@@ -1,0 +1,52 @@
+@import "core.css";
+.wrapper {
+    max-width: 1024px;
+    display: grid;
+    grid-template-areas: "content" "footer";
+}
+
+.content {
+    grid-area: content;
+    text-align: center;
+}
+
+.content input[type=email],
+.content input[type=password] {
+    width: 258px;
+    height: 53px;
+    padding: 0px 20px;
+    margin: 10px 20px;
+    border-radius: 9px;
+    font-size: 16px;
+    border: solid 1px #f9a826;
+}
+
+.content input[type=submit] {
+    width: 258px;
+    height: 53px;
+    padding: 0px 20px;
+    margin: 10px 20px;
+    font-weight: 600;
+    border-radius: 9px;
+    border: 0px;
+    background-color: rgba(255, 168, 0, 0.6);
+    color: white;
+    font-size: 20px;
+}
+
+.content input::placeholder {
+    color: grey;
+}
+
+.content label {
+    font-size: 14px;
+}
+
+.content input[type=checkbox] {
+    border: solid 1px #f9a826;
+}
+
+.content a {
+    color: #f9a826;
+    font-size: 15px;
+}

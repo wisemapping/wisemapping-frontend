@@ -1,0 +1,23 @@
+{
+  "EMAIL": {
+    "defaultMessage": "Email"
+  },
+  "FORGOT_PASSWORD": {
+    "defaultMessage": "Forgot Password ?"
+  },
+  "LOG_INTO": {
+    "defaultMessage": "Log Into Your Account"
+  },
+  "PASSWORD": {
+    "defaultMessage": "Password"
+  },
+  "REMEMBER_ME": {
+    "defaultMessage": "Remember me"
+  },
+  "SING_IN": {
+    "defaultMessage": "Sign In"
+  },
+  "WELCOME": {
+    "defaultMessage": "Welcome"
+  }
+}
