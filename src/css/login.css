@@ -26,15 +26,19 @@
     height: 53px;
     padding: 0px 20px;
     margin: 10px 20px;
+    font-size: 20px;
     font-weight: 600;
     border-radius: 9px;
     border: 0px;
     background-color: rgba(255, 168, 0, 0.6);
     color: white;
-    font-size: 20px;
 }
 
-.content input::placeholder {
+input[type=submit]:hover {
+    background-color: #f9a826;
+}
+
+.content input:placeholder {
     color: grey;
 }
 
@@ -43,10 +47,26 @@
 }
 
 .content input[type=checkbox] {
-    border: solid 1px #f9a826;
+    /* border: solid 1px #f9a826; */
+    background-color: #f9a826;
 }
 
 .content a {
     color: #f9a826;
     font-size: 15px;
+}
+
+.db-warn-msg {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.db-warn-msg p {
+    margin: 0 auto;
+    width: 500px;
+    background-color: #e97450;
+    font-size: 15px;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
 }

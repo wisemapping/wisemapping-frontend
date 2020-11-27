@@ -21,5 +21,5 @@ async function bootstrapApplication(locale) {
     document.getElementById('root')
   )
 }
-
+// @Todo: Is this correct ?
 bootstrapApplication('en')

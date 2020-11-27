@@ -1,7 +1,8 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl'
+
 
 class Header extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -10,19 +11,26 @@ class Header extends React.Component {
     }
 
     render() {
-        let buttons;
+        let signUpButton;
+        let signInButton;
+        let text;
+
         const pageType = this.state.type;
-        if (pageType == 'login') {
-            buttons = <SignUpButton/>;
+        if (pageType === 'login') {
+            text = <span class="nav-center"><FormattedMessage id="DONT_HAVE_ACCOUNT" defaultMessage="Don't have an account ?" /></span>;
+            signUpButton = <SignUpButton/>;
         } else {
-            buttons = <span><SignUpButton/><SignInButton/></span>;
+            signUpButton = <SignUpButton/>
+            signInButton = <SignInButton/>;
         }
 
         return (
             <nav>
                 <div class="header">
                     <span class="header-logo"><a href="/"><img src="images/header-logo.png" alt="logo" /></a></span>
-                    {buttons}
+                    {text}
+                    {signUpButton}
+                    {signInButton}
                 </div>
             </nav>
         ) 
@@ -35,8 +43,14 @@ class SignInButton extends React.Component {
     }
 }
 class SignUpButton extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
-        return <span class="nav-signup"><a href="https://app.wisemapping.com/c/user/registration">Sign Up</a></span>;
+        return (
+            <span class="nav-signup button-style1">
+                <a href="https://app.wisemapping.com/c/user/registration">Sign Up</a>
+            </span>);
     }
 }
 

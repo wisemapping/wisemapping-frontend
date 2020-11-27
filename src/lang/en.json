@@ -1,4 +1,7 @@
 {
+  "DONT_HAVE_ACCOUNT": {
+    "defaultMessage": "Don't have an account ?"
+  },
   "EMAIL": {
     "defaultMessage": "Email"
   },
@@ -7,6 +10,10 @@
   },
   "LOG_INTO": {
     "defaultMessage": "Log Into Your Account"
+  },
+  "NO_PRODUCTION_DATABASE_CONFIGURED": {
+    "defaultMessage": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
+    "description": "Missing production database configured"
   },
   "PASSWORD": {
     "defaultMessage": "Password"

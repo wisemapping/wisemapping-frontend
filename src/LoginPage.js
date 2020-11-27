@@ -13,10 +13,11 @@ class ConfigStatusMessage extends React.Component {
 
   render() {
     return (
-      <p>
-        <FormattedMessage id="NO_PRODUCTION_DATABASE_CONFIGURED" defaultMessage="Missing production database configured" description="Missing production database configured" />
-        <a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"></a>.
-      </p>
+      <div class="db-warn-msg">
+        <p>
+          <FormattedMessage id="NO_PRODUCTION_DATABASE_CONFIGURED" defaultMessage="Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
+        </p>
+      </div>
     );
   }
 }
@@ -65,19 +66,21 @@ class LoginForm extends React.Component {
               <label for="staySignIn"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
             </div>
 
-            <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} value={this.state.value} />
+            <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} />
           </form>
-          <a hef="forgot"><FormattedMessage id="FORGOT_PASSWORD" defaultMessage="Forgot Password ?" /></a>
+          <a href="resetPassword"><FormattedMessage id="FORGOT_PASSWORD" defaultMessage="Forgot Password ?" /></a>
         </div>
       </div>
     );
   }
 }
 
+// Internationalize setup ....
 const cache = createIntlCache()
 
 // @Todo: Review ...
 var intl = null;
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -96,7 +99,7 @@ class LoginPage extends React.Component {
       },
       messages,
       cache
-    )    
+    )
   }
 
   render() {
@@ -105,7 +108,7 @@ class LoginPage extends React.Component {
         <div>
           <Header type='login' />
           <LoginForm />
-          <ConfigStatusMessage enabled='true' />
+          {/* <ConfigStatusMessage enabled='true' /> */}
           <Footer />
         </div>
       </IntlProvider>
