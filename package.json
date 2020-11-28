@@ -20,6 +20,13 @@
         "extract": "formatjs extract",
         "compile": "formatjs compile"
     },
+    "author": {
+        "name": "Paulo Veiga",
+        "email": "pveiga@wisemapping.com"
+    },
+    "contributors": [
+        "Ezequiel Bergamaschi"
+    ],
     "eslintConfig": {
         "extends": [
             "react-app",
@@ -39,8 +46,8 @@
         ]
     },
     "homepage": "http://localhost:8080/react/login/",
+    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
     "devDependencies": {
         "@formatjs/cli": "^2.13.14"
     }
-
 }

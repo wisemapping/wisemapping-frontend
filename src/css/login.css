@@ -72,3 +72,13 @@ input[type=submit]:hover {
     padding: 15px 30px;
     border-radius: 10px;
 }
+
+.error {
+    margin: 10px auto;
+    width: 260px;
+    font-size: 14px;
+    background-color: #e97450;
+    padding: 10px 10px;
+    border-radius: 9px;
+    color: white;
+}

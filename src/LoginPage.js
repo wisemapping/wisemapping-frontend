@@ -22,15 +22,45 @@ class ConfigStatusMessage extends React.Component {
   }
 }
 
+class LoginError extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      errorCode: props.errorCode
+    }
+  }
+
+  render() {
+    const errorCode = this.state.errorCode;
+    let result;
+    if (errorCode) {
+      if (errorCode == 3) {
+        result = (
+          <div class='error'>
+            <FormattedMessage id="USER_INACTIVE" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." />
+          </div>)
+      } else {
+        result = (
+          <div class='error'>
+            <FormattedMessage id="LOGIN_ERROR" defaultMessage="The email address or password you entered is incorrect." />
+          </div>)
+      }
+    }
+    return (<span>{result}</span>);
+  }
+}
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
+
+    const errorCode = props.errorCode
     this.state = {
       email: '',
       password: '',
-      staySignIn: false
+      staySignIn: false,
+      errorCode: errorCode
     };
-
   }
 
   render() {
@@ -40,15 +70,16 @@ class LoginForm extends React.Component {
           <h1><FormattedMessage id="WELCOME" defaultMessage="Welcome" /></h1>
           <p><FormattedMessage id="LOG_INTO" defaultMessage="Log Into Your Account" /></p>
 
+          <LoginError errorCode={this.state.errorCode} />
+
           <form action="/c/perform-login" method="POST">
             <input type="email" name="username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
             <input type="password" name="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
 
             <div>
-              <input name="_spring_security_remember_me" id="staySignIn" type="checkbox"/>
+              <input name="_spring_security_remember_me" id="staySignIn" type="checkbox" />
               <label for="staySignIn"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
             </div>
-
             <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} />
           </form>
           <a href="/c/user/resetPassword"><FormattedMessage id="FORGOT_PASSWORD" defaultMessage="Forgot Password ?" /></a>
@@ -70,9 +101,12 @@ class LoginPage extends React.Component {
 
     const messages = props.messages;
     const locale = props.locale;
+    const errorCode = props.errorCode
+
     this.state = {
       locale: locale,
-      message: messages
+      message: messages,
+      errorCode: errorCode
     };
 
     intl = createIntl(
@@ -90,7 +124,7 @@ class LoginPage extends React.Component {
       <IntlProvider locale={this.state.locale} defaultLocale="en" messages={this.state.messages}>
         <div>
           <Header type='login' />
-          <LoginForm />
+          <LoginForm errorCode={this.state.errorCode} />
           {/* <ConfigStatusMessage enabled='true' /> */}
           <Footer />
         </div>
