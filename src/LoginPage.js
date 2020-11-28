@@ -1,7 +1,8 @@
 import React from 'react';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl'
+
 import Header from './Header.js';
 import Footer from './Footer.js';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl'
 
 class ConfigStatusMessage extends React.Component {
   constructor(props) {
@@ -25,16 +26,20 @@ class ConfigStatusMessage extends React.Component {
 class LoginError extends React.Component {
   constructor(props) {
     super(props)
+    // @Todo: This must be reviewed to be based on navigation state.
+    // Login error example: http://localhost:8080/c/login?login_error=2
+    const errorCode = new URLSearchParams(window.location.search).get('login_error');
     this.state = {
-      errorCode: props.errorCode
+      errorCode: errorCode
     }
   }
 
   render() {
-    const errorCode = this.state.errorCode;
+
     let result;
+    const errorCode = this.state.errorCode;
     if (errorCode) {
-      if (errorCode == 3) {
+      if (errorCode === 3) {
         result = (
           <div class='error'>
             <FormattedMessage id="USER_INACTIVE" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." />
@@ -42,7 +47,7 @@ class LoginError extends React.Component {
       } else {
         result = (
           <div class='error'>
-            <FormattedMessage id="LOGIN_ERROR" defaultMessage="The email address or password you entered is incorrect." />
+            <FormattedMessage id="LOGIN_ERROR" defaultMessage="The email address or password you entered is  not valid." />
           </div>)
       }
     }
@@ -54,12 +59,10 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const errorCode = props.errorCode
     this.state = {
       email: '',
       password: '',
-      staySignIn: false,
-      errorCode: errorCode
+      staySignIn: false
     };
   }
 
@@ -70,11 +73,11 @@ class LoginForm extends React.Component {
           <h1><FormattedMessage id="WELCOME" defaultMessage="Welcome" /></h1>
           <p><FormattedMessage id="LOG_INTO" defaultMessage="Log Into Your Account" /></p>
 
-          <LoginError errorCode={this.state.errorCode} />
+          <LoginError />
 
           <form action="/c/perform-login" method="POST">
-            <input type="email" name="username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
-            <input type="password" name="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
+            <input type="email" name="username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} required="true" autocomplete="email" />
+            <input type="password" name="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} required="true" autocomplete="current-password" />
 
             <div>
               <input name="_spring_security_remember_me" id="staySignIn" type="checkbox" />
@@ -101,12 +104,10 @@ class LoginPage extends React.Component {
 
     const messages = props.messages;
     const locale = props.locale;
-    const errorCode = props.errorCode
 
     this.state = {
       locale: locale,
-      message: messages,
-      errorCode: errorCode
+      message: messages
     };
 
     intl = createIntl(
@@ -124,7 +125,7 @@ class LoginPage extends React.Component {
       <IntlProvider locale={this.state.locale} defaultLocale="en" messages={this.state.messages}>
         <div>
           <Header type='login' />
-          <LoginForm errorCode={this.state.errorCode} />
+          <LoginForm />
           {/* <ConfigStatusMessage enabled='true' /> */}
           <Footer />
         </div>
