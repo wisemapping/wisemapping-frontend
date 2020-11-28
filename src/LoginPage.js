@@ -58,8 +58,8 @@ class LoginForm extends React.Component {
           <p><FormattedMessage id="LOG_INTO" defaultMessage="Log Into Your Account" /></p>
 
           <form onSubmit={this.handleSubmit}>
-            <div><input type="email" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required /></div>
-            <div><input type="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required /></div>
+            <input type="email" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
+            <input type="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
 
             <div>
               <input name="staySignIn" id="staySignIn" type="checkbox" checked={this.state.staySignIn} onChange={this.handleInputChange} />

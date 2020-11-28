@@ -39,7 +39,7 @@ class Header extends React.Component {
 
 class SignInButton extends React.Component {
     render() {
-        return <span class="nav-signin"><a href="https://app.wisemapping.com/c/login">Sign In</a></span>;
+        return <span class="nav-signin"><a href="c/login"><FormattedMessage id="SIGN_IN" defaultMessage="Sign In" /></a></span>;
     }
 }
 class SignUpButton extends React.Component {
@@ -49,7 +49,7 @@ class SignUpButton extends React.Component {
     render() {
         return (
             <span class="nav-signup button-style1">
-                <a href="https://app.wisemapping.com/c/user/registration">Sign Up</a>
+                <a href="c/registration"><FormattedMessage id="SIGN_UP" defaultMessage="Sign Up" /></a>
             </span>);
     }
 }
