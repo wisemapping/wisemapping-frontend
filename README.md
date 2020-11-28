@@ -71,4 +71,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # Generate I18n resource
 
-npm run extract -- 'src/*.js' --out-file src/lang/en.json
+## Extract 
+npm run extract -- 'src/*.js' --out-file lang/en.json
+
+## Compile
+npm run compile -- lang/en.json --ast --out-file src/compiled-lang/en.json
+npm run compile -- lang/es.json --ast --out-file src/compiled-lang/es.json

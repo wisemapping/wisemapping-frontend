@@ -104,16 +104,18 @@ class LoginPage extends React.Component {
 
     const messages = props.messages;
     const locale = props.locale;
+    const defaultLocale = 'en'
 
     this.state = {
       locale: locale,
-      message: messages
+      messages: messages,
+      defaultLocale: defaultLocale
     };
 
     intl = createIntl(
       {
         locale: locale,
-        defaultLocale: 'en'
+        defaultLocale: defaultLocale
       },
       messages,
       cache
@@ -122,7 +124,7 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <IntlProvider locale={this.state.locale} defaultLocale="en" messages={this.state.messages}>
+      <IntlProvider locale={this.state.locale} defaultLocale={this.state.defaultLocale} messages={this.state.messages}>
         <div>
           <Header type='login' />
           <LoginForm />

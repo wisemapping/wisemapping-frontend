@@ -1,0 +1,82 @@
+{
+    "ABOUT_US": [{
+        "type": 0,
+        "value": "About Us"
+    }],
+    "CONTACT_US": [{
+        "type": 0,
+        "value": "Contact Us"
+    }],
+    "DONATIONS": [{
+        "type": 0,
+        "value": "PayPal Donations"
+    }],
+    "DONT_HAVE_ACCOUNT": [{
+        "type": 0,
+        "value": "Don't have an account ?"
+    }],
+    "EMAIL": [{
+        "type": 0,
+        "value": "Email"
+    }],
+    "FAQ": [{
+        "type": 0,
+        "value": "F.A.Q."
+    }],
+    "FEEDBACK": [{
+        "type": 0,
+        "value": "Feedback"
+    }],
+    "FORGOT_PASSWORD": [{
+        "type": 0,
+        "value": "Forgot Password ?"
+    }],
+    "LOGIN_ERROR": [{
+        "type": 0,
+        "value": "The email address or password you entered is not valid."
+    }],
+    "LOG_INTO": [{
+        "type": 0,
+        "value": "Log Into Your Account"
+    }],
+    "NO_PRODUCTION_DATABASE_CONFIGURED": [{
+        "type": 0,
+        "value": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
+    }],
+    "OPEN_SOURCE": [{
+        "type": 0,
+        "value": "Open Source"
+    }],
+    "PASSWORD": [{
+        "type": 0,
+        "value": "Password"
+    }],
+    "REMEMBER_ME": [{
+        "type": 0,
+        "value": "Remember me"
+    }],
+    "SIGN_IN": [{
+        "type": 0,
+        "value": "Sign In"
+    }],
+    "SIGN_UP": [{
+        "type": 0,
+        "value": "Sign Up"
+    }],
+    "SING_IN": [{
+        "type": 0,
+        "value": "Sign In"
+    }],
+    "TERMS_AND_CONDITIONS": [{
+        "type": 0,
+        "value": "Term And Conditions"
+    }],
+    "USER_INACTIVE": [{
+        "type": 0,
+        "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+    }],
+    "WELCOME": [{
+        "type": 0,
+        "value": "Bienvenido"
+    }]
+}
