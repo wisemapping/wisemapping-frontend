@@ -31,18 +31,7 @@ class LoginForm extends React.Component {
       staySignIn: false
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const name = target.name;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-
-    this.setState({
-      [name]: value
-    });
-  };
 
   render() {
     return (
@@ -56,13 +45,13 @@ class LoginForm extends React.Component {
             <input type="password" name="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
 
             <div>
-              <input name="_spring_security_remember_me" id="staySignIn" type="checkbox" checked={this.state.staySignIn} onChange={this.handleInputChange} />
+              <input name="_spring_security_remember_me" id="staySignIn" type="checkbox"/>
               <label for="staySignIn"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
             </div>
 
             <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} />
           </form>
-          <a href="resetPassword"><FormattedMessage id="FORGOT_PASSWORD" defaultMessage="Forgot Password ?" /></a>
+          <a href="/c/user/resetPassword"><FormattedMessage id="FORGOT_PASSWORD" defaultMessage="Forgot Password ?" /></a>
         </div>
       </div>
     );

@@ -49,7 +49,7 @@ input[type=submit]:hover {
 }
 
 .content input[type=checkbox] {
-    /* border: solid 1px #f9a826; */
+    border: solid 1px #f9a826;
     background-color: #f9a826;
 }
 
