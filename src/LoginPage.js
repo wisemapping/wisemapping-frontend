@@ -46,8 +46,8 @@ class LoginForm extends React.Component {
   };
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
+    // @todo: implements in the future ...
+    // event.preventDefault();
   }
 
   render() {
@@ -57,13 +57,13 @@ class LoginForm extends React.Component {
           <h1><FormattedMessage id="WELCOME" defaultMessage="Welcome" /></h1>
           <p><FormattedMessage id="LOG_INTO" defaultMessage="Log Into Your Account" /></p>
 
-          <form onSubmit={this.handleSubmit}>
-            <input type="email" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
-            <input type="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
+          <form onSubmit={this.handleSubmit} action="/c/j_spring_security_check" method="post">
+            <input type="email" name="j_username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
+            <input type="password" name="j_password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
 
             <div>
-              <input name="staySignIn" id="staySignIn" type="checkbox" checked={this.state.staySignIn} onChange={this.handleInputChange} />
-              <label for="staySignIn"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
+              <input name="_spring_security_remember_me" id="staySignIn" type="checkbox" checked={this.state.staySignIn} onChange={this.handleInputChange} />
+              <label for="_spring_security_remember_me"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
             </div>
 
             <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} />

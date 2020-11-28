@@ -43,9 +43,6 @@ class SignInButton extends React.Component {
     }
 }
 class SignUpButton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return (
             <span class="nav-signup button-style1">
