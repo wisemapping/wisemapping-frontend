@@ -32,7 +32,6 @@ class LoginForm extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {
@@ -45,11 +44,6 @@ class LoginForm extends React.Component {
     });
   };
 
-  handleSubmit(event) {
-    // @todo: implements in the future ...
-    // event.preventDefault();
-  }
-
   render() {
     return (
       <div class="wrapper">
@@ -57,13 +51,13 @@ class LoginForm extends React.Component {
           <h1><FormattedMessage id="WELCOME" defaultMessage="Welcome" /></h1>
           <p><FormattedMessage id="LOG_INTO" defaultMessage="Log Into Your Account" /></p>
 
-          <form onSubmit={this.handleSubmit} action="/c/j_spring_security_check" method="post">
-            <input type="email" name="j_username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
-            <input type="password" name="j_password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
+          <form action="/c/perform-login" method="POST">
+            <input type="email" name="username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} onChange={this.handleInputChange} required />
+            <input type="password" name="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} onChange={this.handleInputChange} required />
 
             <div>
               <input name="_spring_security_remember_me" id="staySignIn" type="checkbox" checked={this.state.staySignIn} onChange={this.handleInputChange} />
-              <label for="_spring_security_remember_me"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
+              <label for="staySignIn"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
             </div>
 
             <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} />

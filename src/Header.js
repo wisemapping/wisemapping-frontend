@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl'
+import logo from './images/header-logo.png'
 
 
 class Header extends React.Component {
@@ -27,7 +28,7 @@ class Header extends React.Component {
         return (
             <nav>
                 <div class="header">
-                    <span class="header-logo"><a href="/"><img src="images/header-logo.png" alt="logo" /></a></span>
+                    <span class="header-logo"><a href="/"><img src={logo} alt="logo" /></a></span>
                     {text}
                     {signUpButton}
                     {signInButton}

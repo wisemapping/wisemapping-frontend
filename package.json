@@ -38,7 +38,9 @@
             "last 1 safari version"
         ]
     },
+    "homepage": "http://localhost:8080/react/login/",
     "devDependencies": {
         "@formatjs/cli": "^2.13.14"
     }
+
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl'
-
+import { ReactComponent as Logo } from './images/logo-text.svg'
 
 class Footer extends React.Component {
     render() {
         return (
             <footer class="footer">
-                <img src="images/text-wisemapping.svg" alt="logo"/>
+                <Logo/>
                 <div>
                     <div><a href="termsofuse.html"><FormattedMessage id="TERMS_AND_CONDITIONS" defaultMessage="Term And Conditions" /></a></div>
                     <div><a href="faq.html"><FormattedMessage id="FAQ" defaultMessage="F.A.Q." /></a></div>
