@@ -12,19 +12,19 @@
         "defaultMessage": "No tienes una cuenta ?"
     },
     "login.email": {
-        "defaultMessage": "login.email"
+        "defaultMessage": "Email"
     },
     "footer.faq": {
-        "defaultMessage": "F.A.Q."
+        "defaultMessage": "Preguntas Frecuentes"
     },
     "footer.feedback": {
-        "defaultMessage": "footer.feedback"
+        "defaultMessage": "Feedback"
     },
     "login.forgotpwd": {
-        "defaultMessage": "Olvidaste el login.password ?"
+        "defaultMessage": "Olvidaste la contraseña ?"
     },
     "login.error": {
-        "defaultMessage": "El login.email or la contraseña no es valida."
+        "defaultMessage": "El email o la contraseña no es valida."
     },
     "login.loginto": {
         "defaultMessage": "Ingresar a tu Cuenta"
@@ -52,7 +52,7 @@
         "defaultMessage": "Terminos y Condiciones"
     },
     "login.userinactive": {
-        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
+        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
     },
     "login.welcome": {
         "defaultMessage": "Bienvenido"

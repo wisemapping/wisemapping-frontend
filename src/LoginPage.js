@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormattedMessage, IntlProvider,injectIntl } from 'react-intl'
+import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 
 import Header from './Header.js';
 import Footer from './Footer.js';
@@ -13,13 +13,19 @@ class ConfigStatusMessage extends React.Component {
   }
 
   render() {
-    return (
-      <div class="db-warn-msg">
+    let result;
+   
+    if (this.state.enabled===true) {
+      result = (<div class="db-warn-msg">
         <p>
-          <FormattedMessage id="login.hsqldbcofig" defaultMessage="Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
+          <FormattedMessage id="login.hsqldbcofig" defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
         </p>
-      </div>
-    );
+      </div>);
+    } else {
+      result = <span></span>;
+    }
+   
+    return result;
   }
 }
 
@@ -28,7 +34,7 @@ class LoginError extends React.Component {
     super(props)
     // @Todo: This must be reviewed to be based on navigation state.
     // Login error example: http://localhost:8080/c/login?login.error=2
-    const errorCode = new URLSearchParams(window.location.search).get('login.error');
+    const errorCode = new URLSearchParams(window.location.search).get('login_error');
     this.state = {
       errorCode: errorCode
     }
@@ -69,14 +75,14 @@ class LoginForm extends React.Component {
     return (
       <div class="wrapper">
         <div class="content">
-          <h1><FormattedMessage id="login.welcome" defaultMessage="login.welcome" /></h1>
+          <h1><FormattedMessage id="login.welcome" defaultMessage="Welcome" /></h1>
           <p><FormattedMessage id="login.loginto" defaultMessage="Log Into Your Account" /></p>
 
           <LoginError />
 
           <form action="/c/perform-login" method="POST">
-            <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "login.email" })}  required="true" autocomplete="login.email" />
-            <input type="password" name="login.password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "login.password" })} required="true" autocomplete="current-login.password" />
+            <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "Email" })} required="true" autocomplete="email" />
+            <input type="password" name="password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "Password" })} required="true" autocomplete="current-password" />
 
             <div>
               <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
@@ -84,7 +90,7 @@ class LoginForm extends React.Component {
             </div>
             <input type="submit" value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
           </form>
-          <a href="/c/user/resetlogin.password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot login.password ?" /></a>
+          <a href="/c/user/resetlogin.password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></a>
         </div>
       </div>
     );
@@ -100,7 +106,7 @@ class LoginPage extends React.Component {
 
     this.state = {
       locale: locale,
-      messages: messages    
+      messages: messages
     };
   }
 
@@ -110,14 +116,14 @@ class LoginPage extends React.Component {
         <div>
           <Header type='login' />
           <LoginForm />
-          {/* <ConfigStatusMessage enabled='false' /> */}
+          <ConfigStatusMessage enabled='false' />
           <Footer />
         </div>
       </IntlProvider>
     );
   }
 }
-LoginForm = injectIntl(LoginForm) 
+LoginForm = injectIntl(LoginForm)
 
 export default LoginPage;
 

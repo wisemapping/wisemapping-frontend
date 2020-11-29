@@ -6,25 +6,25 @@
         "defaultMessage": "Contact Us"
     },
     "footer.donations": {
-        "defaultMessage": "PayPal footer.donations"
+        "defaultMessage": "PayPal Donations"
     },
     "header.donthaveaccount": {
         "defaultMessage": "Don't have an account ?"
     },
     "login.email": {
-        "defaultMessage": "login.email"
+        "defaultMessage": "Email"
     },
     "footer.faq": {
         "defaultMessage": "F.A.Q."
     },
     "footer.feedback": {
-        "defaultMessage": "footer.feedback"
+        "defaultMessage": "Feedback"
     },
     "login.forgotpwd": {
-        "defaultMessage": "Forgot login.password ?"
+        "defaultMessage": "Forgot Password ?"
     },
     "login.error": {
-        "defaultMessage": "The login.email address or login.password you entered is not valid."
+        "defaultMessage": "The email address or password you entered is not valid."
     },
     "login.loginto": {
         "defaultMessage": "Log Into Your Account"
@@ -37,7 +37,7 @@
         "defaultMessage": "Open Source"
     },
     "login.password": {
-        "defaultMessage": "login.password"
+        "defaultMessage": "Password"
     },
     "login.remberme": {
         "defaultMessage": "Remember me"
@@ -52,9 +52,9 @@
         "defaultMessage": "Term And Conditions"
     },
     "login.userinactive": {
-        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
+        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
     },
     "login.welcome": {
-        "defaultMessage": "login.welcome"
+        "defaultMessage": "Welcome"
     }
 }
