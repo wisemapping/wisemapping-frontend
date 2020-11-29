@@ -1,5 +1,5 @@
 import React from 'react';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl'
+import {FormattedMessage, IntlProvider,injectIntl } from 'react-intl'
 
 import Header from './Header.js';
 import Footer from './Footer.js';
@@ -16,7 +16,7 @@ class ConfigStatusMessage extends React.Component {
     return (
       <div class="db-warn-msg">
         <p>
-          <FormattedMessage id="NO_PRODUCTION_DATABASE_CONFIGURED" defaultMessage="Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
+          <FormattedMessage id="login.hsqldbcofig" defaultMessage="Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
         </p>
       </div>
     );
@@ -27,8 +27,8 @@ class LoginError extends React.Component {
   constructor(props) {
     super(props)
     // @Todo: This must be reviewed to be based on navigation state.
-    // Login error example: http://localhost:8080/c/login?login_error=2
-    const errorCode = new URLSearchParams(window.location.search).get('login_error');
+    // Login error example: http://localhost:8080/c/login?login.error=2
+    const errorCode = new URLSearchParams(window.location.search).get('login.error');
     this.state = {
       errorCode: errorCode
     }
@@ -42,12 +42,12 @@ class LoginError extends React.Component {
       if (errorCode === 3) {
         result = (
           <div class='error'>
-            <FormattedMessage id="USER_INACTIVE" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." />
+            <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
           </div>)
       } else {
         result = (
           <div class='error'>
-            <FormattedMessage id="LOGIN_ERROR" defaultMessage="The email address or password you entered is  not valid." />
+            <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
           </div>)
       }
     }
@@ -58,45 +58,38 @@ class LoginError extends React.Component {
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      email: '',
-      password: '',
-      staySignIn: false
-    };
+      intl: props.intl
+    }
   }
 
   render() {
+
+    const intl = this.props.intl;
     return (
       <div class="wrapper">
         <div class="content">
-          <h1><FormattedMessage id="WELCOME" defaultMessage="Welcome" /></h1>
-          <p><FormattedMessage id="LOG_INTO" defaultMessage="Log Into Your Account" /></p>
+          <h1><FormattedMessage id="login.welcome" defaultMessage="login.welcome" /></h1>
+          <p><FormattedMessage id="login.loginto" defaultMessage="Log Into Your Account" /></p>
 
           <LoginError />
 
           <form action="/c/perform-login" method="POST">
-            <input type="email" name="username" placeholder={intl.formatMessage({ id: "EMAIL", defaultMessage: 'Email' })} value={this.state.value} required="true" autocomplete="email" />
-            <input type="password" name="password" placeholder={intl.formatMessage({ id: "PASSWORD", defaultMessage: 'Password' })} value={this.state.value} required="true" autocomplete="current-password" />
+            <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "login.email" })}  required="true" autocomplete="login.email" />
+            <input type="password" name="login.password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "login.password" })} required="true" autocomplete="current-login.password" />
 
             <div>
-              <input name="_spring_security_remember_me" id="staySignIn" type="checkbox" />
-              <label for="staySignIn"><FormattedMessage id="REMEMBER_ME" defaultMessage="Remember me" /></label>
+              <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
+              <label for="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
             </div>
-            <input type="submit" value={intl.formatMessage({ id: "SING_IN", defaultMessage: 'Sign In' })} />
+            <input type="submit" value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
           </form>
-          <a href="/c/user/resetPassword"><FormattedMessage id="FORGOT_PASSWORD" defaultMessage="Forgot Password ?" /></a>
+          <a href="/c/user/resetlogin.password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot login.password ?" /></a>
         </div>
       </div>
     );
   }
 }
-
-// Internationalize setup ....
-const cache = createIntlCache()
-
-// @Todo: Review ...
-var intl = null;
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -104,36 +97,27 @@ class LoginPage extends React.Component {
 
     const messages = props.messages;
     const locale = props.locale;
-    const defaultLocale = 'en'
 
     this.state = {
       locale: locale,
-      messages: messages,
-      defaultLocale: defaultLocale
+      messages: messages    
     };
-
-    intl = createIntl(
-      {
-        locale: locale,
-        defaultLocale: defaultLocale
-      },
-      messages,
-      cache
-    )
   }
 
   render() {
     return (
-      <IntlProvider locale={this.state.locale} defaultLocale={this.state.defaultLocale} messages={this.state.messages}>
+      <IntlProvider locale={this.state.locale} defaultLocale='en' messages={this.state.messages}>
         <div>
           <Header type='login' />
           <LoginForm />
-          {/* <ConfigStatusMessage enabled='true' /> */}
+          {/* <ConfigStatusMessage enabled='false' /> */}
           <Footer />
         </div>
       </IntlProvider>
     );
   }
 }
+LoginForm = injectIntl(LoginForm) 
+
 export default LoginPage;
 

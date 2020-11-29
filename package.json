@@ -21,7 +21,7 @@
     },
     "author": {
         "name": "Paulo Veiga",
-        "email": "pveiga@wisemapping.com"
+        "login.email": "pveiga@wisemapping.com"
     },
     "contributors": [
         "Ezequiel Bergamaschi"

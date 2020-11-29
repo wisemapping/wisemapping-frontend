@@ -1,81 +1,77 @@
 {
-    "ABOUT_US": [{
+    "footer.aboutus": [{
         "type": 0,
-        "value": "About Us"
+        "value": "Sobre Nosotros"
     }],
-    "CONTACT_US": [{
+    "footer.contactus": [{
         "type": 0,
-        "value": "Contact Us"
+        "value": "Contáctenos"
     }],
-    "DONATIONS": [{
+    "footer.donations": [{
         "type": 0,
-        "value": "PayPal Donations"
+        "value": "PayPal Donaciones"
     }],
-    "DONT_HAVE_ACCOUNT": [{
+    "header.donthaveaccount": [{
         "type": 0,
-        "value": "Don't have an account ?"
+        "value": "No tienes una cuenta ?"
     }],
-    "EMAIL": [{
+    "login.email": [{
         "type": 0,
-        "value": "Email"
+        "value": "login.email"
     }],
-    "FAQ": [{
+    "footer.faq": [{
         "type": 0,
         "value": "F.A.Q."
     }],
-    "FEEDBACK": [{
+    "footer.feedback": [{
         "type": 0,
-        "value": "Feedback"
+        "value": "footer.feedback"
     }],
-    "FORGOT_PASSWORD": [{
+    "login.forgotpwd": [{
         "type": 0,
-        "value": "Forgot Password ?"
+        "value": "Olvidaste el login.password ?"
     }],
-    "LOGIN_ERROR": [{
+    "login.error": [{
         "type": 0,
-        "value": "The email address or password you entered is not valid."
+        "value": "El login.email or la contraseña no es valida."
     }],
-    "LOG_INTO": [{
+    "login.loginto": [{
         "type": 0,
-        "value": "Log Into Your Account"
+        "value": "Ingresar a tu Cuenta"
     }],
-    "NO_PRODUCTION_DATABASE_CONFIGURED": [{
+    "login.hsqldbcofig": [{
         "type": 0,
         "value": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
     }],
-    "OPEN_SOURCE": [{
+    "footer.opensource": [{
         "type": 0,
         "value": "Open Source"
     }],
-    "PASSWORD": [{
+    "login.password": [{
         "type": 0,
-        "value": "Password"
+        "value": "Contraseña"
     }],
-    "REMEMBER_ME": [{
+    "login.remberme": [{
         "type": 0,
-        "value": "Remember me"
+        "value": "Recordarme"
     }],
-    "SIGN_IN": [{
+    "login.signin": [{
+        "typye": 0,
+        "value": "Ingresar"
+    }],
+    "login.signup": [{
         "type": 0,
-        "value": "Sign In"
+        "value": "Registrarse"
     }],
-    "SIGN_UP": [{
+    "footer.termsandconditions": [{
         "type": 0,
-        "value": "Sign Up"
+        "value": "Terminos y Condiciones"
     }],
-    "SING_IN": [{
+    "login.userinactive": [{
         "type": 0,
-        "value": "Sign In"
+        "value": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
     }],
-    "TERMS_AND_CONDITIONS": [{
-        "type": 0,
-        "value": "Term And Conditions"
-    }],
-    "USER_INACTIVE": [{
-        "type": 0,
-        "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-    }],
-    "WELCOME": [{
+    "login.welcome": [{
         "type": 0,
         "value": "Bienvenido"
     }]

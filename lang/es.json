@@ -1,63 +1,60 @@
 {
-    "ABOUT_US": {
-        "defaultMessage": "About Us"
+    "footer.aboutus": {
+        "defaultMessage": "Sobre Nosotros"
     },
-    "CONTACT_US": {
-        "defaultMessage": "Contact Us"
+    "footer.contactus": {
+        "defaultMessage": "Contáctenos"
     },
-    "DONATIONS": {
-        "defaultMessage": "PayPal Donations"
+    "footer.donations": {
+        "defaultMessage": "PayPal Donaciones"
     },
-    "DONT_HAVE_ACCOUNT": {
-        "defaultMessage": "Don't have an account ?"
+    "header.donthaveaccount": {
+        "defaultMessage": "No tienes una cuenta ?"
     },
-    "EMAIL": {
-        "defaultMessage": "Email"
+    "login.email": {
+        "defaultMessage": "login.email"
     },
-    "FAQ": {
+    "footer.faq": {
         "defaultMessage": "F.A.Q."
     },
-    "FEEDBACK": {
-        "defaultMessage": "Feedback"
+    "footer.feedback": {
+        "defaultMessage": "footer.feedback"
     },
-    "FORGOT_PASSWORD": {
-        "defaultMessage": "Forgot Password ?"
+    "login.forgotpwd": {
+        "defaultMessage": "Olvidaste el login.password ?"
     },
-    "LOGIN_ERROR": {
-        "defaultMessage": "The email address or password you entered is not valid."
+    "login.error": {
+        "defaultMessage": "El login.email or la contraseña no es valida."
     },
-    "LOG_INTO": {
-        "defaultMessage": "Log Into Your Account"
+    "login.loginto": {
+        "defaultMessage": "Ingresar a tu Cuenta"
     },
-    "NO_PRODUCTION_DATABASE_CONFIGURED": {
+    "login.hsqldbcofig": {
         "defaultMessage": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
         "description": "Missing production database configured"
     },
-    "OPEN_SOURCE": {
+    "footer.opensource": {
         "defaultMessage": "Open Source"
     },
-    "PASSWORD": {
-        "defaultMessage": "Password"
+    "login.password": {
+        "defaultMessage": "Contraseña"
     },
-    "REMEMBER_ME": {
-        "defaultMessage": "Remember me"
+    "login.remberme": {
+        "defaultMessage": "Recordarme"
     },
-    "SIGN_IN": {
-        "defaultMessage": "Sign In"
+    "login.signin": {
+        "defaultMessage": "Ingresar"
     },
-    "SIGN_UP": {
-        "defaultMessage": "Sign Up"
+    "login.signup": {
+        "defaultMessage": "Registrarse"
     },
-    "SING_IN": {
-        "defaultMessage": "Sign In"
+    "footer.termsandconditions": {
+        "defaultMessage": "Terminos y Condiciones"
     },
-    "TERMS_AND_CONDITIONS": {
-        "defaultMessage": "Term And Conditions"
+    "login.userinactive": {
+        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
     },
-    "USER_INACTIVE": {
-        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-    },
-    "WELCOME": {
+    "login.welcome": {
         "defaultMessage": "Bienvenido"
     }
 }

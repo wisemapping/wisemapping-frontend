@@ -4,9 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LoginPage from './LoginPage.js';
 
-function loadLocaleData(locale) {
-  const language = locale.split('-')[1];
-  switch (locale) {
+function loadLocaleData(language) {
+  switch (language) {
     case 'es':
       return import('./compiled-lang/es.json')
     default:
@@ -15,13 +14,18 @@ function loadLocaleData(locale) {
 }
 
 async function bootstrapApplication() {
-  const locale = window.navigator.language;
-  console.log("Browser Locale:" + window.navigator.language)
+  const locale = (navigator.languages && navigator.languages[0])
+    || navigator.language
+    || navigator.userLanguage
+    || 'en-US';
+  const language = locale.split('-')[0];
 
-  const messages = (await loadLocaleData(locale));
+  const messages = (await loadLocaleData(language));
+
+  console.log(messages)
+  console.log(language)
   ReactDOM.render(
-    <LoginPage locale={locale} messages={messages} />
-    ,
+    <LoginPage locale={locale} messages={messages} />,
     document.getElementById('root')
   )
 }

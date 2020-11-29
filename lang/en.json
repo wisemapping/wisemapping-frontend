@@ -1,63 +1,60 @@
 {
-  "ABOUT_US": {
-    "defaultMessage": "About Us"
-  },
-  "CONTACT_US": {
-    "defaultMessage": "Contact Us"
-  },
-  "DONATIONS": {
-    "defaultMessage": "PayPal Donations"
-  },
-  "DONT_HAVE_ACCOUNT": {
-    "defaultMessage": "Don't have an account ?"
-  },
-  "EMAIL": {
-    "defaultMessage": "Email"
-  },
-  "FAQ": {
-    "defaultMessage": "F.A.Q."
-  },
-  "FEEDBACK": {
-    "defaultMessage": "Feedback"
-  },
-  "FORGOT_PASSWORD": {
-    "defaultMessage": "Forgot Password ?"
-  },
-  "LOGIN_ERROR": {
-    "defaultMessage": "The email address or password you entered is not valid."
-  },
-  "LOG_INTO": {
-    "defaultMessage": "Log Into Your Account"
-  },
-  "NO_PRODUCTION_DATABASE_CONFIGURED": {
-    "defaultMessage": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
-    "description": "Missing production database configured"
-  },
-  "OPEN_SOURCE": {
-    "defaultMessage": "Open Source"
-  },
-  "PASSWORD": {
-    "defaultMessage": "Password"
-  },
-  "REMEMBER_ME": {
-    "defaultMessage": "Remember me"
-  },
-  "SIGN_IN": {
-    "defaultMessage": "Sign In"
-  },
-  "SIGN_UP": {
-    "defaultMessage": "Sign Up"
-  },
-  "SING_IN": {
-    "defaultMessage": "Sign In"
-  },
-  "TERMS_AND_CONDITIONS": {
-    "defaultMessage": "Term And Conditions"
-  },
-  "USER_INACTIVE": {
-    "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-  },
-  "WELCOME": {
-    "defaultMessage": "Welcome"
-  }
+    "footer.aboutus": {
+        "defaultMessage": "About Us"
+    },
+    "footer.contactus": {
+        "defaultMessage": "Contact Us"
+    },
+    "footer.donations": {
+        "defaultMessage": "PayPal footer.donations"
+    },
+    "header.donthaveaccount": {
+        "defaultMessage": "Don't have an account ?"
+    },
+    "login.email": {
+        "defaultMessage": "login.email"
+    },
+    "footer.faq": {
+        "defaultMessage": "F.A.Q."
+    },
+    "footer.feedback": {
+        "defaultMessage": "footer.feedback"
+    },
+    "login.forgotpwd": {
+        "defaultMessage": "Forgot login.password ?"
+    },
+    "login.error": {
+        "defaultMessage": "The login.email address or login.password you entered is not valid."
+    },
+    "login.loginto": {
+        "defaultMessage": "Log Into Your Account"
+    },
+    "login.hsqldbcofig": {
+        "defaultMessage": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
+        "description": "Missing production database configured"
+    },
+    "footer.opensource": {
+        "defaultMessage": "Open Source"
+    },
+    "login.password": {
+        "defaultMessage": "login.password"
+    },
+    "login.remberme": {
+        "defaultMessage": "Remember me"
+    },
+    "login.signin": {
+        "defaultMessage": "Sign In"
+    },
+    "login.signup": {
+        "defaultMessage": "Sign Up"
+    },
+    "footer.termsandconditions": {
+        "defaultMessage": "Term And Conditions"
+    },
+    "login.userinactive": {
+        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
+    },
+    "login.welcome": {
+        "defaultMessage": "login.welcome"
+    }
 }

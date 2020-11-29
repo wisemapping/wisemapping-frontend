@@ -18,7 +18,7 @@ class Header extends React.Component {
 
         const pageType = this.state.type;
         if (pageType === 'login') {
-            text = <span class="nav-center"><FormattedMessage id="DONT_HAVE_ACCOUNT" defaultMessage="Don't have an account ?" /></span>;
+            text = <span class="nav-center"><FormattedMessage id="header.donthaveaccount" defaultMessage="Don't have an account ?" /></span>;
             signUpButton = <SignUpButton/>;
         } else {
             signUpButton = <SignUpButton/>
@@ -40,14 +40,14 @@ class Header extends React.Component {
 
 class SignInButton extends React.Component {
     render() {
-        return <span class="nav-signin"><a href="/c/login"><FormattedMessage id="SIGN_IN" defaultMessage="Sign In" /></a></span>;
+        return <span class="nav-signin"><a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a></span>;
     }
 }
 class SignUpButton extends React.Component {
     render() {
         return (
             <span class="nav-signup button-style1">
-                <a href="/c/user/registration"><FormattedMessage id="SIGN_UP" defaultMessage="Sign Up" /></a>
+                <a href="/c/user/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></a>
             </span>);
     }
 }
