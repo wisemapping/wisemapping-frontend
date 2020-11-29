@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import LoginPage from './LoginPage.js';
 
 function loadLocaleData(locale) {
+  const language = locale.split('-')[1];
   switch (locale) {
     case 'es':
       return import('./compiled-lang/es.json')
@@ -17,10 +18,7 @@ async function bootstrapApplication() {
   const locale = window.navigator.language;
   console.log("Browser Locale:" + window.navigator.language)
 
-  const messages = loadLocaleData(locale);
-  console.log("loadLocaleData:" + toString(messages))
-
-
+  const messages = (await loadLocaleData(locale));
   ReactDOM.render(
     <LoginPage locale={locale} messages={messages} />
     ,
