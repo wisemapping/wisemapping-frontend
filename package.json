@@ -1,6 +1,6 @@
 {
     "name": "wisemapping-react",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "dependencies": {
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
