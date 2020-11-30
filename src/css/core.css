@@ -154,7 +154,6 @@ nav a {
     padding: 30px 40px 10px 50px;
     background-color: #f9a826;
     display: grid;
-    grid-template-columns: 100px 1fr 1fr 3fr;
 }
 
 .footer a {
@@ -179,7 +178,7 @@ nav a {
 
 @media (min-width: 500px) {
     .footer {
-        grid-template-columns: 5px 1fr 1fr 5px;
+        grid-template-columns: 0px 1fr 1fr 5px;
     }
     .footer>svg {
         display: none;
@@ -193,7 +192,7 @@ nav a {
 
 @media (min-width: 800px) {
     .footer {
-        grid-template-columns: 150px 1fr 1fr;
+        grid-template-columns: 200px 1fr 1fr 3fr;
     }
     .footer>svg {
         display: inline-block;
