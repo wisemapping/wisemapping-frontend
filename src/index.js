@@ -2,7 +2,8 @@ import './css/login.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LoginPage from './LoginPage.js';
+import LoginApp from './LoginApp.js';
+import RegistationApp from './RegistrationApp';
 
 function loadLocaleData(language) {
   switch (language) {
@@ -59,13 +60,13 @@ async function bootstrapApplication() {
   let rootPage;
   switch (router()) {
     case Apps.LOGIN:
-      rootPage = <LoginPage locale={locale} messages={messages} />;
+      rootPage = <LoginApp locale={locale} messages={messages} />;
       break
     case Apps.REGISTRATION:
-      rootPage = <div>Register</div>;
+      rootPage = <RegistationApp locale={locale} messages={messages} />;
       break
     default:
-      rootPage = <LoginPage locale={locale} messages={messages} />;
+      rootPage = <LoginApp locale={locale} messages={messages} />;
   }
 
   ReactDOM.render(

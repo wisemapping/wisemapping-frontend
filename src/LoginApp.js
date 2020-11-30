@@ -97,7 +97,7 @@ class LoginForm extends React.Component {
   }
 }
 
-class LoginPage extends React.Component {
+class LoginApp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -125,5 +125,5 @@ class LoginPage extends React.Component {
 }
 LoginForm = injectIntl(LoginForm)
 
-export default LoginPage;
+export default LoginApp;
 
