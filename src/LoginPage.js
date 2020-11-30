@@ -90,7 +90,7 @@ class LoginForm extends React.Component {
             </div>
             <input type="submit" value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
           </form>
-          <a href="/c/user/resetlogin.password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></a>
+          <a href="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></a>
         </div>
       </div>
     );
