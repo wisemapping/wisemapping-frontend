@@ -154,16 +154,18 @@ nav a {
     padding: 30px 40px 10px 50px;
     background-color: #f9a826;
     display: grid;
-    grid-template-columns: 200px 200px 200px 1fr;
+    grid-template-columns: 100px 1fr 1fr 3fr;
 }
 
 .footer a {
     font-size: 14px;
     margin: 0px 10px;
     color: white;
+    word-wrap: nowrap;
+    text-align: center;
 }
 
-.footer>img {
+.footer>svg {
     grid-column: 1;
 }
 
@@ -175,9 +177,34 @@ nav a {
     grid-column: 3;
 }
 
-.footer div:nth-child(4) {
-    grid-column: 4;
-    text-align: right;
+@media (min-width: 500px) {
+    .footer {
+        grid-template-columns: 5px 1fr 1fr 5px;
+    }
+    .footer>svg {
+        display: none;
+        visibility: hidden;
+    }
+    .footer div:nth-child(4) {
+        display: none;
+        visibility: hidden;
+    }
+}
+
+@media (min-width: 800px) {
+    .footer {
+        grid-template-columns: 150px 1fr 1fr;
+    }
+    .footer>svg {
+        display: inline-block;
+        visibility: visible;
+    }
+    .footer div:nth-child(4) {
+        grid-column: 4;
+        text-align: right;
+        display: inline-block;
+        visibility: visible;
+    }
 }
 
 

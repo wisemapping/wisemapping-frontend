@@ -1,116 +1,78 @@
 {
-  "footer.aboutus": [
-    {
-      "type": 0,
-      "value": "About Us"
-    }
-  ],
-  "footer.contactus": [
-    {
-      "type": 0,
-      "value": "Contact Us"
-    }
-  ],
-  "footer.donations": [
-    {
-      "type": 0,
-      "value": "PayPal Donations"
-    }
-  ],
-  "footer.faq": [
-    {
-      "type": 0,
-      "value": "F.A.Q."
-    }
-  ],
-  "footer.feedback": [
-    {
-      "type": 0,
-      "value": "Feedback"
-    }
-  ],
-  "footer.opensource": [
-    {
-      "type": 0,
-      "value": "Open Source"
-    }
-  ],
-  "footer.termsandconditions": [
-    {
-      "type": 0,
-      "value": "Term And Conditions"
-    }
-  ],
-  "header.donthaveaccount": [
-    {
-      "type": 0,
-      "value": "Don't have an account ?"
-    }
-  ],
-  "login.email": [
-    {
-      "type": 0,
-      "value": "Email"
-    }
-  ],
-  "login.error": [
-    {
-      "type": 0,
-      "value": "The email address or password you entered is not valid."
-    }
-  ],
-  "login.forgotpwd": [
-    {
-      "type": 0,
-      "value": "Forgot Password ?"
-    }
-  ],
-  "login.hsqldbcofig": [
-    {
-      "type": 0,
-      "value": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
-    }
-  ],
-  "login.loginto": [
-    {
-      "type": 0,
-      "value": "Log Into Your Account"
-    }
-  ],
-  "login.password": [
-    {
-      "type": 0,
-      "value": "Password"
-    }
-  ],
-  "login.remberme": [
-    {
-      "type": 0,
-      "value": "Remember me"
-    }
-  ],
-  "login.signin": [
-    {
-      "type": 0,
-      "value": "Sign In"
-    }
-  ],
-  "login.signup": [
-    {
-      "type": 0,
-      "value": "Sign Up"
-    }
-  ],
-  "login.userinactive": [
-    {
-      "type": 0,
-      "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-    }
-  ],
-  "login.welcome": [
-    {
-      "type": 0,
-      "value": "Welcome"
-    }
-  ]
+    "footer.aboutus": [{
+        "type": 0,
+        "value": "About Us"
+    }],
+    "footer.contactus": [{
+        "type": 0,
+        "value": "Contact Us"
+    }],
+    "footer.donations": [{
+        "type": 0,
+        "value": "Donations"
+    }],
+    "footer.faq": [{
+        "type": 0,
+        "value": "F.A.Q."
+    }],
+    "footer.feedback": [{
+        "type": 0,
+        "value": "Feedback"
+    }],
+    "footer.opensource": [{
+        "type": 0,
+        "value": "Open Source"
+    }],
+    "footer.termsandconditions": [{
+        "type": 0,
+        "value": "Term And Conditions"
+    }],
+    "header.donthaveaccount": [{
+        "type": 0,
+        "value": "Don't have an account ?"
+    }],
+    "login.email": [{
+        "type": 0,
+        "value": "Email"
+    }],
+    "login.error": [{
+        "type": 0,
+        "value": "The email address or password you entered is not valid."
+    }],
+    "login.forgotpwd": [{
+        "type": 0,
+        "value": "Forgot Password ?"
+    }],
+    "login.hsqldbcofig": [{
+        "type": 0,
+        "value": "Warning: Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
+    }],
+    "login.loginto": [{
+        "type": 0,
+        "value": "Log Into Your Account"
+    }],
+    "login.password": [{
+        "type": 0,
+        "value": "Password"
+    }],
+    "login.remberme": [{
+        "type": 0,
+        "value": "Remember me"
+    }],
+    "login.signin": [{
+        "type": 0,
+        "value": "Sign In"
+    }],
+    "login.signup": [{
+        "type": 0,
+        "value": "Sign Up"
+    }],
+    "login.userinactive": [{
+        "type": 0,
+        "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+    }],
+    "login.welcome": [{
+        "type": 0,
+        "value": "Welcome"
+    }]
 }
