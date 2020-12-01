@@ -1,5 +1,3 @@
-import './css/login.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LoginApp from './LoginApp.js';

@@ -1,3 +1,5 @@
+import './css/registration.css';
+
 import React from 'react';
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 
@@ -50,22 +52,23 @@ class RegistrationForm extends React.Component {
     return (
       <div class="wrapper">
         <div class="content">
-          <h1><FormattedMessage id="registration.welcome" defaultMessage="Registration" /></h1>
-          <p><FormattedMessage id="registration.loginto" defaultMessage="Log Into Your Account" /></p>
+          <h1><FormattedMessage id="registration.welcome" defaultMessage="Become a member of our comunity" /></h1>
+          <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
 
-          <RegistrationError/>
+          <RegistrationError />
 
           <form action="/c/perform-login" method="POST">
-            <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "Email" })} required="true" autocomplete="email" />
-            <input type="password" name="password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "Password" })} required="true" autocomplete="current-password" />
-
+            <input type="email" name="username" placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required="true" autocomplete="email" />
+            <input type="text" name="firstname" placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required="true" autocomplete="given-name" />
+            <input type="text" name="lastname" placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required="true" autocomplete="family-name" />
+            <input type="password" name="password" placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required="true" autocomplete="new-password" />
+            <input type="password" name="retypePassword" placeholder={intl.formatMessage({ id: "registration.retypepassword", defaultMessage: "Retype Password" })} required="true" autocomplete="new-password" />
             <div>
-              <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
-              <label for="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
+              <FormattedMessage id="registration.termandconditions" defaultMessage="By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy. You may receive SMS Notifications from us and can opt out any time." />
             </div>
-            <input type="submit" value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
+
+            <input type="submit" value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
           </form>
-          <a href="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></a>
         </div>
       </div>
     );

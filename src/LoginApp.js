@@ -1,3 +1,5 @@
+import './css/login.css';
+
 import React from 'react';
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 
