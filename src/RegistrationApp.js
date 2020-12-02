@@ -2,70 +2,64 @@ import './css/registration.css';
 
 import React from 'react';
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
+import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from './Header.js';
 import Footer from './Footer.js';
 
-class RegistrationError extends React.Component {
-  constructor(props) {
-    super(props)
-    // @Todo: This must be reviewed to be based on navigation state.
-    // Login error example: http://localhost:8080/c/login?login.error=2
-    const errorCode = new URLSearchParams(window.location.search).get('login_error');
-    this.state = {
-      errorCode: errorCode
-    }
-  }
-
-  render() {
-
-    let result;
-    const errorCode = this.state.errorCode;
-    if (errorCode) {
-      if (errorCode === 3) {
-        result = (
-          <div class='error'>
-            <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
-          </div>)
-      } else {
-        result = (
-          <div class='error'>
-            <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
-          </div>)
-      }
-    }
-    return (<span>{result}</span>);
-  }
+const RegistrationError = (props) => {
+  return (<span></span>);
 }
 
 class RegistrationForm extends React.Component {
+
   constructor(props) {
-    super(props);
-    this.state = {
-      intl: props.intl
-    }
+    super(props)
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRecaptchaChange = this.handleRecaptchaChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleRecaptchaChange(value) {
+    this.setState({ "recaptcha": value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
   }
 
   render() {
-
     const intl = this.props.intl;
     return (
       <div class="wrapper">
         <div class="content">
-          <h1><FormattedMessage id="registration.welcome" defaultMessage="Become a member of our comunity" /></h1>
+          <h1><FormattedMessage id="registration.become" defaultMessage="Become a member of our comunity" /></h1>
           <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
 
           <RegistrationError />
 
-          <form action="/c/perform-login" method="POST">
-            <input type="email" name="username" placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required="true" autocomplete="email" />
-            <input type="text" name="firstname" placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required="true" autocomplete="given-name" />
-            <input type="text" name="lastname" placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required="true" autocomplete="family-name" />
-            <input type="password" name="password" placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required="true" autocomplete="new-password" />
-            <input type="password" name="retypePassword" placeholder={intl.formatMessage({ id: "registration.retypepassword", defaultMessage: "Retype Password" })} required="true" autocomplete="new-password" />
+          <form action="/" method="POST" onSubmit={this.handleSubmit}>
+            <input type="email" name="username" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required="true" autoComplete="email" />
+            <input type="text" name="firstname" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required="true" autoComplete="given-name" />
+            <input type="text" name="lastname" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required="true" autoComplete="family-name" />
+            <input type="password" name="password" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required="true" autoComplete="new-password" />
+            <input type="password" name="retypePassword" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.retypepassword", defaultMessage: "Retype Password" })} required="true" autoComplete="new-password" />
+
             <div>
-              <FormattedMessage id="registration.termandconditions" defaultMessage="By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy. You may receive SMS Notifications from us and can opt out any time." />
+              <ReCAPTCHA
+                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                onChange={this.handleRecaptchaChange}
+              />
             </div>
+            <p>
+              <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
+            </p>
 
             <input type="submit" value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
           </form>
@@ -75,31 +69,20 @@ class RegistrationForm extends React.Component {
   }
 }
 
-class RegistationApp extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const messages = props.messages;
-    const locale = props.locale;
-
-    this.state = {
-      locale: locale,
-      messages: messages
-    };
-  }
-
-  render() {
-    return (
-      <IntlProvider locale={this.state.locale} defaultLocale='en' messages={this.state.messages}>
-        <div>
-          <Header type='none' />
-          <RegistrationForm />
-          <Footer />
-        </div>
-      </IntlProvider>
-    );
-  }
+const RegistationApp = props => {
+  const messages = props.messages;
+  const locale = props.locale;
+  return (
+    <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
+      <div>
+        <Header type='only-signin' />
+        <RegistrationForm />
+        <Footer />
+      </div>
+    </IntlProvider>
+  );
 }
+
 RegistrationForm = injectIntl(RegistrationForm)
 
 export default RegistationApp;

@@ -34,7 +34,7 @@ function router() {
   } else {
     // It's loaded from the npm start
     const pageId = new URLSearchParams(location.search).get('app');
-    result = Object.values(Apps).find(value => value.id == pageId);
+    result = Object.values(Apps).find(value => value.id === pageId);
   }
   if (result === null) {
     result = Apps.LOGIN;

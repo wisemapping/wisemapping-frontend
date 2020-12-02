@@ -6,71 +6,47 @@ import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 import Header from './Header.js';
 import Footer from './Footer.js';
 
-class ConfigStatusMessage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      enabled: props.enabled
-    }
+const ConfigStatusMessage = (props) => {
+  const enabled = props.enabled
+  let result;
+
+  if (enabled === true) {
+    result = (<div class="db-warn-msg">
+      <p>
+        <FormattedMessage id="login.hsqldbcofig" defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
+      </p>
+    </div>);
+  } else {
+    result = <span></span>;
   }
 
-  render() {
-    let result;
-   
-    if (this.state.enabled===true) {
-      result = (<div class="db-warn-msg">
-        <p>
-          <FormattedMessage id="login.hsqldbcofig" defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
-        </p>
-      </div>);
-    } else {
-      result = <span></span>;
-    }
-   
-    return result;
-  }
+  return result;
 }
 
-class LoginError extends React.Component {
-  constructor(props) {
-    super(props)
-    // @Todo: This must be reviewed to be based on navigation state.
-    // Login error example: http://localhost:8080/c/login?login.error=2
-    const errorCode = new URLSearchParams(window.location.search).get('login_error');
-    this.state = {
-      errorCode: errorCode
+const LoginError = (props) => {
+  // @Todo: This must be reviewed to be based on navigation state.
+  // Login error example: http://localhost:8080/c/login?login.error=2
+  const errorCode = new URLSearchParams(window.location.search).get('login_error');
+
+  let result;
+  if (errorCode) {
+    if (errorCode === 3) {
+      result = (
+        <div class='error'>
+          <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
+        </div>)
+    } else {
+      result = (
+        <div class='error'>
+          <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
+        </div>)
     }
   }
+  return (<span>{result}</span>);
 
-  render() {
-
-    let result;
-    const errorCode = this.state.errorCode;
-    if (errorCode) {
-      if (errorCode === 3) {
-        result = (
-          <div class='error'>
-            <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
-          </div>)
-      } else {
-        result = (
-          <div class='error'>
-            <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
-          </div>)
-      }
-    }
-    return (<span>{result}</span>);
-  }
 }
 
 class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      intl: props.intl
-    }
-  }
-
   render() {
 
     const intl = this.props.intl;
@@ -99,32 +75,22 @@ class LoginForm extends React.Component {
   }
 }
 
-class LoginApp extends React.Component {
-  constructor(props) {
-    super(props);
+const LoginApp = (props) => {
+  const messages = props.messages;
+  const locale = props.locale;
 
-    const messages = props.messages;
-    const locale = props.locale;
-
-    this.state = {
-      locale: locale,
-      messages: messages
-    };
-  }
-
-  render() {
-    return (
-      <IntlProvider locale={this.state.locale} defaultLocale='en' messages={this.state.messages}>
-        <div>
-          <Header type='login' />
-          <LoginForm />
-          <ConfigStatusMessage enabled='false' />
-          <Footer />
-        </div>
-      </IntlProvider>
-    );
-  }
+  return (
+    <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
+      <div>
+        <Header type='only-signup' />
+        <LoginForm />
+        <ConfigStatusMessage enabled='false' />
+        <Footer />
+      </div>
+    </IntlProvider>
+  );
 }
+
 LoginForm = injectIntl(LoginForm)
 
 export default LoginApp;

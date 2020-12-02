@@ -2,7 +2,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl'
 import logo from './images/header-logo.png'
 
-
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -17,9 +16,12 @@ class Header extends React.Component {
         let text;
 
         const pageType = this.state.type;
-        if (pageType === 'login') {
+        if (pageType === 'only-signup') {
             text = <span class="nav-center"><FormattedMessage id="header.donthaveaccount" defaultMessage="Don't have an account ?" /></span>;
             signUpButton = <SignUpButton/>;
+        } if (pageType === 'only-signin') {
+            text = <span class="nav-center"><FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" /></span>;
+            signUpButton = <SignInButton/>;
         } else {
             signUpButton = <SignUpButton/>
             signInButton = <SignInButton/>;
@@ -40,7 +42,7 @@ class Header extends React.Component {
 
 class SignInButton extends React.Component {
     render() {
-        return <span class="nav-signin"><a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a></span>;
+        return <span class="nav-signin button-style1"><a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a></span>;
     }
 }
 class SignUpButton extends React.Component {

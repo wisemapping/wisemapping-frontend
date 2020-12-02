@@ -37,6 +37,13 @@
     color: white;
 }
 
+form>p,
+form>div {
+    font-size: 13px;
+    width: 300px;
+    margin: auto;
+}
+
 input[type=submit]:hover {
     background-color: #f9a826;
 }
