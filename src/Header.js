@@ -15,13 +15,12 @@ class Header extends React.Component {
         let signInButton;
         let text;
 
-
         const pageType = this.state.type;
         if (pageType === 'only-signup') {
-            text = <span className="header-area-right1"><FormattedMessage id="header.donthaveaccount" defaultMessage="Don't have an account ?" /></span>;
+            text = <span className="header-area-content-span"><span><FormattedMessage id="header.donthaveaccount" defaultMessage="Don't have an account ?" /></span></span>;
             signUpButton = <SignUpButton className="header-area-right2" />;
         } else if (pageType === 'only-signin') {
-            text = <span className="header-area-right1"><FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" /></span>;
+            text = <span className="header-area-content-span"><span><FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" /></span></span>;
             signUpButton = <SignInButton className="header-area-right2" />;
         } else {
             signUpButton = <SignUpButton />
@@ -42,19 +41,17 @@ class Header extends React.Component {
 }
 
 const SignInButton = (props) => {
-
-
-    return (<span className={`button-style1 ${props.class}`}>
+    return (
+    <span className={`button-style1 ${props.className}`}>
         <a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a>
     </span>);
 }
 
 const SignUpButton = (props) => {
     return (
-        <span className={`button-style1 ${props.class}`}>
+        <span className={`button-style1 ${props.className}`}>
             <a href="/c/user/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></a>
         </span>);
-
 }
 
 export default Header;

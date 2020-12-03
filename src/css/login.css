@@ -10,42 +10,6 @@
     text-align: center;
 }
 
-.content input[type=email],
-.content input[type=password],
-.content input[type=text] {
-    width: 258px;
-    height: 53px;
-    padding: 0px 20px;
-    margin: 10px 20px;
-    border-radius: 9px;
-    font-size: 16px;
-    border: solid 1px #f9a826;
-    display: block;
-    margin: 10px auto;
-}
-
-.content input[type=submit] {
-    width: 258px;
-    height: 53px;
-    padding: 0px 20px;
-    margin: 10px 20px;
-    font-size: 20px;
-    font-weight: 600;
-    border-radius: 9px;
-    border: 0px;
-    background-color: rgba(255, 168, 0, 0.6);
-    color: white;
-}
-
-.content input[type=checkbox] {
-    border: solid 1px #f9a826;
-    background-color: #f9a826;
-}
-
-.content input[type=submit]:hover {
-    background-color: #f9a826;
-}
-
 .content input:placeholder {
     color: grey;
 }
