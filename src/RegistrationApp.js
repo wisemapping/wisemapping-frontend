@@ -7,20 +7,32 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Header from './Header.js';
 import Footer from './Footer.js';
 
-const RegistrationError = (props) => {
-  return (<span></span>);
+const ErrorMessageDialog = (props) => {
+  let result;
+
+  const message = props.message;
+  if (message) {
+    const message = "here is a messar ofr error eerera rser wer"
+    result = <p class='form-error-dialog'>{message}</p>
+  } else {
+    result = <span></span>
+  }
+  return result;
 }
+
 
 class RegistrationForm extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      errorMsg: ""
+    }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleRecaptchaChange = this.handleRecaptchaChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
 
   handleChange(event) {
     this.setState({ value: event.target.value });
@@ -31,18 +43,21 @@ class RegistrationForm extends React.Component {
   }
 
   handleSubmit(event) {
+    this.setState({ errorMsg: "Error Message" });
     event.preventDefault();
   }
 
   render() {
     const intl = this.props.intl;
+    const errrMsg = this.state.errorMsg;
+
     return (
       <div class="wrapper">
         <div class="content">
           <h1><FormattedMessage id="registration.become" defaultMessage="Become a member of our comunity" /></h1>
           <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
 
-          <RegistrationError />
+          <ErrorMessageDialog message={errrMsg} />
 
           <form action="/" method="POST" onSubmit={this.handleSubmit}>
             <input type="email" name="username" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required="true" autoComplete="email" />
@@ -72,6 +87,7 @@ class RegistrationForm extends React.Component {
 const RegistationApp = props => {
   const messages = props.messages;
   const locale = props.locale;
+
   return (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
       <div>

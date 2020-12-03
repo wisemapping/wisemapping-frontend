@@ -19,7 +19,6 @@ const ConfigStatusMessage = (props) => {
   } else {
     result = <span></span>;
   }
-
   return result;
 }
 
@@ -32,12 +31,12 @@ const LoginError = (props) => {
   if (errorCode) {
     if (errorCode === 3) {
       result = (
-        <div class='error'>
+        <div class='form-error-dialog'>
           <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
         </div>)
     } else {
       result = (
-        <div class='error'>
+        <div class='form-error-dialog'>
           <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
         </div>)
     }

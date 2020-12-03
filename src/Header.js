@@ -19,7 +19,7 @@ class Header extends React.Component {
         if (pageType === 'only-signup') {
             text = <span class="nav-center"><FormattedMessage id="header.donthaveaccount" defaultMessage="Don't have an account ?" /></span>;
             signUpButton = <SignUpButton/>;
-        } if (pageType === 'only-signin') {
+        } else if (pageType === 'only-signin') {
             text = <span class="nav-center"><FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" /></span>;
             signUpButton = <SignInButton/>;
         } else {

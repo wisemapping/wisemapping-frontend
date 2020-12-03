@@ -37,7 +37,12 @@
     color: white;
 }
 
-input[type=submit]:hover {
+.content input[type=checkbox] {
+    border: solid 1px #f9a826;
+    background-color: #f9a826;
+}
+
+.content input[type=submit]:hover {
     background-color: #f9a826;
 }
 
@@ -47,11 +52,6 @@ input[type=submit]:hover {
 
 .content label {
     font-size: 14px;
-}
-
-.content input[type=checkbox] {
-    border: solid 1px #f9a826;
-    background-color: #f9a826;
 }
 
 .content a {
@@ -72,14 +72,4 @@ input[type=submit]:hover {
     color: white;
     padding: 15px 30px;
     border-radius: 10px;
-}
-
-.error {
-    margin: 10px auto;
-    width: 260px;
-    font-size: 14px;
-    background-color: #e97450;
-    padding: 10px 10px;
-    border-radius: 9px;
-    color: white;
 }

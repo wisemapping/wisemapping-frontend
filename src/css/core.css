@@ -209,6 +209,65 @@ nav a {
     }
 }
 
+input[type=email],
+input[type=password],
+input[type=text] {
+    width: 258px;
+    height: 53px;
+    padding: 0px 20px;
+    margin: 10px 20px;
+    border-radius: 9px;
+    font-size: 16px;
+    border: solid 1px #f9a826;
+    display: block;
+    margin: 10px auto;
+}
+
+input[type=checkbox] {
+    border: solid 1px #f9a826;
+    background-color: #f9a826;
+}
+
+input[type=submit] {
+    width: 258px;
+    height: 53px;
+    padding: 0px 20px;
+    margin: 10px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 9px;
+    border: 0px;
+    background-color: rgba(255, 168, 0, 0.6);
+    color: white;
+}
+
+input[type=submit]:hover {
+    background-color: #f9a826;
+}
+
+input:placeholder {
+    color: grey;
+}
+
+::-moz-selection {
+    background: #f7a494;
+}
+
+::selection {
+    background: #f7a494;
+}
+
+.form-error-dialog {
+    margin: 10px auto;
+    width: 260px;
+    font-size: 15px;
+    border: 2px solid #e97450;
+    padding: 10px 10px;
+    border-radius: 9px;
+    color: white;
+    background-color: #e78b72;
+}
+
 
 /* Buttons */
 
