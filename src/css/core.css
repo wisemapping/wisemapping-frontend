@@ -120,29 +120,16 @@ nav a {
     padding: 0px;
 }
 
-.nav-link a:hover,
-.nav-signin a:hover {
-    background-color: rgb(241, 217, 181);
-    color: #ffa800;
-}
-
-.nav-signin {
-    grid-column-start: 4;
-    margin: 20px 0px;
-}
-
-.nav-signup {
-    grid-column-start: 3;
-    margin: 20px 0px;
-}
-
-.nav-center {
-    text-align: left;
+.header-middle {
     grid-column-start: 2;
-    text-align: right;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 20px 10px;
+}
+
+.header-area-right1 {
+    grid-column-start: 3;
+}
+
+.header-area-right2 {
+    grid-column-start: 4;
 }
 
 
@@ -209,6 +196,9 @@ nav a {
     }
 }
 
+
+/* Form Styles Section */
+
 input[type=email],
 input[type=password],
 input[type=text] {
@@ -247,14 +237,6 @@ input[type=submit]:hover {
 
 input:placeholder {
     color: grey;
-}
-
-::-moz-selection {
-    background: #f7a494;
-}
-
-::selection {
-    background: #f7a494;
 }
 
 .form-error-dialog {

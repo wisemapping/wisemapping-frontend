@@ -11,7 +11,7 @@ const ConfigStatusMessage = (props) => {
   let result;
 
   if (enabled === true) {
-    result = (<div class="db-warn-msg">
+    result = (<div className="db-warn-msg">
       <p>
         <FormattedMessage id="login.hsqldbcofig" defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
       </p>
@@ -31,12 +31,12 @@ const LoginError = (props) => {
   if (errorCode) {
     if (errorCode === 3) {
       result = (
-        <div class='form-error-dialog'>
+        <div className='form-error-dialog'>
           <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
         </div>)
     } else {
       result = (
-        <div class='form-error-dialog'>
+        <div className='form-error-dialog'>
           <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
         </div>)
     }
@@ -50,8 +50,8 @@ class LoginForm extends React.Component {
 
     const intl = this.props.intl;
     return (
-      <div class="wrapper">
-        <div class="content">
+      <div className="wrapper">
+        <div className="content">
           <h1><FormattedMessage id="login.welcome" defaultMessage="Welcome" /></h1>
           <p><FormattedMessage id="login.loginto" defaultMessage="Log Into Your Account" /></p>
 

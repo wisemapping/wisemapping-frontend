@@ -13,7 +13,7 @@ const ErrorMessageDialog = (props) => {
   const message = props.message;
   if (message) {
     const message = "here is a messar ofr error eerera rser wer"
-    result = <p class='form-error-dialog'>{message}</p>
+    result = <p className='form-error-dialog'>{message}</p>
   } else {
     result = <span></span>
   }
@@ -52,8 +52,8 @@ class RegistrationForm extends React.Component {
     const errrMsg = this.state.errorMsg;
 
     return (
-      <div class="wrapper">
-        <div class="content">
+      <div className="wrapper">
+        <div className="content">
           <h1><FormattedMessage id="registration.become" defaultMessage="Become a member of our comunity" /></h1>
           <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
 
