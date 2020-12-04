@@ -20,7 +20,6 @@ const ErrorMessageDialog = (props) => {
   return result;
 }
 
-
 class RegistrationForm extends React.Component {
 
   constructor(props) {
