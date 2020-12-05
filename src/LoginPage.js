@@ -47,7 +47,6 @@ const LoginError = (props) => {
 
 class LoginForm extends React.Component {
   render() {
-
     const intl = this.props.intl;
     return (
       <div className="wrapper">
@@ -74,23 +73,18 @@ class LoginForm extends React.Component {
   }
 }
 
-const LoginApp = (props) => {
-  const messages = props.messages;
-  const locale = props.locale;
-
+const LoginPage = (props) => {
   return (
-    <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
       <div>
         <Header type='only-signup' />
         <LoginForm />
         <ConfigStatusMessage enabled='false' />
         <Footer />
       </div>
-    </IntlProvider>
   );
 }
 
 LoginForm = injectIntl(LoginForm)
 
-export default LoginApp;
+export default LoginPage;
 

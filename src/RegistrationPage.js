@@ -2,7 +2,9 @@ import './css/registration.css';
 
 import React from 'react';
 import axios from 'axios';
-import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { useHistory } from "react-router-dom";
+
 import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from './Header.js';
@@ -51,15 +53,15 @@ class RegistrationForm extends React.Component {
       rest,
       { headers: { 'Content-Type': 'application/json' } }
     ).then(response => {
-      alert(response.data);
-      this.setState({ errorMsg: "Error Message" });
+      const history = useHistory();
+      history.push("/c/user/registrationSuccess");
     }).catch(error => {
       // Handle error ...
       const data = error.response.data;
-      const status = error.response.status;
+      // const status = error.response.status;
 
       const errorMsg = Object.values(data.fieldErrors)[0];
-      this.setState({ "errorMsg": errorMsg});
+      this.setState({ "errorMsg": errorMsg });
     });
   }
 
@@ -98,23 +100,33 @@ class RegistrationForm extends React.Component {
     );
   }
 }
+RegistrationForm = injectIntl(RegistrationForm);
 
-const RegistationApp = props => {
-  const messages = props.messages;
-  const locale = props.locale;
-
+const RegistationFormPage = props => {
   return (
-    <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <div>
-        <Header type='only-signin' />
-        <RegistrationForm />
-        <Footer />
-      </div>
-    </IntlProvider>
+    <div>
+      <Header type='only-signin' />
+      <RegistrationForm />
+      <Footer />
+    </div>
   );
 }
 
-RegistrationForm = injectIntl(RegistrationForm)
+const RegistrationSuccessPage = (props) => {
+  return (
+    <div>
+      <Header type='only-signup' />
+      <div className="wrapper">
+        <div className="content">
+          <h1><FormattedMessage id="registration.success.title" defaultMessage="Your account has been created successfully" /></h1>
+          <p><FormattedMessage id="registration.success.desc" defaultMessage="Your account has been created successfully, click to sign in and start enjoying  WiseMapping." /></p>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
 
-export default RegistationApp;
+export { RegistationFormPage, RegistrationSuccessPage };
+
 
