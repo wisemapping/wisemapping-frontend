@@ -103,7 +103,7 @@ nav a {
 .header {
     display: grid;
     white-space: nowrap;
-    grid-template-columns: 150px 1fr 130px 130px;
+    grid-template-columns: 150px 1fr 130px 160px 50px;
 }
 
 .header-logo {
@@ -204,6 +204,11 @@ nav a {
     .header-area-content-span {
         display: none;
         visibility: hidden;
+    }
+    .header {
+        display: grid;
+        white-space: nowrap;
+        grid-template-columns: 100px 1fr 130px 130px;
     }
 }
 

@@ -1,7 +1,7 @@
 import './css/login.css';
 
 import React from 'react';
-import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import Header from './Header';
 import Footer from './Footer';

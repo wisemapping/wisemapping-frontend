@@ -1,17 +1,48 @@
 {
-  "name": "wisemapping-react",
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "clean": "lerna clean && rm -rf node_modules",
-    "lint": "lerna run lint",
-    "test": "lerna run test"
-  },
-  "private": true,
-  "devDependencies": {
-    "lerna": "^3.16.4"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+    "name": "wisemapping-react",
+    "scripts": {
+        "bootstrap": "lerna bootstrap",
+        "build": "lerna run build",
+        "clean": "lerna clean && rm -rf node_modules",
+        "lint": "lerna run lint",
+        "test": "lerna run test"
+    },
+    "private": true,
+    "devDependencies": {
+        "lerna": "^3.16.4"
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "author": {
+        "name": "Paulo Veiga",
+        "login.email": "pveiga@wisemapping.com"
+    },
+    "contributors": [
+        "Ezequiel Bergamaschi"
+    ],
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "engines": {
+        "node": ">=15.3.0",
+        "npm": ">=7.0.14"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "homepage": "http://localhost:8080/react",
+    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
 }
