@@ -1,57 +1,17 @@
 {
-    "name": "wisemapping-react",
-    "version": "0.1.4",
-    "dependencies": {
-        "@testing-library/jest-dom": "^5.11.6",
-        "@testing-library/react": "^11.2.2",
-        "@testing-library/user-event": "^12.2.2",
-        "axios": "^0.21.0",
-        "cors": "^2.8.5",
-        "joi": "^17.3.0",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "react-google-recaptcha": "^2.1.0",
-        "react-intl": "^5.10.5",
-        "react-router-dom": "^5.2.0",
-        "react-scripts": "4.0.1",
-        "web-vitals": "^0.2.4"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "extract": "formatjs extract",
-        "compile": "formatjs compile"
-    },
-    "author": {
-        "name": "Paulo Veiga",
-        "login.email": "pveiga@wisemapping.com"
-    },
-    "contributors": [
-        "Ezequiel Bergamaschi"
-    ],
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "homepage": "http://localhost:8080/react",
-    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
-    "devDependencies": {
-        "@formatjs/cli": "^2.13.14"
-    }
+  "name": "wisemapping-react",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "clean": "lerna clean && rm -rf node_modules",
+    "lint": "lerna run lint",
+    "test": "lerna run test"
+  },
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.16.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

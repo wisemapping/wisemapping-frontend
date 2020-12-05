@@ -3,8 +3,8 @@ import './css/login.css';
 import React from 'react';
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 
-import Header from './Header.js';
-import Footer from './Footer.js';
+import Header from './Header';
+import Footer from './Footer';
 
 const ConfigStatusMessage = (props) => {
   const enabled = props.enabled
@@ -75,12 +75,12 @@ class LoginForm extends React.Component {
 
 const LoginPage = (props) => {
   return (
-      <div>
-        <Header type='only-signup' />
-        <LoginForm />
-        <ConfigStatusMessage enabled='false' />
-        <Footer />
-      </div>
+    <div>
+      <Header type='only-signup' />
+      <LoginForm />
+      <ConfigStatusMessage enabled='false' />
+      <Footer />
+    </div>
   );
 }
 

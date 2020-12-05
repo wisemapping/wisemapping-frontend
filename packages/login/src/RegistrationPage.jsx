@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom";
 
 import ReCAPTCHA from "react-google-recaptcha";
 
-import Header from './Header.js';
-import Footer from './Footer.js';
+import Header from './Header';
+import Footer from './Footer';
 
 
 const ErrorMessageDialog = (props) => {
