@@ -45,12 +45,15 @@ const App = () => {
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
       <Switch>
-        <Route exact path={`${match.url}/`}>
-          <Redirect to={`${match.url}/c/login`} />
+        <Route exact path="/">
+          <Redirect to="/c/login" />
         </Route>
-        <Route path={`${match.url}/c/login`} render={() => <LoginPage />} />
-        <Route path={`${match.url}/c/user/registration`} render={() => <RegistationFormPage />} />
-        <Route path={`${match.url}/c/user/registrationSuccess`} component={RegistrationSuccessPage} />
+        <Route exact path="/">
+          <Redirect to="/react" />
+        </Route>
+        <Route path="/c/login" component={LoginPage} />
+        <Route path="/c/user/registration}" component={RegistationFormPage} />
+        <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
       </Switch>
     </IntlProvider>
   ) : <div>loading</div>
