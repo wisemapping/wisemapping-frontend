@@ -40,8 +40,6 @@ const App = () => {
     fetchData();
   }, []);
 
-  const match = useRouteMatch();
-
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
       <Switch>
@@ -52,7 +50,7 @@ const App = () => {
           <Redirect to="/react" />
         </Route>
         <Route path="/c/login" component={LoginPage} />
-        <Route path="/c/user/registration}" component={RegistationFormPage} />
+        <Route path="/c/user/registration" component={RegistationFormPage} />
         <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
       </Switch>
     </IntlProvider>
