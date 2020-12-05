@@ -1,18 +1,19 @@
 import './css/registration.css';
 
 import React from 'react';
+import axios from 'axios';
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from './Header.js';
 import Footer from './Footer.js';
 
+
 const ErrorMessageDialog = (props) => {
   let result;
 
   const message = props.message;
   if (message) {
-    const message = "here is a messar ofr error eerera rser wer"
     result = <p className='form-error-dialog'>{message}</p>
   } else {
     result = <span></span>
@@ -34,16 +35,32 @@ class RegistrationForm extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleRecaptchaChange(value) {
     this.setState({ "recaptcha": value });
   }
 
-  handleSubmit(event) {
-    this.setState({ errorMsg: "Error Message" });
+  async handleSubmit(event) {
     event.preventDefault();
+
+    const { errorMsg, ...rest } = this.state;
+
+    await axios.post("http://localhost:8080/service/user",
+      rest,
+      { headers: { 'Content-Type': 'application/json' } }
+    ).then(response => {
+      alert(response.data);
+      this.setState({ errorMsg: "Error Message" });
+    }).catch(error => {
+      // Handle error ...
+      const data = error.response.data;
+      const status = error.response.status;
+
+      const errorMsg = Object.values(data.fieldErrors)[0];
+      this.setState({ "errorMsg": errorMsg});
+    });
   }
 
   render() {
@@ -59,11 +76,10 @@ class RegistrationForm extends React.Component {
           <ErrorMessageDialog message={errrMsg} />
 
           <form action="/" method="POST" onSubmit={this.handleSubmit}>
-            <input type="email" name="username" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required="true" autoComplete="email" />
-            <input type="text" name="firstname" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required="true" autoComplete="given-name" />
-            <input type="text" name="lastname" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required="true" autoComplete="family-name" />
-            <input type="password" name="password" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required="true" autoComplete="new-password" />
-            <input type="password" name="retypePassword" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.retypepassword", defaultMessage: "Retype Password" })} required="true" autoComplete="new-password" />
+            <input type="email" name="email" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
+            <input type="text" name="firstname" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required={true} autoComplete="given-name" />
+            <input type="text" name="lastname" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required={true} autoComplete="family-name" />
+            <input type="password" name="password" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required={true} autoComplete="new-password" />
 
             <div>
               <ReCAPTCHA

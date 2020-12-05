@@ -58,12 +58,12 @@ class LoginForm extends React.Component {
           <LoginError />
 
           <form action="/c/perform-login" method="POST">
-            <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "Email" })} required="true" autocomplete="email" />
-            <input type="password" name="password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "Password" })} required="true" autocomplete="current-password" />
+            <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
+            <input type="password" name="password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "Password" })} required={true} autoComplete="current-password" />
 
             <div>
               <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
-              <label for="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
+              <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
             </div>
             <input type="submit" value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
           </form>
