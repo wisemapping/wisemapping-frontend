@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import LoginPage from './components/LoginPage';
+import { Service, RestService } from './services/Service';
+
 import { RegistrationSuccessPage, RegistationFormPage } from './components/RegistrationPage';
 import { IntlProvider } from 'react-intl'
 
@@ -38,6 +40,9 @@ const App = () => {
     fetchData();
   }, []);
 
+  // Create Service object...
+  const service: Service = new RestService('http://localhost:8080', () => { console.log("401 error")});
+
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
       <Router>
@@ -46,7 +51,9 @@ const App = () => {
             <Redirect to="/c/login" />
           </Route>
           <Route path="/c/login" component={LoginPage} />
-          <Route path="/c/user/registration" component={RegistationFormPage} />
+          <Route path="/c/user/registration">
+            <RegistationFormPage service={service}/>
+          </Route>
           <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
         </Switch>
       </Router>

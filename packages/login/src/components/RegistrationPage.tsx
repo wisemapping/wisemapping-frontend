@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState, } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import ReCAPTCHA from "react-google-recaptcha";
 import { useHistory } from "react-router-dom";
-
+import { Service, NewUser } from '../Services/service';
 
 
 import Header from './Header';
@@ -34,10 +33,10 @@ type RegistrationBody = {
   password: string;
   recaptcha: string;
 }
-const RegistrationForm = () => {
+const RegistrationForm = (props: ServiceProps) => {
   const [email, setEmail] = useState(undefined);
   const [lastName, setLastname] = useState(undefined)
-  const [firstname, setFirstname] = useState(undefined);
+  const [firstName, setFirstname] = useState(undefined);
   const [password, setPassword] = useState(undefined);
   const [recaptchaToken, setRecaptchaToken] = useState(undefined);
   const [errorMsg, setErrorMsg] = useState(undefined);
@@ -47,33 +46,21 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const user: NewUser =
+    {
+      email: email,
+      firstname: firstName,
+      lastname: lastName,
+      password: password,
+      recaptcha: recaptchaToken
+    };
 
-    // @Todo: Movo to a type ...
-    const payload = JSON.stringify(
-      {
-        email: email,
-        firstName: firstname,
-        lastName: lastName,
-        password: password,
-        recaptcha: recaptchaToken
-      }
+    // Call Service ...
+    props.service.registerNewUser(
+      user,
+      () => history.push("/c/user/registrationSuccess"),
+      (msg) => setErrorMsg(msg)
     );
-
-    await axios.post("http://localhost:8080/service/user",
-      payload,
-      { headers: { 'Content-Type': 'application/json' } }
-    ).then(response => {
-      // All was ok, let's sent to success page ...
-      history.push("/c/user/registrationSuccess");
-    }).catch(error => {
-      // Handle error ...
-      const data = error.response;
-      let errorMsg = intl.formatMessage({ id: "registration.unexpected", defaultMessage: "Unexpected error. Please, try latter." })
-      if (data != null) {
-        let errorMsg = Object.values(data.fieldErrors)[0] as string;
-      }
-      setErrorMsg(errorMsg);
-    });
   }
 
   return (
@@ -107,11 +94,14 @@ const RegistrationForm = () => {
 
 }
 
-const RegistationFormPage = (props: any) => {
+type ServiceProps = {
+  service: Service
+}
+const RegistationFormPage = (props: ServiceProps) => {
   return (
     <div>
       <Header type='only-signin' />
-      <RegistrationForm />
+      <RegistrationForm service={props.service} />
       <Footer />
     </div>
   );
