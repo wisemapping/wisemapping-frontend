@@ -47,7 +47,8 @@ module.exports = {
             template: path.join(__dirname, 'public/index.html')
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development')
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.PUBLIC_URL': 'http://localhost:3000'
         })
     ],
     devServer: {

@@ -7,6 +7,7 @@ import {
   Route,
   Switch,
   Redirect,
+  BrowserRouter as Router,
 } from 'react-router-dom';
 
 function loadLocaleData(language: string) {
@@ -39,17 +40,16 @@ const App = () => {
 
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/c/login" />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/react" />
-        </Route>
-        <Route path="/c/login" component={LoginPage} />
-        <Route path="/c/user/registration" component={RegistationFormPage} />
-        <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
-      </Switch>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/c/login" />
+          </Route>
+          <Route path="/c/login" component={LoginPage} />
+          <Route path="/c/user/registration" component={RegistationFormPage} />
+          <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
+        </Switch>
+      </Router>
     </IntlProvider>
   ) : <div>loading</div>
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl'
+import { Link } from 'react-router-dom'
 
 const logo = require('../images/header-logo.png')
 
@@ -33,7 +34,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     return (
       <nav>
         <div className="header">
-          <span className="header-logo"><a href="/"><img src={String(logo)} alt="logo" /></a></span>
+          <span className="header-logo"><Link to="/"><img src={String(logo)} alt="logo" /></Link></span>
           {text}
           {signUpButton}
           {signInButton}
@@ -57,7 +58,7 @@ const SignInButton = (props: ButtonProps) => {
 const SignUpButton = (props: ButtonProps) => {
   return (
     <span className={`button-style1 ${props.className}`}>
-      <a href="/c/user/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></a>
+      <Link to="/c/user/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></Link>
     </span>);
 }
 
