@@ -33,7 +33,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     return (
       <nav>
         <div className="header">
-          <span className="header-logo"><Link to="/"><img src={String(logo)} alt="logo" /></a></span>
+          <span className="header-logo"><Link to="/"><img src={String(logo)} alt="logo" /></Link></span>
           {text}
           {signUpButton}
           {signInButton}
