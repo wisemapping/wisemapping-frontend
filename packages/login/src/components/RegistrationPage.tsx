@@ -8,7 +8,7 @@ import { ReCaptcha } from 'react-recaptcha-v3'
 import Header from './Header';
 import Footer from './Footer';
 
-const css = require('./css/registration.css');
+const css = require('../css/registration.css');
 
 
 interface ErrorMessageDialogProps {

@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import Header from './Header'
 import Footer from './Footer'
 
-const css = require('./css/login.css')
+const css = require('../css/login.css')
 
 
 

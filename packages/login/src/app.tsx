@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import LoginPage from './LoginPage';
-import { RegistrationSuccessPage, RegistationFormPage } from './RegistrationPage';
+import LoginPage from './components/LoginPage';
+import { RegistrationSuccessPage, RegistationFormPage } from './components/RegistrationPage';
 import { IntlProvider } from 'react-intl'
 
 import {
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 
 function loadLocaleData(language: string) {
