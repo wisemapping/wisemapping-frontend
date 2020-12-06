@@ -39,11 +39,26 @@ const RegistrationForm = () => {
   const [lastName, setLastname] = useState("")
   const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
+  const [recaptchaToken, setRecaptchaToken] = useState(undefined);
   const [recaptcha, setRecaptcha] = useState(undefined);
   const [errorMsg, setErrorMsg] = useState(undefined);
+  
+  
   const history = useHistory();
   const intl = useIntl();
 
+
+  const verifyCallback = (recaptchaToken:string) => {
+    // Here you will get the final recaptchaToken!!!  
+    console.log(recaptchaToken, "<= your recaptcha token");
+    setRecaptchaToken(recaptchaToken);
+  }
+
+  const updateToken = () => {
+    // you will get a new token in verifyCallback
+    recaptcha.execute();
+  }
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -54,7 +69,7 @@ const RegistrationForm = () => {
         firstName: firstname,
         lastName: lastName,
         password: password,
-        recaptcha: recaptcha
+        recaptcha: recaptchaToken
       }
     );
 
@@ -75,8 +90,6 @@ const RegistrationForm = () => {
     });
   }
 
-
-
   return (
     <div className="wrapper">
       <div className="content">
@@ -93,9 +106,10 @@ const RegistrationForm = () => {
 
           <div>
             <ReCaptcha
+              ref={setRecaptcha}
               sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
               verifyCallback={setRecaptcha}
-            />
+              na/>
           </div>
           <p>
             <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />

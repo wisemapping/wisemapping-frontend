@@ -11,9 +11,8 @@ interface HeaderProps {
 class Header extends React.Component<HeaderProps, HeaderProps> {
   constructor(props: HeaderProps) {
     super(props);
-    this.state = props;
+    this.state = { type: props.type };
   }
-
   render() {
     let signUpButton;
     let signInButton;
@@ -34,7 +33,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     return (
       <nav>
         <div className="header">
-          <span className="header-logo"><Link to="/"><img src={String(logo)} alt="logo" /></Link></span>
+          <span className="header-logo"><Link to="/"><img src={String(logo)} alt="logo" /></a></span>
           {text}
           {signUpButton}
           {signInButton}
@@ -51,7 +50,7 @@ interface ButtonProps {
 const SignInButton = (props: ButtonProps) => {
   return (
     <span className={`button-style1 ${props.className}`}>
-      <a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a>
+      <Link to="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></Link>
     </span>);
 }
 
