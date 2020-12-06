@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { ReCaptcha } from 'react-recaptcha-v3'
+import ReCAPTCHA from "react-google-recaptcha";
 import { useHistory } from "react-router-dom";
 
 
@@ -35,30 +35,16 @@ type RegistrationBody = {
   recaptcha: string;
 }
 const RegistrationForm = () => {
-  const [email, setEmail] = useState("");
-  const [lastName, setLastname] = useState("")
-  const [firstname, setFirstname] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(undefined);
+  const [lastName, setLastname] = useState(undefined)
+  const [firstname, setFirstname] = useState(undefined);
+  const [password, setPassword] = useState(undefined);
   const [recaptchaToken, setRecaptchaToken] = useState(undefined);
-  const [recaptcha, setRecaptcha] = useState(undefined);
   const [errorMsg, setErrorMsg] = useState(undefined);
-  
-  
+
   const history = useHistory();
   const intl = useIntl();
 
-
-  const verifyCallback = (recaptchaToken:string) => {
-    // Here you will get the final recaptchaToken!!!  
-    console.log(recaptchaToken, "<= your recaptcha token");
-    setRecaptchaToken(recaptchaToken);
-  }
-
-  const updateToken = () => {
-    // you will get a new token in verifyCallback
-    recaptcha.execute();
-  }
-  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -105,11 +91,9 @@ const RegistrationForm = () => {
           <input type="password" name="password" onChange={e => setPassword(e.target.value)} placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required={true} autoComplete="new-password" />
 
           <div>
-            <ReCaptcha
-              ref={setRecaptcha}
+            <ReCAPTCHA
               sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-              verifyCallback={setRecaptcha}
-              na/>
+              onChange={setRecaptchaToken} />
           </div>
           <p>
             <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
