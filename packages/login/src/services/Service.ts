@@ -1,13 +1,11 @@
 import axios from 'axios'
-type NewUser =
-    {
-        email: string;
-        firstname: string;
-        lastname: string;
-        password: string;
-        recaptcha: string;
-
-    }
+type NewUser = {
+    email: string;
+    firstname: string;
+    lastname: string;
+    password: string;
+    recaptcha: string;
+}
 
 interface Service {
     registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void): void;
@@ -21,7 +19,7 @@ class RestService implements Service {
         this.baseUrl = baseUrl;
     }
 
-     async registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void) {
+    async registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void) {
 
         await axios.post(this.baseUrl + '/service/user',
             JSON.stringify(user),
@@ -30,12 +28,30 @@ class RestService implements Service {
             // All was ok, let's sent to success page ...
             onSuccess();
         }).catch(error => {
-            const data = error.response;
+            const response = error.response;
+            let msg = '';
+            if (response) {
+                const status: number = response.status;
+                const data = response.data;
 
-            // let errorMsg = intl.formatMessage({ id: "registration.unexpected", defaultMessage: "Unexpected error. Please, try latter." })
-            let msg = 'Unexpected error. Please, try latter';
-            if (data != null) {
-                msg = Object.values(data.fieldErrors)[0] as string;
+                switch (status) {
+                    case 401:
+                        this.authFailed();
+                        break;
+                    default:
+                        console.log(data);
+                        // Is a server error ?
+                        if (!data.fieldErrors) {
+                            msg = response.statusText;
+                        } else if (data) {
+                            const fieldsError = data.fieldErrors;
+                            msg = Object.values(fieldsError)[0] as string;
+                        }
+                }
+
+            } else {
+                // Network related problem ...
+                msg = 'Unexpected error. Please, try latter';
             }
             onError(msg);
         });

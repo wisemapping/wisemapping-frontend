@@ -69,8 +69,6 @@ const RegistrationForm = (props: ServiceProps) => {
         <h1><FormattedMessage id="registration.become" defaultMessage="Become a member of our comunity" /></h1>
         <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
 
-        <ErrorMessageDialog message={errorMsg} />
-
         <form action="/" method="POST" onSubmit={e => handleSubmit(e)}>
           <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
           <input type="text" name="firstname" onChange={e => setFirstname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required={true} autoComplete="given-name" />
@@ -82,10 +80,11 @@ const RegistrationForm = (props: ServiceProps) => {
               sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
               onChange={setRecaptchaToken} />
           </div>
+          <ErrorMessageDialog message={errorMsg} />
+
           <p>
             <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
           </p>
-
           <input type="submit" value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
         </form>
       </div>
