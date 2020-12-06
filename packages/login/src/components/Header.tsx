@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl'
 
-//const logo = require('../images/header-logo.png')
+const logo = require('../images/header-logo.png')
 
 interface HeaderProps {
   type: string;
@@ -33,7 +33,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     return (
       <nav>
         <div className="header">
-          <span className="header-logo"><a href="/"><img src={"logo"} alt="logo" /></a></span>
+          <span className="header-logo"><a href="/"><img src={String(logo)} alt="logo" /></a></span>
           {text}
           {signUpButton}
           {signInButton}

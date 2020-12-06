@@ -1,11 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl'
-// import { ReactComponent as SvgLogo } from './images/logo-text.svg'
+
+const logo = require('../images/logo-text.svg')
+
 
 const Footer = () => {
   return (
     <footer className="footer" >
-      {/* FIXME: we have to unify the way we load SVGs <Logo />*/}
+      <img src={logo} alt="logo"/>
       <div >
         <div><a href="termsofuse.html"> <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" /> </a></div>
         <div><a href="faq.html"> <FormattedMessage id="footer.faq" defaultMessage="F.A.Q." /> </a></div >
