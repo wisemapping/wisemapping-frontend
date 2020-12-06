@@ -1,17 +1,21 @@
-import './css/registration.css';
+import React from 'react'
+import axios from 'axios'
+import { FormattedMessage, useIntl } from 'react-intl'
+import useHistory  from 'react-router-dom'
+import { ReCaptcha } from 'react-recaptcha-v3'
 
-import React from 'react';
-import axios from 'axios';
-import { FormattedMessage, injectIntl } from 'react-intl'
-import { useHistory } from "react-router-dom";
-
-import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from './Header';
 import Footer from './Footer';
 
+const css = require('./css/registration.css');
 
-const ErrorMessageDialog = (props) => {
+
+interface ErrorMessageDialogProps {
+  message: string
+}
+
+const ErrorMessageDialog = (props: ErrorMessageDialogProps) => {
   let result;
 
   const message = props.message;
@@ -23,28 +27,37 @@ const ErrorMessageDialog = (props) => {
   return result;
 }
 
-class RegistrationForm extends React.Component {
+interface RegistrationFormState {
+  email: string;
+  firstname: string;
+  lastname: string;
+  password: string;
+  recaptcha: string;
 
-  constructor(props) {
+  errorMsg: string;
+  intl: string;
+}
+
+class RegistrationForm extends React.Component<{}, RegistrationFormState> {
+
+  constructor(props: {}) {
     super(props)
-    this.state = {
-      errorMsg: ""
-    }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleRecaptchaChange = this.handleRecaptchaChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value }: any = event.target;
+    this.setState({ [name]: value } as Pick<RegistrationFormState, keyof RegistrationFormState>);
   }
 
-  handleRecaptchaChange(value) {
-    this.setState({ "recaptcha": value });
+  handleRecaptchaChange(value: string) {
+    this.setState({ recaptcha: value });
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
     const { errorMsg, ...rest } = this.state;
@@ -53,20 +66,20 @@ class RegistrationForm extends React.Component {
       rest,
       { headers: { 'Content-Type': 'application/json' } }
     ).then(response => {
-      const history = useHistory();
-      history.push("/c/user/registrationSuccess");
+      // const history = useHistory();
+      // history.push("/c/user/registrationSuccess");
     }).catch(error => {
       // Handle error ...
       const data = error.response.data;
       // const status = error.response.status;
 
-      const errorMsg = Object.values(data.fieldErrors)[0];
-      this.setState({ "errorMsg": errorMsg });
+      const errorMsg = Object.values(data.fieldErrors)[0] as string;
+      this.setState({ errorMsg: errorMsg });
     });
   }
 
   render() {
-    const intl = this.props.intl;
+    const intl = useIntl();
     const errrMsg = this.state.errorMsg;
 
     return (
@@ -84,9 +97,9 @@ class RegistrationForm extends React.Component {
             <input type="password" name="password" onChange={this.handleChange} placeholder={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })} required={true} autoComplete="new-password" />
 
             <div>
-              <ReCAPTCHA
+              <ReCaptcha
                 sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                onChange={this.handleRecaptchaChange}
+                verifyCallback={this.handleRecaptchaChange}
               />
             </div>
             <p>
@@ -100,19 +113,19 @@ class RegistrationForm extends React.Component {
     );
   }
 }
-RegistrationForm = injectIntl(RegistrationForm);
 
-const RegistationFormPage = props => {
+
+const RegistationFormPage = (props: any) => {
   return (
     <div>
       <Header type='only-signin' />
-      <RegistrationForm />
+      <RegistrationForm/>
       <Footer />
     </div>
   );
 }
 
-const RegistrationSuccessPage = (props) => {
+const RegistrationSuccessPage = (props: any) => {
   return (
     <div>
       <Header type='only-signup' />

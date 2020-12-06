@@ -1,13 +1,16 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl'
-import logo from './images/header-logo.png'
 
-class Header extends React.Component {
-  constructor(props) {
+//const logo = require('./images/header-logo.png')
+
+interface HeaderProps {
+  type: string;
+}
+
+class Header extends React.Component<HeaderProps, HeaderProps> {
+  constructor(props: HeaderProps) {
     super(props);
-    this.state = {
-      type: props.type
-    };
+    this.state = props;
   }
 
   render() {
@@ -23,14 +26,14 @@ class Header extends React.Component {
       text = <span className="header-area-content-span"><span><FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" /></span></span>;
       signUpButton = <SignInButton className="header-area-right2" />;
     } else {
-      signUpButton = <SignUpButton />
-      signInButton = <SignInButton />;
+      signUpButton = <SignUpButton className="header-area-right2" />
+      signInButton = <SignInButton className="header-area-right2" />;
     }
 
     return (
       <nav>
         <div className="header">
-          <span className="header-logo"><a href="/"><img src={logo} alt="logo" /></a></span>
+          <span className="header-logo"><a href="/"><img src="" alt="logo" /></a></span>
           {text}
           {signUpButton}
           {signInButton}
@@ -40,18 +43,22 @@ class Header extends React.Component {
   };
 }
 
-const SignInButton = (props) => {
+interface ButtonProps {
+  className: string;
+}
+
+const SignInButton = (props: ButtonProps) => {
   return (
     <span className={`button-style1 ${props.className}`}>
-        <a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a>
+      <a href="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></a>
     </span>);
 }
 
-const SignUpButton = (props) => {
+const SignUpButton = (props: ButtonProps) => {
   return (
     <span className={`button-style1 ${props.className}`}>
-            <a href="/c/user/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></a>
-        </span>);
+      <a href="/c/user/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></a>
+    </span>);
 }
 
 export default Header;

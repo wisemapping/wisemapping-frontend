@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import LoginPage from './LoginPage.jsx';
-import { RegistrationSuccessPage, RegistationFormPage } from './RegistrationPage.jsx';
+import LoginPage from './LoginPage';
+import { RegistrationSuccessPage, RegistationFormPage } from './RegistrationPage';
 import { IntlProvider } from 'react-intl'
 
 import {
   Route,
   Switch,
-  Redirect,
-  useRouteMatch,
+  Redirect
 } from 'react-router-dom';
 
-function loadLocaleData(language) {
+function loadLocaleData(language: string) {
   switch (language) {
     case 'es':
-      return import('./compiled-lang/es.json')
+      return require('./compiled-lang/es.json')
     default:
-      return import('./compiled-lang/en.json')
+      return require('./compiled-lang/en.json')
   }
 }
 
@@ -25,7 +24,6 @@ const App = () => {
   // Boostrap i18n ...
   const locale = (navigator.languages && navigator.languages[0])
     || navigator.language
-    || navigator.userLanguage
     || 'en-US';
 
 
@@ -34,7 +32,6 @@ const App = () => {
     const fetchData = async () => {
       const messages = await loadLocaleData(language);
       setMessages(messages);
-
     }
 
     fetchData();
