@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
 const logo = require('../images/logo-text.svg')

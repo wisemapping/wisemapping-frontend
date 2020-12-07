@@ -1,12 +1,13 @@
-import React, { useState, } from 'react'
+import React, { useState, useEffect} from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import ReCAPTCHA from "react-google-recaptcha";
-import { useHistory } from "react-router-dom";
-import { Service, NewUser } from '../services/Service';
+import ReCAPTCHA from "react-google-recaptcha"
+import { useHistory } from "react-router-dom"
+import { Service, NewUser } from '../services/Service'
 
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Header'
+import Footer from './Footer'
+import SubmitButton from './SubmitButton'
 
 const css = require('../css/registration.css');
 
@@ -31,35 +32,39 @@ type RegistrationBody = {
   firstName: string;
   lastName: string;
   password: string;
-  recaptcha: string;
+  recaptcha: string | null;
 }
 const RegistrationForm = (props: ServiceProps) => {
-  const [email, setEmail] = useState(undefined);
-  const [lastName, setLastname] = useState(undefined)
-  const [firstName, setFirstname] = useState(undefined);
-  const [password, setPassword] = useState(undefined);
-  const [recaptchaToken, setRecaptchaToken] = useState(undefined);
-  const [errorMsg, setErrorMsg] = useState(undefined);
+  const [email, setEmail] = useState("");
+  const [lastName, setLastname] = useState("")
+  const [firstName, setFirstname] = useState("");
+  const [password, setPassword] = useState("");
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const [disableButton, setDisableButton] = useState(false);
 
   const history = useHistory();
   const intl = useIntl();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setDisableButton(true);
+
     const user: NewUser =
     {
       email: email,
       firstname: firstName,
       lastname: lastName,
       password: password,
-      recaptcha: recaptchaToken
+      recaptcha: String(recaptchaToken)
     };
 
     // Call Service ...
     props.service.registerNewUser(
       user,
       () => history.push("/c/user/registrationSuccess"),
-      (msg) => setErrorMsg(msg)
+      (msg) => { setErrorMsg(msg); setDisableButton(false); }
     );
   }
 
@@ -80,12 +85,14 @@ const RegistrationForm = (props: ServiceProps) => {
               sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
               onChange={setRecaptchaToken} />
           </div>
+
           <ErrorMessageDialog message={errorMsg} />
 
           <p>
             <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
           </p>
-          <input type="submit" value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
+
+          <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
         </form>
       </div>
     </div>
@@ -97,6 +104,11 @@ type ServiceProps = {
   service: Service
 }
 const RegistationFormPage = (props: ServiceProps) => {
+
+  useEffect(() => {
+    document.title = 'Registration | WiseMapping';
+  });
+
   return (
     <div>
       <Header type='only-signin' />
@@ -107,6 +119,7 @@ const RegistationFormPage = (props: ServiceProps) => {
 }
 
 const RegistrationSuccessPage = (props: any) => {
+  
   return (
     <div>
       <Header type='only-signup' />
@@ -121,6 +134,6 @@ const RegistrationSuccessPage = (props: any) => {
   );
 }
 
-export { RegistationFormPage, RegistrationSuccessPage };
+export { RegistationFormPage, RegistrationSuccessPage }
 
 

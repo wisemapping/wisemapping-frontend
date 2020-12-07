@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Link } from 'react-router-dom'
 
 import Header from './Header'
 import Footer from './Footer'
+import SubmitButton from './SubmitButton'
 
 const css = require('../css/login.css')
-
 
 
 const ConfigStatusMessage = (props: any) => {
@@ -27,7 +28,7 @@ const ConfigStatusMessage = (props: any) => {
 const LoginError = (props: any) => {
   // @Todo: This must be reviewed to be based on navigation state.
   // Login error example: http://localhost:8080/c/login?login.error=2
-  const errorCode: string = new URLSearchParams(window.location.search).get('login_error');
+  const errorCode = new URLSearchParams(window.location.search).get('login_error');
 
   let result;
   if (errorCode) {
@@ -46,7 +47,6 @@ const LoginError = (props: any) => {
   return (<span>{result}</span>);
 
 }
-
 const LoginForm = () => {
   const intl = useIntl();
 
@@ -66,15 +66,20 @@ const LoginForm = () => {
             <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
             <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
           </div>
-          <input type="submit" value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
+          <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })}/>
         </form>
-        <a href="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></a>
+        <Link to="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
       </div>
     </div>
   );
 }
 
 const LoginPage = (props: any) => {
+
+  useEffect(() => {
+    document.title = 'Login - WiseMapping';
+  });
+
   return (
     <div>
       <Header type='only-signup' />
