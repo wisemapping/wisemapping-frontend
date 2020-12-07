@@ -1,46 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createGlobalStyle } from 'styled-components';
-import {
-  Switch,
-  Route,
-  Link,
-  BrowserRouter as Router,
-} from "react-router-dom";
-import Editor from '@wisemapping/editor';
-import Login from '@wisemapping/login';
+import App from './app';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-  }
-`;
-
-const Component = () => (
-  <React.Fragment>
+function bootstrapApplication() {
+  ReactDOM.render(
     <Router>
-      <GlobalStyle />
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/editor">
-          <Editor />
-        </Route>
-        <Route path="/">
-          <ul>
-            <li>
-              <Link to='/login'>/login</Link>
-            </li>
-            <li>
-              <Link to='/editor'>/editor</Link>
-            </li>
-          </ul>
-        </Route>
-      </Switch>
-    </Router>
+      <App />
+    </Router>,
+    document.getElementById('root') as HTMLElement
+  )
+}
 
-  </React.Fragment>
-);
-
-ReactDOM.render(<Component />, document.querySelector('#root'));
+bootstrapApplication()

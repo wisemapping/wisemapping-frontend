@@ -4,88 +4,57 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  devtool: 'eval-source-map',
-  entry: {
-    app: [path.join(__dirname, 'src', 'index.tsx')]
-  },
-  target: 'web',
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js']
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: '/node_modules/'
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: '/node_modules/',
-        resolve: {
-          extensions: [".js", ".jsx"]
-        },
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                "@babel/preset-env",
-                {
-                  "targets": {
-                    "esmodules": true
-                  }
-                }
-              ],
-              '@babel/preset-react',
-            ],
-          }
-        },
-      },
-      {
-        test: /\.svg$/,
-        exclude: /\.x.svg$/,
-        loader: 'svg-url-loader',
-      },
+    mode: 'development',
+    devtool: 'eval-source-map',
+    entry: {
+        app: path.join(__dirname, 'src', 'index.tsx')
+    },
+    target: 'web',
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
+    },
+    module: {
+        rules: [
 
-      // Inline PNGs in Base64 if it is smaller than 10KB; otherwise, emmit files using file-loader.
-      {
-        test: /\.png$/,
-        loader: 'url-loader',
-        options: { mimetype: 'image/png', limit: 10000, name: '[name]-[hash:6].[ext]' },
-      },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: '/node_modules/'
+            },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
 
-      // Style loader
-      {
-        test: /\.css$/i,
-        use: [{
-          loader: 'style-loader',
-        }, {
-          loader: 'css-loader',
-        }],
-      },
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        esModule: false,
+                    }
+                }, ],
+            }
+        ]
+    },
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.join(__dirname, 'public/index.html')
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.PUBLIC_URL': 'http://localhost:3000'
+        })
     ],
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html')
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
-  ],
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
-    hot: true,
-    historyApiFallback: true,
-  }
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 3000,
+        hot: true
+    }
 }
