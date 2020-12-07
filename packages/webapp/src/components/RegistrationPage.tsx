@@ -2,7 +2,7 @@ import React, { useState, } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import ReCAPTCHA from "react-google-recaptcha";
 import { useHistory } from "react-router-dom";
-import { Service, NewUser } from '../Services/service';
+import { Service, NewUser } from '../services/Service';
 
 
 import Header from './Header';
