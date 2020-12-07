@@ -77,7 +77,7 @@ const LoginForm = () => {
 const LoginPage = (props: any) => {
 
   useEffect(() => {
-    document.title = 'Login - WiseMapping';
+    document.title = 'Login | WiseMapping';
   });
 
   return (
