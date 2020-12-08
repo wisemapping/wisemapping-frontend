@@ -234,7 +234,8 @@ input[type=checkbox] {
     background-color: #f9a826;
 }
 
-input[type=submit] {
+input[type=submit],
+input[type=button] {
     width: 258px;
     height: 53px;
     padding: 0px 20px;

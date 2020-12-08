@@ -1,4 +1,10 @@
 {
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "Please wait ..."
+    }
+  ],
   "footer.aboutus": [
     {
       "type": 0,
@@ -159,6 +165,18 @@
     {
       "type": 0,
       "value": "Signing up is free and just take a moment"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "Your account has been created successfully, click to sign in and start enjoying WiseMapping."
+    }
+  ],
+  "registration.success.title": [
+    {
+      "type": 0,
+      "value": "Your account has been created successfully"
     }
   ],
   "registration.termandconditions": [
