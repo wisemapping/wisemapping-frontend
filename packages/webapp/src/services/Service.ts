@@ -1,14 +1,17 @@
 import axios from 'axios'
+
 type NewUser = {
     email: string;
     firstname: string;
     lastname: string;
     password: string;
-    recaptcha: string;
-}
+    recaptcha: string | null;
+  }
 
+  
 interface Service {
     registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void): void;
+    resetPassword(email:string, onSuccess: () => void, onError: (msg: string) => void): void;
 }
 
 class RestService implements Service {
@@ -56,5 +59,10 @@ class RestService implements Service {
             onError(msg);
         });
     }
+
+    resetPassword(email:string, onSuccess: () => void, onError: (msg: string) => void): void {
+        
+    }
+
 }
 export { Service, RestService, NewUser }

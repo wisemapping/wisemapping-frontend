@@ -1,15 +1,15 @@
 import React, { useState, useEffect} from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import ReCAPTCHA from "react-google-recaptcha"
+import ReCAPTCHA from 'react-google-recaptcha'
 import { useHistory } from "react-router-dom"
-import { Service, NewUser } from '../services/Service'
+import { Service, NewUser } from '../../services/Service'
 
 
-import Header from './Header'
-import Footer from './Footer'
-import SubmitButton from './SubmitButton'
+import Header from '../header'
+import Footer from '../footer'
+import SubmitButton from '../submit-button'
 
-const css = require('../css/registration.css');
+const css = require('../../css/registration.css');
 
 interface ErrorMessageDialogProps {
   message: string
@@ -29,15 +29,16 @@ const ErrorMessageDialog = (props: ErrorMessageDialogProps) => {
 
 type RegistrationBody = {
   email: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastlname: string;
   password: string;
   recaptcha: string | null;
 }
+
 const RegistrationForm = (props: ServiceProps) => {
   const [email, setEmail] = useState("");
-  const [lastName, setLastname] = useState("")
-  const [firstName, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("")
+  const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -54,8 +55,8 @@ const RegistrationForm = (props: ServiceProps) => {
     const user: NewUser =
     {
       email: email,
-      firstname: firstName,
-      lastname: lastName,
+      firstname: firstname,
+      lastname: lastname,
       password: password,
       recaptcha: String(recaptchaToken)
     };
@@ -71,10 +72,10 @@ const RegistrationForm = (props: ServiceProps) => {
   return (
     <div className="wrapper">
       <div className="content">
-        <h1><FormattedMessage id="registration.become" defaultMessage="Become a member of our comunity" /></h1>
-        <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
+        <h1><FormattedMessage id="registration.title" defaultMessage="Become a member of our comunity" /></h1>
+        <p><FormattedMessage id="registration.desc" defaultMessage="Signing up is free and just take a moment " /></p>
 
-        <form method="POST" onSubmit={e => handleSubmit(e)}>
+        <form action="/" method="POST" onSubmit={e => handleSubmit(e)}>
           <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
           <input type="text" name="firstname" onChange={e => setFirstname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required={true} autoComplete="given-name" />
           <input type="text" name="lastname" onChange={e => setLastname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required={true} autoComplete="family-name" />

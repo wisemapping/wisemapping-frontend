@@ -8,7 +8,6 @@
         "lint": "eslint src",
         "extract": "formatjs extract",
         "compile": "formatjs compile"
-
     },
     "repository": "http://www.wisemapping.com",
     "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
@@ -44,6 +43,7 @@
         "webpack-dev-server": "^3.11.0"
     },
     "dependencies": {
+        "@types/react-google-recaptcha": "^2.1.0",
         "axios": "^0.21.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",

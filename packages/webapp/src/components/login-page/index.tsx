@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-import Header from './Header'
-import Footer from './Footer'
-import SubmitButton from './SubmitButton'
+import Header from '../header'
+import Footer from '../footer'
+import SubmitButton from '../submit-button'
 
-const css = require('../css/login.css')
+const css = require('../../css/login.css')
 
 
 const ConfigStatusMessage = (props: any) => {
@@ -53,8 +53,8 @@ const LoginForm = () => {
   return (
     <div className="wrapper">
       <div className="content">
-        <h1><FormattedMessage id="login.welcome" defaultMessage="Welcome" /></h1>
-        <p><FormattedMessage id="login.loginto" defaultMessage="Log Into Your Account" /></p>
+        <h1><FormattedMessage id="login.title" defaultMessage="Welcome" /></h1>
+        <p><FormattedMessage id="login.desc" defaultMessage="Log Into Your Account" /></p>
 
         <LoginError />
 

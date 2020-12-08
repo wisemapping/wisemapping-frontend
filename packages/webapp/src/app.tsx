@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Service, RestService } from './services/Service';
 import { IntlProvider } from 'react-intl'
 
-import LoginPage from './components/LoginPage';
-import { RegistationPage } from './components/RegistrationPage';
-import { RegistrationSuccessPage } from './components/RegistrationSuccessPage';
+import { RegistrationSuccessPage } from './components/registration-success-page';
+import { RegistationPage } from './components/registration-page';
+import LoginPage from './components/login-page';
 
 import {
   Route,
@@ -12,6 +12,7 @@ import {
   Redirect,
   BrowserRouter as Router,
 } from 'react-router-dom';
+import { ForgotPasswordPage } from './components/forgot-password-page';
 
 function loadLocaleData(language: string) {
   switch (language) {
@@ -56,6 +57,7 @@ const App = () => {
             <RegistationPage service={service} />
           </Route>
           <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
+          <Route path="/c/user/resetPassword" component={ForgotPasswordPage} />
         </Switch>
       </Router>
     </IntlProvider>

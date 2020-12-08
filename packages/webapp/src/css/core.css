@@ -136,19 +136,25 @@ nav a {
 /* Footer */
 
 .footer {
-    height: 170px;
-    margin-top: 50px;
-    padding: 30px 40px 10px 50px;
+    height: 250px;
+    margin-top: 80px;
+    padding: 60px 40px 10px 50px;
     background-color: #f9a826;
     display: grid;
 }
 
 .footer a {
     font-size: 14px;
-    margin: 0px 10px;
     color: white;
     word-wrap: nowrap;
-    text-align: center;
+}
+
+.footer h4 {
+    font-size: 14px;
+    color: white;
+    word-wrap: nowrap;
+    font-weight: 500px;
+    margin: 0px;
 }
 
 .footer>svg {
@@ -196,11 +202,8 @@ nav a {
     .footer {
         grid-template-columns: 0px 1fr 1fr 5px;
     }
-    .footer>svg,
-    .footer div:nth-child(4) {
-        display: none;
-        visibility: hidden;
-    }
+    .footer div:nth-child(1),
+    .footer div:nth-child(4),
     .header-area-content-span {
         display: none;
         visibility: hidden;
@@ -291,6 +294,7 @@ input:placeholder {
 }
 
 .button-style1 a {
+    color: #f9a826;
     background-color: white;
     border: solid 1px #f9a826;
 }
