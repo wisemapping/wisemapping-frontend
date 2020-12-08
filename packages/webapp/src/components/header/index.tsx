@@ -1,3 +1,5 @@
+import { StyledNav, StyledDiv,Logo } from './styled';
+
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
@@ -34,20 +36,20 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     }
 
     return (
-      <nav>
-        <div className="header">
-          <span className="header-logo"><Link to="/"><img src={String(logo)} alt="logo" /></Link></span>
+      <StyledNav>
+        <StyledDiv>
+          <Logo><Link to="/" className="header-logo"><img src={String(logo)} alt="logo" /></Link></Logo>
           {text}
           {signUpButton}
           {signInButton}
-        </div>
-      </nav>
+        </StyledDiv>
+      </StyledNav>
     )
   };
 }
 
 interface ButtonProps {
-  style?: 'style1' | 'style2'| 'style3';
+  style?: 'style1' | 'style2' | 'style3';
   className?: string;
 }
 
