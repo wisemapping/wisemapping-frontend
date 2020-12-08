@@ -1,0 +1,39 @@
+@import "core.css";
+.wrapper {
+    max-width: 1024px;
+    min-height: 400px;
+}
+
+.rcontent {
+    padding-top: 100px;
+    grid-area: content;
+    text-align: center;
+}
+
+.rcontent p {
+    color: black;
+    font-size: 18px;
+    margin: 10px 0px 30px 0px;
+}
+
+.rcontent h1 {
+    color: #f9a826;
+    font-size: 30px;
+}
+
+
+/* .button-style1 {
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    white-space: nowrap;
+    padding-top: 10px;
+}
+
+.button-style1 a {
+    padding: 10px 30px 10px 30px;
+    transition: background-color 0.3s ease;
+    border-radius: 9px;
+} */

@@ -25,7 +25,7 @@ const ConfigStatusMessage = (props: any) => {
   return result;
 }
 
-const LoginError = (props: any) => {
+const LoginError = () => {
   // @Todo: This must be reviewed to be based on navigation state.
   // Login error example: http://localhost:8080/c/login?login.error=2
   const errorCode = new URLSearchParams(window.location.search).get('login_error');
@@ -66,7 +66,7 @@ const LoginForm = () => {
             <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
             <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
           </div>
-          <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })}/>
+          <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
         </form>
         <Link to="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
       </div>
@@ -74,7 +74,7 @@ const LoginForm = () => {
   );
 }
 
-const LoginPage = (props: any) => {
+const LoginPage = () => {
 
   useEffect(() => {
     document.title = 'Login | WiseMapping';

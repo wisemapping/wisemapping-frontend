@@ -74,7 +74,7 @@ const RegistrationForm = (props: ServiceProps) => {
         <h1><FormattedMessage id="registration.become" defaultMessage="Become a member of our comunity" /></h1>
         <p><FormattedMessage id="registration.signup" defaultMessage="Signing up is free and just take a moment " /></p>
 
-        <form action="/" method="POST" onSubmit={e => handleSubmit(e)}>
+        <form method="POST" onSubmit={e => handleSubmit(e)}>
           <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
           <input type="text" name="firstname" onChange={e => setFirstname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required={true} autoComplete="given-name" />
           <input type="text" name="lastname" onChange={e => setLastname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required={true} autoComplete="family-name" />
@@ -103,7 +103,7 @@ const RegistrationForm = (props: ServiceProps) => {
 type ServiceProps = {
   service: Service
 }
-const RegistationFormPage = (props: ServiceProps) => {
+const RegistationPage = (props: ServiceProps) => {
 
   useEffect(() => {
     document.title = 'Registration | WiseMapping';
@@ -118,22 +118,6 @@ const RegistationFormPage = (props: ServiceProps) => {
   );
 }
 
-const RegistrationSuccessPage = (props: any) => {
-  
-  return (
-    <div>
-      <Header type='only-signup' />
-      <div className="wrapper">
-        <div className="content">
-          <h1><FormattedMessage id="registration.success.title" defaultMessage="Your account has been created successfully" /></h1>
-          <p><FormattedMessage id="registration.success.desc" defaultMessage="Your account has been created successfully, click to sign in and start enjoying  WiseMapping." /></p>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
-}
-
-export { RegistationFormPage, RegistrationSuccessPage }
+export { RegistationPage }
 
 

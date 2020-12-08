@@ -136,7 +136,7 @@ nav a {
 /* Footer */
 
 .footer {
-    height: 130px;
+    height: 170px;
     margin-top: 50px;
     padding: 30px 40px 10px 50px;
     background-color: #f9a826;
@@ -271,7 +271,8 @@ input:placeholder {
 /* Buttons */
 
 .button-style1,
-.button-style2 {
+.button-style2,
+.button-style3 {
     font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
@@ -282,7 +283,8 @@ input:placeholder {
 }
 
 .button-style1 a,
-.button-style2 a {
+.button-style2 a,
+.button-style3 a {
     padding: 10px 30px 10px 30px;
     transition: background-color 0.3s ease;
     border-radius: 9px;
@@ -291,7 +293,6 @@ input:placeholder {
 .button-style1 a {
     background-color: white;
     border: solid 1px #f9a826;
-    color: #ffa800;
 }
 
 .button-style1 a:hover {
@@ -301,13 +302,26 @@ input:placeholder {
 }
 
 .button-style2 a {
+    color: #ffa800;
     background-color: white;
     border: solid 1px rgba(255, 168, 0, 0.6);
-    color: #ffa800;
 }
 
 .button-style2 a:hover {
     color: white;
     border: solid 1px white;
     background-color: rgba(243, 220, 174, 0.6);
+}
+
+.button-style3 a {
+    color: white;
+    background-color: #ffa800;
+    font-weight: 600;
+}
+
+.button-style3 a:hover {
+    color: #ffa800;
+    background-color: white;
+    border: solid 1px #ffa800;
+    font-weight: 600;
 }

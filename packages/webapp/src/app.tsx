@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import LoginPage from './components/LoginPage';
 import { Service, RestService } from './services/Service';
-
-import { RegistrationSuccessPage, RegistationFormPage } from './components/RegistrationPage';
 import { IntlProvider } from 'react-intl'
+
+import LoginPage from './components/LoginPage';
+import { RegistationPage } from './components/RegistrationPage';
+import { RegistrationSuccessPage } from './components/RegistrationSuccessPage';
 
 import {
   Route,
@@ -41,7 +42,7 @@ const App = () => {
   }, []);
 
   // Create Service object...
-  const service: Service = new RestService('http://localhost:8080', () => { console.log("401 error")});
+  const service: Service = new RestService('http://localhost:8080', () => { console.log("401 error") });
 
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
@@ -52,7 +53,7 @@ const App = () => {
           </Route>
           <Route path="/c/login" component={LoginPage} />
           <Route path="/c/user/registration">
-            <RegistationFormPage service={service}/>
+            <RegistationPage service={service} />
           </Route>
           <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
         </Switch>
