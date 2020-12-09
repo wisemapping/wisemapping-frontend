@@ -49,7 +49,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'public/index.html'),
             templateParameters: {
-                PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/'
+                PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
             },
         })
     ],
@@ -57,6 +57,11 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 3000,
-        hot: true
+        hot: true,
+        historyApiFallback: {
+            rewrites: [
+                { from: /^\/c\//, to: '/index.html' }
+            ]
+        }
     }
 }
