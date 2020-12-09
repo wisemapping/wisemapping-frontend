@@ -14,20 +14,41 @@
   "footer.faq": {
     "defaultMessage": "F.A.Q."
   },
+  "footer.faqandhelp": {
+    "defaultMessage": "Help &amp; FAQ"
+  },
   "footer.feedback": {
     "defaultMessage": "Feedback"
   },
   "footer.opensource": {
     "defaultMessage": "Open Source"
   },
+  "footer.others": {
+    "defaultMessage": "Others"
+  },
   "footer.termsandconditions": {
     "defaultMessage": "Term And Conditions"
+  },
+  "forgot.desc": {
+    "defaultMessage": "We will send you an email to reset your password"
+  },
+  "forgot.email": {
+    "defaultMessage": "Email"
+  },
+  "forgot.register": {
+    "defaultMessage": "Send recovery link"
+  },
+  "forgot.title": {
+    "defaultMessage": "Reset your password"
   },
   "header.donthaveaccount": {
     "defaultMessage": "Don't have an account ?"
   },
   "header.haveaccount": {
     "defaultMessage": "Already have an account?"
+  },
+  "login.desc": {
+    "defaultMessage": "Log Into Your Account"
   },
   "login.email": {
     "defaultMessage": "Email"
@@ -42,9 +63,6 @@
     "defaultMessage": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
     "description": "Missing production database configured"
   },
-  "login.loginto": {
-    "defaultMessage": "Log Into Your Account"
-  },
   "login.password": {
     "defaultMessage": "Password"
   },
@@ -57,14 +75,14 @@
   "login.signup": {
     "defaultMessage": "Sign Up"
   },
+  "login.title": {
+    "defaultMessage": "Welcome"
+  },
   "login.userinactive": {
     "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
   },
-  "login.welcome": {
-    "defaultMessage": "Welcome"
-  },
-  "registration.become": {
-    "defaultMessage": "Become a member of our comunity"
+  "registration.desc": {
+    "defaultMessage": "Signing up is free and just take a moment"
   },
   "registration.email": {
     "defaultMessage": "Email"
@@ -81,16 +99,16 @@
   "registration.register": {
     "defaultMessage": "Register"
   },
-  "registration.signup": {
-    "defaultMessage": "Signing up is free and just take a moment"
-  },
   "registration.success.desc": {
-    "defaultMessage": "Click to 'Sign In' button below and start creating mind maps."
+    "defaultMessage": "Click 'Sign In' button below and start creating mind maps."
   },
   "registration.success.title": {
     "defaultMessage": "Your account has been created successfully"
   },
   "registration.termandconditions": {
     "defaultMessage": "Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy"
+  },
+  "registration.title": {
+    "defaultMessage": "Become a member of our comunity"
   }
 }

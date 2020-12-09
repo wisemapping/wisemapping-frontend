@@ -29,6 +29,12 @@
       "value": "F.A.Q."
     }
   ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "Help &amp; FAQ"
+    }
+  ],
   "footer.feedback": [
     {
       "type": 0,
@@ -41,10 +47,40 @@
       "value": "Open Source"
     }
   ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "Others"
+    }
+  ],
   "footer.termsandconditions": [
     {
       "type": 0,
       "value": "Term And Conditions"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "We will send you an email to reset your password"
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "Send recovery link"
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "Reset your password"
     }
   ],
   "header.donthaveaccount": [
@@ -57,6 +93,12 @@
     {
       "type": 0,
       "value": "Already have an account?"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "Log Into Your Account"
     }
   ],
   "login.email": [
@@ -83,12 +125,6 @@
       "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
     }
   ],
-  "login.loginto": [
-    {
-      "type": 0,
-      "value": "Log Into Your Account"
-    }
-  ],
   "login.password": [
     {
       "type": 0,
@@ -113,22 +149,22 @@
       "value": "Sign Up"
     }
   ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "Welcome"
+    }
+  ],
   "login.userinactive": [
     {
       "type": 0,
       "value": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
     }
   ],
-  "login.welcome": [
+  "registration.desc": [
     {
       "type": 0,
-      "value": "Welcome"
-    }
-  ],
-  "registration.become": [
-    {
-      "type": 0,
-      "value": "Become a member of our comunity"
+      "value": "Signing up is free and just take a moment"
     }
   ],
   "registration.email": [
@@ -161,16 +197,10 @@
       "value": "Register"
     }
   ],
-  "registration.signup": [
-    {
-      "type": 0,
-      "value": "Signing up is free and just take a moment"
-    }
-  ],
   "registration.success.desc": [
     {
       "type": 0,
-      "value": "Click to 'Sign In' button below and start creating mind maps."
+      "value": "Click 'Sign In' button below and start creating mind maps."
     }
   ],
   "registration.success.title": [
@@ -183,6 +213,12 @@
     {
       "type": 0,
       "value": "Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "Become a member of our comunity"
     }
   ]
 }

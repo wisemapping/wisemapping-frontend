@@ -1,7 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackDynamicEnvPlugin = require('html-webpack-dynamic-env-plugin');
+
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 
 module.exports = {
     mode: 'development',
@@ -44,11 +47,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'public/index.html')
-        }),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'),
-            'process.env.PUBLIC_URL': 'http://localhost:3000'
+            template: path.join(__dirname, 'public/index.html'),
+            templateParameters: {
+                PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/'
+            },
         })
     ],
     devServer: {
