@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Service, RestService } from './services/Service';
 import { IntlProvider } from 'react-intl'
 
-import GlobalStyle from './theme/global-style';
+import {GlobalStyle} from './theme/global-style';
 import { RegistrationSuccessPage } from './components/registration-success-page';
 import { RegistationPage } from './components/registration-page';
 import LoginPage from './components/login-page';
@@ -13,6 +13,7 @@ import {
   Redirect,
   BrowserRouter as Router,
 } from 'react-router-dom';
+
 import { ForgotPasswordPage } from './components/forgot-password-page';
 
 function loadLocaleData(language: string) {

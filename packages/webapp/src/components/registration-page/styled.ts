@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+
+export const StyledReCAPTCHA = styled.div`
+font-size: 13px;
+width: 300px;
+margin: auto;
+}`;
+
 export const StyledNav = styled.div`
 .db-warn-msg {
     margin-top: 30px;
@@ -13,5 +20,4 @@ export const StyledNav = styled.div`
     color: white;
     padding: 15px 30px;
     border-radius: 10px;
-}
-`
+}`;

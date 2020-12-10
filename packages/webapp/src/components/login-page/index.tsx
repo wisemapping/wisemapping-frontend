@@ -2,21 +2,25 @@ import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'react-router-dom'
 
+import {PageContent} from '../../theme/global-style';
+import FormErrorDialog from '../form-error-dialog'
+
+
 import Header from '../header'
 import Footer from '../footer'
 import SubmitButton from '../submit-button'
-import FormErrorDialog from '../form-error-dialog'
+
 
 const ConfigStatusMessage = (props: any) => {
   const enabled = props.enabled
-  let result= null;
+  let result = null;
   if (enabled === true) {
     result = (<div className="db-warn-msg">
       <p>
         <FormattedMessage id="login.hsqldbcofig" defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
       </p>
     </div>);
-  } 
+  }
   return result;
 }
 
@@ -29,20 +33,27 @@ const LoginError = () => {
   let msg = null;
   if (errorCode) {
     if (errorCode === "3") {
-      msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."});
+      msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." });
     } else {
-      msg = intl.formatMessage({ id: "login.error", defaultMessage: "The login.email address or login.password you entered is  not valid."});
+      msg = intl.formatMessage({ id: "login.error", defaultMessage: "The login.email address or login.password you entered is  not valid." });
     }
   }
   return <FormErrorDialog message={msg} />
 
 }
-const LoginForm = () => {
+
+const LoginPage = () => {
   const intl = useIntl();
 
+  useEffect(() => {
+    document.title = 'Login | WiseMapping';
+  });
+
   return (
-    <div className="wrapper">
-      <div className="content">
+    <div>
+      <Header type='only-signup' />
+
+      <PageContent>
         <h1><FormattedMessage id="login.title" defaultMessage="Welcome" /></h1>
         <p><FormattedMessage id="login.desc" defaultMessage="Log Into Your Account" /></p>
 
@@ -59,22 +70,11 @@ const LoginForm = () => {
           <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
         </form>
         <Link to="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
-      </div>
-    </div>
-  );
-}
 
-const LoginPage = () => {
+        <ConfigStatusMessage enabled='false' />
 
-  useEffect(() => {
-    document.title = 'Login | WiseMapping';
-  });
+      </PageContent>
 
-  return (
-    <div>
-      <Header type='only-signup' />
-      <LoginForm />
-      <ConfigStatusMessage enabled='false' />
       <Footer />
     </div>
   );

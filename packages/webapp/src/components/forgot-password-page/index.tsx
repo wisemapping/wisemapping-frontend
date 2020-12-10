@@ -3,12 +3,13 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { useHistory } from "react-router-dom"
 import { Service } from '../../services/Service'
 
+import { PageContent } from '../../theme/global-style';
+
+
 
 import Header from '../header'
 import Footer from '../footer'
 import SubmitButton from '../submit-button'
-
-const css = require('../../css/registration.css');
 
 interface ErrorMessageDialogProps {
   message: string
@@ -36,7 +37,7 @@ const RegistrationForm = (props: ServiceProps) => {
     event.preventDefault();
     setDisableButton(true);
 
-    
+
     // Call Service ...
     props.service.resetPassword(
       email,
@@ -46,20 +47,18 @@ const RegistrationForm = (props: ServiceProps) => {
   }
 
   return (
-    <div className="wrapper">
-      <div className="content">
-        <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
-        <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
+    <PageContent>
+      <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
+      <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
 
-        <form action="/" method="POST" onSubmit={e => handleSubmit(e)}>
-          <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
+      <form method="POST" onSubmit={e => handleSubmit(e)}>
+        <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
 
-          <ErrorMessageDialog message={errorMsg} />
+        <ErrorMessageDialog message={errorMsg} />
 
-          <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
-        </form>
-      </div>
-    </div>
+        <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
+      </form>
+    </PageContent>
   );
 }
 

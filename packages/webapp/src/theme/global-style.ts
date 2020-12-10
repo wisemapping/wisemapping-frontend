@@ -1,5 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
- 
+import styled, { createGlobalStyle } from 'styled-components';
+
+
 const GlobalStyle = createGlobalStyle`
   
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700,900');
@@ -12,93 +13,10 @@ body {
     margin: 0px;
 }
 
-.wrapper {
-    max-width: 1024px;
-    margin: auto;
-}
-
-.wrapper>* {
-    border-radius: 5px;
-    padding: 10px;
-}
-
-h1,
-h2 {
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.2;
-    letter-spacing: normal;
-}
-
-h1 {
-    font-size: 36px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #f9a826;
-}
-
 a {
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
-
-p {
-    font-size: 20px;
-    font-weight: 300;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.36;
-    letter-spacing: normal;
-    text-align: center;
-    color: #000000;
-}
-
-/* Form Styles Section */
-
-input[type=email],
-input[type=password],
-input[type=text] {
-    width: 258px;
-    height: 53px;
-    padding: 0px 20px;
-    margin: 10px 20px;
-    border-radius: 9px;
-    font-size: 16px;
-    border: solid 1px #f9a826;
-    display: block;
-    margin: 10px auto;
-}
-
-input[type=checkbox] {
-    border: solid 1px #f9a826;
-    background-color: #f9a826;
-}
-
-input[type=submit],
-input[type=button] {
-    width: 258px;
-    height: 53px;
-    padding: 0px 20px;
-    margin: 10px 20px;
-    font-size: 20px;
-    font-weight: 600;
-    border-radius: 9px;
-    border: 0px;
-    background-color: rgba(255, 168, 0, 0.6);
-    color: white;
-}
-
-input[type=submit]:hover {
-    background-color: #f9a826;
-}
-
-input:placeholder {
-    color: grey;
-}
-
 
 /* Buttons */
 
@@ -158,6 +76,82 @@ input:placeholder {
     border: solid 1px #ffa800;
     font-weight: 600;
 }
+
 `;
- 
-export default GlobalStyle;
+const PageContent = styled.div`
+max-width: 800px;
+min-height: 400px;
+margin: 10px auto;
+text-align:center;
+padding: 20px 10px 20px 10px;
+
+/* Form Styles Section */
+
+& input[type=email],
+& input[type=password],
+& input[type=text] {
+    width: 258px;
+    height: 53px;
+    padding: 0px 20px;
+    margin: 10px 20px;
+    border-radius: 9px;
+    font-size: 16px;
+    border: solid 1px #f9a826;
+    display: block;
+    margin: 10px auto;
+}
+
+& input[type=checkbox] {
+    border: solid 1px #f9a826;
+    background-color: #f9a826;
+}
+
+& input[type=submit],
+& input[type=button] {
+    width: 258px;
+    height: 53px;
+    padding: 0px 20px;
+    margin: 10px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 9px;
+    border: 0px;
+    background-color: rgba(255, 168, 0, 0.6);
+    color: white;
+}
+
+& input[type=submit]:hover {
+    background-color: #f9a826;
+}
+
+& input:placeholder {
+    color: grey;
+}
+
+& h1,
+& h2 {
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+}
+
+& h1 {
+    font-size: 36px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f9a826;
+}
+
+& a {
+    font-size: 17px;
+    color: #f9a826;
+}
+`;
+
+
+
+export { GlobalStyle, PageContent };
