@@ -38,6 +38,18 @@ z-index: 1;
 .header-area-right2 {
     grid-column-start: 4;
 }
+
+.header-area-right1 span,
+.header-area-right2 span {
+    font-size: 15px;
+}
+.header-area-content-span {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    text-align: right;
+    font-size: 14px;
+    padding: 10px;
+}
 `;
 
 export const StyledDiv  = styled.nav`

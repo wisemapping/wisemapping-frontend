@@ -1,13 +1,12 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { StyledFooter } from './styled'
 
 const logo = require('../../images/logo-text.svg')
 
-
 const Footer = () => {
   return (
-    <footer className="footer" >
-      {/* Todo: Replace this with a SVG Image */}
+    <StyledFooter>
       <div style={{ padding: 0, margin: 0 }}>
         <a href="http://www.wisemapping.org/">
           <div style={{ textAlign: "left" }}>Powered By</div><img src={logo} alt="logo" />
@@ -28,7 +27,7 @@ const Footer = () => {
       <div>
         <div><span className="button-style2" >< a href="https://www.paypal.com/webapps/shoppingcart?flowlogging_id=c7ac923b53025&mfid=1606520600355_c7ac923b53025#/checkout/openButton">< FormattedMessage id="footer.donations" defaultMessage="PayPal Donations" /> </a></span ></div>
       </div>
-    </footer>
+    </StyledFooter>
   )
 }
 

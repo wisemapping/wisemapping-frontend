@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
+import StyledDiv from './styled'
 
 import Header, { SignInButton } from '../header'
 import Footer from '../footer'
+import PageContent from './styled'
 
-const css = require('../../css/success.css');
 
 const RegistrationSuccessPage = () => {
 
@@ -15,8 +16,7 @@ const RegistrationSuccessPage = () => {
   return (
     <div>
       <Header type='none' />
-      <div className="wrapper">
-        <div className="rcontent">
+      <PageContent>
           <h1>
             <FormattedMessage id="registration.success.title" defaultMessage="Your account has been created successfully" />
           </h1>
@@ -25,9 +25,8 @@ const RegistrationSuccessPage = () => {
           </p>
 
           <SignInButton style='style1'/>
+        </PageContent>
 
-        </div>
-      </div>
       <Footer />
     </div>
   );

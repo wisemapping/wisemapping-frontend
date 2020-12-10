@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-
-
 export const StyledNav = styled.div`
 .db-warn-msg {
     margin-top: 30px;

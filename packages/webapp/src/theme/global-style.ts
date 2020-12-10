@@ -1,3 +1,7 @@
+import { createGlobalStyle } from 'styled-components';
+ 
+const GlobalStyle = createGlobalStyle`
+  
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700,900');
 * {
     box-sizing: border-box;
@@ -52,90 +56,6 @@ p {
     color: #000000;
 }
 
-
-/* Footer */
-
-.footer {
-    height: 250px;
-    margin-top: 80px;
-    padding: 60px 40px 10px 50px;
-    background-color: #f9a826;
-    display: grid;
-}
-
-.footer a {
-    font-size: 14px;
-    color: white;
-    word-wrap: nowrap;
-}
-
-.footer h4 {
-    font-size: 14px;
-    color: white;
-    word-wrap: nowrap;
-    font-weight: 500px;
-    margin: 0px;
-}
-
-.footer>svg {
-    grid-column: 1;
-}
-
-.footer div:nth-child(2) {
-    grid-column: 2;
-}
-
-.footer div:nth-child(3) {
-    grid-column: 3;
-}
-
-.footer {
-    grid-template-columns: 200px 1fr 1fr 3fr;
-}
-
-.footer>svg {
-    display: inline-block;
-    visibility: visible;
-}
-
-.footer div:nth-child(4) {
-    grid-column: 4;
-    text-align: right;
-    display: inline-block;
-    visibility: visible;
-}
-
-.header-area-right1 span,
-.header-area-right2 span {
-    font-size: 15px;
-}
-
-.header-area-content-span {
-    grid-column-start: 2;
-    grid-column-end: 4;
-    text-align: right;
-    font-size: 14px;
-    padding: 10px;
-}
-
-@media (max-width: 500px) {
-    .footer {
-        grid-template-columns: 0px 1fr 1fr 5px;
-    }
-    .footer div:nth-child(1),
-    .footer div:nth-child(4),
-    .header-area-content-span {
-        display: none;
-        visibility: hidden;
-    }
-    .header {
-        display: grid;
-        white-space: nowrap;
-        grid-template-columns: 100px 1fr 130px 130px;
-    }
-}
-
-
 /* Form Styles Section */
 
 input[type=email],
@@ -177,17 +97,6 @@ input[type=submit]:hover {
 
 input:placeholder {
     color: grey;
-}
-
-.form-error-dialog {
-    margin: 10px auto;
-    width: 260px;
-    font-size: 15px;
-    border: 2px solid #e97450;
-    padding: 10px 10px;
-    border-radius: 9px;
-    color: white;
-    background-color: #e78b72;
 }
 
 
@@ -249,3 +158,6 @@ input:placeholder {
     border: solid 1px #ffa800;
     font-weight: 600;
 }
+`;
+ 
+export default GlobalStyle;

@@ -5,23 +5,18 @@ import { Link } from 'react-router-dom'
 import Header from '../header'
 import Footer from '../footer'
 import SubmitButton from '../submit-button'
-
-const css = require('../../css/login.css')
-
+import FormErrorDialog from '../form-error-dialog'
 
 const ConfigStatusMessage = (props: any) => {
   const enabled = props.enabled
-  let result;
-
+  let result= null;
   if (enabled === true) {
     result = (<div className="db-warn-msg">
       <p>
         <FormattedMessage id="login.hsqldbcofig" defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL" description="Missing production database configured" /><a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration"> here</a>
       </p>
     </div>);
-  } else {
-    result = <span></span>;
-  }
+  } 
   return result;
 }
 
@@ -29,22 +24,17 @@ const LoginError = () => {
   // @Todo: This must be reviewed to be based on navigation state.
   // Login error example: http://localhost:8080/c/login?login.error=2
   const errorCode = new URLSearchParams(window.location.search).get('login_error');
+  const intl = useIntl();
 
-  let result;
+  let msg = null;
   if (errorCode) {
     if (errorCode === "3") {
-      result = (
-        <div className='form-error-dialog'>
-          <FormattedMessage id="login.userinactive" defaultMessage="Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." />
-        </div>)
+      msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."});
     } else {
-      result = (
-        <div className='form-error-dialog'>
-          <FormattedMessage id="login.error" defaultMessage="The login.email address or login.password you entered is  not valid." />
-        </div>)
+      msg = intl.formatMessage({ id: "login.error", defaultMessage: "The login.email address or login.password you entered is  not valid."});
     }
   }
-  return (<span>{result}</span>);
+  return <FormErrorDialog message={msg} />
 
 }
 const LoginForm = () => {
