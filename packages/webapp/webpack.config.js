@@ -41,7 +41,8 @@ module.exports = {
         // @FixMe: Fatten the dir ...
         new CopyWebpackPlugin({
             patterns: [{
-                from: 'public/*'
+                from: 'public/*',
+                to: '[name].[ext]'
             }]
         }),
         new HtmlWebpackPlugin({
