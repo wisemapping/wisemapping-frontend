@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Service, RestService } from './services/Service';
 import { IntlProvider } from 'react-intl'
 
-import {GlobalStyle} from './theme/global-style';
-import { RegistrationSuccessPage } from './components/registration-success-page';
-import { RegistationPage } from './components/registration-page';
+import { GlobalStyle } from './theme/global-style';
+import RegistrationSuccessPage from './components/registration-success-page';
+import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
+import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 
 import {
@@ -49,20 +50,23 @@ const App = () => {
 
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-      <GlobalStyle/>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/c/login" />
-            </Route>
-            <Route path="/c/login" component={LoginPage} />
-            <Route path="/c/user/registration">
-              <RegistationPage service={service} />
-            </Route>
-            <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
-            <Route path="/c/user/resetPassword" component={ForgotPasswordPage} />
-          </Switch>
-        </Router>
+      <GlobalStyle />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/c/login" />
+          </Route>
+          <Route path="/c/login" component={LoginPage} />
+          <Route path="/c/user/registration">
+            <RegistationPage service={service} />
+          </Route>
+          <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
+          <Route path="/c/user/resetPassword">
+            <ForgotPasswordPage service={service} />
+          </Route>
+          <Route path="/c/user/forgotPasswordSuccess" component={ForgotPasswordSuccessPage} />
+        </Switch>
+      </Router>
     </IntlProvider>
   ) : <div>Loading ... </div>
 }

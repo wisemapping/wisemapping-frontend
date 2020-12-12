@@ -6,9 +6,7 @@ import {PageContent} from '../../theme/global-style';
 import Header, { SignInButton } from '../header'
 import Footer from '../footer'
 
-
-
-const RegistrationSuccessPage = () => {
+const ForgotPasswordSuccessPage = () => {
   useEffect(() => {
     document.title = 'Reset Password | WiseMapping';
   });
@@ -19,10 +17,10 @@ const RegistrationSuccessPage = () => {
       <div>
       <PageContent>
         <h1>
-          <FormattedMessage id="resetpassword.success.title" defaultMessage="Your account has been created successfully" />
+          <FormattedMessage id="forgot.success.title" defaultMessage="Your temporal password has been sent" />
         </h1>
         <p>
-          <FormattedMessage id="registration.success.desc" defaultMessage="Click 'Sign In' button below and start creating mind maps." />
+          <FormattedMessage id="forgot.success.desc" defaultMessage="We've sent you an email that will allow you to reset your password. Please check your email now." />
         </p>
 
         <SignInButton style='style1' />
@@ -33,6 +31,6 @@ const RegistrationSuccessPage = () => {
   );
 }
 
-export default RegistrationSuccessPage;
+export default ForgotPasswordSuccessPage 
 
 

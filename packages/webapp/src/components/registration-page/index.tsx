@@ -51,7 +51,7 @@ const RegistrationForm = (props: ServiceProps) => {
       <h1><FormattedMessage id="registration.title" defaultMessage="Become a member of our comunity" /></h1>
       <p><FormattedMessage id="registration.desc" defaultMessage="Signing up is free and just take a moment " /></p>
 
-      <form method="POST" onSubmit={e => handleSubmit(e)}>
+      <form onSubmit={e => handleSubmit(e)}>
         <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
         <input type="text" name="firstname" onChange={e => setFirstname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required={true} autoComplete="given-name" />
         <input type="text" name="lastname" onChange={e => setLastname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required={true} autoComplete="family-name" />
@@ -93,6 +93,6 @@ const RegistationPage = (props: ServiceProps) => {
   );
 }
 
-export { RegistationPage }
+export default RegistationPage;
 
 

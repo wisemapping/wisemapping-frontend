@@ -6,12 +6,12 @@ type NewUser = {
     lastname: string;
     password: string;
     recaptcha: string | null;
-  }
+}
 
-  
+
 interface Service {
     registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void): void;
-    resetPassword(email:string, onSuccess: () => void, onError: (msg: string) => void): void;
+    resetPassword(email: string, onSuccess: () => void, onError: (msg: string) => void): void;
 }
 
 class RestService implements Service {
@@ -24,7 +24,7 @@ class RestService implements Service {
 
     async registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void) {
 
-        await axios.post(this.baseUrl + '/service/user',
+        await axios.post(this.baseUrl + '/service/users',
             JSON.stringify(user),
             { headers: { 'Content-Type': 'application/json' } }
         ).then(response => {
@@ -32,36 +32,61 @@ class RestService implements Service {
             onSuccess();
         }).catch(error => {
             const response = error.response;
-            let msg = '';
-            if (response) {
-                const status: number = response.status;
-                const data = response.data;
-
-                switch (status) {
-                    case 401:
-                        this.authFailed();
-                        break;
-                    default:
-                        console.log(data);
-                        // Is a server error ?
-                        if (!data.fieldErrors) {
-                            msg = response.statusText;
-                        } else if (data) {
-                            const fieldsError = data.fieldErrors;
-                            msg = Object.values(fieldsError)[0] as string;
-                        }
-                }
-
-            } else {
-                // Network related problem ...
-                msg = 'Unexpected error. Please, try latter';
-            }
-            onError(msg);
+            const errorMsg = this.parseResponseOnError(response);
+            onError(errorMsg);
         });
     }
 
-    resetPassword(email:string, onSuccess: () => void, onError: (msg: string) => void): void {
-        
+    async resetPassword(email: string, onSuccess: () => void, onError: (msg: string) => void) {
+        await axios.put(this.baseUrl + '/service/users/resetPassword?email=' + email,
+            null,
+            { headers: { 'Content-Type': 'application/json' } }
+        ).then(response => {
+            // All was ok, let's sent to success page ...
+            onSuccess();
+        }).catch(error => {
+            const response = error.response;
+            const errorMsg = this.parseResponseOnError(response);
+            onError(errorMsg);
+        });
+    }
+
+    private parseResponseOnError = (response: any) => {
+        let msg;
+        if (response) {
+            const status: number = response.status;
+            const data = response.data;
+            console.log(data);
+
+            switch (status) {
+                case 401:
+                    this.authFailed();
+                    break;
+                default:
+                    if (data) {
+                        let errors: string[] = [];
+                        if (data.globalErrors) {
+                            errors = data.globalErrors;
+                        } else if (data.fieldErrors) {
+                            errors = Object.values(data.fieldErrors);
+                        }
+
+                        if (errors.length > 0) {
+                            msg = errors[0];
+                        }
+
+                    } else {
+                        msg = response.statusText;
+                    }
+            }
+        }
+
+        // Network related problem ...
+        if (!msg) {
+            msg = 'Unexpected error. Please, try latter';
+        }
+
+        return msg;
     }
 
 }

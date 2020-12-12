@@ -124,6 +124,10 @@ padding: 20px 10px 20px 10px;
     background-color: #f9a826;
 }
 
+& label {
+    font-size:15px;
+}
+
 & input:placeholder {
     color: grey;
 }
@@ -147,7 +151,7 @@ padding: 20px 10px 20px 10px;
 }
 
 & a {
-    font-size: 17px;
+    font-size: 15px;
     color: #f9a826;
 }
 `;

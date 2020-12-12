@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackDynamicEnvPlugin = require('html-webpack-dynamic-env-plugin');
 
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -17,13 +16,11 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     module: {
-        rules: [
-
-            {
+        rules: [{
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: '/node_modules/'
-            }, ,
+            },
             {
                 test: /\.(png|jpe?g|gif|svg)$/,
                 use: [{
@@ -31,7 +28,7 @@ module.exports = {
                     options: {
                         esModule: false,
                     }
-                }, ],
+                }]
             }
         ]
     },

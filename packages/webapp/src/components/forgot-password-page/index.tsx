@@ -6,25 +6,17 @@ import { Service } from '../../services/Service'
 import { PageContent } from '../../theme/global-style';
 
 
-
 import Header from '../header'
 import Footer from '../footer'
+import FormErrorDialog from '../form-error-dialog'
+
 import SubmitButton from '../submit-button'
-
-interface ErrorMessageDialogProps {
-  message: string
-}
-
-const ErrorMessageDialog = (props: ErrorMessageDialogProps) => {
-  const message = props.message;
-  return message ? <p className='form-error-dialog'>{message}</p> : <span></span>;
-}
 
 type ForgotPasswordProps = {
   email: string;
 }
 
-const RegistrationForm = (props: ServiceProps) => {
+const ForgotPassword = (props: ServiceProps) => {
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -36,7 +28,6 @@ const RegistrationForm = (props: ServiceProps) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setDisableButton(true);
-
 
     // Call Service ...
     props.service.resetPassword(
@@ -51,10 +42,10 @@ const RegistrationForm = (props: ServiceProps) => {
       <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
       <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
 
-      <form method="POST" onSubmit={e => handleSubmit(e)}>
+      <form onSubmit={e => handleSubmit(e)}>
         <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
 
-        <ErrorMessageDialog message={errorMsg} />
+        <FormErrorDialog message={errorMsg} />
 
         <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
       </form>
@@ -68,13 +59,13 @@ type ServiceProps = {
 const ForgotPasswordPage = (props: ServiceProps) => {
 
   useEffect(() => {
-    document.title = 'Forgot Password | WiseMapping';
+    document.title = 'Reset Password | WiseMapping';
   });
 
   return (
     <div>
       <Header type='only-signin' />
-      <RegistrationForm service={props.service} />
+      <ForgotPassword service={props.service} />
       <Footer />
     </div>
   );
