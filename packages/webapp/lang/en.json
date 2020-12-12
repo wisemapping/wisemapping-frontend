@@ -8,14 +8,11 @@
   "footer.contactus": {
     "defaultMessage": "Contact Us"
   },
-  "footer.donations": {
-    "defaultMessage": "PayPal Donations"
-  },
   "footer.faq": {
     "defaultMessage": "F.A.Q."
   },
   "footer.faqandhelp": {
-    "defaultMessage": "Help &amp; FAQ"
+    "defaultMessage": "Help & FAQ"
   },
   "footer.feedback": {
     "defaultMessage": "Feedback"
@@ -38,6 +35,12 @@
   "forgot.register": {
     "defaultMessage": "Send recovery link"
   },
+  "forgot.success.desc": {
+    "defaultMessage": "We've sent you an email that will allow you to reset your password. Please check your email now."
+  },
+  "forgot.success.title": {
+    "defaultMessage": "Your temporal password has been sent"
+  },
   "forgot.title": {
     "defaultMessage": "Reset your password"
   },
@@ -48,7 +51,7 @@
     "defaultMessage": "Already have an account?"
   },
   "login.desc": {
-    "defaultMessage": "Log Into Your Account"
+    "defaultMessage": "Log into your account"
   },
   "login.email": {
     "defaultMessage": "Email"
@@ -102,13 +105,13 @@
   "registration.success.desc": {
     "defaultMessage": "Click 'Sign In' button below and start creating mind maps."
   },
-  "registration.success.title": {
-    "defaultMessage": "Your account has been created successfully"
-  },
   "registration.termandconditions": {
     "defaultMessage": "Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy"
   },
   "registration.title": {
     "defaultMessage": "Become a member of our comunity"
+  },
+  "resetpassword.success.title": {
+    "defaultMessage": "Your account has been created successfully"
   }
 }

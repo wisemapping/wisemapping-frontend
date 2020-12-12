@@ -1,8 +1,8 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 module.exports = {
@@ -38,12 +38,20 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        // @FixMe: Fatten the dir ...
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: 'public/*'
+            }]
+        }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'public/index.html'),
             templateParameters: {
                 PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
             },
+            base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
         })
+
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),

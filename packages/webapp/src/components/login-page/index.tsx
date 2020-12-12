@@ -55,7 +55,7 @@ const LoginPage = () => {
 
       <PageContent>
         <h1><FormattedMessage id="login.title" defaultMessage="Welcome" /></h1>
-        <p><FormattedMessage id="login.desc" defaultMessage="Log Into Your Account" /></p>
+        <p><FormattedMessage id="login.desc" defaultMessage="Log into your account" /></p>
 
         <LoginError />
 

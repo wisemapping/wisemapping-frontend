@@ -17,12 +17,6 @@
       "value": "Contact Us"
     }
   ],
-  "footer.donations": [
-    {
-      "type": 0,
-      "value": "PayPal Donations"
-    }
-  ],
   "footer.faq": [
     {
       "type": 0,
@@ -32,7 +26,7 @@
   "footer.faqandhelp": [
     {
       "type": 0,
-      "value": "Help &amp; FAQ"
+      "value": "Help & FAQ"
     }
   ],
   "footer.feedback": [
@@ -77,6 +71,18 @@
       "value": "Send recovery link"
     }
   ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "We've sent you an email that will allow you to reset your password. Please check your email now."
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "Your temporal password has been sent"
+    }
+  ],
   "forgot.title": [
     {
       "type": 0,
@@ -98,7 +104,7 @@
   "login.desc": [
     {
       "type": 0,
-      "value": "Log Into Your Account"
+      "value": "Log into your account"
     }
   ],
   "login.email": [
@@ -203,12 +209,6 @@
       "value": "Click 'Sign In' button below and start creating mind maps."
     }
   ],
-  "registration.success.title": [
-    {
-      "type": 0,
-      "value": "Your account has been created successfully"
-    }
-  ],
   "registration.termandconditions": [
     {
       "type": 0,
@@ -219,6 +219,12 @@
     {
       "type": 0,
       "value": "Become a member of our comunity"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "Your account has been created successfully"
     }
   ]
 }

@@ -26,7 +26,11 @@ function loadLocaleData(language: string) {
   }
 }
 
-const App = () => {
+type AppProps = {
+  baseRestUrl: string;
+}
+
+const App = (props: AppProps) => {
   const [messages, setMessages] = useState(undefined);
 
   // Boostrap i18n ...
@@ -46,7 +50,8 @@ const App = () => {
   }, []);
 
   // Create Service object...
-  const service: Service = new RestService('http://localhost:8080', () => { console.log("401 error") });
+
+  const service: Service = new RestService(props.baseRestUrl, () => { console.log("401 error") });
 
   return messages ? (
     <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
