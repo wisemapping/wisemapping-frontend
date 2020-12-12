@@ -38,7 +38,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     return (
       <StyledNav>
         <StyledDiv>
-          <Logo><Link to="/c/view/login" className="header-logo"><img src={String(logo)} alt="logo" /></Link></Logo>
+          <Logo><Link to="/c/login" className="header-logo"><img src={String(logo)} alt="logo" /></Link></Logo>
           {text}
           {signUpButton}
           {signInButton}
@@ -57,7 +57,7 @@ const SignInButton = (props: ButtonProps) => {
   const style = props.style ? props.style : 'style1';
   return (
     <span className={`button-${style} ${props.className}`}>
-      <Link to="/c/view/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></Link>
+      <Link to="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></Link>
     </span>);
 }
 
@@ -65,7 +65,7 @@ const SignUpButton = (props: ButtonProps) => {
   const style = props.style ? props.style : 'style1';
   return (
     <span className={`button-${style} ${props.className}`}>
-      <Link to="/c/view/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></Link>
+      <Link to="/c/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></Link>
     </span>);
 }
 
