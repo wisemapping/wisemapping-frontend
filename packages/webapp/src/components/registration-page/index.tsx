@@ -41,7 +41,7 @@ const RegistrationForm = (props: ServiceProps) => {
     // Call Service ...
     props.service.registerNewUser(
       user,
-      () => history.push("/c/user/registrationSuccess"),
+      () => history.push("/c/view/registration-success"),
       (msg) => { setErrorMsg(msg); setDisableButton(false); }
     );
   }

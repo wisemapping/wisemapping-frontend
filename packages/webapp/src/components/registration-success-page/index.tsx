@@ -16,7 +16,6 @@ const RegistrationSuccessPage = () => {
   return (
     <div>
       <Header type='none' />
-      <div>
       <PageContent>
         <h1>
           <FormattedMessage id="resetpassword.success.title" defaultMessage="Your account has been created successfully" />
@@ -24,10 +23,8 @@ const RegistrationSuccessPage = () => {
         <p>
           <FormattedMessage id="registration.success.desc" defaultMessage="Click 'Sign In' button below and start creating mind maps." />
         </p>
-
         <SignInButton style='style1' />
       </PageContent>
-      </div>
       <Footer />
     </div>
   );

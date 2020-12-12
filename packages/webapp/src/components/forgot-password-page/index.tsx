@@ -32,8 +32,11 @@ const ForgotPassword = (props: ServiceProps) => {
     // Call Service ...
     props.service.resetPassword(
       email,
-      () => history.push("/c/user/forgotPasswordSuccess"),
-      (msg) => { setErrorMsg(msg); setDisableButton(false); }
+      () => history.push("/c/view/forgot-password-success"),
+      (msg) => {
+        setErrorMsg(msg);
+        setDisableButton(false);
+      }
     );
   }
 

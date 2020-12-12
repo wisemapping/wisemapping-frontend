@@ -54,17 +54,17 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/c/login" />
+            <Redirect to="/c/view/login" />
           </Route>
-          <Route path="/c/login" component={LoginPage} />
-          <Route path="/c/user/registration">
+          <Route path="/c/view/login" component={LoginPage} />
+          <Route path="/c/view/registration">
             <RegistationPage service={service} />
           </Route>
-          <Route path="/c/user/registrationSuccess" component={RegistrationSuccessPage} />
-          <Route path="/c/user/resetPassword">
+          <Route path="/c/view/registration-success" component={RegistrationSuccessPage} />
+          <Route path="/c/view/forgot-password">
             <ForgotPasswordPage service={service} />
           </Route>
-          <Route path="/c/user/forgotPasswordSuccess" component={ForgotPasswordSuccessPage} />
+          <Route path="/c/view/forgot-password-success" component={ForgotPasswordSuccessPage} />
         </Switch>
       </Router>
     </IntlProvider>

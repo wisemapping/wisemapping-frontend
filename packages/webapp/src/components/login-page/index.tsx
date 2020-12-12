@@ -69,7 +69,7 @@ const LoginPage = () => {
           </div>
           <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
         </form>
-        <Link to="/c/user/resetPassword"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
+        <Link to="/c/view/forgot-password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
 
         <ConfigStatusMessage enabled='false' />
 
