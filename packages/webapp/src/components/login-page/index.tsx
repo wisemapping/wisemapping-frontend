@@ -33,9 +33,9 @@ const LoginError = () => {
   let msg = null;
   if (errorCode) {
     if (errorCode === "3") {
-      msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!." });
+      msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." });
     } else {
-      msg = intl.formatMessage({ id: "login.error", defaultMessage: "The login.email address or login.password you entered is  not valid." });
+      msg = intl.formatMessage({ id: "login.error", defaultMessage: "The email address or password you entered is  not valid." });
     }
   }
   return <FormErrorDialog message={msg} />
