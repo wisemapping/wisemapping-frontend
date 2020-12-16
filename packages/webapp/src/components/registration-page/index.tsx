@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useHistory } from "react-router-dom"
-import { Service, NewUser } from '../../services/Service'
+import { Service, NewUser, ErrorInfo } from '../../services/Service'
 import FormErrorDialog from '../form-error-dialog'
 
 import Header from '../header'
@@ -18,14 +18,15 @@ const RegistrationForm = (props: ServiceProps) => {
   const [firstname, setFirstname] = useState('');
   const [password, setPassword] = useState('');
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>('');
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [errorMsg, setErrorMsg] = useState<string | undefined>();
 
   const [disableButton, setDisableButton] = useState(false);
 
   const history = useHistory();
   const intl = useIntl();
 
-  const handleSubmit = async (event: React.FormEvent) => {
+
+  const handleOnSubmit = (event: React.FormEvent<any>): void => {
     event.preventDefault();
     setDisableButton(true);
 
@@ -39,22 +40,25 @@ const RegistrationForm = (props: ServiceProps) => {
     };
 
     // Call Service ...
-    props.service.registerNewUser(
-      user,
-      () => history.push("/c/registration-success"),
-      (errorInfo) => {
-        const errorMsg = errorInfo.msg ? errorInfo.msg : '';
-        setErrorMsg(errorMsg); setDisableButton(false);
-      }
-    );
+    const service = props.service;
+    service.registerNewUser(user)
+      .then(() => {
+        history.push("/c/registration-success")
+      }).catch((error: ErrorInfo) => {
+        const errorMsg = error.msg ? error.msg : undefined;
+        setErrorMsg(errorMsg);
+        setDisableButton(false);
+      });
   }
+
+
 
   return (
     <PageContent>
       <h1><FormattedMessage id="registration.title" defaultMessage="Become a member of our comunity" /></h1>
       <p><FormattedMessage id="registration.desc" defaultMessage="Signing up is free and just take a moment " /></p>
 
-      <form onSubmit={e => handleSubmit(e)}>
+      <form onSubmit={handleOnSubmit}>
         <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
         <input type="text" name="firstname" onChange={e => setFirstname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })} required={true} autoComplete="given-name" />
         <input type="text" name="lastname" onChange={e => setLastname(e.target.value)} placeholder={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })} required={true} autoComplete="family-name" />

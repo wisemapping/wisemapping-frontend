@@ -33,8 +33,8 @@ export type ErrorInfo = {
 }
 
 interface Service {
-    registerNewUser(user: NewUser, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void):void;
-    resetPassword(email: string, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void): void;
+    registerNewUser(user: NewUser): Promise<void>;
+    resetPassword(email: string): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
 
     deleteMap(id: number): Promise<void>;
@@ -62,19 +62,21 @@ class RestService implements Service {
         return Promise.resolve();
     }
 
-    async registerNewUser(user: NewUser, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void) {
-
-        await axios.post(this.baseUrl + '/service/users',
-            JSON.stringify(user),
-            { headers: { 'Content-Type': 'application/json' } }
-        ).then(response => {
-            // All was ok, let's sent to success page ...
-            onSuccess();
-        }).catch(error => {
-            const response = error.response;
-            const errorMsg = this.parseResponseOnError(response);
-            onError(errorMsg);
-        });
+    registerNewUser(user: NewUser): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.post(this.baseUrl + '/service/users',
+                JSON.stringify(user),
+                { headers: { 'Content-Type': 'application/json' } }
+            ).then(response => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 
     async fetchAllMaps(): Promise<MapInfo[]> {
@@ -99,18 +101,23 @@ class RestService implements Service {
         return Promise.resolve(maps);
     }
 
-    async resetPassword(email: string, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void) {
-        await axios.put(this.baseUrl + '/service/users/resetPassword?email=' + email,
-            null,
-            { headers: { 'Content-Type': 'application/json' } }
-        ).then(response => {
-            // All was ok, let's sent to success page ...
-            onSuccess();
-        }).catch(error => {
-            const response = error.response;
-            const errorInfo: ErrorInfo = this.parseResponseOnError(response);
-            onError(errorInfo);
-        });
+    resetPassword(email: string): Promise<void> {
+
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.post(this.baseUrl + '/service/users/resetPassword?email=' + email,
+                null,
+                { headers: { 'Content-Type': 'application/json' } }
+            ).then(response => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+
     }
 
     private parseResponseOnError = (response: any): ErrorInfo => {
