@@ -38,11 +38,15 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        // @FixMe: Fatten the dir ...
         new CopyWebpackPlugin({
             patterns: [{
                 from: 'public/*',
-                to: '[name].[ext]'
+                to: '[name].[ext]',
+                globOptions: {
+                    ignore: [
+                        '**/index.html'
+                    ]
+                }
             }]
         }),
         new HtmlWebpackPlugin({

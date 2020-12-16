@@ -17,8 +17,8 @@ type ForgotPasswordProps = {
 }
 
 const ForgotPassword = (props: ServiceProps) => {
-  const [email, setEmail] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const [disableButton, setDisableButton] = useState(false);
 
@@ -33,8 +33,8 @@ const ForgotPassword = (props: ServiceProps) => {
     props.service.resetPassword(
       email,
       () => history.push("/c/forgot-password-success"),
-      (msg) => {
-        setErrorMsg(msg);
+      (errorInfo) => {
+        setErrorMsg(errorInfo.msg ? errorInfo.msg : '');
         setDisableButton(false);
       }
     );
@@ -42,8 +42,8 @@ const ForgotPassword = (props: ServiceProps) => {
 
   return (
     <PageContent>
-      <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
-      <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
+      <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password"/></h1>
+      <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password"/></p>
 
       <form onSubmit={e => handleSubmit(e)}>
         <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })} required={true} autoComplete="email" />

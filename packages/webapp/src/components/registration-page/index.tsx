@@ -13,12 +13,12 @@ import { StyledReCAPTCHA } from './styled';
 import { PageContent } from '../../theme/global-style';
 
 const RegistrationForm = (props: ServiceProps) => {
-  const [email, setEmail] = useState("");
-  const [lastname, setLastname] = useState("")
-  const [firstname, setFirstname] = useState("");
-  const [password, setPassword] = useState("");
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [lastname, setLastname] = useState('')
+  const [firstname, setFirstname] = useState('');
+  const [password, setPassword] = useState('');
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>('');
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   const [disableButton, setDisableButton] = useState(false);
 
@@ -42,7 +42,10 @@ const RegistrationForm = (props: ServiceProps) => {
     props.service.registerNewUser(
       user,
       () => history.push("/c/registration-success"),
-      (msg) => { setErrorMsg(msg); setDisableButton(false); }
+      (errorInfo) => {
+        const errorMsg = errorInfo.msg ? errorInfo.msg : '';
+        setErrorMsg(errorMsg); setDisableButton(false);
+      }
     );
   }
 
@@ -65,11 +68,11 @@ const RegistrationForm = (props: ServiceProps) => {
 
         <FormErrorDialog message={errorMsg} />
 
-        <div style={{ width: "300px", textAlign: "center", fontSize:"13px",margin:"auto" }}>
+        <div style={{ width: "300px", textAlign: "center", fontSize: "13px", margin: "auto" }}>
           <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
         </div>
 
-      <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
+        <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
       </form>
     </PageContent >
   );

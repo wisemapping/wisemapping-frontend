@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-type NewUser = {
+export type NewUser = {
     email: string;
     firstname: string;
     lastname: string;
@@ -8,10 +8,38 @@ type NewUser = {
     recaptcha: string | null;
 }
 
+export type MapInfo = {
+    id: number;
+    starred: boolean;
+    name: string;
+    labels: [string];
+    creator: string;
+    modified: number;
+}
+
+export type BasicMapInfo = {
+    name: string;
+    description: string;
+}
+
+export type FieldError = {
+    id: string,
+    msg: string
+}
+
+export type ErrorInfo = {
+    msg?: string;
+    fields?: FieldError[];
+}
 
 interface Service {
-    registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void): void;
-    resetPassword(email: string, onSuccess: () => void, onError: (msg: string) => void): void;
+    registerNewUser(user: NewUser, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void):void;
+    resetPassword(email: string, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void): void;
+    fetchAllMaps(): Promise<MapInfo[]>;
+
+    deleteMap(id: number): Promise<void>;
+    remameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
+    loadMapInfo(id: number): Promise<BasicMapInfo>;
 }
 
 class RestService implements Service {
@@ -22,7 +50,19 @@ class RestService implements Service {
         this.baseUrl = baseUrl;
     }
 
-    async registerNewUser(user: NewUser, onSuccess: () => void, onError: (msg: string) => void) {
+    loadMapInfo(id: number): Promise<BasicMapInfo> {
+        return Promise.resolve({ name: 'My Map', description: 'My Descition' });
+    }
+
+    async remameMap(id: number, basicInfo: BasicMapInfo) {
+        return Promise.resolve();
+    }
+
+    async deleteMap(id: number): Promise<void> {
+        return Promise.resolve();
+    }
+
+    async registerNewUser(user: NewUser, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void) {
 
         await axios.post(this.baseUrl + '/service/users',
             JSON.stringify(user),
@@ -37,7 +77,29 @@ class RestService implements Service {
         });
     }
 
-    async resetPassword(email: string, onSuccess: () => void, onError: (msg: string) => void) {
+    async fetchAllMaps(): Promise<MapInfo[]> {
+        function createMapInfo(
+            id: number,
+            starred: boolean,
+            name: string,
+            labels: [string],
+            creator: string,
+            modified: number,
+        ): MapInfo {
+            return { id, name, labels, creator, modified, starred };
+        }
+
+        const maps = [
+            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67,),
+            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67),
+            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67)
+
+        ];
+
+        return Promise.resolve(maps);
+    }
+
+    async resetPassword(email: string, onSuccess: () => void, onError: (errorInfo: ErrorInfo) => void) {
         await axios.put(this.baseUrl + '/service/users/resetPassword?email=' + email,
             null,
             { headers: { 'Content-Type': 'application/json' } }
@@ -46,13 +108,14 @@ class RestService implements Service {
             onSuccess();
         }).catch(error => {
             const response = error.response;
-            const errorMsg = this.parseResponseOnError(response);
-            onError(errorMsg);
+            const errorInfo: ErrorInfo = this.parseResponseOnError(response);
+            onError(errorInfo);
         });
     }
 
-    private parseResponseOnError = (response: any) => {
-        let msg;
+    private parseResponseOnError = (response: any): ErrorInfo => {
+
+        let result: ErrorInfo | undefined;
         if (response) {
             const status: number = response.status;
             const data = response.data;
@@ -64,30 +127,35 @@ class RestService implements Service {
                     break;
                 default:
                     if (data) {
-                        let errors: string[] = [];
+                        // Set global errorrs ...
                         if (data.globalErrors) {
-                            errors = data.globalErrors;
-                        } else if (data.fieldErrors) {
-                            errors = Object.values(data.fieldErrors);
+                            let msg;
+                            let errors = data.globalErrors;
+                            if (errors.length > 0) {
+                                msg = errors[0];
+                            }
+                            result = { msg: errors };
                         }
 
-                        if (errors.length > 0) {
-                            msg = errors[0];
+                        // Set field errors ...
+                        if (data.fieldErrors) {
+                            // @Todo: Fix this ...
+                            result = { msg: data.fieldErrors };
                         }
 
                     } else {
-                        msg = response.statusText;
+                        result = { msg: response.statusText };
                     }
             }
         }
 
         // Network related problem ...
-        if (!msg) {
-            msg = 'Unexpected error. Please, try latter';
+        if (!result) {
+            result = { msg: 'Unexpected error. Please, try latter' };
         }
 
-        return msg;
+        return result;
     }
 
 }
-export { Service, RestService, NewUser }
+export { Service, RestService }

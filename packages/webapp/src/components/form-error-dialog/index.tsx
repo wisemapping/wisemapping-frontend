@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleDiv } from './styled'
 
 type FormErrorDialogProps = {
-  message: string | null;
+  message?: string;
 }
 
 const FormErrorDialog = (props: FormErrorDialogProps) => {

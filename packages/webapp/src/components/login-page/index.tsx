@@ -9,7 +9,7 @@ import FormErrorDialog from '../form-error-dialog'
 import Header from '../header'
 import Footer from '../footer'
 import SubmitButton from '../submit-button'
-
+ 
 
 const ConfigStatusMessage = (props: any) => {
   const enabled = props.enabled
@@ -30,7 +30,7 @@ const LoginError = () => {
   const errorCode = new URLSearchParams(window.location.search).get('login_error');
   const intl = useIntl();
 
-  let msg = null;
+  let msg;
   if (errorCode) {
     if (errorCode === "3") {
       msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." });

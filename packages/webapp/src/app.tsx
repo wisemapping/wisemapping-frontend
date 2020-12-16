@@ -7,6 +7,7 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
+import MapsPage from './components/maps-page'; 
 
 import {
   Route,
@@ -24,7 +25,7 @@ function loadLocaleData(language: string) {
     default:
       return require('./compiled-lang/en.json')
   }
-}
+} 
 
 type AppProps = {
   baseRestUrl: string;
@@ -70,6 +71,9 @@ const App = (props: AppProps) => {
             <ForgotPasswordPage service={service} />
           </Route>
           <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
+          <Route path="/c/maps/">
+            <MapsPage service={service} />
+          </Route>
         </Switch>
       </Router>
     </IntlProvider>
