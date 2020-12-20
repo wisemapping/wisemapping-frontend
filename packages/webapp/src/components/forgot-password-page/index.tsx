@@ -16,10 +16,6 @@ type ForgotPasswordProps = {
 const ForgotPassword = (props: ServiceProps) => {
   const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-<<<<<<< HEAD
-
-=======
->>>>>>> 9a3a179 (Initial version of maps list. WIP)
   const [disableButton, setDisableButton] = useState(false);
 
   const history = useHistory();
@@ -30,20 +26,12 @@ const ForgotPassword = (props: ServiceProps) => {
     setDisableButton(true);
 
     // Call Service ...
-<<<<<<< HEAD
-    props.service.resetPassword(
-      email,
-      () => history.push("/c/forgot-password-success"),
-      (errorInfo) => {
-        setErrorMsg(errorInfo.msg ? errorInfo.msg : '');
-=======
     const service = props.service;
     service.resetPassword(email)
       .then(() => {
         history.push("/c/forgot-password-success");
       }).catch((error: ErrorInfo) => {
         setErrorMsg(error.msg ? error.msg : '');
->>>>>>> 9a3a179 (Initial version of maps list. WIP)
         setDisableButton(false);
       });
   }
