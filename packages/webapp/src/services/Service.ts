@@ -29,7 +29,7 @@ export type FieldError = {
 
 export type ErrorInfo = {
     msg?: string;
-    fields?: FieldError[];
+    fields?: Map<String, String>;
 }
 
 interface Service {
@@ -38,7 +38,7 @@ interface Service {
     fetchAllMaps(): Promise<MapInfo[]>;
 
     deleteMap(id: number): Promise<void>;
-    remameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
+    renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
 }
 
@@ -51,11 +51,17 @@ class RestService implements Service {
     }
 
     loadMapInfo(id: number): Promise<BasicMapInfo> {
-        return Promise.resolve({ name: 'My Map', description: 'My Descition' });
+        return Promise.resolve({ name: 'My Map', description: 'My Description' });
     }
 
-    async remameMap(id: number, basicInfo: BasicMapInfo) {
-        return Promise.resolve();
+    renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
+        const fieldErrors: Map<string, string> = new Map<string, string>();
+        fieldErrors.set('name', 'name already exists ')
+
+        return Promise.reject({
+            msg: 'Map already exists ...' + basicInfo.name,
+            fields: fieldErrors
+        });
     }
 
     async deleteMap(id: number): Promise<void> {
@@ -95,7 +101,6 @@ class RestService implements Service {
             createMapInfo(1, true, "El Mapa", [""], "Paulo", 67,),
             createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67),
             createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67)
-
         ];
 
         return Promise.resolve(maps);
@@ -148,6 +153,7 @@ class RestService implements Service {
                         if (data.fieldErrors) {
                             // @Todo: Fix this ...
                             result = { msg: data.fieldErrors };
+                            result.fields = new Map<string, string>();
                         }
 
                     } else {

@@ -6,8 +6,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { BasicMapInfo, Service } from '../../services/Service';
+import { BasicMapInfo, ErrorInfo, Service } from '../../services/Service';
 import { FormControl, TextField } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 type DialogProps = {
   open: boolean,
@@ -35,14 +36,17 @@ function DeleteConfirmDialog(props: DialogProps) {
         <DialogTitle><FormattedMessage id="action.delete-title" defaultMessage="Delete" /></DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
+            <Alert severity="warning">
+              <AlertTitle>Map to be deleted</AlertTitle>
+              <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
+            </Alert>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleOnClose('accept')} color="primary">
+          <Button onClick={() => handleOnClose('accept')} variant="outlined" color="primary">
             <FormattedMessage id="action.delete-button" defaultMessage="Delete" />
           </Button>
-          <Button onClick={() => handleOnClose(undefined)} color="secondary" autoFocus>
+          <Button onClick={() => handleOnClose(undefined)} variant="outlined" color="secondary" autoFocus>
             <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
           </Button>
         </DialogActions>
@@ -52,9 +56,11 @@ function DeleteConfirmDialog(props: DialogProps) {
 }
 
 function RenameDialog(props: DialogProps) {
-  const [model, setModel] = React.useState<BasicMapInfo>({ name: '', description: '' });
+  const defaultModel: BasicMapInfo = { name: '', description: '' };
+  const [model, setModel] = React.useState<BasicMapInfo>(defaultModel);
+  const [errorInfo, setErroInfo] = React.useState<ErrorInfo>();
+
   const intl = useIntl();
-  const [nameErrorMsg, setNameErrorMsg] = React.useState<string|undefined>(undefined);
 
   useEffect(() => {
     props.service.loadMapInfo(props.mapId)
@@ -64,6 +70,10 @@ function RenameDialog(props: DialogProps) {
   }, []);
 
   const handleOnClose = (): void => {
+    // Clean Up ...
+    setModel(defaultModel);
+    setErroInfo(undefined);
+
     props.onClose(false);
   };
 
@@ -73,12 +83,11 @@ function RenameDialog(props: DialogProps) {
 
     // Fire rest call ...
     const mapId = props.mapId;
-    props.service.remameMap(mapId, model).
-      then(e => {
-        // Close the dialog ...
+    props.service.renameMap(mapId, model).
+      then(() => {
         props.onClose(true);
-      }).catch(e => {
-        setNameErrorMsg("Error ....")  
+      }).catch((errorInfo: ErrorInfo) => {
+        setErroInfo(errorInfo)
       });
   };
 
@@ -103,24 +112,27 @@ function RenameDialog(props: DialogProps) {
 
           <DialogContent>
             <DialogContentText>
-              <FormattedMessage id="action.rename-description" defaultMessage="Rename Desc" />
+              <FormattedMessage id="action.rename-description" defaultMessage="Please, update the name and description for your mindmap." />
             </DialogContentText>
 
+            {Boolean(errorInfo?.msg) ? <Alert severity="error" variant="filled" hidden={!Boolean(errorInfo?.msg)}>{errorInfo?.msg}</Alert> : null}
             <FormControl margin="normal" required fullWidth>
-              <TextField name="name" label={intl.formatMessage({ id: "action.name-lable", defaultMessage: "Name" })} value={model.name} variant="filled" onChange={handleOnChange} required={true} error={Boolean(nameErrorMsg)} helperText={nameErrorMsg} />
+              <TextField name="name" label={intl.formatMessage({ id: "action.rename-name-placeholder", defaultMessage: "Name" })}
+                value={model.name} onChange={handleOnChange}  
+                error={Boolean(errorInfo?.fields?.get('name'))} helperText={errorInfo?.fields?.get('name')} 
+                variant="filled" required={true}/>
             </FormControl>
             <FormControl margin="normal" required fullWidth>
-              <TextField name="description" label={intl.formatMessage({ id: "action.description-lable", defaultMessage: "Description" })} value={model.description} onChange={handleOnChange} variant="filled" />
+              <TextField name="description" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })} value={model.description} onChange={handleOnChange} variant="filled" />
             </FormControl>
-
           </DialogContent>
 
           <DialogActions>
-            <Button color="primary" fullWidth type="submit">
-              <FormattedMessage id="action.rename-button" defaultMessage="Rename" />
+            <Button color="primary" variant="outlined" type="submit">
+              <FormattedMessage id="action.rename-button" defaultMessage="Rename"/>
             </Button>
 
-            <Button color="secondary" autoFocus fullWidth onClick={handleOnClose}>
+            <Button color="secondary" variant="outlined" autoFocus onClick={handleOnClose}>
               <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
             </Button>
           </DialogActions>
