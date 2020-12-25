@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { MapInfo, Service } from '../../services/Service'
 import { PageContainer, MapsListArea, NavArea, HeaderArea, StyledTableCell } from './styled';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -24,6 +23,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
 import MapActionMenu, { ActionType } from './MapActionMenu';
 import ActionDialog, { DialogType } from './ActionDialog';
+import { useSelector } from 'react-redux';
+import { allMaps, MapInfo } from '../../reducers/mapsListSlice';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -84,6 +85,7 @@ interface EnhancedTableProps {
 
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+
   const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
@@ -209,32 +211,22 @@ type ActionPanelState = {
   mapId: number
 }
 
-function EnhancedTable(props: ServiceProps) {
+function EnhancedTable() {
   const classes = useStyles();
-
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('modified');
   const [selected, setSelected] = React.useState<number[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState<MapInfo[]>([]);
-
+  const mapsInfo: MapInfo[] = useSelector(allMaps);
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(undefined);
-
   type ActiveDialog = {
     actionType: DialogType;
     mapId: number
 
   };
   const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
-
-  useEffect(() => {
-    (async () => {
-      const mapsInfo = await props.service.fetchAllMaps();
-      setRows(mapsInfo);
-    })();
-  }, []);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -244,7 +236,7 @@ function EnhancedTable(props: ServiceProps) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
+      const newSelecteds = mapsInfo.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -306,7 +298,7 @@ function EnhancedTable(props: ServiceProps) {
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, mapsInfo.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -327,10 +319,10 @@ function EnhancedTable(props: ServiceProps) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={mapsInfo.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(mapsInfo, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: MapInfo) => {
                   const isItemSelected = isSelected(row.id);
@@ -390,7 +382,7 @@ function EnhancedTable(props: ServiceProps) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={mapsInfo.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -399,16 +391,12 @@ function EnhancedTable(props: ServiceProps) {
       </Paper>
 
       {/* Action Dialog */}
-      <ActionDialog action={activeDialog?.actionType} onClose={(refresh: boolean) => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} service={props.service}/>
+      <ActionDialog action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1}/>
     </div>
   );
 }
 
-type ServiceProps = {
-  service: Service
-}
-
-const MapsPage = (props: ServiceProps) => {
+const MapsPage = () => {
 
   useEffect(() => {
     document.title = 'Maps | WiseMapping';
@@ -423,7 +411,7 @@ const MapsPage = (props: ServiceProps) => {
         <h1> Nav </h1>
       </NavArea>
       <MapsListArea>
-        <EnhancedTable service={props.service} />
+        <EnhancedTable/>
       </MapsListArea>
     </PageContainer>
   );

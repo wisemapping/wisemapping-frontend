@@ -13,7 +13,7 @@ type ForgotPasswordProps = {
   email: string;
 }
 
-const ForgotPassword = (props: ServiceProps) => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [disableButton, setDisableButton] = useState(false);
@@ -26,20 +26,20 @@ const ForgotPassword = (props: ServiceProps) => {
     setDisableButton(true);
 
     // Call Service ...
-    const service = props.service;
-    service.resetPassword(email)
-      .then(() => {
-        history.push("/c/forgot-password-success");
-      }).catch((error: ErrorInfo) => {
-        setErrorMsg(error.msg ? error.msg : '');
-        setDisableButton(false);
-      });
+    // const service = props.service;
+    // service.resetPassword(email)
+    //   .then(() => {
+    //     history.push("/c/forgot-password-success");
+    //   }).catch((error: ErrorInfo) => {
+    //     setErrorMsg(error.msg ? error.msg : '');
+    //     setDisableButton(false);
+    //   });
   }
 
   return (
     <PageContent>
-      <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password"/></h1>
-      <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password"/></p>
+      <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
+      <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
 
       <form onSubmit={handleOnSubmit}>
         <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
@@ -55,7 +55,7 @@ const ForgotPassword = (props: ServiceProps) => {
 type ServiceProps = {
   service: Service
 }
-const ForgotPasswordPage = (props: ServiceProps) => {
+const ForgotPasswordPage = () => {
 
   useEffect(() => {
     document.title = 'Reset Password | WiseMapping';
@@ -64,7 +64,7 @@ const ForgotPasswordPage = (props: ServiceProps) => {
   return (
     <div>
       <Header type='only-signin' />
-      <ForgotPassword service={props.service} />
+      <ForgotPassword />
       <Footer />
     </div>
   );

@@ -6,26 +6,41 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { BasicMapInfo, ErrorInfo, Service } from '../../services/Service';
+import { ErrorInfo, MapInfo, Service } from '../../services/Service';
 import { FormControl, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  allMaps,
+  remove,
+  rename
+} from '../../reducers/mapsListSlice'
+import { Description } from '@material-ui/icons';
+
 
 type DialogProps = {
   open: boolean,
   mapId: number,
-  onClose: (reload: boolean) => void,
-  service: Service
+  onClose: () => void
 }
 
-function DeleteConfirmDialog(props: DialogProps) {
+export type BasicMapInfo = {
+  name: string;
+  description: string | undefined;
+}
+
+function DeleteDialog(props: DialogProps) {
+  const dispatch = useDispatch()
+  const mapId = props.mapId;
+
+  const mapInfo: MapInfo | undefined = useSelector(allMaps).
+    find(m => m.id == mapId);
 
   const handleOnClose = (action: 'accept' | undefined): void => {
-    let result = false;
-    if (action == 'accept') {
-      props.service.deleteMap(props.mapId);
-      result = true;
+    if (action == 'accept' && mapInfo) {
+      dispatch(remove({ id: mapId }))
     }
-    props.onClose(result);
+    props.onClose();
   };
 
   return (
@@ -35,12 +50,10 @@ function DeleteConfirmDialog(props: DialogProps) {
         onClose={() => handleOnClose(undefined)} >
         <DialogTitle><FormattedMessage id="action.delete-title" defaultMessage="Delete" /></DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <Alert severity="warning">
-              <AlertTitle>Map to be deleted</AlertTitle>
-              <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
-            </Alert>
-          </DialogContentText>
+          <Alert severity="warning">
+            <AlertTitle>Delete '{mapInfo?.name}'</AlertTitle>
+            <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
+          </Alert>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => handleOnClose('accept')} variant="outlined" color="primary">
@@ -54,19 +67,32 @@ function DeleteConfirmDialog(props: DialogProps) {
     </div>
   );
 }
+export type RenameModel = {
+  id: number;
+  name: string;
+  description?: string;
+}
 
 function RenameDialog(props: DialogProps) {
-  const defaultModel: BasicMapInfo = { name: '', description: '' };
-  const [model, setModel] = React.useState<BasicMapInfo>(defaultModel);
-  const [errorInfo, setErroInfo] = React.useState<ErrorInfo>();
 
+  const defaultModel: RenameModel = { name: '', description: '', id: -1 };
+  const [model, setModel] = React.useState<RenameModel>(defaultModel);
+  const [errorInfo, setErroInfo] = React.useState<ErrorInfo>();
+  const dispatch = useDispatch()
   const intl = useIntl();
 
   useEffect(() => {
-    props.service.loadMapInfo(props.mapId)
-      .then((info: BasicMapInfo) => {
-        setModel(info);
-      })
+    const mapId: number = props.mapId;
+    if (mapId != -1) {
+      const mapInfo: MapInfo | undefined = useSelector(allMaps)
+        .find(m => m.id == props.mapId);
+
+      if (!mapInfo) {
+        throw "Please, reflesh the page.";
+      }
+
+      setModel({ ...mapInfo });
+    }
   }, []);
 
   const handleOnClose = (): void => {
@@ -74,21 +100,22 @@ function RenameDialog(props: DialogProps) {
     setModel(defaultModel);
     setErroInfo(undefined);
 
-    props.onClose(false);
+    props.onClose();
   };
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     // Stop form submit ...
     event.preventDefault();
 
-    // Fire rest call ...
-    const mapId = props.mapId;
-    props.service.renameMap(mapId, model).
-      then(() => {
-        props.onClose(true);
-      }).catch((errorInfo: ErrorInfo) => {
-        setErroInfo(errorInfo)
-      });
+    // Fire rename ...
+    const mapId: number = props.mapId;
+    try {
+      dispatch(rename({ id: mapId, name: model.name, description: model.description }))
+      handleOnClose();
+      
+    } catch (errorInfo) {
+      setErroInfo(errorInfo)
+    }
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -118,9 +145,9 @@ function RenameDialog(props: DialogProps) {
             {Boolean(errorInfo?.msg) ? <Alert severity="error" variant="filled" hidden={!Boolean(errorInfo?.msg)}>{errorInfo?.msg}</Alert> : null}
             <FormControl margin="normal" required fullWidth>
               <TextField name="name" label={intl.formatMessage({ id: "action.rename-name-placeholder", defaultMessage: "Name" })}
-                value={model.name} onChange={handleOnChange}  
-                error={Boolean(errorInfo?.fields?.get('name'))} helperText={errorInfo?.fields?.get('name')} 
-                variant="filled" required={true}/>
+                value={model.name} onChange={handleOnChange}
+                error={Boolean(errorInfo?.fields?.get('name'))} helperText={errorInfo?.fields?.get('name')}
+                variant="filled" required={true} />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <TextField name="description" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })} value={model.description} onChange={handleOnChange} variant="filled" />
@@ -129,7 +156,7 @@ function RenameDialog(props: DialogProps) {
 
           <DialogActions>
             <Button color="primary" variant="outlined" type="submit">
-              <FormattedMessage id="action.rename-button" defaultMessage="Rename"/>
+              <FormattedMessage id="action.rename-button" defaultMessage="Rename" />
             </Button>
 
             <Button color="secondary" variant="outlined" autoFocus onClick={handleOnClose}>
@@ -145,23 +172,23 @@ function RenameDialog(props: DialogProps) {
 export type DialogType = 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'rename' | 'publish';
 
 type ActionDialogProps = {
-  action: DialogType | undefined,
+  action?: DialogType,
   mapId: number,
-  service: Service,
-  onClose: (reload: boolean) => void
+  onClose: () => void
 }
 
 const ActionDialog = (props: ActionDialogProps) => {
-
-  const handleOnClose = (reload: boolean): void => {
-    props.onClose(reload);
+  const handleOnClose = (): void => {
+    props.onClose();
   }
+
+  const mapId = props.mapId;
+  const action = props.action;
 
   return (
     <span>
-      <DeleteConfirmDialog open={props.action === 'delete'} service={props.service} onClose={handleOnClose} mapId={props.mapId} />
-      <RenameDialog open={props.action === 'rename'} service={props.service} onClose={handleOnClose} mapId={props.mapId} />
-
+      <DeleteDialog open={action === 'delete'} onClose={handleOnClose} mapId={mapId} />
+      <RenameDialog open={action === 'rename'} onClose={handleOnClose} mapId={mapId} />
     </span >
   );
 }

@@ -1,4 +1,106 @@
 {
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "action.delete-button": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "Deleted mindmap can not be recovered. Do you want to continue ?."
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "Export"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "Open"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "Print"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "Publish"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "action.rename-button": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "action.rename-description": [
+    {
+      "type": 0,
+      "value": "Please, update the name and description for your mindmap."
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "action.rename-title": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Info"
+    }
+  ],
   "common.wait": [
     {
       "type": 0,
@@ -116,7 +218,7 @@
   "login.error": [
     {
       "type": 0,
-      "value": "The login.email address or login.password you entered is not valid."
+      "value": "The email address or password you entered is not valid."
     }
   ],
   "login.forgotpwd": [
@@ -164,7 +266,7 @@
   "login.userinactive": [
     {
       "type": 0,
-      "value": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
+      "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
     }
   ],
   "registration.desc": [

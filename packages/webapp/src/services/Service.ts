@@ -1,3 +1,4 @@
+import { Description } from '@material-ui/icons'
 import axios from 'axios'
 
 export type NewUser = {
@@ -15,11 +16,12 @@ export type MapInfo = {
     labels: [string];
     creator: string;
     modified: number;
+    description: string;
 }
 
 export type BasicMapInfo = {
     name: string;
-    description: string;
+    description?: string;
 }
 
 export type FieldError = {
@@ -86,6 +88,7 @@ class RestService implements Service {
     }
 
     async fetchAllMaps(): Promise<MapInfo[]> {
+
         function createMapInfo(
             id: number,
             starred: boolean,
@@ -93,14 +96,15 @@ class RestService implements Service {
             labels: [string],
             creator: string,
             modified: number,
+            description: string
         ): MapInfo {
-            return { id, name, labels, creator, modified, starred };
+            return { id, name, labels, creator, modified, starred, description};
         }
 
         const maps = [
-            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67,),
-            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67),
-            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67)
+            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67,""),
+            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67,""),
+            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67,"")
         ];
 
         return Promise.resolve(maps);

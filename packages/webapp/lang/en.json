@@ -1,4 +1,55 @@
 {
+  "action.cancel-button": {
+    "defaultMessage": "Cancel"
+  },
+  "action.delete": {
+    "defaultMessage": "Delete"
+  },
+  "action.delete-button": {
+    "defaultMessage": "Delete"
+  },
+  "action.delete-description": {
+    "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
+  },
+  "action.delete-title": {
+    "defaultMessage": "Delete"
+  },
+  "action.duplicate": {
+    "defaultMessage": "Duplicate"
+  },
+  "action.export": {
+    "defaultMessage": "Export"
+  },
+  "action.open": {
+    "defaultMessage": "Open"
+  },
+  "action.print": {
+    "defaultMessage": "Print"
+  },
+  "action.publish": {
+    "defaultMessage": "Publish"
+  },
+  "action.rename": {
+    "defaultMessage": "Rename"
+  },
+  "action.rename-button": {
+    "defaultMessage": "Rename"
+  },
+  "action.rename-description": {
+    "defaultMessage": "Please, update the name and description for your mindmap."
+  },
+  "action.rename-description-placeholder": {
+    "defaultMessage": "Description"
+  },
+  "action.rename-name-placeholder": {
+    "defaultMessage": "Name"
+  },
+  "action.rename-title": {
+    "defaultMessage": "Rename"
+  },
+  "action.share": {
+    "defaultMessage": "Info"
+  },
   "common.wait": {
     "defaultMessage": "Please wait ..."
   },
@@ -57,7 +108,7 @@
     "defaultMessage": "Email"
   },
   "login.error": {
-    "defaultMessage": "The login.email address or login.password you entered is not valid."
+    "defaultMessage": "The email address or password you entered is not valid."
   },
   "login.forgotpwd": {
     "defaultMessage": "Forgot Password ?"
@@ -82,7 +133,7 @@
     "defaultMessage": "Welcome"
   },
   "login.userinactive": {
-    "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification login.email when it becomes active. Stay tuned!."
+    "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
   },
   "registration.desc": {
     "defaultMessage": "Signing up is free and just take a moment"

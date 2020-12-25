@@ -12,7 +12,7 @@ import SubmitButton from '../submit-button'
 import { StyledReCAPTCHA } from './styled';
 import { PageContent } from '../../theme/global-style';
 
-const RegistrationForm = (props: ServiceProps) => {
+const RegistrationForm = () => {
   const [email, setEmail] = useState('');
   const [lastname, setLastname] = useState('')
   const [firstname, setFirstname] = useState('');
@@ -40,15 +40,15 @@ const RegistrationForm = (props: ServiceProps) => {
     };
 
     // Call Service ...
-    const service = props.service;
-    service.registerNewUser(user)
-      .then(() => {
-        history.push("/c/registration-success")
-      }).catch((error: ErrorInfo) => {
-        const errorMsg = error.msg ? error.msg : undefined;
-        setErrorMsg(errorMsg);
-        setDisableButton(false);
-      });
+    // const service = props.service;
+    // service.registerNewUser(user)
+    //   .then(() => {
+    //     history.push("/c/registration-success")
+    //   }).catch((error: ErrorInfo) => {
+    //     const errorMsg = error.msg ? error.msg : undefined;
+    //     setErrorMsg(errorMsg);
+    //     setDisableButton(false);
+    //   });
   }
 
 
@@ -82,10 +82,7 @@ const RegistrationForm = (props: ServiceProps) => {
   );
 }
 
-type ServiceProps = {
-  service: Service
-}
-const RegistationPage = (props: ServiceProps) => {
+const RegistationPage = () => {
 
   useEffect(() => {
     document.title = 'Registration | WiseMapping';
@@ -94,7 +91,7 @@ const RegistationPage = (props: ServiceProps) => {
   return (
     <div>
       <Header type='only-signin' />
-      <RegistrationForm service={props.service} />
+      <RegistrationForm/>
       <Footer />
     </div>
   );
