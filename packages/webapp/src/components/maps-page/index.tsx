@@ -24,7 +24,11 @@ import { CSSProperties } from 'react';
 import MapActionMenu, { ActionType } from './MapActionMenu';
 import ActionDialog, { DialogType } from './ActionDialog';
 import { useSelector } from 'react-redux';
-import { allMaps, MapInfo } from '../../reducers/mapsListSlice';
+import { activeInstance } from '../../reducers/serviceSlice';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { ErrorInfo, MapInfo, Service } from '../../services/Service';
+
+
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -41,7 +45,7 @@ type Order = 'asc' | 'desc';
 function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key,
-): (a: { [key in Key]: number | string | boolean | string[] }, b: { [key in Key]: number | string | string[] | boolean }) => number {
+): (a: { [key in Key]: number | string | boolean | string[] | undefined }, b: { [key in Key]: number | string | string[] | boolean }) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -211,14 +215,22 @@ type ActionPanelState = {
   mapId: number
 }
 
-function EnhancedTable() {
+const EnhancedTable = () => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('modified');
   const [selected, setSelected] = React.useState<number[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const mapsInfo: MapInfo[] = useSelector(allMaps);
+  const service: Service = useSelector(activeInstance);
+
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
+    
+    const result = await service.fetchAllMaps();
+    return result;
+  });
+  const mapsInfo: MapInfo[] = data ? data : [];
+
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(undefined);
   type ActiveDialog = {
@@ -322,7 +334,7 @@ function EnhancedTable() {
               rowCount={mapsInfo.length}
             />
             <TableBody>
-              {stableSort(mapsInfo, getComparator(order, orderBy))
+              {isLoading ? (<TableRow></TableRow>) : stableSort(mapsInfo, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: MapInfo) => {
                   const isItemSelected = isSelected(row.id);
@@ -391,11 +403,14 @@ function EnhancedTable() {
       </Paper>
 
       {/* Action Dialog */}
-      <ActionDialog action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1}/>
+      <ActionDialog action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
     </div>
   );
 }
 
+
+
+const queryClient = new QueryClient();
 const MapsPage = () => {
 
   useEffect(() => {
@@ -403,20 +418,21 @@ const MapsPage = () => {
   }, []);
 
   return (
-    <PageContainer>
-      <HeaderArea>
-        <h2>Header</h2>
-      </HeaderArea>
-      <NavArea>
-        <h1> Nav </h1>
-      </NavArea>
-      <MapsListArea>
-        <EnhancedTable/>
-      </MapsListArea>
-    </PageContainer>
+    <QueryClientProvider client={queryClient}>
+      <PageContainer>
+        <HeaderArea>
+          <h2>Header</h2>
+        </HeaderArea>
+        <NavArea>
+          <h1> Nav </h1>
+        </NavArea>
+        <MapsListArea>
+          <EnhancedTable />
+        </MapsListArea>
+      </PageContainer>
+    </QueryClientProvider>
   );
 }
-
 export default MapsPage;
 
 

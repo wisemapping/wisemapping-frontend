@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,13 +9,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo, MapInfo, Service } from '../../services/Service';
 import { FormControl, TextField } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
-  allMaps,
-  remove,
-  rename
-} from '../../reducers/mapsListSlice'
-import { Description } from '@material-ui/icons';
+  activeInstance,
+} from '../../reducers/serviceSlice'
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 
 type DialogProps = {
@@ -30,17 +28,32 @@ export type BasicMapInfo = {
 }
 
 function DeleteDialog(props: DialogProps) {
-  const dispatch = useDispatch()
+  const service: Service = useSelector(activeInstance);
+  const queryClient = useQueryClient();
   const mapId = props.mapId;
 
-  const mapInfo: MapInfo | undefined = useSelector(allMaps).
-    find(m => m.id == mapId);
+  const mutation = useMutation((id: number) => service.deleteMap(id),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries()
+        props.onClose();
+      }
+    }
+  );
+
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
+    return service.fetchAllMaps();
+  });
+
+  let mapInfo: MapInfo | undefined = undefined;
+  if (data) {
+    mapInfo = data.find((m) => m.id == mapId);
+  }
 
   const handleOnClose = (action: 'accept' | undefined): void => {
     if (action == 'accept' && mapInfo) {
-      dispatch(remove({ id: mapId }))
+      mutation.mutate(mapId);
     }
-    props.onClose();
   };
 
   return (
@@ -78,22 +91,21 @@ function RenameDialog(props: DialogProps) {
   const defaultModel: RenameModel = { name: '', description: '', id: -1 };
   const [model, setModel] = React.useState<RenameModel>(defaultModel);
   const [errorInfo, setErroInfo] = React.useState<ErrorInfo>();
-  const dispatch = useDispatch()
   const intl = useIntl();
 
-  useEffect(() => {
-    const mapId: number = props.mapId;
-    if (mapId != -1) {
-      const mapInfo: MapInfo | undefined = useSelector(allMaps)
-        .find(m => m.id == props.mapId);
+  // useEffect(() => {
+  //   const mapId: number = props.mapId;
+  //   if (mapId != -1) {
+  //     const mapInfo: MapInfo | undefined = useSelector(activeInstance)
+  //       .find(m => m.id == props.mapId);
 
-      if (!mapInfo) {
-        throw "Please, reflesh the page.";
-      }
+  //     if (!mapInfo) {
+  //       throw "Please, reflesh the page.";
+  //     }
 
-      setModel({ ...mapInfo });
-    }
-  }, []);
+  //     setModel({ ...mapInfo });
+  //   }
+  // }, []);
 
   const handleOnClose = (): void => {
     // Clean Up ...
@@ -110,9 +122,9 @@ function RenameDialog(props: DialogProps) {
     // Fire rename ...
     const mapId: number = props.mapId;
     try {
-      dispatch(rename({ id: mapId, name: model.name, description: model.description }))
+      //      dispatch(rename({ id: mapId, name: model.name, description: model.description }))
       handleOnClose();
-      
+
     } catch (errorInfo) {
       setErroInfo(errorInfo)
     }

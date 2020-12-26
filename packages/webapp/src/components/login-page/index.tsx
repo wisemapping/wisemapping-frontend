@@ -2,18 +2,18 @@ import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-import {PageContent} from '../../theme/global-style';
+import { PageContent } from '../../theme/global-style';
 import FormErrorDialog from '../form-error-dialog'
 
 
 import Header from '../header'
 import Footer from '../footer'
 import SubmitButton from '../submit-button'
- 
+
 
 const ConfigStatusMessage = (props: any) => {
   const enabled = props.enabled
-  let result = null;
+  let result;
   if (enabled === true) {
     result = (<div className="db-warn-msg">
       <p>
@@ -21,7 +21,7 @@ const ConfigStatusMessage = (props: any) => {
       </p>
     </div>);
   }
-  return result;
+  return result ? result : null;
 }
 
 const LoginError = () => {

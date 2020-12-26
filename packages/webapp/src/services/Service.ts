@@ -1,4 +1,3 @@
-import { Description } from '@material-ui/icons'
 import axios from 'axios'
 
 export type NewUser = {
@@ -47,10 +46,30 @@ interface Service {
 class RestService implements Service {
     private baseUrl: string;
     private authFailed: () => void
+    private maps: MapInfo[] = [];
 
     constructor(baseUrl: string, authFailed: () => void) {
         this.baseUrl = baseUrl;
+
+        // Remove, just for develop ....
+        function createMapInfo(
+            id: number,
+            starred: boolean,
+            name: string,
+            labels: [string],
+            creator: string,
+            modified: number,
+            description: string
+        ): MapInfo {
+            return { id, name, labels, creator, modified, starred, description };
+        }
+        this.maps = [
+            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67, ""),
+            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67, ""),
+            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67, "")
+        ];
     }
+
 
     loadMapInfo(id: number): Promise<BasicMapInfo> {
         return Promise.resolve({ name: 'My Map', description: 'My Description' });
@@ -66,7 +85,8 @@ class RestService implements Service {
         });
     }
 
-    async deleteMap(id: number): Promise<void> {
+    deleteMap(id: number): Promise<void> {
+        this.maps = this.maps.filter(m => m.id != id);
         return Promise.resolve();
     }
 
@@ -87,27 +107,8 @@ class RestService implements Service {
         return new Promise(handler);
     }
 
-    async fetchAllMaps(): Promise<MapInfo[]> {
-
-        function createMapInfo(
-            id: number,
-            starred: boolean,
-            name: string,
-            labels: [string],
-            creator: string,
-            modified: number,
-            description: string
-        ): MapInfo {
-            return { id, name, labels, creator, modified, starred, description};
-        }
-
-        const maps = [
-            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67,""),
-            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67,""),
-            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67,"")
-        ];
-
-        return Promise.resolve(maps);
+    fetchAllMaps(): Promise<MapInfo[]> {
+        return Promise.resolve(this.maps);
     }
 
     resetPassword(email: string): Promise<void> {

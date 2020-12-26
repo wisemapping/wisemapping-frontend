@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl';
+import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
 
 import { GlobalStyle } from './theme/global-style';
 import RegistrationSuccessPage from './components/registration-success-page';
@@ -7,14 +8,7 @@ import ForgotPasswordSuccessPage from './components/forgot-password-success-page
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import MapsPage from './components/maps-page';
-import store from "./store"
-
-import {
-  Route,
-  Switch,
-  Redirect,
-  BrowserRouter as Router,
-} from 'react-router-dom';
+import store from "./store";
 
 import { ForgotPasswordPage } from './components/forgot-password-page';
 import { Provider } from 'react-redux';
