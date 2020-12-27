@@ -76,13 +76,28 @@ class RestService implements Service {
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
-        const fieldErrors: Map<string, string> = new Map<string, string>();
-        fieldErrors.set('name', 'name already exists ')
 
-        return Promise.reject({
-            msg: 'Map already exists ...' + basicInfo.name,
-            fields: fieldErrors
-        });
+        const exists = this.maps.find(m => m.name == basicInfo.name) != undefined;
+        if (!exists) {
+            this.maps = this.maps.map(m => {
+                const result = m;
+                if (m.id == id) {
+                    result.description = basicInfo.description ? basicInfo.description : '';
+                    result.name = basicInfo.name;
+                }
+                return result;
+            })
+            return Promise.resolve();
+        } else {
+            const fieldErrors: Map<string, string> = new Map<string, string>();
+            fieldErrors.set('name', 'name already exists ')
+
+            return Promise.reject({
+                msg: 'Map already exists ...' + basicInfo.name,
+                fields: fieldErrors
+
+            })
+        };
     }
 
     deleteMap(id: number): Promise<void> {

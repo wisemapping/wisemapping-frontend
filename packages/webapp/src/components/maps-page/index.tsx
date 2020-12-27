@@ -236,10 +236,9 @@ const EnhancedTable = () => {
   type ActiveDialog = {
     actionType: DialogType;
     mapId: number
-
   };
-  const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
 
+  const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
