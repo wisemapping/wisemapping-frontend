@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl'
 
 import { PageContent } from '../../theme/global-style';
 
-import Header, { SignInButton } from '../header'
-import Footer from '../footer'
+import Header, { SignInButton } from '../layout/header'
+import Footer from '../layout/footer'
 
 const ForgotPasswordSuccessPage = () => {
   useEffect(() => {

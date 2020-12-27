@@ -1,3 +1,5 @@
+import { TextField, withStyles } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import styled, { createGlobalStyle } from 'styled-components';
 
 
@@ -87,20 +89,6 @@ padding: 20px 10px 20px 10px;
 
 /* Form Styles Section */
 
-& input[type=email],
-& input[type=password],
-& input[type=text] {
-    width: 258px;
-    height: 53px;
-    padding: 0px 20px;
-    margin: 10px 20px;
-    border-radius: 9px;
-    font-size: 16px;
-    border: solid 1px #f9a826;
-    display: block;
-    margin: 10px auto;
-}
-
 & input[type=checkbox] {
     border: solid 1px #f9a826;
     background-color: #f9a826;
@@ -108,7 +96,7 @@ padding: 20px 10px 20px 10px;
 
 & input[type=submit],
 & input[type=button] {
-    width: 258px;
+    width: 300px;
     height: 53px;
     padding: 0px 20px;
     margin: 10px 20px;
@@ -155,7 +143,6 @@ padding: 20px 10px 20px 10px;
     color: #f9a826;
 }
 `;
-
 
 
 export { GlobalStyle, PageContent };

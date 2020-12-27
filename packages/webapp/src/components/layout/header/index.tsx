@@ -4,7 +4,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
-const logo = require('../../images/header-logo.png')
+const logo = require('../../../images/header-logo.png')
 
 interface HeaderProps {
   type: 'only-signup' | 'only-signin' | 'none';

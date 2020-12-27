@@ -4,8 +4,8 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { Service } from "../../services/Service";
-import { activeInstance } from '../../reducers/serviceSlice';
+import { Service } from "../../../services/Service";
+import { activeInstance } from '../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./DialogCommon";
 
 

@@ -3,12 +3,11 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import { PageContent } from '../../theme/global-style';
-import FormErrorDialog from '../form-error-dialog'
-
-
-import Header from '../header'
-import Footer from '../footer'
-import SubmitButton from '../submit-button'
+import Header from '../layout/header'
+import Footer from '../layout/footer'
+import SubmitButton from '../form/submit-button'
+import Input from '../form/input';
+import GlobalError from '../form/global-error';
 
 
 const ConfigStatusMessage = (props: any) => {
@@ -38,9 +37,10 @@ const LoginError = () => {
       msg = intl.formatMessage({ id: "login.error", defaultMessage: "The email address or password you entered is  not valid." });
     }
   }
-  return <FormErrorDialog message={msg} />
-
+  <GlobalError error={{msg: msg}} />
+  return null;
 }
+
 
 const LoginPage = () => {
   const intl = useIntl();
@@ -60,17 +60,18 @@ const LoginPage = () => {
         <LoginError />
 
         <form action="/c/perform-login" method="POST">
-          <input type="email" name="username" placeholder={intl.formatMessage({ id: "login.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
-          <input type="password" name="password" placeholder={intl.formatMessage({ id: "login.password", defaultMessage: "Password" })} required={true} autoComplete="current-password" />
+          <Input name="email" type="email" label={{ id: "login.email", defaultMessage: "Email" }} required={true} autoComplete="email" />
+          <Input name="password" type="password" label={{ id: "login.password", defaultMessage: "Password" }} required={true} autoComplete="current-password" />
 
           <div>
             <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
             <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
           </div>
+
           <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
         </form>
-        <Link to="/c/forgot-password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
 
+        <Link to="/c/forgot-password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
         <ConfigStatusMessage enabled='false' />
 
       </PageContent>

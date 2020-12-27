@@ -1,7 +1,7 @@
 import { QueryClient, useQuery } from "react-query";
 import { useSelector } from "react-redux";
-import { ErrorInfo, MapInfo, Service } from "../../services/Service";
-import { activeInstance, } from '../../reducers/serviceSlice';
+import { ErrorInfo, MapInfo, Service } from "../../../services/Service";
+import { activeInstance, } from '../../../reducers/serviceSlice';
 
 type MapLoadResult = {
   isLoading: boolean,

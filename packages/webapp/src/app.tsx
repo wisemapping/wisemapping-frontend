@@ -12,6 +12,7 @@ import store from "./store";
 
 import { ForgotPasswordPage } from './components/forgot-password-page';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 function loadLocaleData(language: string) {
   switch (language) {
@@ -22,18 +23,13 @@ function loadLocaleData(language: string) {
   }
 }
 
-type AppProps = {
-  baseRestUrl: string;
-}
-
+const queryClient = new QueryClient();
 const App = () => {
   const [messages, setMessages] = useState(undefined);
-
   // Boostrap i18n ...
   const locale = (navigator.languages && navigator.languages[0])
     || navigator.language
     || 'en-US';
-
 
   useEffect(() => {
     const language = locale.split('-')[0];
@@ -47,28 +43,30 @@ const App = () => {
 
   return messages ? (
     <Provider store={store}>
-      <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-        <GlobalStyle />
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/c/login" />
-            </Route>
-            <Route path="/c/login" component={LoginPage} />
-            <Route path="/c/registration">
-              <RegistationPage />
-            </Route>
-            <Route path="/c/registration-success" component={RegistrationSuccessPage} />
-            <Route path="/c/forgot-password">
-              <ForgotPasswordPage />
-            </Route>
-            <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
-            <Route path="/c/maps/">
-              <MapsPage />
-            </Route>
-          </Switch>
-        </Router>
-      </IntlProvider>
+      <QueryClientProvider client={queryClient}>
+        <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
+          <GlobalStyle />
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/c/login" />
+              </Route>
+              <Route path="/c/login" component={LoginPage} />
+              <Route path="/c/registration">
+                <RegistationPage />
+              </Route>
+              <Route path="/c/registration-success" component={RegistrationSuccessPage} />
+              <Route path="/c/forgot-password">
+                <ForgotPasswordPage />
+              </Route>
+              <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
+              <Route path="/c/maps/">
+                <MapsPage />
+              </Route>
+            </Switch>
+          </Router>
+        </IntlProvider>
+      </QueryClientProvider>
     </Provider>
 
   ) : <div>Loading ... </div>

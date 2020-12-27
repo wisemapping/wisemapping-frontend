@@ -22,10 +22,10 @@ import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
 import MapActionMenu, { ActionType } from './MapActionMenu';
-import ActionDialog, { DialogType } from './ActionDialog';
+import ActionDialog, { DialogType } from './dialogs/ActionDialog';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../reducers/serviceSlice';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { ErrorInfo, MapInfo, Service } from '../../services/Service';
 
 
@@ -225,7 +225,7 @@ const EnhancedTable = () => {
   const service: Service = useSelector(activeInstance);
 
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
-    
+
     const result = await service.fetchAllMaps();
     return result;
   });
@@ -409,7 +409,6 @@ const EnhancedTable = () => {
 
 
 
-const queryClient = new QueryClient();
 const MapsPage = () => {
 
   useEffect(() => {
@@ -417,19 +416,17 @@ const MapsPage = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <PageContainer>
-        <HeaderArea>
-          <h2>Header</h2>
-        </HeaderArea>
-        <NavArea>
-          <h1> Nav </h1>
-        </NavArea>
-        <MapsListArea>
-          <EnhancedTable />
-        </MapsListArea>
-      </PageContainer>
-    </QueryClientProvider>
+    <PageContainer>
+      <HeaderArea>
+        <h2>Header</h2>
+      </HeaderArea>
+      <NavArea>
+        <h1> Nav </h1>
+      </NavArea>
+      <MapsListArea>
+        <EnhancedTable />
+      </MapsListArea>
+    </PageContainer>
   );
 }
 export default MapsPage;

@@ -2,7 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { StyledFooter } from './styled'
 
-const logo = require('../../images/logo-text.svg')
+const logo = require('../../../images/logo-text.svg')
 
 const Footer = () => {
   return (

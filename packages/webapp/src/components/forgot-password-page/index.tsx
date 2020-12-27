@@ -3,37 +3,35 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { useHistory } from "react-router-dom"
 import { Service, ErrorInfo } from '../../services/Service'
 
-import Header from '../header'
-import Footer from '../footer'
+import Header from '../layout/header'
+import Footer from '../layout/footer'
 import { PageContent } from '../../theme/global-style'
-import FormErrorDialog from '../form-error-dialog'
-import SubmitButton from '../submit-button'
-
-type ForgotPasswordProps = {
-  email: string;
-}
+import { useSelector } from 'react-redux'
+import { useMutation } from 'react-query'
+import { activeInstance } from '../../reducers/serviceSlice'
+import Input from '../form/input'
+import GlobalError from '../form/global-error'
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [disableButton, setDisableButton] = useState(false);
-
+  const [email, setEmail] = useState<string>('');
+  const [error, setError] = useState<ErrorInfo>();
   const history = useHistory();
   const intl = useIntl();
 
+  const service: Service = useSelector(activeInstance);
+  const mutation = useMutation<void, ErrorInfo, string>(
+    (email: string) => service.resetPassword(email),
+    {
+      onSuccess: () => history.push("/c/forgot-password-success"),
+      onError: (error) => {
+        setError(error);
+      }
+    }
+  );
+
   const handleOnSubmit = (event: React.FormEvent<any>) => {
     event.preventDefault();
-    setDisableButton(true);
-
-    // Call Service ...
-    // const service = props.service;
-    // service.resetPassword(email)
-    //   .then(() => {
-    //     history.push("/c/forgot-password-success");
-    //   }).catch((error: ErrorInfo) => {
-    //     setErrorMsg(error.msg ? error.msg : '');
-    //     setDisableButton(false);
-    //   });
+    mutation.mutate(email);
   }
 
   return (
@@ -41,20 +39,18 @@ const ForgotPassword = () => {
       <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
       <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
 
+      <GlobalError error={error} />
+
       <form onSubmit={handleOnSubmit}>
-        <input type="email" name="email" onChange={e => setEmail(e.target.value)} placeholder={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })} required={true} autoComplete="email" />
+        <Input type="email" name="email" label={{ id: "forgot.email", defaultMessage: "Email" }}
+          autoComplete="email" onChange={e => setEmail(e.target.value)} />
 
-        <FormErrorDialog message={errorMsg} />
-
-        <SubmitButton disabled={disableButton} value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
+        <input type="submit" value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
       </form>
     </PageContent>
   );
 }
 
-type ServiceProps = {
-  service: Service
-}
 const ForgotPasswordPage = () => {
 
   useEffect(() => {

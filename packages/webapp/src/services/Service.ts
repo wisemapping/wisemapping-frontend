@@ -43,7 +43,7 @@ interface Service {
     loadMapInfo(id: number): Promise<BasicMapInfo>;
 }
 
-class RestService implements Service {
+class MockService implements Service {
     private baseUrl: string;
     private authFailed: () => void
     private maps: MapInfo[] = [];
@@ -129,7 +129,7 @@ class RestService implements Service {
     resetPassword(email: string): Promise<void> {
 
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + '/service/users/resetPassword?email=' + email,
+            axios.post(`${this.baseUrl}/service/users/resetPassword?email=${email}`,
                 null,
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(response => {
@@ -142,7 +142,6 @@ class RestService implements Service {
             });
         }
         return new Promise(handler);
-
     }
 
     private parseResponseOnError = (response: any): ErrorInfo => {
@@ -159,7 +158,7 @@ class RestService implements Service {
                     break;
                 default:
                     if (data) {
-                        // Set global errorrs ...
+                        // Set global errors ...
                         if (data.globalErrors) {
                             let msg;
                             let errors = data.globalErrors;
@@ -191,4 +190,4 @@ class RestService implements Service {
     }
 
 }
-export { Service, RestService }
+export { Service, MockService as RestService }

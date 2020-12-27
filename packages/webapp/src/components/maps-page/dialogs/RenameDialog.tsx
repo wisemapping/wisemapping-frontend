@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { BasicMapInfo, ErrorInfo, Service } from "../../services/Service";
-import { activeInstance } from '../../reducers/serviceSlice';
+import { BasicMapInfo, ErrorInfo, Service } from "../../../services/Service";
+import { activeInstance } from '../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./DialogCommon";
 
 export type RenameModel = {
@@ -13,8 +13,8 @@ export type RenameModel = {
     name: string;
     description?: string;
 }
-const defaultModel: RenameModel = { name: '', description: '', id: -1 };
 
+const defaultModel: RenameModel = { name: '', description: '', id: -1 };
 const RenameDialog = (props: DialogProps) => {
     const service: Service = useSelector(activeInstance);
     const [model, setModel] = React.useState<RenameModel>(defaultModel);
@@ -70,7 +70,7 @@ const RenameDialog = (props: DialogProps) => {
     return (
         <div>
             <Dialog
-                open={props.open}
+                open={open}
                 onClose={() => handleOnClose()} >
                 <form autoComplete="off" onSubmit={handleOnSubmit}>
                     <DialogTitle>
@@ -83,6 +83,7 @@ const RenameDialog = (props: DialogProps) => {
                         </DialogContentText>
 
                         {Boolean(error?.msg) ? <Alert severity="error" variant="filled" hidden={!Boolean(error?.msg)}>{error?.msg}</Alert> : null}
+                      
                         <FormControl margin="normal" required fullWidth>
                             <TextField name="name" label={intl.formatMessage({ id: "action.rename-name-placeholder", defaultMessage: "Name" })}
                                 value={model.name} onChange={handleOnChange}
@@ -90,7 +91,8 @@ const RenameDialog = (props: DialogProps) => {
                                 variant="filled" required={true} />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
-                            <TextField name="description" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })} value={model.description} onChange={handleOnChange} variant="filled" />
+                            <TextField name="description" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })} 
+                            value={model.description} onChange={handleOnChange} variant="filled" />
                         </FormControl>
                     </DialogContent>
 
