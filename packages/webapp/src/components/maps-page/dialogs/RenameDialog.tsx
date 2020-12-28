@@ -1,12 +1,12 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import React, { useEffect } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { BasicMapInfo, ErrorInfo, Service } from "../../../services/Service";
 import { activeInstance } from '../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./DialogCommon";
+import Dialog from "./Dialog";
+import Input from "../../form/input";
 
 export type RenameModel = {
     id: number;
@@ -39,9 +39,9 @@ const RenameDialog = (props: DialogProps) => {
     );
 
     const handleOnClose = (): void => {
+        props.onClose();
         setModel(defaultModel);
         setError(undefined);
-        props.onClose();
     };
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -69,43 +69,16 @@ const RenameDialog = (props: DialogProps) => {
 
     return (
         <div>
-            <Dialog
-                open={open}
-                onClose={() => handleOnClose()} >
-                <form autoComplete="off" onSubmit={handleOnSubmit}>
-                    <DialogTitle>
-                        <FormattedMessage id="action.rename-title" defaultMessage="Rename" />
-                    </DialogTitle>
+            <Dialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+                title={{ id: 'rename.title', defaultMessage: 'Rename' }}
+                description={{ id: 'rename.description', defaultMessage: 'Rename' }}
+                submitButton={{ id: 'rename.title', defaultMessage: 'Rename Description' }}>
+                
+                <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
+                    value={model.name} onChange={handleOnChange} error={error} />
 
-                    <DialogContent>
-                        <DialogContentText>
-                            <FormattedMessage id="action.rename-description" defaultMessage="Please, update the name and description for your mindmap." />
-                        </DialogContentText>
-
-                        {Boolean(error?.msg) ? <Alert severity="error" variant="filled" hidden={!Boolean(error?.msg)}>{error?.msg}</Alert> : null}
-                      
-                        <FormControl margin="normal" required fullWidth>
-                            <TextField name="name" label={intl.formatMessage({ id: "action.rename-name-placeholder", defaultMessage: "Name" })}
-                                value={model.name} onChange={handleOnChange}
-                                error={Boolean(error?.fields?.get('name'))} helperText={error?.fields?.get('name')}
-                                variant="filled" required={true} />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <TextField name="description" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })} 
-                            value={model.description} onChange={handleOnChange} variant="filled" />
-                        </FormControl>
-                    </DialogContent>
-
-                    <DialogActions>
-                        <Button color="primary" variant="outlined" type="submit">
-                            <FormattedMessage id="action.rename-button" defaultMessage="Rename" />
-                        </Button>
-
-                        <Button color="secondary" variant="outlined" autoFocus onClick={handleOnClose}>
-                            <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
-                        </Button>
-                    </DialogActions>
-                </form>
+                <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
+                    value={model.description} onChange={handleOnChange} required={false} />
             </Dialog>
         </div>
     );

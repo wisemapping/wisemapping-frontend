@@ -23,7 +23,7 @@ const Input = (props: InputProps) => {
     const value = props.value;
     const onChange = props.onChange ? props.onChange : () => { };
     const fieldError = error?.fields?.get(name);
-    const required = props.required ? props.required : true;
+    const required = props.required != undefined ? props.required : true;
 
     return (
         <FormControl margin="normal" required={required} fullWidth>
