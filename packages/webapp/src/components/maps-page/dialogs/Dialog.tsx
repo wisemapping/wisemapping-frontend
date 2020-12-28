@@ -10,10 +10,10 @@ export type DialogProps = {
     open: boolean;
     children: any;
     error?: ErrorInfo;
-    
+
     title: MessageDescriptor;
-    description:MessageDescriptor;
-    submitButton: MessageDescriptor; 
+    description?: MessageDescriptor;
+    submitButton: MessageDescriptor;
 }
 
 const Dialog = (props: DialogProps) => {
@@ -21,6 +21,8 @@ const Dialog = (props: DialogProps) => {
     const handleOnClose = props.onClose;
     const isOpen = props.open;
     const handleOnSubmit = props.onSubmit;
+
+    const description = props.description ? (<DialogContentText>{intl.formatMessage(props.description)}</DialogContentText>) : null;
 
     return (
         <div>
@@ -33,15 +35,14 @@ const Dialog = (props: DialogProps) => {
                     </DialogTitle>
 
                     <DialogContent>
-                        <DialogContentText>{intl.formatMessage(props.description)}</DialogContentText>
+                        {description}
                         <GlobalError error={props.error} />
-                        
                         {props.children}
                     </DialogContent>
 
                     <DialogActions>
                         <Button color="primary" variant="outlined" type="submit">
-                            <FormattedMessage id="action.rename-button" defaultMessage="Rename" />
+                            {intl.formatMessage(props.title)}
                         </Button>
 
                         <Button color="secondary" variant="outlined" autoFocus onClick={handleOnClose}>
