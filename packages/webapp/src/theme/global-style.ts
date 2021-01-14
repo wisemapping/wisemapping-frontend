@@ -150,14 +150,27 @@ const theme = createMuiTheme({
         fontFamily: [
             'Montserrat'
         ].join(','),
+        h6: {
+            fontSize: '25px',
+            fontWeight: 'bold'
+        },
+    },
+    palette: {
+        primary: {
+            main: '#ffffff',
+            light: '#ffffff',
+            dark:  '#ffffff',
+            contrastText: '#ffffff'
+        },
+        secondary: {
+            main: '#ffffff',
+            light: '#ffffff',
+            dark:  '#ffffff',
+            contrastText: '#ffffff'
+        }
     }
 });
 
-theme.typography.h6 = {
-    fontSize: '25px',
-    fontWeight: 'bold'
-
-  };
-
+theme.palette.secondary
 export { GlobalStyle, PageContent, theme };
 

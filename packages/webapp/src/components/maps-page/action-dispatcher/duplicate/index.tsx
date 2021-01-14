@@ -4,30 +4,30 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { BasicMapInfo, ErrorInfo, Service } from "../../../../services/Service";
 import { activeInstance } from '../../../../reducers/serviceSlice';
-import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./../DialogCommon";
 import Input from "../../../form/input";
 import { FormControl } from "@material-ui/core";
+import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import BaseDialog from "../action-dialog";
 
-export type RenameModel = {
+export type DuplicateModel = {
     id: number;
     name: string;
     description?: string;
 }
 
-const defaultModel: RenameModel = { name: '', description: '', id: -1 };
-const RenameDialog = (props: DialogProps) => {
+const defaultModel: DuplicateModel = { name: '', description: '', id: -1 };
+const DuplicateDialog = (props: DialogProps) => {
     const service: Service = useSelector(activeInstance);
-    const [model, setModel] = React.useState<RenameModel>(defaultModel);
+    const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
     const { mapId, open } = props;
 
     const intl = useIntl();
     const queryClient = useQueryClient();
 
-    const mutation = useMutation<RenameModel, ErrorInfo, RenameModel>((model: RenameModel) => {
+    const mutation = useMutation<DuplicateModel, ErrorInfo, DuplicateModel>((model: DuplicateModel) => {
         const { id, ...rest } = model;
-        return service.renameMap(id, rest).then(() => model);
+        return service.duplicateMap(id, rest).then(() => model);
     },
         {
             onSuccess: () => {
@@ -71,9 +71,9 @@ const RenameDialog = (props: DialogProps) => {
     return (
         <div>
             <BaseDialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
-                title={{ id: 'rename.title', defaultMessage: 'Rename' }}
-                description={{ id: 'rename.description', defaultMessage: 'Rename' }}
-                submitButton={{ id: 'rename.title', defaultMessage: 'Rename Description' }}>
+                title={{ id: 'duplicate.title', defaultMessage: 'Duplicate' }}
+                description={{ id: 'rename.description', defaultMessage: 'Please, fill the new map name and description.' }}
+                submitButton={{ id: 'duplicate.title', defaultMessage: 'Duplicate' }}>
 
                 <FormControl fullWidth={true}>
                     <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
@@ -87,4 +87,4 @@ const RenameDialog = (props: DialogProps) => {
     );
 }
 
-export default RenameDialog;
+export default DuplicateDialog;

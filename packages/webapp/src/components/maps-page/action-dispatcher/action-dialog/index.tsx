@@ -7,14 +7,14 @@ import GlobalError from "../../../form/global-error";
 
 export type DialogProps = {
     onClose: () => void;
-    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
     open: boolean;
     children: any;
     error?: ErrorInfo;
 
     title: MessageDescriptor;
     description?: MessageDescriptor;
-    submitButton: MessageDescriptor;
+    submitButton?: MessageDescriptor;
 }
 
 const BaseDialog = (props: DialogProps) => {
@@ -44,12 +44,13 @@ const BaseDialog = (props: DialogProps) => {
                     </StyledDialogContent>
 
                     <StyledDialogActions>
-                        <ButtonStyled color="primary" size="medium" variant="outlined" type="submit">
-                            {intl.formatMessage(props.title)}
-                        </ButtonStyled>
-
+                        {handleOnSubmit ? (
+                            <ButtonStyled color="primary" size="medium" variant="outlined" type="submit">
+                                {intl.formatMessage(props.title)}
+                            </ButtonStyled>) : null
+                        }
                         <ButtonStyled color="secondary" size="medium" variant="outlined" autoFocus onClick={handleOnClose}>
-                            <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
+                            {handleOnSubmit ? (<FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />) : (<FormattedMessage id="action.close-button" defaultMessage="Close" />)};
                         </ButtonStyled>
                     </StyledDialogActions>
                 </form>

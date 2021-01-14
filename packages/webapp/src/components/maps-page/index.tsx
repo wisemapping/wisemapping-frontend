@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { PageContainer, MapsListArea, NavArea, HeaderArea, StyledTableCell } from './styled';
+import { PageContainer, MapsListArea, HeaderArea, StyledTableCell } from './styled';
 
 import { createStyles, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -28,7 +28,8 @@ import { ErrorInfo, MapInfo, Service } from '../../services/Service';
 import { theme } from '../../theme/global-style';
 import { CssBaseline } from '@material-ui/core';
 import ActionChooser, { ActionType } from './action-chooser';
-import ActionDialogDispatcher from './action-dialog-dispatcher';
+import ActionDispatcher from './action-dispatcher';
+import NavPanel from './nav-panel';
 
 
 
@@ -404,7 +405,7 @@ const EnhancedTable = () => {
       </Paper>
 
       {/* Action Dialog */}
-      <ActionDialogDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
+      <ActionDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
     </div>
   );
 }
@@ -420,13 +421,12 @@ const MapsPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
       <PageContainer>
         <HeaderArea>
           <h2>Header</h2>
         </HeaderArea>
-        <NavArea>
-          <h1> Nav </h1>
-        </NavArea>
+        <NavPanel/>
         <MapsListArea>
           <EnhancedTable />
         </MapsListArea>

@@ -8,11 +8,17 @@
   "action.delete-description": {
     "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
   },
+  "action.delete-title": {
+    "defaultMessage": "Delete"
+  },
   "action.duplicate": {
     "defaultMessage": "Duplicate"
   },
   "action.export": {
     "defaultMessage": "Export"
+  },
+  "action.info": {
+    "defaultMessage": "Info"
   },
   "action.open": {
     "defaultMessage": "Open"
@@ -27,7 +33,7 @@
     "defaultMessage": "Rename"
   },
   "action.share": {
-    "defaultMessage": "Info"
+    "defaultMessage": "Share"
   },
   "common.wait": {
     "defaultMessage": "Please wait ..."

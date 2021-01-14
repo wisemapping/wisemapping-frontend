@@ -12,7 +12,7 @@ export type MapInfo = {
     id: number;
     starred: boolean;
     name: string;
-    labels: [string];
+    labels: string[];
     creator: string;
     modified: number;
     description: string;
@@ -40,6 +40,7 @@ interface Service {
 
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
+    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
 }
 
@@ -56,7 +57,7 @@ class MockService implements Service {
             id: number,
             starred: boolean,
             name: string,
-            labels: [string],
+            labels: string[],
             creator: string,
             modified: number,
             description: string
@@ -94,6 +95,33 @@ class MockService implements Service {
 
             return Promise.reject({
                 msg: 'Map already exists ...' + basicInfo.name,
+                fields: fieldErrors
+
+            })
+        };
+    }
+    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
+
+        const exists = this.maps.find(m => m.name == basicInfo.name) != undefined;
+        if (!exists) {
+
+            const newMap: MapInfo = {
+                id: Math.random() * 1000,
+                description: String(basicInfo.description),
+                name: basicInfo.name,
+                starred: false,
+                creator: "current user",
+                labels: [],
+                modified: -1
+            };
+            this.maps.push(newMap);
+            return Promise.resolve();
+        } else {
+            const fieldErrors: Map<string, string> = new Map<string, string>();
+            fieldErrors.set('name', 'name already exists ')
+
+            return Promise.reject({
+                msg: 'Maps name must be unique:' + basicInfo.name,
                 fields: fieldErrors
 
             })

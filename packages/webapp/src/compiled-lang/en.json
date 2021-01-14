@@ -17,6 +17,12 @@
       "value": "Deleted mindmap can not be recovered. Do you want to continue ?."
     }
   ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
   "action.duplicate": [
     {
       "type": 0,
@@ -27,6 +33,12 @@
     {
       "type": 0,
       "value": "Export"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "Info"
     }
   ],
   "action.open": [
@@ -56,7 +68,7 @@
   "action.share": [
     {
       "type": 0,
-      "value": "Info"
+      "value": "Share"
     }
   ],
   "common.wait": [

@@ -18,11 +18,6 @@ grid-area: main;
 background-color: #ffff64;
 `
 
-export const NavArea = styled.div` 
-grid-area: nav;
-background-color: red;
-`
-
 export const HeaderArea = styled.div`
 grid-area: header;
 background-color: blue;

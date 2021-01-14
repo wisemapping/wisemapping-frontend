@@ -14,12 +14,12 @@ import { FormattedMessage } from 'react-intl';
 
 export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'rename' | 'print' | 'info' | 'publish' | undefined;
 
-interface MapActionProps {
+interface ActionProps {
   onClose: (action: ActionType) => void;
   anchor: undefined | HTMLElement;
 }
 
-const ActionChooser = (props: MapActionProps) => {
+const ActionChooser = (props: ActionProps) => {
   const { anchor, onClose } = props;
 
   const handleOnClose = (action: ActionType): ((event: React.MouseEvent<HTMLLIElement>) => void) => {
@@ -68,7 +68,7 @@ const ActionChooser = (props: MapActionProps) => {
       <Divider />
 
       <MenuItem onClick={handleOnClose('info')}>
-        <InfoOutlinedIcon /><FormattedMessage id="action.share" defaultMessage="Info" />
+        <InfoOutlinedIcon /><FormattedMessage id="action.info" defaultMessage="Info" />
       </MenuItem>
     </Menu>);
 }
