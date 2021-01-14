@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, Dialog as DialogUI, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { DialogActions, DialogContentText, DialogTitle } from "@material-ui/core";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
-import GlobalError from "../../form/global-error";
-import { ErrorInfo } from "../../../services/Service";
+import { ErrorInfo } from "../../../../services/Service";
+import { ButtonStyled, StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
+import GlobalError from "../../../form/global-error";
 
 export type DialogProps = {
     onClose: () => void;
@@ -16,7 +17,7 @@ export type DialogProps = {
     submitButton: MessageDescriptor;
 }
 
-const Dialog = (props: DialogProps) => {
+const BaseDialog = (props: DialogProps) => {
     const intl = useIntl();
     const handleOnClose = props.onClose;
     const isOpen = props.open;
@@ -26,33 +27,35 @@ const Dialog = (props: DialogProps) => {
 
     return (
         <div>
-            <DialogUI
+            <StyledDialog
                 open={isOpen}
-                onClose={handleOnClose} >
+                onClose={handleOnClose}
+                maxWidth="sm"
+                fullWidth={true}>
                 <form autoComplete="off" onSubmit={handleOnSubmit}>
-                    <DialogTitle>
+                    <StyledDialogTitle>
                         {intl.formatMessage(props.title)}
-                    </DialogTitle>
+                    </StyledDialogTitle>
 
-                    <DialogContent>
+                    <StyledDialogContent>
                         {description}
                         <GlobalError error={props.error} />
                         {props.children}
-                    </DialogContent>
+                    </StyledDialogContent>
 
-                    <DialogActions>
-                        <Button color="primary" variant="outlined" type="submit">
+                    <StyledDialogActions>
+                        <ButtonStyled color="primary" size="medium" variant="outlined" type="submit">
                             {intl.formatMessage(props.title)}
-                        </Button>
+                        </ButtonStyled>
 
-                        <Button color="secondary" variant="outlined" autoFocus onClick={handleOnClose}>
+                        <ButtonStyled color="secondary" size="medium" variant="outlined" autoFocus onClick={handleOnClose}>
                             <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
-                        </Button>
-                    </DialogActions>
+                        </ButtonStyled>
+                    </StyledDialogActions>
                 </form>
-            </DialogUI>
+            </StyledDialog>
         </div>
     );
 }
 
-export default Dialog;
+export default BaseDialog;

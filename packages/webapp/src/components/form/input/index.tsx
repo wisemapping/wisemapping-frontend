@@ -13,6 +13,7 @@ type InputProps = {
     type: string;
     value?: string
     autoComplete?: string;
+    fullWidth?: boolean
 }
 
 const Input = (props: InputProps) => {
@@ -22,16 +23,16 @@ const Input = (props: InputProps) => {
     const name = props.name;
     const value = props.value;
     const onChange = props.onChange ? props.onChange : () => { };
-    const fieldError = error?.fields?.get(name);
+    const fieldError = Boolean(error?.fields?.get(name));
     const required = props.required != undefined ? props.required : true;
+    const fullWidth = props.fullWidth != undefined ? props.required : true;
 
     return (
-        <FormControl margin="normal" required={required} fullWidth>
-            <StyledTextField name={name} type={props.type} label={intl.formatMessage(props.label)}
-                value={value} onChange={onChange}
-                error={Boolean(fieldError)} helperText={fieldError}
-                variant="outlined" required={required} />
-        </FormControl>
+        <StyledTextField name={name} type={props.type} label={intl.formatMessage(props.label)}
+            value={value} onChange={onChange}
+            error={fieldError} helperText={fieldError}
+            variant="outlined" required={required} fullWidth={fullWidth} margin="dense"/>
+
     );
 }
 export default Input;

@@ -1,13 +1,12 @@
-import { Button, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { Service } from "../../../services/Service";
-import { activeInstance } from '../../../reducers/serviceSlice';
-import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./DialogCommon";
-import Dialog from "./Dialog";
+import { Service } from "../../../../services/Service";
+import { activeInstance } from '../../../../reducers/serviceSlice';
+import { DialogProps, fetchMapById, handleOnMutationSuccess } from "../DialogCommon";
+import BaseDialog from "../action-dialog";
 
 
 const DeleteDialog = (props: DialogProps) => {
@@ -32,7 +31,7 @@ const DeleteDialog = (props: DialogProps) => {
   const { map } = fetchMapById(mapId);
   return (
     <div>
-      <Dialog
+      <BaseDialog
         open={props.open} onClose={handleOnClose} onSubmit={handleOnSubmit}
         title={{ id: "action.delete-title", defaultMessage: "Delete" }} 
         submitButton={{ id: "action.delete-title", defaultMessage: "Delete" }} >
@@ -41,7 +40,7 @@ const DeleteDialog = (props: DialogProps) => {
           <AlertTitle>Delete '{map?.name}'</AlertTitle>
           <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
         </Alert>
-      </Dialog>
+      </BaseDialog>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { MenuItem, TableCell } from '@material-ui/core';
+import { Button, Dialog, MenuItem, TableCell } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 
@@ -27,7 +27,6 @@ export const HeaderArea = styled.div`
 grid-area: header;
 background-color: blue;
 `
-
 
 export const StyledTableCell = withStyles({
     root: {

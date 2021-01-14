@@ -1,4 +1,4 @@
-import { TextField, withStyles } from '@material-ui/core';
+import { createMuiTheme, TextField, withStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -78,11 +78,11 @@ a {
     border: solid 1px #ffa800;
     font-weight: 600;
 }
-
 `;
+
 const PageContent = styled.div`
-max-width: 800px;
-min-height: 400px;
+max-width: 350px;
+min-height: 350px;
 margin: 10px auto;
 text-align:center;
 padding: 20px 10px 20px 10px;
@@ -96,20 +96,21 @@ padding: 20px 10px 20px 10px;
 
 & input[type=submit],
 & input[type=button] {
-    width: 300px;
+    width: 330px;
     height: 53px;
     padding: 0px 20px;
-    margin: 10px 20px;
+    margin: 7px 0px;
     font-size: 20px;
     font-weight: 600;
     border-radius: 9px;
     border: 0px;
-    background-color: rgba(255, 168, 0, 0.6);
+    background-color: #ffa800;
     color: white;
 }
 
 & input[type=submit]:hover {
-    background-color: #f9a826;
+    background-color: rgba(249, 168, 38, 0.91);
+    cursor: pointer
 }
 
 & label {
@@ -144,5 +145,19 @@ padding: 20px 10px 20px 10px;
 }
 `;
 
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: [
+            'Montserrat'
+        ].join(','),
+    }
+});
 
-export { GlobalStyle, PageContent };
+theme.typography.h6 = {
+    fontSize: '25px',
+    fontWeight: 'bold'
+
+  };
+
+export { GlobalStyle, PageContent, theme };
+

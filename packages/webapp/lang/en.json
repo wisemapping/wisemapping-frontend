@@ -5,14 +5,8 @@
   "action.delete": {
     "defaultMessage": "Delete"
   },
-  "action.delete-button": {
-    "defaultMessage": "Delete"
-  },
   "action.delete-description": {
     "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
-  },
-  "action.delete-title": {
-    "defaultMessage": "Delete"
   },
   "action.duplicate": {
     "defaultMessage": "Duplicate"
@@ -30,21 +24,6 @@
     "defaultMessage": "Publish"
   },
   "action.rename": {
-    "defaultMessage": "Rename"
-  },
-  "action.rename-button": {
-    "defaultMessage": "Rename"
-  },
-  "action.rename-description": {
-    "defaultMessage": "Please, update the name and description for your mindmap."
-  },
-  "action.rename-description-placeholder": {
-    "defaultMessage": "Description"
-  },
-  "action.rename-name-placeholder": {
-    "defaultMessage": "Name"
-  },
-  "action.rename-title": {
     "defaultMessage": "Rename"
   },
   "action.share": {
@@ -80,9 +59,6 @@
   "forgot.desc": {
     "defaultMessage": "We will send you an email to reset your password"
   },
-  "forgot.email": {
-    "defaultMessage": "Email"
-  },
   "forgot.register": {
     "defaultMessage": "Send recovery link"
   },
@@ -104,9 +80,6 @@
   "login.desc": {
     "defaultMessage": "Log into your account"
   },
-  "login.email": {
-    "defaultMessage": "Email"
-  },
   "login.error": {
     "defaultMessage": "The email address or password you entered is not valid."
   },
@@ -116,9 +89,6 @@
   "login.hsqldbcofig": {
     "defaultMessage": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
     "description": "Missing production database configured"
-  },
-  "login.password": {
-    "defaultMessage": "Password"
   },
   "login.remberme": {
     "defaultMessage": "Remember me"
@@ -138,18 +108,6 @@
   "registration.desc": {
     "defaultMessage": "Signing up is free and just take a moment"
   },
-  "registration.email": {
-    "defaultMessage": "Email"
-  },
-  "registration.firstname": {
-    "defaultMessage": "First Name"
-  },
-  "registration.lastname": {
-    "defaultMessage": "Last Name"
-  },
-  "registration.password": {
-    "defaultMessage": "Password"
-  },
   "registration.register": {
     "defaultMessage": "Register"
   },
@@ -160,7 +118,7 @@
     "defaultMessage": "Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy"
   },
   "registration.title": {
-    "defaultMessage": "Become a member of our comunity"
+    "defaultMessage": "Become a member"
   },
   "resetpassword.success.title": {
     "defaultMessage": "Your account has been created successfully"

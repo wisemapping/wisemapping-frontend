@@ -1,6 +1,7 @@
 import React from 'react';
-import RenameDialog from './RenameDialog';
-import DeleteDialog from './DeleteDialog';
+import RenameDialog from './rename';
+import DeleteDialog from './delete';
+import { ActionType } from '../action-chooser';
 
 
 export type BasicMapInfo = {
@@ -8,15 +9,13 @@ export type BasicMapInfo = {
   description: string | undefined;
 }
 
-export type DialogType = 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'rename' | 'publish';
-
 type ActionDialogProps = {
-  action?: DialogType,
+  action?: ActionType,
   mapId: number,
   onClose: () => void
 }
 
-const ActionDialog = (props: ActionDialogProps) => {
+const ActionDialogDispatcher = (props: ActionDialogProps) => {
   const handleOnClose = (): void => {
     props.onClose();
   }
@@ -32,4 +31,4 @@ const ActionDialog = (props: ActionDialogProps) => {
   );
 }
 
-export default ActionDialog;
+export default ActionDialogDispatcher;

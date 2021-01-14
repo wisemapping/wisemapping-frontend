@@ -11,22 +11,10 @@
       "value": "Delete"
     }
   ],
-  "action.delete-button": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
   "action.delete-description": [
     {
       "type": 0,
       "value": "Deleted mindmap can not be recovered. Do you want to continue ?."
-    }
-  ],
-  "action.delete-title": [
-    {
-      "type": 0,
-      "value": "Delete"
     }
   ],
   "action.duplicate": [
@@ -60,36 +48,6 @@
     }
   ],
   "action.rename": [
-    {
-      "type": 0,
-      "value": "Rename"
-    }
-  ],
-  "action.rename-button": [
-    {
-      "type": 0,
-      "value": "Rename"
-    }
-  ],
-  "action.rename-description": [
-    {
-      "type": 0,
-      "value": "Please, update the name and description for your mindmap."
-    }
-  ],
-  "action.rename-description-placeholder": [
-    {
-      "type": 0,
-      "value": "Description"
-    }
-  ],
-  "action.rename-name-placeholder": [
-    {
-      "type": 0,
-      "value": "Name"
-    }
-  ],
-  "action.rename-title": [
     {
       "type": 0,
       "value": "Rename"
@@ -161,12 +119,6 @@
       "value": "We will send you an email to reset your password"
     }
   ],
-  "forgot.email": [
-    {
-      "type": 0,
-      "value": "Email"
-    }
-  ],
   "forgot.register": [
     {
       "type": 0,
@@ -209,12 +161,6 @@
       "value": "Log into your account"
     }
   ],
-  "login.email": [
-    {
-      "type": 0,
-      "value": "Email"
-    }
-  ],
   "login.error": [
     {
       "type": 0,
@@ -231,12 +177,6 @@
     {
       "type": 0,
       "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
-    }
-  ],
-  "login.password": [
-    {
-      "type": 0,
-      "value": "Password"
     }
   ],
   "login.remberme": [
@@ -275,30 +215,6 @@
       "value": "Signing up is free and just take a moment"
     }
   ],
-  "registration.email": [
-    {
-      "type": 0,
-      "value": "Email"
-    }
-  ],
-  "registration.firstname": [
-    {
-      "type": 0,
-      "value": "First Name"
-    }
-  ],
-  "registration.lastname": [
-    {
-      "type": 0,
-      "value": "Last Name"
-    }
-  ],
-  "registration.password": [
-    {
-      "type": 0,
-      "value": "Password"
-    }
-  ],
   "registration.register": [
     {
       "type": 0,
@@ -320,7 +236,7 @@
   "registration.title": [
     {
       "type": 0,
-      "value": "Become a member of our comunity"
+      "value": "Become a member"
     }
   ],
   "resetpassword.success.title": [

@@ -8,6 +8,7 @@ import Footer from '../layout/footer'
 import SubmitButton from '../form/submit-button'
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
+import { FormControl } from '@material-ui/core';
 
 
 const ConfigStatusMessage = (props: any) => {
@@ -29,16 +30,17 @@ const LoginError = () => {
   const errorCode = new URLSearchParams(window.location.search).get('login_error');
   const intl = useIntl();
 
-  let msg;
+  let msg: null | string = null;
   if (errorCode) {
-    if (errorCode === "3") {
-      msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." });
-    } else {
-      msg = intl.formatMessage({ id: "login.error", defaultMessage: "The email address or password you entered is  not valid." });
+    switch (errorCode) {
+      case "3":
+        msg = intl.formatMessage({ id: "login.userinactive", defaultMessage: "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!." });
+        break;
+      default:
+        msg = intl.formatMessage({ id: "login.error", defaultMessage: "The email address or password you entered is  not valid." });
     }
   }
-  <GlobalError error={{msg: msg}} />
-  return null;
+  return (msg ? <GlobalError error={{ msg: msg }} /> : null);
 }
 
 
@@ -59,20 +61,20 @@ const LoginPage = () => {
 
         <LoginError />
 
-        <form action="/c/perform-login" method="POST">
-          <Input name="email" type="email" label={{ id: "login.email", defaultMessage: "Email" }} required={true} autoComplete="email" />
-          <Input name="password" type="password" label={{ id: "login.password", defaultMessage: "Password" }} required={true} autoComplete="current-password" />
-
-          <div>
-            <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
-            <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
-          </div>
-
-          <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
-        </form>
+        <FormControl>
+          <form action="/c/perform-login" method="POST" >
+            <Input name="email" type="email" label={{ id: "login.email", defaultMessage: "Email" }} required autoComplete="email" />
+            <Input name="password" type="password" label={{ id: "login.password", defaultMessage: "Password" }} required autoComplete="current-password" />
+            <div>
+              <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
+              <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
+            </div>
+            <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
+          </form>
+        </FormControl>
 
         <Link to="/c/forgot-password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
-        <ConfigStatusMessage enabled='false' />
+        <ConfigStatusMessage />
 
       </PageContent>
 

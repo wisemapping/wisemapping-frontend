@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { PageContainer, MapsListArea, NavArea, HeaderArea, StyledTableCell } from './styled';
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,12 +21,14 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
-import MapActionMenu, { ActionType } from './MapActionMenu';
-import ActionDialog, { DialogType } from './dialogs/ActionDialog';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../reducers/serviceSlice';
 import { useQuery } from 'react-query';
 import { ErrorInfo, MapInfo, Service } from '../../services/Service';
+import { theme } from '../../theme/global-style';
+import { CssBaseline } from '@material-ui/core';
+import ActionChooser, { ActionType } from './action-chooser';
+import ActionDialogDispatcher from './action-dialog-dispatcher';
 
 
 
@@ -234,7 +236,7 @@ const EnhancedTable = () => {
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(undefined);
   type ActiveDialog = {
-    actionType: DialogType;
+    actionType: ActionType;
     mapId: number
   };
 
@@ -301,7 +303,7 @@ const EnhancedTable = () => {
 
       setActiveRowAction(undefined);
       setActiveDialog({
-        actionType: action as DialogType,
+        actionType: action as ActionType,
         mapId: mapId as number
       });
     }
@@ -377,7 +379,7 @@ const EnhancedTable = () => {
                             <MoreHorizIcon color="action" />
                           </IconButton>
                         </Tooltip>
-                        <MapActionMenu anchor={activeRowAction?.el} onClose={handleActionMenuClose} />
+                        <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} />
                       </StyledTableCell>
                     </TableRow>
                   );
@@ -402,7 +404,7 @@ const EnhancedTable = () => {
       </Paper>
 
       {/* Action Dialog */}
-      <ActionDialog action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
+      <ActionDialogDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
     </div>
   );
 }
@@ -416,17 +418,20 @@ const MapsPage = () => {
   }, []);
 
   return (
-    <PageContainer>
-      <HeaderArea>
-        <h2>Header</h2>
-      </HeaderArea>
-      <NavArea>
-        <h1> Nav </h1>
-      </NavArea>
-      <MapsListArea>
-        <EnhancedTable />
-      </MapsListArea>
-    </PageContainer>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <PageContainer>
+        <HeaderArea>
+          <h2>Header</h2>
+        </HeaderArea>
+        <NavArea>
+          <h1> Nav </h1>
+        </NavArea>
+        <MapsListArea>
+          <EnhancedTable />
+        </MapsListArea>
+      </PageContainer>
+    </ThemeProvider>
   );
 }
 export default MapsPage;

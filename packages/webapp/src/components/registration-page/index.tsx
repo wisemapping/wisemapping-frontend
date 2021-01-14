@@ -8,8 +8,8 @@ import Header from '../layout/header';
 import Footer from '../layout/footer';
 
 import { StyledReCAPTCHA } from './styled';
-import { PageContent } from '../../theme/global-style';
-import { FormControl } from '@material-ui/core';
+import { PageContent, theme } from '../../theme/global-style';
+import { CssBaseline, FormControl, ThemeProvider } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
 import { activeInstance } from '../../reducers/serviceSlice';
@@ -58,40 +58,40 @@ const RegistrationForm = () => {
 
   return (
     <PageContent>
-      <h1><FormattedMessage id="registration.title" defaultMessage="Become a member of our comunity" /></h1>
+      <h1><FormattedMessage id="registration.title" defaultMessage="Become a member" /></h1>
       <p><FormattedMessage id="registration.desc" defaultMessage="Signing up is free and just take a moment " /></p>
 
+      <FormControl>
 
-      <form onSubmit={handleOnSubmit}>
-        <GlobalError error={error} />
-        
-        <Input name="email" type="email" onChange={handleOnChange} label={{ id: "registration.email", defaultMessage: "Email" }}
-          autoComplete="email" />
+        <form onSubmit={handleOnSubmit}>
+          <GlobalError error={error} />
 
-        <Input name="firstname" type="text" onChange={handleOnChange} label={{ id: "registration.firstname", defaultMessage: "First Name" }}
-          autoComplete="given-name" />
+          <Input name="email" type="email" onChange={handleOnChange} label={{ id: "registration.email", defaultMessage: "Email" }}
+            autoComplete="email" />
 
-        <Input name="lastname" type="text" onChange={handleOnChange} label={{ id: "registration.lastname", defaultMessage: "Last Name" }}
-          autoComplete="family-name" />
+          <Input name="firstname" type="text" onChange={handleOnChange} label={{ id: "registration.firstname", defaultMessage: "First Name" }}
+            autoComplete="given-name" />
 
-        <Input name="password" type="password" onChange={handleOnChange} label={{ id: "registration.password", defaultMessage: "Password" }}
-          autoComplete="new-password" />
+          <Input name="lastname" type="text" onChange={handleOnChange} label={{ id: "registration.lastname", defaultMessage: "Last Name" }}
+            autoComplete="family-name" />
 
-        <FormControl>
+          <Input name="password" type="password" onChange={handleOnChange} label={{ id: "registration.password", defaultMessage: "Password" }}
+            autoComplete="new-password" />
+
           <StyledReCAPTCHA>
             <ReCAPTCHA
               sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
               onChange={(value: string) => { model.recaptcha = value; setModel(model) }} />
           </StyledReCAPTCHA>
-        </FormControl>
 
-        <div style={{ width: "300px", textAlign: "center", fontSize: "12px", margin: "auto" }}>
-          <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
-        </div>
+          <div style={{ fontSize: "12px", padding: "5px 0px" }}>
+            <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
+          </div>
 
-        <input type="submit" value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
+          <input type="submit" value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />
+        </form>
+      </FormControl>
 
-      </form>
     </PageContent >
   );
 }

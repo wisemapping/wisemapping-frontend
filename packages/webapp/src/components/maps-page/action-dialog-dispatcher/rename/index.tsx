@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { BasicMapInfo, ErrorInfo, Service } from "../../../services/Service";
-import { activeInstance } from '../../../reducers/serviceSlice';
-import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./DialogCommon";
-import Dialog from "./Dialog";
-import Input from "../../form/input";
+import { BasicMapInfo, ErrorInfo, Service } from "../../../../services/Service";
+import { activeInstance } from '../../../../reducers/serviceSlice';
+import { DialogProps, fetchMapById, handleOnMutationSuccess } from "./../DialogCommon";
+import Input from "../../../form/input";
+import { FormControl } from "@material-ui/core";
+import BaseDialog from "../action-dialog";
 
 export type RenameModel = {
     id: number;
@@ -69,18 +70,20 @@ const RenameDialog = (props: DialogProps) => {
 
     return (
         <div>
-            <Dialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+            <BaseDialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
                 title={{ id: 'rename.title', defaultMessage: 'Rename' }}
                 description={{ id: 'rename.description', defaultMessage: 'Rename' }}
                 submitButton={{ id: 'rename.title', defaultMessage: 'Rename Description' }}>
-                
-                <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
-                    value={model.name} onChange={handleOnChange} error={error} />
 
-                <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
-                    value={model.description} onChange={handleOnChange} required={false} />
-            </Dialog>
-        </div>
+                <FormControl fullWidth={true}>
+                    <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
+                        value={model.name} onChange={handleOnChange} error={error} fullWidth={true} />
+
+                    <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
+                        value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />
+                </FormControl>
+            </BaseDialog>
+        </div> 
     );
 }
 
