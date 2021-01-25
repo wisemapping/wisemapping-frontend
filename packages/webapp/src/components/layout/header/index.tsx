@@ -1,8 +1,9 @@
-import { StyledNav, StyledDiv,Logo } from './styled';
+import { StyledNav, StyledDiv, Logo } from './styled';
 
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
+import { Button } from '@material-ui/core';
 
 const logo = require('../../../images/header-logo.png')
 
@@ -49,23 +50,20 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
 }
 
 interface ButtonProps {
-  style?: 'style1' | 'style2' | 'style3';
   className?: string;
 }
 
 const SignInButton = (props: ButtonProps) => {
-  const style = props.style ? props.style : 'style1';
   return (
-    <span className={`button-${style} ${props.className}`}>
-      <Link to="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></Link>
+    <span className={`${props.className}`}>
+      <Button color="primary" size="medium" variant="outlined" component={Link} to="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></Button>
     </span>);
 }
 
 const SignUpButton = (props: ButtonProps) => {
-  const style = props.style ? props.style : 'style1';
   return (
-    <span className={`button-${style} ${props.className}`}>
-      <Link to="/c/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></Link>
+    <span className={`${props.className}`}>
+      <Button color="primary" size="medium" variant="outlined" component={Link} to="/c/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></Button>
     </span>);
 }
 

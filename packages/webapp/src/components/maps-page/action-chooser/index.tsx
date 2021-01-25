@@ -9,7 +9,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import { StyledMenuItem } from '../styled';
+import { StyledMenuItem } from '../maps-list/styled';
 import { FormattedMessage } from 'react-intl';
 
 export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'rename' | 'print' | 'info' | 'publish' | undefined;

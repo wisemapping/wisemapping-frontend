@@ -5,12 +5,14 @@ import { Service, ErrorInfo } from '../../services/Service'
 
 import Header from '../layout/header'
 import Footer from '../layout/footer'
-import { PageContent } from '../../theme/global-style'
+import { PageContent } from '../../theme'
 import { useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
 import { activeInstance } from '../../reducers/serviceSlice'
 import Input from '../form/input'
 import GlobalError from '../form/global-error'
+import SubmitButton from '../form/submit-button'
+import { Typography } from '@material-ui/core'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -36,8 +38,13 @@ const ForgotPassword = () => {
 
   return (
     <PageContent>
-      <h1><FormattedMessage id="forgot.title" defaultMessage="Reset your password" /></h1>
-      <p><FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" /></p>
+      <Typography variant="h4" component="h1">
+        <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
+      </Typography>
+
+      <Typography>
+        <FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" />
+      </Typography>
 
       <GlobalError error={error} />
 
@@ -45,7 +52,7 @@ const ForgotPassword = () => {
         <Input type="email" name="email" label={{ id: "forgot.email", defaultMessage: "Email" }}
           autoComplete="email" onChange={e => setEmail(e.target.value)} />
 
-        <input type="submit" value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
+        <SubmitButton value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
       </form>
     </PageContent>
   );

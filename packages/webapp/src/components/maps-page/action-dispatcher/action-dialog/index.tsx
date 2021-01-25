@@ -1,8 +1,8 @@
 import React from "react";
-import { DialogActions, DialogContentText, DialogTitle } from "@material-ui/core";
+import { Button, DialogContentText, DialogTitle } from "@material-ui/core";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { ErrorInfo } from "../../../../services/Service";
-import { ButtonStyled, StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
+import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
 import GlobalError from "../../../form/global-error";
 
 export type DialogProps = {
@@ -44,14 +44,14 @@ const BaseDialog = (props: DialogProps) => {
                     </StyledDialogContent>
 
                     <StyledDialogActions>
+                        <Button color="primary" size="medium" onClick={handleOnClose} >
+                            {handleOnSubmit ? (<FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />) : (<FormattedMessage id="action.close-button" defaultMessage="Close" />)}
+                        </Button>
                         {handleOnSubmit ? (
-                            <ButtonStyled color="primary" size="medium" variant="outlined" type="submit">
+                            <Button color="primary" size="medium" variant="contained" type="submit" disableElevation={true}>
                                 {intl.formatMessage(props.title)}
-                            </ButtonStyled>) : null
+                            </Button>) : null
                         }
-                        <ButtonStyled color="secondary" size="medium" variant="outlined" autoFocus onClick={handleOnClose}>
-                            {handleOnSubmit ? (<FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />) : (<FormattedMessage id="action.close-button" defaultMessage="Close" />)};
-                        </ButtonStyled>
                     </StyledDialogActions>
                 </form>
             </StyledDialog>
