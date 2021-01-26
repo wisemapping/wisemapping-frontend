@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { PageContent } from '../../theme';
-import Header, { SignInButton } from '../layout/header'
+import FormContainer from '../layout/form-container';
+import Header from '../layout/header'
 import Footer from '../layout/footer'
 import { Button, Typography } from '@material-ui/core';
 import { Link as RouterLink} from 'react-router-dom'
@@ -15,7 +15,7 @@ const ForgotPasswordSuccessPage = () => {
   return (
     <div>
       <Header type='none' />
-      <PageContent>
+      <FormContainer>
         <Typography variant="h4" component="h1">
           <FormattedMessage id="forgot.success.title" defaultMessage="Your temporal password has been sent" />
         </Typography>
@@ -28,7 +28,7 @@ const ForgotPasswordSuccessPage = () => {
           <FormattedMessage id="login.signin" defaultMessage="Sign In" />
         </Button>
 
-      </PageContent>
+      </FormContainer>
       <Footer />
     </div>
   );

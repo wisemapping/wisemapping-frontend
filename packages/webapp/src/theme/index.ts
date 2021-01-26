@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -8,14 +8,6 @@ const GlobalStyle = createGlobalStyle`
 * {
     box-sizing: border-box;
 }
-`;
-
-const PageContent = styled.div`
-max-width: 350px;
-min-height: 350px;
-margin: 10px auto;
-text-align:center;
-padding: 20px 10px 20px 10px;
 `;
 
 const theme = createMuiTheme({
@@ -88,5 +80,5 @@ const theme = createMuiTheme({
     }
 });
 
-export { GlobalStyle, PageContent, theme };
+export { GlobalStyle, theme };
 

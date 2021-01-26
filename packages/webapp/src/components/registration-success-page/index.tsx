@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { PageContent } from '../../theme';
-import Header, { SignInButton } from '../layout/header'
-import Footer from '../layout/footer'
+import React, { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import FormContainer from '../layout/form-container';
+import Header from '../layout/header';
+import Footer from '../layout/footer';
 import { Button, Typography } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
 
 
 const RegistrationSuccessPage = () => {
@@ -15,7 +15,7 @@ const RegistrationSuccessPage = () => {
   return (
     <div>
       <Header type='none' />
-      <PageContent>
+      <FormContainer>
         <Typography variant="h4" component="h1">
           <FormattedMessage id="resetpassword.success.title" defaultMessage="Your account has been created successfully" />
         </Typography>
@@ -29,7 +29,7 @@ const RegistrationSuccessPage = () => {
           <FormattedMessage id="login.signin" defaultMessage="Sign In" />
         </Button>
 
-      </PageContent>
+      </FormContainer>
       <Footer />
     </div>
   );

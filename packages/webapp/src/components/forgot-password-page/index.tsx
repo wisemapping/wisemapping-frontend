@@ -5,7 +5,7 @@ import { Service, ErrorInfo } from '../../services/Service'
 
 import Header from '../layout/header'
 import Footer from '../layout/footer'
-import { PageContent } from '../../theme'
+import FormContainer from '../layout/form-container';
 import { useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
 import { activeInstance } from '../../reducers/serviceSlice'
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <PageContent>
+    <FormContainer>
       <Typography variant="h4" component="h1">
         <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
       </Typography>
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
 
         <SubmitButton value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
       </form>
-    </PageContent>
+    </FormContainer>
   );
 }
 

@@ -3,11 +3,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useHistory } from 'react-router-dom';
 import { ErrorInfo, Service } from '../../services/Service';
+import FormContainer from '../layout/form-container';
 
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 
-import { PageContent } from '../../theme';
 import { FormControl, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
@@ -57,7 +57,7 @@ const RegistrationForm = () => {
 
 
   return (
-    <PageContent>
+    <FormContainer>
       <Typography variant="h4" component="h1">
         <FormattedMessage id="registration.title" defaultMessage="Become a member" />
       </Typography>
@@ -83,13 +83,13 @@ const RegistrationForm = () => {
           <Input name="password" type="password" onChange={handleOnChange} label={{ id: "registration.password", defaultMessage: "Password" }}
             autoComplete="new-password" />
 
-          <div style={{ width: '330px', padding: '5px 10px' }}>
+          <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>
             <ReCAPTCHA
               sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
               onChange={(value: string) => { model.recaptcha = value; setModel(model) }} />
           </div>
 
-          <div style={{ fontSize: "12px", padding: "5px 0px" }}>
+          <div style={{ fontSize: "12px", padding: "10px 0px" }}>
             <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
           </div>
 
@@ -97,7 +97,7 @@ const RegistrationForm = () => {
         </form>
       </FormControl>
 
-    </PageContent >
+    </FormContainer>
   );
 }
 

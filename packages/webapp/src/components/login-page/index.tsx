@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink} from 'react-router-dom'
-
-import { PageContent } from '../../theme';
-import Header from '../layout/header'
-import Footer from '../layout/footer'
-import SubmitButton from '../form/submit-button'
+import { Link as RouterLink} from 'react-router-dom';
+import Header from '../layout/header';
+import Footer from '../layout/footer';
+import SubmitButton from '../form/submit-button';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import { FormControl, Link, Typography } from '@material-ui/core';
+import FormContainer from '../layout/form-container';
 
 
 const ConfigStatusMessage = (props: any) => {
@@ -55,7 +54,7 @@ const LoginPage = () => {
     <div>
       <Header type='only-signup' />
 
-      <PageContent>
+      <FormContainer maxWidth="xs">
         <Typography variant="h4" component="h1">
           <FormattedMessage id="login.title" defaultMessage="Welcome" />
         </Typography>
@@ -81,7 +80,7 @@ const LoginPage = () => {
         <Link component={RouterLink} to="/c/forgot-password"><FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" /></Link>
         <ConfigStatusMessage />
 
-      </PageContent>
+      </FormContainer>
 
       <Footer />
     </div>
