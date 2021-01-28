@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import { StyledTableCell } from './styled';
+import React from 'react'
+import { useStyles } from './styled';
 
-import { createStyles, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -23,10 +23,11 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../reducers/serviceSlice';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ErrorInfo, MapInfo, Service } from '../../../services/Service';
 import ActionChooser, { ActionType } from '../action-chooser';
-import ActionDispatcher from '../action-dispatcher';
+import ActionDispatcher, { handleOnMutationSuccess } from '../action-dispatcher';
+import { Link } from '@material-ui/core';
 
 
 
@@ -64,7 +65,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 interface HeadCell {
   disablePadding: boolean;
   id: keyof MapInfo;
-  label: string;
+  label?: string;
   numeric: boolean;
   style: CSSProperties;
 }
@@ -72,7 +73,7 @@ interface HeadCell {
 const headCells: HeadCell[] = [
   { id: 'starred', numeric: false, disablePadding: false, label: '', style: { width: '20px', padding: '0px' } },
   { id: 'name', numeric: false, disablePadding: true, label: 'Name', style: {} },
-  { id: 'labels', numeric: false, disablePadding: true, label: 'Labels', style: {} },
+  { id: 'labels', numeric: false, disablePadding: true, style: {} },
   { id: 'creator', numeric: false, disablePadding: false, label: 'Creator', style: {} },
   { id: 'modified', numeric: true, disablePadding: false, label: 'Modified', style: { width: '50px' } }
 ];
@@ -96,9 +97,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
   return (
     <TableHead>
-
       <TableRow>
-        <TableCell padding='checkbox' key='select' style={{ width: '20px' }}>
+        <TableCell padding='checkbox' key='select' style={{ width: '20px' }} className={classes.headerCell}>
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -108,11 +108,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           />
         </TableCell>
 
-        {headCells.map((headCell) => (
-          <TableCell
+        {headCells.map((headCell) => {
+          return headCell.label ? (<TableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
             style={headCell.style}
+            className={classes.headerCell}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -125,11 +126,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 </span>
               ) : null}
             </TableSortLabel>
-          </TableCell>
-        ))}
-        <TableCell style={{ width: '20px', padding: '0px' }} key='actions'>
-          <TableSortLabel>""</TableSortLabel>
-        </TableCell>
+          </TableCell>) : (<TableCell className={classes.headerCell} key={headCell.id}> </TableCell>)
+        }
+        )}
+        <TableCell style={{ width: '20px', padding: '0px' }} key='actions' className={classes.headerCell}></TableCell>
       </TableRow>
     </TableHead>
   );
@@ -163,7 +163,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Nutrition
+            All
           </Typography>
         )}
       {numSelected > 0 ? (
@@ -183,32 +183,6 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    paper: {
-      width: '100%',
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-      border: 0,
-    },
-    visuallyHidden: {
-      border: 0,
-      clip: 'rect(0 0 0 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      top: 20,
-      width: 1,
-    },
-  }),
-);
 
 type ActionPanelState = {
   el: HTMLElement | undefined,
@@ -295,16 +269,38 @@ export const MapsList = () => {
     };
   };
 
+  const queryClient = useQueryClient();
+
+  const starredMultation = useMutation<void, ErrorInfo, number>((id: number) => {
+    return service.changeStarred(id);
+  },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('maps');
+      },
+      onError: (error) => {
+        // setError(error);
+      }
+    }
+  );
+
+  const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
+    event.stopPropagation();
+
+    event.preventDefault();
+    starredMultation.mutate(id);
+  }
+
   const handleActionMenuClose = (action: ActionType): void => {
     if (action) {
       const mapId = activeRowAction?.mapId;
 
-      setActiveRowAction(undefined);
       setActiveDialog({
         actionType: action as ActionType,
         mapId: mapId as number
       });
     }
+    setActiveRowAction(undefined);
   };
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
@@ -313,14 +309,14 @@ export const MapsList = () => {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={0}>
         <EnhancedTableToolbar numSelected={selected.length} />
+
         <TableContainer>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={'small'}
-            aria-label="sticky table"
+            size="small"
             stickyHeader
           >
             <EnhancedTableHead
@@ -332,6 +328,7 @@ export const MapsList = () => {
               onRequestSort={handleRequestSort}
               rowCount={mapsInfo.length}
             />
+
             <TableBody>
               {isLoading ? (<TableRow></TableRow>) : stableSort(mapsInfo, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -350,35 +347,41 @@ export const MapsList = () => {
                       selected={isItemSelected}
                     >
 
-                      <StyledTableCell padding="checkbox">
+                      <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': String(labelId) }}
-                          size="small"
-                        />
-                      </StyledTableCell>
+                          size="small" />
+                      </TableCell>
 
-                      <StyledTableCell>
+                      <TableCell>
                         <Tooltip title="Starred">
-                          <IconButton aria-label="Starred" size="small" onClick={(e) => { alert("") }}>
+                          <IconButton aria-label="Starred" size="small" onClick={(e) => handleStarred(e, row.id)}>
                             <StarRateRoundedIcon color="action" style={{ color: row.starred ? 'yellow' : 'gray' }} />
                           </IconButton>
                         </Tooltip>
-                      </StyledTableCell>
+                      </TableCell>
 
-                      <StyledTableCell>{row.name}</StyledTableCell>
-                      <StyledTableCell>{row.labels}</StyledTableCell>
-                      <StyledTableCell>{row.creator}</StyledTableCell>
-                      <StyledTableCell>{row.modified}</StyledTableCell>
+                      <Tooltip title="Open for edition" placement="bottom-start">
+                        <TableCell>
+                          <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
+                            {row.name}
+                          </Link>
+                        </TableCell>
+                      </Tooltip>
 
-                      <StyledTableCell>
+                      <TableCell>{row.labels}</TableCell>
+                      <TableCell>{row.creator}</TableCell>
+                      <TableCell>{row.modified}</TableCell>
+
+                      <TableCell>
                         <Tooltip title="Others">
                           <IconButton aria-label="Others" size="small" onClick={handleActionClick(row.id)}>
                             <MoreHorizIcon color="action" />
                           </IconButton>
                         </Tooltip>
                         <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} />
-                      </StyledTableCell>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -403,6 +406,6 @@ export const MapsList = () => {
 
       {/* Action Dialog */}
       <ActionDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
-    </div>
+    </div >
   );
 }

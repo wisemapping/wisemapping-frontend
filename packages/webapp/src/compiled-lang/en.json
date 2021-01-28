@@ -5,6 +5,12 @@
       "value": "Cancel"
     }
   ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
   "action.delete": [
     {
       "type": 0,
@@ -36,6 +42,12 @@
     }
   ],
   "action.info": [
+    {
+      "type": 0,
+      "value": "Info"
+    }
+  ],
+  "action.info-title": [
     {
       "type": 0,
       "value": "Info"
@@ -75,6 +87,12 @@
     {
       "type": 0,
       "value": "Please wait ..."
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "Duplicate"
     }
   ],
   "footer.aboutus": [
@@ -249,6 +267,18 @@
     {
       "type": 0,
       "value": "Become a member"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "Please, fill the new map name and description."
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "Rename"
     }
   ],
   "resetpassword.success.title": [

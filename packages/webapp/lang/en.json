@@ -2,6 +2,9 @@
   "action.cancel-button": {
     "defaultMessage": "Cancel"
   },
+  "action.close-button": {
+    "defaultMessage": "Close"
+  },
   "action.delete": {
     "defaultMessage": "Delete"
   },
@@ -18,6 +21,9 @@
     "defaultMessage": "Export"
   },
   "action.info": {
+    "defaultMessage": "Info"
+  },
+  "action.info-title": {
     "defaultMessage": "Info"
   },
   "action.open": {
@@ -37,6 +43,9 @@
   },
   "common.wait": {
     "defaultMessage": "Please wait ..."
+  },
+  "duplicate.title": {
+    "defaultMessage": "Duplicate"
   },
   "footer.aboutus": {
     "defaultMessage": "About Us"
@@ -125,6 +134,12 @@
   },
   "registration.title": {
     "defaultMessage": "Become a member"
+  },
+  "rename.description": {
+    "defaultMessage": "Please, fill the new map name and description."
+  },
+  "rename.title": {
+    "defaultMessage": "Rename"
   },
   "resetpassword.success.title": {
     "defaultMessage": "Your account has been created successfully"

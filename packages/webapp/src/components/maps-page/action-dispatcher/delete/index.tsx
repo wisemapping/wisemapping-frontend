@@ -10,6 +10,8 @@ import BaseDialog from "../action-dialog";
 
 
 const DeleteDialog = (props: DialogProps) => {
+  const intl = useIntl();
+
   const service: Service = useSelector(activeInstance);
   const queryClient = useQueryClient();
   const mutation = useMutation((id: number) => service.deleteMap(id),
@@ -33,8 +35,8 @@ const DeleteDialog = (props: DialogProps) => {
     <div>
       <BaseDialog
         open={props.open} onClose={handleOnClose} onSubmit={handleOnSubmit}
-        title={{ id: "action.delete-title", defaultMessage: "Delete" }} 
-        submitButton={{ id: "action.delete-title", defaultMessage: "Delete" }} >
+        title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} 
+        submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} >
         <Alert severity="warning">
           <AlertTitle>Delete '{map?.name}'</AlertTitle>
           <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />

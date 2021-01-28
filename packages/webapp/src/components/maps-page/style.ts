@@ -28,6 +28,17 @@ export const useStyles = makeStyles((theme: Theme) =>
         menuButton: {
             marginRight: 36,
         },
+        newMapButton: {
+            marginRight: 10,
+        },
+        importButton: {
+            marginRight: 10,
+        },
+        rightButtonGroup: {
+            marginRight: 10,
+            flexGrow: 10,
+            textAlign: 'right'
+        },
         hide: {
             display: 'none',
         },
@@ -66,11 +77,10 @@ export const useStyles = makeStyles((theme: Theme) =>
         content: {
             flexGrow: 1,
             padding: theme.spacing(3),
-        },
-        listItemText: {
         }
     }),
 );
+
 
 export const ListItemTextStyled = withStyles({
     root:

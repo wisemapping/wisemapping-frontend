@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
+import { FormControl } from "@material-ui/core";
+
 import { BasicMapInfo, ErrorInfo, Service } from "../../../../services/Service";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import Input from "../../../form/input";
-import { FormControl } from "@material-ui/core";
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import BaseDialog from "../action-dialog";
 
@@ -71,10 +72,10 @@ const DuplicateDialog = (props: DialogProps) => {
     return (
         <div>
             <BaseDialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
-                title={{ id: 'duplicate.title', defaultMessage: 'Duplicate' }}
-                description={{ id: 'rename.description', defaultMessage: 'Please, fill the new map name and description.' }}
-                submitButton={{ id: 'duplicate.title', defaultMessage: 'Duplicate' }}>
-
+                title={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}
+                description={intl.formatMessage({ id: 'rename.description', defaultMessage: 'Please, fill the new map name and description.' })}
+                submitButton={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}>
+ 
                 <FormControl fullWidth={true}>
                     <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
                         value={model.name} onChange={handleOnChange} error={error} fullWidth={true} />

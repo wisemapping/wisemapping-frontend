@@ -42,6 +42,7 @@ interface Service {
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
+    changeStarred(id: number): Promise<void>;
 }
 
 class MockService implements Service {
@@ -71,6 +72,17 @@ class MockService implements Service {
         ];
     }
 
+    changeStarred(id: number): Promise<void> {
+        const mapInfo = this.maps.find(m => m.id == id);
+        if (!mapInfo) {
+            console.log(`Could not find the map iwth id ${id}`);
+            return Promise.reject();
+        }
+        const newStarredValue = !mapInfo?.starred;
+        mapInfo.starred = newStarredValue;
+
+        return Promise.resolve();
+    }
 
     loadMapInfo(id: number): Promise<BasicMapInfo> {
         return Promise.resolve({ name: 'My Map', description: 'My Description' });
@@ -100,6 +112,7 @@ class MockService implements Service {
             })
         };
     }
+   
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
 
         const exists = this.maps.find(m => m.name == basicInfo.name) != undefined;

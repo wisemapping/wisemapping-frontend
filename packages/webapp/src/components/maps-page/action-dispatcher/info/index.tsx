@@ -5,12 +5,14 @@ import { Service } from "../../../../services/Service";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById } from "..";
 import BaseDialog from "../action-dialog";
+import { useIntl } from "react-intl";
 
 
 const InfoDialog = (props: DialogProps) => {
   const service: Service = useSelector(activeInstance);
   const queryClient = useQueryClient();
- 
+  const intl = useIntl();
+
 
   const mapId = props.mapId;
   const handleOnClose = (): void => {
@@ -22,7 +24,7 @@ const InfoDialog = (props: DialogProps) => {
     <div>
       <BaseDialog
         open={props.open} onClose={handleOnClose}
-        title={{ id: "action.info-title", defaultMessage: "Info" }}>
+        title={intl.formatMessage({ id: "action.info-title", defaultMessage: "Info" })}>
 
         <iframe src="http://www.clarin.com" style={{width:'100%',height:'400px'}}/>
 

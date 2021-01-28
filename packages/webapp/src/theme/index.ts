@@ -12,6 +12,13 @@ const GlobalStyle = createGlobalStyle`
 
 const theme = createMuiTheme({
     overrides: {
+        MuiCssBaseline: {
+            '@global': {
+                body: {
+                  backgroundColor: 'white',
+                },
+              },
+        },
         MuiOutlinedInput: {
             root: {
                 height: '53px',

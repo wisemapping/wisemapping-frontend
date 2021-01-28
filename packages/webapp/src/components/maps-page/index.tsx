@@ -10,11 +10,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { MapsList } from './maps-list';
 import { ListItemTextStyled, useStyles } from './style';
-import { AddTwoTone, BlurCircular, DeleteOutlineTwoTone, LabelTwoTone, PublicTwoTone, ShareTwoTone, StarRateTwoTone } from '@material-ui/icons';
+import { AccountCircle, AddTwoTone, BlurCircular, DeleteOutlineTwoTone, LabelTwoTone, PublicTwoTone, PublishTwoTone, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
 import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
-import { Button, ListItemSecondaryAction } from '@material-ui/core';
+import { Button, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
+import { MapsList } from './maps-list';
 
 type FilterType = 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned'
 
@@ -44,107 +44,127 @@ const MapsPage = (props: any) => {
 
 
     return (
-            <div className={classes.root}>
-                <AppBar
-                    position="fixed"
-                    className={clsx(classes.appBar, {
-                        [classes.appBarShift]: open,
-                    })}>
-                    <Toolbar>
-                            <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            className={clsx(classes.menuButton, {
-                                [classes.hide]: open,
-                            })}>
-                            <MenuIcon />
-                        </IconButton>
+        <div className={classes.root}>
+            <AppBar
+                position="fixed"
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}>
+                <Toolbar variant="regular">
+                    <IconButton color="inherit" onClick={handleDrawerOpen} edge="start"
+                        className={clsx(classes.menuButton, {
+                            [classes.hide]: open,
+                        })}>
+                        <MenuIcon />
+                    </IconButton>
 
-                        <Button color="primary" size="medium" variant="contained" type="button" 
-                        disableElevation={true} startIcon={<AddTwoTone />}>
+                    <Tooltip title="Create a New Map">
+                        <Button color="primary" size="medium" variant="contained" type="button"
+                            disableElevation={true} startIcon={<AddTwoTone />} className={classes.newMapButton}>
                             New Map
                         </Button>
-                    </Toolbar>
-                </AppBar>
+                    </Tooltip>
 
-                <Drawer
-                    variant="permanent"
-                    className={clsx(classes.drawer, {
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
-                    })}
-                    classes={{
-                        paper: clsx({
-                            [classes.drawerOpen]: open,
-                            [classes.drawerClose]: !open,
-                        }),
-                    }}>
-                    <div className={classes.toolbar}>
-                        <IconButton onClick={handleDrawerClose}>
-                            {<ChevronLeftIcon />}
+                    <Tooltip title="Import from other mindmap tools">
+                        <Button color="primary" size="medium" variant="outlined" type="button"
+                            disableElevation={true} startIcon={<PublishTwoTone />} className={classes.importButton}>
+                            Import
+                    </Button>
+                    </Tooltip>
+
+
+                    <div className={classes.rightButtonGroup}>
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                        // onClick={handleMenu}
+                        >
+                            <AccountCircle fontSize="large" />
                         </IconButton>
                     </div>
-                    <Divider />
 
-                    <List component="nav">
 
-                        <ListItem button >
-                            <ListItemIcon>
-                                <InboxTwoToneIcon color="secondary" />
-                            </ListItemIcon>
-                            <ListItemTextStyled primary="All" />
-                        </ListItem>
 
-                        <ListItem button >
-                            <ListItemIcon>
-                                <BlurCircular color="secondary" />
-                            </ListItemIcon>
-                            <ListItemTextStyled primary="Owned" />
-                        </ListItem>
+                </Toolbar>
+            </AppBar>
 
-                        <ListItem button >
-                            <ListItemIcon>
-                                <StarRateTwoTone color="secondary" />
-                            </ListItemIcon>
-                            <ListItemTextStyled primary="Starred" />
-                        </ListItem>
+            <Drawer
+                variant="permanent"
+                className={clsx(classes.drawer, {
+                    [classes.drawerOpen]: open,
+                    [classes.drawerClose]: !open,
+                })}
+                classes={{
+                    paper: clsx({
+                        [classes.drawerOpen]: open,
+                        [classes.drawerClose]: !open,
+                    }),
+                }}>
+                <div className={classes.toolbar}>
+                    <IconButton onClick={handleDrawerClose}>
+                        {<ChevronLeftIcon />}
+                    </IconButton>
+                </div>
+                <Divider />
 
-                        <ListItem button >
-                            <ListItemIcon>
-                                <ShareTwoTone color="secondary" />
-                            </ListItemIcon>
-                            <ListItemTextStyled primary="Shared With Me" />
-                        </ListItem>
+                <List component="nav">
 
-                        <ListItem button >
-                            <ListItemIcon>
-                                <PublicTwoTone color="secondary" />
-                            </ListItemIcon>
-                            <ListItemTextStyled primary="Public" />
-                        </ListItem>
+                    <ListItem button >
+                        <ListItemIcon>
+                            <InboxTwoToneIcon color="secondary" />
+                        </ListItemIcon>
+                        <ListItemTextStyled primary="All" />
+                    </ListItem>
 
-                        <ListItem button >
-                            <ListItemIcon>
-                                <LabelTwoTone color="secondary" />
-                            </ListItemIcon>
-                            <ListItemTextStyled primary="Some label>" />
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="delete">
-                                    <DeleteOutlineTwoTone color="secondary" />
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>
+                    <ListItem button >
+                        <ListItemIcon>
+                            <BlurCircular color="secondary" />
+                        </ListItemIcon>
+                        <ListItemTextStyled primary="Owned" />
+                    </ListItem>
 
-                    </List>
-                </Drawer>
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    <MapsList />
-                </main>
-            </div>
-        );
+                    <ListItem button >
+                        <ListItemIcon>
+                            <StarRateTwoTone color="secondary" />
+                        </ListItemIcon>
+                        <ListItemTextStyled primary="Starred" />
+                    </ListItem>
+
+                    <ListItem button >
+                        <ListItemIcon>
+                            <ShareTwoTone color="secondary" />
+                        </ListItemIcon>
+                        <ListItemTextStyled primary="Shared With Me" />
+                    </ListItem>
+
+                    <ListItem button >
+                        <ListItemIcon>
+                            <PublicTwoTone color="secondary" />
+                        </ListItemIcon>
+                        <ListItemTextStyled primary="Public" />
+                    </ListItem>
+
+                    <ListItem button >
+                        <ListItemIcon>
+                            <LabelTwoTone color="secondary" />
+                        </ListItemIcon>
+                        <ListItemTextStyled primary="Some label>" />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete">
+                                <DeleteOutlineTwoTone color="secondary" />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+
+                </List>
+            </Drawer>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <MapsList />
+            </main>
+        </div>
+    );
 }
 
 export default MapsPage;

@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, DialogContentText, DialogTitle } from "@material-ui/core";
-import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { Button, DialogContentText } from "@material-ui/core";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ErrorInfo } from "../../../../services/Service";
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
 import GlobalError from "../../../form/global-error";
@@ -12,9 +12,9 @@ export type DialogProps = {
     children: any;
     error?: ErrorInfo;
 
-    title: MessageDescriptor;
-    description?: MessageDescriptor;
-    submitButton?: MessageDescriptor;
+    title: string;
+    description?: string;
+    submitButton?: string; 
 }
 
 const BaseDialog = (props: DialogProps) => {
@@ -23,7 +23,7 @@ const BaseDialog = (props: DialogProps) => {
     const isOpen = props.open;
     const handleOnSubmit = props.onSubmit;
 
-    const description = props.description ? (<DialogContentText>{intl.formatMessage(props.description)}</DialogContentText>) : null;
+    const description = props.description ? (<DialogContentText>{props.description}</DialogContentText>) : null;
 
     return (
         <div>
@@ -34,7 +34,7 @@ const BaseDialog = (props: DialogProps) => {
                 fullWidth={true}>
                 <form autoComplete="off" onSubmit={handleOnSubmit}>
                     <StyledDialogTitle>
-                        {intl.formatMessage(props.title)}
+                        {props.title}
                     </StyledDialogTitle>
 
                     <StyledDialogContent>
@@ -49,7 +49,7 @@ const BaseDialog = (props: DialogProps) => {
                         </Button>
                         {handleOnSubmit ? (
                             <Button color="primary" size="medium" variant="contained" type="submit" disableElevation={true}>
-                                {intl.formatMessage(props.title)}
+                                {props.title}
                             </Button>) : null
                         }
                     </StyledDialogActions>

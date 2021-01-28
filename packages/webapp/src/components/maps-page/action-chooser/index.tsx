@@ -9,10 +9,10 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import { StyledMenuItem } from '../maps-list/styled';
+import { StyledMenuItem } from './styled';
 import { FormattedMessage } from 'react-intl';
 
-export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'rename' | 'print' | 'info' | 'publish' | undefined;
+export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'rename' | 'print' | 'info' | 'publish' | 'history'| undefined;
 
 interface ActionProps {
   onClose: (action: ActionType) => void;
@@ -36,6 +36,7 @@ const ActionChooser = (props: ActionProps) => {
       keepMounted
       open={Boolean(anchor)}
       onClose={handleOnClose(undefined)}
+
     >
       <StyledMenuItem onClick={handleOnClose('open')}>
         <DescriptionOutlinedIcon /><FormattedMessage id="action.open" defaultMessage="Open" />
@@ -70,6 +71,11 @@ const ActionChooser = (props: ActionProps) => {
       <MenuItem onClick={handleOnClose('info')}>
         <InfoOutlinedIcon /><FormattedMessage id="action.info" defaultMessage="Info" />
       </MenuItem>
+     
+      <MenuItem onClick={handleOnClose('history')}>
+        <DeleteOutlinedIcon /><FormattedMessage id="action.delete" defaultMessage="History" />
+      </MenuItem>
+
     </Menu>);
 }
 
