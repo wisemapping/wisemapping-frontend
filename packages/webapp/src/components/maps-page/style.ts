@@ -25,9 +25,6 @@ export const useStyles = makeStyles((theme: Theme) =>
                 duration: theme.transitions.duration.enteringScreen,
             }),
         },
-        menuButton: {
-            marginRight: 36,
-        },
         newMapButton: {
             marginRight: 10,
         },
@@ -68,9 +65,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         toolbar: {
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'flex-end',
-            padding: theme.spacing(0, 1),
             // necessary for content to be below app bar
             ...theme.mixins.toolbar,
         },

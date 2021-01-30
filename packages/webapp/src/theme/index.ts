@@ -15,9 +15,9 @@ const theme = createMuiTheme({
         MuiCssBaseline: {
             '@global': {
                 body: {
-                  backgroundColor: 'white',
+                    backgroundColor: 'white',
                 },
-              },
+            },
         },
         MuiOutlinedInput: {
             root: {

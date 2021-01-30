@@ -69,11 +69,7 @@ grid-template-columns: 150px 1fr 130px 160px 50px;
 export const Logo  = styled.span`
 grid-column-start: 1;
 margin-left: 50px;
-margin-top: 5px;
-
-.header-logo img {
-    height: 50px;
-}
+margin-top: 0px;
 
 .header-logo a {
     padding: 0px;

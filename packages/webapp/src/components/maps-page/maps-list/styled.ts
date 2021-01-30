@@ -1,5 +1,4 @@
-import { MenuItem, TableCell } from '@material-ui/core';
-import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -12,19 +11,22 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     table: {
       minWidth: 750,
-      border: 0,
       '& tr:nth-child(even)': {
         background: 'white'
       },
       '& tr:nth-child(odd)':
       {
         background: 'rgba(221, 221, 221, 0.35)'
-      } 
+      }
     },
     headerCell: {
       background: 'white',
       fontWeight: 'bold',
-      color: 'rgba(0, 0, 0, 0.44)'
+      color: 'rgba(0, 0, 0, 0.44)',
+      border: 0
+    },
+    bodyCell: {
+      border: 0
     },
     visuallyHidden: {
       border: 0,
@@ -37,14 +39,59 @@ export const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
-  }),
+    toolbar: {
+      display: 'flex',
+      borderBottom: '1px solid #cccccc',
+      padding: '0',
+      marging: '0'
+    },
+    toolbarActions: {
+      flexGrow: 1
+    },
+    toolbarListActions: {
+      flexGrow: 1
+    },
+    search: {
+      borderRadius: 9,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+      },
+      float: 'right'
+    },
+    searchIcon: {
+      padding: '5px 0 0 8px',
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    searchInputRoot: {
+      color: 'inherit',
+    }, toolbalLeft: {
+      float: 'right'
+    },
+    searchInputInput: {
+      // padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      border: '1px solid #ffa800',
+      borderRadius: 4,
+      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    }
+  })
 );
-
-// export const StyledTableCell = withStyles({
-//   root: {
-//     color: 'black',
-//     padding: '0px',
-//     cursor: 'pointer',
-//     border: '0'
-//   }
-// })(TableCell);

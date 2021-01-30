@@ -4,17 +4,16 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { ListItemTextStyled, useStyles } from './style';
-import { AccountCircle, AddTwoTone, BlurCircular, DeleteOutlineTwoTone, LabelTwoTone, PublicTwoTone, PublishTwoTone, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
+import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, Help, LabelTwoTone, PublicTwoTone,  ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
 import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
-import { Button, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
+import { Button, ListItemSecondaryAction, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
+import { FormattedMessage } from 'react-intl';
+const logo = require('../../images/logo-small.svg')
 
 type FilterType = 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned'
 
@@ -28,20 +27,9 @@ interface LabelFinter extends Filter {
 
 const MapsPage = (props: any) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
     useEffect(() => {
         document.title = 'Maps | WiseMapping';
     }, []);
-
 
     return (
         <div className={classes.root}>
@@ -49,46 +37,38 @@ const MapsPage = (props: any) => {
                 position="fixed"
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
-                })}>
+                })}
+                variant='outlined'
+                elevation={0}
+            >
                 <Toolbar variant="regular">
-                    <IconButton color="inherit" onClick={handleDrawerOpen} edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}>
-                        <MenuIcon />
-                    </IconButton>
-
                     <Tooltip title="Create a New Map">
                         <Button color="primary" size="medium" variant="contained" type="button"
-                            disableElevation={true} startIcon={<AddTwoTone />} className={classes.newMapButton}>
+                            disableElevation={true} startIcon={<AddCircleTwoTone />} className={classes.newMapButton}>
                             New Map
                         </Button>
                     </Tooltip>
 
-                    <Tooltip title="Import from other mindmap tools">
+                    <Tooltip title="Import from external tools">
                         <Button color="primary" size="medium" variant="outlined" type="button"
-                            disableElevation={true} startIcon={<PublishTwoTone />} className={classes.importButton}>
+                            disableElevation={true} startIcon={<CloudUploadTwoTone />} className={classes.importButton}>
                             Import
-                    </Button>
+                        </Button>
                     </Tooltip>
 
+                    <Tooltip title="Use labels to organize your maps">
+                        <Button color="primary" size="medium" variant="outlined" type="button"
+                            disableElevation={true} startIcon={<LabelTwoTone />} className={classes.importButton}>
+                            Label
+                        </Button>
+                    </Tooltip>
 
                     <div className={classes.rightButtonGroup}>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                        // onClick={handleMenu}
-                        >
-                            <AccountCircle fontSize="large" />
-                        </IconButton>
+                        <HelpToobarButton />
+                        <ProfileToobarButton />
                     </div>
-
-
-
                 </Toolbar>
             </AppBar>
-
             <Drawer
                 variant="permanent"
                 className={clsx(classes.drawer, {
@@ -101,12 +81,10 @@ const MapsPage = (props: any) => {
                         [classes.drawerClose]: !open,
                     }),
                 }}>
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {<ChevronLeftIcon />}
-                    </IconButton>
+
+                <div style={{textAlign: 'center',margin:"20px 0px"}}>
+                    <img src={logo} alt="logo"/>
                 </div>
-                <Divider />
 
                 <List component="nav">
 
@@ -167,4 +145,86 @@ const MapsPage = (props: any) => {
     );
 }
 
+const ProfileToobarButton = () => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <span>
+            <IconButton
+                aria-haspopup="true"
+                onClick={handleMenu}>
+                <AccountCircle fontSize="large" />
+            </IconButton >
+            <Menu id="appbar-profile"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                getContentAnchorEl={null}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={handleClose}>Account</MenuItem>
+                <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+            </Menu>
+        </span>);
+}
+
+const HelpToobarButton = () => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <span>
+            <IconButton
+                aria-haspopup="true"
+                onClick={handleMenu}>
+                <Help />
+            </IconButton>
+            <Menu id="appbar-profile"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                getContentAnchorEl={null}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}>
+                <MenuItem onClick={handleClose}>
+                    <a href="https://www.wisemapping.com/termsofuse.html"> <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" /></a>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                    <a href="mailto:team@wisemapping.com"> <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" /> </a>
+                </MenuItem>
+            </Menu>
+        </span>);
+}
 export default MapsPage;

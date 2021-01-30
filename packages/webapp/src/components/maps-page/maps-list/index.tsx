@@ -1,7 +1,6 @@
 import React from 'react'
 import { useStyles } from './styled';
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,13 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
@@ -26,9 +23,9 @@ import { activeInstance } from '../../../reducers/serviceSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ErrorInfo, MapInfo, Service } from '../../../services/Service';
 import ActionChooser, { ActionType } from '../action-chooser';
-import ActionDispatcher, { handleOnMutationSuccess } from '../action-dispatcher';
-import { Link } from '@material-ui/core';
-
+import ActionDispatcher from '../action-dispatcher';
+import { InputBase, Link } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -134,55 +131,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     </TableHead>
   );
 }
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    title: {
-      flex: '1 1 100%',
-    },
-  }),
-);
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const classes = useToolbarStyles();
-  const { numSelected } = props;
-
-  return (
-    <Toolbar>
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-          {numSelected} selected
-        </Typography>
-      ) : (
-          <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            All
-          </Typography>
-        )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-    </Toolbar>
-  );
-};
-
 
 type ActionPanelState = {
   el: HTMLElement | undefined,
@@ -304,13 +252,52 @@ export const MapsList = () => {
   };
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, mapsInfo.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <Toolbar className={classes.toolbar} variant="dense">
+
+
+          <div className={classes.toolbarActions}>
+            {selected.length > 0 ? (
+
+              <Tooltip title="Delete">
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            ) : null}
+          </div>
+
+          <div className={classes.toolbarListActions}>
+            <TablePagination
+              style={{ float: 'right', border: "0", paddingBottom: "5px" }}
+              rowsPerPageOptions={[50]}
+              count={mapsInfo.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              component="div"
+            />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.searchInputRoot,
+                  input: classes.searchInputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </div>
+          </div>
+
+        </Toolbar>
 
         <TableContainer>
           <Table
@@ -345,9 +332,9 @@ export const MapsList = () => {
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
+                      style={{ border: "0" }}
                     >
-
-                      <TableCell padding="checkbox">
+                      <TableCell padding="checkbox" style={{ border: "0" }}>
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': String(labelId) }}
@@ -362,13 +349,14 @@ export const MapsList = () => {
                         </Tooltip>
                       </TableCell>
 
-                      <Tooltip title="Open for edition" placement="bottom-start">
-                        <TableCell>
+                      <TableCell>
+                        <Tooltip title="Open for edition" placement="bottom-start">
+
                           <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
                             {row.name}
                           </Link>
-                        </TableCell>
-                      </Tooltip>
+                        </Tooltip>
+                      </TableCell>
 
                       <TableCell>{row.labels}</TableCell>
                       <TableCell>{row.creator}</TableCell>
@@ -385,23 +373,10 @@ export const MapsList = () => {
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 33 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={mapsInfo.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+
       </Paper>
 
       {/* Action Dialog */}

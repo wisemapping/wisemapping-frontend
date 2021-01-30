@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { Button } from '@material-ui/core';
 
-const logo = require('../../../images/header-logo.png')
+const logo = require('../../../images/logo-small.svg')
 
 interface HeaderProps {
   type: 'only-signup' | 'only-signin' | 'none';
