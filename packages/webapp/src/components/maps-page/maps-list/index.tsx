@@ -356,7 +356,6 @@ export const MapsList = () => {
 
                       <TableCell className={classes.bodyCell}>
                         <Tooltip title="Open for edition" placement="bottom-start">
-
                           <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
                             {row.name}
                           </Link>
@@ -372,8 +371,8 @@ export const MapsList = () => {
                       </TableCell>
 
                       <TableCell className={classes.bodyCell}>
-                        <Tooltip title={moment("20200704T120854").format("lll")} placement="bottom-start">
-                          <span>{moment("20200704T120854").fromNow()}</span>
+                        <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
+                          <span>{moment(row.modified).fromNow()}</span>
                         </Tooltip>
                       </TableCell>
 

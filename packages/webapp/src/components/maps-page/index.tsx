@@ -8,10 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { ListItemTextStyled, useStyles } from './style';
-import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, Help, LabelTwoTone, PublicTwoTone, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
+import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
 import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
 import { Button, Link, ListItemSecondaryAction, Menu, MenuItem, Tooltip } from '@material-ui/core';
-import { MapsList } from './maps-list'; 
+import { MapsList } from './maps-list';
 import { FormattedMessage } from 'react-intl';
 const logoIcon = require('../../images/logo-small.svg')
 const poweredByIcon = require('../../images/pwrdby-white.svg')
@@ -183,8 +183,22 @@ const ProfileToobarButton = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={handleClose}>Account</MenuItem>
-                <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+                <MenuItem onClick={handleClose}>
+                    <ListItemIcon>
+                        <SettingsApplicationsOutlined fontSize="small" />
+                    </ListItemIcon>
+                    <FormattedMessage id="menu.account" defaultMessage="Account" />
+                </MenuItem>
+
+                <MenuItem onClick={handleClose}>
+                    <Link color="textSecondary" href="/c/logout">
+                        <ListItemIcon>
+                            <ExitToAppOutlined fontSize="small" />
+                        </ListItemIcon>
+                        <FormattedMessage id="menu.signout" defaultMessage="Sign Out" />
+                    </Link>
+                </MenuItem>
+
             </Menu>
         </span>);
 }
@@ -222,11 +236,41 @@ const HelpToobarButton = () => {
                     vertical: 'top',
                     horizontal: 'right',
                 }}>
+
                 <MenuItem onClick={handleClose}>
-                    <a href="https://www.wisemapping.com/termsofuse.html"> <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" /></a>
+                    <Link color="textSecondary" href="https://www.wisemapping.com/termsofuse.html">
+                        <ListItemIcon>
+                            <PolicyOutlined fontSize="small" />
+                        </ListItemIcon>
+                        <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" />
+                    </Link>
                 </MenuItem>
+
                 <MenuItem onClick={handleClose}>
-                    <a href="mailto:team@wisemapping.com"> <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" /> </a>
+                    <Link color="textSecondary" href="mailto:team@wisemapping.com">
+                        <ListItemIcon>
+                            <EmailOutlined fontSize="small" />
+                        </ListItemIcon>
+                        <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem onClick={handleClose}>
+                    <Link color="textSecondary" href="feedback@wisemapping.com">
+                        <ListItemIcon>
+                            <FeedbackOutlined fontSize="small" />
+                        </ListItemIcon>
+                        <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem onClick={handleClose}>
+                    <Link color="textSecondary" href="https://www.wisemapping.com/aboutus.html">
+                        <ListItemIcon>
+                            <EmojiPeopleOutlined fontSize="small" />
+                        </ListItemIcon>
+                        <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
+                    </Link>
                 </MenuItem>
             </Menu>
         </span>);
