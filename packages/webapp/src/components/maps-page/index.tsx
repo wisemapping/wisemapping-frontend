@@ -8,12 +8,13 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { ListItemTextStyled, useStyles } from './style';
-import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, Help, LabelTwoTone, PublicTwoTone,  ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
+import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, Help, LabelTwoTone, PublicTwoTone, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
 import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
-import { Button, ListItemSecondaryAction, Menu, MenuItem, Tooltip } from '@material-ui/core';
-import { MapsList } from './maps-list';
+import { Button, Link, ListItemSecondaryAction, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { MapsList } from './maps-list'; 
 import { FormattedMessage } from 'react-intl';
 const logo = require('../../images/logo-small.svg')
+const poweredByIcon = require('../../images/pwrdby-white.svg')
 
 type FilterType = 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned'
 
@@ -82,12 +83,11 @@ const MapsPage = (props: any) => {
                     }),
                 }}>
 
-                <div style={{textAlign: 'center',margin:"20px 0px"}}>
-                    <img src={logo} alt="logo"/>
+                <div style={{ textAlign: 'center', margin: "20px 0px" }}>
+                    <img src={logo} alt="logo" />
                 </div>
 
                 <List component="nav">
-
                     <ListItem button >
                         <ListItemIcon>
                             <InboxTwoToneIcon color="secondary" />
@@ -134,8 +134,12 @@ const MapsPage = (props: any) => {
                             </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
-
                 </List>
+                <div style={{ position: 'absolute', bottom: '10px', left: '20px' }}>
+                    <Link href="http://www.wisemapping.org/">
+                        <img src={poweredByIcon} alt="Powered By WiseMapping" />
+                    </Link>
+                </div>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />

@@ -302,7 +302,6 @@ export const MapsList = () => {
         <TableContainer>
           <Table
             className={classes.table}
-            aria-labelledby="tableTitle"
             size="small"
             stickyHeader
           >

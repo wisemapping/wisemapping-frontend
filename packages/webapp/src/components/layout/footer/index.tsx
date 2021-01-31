@@ -2,14 +2,14 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { StyledFooter } from './styled'
 
-const logo = require('../../../images/logo-text.svg')
+const poweredByIcon = require('../../../images/pwrdby-white.svg')
 
 const Footer = () => {
   return (
     <StyledFooter>
       <div style={{ padding: 0, margin: 0 }}>
         <a href="http://www.wisemapping.org/">
-          <div style={{ textAlign: "left" }}>Powered By</div><img src={logo} alt="logo" />
+          <img src={poweredByIcon} alt="Powered By WiseMapping" />
         </a>
       </div>
       <div >

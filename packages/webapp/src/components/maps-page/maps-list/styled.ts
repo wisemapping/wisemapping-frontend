@@ -57,7 +57,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),
       },
-      marginLeft: 0,
+      margin: '10px 0px',
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(1),
@@ -66,7 +66,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       float: 'right'
     },
     searchIcon: {
-      padding: '5px 0 0 8px',
+      padding: '5px 0 0 5px',
       height: '100%',
       position: 'absolute',
       pointerEvents: 'none',
