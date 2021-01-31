@@ -26,6 +26,7 @@ import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
 import { InputBase, Link } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import moment from 'moment'
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -60,18 +61,17 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 }
 
 interface HeadCell {
-  disablePadding: boolean;
   id: keyof MapInfo;
   label?: string;
   numeric: boolean;
-  style: CSSProperties;
+  style?: CSSProperties;
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name', style: {} },
-  { id: 'labels', numeric: false, disablePadding: true, style: {} },
-  { id: 'creator', numeric: false, disablePadding: false, label: 'Creator', style: {} },
-  { id: 'modified', numeric: true, disablePadding: false, label: 'Modified', style: { width: '50px' } }
+  { id: 'name', numeric: false, label: 'Name' },
+  { id: 'labels', numeric: false },
+  { id: 'creator', numeric: false, label: 'Creator', style: { width: '60px' } },
+  { id: 'modified', numeric: true, label: 'Modified', style: { width: '30px' } }
 ];
 
 interface EnhancedTableProps {
@@ -366,13 +366,15 @@ export const MapsList = () => {
                       <TableCell className={classes.bodyCell}>
                         {row.labels}
                       </TableCell>
-                      
+
                       <TableCell className={classes.bodyCell}>
                         {row.creator}
                       </TableCell>
 
                       <TableCell className={classes.bodyCell}>
-                        {row.modified}
+                        <Tooltip title={moment("20200704T120854").format("lll")} placement="bottom-start">
+                          <span>{moment("20200704T120854").fromNow()}</span>
+                        </Tooltip>
                       </TableCell>
 
                       <TableCell className={classes.bodyCell}>
