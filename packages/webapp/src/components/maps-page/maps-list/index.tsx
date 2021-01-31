@@ -68,7 +68,6 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'starred', numeric: false, disablePadding: false, label: '', style: { width: '20px', padding: '0px' } },
   { id: 'name', numeric: false, disablePadding: true, label: 'Name', style: {} },
   { id: 'labels', numeric: false, disablePadding: true, style: {} },
   { id: 'creator', numeric: false, disablePadding: false, label: 'Creator', style: {} },
@@ -105,8 +104,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           />
         </TableCell>
 
+        <TableCell padding='checkbox' key='starred' className={classes.headerCell}></TableCell>
+
         {headCells.map((headCell) => {
-          return headCell.label ? (<TableCell
+          return (<TableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
             style={headCell.style}
@@ -123,10 +124,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 </span>
               ) : null}
             </TableSortLabel>
-          </TableCell>) : (<TableCell className={classes.headerCell} key={headCell.id}> </TableCell>)
-        }
-        )}
-        <TableCell style={{ width: '20px', padding: '0px' }} key='actions' className={classes.headerCell}></TableCell>
+          </TableCell>)
+        })}
+
+        <TableCell padding='checkbox' key='action' className={classes.headerCell}></TableCell>
+
       </TableRow>
     </TableHead>
   );
@@ -333,14 +335,18 @@ export const MapsList = () => {
                       selected={isItemSelected}
                       style={{ border: "0" }}
                     >
-                      <TableCell padding="checkbox" style={{ border: "0" }}>
+                      <TableCell
+                        padding="checkbox"
+                        className={classes.bodyCell}>
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': String(labelId) }}
                           size="small" />
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell
+                        padding="checkbox"
+                        className={classes.bodyCell}>
                         <Tooltip title="Starred">
                           <IconButton aria-label="Starred" size="small" onClick={(e) => handleStarred(e, row.id)}>
                             <StarRateRoundedIcon color="action" style={{ color: row.starred ? 'yellow' : 'gray' }} />
@@ -348,7 +354,7 @@ export const MapsList = () => {
                         </Tooltip>
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className={classes.bodyCell}>
                         <Tooltip title="Open for edition" placement="bottom-start">
 
                           <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
@@ -357,11 +363,19 @@ export const MapsList = () => {
                         </Tooltip>
                       </TableCell>
 
-                      <TableCell>{row.labels}</TableCell>
-                      <TableCell>{row.creator}</TableCell>
-                      <TableCell>{row.modified}</TableCell>
+                      <TableCell className={classes.bodyCell}>
+                        {row.labels}
+                      </TableCell>
+                      
+                      <TableCell className={classes.bodyCell}>
+                        {row.creator}
+                      </TableCell>
 
-                      <TableCell>
+                      <TableCell className={classes.bodyCell}>
+                        {row.modified}
+                      </TableCell>
+
+                      <TableCell className={classes.bodyCell}>
                         <Tooltip title="Others">
                           <IconButton aria-label="Others" size="small" onClick={handleActionClick(row.id)}>
                             <MoreHorizIcon color="action" />

@@ -13,7 +13,7 @@ import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
 import { Button, Link, ListItemSecondaryAction, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list'; 
 import { FormattedMessage } from 'react-intl';
-const logo = require('../../images/logo-small.svg')
+const logoIcon = require('../../images/logo-small.svg')
 const poweredByIcon = require('../../images/pwrdby-white.svg')
 
 type FilterType = 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned'
@@ -83,8 +83,8 @@ const MapsPage = (props: any) => {
                     }),
                 }}>
 
-                <div style={{ textAlign: 'center', margin: "20px 0px" }}>
-                    <img src={logo} alt="logo" />
+                <div style={{ padding: "20px 0 20px 15px" }}>
+                    <img src={logoIcon} alt="logo" />
                 </div>
 
                 <List component="nav">
