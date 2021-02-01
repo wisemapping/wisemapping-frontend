@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { FormControl } from "@material-ui/core";
 
-import { BasicMapInfo, ErrorInfo, Service } from "../../../../services/Service";
+import Service, { BasicMapInfo, ErrorInfo } from "../../../../services";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import Input from "../../../form/input";
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
@@ -75,7 +75,7 @@ const DuplicateDialog = (props: DialogProps) => {
                 title={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}
                 description={intl.formatMessage({ id: 'rename.description', defaultMessage: 'Please, fill the new map name and description.' })}
                 submitButton={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}>
- 
+
                 <FormControl fullWidth={true}>
                     <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
                         value={model.name} onChange={handleOnChange} error={error} fullWidth={true} />
@@ -84,7 +84,7 @@ const DuplicateDialog = (props: DialogProps) => {
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />
                 </FormControl>
             </BaseDialog>
-        </div> 
+        </div>
     );
 }
 

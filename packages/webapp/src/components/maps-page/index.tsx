@@ -7,30 +7,39 @@ import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { ListItemTextStyled, useStyles } from './style';
-import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
+import { useStyles } from './style';
+import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
 import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
-import { Button, Link, ListItemSecondaryAction, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { Button, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage } from 'react-intl';
+import { useQueryClient } from 'react-query';
 const logoIcon = require('../../images/logo-small.svg')
 const poweredByIcon = require('../../images/pwrdby-white.svg')
 
-type FilterType = 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned'
+export type Filter = GenericFilter | LabelFilter;
 
-interface Filter {
-    type: FilterType
+interface GenericFilter {
+    type: 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned';
 }
 
-interface LabelFinter extends Filter {
+interface LabelFilter {
+    type: 'label',
     label: string
 }
 
 const MapsPage = (props: any) => {
     const classes = useStyles();
+    const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
+    const queryClient = useQueryClient();
+
     useEffect(() => {
         document.title = 'Maps | WiseMapping';
     }, []);
+
+    const handleMenuClick = (filter: Filter) => {
+        setFilter(filter);
+    };
 
     return (
         <div className={classes.root}>
@@ -88,53 +97,43 @@ const MapsPage = (props: any) => {
                 </div>
 
                 <List component="nav">
-                    <ListItem button >
-                        <ListItemIcon>
-                            <InboxTwoToneIcon color="secondary" />
-                        </ListItemIcon>
-                        <ListItemTextStyled primary="All" />
-                    </ListItem>
-
-                    <ListItem button >
-                        <ListItemIcon>
-                            <BlurCircular color="secondary" />
-                        </ListItemIcon>
-                        <ListItemTextStyled primary="Owned" />
-                    </ListItem>
-
-                    <ListItem button >
-                        <ListItemIcon>
-                            <StarRateTwoTone color="secondary" />
-                        </ListItemIcon>
-                        <ListItemTextStyled primary="Starred" />
-                    </ListItem>
-
-                    <ListItem button >
-                        <ListItemIcon>
-                            <ShareTwoTone color="secondary" />
-                        </ListItemIcon>
-                        <ListItemTextStyled primary="Shared With Me" />
-                    </ListItem>
-
-                    <ListItem button >
-                        <ListItemIcon>
-                            <PublicTwoTone color="secondary" />
-                        </ListItemIcon>
-                        <ListItemTextStyled primary="Public" />
-                    </ListItem>
-
-                    <ListItem button >
-                        <ListItemIcon>
-                            <LabelTwoTone color="secondary" />
-                        </ListItemIcon>
-                        <ListItemTextStyled primary="Some label>" />
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete">
-                                <DeleteOutlineTwoTone color="secondary" />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
+                    <StyleListItem
+                        icon={<InboxTwoToneIcon color="secondary" />}
+                        label={"All"}
+                        filter={{ type: 'all' }}
+                        active={filter}
+                        onClick={handleMenuClick}
+                    />
+                    <StyleListItem
+                        icon={<BlurCircular color="secondary" />}
+                        label={"Owned"}
+                        filter={{ type: 'owned' }}
+                        active={filter}
+                        onClick={handleMenuClick}
+                    />
+                    <StyleListItem
+                        icon={<StarRateTwoTone color="secondary" />}
+                        label={"Starred"}
+                        filter={{ type: 'starred' }}
+                        active={filter}
+                        onClick={handleMenuClick}
+                    />
+                    <StyleListItem
+                        icon={<ShareTwoTone color="secondary" />}
+                        label={"Shared With Me"}
+                        filter={{ type: 'shared' }}
+                        active={filter}
+                        onClick={handleMenuClick}
+                    />
+                    <StyleListItem
+                        icon={<PublicTwoTone color="secondary" />}
+                        label={"Public"}
+                        filter={{ type: 'public' }}
+                        active={filter}
+                        onClick={handleMenuClick}
+                    />
                 </List>
+
                 <div style={{ position: 'absolute', bottom: '10px', left: '20px' }}>
                     <Link href="http://www.wisemapping.org/">
                         <img src={poweredByIcon} alt="Powered By WiseMapping" />
@@ -143,9 +142,47 @@ const MapsPage = (props: any) => {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <MapsList />
+                <MapsList filter={filter} />
             </main>
         </div>
+    );
+}
+
+interface ListItemProps {
+    icon: any,
+    label: string,
+    filter: Filter,
+    active?: Filter
+    onClick: (filter: Filter) => void;
+}
+
+const StyleListItem = (props: ListItemProps) => {
+    const icon = props.icon;
+    const label = props.label;
+    const filter = props.filter;
+    const activeType = props.active?.type;
+    const onClick = props.onClick;
+
+    const handleOnClick = (event: any, filter: Filter) => {
+        // Invalidate cache to provide a fresh load ...
+        event.stopPropagation();
+        onClick(filter);
+    }
+
+    return (
+        <ListItem button selected={activeType == filter.type} onClick={e => { handleOnClick(e, filter) }}>
+            <ListItemIcon>
+                {icon}
+            </ListItemIcon>
+            <ListItemText style={{ color: 'white' }} primary={label} />
+
+            {/* <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="delete">
+                    <DeleteOutlineTwoTone color="secondary" />
+                </IconButton>
+            </ListItemSecondaryAction> */}
+
+        </ListItem>
     );
 }
 
@@ -163,11 +200,14 @@ const ProfileToobarButton = () => {
 
     return (
         <span>
-            <IconButton
-                aria-haspopup="true"
-                onClick={handleMenu}>
-                <AccountCircle fontSize="large" />
-            </IconButton >
+            <Tooltip title="Paulo Veiga <pveiga@gmail.com>">
+                <Button
+                    aria-haspopup="true"
+                    onClick={handleMenu}>
+                    <AccountCircle fontSize="large" />
+                Paulo Veiga
+            </Button >
+            </Tooltip>
             <Menu id="appbar-profile"
                 anchorEl={anchorEl}
                 keepMounted

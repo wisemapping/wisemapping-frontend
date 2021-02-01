@@ -36,6 +36,7 @@ const ActionChooser = (props: ActionProps) => {
       keepMounted
       open={Boolean(anchor)}
       onClose={handleOnClose(undefined)}
+      elevation={1}
     >
       <MenuItem onClick={handleOnClose('open')} style={{width:"220px"}}>
         <ListItemIcon>

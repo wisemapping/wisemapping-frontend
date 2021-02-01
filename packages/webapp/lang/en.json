@@ -6,7 +6,7 @@
     "defaultMessage": "Close"
   },
   "action.delete": {
-    "defaultMessage": "Delete"
+    "defaultMessage": "History"
   },
   "action.delete-description": {
     "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
@@ -25,6 +25,9 @@
   },
   "action.info-title": {
     "defaultMessage": "Info"
+  },
+  "action.label": {
+    "defaultMessage": "Add Label"
   },
   "action.open": {
     "defaultMessage": "Open"
@@ -119,6 +122,12 @@
   },
   "login.userinactive": {
     "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+  },
+  "menu.account": {
+    "defaultMessage": "Account"
+  },
+  "menu.signout": {
+    "defaultMessage": "Sign Out"
   },
   "registration.desc": {
     "defaultMessage": "Signing up is free and just take a moment"

@@ -66,8 +66,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         toolbar: {
             display: 'flex',
             justifyContent: 'flex-end',
-            // necessary for content to be below app bar
-            ...theme.mixins.toolbar,
+            minHeight: '44px'
         },
         content: {
             flexGrow: 1,
@@ -75,11 +74,3 @@ export const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
-
-export const ListItemTextStyled = withStyles({
-    root:
-    {
-        color: 'white',
-    }
-})(ListItemText);

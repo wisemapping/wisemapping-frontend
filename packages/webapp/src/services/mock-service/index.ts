@@ -1,49 +1,6 @@
-import axios from 'axios'
-
-export type NewUser = {
-    email: string;
-    firstname: string;
-    lastname: string;
-    password: string;
-    recaptcha: string | null;
-}
-
-export type MapInfo = {
-    id: number;
-    starred: boolean;
-    name: string;
-    labels: string[];
-    creator: string;
-    modified: number;
-    description: string;
-}
-
-export type BasicMapInfo = {
-    name: string;
-    description?: string;
-}
-
-export type FieldError = {
-    id: string,
-    msg: string
-}
-
-export type ErrorInfo = {
-    msg?: string;
-    fields?: Map<String, String>;
-}
-
-interface Service {
-    registerNewUser(user: NewUser): Promise<void>;
-    resetPassword(email: string): Promise<void>;
-    fetchAllMaps(): Promise<MapInfo[]>;
-
-    deleteMap(id: number): Promise<void>;
-    renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
-    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
-    loadMapInfo(id: number): Promise<BasicMapInfo>;
-    changeStarred(id: number): Promise<void>;
-}
+import { BasicMapInfo, ErrorInfo, MapInfo, NewUser } from "..";
+import Service from "..";
+import axios from "axios";
 
 class MockService implements Service {
     private baseUrl: string;
@@ -61,14 +18,24 @@ class MockService implements Service {
             labels: string[],
             creator: string,
             modified: number,
-            description: string
+            description: string,
+            isPublic: boolean
         ): MapInfo {
-            return { id, name, labels, creator, modified, starred, description };
+            return { id, name, labels, creator, modified, starred, description, isPublic };
         }
         this.maps = [
-            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67, ""),
-            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67, ""),
-            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67, "")
+            createMapInfo(1, true, "El Mapa", [""], "Paulo", 67, "", true),
+            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", 67, "", false),
+            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(4, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(5, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(6, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(7, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(8, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(9, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(10, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(11, false, "El Mapa3", [""], "Paulo3", 67, "", false),
+            createMapInfo(12, false, "El Mapa3", [""], "Paulo3", 67, "", false)
         ];
     }
 
@@ -112,7 +79,7 @@ class MockService implements Service {
             })
         };
     }
-   
+
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
 
         const exists = this.maps.find(m => m.name == basicInfo.name) != undefined;
@@ -125,7 +92,8 @@ class MockService implements Service {
                 starred: false,
                 creator: "current user",
                 labels: [],
-                modified: -1
+                modified: -1,
+                isPublic: false
             };
             this.maps.push(newMap);
             return Promise.resolve();
@@ -164,6 +132,7 @@ class MockService implements Service {
     }
 
     fetchAllMaps(): Promise<MapInfo[]> {
+        console.log("Fetch maps from server")
         return Promise.resolve(this.maps);
     }
 
@@ -229,6 +198,6 @@ class MockService implements Service {
 
         return result;
     }
-
 }
-export { Service, MockService as RestService }
+
+export default MockService;

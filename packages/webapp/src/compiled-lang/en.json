@@ -14,7 +14,7 @@
   "action.delete": [
     {
       "type": 0,
-      "value": "Delete"
+      "value": "History"
     }
   ],
   "action.delete-description": [
@@ -51,6 +51,12 @@
     {
       "type": 0,
       "value": "Info"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "Add Label"
     }
   ],
   "action.open": [
@@ -237,6 +243,18 @@
     {
       "type": 0,
       "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "Account"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "Sign Out"
     }
   ],
   "registration.desc": [

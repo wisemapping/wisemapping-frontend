@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStyles } from './styled';
 
 import Table from '@material-ui/core/Table';
@@ -21,12 +21,14 @@ import { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../reducers/serviceSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { ErrorInfo, MapInfo, Service } from '../../../services/Service';
+import { ErrorInfo, MapInfo } from '../../../services';
+import Service from '../../../services';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
 import { InputBase, Link } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import moment from 'moment'
+import { Filter } from '..';
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -139,21 +141,66 @@ type ActionPanelState = {
   mapId: number
 }
 
-export const MapsList = () => {
+interface MapsListProps {
+  filter: Filter
+}
+
+const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => boolean) => {
+  return (mapInfo: MapInfo) => {
+
+    // Check for filter condition
+    let result = false;
+    switch (filter.type) {
+      case 'all':
+        result = true;
+        break;
+      case 'public':
+        result = mapInfo.isPublic;
+        break;
+      case 'starred':
+        result = mapInfo.starred;
+        break;
+      default:
+        result = false;
+    }
+
+    // Does it match search filter criteria...
+    if (search && result) {
+      result = mapInfo.name.toLowerCase().indexOf(search.toLowerCase()) != -1;
+    }
+
+    return result;
+  }
+}
+
+export const MapsList = (props: MapsListProps) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
+  const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
+
   const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('modified');
   const [selected, setSelected] = React.useState<number[]>([]);
+  const [searchCondition, setSearchCondition] = React.useState<string>('');
+
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const service: Service = useSelector(activeInstance);
 
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
+  useEffect(() => {
+    console.log("Update maps state.")
+    setSelected([]);
+    setSearchCondition('');
+    setPage(0);
+    setFilter(props.filter)
+    queryClient.invalidateQueries('maps');
 
-    const result = await service.fetchAllMaps();
-    return result;
+  }, [props.filter.type]);
+
+
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
+    return await service.fetchAllMaps();
   });
-  const mapsInfo: MapInfo[] = data ? data : [];
+  const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
 
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(undefined);
@@ -236,8 +283,6 @@ export const MapsList = () => {
 
   const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
     event.stopPropagation();
-
-    event.preventDefault();
     starredMultation.mutate(id);
   }
 
@@ -253,9 +298,11 @@ export const MapsList = () => {
     setActiveRowAction(undefined);
   };
 
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, mapsInfo.length - page * rowsPerPage);
+  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchCondition(e.target.value);
+  }
 
+  const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
@@ -276,7 +323,6 @@ export const MapsList = () => {
           <div className={classes.toolbarListActions}>
             <TablePagination
               style={{ float: 'right', border: "0", paddingBottom: "5px" }}
-              rowsPerPageOptions={[50]}
               count={mapsInfo.length}
               rowsPerPage={rowsPerPage}
               page={page}
@@ -295,6 +341,7 @@ export const MapsList = () => {
                   input: classes.searchInputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={handleOnSearchChange}
               />
             </div>
           </div>

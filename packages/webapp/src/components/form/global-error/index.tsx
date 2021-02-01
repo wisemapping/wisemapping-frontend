@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorInfo } from "../../../services/Service"
+import { ErrorInfo } from "../../../services"
 import StyledAlert from "./styled";
 
 

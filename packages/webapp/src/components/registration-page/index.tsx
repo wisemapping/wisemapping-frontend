@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useHistory } from 'react-router-dom';
-import { ErrorInfo, Service } from '../../services/Service';
+import Service , { ErrorInfo} from '../../services';
 import FormContainer from '../layout/form-container';
 
 import Header from '../layout/header';

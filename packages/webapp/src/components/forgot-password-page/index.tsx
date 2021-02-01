@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useHistory } from "react-router-dom"
-import { Service, ErrorInfo } from '../../services/Service'
+import Service, { ErrorInfo } from '../../services'
 
 import Header from '../layout/header'
 import Footer from '../layout/footer'

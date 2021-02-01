@@ -17,7 +17,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       '& tr:nth-child(odd)':
       {
         background: 'rgba(221, 221, 221, 0.35)'
-      }
+      },
+      // '&:hover tr': {
+      //   backgroundColor: 'rgba(150, 150, 150, 0.7)',
+      // }
     },
     headerCell: {
       background: 'white',
@@ -26,7 +29,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       border: 0
     },
     bodyCell: {
-      border: 0
+      border: '0px'
     },
     visuallyHidden: {
       border: 0,
@@ -66,7 +69,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       float: 'right'
     },
     searchIcon: {
-      padding: '5px 0 0 5px',
+      padding: '6px 0 0 5px',
       height: '100%',
       position: 'absolute',
       pointerEvents: 'none',

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { BasicMapInfo, ErrorInfo, Service } from "../../../../services/Service";
+import Service, { BasicMapInfo, ErrorInfo } from "../../../../services";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import Input from "../../../form/input";
