@@ -35,8 +35,8 @@ class MockClient implements Client {
             createMapInfo(8, false, "El Mapa3", [""], "Paulo3", 67, "", false),
             createMapInfo(9, false, "El Mapa3", [""], "Paulo3", 67, "", false),
             createMapInfo(10, false, "El Mapa3", [""], "Paulo3", 67, "", false),
-            createMapInfo(11, false, "El Mapa3", [""], "Paulo3", 67, "", false),
-            createMapInfo(12, false, "El Mapa3", [""], "Paulo3", 67, "", false)
+            createMapInfo(11, false, "El Mapa3", ["label 3", "label3"], "Paulo3", 67, "", false),
+            createMapInfo(12, false, "El Mapa3", ["label 2"], "Paulo3", 67, "", false)
         ];
 
         this.labels = ["label 1,", "label 2", "label 3"];
@@ -45,6 +45,7 @@ class MockClient implements Client {
 
 
     fetchLabels(): Promise<string[]> {
+        console.log("Fetching  labels from server")
         return Promise.resolve(this.labels);
     }
 
@@ -151,7 +152,7 @@ class MockClient implements Client {
     }
 
     fetchAllMaps(): Promise<MapInfo[]> {
-        console.log("Fetch maps from server")
+        console.log("Fetching  maps from server")
         return Promise.resolve(this.maps);
     }
 

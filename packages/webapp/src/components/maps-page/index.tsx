@@ -8,8 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
-import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
+import { AccountCircle, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined } from '@material-ui/icons';
 import { Button, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage } from 'react-intl';
@@ -24,23 +23,21 @@ const poweredByIcon = require('../../images/pwrdby-white.svg');
 
 export type Filter = GenericFilter | LabelFilter;
 
-interface GenericFilter {
+export interface GenericFilter {
     type: 'public' | 'all' | 'starred' | 'shared' | 'label' | 'owned';
 }
 
-interface LabelFilter {
+export interface LabelFilter {
     type: 'label',
     label: string
 }
-
 
 interface ToolbarButtonInfo {
     filter: GenericFilter | LabelFilter,
     label: string
 }
 
-
-const MapsPage = (props: any) => {
+const MapsPage = () => {
     const classes = useStyles();
     const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
     const client: Client = useSelector(activeInstance);
@@ -60,6 +57,8 @@ const MapsPage = (props: any) => {
     );
 
     const handleMenuClick = (filter: Filter) => {
+        // Force reload ...
+        queryClient.invalidateQueries('maps');
         setFilter(filter);
     };
 
@@ -67,7 +66,7 @@ const MapsPage = (props: any) => {
         mutation.mutate(label);
     };
 
-    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, string[]>('labels', async () => {
+    const { data } = useQuery<unknown, ErrorInfo, string[]>('labels', async () => {
         return await client.fetchLabels();
     });
 
@@ -102,7 +101,7 @@ const MapsPage = (props: any) => {
                 variant='outlined'
                 elevation={0}>
 
-                <Toolbar style={{ minWidth: '600px' }}>
+                <Toolbar>
                     <Tooltip title="Create a New Map">
                         <Button color="primary" size="medium" variant="contained" type="button"
                             disableElevation={true} startIcon={<AddCircleTwoTone />} className={classes.newMapButton}>
@@ -178,9 +177,12 @@ const StyleListItem = (props: ListItemProps) => {
     const icon = props.icon;
     const label = props.label;
     const filter = props.filter;
-    const activeType = props.active?.type;
+    const activeFilter = props.active;
     const onClick = props.onClick;
     const onDeleteLabel = props.onDelete;
+    const isSelected = activeFilter
+        && (activeFilter.type == filter.type)
+        && (activeFilter.type != 'label' || ((activeFilter as LabelFilter).label == (filter as LabelFilter).label));
 
 
     const handleOnClick = (event: any, filter: Filter) => {
@@ -198,7 +200,7 @@ const StyleListItem = (props: ListItemProps) => {
 
     return (
         <ListItem button
-            selected={activeType == filter.type}
+            selected={isSelected}
             onClick={e => handleOnClick(e, filter)}>
             <ListItemIcon>
                 {icon}

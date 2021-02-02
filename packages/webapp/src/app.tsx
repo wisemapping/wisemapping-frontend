@@ -9,13 +9,11 @@ import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import MapsPage from './components/maps-page';
 import store from "./store";
-
 import { ForgotPasswordPage } from './components/forgot-password-page';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { theme } from './theme'
-
 
 function loadLocaleData(language: string) {
   switch (language) {
@@ -26,7 +24,15 @@ function loadLocaleData(language: string) {
   }
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchIntervalInBackground: false,
+      staleTime: 5*1000*60 // 10 minutes
+    }
+  }
+});
+
 const App = () => {
   const [messages, setMessages] = useState(undefined);
   // Boostrap i18n ...
@@ -46,33 +52,33 @@ const App = () => {
 
   return messages ? (
     <Provider store={store}>
-      <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Router>
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/c/login" />
-                </Route>
-                <Route path="/c/login" component={LoginPage} />
-                <Route path="/c/registration">
-                  <RegistationPage />
-                </Route>
-                <Route path="/c/registration-success" component={RegistrationSuccessPage} />
-                <Route path="/c/forgot-password">
-                  <ForgotPasswordPage />
-                </Route>
-                <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
-                <Route path="/c/maps/">
-                  <MapsPage />
-                </Route>
-              </Switch>
-            </Router>
-          </ThemeProvider>
-        </IntlProvider>
-      </QueryClientProvider>
+        <GlobalStyle />
+        <QueryClientProvider client={queryClient}>
+          <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Router>
+                <Switch>
+                  <Route exact path="/">
+                    <Redirect to="/c/login" />
+                  </Route>
+                  <Route path="/c/login" component={LoginPage} />
+                  <Route path="/c/registration">
+                    <RegistationPage />
+                  </Route>
+                  <Route path="/c/registration-success" component={RegistrationSuccessPage} />
+                  <Route path="/c/forgot-password">
+                    <ForgotPasswordPage />
+                  </Route>
+                  <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
+                  <Route path="/c/maps/">
+                    <MapsPage />
+                  </Route>
+                </Switch>
+              </Router>
+            </ThemeProvider>
+          </IntlProvider>
+        </QueryClientProvider>
     </Provider>
 
   ) : <div>Loading ... </div>

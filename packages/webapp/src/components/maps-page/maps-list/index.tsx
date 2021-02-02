@@ -27,7 +27,7 @@ import ActionDispatcher from '../action-dispatcher';
 import { Button, InputBase, Link } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import moment from 'moment'
-import { Filter } from '..';
+import { Filter, LabelFilter } from '..';
 import { FormattedMessage } from 'react-intl';
 import { DeleteOutlined, LabelTwoTone } from '@material-ui/icons';
 
@@ -168,7 +168,10 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
         //@todo: complete ...
         result = mapInfo.starred;
         break;
-
+      case 'label':
+        //@todo: complete ...
+        result = !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label)
+        break;
       default:
         result = false;
     }
@@ -195,14 +198,11 @@ export const MapsList = (props: MapsListProps) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const client: Client = useSelector(activeInstance);
 
-  console.log("MapsList refresh");
-
   useEffect(() => {
-    console.log("Update maps state.")
     setSelected([]);
     setPage(0);
     setFilter(props.filter)
-  }, [props.filter.type]);
+  }, [props.filter.type, (props.filter as LabelFilter).label]);
 
 
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
