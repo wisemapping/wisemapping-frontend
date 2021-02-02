@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import Service, { BasicMapInfo, ErrorInfo } from "../../../../services";
+import Client, { BasicMapInfo, ErrorInfo } from "../../../../client";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import Input from "../../../form/input";
@@ -17,7 +17,7 @@ export type RenameModel = {
 
 const defaultModel: RenameModel = { name: '', description: '', id: -1 };
 const RenameDialog = (props: DialogProps) => {
-    const service: Service = useSelector(activeInstance);
+    const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<RenameModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
     const { mapId, open } = props;

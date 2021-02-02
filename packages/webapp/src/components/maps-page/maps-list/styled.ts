@@ -46,10 +46,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       borderBottom: '1px solid #cccccc',
       padding: '0',
-      marging: '0'
+      marging: '0'    
     },
     toolbarActions: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     toolbarListActions: {
       flexGrow: 1

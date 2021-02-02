@@ -115,7 +115,7 @@ const ActionChooser = (props: ActionProps) => {
         <ListItemIcon>
           <DeleteOutlinedIcon />
         </ListItemIcon>
-        <FormattedMessage id="action.delete" defaultMessage="History" />
+        <FormattedMessage id="action.history" defaultMessage="History" />
       </MenuItem>
     </Menu>);
 }

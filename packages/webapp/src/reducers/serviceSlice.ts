@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios';
-import Service  from '../services';
-import MockService from '../services/mock-service';
+import Client  from '../client';
+import MockClient from '../client/mock-client';
 
 type RutimeConfig = {
   apiBaseUrl: string;
@@ -34,11 +34,11 @@ async function loadRuntimeConfig() {
 
 
 interface ServiceState {
-  instance: Service
+  instance: Client;
 }
 
 const initialState: ServiceState = { 
-  instance: new MockService("", () => { console.log("401 error") })
+  instance: new MockClient("", () => { console.log("401 error") })
 };
 
 export const serviceSlice = createSlice({
@@ -46,12 +46,12 @@ export const serviceSlice = createSlice({
   initialState: initialState,
   reducers: {
     initialize(state, action: PayloadAction<void[]>) {
-      state.instance = new MockService("", () => { console.log("401 error") });
+      state.instance = new MockClient("", () => { console.log("401 error") });
     }
   },
 });
 
-export const activeInstance = (state: any): Service => {
+export const activeInstance = (state: any): Client => {
   return state.service.instance;
 }
 export default serviceSlice.reducer

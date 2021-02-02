@@ -2,8 +2,8 @@ import React from 'react';
 import RenameDialog from './rename';
 import DeleteDialog from './delete';
 import { ActionType } from '../action-chooser';
-import { ErrorInfo, MapInfo } from '../../../services';
-import Service from '../../../services';
+import { ErrorInfo, MapInfo } from '../../../client';
+import Client from '../../../client';
 import { useSelector } from 'react-redux';
 import { QueryClient, useQuery } from 'react-query';
 import { activeInstance } from '../../../reducers/serviceSlice';
@@ -60,7 +60,7 @@ type MapLoadResult = {
 
 export const fetchMapById = (id: number): MapLoadResult => {
 
-  const service: Service = useSelector(activeInstance);
+  const service: Client = useSelector(activeInstance);
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
     return service.fetchAllMaps();
   });

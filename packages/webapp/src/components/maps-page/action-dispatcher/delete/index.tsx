@@ -3,7 +3,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import Service from "../../../../services";
+import Client from "../../../../client";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import BaseDialog from "../action-dialog";
@@ -12,7 +12,7 @@ import BaseDialog from "../action-dialog";
 const DeleteDialog = (props: DialogProps) => {
   const intl = useIntl();
 
-  const service: Service = useSelector(activeInstance);
+  const service: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
   const mutation = useMutation((id: number) => service.deleteMap(id),
     {

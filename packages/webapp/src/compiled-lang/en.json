@@ -14,7 +14,7 @@
   "action.delete": [
     {
       "type": 0,
-      "value": "History"
+      "value": "Delete"
     }
   ],
   "action.delete-description": [
@@ -41,6 +41,18 @@
       "value": "Export"
     }
   ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "History"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "Import"
+    }
+  ],
   "action.info": [
     {
       "type": 0,
@@ -57,6 +69,12 @@
     {
       "type": 0,
       "value": "Add Label"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "New Map"
     }
   ],
   "action.open": [
@@ -278,7 +296,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy"
+      "value": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
     }
   ],
   "registration.title": [

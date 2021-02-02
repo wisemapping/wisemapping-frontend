@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, DialogContentText } from "@material-ui/core";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ErrorInfo } from "../../../../services";
+import { ErrorInfo } from "../../../../client";
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
 import GlobalError from "../../../form/global-error";
 

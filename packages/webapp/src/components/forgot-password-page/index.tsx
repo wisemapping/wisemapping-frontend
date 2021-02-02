@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { useHistory } from "react-router-dom"
-import Service, { ErrorInfo } from '../../services'
+import { useHistory } from 'react-router-dom'
+import Client, { ErrorInfo } from '../../client'
 
 import Header from '../layout/header'
 import Footer from '../layout/footer'
@@ -20,7 +20,7 @@ const ForgotPassword = () => {
   const history = useHistory();
   const intl = useIntl();
 
-  const service: Service = useSelector(activeInstance);
+  const service: Client = useSelector(activeInstance);
   const mutation = useMutation<void, ErrorInfo, string>(
     (email: string) => service.resetPassword(email),
     {

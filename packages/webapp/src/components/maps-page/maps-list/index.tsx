@@ -14,21 +14,22 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../reducers/serviceSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { ErrorInfo, MapInfo } from '../../../services';
-import Service from '../../../services';
+import { ErrorInfo, MapInfo } from '../../../client';
+import Client from '../../../client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
-import { InputBase, Link } from '@material-ui/core';
+import { Button, InputBase, Link } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import moment from 'moment'
 import { Filter } from '..';
+import { FormattedMessage } from 'react-intl';
+import { DeleteOutlined, LabelTwoTone } from '@material-ui/icons';
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -160,6 +161,14 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
       case 'starred':
         result = mapInfo.starred;
         break;
+      case 'owned':
+        result = mapInfo.starred;
+        break;
+      case 'shared':
+        //@todo: complete ...
+        result = mapInfo.starred;
+        break;
+
       default:
         result = false;
     }
@@ -184,24 +193,22 @@ export const MapsList = (props: MapsListProps) => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const service: Service = useSelector(activeInstance);
+  const client: Client = useSelector(activeInstance);
+
+  console.log("MapsList refresh");
 
   useEffect(() => {
     console.log("Update maps state.")
     setSelected([]);
-    setSearchCondition('');
     setPage(0);
     setFilter(props.filter)
-    queryClient.invalidateQueries('maps');
-
   }, [props.filter.type]);
 
 
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
-    return await service.fetchAllMaps();
+    return await client.fetchAllMaps();
   });
   const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
-
 
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(undefined);
   type ActiveDialog = {
@@ -269,7 +276,7 @@ export const MapsList = (props: MapsListProps) => {
   const queryClient = useQueryClient();
 
   const starredMultation = useMutation<void, ErrorInfo, number>((id: number) => {
-    return service.changeStarred(id);
+    return client.changeStarred(id);
   },
     {
       onSuccess: () => {
@@ -308,14 +315,33 @@ export const MapsList = (props: MapsListProps) => {
       <Paper className={classes.paper} elevation={0}>
         <Toolbar className={classes.toolbar} variant="dense">
 
-
           <div className={classes.toolbarActions}>
             {selected.length > 0 ? (
+              <Tooltip title="Delete selected">
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="outlined"
+                  type="button"
+                  disableElevation={true}
+                  startIcon={<DeleteOutlined />}>
+                  <FormattedMessage id="action.delete" defaultMessage="Delete" />
+                </Button>
+              </Tooltip>
+            ) : null}
 
-              <Tooltip title="Delete">
-                <IconButton aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
+            {selected.length > 0 ? (
+              <Tooltip title="Add label to selected">
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="outlined"
+                  type="button"
+                  style={{ marginLeft: "10px" }}
+                  disableElevation={true}
+                  startIcon={<LabelTwoTone />}>
+                  <FormattedMessage id="action.label" defaultMessage="Add Label" />
+                </Button>
               </Tooltip>
             ) : null}
           </div>
@@ -324,6 +350,7 @@ export const MapsList = (props: MapsListProps) => {
             <TablePagination
               style={{ float: 'right', border: "0", paddingBottom: "5px" }}
               count={mapsInfo.length}
+              rowsPerPageOptions={[]}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}

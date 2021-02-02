@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useHistory } from 'react-router-dom';
-import Service , { ErrorInfo} from '../../services';
+import Client , { ErrorInfo} from '../../client';
 import FormContainer from '../layout/form-container';
 
 import Header from '../layout/header';
@@ -31,9 +31,9 @@ const RegistrationForm = () => {
   const history = useHistory();
   const intl = useIntl();
 
-  const service: Service = useSelector(activeInstance);
+  const Client: Client = useSelector(activeInstance);
   const mutation = useMutation<void, ErrorInfo, Model>(
-    (model: Model) => service.registerNewUser({ ...model }),
+    (model: Model) => Client.registerNewUser({ ...model }),
     {
       onSuccess: () => history.push("/c/registration-success"),
       onError: (error) => {
@@ -90,7 +90,7 @@ const RegistrationForm = () => {
           </div>
 
           <div style={{ fontSize: "12px", padding: "10px 0px" }}>
-            <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy" />
+            <FormattedMessage id="registration.termandconditions" defaultMessage="Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy" />
           </div>
 
           <SubmitButton value={intl.formatMessage({ id: "registration.register", defaultMessage: "Register" })} />

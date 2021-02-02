@@ -1,7 +1,7 @@
 import React from "react";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import Service from "../../../../services";
+import Client from "../../../../client";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById } from "..";
 import BaseDialog from "../action-dialog";
@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 
 const InfoDialog = (props: DialogProps) => {
-  const service: Service = useSelector(activeInstance);
+  const service: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
   const intl = useIntl();
 

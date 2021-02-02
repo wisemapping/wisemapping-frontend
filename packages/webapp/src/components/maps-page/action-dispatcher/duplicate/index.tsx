@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { FormControl } from "@material-ui/core";
 
-import Service, { BasicMapInfo, ErrorInfo } from "../../../../services";
+import Client, { BasicMapInfo, ErrorInfo } from "../../../../client";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import Input from "../../../form/input";
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
@@ -18,7 +18,7 @@ export type DuplicateModel = {
 
 const defaultModel: DuplicateModel = { name: '', description: '', id: -1 };
 const DuplicateDialog = (props: DialogProps) => {
-    const service: Service = useSelector(activeInstance);
+    const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
     const { mapId, open } = props;

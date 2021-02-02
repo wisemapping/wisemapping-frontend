@@ -1,11 +1,12 @@
 import { BasicMapInfo, ErrorInfo, MapInfo, NewUser } from "..";
-import Service from "..";
+import Client from "..";
 import axios from "axios";
 
-class MockService implements Service {
+class MockClient implements Client {
     private baseUrl: string;
     private authFailed: () => void
     private maps: MapInfo[] = [];
+    private labels: string[] = [];
 
     constructor(baseUrl: string, authFailed: () => void) {
         this.baseUrl = baseUrl;
@@ -37,6 +38,14 @@ class MockService implements Service {
             createMapInfo(11, false, "El Mapa3", [""], "Paulo3", 67, "", false),
             createMapInfo(12, false, "El Mapa3", [""], "Paulo3", 67, "", false)
         ];
+
+        this.labels = ["label 1,", "label 2", "label 3"];
+
+    }
+
+
+    fetchLabels(): Promise<string[]> {
+        return Promise.resolve(this.labels);
     }
 
     changeStarred(id: number): Promise<void> {
@@ -52,6 +61,10 @@ class MockService implements Service {
     }
 
     loadMapInfo(id: number): Promise<BasicMapInfo> {
+        return Promise.resolve({ name: 'My Map', description: 'My Description' });
+    }
+
+    fetchLabes(id: number): Promise<BasicMapInfo> {
         return Promise.resolve({ name: 'My Map', description: 'My Description' });
     }
 
@@ -107,6 +120,12 @@ class MockService implements Service {
 
             })
         };
+    }
+
+    deleteLabel(label: string): Promise<void> {
+        this.labels = this.labels.filter(l => l != label);
+        console.log("Label delete:" + label);
+        return Promise.resolve();
     }
 
     deleteMap(id: number): Promise<void> {
@@ -200,4 +219,4 @@ class MockService implements Service {
     }
 }
 
-export default MockService;
+export default MockClient;

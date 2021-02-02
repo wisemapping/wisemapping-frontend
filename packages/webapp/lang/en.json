@@ -6,7 +6,7 @@
     "defaultMessage": "Close"
   },
   "action.delete": {
-    "defaultMessage": "History"
+    "defaultMessage": "Delete"
   },
   "action.delete-description": {
     "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
@@ -20,6 +20,12 @@
   "action.export": {
     "defaultMessage": "Export"
   },
+  "action.history": {
+    "defaultMessage": "History"
+  },
+  "action.import": {
+    "defaultMessage": "Import"
+  },
   "action.info": {
     "defaultMessage": "Info"
   },
@@ -28,6 +34,9 @@
   },
   "action.label": {
     "defaultMessage": "Add Label"
+  },
+  "action.new": {
+    "defaultMessage": "New Map"
   },
   "action.open": {
     "defaultMessage": "Open"
@@ -139,7 +148,7 @@
     "defaultMessage": "Click 'Sign In' button below and start creating mind maps."
   },
   "registration.termandconditions": {
-    "defaultMessage": "Terms of Service: Please check the WiseMapping Account information you've entered above, and review the Terms of Service here. By clicking on 'Register' below you are agreeing to the Terms of Service above and the Privacy Policy"
+    "defaultMessage": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
   },
   "registration.title": {
     "defaultMessage": "Become a member"

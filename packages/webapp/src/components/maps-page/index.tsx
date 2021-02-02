@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ErrorInfo, useEffect } from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,14 +8,19 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
+import { AccountCircle, AddCircleTwoTone, BlurCircular, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarRateTwoTone, Translate, TranslateTwoTone } from '@material-ui/icons';
 import InboxTwoToneIcon from '@material-ui/icons/InboxTwoTone';
 import { Button, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage } from 'react-intl';
-import { useQueryClient } from 'react-query';
-const logoIcon = require('../../images/logo-small.svg')
-const poweredByIcon = require('../../images/pwrdby-white.svg')
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { activeInstance } from '../../reducers/serviceSlice';
+import { useSelector } from 'react-redux';
+import Client from '../../client';
+
+const logoIcon = require('../../images/logo-small.svg');
+const poweredByIcon = require('../../images/pwrdby-white.svg');
+
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -28,18 +33,64 @@ interface LabelFilter {
     label: string
 }
 
+
+interface ToolbarButtonInfo {
+    filter: GenericFilter | LabelFilter,
+    label: string
+}
+
+
 const MapsPage = (props: any) => {
     const classes = useStyles();
     const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
+    const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
+
 
     useEffect(() => {
         document.title = 'Maps | WiseMapping';
     }, []);
 
+
+    const mutation = useMutation(
+        (label: string) => client.deleteLabel(label),
+        {
+            onSuccess: () => queryClient.invalidateQueries('labels')
+        }
+    );
+
     const handleMenuClick = (filter: Filter) => {
         setFilter(filter);
     };
+
+    const handleLabelDelete = (label: string) => {
+        mutation.mutate(label);
+    };
+
+    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, string[]>('labels', async () => {
+        return await client.fetchLabels();
+    });
+
+    const labels: string[] = data ? data : [];
+    const filterButtons: ToolbarButtonInfo[] = [{
+        filter: { type: 'all' },
+        label: 'All'
+    }, {
+        filter: { type: 'owned' },
+        label: 'Owned'
+    }, {
+        filter: { type: 'starred' },
+        label: 'Starred'
+    }, {
+        filter: { type: 'shared' },
+        label: 'Shared with me'
+    }, {
+        filter: { type: 'public' },
+        label: 'Public'
+    }];
+
+    labels.forEach(l => filterButtons.push({ filter: { type: 'label', label: l }, label: l }))
+
 
     return (
         <div className={classes.root}>
@@ -49,27 +100,20 @@ const MapsPage = (props: any) => {
                     [classes.appBarShift]: open,
                 })}
                 variant='outlined'
-                elevation={0}
-            >
-                <Toolbar variant="regular">
+                elevation={0}>
+
+                <Toolbar style={{ minWidth: '600px' }}>
                     <Tooltip title="Create a New Map">
                         <Button color="primary" size="medium" variant="contained" type="button"
                             disableElevation={true} startIcon={<AddCircleTwoTone />} className={classes.newMapButton}>
-                            New Map
+                            <FormattedMessage id="action.new" defaultMessage="New Map" />
                         </Button>
                     </Tooltip>
 
                     <Tooltip title="Import from external tools">
                         <Button color="primary" size="medium" variant="outlined" type="button"
                             disableElevation={true} startIcon={<CloudUploadTwoTone />} className={classes.importButton}>
-                            Import
-                        </Button>
-                    </Tooltip>
-
-                    <Tooltip title="Use labels to organize your maps">
-                        <Button color="primary" size="medium" variant="outlined" type="button"
-                            disableElevation={true} startIcon={<LabelTwoTone />} className={classes.importButton}>
-                            Label
+                            <FormattedMessage id="action.import" defaultMessage="Import" />
                         </Button>
                     </Tooltip>
 
@@ -82,13 +126,11 @@ const MapsPage = (props: any) => {
             <Drawer
                 variant="permanent"
                 className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
+                    [classes.drawerOpen]: open
                 })}
                 classes={{
                     paper: clsx({
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
+                        [classes.drawerOpen]: open
                     }),
                 }}>
 
@@ -97,41 +139,16 @@ const MapsPage = (props: any) => {
                 </div>
 
                 <List component="nav">
-                    <StyleListItem
-                        icon={<InboxTwoToneIcon color="secondary" />}
-                        label={"All"}
-                        filter={{ type: 'all' }}
-                        active={filter}
-                        onClick={handleMenuClick}
-                    />
-                    <StyleListItem
-                        icon={<BlurCircular color="secondary" />}
-                        label={"Owned"}
-                        filter={{ type: 'owned' }}
-                        active={filter}
-                        onClick={handleMenuClick}
-                    />
-                    <StyleListItem
-                        icon={<StarRateTwoTone color="secondary" />}
-                        label={"Starred"}
-                        filter={{ type: 'starred' }}
-                        active={filter}
-                        onClick={handleMenuClick}
-                    />
-                    <StyleListItem
-                        icon={<ShareTwoTone color="secondary" />}
-                        label={"Shared With Me"}
-                        filter={{ type: 'shared' }}
-                        active={filter}
-                        onClick={handleMenuClick}
-                    />
-                    <StyleListItem
+                    {filterButtons.map(buttonInfo => (<StyleListItem
                         icon={<PublicTwoTone color="secondary" />}
-                        label={"Public"}
-                        filter={{ type: 'public' }}
+                        label={buttonInfo.label}
+                        filter={buttonInfo.filter}
                         active={filter}
                         onClick={handleMenuClick}
-                    />
+                        onDelete={handleLabelDelete}
+                        key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label}`}
+                    />)
+                    )}
                 </List>
 
                 <div style={{ position: 'absolute', bottom: '10px', left: '20px' }}>
@@ -154,6 +171,7 @@ interface ListItemProps {
     filter: Filter,
     active?: Filter
     onClick: (filter: Filter) => void;
+    onDelete?: (label: string) => void;
 }
 
 const StyleListItem = (props: ListItemProps) => {
@@ -162,26 +180,36 @@ const StyleListItem = (props: ListItemProps) => {
     const filter = props.filter;
     const activeType = props.active?.type;
     const onClick = props.onClick;
+    const onDeleteLabel = props.onDelete;
+
 
     const handleOnClick = (event: any, filter: Filter) => {
-        // Invalidate cache to provide a fresh load ...
         event.stopPropagation();
         onClick(filter);
     }
 
+    const handleOnDelete = (event: any, filter: Filter) => {
+        event.stopPropagation();
+        if (!onDeleteLabel) {
+            throw "Illegal state exeption";
+        }
+        onDeleteLabel((filter as LabelFilter).label);
+    }
+
     return (
-        <ListItem button selected={activeType == filter.type} onClick={e => { handleOnClick(e, filter) }}>
+        <ListItem button
+            selected={activeType == filter.type}
+            onClick={e => handleOnClick(e, filter)}>
             <ListItemIcon>
                 {icon}
             </ListItemIcon>
             <ListItemText style={{ color: 'white' }} primary={label} />
-
-            {/* <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete">
-                    <DeleteOutlineTwoTone color="secondary" />
-                </IconButton>
-            </ListItemSecondaryAction> */}
-
+            {filter.type == 'label' ?
+                (<ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete" onClick={e => handleOnDelete(e, filter)}>
+                        <DeleteOutlineTwoTone color="secondary" />
+                    </IconButton>
+                </ListItemSecondaryAction>) : null}
         </ListItem>
     );
 }

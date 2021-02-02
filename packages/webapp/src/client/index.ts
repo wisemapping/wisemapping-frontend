@@ -32,11 +32,12 @@ export type ErrorInfo = {
     fields?: Map<String, String>;
 }
 
-interface Service {
+interface Client {
+    deleteLabel(label: string): Promise<unknown>;
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
-
+    fetchLabels(): Promise<string[]>;
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
@@ -45,4 +46,4 @@ interface Service {
 }
 
 
-export  default Service;
+export default Client;
