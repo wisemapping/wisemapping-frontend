@@ -68,7 +68,7 @@ const BaseDialog = (props: DialogProps) => {
                                 variant="contained"
                                 type="submit"
                                 disableElevation={true}>
-                                {props.title}
+                                {props.submitButton}
                             </Button>) : null
                         }
                     </StyledDialogActions>

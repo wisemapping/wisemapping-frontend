@@ -10,6 +10,7 @@ import { activeInstance } from '../../../reducers/serviceSlice';
 import DuplicateDialog from './duplicate';
 import { useHistory } from 'react-router-dom';
 import InfoDialog from './info';
+import CreateDialog from './create';
 
 
 export type BasicMapInfo = {
@@ -43,6 +44,7 @@ const ActionDispatcher = (props: ActionDialogProps) => {
 
   return (
     <span>
+      <CreateDialog open={action === 'create'} onClose={handleOnClose}/>
       <DeleteDialog open={action === 'delete'} onClose={handleOnClose} mapId={mapId} />
       <RenameDialog open={action === 'rename'} onClose={handleOnClose} mapId={mapId} />
       <DuplicateDialog open={action === 'duplicate'} onClose={handleOnClose} mapId={mapId} />

@@ -12,7 +12,7 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import { FormattedMessage } from 'react-intl';
 import { LabelOutlined } from '@material-ui/icons';
 
-export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
+export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'create'| 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
 
 interface ActionProps {
   onClose: (action: ActionType) => void;

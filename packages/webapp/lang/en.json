@@ -56,6 +56,15 @@
   "common.wait": {
     "defaultMessage": "Please wait ..."
   },
+  "create.button": {
+    "defaultMessage": "Create"
+  },
+  "create.description": {
+    "defaultMessage": "Please, fill the new map name and description."
+  },
+  "create.title": {
+    "defaultMessage": "Create a new mindmap"
+  },
   "duplicate.title": {
     "defaultMessage": "Duplicate"
   },

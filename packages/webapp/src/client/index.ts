@@ -33,6 +33,7 @@ export type ErrorInfo = {
 }
 
 interface Client {
+    createMap(rest: { name: string; description?: string | undefined }) 
     deleteLabel(label: string): Promise<unknown>;
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;

@@ -392,75 +392,79 @@ export const MapsList = (props: MapsListProps) => {
             />
 
             <TableBody>
-              {isLoading ? (<TableRow></TableRow>) : stableSort(mapsInfo, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: MapInfo) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = row.id;
+              {isLoading ? (
+                <TableRow><TableCell rowSpan={6}>Loading ...</TableCell></TableRow>) :
+                (mapsInfo.length == 0 ?
+                  (<TableRow><TableCell rowSpan={6}>No matching records found</TableCell></TableRow>) :
+                  stableSort(mapsInfo, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row: MapInfo) => {
+                      const isItemSelected = isSelected(row.id);
+                      const labelId = row.id;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event: any) => handleRowClick(event, row.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                      style={{ border: "0" }}
-                    >
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.bodyCell}>
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': String(labelId) }}
-                          size="small" />
-                      </TableCell>
+                      return (
+                        <TableRow
+                          hover
+                          onClick={(event: any) => handleRowClick(event, row.id)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.id}
+                          selected={isItemSelected}
+                          style={{ border: "0" }}
+                        >
+                          <TableCell
+                            padding="checkbox"
+                            className={classes.bodyCell}>
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ 'aria-labelledby': String(labelId) }}
+                              size="small" />
+                          </TableCell>
 
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.bodyCell}>
-                        <Tooltip title="Starred">
-                          <IconButton aria-label="Starred" size="small" onClick={(e) => handleStarred(e, row.id)}>
-                            <StarRateRoundedIcon color="action" style={{ color: row.starred ? 'yellow' : 'gray' }} />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
+                          <TableCell
+                            padding="checkbox"
+                            className={classes.bodyCell}>
+                            <Tooltip title="Starred">
+                              <IconButton aria-label="Starred" size="small" onClick={(e) => handleStarred(e, row.id)}>
+                                <StarRateRoundedIcon color="action" style={{ color: row.starred ? 'yellow' : 'gray' }} />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
 
-                      <TableCell className={classes.bodyCell}>
-                        <Tooltip title="Open for edition" placement="bottom-start">
-                          <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
-                            {row.name}
-                          </Link>
-                        </Tooltip>
-                      </TableCell>
+                          <TableCell className={classes.bodyCell}>
+                            <Tooltip title="Open for edition" placement="bottom-start">
+                              <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
+                                {row.name}
+                              </Link>
+                            </Tooltip>
+                          </TableCell>
 
-                      <TableCell className={classes.bodyCell}>
-                        {row.labels}
-                      </TableCell>
+                          <TableCell className={classes.bodyCell}>
+                            {row.labels}
+                          </TableCell>
 
-                      <TableCell className={classes.bodyCell}>
-                        {row.creator}
-                      </TableCell>
+                          <TableCell className={classes.bodyCell}>
+                            {row.creator}
+                          </TableCell>
 
-                      <TableCell className={classes.bodyCell}>
-                        <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
-                          <span>{moment(row.modified).fromNow()}</span>
-                        </Tooltip>
-                      </TableCell>
+                          <TableCell className={classes.bodyCell}>
+                            <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
+                              <span>{moment(row.modified).fromNow()}</span>
+                            </Tooltip>
+                          </TableCell>
 
-                      <TableCell className={classes.bodyCell}>
-                        <Tooltip title="Others">
-                          <IconButton aria-label="Others" size="small" onClick={handleActionClick(row.id)}>
-                            <MoreHorizIcon color="action" />
-                          </IconButton>
-                        </Tooltip>
-                        <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                          <TableCell className={classes.bodyCell}>
+                            <Tooltip title="Others">
+                              <IconButton aria-label="Others" size="small" onClick={handleActionClick(row.id)}>
+                                <MoreHorizIcon color="action" />
+                              </IconButton>
+                            </Tooltip>
+                            <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }))}
             </TableBody>
           </Table>
         </TableContainer>

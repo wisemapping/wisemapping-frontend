@@ -43,7 +43,10 @@ class MockClient implements Client {
 
     }
 
-
+    createMap(rest: { name: string; description?: string | undefined; }) {
+        throw new Error("Method not implemented.");
+    }
+s
     fetchLabels(): Promise<string[]> {
         console.log("Fetching  labels from server")
         return Promise.resolve(this.labels);

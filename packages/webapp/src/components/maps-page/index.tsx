@@ -16,10 +16,11 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../reducers/serviceSlice';
 import { useSelector } from 'react-redux';
 import Client from '../../client';
+import ActionDispatcher from './action-dispatcher';
+import { ActionType } from './action-chooser';
 
 const logoIcon = require('../../images/logo-small.svg');
 const poweredByIcon = require('../../images/pwrdby-white.svg');
-
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -42,6 +43,7 @@ const MapsPage = () => {
     const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
+    const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
 
 
     useEffect(() => {
@@ -103,8 +105,14 @@ const MapsPage = () => {
 
                 <Toolbar>
                     <Tooltip title="Create a New Map">
-                        <Button color="primary" size="medium" variant="contained" type="button"
-                            disableElevation={true} startIcon={<AddCircleTwoTone />} className={classes.newMapButton}>
+                        <Button color="primary"
+                            size="medium"
+                            variant="contained"
+                            type="button"
+                            disableElevation={true}
+                            startIcon={<AddCircleTwoTone />}
+                            className={classes.newMapButton}
+                            onClick={e => setActiveDialog('create')}>
                             <FormattedMessage id="action.new" defaultMessage="New Map" />
                         </Button>
                     </Tooltip>
@@ -115,6 +123,7 @@ const MapsPage = () => {
                             <FormattedMessage id="action.import" defaultMessage="Import" />
                         </Button>
                     </Tooltip>
+                    <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapId={-1} />
 
                     <div className={classes.rightButtonGroup}>
                         <HelpToobarButton />

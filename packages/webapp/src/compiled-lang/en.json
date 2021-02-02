@@ -113,6 +113,24 @@
       "value": "Please wait ..."
     }
   ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "Please, fill the new map name and description."
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "Create a new mindmap"
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
