@@ -32,6 +32,51 @@ export type ErrorInfo = {
     fields?: Map<String, String>;
 }
 
+export const parseResponseOnError = (response: any): ErrorInfo => {
+
+    let result: ErrorInfo | undefined;
+    if (response) {
+        const status: number = response.status;
+        const data = response.data;
+        console.log(data);
+
+        switch (status) {
+            case 401:
+            //    this.authFailed();
+                break;
+            default:
+                if (data) {
+                    // Set global errors ...
+                    if (data.globalErrors) {
+                        let msg;
+                        let errors = data.globalErrors;
+                        if (errors.length > 0) {
+                            msg = errors[0];
+                        }
+                        result = { msg: errors };
+                    }
+
+                    // Set field errors ...
+                    if (data.fieldErrors) {
+                        // @Todo: Fix this ...
+                        result = { msg: data.fieldErrors };
+                        result.fields = new Map<string, string>();
+                    }
+
+                } else {
+                    result = { msg: response.statusText };
+                }
+        }
+    }
+
+    // Network related problem ...
+    if (!result) {
+        result = { msg: 'Unexpected error. Please, try latter' };
+    }
+
+    return result;
+}
+
 interface Client {
     createMap(rest: { name: string; description?: string | undefined }) 
     deleteLabel(label: string): Promise<unknown>;
@@ -44,6 +89,7 @@ interface Client {
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
     changeStarred(id: number): Promise<void>;
+    
 }
 
 

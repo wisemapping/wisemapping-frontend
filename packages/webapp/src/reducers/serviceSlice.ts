@@ -1,44 +1,47 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios';
-import Client  from '../client';
+import Client from '../client';
 import MockClient from '../client/mock-client';
+import RestClient from '../client/rest-client';
 
-type RutimeConfig = {
-  apiBaseUrl: string;
+interface ConfigInfo {
+  apiBaseUrl: string
 }
 
-async function loadRuntimeConfig() {
-  let result: RutimeConfig | undefined;
+class RutimeConfig {
+  private config: ConfigInfo;
 
-  await axios.get("runtime-config.json"
-  ).then(response => {
-    // All was ok, let's sent to success page ...
-    result = response.data as RutimeConfig;
-    console.log("Dynamic configuration->" + response.data);
-  }).catch(e => {
-    console.log(e)
-  });
+  constructor() {
 
-  if (!result) {
-    // Ok, try to create a default configuration relative to the current path ...
-    console.log("Configuration could not be loaded, falback to default config.")
-    const location = window.location;
-    const basePath = location.protocol + "//" + location.host + "/" + location.pathname.split('/')[1]
-
-    result = {
-      apiBaseUrl: basePath
-    }
   }
-  return result;
-}
 
+  load() {
+
+    // Config can be inserted in the html page to define the global properties ...
+    this.config = (window as any).serverconfig;
+    return this;
+  }
+
+  buildClient(): Client {
+    let result: Client;
+    if (this.config) {
+      result = new RestClient(this.config.apiBaseUrl, () => { console.log("401 error") });
+      console.log("Service using rest client. " + JSON.stringify(this.config))
+
+    } else {
+      console.log("Warning:Service using mockservice client")
+      result = new MockClient();
+    }
+    return result;
+  }
+}
 
 interface ServiceState {
   instance: Client;
 }
 
-const initialState: ServiceState = { 
-  instance: new MockClient("", () => { console.log("401 error") })
+const initialState: ServiceState = {
+  instance: new RutimeConfig().load().buildClient()
 };
 
 export const serviceSlice = createSlice({
@@ -46,7 +49,7 @@ export const serviceSlice = createSlice({
   initialState: initialState,
   reducers: {
     initialize(state, action: PayloadAction<void[]>) {
-      state.instance = new MockClient("", () => { console.log("401 error") });
+      // state.instance = new RutimeConfig().load().buildClient()
     }
   },
 });
@@ -54,5 +57,6 @@ export const serviceSlice = createSlice({
 export const activeInstance = (state: any): Client => {
   return state.service.instance;
 }
+
 export default serviceSlice.reducer
 

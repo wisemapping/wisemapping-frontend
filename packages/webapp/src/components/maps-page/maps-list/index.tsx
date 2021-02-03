@@ -393,9 +393,9 @@ export const MapsList = (props: MapsListProps) => {
 
             <TableBody>
               {isLoading ? (
-                <TableRow><TableCell rowSpan={6}>Loading ...</TableCell></TableRow>) :
+                <TableRow><TableCell colSpan={6}>Loading ...</TableCell></TableRow>) :
                 (mapsInfo.length == 0 ?
-                  (<TableRow><TableCell rowSpan={6}>No matching records found</TableCell></TableRow>) :
+                  (<TableRow><TableCell colSpan={6} style={{textAlign:'center'}}><FormattedMessage id="maps.emptyresult" defaultMessage="No matching record found with the current filter criteria." /></TableCell></TableRow>) :
                   stableSort(mapsInfo, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: MapInfo) => {

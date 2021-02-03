@@ -1,15 +1,11 @@
-import { BasicMapInfo, ErrorInfo, MapInfo, NewUser } from "..";
-import Client from "..";
+import Client, { BasicMapInfo, ErrorInfo, MapInfo, NewUser, parseResponseOnError } from '..';
 import axios from "axios";
 
 class MockClient implements Client {
-    private baseUrl: string;
-    private authFailed: () => void
     private maps: MapInfo[] = [];
     private labels: string[] = [];
 
-    constructor(baseUrl: string, authFailed: () => void) {
-        this.baseUrl = baseUrl;
+    constructor() {
 
         // Remove, just for develop ....
         function createMapInfo(
@@ -46,7 +42,7 @@ class MockClient implements Client {
     createMap(rest: { name: string; description?: string | undefined; }) {
         throw new Error("Method not implemented.");
     }
-s
+    s
     fetchLabels(): Promise<string[]> {
         console.log("Fetching  labels from server")
         return Promise.resolve(this.labels);
@@ -138,20 +134,7 @@ s
     }
 
     registerNewUser(user: NewUser): Promise<void> {
-        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + '/service/users',
-                JSON.stringify(user),
-                { headers: { 'Content-Type': 'application/json' } }
-            ).then(response => {
-                // All was ok, let's sent to success page ...;
-                success();
-            }).catch(error => {
-                const response = error.response;
-                const errorInfo = this.parseResponseOnError(response);
-                reject(errorInfo);
-            });
-        }
-        return new Promise(handler);
+        return Promise.resolve();
     }
 
     fetchAllMaps(): Promise<MapInfo[]> {
@@ -160,66 +143,7 @@ s
     }
 
     resetPassword(email: string): Promise<void> {
-
-        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(`${this.baseUrl}/service/users/resetPassword?email=${email}`,
-                null,
-                { headers: { 'Content-Type': 'application/json' } }
-            ).then(response => {
-                // All was ok, let's sent to success page ...;
-                success();
-            }).catch(error => {
-                const response = error.response;
-                const errorInfo = this.parseResponseOnError(response);
-                reject(errorInfo);
-            });
-        }
-        return new Promise(handler);
-    }
-
-    private parseResponseOnError = (response: any): ErrorInfo => {
-
-        let result: ErrorInfo | undefined;
-        if (response) {
-            const status: number = response.status;
-            const data = response.data;
-            console.log(data);
-
-            switch (status) {
-                case 401:
-                    this.authFailed();
-                    break;
-                default:
-                    if (data) {
-                        // Set global errors ...
-                        if (data.globalErrors) {
-                            let msg;
-                            let errors = data.globalErrors;
-                            if (errors.length > 0) {
-                                msg = errors[0];
-                            }
-                            result = { msg: errors };
-                        }
-
-                        // Set field errors ...
-                        if (data.fieldErrors) {
-                            // @Todo: Fix this ...
-                            result = { msg: data.fieldErrors };
-                            result.fields = new Map<string, string>();
-                        }
-
-                    } else {
-                        result = { msg: response.statusText };
-                    }
-            }
-        }
-
-        // Network related problem ...
-        if (!result) {
-            result = { msg: 'Unexpected error. Please, try latter' };
-        }
-
-        return result;
+        return Promise.resolve();
     }
 }
 
