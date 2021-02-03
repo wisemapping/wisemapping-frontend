@@ -13,11 +13,4 @@ pipelines:
             caches:
               - node
             script:
-              - npm install
-        - step:
-            name: Code linting
-            script:
-              - npm install eslint
-              - npx eslint .
-            caches:
-              - node
+              - yarn build
