@@ -67,7 +67,7 @@ const LoginPage = () => {
 
         <FormControl>
           <form action="/c/perform-login" method="POST" >
-            <Input name="email" type="email" label={{ id: "login.email", defaultMessage: "Email" }} required autoComplete="email" />
+            <Input name="username" type="email" label={{ id: "login.email", defaultMessage: "Email" }} required autoComplete="email" />
             <Input name="password" type="password" label={{ id: "login.password", defaultMessage: "Password" }} required autoComplete="current-password" />
             <div>
               <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
