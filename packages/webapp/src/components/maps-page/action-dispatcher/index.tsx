@@ -1,17 +1,15 @@
 import React from 'react';
 import RenameDialog from './rename';
-import DeleteDialog from './delete';
+import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
 import { ErrorInfo, MapInfo } from '../../../client';
 import Client from '../../../client';
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { QueryClient, useQuery } from 'react-query';
 import { activeInstance } from '../../../reducers/serviceSlice';
-import DuplicateDialog from './duplicate';
+import DuplicateDialog from './duplicate-dialog';
 import { useHistory } from 'react-router-dom';
-import InfoDialog from './info';
-import CreateDialog from './create';
-
+import CreateDialog from './create-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -35,10 +33,10 @@ const ActionDispatcher = (props: ActionDialogProps) => {
 
   switch (action) {
     case 'open':
-      history.push(`/c/maps/${mapId}/edit`);
+      window.location.href = `/c/maps/${mapId}/edit`;
       break;
     case 'print':
-      history.push(`/c/maps/${mapId}/print`);
+      window.open(`/c/maps/${mapId}/print`,'print');
       break;
   }
 
@@ -48,7 +46,6 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       <DeleteDialog open={action === 'delete'} onClose={handleOnClose} mapId={mapId} />
       <RenameDialog open={action === 'rename'} onClose={handleOnClose} mapId={mapId} />
       <DuplicateDialog open={action === 'duplicate'} onClose={handleOnClose} mapId={mapId} />
-      <InfoDialog open={action === 'info'} onClose={handleOnClose} mapId={mapId} />
     </span >
   );
 }

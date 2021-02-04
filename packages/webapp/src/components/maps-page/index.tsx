@@ -317,7 +317,7 @@ const HelpToobarButton = () => {
                 }}>
 
                 <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="https://www.wisemapping.com/termsofuse.html">
+                    <Link color="textSecondary" href="https://www.wisemapping.com/termsofuse.html" target="help">
                         <ListItemIcon>
                             <PolicyOutlined fontSize="small" />
                         </ListItemIcon>
@@ -335,7 +335,7 @@ const HelpToobarButton = () => {
                 </MenuItem>
 
                 <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="feedback@wisemapping.com">
+                    <Link color="textSecondary" href="mailto:feedback@wisemapping.com">
                         <ListItemIcon>
                             <FeedbackOutlined fontSize="small" />
                         </ListItemIcon>
@@ -344,7 +344,7 @@ const HelpToobarButton = () => {
                 </MenuItem>
 
                 <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="https://www.wisemapping.com/aboutus.html">
+                    <Link color="textSecondary" href="https://www.wisemapping.com/aboutus.html" target="help">
                         <ListItemIcon>
                             <EmojiPeopleOutlined fontSize="small" />
                         </ListItemIcon>

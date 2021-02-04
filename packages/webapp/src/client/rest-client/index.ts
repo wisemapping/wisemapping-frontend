@@ -56,6 +56,10 @@ export default class RestClient extends MockClient {
         return result;
     }
 
+    renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
+        throw "Method not implemented yet";
+    }
+
     createMap(model: BasicMapInfo): Promise<number> {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
@@ -72,7 +76,6 @@ export default class RestClient extends MockClient {
         }
         return new Promise(handler);
     }
-
 
     fetchAllMaps(): Promise<MapInfo[]> {
         const handler = (success: (mapsInfo: MapInfo[]) => void, reject: (error: ErrorInfo) => void) => {
@@ -142,7 +145,6 @@ export default class RestClient extends MockClient {
         return new Promise(handler);
     }
 
-
     resetPassword(email: string): Promise<void> {
 
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
@@ -170,6 +172,22 @@ export default class RestClient extends MockClient {
             ).then(response => {
                 const mapId = response.headers.resourceid;
                 success(mapId);
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
+
+    changeStarred(id: number, starred: boolean): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(this.baseUrl + `/c/restful/maps/${id}/starred`,
+            starred,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                success();
             }).catch(error => {
                 const response = error.response;
                 const errorInfo = this.parseResponseOnError(response);

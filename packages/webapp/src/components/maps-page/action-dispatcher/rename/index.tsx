@@ -7,7 +7,7 @@ import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import Input from "../../../form/input";
 import { FormControl } from "@material-ui/core";
-import BaseDialog from "../action-dialog";
+import BaseDialog from "../base-dialog";
 
 export type RenameModel = {
     id: number;

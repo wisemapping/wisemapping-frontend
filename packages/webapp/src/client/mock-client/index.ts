@@ -47,7 +47,7 @@ class MockClient implements Client {
         return Promise.resolve(this.labels);
     }
 
-    changeStarred(id: number): Promise<void> {
+    changeStarred(id: number, starred: boolean): Promise<void> {
         const mapInfo = this.maps.find(m => m.id == id);
         if (!mapInfo) {
             console.log(`Could not find the map iwth id ${id}`);

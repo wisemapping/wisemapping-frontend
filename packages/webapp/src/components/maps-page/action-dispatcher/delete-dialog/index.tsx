@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Client from "../../../../client";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
-import BaseDialog from "../action-dialog";
+import BaseDialog from "../base-dialog";
 
 
 const DeleteDialog = (props: DialogProps) => {

@@ -17,6 +17,12 @@ export type MapInfo = {
     isPublic: boolean;
 }
 
+export type HistoryChange = {
+    id: number;
+    creator: string;
+    modified: string;
+}
+
 export type BasicMapInfo = {
     title: string;
     description?: string;
@@ -44,8 +50,7 @@ interface Client {
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
-    changeStarred(id: number): Promise<void>;
-
+    changeStarred(id: number, starred: boolean): Promise<void>;
 }
 
 

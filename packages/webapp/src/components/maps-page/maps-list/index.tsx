@@ -276,7 +276,8 @@ export const MapsList = (props: MapsListProps) => {
   const queryClient = useQueryClient();
 
   const starredMultation = useMutation<void, ErrorInfo, number>((id: number) => {
-    return client.changeStarred(id);
+    const map = mapsInfo.find(m => m.id == id);
+    return client.changeStarred(id, !Boolean(map?.starred));
   },
     {
       onSuccess: () => {
@@ -395,7 +396,7 @@ export const MapsList = (props: MapsListProps) => {
               {isLoading ? (
                 <TableRow><TableCell colSpan={6}>Loading ...</TableCell></TableRow>) :
                 (mapsInfo.length == 0 ?
-                  (<TableRow><TableCell colSpan={6} style={{textAlign:'center'}}><FormattedMessage id="maps.emptyresult" defaultMessage="No matching record found with the current filter criteria." /></TableCell></TableRow>) :
+                  (<TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}><FormattedMessage id="maps.emptyresult" defaultMessage="No matching record found with the current filter criteria." /></TableCell></TableRow>) :
                   stableSort(mapsInfo, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: MapInfo) => {
@@ -434,7 +435,7 @@ export const MapsList = (props: MapsListProps) => {
 
                           <TableCell className={classes.bodyCell}>
                             <Tooltip title="Open for edition" placement="bottom-start">
-                              <Link href={`/c/maps/${row.id}/edit`} color="textPrimary" underline="always" onClick={(e)=>e.stopPropagation()}>
+                              <Link href={`/c/maps/${row.id}/edit`} color="textPrimary" underline="always" onClick={(e) => e.stopPropagation()}>
                                 {row.title}
                               </Link>
                             </Tooltip>

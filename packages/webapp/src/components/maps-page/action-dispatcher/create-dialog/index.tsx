@@ -8,7 +8,7 @@ import { FormControl } from '@material-ui/core';
 import Client, { BasicMapInfo, ErrorInfo } from '../../../../client';
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import Input from '../../../form/input';
-import BaseDialog from '../action-dialog';
+import BaseDialog from '../base-dialog';
 
 export type CreateModel = {
     title: string;

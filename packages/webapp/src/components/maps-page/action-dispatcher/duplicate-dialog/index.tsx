@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
 import { FormControl } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import Client, { BasicMapInfo, ErrorInfo } from "../../../../client";
 import { activeInstance } from '../../../../reducers/serviceSlice';
 import Input from "../../../form/input";
-import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
-import BaseDialog from "../action-dialog";
+import { DialogProps, fetchMapById } from "..";
+import BaseDialog from "../base-dialog";
 
 export type DuplicateModel = {
     id: number;
