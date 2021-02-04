@@ -31,8 +31,8 @@ const DuplicateDialog = (props: DialogProps) => {
         return service.duplicateMap(id, rest);
     },
         {
-            onSuccess: () => {
-                handleOnMutationSuccess(props.onClose, queryClient);
+            onSuccess: (mapId) => {
+                window.location.href = `/c/maps/${mapId}/edit`;
             },
             onError: (error) => {
                 setError(error);

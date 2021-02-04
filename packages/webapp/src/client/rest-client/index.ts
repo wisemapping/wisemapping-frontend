@@ -19,7 +19,7 @@ export default class RestClient extends MockClient {
             const status: number = response.status;
             const data = response.data;
             console.log(data);
-    
+
             switch (status) {
                 case 401:
                     //    this.authFailed();
@@ -32,7 +32,7 @@ export default class RestClient extends MockClient {
                         if (globalErrors && globalErrors.length > 0) {
                             result.msg = globalErrors[0];
                         }
-    
+
                         // Set field errors ...
                         if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
                             result.fields = data.fieldErrors;
@@ -41,23 +41,23 @@ export default class RestClient extends MockClient {
                                 result.msg = data.fieldErrors[key];
                             }
                         }
-    
+
                     } else {
                         result = { msg: response.statusText };
                     }
             }
         }
-    
+
         // Network related problem ...
         if (!result) {
             result = { msg: 'Unexpected error. Please, try latter' };
         }
-    
+
         return result;
     }
-    
+
     createMap(model: BasicMapInfo): Promise<number> {
-        const handler = (success: (mapId:number) => void, reject: (error: ErrorInfo) => void) => {
+        const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
                 null,
                 { headers: { 'Content-Type': 'application/json' } }
@@ -152,6 +152,24 @@ export default class RestClient extends MockClient {
             ).then(response => {
                 // All was ok, let's sent to success page ...;
                 success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
+
+    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
+
+        const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
+            axios.post(this.baseUrl + `/c/restful/maps/${id}`,
+                JSON.stringify(basicInfo),
+                { headers: { 'Content-Type': 'application/json' } }
+            ).then(response => {
+                const mapId = response.headers.resourceid;
+                success(mapId);
             }).catch(error => {
                 const response = error.response;
                 const errorInfo = this.parseResponseOnError(response);
