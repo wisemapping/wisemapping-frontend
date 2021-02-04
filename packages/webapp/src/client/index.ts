@@ -12,7 +12,7 @@ export type MapInfo = {
     name: string;
     labels: string[];
     creator: string;
-    modified: number;
+    modified: string;
     description: string;
     isPublic: boolean;
 }

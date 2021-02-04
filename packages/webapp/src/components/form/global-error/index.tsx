@@ -13,7 +13,8 @@ const GlobalError = (props: GlobalErrorProps) => {
     const hasError = Boolean(error?.msg);
     const errorMsg = error?.msg;
 
-    return (hasError ? <StyledAlert severity="error" variant="filled" hidden={!hasError}> {errorMsg}</StyledAlert> : null);
+    return (hasError ? 
+    <StyledAlert severity="error" variant="filled" hidden={!hasError}> {errorMsg}</StyledAlert> : null);
 
 };
 
