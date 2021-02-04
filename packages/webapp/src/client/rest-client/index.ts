@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorInfo, MapInfo, NewUser, parseResponseOnError } from '..';
+import { ErrorInfo, MapInfo, BasicMapInfo, NewUser, parseResponseOnError } from '..';
 import MockClient from '../mock-client/';
 
 //@Remove inheritance once is it completed.
@@ -12,22 +12,38 @@ export default class RestClient extends MockClient {
         this.baseUrl = baseUrl;
     }
 
+    createMap(model: BasicMapInfo): Promise<number> {
+        const handler = (success: (mapId:number) => void, reject: (error: ErrorInfo) => void) => {
+            axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
+                null,
+                { headers: { 'Content-Type': 'application/json' } }
+            ).then(response => {
+                const mapId = response.headers.resourceid;
+                success(mapId);
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
+
+
     fetchAllMaps(): Promise<MapInfo[]> {
         const handler = (success: (mapsInfo: MapInfo[]) => void, reject: (error: ErrorInfo) => void) => {
             axios.get(
                 this.baseUrl + '/c/restful/maps/',
-                { headers: { 'Content-Type': 'application/json' } 
-            }
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                }
             ).then(response => {
-                console.log("Maps List Response=>")
-                console.log(response.data)
-
                 const data = response.data;
                 const maps: MapInfo[] = (data.mindmapsInfo as any[]).map(m => {
                     return {
                         id: m.id,
                         starred: Boolean(m.starred),
-                        name: m.title,
+                        title: m.title,
                         labels: [],
                         creator: m.creator,
                         modified: m.lastModificationTime,

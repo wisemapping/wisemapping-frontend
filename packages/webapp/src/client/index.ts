@@ -9,7 +9,7 @@ export type NewUser = {
 export type MapInfo = {
     id: number;
     starred: boolean;
-    name: string;
+    title: string;
     labels: string[];
     creator: string;
     modified: string;
@@ -18,7 +18,7 @@ export type MapInfo = {
 }
 
 export type BasicMapInfo = {
-    name: string;
+    title: string;
     description?: string;
 }
 
@@ -77,15 +77,15 @@ export const parseResponseOnError = (response: any): ErrorInfo => {
 }
 
 interface Client {
-    createMap(rest: { name: string; description?: string | undefined })
-    deleteLabel(label: string): Promise<unknown>;
+    createMap(map: BasicMapInfo): Promise<number>;
+    deleteLabel(label: string): Promise<void>;
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
     fetchLabels(): Promise<string[]>;
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
-    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
+    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
     changeStarred(id: number): Promise<void>;
 

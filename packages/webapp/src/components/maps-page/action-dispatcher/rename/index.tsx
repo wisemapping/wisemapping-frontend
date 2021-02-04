@@ -11,11 +11,11 @@ import BaseDialog from "../action-dialog";
 
 export type RenameModel = {
     id: number;
-    name: string;
+    title: string;
     description?: string;
 }
 
-const defaultModel: RenameModel = { name: '', description: '', id: -1 };
+const defaultModel: RenameModel = { title: '', description: '', id: -1 };
 const RenameDialog = (props: DialogProps) => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<RenameModel>(defaultModel);
@@ -76,8 +76,8 @@ const RenameDialog = (props: DialogProps) => {
                 submitButton={intl.formatMessage({ id: 'rename.title', defaultMessage: 'Rename' })}>
 
                 <FormControl fullWidth={true}>
-                    <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
-                        value={model.name} onChange={handleOnChange} error={error} fullWidth={true} />
+                    <Input name="title" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
+                        value={model.title} onChange={handleOnChange} error={error} fullWidth={true} />
 
                     <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />

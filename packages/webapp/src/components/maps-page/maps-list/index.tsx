@@ -71,7 +71,7 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, label: 'Name' },
+  { id: 'title', numeric: false, label: 'Name' },
   { id: 'labels', numeric: false },
   { id: 'creator', numeric: false, label: 'Creator', style: { width: '60px' } },
   { id: 'modified', numeric: true, label: 'Modified', style: { width: '30px' } }
@@ -178,7 +178,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
 
     // Does it match search filter criteria...
     if (search && result) {
-      result = mapInfo.name.toLowerCase().indexOf(search.toLowerCase()) != -1;
+      result = mapInfo.title.toLowerCase().indexOf(search.toLowerCase()) != -1;
     }
 
     return result;
@@ -434,8 +434,8 @@ export const MapsList = (props: MapsListProps) => {
 
                           <TableCell className={classes.bodyCell}>
                             <Tooltip title="Open for edition" placement="bottom-start">
-                              <Link href={`c/maps/${row.id}/edit`} color="textPrimary" underline="always">
-                                {row.name}
+                              <Link href={`/c/maps/${row.id}/edit`} color="textPrimary" underline="always" onClick={(e)=>e.stopPropagation()}>
+                                {row.title}
                               </Link>
                             </Tooltip>
                           </TableCell>

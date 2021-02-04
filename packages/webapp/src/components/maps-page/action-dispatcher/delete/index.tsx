@@ -38,7 +38,7 @@ const DeleteDialog = (props: DialogProps) => {
         title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
         submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} >
         <Alert severity="warning">
-          <AlertTitle>Delete '{map?.name}'</AlertTitle>
+          <AlertTitle>Delete '{map?.title}'</AlertTitle>
           <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
         </Alert>
       </BaseDialog>

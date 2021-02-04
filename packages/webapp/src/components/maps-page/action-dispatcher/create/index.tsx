@@ -1,42 +1,39 @@
-import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
-import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
-import { FormControl } from "@material-ui/core";
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { FormControl } from '@material-ui/core';
 
-import Client, { BasicMapInfo, ErrorInfo } from "../../../../client";
+
+import Client, { BasicMapInfo, ErrorInfo } from '../../../../client';
 import { activeInstance } from '../../../../reducers/serviceSlice';
-import Input from "../../../form/input";
-import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
-import BaseDialog from "../action-dialog";
+import Input from '../../../form/input';
+import BaseDialog from '../action-dialog';
 
 export type CreateModel = {
-    name: string;
+    title: string;
     description?: string;
 }
 
 export type CreateProps = {
     open: boolean,
     onClose: () => void
-  }
-  
-const defaultModel: CreateModel = { name: '', description: ''};
+}
+
+const defaultModel: CreateModel = { title: '', description: '' };
 const CreateDialog = (props: CreateProps) => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<CreateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
     const { open } = props;
-
     const intl = useIntl();
-    const queryClient = useQueryClient();
 
-    const mutation = useMutation<CreateModel, ErrorInfo, CreateModel>((model: CreateModel) => {
-        const {  ...rest } = model;
-        return client.createMap(rest).then(() => model);
+    const mutation = useMutation<number, ErrorInfo, CreateModel>((model: CreateModel) => {
+        return client.createMap(model);
     },
         {
-            onSuccess: () => {
-                handleOnMutationSuccess(props.onClose, queryClient);
+            onSuccess: (mapId: number) => {
+                window.location.href = `/c/maps/${mapId}/edit`;
             },
             onError: (error) => {
                 setError(error);
@@ -71,8 +68,8 @@ const CreateDialog = (props: CreateProps) => {
                 submitButton={intl.formatMessage({ id: 'create.button', defaultMessage: 'Create' })}>
 
                 <FormControl fullWidth={true}>
-                    <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
-                        value={model.name} onChange={handleOnChange} error={error} fullWidth={true} />
+                    <Input name="title" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
+                        value={model.title} onChange={handleOnChange} error={error} fullWidth={true} />
 
                     <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />

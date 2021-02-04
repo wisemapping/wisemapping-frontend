@@ -1,5 +1,4 @@
-import Client, { BasicMapInfo, ErrorInfo, MapInfo, NewUser, parseResponseOnError } from '..';
-import axios from "axios";
+import Client, { BasicMapInfo, MapInfo, NewUser } from '..';
 
 class MockClient implements Client {
     private maps: MapInfo[] = [];
@@ -11,14 +10,14 @@ class MockClient implements Client {
         function createMapInfo(
             id: number,
             starred: boolean,
-            name: string,
+            title: string,
             labels: string[],
             creator: string,
             modified: string,
             description: string,
             isPublic: boolean
         ): MapInfo {
-            return { id, name, labels, creator, modified, starred, description, isPublic };
+            return { id, title, labels, creator, modified, starred, description, isPublic };
         }
         this.maps = [
             createMapInfo(1, true, "El Mapa", [""], "Paulo", "2008-06-02T00:00:00Z", "", true),
@@ -39,10 +38,10 @@ class MockClient implements Client {
 
     }
 
-    createMap(rest: { name: string; description?: string | undefined; }) {
+    createMap(map: BasicMapInfo): Promise<number> {
         throw new Error("Method not implemented.");
     }
-    s
+
     fetchLabels(): Promise<string[]> {
         console.log("Fetching  labels from server")
         return Promise.resolve(this.labels);
@@ -61,22 +60,22 @@ class MockClient implements Client {
     }
 
     loadMapInfo(id: number): Promise<BasicMapInfo> {
-        return Promise.resolve({ name: 'My Map', description: 'My Description' });
+        return Promise.resolve({ title: 'My Map', description: 'My Description' });
     }
 
     fetchLabes(id: number): Promise<BasicMapInfo> {
-        return Promise.resolve({ name: 'My Map', description: 'My Description' });
+        return Promise.resolve({ title: 'My Map', description: 'My Description' });
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
 
-        const exists = this.maps.find(m => m.name == basicInfo.name) != undefined;
+        const exists = this.maps.find(m => m.title == basicInfo.title) != undefined;
         if (!exists) {
             this.maps = this.maps.map(m => {
                 const result = m;
                 if (m.id == id) {
                     result.description = basicInfo.description ? basicInfo.description : '';
-                    result.name = basicInfo.name;
+                    result.title = basicInfo.title;
                 }
                 return result;
             })
@@ -86,22 +85,22 @@ class MockClient implements Client {
             fieldErrors.set('name', 'name already exists ')
 
             return Promise.reject({
-                msg: 'Map already exists ...' + basicInfo.name,
+                msg: 'Map already exists ...' + basicInfo.title,
                 fields: fieldErrors
 
             })
         };
     }
 
-    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
+    duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
 
-        const exists = this.maps.find(m => m.name == basicInfo.name) != undefined;
+        const exists = this.maps.find(m => m.title == basicInfo.title) != undefined;
         if (!exists) {
 
             const newMap: MapInfo = {
                 id: Math.random() * 1000,
                 description: String(basicInfo.description),
-                name: basicInfo.name,
+                title: basicInfo.title,
                 starred: false,
                 creator: "current user",
                 labels: [],
@@ -109,13 +108,13 @@ class MockClient implements Client {
                 isPublic: false
             };
             this.maps.push(newMap);
-            return Promise.resolve();
+            return Promise.resolve(newMap.id);
         } else {
             const fieldErrors: Map<string, string> = new Map<string, string>();
             fieldErrors.set('name', 'name already exists ')
 
             return Promise.reject({
-                msg: 'Maps name must be unique:' + basicInfo.name,
+                msg: 'Maps name must be unique:' + basicInfo.title,
                 fields: fieldErrors
 
             })

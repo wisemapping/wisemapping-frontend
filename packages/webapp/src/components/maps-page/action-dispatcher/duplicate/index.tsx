@@ -12,11 +12,11 @@ import BaseDialog from "../action-dialog";
 
 export type DuplicateModel = {
     id: number;
-    name: string;
+    title: string;
     description?: string;
 }
 
-const defaultModel: DuplicateModel = { name: '', description: '', id: -1 };
+const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
 const DuplicateDialog = (props: DialogProps) => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
@@ -26,9 +26,9 @@ const DuplicateDialog = (props: DialogProps) => {
     const intl = useIntl();
     const queryClient = useQueryClient();
 
-    const mutation = useMutation<DuplicateModel, ErrorInfo, DuplicateModel>((model: DuplicateModel) => {
+    const mutation = useMutation<number, ErrorInfo, DuplicateModel>((model: DuplicateModel) => {
         const { id, ...rest } = model;
-        return service.duplicateMap(id, rest).then(() => model);
+        return service.duplicateMap(id, rest);
     },
         {
             onSuccess: () => {
@@ -77,8 +77,8 @@ const DuplicateDialog = (props: DialogProps) => {
                 submitButton={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}>
 
                 <FormControl fullWidth={true}>
-                    <Input name="name" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
-                        value={model.name} onChange={handleOnChange} error={error} fullWidth={true} />
+                    <Input name="title" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
+                        value={model.title} onChange={handleOnChange} error={error} fullWidth={true} />
 
                     <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />
