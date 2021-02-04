@@ -13,13 +13,32 @@ export default class RestClient extends MockClient {
     }
     
     fetchAllMaps(): Promise<MapInfo[]> {
-        console.log("Fetching  maps from server")
+        // https://app.wisemapping.com/c/restful/maps/
+        
+        // const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+        //     axios.post(this.baseUrl + '/service/users/',
+        //         JSON.stringify(user),
+        //         { headers: { 'Content-Type': 'application/json' } }
+        //     ).then(response => {
+        //         // All was ok, let's sent to success page ...;
+        //         success();
+        //     }).catch(error => {
+        //         const response = error.response;
+        //         const errorInfo = parseResponseOnError(response);
+        //         reject(errorInfo);
+        //     });
+        // }
+        // return new Promise(handler);
+        // https://app.wisemapping.com/c/restful/maps/
+
+
+        // console.log("Fetching  maps from server")
         return Promise.resolve([]);
     }
 
     registerNewUser(user: NewUser): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + '/service/users',
+            axios.post(this.baseUrl + '/service/users/',
                 JSON.stringify(user),
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(response => {
@@ -33,6 +52,7 @@ export default class RestClient extends MockClient {
         }
         return new Promise(handler);
     }
+
     resetPassword(email: string): Promise<void> {
 
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {

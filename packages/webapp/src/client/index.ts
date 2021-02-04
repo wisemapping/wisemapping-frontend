@@ -42,23 +42,24 @@ export const parseResponseOnError = (response: any): ErrorInfo => {
 
         switch (status) {
             case 401:
-            //    this.authFailed();
+                //    this.authFailed();
                 break;
             default:
                 if (data) {
-                    result = {};
                     // Set global errors ...
-                    if (data.globalErrors) {
-                        let msg:string;
-                        let errors = data.globalErrors;
-                        if (errors.length > 0) {
-                            result.msg = errors[0];
-                        }
+                    result = {};
+                    let globalErrors = data.globalErrors;
+                    if (globalErrors && globalErrors.length > 0) {
+                        result.msg = globalErrors[0];
                     }
 
                     // Set field errors ...
-                    if (data.fieldErrors) {
-                        result.fields = new Map<string, string>();
+                    if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
+                        result.fields = data.fieldErrors;
+                        if (!result.msg) {
+                            const key = Object.keys(data.fieldErrors)[0];
+                            result.msg = data.fieldErrors[key];
+                        }
                     }
 
                 } else {
@@ -76,7 +77,7 @@ export const parseResponseOnError = (response: any): ErrorInfo => {
 }
 
 interface Client {
-    createMap(rest: { name: string; description?: string | undefined }) 
+    createMap(rest: { name: string; description?: string | undefined })
     deleteLabel(label: string): Promise<unknown>;
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;
@@ -87,7 +88,7 @@ interface Client {
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
     changeStarred(id: number): Promise<void>;
-    
+
 }
 
 

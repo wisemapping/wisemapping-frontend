@@ -50,7 +50,7 @@ const ForgotPassword = () => {
 
       <form onSubmit={handleOnSubmit}>
         <Input type="email" name="email" label={{ id: "forgot.email", defaultMessage: "Email" }}
-          autoComplete="email" onChange={e => setEmail(e.target.value)} />
+          autoComplete="email" onChange={e => setEmail(e.target.value)} error={error}/>
 
         <SubmitButton value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
       </form>
