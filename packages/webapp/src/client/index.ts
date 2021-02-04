@@ -46,20 +46,18 @@ export const parseResponseOnError = (response: any): ErrorInfo => {
                 break;
             default:
                 if (data) {
+                    result = {};
                     // Set global errors ...
                     if (data.globalErrors) {
-                        let msg;
+                        let msg:string;
                         let errors = data.globalErrors;
                         if (errors.length > 0) {
-                            msg = errors[0];
+                            result.msg = errors[0];
                         }
-                        result = { msg: errors };
                     }
 
                     // Set field errors ...
                     if (data.fieldErrors) {
-                        // @Todo: Fix this ...
-                        result = { msg: data.fieldErrors };
                         result.fields = new Map<string, string>();
                     }
 

@@ -5,6 +5,7 @@
     "scripts": {
         "start": "webpack serve",
         "build": "webpack --mode production",
+        "build-dev": "webpack --mode development",
         "lint": "eslint src",
         "extract": "formatjs extract",
         "compile": "formatjs compile"
