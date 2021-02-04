@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorInfo, MapInfo, BasicMapInfo, NewUser, parseResponseOnError } from '..';
+import { ErrorInfo, MapInfo, BasicMapInfo, NewUser } from '..';
 import MockClient from '../mock-client/';
 
 //@Remove inheritance once is it completed.
@@ -12,6 +12,50 @@ export default class RestClient extends MockClient {
         this.baseUrl = baseUrl;
     }
 
+    private parseResponseOnError = (response: any): ErrorInfo => {
+
+        let result: ErrorInfo | undefined;
+        if (response) {
+            const status: number = response.status;
+            const data = response.data;
+            console.log(data);
+    
+            switch (status) {
+                case 401:
+                    //    this.authFailed();
+                    break;
+                default:
+                    if (data) {
+                        // Set global errors ...
+                        result = {};
+                        let globalErrors = data.globalErrors;
+                        if (globalErrors && globalErrors.length > 0) {
+                            result.msg = globalErrors[0];
+                        }
+    
+                        // Set field errors ...
+                        if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
+                            result.fields = data.fieldErrors;
+                            if (!result.msg) {
+                                const key = Object.keys(data.fieldErrors)[0];
+                                result.msg = data.fieldErrors[key];
+                            }
+                        }
+    
+                    } else {
+                        result = { msg: response.statusText };
+                    }
+            }
+        }
+    
+        // Network related problem ...
+        if (!result) {
+            result = { msg: 'Unexpected error. Please, try latter' };
+        }
+    
+        return result;
+    }
+    
     createMap(model: BasicMapInfo): Promise<number> {
         const handler = (success: (mapId:number) => void, reject: (error: ErrorInfo) => void) => {
             axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
@@ -22,7 +66,7 @@ export default class RestClient extends MockClient {
                 success(mapId);
             }).catch(error => {
                 const response = error.response;
-                const errorInfo = parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(response);
                 reject(errorInfo);
             });
         }
@@ -58,7 +102,7 @@ export default class RestClient extends MockClient {
                 console.log(error)
 
                 const response = error.response;
-                const errorInfo = parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(response);
                 reject(errorInfo);
             });
         }
@@ -74,13 +118,30 @@ export default class RestClient extends MockClient {
                 // All was ok, let's sent to success page ...;
                 success();
             }).catch(error => {
+                console.log(error);
                 const response = error.response;
-                const errorInfo = parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(response);
                 reject(errorInfo);
             });
         }
         return new Promise(handler);
     }
+
+    deleteMap(id: number): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.delete(this.baseUrl + `/c/restful/maps/${id}`,
+                { headers: { 'Content-Type': 'application/json' } }
+            ).then(response => {
+                success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
+
 
     resetPassword(email: string): Promise<void> {
 
@@ -93,7 +154,7 @@ export default class RestClient extends MockClient {
                 success();
             }).catch(error => {
                 const response = error.response;
-                const errorInfo = parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(response);
                 reject(errorInfo);
             });
         }

@@ -32,49 +32,6 @@ export type ErrorInfo = {
     fields?: Map<String, String>;
 }
 
-export const parseResponseOnError = (response: any): ErrorInfo => {
-
-    let result: ErrorInfo | undefined;
-    if (response) {
-        const status: number = response.status;
-        const data = response.data;
-        console.log(data);
-
-        switch (status) {
-            case 401:
-                //    this.authFailed();
-                break;
-            default:
-                if (data) {
-                    // Set global errors ...
-                    result = {};
-                    let globalErrors = data.globalErrors;
-                    if (globalErrors && globalErrors.length > 0) {
-                        result.msg = globalErrors[0];
-                    }
-
-                    // Set field errors ...
-                    if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
-                        result.fields = data.fieldErrors;
-                        if (!result.msg) {
-                            const key = Object.keys(data.fieldErrors)[0];
-                            result.msg = data.fieldErrors[key];
-                        }
-                    }
-
-                } else {
-                    result = { msg: response.statusText };
-                }
-        }
-    }
-
-    // Network related problem ...
-    if (!result) {
-        result = { msg: 'Unexpected error. Please, try latter' };
-    }
-
-    return result;
-}
 
 interface Client {
     createMap(map: BasicMapInfo): Promise<number>;
