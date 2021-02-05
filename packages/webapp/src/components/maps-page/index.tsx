@@ -8,14 +8,14 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import { AccountCircle, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined } from '@material-ui/icons';
+import { AccountCircle, AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PeopleAltTwoTone, PersonAddTwoTone, PersonOutlineTwoTone, PersonTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
 import { Button, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../reducers/serviceSlice';
 import { useSelector } from 'react-redux';
-import Client from '../../client';
+import Client, { Label } from '../../client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
 
@@ -30,12 +30,13 @@ export interface GenericFilter {
 
 export interface LabelFilter {
     type: 'label',
-    label: string
+    label: Label
 }
 
 interface ToolbarButtonInfo {
     filter: GenericFilter | LabelFilter,
     label: string
+    icon: any;
 }
 
 const MapsPage = () => {
@@ -52,7 +53,7 @@ const MapsPage = () => {
 
 
     const mutation = useMutation(
-        (label: string) => client.deleteLabel(label),
+        (id: number) => client.deleteLabel(id),
         {
             onSuccess: () => queryClient.invalidateQueries('labels')
         }
@@ -64,34 +65,44 @@ const MapsPage = () => {
         setFilter(filter);
     };
 
-    const handleLabelDelete = (label: string) => {
-        mutation.mutate(label);
+    const handleLabelDelete = (id: number) => {
+        mutation.mutate(id);
     };
 
-    const { data } = useQuery<unknown, ErrorInfo, string[]>('labels', async () => {
+    const { data } = useQuery<unknown, ErrorInfo, Label[]>('labels', async () => {
         return await client.fetchLabels();
     });
 
-    const labels: string[] = data ? data : [];
+    const labels: Label[] = data ? data : [];
     const filterButtons: ToolbarButtonInfo[] = [{
         filter: { type: 'all' },
-        label: 'All'
+        label: 'All',
+        icon: <AcUnitTwoTone color="secondary" />
     }, {
         filter: { type: 'owned' },
-        label: 'Owned'
+        label: 'Owned',
+        icon: <PersonOutlineTwoTone color="secondary" />
+
     }, {
         filter: { type: 'starred' },
-        label: 'Starred'
+        label: 'Starred',
+        icon: <StarTwoTone color="secondary" />
+
     }, {
         filter: { type: 'shared' },
-        label: 'Shared with me'
+        label: 'Shared with me',
+        icon: <ShareTwoTone color="secondary" />
     }, {
         filter: { type: 'public' },
-        label: 'Public'
+        label: 'Public',
+        icon: <PublicTwoTone color="secondary" />
     }];
 
-    labels.forEach(l => filterButtons.push({ filter: { type: 'label', label: l }, label: l }))
-
+    labels.forEach(l => filterButtons.push({
+        filter: { type: 'label', label: l },
+        label: l.title,
+        icon: <LabelTwoTone style={{ color: l.color ? l.color : 'inherit' }} />
+    }))
 
     return (
         <div className={classes.root}>
@@ -147,15 +158,17 @@ const MapsPage = () => {
                 </div>
 
                 <List component="nav">
-                    {filterButtons.map(buttonInfo => (<StyleListItem
-                        icon={<PublicTwoTone color="secondary" />}
-                        label={buttonInfo.label}
-                        filter={buttonInfo.filter}
-                        active={filter}
-                        onClick={handleMenuClick}
-                        onDelete={handleLabelDelete}
-                        key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label}`}
-                    />)
+                    {filterButtons.map(buttonInfo => {
+                        return (<StyleListItem
+                            icon={buttonInfo.icon}
+                            label={buttonInfo.label}
+                            filter={buttonInfo.filter}
+                            active={filter}
+                            onClick={handleMenuClick}
+                            onDelete={handleLabelDelete}
+                            key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label}`}
+                        />)
+                    }
                     )}
                 </List>
 
@@ -179,7 +192,7 @@ interface ListItemProps {
     filter: Filter,
     active?: Filter
     onClick: (filter: Filter) => void;
-    onDelete?: (label: string) => void;
+    onDelete?: (id: number) => void;
 }
 
 const StyleListItem = (props: ListItemProps) => {
@@ -204,7 +217,7 @@ const StyleListItem = (props: ListItemProps) => {
         if (!onDeleteLabel) {
             throw "Illegal state exeption";
         }
-        onDeleteLabel((filter as LabelFilter).label);
+        onDeleteLabel((filter as LabelFilter).label.id);
     }
 
     return (

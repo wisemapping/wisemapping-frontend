@@ -47,7 +47,7 @@ type Order = 'asc' | 'desc';
 function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key,
-): (a: { [key in Key]: number | string | boolean | string[] | undefined }, b: { [key in Key]: number | string | string[] | boolean }) => number {
+): (a: { [key in Key]: number | string | boolean | number[] | undefined }, b: { [key in Key]: number | string | number[] | boolean }) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -162,6 +162,8 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
         result = mapInfo.starred;
         break;
       case 'owned':
+                //@todo: complete ...
+
         result = mapInfo.starred;
         break;
       case 'shared':
@@ -169,8 +171,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
         result = mapInfo.starred;
         break;
       case 'label':
-        //@todo: complete ...
-        result = !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label)
+        result = !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label.id)
         break;
       default:
         result = false;
@@ -284,6 +285,7 @@ export const MapsList = (props: MapsListProps) => {
         queryClient.invalidateQueries('maps');
       },
       onError: (error) => {
+        // @todo ...
         // setError(error);
       }
     }

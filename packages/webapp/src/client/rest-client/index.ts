@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorInfo, MapInfo, BasicMapInfo, NewUser } from '..';
+import { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label } from '..';
 import MockClient from '../mock-client/';
 
 //@Remove inheritance once is it completed.
@@ -195,6 +195,11 @@ export default class RestClient extends MockClient {
             });
         }
         return new Promise(handler);
+    }
+
+    deleteLabel(id: number): Promise<void> {
+        console.log("Fetching  labels from server")
+        return Promise.resolve();
     }
 }
 

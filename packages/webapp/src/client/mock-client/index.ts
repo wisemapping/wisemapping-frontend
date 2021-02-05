@@ -1,8 +1,8 @@
-import Client, { BasicMapInfo, MapInfo, NewUser } from '..';
+import Client, { BasicMapInfo, Label, MapInfo, NewUser } from '..';
 
 class MockClient implements Client {
     private maps: MapInfo[] = [];
-    private labels: string[] = [];
+    private labels: Label[] = [];
 
     constructor() {
 
@@ -11,7 +11,7 @@ class MockClient implements Client {
             id: number,
             starred: boolean,
             title: string,
-            labels: string[],
+            labels: number[],
             creator: string,
             modified: string,
             description: string,
@@ -20,21 +20,24 @@ class MockClient implements Client {
             return { id, title, labels, creator, modified, starred, description, isPublic };
         }
         this.maps = [
-            createMapInfo(1, true, "El Mapa", [""], "Paulo", "2008-06-02T00:00:00Z", "", true),
-            createMapInfo(2, false, "El Mapa2", [""], "Paulo2", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(3, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(4, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(5, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(6, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(7, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(8, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(9, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(10, false, "El Mapa3", [""], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(11, false, "El Mapa3", ["label 3", "label3"], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(12, false, "El Mapa3", ["label 2"], "Paulo3", "2008-06-02T00:00:00Z", "", false)
+            createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "", true),
+            createMapInfo(2, false, "El Mapa2", [], "Paulo2", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(3, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(4, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(5, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(6, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(7, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(8, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(9, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(10, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false),
+            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false)
         ];
 
-        this.labels = ["label 1,", "label 2", "label 3"];
+        this.labels = [
+            { id: 1, title: "Red Label", iconName: "", color: 'red' },
+            { id: 1, title: "Blue Label", iconName: "", color: 'blue' }
+        ];
 
     }
 
@@ -42,7 +45,7 @@ class MockClient implements Client {
         throw new Error("Method not implemented.");
     }
 
-    fetchLabels(): Promise<string[]> {
+    fetchLabels(): Promise<Label[]> {
         console.log("Fetching  labels from server")
         return Promise.resolve(this.labels);
     }
@@ -60,10 +63,6 @@ class MockClient implements Client {
     }
 
     loadMapInfo(id: number): Promise<BasicMapInfo> {
-        return Promise.resolve({ title: 'My Map', description: 'My Description' });
-    }
-
-    fetchLabes(id: number): Promise<BasicMapInfo> {
         return Promise.resolve({ title: 'My Map', description: 'My Description' });
     }
 
@@ -121,9 +120,9 @@ class MockClient implements Client {
         };
     }
 
-    deleteLabel(label: string): Promise<void> {
-        this.labels = this.labels.filter(l => l != label);
-        console.log("Label delete:" + label);
+    deleteLabel(id: number): Promise<void> {
+        this.labels = this.labels.filter(l => l.id != id);
+        console.log("Label delete:" + this.labels);
         return Promise.resolve();
     }
 

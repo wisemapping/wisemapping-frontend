@@ -6,11 +6,19 @@ export type NewUser = {
     recaptcha: string | null;
 }
 
+export type Label = {
+    id: number;
+    title: string;
+    color: string;
+    iconName: string;
+}
+
+
 export type MapInfo = {
     id: number;
     starred: boolean;
     title: string;
-    labels: string[];
+    labels: number[];
     creator: string;
     modified: string;
     description: string;
@@ -40,17 +48,18 @@ export type ErrorInfo = {
 
 
 interface Client {
-    createMap(map: BasicMapInfo): Promise<number>;
-    deleteLabel(label: string): Promise<void>;
+    createMap(map: BasicMapInfo): Promise<number>; 
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
-    fetchLabels(): Promise<string[]>;
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
     loadMapInfo(id: number): Promise<BasicMapInfo>;
     changeStarred(id: number, starred: boolean): Promise<void>;
+
+    fetchLabels(): Promise<Label[]>;
+    deleteLabel(id: number): Promise<void>;
 }
 
 
