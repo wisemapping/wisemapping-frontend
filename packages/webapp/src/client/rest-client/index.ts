@@ -98,11 +98,12 @@ export default class RestClient implements Client {
                         id: m.id,
                         starred: Boolean(m.starred),
                         title: m.title,
-                        labels: [],
+                        labels: m.labels,
                         creator: m.creator,
                         modified: m.lastModificationTime,
                         description: m.description,
-                        isPublic: false
+                        isPublic: m['public'],
+                        role: m.role
                     }
                 })
                 success(maps);
@@ -233,8 +234,15 @@ export default class RestClient implements Client {
     }
 
     deleteLabel(id: number): Promise<void> {
-        console.log("Fetching  labels from server")
-        return Promise.resolve();
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.delete(this.baseUrl + `/c/restful/label/${id}`).then(response => {
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 }
 

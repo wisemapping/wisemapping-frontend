@@ -15,23 +15,24 @@ class MockClient implements Client {
             creator: string,
             modified: string,
             description: string,
-            isPublic: boolean
+            isPublic: boolean,
+            role: 'owner' | 'viewer' | 'editor'
         ): MapInfo {
-            return { id, title, labels, creator, modified, starred, description, isPublic };
+            return { id, title, labels, creator, modified, starred, description, isPublic, role };
         }
         this.maps = [
-            createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "", true),
-            createMapInfo(2, false, "El Mapa2", [], "Paulo2", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(3, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(4, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(5, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(6, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(7, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(8, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(9, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(10, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false),
-            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false)
+            createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "", true, 'owner'),
+            createMapInfo(2, false, "El Mapa2", [], "Paulo2", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(3, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(4, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(5, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(6, false, "/El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(7, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(8, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(9, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(10, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor')
         ];
 
         this.labels = [
@@ -104,7 +105,8 @@ class MockClient implements Client {
                 creator: "current user",
                 labels: [],
                 modified: "2008-06-02T00:00:00Z",
-                isPublic: false
+                isPublic: false,
+                role: 'owner'
             };
             this.maps.push(newMap);
             return Promise.resolve(newMap.id);

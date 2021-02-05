@@ -22,6 +22,7 @@ export type MapInfo = {
     modified: string;
     description: string;
     isPublic: boolean;
+    role: 'owner' | 'editor'  | 'viewer'
 }
 
 export type HistoryChange = {
@@ -47,7 +48,7 @@ export type ErrorInfo = {
 
 
 interface Client {
-    createMap(map: BasicMapInfo): Promise<number>; 
+    createMap(map: BasicMapInfo): Promise<number>;
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
@@ -56,7 +57,8 @@ interface Client {
     changeStarred(id: number, starred: boolean): Promise<void>;
 
     fetchLabels(): Promise<Label[]>;
-    deleteLabel(id: number): Promise<void>; 
+    // createLabel(label: Label): Promise<void>;
+    deleteLabel(id: number): Promise<void>;
 
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;

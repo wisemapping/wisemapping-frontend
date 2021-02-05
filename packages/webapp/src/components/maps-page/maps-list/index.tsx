@@ -75,7 +75,7 @@ const headCells: HeadCell[] = [
   { id: 'title', numeric: false, label: 'Name' },
   { id: 'labels', numeric: false },
   { id: 'creator', numeric: false, label: 'Creator', style: { width: '60px' } },
-  { id: 'modified', numeric: true, label: 'Modified', style: { width: '30px' } }
+  { id: 'modified', numeric: true, label: 'Last Update', style: { width: '30px' } }
 ];
 
 interface EnhancedTableProps {
@@ -156,23 +156,20 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
       case 'all':
         result = true;
         break;
-      case 'public':
-        result = mapInfo.isPublic;
-        break;
       case 'starred':
         result = mapInfo.starred;
         break;
       case 'owned':
-        //@todo: complete ...
-
-        result = mapInfo.starred;
+        result = mapInfo.role == 'owner';
         break;
       case 'shared':
-        //@todo: complete ...
-        result = mapInfo.starred;
+        result = mapInfo.role != 'owner';
         break;
       case 'label':
         result = !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label.id)
+        break;
+      case 'public':
+        result = mapInfo.isPublic;
         break;
       default:
         result = false;
