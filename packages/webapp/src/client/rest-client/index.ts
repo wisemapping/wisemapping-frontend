@@ -11,7 +11,7 @@ export default class RestClient extends MockClient {
         super();
         this.baseUrl = baseUrl;
     }
-
+ 
     private parseResponseOnError = (response: any): ErrorInfo => {
 
         let result: ErrorInfo | undefined;
@@ -184,13 +184,41 @@ export default class RestClient extends MockClient {
     changeStarred(id: number, starred: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios.put(this.baseUrl + `/c/restful/maps/${id}/starred`,
-            starred,
+                starred,
                 { headers: { 'Content-Type': 'text/plain' } }
             ).then(() => {
                 success();
             }).catch(error => {
                 const response = error.response;
                 const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
+
+
+    fetchLabels(): Promise<Label[]> {
+
+        const handler = (success: (labels: Label[]) => void, reject: (error: ErrorInfo) => void) => {
+            axios.get(
+                this.baseUrl + '/c/restful/labels/',
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            ).then(response => {
+                const data = response.data;
+                const maps: Label[] = (data.labels as any[]).map(l => {
+                    return {
+                        id: l.id,
+                        color: l.color,
+                        title: l.title,
+                        iconName: l.iconName
+                    }
+                })
+                success(maps);
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
                 reject(errorInfo);
             });
         }

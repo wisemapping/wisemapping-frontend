@@ -36,7 +36,7 @@ class MockClient implements Client {
 
         this.labels = [
             { id: 1, title: "Red Label", iconName: "", color: 'red' },
-            { id: 1, title: "Blue Label", iconName: "", color: 'blue' }
+            { id: 2, title: "Blue Label", iconName: "", color: 'blue' }
         ];
 
     }
@@ -62,7 +62,7 @@ class MockClient implements Client {
         return Promise.resolve();
     }
 
-    loadMapInfo(id: number): Promise<BasicMapInfo> {
+    fetchMapInfo(id: number): Promise<BasicMapInfo> {
         return Promise.resolve({ title: 'My Map', description: 'My Description' });
     }
 

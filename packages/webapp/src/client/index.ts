@@ -49,17 +49,18 @@ export type ErrorInfo = {
 
 interface Client {
     createMap(map: BasicMapInfo): Promise<number>; 
-    registerNewUser(user: NewUser): Promise<void>;
-    resetPassword(email: string): Promise<void>;
-    fetchAllMaps(): Promise<MapInfo[]>;
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
+    fetchAllMaps(): Promise<MapInfo[]>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
-    loadMapInfo(id: number): Promise<BasicMapInfo>;
+    fetchMapInfo(id: number): Promise<BasicMapInfo>;
     changeStarred(id: number, starred: boolean): Promise<void>;
 
     fetchLabels(): Promise<Label[]>;
-    deleteLabel(id: number): Promise<void>;
+    deleteLabel(id: number): Promise<void>; 
+
+    registerNewUser(user: NewUser): Promise<void>;
+    resetPassword(email: string): Promise<void>;
 }
 
 
