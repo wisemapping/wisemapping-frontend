@@ -25,7 +25,7 @@ export type MapInfo = {
     role: 'owner' | 'editor'  | 'viewer'
 }
 
-export type HistoryChange = {
+export type ChangeHistory = {
     id: number;
     creator: string;
     modified: string;
@@ -62,6 +62,9 @@ interface Client {
 
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;
+
+    fetchHistory(id:number):Promise<ChangeHistory[]>;
+    revertHistory(id:number,cid:number): Promise<void>
 }
 
 

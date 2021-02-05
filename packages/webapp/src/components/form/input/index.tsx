@@ -7,7 +7,7 @@ type InputProps = {
     name: string;
     error?: ErrorInfo;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    label: MessageDescriptor;
+    label: string;
     required?: boolean;
     type: string;
     value?: string
@@ -27,7 +27,7 @@ const Input = (props: InputProps) => {
     const fullWidth = props.fullWidth != undefined ? props.required : true;
 
     return (
-        <TextField name={name} type={props.type} label={intl.formatMessage(props.label)}
+        <TextField name={name} type={props.type} label={props.label}
             value={value} onChange={onChange}
             error={Boolean(fieldError)} helperText={fieldError}
             variant="outlined" required={required} fullWidth={fullWidth} margin="dense"/>

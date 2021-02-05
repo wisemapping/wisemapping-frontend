@@ -28,7 +28,7 @@ import { Button, InputBase, Link } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import moment from 'moment'
 import { Filter, LabelFilter } from '..';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { DeleteOutlined, LabelTwoTone } from '@material-ui/icons';
 import Alert from '@material-ui/lab/Alert';
 
@@ -71,12 +71,6 @@ interface HeadCell {
   style?: CSSProperties;
 }
 
-const headCells: HeadCell[] = [
-  { id: 'title', numeric: false, label: 'Name' },
-  { id: 'labels', numeric: false },
-  { id: 'creator', numeric: false, label: 'Creator', style: { width: '60px' } },
-  { id: 'modified', numeric: true, label: 'Last Update', style: { width: '30px' } }
-];
 
 interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
@@ -89,11 +83,20 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
+  const intl = useIntl();
+
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
 
   const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
+
+  const headCells: HeadCell[] = [
+    { id: 'title', numeric: false, label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }) },
+    { id: 'labels', numeric: false },
+    { id: 'creator', numeric: false, label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }), style: { width: '70px', whiteSpace: 'nowrap' } },
+    { id: 'modified', numeric: true, label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }), style: { width: '70px', whiteSpace: 'nowrap' } }
+  ];
 
   return (
     <TableHead>
@@ -196,6 +199,7 @@ export const MapsList = (props: MapsListProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const client: Client = useSelector(activeInstance);
+  const intl = useIntl();
 
   useEffect(() => {
     setSelected([]);
@@ -456,7 +460,7 @@ export const MapsList = (props: MapsListProps) => {
                           </TableCell>
 
                           <TableCell className={classes.bodyCell}>
-                            <Tooltip title="Others">
+                            <Tooltip title={intl.formatMessage({ id: 'map.more-actions', defaultMessage: 'More Actions' })}>
                               <IconButton aria-label="Others" size="small" onClick={handleActionClick(row.id)}>
                                 <MoreHorizIcon color="action" />
                               </IconButton>

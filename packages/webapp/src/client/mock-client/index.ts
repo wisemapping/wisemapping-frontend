@@ -1,4 +1,4 @@
-import Client, { BasicMapInfo, Label, MapInfo, NewUser } from '..';
+import Client, { BasicMapInfo, ChangeHistory, Label, MapInfo, NewUser } from '..';
 
 class MockClient implements Client {
     private maps: MapInfo[] = [];
@@ -40,6 +40,9 @@ class MockClient implements Client {
             { id: 2, title: "Blue Label", iconName: "", color: 'blue' }
         ];
 
+    }
+    revertHistory(id: number, cid: number): Promise<void> {
+        return Promise.resolve();
     }
 
     createMap(map: BasicMapInfo): Promise<number> {
@@ -90,6 +93,46 @@ class MockClient implements Client {
 
             })
         };
+    }
+    fetchHistory(id: number): Promise<ChangeHistory[]> {
+        const result = [{
+            id: 1,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        },
+        {
+            id: 2,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        }
+            ,
+        {
+            id: 3,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        },
+        {
+            id: 4,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        },
+        {
+            id: 5,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        },
+        {
+            id: 6,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        },
+        {
+            id: 7,
+            creator: 'Paulo',
+            modified: '2008-06-02T00:00:00Z'
+        }
+        ]
+        return Promise.resolve(result);
     }
 
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {

@@ -68,10 +68,10 @@ const CreateDialog = (props: CreateProps) => {
                 submitButton={intl.formatMessage({ id: 'create.button', defaultMessage: 'Create' })}>
 
                 <FormControl fullWidth={true}>
-                    <Input name="title" type="text" label={{ id: "action.rename-name-placeholder", defaultMessage: "Name" }}
+                    <Input name="title" type="text" label={intl.formatMessage({ id: "action.rename-name-placeholder", defaultMessage: "Name" })}
                         value={model.title} onChange={handleOnChange} error={error} fullWidth={true} />
 
-                    <Input name="description" type="text" label={{ id: "action.rename-description-placeholder", defaultMessage: "Description" }}
+                    <Input name="description" type="text" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })}
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />
                 </FormControl>
             </BaseDialog>

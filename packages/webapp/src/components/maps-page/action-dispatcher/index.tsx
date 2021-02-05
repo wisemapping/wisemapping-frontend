@@ -1,5 +1,5 @@
 import React from 'react';
-import RenameDialog from './rename';
+import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
 import { ErrorInfo, MapInfo } from '../../../client';
@@ -10,6 +10,7 @@ import { activeInstance } from '../../../redux/clientSlice';
 import DuplicateDialog from './duplicate-dialog';
 import { useHistory } from 'react-router-dom';
 import CreateDialog from './create-dialog';
+import HistoryDialog from './history-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -46,6 +47,7 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       <DeleteDialog open={action === 'delete'} onClose={handleOnClose} mapId={mapId} />
       <RenameDialog open={action === 'rename'} onClose={handleOnClose} mapId={mapId} />
       <DuplicateDialog open={action === 'duplicate'} onClose={handleOnClose} mapId={mapId} />
+      <HistoryDialog open={action === 'history'} onClose={handleOnClose} mapId={mapId} />
     </span >
   );
 }

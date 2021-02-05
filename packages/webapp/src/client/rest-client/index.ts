@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useIntl } from 'react-intl';
-import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label } from '..';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory } from '..';
 
 export default class RestClient implements Client {
     private baseUrl: string;
@@ -10,6 +10,14 @@ export default class RestClient implements Client {
     constructor(baseUrl: string, sessionExpired: () => void) {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
+    }
+    revertHistory(id: number, cid: number): Promise<void> {
+        //    '/c/restful/maps/${mindmapId}/history'
+
+        throw new Error('Method not implemented.');
+    }
+    fetchHistory(id: number): Promise<ChangeHistory[]> {
+        throw new Error('Method not implemented.');
     }
 
     fetchMapInfo(id: number): Promise<BasicMapInfo> {
@@ -29,7 +37,7 @@ export default class RestClient implements Client {
                 case 401:
                 case 302:
                     this.sessionExpired();
-                    result = { msg: intl.formatMessage({ id: "expired.title", defaultMessage: "Your current session has expired. Please, sign in and try again." })}
+                    result = { msg: intl.formatMessage({ id: "expired.description", defaultMessage: "Your current session has expired. Please, sign in and try again." })}
                     break;
                 default:
                     if (data) {

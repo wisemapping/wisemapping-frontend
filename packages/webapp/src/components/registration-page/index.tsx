@@ -71,16 +71,16 @@ const RegistrationForm = () => {
         <form onSubmit={handleOnSubmit}>
           <GlobalError error={error} />
 
-          <Input name="email" type="email" onChange={handleOnChange} label={{ id: "registration.email", defaultMessage: "Email" }}
+          <Input name="email" type="email" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })}
             autoComplete="email" error={error}/>
 
-          <Input name="firstname" type="text" onChange={handleOnChange} label={{ id: "registration.firstname", defaultMessage: "First Name" }}
+          <Input name="firstname" type="text" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })}
             autoComplete="given-name" error={error}/>
 
-          <Input name="lastname" type="text" onChange={handleOnChange} label={{ id: "registration.lastname", defaultMessage: "Last Name" }}
+          <Input name="lastname" type="text" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })}
             autoComplete="family-name" error={error}/>
 
-          <Input name="password" type="password" onChange={handleOnChange} label={{ id: "registration.password", defaultMessage: "Password" }}
+          <Input name="password" type="password" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })}
             autoComplete="new-password" error={error}/>
 
           <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>

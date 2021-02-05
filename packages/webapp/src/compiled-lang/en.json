@@ -47,6 +47,18 @@
       "value": "History"
     }
   ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "List of changes introduced in the last 90 days."
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "Version history"
+    }
+  ],
   "action.import": [
     {
       "type": 0,
@@ -54,12 +66,6 @@
     }
   ],
   "action.info": [
-    {
-      "type": 0,
-      "value": "Info"
-    }
-  ],
-  "action.info-title": [
     {
       "type": 0,
       "value": "Info"
@@ -101,6 +107,18 @@
       "value": "Rename"
     }
   ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
   "action.share": [
     {
       "type": 0,
@@ -135,6 +153,18 @@
     {
       "type": 0,
       "value": "Duplicate"
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "Your current session has expired. Please, sign in and try again."
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "Your session has expired"
     }
   ],
   "footer.aboutus": [
@@ -233,6 +263,12 @@
       "value": "Log into your account"
     }
   ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
   "login.error": [
     {
       "type": 0,
@@ -249,6 +285,12 @@
     {
       "type": 0,
       "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "Password"
     }
   ],
   "login.remberme": [
@@ -279,6 +321,60 @@
     {
       "type": 0,
       "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "Creator"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "Last Update"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "More Actions"
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "No matching record found with the current filter criteria."
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "Modified"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "Modified By"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "Revert"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "View"
     }
   ],
   "menu.account": [

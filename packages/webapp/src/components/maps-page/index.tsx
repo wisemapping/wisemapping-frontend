@@ -259,7 +259,7 @@ const HandleClientStatus = () => {
 
                 <DialogContent>
                     <Alert severity="error">
-                        <AlertTitle><FormattedMessage id="expired.title" defaultMessage="Your current session has expired. Please, sign in and try again." /></AlertTitle>
+                        <AlertTitle><FormattedMessage id="expired.description" defaultMessage="Your current session has expired. Please, sign in and try again." /></AlertTitle>
                     </Alert>
                 </DialogContent>
 
