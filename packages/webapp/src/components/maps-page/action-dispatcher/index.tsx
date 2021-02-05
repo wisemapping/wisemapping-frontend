@@ -6,7 +6,7 @@ import { ErrorInfo, MapInfo } from '../../../client';
 import Client from '../../../client';
 import { useSelector } from "react-redux";
 import { QueryClient, useQuery } from 'react-query';
-import { activeInstance } from '../../../reducers/serviceSlice';
+import { activeInstance } from '../../../redux/clientSlice';
 import DuplicateDialog from './duplicate-dialog';
 import { useHistory } from 'react-router-dom';
 import CreateDialog from './create-dialog';
@@ -49,8 +49,6 @@ const ActionDispatcher = (props: ActionDialogProps) => {
     </span >
   );
 }
-
-
 type MapLoadResult = {
   isLoading: boolean,
   error: ErrorInfo | null,

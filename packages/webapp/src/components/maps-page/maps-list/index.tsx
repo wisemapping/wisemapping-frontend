@@ -18,7 +18,7 @@ import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../reducers/serviceSlice';
+import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ErrorInfo, MapInfo } from '../../../client';
 import Client from '../../../client';
@@ -30,6 +30,7 @@ import moment from 'moment'
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage } from 'react-intl';
 import { DeleteOutlined, LabelTwoTone } from '@material-ui/icons';
+import Alert from '@material-ui/lab/Alert';
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -162,7 +163,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
         result = mapInfo.starred;
         break;
       case 'owned':
-                //@todo: complete ...
+        //@todo: complete ...
 
         result = mapInfo.starred;
         break;
@@ -398,7 +399,7 @@ export const MapsList = (props: MapsListProps) => {
               {isLoading ? (
                 <TableRow><TableCell colSpan={6}>Loading ...</TableCell></TableRow>) :
                 (mapsInfo.length == 0 ?
-                  (<TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}><FormattedMessage id="maps.emptyresult" defaultMessage="No matching record found with the current filter criteria." /></TableCell></TableRow>) :
+                  (<TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}><FormattedMessage id="maps.empty-result" defaultMessage="No matching record found with the current filter criteria." /></TableCell></TableRow>) :
                   stableSort(mapsInfo, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: MapInfo) => {
@@ -478,4 +479,10 @@ export const MapsList = (props: MapsListProps) => {
       <ActionDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
     </div >
   );
+}
+
+const ErrorDialog = (props) => {
+
+  return (<Alert severity="error">This is an error alert — check it out!</Alert>);
+
 }

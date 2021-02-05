@@ -6,7 +6,7 @@ import { FormControl } from '@material-ui/core';
 
 
 import Client, { BasicMapInfo, ErrorInfo } from '../../../../client';
-import { activeInstance } from '../../../../reducers/serviceSlice';
+import { activeInstance } from '../../../../redux/clientSlice';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
 

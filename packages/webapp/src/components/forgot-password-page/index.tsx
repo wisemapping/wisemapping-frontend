@@ -8,7 +8,7 @@ import Footer from '../layout/footer'
 import FormContainer from '../layout/form-container';
 import { useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
-import { activeInstance } from '../../reducers/serviceSlice'
+import { activeInstance } from '../../redux/clientSlice'
 import Input from '../form/input'
 import GlobalError from '../form/global-error'
 import SubmitButton from '../form/submit-button'

@@ -1,18 +1,23 @@
 import axios from 'axios';
-import { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label } from '..';
-import MockClient from '../mock-client/';
+import { useIntl } from 'react-intl';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label } from '..';
 
-//@Remove inheritance once is it completed.
-export default class RestClient extends MockClient {
+export default class RestClient implements Client {
     private baseUrl: string;
-    private authFailed: () => void
+    private sessionExpired: () => void
 
-    constructor(baseUrl: string, authFailed: () => void) {
-        super();
+
+    constructor(baseUrl: string, sessionExpired: () => void) {
         this.baseUrl = baseUrl;
+        this.sessionExpired = sessionExpired;
     }
- 
+
+    fetchMapInfo(id: number): Promise<BasicMapInfo> {
+        throw new Error('Method not implemented.');
+    }
+
     private parseResponseOnError = (response: any): ErrorInfo => {
+        const intl = useIntl();
 
         let result: ErrorInfo | undefined;
         if (response) {
@@ -22,7 +27,9 @@ export default class RestClient extends MockClient {
 
             switch (status) {
                 case 401:
-                    //    this.authFailed();
+                case 302:
+                    this.sessionExpired();
+                    result = { msg: intl.formatMessage({ id: "expired.title", defaultMessage: "Your current session has expired. Please, sign in and try again." })}
                     break;
                 default:
                     if (data) {

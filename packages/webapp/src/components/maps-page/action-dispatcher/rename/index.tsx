@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import Client, { BasicMapInfo, ErrorInfo } from "../../../../client";
-import { activeInstance } from '../../../../reducers/serviceSlice';
+import { activeInstance } from '../../../../redux/clientSlice';
 import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import Input from "../../../form/input";
 import { FormControl } from "@material-ui/core";

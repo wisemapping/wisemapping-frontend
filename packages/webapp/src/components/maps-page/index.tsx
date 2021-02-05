@@ -9,15 +9,16 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
 import { AccountCircle, AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PeopleAltTwoTone, PersonAddTwoTone, PersonOutlineTwoTone, PersonTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
-import { Button, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { activeInstance } from '../../reducers/serviceSlice';
+import { activeInstance, activeInstanceStatus, ClientStatus } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
 import Client, { Label } from '../../client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const logoIcon = require('../../images/logo-small.svg');
 const poweredByIcon = require('../../images/pwrdby-white.svg');
@@ -46,11 +47,9 @@ const MapsPage = () => {
     const queryClient = useQueryClient();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
 
-
     useEffect(() => {
         document.title = 'Maps | WiseMapping';
     }, []);
-
 
     const mutation = useMutation(
         (id: number) => client.deleteLabel(id),
@@ -106,6 +105,7 @@ const MapsPage = () => {
 
     return (
         <div className={classes.root}>
+            <HandleClientStatus/>
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
@@ -236,6 +236,46 @@ const StyleListItem = (props: ListItemProps) => {
                 </ListItemSecondaryAction>) : null}
         </ListItem>
     );
+}
+
+const HandleClientStatus = () => {
+    const status: ClientStatus = useSelector(activeInstanceStatus);
+
+    const handleOnClose = () => {
+        window.location.href = '/c/login';
+    }
+
+    return (
+        <div>
+            <Dialog
+                open={status.state != 'healthy'}
+                onClose={handleOnClose}
+                maxWidth="sm"
+                fullWidth={true}>
+
+                <DialogTitle>
+                <FormattedMessage id="expired.title" defaultMessage="Your session has expired" />
+                </DialogTitle>
+
+                <DialogContent>
+                    <Alert severity="error">
+                        <AlertTitle><FormattedMessage id="expired.title" defaultMessage="Your current session has expired. Please, sign in and try again." /></AlertTitle>
+                    </Alert>
+                </DialogContent>
+
+                <DialogActions>
+                    <Button
+                        type="button"
+                        color="primary"
+                        size="medium"
+                        onClick={handleOnClose} >
+                        <FormattedMessage id="action.close-button" defaultMessage="Close" />
+                    </Button>
+                </DialogActions>
+
+            </Dialog>
+        </div>
+    )
 }
 
 const ProfileToobarButton = () => {

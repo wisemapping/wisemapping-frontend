@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
@@ -25,7 +24,7 @@ class RutimeConfig {
   buildClient(): Client {
     let result: Client;
     if (this.config) {
-      result = new RestClient(this.config.apiBaseUrl, () => { console.log("401 error") });
+      result = new RestClient(this.config.apiBaseUrl, () => { sessionExpired() });
       console.log("Service using rest client. " + JSON.stringify(this.config))
 
     } else {
@@ -36,27 +35,40 @@ class RutimeConfig {
   }
 }
 
-interface ServiceState {
-  instance: Client;
+export interface ClientStatus {
+  state: 'healthy' | 'session-expired';
+  msg?: string
+
 }
 
-const initialState: ServiceState = {
-  instance: new RutimeConfig().load().buildClient()
+export interface ClientState {
+  instance: Client;
+  status: ClientStatus;
+}
+
+const initialState: ClientState = {
+  instance: new RutimeConfig().load().buildClient(),
+  status: { state: 'healthy' }
 };
 
-export const serviceSlice = createSlice({
-  name: "service",
+export const clientSlice = createSlice({
+  name: "client",
   initialState: initialState,
   reducers: {
-    initialize(state, action: PayloadAction<void[]>) {
-      // state.instance = new RutimeConfig().load().buildClient()
+    sessionExpired(state, action: PayloadAction<void>) {
+      state.status = { state: 'session-expired', msg: 'Sessions has expired. You need to login again.' }
     }
   },
 });
 
 export const activeInstance = (state: any): Client => {
-  return state.service.instance;
+  return state.client.instance;
 }
 
-export default serviceSlice.reducer
+export const activeInstanceStatus = (state: any): ClientStatus => {
+  return state.client.status;
+}
+
+export const { sessionExpired } = clientSlice.actions;
+export default clientSlice.reducer;
 

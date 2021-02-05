@@ -13,7 +13,6 @@ export type Label = {
     iconName: string;
 }
 
-
 export type MapInfo = {
     id: number;
     starred: boolean;

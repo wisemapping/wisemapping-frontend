@@ -8,7 +8,7 @@ import ForgotPasswordSuccessPage from './components/forgot-password-success-page
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import MapsPage from './components/maps-page';
-import store from "./store";
+import store from "./redux/store";
 import { ForgotPasswordPage } from './components/forgot-password-page';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
