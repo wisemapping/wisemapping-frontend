@@ -221,6 +221,12 @@
       "value": "We will send you an email to reset your password"
     }
   ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
   "forgot.register": [
     {
       "type": 0,
@@ -255,6 +261,12 @@
     {
       "type": 0,
       "value": "Already have an account?"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "There is no changes available"
     }
   ],
   "login.desc": [
@@ -393,6 +405,30 @@
     {
       "type": 0,
       "value": "Signing up is free and just take a moment"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "First Name"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "Last Name"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "Password"
     }
   ],
   "registration.register": [

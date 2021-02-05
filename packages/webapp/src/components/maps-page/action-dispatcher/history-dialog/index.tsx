@@ -24,12 +24,12 @@ const HistoryDialog = (props: DialogProps) => {
     props.onClose();
   };
 
-  const handleOnClick = (event,vid): void => {
+  const handleOnClick = (event, vid): void => {
     event.preventDefault();
-    client.revertHistory(mapId,vid)
-    .then((mapId)=>{
-      handleOnClose();
-    })
+    client.revertHistory(mapId, vid)
+      .then((mapId) => {
+        handleOnClose();
+      })
   };
 
 
@@ -50,18 +50,25 @@ const HistoryDialog = (props: DialogProps) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {changeHistory.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell align="left">{row.creator}</TableCell>
-                  <TableCell align="left">
-                    <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
-                      <span>{moment(row.modified).fromNow()}</span>
-                    </Tooltip>
+
+              {changeHistory.length == 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4}><FormattedMessage id='history.no-changes' defaultMessage='There is no changes available' />
                   </TableCell>
-                  <TableCell align="left"><Link href={`c/maps/${mapId}/${row.id}/view`} target="history"><FormattedMessage id="maps.view" defaultMessage="View" /></Link></TableCell>
-                  <TableCell align="left"><Link href="#" onClick={(e)=>handleOnClick(e,row.id)}><FormattedMessage id="maps.revert" defaultMessage="Revert" /></Link></TableCell>
                 </TableRow>
-              ))}
+              ) :
+                changeHistory.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell align="left">{row.creator}</TableCell>
+                    <TableCell align="left">
+                      <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
+                        <span>{moment(row.modified).fromNow()}</span>
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell align="left"><Link href={`c/maps/${mapId}/${row.id}/view`} target="history"><FormattedMessage id="maps.view" defaultMessage="View" /></Link></TableCell>
+                    <TableCell align="left"><Link href="#" onClick={(e) => handleOnClick(e, row.id)}><FormattedMessage id="maps.revert" defaultMessage="Revert" /></Link></TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

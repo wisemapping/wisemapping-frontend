@@ -110,6 +110,9 @@
   "forgot.desc": {
     "defaultMessage": "We will send you an email to reset your password"
   },
+  "forgot.email": {
+    "defaultMessage": "Email"
+  },
   "forgot.register": {
     "defaultMessage": "Send recovery link"
   },
@@ -127,6 +130,9 @@
   },
   "header.haveaccount": {
     "defaultMessage": "Already have an account?"
+  },
+  "history.no-changes": {
+    "defaultMessage": "There is no changes available"
   },
   "login.desc": {
     "defaultMessage": "Log into your account"
@@ -197,6 +203,18 @@
   },
   "registration.desc": {
     "defaultMessage": "Signing up is free and just take a moment"
+  },
+  "registration.email": {
+    "defaultMessage": "Email"
+  },
+  "registration.firstname": {
+    "defaultMessage": "First Name"
+  },
+  "registration.lastname": {
+    "defaultMessage": "Last Name"
+  },
+  "registration.password": {
+    "defaultMessage": "Password"
   },
   "registration.register": {
     "defaultMessage": "Register"
