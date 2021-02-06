@@ -25,7 +25,6 @@ const CreateDialog = (props: CreateProps) => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<CreateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
-    const { open } = props;
     const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, CreateModel>((model: CreateModel) => {
@@ -62,7 +61,7 @@ const CreateDialog = (props: CreateProps) => {
 
     return (
         <div>
-            <BaseDialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+            <BaseDialog onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
                 title={intl.formatMessage({ id: 'create.title', defaultMessage: 'Create a new mindmap' })}
                 description={intl.formatMessage({ id: 'create.description', defaultMessage: 'Please, fill the new map name and description.' })}
                 submitButton={intl.formatMessage({ id: 'create.button', defaultMessage: 'Create' })}>

@@ -34,7 +34,7 @@ const DeleteDialog = (props: DialogProps) => {
   return (
     <div>
       <BaseDialog
-        open={props.open} onClose={handleOnClose} onSubmit={handleOnSubmit}
+        onClose={handleOnClose} onSubmit={handleOnSubmit}
         title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
         submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} >
         <Alert severity="warning">

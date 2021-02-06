@@ -1,10 +1,10 @@
 import React, { ErrorInfo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import Client, { ChangeHistory } from "../../../../client";
 import { activeInstance } from '../../../../redux/clientSlice';
-import { DialogProps, fetchMapById, handleOnMutationSuccess } from "..";
+import { DialogProps } from "..";
 import BaseDialog from "../base-dialog";
 import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "@material-ui/core";
 import moment from "moment";
@@ -36,7 +36,7 @@ const HistoryDialog = (props: DialogProps) => {
   return (
     <div>
       <BaseDialog
-        open={props.open} onClose={handleOnClose}
+        onClose={handleOnClose}
         title={intl.formatMessage({ id: "action.history-title", defaultMessage: "Version history" })}
         description={intl.formatMessage({ id: "action.history-description", defaultMessage: "List of changes introduced in the last 90 days." })} >
         <TableContainer component={Paper} style={{ maxHeight: '200px' }}>

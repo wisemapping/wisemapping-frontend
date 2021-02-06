@@ -37,17 +37,18 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       window.location.href = `/c/maps/${mapId}/edit`;
       break;
     case 'print':
-      window.open(`/c/maps/${mapId}/print`,'print');
+      window.open(`/c/maps/${mapId}/print`, 'print');
       break;
   }
 
   return (
     <span>
-      <CreateDialog open={action === 'create'} onClose={handleOnClose}/>
-      <DeleteDialog open={action === 'delete'} onClose={handleOnClose} mapId={mapId} />
-      <RenameDialog open={action === 'rename'} onClose={handleOnClose} mapId={mapId} />
-      <DuplicateDialog open={action === 'duplicate'} onClose={handleOnClose} mapId={mapId} />
-      <HistoryDialog open={action === 'history'} onClose={handleOnClose} mapId={mapId} />
+
+      {action === 'create' ? <CreateDialog open={true} onClose={handleOnClose} /> : null}
+      {action === 'delete' ? <DeleteDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
+      {action === 'rename' ? <RenameDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
+      {action === 'duplicate' ? <DuplicateDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
+      {action === 'history' ? <HistoryDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
     </span >
   );
 }

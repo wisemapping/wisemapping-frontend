@@ -70,7 +70,7 @@ const RenameDialog = (props: DialogProps) => {
 
     return (
         <div>
-            <BaseDialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+            <BaseDialog onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
                 title={intl.formatMessage({ id: 'rename.title', defaultMessage: 'Rename' })}
                 description={intl.formatMessage({ id: 'rename.description', defaultMessage: 'Please, fill the new map name and description.' })}
                 submitButton={intl.formatMessage({ id: 'rename.title', defaultMessage: 'Rename' })}>
@@ -83,7 +83,7 @@ const RenameDialog = (props: DialogProps) => {
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />
                 </FormControl>
             </BaseDialog>
-        </div> 
+        </div>
     );
 }
 

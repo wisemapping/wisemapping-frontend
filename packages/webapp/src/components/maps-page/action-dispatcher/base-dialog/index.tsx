@@ -8,7 +8,6 @@ import GlobalError from "../../../form/global-error";
 export type DialogProps = {
     onClose: () => void;
     onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
-    open: boolean;
     children: any;
     error?: ErrorInfo;
 
@@ -21,8 +20,6 @@ const BaseDialog = (props: DialogProps) => {
     const intl = useIntl();
     const handleOnClose = props.onClose;
     const onSubmit = props.onSubmit;
-    const isOpen = props.open;
-
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -36,7 +33,7 @@ const BaseDialog = (props: DialogProps) => {
     return (
         <div>
             <StyledDialog
-                open={isOpen}
+                open={true}
                 onClose={handleOnClose}
                 maxWidth="sm"
                 fullWidth={true}>

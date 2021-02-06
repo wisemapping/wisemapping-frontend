@@ -71,7 +71,7 @@ const DuplicateDialog = (props: DialogProps) => {
 
     return (
         <div>
-            <BaseDialog open={open} onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+            <BaseDialog onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
                 title={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}
                 description={intl.formatMessage({ id: 'rename.description', defaultMessage: 'Please, fill the new map name and description.' })}
                 submitButton={intl.formatMessage({ id: 'duplicate.title', defaultMessage: 'Duplicate' })}>
