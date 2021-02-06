@@ -319,6 +319,8 @@ export const MapsList = (props: MapsListProps) => {
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
     <div className={classes.root}>
+      <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} mapId={activeRowAction?.mapId} />
+
       <Paper className={classes.paper} elevation={0}>
         <Toolbar className={classes.toolbar} variant="dense">
 
@@ -467,7 +469,6 @@ export const MapsList = (props: MapsListProps) => {
                                 <MoreHorizIcon color="action" />
                               </IconButton>
                             </Tooltip>
-                            <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} role={row.role} />
                           </TableCell>
                         </TableRow>
                       );
@@ -478,7 +479,6 @@ export const MapsList = (props: MapsListProps) => {
 
       </Paper>
 
-      {/* Action Dialog */}
       <ActionDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
     </div >
   );

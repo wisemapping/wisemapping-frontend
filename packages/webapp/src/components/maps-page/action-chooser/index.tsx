@@ -11,17 +11,18 @@ import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import { FormattedMessage } from 'react-intl';
 import { LabelOutlined } from '@material-ui/icons';
+import { fetchMapById } from '../action-dispatcher';
 
 export type ActionType = 'open' | 'share' | 'import' | 'delete' | 'info' | 'create' | 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
 
 interface ActionProps {
   onClose: (action: ActionType) => void;
-  anchor: undefined | HTMLElement;
-  role: 'owner' | 'editor' | 'viewer'
+  anchor?: HTMLElement;
+  mapId?: number
 }
 
 const ActionChooser = (props: ActionProps) => {
-  const { anchor, onClose, role } = props;
+  const { anchor, onClose, mapId } = props;
 
   const handleOnClose = (action: ActionType): ((event: React.MouseEvent<HTMLLIElement>) => void) => {
     return (event): void => {
@@ -30,8 +31,8 @@ const ActionChooser = (props: ActionProps) => {
     };
   }
 
+  const role = mapId ? fetchMapById(mapId)?.map?.role : undefined;
   return (
-
     <Menu
       anchorEl={anchor}
       keepMounted
@@ -45,7 +46,7 @@ const ActionChooser = (props: ActionProps) => {
         </ListItemIcon>
         <FormattedMessage id="action.open" defaultMessage="Open" />
       </MenuItem>
-      
+
       <Divider />
 
       <MenuItem onClick={handleOnClose('duplicate')}>
