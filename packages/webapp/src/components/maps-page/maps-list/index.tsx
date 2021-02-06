@@ -311,7 +311,7 @@ export const MapsList = (props: MapsListProps) => {
     }
     setActiveRowAction(undefined);
   };
-
+  
   const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchCondition(e.target.value);
   }
@@ -319,7 +319,7 @@ export const MapsList = (props: MapsListProps) => {
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
     <div className={classes.root}>
-      <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} mapId={activeRowAction?.mapId} />
+            <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} mapId={activeRowAction?.mapId} />
 
       <Paper className={classes.paper} elevation={0}>
         <Toolbar className={classes.toolbar} variant="dense">

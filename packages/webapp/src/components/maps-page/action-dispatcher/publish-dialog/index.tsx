@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
-import { AppBar, Checkbox, FormControl, FormControlLabel, Tab, Typography } from '@material-ui/core';
+import { AppBar, Checkbox, FormControl, FormControlLabel, Tab, TextareaAutosize, Typography } from '@material-ui/core';
 
 
 import Client, { ErrorInfo } from '../../../../client';
@@ -10,6 +10,7 @@ import { activeInstance } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import { fetchMapById, handleOnMutationSuccess } from '..';
+import { useStyles } from './style';
 
 export type PublishProps = {
     mapId: number,
@@ -27,6 +28,7 @@ const PublishDialog = (props: PublishProps) => {
     const queryClient = useQueryClient();
     const intl = useIntl();
 
+    const classes = useStyles();
     const mutation = useMutation<void, ErrorInfo, boolean>((model: boolean) => {
         return client.updateMapToPublic(mapId, model);
     },
@@ -93,21 +95,13 @@ const PublishDialog = (props: PublishProps) => {
                             <Typography variant="subtitle2">
                                 <FormattedMessage id="publish.embedded-msg" defaultMessage="Copy this snippet of code to embed in your blog or page:" />
                             </Typography>
-                            <p>
-                                <textarea style={{ width: "100%" }}>
-                                    {`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
-                                </textarea>
-                            </p>
+                            <TextareaAutosize className={classes.textarea} readOnly={true} spellCheck={false} rowsMax={6} defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`} />
                         </TabPanel>
                         <TabPanel value="2">
                             <Typography variant="subtitle2">
                                 <FormattedMessage id="publish.public-url-msg" defaultMessage="Copy and paste the link below to share your map with colleagues:" />
                             </Typography>
-                            <p>
-                                <textarea style={{ width: "100%" }}>
-                                    {`https://app.wisemapping.com/c/maps/${mapId}/public`}
-                                </textarea>
-                            </p>
+                            <TextareaAutosize className={classes.textarea} readOnly={true} spellCheck={false} rowsMax={1} defaultValue={`https://app.wisemapping.com/c/maps/${mapId}/public`} />
                         </TabPanel>
                     </TabContext>
                 </div>
