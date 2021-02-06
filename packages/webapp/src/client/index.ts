@@ -55,6 +55,7 @@ interface Client {
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
     fetchMapInfo(id: number): Promise<BasicMapInfo>;
     changeStarred(id: number, starred: boolean): Promise<void>;
+    updateMapToPublic(id: number, starred: boolean): Promise<void>;
 
     fetchLabels(): Promise<Label[]>;
     // createLabel(label: Label): Promise<void>;

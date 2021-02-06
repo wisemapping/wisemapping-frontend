@@ -11,6 +11,35 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
+
+    updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
+        /*
+         jQuery.ajax("c/restful/maps/${mindmap.id}/publish", {
+                    async:false,
+                    dataType:'json',
+                    data:$('#dialogMainForm #enablePublicView')[0].checked ? 'true' : 'false',
+                    type:'PUT',
+                    contentType:"text/plain",
+                    success:function (data, textStatus, jqXHR) {
+                        $('#publish-dialog-modal').modal('hide');
+                    },
+        */
+
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(`${this.baseUrl}/c/restful/maps/${id}/publish`,
+                isPublic,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(response => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
     revertHistory(id: number, cid: number): Promise<void> {
         //    '/c/restful/maps/${mindmapId}/history'
 
@@ -37,7 +66,7 @@ export default class RestClient implements Client {
                 case 401:
                 case 302:
                     this.sessionExpired();
-                    result = { msg: intl.formatMessage({ id: "expired.description", defaultMessage: "Your current session has expired. Please, sign in and try again." })}
+                    result = { msg: intl.formatMessage({ id: "expired.description", defaultMessage: "Your current session has expired. Please, sign in and try again." }) }
                     break;
                 default:
                     if (data) {

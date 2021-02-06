@@ -105,7 +105,7 @@ const MapsPage = () => {
 
     return (
         <div className={classes.root}>
-            <HandleClientStatus/>
+            <HandleClientStatus />
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
@@ -129,8 +129,15 @@ const MapsPage = () => {
                     </Tooltip>
 
                     <Tooltip title="Import from external tools">
-                        <Button color="primary" size="medium" variant="outlined" type="button"
-                            disableElevation={true} startIcon={<CloudUploadTwoTone />} className={classes.importButton}>
+                        <Button
+                            color="primary"
+                            size="medium"
+                            variant="outlined"
+                            type="button"
+                            disableElevation={true}
+                            startIcon={<CloudUploadTwoTone />}
+                            className={classes.importButton}
+                            onClick={e => setActiveDialog('import')}>
                             <FormattedMessage id="action.import" defaultMessage="Import" />
                         </Button>
                     </Tooltip>
@@ -228,12 +235,13 @@ const StyleListItem = (props: ListItemProps) => {
                 {icon}
             </ListItemIcon>
             <ListItemText style={{ color: 'white' }} primary={label} />
-            {filter.type == 'label' ?
-                (<ListItemSecondaryAction>
+            {filter.type == 'label' &&
+                <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete" onClick={e => handleOnDelete(e, filter)}>
                         <DeleteOutlineTwoTone color="secondary" />
                     </IconButton>
-                </ListItemSecondaryAction>) : null}
+                </ListItemSecondaryAction>
+            }
         </ListItem>
     );
 }
@@ -254,7 +262,7 @@ const HandleClientStatus = () => {
                 fullWidth={true}>
 
                 <DialogTitle>
-                <FormattedMessage id="expired.title" defaultMessage="Your session has expired" />
+                    <FormattedMessage id="expired.title" defaultMessage="Your session has expired" />
                 </DialogTitle>
 
                 <DialogContent>

@@ -269,6 +269,24 @@
       "value": "There is no changes available"
     }
   ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "You can import FreeMind 1.0.1 and WiseMapping maps to your list of maps. Select the file you want to import."
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "Import existing mindmap"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,
@@ -399,6 +417,54 @@
     {
       "type": 0,
       "value": "Sign Out"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "Accept"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "Enable public sharing"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "By publishing the map you make it visible to everyone on the Internet."
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "Embedded"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "Copy this snippet of code to embed in your blog or page:"
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "Public URL"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "Copy and paste the link below to share your map with colleagues:"
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "Publish"
     }
   ],
   "registration.desc": [

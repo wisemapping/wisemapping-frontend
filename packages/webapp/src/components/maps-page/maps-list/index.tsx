@@ -125,11 +125,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}>
               {headCell.label}
-              {orderBy === headCell.id ? (
+
+              {orderBy === headCell.id && (
                 <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </span>
-              ) : null}
+              )}
+
             </TableSortLabel>
           </TableCell>)
         })}
@@ -321,7 +323,7 @@ export const MapsList = (props: MapsListProps) => {
         <Toolbar className={classes.toolbar} variant="dense">
 
           <div className={classes.toolbarActions}>
-            {selected.length > 0 ? (
+            {selected.length > 0 &&
               <Tooltip title="Delete selected">
                 <Button
                   color="primary"
@@ -333,9 +335,9 @@ export const MapsList = (props: MapsListProps) => {
                   <FormattedMessage id="action.delete" defaultMessage="Delete" />
                 </Button>
               </Tooltip>
-            ) : null}
+            }
 
-            {selected.length > 0 ? (
+            {selected.length > 0 &&
               <Tooltip title="Add label to selected">
                 <Button
                   color="primary"
@@ -348,7 +350,7 @@ export const MapsList = (props: MapsListProps) => {
                   <FormattedMessage id="action.label" defaultMessage="Add Label" />
                 </Button>
               </Tooltip>
-            ) : null}
+            }
           </div>
 
           <div className={classes.toolbarListActions}>
@@ -465,7 +467,7 @@ export const MapsList = (props: MapsListProps) => {
                                 <MoreHorizIcon color="action" />
                               </IconButton>
                             </Tooltip>
-                            <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} />
+                            <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} role={row.role} />
                           </TableCell>
                         </TableRow>
                       );

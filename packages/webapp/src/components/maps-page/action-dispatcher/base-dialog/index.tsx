@@ -58,7 +58,7 @@ const BaseDialog = (props: DialogProps) => {
                                 (<FormattedMessage id="action.close-button" defaultMessage="Close" />)
                             }
                         </Button>
-                        {onSubmit ? (
+                        {onSubmit &&
                             <Button
                                 color="primary"
                                 size="medium"
@@ -66,7 +66,7 @@ const BaseDialog = (props: DialogProps) => {
                                 type="submit"
                                 disableElevation={true}>
                                 {props.submitButton}
-                            </Button>) : null
+                            </Button>
                         }
                     </StyledDialogActions>
                 </form>

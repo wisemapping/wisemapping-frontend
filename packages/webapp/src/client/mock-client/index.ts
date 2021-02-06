@@ -54,15 +54,21 @@ class MockClient implements Client {
         return Promise.resolve(this.labels);
     }
 
+    updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
+        const mapInfo = this.maps.find(m => m.id == id);
+        if (mapInfo) {
+            mapInfo.isPublic = isPublic;
+        }
+        return Promise.resolve();
+    }
+
     changeStarred(id: number, starred: boolean): Promise<void> {
         const mapInfo = this.maps.find(m => m.id == id);
         if (!mapInfo) {
             console.log(`Could not find the map iwth id ${id}`);
             return Promise.reject();
         }
-        const newStarredValue = !mapInfo?.starred;
-        mapInfo.starred = newStarredValue;
-
+        mapInfo.starred = starred;
         return Promise.resolve();
     }
 

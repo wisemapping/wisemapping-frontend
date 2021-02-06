@@ -134,6 +134,15 @@
   "history.no-changes": {
     "defaultMessage": "There is no changes available"
   },
+  "import.button": {
+    "defaultMessage": "Create"
+  },
+  "import.description": {
+    "defaultMessage": "You can import FreeMind 1.0.1 and WiseMapping maps to your list of maps. Select the file you want to import."
+  },
+  "import.title": {
+    "defaultMessage": "Import existing mindmap"
+  },
   "login.desc": {
     "defaultMessage": "Log into your account"
   },
@@ -200,6 +209,30 @@
   },
   "menu.signout": {
     "defaultMessage": "Sign Out"
+  },
+  "publish.button": {
+    "defaultMessage": "Accept"
+  },
+  "publish.checkbox": {
+    "defaultMessage": "Enable public sharing"
+  },
+  "publish.description": {
+    "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
+  },
+  "publish.embedded": {
+    "defaultMessage": "Embedded"
+  },
+  "publish.embedded-msg": {
+    "defaultMessage": "Copy this snippet of code to embed in your blog or page:"
+  },
+  "publish.public-url": {
+    "defaultMessage": "Public URL"
+  },
+  "publish.public-url-msg": {
+    "defaultMessage": "Copy and paste the link below to share your map with colleagues:"
+  },
+  "publish.title": {
+    "defaultMessage": "Publish"
   },
   "registration.desc": {
     "defaultMessage": "Signing up is free and just take a moment"

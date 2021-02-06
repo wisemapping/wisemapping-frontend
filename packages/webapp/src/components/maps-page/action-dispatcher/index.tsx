@@ -11,6 +11,8 @@ import DuplicateDialog from './duplicate-dialog';
 import { useHistory } from 'react-router-dom';
 import CreateDialog from './create-dialog';
 import HistoryDialog from './history-dialog';
+import ImportDialog from './import-dialog';
+import PublishDialog from './publish-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -44,11 +46,14 @@ const ActionDispatcher = (props: ActionDialogProps) => {
   return (
     <span>
 
-      {action === 'create' ? <CreateDialog open={true} onClose={handleOnClose} /> : null}
-      {action === 'delete' ? <DeleteDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
-      {action === 'rename' ? <RenameDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
-      {action === 'duplicate' ? <DuplicateDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
-      {action === 'history' ? <HistoryDialog open={true} onClose={handleOnClose} mapId={mapId} /> : null}
+      {action === 'create' && <CreateDialog open={true} onClose={handleOnClose} /> }
+      {action === 'delete' &&<DeleteDialog open={true} onClose={handleOnClose} mapId={mapId} />}
+      {action === 'rename' && <RenameDialog open={true} onClose={handleOnClose} mapId={mapId} />}
+      {action === 'duplicate' && <DuplicateDialog open={true} onClose={handleOnClose} mapId={mapId} />}
+      {action === 'history' && <HistoryDialog open={true} onClose={handleOnClose} mapId={mapId} />}
+      {action === 'import' && <ImportDialog open={true} onClose={handleOnClose} />}
+      {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapId}/>}
+
     </span >
   );
 }

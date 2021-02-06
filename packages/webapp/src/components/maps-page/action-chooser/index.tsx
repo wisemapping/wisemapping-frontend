@@ -12,15 +12,16 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import { FormattedMessage } from 'react-intl';
 import { LabelOutlined } from '@material-ui/icons';
 
-export type ActionType = 'open' | 'share' | 'delete' | 'info' | 'create'| 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
+export type ActionType = 'open' | 'share' | 'import' | 'delete' | 'info' | 'create' | 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
 
 interface ActionProps {
   onClose: (action: ActionType) => void;
   anchor: undefined | HTMLElement;
+  role: 'owner' | 'editor' | 'viewer'
 }
 
 const ActionChooser = (props: ActionProps) => {
-  const { anchor, onClose } = props;
+  const { anchor, onClose, role } = props;
 
   const handleOnClose = (action: ActionType): ((event: React.MouseEvent<HTMLLIElement>) => void) => {
     return (event): void => {
@@ -38,12 +39,13 @@ const ActionChooser = (props: ActionProps) => {
       onClose={handleOnClose(undefined)}
       elevation={1}
     >
-      <MenuItem onClick={handleOnClose('open')} style={{width:"220px"}}>
+      <MenuItem onClick={handleOnClose('open')} style={{ width: "220px" }}>
         <ListItemIcon>
           <DescriptionOutlinedIcon />
         </ListItemIcon>
         <FormattedMessage id="action.open" defaultMessage="Open" />
       </MenuItem>
+      
       <Divider />
 
       <MenuItem onClick={handleOnClose('duplicate')}>
@@ -53,12 +55,14 @@ const ActionChooser = (props: ActionProps) => {
         <FormattedMessage id="action.duplicate" defaultMessage="Duplicate" />
       </MenuItem>
 
-      <MenuItem onClick={handleOnClose('rename')}>
-        <ListItemIcon>
-          <EditOutlinedIcon />
-        </ListItemIcon>
-        <FormattedMessage id="action.rename" defaultMessage="Rename" />
-      </MenuItem>
+      {role == 'owner' &&
+        <MenuItem onClick={handleOnClose('rename')}>
+          <ListItemIcon>
+            <EditOutlinedIcon />
+          </ListItemIcon>
+          <FormattedMessage id="action.rename" defaultMessage="Rename" />
+        </MenuItem>
+      }
 
       <MenuItem onClick={handleOnClose('label')}>
         <ListItemIcon>
@@ -89,19 +93,23 @@ const ActionChooser = (props: ActionProps) => {
         <FormattedMessage id="action.print" defaultMessage="Print" />
       </MenuItem>
 
-      <MenuItem onClick={handleOnClose('publish')}>
-        <ListItemIcon>
-          <PublicOutlinedIcon />
-        </ListItemIcon>
-        <FormattedMessage id="action.publish" defaultMessage="Publish" />
-      </MenuItem>
+      {role != 'viewer' &&
+        <MenuItem onClick={handleOnClose('publish')}>
+          <ListItemIcon>
+            <PublicOutlinedIcon />
+          </ListItemIcon>
+          <FormattedMessage id="action.publish" defaultMessage="Publish" />
+        </MenuItem>
+      }
 
-      <MenuItem onClick={handleOnClose('share')}>
-        <ListItemIcon>
-          <ShareOutlinedIcon />
-        </ListItemIcon>
-        <FormattedMessage id="action.share" defaultMessage="Share" />
-      </MenuItem>
+      {role != 'viewer' &&
+        <MenuItem onClick={handleOnClose('share')}>
+          <ListItemIcon>
+            <ShareOutlinedIcon />
+          </ListItemIcon>
+          <FormattedMessage id="action.share" defaultMessage="Share" />
+        </MenuItem>
+      }
       <Divider />
 
       <MenuItem onClick={handleOnClose('info')}>
@@ -111,12 +119,14 @@ const ActionChooser = (props: ActionProps) => {
         <FormattedMessage id="action.info" defaultMessage="Info" />
       </MenuItem>
 
-      <MenuItem onClick={handleOnClose('history')}>
-        <ListItemIcon>
-          <DeleteOutlinedIcon />
-        </ListItemIcon>
-        <FormattedMessage id="action.history" defaultMessage="History" />
-      </MenuItem>
+      {role != 'viewer' &&
+        <MenuItem onClick={handleOnClose('history')}>
+          <ListItemIcon>
+            <DeleteOutlinedIcon />
+          </ListItemIcon>
+          <FormattedMessage id="action.history" defaultMessage="History" />
+        </MenuItem>
+      }
     </Menu>);
 }
 
