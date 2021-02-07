@@ -13,6 +13,7 @@ import CreateDialog from './create-dialog';
 import HistoryDialog from './history-dialog';
 import ImportDialog from './import-dialog';
 import PublishDialog from './publish-dialog';
+import InfoDialog from './info-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -53,6 +54,7 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       {action === 'history' && <HistoryDialog open={true} onClose={handleOnClose} mapId={mapId} />}
       {action === 'import' && <ImportDialog open={true} onClose={handleOnClose} />}
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapId}/>}
+      {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapId}/>}
 
     </span >
   );

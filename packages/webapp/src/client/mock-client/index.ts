@@ -13,26 +13,19 @@ class MockClient implements Client {
             title: string,
             labels: number[],
             creator: string,
-            modified: string,
+            creationTime: string,
+            modifiedByUser: string,
+            modifiedTime: string,
             description: string,
             isPublic: boolean,
             role: 'owner' | 'viewer' | 'editor'
         ): MapInfo {
-            return { id, title, labels, creator, modified, starred, description, isPublic, role };
+            return { id, title, labels, createdBy: creator, creationTime, lastModificationBy: modifiedByUser, lastModificationTime: modifiedTime, starred, description, isPublic, role };
         }
         this.maps = [
-            createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "", true, 'owner'),
-            createMapInfo(2, false, "El Mapa2", [], "Paulo2", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(3, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(4, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(5, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(6, false, "/El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(7, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(8, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(9, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(10, false, "El Mapa3", [], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "", false, 'editor')
+            createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", true, 'owner'),
+            createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", false, 'editor'),
+            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z",  "Berna", "2008-06-02T00:00:00Z","", false, 'editor')
         ];
 
         this.labels = [
@@ -103,39 +96,39 @@ class MockClient implements Client {
     fetchHistory(id: number): Promise<ChangeHistory[]> {
         const result = [{
             id: 1,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         },
         {
             id: 2,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         }
             ,
         {
             id: 3,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         },
         {
             id: 4,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         },
         {
             id: 5,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         },
         {
             id: 6,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         },
         {
             id: 7,
-            creator: 'Paulo',
-            modified: '2008-06-02T00:00:00Z'
+            lastModificationBy: 'Paulo',
+            lastModificationTime: '2008-06-02T00:00:00Z'
         }
         ]
         return Promise.resolve(result);
@@ -151,9 +144,11 @@ class MockClient implements Client {
                 description: String(basicInfo.description),
                 title: basicInfo.title,
                 starred: false,
-                creator: "current user",
+                createdBy: "current user",
                 labels: [],
-                modified: "2008-06-02T00:00:00Z",
+                lastModificationTime: "2008-06-02T00:00:00Z",
+                lastModificationBy: "Berna",
+                creationTime: "2008-06-02T00:00:00Z",
                 isPublic: false,
                 role: 'owner'
             };
@@ -176,7 +171,7 @@ class MockClient implements Client {
         console.log("Label delete:" + this.labels);
         return Promise.resolve();
     }
-
+ 
     deleteMap(id: number): Promise<void> {
         this.maps = this.maps.filter(m => m.id != id);
         return Promise.resolve();
@@ -186,7 +181,7 @@ class MockClient implements Client {
         return Promise.resolve();
     }
 
-    fetchAllMaps(): Promise<MapInfo[]> {
+    fetchAllMaps(): Promise<MapInfo[]> { 
         console.log("Fetching  maps from server")
         return Promise.resolve(this.maps);
     }

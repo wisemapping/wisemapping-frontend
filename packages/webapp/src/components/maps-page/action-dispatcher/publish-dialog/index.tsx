@@ -24,7 +24,7 @@ const PublishDialog = (props: PublishProps) => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
     const [error, setError] = React.useState<ErrorInfo>();
-    const [value, setValue] = React.useState('1');
+    const [activeTab, setActiveTab] = React.useState('1');
     const queryClient = useQueryClient();
     const intl = useIntl();
 
@@ -59,7 +59,7 @@ const PublishDialog = (props: PublishProps) => {
     }
 
     const handleTabChange = (event, newValue) => {
-        setValue(newValue);
+        setActiveTab(newValue);
     };
 
     return (
@@ -84,7 +84,7 @@ const PublishDialog = (props: PublishProps) => {
                 </FormControl>
 
                 <div style={!model ? { visibility: 'hidden' } : {}}>
-                    <TabContext value={value}>
+                    <TabContext value={activeTab}>
                         <AppBar position="static">
                             <TabList onChange={handleTabChange}>
                                 <Tab label={intl.formatMessage({ id: 'publish.embedded', defaultMessage: 'Embedded' })} value="1" />

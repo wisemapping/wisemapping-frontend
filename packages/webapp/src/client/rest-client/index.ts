@@ -136,8 +136,10 @@ export default class RestClient implements Client {
                         starred: Boolean(m.starred),
                         title: m.title,
                         labels: m.labels,
-                        creator: m.creator,
-                        modified: m.lastModificationTime,
+                        createdBy: m.creator,
+                        creationTime: m.creationTime,
+                        lastModificationBy: m.lastModifierUser,
+                        lastModificationTime: m.lastModificationTime,
                         description: m.description,
                         isPublic: m['public'],
                         role: m.role

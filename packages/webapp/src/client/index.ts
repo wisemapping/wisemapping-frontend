@@ -18,8 +18,10 @@ export type MapInfo = {
     starred: boolean;
     title: string;
     labels: number[];
-    creator: string;
-    modified: string;
+    createdBy: string;
+    creationTime: string;
+    lastModificationBy: string;
+    lastModificationTime: string;
     description: string;
     isPublic: boolean;
     role: 'owner' | 'editor'  | 'viewer'
@@ -27,8 +29,8 @@ export type MapInfo = {
 
 export type ChangeHistory = {
     id: number;
-    creator: string;
-    modified: string;
+    lastModificationBy: string;
+    lastModificationTime: string;
 }
 
 export type BasicMapInfo = {

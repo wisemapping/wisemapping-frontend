@@ -39,7 +39,8 @@ const HistoryDialog = (props: DialogProps) => {
         onClose={handleOnClose}
         title={intl.formatMessage({ id: "action.history-title", defaultMessage: "Version history" })}
         description={intl.formatMessage({ id: "action.history-description", defaultMessage: "List of changes introduced in the last 90 days." })} >
-        <TableContainer component={Paper} style={{ maxHeight: '200px' }}>
+
+        <TableContainer component={Paper} style={{ maxHeight: '200px' }} variant="outlined">
           <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
@@ -59,10 +60,10 @@ const HistoryDialog = (props: DialogProps) => {
               ) :
                 changeHistory.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell align="left">{row.creator}</TableCell>
+                    <TableCell align="left">{row.lastModificationBy}</TableCell>
                     <TableCell align="left">
-                      <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
-                        <span>{moment(row.modified).fromNow()}</span>
+                      <Tooltip title={moment(row.lastModificationTime).format("lll")} placement="bottom-start">
+                        <span>{moment(row.lastModificationTime).fromNow()}</span>
                       </Tooltip>
                     </TableCell>
                     <TableCell align="left"><Link href={`c/maps/${mapId}/${row.id}/view`} target="history"><FormattedMessage id="maps.view" defaultMessage="View" /></Link></TableCell>

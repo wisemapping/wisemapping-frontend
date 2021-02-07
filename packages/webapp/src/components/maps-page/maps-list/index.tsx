@@ -94,8 +94,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   const headCells: HeadCell[] = [
     { id: 'title', numeric: false, label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }) },
     { id: 'labels', numeric: false },
-    { id: 'creator', numeric: false, label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }), style: { width: '70px', whiteSpace: 'nowrap' } },
-    { id: 'modified', numeric: true, label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }), style: { width: '70px', whiteSpace: 'nowrap' } }
+    { id: 'createdBy', numeric: false, label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }), style: { width: '70px', whiteSpace: 'nowrap' } },
+    { id: 'lastModificationTime', numeric: true, label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }), style: { width: '70px', whiteSpace: 'nowrap' } }
   ];
 
   return (
@@ -194,7 +194,7 @@ export const MapsList = (props: MapsListProps) => {
   const [order, setOrder] = React.useState<Order>('asc');
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
 
-  const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('modified');
+  const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
   const [selected, setSelected] = React.useState<number[]>([]);
   const [searchCondition, setSearchCondition] = React.useState<string>('');
 
@@ -311,7 +311,7 @@ export const MapsList = (props: MapsListProps) => {
     }
     setActiveRowAction(undefined);
   };
-  
+
   const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchCondition(e.target.value);
   }
@@ -319,7 +319,7 @@ export const MapsList = (props: MapsListProps) => {
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
     <div className={classes.root}>
-            <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} mapId={activeRowAction?.mapId} />
+      <ActionChooser anchor={activeRowAction?.el} onClose={handleActionMenuClose} mapId={activeRowAction?.mapId} />
 
       <Paper className={classes.paper} elevation={0}>
         <Toolbar className={classes.toolbar} variant="dense">
@@ -454,12 +454,14 @@ export const MapsList = (props: MapsListProps) => {
                           </TableCell>
 
                           <TableCell className={classes.bodyCell}>
-                            {row.creator}
+                            {row.createdBy}
                           </TableCell>
 
                           <TableCell className={classes.bodyCell}>
-                            <Tooltip title={moment(row.modified).format("lll")} placement="bottom-start">
-                              <span>{moment(row.modified).fromNow()}</span>
+                            <Tooltip title={
+                              `Modified by ${row.lastModificationBy} on ${moment(row.lastModificationTime).format("lll")}`
+                            } placement="bottom-start">
+                              <span>{moment(row.lastModificationTime).fromNow()}</span>
                             </Tooltip>
                           </TableCell>
 
