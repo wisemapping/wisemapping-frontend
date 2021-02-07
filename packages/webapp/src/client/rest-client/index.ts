@@ -20,8 +20,8 @@ export default class RestClient implements Client {
             ).then(response => {
                 const account = response.data;
                 success({
-                    lastName: account.lastName,
-                    firstName: account.fistName,
+                    lastName: account.lastName ? account.lastName : '',
+                    firstName: account.fistName ? account.fistName : '',
                     email: account.email,
                 });
             }).catch(error => {
