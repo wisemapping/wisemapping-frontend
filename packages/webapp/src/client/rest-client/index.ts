@@ -6,30 +6,32 @@ export default class RestClient implements Client {
     private baseUrl: string;
     private sessionExpired: () => void
 
-
     constructor(baseUrl: string, sessionExpired: () => void) {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
 
-    updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
-        /*
-         jQuery.ajax("c/restful/maps/${mindmap.id}/publish", {
-                    async:false,
-                    dataType:'json',
-                    data:$('#dialogMainForm #enablePublicView')[0].checked ? 'true' : 'false',
-                    type:'PUT',
-                    contentType:"text/plain",
-                    success:function (data, textStatus, jqXHR) {
-                        $('#publish-dialog-modal').modal('hide');
-                    },
-        */
+    deleteMaps(ids: number[]): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.delete(this.baseUrl + `/c/restful/maps/batch?ids=${ids.join()}`,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
 
+    updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios.put(`${this.baseUrl}/c/restful/maps/${id}/publish`,
                 isPublic,
                 { headers: { 'Content-Type': 'text/plain' } }
-            ).then(response => {
+            ).then(() => {
                 // All was ok, let's sent to success page ...;
                 success();
             }).catch(error => {
@@ -45,60 +47,11 @@ export default class RestClient implements Client {
 
         throw new Error('Method not implemented.');
     }
+
     fetchHistory(id: number): Promise<ChangeHistory[]> {
         throw new Error('Method not implemented.');
     }
 
-    fetchMapInfo(id: number): Promise<BasicMapInfo> {
-        throw new Error('Method not implemented.');
-    }
-
-    private parseResponseOnError = (response: any): ErrorInfo => {
-        const intl = useIntl();
-
-        let result: ErrorInfo | undefined;
-        if (response) {
-            const status: number = response.status;
-            const data = response.data;
-            console.log(data);
-
-            switch (status) {
-                case 401:
-                case 302:
-                    this.sessionExpired();
-                    result = { msg: intl.formatMessage({ id: "expired.description", defaultMessage: "Your current session has expired. Please, sign in and try again." }) }
-                    break;
-                default:
-                    if (data) {
-                        // Set global errors ...
-                        result = {};
-                        let globalErrors = data.globalErrors;
-                        if (globalErrors && globalErrors.length > 0) {
-                            result.msg = globalErrors[0];
-                        }
-
-                        // Set field errors ...
-                        if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
-                            result.fields = data.fieldErrors;
-                            if (!result.msg) {
-                                const key = Object.keys(data.fieldErrors)[0];
-                                result.msg = data.fieldErrors[key];
-                            }
-                        }
-
-                    } else {
-                        result = { msg: response.statusText };
-                    }
-            }
-        }
-
-        // Network related problem ...
-        if (!result) {
-            result = { msg: 'Unexpected error. Please, try latter' };
-        }
-
-        return result;
-    }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
         throw "Method not implemented yet";
@@ -283,5 +236,53 @@ export default class RestClient implements Client {
         }
         return new Promise(handler);
     }
+
+    private parseResponseOnError = (response: any): ErrorInfo => {
+        const intl = useIntl();
+
+        let result: ErrorInfo | undefined;
+        if (response) {
+            const status: number = response.status;
+            const data = response.data;
+            console.log(data);
+
+            switch (status) {
+                case 401:
+                case 302:
+                    this.sessionExpired();
+                    result = { msg: intl.formatMessage({ id: "expired.description", defaultMessage: "Your current session has expired. Please, sign in and try again." }) }
+                    break;
+                default:
+                    if (data) {
+                        // Set global errors ...
+                        result = {};
+                        let globalErrors = data.globalErrors;
+                        if (globalErrors && globalErrors.length > 0) {
+                            result.msg = globalErrors[0];
+                        }
+
+                        // Set field errors ...
+                        if (data.fieldErrors && Object.keys(data.fieldErrors).length > 0) {
+                            result.fields = data.fieldErrors;
+                            if (!result.msg) {
+                                const key = Object.keys(data.fieldErrors)[0];
+                                result.msg = data.fieldErrors[key];
+                            }
+                        }
+
+                    } else {
+                        result = { msg: response.statusText };
+                    }
+            }
+        }
+
+        // Network related problem ...
+        if (!result) {
+            result = { msg: 'Unexpected error. Please, try latter' };
+        }
+
+        return result;
+    }
+
 }
 

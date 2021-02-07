@@ -149,6 +149,12 @@
       "value": "Create a new mindmap"
     }
   ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "All selected maps will be deleted"
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -287,6 +293,84 @@
       "value": "Import existing mindmap"
     }
   ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "Basic Info"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "Accept"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "Creation Date"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "Creator"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "By publishing the map you make it visible to everyone on the Internet."
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "Last Modified Date"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "Last Modified By"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "Publicly Visible"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "Sharing"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "Starred"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "Info"
+    }
+  ],
   "login.desc": [
     {
       "type": 0,
@@ -375,6 +459,12 @@
     {
       "type": 0,
       "value": "Name"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "Create a New Map"
     }
   ],
   "maps.empty-result": [

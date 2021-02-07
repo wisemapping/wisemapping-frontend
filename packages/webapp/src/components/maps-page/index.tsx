@@ -11,7 +11,7 @@ import { useStyles } from './style';
 import { AccountCircle, AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PeopleAltTwoTone, PersonAddTwoTone, PersonOutlineTwoTone, PersonTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance, activeInstanceStatus, ClientStatus } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
@@ -46,6 +46,7 @@ const MapsPage = () => {
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
+    const intl = useIntl();
 
     useEffect(() => {
         document.title = 'Maps | WiseMapping';
@@ -59,7 +60,6 @@ const MapsPage = () => {
     );
 
     const handleMenuClick = (filter: Filter) => {
-        // Force reload ...
         queryClient.invalidateQueries('maps');
         setFilter(filter);
     };
@@ -115,7 +115,7 @@ const MapsPage = () => {
                 elevation={0}>
 
                 <Toolbar>
-                    <Tooltip title="Create a New Map">
+                    <Tooltip title={intl.formatMessage({id:'maps.create-tooltip',defaultMessage:'Create a New Map'})}>
                         <Button color="primary"
                             size="medium"
                             variant="contained"
@@ -141,7 +141,7 @@ const MapsPage = () => {
                             <FormattedMessage id="action.import" defaultMessage="Import" />
                         </Button>
                     </Tooltip>
-                    <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapId={-1} />
+                    <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapsId={[]} />
 
                     <div className={classes.rightButtonGroup}>
                         <HelpToobarButton />

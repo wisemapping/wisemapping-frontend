@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import { Card, List, ListItem, Paper, Typography } from '@material-ui/core';
 
@@ -8,37 +8,28 @@ import { Card, List, ListItem, Paper, Typography } from '@material-ui/core';
 import Client, { ErrorInfo } from '../../../../client';
 import { activeInstance } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
-import { fetchMapById, handleOnMutationSuccess } from '..';
+import { fetchMapById, SimpleDialogProps } from '..';
 import { useStyles } from './style';
 import moment from 'moment';
 
-export type InfoProps = {
-    mapId: number,
-    onClose: () => void
-}
-
-const InfoDialog = (props: InfoProps) => {
+const InfoDialog = (props: SimpleDialogProps) => {
     const { mapId, onClose } = props;
     const { map } = fetchMapById(mapId);
-
-    const client: Client = useSelector(activeInstance);
-    const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
     const [error, setError] = React.useState<ErrorInfo>();
     const [] = React.useState('1');
-    const queryClient = useQueryClient();
-    const intl = useIntl();
 
+    const intl = useIntl();
     const classes = useStyles();
 
     const handleOnClose = (): void => {
-        props.onClose();
+        onClose();
         setError(undefined);
     };
 
     return (
         <BaseDialog onClose={handleOnClose} error={error}
             title={intl.formatMessage({ id: 'info.title', defaultMessage: 'Info' })}
-            description={intl.formatMessage({ id: 'info.description', defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.' })}
+            description={intl.formatMessage({ id: 'info.description-msg', defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.' })}
             submitButton={intl.formatMessage({ id: 'info.button', defaultMessage: 'Accept' })}>
 
             <Paper style={{ maxHeight: '200px' }}>

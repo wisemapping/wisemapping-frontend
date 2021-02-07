@@ -51,11 +51,12 @@ export type ErrorInfo = {
 
 interface Client {
     createMap(map: BasicMapInfo): Promise<number>;
+    deleteMaps(ids: number[]): Promise<void>;
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
-    fetchMapInfo(id: number): Promise<BasicMapInfo>;
+
     changeStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, starred: boolean): Promise<void>;
 

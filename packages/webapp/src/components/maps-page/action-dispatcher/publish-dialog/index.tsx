@@ -9,15 +9,11 @@ import Client, { ErrorInfo } from '../../../../client';
 import { activeInstance } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
-import { fetchMapById, handleOnMutationSuccess } from '..';
+import { fetchMapById, handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
 
-export type PublishProps = {
-    mapId: number,
-    onClose: () => void
-}
 
-const PublishDialog = (props: PublishProps) => {
+const PublishDialog = (props: SimpleDialogProps) => {
     const { mapId, onClose } = props;
     const { map } = fetchMapById(mapId);
 

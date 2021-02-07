@@ -25,7 +25,7 @@ class MockClient implements Client {
         this.maps = [
             createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", true, 'owner'),
             createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", false, 'editor'),
-            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z",  "Berna", "2008-06-02T00:00:00Z","", false, 'editor')
+            createMapInfo(12, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", false, 'editor')
         ];
 
         this.labels = [
@@ -33,6 +33,10 @@ class MockClient implements Client {
             { id: 2, title: "Blue Label", iconName: "", color: 'blue' }
         ];
 
+    }
+    deleteMaps(ids: number[]): Promise<void> {
+        ids.forEach(id => this.deleteMap(id));
+        return Promise.resolve();
     }
     revertHistory(id: number, cid: number): Promise<void> {
         return Promise.resolve();
@@ -63,10 +67,6 @@ class MockClient implements Client {
         }
         mapInfo.starred = starred;
         return Promise.resolve();
-    }
-
-    fetchMapInfo(id: number): Promise<BasicMapInfo> {
-        return Promise.resolve({ title: 'My Map', description: 'My Description' });
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
@@ -171,7 +171,7 @@ class MockClient implements Client {
         console.log("Label delete:" + this.labels);
         return Promise.resolve();
     }
- 
+
     deleteMap(id: number): Promise<void> {
         this.maps = this.maps.filter(m => m.id != id);
         return Promise.resolve();
@@ -181,7 +181,7 @@ class MockClient implements Client {
         return Promise.resolve();
     }
 
-    fetchAllMaps(): Promise<MapInfo[]> { 
+    fetchAllMaps(): Promise<MapInfo[]> {
         console.log("Fetching  maps from server")
         return Promise.resolve(this.maps);
     }

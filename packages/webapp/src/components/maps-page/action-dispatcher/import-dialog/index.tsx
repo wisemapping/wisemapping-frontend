@@ -16,7 +16,6 @@ export type ImportModel = {
 }
 
 export type CreateProps = {
-    open: boolean,
     onClose: () => void
 }
 

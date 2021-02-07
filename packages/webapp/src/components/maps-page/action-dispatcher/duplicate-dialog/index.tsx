@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import Client, { BasicMapInfo, ErrorInfo } from "../../../../client";
 import { activeInstance } from '../../../../redux/clientSlice';
 import Input from "../../../form/input";
-import { DialogProps, fetchMapById } from "..";
+import { SimpleDialogProps, fetchMapById } from "..";
 import BaseDialog from "../base-dialog";
 
 export type DuplicateModel = {
@@ -17,14 +17,13 @@ export type DuplicateModel = {
 }
 
 const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
-const DuplicateDialog = (props: DialogProps) => {
+const DuplicateDialog = (props: SimpleDialogProps) => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
-    const { mapId, open } = props;
+    const { mapId, onClose } = props;
 
     const intl = useIntl();
-    const queryClient = useQueryClient();
 
     const mutation = useMutation<number, ErrorInfo, DuplicateModel>((model: DuplicateModel) => {
         const { id, ...rest } = model;
@@ -41,9 +40,7 @@ const DuplicateDialog = (props: DialogProps) => {
     );
 
     const handleOnClose = (): void => {
-        props.onClose();
-        setModel(defaultModel);
-        setError(undefined);
+        onClose();
     };
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {

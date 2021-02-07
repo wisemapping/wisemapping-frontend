@@ -74,6 +74,9 @@
   "create.title": {
     "defaultMessage": "Create a new mindmap"
   },
+  "deletem.title": {
+    "defaultMessage": "All selected maps will be deleted"
+  },
   "duplicate.title": {
     "defaultMessage": "Duplicate"
   },
@@ -143,6 +146,45 @@
   "import.title": {
     "defaultMessage": "Import existing mindmap"
   },
+  "info.basic-info": {
+    "defaultMessage": "Basic Info"
+  },
+  "info.button": {
+    "defaultMessage": "Accept"
+  },
+  "info.creation-time": {
+    "defaultMessage": "Creation Date"
+  },
+  "info.creator": {
+    "defaultMessage": "Creator"
+  },
+  "info.description": {
+    "defaultMessage": "Description"
+  },
+  "info.description-msg": {
+    "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
+  },
+  "info.modified-time": {
+    "defaultMessage": "Last Modified Date"
+  },
+  "info.modified-tny": {
+    "defaultMessage": "Last Modified By"
+  },
+  "info.name": {
+    "defaultMessage": "Name"
+  },
+  "info.public-visibility": {
+    "defaultMessage": "Publicly Visible"
+  },
+  "info.sharing": {
+    "defaultMessage": "Sharing"
+  },
+  "info.starred": {
+    "defaultMessage": "Starred"
+  },
+  "info.title": {
+    "defaultMessage": "Info"
+  },
   "login.desc": {
     "defaultMessage": "Log into your account"
   },
@@ -188,6 +230,9 @@
   },
   "map.name": {
     "defaultMessage": "Name"
+  },
+  "maps.create-tooltip": {
+    "defaultMessage": "Create a New Map"
   },
   "maps.empty-result": {
     "defaultMessage": "No matching record found with the current filter criteria."

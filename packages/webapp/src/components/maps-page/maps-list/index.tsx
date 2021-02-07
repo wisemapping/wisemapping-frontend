@@ -203,6 +203,9 @@ export const MapsList = (props: MapsListProps) => {
   const client: Client = useSelector(activeInstance);
   const intl = useIntl();
 
+  const queryClient = useQueryClient();
+
+
   useEffect(() => {
     setSelected([]);
     setPage(0);
@@ -218,7 +221,7 @@ export const MapsList = (props: MapsListProps) => {
   const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(undefined);
   type ActiveDialog = {
     actionType: ActionType;
-    mapId: number
+    mapsId: number[];
   };
 
   const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
@@ -278,7 +281,6 @@ export const MapsList = (props: MapsListProps) => {
     };
   };
 
-  const queryClient = useQueryClient();
 
   const starredMultation = useMutation<void, ErrorInfo, number>((id: number) => {
     const map = mapsInfo.find(m => m.id == id);
@@ -289,7 +291,6 @@ export const MapsList = (props: MapsListProps) => {
         queryClient.invalidateQueries('maps');
       },
       onError: (error) => {
-        // @todo ...
         // setError(error);
       }
     }
@@ -306,7 +307,7 @@ export const MapsList = (props: MapsListProps) => {
 
       setActiveDialog({
         actionType: action as ActionType,
-        mapId: mapId as number
+        mapsId: [mapId] as number[]
       });
     }
     setActiveRowAction(undefined);
@@ -314,6 +315,13 @@ export const MapsList = (props: MapsListProps) => {
 
   const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchCondition(e.target.value);
+  }
+
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setActiveDialog({
+        actionType: 'delete',
+        mapsId: selected
+      });
   }
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
@@ -333,7 +341,9 @@ export const MapsList = (props: MapsListProps) => {
                   variant="outlined"
                   type="button"
                   disableElevation={true}
-                  startIcon={<DeleteOutlined />}>
+                  onClick={handleDeleteClick}
+                  startIcon={<DeleteOutlined
+                  />}>
                   <FormattedMessage id="action.delete" defaultMessage="Delete" />
                 </Button>
               </Tooltip>
@@ -481,7 +491,7 @@ export const MapsList = (props: MapsListProps) => {
 
       </Paper>
 
-      <ActionDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapId={activeDialog ? activeDialog.mapId : -1} />
+      <ActionDispatcher action={activeDialog?.actionType} onClose={() => setActiveDialog(undefined)} mapsId={activeDialog ? activeDialog.mapsId : []} />
     </div >
   );
 }

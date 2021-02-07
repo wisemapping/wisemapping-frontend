@@ -4,13 +4,13 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import Client, { ChangeHistory } from "../../../../client";
 import { activeInstance } from '../../../../redux/clientSlice';
-import { DialogProps } from "..";
+import { SimpleDialogProps } from "..";
 import BaseDialog from "../base-dialog";
 import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "@material-ui/core";
 import moment from "moment";
 
 
-const HistoryDialog = (props: DialogProps) => {
+const HistoryDialog = (props: SimpleDialogProps) => {
   const intl = useIntl();
   const mapId = props.mapId;
 

@@ -5,19 +5,23 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import Client from "../../../../client";
 import { activeInstance } from '../../../../redux/clientSlice';
-import { SimpleDialogProps, fetchMapById, handleOnMutationSuccess } from "..";
+import { handleOnMutationSuccess } from "..";
 import BaseDialog from "../base-dialog";
 
+export type DeleteMultiselectDialogProps = {
+  mapsId: number[],
+  onClose: () => void
+}
 
-const DeleteDialog = (props: SimpleDialogProps) => {
+const DeleteMultiselectDialog = (props: DeleteMultiselectDialogProps) => {
+  const { onClose, mapsId } = props;
   const intl = useIntl();
-  const { mapId, onClose } = props;
-
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
-  const mutation = useMutation((id: number) => client.deleteMap(id),
+ 
+  const mutation = useMutation((ids: number[]) => client.deleteMaps(ids),
     {
-      onSuccess: () => handleOnMutationSuccess(onClose, queryClient)
+      onSuccess: () => handleOnMutationSuccess(props.onClose, queryClient)
     }
   );
 
@@ -26,27 +30,23 @@ const DeleteDialog = (props: SimpleDialogProps) => {
   };
 
   const handleOnSubmit = (): void => {
-    mutation.mutate(mapId);
+    mutation.mutate(mapsId);
   }
 
-  // Fetch map model to be rendered ...
-  const { map } = fetchMapById(mapId);
   return (
     <div>
       <BaseDialog
         onClose={handleOnClose} onSubmit={handleOnSubmit}
         title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
         submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} >
-     
         <Alert severity="warning">
-          <AlertTitle>Delete '{map?.title}'</AlertTitle>
+          <AlertTitle><FormattedMessage id="deletem.title" defaultMessage="All selected maps will be deleted" /></AlertTitle>
           <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
         </Alert>
-     
       </BaseDialog>
     </div>
   );
 }
 
 
-export default DeleteDialog;
+export default DeleteMultiselectDialog;

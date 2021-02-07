@@ -8,12 +8,12 @@ import { useSelector } from "react-redux";
 import { QueryClient, useQuery } from 'react-query';
 import { activeInstance } from '../../../redux/clientSlice';
 import DuplicateDialog from './duplicate-dialog';
-import { useHistory } from 'react-router-dom';
 import CreateDialog from './create-dialog';
 import HistoryDialog from './history-dialog';
 import ImportDialog from './import-dialog';
 import PublishDialog from './publish-dialog';
 import InfoDialog from './info-dialog';
+import DeleteMultiselectDialog from './delete-multiselect-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -22,13 +22,12 @@ export type BasicMapInfo = {
 
 type ActionDialogProps = {
   action?: ActionType,
-  mapId: number,
+  mapsId: number[],
   onClose: () => void
 }
 
 const ActionDispatcher = (props: ActionDialogProps) => {
-  const history = useHistory();
-  const mapId = props.mapId;
+  const mapsId = props.mapsId;
   const action = props.action;
 
   const handleOnClose = (): void => {
@@ -37,24 +36,26 @@ const ActionDispatcher = (props: ActionDialogProps) => {
 
   switch (action) {
     case 'open':
-      window.location.href = `/c/maps/${mapId}/edit`;
+      window.location.href = `/c/maps/${mapsId}/edit`;
       break;
     case 'print':
-      window.open(`/c/maps/${mapId}/print`, 'print');
+      window.open(`/c/maps/${mapsId}/print`, 'print');
       break;
   }
 
   return (
     <span>
 
-      {action === 'create' && <CreateDialog open={true} onClose={handleOnClose} /> }
-      {action === 'delete' &&<DeleteDialog open={true} onClose={handleOnClose} mapId={mapId} />}
-      {action === 'rename' && <RenameDialog open={true} onClose={handleOnClose} mapId={mapId} />}
-      {action === 'duplicate' && <DuplicateDialog open={true} onClose={handleOnClose} mapId={mapId} />}
-      {action === 'history' && <HistoryDialog open={true} onClose={handleOnClose} mapId={mapId} />}
-      {action === 'import' && <ImportDialog open={true} onClose={handleOnClose} />}
-      {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapId}/>}
-      {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapId}/>}
+      {action === 'create' && <CreateDialog onClose={handleOnClose} />}
+      {(action === 'delete' && mapsId.length == 1) && <DeleteDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {(action === 'delete' && mapsId.length > 1) && <DeleteMultiselectDialog onClose={handleOnClose} mapsId={mapsId} />}
+      {action === 'rename' && <RenameDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'duplicate' && <DuplicateDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'history' && <HistoryDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'import' && <ImportDialog onClose={handleOnClose} />}
+      {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+      {action === 'create' && <CreateDialog onClose={handleOnClose} />}
 
     </span >
   );
@@ -83,8 +84,7 @@ export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryC
   onClose();
 }
 
-export type DialogProps = {
-  open: boolean,
+export type SimpleDialogProps = {
   mapId: number,
   onClose: () => void
 }
