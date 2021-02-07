@@ -34,8 +34,7 @@ export default class RestClient implements Client {
                 // All was ok, let's sent to success page ...;
                 success();
             }).catch(error => {
-                const response = error.response;
-                const errorInfo = this.parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(error.response);
                 reject(errorInfo);
             });
         }
@@ -62,7 +61,25 @@ export default class RestClient implements Client {
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
-        throw "Method not implemented yet";
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(`${this.baseUrl}/c/restful/maps/${id}/title`,
+                basicInfo.title,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                return axios.put(`${this.baseUrl}/c/restful/maps/${id}/description`,
+                    basicInfo.description,
+                    { headers: { 'Content-Type': 'text/plain' } }
+                )
+            }).then(() => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const response = error.response;
+                const errorInfo = this.parseResponseOnError(response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 
     createMap(model: BasicMapInfo): Promise<number> {
@@ -254,7 +271,7 @@ export default class RestClient implements Client {
                 case 401:
                 case 302:
                     this.sessionExpired();
-                    result = { msg:  "Your current session has expired. Please, sign in and try again." };
+                    result = { msg: "Your current session has expired. Please, sign in and try again." };
                     break;
                 default:
                     if (data) {
