@@ -1,4 +1,4 @@
-import Client, { BasicMapInfo, ChangeHistory, Label, MapInfo, NewUser } from '..';
+import Client, { AccountInfo, BasicMapInfo, ChangeHistory, Label, MapInfo, NewUser } from '..';
 
 class MockClient implements Client {
     private maps: MapInfo[] = [];
@@ -34,6 +34,13 @@ class MockClient implements Client {
         ];
 
     }
+    fetchAccountInfo(): Promise<AccountInfo> {
+        return Promise.resolve({
+            firstName: 'Costme',
+            lastName: 'Fulanito',
+            email: 'test@example.com'
+        });
+    }
     deleteMaps(ids: number[]): Promise<void> {
         ids.forEach(id => this.deleteMap(id));
         return Promise.resolve();
@@ -59,7 +66,7 @@ class MockClient implements Client {
         return Promise.resolve();
     }
 
-    changeStarred(id: number, starred: boolean): Promise<void> {
+    updateStarred(id: number, starred: boolean): Promise<void> {
         const mapInfo = this.maps.find(m => m.id == id);
         if (!mapInfo) {
             console.log(`Could not find the map iwth id ${id}`);

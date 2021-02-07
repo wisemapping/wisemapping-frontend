@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import React from "react";
-import { activeInstanceStatus, ClientStatus } from '../../../redux/clientSlice';
+import { activeInstanceStatus, ClientStatus } from '../../redux/clientSlice';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
-const ClientHealthChecker = () => {
+const ClientHealthSentinel = () => {
     const status: ClientStatus = useSelector(activeInstanceStatus);
 
     const handleOnClose = () => {
@@ -44,4 +44,4 @@ const ClientHealthChecker = () => {
         </div>
     )
 };
-export default ClientHealthChecker;
+export default ClientHealthSentinel;

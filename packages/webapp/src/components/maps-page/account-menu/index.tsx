@@ -1,9 +1,18 @@
-import { Button, Link, ListItemIcon, Menu, MenuItem, Tooltip } from "@material-ui/core";
-import { AccountCircle, ExitToAppOutlined, SettingsApplicationsOutlined } from "@material-ui/icons";
+import { Button, IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { AccountCircle, ExitToAppOutlined, SettingsApplicationsOutlined } from '@material-ui/icons';
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { useQuery, useQueryClient } from "react-query";
+import Client, { ErrorInfo, AccountInfo } from "../../../client";
+import { useSelector } from 'react-redux';
+import { activeInstance } from '../../../redux/clientSlice';
+
 
 const AccountMenu = () => {
+
+    const client: Client = useSelector(activeInstance);
+    const queryClient = useQueryClient();
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -14,15 +23,18 @@ const AccountMenu = () => {
         setAnchorEl(null);
     };
 
+    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
+        return client.fetchAccountInfo();
+    });
+    const account = data;
+
     return (
         <span>
-            <Tooltip title="Paulo Veiga <pveiga@gmail.com>">
-                <Button
-                    aria-haspopup="true"
+            <Tooltip title={`${account?.firstName} ${account?.lastName} <${account?.email}>`}>
+                <IconButton
                     onClick={handleMenu}>
-                    <AccountCircle fontSize="large" />
-                Paulo Veiga
-            </Button >
+                    <AccountCircle fontSize="large" style={{color:'black'}}/>
+                </IconButton >
             </Tooltip>
             <Menu id="appbar-profile"
                 anchorEl={anchorEl}

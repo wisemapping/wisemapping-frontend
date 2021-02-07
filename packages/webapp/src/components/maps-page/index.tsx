@@ -19,7 +19,7 @@ import Client, { Label } from '../../client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
-import ClientHealthSentinel from './client-health-sentinel';
+import ClientHealthSentinel from '../../client/client-health-sentinel';
 import HelpMenu from '../help-menu';
 
 const logoIcon = require('../../images/logo-small.svg');

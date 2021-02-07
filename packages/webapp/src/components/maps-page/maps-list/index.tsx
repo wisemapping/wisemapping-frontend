@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,CSSProperties } from 'react';
 import { useStyles } from './styled';
 
 import Table from '@material-ui/core/Table';
@@ -16,7 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -30,7 +29,6 @@ import moment from 'moment'
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { DeleteOutlined, LabelTwoTone } from '@material-ui/icons';
-import Alert from '@material-ui/lab/Alert';
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -213,7 +211,7 @@ export const MapsList = (props: MapsListProps) => {
   }, [props.filter.type, (props.filter as LabelFilter).label]);
 
 
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
+  const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
     return await client.fetchAllMaps();
   });
   const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
@@ -284,13 +282,13 @@ export const MapsList = (props: MapsListProps) => {
 
   const starredMultation = useMutation<void, ErrorInfo, number>((id: number) => {
     const map = mapsInfo.find(m => m.id == id);
-    return client.changeStarred(id, !Boolean(map?.starred));
+    return client.updateStarred(id, !Boolean(map?.starred));
   },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('maps');
       },
-      onError: (error) => {
+      onError: () => {
         // setError(error);
       }
     }
@@ -317,7 +315,7 @@ export const MapsList = (props: MapsListProps) => {
     setSearchCondition(e.target.value);
   }
 
-  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteClick = () => {
       setActiveDialog({
         actionType: 'delete',
         mapsId: selected
@@ -496,8 +494,3 @@ export const MapsList = (props: MapsListProps) => {
   );
 }
 
-const ErrorDialog = (props) => {
-
-  return (<Alert severity="error">This is an error alert — check it out!</Alert>);
-
-}

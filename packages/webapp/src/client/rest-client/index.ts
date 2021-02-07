@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory } from '..';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo } from '..';
 
 export default class RestClient implements Client {
     private baseUrl: string;
@@ -8,6 +8,28 @@ export default class RestClient implements Client {
     constructor(baseUrl: string, sessionExpired: () => void) {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
+    }
+
+    fetchAccountInfo(): Promise<AccountInfo> {
+        const handler = (success: (account: AccountInfo) => void, reject: (error: ErrorInfo) => void) => {
+            axios.get(
+                this.baseUrl + '/c/restful/account',
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            ).then(response => {
+                const account = response.data;
+                success({
+                    lastName: account.lastName,
+                    firstName: account.fistName,
+                    email: account.email,
+                });
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 
     deleteMaps(ids: number[]): Promise<void> {
@@ -204,7 +226,7 @@ export default class RestClient implements Client {
         return new Promise(handler);
     }
 
-    changeStarred(id: number, starred: boolean): Promise<void> {
+    updateStarred(id: number, starred: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios.put(this.baseUrl + `/c/restful/maps/${id}/starred`,
                 starred,
@@ -220,9 +242,7 @@ export default class RestClient implements Client {
         return new Promise(handler);
     }
 
-
     fetchLabels(): Promise<Label[]> {
-
         const handler = (success: (labels: Label[]) => void, reject: (error: ErrorInfo) => void) => {
             axios.get(
                 this.baseUrl + '/c/restful/labels/',

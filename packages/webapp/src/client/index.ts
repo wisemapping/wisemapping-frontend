@@ -24,7 +24,7 @@ export type MapInfo = {
     lastModificationTime: string;
     description: string;
     isPublic: boolean;
-    role: 'owner' | 'editor'  | 'viewer'
+    role: 'owner' | 'editor' | 'viewer'
 }
 
 export type ChangeHistory = {
@@ -48,6 +48,11 @@ export type ErrorInfo = {
     fields?: Map<String, String>;
 }
 
+export type AccountInfo = {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
 
 interface Client {
     createMap(map: BasicMapInfo): Promise<number>;
@@ -57,18 +62,18 @@ interface Client {
     fetchAllMaps(): Promise<MapInfo[]>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
 
-    changeStarred(id: number, starred: boolean): Promise<void>;
+    updateStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, starred: boolean): Promise<void>;
 
     fetchLabels(): Promise<Label[]>;
-    // createLabel(label: Label): Promise<void>;
     deleteLabel(id: number): Promise<void>;
+    fetchAccountInfo():Promise<AccountInfo>;
 
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;
 
-    fetchHistory(id:number):Promise<ChangeHistory[]>;
-    revertHistory(id:number,cid:number): Promise<void>
+    fetchHistory(id: number): Promise<ChangeHistory[]>;
+    revertHistory(id: number, cid: number): Promise<void>
 }
 
 
