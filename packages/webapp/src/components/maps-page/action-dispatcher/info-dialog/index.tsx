@@ -1,12 +1,9 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
 import { Card, List, ListItem, Paper, Typography } from '@material-ui/core';
 
 
-import Client, { ErrorInfo } from '../../../../client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { ErrorInfo } from '../../../../client';
 import BaseDialog from '../base-dialog';
 import { fetchMapById, SimpleDialogProps } from '..';
 import { useStyles } from './style';

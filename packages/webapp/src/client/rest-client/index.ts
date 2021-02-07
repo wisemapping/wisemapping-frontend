@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useIntl } from 'react-intl';
 import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory } from '..';
 
 export default class RestClient implements Client {
@@ -42,16 +41,25 @@ export default class RestClient implements Client {
         }
         return new Promise(handler);
     }
-    revertHistory(id: number, cid: number): Promise<void> {
-        //    '/c/restful/maps/${mindmapId}/history'
 
-        throw new Error('Method not implemented.');
+    revertHistory(id: number, hid: number): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.post(this.baseUrl + `/maps/${id}/history/${hid}`,
+                null,
+                { headers: { 'Content-Type': 'text/pain' } }
+            ).then(() => {
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 
     fetchHistory(id: number): Promise<ChangeHistory[]> {
         throw new Error('Method not implemented.');
     }
-
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
         throw "Method not implemented yet";
@@ -66,8 +74,7 @@ export default class RestClient implements Client {
                 const mapId = response.headers.resourceid;
                 success(mapId);
             }).catch(error => {
-                const response = error.response;
-                const errorInfo = this.parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(error.response);
                 reject(errorInfo);
             });
         }
@@ -137,8 +144,7 @@ export default class RestClient implements Client {
             ).then(response => {
                 success();
             }).catch(error => {
-                const response = error.response;
-                const errorInfo = this.parseResponseOnError(response);
+                const errorInfo = this.parseResponseOnError(error.response);
                 reject(errorInfo);
             });
         }
@@ -238,8 +244,6 @@ export default class RestClient implements Client {
     }
 
     private parseResponseOnError = (response: any): ErrorInfo => {
-        const intl = useIntl();
-
         let result: ErrorInfo | undefined;
         if (response) {
             const status: number = response.status;
@@ -250,7 +254,7 @@ export default class RestClient implements Client {
                 case 401:
                 case 302:
                     this.sessionExpired();
-                    result = { msg: intl.formatMessage({ id: "expired.description", defaultMessage: "Your current session has expired. Please, sign in and try again." }) }
+                    result = { msg:  "Your current session has expired. Please, sign in and try again." };
                     break;
                 default:
                     if (data) {
