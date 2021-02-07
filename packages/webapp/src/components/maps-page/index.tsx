@@ -8,17 +8,19 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import { AccountCircle, AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, EmailOutlined, EmojiPeopleOutlined, ExitToAppOutlined, FeedbackOutlined, Help, LabelTwoTone, PeopleAltTwoTone, PersonAddTwoTone, PersonOutlineTwoTone, PersonTwoTone, PolicyOutlined, PublicTwoTone, SettingsApplicationsOutlined, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, LabelTwoTone, PersonOutlineTwoTone, PublicTwoTone, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
+import { Button, Link, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { activeInstance, activeInstanceStatus, ClientStatus } from '../../redux/clientSlice';
+import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
 import Client, { Label } from '../../client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import AccountMenu from './account-menu';
+import ClientHealthSentinel from './client-health-sentinel';
+import HelpMenu from '../help-menu';
 
 const logoIcon = require('../../images/logo-small.svg');
 const poweredByIcon = require('../../images/pwrdby-white.svg');
@@ -105,7 +107,7 @@ const MapsPage = () => {
 
     return (
         <div className={classes.root}>
-            <HandleClientStatus />
+            <ClientHealthSentinel />
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
@@ -115,7 +117,7 @@ const MapsPage = () => {
                 elevation={0}>
 
                 <Toolbar>
-                    <Tooltip title={intl.formatMessage({id:'maps.create-tooltip',defaultMessage:'Create a New Map'})}>
+                    <Tooltip title={intl.formatMessage({ id: 'maps.create-tooltip', defaultMessage: 'Create a New Map' })}>
                         <Button color="primary"
                             size="medium"
                             variant="contained"
@@ -123,12 +125,12 @@ const MapsPage = () => {
                             disableElevation={true}
                             startIcon={<AddCircleTwoTone />}
                             className={classes.newMapButton}
-                            onClick={e => setActiveDialog('create')}>
+                            onClick={() => setActiveDialog('create')}>
                             <FormattedMessage id="action.new" defaultMessage="New Map" />
                         </Button>
                     </Tooltip>
 
-                    <Tooltip title="Import from external tools">
+                    <Tooltip title={intl.formatMessage({ id: 'maps.import-desc', defaultMessage: 'Import from other tools' })}>
                         <Button
                             color="primary"
                             size="medium"
@@ -137,15 +139,15 @@ const MapsPage = () => {
                             disableElevation={true}
                             startIcon={<CloudUploadTwoTone />}
                             className={classes.importButton}
-                            onClick={e => setActiveDialog('import')}>
+                            onClick={() => setActiveDialog('import')}>
                             <FormattedMessage id="action.import" defaultMessage="Import" />
                         </Button>
                     </Tooltip>
                     <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapsId={[]} />
 
                     <div className={classes.rightButtonGroup}>
-                        <HelpToobarButton />
-                        <ProfileToobarButton />
+                        <HelpMenu />
+                        <AccountMenu />
                     </div>
                 </Toolbar>
             </AppBar>
@@ -246,173 +248,4 @@ const StyleListItem = (props: ListItemProps) => {
     );
 }
 
-const HandleClientStatus = () => {
-    const status: ClientStatus = useSelector(activeInstanceStatus);
-
-    const handleOnClose = () => {
-        window.location.href = '/c/login';
-    }
-
-    return (
-        <div>
-            <Dialog
-                open={status.state != 'healthy'}
-                onClose={handleOnClose}
-                maxWidth="sm"
-                fullWidth={true}>
-
-                <DialogTitle>
-                    <FormattedMessage id="expired.title" defaultMessage="Your session has expired" />
-                </DialogTitle>
-
-                <DialogContent>
-                    <Alert severity="error">
-                        <AlertTitle><FormattedMessage id="expired.description" defaultMessage="Your current session has expired. Please, sign in and try again." /></AlertTitle>
-                    </Alert>
-                </DialogContent>
-
-                <DialogActions>
-                    <Button
-                        type="button"
-                        color="primary"
-                        size="medium"
-                        onClick={handleOnClose} >
-                        <FormattedMessage id="action.close-button" defaultMessage="Close" />
-                    </Button>
-                </DialogActions>
-
-            </Dialog>
-        </div>
-    )
-}
-
-const ProfileToobarButton = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    return (
-        <span>
-            <Tooltip title="Paulo Veiga <pveiga@gmail.com>">
-                <Button
-                    aria-haspopup="true"
-                    onClick={handleMenu}>
-                    <AccountCircle fontSize="large" />
-                Paulo Veiga
-            </Button >
-            </Tooltip>
-            <Menu id="appbar-profile"
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                getContentAnchorEl={null}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <SettingsApplicationsOutlined fontSize="small" />
-                    </ListItemIcon>
-                    <FormattedMessage id="menu.account" defaultMessage="Account" />
-                </MenuItem>
-
-                <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="/c/logout">
-                        <ListItemIcon>
-                            <ExitToAppOutlined fontSize="small" />
-                        </ListItemIcon>
-                        <FormattedMessage id="menu.signout" defaultMessage="Sign Out" />
-                    </Link>
-                </MenuItem>
-
-            </Menu>
-        </span>);
-}
-
-const HelpToobarButton = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    return (
-        <span>
-            <IconButton
-                aria-haspopup="true"
-                onClick={handleMenu}>
-                <Help />
-            </IconButton>
-            <Menu id="appbar-profile"
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                getContentAnchorEl={null}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}>
-
-                <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="https://www.wisemapping.com/termsofuse.html" target="help">
-                        <ListItemIcon>
-                            <PolicyOutlined fontSize="small" />
-                        </ListItemIcon>
-                        <FormattedMessage id="footer.termsandconditions" defaultMessage="Term And Conditions" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="mailto:team@wisemapping.com">
-                        <ListItemIcon>
-                            <EmailOutlined fontSize="small" />
-                        </ListItemIcon>
-                        <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="mailto:feedback@wisemapping.com">
-                        <ListItemIcon>
-                            <FeedbackOutlined fontSize="small" />
-                        </ListItemIcon>
-                        <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="https://www.wisemapping.com/aboutus.html" target="help">
-                        <ListItemIcon>
-                            <EmojiPeopleOutlined fontSize="small" />
-                        </ListItemIcon>
-                        <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
-                    </Link>
-                </MenuItem>
-            </Menu>
-        </span>);
-}
 export default MapsPage;

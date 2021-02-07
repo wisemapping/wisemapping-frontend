@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
 import { Button, FormControl } from '@material-ui/core';
@@ -79,8 +79,8 @@ const ImportDialog = (props: CreateProps) => {
                         style={{display: 'none'}}
                     />
                     <label htmlFor="contained-button-file">
-                        <Button variant="contained" color="primary" component="span">
-                            Upload
+                        <Button variant="outlined" color="primary" component="span" style={{margin: '10px 5px', width: '100%'}}>
+                            <FormattedMessage id="maps.choose-file" defaultMessage="Choose a file"/>
                         </Button>
                     </label>
                 </FormControl>
