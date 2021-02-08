@@ -14,6 +14,7 @@ import ImportDialog from './import-dialog';
 import PublishDialog from './publish-dialog';
 import InfoDialog from './info-dialog';
 import DeleteMultiselectDialog from './delete-multiselect-dialog';
+import ExportDialog from './export-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -56,7 +57,7 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'create' && <CreateDialog onClose={handleOnClose} />}
-
+      {action === 'export' && <ExportDialog onClose={handleOnClose} mapId={mapsId[0]}/>}
     </span >
   );
 }

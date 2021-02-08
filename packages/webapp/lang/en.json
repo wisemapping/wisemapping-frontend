@@ -86,6 +86,9 @@
   "expired.title": {
     "defaultMessage": "Your session has expired"
   },
+  "export.title": {
+    "defaultMessage": "Export"
+  },
   "footer.aboutus": {
     "defaultMessage": "About Us"
   },
@@ -231,11 +234,17 @@
   "map.name": {
     "defaultMessage": "Name"
   },
+  "maps.choose-file": {
+    "defaultMessage": "Choose a file"
+  },
   "maps.create-tooltip": {
     "defaultMessage": "Create a New Map"
   },
   "maps.empty-result": {
     "defaultMessage": "No matching record found with the current filter criteria."
+  },
+  "maps.import-desc": {
+    "defaultMessage": "Import from other tools"
   },
   "maps.modified": {
     "defaultMessage": "Modified"

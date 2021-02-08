@@ -18,8 +18,7 @@ export type DialogProps = {
 
 const BaseDialog = (props: DialogProps) => {
     const intl = useIntl();
-    const handleOnClose = props.onClose;
-    const onSubmit = props.onSubmit;
+    const { onClose, onSubmit } = props;
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,7 +33,7 @@ const BaseDialog = (props: DialogProps) => {
         <div>
             <StyledDialog
                 open={true}
-                onClose={handleOnClose}
+                onClose={onClose}
                 maxWidth="sm"
                 fullWidth={true}>
                 <form autoComplete="off" onSubmit={handleOnSubmit}>
@@ -53,7 +52,7 @@ const BaseDialog = (props: DialogProps) => {
                             type="button"
                             color="primary"
                             size="medium"
-                            onClick={handleOnClose} >
+                            onClick={onClose} >
                             {onSubmit ? (<FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />) :
                                 (<FormattedMessage id="action.close-button" defaultMessage="Close" />)
                             }

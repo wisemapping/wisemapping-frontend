@@ -173,6 +173,12 @@
       "value": "Your session has expired"
     }
   ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "Export"
+    }
+  ],
   "footer.aboutus": [
     {
       "type": 0,
@@ -461,6 +467,12 @@
       "value": "Name"
     }
   ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "Choose a file"
+    }
+  ],
   "maps.create-tooltip": [
     {
       "type": 0,
@@ -471,6 +483,12 @@
     {
       "type": 0,
       "value": "No matching record found with the current filter criteria."
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "Import from other tools"
     }
   ],
   "maps.modified": [
