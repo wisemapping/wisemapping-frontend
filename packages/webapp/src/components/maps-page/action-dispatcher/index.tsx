@@ -57,7 +57,7 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'create' && <CreateDialog onClose={handleOnClose} />}
-      {action === 'export' && <ExportDialog onClose={handleOnClose} mapId={mapsId[0]}/>}
+      {action === 'export' && <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={false}/>}
     </span >
   );
 }
