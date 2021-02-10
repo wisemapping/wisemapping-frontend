@@ -6,7 +6,7 @@ import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select } fr
 import { useStyles } from './style';
 import { Alert } from "@material-ui/lab";
 
-type ExportFormat = 'pdf' | 'svg' | 'jpeg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
+type ExportFormat = 'pdf' | 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -61,7 +61,7 @@ const ExportDialog = (props: ExportDialogProps) => {
     useEffect(() => {
         if (submit) {
             // Depending on the type of export. It will require differt POST.
-            if (exportFormat == 'pdf' || exportFormat == "svg" || exportFormat == "jpeg" || exportFormat == "png") {
+            if (exportFormat == 'pdf' || exportFormat == "svg" || exportFormat == "jpg" || exportFormat == "png") {
                 formTransformtRef.submit();
             } else {
 
@@ -105,7 +105,7 @@ const ExportDialog = (props: ExportDialogProps) => {
                                     <MenuItem value="svg" className={classes.menu}>Scalable Vector Graphics (SVG)</MenuItem>
                                     <MenuItem value="pdf" className={classes.select} >Portable Document Format (PDF)</MenuItem>
                                     <MenuItem value="png" className={classes.menu}>Portable Network Graphics (PNG)</MenuItem>
-                                    <MenuItem value="jpeg" className={classes.menu}>JPEG Image (JPEG)</MenuItem>
+                                    <MenuItem value="jpg" className={classes.menu}>JPEG Image (JPEG)</MenuItem>
                                 </Select>)
                             }
                         </FormControl>
