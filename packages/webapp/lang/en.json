@@ -86,8 +86,17 @@
   "expired.title": {
     "defaultMessage": "Your session has expired"
   },
+  "export.document": {
+    "defaultMessage": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
+  },
+  "export.image": {
+    "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes."
+  },
   "export.title": {
     "defaultMessage": "Export"
+  },
+  "export.warning": {
+    "defaultMessage": "Exporting to Image (SVG,PNG,JPEG )is available only in the editor toolbar."
   },
   "footer.aboutus": {
     "defaultMessage": "About Us"

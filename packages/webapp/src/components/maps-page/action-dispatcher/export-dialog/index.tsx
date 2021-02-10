@@ -1,28 +1,29 @@
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { fetchMapById, SimpleDialogProps } from "..";
+import { fetchMapById } from "..";
 import BaseDialog from "../base-dialog";
-import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select, Tooltip, Typography } from "@material-ui/core";
+import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select } from "@material-ui/core";
 import { useStyles } from './style';
 import { Alert } from "@material-ui/lab";
 
-type ExportFormat = 'pdf' | 'svg' | 'jpeg' | 'png' | 'txt' | 'mm' | 'wxml';
+type ExportFormat = 'pdf' | 'svg' | 'jpeg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
     mapId: number,
     enableImgExport: boolean,
+    svgXml?: string,
     onClose: () => void,
 }
 
 const ExportDialog = (props: ExportDialogProps) => {
     const intl = useIntl();
-    const { mapId, onClose, enableImgExport } = props;
+    const { mapId, onClose, enableImgExport, svgXml } = props;
     const [submit, setSubmit] = React.useState<boolean>(false);
     const [formExportRef, setExportFormRef] = React.useState<any>();
     const [formTransformtRef, setTransformFormRef] = React.useState<any>();
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(enableImgExport ? 'image' : 'document');
-    const [exportFormat, setExportFormat] = React.useState<ExportFormat>(enableImgExport ? 'svg' : 'pdf');
+    const [exportFormat, setExportFormat] = React.useState<ExportFormat>(enableImgExport ? 'svg' : 'xls');
     const classes = useStyles();
 
 
@@ -31,14 +32,29 @@ const ExportDialog = (props: ExportDialogProps) => {
     };
 
     const handleOnGroupChange = (event) => {
-        setExportGroup(event.target.value);
-    };
+        const value: ExportGroup = event.target.value;
+        setExportGroup(value);
+
+        let defaultFormat: ExportFormat;
+        switch (value) {
+            case 'document':
+                defaultFormat = 'pdf';
+                break;
+            case 'image':
+                defaultFormat = 'svg';
+                break;
+            case 'mindmap-tool':
+                defaultFormat = 'wxml';
+                break;
+        }
+        setExportFormat(defaultFormat);
+    }
 
     const handleOnClose = (): void => {
         onClose();
     };
 
-    const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    const handleOnSubmit = (): void => {
         setSubmit(true);
     }
 
@@ -66,7 +82,7 @@ const ExportDialog = (props: ExportDialogProps) => {
                 submitButton={intl.formatMessage({ id: "export.title", defaultMessage: "Export" })} >
 
                 <Alert severity="info">
-                    <FormattedMessage id="export.warning" defaultMessage="Exporting to Image (SVG,PNG,JPEG )is available only in the editor toolbar." />
+                    <FormattedMessage id="export.warning" defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar." />
                 </Alert>
 
                 <FormControl component="fieldset" >
@@ -82,10 +98,12 @@ const ExportDialog = (props: ExportDialogProps) => {
                                 style={{ fontSize: '9px' }} />
                             {(exportGroup == 'image') &&
                                 (<Select
-                                    onChange={handleOnExportFormatChange}
+                                    onSelect={handleOnExportFormatChange}
                                     variant="outlined"
+                                    value={exportFormat}
                                     className={classes.label}>
                                     <MenuItem value="svg" className={classes.menu}>Scalable Vector Graphics (SVG)</MenuItem>
+                                    <MenuItem value="pdf" className={classes.select} >Portable Document Format (PDF)</MenuItem>
                                     <MenuItem value="png" className={classes.menu}>Portable Network Graphics (PNG)</MenuItem>
                                     <MenuItem value="jpeg" className={classes.menu}>JPEG Image (JPEG)</MenuItem>
                                 </Select>)
@@ -102,11 +120,11 @@ const ExportDialog = (props: ExportDialogProps) => {
                             {exportGroup == 'document' &&
                                 (<Select onChange={handleOnExportFormatChange}
                                     variant="outlined"
+                                    value={exportFormat}
                                     className={classes.select}
                                 >
-                                    <MenuItem className={classes.select} value="pdf">Portable Document Format (PDF)</MenuItem>
-                                    <MenuItem className={classes.select} value="txt">Plain Text File (TXT)</MenuItem>
                                     <MenuItem className={classes.select} value="xls">Microsoft Excel (XLS)</MenuItem>
+                                    <MenuItem className={classes.select} value="txt">Plain Text File (TXT)</MenuItem>
                                 </Select>)
                             }
                         </FormControl>
@@ -123,6 +141,7 @@ const ExportDialog = (props: ExportDialogProps) => {
                                     onChange={handleOnExportFormatChange}
                                     variant="outlined"
                                     className={classes.select}
+                                    value={exportFormat}
                                 >
                                     <MenuItem className={classes.select} value="wxml">WiseMapping (WXML)</MenuItem>
                                     <MenuItem className={classes.select} value="mm">Freemind 1.0.1 (MM)</MenuItem>
@@ -143,7 +162,7 @@ const ExportDialog = (props: ExportDialogProps) => {
             <form action={`/c/restful/transform.${exportFormat}`} ref={setTransformFormRef} method="POST">
                 <input name="download" type="hidden" value={exportFormat} />
                 <input name="filename" type="hidden" value={map?.title} />
-                <input name="svgXml" id="svgXml" value="" type="hidden" />
+                <input name="svgXml" id="svgXml" value={svgXml} type="hidden" />
             </form>
         </div>
     );

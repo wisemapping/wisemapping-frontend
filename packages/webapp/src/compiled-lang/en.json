@@ -173,10 +173,28 @@
       "value": "Your session has expired"
     }
   ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "Image: Get a graphic representation of your map including all colors and shapes."
+    }
+  ],
   "export.title": [
     {
       "type": 0,
       "value": "Export"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "Exporting to Image (SVG,PNG,JPEG )is available only in the editor toolbar."
     }
   ],
   "footer.aboutus": [
