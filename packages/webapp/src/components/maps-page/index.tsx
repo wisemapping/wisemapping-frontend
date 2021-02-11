@@ -21,6 +21,7 @@ import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
 import ClientHealthSentinel from '../../client/client-health-sentinel';
 import HelpMenu from '../help-menu';
+import LanguageMenu from './language-menu';
 
 const logoIcon = require('../../images/logo-small.svg');
 const poweredByIcon = require('../../images/pwrdby-white.svg');
@@ -146,6 +147,7 @@ const MapsPage = () => {
                     <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapsId={[]} />
 
                     <div className={classes.rightButtonGroup}>
+                        <LanguageMenu/>
                         <HelpMenu />
                         <AccountMenu />
                     </div>

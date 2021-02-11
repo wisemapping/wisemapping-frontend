@@ -37,6 +37,7 @@ export default class RestClient implements Client {
                     lastName: account.lastName ? account.lastName : '',
                     firstName: account.fistName ? account.fistName : '',
                     email: account.email,
+                    language: "en"
                 });
             }).catch(error => {
                 const errorInfo = this.parseResponseOnError(error.response);

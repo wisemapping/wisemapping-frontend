@@ -1,3 +1,4 @@
+import { Language } from '@material-ui/icons';
 import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser} from '..';
 class MockClient implements Client {
     private maps: MapInfo[] = [];
@@ -41,7 +42,8 @@ class MockClient implements Client {
         return Promise.resolve({
             firstName: 'Costme',
             lastName: 'Fulanito',
-            email: 'test@example.com'
+            email: 'test@example.com',
+            language: 'en'
         });
     }
     deleteMaps(ids: number[]): Promise<void> {

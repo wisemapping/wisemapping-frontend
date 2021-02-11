@@ -59,6 +59,7 @@ export type AccountInfo = {
     firstName: string;
     lastName: string;
     email: string;
+    language: string;
 }
 
 interface Client {
