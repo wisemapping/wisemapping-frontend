@@ -1,5 +1,4 @@
-import Client, { AccountInfo, BasicMapInfo, ChangeHistory, Label, MapInfo, NewUser } from '..';
-
+import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser} from '..';
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];
@@ -8,7 +7,7 @@ class MockClient implements Client {
 
         // Remove, just for develop ....
         function createMapInfo(
-            id: number,
+            id: number, 
             starred: boolean,
             title: string,
             labels: number[],
@@ -34,6 +33,10 @@ class MockClient implements Client {
         ];
 
     }
+    importMap(model: ImportMapInfo): Promise<number> {
+        return Promise.resolve(10);
+    }
+    
     fetchAccountInfo(): Promise<AccountInfo> {
         return Promise.resolve({
             firstName: 'Costme',

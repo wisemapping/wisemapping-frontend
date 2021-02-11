@@ -13,13 +13,15 @@ import BaseDialog from '../base-dialog';
 export type ImportModel = {
     title: string;
     description?: string;
+    contentType?: string;
+    content?: ArrayBuffer | null | string;
 }
 
 export type CreateProps = {
     onClose: () => void
 }
 
-const defaultModel: ImportModel = { title: '', description: '' };
+const defaultModel: ImportModel = { title: '' };
 const ImportDialog = (props: CreateProps) => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ImportModel>(defaultModel);
@@ -27,7 +29,7 @@ const ImportDialog = (props: CreateProps) => {
     const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, ImportModel>((model: ImportModel) => {
-        return client.createMap(model);
+        return client.importMap(model);
     },
         {
             onSuccess: (mapId: number) => {
@@ -55,8 +57,40 @@ const ImportDialog = (props: CreateProps) => {
 
         const name = event.target.name;
         const value = event.target.value;
-        setModel({ ...model, [name as keyof BasicMapInfo]: value });
+        setModel({ ...model, [name as keyof ImportModel]: value });
     }
+
+    const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event?.target?.files;
+        const reader = new FileReader();
+
+        if (files) {
+            const file = files[0];
+            var title = file.name;
+            title = title.substring(0, title.lastIndexOf("."));
+
+            // Closure to capture the file information.
+            reader.onload =  (event) => {
+                const fileContent = event?.target?.result;
+                model.content = fileContent;
+
+                // Suggest file name ... 
+                const fileName = file.name;
+                if (fileName) {
+                    var title = fileName.split('.')[0]
+                    if (!model.title || 0 === model.title.length) {
+                        model.title = title;
+                    }
+                }
+                model.contentType = file.name.lastIndexOf(".wxml") != -1 ? "application/xml" : "application/freemind";
+                setModel({...model});
+            };
+
+            // Read in the image file as a data URL.
+            reader.readAsText(file);
+        }
+
+    };
 
     return (
         <div>
@@ -66,21 +100,24 @@ const ImportDialog = (props: CreateProps) => {
                 submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}>
 
                 <FormControl fullWidth={true}>
+                    <input
+                        accept=".wxml,.mm"
+                        id="contained-button-file"
+                        type="file"
+                        required={true}
+                        style={{ display: 'none' }}
+                        onChange={handleOnFileChange}
+                    />
+
                     <Input name="title" type="text" label={intl.formatMessage({ id: "action.rename-name-placeholder", defaultMessage: "Name" })}
                         value={model.title} onChange={handleOnChange} error={error} fullWidth={true} />
 
                     <Input name="description" type="text" label={intl.formatMessage({ id: "action.rename-description-placeholder", defaultMessage: "Description" })}
                         value={model.description} onChange={handleOnChange} required={false} fullWidth={true} />
 
-                    <input
-                        accept="image/*"
-                        id="contained-button-file"
-                        type="file"
-                        style={{display: 'none'}}
-                    />
                     <label htmlFor="contained-button-file">
-                        <Button variant="outlined" color="primary" component="span" style={{margin: '10px 5px', width: '100%'}}>
-                            <FormattedMessage id="maps.choose-file" defaultMessage="Choose a file"/>
+                        <Button variant="outlined" color="primary" component="span" style={{ margin: '10px 5px', width: '100%' }}>
+                            <FormattedMessage id="maps.choose-file" defaultMessage="Choose a file" />
                         </Button>
                     </label>
                 </FormControl>

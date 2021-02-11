@@ -13,12 +13,14 @@ export type DialogProps = {
 
     title: string;
     description?: string;
+
     submitButton?: string;
+    actionUrl?: string;
 }
 
 const BaseDialog = (props: DialogProps) => {
     const intl = useIntl();
-    const { onClose, onSubmit } = props;
+    const { onClose, onSubmit, actionUrl = "" } = props;
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

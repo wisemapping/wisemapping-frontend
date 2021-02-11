@@ -6,6 +6,13 @@ export type NewUser = {
     recaptcha: string | null;
 }
 
+export type ImportMapInfo = {
+    title: string;
+    description?: string;
+    contentType?: string;
+    content?: ArrayBuffer | null | string;
+
+}
 export type Label = {
     id: number;
     title: string;
@@ -55,6 +62,7 @@ export type AccountInfo = {
 }
 
 interface Client {
+    importMap(model: ImportMapInfo): Promise<number>
     createMap(map: BasicMapInfo): Promise<number>;
     deleteMaps(ids: number[]): Promise<void>;
     deleteMap(id: number): Promise<void>;
@@ -67,7 +75,7 @@ interface Client {
 
     fetchLabels(): Promise<Label[]>;
     deleteLabel(id: number): Promise<void>;
-    fetchAccountInfo():Promise<AccountInfo>;
+    fetchAccountInfo(): Promise<AccountInfo>;
 
     registerNewUser(user: NewUser): Promise<void>;
     resetPassword(email: string): Promise<void>;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo } from '..';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo } from '..';
 
 export default class RestClient implements Client {
     private baseUrl: string;
@@ -9,6 +9,20 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
+    importMap(model: ImportMapInfo): Promise<number> {
+        const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
+            axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
+                model.content,
+                { headers: { 'Content-Type': model.contentType } }
+            ).then(response => {
+                const mapId = response.headers.resourceid;
+                success(mapId);
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);    }
 
     fetchAccountInfo(): Promise<AccountInfo> {
         const handler = (success: (account: AccountInfo) => void, reject: (error: ErrorInfo) => void) => {
