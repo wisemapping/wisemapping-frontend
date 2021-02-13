@@ -1,5 +1,5 @@
 import { Language } from '@material-ui/icons';
-import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser} from '..';
+import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, LocaleCode, MapInfo, NewUser } from '..';
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];
@@ -8,7 +8,7 @@ class MockClient implements Client {
 
         // Remove, just for develop ....
         function createMapInfo(
-            id: number, 
+            id: number,
             starred: boolean,
             title: string,
             labels: number[],
@@ -34,16 +34,23 @@ class MockClient implements Client {
         ];
 
     }
+
+    updateAccountLanguage(locale: LocaleCode): Promise<void> {
+        localStorage.setItem('locale', locale);
+        return Promise.resolve();
+    }
+
     importMap(model: ImportMapInfo): Promise<number> {
         return Promise.resolve(10);
     }
-    
+
     fetchAccountInfo(): Promise<AccountInfo> {
+        const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
         return Promise.resolve({
             firstName: 'Costme',
             lastName: 'Fulanito',
             email: 'test@example.com',
-            language: 'en'
+            language: locale ? locale : 'en'
         });
     }
     deleteMaps(ids: number[]): Promise<void> {

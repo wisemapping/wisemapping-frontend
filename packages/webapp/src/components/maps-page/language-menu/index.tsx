@@ -1,18 +1,31 @@
-import { Button, Divider, Link, ListItemIcon, Menu, MenuItem, Tooltip } from '@material-ui/core';
-import { ExitToAppOutlined, SettingsApplicationsOutlined, TranslateTwoTone } from '@material-ui/icons';
+import { Button, Divider, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { TranslateTwoTone } from '@material-ui/icons';
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { useQuery } from "react-query";
-import Client, { ErrorInfo, AccountInfo } from "../../../client";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import Client, { ErrorInfo, AccountInfo, LocaleCode } from "../../../client";
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../redux/clientSlice';
+import { FormattedMessage, useIntl } from 'react-intl';
+
+const localeToStr = new Map<LocaleCode, string>([["en", "English"], ["es", "Español"], ["fr", "Français"], ["de", "Deutsch"]]);
 
 
 const LanguageMenu = () => {
-
+    const queryClient = useQueryClient();
     const client: Client = useSelector(activeInstance);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const intl = useIntl();
+
+    const mutation = useMutation((locale: LocaleCode) => client.updateAccountLanguage(locale),
+        {
+            onSuccess: () => {
+
+                queryClient.invalidateQueries('account')
+                handleClose();
+            }
+        }
+    );
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -22,13 +35,18 @@ const LanguageMenu = () => {
         setAnchorEl(null);
     };
 
+    const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
+        const localeCode = event.target['id'];
+        mutation.mutate(localeCode);
+    }
+
     const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
         return client.fetchAccountInfo();
     });
 
     return (
         <span>
-            <Tooltip title="Change Language">
+            <Tooltip title={intl.formatMessage({ id: 'language.change', defaultMessage: 'Change Language' })}>
                 <Button
                     size="small"
                     variant="outlined"
@@ -37,7 +55,7 @@ const LanguageMenu = () => {
                     onClick={handleMenu}
                     startIcon={<TranslateTwoTone />}
                 >
-                    {data?.language == "en" ? "English" : "Español"}
+                    {localeToStr.get(data?.language ? data?.language : 'en')}
                 </Button>
             </Tooltip>
             <Menu id="appbar-language"
@@ -55,17 +73,25 @@ const LanguageMenu = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={handleClose}>
-                    English
+                <MenuItem onClick={handleOnClick} id="en">
+                    {localeToStr.get('en')}
                 </MenuItem>
 
-                <MenuItem onClick={handleClose}>
-                    Español
+                <MenuItem onClick={handleOnClick} id="es">
+                    {localeToStr.get('es')}
                 </MenuItem>
 
+                <MenuItem onClick={handleOnClick} id="fr">
+                    {localeToStr.get('fr')}
+                </MenuItem>
+
+                <MenuItem onClick={handleOnClick} id="de">
+                    {localeToStr.get('de')}
+                </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
-                    Help to Translate
+
+                <MenuItem onClick={handleOnClick}>
+                    <FormattedMessage id="language.help" defaultMessage=" Help to Translate" />
                 </MenuItem>
             </Menu>
         </span>);

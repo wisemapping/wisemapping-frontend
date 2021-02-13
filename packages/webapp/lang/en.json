@@ -89,6 +89,9 @@
   "export.document": {
     "defaultMessage": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
   },
+  "export.document-label": {
+    "defaultMessage": "Document: Export your mindmap in a self-contained document ready to share"
+  },
   "export.image": {
     "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes."
   },
@@ -96,7 +99,7 @@
     "defaultMessage": "Export"
   },
   "export.warning": {
-    "defaultMessage": "Exporting to Image (SVG,PNG,JPEG )is available only in the editor toolbar."
+    "defaultMessage": "Exporting to Image (SVG,PNG,JPEG,PDF) is only available in the editor toolbar."
   },
   "footer.aboutus": {
     "defaultMessage": "About Us"
@@ -196,6 +199,12 @@
   },
   "info.title": {
     "defaultMessage": "Info"
+  },
+  "language.change": {
+    "defaultMessage": "Change Language"
+  },
+  "languange.help": {
+    "defaultMessage": "Help to Translate"
   },
   "login.desc": {
     "defaultMessage": "Log into your account"

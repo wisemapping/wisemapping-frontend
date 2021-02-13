@@ -59,8 +59,10 @@ export type AccountInfo = {
     firstName: string;
     lastName: string;
     email: string;
-    language: string;
+    language: LocaleCode;
 }
+
+export type LocaleCode = 'en' | 'es' | 'fr' | 'de';
 
 interface Client {
     importMap(model: ImportMapInfo): Promise<number>
@@ -70,6 +72,7 @@ interface Client {
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
+    updateAccountLanguage(locale: LocaleCode): Promise<void>;
 
     updateStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, starred: boolean): Promise<void>;

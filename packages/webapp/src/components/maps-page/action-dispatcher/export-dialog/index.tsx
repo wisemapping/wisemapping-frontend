@@ -115,7 +115,7 @@ const ExportDialog = (props: ExportDialogProps) => {
                                 className={classes.label}
                                 value="document"
                                 control={<Radio color="primary" />}
-                                label={intl.formatMessage({ id: "export.document", defaultMessage: "Document: Export your mindmap in a self-contained document ready to share" })}
+                                label={intl.formatMessage({ id: "export.document-label", defaultMessage: "Document: Export your mindmap in a self-contained document ready to share" })}
                                 color="secondary" />
                             {exportGroup == 'document' &&
                                 (<Select onChange={handleOnExportFormatChange}

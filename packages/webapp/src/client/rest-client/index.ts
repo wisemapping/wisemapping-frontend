@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo } from '..';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo, LocaleCode } from '..';
 
 export default class RestClient implements Client {
     private baseUrl: string;
@@ -9,6 +9,11 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
+
+    updateAccountLanguage(locale: LocaleCode): Promise<void> {
+        throw "Method not implemented";
+    }
+
     importMap(model: ImportMapInfo): Promise<number> {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
@@ -22,7 +27,8 @@ export default class RestClient implements Client {
                 reject(errorInfo);
             });
         }
-        return new Promise(handler);    }
+        return new Promise(handler);
+    }
 
     fetchAccountInfo(): Promise<AccountInfo> {
         const handler = (success: (account: AccountInfo) => void, reject: (error: ErrorInfo) => void) => {
@@ -33,11 +39,12 @@ export default class RestClient implements Client {
                 }
             ).then(response => {
                 const account = response.data;
+                const locale: LocaleCode | null = account.locale;
                 success({
                     lastName: account.lastName ? account.lastName : '',
                     firstName: account.fistName ? account.fistName : '',
                     email: account.email,
-                    language: "en"
+                    language: locale ? locale : 'en'
                 });
             }).catch(error => {
                 const errorInfo = this.parseResponseOnError(error.response);
