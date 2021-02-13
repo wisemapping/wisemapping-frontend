@@ -70,8 +70,8 @@ const LoginPage = () => {
             <Input name="username" type="email" label={intl.formatMessage({ id: "login.email", defaultMessage: "Email" })} required autoComplete="email" />
             <Input name="password" type="password" label={intl.formatMessage({ id: "login.password", defaultMessage: "Password" })} required autoComplete="current-password" />
             <div>
-              <input name="_spring_security_login.remberme" id="staySignIn" type="checkbox" />
-              <label htmlFor="staySignIn"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
+              <input name="remember-me" id="remember-me" type="checkbox" />
+              <label htmlFor="remember-me"><FormattedMessage id="login.remberme" defaultMessage="Remember me" /></label>
             </div>
             <SubmitButton value={intl.formatMessage({ id: "login.signin", defaultMessage: "Sign In" })} />
           </form>
