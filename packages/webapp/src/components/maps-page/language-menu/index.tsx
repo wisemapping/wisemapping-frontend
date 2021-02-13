@@ -6,7 +6,7 @@ import Client, { ErrorInfo, AccountInfo } from "../../../classes/client";
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
-import AppLocale, { LocaleCode, Locales } from '../../../classes/app-locale';
+import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
 
 
 
@@ -44,7 +44,7 @@ const LanguageMenu = () => {
         return client.fetchAccountInfo();
     });
 
-    const locale = new AppLocale(data?.language);
+    const locale = data?.locale;
     return (
         <span>
             <Tooltip title={intl.formatMessage({ id: 'language.change', defaultMessage: 'Change Language' })}>
@@ -56,7 +56,7 @@ const LanguageMenu = () => {
                     onClick={handleMenu}
                     startIcon={<TranslateTwoTone />}
                 >
-                    {locale.toString()}
+                    {locale?.label}
                 </Button>
             </Tooltip>
             <Menu id="appbar-language"

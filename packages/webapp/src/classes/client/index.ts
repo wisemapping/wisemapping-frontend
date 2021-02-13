@@ -1,4 +1,4 @@
-import { LocaleCode } from "../app-locale"
+import { Locale, LocaleCode } from "../app-i18n"
 
 export type NewUser = {
     email: string;
@@ -61,7 +61,7 @@ export type AccountInfo = {
     firstName: string;
     lastName: string;
     email: string;
-    language: LocaleCode;
+    locale: Locale;
 }
 
 interface Client {

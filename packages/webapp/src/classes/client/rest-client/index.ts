@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo } from '..';
-import { LocaleCode } from '../../app-locale';
+import { LocaleCode, localeFromStr, Locales } from '../../app-i18n';
 
 export default class RestClient implements Client {
     private baseUrl: string;
@@ -45,7 +45,7 @@ export default class RestClient implements Client {
                     lastName: account.lastName ? account.lastName : '',
                     firstName: account.fistName ? account.fistName : '',
                     email: account.email,
-                    language: locale ? locale : 'en'
+                    locale: locale ? localeFromStr(locale) : Locales.EN
                 });
             }).catch(error => {
                 const errorInfo = this.parseResponseOnError(error.response);

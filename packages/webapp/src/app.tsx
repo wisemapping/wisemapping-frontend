@@ -14,71 +14,76 @@ import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { theme } from './theme'
-
-function loadLocaleData(language: string) {
-  switch (language) {
-    case 'es':
-      return require('./compiled-lang/es.json')
-    default:
-      return require('./compiled-lang/en.json')
-  }
-}
+import AppI18n, { Locale, Locales } from './classes/app-i18n';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchIntervalInBackground: false,
-      staleTime: 5*1000*60 // 10 minutes
+      staleTime: 5 * 1000 * 60 // 10 minutes
     }
   }
 });
 
 const App = () => {
   const [messages, setMessages] = useState(undefined);
-  // Boostrap i18n ...
-  const locale = (navigator.languages && navigator.languages[0])
-    || navigator.language
-    || 'en-US';
+  const [appi18n, setAppi18n] = useState<AppI18n>( new AppI18n('es'));
 
   useEffect(() => {
-    const language = locale.split('-')[0];
-    const fetchData = async () => {
-      const messages = await loadLocaleData(language);
-      setMessages(messages);
+
+    // @Todo: Why can not be dynamc  ?
+    const loadResourceBundle = async (locale: Locale) => {
+      let result;
+      console.log("Language:" + locale.code);
+
+      switch (locale.code) {
+        case 'en':
+          result = require('./compiled-lang/en.json');
+          break;
+        case 'es':
+          result = require('./compiled-lang/es.json');
+          break;
+      }
+      return result;
     }
 
+    const fetchData = async () => {
+      const locale = appi18n.getLocale();
+      const msg = await loadResourceBundle(locale);
+      setMessages(msg);
+    }
     fetchData();
   }, []);
 
   return messages ? (
     <Provider store={store}>
-        <GlobalStyle />
-        <QueryClientProvider client={queryClient}>
-          <IntlProvider locale={locale} defaultLocale='en' messages={messages}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <Router>
-                <Switch>
-                  <Route exact path="/">
-                    <Redirect to="/c/login" />
-                  </Route>
-                  <Route path="/c/login" component={LoginPage} />
-                  <Route path="/c/registration">
-                    <RegistationPage />
-                  </Route>
-                  <Route path="/c/registration-success" component={RegistrationSuccessPage} />
-                  <Route path="/c/forgot-password">
-                    <ForgotPasswordPage />
-                  </Route>
-                  <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
-                  <Route path="/c/maps/">
-                    <MapsPage />
-                  </Route>
-                </Switch>
-              </Router>
-            </ThemeProvider>
-          </IntlProvider>
-        </QueryClientProvider>
+      <GlobalStyle />
+      <QueryClientProvider client={queryClient}>
+        <IntlProvider locale={appi18n.getLocale().code} defaultLocale={Locales.EN.code} messages={messages}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Router>
+              <Switch>
+                <Route exact path="/">
+                  <Redirect to="/c/login" />
+                </Route>
+                <Route path="/c/login" component={LoginPage} />
+                <Route path="/c/registration">
+                  <RegistationPage />
+                </Route>
+                <Route path="/c/registration-success" component={RegistrationSuccessPage} />
+                <Route path="/c/forgot-password">
+                  <ForgotPasswordPage />
+                </Route>
+                <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
+                <Route path="/c/maps/">
+                  <MapsPage />
+                </Route>
+              </Switch>
+            </Router>
+          </ThemeProvider>
+        </IntlProvider>
+      </QueryClientProvider>
     </Provider>
 
   ) : <div>Loading ... </div>

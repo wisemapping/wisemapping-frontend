@@ -1,6 +1,5 @@
-import { Language } from '@material-ui/icons';
 import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser } from '..';
-import { LocaleCode } from '../../app-locale';
+import { LocaleCode, localeFromStr, Locales } from '../../app-i18n';
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];
@@ -51,11 +50,12 @@ class MockClient implements Client {
             firstName: 'Costme',
             lastName: 'Fulanito',
             email: 'test@example.com',
-            language: locale ? locale : 'en'
+            locale: localeFromStr(locale)
         });
     }
+
     deleteMaps(ids: number[]): Promise<void> {
-        ids.forEach(id => this.deleteMap(id));
+        ids.forEach(id => this.deleteMap(id)); 
         return Promise.resolve();
     }
     revertHistory(id: number, cid: number): Promise<void> {
