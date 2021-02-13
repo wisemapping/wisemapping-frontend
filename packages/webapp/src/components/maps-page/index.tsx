@@ -11,7 +11,7 @@ import { useStyles } from './style';
 import { AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, LabelTwoTone, PersonOutlineTwoTone, PublicTwoTone, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
 import { Button, Link, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, IntlProvider, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
 import ClientHealthSentinel from '../../classes/client/client-health-sentinel';
-import HelpMenu from '../help-menu';
+import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
 
 const logoIcon = require('../../images/logo-small.svg');
@@ -106,6 +106,7 @@ const MapsPage = () => {
         icon: <LabelTwoTone style={{ color: l.color ? l.color : 'inherit' }} />
     }))
 
+
     return (
         <div className={classes.root}>
             <ClientHealthSentinel />
@@ -147,7 +148,7 @@ const MapsPage = () => {
                     <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapsId={[]} />
 
                     <div className={classes.rightButtonGroup}>
-                        <LanguageMenu/>
+                        <LanguageMenu />
                         <HelpMenu />
                         <AccountMenu />
                     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
-import { ErrorInfo, MapInfo } from '../../../classes/client';
+import { AccountInfo, ErrorInfo, MapInfo } from '../../../classes/client';
 import Client from '../../../classes/client';
 import { useSelector } from 'react-redux';
 import { QueryClient, useQuery } from 'react-query';
@@ -57,29 +57,10 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       {action === 'publish' && <PublishDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'create' && <CreateDialog onClose={handleOnClose} />}
-      {action === 'export' && <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={false}/>}
+      {action === 'export' && <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={false} />}
     </span >
   );
 }
-type MapLoadResult = {
-  isLoading: boolean,
-  error: ErrorInfo | null,
-  map: MapInfo | null
-}
-
-export const fetchMapById = (id: number): MapLoadResult => {
-
-  const service: Client = useSelector(activeInstance);
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
-    return service.fetchAllMaps();
-  });
-
-  const result = data?.find(m => m.id == id);
-  const map = result ? result : null;
-  return { isLoading: isLoading, error: error, map: map };
-}
-
-
 export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryClient): void => {
   queryClient.invalidateQueries('maps')
   onClose();

@@ -5,9 +5,10 @@ import { Card, List, ListItem, Paper, Typography } from '@material-ui/core';
 
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
-import { fetchMapById, SimpleDialogProps } from '..';
+import {  SimpleDialogProps } from '..';
 import { useStyles } from './style';
 import moment from 'moment';
+import { fetchMapById } from '../../../../redux/clientSlice';
 
 const InfoDialog = (props: SimpleDialogProps) => {
     const { mapId, onClose } = props;

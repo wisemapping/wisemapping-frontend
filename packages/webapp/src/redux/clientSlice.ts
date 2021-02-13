@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Client from '../classes/client';
+import { useQuery } from 'react-query';
+import Client, { AccountInfo, ErrorInfo, MapInfo } from '../classes/client';
 import MockClient from '../classes/client/mock-client';
 import RestClient from '../classes/client/rest-client';
+import { useSelector } from 'react-redux'
+
 
 interface ConfigInfo {
   apiBaseUrl: string
@@ -61,6 +64,34 @@ export const clientSlice = createSlice({
   },
 });
 
+
+type MapLoadResult = {
+  isLoading: boolean,
+  error: ErrorInfo | null,
+  map: MapInfo | null
+}
+
+export const fetchMapById = (id: number): MapLoadResult => {
+
+  const client: Client = useSelector(activeInstance);
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
+    return client.fetchAllMaps();
+  });
+
+  const result = data?.find(m => m.id == id);
+  const map = result ? result : null;
+  return { isLoading: isLoading, error: error, map: map };
+}
+
+
+export const fetchAccount = (): AccountInfo | undefined => {
+  const client: Client = useSelector(activeInstance);
+  const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
+    return client.fetchAccountInfo();
+  });
+  return data;
+}
+
 export const activeInstance = (state: any): Client => {
   return state.client.instance;
 }
@@ -71,4 +102,5 @@ export const activeInstanceStatus = (state: any): ClientStatus => {
 
 export const { sessionExpired } = clientSlice.actions;
 export default clientSlice.reducer;
+
 

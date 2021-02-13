@@ -6,10 +6,10 @@ import { AppBar, Checkbox, FormControl, FormControlLabel, Tab, TextareaAutosize,
 
 
 import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
-import { fetchMapById, handleOnMutationSuccess, SimpleDialogProps } from '..';
+import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
 
 

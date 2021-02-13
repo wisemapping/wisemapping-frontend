@@ -1,13 +1,12 @@
 import { Button, Divider, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { TranslateTwoTone } from '@material-ui/icons';
 import React from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import Client, { ErrorInfo, AccountInfo } from "../../../classes/client";
+import { useMutation, useQueryClient } from "react-query";
+import Client from "../../../classes/client";
 import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../redux/clientSlice';
+import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
-import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
-
+import { LocaleCode, Locales } from '../../../classes/app-i18n';
 
 
 const LanguageMenu = () => {
@@ -40,11 +39,7 @@ const LanguageMenu = () => {
         mutation.mutate(localeCode);
     }
 
-    const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
-        return client.fetchAccountInfo();
-    });
-
-    const locale = data?.locale;
+    const accountInfo =  fetchAccount();
     return (
         <span>
             <Tooltip title={intl.formatMessage({ id: 'language.change', defaultMessage: 'Change Language' })}>
@@ -56,7 +51,7 @@ const LanguageMenu = () => {
                     onClick={handleMenu}
                     startIcon={<TranslateTwoTone />}
                 >
-                    {locale?.label}
+                    {accountInfo?.locale?.label}
                 </Button>
             </Tooltip>
             <Menu id="appbar-language"

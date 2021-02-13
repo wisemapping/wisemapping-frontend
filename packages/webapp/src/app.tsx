@@ -27,33 +27,35 @@ const queryClient = new QueryClient({
 
 const App = () => {
   const [messages, setMessages] = useState(undefined);
-  const [appi18n, setAppi18n] = useState<AppI18n>( new AppI18n('es'));
+  const [appi18n, setAppi18n] = useState<AppI18n>(new AppI18n('es'));
+
+  const loadResourceBundle = async (locale: Locale) => {
+    let result;
+    switch (locale.code) {
+      case 'en':
+        result = require('./compiled-lang/en.json');
+        break;
+      case 'es':
+        result = require('./compiled-lang/es.json');
+        break;
+      case 'de':
+        // result = require('./compiled-lang/de.json');
+        break;
+      case 'fr':
+        // result = require('./compiled-lang/fr.json');
+        break;
+    }
+    return result;
+  }
 
   useEffect(() => {
-
-    // @Todo: Why can not be dynamc  ?
-    const loadResourceBundle = async (locale: Locale) => {
-      let result;
-      console.log("Language:" + locale.code);
-
-      switch (locale.code) {
-        case 'en':
-          result = require('./compiled-lang/en.json');
-          break;
-        case 'es':
-          result = require('./compiled-lang/es.json');
-          break;
-      }
-      return result;
-    }
-
     const fetchData = async () => {
       const locale = appi18n.getLocale();
       const msg = await loadResourceBundle(locale);
       setMessages(msg);
     }
     fetchData();
-  }, []);
+  }, [window.location.pathname]);
 
   return messages ? (
     <Provider store={store}>

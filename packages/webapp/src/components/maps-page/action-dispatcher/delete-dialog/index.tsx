@@ -4,8 +4,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import Client from "../../../../classes/client";
-import { activeInstance } from '../../../../redux/clientSlice';
-import { SimpleDialogProps, fetchMapById, handleOnMutationSuccess } from "..";
+import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
+import { SimpleDialogProps, handleOnMutationSuccess } from "..";
 import BaseDialog from "../base-dialog";
 
 
@@ -37,12 +37,12 @@ const DeleteDialog = (props: SimpleDialogProps) => {
         onClose={handleOnClose} onSubmit={handleOnSubmit}
         title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
         submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} >
-     
+
         <Alert severity="warning">
           <AlertTitle>Delete '{map?.title}'</AlertTitle>
           <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
         </Alert>
-     
+
       </BaseDialog>
     </div>
   );

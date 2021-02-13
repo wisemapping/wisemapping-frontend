@@ -5,9 +5,9 @@ import { FormControl } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 import Client, { BasicMapInfo, ErrorInfo } from "../../../../classes/client";
-import { activeInstance } from '../../../../redux/clientSlice';
+import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import Input from "../../../form/input";
-import { SimpleDialogProps, fetchMapById } from "..";
+import { SimpleDialogProps } from "..";
 import BaseDialog from "../base-dialog";
 
 export type DuplicateModel = {

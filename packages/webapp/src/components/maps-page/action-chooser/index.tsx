@@ -11,7 +11,7 @@ import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import { FormattedMessage } from 'react-intl';
 import { LabelOutlined } from '@material-ui/icons';
-import { fetchMapById } from '../action-dispatcher';
+import { fetchMapById } from '../../../redux/clientSlice';
 
 export type ActionType = 'open' | 'share' | 'import' | 'delete' | 'info' | 'create' | 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
 

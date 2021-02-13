@@ -1,17 +1,15 @@
-import { Button, IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { AccountCircle, ExitToAppOutlined, SettingsApplicationsOutlined } from '@material-ui/icons';
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { useQuery, useQueryClient } from "react-query";
-import Client, { ErrorInfo, AccountInfo } from "../../../classes/client";
+import { useQueryClient } from "react-query";
+import Client, {  } from "../../../classes/client";
 import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../redux/clientSlice';
+import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
 
 
 const AccountMenu = () => {
 
-    const client: Client = useSelector(activeInstance);
-    const queryClient = useQueryClient();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -24,11 +22,7 @@ const AccountMenu = () => {
         setAnchorEl(null);
     };
 
-    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
-        return client.fetchAccountInfo();
-    });
-    const account = data;
-
+    const account =  fetchAccount();
     return (
         <span>
             <Tooltip title={`${account?.firstName} ${account?.lastName} <${account?.email}>`}>
