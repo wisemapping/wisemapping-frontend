@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Client from '../client';
-import MockClient from '../client/mock-client';
-import RestClient from '../client/rest-client';
+import Client from '../classes/client';
+import MockClient from '../classes/client/mock-client';
+import RestClient from '../classes/client/rest-client';
 
 interface ConfigInfo {
   apiBaseUrl: string

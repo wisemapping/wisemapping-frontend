@@ -1,5 +1,6 @@
 import axios from 'axios';
-import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo, LocaleCode } from '..';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo } from '..';
+import { LocaleCode } from '../../app-locale';
 
 export default class RestClient implements Client {
     private baseUrl: string;

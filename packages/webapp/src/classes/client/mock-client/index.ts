@@ -1,5 +1,6 @@
 import { Language } from '@material-ui/icons';
-import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, LocaleCode, MapInfo, NewUser } from '..';
+import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser } from '..';
+import { LocaleCode } from '../../app-locale';
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];

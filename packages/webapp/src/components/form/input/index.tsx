@@ -1,7 +1,7 @@
 import { TextField } from "@material-ui/core";
 import React, { ChangeEvent } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
-import { ErrorInfo } from "../../../client";
+import { ErrorInfo } from "../../../classes/client";
 
 type InputProps = {
     name: string;

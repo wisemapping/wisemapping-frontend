@@ -3,7 +3,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import Client from "../../../../client";
+import Client from "../../../../classes/client";
 import { activeInstance } from '../../../../redux/clientSlice';
 import { SimpleDialogProps, fetchMapById, handleOnMutationSuccess } from "..";
 import BaseDialog from "../base-dialog";

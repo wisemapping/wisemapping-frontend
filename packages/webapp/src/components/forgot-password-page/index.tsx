@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
-import Client, { ErrorInfo } from '../../client'
+import Client, { ErrorInfo } from '../../classes/client'
 
 import Header from '../layout/header'
 import Footer from '../layout/footer'

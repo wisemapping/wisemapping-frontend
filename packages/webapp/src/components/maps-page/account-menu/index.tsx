@@ -3,7 +3,7 @@ import { AccountCircle, ExitToAppOutlined, SettingsApplicationsOutlined } from '
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useQuery, useQueryClient } from "react-query";
-import Client, { ErrorInfo, AccountInfo } from "../../../client";
+import Client, { ErrorInfo, AccountInfo } from "../../../classes/client";
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../redux/clientSlice';
 

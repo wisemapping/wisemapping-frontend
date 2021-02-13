@@ -1,3 +1,5 @@
+import { LocaleCode } from "../app-locale"
+
 export type NewUser = {
     email: string;
     firstname: string;
@@ -61,8 +63,6 @@ export type AccountInfo = {
     email: string;
     language: LocaleCode;
 }
-
-export type LocaleCode = 'en' | 'es' | 'fr' | 'de';
 
 interface Client {
     importMap(model: ImportMapInfo): Promise<number>

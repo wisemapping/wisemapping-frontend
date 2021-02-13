@@ -15,11 +15,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
-import Client, { Label } from '../../client';
+import Client, { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
-import ClientHealthSentinel from '../../client/client-health-sentinel';
+import ClientHealthSentinel from '../../classes/client/client-health-sentinel';
 import HelpMenu from '../help-menu';
 import LanguageMenu from './language-menu';
 

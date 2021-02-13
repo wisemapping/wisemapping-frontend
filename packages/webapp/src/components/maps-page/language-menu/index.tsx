@@ -2,12 +2,12 @@ import { Button, Divider, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { TranslateTwoTone } from '@material-ui/icons';
 import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import Client, { ErrorInfo, AccountInfo, LocaleCode } from "../../../client";
+import Client, { ErrorInfo, AccountInfo } from "../../../classes/client";
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
+import AppLocale, { LocaleCode, Locales } from '../../../classes/app-locale';
 
-const localeToStr = new Map<LocaleCode, string>([["en", "English"], ["es", "Español"], ["fr", "Français"], ["de", "Deutsch"]]);
 
 
 const LanguageMenu = () => {
@@ -44,6 +44,7 @@ const LanguageMenu = () => {
         return client.fetchAccountInfo();
     });
 
+    const locale = new AppLocale(data?.language);
     return (
         <span>
             <Tooltip title={intl.formatMessage({ id: 'language.change', defaultMessage: 'Change Language' })}>
@@ -55,7 +56,7 @@ const LanguageMenu = () => {
                     onClick={handleMenu}
                     startIcon={<TranslateTwoTone />}
                 >
-                    {localeToStr.get(data?.language ? data?.language : 'en')}
+                    {locale.toString()}
                 </Button>
             </Tooltip>
             <Menu id="appbar-language"
@@ -73,20 +74,20 @@ const LanguageMenu = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={handleOnClick} id="en">
-                    {localeToStr.get('en')}
+                <MenuItem onClick={handleOnClick} id={Locales.EN.code}>
+                    {Locales.EN.label}
                 </MenuItem>
 
-                <MenuItem onClick={handleOnClick} id="es">
-                    {localeToStr.get('es')}
+                <MenuItem onClick={handleOnClick} id={Locales.ES.code}>
+                    {Locales.ES.label}
                 </MenuItem>
 
-                <MenuItem onClick={handleOnClick} id="fr">
-                    {localeToStr.get('fr')}
+                <MenuItem onClick={handleOnClick} id={Locales.DE.code}>
+                    {Locales.DE.label}
                 </MenuItem>
 
-                <MenuItem onClick={handleOnClick} id="de">
-                    {localeToStr.get('de')}
+                <MenuItem onClick={handleOnClick} id={Locales.FR.code}>
+                    {Locales.FR.label}
                 </MenuItem>
                 <Divider />
 

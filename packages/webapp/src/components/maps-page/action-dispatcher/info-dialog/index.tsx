@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Card, List, ListItem, Paper, Typography } from '@material-ui/core';
 
 
-import { ErrorInfo } from '../../../../client';
+import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
 import { fetchMapById, SimpleDialogProps } from '..';
 import { useStyles } from './style';

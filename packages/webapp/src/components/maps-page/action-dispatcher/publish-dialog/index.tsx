@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { AppBar, Checkbox, FormControl, FormControlLabel, Tab, TextareaAutosize, Typography } from '@material-ui/core';
 
 
-import Client, { ErrorInfo } from '../../../../client';
+import Client, { ErrorInfo } from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';

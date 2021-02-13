@@ -2,7 +2,7 @@ import React, { ErrorInfo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
-import Client, { ChangeHistory } from "../../../../client";
+import Client, { ChangeHistory } from "../../../../classes/client";
 import { activeInstance } from '../../../../redux/clientSlice';
 import { SimpleDialogProps } from "..";
 import BaseDialog from "../base-dialog";
