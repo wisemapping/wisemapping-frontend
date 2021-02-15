@@ -13,4 +13,5 @@ pipelines:
             caches:
               - node
             script:
+              - npm install lerna
               - yarn build
