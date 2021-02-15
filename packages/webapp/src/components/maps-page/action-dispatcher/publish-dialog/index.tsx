@@ -13,8 +13,7 @@ import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
 
 
-const PublishDialog = (props: SimpleDialogProps) => {
-    const { mapId, onClose } = props;
+const PublishDialog = ({ mapId, onClose }: SimpleDialogProps) => {
     const { map } = fetchMapById(mapId);
 
     const client: Client = useSelector(activeInstance);
@@ -40,7 +39,7 @@ const PublishDialog = (props: SimpleDialogProps) => {
     );
 
     const handleOnClose = (): void => {
-        props.onClose();
+        onClose();
         setError(undefined);
     };
 

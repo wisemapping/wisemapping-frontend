@@ -17,11 +17,10 @@ export type DuplicateModel = {
 }
 
 const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
-const DuplicateDialog = (props: SimpleDialogProps) => {
+const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps) => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
-    const { mapId, onClose } = props;
 
     const intl = useIntl();
 

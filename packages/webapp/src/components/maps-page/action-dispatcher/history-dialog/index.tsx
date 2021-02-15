@@ -10,9 +10,8 @@ import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 import moment from "moment";
 
 
-const HistoryDialog = (props: SimpleDialogProps) => {
+const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps) => {
   const intl = useIntl();
-  const mapId = props.mapId;
 
   const client: Client = useSelector(activeInstance);
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>('history', () => {
@@ -21,7 +20,7 @@ const HistoryDialog = (props: SimpleDialogProps) => {
   const changeHistory: ChangeHistory[] = data ? data : [];
 
   const handleOnClose = (): void => {
-    props.onClose();
+    onClose();
   };
 
   const handleOnClick = (event, vid): void => {

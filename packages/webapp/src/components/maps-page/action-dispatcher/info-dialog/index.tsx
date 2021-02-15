@@ -10,8 +10,7 @@ import { useStyles } from './style';
 import moment from 'moment';
 import { fetchMapById } from '../../../../redux/clientSlice';
 
-const InfoDialog = (props: SimpleDialogProps) => {
-    const { mapId, onClose } = props;
+const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
     const { map } = fetchMapById(mapId);
     const [error, setError] = React.useState<ErrorInfo>();
     const [] = React.useState('1');

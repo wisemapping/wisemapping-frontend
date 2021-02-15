@@ -20,7 +20,7 @@ export type CreateProps = {
 }
 
 const defaultModel: CreateModel = { title: '', description: '' };
-const CreateDialog = (props: CreateProps) => {
+const CreateDialog = ({onClose}: CreateProps) => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<CreateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
@@ -40,7 +40,7 @@ const CreateDialog = (props: CreateProps) => {
     );
 
     const handleOnClose = (): void => {
-        props.onClose();
+        onClose();
         setModel(defaultModel);
         setError(undefined);
     };

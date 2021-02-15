@@ -9,12 +9,11 @@ import { SimpleDialogProps, handleOnMutationSuccess } from "..";
 import BaseDialog from "../base-dialog";
 
 
-const DeleteDialog = (props: SimpleDialogProps) => {
+const DeleteDialog = ({ mapId, onClose } : SimpleDialogProps) => {
   const intl = useIntl();
-  const { mapId, onClose } = props;
-
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
+ 
   const mutation = useMutation((id: number) => client.deleteMap(id),
     {
       onSuccess: () => handleOnMutationSuccess(onClose, queryClient)

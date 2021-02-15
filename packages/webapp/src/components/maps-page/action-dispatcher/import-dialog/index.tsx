@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Button, FormControl } from '@material-ui/core';
 
 
-import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
+import Client, { ErrorInfo } from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
@@ -22,7 +22,7 @@ export type CreateProps = {
 }
 
 const defaultModel: ImportModel = { title: '' };
-const ImportDialog = (props: CreateProps) => {
+const ImportDialog = ({onClose}: CreateProps) => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ImportModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
@@ -42,7 +42,7 @@ const ImportDialog = (props: CreateProps) => {
     );
 
     const handleOnClose = (): void => {
-        props.onClose();
+        onClose();
         setModel(defaultModel);
         setError(undefined);
     };

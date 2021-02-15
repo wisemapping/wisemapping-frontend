@@ -16,9 +16,8 @@ type ExportDialogProps = {
     onClose: () => void,
 }
 
-const ExportDialog = (props: ExportDialogProps) => {
+const ExportDialog = ({ mapId, onClose, enableImgExport, svgXml }: ExportDialogProps) => {
     const intl = useIntl();
-    const { mapId, onClose, enableImgExport, svgXml } = props;
     const [submit, setSubmit] = React.useState<boolean>(false);
     const [formExportRef, setExportFormRef] = React.useState<any>();
     const [formTransformtRef, setTransformFormRef] = React.useState<any>();

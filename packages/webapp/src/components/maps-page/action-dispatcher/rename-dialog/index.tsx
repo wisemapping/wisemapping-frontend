@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import Client, { BasicMapInfo, ErrorInfo } from "../../../../classes/client";
 import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
-import { SimpleDialogProps,  handleOnMutationSuccess } from "..";
+import { SimpleDialogProps, handleOnMutationSuccess } from "..";
 import Input from "../../../form/input";
 import { FormControl } from "@material-ui/core";
 import BaseDialog from "../base-dialog";
@@ -16,11 +16,10 @@ export type RenameModel = {
 }
 
 const defaultModel: RenameModel = { title: '', description: '', id: -1 };
-const RenameDialog = (props: SimpleDialogProps) => {
+const RenameDialog = ({ mapId, onClose }: SimpleDialogProps) => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<RenameModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
-    const { mapId } = props;
 
     const intl = useIntl();
     const queryClient = useQueryClient();
@@ -31,7 +30,7 @@ const RenameDialog = (props: SimpleDialogProps) => {
     },
         {
             onSuccess: () => {
-                handleOnMutationSuccess(props.onClose, queryClient);
+                handleOnMutationSuccess(onClose, queryClient);
             },
             onError: (error) => {
                 setError(error);
@@ -40,7 +39,7 @@ const RenameDialog = (props: SimpleDialogProps) => {
     );
 
     const handleOnClose = (): void => {
-        props.onClose();
+        onClose();
         setModel(defaultModel);
         setError(undefined);
     };

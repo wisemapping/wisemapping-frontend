@@ -13,15 +13,14 @@ export type DeleteMultiselectDialogProps = {
   onClose: () => void
 }
 
-const DeleteMultiselectDialog = (props: DeleteMultiselectDialogProps) => {
-  const { onClose, mapsId } = props;
+const DeleteMultiselectDialog = ({ onClose, mapsId }: DeleteMultiselectDialogProps) => {
   const intl = useIntl();
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
  
   const mutation = useMutation((ids: number[]) => client.deleteMaps(ids),
     {
-      onSuccess: () => handleOnMutationSuccess(props.onClose, queryClient)
+      onSuccess: () => handleOnMutationSuccess(onClose, queryClient)
     }
   );
 
