@@ -10,6 +10,20 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
+    
+    updateAccountPassword(pasword: string): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(`${this.baseUrl}/c/restful/account/password`,
+            pasword,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);    }
 
     updateAccountLanguage(locale: LocaleCode): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {

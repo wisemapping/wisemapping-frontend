@@ -13,7 +13,7 @@ const LanguageMenu = () => {
     const queryClient = useQueryClient();
     const client: Client = useSelector(activeInstance);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [helpDialogOpen, setHelpDialogOpen] = React.useState<boolean>(false);
+    const [openHelpDialog, setHelpDialogOpen] = React.useState<boolean>(false);
 
     const open = Boolean(anchorEl);
     const intl = useIntl();
@@ -92,25 +92,26 @@ const LanguageMenu = () => {
                     <FormattedMessage id="language.help" defaultMessage="Help to Translate" />
                 </MenuItem>
             </Menu>
-            <HelpUsToTranslateDialog open={helpDialogOpen} onClose={() => setHelpDialogOpen(false)} />
+            {openHelpDialog &&
+                <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />
+            }           
         </span>);
 }
 
 type HelpUsToTranslateDialogProp = {
-    open: boolean,
     onClose: () => void
 }
-const HelpUsToTranslateDialog = ({ open, onClose }: HelpUsToTranslateDialogProp) => {
+const HelpUsToTranslateDialog = ({ onClose }: HelpUsToTranslateDialogProp) => {
 
     return (
         <Dialog
-            open={open}
+            open={true}
             onClose={onClose}
         >
-            <DialogTitle>Help us to Translate !</DialogTitle>
+            <DialogTitle>Help us to support more languages !</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    We need your help !. You could help us to support more languages. If you are interested, send us an email to team@wisemapping.com.
+                    We need your help !. If you are interested, send us an email to team@wisemapping.com.
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -119,5 +120,6 @@ const HelpUsToTranslateDialog = ({ open, onClose }: HelpUsToTranslateDialogProp)
         </Dialog>
     );
 }
+
 
 export default LanguageMenu;

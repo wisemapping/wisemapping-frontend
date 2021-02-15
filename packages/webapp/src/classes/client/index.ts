@@ -13,8 +13,8 @@ export type ImportMapInfo = {
     description?: string;
     contentType?: string;
     content?: ArrayBuffer | null | string;
-
 }
+
 export type Label = {
     id: number;
     title: string;
@@ -72,7 +72,9 @@ interface Client {
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
+   
     updateAccountLanguage(locale: LocaleCode): Promise<void>;
+    updateAccountPassword(pasword: string): Promise<void>;
 
     updateStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, starred: boolean): Promise<void>;

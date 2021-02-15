@@ -35,6 +35,10 @@ class MockClient implements Client {
 
     }
 
+    updateAccountPassword(pasword: string): Promise<void> {
+        return Promise.resolve();
+    }
+
     updateAccountLanguage(locale: LocaleCode): Promise<void> {
         localStorage.setItem('locale', locale);
         return Promise.resolve();
