@@ -1,14 +1,4 @@
 import { createMuiTheme } from '@material-ui/core';
-import { createGlobalStyle } from 'styled-components';
-
-
-const GlobalStyle = createGlobalStyle`
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;600&display=swap');
-* {
-    box-sizing: border-box;
-}
-`;
 
 const theme = createMuiTheme({
     overrides: {
@@ -87,5 +77,5 @@ const theme = createMuiTheme({
     }
 });
 
-export { GlobalStyle, theme };
+export {theme };
 

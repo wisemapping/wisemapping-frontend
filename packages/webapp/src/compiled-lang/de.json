@@ -1,0 +1,668 @@
+{
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "Deleted mindmap can not be recovered. Do you want to continue ?."
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "Export"
+    }
+  ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "History"
+    }
+  ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "List of changes introduced in the last 90 days."
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "Version history"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "Import"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "Info"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "Add Label"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "New Map"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "Open"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "Print"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "Publish"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "Please wait ..."
+    }
+  ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "Please, fill the new map name and description."
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "Create a new mindmap"
+    }
+  ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "All selected maps will be deleted"
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "Duplicate"
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "Your current session has expired. Please, sign in and try again."
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "Your session has expired"
+    }
+  ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "Image: Get a graphic representation of your map including all colors and shapes."
+    }
+  ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "Export"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "Exporting to Image (SVG,PNG,JPEG )is available only in the editor toolbar."
+    }
+  ],
+  "footer.aboutus": [
+    {
+      "type": 0,
+      "value": "About Us"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "Contact Us"
+    }
+  ],
+  "footer.faq": [
+    {
+      "type": 0,
+      "value": "F.A.Q."
+    }
+  ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "Help & FAQ"
+    }
+  ],
+  "footer.feedback": [
+    {
+      "type": 0,
+      "value": "Feedback"
+    }
+  ],
+  "footer.opensource": [
+    {
+      "type": 0,
+      "value": "Open Source"
+    }
+  ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "Others"
+    }
+  ],
+  "footer.termsandconditions": [
+    {
+      "type": 0,
+      "value": "Term And Conditions"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "We will send you an email to reset your password"
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "Send recovery link"
+    }
+  ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "We've sent you an email that will allow you to reset your password. Please check your email now."
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "Your temporal password has been sent"
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "Reset your password"
+    }
+  ],
+  "header.donthaveaccount": [
+    {
+      "type": 0,
+      "value": "Don't have an account ?"
+    }
+  ],
+  "header.haveaccount": [
+    {
+      "type": 0,
+      "value": "Already have an account?"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "There is no changes available"
+    }
+  ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "Create"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "You can import FreeMind 1.0.1 and WiseMapping maps to your list of maps. Select the file you want to import."
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "Import existing mindmap"
+    }
+  ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "Basic Info"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "Accept"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "Creation Date"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "Creator"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "By publishing the map you make it visible to everyone on the Internet."
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "Last Modified Date"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "Last Modified By"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "Publicly Visible"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "Sharing"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "Starred"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "Info"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "Log into your account"
+    }
+  ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "login.error": [
+    {
+      "type": 0,
+      "value": "The email address or password you entered is not valid."
+    }
+  ],
+  "login.forgotpwd": [
+    {
+      "type": 0,
+      "value": "Forgot Password ?"
+    }
+  ],
+  "login.hsqldbcofig": [
+    {
+      "type": 0,
+      "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "Password"
+    }
+  ],
+  "login.remberme": [
+    {
+      "type": 0,
+      "value": "Remember me"
+    }
+  ],
+  "login.signin": [
+    {
+      "type": 0,
+      "value": "Sign In"
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "Sign Up"
+    }
+  ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "Welcome"
+    }
+  ],
+  "login.userinactive": [
+    {
+      "type": 0,
+      "value": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "Creator"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "Last Update"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "More Actions"
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "Choose a file"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "Create a New Map"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "No matching record found with the current filter criteria."
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "Import from other tools"
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "Modified"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "Modified By"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "Revert"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "View"
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "Account"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "Sign Out"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "Accept"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "Enable public sharing"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "By publishing the map you make it visible to everyone on the Internet."
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "Embedded"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "Copy this snippet of code to embed in your blog or page:"
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "Public URL"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "Copy and paste the link below to share your map with colleagues:"
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "Publish"
+    }
+  ],
+  "registration.desc": [
+    {
+      "type": 0,
+      "value": "Signing up is free and just take a moment"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "First Name"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "Last Name"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "Password"
+    }
+  ],
+  "registration.register": [
+    {
+      "type": 0,
+      "value": "Register"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "Click 'Sign In' button below and start creating mind maps."
+    }
+  ],
+  "registration.termandconditions": [
+    {
+      "type": 0,
+      "value": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "Become a member"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "Please, fill the new map name and description."
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "Your account has been created successfully"
+    }
+  ]
+}
