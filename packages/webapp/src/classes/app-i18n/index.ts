@@ -59,7 +59,7 @@ export const localeFromStr = (code: string): Locale => {
         .find((l) => l.code == code);
 
     if (!result) {
-        throw `Langunage code could not be found in list of default supported: + ${code}`
+        throw `Language code could not be found in list of default supported: + ${code}`
     }
 
     return result;

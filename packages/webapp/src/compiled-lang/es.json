@@ -44,7 +44,7 @@
   "header.donthaveaccount": [
     {
       "type": 0,
-      "value": "No tienes una cuenta ?"
+      "value": "No tienes una cuenta contraseña?"
     }
   ],
   "login.email": [

@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import { AcUnitTwoTone, AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, LabelTwoTone, PersonOutlineTwoTone, PublicTwoTone, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
+import {  AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, LabelTwoTone, PersonOutlineTwoTone, PublicTwoTone, ScatterPlotTwoTone, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
 import { Button, Link, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage, IntlProvider, useIntl } from 'react-intl';
@@ -80,7 +80,7 @@ const MapsPage = () => {
     const filterButtons: ToolbarButtonInfo[] = [{
         filter: { type: 'all' },
         label: 'All',
-        icon: <AcUnitTwoTone color="secondary" />
+        icon: <ScatterPlotTwoTone color="secondary" />
     }, {
         filter: { type: 'owned' },
         label: 'Owned',
@@ -171,7 +171,7 @@ const MapsPage = () => {
                         }),
                     }}>
 
-                    <div style={{ padding: "20px 0 20px 15px" }}>
+                    <div style={{ padding: "20px 0 20px 15px" }} key="logo">
                         <img src={logoIcon} alt="logo" />
                     </div>
 
@@ -190,7 +190,7 @@ const MapsPage = () => {
                         )}
                     </List>
 
-                    <div style={{ position: 'absolute', bottom: '10px', left: '20px' }}>
+                    <div style={{ position: 'absolute', bottom: '10px', left: '20px' }} key="power-by">
                         <Link href="http://www.wisemapping.org/">
                             <img src={poweredByIcon} alt="Powered By WiseMapping" />
                         </Link>
