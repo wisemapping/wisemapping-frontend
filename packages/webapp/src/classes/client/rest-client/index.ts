@@ -10,11 +10,32 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
-    
+
+    updateAccountInfo(firstname: string, lastname: string): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(`${this.baseUrl}/c/restful/account/firstname`,
+                firstname,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                return axios.put(`${this.baseUrl}/c/restful/account/lastname`,
+                    lastname,
+                    { headers: { 'Content-Type': 'text/plain' } }
+                )
+            }).then(() => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
+
     updateAccountPassword(pasword: string): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios.put(`${this.baseUrl}/c/restful/account/password`,
-            pasword,
+                pasword,
                 { headers: { 'Content-Type': 'text/plain' } }
             ).then(() => {
                 success();
@@ -23,7 +44,8 @@ export default class RestClient implements Client {
                 reject(errorInfo);
             });
         }
-        return new Promise(handler);    }
+        return new Promise(handler);
+    }
 
     updateAccountLanguage(locale: LocaleCode): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
@@ -68,8 +90,8 @@ export default class RestClient implements Client {
                 const account = response.data;
                 const locale: LocaleCode | null = account.locale;
                 success({
-                    lastName: account.lastName ? account.lastName : '',
-                    firstName: account.fistName ? account.fistName : '',
+                    lastname: account.lastname ? account.lastname : '',
+                    firstname: account.firstname ? account.firstname : '',
                     email: account.email,
                     locale: locale ? localeFromStr(locale) : Locales.EN
                 });

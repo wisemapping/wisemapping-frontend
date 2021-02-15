@@ -34,6 +34,9 @@ class MockClient implements Client {
         ];
 
     }
+    updateAccountInfo(firstname: string, lastname: string): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
 
     updateAccountPassword(pasword: string): Promise<void> {
         return Promise.resolve();
@@ -52,8 +55,8 @@ class MockClient implements Client {
         console.log('Fetch account info ...')
         const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
         return Promise.resolve({
-            firstName: 'Costme',
-            lastName: 'Fulanito',
+            firstname: 'Costme',
+            lastname: 'Fulanito',
             email: 'test@example.com',
             locale: localeFromStr(locale)
         });

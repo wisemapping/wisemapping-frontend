@@ -58,8 +58,8 @@ export type ErrorInfo = {
 }
 
 export type AccountInfo = {
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     email: string;
     locale: Locale;
 }
@@ -75,6 +75,7 @@ interface Client {
    
     updateAccountLanguage(locale: LocaleCode): Promise<void>;
     updateAccountPassword(pasword: string): Promise<void>;
+    updateAccountInfo(firstname: string,lastname: string): Promise<void>;
 
     updateStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, starred: boolean): Promise<void>;
