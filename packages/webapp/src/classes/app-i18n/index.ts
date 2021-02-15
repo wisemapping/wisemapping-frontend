@@ -1,3 +1,5 @@
+import { fetchAccount } from './../../redux/clientSlice';
+
 export class Locale {
     code: LocaleCode;
     label: string;
@@ -11,21 +13,17 @@ export class Locale {
 }
 
 export default class AppI18n {
-    private locale: Locale = Locales.EN;
 
-    constructor(localeCode: string) {
-        try {
-            this.locale = localeFromStr(localeCode)
-        } catch {
-            this.locale = this.browserLocale();
-        }
+    constructor() {
+
     }
 
-    getLocale(): Locale {
-        return this.locale;
+    public getUserLocale(): Locale {
+        const account = fetchAccount();
+        return account ? account.locale : this.getBrowserLocale();
     }
 
-    private browserLocale(): Locale {
+    public getBrowserLocale(): Locale {
         let localeCode = (navigator.languages && navigator.languages[0])
             || navigator.language;
 
@@ -49,8 +47,8 @@ export const Locales =
 {
     EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')),
     ES: new Locale('es', 'Español', require('./../../compiled-lang/es.json')),
-    DE: new Locale('de', 'Français', require('./../../compiled-lang/de.json')),
-    FR: new Locale('fr', 'Deutsch', require('./../../compiled-lang/fr.json')),
+    DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')),
+    FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')),
 }
 
 export const localeFromStr = (code: string): Locale => {

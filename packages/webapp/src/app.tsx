@@ -25,8 +25,8 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-  const [appi18n, setAppi18n] = useState<AppI18n>(new AppI18n('es'));
-  const locale = appi18n.getLocale();
+  const appi18n = new AppI18n();
+  const locale = appi18n.getBrowserLocale();
 
   return locale.message ? (
     <Provider store={store}>

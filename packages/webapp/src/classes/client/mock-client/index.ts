@@ -45,6 +45,7 @@ class MockClient implements Client {
     }
 
     fetchAccountInfo(): Promise<AccountInfo> {
+        console.log('Fetch account info ...')
         const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
         return Promise.resolve({
             firstName: 'Costme',

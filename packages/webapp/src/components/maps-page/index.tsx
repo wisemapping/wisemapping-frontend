@@ -22,6 +22,7 @@ import AccountMenu from './account-menu';
 import ClientHealthSentinel from '../../classes/client/client-health-sentinel';
 import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
+import AppI18n, { Locales } from '../../classes/app-i18n';
 
 const logoIcon = require('../../images/logo-small.svg');
 const poweredByIcon = require('../../images/pwrdby-white.svg');
@@ -107,94 +108,100 @@ const MapsPage = () => {
     }))
 
 
+    // Configure using user settings ...
+    const appi18n = new AppI18n();
+    const userLocale = appi18n.getUserLocale();
+
     return (
-        <div className={classes.root}>
-            <ClientHealthSentinel />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-                variant='outlined'
-                elevation={0}>
+        <IntlProvider locale={userLocale.code} defaultLocale={Locales.EN.code} messages={userLocale.message} >
+            <div className={classes.root}>
+                <ClientHealthSentinel />
+                <AppBar
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
+                    })}
+                    variant='outlined'
+                    elevation={0}>
 
-                <Toolbar>
-                    <Tooltip title={intl.formatMessage({ id: 'maps.create-tooltip', defaultMessage: 'Create a New Map' })}>
-                        <Button color="primary"
-                            size="medium"
-                            variant="contained"
-                            type="button"
-                            disableElevation={true}
-                            startIcon={<AddCircleTwoTone />}
-                            className={classes.newMapButton}
-                            onClick={() => setActiveDialog('create')}>
-                            <FormattedMessage id="action.new" defaultMessage="New Map" />
-                        </Button>
-                    </Tooltip>
+                    <Toolbar>
+                        <Tooltip title={intl.formatMessage({ id: 'maps.create-tooltip', defaultMessage: 'Create a New Map' })}>
+                            <Button color="primary"
+                                size="medium"
+                                variant="contained"
+                                type="button"
+                                disableElevation={true}
+                                startIcon={<AddCircleTwoTone />}
+                                className={classes.newMapButton}
+                                onClick={() => setActiveDialog('create')}>
+                                <FormattedMessage id="action.new" defaultMessage="New Map" />
+                            </Button>
+                        </Tooltip>
 
-                    <Tooltip title={intl.formatMessage({ id: 'maps.import-desc', defaultMessage: 'Import from other tools' })}>
-                        <Button
-                            color="primary"
-                            size="medium"
-                            variant="outlined"
-                            type="button"
-                            disableElevation={true}
-                            startIcon={<CloudUploadTwoTone />}
-                            className={classes.importButton}
-                            onClick={() => setActiveDialog('import')}>
-                            <FormattedMessage id="action.import" defaultMessage="Import" />
-                        </Button>
-                    </Tooltip>
-                    <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapsId={[]} />
+                        <Tooltip title={intl.formatMessage({ id: 'maps.import-desc', defaultMessage: 'Import from other tools' })}>
+                            <Button
+                                color="primary"
+                                size="medium"
+                                variant="outlined"
+                                type="button"
+                                disableElevation={true}
+                                startIcon={<CloudUploadTwoTone />}
+                                className={classes.importButton}
+                                onClick={() => setActiveDialog('import')}>
+                                <FormattedMessage id="action.import" defaultMessage="Import" />
+                            </Button>
+                        </Tooltip>
+                        <ActionDispatcher action={activeDialog} onClose={() => setActiveDialog(undefined)} mapsId={[]} />
 
-                    <div className={classes.rightButtonGroup}>
-                        <LanguageMenu />
-                        <HelpMenu />
-                        <AccountMenu />
-                    </div>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open
-                })}
-                classes={{
-                    paper: clsx({
+                        <div className={classes.rightButtonGroup}>
+                            <LanguageMenu />
+                            <HelpMenu />
+                            <AccountMenu />
+                        </div>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
                         [classes.drawerOpen]: open
-                    }),
-                }}>
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerOpen]: open
+                        }),
+                    }}>
 
-                <div style={{ padding: "20px 0 20px 15px" }}>
-                    <img src={logoIcon} alt="logo" />
-                </div>
+                    <div style={{ padding: "20px 0 20px 15px" }}>
+                        <img src={logoIcon} alt="logo" />
+                    </div>
 
-                <List component="nav">
-                    {filterButtons.map(buttonInfo => {
-                        return (<StyleListItem
-                            icon={buttonInfo.icon}
-                            label={buttonInfo.label}
-                            filter={buttonInfo.filter}
-                            active={filter}
-                            onClick={handleMenuClick}
-                            onDelete={handleLabelDelete}
-                            key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label}`}
-                        />)
-                    }
-                    )}
-                </List>
+                    <List component="nav">
+                        {filterButtons.map(buttonInfo => {
+                            return (<StyleListItem
+                                icon={buttonInfo.icon}
+                                label={buttonInfo.label}
+                                filter={buttonInfo.filter}
+                                active={filter}
+                                onClick={handleMenuClick}
+                                onDelete={handleLabelDelete}
+                                key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label}`}
+                            />)
+                        }
+                        )}
+                    </List>
 
-                <div style={{ position: 'absolute', bottom: '10px', left: '20px' }}>
-                    <Link href="http://www.wisemapping.org/">
-                        <img src={poweredByIcon} alt="Powered By WiseMapping" />
-                    </Link>
-                </div>
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <MapsList filter={filter} />
-            </main>
-        </div>
+                    <div style={{ position: 'absolute', bottom: '10px', left: '20px' }}>
+                        <Link href="http://www.wisemapping.org/">
+                            <img src={poweredByIcon} alt="Powered By WiseMapping" />
+                        </Link>
+                    </div>
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    <MapsList filter={filter} />
+                </main>
+            </div>
+        </IntlProvider>
     );
 }
 

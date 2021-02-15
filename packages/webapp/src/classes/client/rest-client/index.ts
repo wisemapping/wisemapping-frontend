@@ -12,7 +12,19 @@ export default class RestClient implements Client {
     }
 
     updateAccountLanguage(locale: LocaleCode): Promise<void> {
-        throw "Method not implemented";
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(`${this.baseUrl}/c/restful/account/locale`,
+                locale,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 
     importMap(model: ImportMapInfo): Promise<number> {
