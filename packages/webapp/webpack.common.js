@@ -12,22 +12,44 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
     module: {
         rules: [{
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: '/node_modules/'
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        esModule: false,
-                    }
-                }]
-            },
+            test: /\.tsx?$/,
+            use: 'ts-loader',
+            exclude: '/node_modules/'
+        },
+        {
+            test: /\.(png|jpe?g|gif|svg)$/,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    esModule: false,
+                }
+            }]
+        },
         ]
+    },
+    optimization: {
+        usedExports: true,
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /node_modules\/(?!antd\/).*/,
+                    name: "vendors",
+                    chunks: "all",
+                },
+                // This can be your own design library.
+                antd: {
+                    test: /node_modules\/(antd\/).*/,
+                    name: "antd",
+                    chunks: "all",
+                },
+            },
+        }
     },
     plugins: [
         new CleanWebpackPlugin(),
