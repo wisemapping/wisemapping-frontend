@@ -7,6 +7,7 @@ import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
 import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
+
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';

@@ -1,9 +1,14 @@
 import { useSelector } from 'react-redux';
 import React from "react";
 import { activeInstanceStatus, ClientStatus } from '../../../redux/clientSlice';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Alert from '@material-ui/lab/Alert';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 const ClientHealthSentinel = () => {
     const status: ClientStatus = useSelector(activeInstanceStatus);

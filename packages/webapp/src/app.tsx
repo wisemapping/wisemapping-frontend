@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
 
@@ -10,10 +10,11 @@ import store from "./redux/store";
 import { ForgotPasswordPage } from './components/forgot-password-page';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { theme } from './theme'
 import AppI18n, { Locales } from './classes/app-i18n';
 import MapsPage from './components/maps-page';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 const queryClient = new QueryClient({
   defaultOptions: {

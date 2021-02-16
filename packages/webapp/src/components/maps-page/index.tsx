@@ -5,10 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import { Button, Link, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage, IntlProvider, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
@@ -24,6 +21,8 @@ import LanguageMenu from './language-menu';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 
 
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItem from '@material-ui/core/ListItem';
 
 import AddCircleTwoTone from '@material-ui/icons/AddCircleTwoTone';
 import CloudUploadTwoTone from '@material-ui/icons/CloudUploadTwoTone';
@@ -34,6 +33,11 @@ import PublicTwoTone from '@material-ui/icons/PublicTwoTone';
 import ScatterPlotTwoTone from '@material-ui/icons/ScatterPlotTwoTone';
 import ShareTwoTone from '@material-ui/icons/ShareTwoTone';
 import StarTwoTone from '@material-ui/icons/StarTwoTone';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 
 const logoIcon = require('../../images/logo-small.svg');
