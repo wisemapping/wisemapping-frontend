@@ -1,13 +1,10 @@
 const path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 module.exports = {
-    mode: 'development',
-    devtool: 'eval-source-map',
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
@@ -29,7 +26,7 @@ module.exports = {
                         esModule: false,
                     }
                 }]
-            }
+            },
         ]
     },
     output: {
@@ -48,25 +45,7 @@ module.exports = {
                     ]
                 }
             }]
-        }),
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'public/index.html'),
-            templateParameters: {
-                PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
-            },
-            base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
         })
 
-    ],
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 3000,
-        hot: true,
-        historyApiFallback: {
-            rewrites: [
-                { from: /^\/c\//, to: '/index.html' }
-            ]
-        }
-    }
+    ]
 }
