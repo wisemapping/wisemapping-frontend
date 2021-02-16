@@ -1,5 +1,16 @@
 import React, { useEffect, CSSProperties } from 'react';
 
+import { useStyles } from './styled';
+import { useSelector } from 'react-redux';
+import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import Client, { ErrorInfo, MapInfo } from '../../../classes/client';
+import ActionChooser, { ActionType } from '../action-chooser';
+import ActionDispatcher from '../action-dispatcher';
+import moment from 'moment'
+import { Filter, LabelFilter } from '..';
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,20 +33,6 @@ import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import SearchIcon from '@material-ui/icons/Search';
-
-import { useStyles } from './styled';
-import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../redux/clientSlice';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { ErrorInfo, MapInfo } from '../../../classes/client';
-import Client from '../../../classes/client';
-import ActionChooser, { ActionType } from '../action-chooser';
-import ActionDispatcher from '../action-dispatcher';
-import moment from 'moment'
-import { Filter, LabelFilter } from '..';
-import { FormattedMessage, useIntl } from 'react-intl';
-
-
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -209,7 +206,12 @@ export const MapsList = (props: MapsListProps) => {
   const intl = useIntl();
 
   const queryClient = useQueryClient();
-
+  
+  // Configure locale ...
+  const account = fetchAccount();
+  if (account) {
+    moment.locale(account.locale.code);
+  }
 
   useEffect(() => {
     setSelected([]);
