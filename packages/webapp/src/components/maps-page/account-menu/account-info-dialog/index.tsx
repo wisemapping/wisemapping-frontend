@@ -115,7 +115,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps) => {
                 <FormGroup>
                     {remove &&
                         <Alert severity="error">
-                            <FormattedMessage id="account.delete-warning" defaultMessage=" Keep in mind that you will not be able retrieve any mindmap you have added.If you would still like your account deleted." />
+                            <FormattedMessage id="account.delete-warning" defaultMessage="Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored." />
                         </Alert>
                     }
                     <FormControlLabel
