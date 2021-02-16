@@ -1,6 +1,10 @@
 const path = require('path');
+const webpack = require('webpack')
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+webpack
 
 module.exports = {
     entry: {
@@ -60,6 +64,10 @@ module.exports = {
                     ]
                 }
             }]
-        })
-     ]
+        }),
+        // Ignore all locale files of moment.js
+        new webpack.ContextReplacementPlugin(
+            /moment[\/\\]locale$/,
+            /de$|es$|fr$/
+        )]
 }
