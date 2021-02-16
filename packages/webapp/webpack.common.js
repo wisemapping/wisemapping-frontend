@@ -1,7 +1,7 @@
 const path = require('path');
-
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 
 module.exports = {
@@ -29,10 +29,6 @@ module.exports = {
             },
         ]
     },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
-    },
     plugins: [
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
@@ -45,7 +41,7 @@ module.exports = {
                     ]
                 }
             }]
-        })
-
+        }),
+        new CompressionPlugin()
     ]
 }

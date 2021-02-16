@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, Switch } from "@material-ui/core";
+import { FormControl, FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
