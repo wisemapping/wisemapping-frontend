@@ -65,6 +65,7 @@ export type AccountInfo = {
 }
 
 interface Client {
+    deleteAccount(): Promise<void>
     importMap(model: ImportMapInfo): Promise<number>
     createMap(map: BasicMapInfo): Promise<number>;
     deleteMaps(ids: number[]): Promise<void>;

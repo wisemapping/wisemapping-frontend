@@ -10,6 +10,19 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
+    deleteAccount(): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.delete(this.baseUrl + `/c/restful/account`,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+    }
 
     updateAccountInfo(firstname: string, lastname: string): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {

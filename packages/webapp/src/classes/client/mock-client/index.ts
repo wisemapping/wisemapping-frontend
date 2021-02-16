@@ -34,8 +34,13 @@ class MockClient implements Client {
         ];
 
     }
+
+    deleteAccount(): Promise<void> {
+         return Promise.resolve();
+    }
+
     updateAccountInfo(firstname: string, lastname: string): Promise<void> {
-        throw new Error('Method not implemented.');
+         return Promise.resolve();
     }
 
     updateAccountPassword(pasword: string): Promise<void> {
