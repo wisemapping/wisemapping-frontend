@@ -34,6 +34,10 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
+// Load fromNow pluggin
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime);
+
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -330,9 +334,6 @@ export const MapsList = (props: MapsListProps) => {
       mapsId: selected
     });
   }
-
-  const relativeTime = require('dayjs/plugin/relativeTime')
-  dayjs.extend(relativeTime);
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
