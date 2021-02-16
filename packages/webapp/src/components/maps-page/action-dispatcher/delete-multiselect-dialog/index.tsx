@@ -1,4 +1,3 @@
-import { Alert, AlertTitle } from "@material-ui/lab";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
@@ -7,6 +6,8 @@ import Client from "../../../../classes/client";
 import { activeInstance } from '../../../../redux/clientSlice';
 import { handleOnMutationSuccess } from "..";
 import BaseDialog from "../base-dialog";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
 
 export type DeleteMultiselectDialogProps = {
   mapsId: number[],
