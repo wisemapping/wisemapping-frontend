@@ -6,5 +6,21 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   optimization: {
-    minimize: true  }
+    minimize: true
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: 'public/*',
+        to: '[name].[ext]',
+        globOptions: {
+          ignore: [
+            '**/index.html'
+          ]
+        }
+      }]
+    }),
+    new CompressionPlugin()
+  ]
 });
