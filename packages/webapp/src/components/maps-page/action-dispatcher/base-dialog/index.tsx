@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, DialogContentText } from "@material-ui/core";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ErrorInfo } from "../../../../classes/client";
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
 import GlobalError from "../../../form/global-error";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Button from "@material-ui/core/Button";
 
 export type DialogProps = {
     onClose: () => void;

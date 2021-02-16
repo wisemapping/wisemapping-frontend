@@ -1,5 +1,5 @@
-import { Button } from '@material-ui/core';
-import React, { useState, useEffect } from 'react'
+import Button from '@material-ui/core/Button';
+import React, { useState } from 'react'
 import { useIntl } from 'react-intl'
 
 type SubmitButton = {
@@ -17,8 +17,8 @@ const SubmitButton = (props: SubmitButton) => {
     const [value, setValue] = useState(valueTxt);
     return (
         <Button color="primary" size="medium" variant="contained" type="submit"
-            disableElevation={true} disabled={disabled} 
-            style={{width: '350px', height: '53px', padding: '0px 20px', margin: '7px 0px',fontSize: '18px' }} >
+            disableElevation={true} disabled={disabled}
+            style={{ width: '350px', height: '53px', padding: '0px 20px', margin: '7px 0px', fontSize: '18px' }} >
             {value}
         </Button>
     );

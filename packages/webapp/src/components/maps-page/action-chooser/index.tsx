@@ -1,4 +1,3 @@
-import { Divider, ListItemIcon, Menu, MenuItem } from '@material-ui/core';
 import React from 'react';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
@@ -9,10 +8,14 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import { FormattedMessage } from 'react-intl';
-import { LabelOutlined } from '@material-ui/icons';
-import { fetchMapById } from '../../../redux/clientSlice';
+import LabelOutlined from '@material-ui/icons/LabelOutlined';
 
+import { FormattedMessage } from 'react-intl';
+import { fetchMapById } from '../../../redux/clientSlice';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
 export type ActionType = 'open' | 'share' | 'import' | 'delete' | 'info' | 'create' | 'duplicate' | 'export' | 'label' | 'rename' | 'print' | 'info' | 'publish' | 'history' | undefined;
 
 interface ActionProps {

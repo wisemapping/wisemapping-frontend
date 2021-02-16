@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useHistory } from 'react-router-dom';
-import Client , { ErrorInfo} from '../../classes/client';
+import Client, { ErrorInfo } from '../../classes/client';
 import FormContainer from '../layout/form-container';
 
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 
-import { FormControl, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
 
 export type Model = {
   email: string;
@@ -72,16 +73,16 @@ const RegistrationForm = () => {
           <GlobalError error={error} />
 
           <Input name="email" type="email" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.email", defaultMessage: "Email" })}
-            autoComplete="email" error={error}/>
+            autoComplete="email" error={error} />
 
           <Input name="firstname" type="text" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.firstname", defaultMessage: "First Name" })}
-            autoComplete="given-name" error={error}/>
+            autoComplete="given-name" error={error} />
 
           <Input name="lastname" type="text" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.lastname", defaultMessage: "Last Name" })}
-            autoComplete="family-name" error={error}/>
+            autoComplete="family-name" error={error} />
 
           <Input name="password" type="password" onChange={handleOnChange} label={intl.formatMessage({ id: "registration.password", defaultMessage: "Password" })}
-            autoComplete="new-password" error={error}/>
+            autoComplete="new-password" error={error} />
 
           <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>
             <ReCAPTCHA

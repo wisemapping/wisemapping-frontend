@@ -1,4 +1,3 @@
-import { FormControl, FormControlLabel, FormGroup, Switch } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
@@ -7,7 +6,12 @@ import Input from "../../../form/input";
 import BaseDialog from "../../action-dispatcher/base-dialog";
 import { useSelector } from 'react-redux';
 import { activeInstance, fetchAccount } from "../../../../redux/clientSlice";
-import { Alert } from "@material-ui/lab";
+
+import Alert from "@material-ui/lab/Alert";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import Switch from "@material-ui/core/Switch";
 
 
 type AccountInfoDialogProps = {

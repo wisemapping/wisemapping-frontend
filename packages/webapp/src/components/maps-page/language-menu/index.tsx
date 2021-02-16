@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Menu, MenuItem, Tooltip } from '@material-ui/core';
-import { TranslateTwoTone } from '@material-ui/icons';
+import TranslateTwoTone from '@material-ui/icons/TranslateTwoTone';
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import Client from "../../../classes/client";
@@ -94,7 +94,7 @@ const LanguageMenu = () => {
             </Menu>
             {openHelpDialog &&
                 <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />
-            }           
+            }
         </span>);
 }
 

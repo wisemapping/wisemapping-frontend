@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { useStyles } from './style';
-import {  AddCircleTwoTone, CloudUploadTwoTone, DeleteOutlineTwoTone, LabelTwoTone, PersonOutlineTwoTone, PublicTwoTone, ScatterPlotTwoTone, ShareTwoTone, StarTwoTone } from '@material-ui/icons';
 import { Button, Link, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
 import { MapsList } from './maps-list';
 import { FormattedMessage, IntlProvider, useIntl } from 'react-intl';
@@ -23,6 +22,19 @@ import ClientHealthSentinel from '../../classes/client/client-health-sentinel';
 import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
 import AppI18n, { Locales } from '../../classes/app-i18n';
+
+
+
+import AddCircleTwoTone from '@material-ui/icons/AddCircleTwoTone';
+import CloudUploadTwoTone from '@material-ui/icons/CloudUploadTwoTone';
+import DeleteOutlineTwoTone from '@material-ui/icons/DeleteOutlineTwoTone';
+import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
+import PersonOutlineTwoTone from '@material-ui/icons/PersonOutlineTwoTone';
+import PublicTwoTone from '@material-ui/icons/PublicTwoTone';
+import ScatterPlotTwoTone from '@material-ui/icons/ScatterPlotTwoTone';
+import ShareTwoTone from '@material-ui/icons/ShareTwoTone';
+import StarTwoTone from '@material-ui/icons/StarTwoTone';
+
 
 const logoIcon = require('../../images/logo-small.svg');
 const poweredByIcon = require('../../images/pwrdby-white.svg');

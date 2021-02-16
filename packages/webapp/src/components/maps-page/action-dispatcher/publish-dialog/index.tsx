@@ -2,15 +2,21 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
-import { AppBar, Checkbox, FormControl, FormControlLabel, Tab, TextareaAutosize, Typography } from '@material-ui/core';
-
-
 import Client, { ErrorInfo } from '../../../../classes/client';
 import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import TabContext from '@material-ui/lab/TabContext';
+import AppBar from '@material-ui/core/AppBar';
+import TabList from '@material-ui/lab/TabList';
+import Tab from '@material-ui/core/Tab';
+import TabPanel from '@material-ui/lab/TabPanel';
+import Typography from '@material-ui/core/Typography';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps) => {

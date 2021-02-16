@@ -1,4 +1,4 @@
-import { FormControl } from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useMutation } from "react-query";

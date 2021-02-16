@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import BaseDialog from "../base-dialog";
-import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select } from "@material-ui/core";
 import { useStyles } from './style';
-import { Alert } from "@material-ui/lab";
+import Alert from "@material-ui/lab/Alert";
 import { fetchMapById } from "../../../../redux/clientSlice";
+import FormControl from "@material-ui/core/FormControl";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 type ExportFormat = 'pdf' | 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';

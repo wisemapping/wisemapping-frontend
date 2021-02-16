@@ -6,8 +6,17 @@ import Client, { ChangeHistory } from "../../../../classes/client";
 import { activeInstance } from '../../../../redux/clientSlice';
 import { SimpleDialogProps } from "..";
 import BaseDialog from "../base-dialog";
-import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "@material-ui/core";
 import moment from "moment";
+
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableBody from "@material-ui/core/TableBody";
+import Tooltip from "@material-ui/core/Tooltip";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
 
 
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps) => {

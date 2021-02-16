@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import React, { ChangeEvent } from "react";
 import { ErrorInfo } from "../../../classes/client";
 

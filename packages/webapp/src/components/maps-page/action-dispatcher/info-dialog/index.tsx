@@ -1,7 +1,5 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Card, List, ListItem, Paper, Typography } from '@material-ui/core';
-
 
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
@@ -9,6 +7,11 @@ import {  SimpleDialogProps } from '..';
 import { useStyles } from './style';
 import moment from 'moment';
 import { fetchMapById } from '../../../../redux/clientSlice';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
     const { map } = fetchMapById(mapId);

@@ -1,7 +1,16 @@
-import { IconButton, Link, ListItemIcon, Menu, MenuItem } from "@material-ui/core";
-import { Help, PolicyOutlined, EmailOutlined, FeedbackOutlined, EmojiPeopleOutlined } from "@material-ui/icons";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
+import Help from "@material-ui/icons/Help";
+import PolicyOutlined from "@material-ui/icons/PolicyOutlined";
+import FeedbackOutlined from "@material-ui/icons/FeedbackOutlined";
+import EmojiPeopleOutlined from "@material-ui/icons/EmailOutlined";
+import EmailOutlined from "@material-ui/icons/EmailOutlined";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Link from "@material-ui/core/Link";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 const HelpMenu = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

@@ -1,10 +1,18 @@
-import { IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip } from '@material-ui/core';
-import { AccountCircle, ExitToAppOutlined, LockOpenOutlined, SettingsApplicationsOutlined } from '@material-ui/icons';
+import IconButton from "@material-ui/core/IconButton";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Tooltip from "@material-ui/core/Tooltip";
+import SettingsApplicationsOutlined from "@material-ui/icons/SettingsApplicationsOutlined";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { fetchAccount } from '../../../redux/clientSlice';
 import AccountInfoDialog from './account-info-dialog';
 import ChangePasswordDialog from './change-password-dialog';
+import LockOpenOutlined from "@material-ui/icons/LockOpenOutlined";
+import Link from "@material-ui/core/Link";
+import ExitToAppOutlined from "@material-ui/icons/ExitToAppOutlined";
 
 type ActionType = 'change-password' | 'account-info' | undefined;
 const AccountMenu = () => {

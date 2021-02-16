@@ -12,7 +12,8 @@ import { activeInstance } from '../../redux/clientSlice'
 import Input from '../form/input'
 import GlobalError from '../form/global-error'
 import SubmitButton from '../form/submit-button'
-import { Typography } from '@material-ui/core'
+
+import Typography from '@material-ui/core/Typography'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -50,7 +51,7 @@ const ForgotPassword = () => {
 
       <form onSubmit={handleOnSubmit}>
         <Input type="email" name="email" label={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })}
-          autoComplete="email" onChange={e => setEmail(e.target.value)} error={error}/>
+          autoComplete="email" onChange={e => setEmail(e.target.value)} error={error} />
 
         <SubmitButton value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
       </form>

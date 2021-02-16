@@ -1,5 +1,4 @@
-import React, { useEffect,CSSProperties } from 'react';
-import { useStyles } from './styled';
+import React, { useEffect, CSSProperties } from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,8 +13,17 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
+import Button from '@material-ui/core/Button';
+import InputBase from '@material-ui/core/InputBase';
+import Link from '@material-ui/core/Link';
+
+import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
+import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
+import SearchIcon from '@material-ui/icons/Search';
+
+import { useStyles } from './styled';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -23,12 +31,11 @@ import { ErrorInfo, MapInfo } from '../../../classes/client';
 import Client from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
-import { Button, InputBase, Link } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import moment from 'moment'
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { DeleteOutlined, LabelTwoTone } from '@material-ui/icons';
+
+
 
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -316,10 +323,10 @@ export const MapsList = (props: MapsListProps) => {
   }
 
   const handleDeleteClick = () => {
-      setActiveDialog({
-        actionType: 'delete',
-        mapsId: selected
-      });
+    setActiveDialog({
+      actionType: 'delete',
+      mapsId: selected
+    });
   }
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;

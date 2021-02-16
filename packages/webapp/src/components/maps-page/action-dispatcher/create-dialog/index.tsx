@@ -2,8 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
-import { FormControl } from '@material-ui/core';
-
+import FormControl  from '@material-ui/core/FormControl';
 
 import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';

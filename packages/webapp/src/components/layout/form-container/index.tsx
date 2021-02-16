@@ -1,4 +1,5 @@
-import { Container, withStyles } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const FormContainer = withStyles({
     root: {
