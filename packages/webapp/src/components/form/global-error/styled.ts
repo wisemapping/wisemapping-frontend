@@ -1,6 +1,5 @@
-import { withStyles } from "@material-ui/core/styles";
-import { Alert } from "@material-ui/lab";
-
+import withStyles from "@material-ui/core/styles/withStyles";
+import Alert from "@material-ui/lab/Alert";
 
 export const StyledAlert = withStyles({
     root:

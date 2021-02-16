@@ -16,7 +16,7 @@ const theme = createMuiTheme({
                 fontSize: '14px',
                 '& fieldset': {
                     border: 'solid 1px #ffcb66',
-                },
+                }, 
                 '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
                     borderColor: '#f9a826',
                 }
