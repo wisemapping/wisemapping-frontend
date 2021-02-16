@@ -1,8 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
-
 
 module.exports = {
     entry: {
@@ -38,14 +36,13 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 vendors: {
-                    test: /node_modules\/(?!antd\/).*/,
+                    test: /node_modules\/(?!@material-ui\/).*/,
                     name: "vendors",
                     chunks: "all",
                 },
-                // This can be your own design library.
-                antd: {
-                    test: /node_modules\/(antd\/).*/,
-                    name: "antd",
+                material: {
+                    test: /node_modules\/(@material-ui\/).*/,
+                    name: "material-ui",
                     chunks: "all",
                 },
             },
@@ -64,5 +61,5 @@ module.exports = {
                 }
             }]
         })
-    ]
+     ]
 }
