@@ -6,7 +6,7 @@ import Client, { ChangeHistory } from "../../../../classes/client";
 import { activeInstance } from '../../../../redux/clientSlice';
 import { SimpleDialogProps } from "..";
 import BaseDialog from "../base-dialog";
-import moment from "moment";
+import dayjs from "dayjs";
 
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -40,7 +40,6 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps) => {
       })
   };
 
-
   return (
     <div>
       <BaseDialog
@@ -70,8 +69,8 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps) => {
                   <TableRow key={row.id}>
                     <TableCell align="left">{row.lastModificationBy}</TableCell>
                     <TableCell align="left">
-                      <Tooltip title={moment(row.lastModificationTime).format("lll")} placement="bottom-start">
-                        <span>{moment(row.lastModificationTime).fromNow()}</span>
+                      <Tooltip title={dayjs(row.lastModificationTime).format("lll")} placement="bottom-start">
+                        <span>{dayjs(row.lastModificationTime).fromNow()}</span>
                       </Tooltip>
                     </TableCell>
                     <TableCell align="left"><Link href={`c/maps/${mapId}/${row.id}/view`} target="history"><FormattedMessage id="maps.view" defaultMessage="View" /></Link></TableCell>

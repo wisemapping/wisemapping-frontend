@@ -64,10 +64,5 @@ module.exports = {
                     ]
                 }
             }]
-        }),
-        // Ignore all locale files of moment.js
-        new webpack.ContextReplacementPlugin(
-            /moment[\/\\]locale$/,
-            /de$|es$|fr$/
-        )]
+        })]
 }

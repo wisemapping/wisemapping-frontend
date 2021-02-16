@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Client, { ErrorInfo, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
-import moment from 'moment'
+import dayjs from 'dayjs';
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -210,7 +210,7 @@ export const MapsList = (props: MapsListProps) => {
   // Configure locale ...
   const account = fetchAccount();
   if (account) {
-    moment.locale(account.locale.code);
+    dayjs.locale(account.locale.code);
   }
 
   useEffect(() => {
@@ -330,6 +330,9 @@ export const MapsList = (props: MapsListProps) => {
       mapsId: selected
     });
   }
+
+  const relativeTime = require('dayjs/plugin/relativeTime')
+  dayjs.extend(relativeTime);
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
@@ -476,9 +479,9 @@ export const MapsList = (props: MapsListProps) => {
 
                           <TableCell className={classes.bodyCell}>
                             <Tooltip title={
-                              `Modified by ${row.lastModificationBy} on ${moment(row.lastModificationTime).format("lll")}`
+                              `Modified by ${row.lastModificationBy} on ${dayjs(row.lastModificationTime).format("lll")}`
                             } placement="bottom-start">
-                              <span>{moment(row.lastModificationTime).fromNow()}</span>
+                              <span>{dayjs(row.lastModificationTime).fromNow()}</span>
                             </Tooltip>
                           </TableCell>
 

@@ -5,7 +5,7 @@ import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
 import {  SimpleDialogProps } from '..';
 import { useStyles } from './style';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { fetchMapById } from '../../../../redux/clientSlice';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -73,7 +73,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
                                 <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />:
                         </Typography>
                             <Typography variant="body2">
-                                {moment(map?.creationTime).format("lll")}
+                                {dayjs(map?.creationTime).format("lll")}
                             </Typography>
                         </ListItem>
 
@@ -92,7 +92,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
                                 <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />:
                         </Typography>
                             <Typography variant="body2">
-                                {moment(map?.lastModificationTime).format("lll")}
+                                {dayjs(map?.lastModificationTime).format("lll")}
                             </Typography>
                         </ListItem>
 

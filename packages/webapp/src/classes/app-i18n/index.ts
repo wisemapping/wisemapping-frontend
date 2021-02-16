@@ -1,4 +1,7 @@
 import { fetchAccount } from './../../redux/clientSlice';
+import 'dayjs/locale/fr';
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 
 export class Locale {
     code: LocaleCode;
