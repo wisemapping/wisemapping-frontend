@@ -11,7 +11,9 @@ module.exports = merge(common, {
     minimize: true
   },
   plugins: [
-    new CompressionPlugin(),
+    new CompressionPlugin({
+      test: /\.js(\?.*)?$/i
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
