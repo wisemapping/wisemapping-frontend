@@ -16,3 +16,4 @@ pipelines:
             script:
               - yarn install
               - yarn build
+              - yarn lint
