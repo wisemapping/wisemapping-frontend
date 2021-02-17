@@ -19,7 +19,7 @@ type ChangePasswordModel = {
 }
 
 const defaultModel: ChangePasswordModel = { password: '', retryPassword: '' };
-const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps) => {
+const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps):React.ReactElement => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ChangePasswordModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();

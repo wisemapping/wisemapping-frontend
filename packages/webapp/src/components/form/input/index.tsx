@@ -27,7 +27,7 @@ const Input = ({
     fullWidth = true,
     disabled = false
 
-}: InputProps) => {
+}: InputProps): React.ReactElement => {
 
     const fieldError = error?.fields?.[name];
     return (

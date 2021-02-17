@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
-import {  SimpleDialogProps } from '..';
+import { SimpleDialogProps } from '..';
 import { useStyles } from './style';
 import dayjs from 'dayjs';
 import { fetchMapById } from '../../../../redux/clientSlice';
@@ -13,7 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 
-const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
+const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);
     const [error, setError] = React.useState<ErrorInfo>();
 
@@ -31,7 +31,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
             description={intl.formatMessage({ id: 'info.description-msg', defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.' })}
             submitButton={intl.formatMessage({ id: 'info.button', defaultMessage: 'Accept' })}>
 
-            <Paper style={{ maxHeight: '200px' }}>
+            <Paper style={{ maxHeight: 200, overflowY: 'scroll' }} variant="outlined" elevation={0}>
                 <Card variant="outlined">
                     <List dense={true}>
                         <ListItem>

@@ -10,7 +10,7 @@ import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 
 
-const DeleteDialog = ({ mapId, onClose } : SimpleDialogProps) => {
+const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
@@ -36,13 +36,13 @@ const DeleteDialog = ({ mapId, onClose } : SimpleDialogProps) => {
     <div>
       <BaseDialog
         onClose={handleOnClose} onSubmit={handleOnSubmit}
-        title={intl.formatMessage({id: "action.delete-title", defaultMessage: "Delete"})}
-        submitButton={intl.formatMessage({id: "action.delete-title", defaultMessage: "Delete"})}>
+        title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
+        submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}>
 
         <Alert severity="warning">
           <AlertTitle>{alertTitle}</AlertTitle>
           <FormattedMessage id="action.delete-description"
-                            defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?."/>
+            defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
         </Alert>
 
       </BaseDialog>

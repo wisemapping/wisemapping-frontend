@@ -6,15 +6,15 @@ type SubmitButton = {
     value: string;
     disabled?: boolean;
 }
-const SubmitButton = (props: SubmitButton) => {
-    const [disabled, setDisabled] = useState(props.disabled ? true : false);
+const SubmitButton = (props: SubmitButton): React.ReactElement => {
+    const [disabled] = useState(props.disabled ? true : false);
     const intl = useIntl();
 
     let valueTxt = props.value;
     if (disabled) {
         valueTxt = intl.formatMessage({ id: "common.wait", defaultMessage: "Please wait ..." });
     }
-    const [value, setValue] = useState(valueTxt);
+    const [value] = useState(valueTxt);
     return (
         <Button color="primary" size="medium" variant="contained" type="submit"
             disableElevation={true} disabled={disabled}

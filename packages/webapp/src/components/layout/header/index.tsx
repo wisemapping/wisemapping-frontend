@@ -16,7 +16,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
     super(props);
     this.state = { type: props.type };
   }
-  render() {
+  render(): React.ReactElement {
     let signUpButton;
     let signInButton;
     let text;
@@ -53,14 +53,14 @@ interface ButtonProps {
   className?: string;
 }
 
-const SignInButton = (props: ButtonProps) => {
+const SignInButton = (props: ButtonProps): React.ReactElement => {
   return (
     <span className={`${props.className}`}>
       <Button color="primary" size="medium" variant="outlined" component={Link} to="/c/login"><FormattedMessage id="login.signin" defaultMessage="Sign In" /></Button>
     </span>);
 }
 
-const SignUpButton = (props: ButtonProps) => {
+const SignUpButton = (props: ButtonProps): React.ReactElement => {
   return (
     <span className={`${props.className}`}>
       <Button color="primary" size="medium" variant="outlined" component={Link} to="/c/registration"><FormattedMessage id="login.signup" defaultMessage="Sign Up" /></Button>

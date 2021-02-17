@@ -36,14 +36,16 @@ class MockClient implements Client {
     }
 
     deleteAccount(): Promise<void> {
-         return Promise.resolve();
+        return Promise.resolve();
     }
 
     updateAccountInfo(firstname: string, lastname: string): Promise<void> {
-         return Promise.resolve();
+        console.log("firstname:" + firstname, +lastname)
+        return Promise.resolve();
     }
 
     updateAccountPassword(pasword: string): Promise<void> {
+        console.log("password:" + pasword)
         return Promise.resolve();
     }
 
@@ -53,6 +55,7 @@ class MockClient implements Client {
     }
 
     importMap(model: ImportMapInfo): Promise<number> {
+        console.log("model:" + model);
         return Promise.resolve(10);
     }
 
@@ -72,11 +75,12 @@ class MockClient implements Client {
         return Promise.resolve();
     }
     revertHistory(id: number, cid: number): Promise<void> {
+        console.log("model:" + id + cid);
         return Promise.resolve();
     }
 
     createMap(map: BasicMapInfo): Promise<number> {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented." + map);
     }
 
     fetchLabels(): Promise<Label[]> {
@@ -127,6 +131,7 @@ class MockClient implements Client {
         }
     }
     fetchHistory(id: number): Promise<ChangeHistory[]> {
+        console.log(`Fetching history for ${id}`)
         const result = [{
             id: 1,
             lastModificationBy: 'Paulo',
@@ -211,6 +216,7 @@ class MockClient implements Client {
     }
 
     registerNewUser(user: NewUser): Promise<void> {
+        console.log("user:" + user)
         return Promise.resolve();
     }
 
@@ -220,6 +226,7 @@ class MockClient implements Client {
     }
 
     resetPassword(email: string): Promise<void> {
+        console.log("email:" + email)
         return Promise.resolve();
     }
 }

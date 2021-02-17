@@ -32,7 +32,7 @@ const ForgotPassword = () => {
     }
   );
 
-  const handleOnSubmit = (event: React.FormEvent<any>) => {
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     mutation.mutate(email);
   }
@@ -59,7 +59,7 @@ const ForgotPassword = () => {
   );
 }
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage = ():React.ReactElement => {
 
   useEffect(() => {
     document.title = 'Reset Password | WiseMapping';

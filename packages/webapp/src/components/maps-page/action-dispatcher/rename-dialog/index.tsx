@@ -16,7 +16,7 @@ export type RenameModel = {
 }
 
 const defaultModel: RenameModel = { title: '', description: '', id: -1 };
-const RenameDialog = ({ mapId, onClose }: SimpleDialogProps) => {
+const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<RenameModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();

@@ -11,6 +11,7 @@ import PublishDialog from './publish-dialog';
 import InfoDialog from './info-dialog';
 import DeleteMultiselectDialog from './delete-multiselect-dialog';
 import ExportDialog from './export-dialog';
+import ShareDialog from './share-dialog';
 
 export type BasicMapInfo = {
   name: string;
@@ -23,12 +24,10 @@ type ActionDialogProps = {
   onClose: () => void
 }
 
-const ActionDispatcher = (props: ActionDialogProps) => {
-  const mapsId = props.mapsId;
-  const action = props.action;
+const ActionDispatcher = ({ mapsId, action, onClose }: ActionDialogProps): React.ReactElement => {
 
   const handleOnClose = (): void => {
-    props.onClose();
+    onClose();
   }
 
   switch (action) {
@@ -54,6 +53,7 @@ const ActionDispatcher = (props: ActionDialogProps) => {
       {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
       {action === 'create' && <CreateDialog onClose={handleOnClose} />}
       {action === 'export' && <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={false} />}
+      {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
     </span >
   );
 }

@@ -12,7 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Link from "@material-ui/core/Link";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-const HelpMenu = () => {
+const HelpMenu = (): React.ReactElement => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 

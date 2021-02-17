@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useMutation } from "react-query";
-import  FormControl  from "@material-ui/core/FormControl";
+import FormControl from "@material-ui/core/FormControl";
 import { useSelector } from "react-redux";
 
 import Client, { BasicMapInfo, ErrorInfo } from "../../../../classes/client";
@@ -17,7 +17,7 @@ export type DuplicateModel = {
 }
 
 const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
-const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps) => {
+const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const service: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();

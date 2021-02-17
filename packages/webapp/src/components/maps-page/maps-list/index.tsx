@@ -51,6 +51,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 type Order = 'asc' | 'desc';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key,
@@ -195,7 +196,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
   }
 }
 
-export const MapsList = (props: MapsListProps) => {
+export const MapsList = (props: MapsListProps):React.ReactElement => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
@@ -280,8 +281,8 @@ export const MapsList = (props: MapsListProps) => {
     setPage(0);
   };
 
-  const handleActionClick = (mapId: number): ((event: any) => void) => {
-    return (event: any): void => {
+  const handleActionClick = (mapId: number): ((event) => void) => {
+    return (event): void => {
       setActiveRowAction(
         {
           mapId: mapId,
@@ -435,7 +436,7 @@ export const MapsList = (props: MapsListProps) => {
                       return (
                         <TableRow
                           hover
-                          onClick={(event: any) => handleRowClick(event, row.id)}
+                          onClick={(event) => handleRowClick(event, row.id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}

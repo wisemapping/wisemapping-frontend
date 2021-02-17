@@ -6,12 +6,12 @@ import 'dayjs/locale/es';
 export class Locale {
     code: LocaleCode;
     label: string;
-    message: any;
+    message: Record<string, string> ;
 
-    constructor(code: LocaleCode, label: string, message: any) {
+    constructor(code: LocaleCode, label: string, message: unknown) {
         this.code = code;
         this.label = label;
-        this.message = message;
+        this.message = message as Record<string, string>;
     }
 }
 

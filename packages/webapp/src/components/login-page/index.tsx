@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink} from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 import SubmitButton from '../form/submit-button';
@@ -11,9 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Link from '@material-ui/core/Link';
 
+type ConfigStatusProps = {
+  enabled?: boolean
+}
 
-const ConfigStatusMessage = (props: any) => {
-  const enabled = props.enabled
+const ConfigStatusMessage = ({ enabled = false }: ConfigStatusProps): React.ReactElement => {
   let result;
   if (enabled === true) {
     result = (<div className="db-warn-msg">
@@ -45,7 +47,7 @@ const LoginError = () => {
 }
 
 
-const LoginPage = () => {
+const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
 
   useEffect(() => {

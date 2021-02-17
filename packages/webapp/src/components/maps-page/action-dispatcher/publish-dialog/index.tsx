@@ -20,7 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 
-const PublishDialog = ({ mapId, onClose }: SimpleDialogProps) => {
+const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);
 
     const client: Client = useSelector(activeInstance);

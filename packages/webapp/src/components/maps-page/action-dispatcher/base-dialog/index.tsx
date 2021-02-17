@@ -1,5 +1,5 @@
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { ErrorInfo } from "../../../../classes/client";
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from "./style";
 import GlobalError from "../../../form/global-error";
@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 export type DialogProps = {
     onClose: () => void;
     onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
-    children: any;
+    children: unknown;
     error?: ErrorInfo;
 
     title: string;
@@ -19,9 +19,8 @@ export type DialogProps = {
     actionUrl?: string;
 }
 
-const BaseDialog = (props: DialogProps) => {
-    const intl = useIntl();
-    const { onClose, onSubmit, actionUrl = "" } = props;
+const BaseDialog = (props: DialogProps): React.ReactElement => {
+    const { onClose, onSubmit } = props;
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

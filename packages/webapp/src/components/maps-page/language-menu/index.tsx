@@ -18,7 +18,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Divider from '@material-ui/core/Divider';
 
 
-const LanguageMenu = () => {
+const LanguageMenu = (): React.ReactElement => {
     const queryClient = useQueryClient();
     const client: Client = useSelector(activeInstance);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

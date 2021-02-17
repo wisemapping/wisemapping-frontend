@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IntlProvider } from 'react-intl';
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
 
@@ -25,14 +25,14 @@ const queryClient = new QueryClient({
   }
 });
 
-const App = () => {
+const App = ():ReactElement => {
   const appi18n = new AppI18n();
   const locale = appi18n.getBrowserLocale();
 
   return locale.message ? (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <IntlProvider locale={locale.code} defaultLocale={Locales.EN.code} messages={locale.message}>
+        <IntlProvider locale={locale.code} defaultLocale={Locales.EN.code} messages={locale.message as Record<string, string> }>
           <CssBaseline />
           <ThemeProvider theme={theme}>
             <Router>

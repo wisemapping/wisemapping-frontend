@@ -19,11 +19,11 @@ import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 
 
-const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps) => {
+const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
 
   const client: Client = useSelector(activeInstance);
-  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>('history', () => {
+  const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>('history', () => {
     return client.fetchHistory(mapId);
   });
   const changeHistory: ChangeHistory[] = data ? data : [];
@@ -35,7 +35,7 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps) => {
   const handleOnClick = (event, vid): void => {
     event.preventDefault();
     client.revertHistory(mapId, vid)
-      .then((mapId) => {
+      .then(() => {
         handleOnClose();
       })
   };

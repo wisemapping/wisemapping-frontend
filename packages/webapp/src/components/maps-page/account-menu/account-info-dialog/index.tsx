@@ -25,7 +25,7 @@ type AccountInfoModel = {
 }
 
 const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' };
-const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps) => {
+const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps):React.ReactElement => {
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const [remove, setRemove] = React.useState<boolean>(false);

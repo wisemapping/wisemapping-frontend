@@ -21,10 +21,12 @@ type ExportDialogProps = {
     onClose: () => void,
 }
 
-const ExportDialog = ({ mapId, onClose, enableImgExport, svgXml }: ExportDialogProps) => {
+const ExportDialog = ({ mapId, onClose, enableImgExport, svgXml }: ExportDialogProps): React.ReactElement => {
     const intl = useIntl();
     const [submit, setSubmit] = React.useState<boolean>(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [formExportRef, setExportFormRef] = React.useState<any>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [formTransformtRef, setTransformFormRef] = React.useState<any>();
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(enableImgExport ? 'image' : 'document');
     const [exportFormat, setExportFormat] = React.useState<ExportFormat>(enableImgExport ? 'svg' : 'xls');
@@ -66,10 +68,10 @@ const ExportDialog = ({ mapId, onClose, enableImgExport, svgXml }: ExportDialogP
         if (submit) {
             // Depending on the type of export. It will require differt POST.
             if (exportFormat == 'pdf' || exportFormat == "svg" || exportFormat == "jpg" || exportFormat == "png") {
-                formTransformtRef.submit();
+                formTransformtRef?.submit();
             } else {
 
-                formExportRef.submit();
+                formExportRef?.submit();
             }
             onClose();
         }

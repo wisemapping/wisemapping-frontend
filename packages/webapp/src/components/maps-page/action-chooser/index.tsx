@@ -24,7 +24,7 @@ interface ActionProps {
   mapId?: number
 }
 
-const ActionChooser = (props: ActionProps) => {
+const ActionChooser = (props: ActionProps): React.ReactElement => {
   const { anchor, onClose, mapId } = props;
 
   const handleOnClose = (action: ActionType): ((event: React.MouseEvent<HTMLLIElement>) => void) => {

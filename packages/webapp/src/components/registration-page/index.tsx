@@ -102,7 +102,7 @@ const RegistrationForm = () => {
   );
 }
 
-const RegistationPage = () => {
+const RegistationPage = (): React.ReactElement => {
 
   useEffect(() => {
     document.title = 'Registration | WiseMapping';

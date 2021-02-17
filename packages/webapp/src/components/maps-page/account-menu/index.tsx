@@ -15,7 +15,7 @@ import Link from "@material-ui/core/Link";
 import ExitToAppOutlined from "@material-ui/icons/ExitToAppOutlined";
 
 type ActionType = 'change-password' | 'account-info' | undefined;
-const AccountMenu = () => {
+const AccountMenu = (): React.ReactElement => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const [action, setAction] = React.useState<ActionType>(undefined);

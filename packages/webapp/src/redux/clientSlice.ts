@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { createSlice } from '@reduxjs/toolkit';
 import { useQuery } from 'react-query';
 import Client, { AccountInfo, ErrorInfo, MapInfo } from '../classes/client';
 import MockClient from '../classes/client/mock-client';
@@ -15,6 +16,7 @@ class RutimeConfig {
   load() {
 
     // Config can be inserted in the html page to define the global properties ...
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.config = (window as any).serverconfig;
     return this;
   }
@@ -53,8 +55,8 @@ export const clientSlice = createSlice({
   name: "client",
   initialState: initialState,
   reducers: {
-    sessionExpired(state, action: PayloadAction<void>) {
-      state.status = { state: 'session-expired', msg: 'Sessions has expired. You need to login again.' }
+    sessionExpired(state) {
+      state.status = { state: 'session-expired', msg: 'Sessions has expired. You need to login again'  }
     }
   },
 });
@@ -87,10 +89,12 @@ export const fetchAccount = (): AccountInfo | undefined => {
   return data;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const activeInstance = (state: any): Client => {
   return state.client.instance;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const activeInstanceStatus = (state: any): ClientStatus => {
   return state.client.status;
 }

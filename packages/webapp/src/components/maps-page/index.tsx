@@ -1,4 +1,4 @@
-import React, { ErrorInfo, useEffect } from 'react';
+import React, { ErrorInfo, ReactElement, useEffect } from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -56,10 +56,10 @@ export interface LabelFilter {
 interface ToolbarButtonInfo {
     filter: GenericFilter | LabelFilter,
     label: string
-    icon: any;
+    icon: React.ReactElement;
 }
 
-const MapsPage = () => {
+const MapsPage = (): ReactElement => {
     const classes = useStyles();
     const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
     const client: Client = useSelector(activeInstance);
@@ -221,7 +221,7 @@ const MapsPage = () => {
 }
 
 interface ListItemProps {
-    icon: any,
+    icon: React.ReactElement,
     label: string,
     filter: Filter,
     active?: Filter
@@ -241,12 +241,12 @@ const StyleListItem = (props: ListItemProps) => {
         && (activeFilter.type != 'label' || ((activeFilter as LabelFilter).label == (filter as LabelFilter).label));
 
 
-    const handleOnClick = (event: any, filter: Filter) => {
+    const handleOnClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, filter: Filter) => {
         event.stopPropagation();
         onClick(filter);
     }
 
-    const handleOnDelete = (event: any, filter: Filter) => {
+    const handleOnDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, filter: Filter) => {
         event.stopPropagation();
         if (!onDeleteLabel) {
             throw "Illegal state exeption";

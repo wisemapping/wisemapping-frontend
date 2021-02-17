@@ -163,7 +163,7 @@ export default class RestClient implements Client {
     }
 
     fetchHistory(id: number): Promise<ChangeHistory[]> {
-        throw new Error('Method not implemented.');
+        throw new Error(`Method not implemented. ${id}`);
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
@@ -213,6 +213,7 @@ export default class RestClient implements Client {
                 }
             ).then(response => {
                 const data = response.data;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const maps: MapInfo[] = (data.mindmapsInfo as any[]).map(m => {
                     return {
                         id: m.id,
@@ -247,7 +248,7 @@ export default class RestClient implements Client {
             axios.post(this.baseUrl + '/service/users/',
                 JSON.stringify(user),
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(response => {
+            ).then(() => {
                 // All was ok, let's sent to success page ...;
                 success();
             }).catch(error => {
@@ -264,7 +265,7 @@ export default class RestClient implements Client {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios.delete(this.baseUrl + `/c/restful/maps/${id}`,
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(response => {
+            ).then(() => {
                 success();
             }).catch(error => {
                 const errorInfo = this.parseResponseOnError(error.response);
@@ -280,7 +281,7 @@ export default class RestClient implements Client {
             axios.put(`${this.baseUrl}/service/users/resetPassword?email=${email}`,
                 null,
                 { headers: { 'Content-Type': 'application/json' } }
-            ).then(response => {
+            ).then(() => {
                 // All was ok, let's sent to success page ...;
                 success();
             }).catch(error => {
@@ -335,6 +336,7 @@ export default class RestClient implements Client {
                 }
             ).then(response => {
                 const data = response.data;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const maps: Label[] = (data.labels as any[]).map(l => {
                     return {
                         id: l.id,
@@ -354,7 +356,7 @@ export default class RestClient implements Client {
 
     deleteLabel(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.delete(this.baseUrl + `/c/restful/label/${id}`).then(response => {
+            axios.delete(this.baseUrl + `/c/restful/label/${id}`).then(() => {
                 success();
             }).catch(error => {
                 const errorInfo = this.parseResponseOnError(error.response);
@@ -364,6 +366,7 @@ export default class RestClient implements Client {
         return new Promise(handler);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private parseResponseOnError = (response: any): ErrorInfo => {
         let result: ErrorInfo | undefined;
         if (response) {

@@ -3,12 +3,12 @@ import { FormattedMessage } from 'react-intl'
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header'
 import Footer from '../layout/footer'
-import { Link as RouterLink} from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 
-const ForgotPasswordSuccessPage = () => {
+const ForgotPasswordSuccessPage = (): React.ReactElement => {
   useEffect(() => {
     document.title = 'Reset Password | WiseMapping';
   });

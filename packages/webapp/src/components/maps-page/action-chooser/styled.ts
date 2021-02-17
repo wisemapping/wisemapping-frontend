@@ -5,5 +5,5 @@ export const StyledMenuItem = withStyles({
     root: {
       width: '300px',
     }
-  })(MenuItem)
+  })(MenuItem);
   

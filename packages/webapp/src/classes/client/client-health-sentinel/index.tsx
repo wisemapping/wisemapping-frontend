@@ -10,7 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 
-const ClientHealthSentinel = () => {
+const ClientHealthSentinel = (): React.ReactElement => {
     const status: ClientStatus = useSelector(activeInstanceStatus);
 
     const handleOnClose = () => {

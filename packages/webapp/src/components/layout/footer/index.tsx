@@ -6,7 +6,7 @@ import { StyledFooter } from './styled'
 // eslint-disable-next-line
 const poweredByIcon = require('../../../images/pwrdby-white.svg')
 
-const Footer = () => {
+const Footer = (): React.ReactElement => {
   return (
     <StyledFooter>
       <div style={{ padding: 0, margin: 0 }}>

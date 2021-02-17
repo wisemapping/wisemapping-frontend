@@ -22,7 +22,7 @@ export type CreateProps = {
 }
 
 const defaultModel: ImportModel = { title: '' };
-const ImportDialog = ({onClose}: CreateProps) => {
+const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ImportModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
@@ -66,11 +66,8 @@ const ImportDialog = ({onClose}: CreateProps) => {
 
         if (files) {
             const file = files[0];
-            let title = file.name;
-            title = title.substring(0, title.lastIndexOf("."));
-
             // Closure to capture the file information.
-            reader.onload =  (event) => {
+            reader.onload = (event) => {
                 const fileContent = event?.target?.result;
                 model.content = fileContent;
 
@@ -83,7 +80,7 @@ const ImportDialog = ({onClose}: CreateProps) => {
                     }
                 }
                 model.contentType = file.name.lastIndexOf(".wxml") != -1 ? "application/xml" : "application/freemind";
-                setModel({...model});
+                setModel({ ...model });
             };
 
             // Read in the image file as a data URL.

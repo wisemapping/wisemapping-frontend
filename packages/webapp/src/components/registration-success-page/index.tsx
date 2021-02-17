@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 
-const RegistrationSuccessPage = () => {
+const RegistrationSuccessPage = (): React.ReactElement => {
   useEffect(() => {
     document.title = 'Reset Password | WiseMapping';
   });
