@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledFooter } from './styled';
 
-const Footer = () => (
+const Footer = (): React.ReactElement => (
   <StyledFooter>footer</StyledFooter>
 );
 

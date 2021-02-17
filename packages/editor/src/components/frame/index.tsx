@@ -4,7 +4,7 @@ import TopBar from '../top-bar';
 import Canvas from '../canvas';
 import { StyledFrame } from './styled';
 
-const Frame = () => (
+const Frame = (): React.ReactElement => (
   <StyledFrame>
     <TopBar />
     <Canvas />

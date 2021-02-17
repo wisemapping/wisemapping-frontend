@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledCanvas } from './styled';
 
-const Canvas = () => (
+const Canvas = (): React.ReactElement => (
   <StyledCanvas>canvas</StyledCanvas>
 );
 
