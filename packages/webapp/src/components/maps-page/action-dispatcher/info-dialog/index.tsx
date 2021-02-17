@@ -16,7 +16,6 @@ import List from '@material-ui/core/List';
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps) => {
     const { map } = fetchMapById(mapId);
     const [error, setError] = React.useState<ErrorInfo>();
-    const [] = React.useState('1');
 
     const intl = useIntl();
     const classes = useStyles();

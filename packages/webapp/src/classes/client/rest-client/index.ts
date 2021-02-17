@@ -381,7 +381,7 @@ export default class RestClient implements Client {
                     if (data) {
                         // Set global errors ...
                         result = {};
-                        let globalErrors = data.globalErrors;
+                        const globalErrors = data.globalErrors;
                         if (globalErrors && globalErrors.length > 0) {
                             result.msg = globalErrors[0];
                         }

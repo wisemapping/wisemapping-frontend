@@ -66,7 +66,7 @@ const ImportDialog = ({onClose}: CreateProps) => {
 
         if (files) {
             const file = files[0];
-            var title = file.name;
+            let title = file.name;
             title = title.substring(0, title.lastIndexOf("."));
 
             // Closure to capture the file information.
@@ -77,7 +77,7 @@ const ImportDialog = ({onClose}: CreateProps) => {
                 // Suggest file name ... 
                 const fileName = file.name;
                 if (fileName) {
-                    var title = fileName.split('.')[0]
+                    const title = fileName.split('.')[0]
                     if (!model.title || 0 === model.title.length) {
                         model.title = title;
                     }

@@ -35,7 +35,7 @@ import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
 // Load fromNow pluggin
-const relativeTime = require('dayjs/plugin/relativeTime')
+import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 
@@ -210,7 +210,7 @@ export const MapsList = (props: MapsListProps) => {
   const intl = useIntl();
 
   const queryClient = useQueryClient();
-  
+
   // Configure locale ...
   const account = fetchAccount();
   if (account) {
@@ -295,7 +295,7 @@ export const MapsList = (props: MapsListProps) => {
 
   const starredMultation = useMutation<void, ErrorInfo, number>((id: number) => {
     const map = mapsInfo.find(m => m.id == id);
-    return client.updateStarred(id, !Boolean(map?.starred));
+    return client.updateStarred(id, !map?.starred);
   },
     {
       onSuccess: () => {

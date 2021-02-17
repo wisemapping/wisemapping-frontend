@@ -16,11 +16,6 @@ export class Locale {
 }
 
 export default class AppI18n {
-
-    constructor() {
-
-    }
-
     public getUserLocale(): Locale {
         const account = fetchAccount();
         return account ? account.locale : this.getBrowserLocale();

@@ -14,7 +14,7 @@ const DeleteDialog = ({ mapId, onClose } : SimpleDialogProps) => {
   const intl = useIntl();
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
- 
+
   const mutation = useMutation((id: number) => client.deleteMap(id),
     {
       onSuccess: () => handleOnMutationSuccess(onClose, queryClient)
@@ -31,16 +31,18 @@ const DeleteDialog = ({ mapId, onClose } : SimpleDialogProps) => {
 
   // Fetch map model to be rendered ...
   const { map } = fetchMapById(mapId);
+  const alertTitle = `Delete ${map?.title}`;
   return (
     <div>
       <BaseDialog
         onClose={handleOnClose} onSubmit={handleOnSubmit}
-        title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
-        submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })} >
+        title={intl.formatMessage({id: "action.delete-title", defaultMessage: "Delete"})}
+        submitButton={intl.formatMessage({id: "action.delete-title", defaultMessage: "Delete"})}>
 
         <Alert severity="warning">
-          <AlertTitle>Delete '{map?.title}'</AlertTitle>
-          <FormattedMessage id="action.delete-description" defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?." />
+          <AlertTitle>{alertTitle}</AlertTitle>
+          <FormattedMessage id="action.delete-description"
+                            defaultMessage="Deleted mindmap can not be recovered. Do you want to continue ?."/>
         </Alert>
 
       </BaseDialog>

@@ -12,11 +12,6 @@ interface ConfigInfo {
 
 class RutimeConfig {
   private config: ConfigInfo;
-
-  constructor() {
-
-  }
-
   load() {
 
     // Config can be inserted in the html page to define the global properties ...

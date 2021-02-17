@@ -54,7 +54,7 @@ export type FieldError = {
 
 export type ErrorInfo = {
     msg?: string;
-    fields?: Map<String, String>;
+    fields?: Map<string, string>;
 }
 
 export type AccountInfo = {

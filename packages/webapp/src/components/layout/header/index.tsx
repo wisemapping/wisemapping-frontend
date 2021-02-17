@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 
-const logo = require('../../../images/logo-small.svg')
+import logo from '../../../images/logo-small.svg';
 
 interface HeaderProps {
   type: 'only-signup' | 'only-signin' | 'none';
@@ -46,7 +46,7 @@ class Header extends React.Component<HeaderProps, HeaderProps> {
         </StyledDiv>
       </StyledNav>
     )
-  };
+  }
 }
 
 interface ButtonProps {

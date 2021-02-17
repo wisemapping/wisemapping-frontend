@@ -1,5 +1,5 @@
 import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser } from '..';
-import { LocaleCode, localeFromStr, Locales } from '../../app-i18n';
+import { LocaleCode, localeFromStr } from '../../app-i18n';
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];
@@ -68,7 +68,7 @@ class MockClient implements Client {
     }
 
     deleteMaps(ids: number[]): Promise<void> {
-        ids.forEach(id => this.deleteMap(id)); 
+        ids.forEach(id => this.deleteMap(id));
         return Promise.resolve();
     }
     revertHistory(id: number, cid: number): Promise<void> {
@@ -124,7 +124,7 @@ class MockClient implements Client {
                 fields: fieldErrors
 
             })
-        };
+        }
     }
     fetchHistory(id: number): Promise<ChangeHistory[]> {
         const result = [{
@@ -196,7 +196,7 @@ class MockClient implements Client {
                 fields: fieldErrors
 
             })
-        };
+        }
     }
 
     deleteLabel(id: number): Promise<void> {

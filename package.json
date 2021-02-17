@@ -21,12 +21,6 @@
     "contributors": [
         "Ezequiel Bergamaschi"
     ],
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
     "engines": {
         "node": ">=15.3.0",
         "npm": ">=7.0.14"
