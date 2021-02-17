@@ -28,7 +28,6 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "file-loader": "^6.2.0",
         "html-webpack-dynamic-env-plugin": "^0.0.2",
-        "html-webpack-plugin": "^4.5.0",
         "sass-loader": "^10.1.0",
         "style-loader": "^2.0.0",
         "ts-loader": "^8.0.11",
