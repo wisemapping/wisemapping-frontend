@@ -17,10 +17,11 @@ export type DialogProps = {
 
     submitButton?: string;
     actionUrl?: string;
+    maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 }
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-    const { onClose, onSubmit } = props;
+    const { onClose, onSubmit, maxWidth = 'sm' } = props;
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -36,7 +37,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
             <StyledDialog
                 open={true}
                 onClose={onClose}
-                maxWidth="sm"
+                maxWidth={maxWidth}
                 fullWidth={true}>
                 <form autoComplete="off" onSubmit={handleOnSubmit}>
                     <StyledDialogTitle>

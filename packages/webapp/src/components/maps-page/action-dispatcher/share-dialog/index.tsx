@@ -1,5 +1,5 @@
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import Client from "../../../../classes/client";
@@ -13,6 +13,12 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Paper from "@material-ui/core/Paper";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
@@ -39,13 +45,31 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     <div>
       <BaseDialog
         onClose={handleOnClose} onSubmit={handleOnSubmit}
-        title={intl.formatMessage({ id: "share.delete-title", defaultMessage: "Share with collaborators" })}
+        title={intl.formatMessage({ id: "share.delete-title", defaultMessage: "Share with people" })}
         description={intl.formatMessage({ id: "share.delete-description", defaultMessage: "Collaboration " })}
-        submitButton={intl.formatMessage({ id: "share.delete-title", defaultMessage: "Share" })} >
+        submitButton={intl.formatMessage({ id: "share.delete-title", defaultMessage: "Share" })}
+        maxWidth="md">
 
+        <div style={{ padding: '10px 10px', background: '#f9f9f9' }}>
+          <TextField id="email" style={{ width: '300px' }} size="small" type="text" variant="outlined" placeholder="Add collaboratos's emails seperated by commas" label="Email" />
+          <Select
+            value='edit'
+            variant="outlined"
+            style={{ margin: '0px 10px' }}
+          >
+            <MenuItem value='edit'>Can Edit</MenuItem>
+            <MenuItem value='view'>Can View</MenuItem>
+          </Select>
 
-        <div style={{ margin: "10px 0px", padding:"30px 0px"   ,background:"gray" }}>
-          <input type="text" placeholder="Enter collaboratior emails separated by comas" />
+          <FormControlLabel
+            value="start"
+            control={<Checkbox color="primary" />}
+            label={<FormattedMessage id="share.add-message" defaultMessage="Add message" />}
+            labelPlacement="end"
+            />
+          <Button 
+          color="primary" 
+          variant="contained" disableElevation={true}><FormattedMessage id="share.add-button" defaultMessage="Add " /></Button>
         </div>
 
         <Paper elevation={1} style={{ maxHeight: 200, overflowY: 'scroll' }} variant="outlined">
@@ -68,7 +92,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         </Paper>
 
       </BaseDialog>
-    </div>
+    </div >
   );
 }
 
