@@ -23,7 +23,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./style";
 import RoleIcon from "../../role-icon";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
 
 
 type ShareModel = {
