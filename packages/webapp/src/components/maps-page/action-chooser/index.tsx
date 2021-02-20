@@ -97,7 +97,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
         <FormattedMessage id="action.print" defaultMessage="Print" />
       </MenuItem>
 
-      {role != 'viewer' &&
+      {role == 'owner' &&
         <MenuItem onClick={handleOnClose('publish')}>
           <ListItemIcon>
             <PublicOutlinedIcon />
@@ -106,7 +106,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
         </MenuItem>
       }
 
-      {role != 'viewer' &&
+      {role == 'owner' &&
         <MenuItem onClick={handleOnClose('share')}>
           <ListItemIcon>
             <ShareOutlinedIcon />

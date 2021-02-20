@@ -16,7 +16,24 @@ export default class RestClient implements Client {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
-        throw new Error('Method not implemented.');
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.put(`${this.baseUrl}/c/restful/maps/${id}/collabs/`,
+                {
+                    messasge: message,
+                    collaborations: permissions
+                },
+                { headers: { 'Content-Type': 'application/json' } }
+            ).then(() => {
+                // All was ok, let's sent to success page ...;
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
+
+
     }
 
     fetchMapPermissions(id: number): Promise<Permission[]> {
