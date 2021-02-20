@@ -20,7 +20,30 @@ export default class RestClient implements Client {
     }
 
     fetchMapPermissions(id: number): Promise<Permission[]> {
-        throw new Error('Method not implemented.' + id);
+        const handler = (success: (labels: Permission[]) => void, reject: (error: ErrorInfo) => void) => {
+            axios.get(
+                this.baseUrl + `/c/restful/maps/${id}/collabs`,
+                {
+                    headers: { 'Content-Type': 'text/plain' }
+                }
+            ).then(response => {
+                const data = response.data;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const perms: Permission[] = (data.collaborations as any[]).map(p => {
+                    return {
+                        id: p.id,
+                        email: p.email,
+                        name: p.name,
+                        role: p.role
+                    }
+                })
+                success(perms);
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
 
     deleteAccount(): Promise<void> {

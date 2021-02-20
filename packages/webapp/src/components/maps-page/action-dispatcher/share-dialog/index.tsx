@@ -100,6 +100,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     return client.fetchMapPermissions(mapId);
   });
 
+  const formatName = (perm: Permission): string => {
+    return perm.name ? `${perm.name}<${perm.email}>` : perm.email;
+  }
+
   return (
     <div>
       <BaseDialog
@@ -151,7 +155,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             variant="contained"
             disableElevation={true}
             onClick={handleOnAddClick}>
-            <FormattedMessage id="share.add-button" defaultMessage="Add " />
+            <FormattedMessage id="share.add-button" defaultMessage="Add" />
           </Button>
 
           {showMessage &&
@@ -175,7 +179,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               {permissions && permissions.map((permission) => {
                 return (
                   <ListItem key={permission.email} role={undefined} dense button>
-                    <ListItemText id={permission.email} primary={`${permission.name}<${permission.email}>`} />
+                    <ListItemText id={permission.email} primary={formatName(permission)} />
 
                     <RoleIcon role={permission.role} />
                     < ListItemSecondaryAction >
