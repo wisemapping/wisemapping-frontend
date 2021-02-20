@@ -1,4 +1,22 @@
 {
+  "account.delete-warning": {
+    "defaultMessage": "Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
+  },
+  "accountinfo.button": {
+    "defaultMessage": "Accept"
+  },
+  "accountinfo.email": {
+    "defaultMessage": "Email"
+  },
+  "accountinfo.firstname": {
+    "defaultMessage": "First Name"
+  },
+  "accountinfo.lastname": {
+    "defaultMessage": "Last Name"
+  },
+  "accountinfo.title": {
+    "defaultMessage": "Account info"
+  },
   "action.cancel-button": {
     "defaultMessage": "Cancel"
   },
@@ -61,6 +79,24 @@
   },
   "action.share": {
     "defaultMessage": "Share"
+  },
+  "changepwd.button": {
+    "defaultMessage": "Change"
+  },
+  "changepwd.confirm-password": {
+    "defaultMessage": "Confirm Password"
+  },
+  "changepwd.description": {
+    "defaultMessage": "Please, provide the new password for your account."
+  },
+  "changepwd.password": {
+    "defaultMessage": "Password"
+  },
+  "changepwd.password-match": {
+    "defaultMessage": "Password do not match. Please, try again."
+  },
+  "changepwd.title": {
+    "defaultMessage": "Change Password"
   },
   "common.wait": {
     "defaultMessage": "Please wait ..."
@@ -149,6 +185,9 @@
   "header.haveaccount": {
     "defaultMessage": "Already have an account?"
   },
+  "help.support": {
+    "defaultMessage": "Support"
+  },
   "history.no-changes": {
     "defaultMessage": "There is no changes available"
   },
@@ -203,7 +242,7 @@
   "language.change": {
     "defaultMessage": "Change Language"
   },
-  "languange.help": {
+  "language.help": {
     "defaultMessage": "Help to Translate"
   },
   "login.desc": {
@@ -279,6 +318,9 @@
   "menu.account": {
     "defaultMessage": "Account"
   },
+  "menu.change-password": {
+    "defaultMessage": "Change password"
+  },
   "menu.signout": {
     "defaultMessage": "Sign Out"
   },
@@ -341,5 +383,38 @@
   },
   "resetpassword.success.title": {
     "defaultMessage": "Your account has been created successfully"
+  },
+  "role.editor": {
+    "defaultMessage": "Editor"
+  },
+  "role.owner": {
+    "defaultMessage": "Onwer"
+  },
+  "role.viewer": {
+    "defaultMessage": "Viewer"
+  },
+  "share.add-button": {
+    "defaultMessage": "Add"
+  },
+  "share.add-message": {
+    "defaultMessage": "Add message"
+  },
+  "share.can-edit": {
+    "defaultMessage": "Can edit"
+  },
+  "share.can-view": {
+    "defaultMessage": "Can view"
+  },
+  "share.delete": {
+    "defaultMessage": "Delete collaborator"
+  },
+  "share.delete-description": {
+    "defaultMessage": "Invite people to collaborate with you in the creation of your midnmap. They will be notified by email."
+  },
+  "share.delete-title": {
+    "defaultMessage": "Share with people"
+  },
+  "share.message": {
+    "defaultMessage": "Message"
   }
 }

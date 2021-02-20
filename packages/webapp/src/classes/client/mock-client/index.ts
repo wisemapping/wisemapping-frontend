@@ -36,6 +36,12 @@ class MockClient implements Client {
             { id: 2, title: "Blue Label", iconName: "", color: 'blue' }
         ];
     }
+    deleteMapPermission(id: number, email: string): Promise<void> {
+        let perm = this.permissionsByMap.get(id) || [];
+        perm = perm.filter(p=>p.email!=email)
+        this.permissionsByMap.set(id, perm);
+        return Promise.resolve();
+    }
 
     addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
         let perm = this.permissionsByMap.get(id) || [];
@@ -50,9 +56,17 @@ class MockClient implements Client {
         let perm = this.permissionsByMap.get(id);
         if (!perm) {
             perm = [{
-                name: 'Cosme Sharing',
-                email: 'pepe@gmail.com',
+                name: 'Cosme Editor',
+                email: 'pepe@example.com',
                 role: 'editor'
+            }, {
+                name: 'Cosme Owner',
+                email: 'pepe2@example.com',
+                role: 'owner'
+            }, {
+                name: 'Cosme Viewer',
+                email: 'pepe3@example.com',
+                role: 'viewer'
             }];
             this.permissionsByMap.set(id, perm);
         }

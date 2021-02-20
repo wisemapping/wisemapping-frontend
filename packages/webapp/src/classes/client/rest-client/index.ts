@@ -11,6 +11,10 @@ export default class RestClient implements Client {
         this.sessionExpired = sessionExpired;
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    deleteMapPermission(id: number, email: string): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
         throw new Error('Method not implemented.');
     }

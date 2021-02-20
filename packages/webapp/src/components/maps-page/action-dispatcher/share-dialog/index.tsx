@@ -23,6 +23,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./style";
 import RoleIcon from "../../role-icon";
+import { Tooltip } from "@material-ui/core";
 
 
 type ShareModel = {
@@ -41,7 +42,22 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
   const [model, setModel] = React.useState<ShareModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
 
-  const mutation = useMutation(
+  const deleteMutation = useMutation(
+    (email: string) => {
+      return client.deleteMapPermission(mapId, email);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(`perm-${mapId}`);
+        setModel(defaultModel);
+      },
+      onError: (error: ErrorInfo) => {
+        setError(error);
+      }
+    }
+  );
+
+  const addMutation = useMutation(
     (model: ShareModel) => {
       const emails = model.emails.split("'");
       const permissions = emails.map((email) => { return { email: email, role: model.role } });
@@ -70,9 +86,14 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     setModel({ ...model, [name as keyof ShareModel]: value });
   }
 
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+  const handleOnAddClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     event.stopPropagation();
-    mutation.mutate(model);
+    addMutation.mutate(model);
+  };
+
+  const handleOnDeleteClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, email: string): void => {
+    event.stopPropagation();
+    deleteMutation.mutate(email);
   };
 
   const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(`perm-${mapId}`, () => {
@@ -84,7 +105,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
       <BaseDialog
         onClose={handleOnClose}
         title={intl.formatMessage({ id: "share.delete-title", defaultMessage: "Share with people" })}
-        description={intl.formatMessage({ id: "share.delete-description", defaultMessage: "Invite people to collaborate with you on the creation of your midnmap. They will be notified by email. " })}
+        description={intl.formatMessage({ id: "share.delete-description", defaultMessage: "Invite people to collaborate with you in the creation of your midnmap. They will be notified by email. " })}
         PaperProps={{ classes: { root: classes.paper } }}
         error={error}
       >
@@ -98,7 +119,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             size="small"
             type="email"
             variant="outlined"
-            placeholder="Add collaboration email"
+            placeholder="Add collaborator email"
             label="Emails"
             onChange={handleOnChange}
             value={model.emails}
@@ -129,7 +150,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             type="button"
             variant="contained"
             disableElevation={true}
-            onClick={handleOnClick}>
+            onClick={handleOnAddClick}>
             <FormattedMessage id="share.add-button" defaultMessage="Add " />
           </Button>
 
@@ -143,7 +164,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               name="message"
               onChange={handleOnChange}
               value={model.message}
-              placeholder="Include a customize message to ..."
+              label={intl.formatMessage({ id: 'share.message', defaultMessage: 'Message' })}
             />
           }
         </div>
@@ -154,14 +175,15 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               {permissions && permissions.map((permission) => {
                 return (
                   <ListItem key={permission.email} role={undefined} dense button>
-                    <ListItemText id={`${permission.name}<${permission.email}>`} primary={permission.email} />
+                    <ListItemText id={permission.email} primary={`${permission.name}<${permission.email}>`} />
 
                     <RoleIcon role={permission.role} />
-
-                    <ListItemSecondaryAction>
-                      <IconButton edge="end">
-                        <DeleteIcon />
-                      </IconButton>
+                    < ListItemSecondaryAction >
+                      <Tooltip title={<FormattedMessage id="share.delete" defaultMessage="Delete collaborator" />}>
+                        <IconButton edge="end" disabled={permission.role == 'owner'} onClick={e => handleOnDeleteClick(e, permission.email)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </ListItemSecondaryAction>
                   </ListItem>
                 );
