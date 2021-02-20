@@ -1,5 +1,5 @@
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import Help from "@material-ui/icons/Help";
 import PolicyOutlined from "@material-ui/icons/PolicyOutlined";
@@ -11,10 +11,12 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Link from "@material-ui/core/Link";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const HelpMenu = (): React.ReactElement => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const intl = useIntl();
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -26,11 +28,14 @@ const HelpMenu = (): React.ReactElement => {
 
     return (
         <span>
-            <IconButton
-                aria-haspopup="true"
-                onClick={handleMenu}>
-                <Help />
-            </IconButton>
+            <Tooltip arrow={true} title={intl.formatMessage({ id: 'help.support', defaultMessage: 'Support' })}>
+
+                <IconButton
+                    aria-haspopup="true"
+                    onClick={handleMenu}>
+                    <Help />
+                </IconButton>
+            </Tooltip>
             <Menu id="appbar-profile"
                 anchorEl={anchorEl}
                 keepMounted

@@ -74,7 +74,10 @@ const MapsPage = (): ReactElement => {
     const mutation = useMutation(
         (id: number) => client.deleteLabel(id),
         {
-            onSuccess: () => queryClient.invalidateQueries('labels')
+            onSuccess: () => queryClient.invalidateQueries('labels'),
+            onError: (error) => {
+                console.error(`Unexpected error ${error}`);
+            }
         }
     );
 
@@ -87,8 +90,8 @@ const MapsPage = (): ReactElement => {
         mutation.mutate(id);
     };
 
-    const { data } = useQuery<unknown, ErrorInfo, Label[]>('labels', async () => {
-        return await client.fetchLabels();
+    const { data } = useQuery<unknown, ErrorInfo, Label[]>('labels', () => {
+        return client.fetchLabels();
     });
 
     const labels: Label[] = data ? data : [];
@@ -140,7 +143,7 @@ const MapsPage = (): ReactElement => {
                     elevation={0}>
 
                     <Toolbar>
-                        <Tooltip title={intl.formatMessage({ id: 'maps.create-tooltip', defaultMessage: 'Create a New Map' })}>
+                        <Tooltip arrow={true} title={intl.formatMessage({ id: 'maps.create-tooltip', defaultMessage: 'Create a New Map' })}>
                             <Button color="primary"
                                 size="medium"
                                 variant="contained"
@@ -153,7 +156,7 @@ const MapsPage = (): ReactElement => {
                             </Button>
                         </Tooltip>
 
-                        <Tooltip title={intl.formatMessage({ id: 'maps.import-desc', defaultMessage: 'Import from other tools' })}>
+                        <Tooltip arrow={true} title={intl.formatMessage({ id: 'maps.import-desc', defaultMessage: 'Import from other tools' })}>
                             <Button
                                 color="primary"
                                 size="medium"

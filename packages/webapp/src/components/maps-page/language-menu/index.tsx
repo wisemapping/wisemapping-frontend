@@ -32,6 +32,9 @@ const LanguageMenu = (): React.ReactElement => {
             onSuccess: () => {
                 queryClient.invalidateQueries('account')
                 handleClose();
+            },
+            onError: (error) => {
+                console.error(`Unexpected error ${error}`)
             }
         }
     );
@@ -52,7 +55,7 @@ const LanguageMenu = (): React.ReactElement => {
     const accountInfo = fetchAccount();
     return (
         <span>
-            <Tooltip title={intl.formatMessage({ id: 'language.change', defaultMessage: 'Change Language' })}>
+            <Tooltip arrow={true} title={intl.formatMessage({ id: 'language.change', defaultMessage: 'Change Language' })}>
                 <Button
                     size="small"
                     variant="outlined"

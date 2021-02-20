@@ -76,7 +76,7 @@ export const fetchMapById = (id: number): MapLoadResult => {
   });
 
   const result = data?.find(m => m.id == id);
-  const map = result ? result : null;
+  const map = result || null;
   return { isLoading: isLoading, error: error, map: map };
 }
 

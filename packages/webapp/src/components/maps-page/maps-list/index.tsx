@@ -196,7 +196,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
   }
 }
 
-export const MapsList = (props: MapsListProps):React.ReactElement => {
+export const MapsList = (props: MapsListProps): React.ReactElement => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
@@ -225,8 +225,8 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
   }, [props.filter.type, (props.filter as LabelFilter).label]);
 
 
-  const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', async () => {
-    return await client.fetchAllMaps();
+  const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
+    return client.fetchAllMaps();
   });
   const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
 
@@ -346,7 +346,7 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
 
           <div className={classes.toolbarActions}>
             {selected.length > 0 &&
-              <Tooltip title="Delete selected">
+              <Tooltip arrow={true} title="Delete selected">
                 <Button
                   color="primary"
                   size="medium"
@@ -362,7 +362,7 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
             }
 
             {selected.length > 0 &&
-              <Tooltip title="Add label to selected">
+              <Tooltip arrow={true} title="Add label to selected">
                 <Button
                   color="primary"
                   size="medium"
@@ -456,7 +456,7 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
                           <TableCell
                             padding="checkbox"
                             className={classes.bodyCell}>
-                            <Tooltip title="Starred">
+                            <Tooltip arrow={true} title="Starred">
                               <IconButton aria-label="Starred" size="small" onClick={(e) => handleStarred(e, row.id)}>
                                 <StarRateRoundedIcon color="action" style={{ color: row.starred ? 'yellow' : 'gray' }} />
                               </IconButton>
@@ -464,7 +464,7 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
                           </TableCell>
 
                           <TableCell className={classes.bodyCell}>
-                            <Tooltip title="Open for edition" placement="bottom-start">
+                            <Tooltip arrow={true} title="Open for edition" placement="bottom-start">
                               <Link href={`/c/maps/${row.id}/edit`} color="textPrimary" underline="always" onClick={(e) => e.stopPropagation()}>
                                 {row.title}
                               </Link>
@@ -480,7 +480,7 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
                           </TableCell>
 
                           <TableCell className={classes.bodyCell}>
-                            <Tooltip title={
+                            <Tooltip arrow={true}  title={
                               `Modified by ${row.lastModificationBy} on ${dayjs(row.lastModificationTime).format("lll")}`
                             } placement="bottom-start">
                               <span>{dayjs(row.lastModificationTime).fromNow()}</span>
@@ -488,7 +488,7 @@ export const MapsList = (props: MapsListProps):React.ReactElement => {
                           </TableCell>
 
                           <TableCell className={classes.bodyCell}>
-                            <Tooltip title={intl.formatMessage({ id: 'map.more-actions', defaultMessage: 'More Actions' })}>
+                            <Tooltip arrow={true} title={intl.formatMessage({ id: 'map.more-actions', defaultMessage: 'More Actions' })}>
                               <IconButton aria-label="Others" size="small" onClick={handleActionClick(row.id)}>
                                 <MoreHorizIcon color="action" />
                               </IconButton>

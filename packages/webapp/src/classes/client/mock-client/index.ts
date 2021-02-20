@@ -1,8 +1,10 @@
-import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser } from '..';
+import Client, { AccountInfo, BasicMapInfo, ChangeHistory, ImportMapInfo, Label, MapInfo, NewUser, Permission } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
+
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];
+    private permissionsByMap: Map<number, Permission[]> = new Map();
 
     constructor() {
 
@@ -22,6 +24,7 @@ class MockClient implements Client {
         ): MapInfo {
             return { id, title, labels, createdBy: creator, creationTime, lastModificationBy: modifiedByUser, lastModificationTime: modifiedTime, starred, description, isPublic, role };
         }
+
         this.maps = [
             createMapInfo(1, true, "El Mapa", [], "Paulo", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", true, 'owner'),
             createMapInfo(11, false, "El Mapa3", [1, 2, 3], "Paulo3", "2008-06-02T00:00:00Z", "Berna", "2008-06-02T00:00:00Z", "", false, 'editor'),
@@ -32,7 +35,28 @@ class MockClient implements Client {
             { id: 1, title: "Red Label", iconName: "", color: 'red' },
             { id: 2, title: "Blue Label", iconName: "", color: 'blue' }
         ];
+    }
 
+    addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
+        let perm = this.permissionsByMap.get(id) || [];
+        perm = perm.concat(permissions);
+        this.permissionsByMap.set(id, perm);
+
+        console.log(`Message ${message}`)
+        return Promise.resolve();
+    }
+
+    fetchMapPermissions(id: number): Promise<Permission[]> {
+        let perm = this.permissionsByMap.get(id);
+        if (!perm) {
+            perm = [{
+                name: 'Cosme Sharing',
+                email: 'pepe@gmail.com',
+                role: 'editor'
+            }];
+            this.permissionsByMap.set(id, perm);
+        }
+        return Promise.resolve(perm);
     }
 
     deleteAccount(): Promise<void> {

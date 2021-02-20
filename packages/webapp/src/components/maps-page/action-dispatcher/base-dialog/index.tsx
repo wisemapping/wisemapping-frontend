@@ -5,6 +5,7 @@ import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTit
 import GlobalError from "../../../form/global-error";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Button from "@material-ui/core/Button";
+import { PaperProps } from "@material-ui/core/Paper";
 
 export type DialogProps = {
     onClose: () => void;
@@ -18,10 +19,11 @@ export type DialogProps = {
     submitButton?: string;
     actionUrl?: string;
     maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
+    PaperProps?: Partial<PaperProps>;
 }
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-    const { onClose, onSubmit, maxWidth = 'sm' } = props;
+    const { onClose, onSubmit, maxWidth = 'sm', PaperProps } = props;
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -31,13 +33,13 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
     }
 
     const description = props.description ? (<DialogContentText>{props.description}</DialogContentText>) : null;
-
     return (
         <div>
             <StyledDialog
                 open={true}
                 onClose={onClose}
                 maxWidth={maxWidth}
+                PaperProps={PaperProps}
                 fullWidth={true}>
                 <form autoComplete="off" onSubmit={handleOnSubmit}>
                     <StyledDialogTitle>

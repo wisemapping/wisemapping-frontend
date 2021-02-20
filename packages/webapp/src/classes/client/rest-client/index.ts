@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo } from '..';
+import Client, { ErrorInfo, MapInfo, BasicMapInfo, NewUser, Label, ChangeHistory, AccountInfo, ImportMapInfo, Permission } from '..';
 import { LocaleCode, localeFromStr, Locales } from '../../app-i18n';
 
 export default class RestClient implements Client {
@@ -10,6 +10,15 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
+    fetchMapPermissions(id: number): Promise<Permission[]> {
+        throw new Error('Method not implemented.' + id);
+    }
+
     deleteAccount(): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios.delete(this.baseUrl + `/c/restful/account`,

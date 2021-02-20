@@ -22,6 +22,8 @@ export type Label = {
     iconName: string;
 }
 
+export type Role = 'owner' | 'editor' | 'viewer';
+
 export type MapInfo = {
     id: number;
     starred: boolean;
@@ -33,7 +35,7 @@ export type MapInfo = {
     lastModificationTime: string;
     description: string;
     isPublic: boolean;
-    role: 'owner' | 'editor' | 'viewer'
+    role: Role;
 }
 
 export type ChangeHistory = {
@@ -64,6 +66,12 @@ export type AccountInfo = {
     locale: Locale;
 }
 
+export type Permission = {
+    name?: string;
+    email: string;
+    role: Role;
+}
+
 interface Client {
     deleteAccount(): Promise<void>
     importMap(model: ImportMapInfo): Promise<number>
@@ -72,11 +80,14 @@ interface Client {
     deleteMap(id: number): Promise<void>;
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
     fetchAllMaps(): Promise<MapInfo[]>;
+    fetchMapPermissions(id: number): Promise<Permission[]>;
+    addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void>;
+
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number>;
-   
+
     updateAccountLanguage(locale: LocaleCode): Promise<void>;
     updateAccountPassword(pasword: string): Promise<void>;
-    updateAccountInfo(firstname: string,lastname: string): Promise<void>;
+    updateAccountInfo(firstname: string, lastname: string): Promise<void>;
 
     updateStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, starred: boolean): Promise<void>;

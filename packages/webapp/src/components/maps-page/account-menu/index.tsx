@@ -32,7 +32,7 @@ const AccountMenu = (): React.ReactElement => {
     const account = fetchAccount();
     return (
         <span>
-            <Tooltip title={`${account?.firstname} ${account?.lastname} <${account?.email}>`}>
+            <Tooltip arrow={true}  title={`${account?.firstname} ${account?.lastname} <${account?.email}>`}>
                 <IconButton
                     onClick={handleMenu}>
                     <AccountCircle fontSize="large" style={{ color: 'black' }} />

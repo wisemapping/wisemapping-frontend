@@ -24,7 +24,7 @@ const ConfigStatusMessage = ({ enabled = false }: ConfigStatusProps): React.Reac
       </p>
     </div>);
   }
-  return result ? result : null;
+  return result || null;
 }
 
 const LoginError = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import Client from "../../../../classes/client";
+import Client, { ErrorInfo } from "../../../../classes/client";
 import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import { SimpleDialogProps, handleOnMutationSuccess } from "..";
 import BaseDialog from "../base-dialog";
@@ -14,10 +14,14 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   const intl = useIntl();
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
+  const [error, setError] = React.useState<ErrorInfo>();
 
   const mutation = useMutation((id: number) => client.deleteMap(id),
     {
-      onSuccess: () => handleOnMutationSuccess(onClose, queryClient)
+      onSuccess: () => handleOnMutationSuccess(onClose, queryClient),
+      onError: (error: ErrorInfo) => {
+        setError(error);
+      }
     }
   );
 
@@ -35,6 +39,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   return (
     <div>
       <BaseDialog
+        error={error}
         onClose={handleOnClose} onSubmit={handleOnSubmit}
         title={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}
         submitButton={intl.formatMessage({ id: "action.delete-title", defaultMessage: "Delete" })}>
