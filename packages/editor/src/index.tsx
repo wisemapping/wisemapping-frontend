@@ -1,3 +1,3 @@
-import Editor from './components/frame'
+import Editor from './components/frame';
 
-export default Editor
+export default Editor;

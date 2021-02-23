@@ -1,4 +1,4 @@
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 const theme = createMuiTheme({
     overrides: {
@@ -71,6 +71,6 @@ const theme = createMuiTheme({
             contrastText: '#FFFFFF',
         },
     },
-})
+});
 
-export { theme }
+export { theme };

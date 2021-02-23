@@ -1,8 +1,8 @@
-import { Theme } from '@material-ui/core/styles/createMuiTheme'
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-const drawerWidth = 300
+const drawerWidth = 300;
 
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -60,4 +60,4 @@ export const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(3),
         },
     })
-)
+);

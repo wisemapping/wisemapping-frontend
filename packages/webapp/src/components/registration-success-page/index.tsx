@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import { FormattedMessage } from 'react-intl'
-import FormContainer from '../layout/form-container'
-import Header from '../layout/header'
-import Footer from '../layout/footer'
-import { Link as RouterLink } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import React, { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import FormContainer from '../layout/form-container';
+import Header from '../layout/header';
+import Footer from '../layout/footer';
+import { Link as RouterLink } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const RegistrationSuccessPage = (): React.ReactElement => {
     useEffect(() => {
-        document.title = 'Reset Password | WiseMapping'
-    })
+        document.title = 'Reset Password | WiseMapping';
+    });
 
     return (
         <div>
@@ -43,7 +43,7 @@ const RegistrationSuccessPage = (): React.ReactElement => {
             </FormContainer>
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default RegistrationSuccessPage
+export default RegistrationSuccessPage;

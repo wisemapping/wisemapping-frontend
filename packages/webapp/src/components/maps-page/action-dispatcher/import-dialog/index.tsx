@@ -1,96 +1,96 @@
-import Button from '@material-ui/core/Button'
-import FormControl from '@material-ui/core/FormControl'
-import React from 'react'
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import React from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl'
-import { useMutation } from 'react-query'
-import { useSelector } from 'react-redux'
-import Client, { ErrorInfo } from '../../../../classes/client'
-import { activeInstance } from '../../../../redux/clientSlice'
-import Input from '../../../form/input'
-import BaseDialog from '../base-dialog'
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import Client, { ErrorInfo } from '../../../../classes/client';
+import { activeInstance } from '../../../../redux/clientSlice';
+import Input from '../../../form/input';
+import BaseDialog from '../base-dialog';
 
 export type ImportModel = {
-    title: string
-    description?: string
-    contentType?: string
-    content?: ArrayBuffer | null | string
-}
+    title: string;
+    description?: string;
+    contentType?: string;
+    content?: ArrayBuffer | null | string;
+};
 
 export type CreateProps = {
-    onClose: () => void
-}
+    onClose: () => void;
+};
 
-const defaultModel: ImportModel = { title: '' }
+const defaultModel: ImportModel = { title: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
-    const client: Client = useSelector(activeInstance)
-    const [model, setModel] = React.useState<ImportModel>(defaultModel)
-    const [error, setError] = React.useState<ErrorInfo>()
-    const intl = useIntl()
+    const client: Client = useSelector(activeInstance);
+    const [model, setModel] = React.useState<ImportModel>(defaultModel);
+    const [error, setError] = React.useState<ErrorInfo>();
+    const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, ImportModel>(
         (model: ImportModel) => {
-            return client.importMap(model)
+            return client.importMap(model);
         },
         {
             onSuccess: (mapId: number) => {
-                window.location.href = `/c/maps/${mapId}/edit`
+                window.location.href = `/c/maps/${mapId}/edit`;
             },
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
     const handleOnClose = (): void => {
-        onClose()
-        setModel(defaultModel)
-        setError(undefined)
-    }
+        onClose();
+        setModel(defaultModel);
+        setError(undefined);
+    };
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
-        mutation.mutate(model)
-    }
+        event.preventDefault();
+        mutation.mutate(model);
+    };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        event.preventDefault()
+        event.preventDefault();
 
-        const name = event.target.name
-        const value = event.target.value
-        setModel({ ...model, [name as keyof ImportModel]: value })
-    }
+        const name = event.target.name;
+        const value = event.target.value;
+        setModel({ ...model, [name as keyof ImportModel]: value });
+    };
 
     const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event?.target?.files
-        const reader = new FileReader()
+        const files = event?.target?.files;
+        const reader = new FileReader();
 
         if (files) {
-            const file = files[0]
+            const file = files[0];
             // Closure to capture the file information.
             reader.onload = (event) => {
-                const fileContent = event?.target?.result
-                model.content = fileContent
+                const fileContent = event?.target?.result;
+                model.content = fileContent;
 
                 // Suggest file name ...
-                const fileName = file.name
+                const fileName = file.name;
                 if (fileName) {
-                    const title = fileName.split('.')[0]
+                    const title = fileName.split('.')[0];
                     if (!model.title || 0 === model.title.length) {
-                        model.title = title
+                        model.title = title;
                     }
                 }
                 model.contentType =
                     file.name.lastIndexOf('.wxml') != -1
                         ? 'application/xml'
-                        : 'application/freemind'
-                setModel({ ...model })
-            }
+                        : 'application/freemind';
+                setModel({ ...model });
+            };
 
             // Read in the image file as a data URL.
-            reader.readAsText(file)
+            reader.readAsText(file);
         }
-    }
+    };
 
     return (
         <div>
@@ -161,7 +161,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 </FormControl>
             </BaseDialog>
         </div>
-    )
-}
+    );
+};
 
-export default ImportDialog
+export default ImportDialog;

@@ -1,68 +1,68 @@
-import React from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { useMutation, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
-import Client, { ErrorInfo } from '../../../../classes/client'
-import { activeInstance, fetchMapById } from '../../../../redux/clientSlice'
-import BaseDialog from '../base-dialog'
-import { handleOnMutationSuccess, SimpleDialogProps } from '..'
-import { useStyles } from './style'
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useMutation, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
+import Client, { ErrorInfo } from '../../../../classes/client';
+import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
+import BaseDialog from '../base-dialog';
+import { handleOnMutationSuccess, SimpleDialogProps } from '..';
+import { useStyles } from './style';
 
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import TabContext from '@material-ui/lab/TabContext'
-import AppBar from '@material-ui/core/AppBar'
-import TabList from '@material-ui/lab/TabList'
-import Tab from '@material-ui/core/Tab'
-import TabPanel from '@material-ui/lab/TabPanel'
-import Typography from '@material-ui/core/Typography'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import TabContext from '@material-ui/lab/TabContext';
+import AppBar from '@material-ui/core/AppBar';
+import TabList from '@material-ui/lab/TabList';
+import Tab from '@material-ui/core/Tab';
+import TabPanel from '@material-ui/lab/TabPanel';
+import Typography from '@material-ui/core/Typography';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-    const { map } = fetchMapById(mapId)
+    const { map } = fetchMapById(mapId);
 
-    const client: Client = useSelector(activeInstance)
-    const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false)
-    const [error, setError] = React.useState<ErrorInfo>()
-    const [activeTab, setActiveTab] = React.useState('1')
-    const queryClient = useQueryClient()
-    const intl = useIntl()
+    const client: Client = useSelector(activeInstance);
+    const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
+    const [error, setError] = React.useState<ErrorInfo>();
+    const [activeTab, setActiveTab] = React.useState('1');
+    const queryClient = useQueryClient();
+    const intl = useIntl();
 
-    const classes = useStyles()
+    const classes = useStyles();
     const mutation = useMutation<void, ErrorInfo, boolean>(
         (model: boolean) => {
-            return client.updateMapToPublic(mapId, model)
+            return client.updateMapToPublic(mapId, model);
         },
         {
             onSuccess: () => {
-                setModel(model)
-                handleOnMutationSuccess(onClose, queryClient)
+                setModel(model);
+                handleOnMutationSuccess(onClose, queryClient);
             },
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
     const handleOnClose = (): void => {
-        onClose()
-        setError(undefined)
-    }
+        onClose();
+        setError(undefined);
+    };
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
-        mutation.mutate(model)
-    }
+        event.preventDefault();
+        mutation.mutate(model);
+    };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean): void => {
-        event.preventDefault()
-        setModel(checked)
-    }
+        event.preventDefault();
+        setModel(checked);
+    };
 
     const handleTabChange = (event, newValue) => {
-        setActiveTab(newValue)
-    }
+        setActiveTab(newValue);
+    };
 
     return (
         <div>
@@ -152,7 +152,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 </div>
             </BaseDialog>
         </div>
-    )
-}
+    );
+};
 
-export default PublishDialog
+export default PublishDialog;

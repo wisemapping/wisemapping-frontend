@@ -1,41 +1,41 @@
-import React from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { useMutation, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
-import Client from '../../../../classes/client'
-import { activeInstance } from '../../../../redux/clientSlice'
-import { handleOnMutationSuccess } from '..'
-import BaseDialog from '../base-dialog'
-import Alert from '@material-ui/lab/Alert'
-import AlertTitle from '@material-ui/lab/AlertTitle'
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useMutation, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
+import Client from '../../../../classes/client';
+import { activeInstance } from '../../../../redux/clientSlice';
+import { handleOnMutationSuccess } from '..';
+import BaseDialog from '../base-dialog';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 export type DeleteMultiselectDialogProps = {
-    mapsId: number[]
-    onClose: () => void
-}
+    mapsId: number[];
+    onClose: () => void;
+};
 
 const DeleteMultiselectDialog = ({
     onClose,
     mapsId,
 }: DeleteMultiselectDialogProps): React.ReactElement => {
-    const intl = useIntl()
-    const client: Client = useSelector(activeInstance)
-    const queryClient = useQueryClient()
+    const intl = useIntl();
+    const client: Client = useSelector(activeInstance);
+    const queryClient = useQueryClient();
 
     const mutation = useMutation((ids: number[]) => client.deleteMaps(ids), {
         onSuccess: () => handleOnMutationSuccess(onClose, queryClient),
         onError: (error) => {
-            console.error(`Unexpected error ${error}`)
+            console.error(`Unexpected error ${error}`);
         },
-    })
+    });
 
     const handleOnClose = (): void => {
-        onClose()
-    }
+        onClose();
+    };
 
     const handleOnSubmit = (): void => {
-        mutation.mutate(mapsId)
-    }
+        mutation.mutate(mapsId);
+    };
 
     return (
         <div>
@@ -62,7 +62,7 @@ const DeleteMultiselectDialog = ({
                 </Alert>
             </BaseDialog>
         </div>
-    )
-}
+    );
+};
 
-export default DeleteMultiselectDialog
+export default DeleteMultiselectDialog;

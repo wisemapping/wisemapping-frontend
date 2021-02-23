@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const StyledNav = styled.nav`
     height: 90px;
@@ -50,7 +50,7 @@ export const StyledNav = styled.nav`
         font-size: 14px;
         padding: 10px;
     }
-`
+`;
 
 export const StyledDiv = styled.nav`
     background: white;
@@ -64,7 +64,7 @@ export const StyledDiv = styled.nav`
     display: grid;
     white-space: nowrap;
     grid-template-columns: 150px 1fr 130px 160px 50px;
-`
+`;
 
 export const Logo = styled.span`
     grid-column-start: 1;
@@ -74,4 +74,4 @@ export const Logo = styled.span`
     .header-logo a {
         padding: 0px;
     }
-`
+`;

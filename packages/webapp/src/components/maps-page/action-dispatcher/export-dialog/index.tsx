@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import BaseDialog from '../base-dialog'
-import { useStyles } from './style'
-import Alert from '@material-ui/lab/Alert'
-import { fetchMapById } from '../../../../redux/clientSlice'
-import FormControl from '@material-ui/core/FormControl'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Radio from '@material-ui/core/Radio'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import BaseDialog from '../base-dialog';
+import { useStyles } from './style';
+import Alert from '@material-ui/lab/Alert';
+import { fetchMapById } from '../../../../redux/clientSlice';
+import FormControl from '@material-ui/core/FormControl';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
-type ExportFormat = 'pdf' | 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt'
-type ExportGroup = 'image' | 'document' | 'mindmap-tool'
+type ExportFormat = 'pdf' | 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
+type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
-    mapId: number
-    enableImgExport: boolean
-    svgXml?: string
-    onClose: () => void
-}
+    mapId: number;
+    enableImgExport: boolean;
+    svgXml?: string;
+    onClose: () => void;
+};
 
 const ExportDialog = ({
     mapId,
@@ -27,50 +27,50 @@ const ExportDialog = ({
     enableImgExport,
     svgXml,
 }: ExportDialogProps): React.ReactElement => {
-    const intl = useIntl()
-    const [submit, setSubmit] = React.useState<boolean>(false)
+    const intl = useIntl();
+    const [submit, setSubmit] = React.useState<boolean>(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [formExportRef, setExportFormRef] = React.useState<any>()
+    const [formExportRef, setExportFormRef] = React.useState<any>();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [formTransformtRef, setTransformFormRef] = React.useState<any>()
+    const [formTransformtRef, setTransformFormRef] = React.useState<any>();
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
         enableImgExport ? 'image' : 'document'
-    )
+    );
     const [exportFormat, setExportFormat] = React.useState<ExportFormat>(
         enableImgExport ? 'svg' : 'xls'
-    )
-    const classes = useStyles()
+    );
+    const classes = useStyles();
 
     const handleOnExportFormatChange = (event) => {
-        setExportFormat(event.target.value)
-    }
+        setExportFormat(event.target.value);
+    };
 
     const handleOnGroupChange = (event) => {
-        const value: ExportGroup = event.target.value
-        setExportGroup(value)
+        const value: ExportGroup = event.target.value;
+        setExportGroup(value);
 
-        let defaultFormat: ExportFormat
+        let defaultFormat: ExportFormat;
         switch (value) {
             case 'document':
-                defaultFormat = 'pdf'
-                break
+                defaultFormat = 'pdf';
+                break;
             case 'image':
-                defaultFormat = 'svg'
-                break
+                defaultFormat = 'svg';
+                break;
             case 'mindmap-tool':
-                defaultFormat = 'wxml'
-                break
+                defaultFormat = 'wxml';
+                break;
         }
-        setExportFormat(defaultFormat)
-    }
+        setExportFormat(defaultFormat);
+    };
 
     const handleOnClose = (): void => {
-        onClose()
-    }
+        onClose();
+    };
 
     const handleOnSubmit = (): void => {
-        setSubmit(true)
-    }
+        setSubmit(true);
+    };
 
     useEffect(() => {
         if (submit) {
@@ -81,15 +81,15 @@ const ExportDialog = ({
                 exportFormat == 'jpg' ||
                 exportFormat == 'png'
             ) {
-                formTransformtRef?.submit()
+                formTransformtRef?.submit();
             } else {
-                formExportRef?.submit()
+                formExportRef?.submit();
             }
-            onClose()
+            onClose();
         }
-    }, [submit])
+    }, [submit]);
 
-    const { map } = fetchMapById(mapId)
+    const { map } = fetchMapById(mapId);
     return (
         <div>
             <BaseDialog
@@ -231,7 +231,7 @@ const ExportDialog = ({
                 <input name="svgXml" id="svgXml" value={svgXml} type="hidden" />
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default ExportDialog
+export default ExportDialog;

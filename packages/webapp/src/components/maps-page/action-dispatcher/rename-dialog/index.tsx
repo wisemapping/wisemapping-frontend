@@ -1,72 +1,72 @@
-import React, { useEffect } from 'react'
-import { useIntl } from 'react-intl'
-import { useMutation, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
-import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client'
-import { activeInstance, fetchMapById } from '../../../../redux/clientSlice'
-import { SimpleDialogProps, handleOnMutationSuccess } from '..'
-import Input from '../../../form/input'
-import BaseDialog from '../base-dialog'
-import FormControl from '@material-ui/core/FormControl'
+import React, { useEffect } from 'react';
+import { useIntl } from 'react-intl';
+import { useMutation, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
+import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
+import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
+import { SimpleDialogProps, handleOnMutationSuccess } from '..';
+import Input from '../../../form/input';
+import BaseDialog from '../base-dialog';
+import FormControl from '@material-ui/core/FormControl';
 
 export type RenameModel = {
-    id: number
-    title: string
-    description?: string
-}
+    id: number;
+    title: string;
+    description?: string;
+};
 
-const defaultModel: RenameModel = { title: '', description: '', id: -1 }
+const defaultModel: RenameModel = { title: '', description: '', id: -1 };
 const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-    const service: Client = useSelector(activeInstance)
-    const [model, setModel] = React.useState<RenameModel>(defaultModel)
-    const [error, setError] = React.useState<ErrorInfo>()
+    const service: Client = useSelector(activeInstance);
+    const [model, setModel] = React.useState<RenameModel>(defaultModel);
+    const [error, setError] = React.useState<ErrorInfo>();
 
-    const intl = useIntl()
-    const queryClient = useQueryClient()
+    const intl = useIntl();
+    const queryClient = useQueryClient();
 
     const mutation = useMutation<RenameModel, ErrorInfo, RenameModel>(
         (model: RenameModel) => {
-            const { id, ...rest } = model
-            return service.renameMap(id, rest).then(() => model)
+            const { id, ...rest } = model;
+            return service.renameMap(id, rest).then(() => model);
         },
         {
             onSuccess: () => {
-                handleOnMutationSuccess(onClose, queryClient)
+                handleOnMutationSuccess(onClose, queryClient);
             },
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
     const handleOnClose = (): void => {
-        onClose()
-        setModel(defaultModel)
-        setError(undefined)
-    }
+        onClose();
+        setModel(defaultModel);
+        setError(undefined);
+    };
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
-        mutation.mutate(model)
-    }
+        event.preventDefault();
+        mutation.mutate(model);
+    };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        event.preventDefault()
+        event.preventDefault();
 
-        const name = event.target.name
-        const value = event.target.value
-        setModel({ ...model, [name as keyof BasicMapInfo]: value })
-    }
+        const name = event.target.name;
+        const value = event.target.value;
+        setModel({ ...model, [name as keyof BasicMapInfo]: value });
+    };
 
-    const { map } = fetchMapById(mapId)
+    const { map } = fetchMapById(mapId);
     useEffect(() => {
         if (open && map) {
-            setModel(map)
+            setModel(map);
         } else {
-            setModel(defaultModel)
-            setError(undefined)
+            setModel(defaultModel);
+            setError(undefined);
         }
-    }, [mapId])
+    }, [mapId]);
 
     return (
         <div>
@@ -110,7 +110,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
                 </FormControl>
             </BaseDialog>
         </div>
-    )
-}
+    );
+};
 
-export default RenameDialog
+export default RenameDialog;

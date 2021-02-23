@@ -1,6 +1,6 @@
-import React from 'react'
-import { StyledTopBar } from './styled'
+import React from 'react';
+import { StyledTopBar } from './styled';
 
-const TopBar = (): React.ReactElement => <StyledTopBar>top bar</StyledTopBar>
+const TopBar = (): React.ReactElement => <StyledTopBar>top bar</StyledTopBar>;
 
-export default TopBar
+export default TopBar;

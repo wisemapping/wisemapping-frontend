@@ -1,29 +1,29 @@
-import React from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { ErrorInfo } from '../../../../classes/client'
-import BaseDialog from '../base-dialog'
-import { SimpleDialogProps } from '..'
-import { useStyles } from './style'
-import dayjs from 'dayjs'
-import { fetchMapById } from '../../../../redux/clientSlice'
-import Paper from '@material-ui/core/Paper'
-import Card from '@material-ui/core/Card'
-import ListItem from '@material-ui/core/ListItem'
-import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
+import { ErrorInfo } from '../../../../classes/client';
+import BaseDialog from '../base-dialog';
+import { SimpleDialogProps } from '..';
+import { useStyles } from './style';
+import dayjs from 'dayjs';
+import { fetchMapById } from '../../../../redux/clientSlice';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-    const { map } = fetchMapById(mapId)
-    const [error, setError] = React.useState<ErrorInfo>()
+    const { map } = fetchMapById(mapId);
+    const [error, setError] = React.useState<ErrorInfo>();
 
-    const intl = useIntl()
-    const classes = useStyles()
+    const intl = useIntl();
+    const classes = useStyles();
 
     const handleOnClose = (): void => {
-        onClose()
-        setError(undefined)
-    }
+        onClose();
+        setError(undefined);
+    };
 
     return (
         <BaseDialog
@@ -175,7 +175,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
                 </Card>
             </Paper>
         </BaseDialog>
-    )
-}
+    );
+};
 
-export default InfoDialog
+export default InfoDialog;

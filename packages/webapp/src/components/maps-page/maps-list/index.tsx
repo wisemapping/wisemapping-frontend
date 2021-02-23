@@ -1,54 +1,54 @@
-import React, { useEffect, CSSProperties } from 'react'
+import React, { useEffect, CSSProperties } from 'react';
 
-import { useStyles } from './styled'
-import { useSelector } from 'react-redux'
-import { activeInstance, fetchAccount } from '../../../redux/clientSlice'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import Client, { ErrorInfo, MapInfo } from '../../../classes/client'
-import ActionChooser, { ActionType } from '../action-chooser'
-import ActionDispatcher from '../action-dispatcher'
-import dayjs from 'dayjs'
-import { Filter, LabelFilter } from '..'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useStyles } from './styled';
+import { useSelector } from 'react-redux';
+import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import Client, { ErrorInfo, MapInfo } from '../../../classes/client';
+import ActionChooser, { ActionType } from '../action-chooser';
+import ActionDispatcher from '../action-dispatcher';
+import dayjs from 'dayjs';
+import { Filter, LabelFilter } from '..';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
-import Toolbar from '@material-ui/core/Toolbar'
-import Paper from '@material-ui/core/Paper'
-import Checkbox from '@material-ui/core/Checkbox'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
-import Button from '@material-ui/core/Button'
-import InputBase from '@material-ui/core/InputBase'
-import Link from '@material-ui/core/Link'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import InputBase from '@material-ui/core/InputBase';
+import Link from '@material-ui/core/Link';
 
-import LabelTwoTone from '@material-ui/icons/LabelTwoTone'
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded'
-import SearchIcon from '@material-ui/icons/Search'
+import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
+import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
+import SearchIcon from '@material-ui/icons/Search';
 
 // Load fromNow pluggin
-import relativeTime from 'dayjs/plugin/relativeTime'
-dayjs.extend(relativeTime)
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
-        return -1
+        return -1;
     }
     if (b[orderBy] > a[orderBy]) {
-        return 1
+        return 1;
     }
-    return 0
+    return 0;
 }
 
-type Order = 'asc' | 'desc'
+type Order = 'asc' | 'desc';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getComparator<Key extends keyof any>(
@@ -60,38 +60,38 @@ function getComparator<Key extends keyof any>(
 ) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-    const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
     stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0])
-        if (order !== 0) return order
-        return a[1] - b[1]
-    })
-    return stabilizedThis.map((el) => el[0])
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
 }
 
 interface HeadCell {
-    id: keyof MapInfo
-    label?: string
-    numeric: boolean
-    style?: CSSProperties
+    id: keyof MapInfo;
+    label?: string;
+    numeric: boolean;
+    style?: CSSProperties;
 }
 
 interface EnhancedTableProps {
-    classes: ReturnType<typeof useStyles>
-    numSelected: number
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof MapInfo) => void
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
-    order: Order
-    orderBy: string
-    rowCount: number
+    classes: ReturnType<typeof useStyles>;
+    numSelected: number;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof MapInfo) => void;
+    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    order: Order;
+    orderBy: string;
+    rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const intl = useIntl()
+    const intl = useIntl();
 
     const {
         classes,
@@ -101,11 +101,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         numSelected,
         rowCount,
         onRequestSort,
-    } = props
+    } = props;
 
     const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property)
-    }
+        onRequestSort(event, property);
+    };
 
     const headCells: HeadCell[] = [
         {
@@ -126,7 +126,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }),
             style: { width: '70px', whiteSpace: 'nowrap' },
         },
-    ]
+    ];
 
     return (
         <TableHead>
@@ -176,7 +176,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 )}
                             </TableSortLabel>
                         </TableCell>
-                    )
+                    );
                 })}
 
                 <TableCell
@@ -186,195 +186,195 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 ></TableCell>
             </TableRow>
         </TableHead>
-    )
+    );
 }
 
 type ActionPanelState = {
-    el: HTMLElement | undefined
-    mapId: number
-}
+    el: HTMLElement | undefined;
+    mapId: number;
+};
 
 interface MapsListProps {
-    filter: Filter
+    filter: Filter;
 }
 
 const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => boolean) => {
     return (mapInfo: MapInfo) => {
         // Check for filter condition
-        let result = false
+        let result = false;
         switch (filter.type) {
             case 'all':
-                result = true
-                break
+                result = true;
+                break;
             case 'starred':
-                result = mapInfo.starred
-                break
+                result = mapInfo.starred;
+                break;
             case 'owned':
-                result = mapInfo.role == 'owner'
-                break
+                result = mapInfo.role == 'owner';
+                break;
             case 'shared':
-                result = mapInfo.role != 'owner'
-                break
+                result = mapInfo.role != 'owner';
+                break;
             case 'label':
                 result =
-                    !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label.id)
-                break
+                    !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label.id);
+                break;
             case 'public':
-                result = mapInfo.isPublic
-                break
+                result = mapInfo.isPublic;
+                break;
             default:
-                result = false
+                result = false;
         }
 
         // Does it match search filter criteria...
         if (search && result) {
-            result = mapInfo.title.toLowerCase().indexOf(search.toLowerCase()) != -1
+            result = mapInfo.title.toLowerCase().indexOf(search.toLowerCase()) != -1;
         }
 
-        return result
-    }
-}
+        return result;
+    };
+};
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
-    const classes = useStyles()
-    const [order, setOrder] = React.useState<Order>('asc')
-    const [filter, setFilter] = React.useState<Filter>({ type: 'all' })
+    const classes = useStyles();
+    const [order, setOrder] = React.useState<Order>('asc');
+    const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
 
-    const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime')
-    const [selected, setSelected] = React.useState<number[]>([])
-    const [searchCondition, setSearchCondition] = React.useState<string>('')
+    const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
+    const [selected, setSelected] = React.useState<number[]>([]);
+    const [searchCondition, setSearchCondition] = React.useState<string>('');
 
-    const [page, setPage] = React.useState(0)
-    const [rowsPerPage, setRowsPerPage] = React.useState(10)
-    const client: Client = useSelector(activeInstance)
-    const intl = useIntl()
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const client: Client = useSelector(activeInstance);
+    const intl = useIntl();
 
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
 
     // Configure locale ...
-    const account = fetchAccount()
+    const account = fetchAccount();
     if (account) {
-        dayjs.locale(account.locale.code)
+        dayjs.locale(account.locale.code);
     }
 
     useEffect(() => {
-        setSelected([])
-        setPage(0)
-        setFilter(props.filter)
-    }, [props.filter.type, (props.filter as LabelFilter).label])
+        setSelected([]);
+        setPage(0);
+        setFilter(props.filter);
+    }, [props.filter.type, (props.filter as LabelFilter).label]);
 
     const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
-        return client.fetchAllMaps()
-    })
-    const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : []
+        return client.fetchAllMaps();
+    });
+    const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
 
     const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
         undefined
-    )
+    );
     type ActiveDialog = {
-        actionType: ActionType
-        mapsId: number[]
-    }
+        actionType: ActionType;
+        mapsId: number[];
+    };
 
-    const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined)
+    const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) => {
-        const isAsc = orderBy === property && order === 'asc'
-        setOrder(isAsc ? 'desc' : 'asc')
-        setOrderBy(property)
-    }
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.checked) {
-            const newSelecteds = mapsInfo.map((n) => n.id)
-            setSelected(newSelecteds)
-            return
+            const newSelecteds = mapsInfo.map((n) => n.id);
+            setSelected(newSelecteds);
+            return;
         }
-        setSelected([])
-    }
+        setSelected([]);
+    };
 
     const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => {
-        const selectedIndex = selected.indexOf(id)
-        let newSelected: number[] = []
+        const selectedIndex = selected.indexOf(id);
+        let newSelected: number[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id)
+            newSelected = newSelected.concat(selected, id);
         } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1))
+            newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1))
+            newSelected = newSelected.concat(selected.slice(0, -1));
         } else if (selectedIndex > 0) {
             newSelected = newSelected.concat(
                 selected.slice(0, selectedIndex),
                 selected.slice(selectedIndex + 1)
-            )
+            );
         }
 
-        setSelected(newSelected)
-    }
+        setSelected(newSelected);
+    };
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage)
-    }
+        setPage(newPage);
+    };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10))
-        setPage(0)
-    }
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     const handleActionClick = (mapId: number): ((event) => void) => {
         return (event): void => {
             setActiveRowAction({
                 mapId: mapId,
                 el: event.currentTarget,
-            })
-            event.stopPropagation()
-        }
-    }
+            });
+            event.stopPropagation();
+        };
+    };
 
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
-            const map = mapsInfo.find((m) => m.id == id)
-            return client.updateStarred(id, !map?.starred)
+            const map = mapsInfo.find((m) => m.id == id);
+            return client.updateStarred(id, !map?.starred);
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries('maps')
+                queryClient.invalidateQueries('maps');
             },
             onError: () => {
                 // setError(error);
             },
         }
-    )
+    );
 
     const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
-        event.stopPropagation()
-        starredMultation.mutate(id)
-    }
+        event.stopPropagation();
+        starredMultation.mutate(id);
+    };
 
     const handleActionMenuClose = (action: ActionType): void => {
         if (action) {
-            const mapId = activeRowAction?.mapId
+            const mapId = activeRowAction?.mapId;
 
             setActiveDialog({
                 actionType: action as ActionType,
                 mapsId: [mapId] as number[],
-            })
+            });
         }
-        setActiveRowAction(undefined)
-    }
+        setActiveRowAction(undefined);
+    };
 
     const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchCondition(e.target.value)
-    }
+        setSearchCondition(e.target.value);
+    };
 
     const handleDeleteClick = () => {
         setActiveDialog({
             actionType: 'delete',
             mapsId: selected,
-        })
-    }
+        });
+    };
 
-    const isSelected = (id: number) => selected.indexOf(id) !== -1
+    const isSelected = (id: number) => selected.indexOf(id) !== -1;
     return (
         <div className={classes.root}>
             <ActionChooser
@@ -480,8 +480,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 stableSort(mapsInfo, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row: MapInfo) => {
-                                        const isItemSelected = isSelected(row.id)
-                                        const labelId = row.id
+                                        const isItemSelected = isSelected(row.id);
+                                        const labelId = row.id;
 
                                         return (
                                             <TableRow
@@ -592,7 +592,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                     </Tooltip>
                                                 </TableCell>
                                             </TableRow>
-                                        )
+                                        );
                                     })
                             )}
                         </TableBody>
@@ -606,5 +606,5 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 mapsId={activeDialog ? activeDialog.mapsId : []}
             />
         </div>
-    )
-}
+    );
+};

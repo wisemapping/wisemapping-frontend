@@ -1,60 +1,60 @@
-import React, { useState, useEffect } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { useHistory } from 'react-router-dom'
-import Client, { ErrorInfo } from '../../classes/client'
-import FormContainer from '../layout/form-container'
+import React, { useState, useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useHistory } from 'react-router-dom';
+import Client, { ErrorInfo } from '../../classes/client';
+import FormContainer from '../layout/form-container';
 
-import Header from '../layout/header'
-import Footer from '../layout/footer'
+import Header from '../layout/header';
+import Footer from '../layout/footer';
 
-import { useSelector } from 'react-redux'
-import { useMutation } from 'react-query'
-import { activeInstance } from '../../redux/clientSlice'
-import Input from '../form/input'
-import GlobalError from '../form/global-error'
-import SubmitButton from '../form/submit-button'
-import Typography from '@material-ui/core/Typography'
-import FormControl from '@material-ui/core/FormControl'
+import { useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
+import { activeInstance } from '../../redux/clientSlice';
+import Input from '../form/input';
+import GlobalError from '../form/global-error';
+import SubmitButton from '../form/submit-button';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
 
 export type Model = {
-    email: string
-    lastname: string
-    firstname: string
-    password: string
-    recaptcha: string
-}
+    email: string;
+    lastname: string;
+    firstname: string;
+    password: string;
+    recaptcha: string;
+};
 
-const defaultModel: Model = { email: '', lastname: '', firstname: '', password: '', recaptcha: '' }
+const defaultModel: Model = { email: '', lastname: '', firstname: '', password: '', recaptcha: '' };
 const RegistrationForm = () => {
-    const [model, setModel] = useState<Model>(defaultModel)
-    const [error, setError] = useState<ErrorInfo>()
-    const history = useHistory()
-    const intl = useIntl()
+    const [model, setModel] = useState<Model>(defaultModel);
+    const [error, setError] = useState<ErrorInfo>();
+    const history = useHistory();
+    const intl = useIntl();
 
-    const Client: Client = useSelector(activeInstance)
+    const Client: Client = useSelector(activeInstance);
     const mutation = useMutation<void, ErrorInfo, Model>(
         (model: Model) => Client.registerNewUser({ ...model }),
         {
             onSuccess: () => history.push('/c/registration-success'),
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
-        mutation.mutate(model)
-    }
+        event.preventDefault();
+        mutation.mutate(model);
+    };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        event.preventDefault()
+        event.preventDefault();
 
-        const name = event.target.name
-        const value = event.target.value
-        setModel({ ...model, [name as keyof Model]: value })
-    }
+        const name = event.target.name;
+        const value = event.target.value;
+        setModel({ ...model, [name as keyof Model]: value });
+    };
 
     return (
         <FormContainer>
@@ -125,8 +125,8 @@ const RegistrationForm = () => {
                         <ReCAPTCHA
                             sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                             onChange={(value: string) => {
-                                model.recaptcha = value
-                                setModel(model)
+                                model.recaptcha = value;
+                                setModel(model);
                             }}
                         />
                     </div>
@@ -147,13 +147,13 @@ const RegistrationForm = () => {
                 </form>
             </FormControl>
         </FormContainer>
-    )
-}
+    );
+};
 
 const RegistationPage = (): React.ReactElement => {
     useEffect(() => {
-        document.title = 'Registration | WiseMapping'
-    })
+        document.title = 'Registration | WiseMapping';
+    });
 
     return (
         <div>
@@ -161,7 +161,7 @@ const RegistationPage = (): React.ReactElement => {
             <RegistrationForm />
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default RegistationPage
+export default RegistationPage;

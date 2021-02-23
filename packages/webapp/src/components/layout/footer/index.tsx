@@ -1,10 +1,10 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { StyledFooter } from './styled'
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { StyledFooter } from './styled';
 
 // FIXME: use SVG loader
 // eslint-disable-next-line
-const poweredByIcon = require('../../../images/pwrdby-white.svg')
+const poweredByIcon = require('../../../images/pwrdby-white.svg');
 
 const Footer = (): React.ReactElement => {
     return (
@@ -67,7 +67,7 @@ const Footer = (): React.ReactElement => {
                 </div>
             </div>
         </StyledFooter>
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;

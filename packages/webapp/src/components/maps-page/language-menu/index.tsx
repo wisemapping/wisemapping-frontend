@@ -1,55 +1,55 @@
-import TranslateTwoTone from '@material-ui/icons/TranslateTwoTone'
-import React from 'react'
-import { useMutation, useQueryClient } from 'react-query'
-import Client from '../../../classes/client'
-import { useSelector } from 'react-redux'
-import { activeInstance, fetchAccount } from '../../../redux/clientSlice'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { LocaleCode, Locales } from '../../../classes/app-i18n'
-import Tooltip from '@material-ui/core/Tooltip'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogActions from '@material-ui/core/DialogActions'
-import Divider from '@material-ui/core/Divider'
+import TranslateTwoTone from '@material-ui/icons/TranslateTwoTone';
+import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import Client from '../../../classes/client';
+import { useSelector } from 'react-redux';
+import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { LocaleCode, Locales } from '../../../classes/app-i18n';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+import Divider from '@material-ui/core/Divider';
 
 const LanguageMenu = (): React.ReactElement => {
-    const queryClient = useQueryClient()
-    const client: Client = useSelector(activeInstance)
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-    const [openHelpDialog, setHelpDialogOpen] = React.useState<boolean>(false)
+    const queryClient = useQueryClient();
+    const client: Client = useSelector(activeInstance);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [openHelpDialog, setHelpDialogOpen] = React.useState<boolean>(false);
 
-    const open = Boolean(anchorEl)
-    const intl = useIntl()
+    const open = Boolean(anchorEl);
+    const intl = useIntl();
 
     const mutation = useMutation((locale: LocaleCode) => client.updateAccountLanguage(locale), {
         onSuccess: () => {
-            queryClient.invalidateQueries('account')
-            handleClose()
+            queryClient.invalidateQueries('account');
+            handleClose();
         },
         onError: (error) => {
-            console.error(`Unexpected error ${error}`)
+            console.error(`Unexpected error ${error}`);
         },
-    })
+    });
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget)
-    }
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
 
     const handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
-        const localeCode = event.target['id']
-        mutation.mutate(localeCode)
-    }
+        const localeCode = event.target['id'];
+        mutation.mutate(localeCode);
+    };
 
-    const accountInfo = fetchAccount()
+    const accountInfo = fetchAccount();
     return (
         <span>
             <Tooltip
@@ -106,8 +106,8 @@ const LanguageMenu = (): React.ReactElement => {
 
                 <MenuItem
                     onClick={() => {
-                        handleClose()
-                        setHelpDialogOpen(true)
+                        handleClose();
+                        setHelpDialogOpen(true);
                     }}
                 >
                     <FormattedMessage id="language.help" defaultMessage="Help to Translate" />
@@ -115,12 +115,12 @@ const LanguageMenu = (): React.ReactElement => {
             </Menu>
             {openHelpDialog && <HelpUsToTranslateDialog onClose={() => setHelpDialogOpen(false)} />}
         </span>
-    )
-}
+    );
+};
 
 type HelpUsToTranslateDialogProp = {
-    onClose: () => void
-}
+    onClose: () => void;
+};
 const HelpUsToTranslateDialog = ({ onClose }: HelpUsToTranslateDialogProp) => {
     return (
         <Dialog open={true} onClose={onClose}>
@@ -137,7 +137,7 @@ const HelpUsToTranslateDialog = ({ onClose }: HelpUsToTranslateDialogProp) => {
                 </Button>
             </DialogActions>
         </Dialog>
-    )
-}
+    );
+};
 
-export default LanguageMenu
+export default LanguageMenu;

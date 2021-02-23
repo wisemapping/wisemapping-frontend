@@ -1,21 +1,21 @@
-import React from 'react'
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined'
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
-import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
-import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined'
-import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined'
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined'
-import LabelOutlined from '@material-ui/icons/LabelOutlined'
+import React from 'react';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
+import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
+import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
+import LabelOutlined from '@material-ui/icons/LabelOutlined';
 
-import { FormattedMessage } from 'react-intl'
-import { fetchMapById } from '../../../redux/clientSlice'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Divider from '@material-ui/core/Divider'
+import { FormattedMessage } from 'react-intl';
+import { fetchMapById } from '../../../redux/clientSlice';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
 export type ActionType =
     | 'open'
     | 'share'
@@ -31,27 +31,27 @@ export type ActionType =
     | 'info'
     | 'publish'
     | 'history'
-    | undefined
+    | undefined;
 
 interface ActionProps {
-    onClose: (action: ActionType) => void
-    anchor?: HTMLElement
-    mapId?: number
+    onClose: (action: ActionType) => void;
+    anchor?: HTMLElement;
+    mapId?: number;
 }
 
 const ActionChooser = (props: ActionProps): React.ReactElement => {
-    const { anchor, onClose, mapId } = props
+    const { anchor, onClose, mapId } = props;
 
     const handleOnClose = (
         action: ActionType
     ): ((event: React.MouseEvent<HTMLLIElement>) => void) => {
         return (event): void => {
-            event.stopPropagation()
-            onClose(action)
-        }
-    }
+            event.stopPropagation();
+            onClose(action);
+        };
+    };
 
-    const role = mapId ? fetchMapById(mapId)?.map?.role : undefined
+    const role = mapId ? fetchMapById(mapId)?.map?.role : undefined;
     return (
         <Menu
             anchorEl={anchor}
@@ -149,7 +149,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
                 </MenuItem>
             )}
         </Menu>
-    )
-}
+    );
+};
 
-export default ActionChooser
+export default ActionChooser;

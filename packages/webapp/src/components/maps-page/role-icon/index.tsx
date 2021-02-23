@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-import Tooltip from '@material-ui/core/Tooltip'
-import PersonSharpIcon from '@material-ui/icons/PersonSharp'
-import EditSharpIcon from '@material-ui/icons/EditSharp'
-import VisibilitySharpIcon from '@material-ui/icons/VisibilitySharp'
+import Tooltip from '@material-ui/core/Tooltip';
+import PersonSharpIcon from '@material-ui/icons/PersonSharp';
+import EditSharpIcon from '@material-ui/icons/EditSharp';
+import VisibilitySharpIcon from '@material-ui/icons/VisibilitySharp';
 
-import { FormattedMessage } from 'react-intl'
-import { Role } from '../../../classes/client'
+import { FormattedMessage } from 'react-intl';
+import { Role } from '../../../classes/client';
 
 type RoleIconProps = {
-    role: Role
-}
+    role: Role;
+};
 
 const RoleIcon = ({ role }: RoleIconProps): React.ReactElement => {
     return (
@@ -42,7 +42,7 @@ const RoleIcon = ({ role }: RoleIconProps): React.ReactElement => {
                 </Tooltip>
             )}
         </span>
-    )
-}
+    );
+};
 
-export default RoleIcon
+export default RoleIcon;

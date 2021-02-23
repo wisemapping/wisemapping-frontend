@@ -1,21 +1,21 @@
-import { useSelector } from 'react-redux'
-import React from 'react'
-import { activeInstanceStatus, ClientStatus } from '../../../redux/clientSlice'
-import { FormattedMessage } from 'react-intl'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import Alert from '@material-ui/lab/Alert'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
-import AlertTitle from '@material-ui/lab/AlertTitle'
+import { useSelector } from 'react-redux';
+import React from 'react';
+import { activeInstanceStatus, ClientStatus } from '../../../redux/clientSlice';
+import { FormattedMessage } from 'react-intl';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Alert from '@material-ui/lab/Alert';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 const ClientHealthSentinel = (): React.ReactElement => {
-    const status: ClientStatus = useSelector(activeInstanceStatus)
+    const status: ClientStatus = useSelector(activeInstanceStatus);
 
     const handleOnClose = () => {
-        window.location.href = '/c/login'
-    }
+        window.location.href = '/c/login';
+    };
 
     return (
         <div>
@@ -50,6 +50,6 @@ const ClientHealthSentinel = (): React.ReactElement => {
                 </DialogActions>
             </Dialog>
         </div>
-    )
-}
-export default ClientHealthSentinel
+    );
+};
+export default ClientHealthSentinel;

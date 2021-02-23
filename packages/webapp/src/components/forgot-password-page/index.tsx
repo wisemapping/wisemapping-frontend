@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { useHistory } from 'react-router-dom'
-import Client, { ErrorInfo } from '../../classes/client'
+import React, { useState, useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
+import Client, { ErrorInfo } from '../../classes/client';
 
-import Header from '../layout/header'
-import Footer from '../layout/footer'
-import FormContainer from '../layout/form-container'
-import { useSelector } from 'react-redux'
-import { useMutation } from 'react-query'
-import { activeInstance } from '../../redux/clientSlice'
-import Input from '../form/input'
-import GlobalError from '../form/global-error'
-import SubmitButton from '../form/submit-button'
+import Header from '../layout/header';
+import Footer from '../layout/footer';
+import FormContainer from '../layout/form-container';
+import { useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
+import { activeInstance } from '../../redux/clientSlice';
+import Input from '../form/input';
+import GlobalError from '../form/global-error';
+import SubmitButton from '../form/submit-button';
 
-import Typography from '@material-ui/core/Typography'
+import Typography from '@material-ui/core/Typography';
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState<string>('')
-    const [error, setError] = useState<ErrorInfo>()
-    const history = useHistory()
-    const intl = useIntl()
+    const [email, setEmail] = useState<string>('');
+    const [error, setError] = useState<ErrorInfo>();
+    const history = useHistory();
+    const intl = useIntl();
 
-    const service: Client = useSelector(activeInstance)
+    const service: Client = useSelector(activeInstance);
     const mutation = useMutation<void, ErrorInfo, string>(
         (email: string) => service.resetPassword(email),
         {
             onSuccess: () => history.push('/c/forgot-password-success'),
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        mutation.mutate(email)
-    }
+        event.preventDefault();
+        mutation.mutate(email);
+    };
 
     return (
         <FormContainer>
@@ -70,13 +70,13 @@ const ForgotPassword = () => {
                 />
             </form>
         </FormContainer>
-    )
-}
+    );
+};
 
 const ForgotPasswordPage = (): React.ReactElement => {
     useEffect(() => {
-        document.title = 'Reset Password | WiseMapping'
-    })
+        document.title = 'Reset Password | WiseMapping';
+    });
 
     return (
         <div>
@@ -84,7 +84,7 @@ const ForgotPasswordPage = (): React.ReactElement => {
             <ForgotPassword />
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export { ForgotPasswordPage }
+export { ForgotPasswordPage };

@@ -1,5 +1,5 @@
-import Container from '@material-ui/core/Container'
-import withStyles from '@material-ui/core/styles/withStyles'
+import Container from '@material-ui/core/Container';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const FormContainer = withStyles({
     root: {
@@ -7,6 +7,6 @@ const FormContainer = withStyles({
         maxWidth: '380px',
         textAlign: 'center',
     },
-})(Container)
+})(Container);
 
-export default FormContainer
+export default FormContainer;

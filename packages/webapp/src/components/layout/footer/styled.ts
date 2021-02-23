@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 /* Footer */
 
 export const StyledFooter = styled.footer`
@@ -41,4 +41,4 @@ export const StyledFooter = styled.footer`
         display: inline-block;
         visibility: visible;
     }
-`
+`;

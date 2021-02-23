@@ -1,20 +1,20 @@
-import { StyledNav, StyledDiv, Logo } from './styled'
+import { StyledNav, StyledDiv, Logo } from './styled';
 
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
-import logo from '../../../images/logo-small.svg'
+import logo from '../../../images/logo-small.svg';
 
 interface HeaderProps {
-    type: 'only-signup' | 'only-signin' | 'none'
+    type: 'only-signup' | 'only-signin' | 'none';
 }
 
 export const Header = ({ type }: HeaderProps): React.ReactElement => {
-    let signUpButton
-    let text
-    let signInButton
+    let signUpButton;
+    let text;
+    let signInButton;
     if (type === 'only-signup') {
         text = (
             <span className="header-area-content-span">
@@ -25,8 +25,8 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
                     />
                 </span>
             </span>
-        )
-        signUpButton = <SignUpButton className="header-area-right2" />
+        );
+        signUpButton = <SignUpButton className="header-area-right2" />;
     } else if (type === 'only-signin') {
         text = (
             <span className="header-area-content-span">
@@ -37,14 +37,14 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
                     />
                 </span>
             </span>
-        )
-        signUpButton = <SignInButton className="header-area-right2" />
+        );
+        signUpButton = <SignInButton className="header-area-right2" />;
     } else if (type === 'none') {
-        text = ''
-        signUpButton = ''
+        text = '';
+        signUpButton = '';
     } else {
-        signUpButton = <SignUpButton className="header-area-right2" />
-        signInButton = <SignInButton className="header-area-right2" />
+        signUpButton = <SignUpButton className="header-area-right2" />;
+        signInButton = <SignInButton className="header-area-right2" />;
     }
 
     return (
@@ -60,11 +60,11 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
                 {signInButton}
             </StyledDiv>
         </StyledNav>
-    )
-}
+    );
+};
 
 interface ButtonProps {
-    className?: string
+    className?: string;
 }
 
 export const SignInButton = (props: ButtonProps): React.ReactElement => {
@@ -74,8 +74,8 @@ export const SignInButton = (props: ButtonProps): React.ReactElement => {
                 <FormattedMessage id="login.signin" defaultMessage="Sign In" />
             </Button>
         </span>
-    )
-}
+    );
+};
 
 const SignUpButton = (props: ButtonProps): React.ReactElement => {
     return (
@@ -90,7 +90,7 @@ const SignUpButton = (props: ButtonProps): React.ReactElement => {
                 <FormattedMessage id="login.signup" defaultMessage="Sign Up" />
             </Button>
         </span>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

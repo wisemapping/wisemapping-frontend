@@ -1,34 +1,34 @@
-import IconButton from '@material-ui/core/IconButton'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Tooltip from '@material-ui/core/Tooltip'
-import SettingsApplicationsOutlined from '@material-ui/icons/SettingsApplicationsOutlined'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { fetchAccount } from '../../../redux/clientSlice'
-import AccountInfoDialog from './account-info-dialog'
-import ChangePasswordDialog from './change-password-dialog'
-import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined'
-import Link from '@material-ui/core/Link'
-import ExitToAppOutlined from '@material-ui/icons/ExitToAppOutlined'
+import IconButton from '@material-ui/core/IconButton';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Tooltip from '@material-ui/core/Tooltip';
+import SettingsApplicationsOutlined from '@material-ui/icons/SettingsApplicationsOutlined';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { fetchAccount } from '../../../redux/clientSlice';
+import AccountInfoDialog from './account-info-dialog';
+import ChangePasswordDialog from './change-password-dialog';
+import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
+import Link from '@material-ui/core/Link';
+import ExitToAppOutlined from '@material-ui/icons/ExitToAppOutlined';
 
-type ActionType = 'change-password' | 'account-info' | undefined
+type ActionType = 'change-password' | 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-    const open = Boolean(anchorEl)
-    const [action, setAction] = React.useState<ActionType>(undefined)
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const [action, setAction] = React.useState<ActionType>(undefined);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget)
-    }
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
 
-    const account = fetchAccount()
+    const account = fetchAccount();
     return (
         <span>
             <Tooltip
@@ -57,7 +57,7 @@ const AccountMenu = (): React.ReactElement => {
             >
                 <MenuItem
                     onClick={() => {
-                        handleClose(), setAction('account-info')
+                        handleClose(), setAction('account-info');
                     }}
                 >
                     <ListItemIcon>
@@ -68,7 +68,7 @@ const AccountMenu = (): React.ReactElement => {
 
                 <MenuItem
                     onClick={() => {
-                        handleClose(), setAction('change-password')
+                        handleClose(), setAction('change-password');
                     }}
                 >
                     <ListItemIcon>
@@ -91,7 +91,7 @@ const AccountMenu = (): React.ReactElement => {
             )}
             {action == 'account-info' && <AccountInfoDialog onClose={() => setAction(undefined)} />}
         </span>
-    )
-}
+    );
+};
 
-export default AccountMenu
+export default AccountMenu;

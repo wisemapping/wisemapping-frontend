@@ -1,6 +1,6 @@
-import React from 'react'
-import { StyledCanvas } from './styled'
+import React from 'react';
+import { StyledCanvas } from './styled';
 
-const Canvas = (): React.ReactElement => <StyledCanvas>canvas</StyledCanvas>
+const Canvas = (): React.ReactElement => <StyledCanvas>canvas</StyledCanvas>;
 
-export default Canvas
+export default Canvas;

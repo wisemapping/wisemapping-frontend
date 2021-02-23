@@ -1,5 +1,5 @@
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 export const useStyles = makeStyles(() =>
     createStyles({
@@ -17,4 +17,4 @@ export const useStyles = makeStyles(() =>
             margin: '5px 0px',
         },
     })
-)
+);

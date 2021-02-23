@@ -1,20 +1,20 @@
-import React, { ReactElement } from 'react'
-import { IntlProvider } from 'react-intl'
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
+import React, { ReactElement } from 'react';
+import { IntlProvider } from 'react-intl';
+import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
 
-import RegistrationSuccessPage from './components/registration-success-page'
-import ForgotPasswordSuccessPage from './components/forgot-password-success-page'
-import RegistationPage from './components/registration-page'
-import LoginPage from './components/login-page'
-import store from './redux/store'
-import { ForgotPasswordPage } from './components/forgot-password-page'
-import { Provider } from 'react-redux'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { theme } from './theme'
-import AppI18n, { Locales } from './classes/app-i18n'
-import MapsPage from './components/maps-page'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { ThemeProvider } from '@material-ui/core/styles'
+import RegistrationSuccessPage from './components/registration-success-page';
+import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
+import RegistationPage from './components/registration-page';
+import LoginPage from './components/login-page';
+import store from './redux/store';
+import { ForgotPasswordPage } from './components/forgot-password-page';
+import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { theme } from './theme';
+import AppI18n, { Locales } from './classes/app-i18n';
+import MapsPage from './components/maps-page';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -23,11 +23,11 @@ const queryClient = new QueryClient({
             staleTime: 5 * 1000 * 60, // 10 minutes
         },
     },
-})
+});
 
 const App = (): ReactElement => {
-    const appi18n = new AppI18n()
-    const locale = appi18n.getBrowserLocale()
+    const appi18n = new AppI18n();
+    const locale = appi18n.getBrowserLocale();
 
     return locale.message ? (
         <Provider store={store}>
@@ -70,7 +70,7 @@ const App = (): ReactElement => {
         </Provider>
     ) : (
         <div>Loading ... </div>
-    )
-}
+    );
+};
 
-export default App
+export default App;

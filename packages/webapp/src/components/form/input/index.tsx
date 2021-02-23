@@ -1,19 +1,19 @@
-import TextField from '@material-ui/core/TextField'
-import React, { ChangeEvent } from 'react'
-import { ErrorInfo } from '../../../classes/client'
+import TextField from '@material-ui/core/TextField';
+import React, { ChangeEvent } from 'react';
+import { ErrorInfo } from '../../../classes/client';
 
 type InputProps = {
-    name: string
-    error?: ErrorInfo
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void
-    label: string
-    required?: boolean
-    type: string
-    value?: string
-    autoComplete?: string
-    fullWidth?: boolean
-    disabled?: boolean
-}
+    name: string;
+    error?: ErrorInfo;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    label: string;
+    required?: boolean;
+    type: string;
+    value?: string;
+    autoComplete?: string;
+    fullWidth?: boolean;
+    disabled?: boolean;
+};
 
 const Input = ({
     name,
@@ -27,7 +27,7 @@ const Input = ({
     fullWidth = true,
     disabled = false,
 }: InputProps): React.ReactElement => {
-    const fieldError = error?.fields?.[name]
+    const fieldError = error?.fields?.[name];
     return (
         <TextField
             name={name}
@@ -44,6 +44,6 @@ const Input = ({
             disabled={disabled}
             autoComplete={autoComplete}
         />
-    )
-}
-export default Input
+    );
+};
+export default Input;

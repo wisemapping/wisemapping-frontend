@@ -1,20 +1,20 @@
-import Button from '@material-ui/core/Button'
-import React, { useState } from 'react'
-import { useIntl } from 'react-intl'
+import Button from '@material-ui/core/Button';
+import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
 
 type SubmitButton = {
-    value: string
-    disabled?: boolean
-}
+    value: string;
+    disabled?: boolean;
+};
 const SubmitButton = (props: SubmitButton): React.ReactElement => {
-    const [disabled] = useState(props.disabled ? true : false)
-    const intl = useIntl()
+    const [disabled] = useState(props.disabled ? true : false);
+    const intl = useIntl();
 
-    let valueTxt = props.value
+    let valueTxt = props.value;
     if (disabled) {
-        valueTxt = intl.formatMessage({ id: 'common.wait', defaultMessage: 'Please wait ...' })
+        valueTxt = intl.formatMessage({ id: 'common.wait', defaultMessage: 'Please wait ...' });
     }
-    const [value] = useState(valueTxt)
+    const [value] = useState(valueTxt);
     return (
         <Button
             color="primary"
@@ -33,7 +33,7 @@ const SubmitButton = (props: SubmitButton): React.ReactElement => {
         >
             {value}
         </Button>
-    )
-}
+    );
+};
 
-export default SubmitButton
+export default SubmitButton;

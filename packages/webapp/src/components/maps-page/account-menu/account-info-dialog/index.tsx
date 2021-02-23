@@ -1,105 +1,105 @@
-import React, { useEffect } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { useMutation, useQueryClient } from 'react-query'
-import Client, { ErrorInfo } from '../../../../classes/client'
-import Input from '../../../form/input'
-import BaseDialog from '../../action-dispatcher/base-dialog'
-import { useSelector } from 'react-redux'
-import { activeInstance, fetchAccount } from '../../../../redux/clientSlice'
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useMutation, useQueryClient } from 'react-query';
+import Client, { ErrorInfo } from '../../../../classes/client';
+import Input from '../../../form/input';
+import BaseDialog from '../../action-dispatcher/base-dialog';
+import { useSelector } from 'react-redux';
+import { activeInstance, fetchAccount } from '../../../../redux/clientSlice';
 
-import Alert from '@material-ui/lab/Alert'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
-import Switch from '@material-ui/core/Switch'
+import Alert from '@material-ui/lab/Alert';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import Switch from '@material-ui/core/Switch';
 
 type AccountInfoDialogProps = {
-    onClose: () => void
-}
+    onClose: () => void;
+};
 
 type AccountInfoModel = {
-    email: string
-    firstname: string
-    lastname: string
-}
+    email: string;
+    firstname: string;
+    lastname: string;
+};
 
-const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' }
+const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' };
 const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
-    const client: Client = useSelector(activeInstance)
-    const queryClient = useQueryClient()
-    const [remove, setRemove] = React.useState<boolean>(false)
+    const client: Client = useSelector(activeInstance);
+    const queryClient = useQueryClient();
+    const [remove, setRemove] = React.useState<boolean>(false);
 
-    const [model, setModel] = React.useState<AccountInfoModel>(defaultModel)
-    const [error, setError] = React.useState<ErrorInfo>()
-    const intl = useIntl()
+    const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);
+    const [error, setError] = React.useState<ErrorInfo>();
+    const intl = useIntl();
 
     const mutationChangeName = useMutation<void, ErrorInfo, AccountInfoModel>(
         (model: AccountInfoModel) => {
-            return client.updateAccountInfo(model.firstname, model.lastname)
+            return client.updateAccountInfo(model.firstname, model.lastname);
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries('account')
-                onClose()
+                queryClient.invalidateQueries('account');
+                onClose();
             },
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
     const mutationRemove = useMutation<void, ErrorInfo, void>(
         () => {
-            return client.deleteAccount()
+            return client.deleteAccount();
         },
         {
             onSuccess: () => {
-                window.location.href = '/c/logout'
-                onClose()
+                window.location.href = '/c/logout';
+                onClose();
             },
             onError: (error) => {
-                setError(error)
+                setError(error);
             },
         }
-    )
+    );
 
-    const account = fetchAccount()
+    const account = fetchAccount();
     useEffect(() => {
         if (account) {
             setModel({
                 email: account?.email,
                 lastname: account?.lastname,
                 firstname: account?.firstname,
-            })
+            });
         }
-    }, [account?.email])
+    }, [account?.email]);
 
     const handleOnClose = (): void => {
-        onClose()
-        setModel(defaultModel)
-        setError(undefined)
-    }
+        onClose();
+        setModel(defaultModel);
+        setError(undefined);
+    };
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
+        event.preventDefault();
         if (remove) {
-            mutationRemove.mutate()
+            mutationRemove.mutate();
         } else {
-            mutationChangeName.mutate(model)
+            mutationChangeName.mutate(model);
         }
-    }
+    };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        event.preventDefault()
+        event.preventDefault();
 
-        const name = event.target.name
-        const value = event.target.value
-        setModel({ ...model, [name as keyof AccountInfoModel]: value })
-    }
+        const name = event.target.name;
+        const value = event.target.value;
+        setModel({ ...model, [name as keyof AccountInfoModel]: value });
+    };
 
     const handleOnRemoveChange = (event) => {
-        setRemove(event.target.checked)
-    }
+        setRemove(event.target.checked);
+    };
 
     return (
         <BaseDialog
@@ -173,6 +173,6 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                 </FormGroup>
             </FormControl>
         </BaseDialog>
-    )
-}
-export default AccountInfoDialog
+    );
+};
+export default AccountInfoDialog;

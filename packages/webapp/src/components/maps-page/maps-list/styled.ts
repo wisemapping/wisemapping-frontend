@@ -1,7 +1,7 @@
-import { fade } from '@material-ui/core/styles'
-import { Theme } from '@material-ui/core/styles/createMuiTheme'
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { fade } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -100,4 +100,4 @@ export const useStyles = makeStyles((theme: Theme) =>
             },
         },
     })
-)
+);

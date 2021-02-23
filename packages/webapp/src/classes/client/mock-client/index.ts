@@ -7,13 +7,13 @@ import Client, {
     MapInfo,
     NewUser,
     Permission,
-} from '..'
-import { LocaleCode, localeFromStr } from '../../app-i18n'
+} from '..';
+import { LocaleCode, localeFromStr } from '../../app-i18n';
 
 class MockClient implements Client {
-    private maps: MapInfo[] = []
-    private labels: Label[] = []
-    private permissionsByMap: Map<number, Permission[]> = new Map()
+    private maps: MapInfo[] = [];
+    private labels: Label[] = [];
+    private permissionsByMap: Map<number, Permission[]> = new Map();
 
     constructor() {
         // Remove, just for develop ....
@@ -42,7 +42,7 @@ class MockClient implements Client {
                 description,
                 isPublic,
                 role,
-            }
+            };
         }
 
         this.maps = [
@@ -85,31 +85,31 @@ class MockClient implements Client {
                 false,
                 'editor'
             ),
-        ]
+        ];
 
         this.labels = [
             { id: 1, title: 'Red Label', iconName: '', color: 'red' },
             { id: 2, title: 'Blue Label', iconName: '', color: 'blue' },
-        ]
+        ];
     }
     deleteMapPermission(id: number, email: string): Promise<void> {
-        let perm = this.permissionsByMap.get(id) || []
-        perm = perm.filter((p) => p.email != email)
-        this.permissionsByMap.set(id, perm)
-        return Promise.resolve()
+        let perm = this.permissionsByMap.get(id) || [];
+        perm = perm.filter((p) => p.email != email);
+        this.permissionsByMap.set(id, perm);
+        return Promise.resolve();
     }
 
     addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
-        let perm = this.permissionsByMap.get(id) || []
-        perm = perm.concat(permissions)
-        this.permissionsByMap.set(id, perm)
+        let perm = this.permissionsByMap.get(id) || [];
+        perm = perm.concat(permissions);
+        this.permissionsByMap.set(id, perm);
 
-        console.log(`Message ${message}`)
-        return Promise.resolve()
+        console.log(`Message ${message}`);
+        return Promise.resolve();
     }
 
     fetchMapPermissions(id: number): Promise<Permission[]> {
-        let perm = this.permissionsByMap.get(id)
+        let perm = this.permissionsByMap.get(id);
         if (!perm) {
             perm = [
                 {
@@ -127,107 +127,107 @@ class MockClient implements Client {
                     email: 'pepe3@example.com',
                     role: 'viewer',
                 },
-            ]
-            this.permissionsByMap.set(id, perm)
+            ];
+            this.permissionsByMap.set(id, perm);
         }
-        return Promise.resolve(perm)
+        return Promise.resolve(perm);
     }
 
     deleteAccount(): Promise<void> {
-        return Promise.resolve()
+        return Promise.resolve();
     }
 
     updateAccountInfo(firstname: string, lastname: string): Promise<void> {
-        console.log('firstname:' + firstname, +lastname)
-        return Promise.resolve()
+        console.log('firstname:' + firstname, +lastname);
+        return Promise.resolve();
     }
 
     updateAccountPassword(pasword: string): Promise<void> {
-        console.log('password:' + pasword)
-        return Promise.resolve()
+        console.log('password:' + pasword);
+        return Promise.resolve();
     }
 
     updateAccountLanguage(locale: LocaleCode): Promise<void> {
-        localStorage.setItem('locale', locale)
-        return Promise.resolve()
+        localStorage.setItem('locale', locale);
+        return Promise.resolve();
     }
 
     importMap(model: ImportMapInfo): Promise<number> {
-        console.log('model:' + model)
-        return Promise.resolve(10)
+        console.log('model:' + model);
+        return Promise.resolve(10);
     }
 
     fetchAccountInfo(): Promise<AccountInfo> {
-        console.log('Fetch account info ...')
-        const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode
+        console.log('Fetch account info ...');
+        const locale: LocaleCode | null = localStorage.getItem('locale') as LocaleCode;
         return Promise.resolve({
             firstname: 'Costme',
             lastname: 'Fulanito',
             email: 'test@example.com',
             locale: localeFromStr(locale),
-        })
+        });
     }
 
     deleteMaps(ids: number[]): Promise<void> {
-        ids.forEach((id) => this.deleteMap(id))
-        return Promise.resolve()
+        ids.forEach((id) => this.deleteMap(id));
+        return Promise.resolve();
     }
     revertHistory(id: number, cid: number): Promise<void> {
-        console.log('model:' + id + cid)
-        return Promise.resolve()
+        console.log('model:' + id + cid);
+        return Promise.resolve();
     }
 
     createMap(map: BasicMapInfo): Promise<number> {
-        throw new Error('Method not implemented.' + map)
+        throw new Error('Method not implemented.' + map);
     }
 
     fetchLabels(): Promise<Label[]> {
-        console.log('Fetching  labels from server')
-        return Promise.resolve(this.labels)
+        console.log('Fetching  labels from server');
+        return Promise.resolve(this.labels);
     }
 
     updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
-        const mapInfo = this.maps.find((m) => m.id == id)
+        const mapInfo = this.maps.find((m) => m.id == id);
         if (mapInfo) {
-            mapInfo.isPublic = isPublic
+            mapInfo.isPublic = isPublic;
         }
-        return Promise.resolve()
+        return Promise.resolve();
     }
 
     updateStarred(id: number, starred: boolean): Promise<void> {
-        const mapInfo = this.maps.find((m) => m.id == id)
+        const mapInfo = this.maps.find((m) => m.id == id);
         if (!mapInfo) {
-            console.log(`Could not find the map iwth id ${id}`)
-            return Promise.reject()
+            console.log(`Could not find the map iwth id ${id}`);
+            return Promise.reject();
         }
-        mapInfo.starred = starred
-        return Promise.resolve()
+        mapInfo.starred = starred;
+        return Promise.resolve();
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
-        const exists = this.maps.find((m) => m.title == basicInfo.title) != undefined
+        const exists = this.maps.find((m) => m.title == basicInfo.title) != undefined;
         if (!exists) {
             this.maps = this.maps.map((m) => {
-                const result = m
+                const result = m;
                 if (m.id == id) {
-                    result.description = basicInfo.description ? basicInfo.description : ''
-                    result.title = basicInfo.title
+                    result.description = basicInfo.description ? basicInfo.description : '';
+                    result.title = basicInfo.title;
                 }
-                return result
-            })
-            return Promise.resolve()
+                return result;
+            });
+            return Promise.resolve();
         } else {
-            const fieldErrors: Map<string, string> = new Map<string, string>()
-            fieldErrors.set('name', 'name already exists ')
+            const fieldErrors: Map<string, string> = new Map<string, string>();
+            fieldErrors.set('name', 'name already exists ');
 
             return Promise.reject({
                 msg: 'Map already exists ...' + basicInfo.title,
                 fields: fieldErrors,
-            })
+            });
         }
     }
     fetchHistory(id: number): Promise<ChangeHistory[]> {
-        console.log(`Fetching history for ${id}`)
+        console.log(`Fetching history for ${id}`);
         const result = [
             {
                 id: 1,
@@ -264,12 +264,12 @@ class MockClient implements Client {
                 lastModificationBy: 'Paulo',
                 lastModificationTime: '2008-06-02T00:00:00Z',
             },
-        ]
-        return Promise.resolve(result)
+        ];
+        return Promise.resolve(result);
     }
 
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
-        const exists = this.maps.find((m) => m.title == basicInfo.title) != undefined
+        const exists = this.maps.find((m) => m.title == basicInfo.title) != undefined;
         if (!exists) {
             const newMap: MapInfo = {
                 id: Math.random() * 1000,
@@ -283,45 +283,45 @@ class MockClient implements Client {
                 creationTime: '2008-06-02T00:00:00Z',
                 isPublic: false,
                 role: 'owner',
-            }
-            this.maps.push(newMap)
-            return Promise.resolve(newMap.id)
+            };
+            this.maps.push(newMap);
+            return Promise.resolve(newMap.id);
         } else {
-            const fieldErrors: Map<string, string> = new Map<string, string>()
-            fieldErrors.set('name', 'name already exists ')
+            const fieldErrors: Map<string, string> = new Map<string, string>();
+            fieldErrors.set('name', 'name already exists ');
 
             return Promise.reject({
                 msg: 'Maps name must be unique:' + basicInfo.title,
                 fields: fieldErrors,
-            })
+            });
         }
     }
 
     deleteLabel(id: number): Promise<void> {
-        this.labels = this.labels.filter((l) => l.id != id)
-        console.log('Label delete:' + this.labels)
-        return Promise.resolve()
+        this.labels = this.labels.filter((l) => l.id != id);
+        console.log('Label delete:' + this.labels);
+        return Promise.resolve();
     }
 
     deleteMap(id: number): Promise<void> {
-        this.maps = this.maps.filter((m) => m.id != id)
-        return Promise.resolve()
+        this.maps = this.maps.filter((m) => m.id != id);
+        return Promise.resolve();
     }
 
     registerNewUser(user: NewUser): Promise<void> {
-        console.log('user:' + user)
-        return Promise.resolve()
+        console.log('user:' + user);
+        return Promise.resolve();
     }
 
     fetchAllMaps(): Promise<MapInfo[]> {
-        console.log('Fetching  maps from server')
-        return Promise.resolve(this.maps)
+        console.log('Fetching  maps from server');
+        return Promise.resolve(this.maps);
     }
 
     resetPassword(email: string): Promise<void> {
-        console.log('email:' + email)
-        return Promise.resolve()
+        console.log('email:' + email);
+        return Promise.resolve();
     }
 }
 
-export default MockClient
+export default MockClient;

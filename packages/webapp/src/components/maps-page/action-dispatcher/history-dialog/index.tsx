@@ -1,42 +1,42 @@
-import React, { ErrorInfo } from 'react'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { useQuery } from 'react-query'
-import { useSelector } from 'react-redux'
-import Client, { ChangeHistory } from '../../../../classes/client'
-import { activeInstance } from '../../../../redux/clientSlice'
-import { SimpleDialogProps } from '..'
-import BaseDialog from '../base-dialog'
-import dayjs from 'dayjs'
+import React, { ErrorInfo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import Client, { ChangeHistory } from '../../../../classes/client';
+import { activeInstance } from '../../../../redux/clientSlice';
+import { SimpleDialogProps } from '..';
+import BaseDialog from '../base-dialog';
+import dayjs from 'dayjs';
 
-import TableContainer from '@material-ui/core/TableContainer'
-import Table from '@material-ui/core/Table'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
-import Tooltip from '@material-ui/core/Tooltip'
-import Link from '@material-ui/core/Link'
-import Paper from '@material-ui/core/Paper'
+import TableContainer from '@material-ui/core/TableContainer';
+import Table from '@material-ui/core/Table';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import Tooltip from '@material-ui/core/Tooltip';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
 
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-    const intl = useIntl()
+    const intl = useIntl();
 
-    const client: Client = useSelector(activeInstance)
+    const client: Client = useSelector(activeInstance);
     const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>('history', () => {
-        return client.fetchHistory(mapId)
-    })
-    const changeHistory: ChangeHistory[] = data ? data : []
+        return client.fetchHistory(mapId);
+    });
+    const changeHistory: ChangeHistory[] = data ? data : [];
 
     const handleOnClose = (): void => {
-        onClose()
-    }
+        onClose();
+    };
 
     const handleOnClick = (event, vid): void => {
-        event.preventDefault()
+        event.preventDefault();
         client.revertHistory(mapId, vid).then(() => {
-            handleOnClose()
-        })
-    }
+            handleOnClose();
+        });
+    };
 
     return (
         <div>
@@ -127,7 +127,7 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 </TableContainer>
             </BaseDialog>
         </div>
-    )
-}
+    );
+};
 
-export default HistoryDialog
+export default HistoryDialog;
