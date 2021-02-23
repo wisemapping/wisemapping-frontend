@@ -43,7 +43,8 @@
     "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged",
+            "pre-push": "yarn lint && yarn test"
         }
     },
     "lint-staged": {
