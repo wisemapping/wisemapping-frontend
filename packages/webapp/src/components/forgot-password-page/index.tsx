@@ -5,7 +5,7 @@ import Client, { ErrorInfo } from '../../classes/client'
 
 import Header from '../layout/header'
 import Footer from '../layout/footer'
-import FormContainer from '../layout/form-container';
+import FormContainer from '../layout/form-container'
 import { useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
 import { activeInstance } from '../../redux/clientSlice'
@@ -16,64 +16,75 @@ import SubmitButton from '../form/submit-button'
 import Typography from '@material-ui/core/Typography'
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState<string>('');
-  const [error, setError] = useState<ErrorInfo>();
-  const history = useHistory();
-  const intl = useIntl();
+    const [email, setEmail] = useState<string>('')
+    const [error, setError] = useState<ErrorInfo>()
+    const history = useHistory()
+    const intl = useIntl()
 
-  const service: Client = useSelector(activeInstance);
-  const mutation = useMutation<void, ErrorInfo, string>(
-    (email: string) => service.resetPassword(email),
-    {
-      onSuccess: () => history.push("/c/forgot-password-success"),
-      onError: (error) => {
-        setError(error);
-      }
+    const service: Client = useSelector(activeInstance)
+    const mutation = useMutation<void, ErrorInfo, string>(
+        (email: string) => service.resetPassword(email),
+        {
+            onSuccess: () => history.push('/c/forgot-password-success'),
+            onError: (error) => {
+                setError(error)
+            },
+        }
+    )
+
+    const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        mutation.mutate(email)
     }
-  );
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    mutation.mutate(email);
-  }
+    return (
+        <FormContainer>
+            <Typography variant="h4" component="h1">
+                <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
+            </Typography>
 
-  return (
-    <FormContainer>
-      <Typography variant="h4" component="h1">
-        <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
-      </Typography>
+            <Typography>
+                <FormattedMessage
+                    id="forgot.desc"
+                    defaultMessage="We will send you an email to reset your password"
+                />
+            </Typography>
 
-      <Typography>
-        <FormattedMessage id="forgot.desc" defaultMessage="We will send you an email to reset your password" />
-      </Typography>
+            <GlobalError error={error} />
 
-      <GlobalError error={error} />
+            <form onSubmit={handleOnSubmit}>
+                <Input
+                    type="email"
+                    name="email"
+                    label={intl.formatMessage({ id: 'forgot.email', defaultMessage: 'Email' })}
+                    autoComplete="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={error}
+                />
 
-      <form onSubmit={handleOnSubmit}>
-        <Input type="email" name="email" label={intl.formatMessage({ id: "forgot.email", defaultMessage: "Email" })}
-          autoComplete="email" onChange={e => setEmail(e.target.value)} error={error} />
-
-        <SubmitButton value={intl.formatMessage({ id: "forgot.register", defaultMessage: "Send recovery link" })} />
-      </form>
-    </FormContainer>
-  );
+                <SubmitButton
+                    value={intl.formatMessage({
+                        id: 'forgot.register',
+                        defaultMessage: 'Send recovery link',
+                    })}
+                />
+            </form>
+        </FormContainer>
+    )
 }
 
-const ForgotPasswordPage = ():React.ReactElement => {
+const ForgotPasswordPage = (): React.ReactElement => {
+    useEffect(() => {
+        document.title = 'Reset Password | WiseMapping'
+    })
 
-  useEffect(() => {
-    document.title = 'Reset Password | WiseMapping';
-  });
-
-  return (
-    <div>
-      <Header type='only-signin' />
-      <ForgotPassword />
-      <Footer />
-    </div>
-  );
+    return (
+        <div>
+            <Header type="only-signin" />
+            <ForgotPassword />
+            <Footer />
+        </div>
+    )
 }
 
 export { ForgotPasswordPage }
-
-

@@ -1,4 +1,4 @@
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 
 const theme = createMuiTheme({
     overrides: {
@@ -16,16 +16,16 @@ const theme = createMuiTheme({
                 fontSize: '14px',
                 '& fieldset': {
                     border: 'solid 1px #ffcb66',
-                }, 
+                },
                 '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
                     borderColor: '#f9a826',
-                }
+                },
             },
         },
         MuiInputLabel: {
             root: {
-                color: '#f9a826'
-            }
+                color: '#f9a826',
+            },
         },
         MuiButton: {
             root: {
@@ -35,29 +35,26 @@ const theme = createMuiTheme({
                 textTransform: 'none',
                 borderRadius: '9px',
                 padding: '6px 54px 6px 54px',
-                width: '136px'
+                width: '136px',
             },
             containedPrimary: {
                 color: 'white',
                 '&:hover': {
-                    backgroundColor: 'rgba(249, 168, 38, 0.91)'
-                }
+                    backgroundColor: 'rgba(249, 168, 38, 0.91)',
+                },
             },
-            textPrimary: {
-            }
-        }
+            textPrimary: {},
+        },
     },
     typography: {
-        fontFamily: [
-            'Montserrat'
-        ].join(','),
+        fontFamily: ['Montserrat'].join(','),
         h4: {
             color: '#ffa800',
-            fontWeight: 600
+            fontWeight: 600,
         },
         h6: {
             fontSize: '25px',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
         },
     },
     palette: {
@@ -73,9 +70,7 @@ const theme = createMuiTheme({
             dark: '#FFFFFF',
             contrastText: '#FFFFFF',
         },
+    },
+})
 
-    }
-});
-
-export {theme };
-
+export { theme }

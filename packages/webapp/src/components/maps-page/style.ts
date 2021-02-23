@@ -1,8 +1,8 @@
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import createStyles from "@material-ui/core/styles/createStyles";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import createStyles from '@material-ui/core/styles/createStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
-const drawerWidth = 300;
+const drawerWidth = 300
 
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -16,7 +16,6 @@ export const useStyles = makeStyles((theme: Theme) =>
                 duration: theme.transitions.duration.leavingScreen,
             }),
             background: '#ffffff',
-
         },
         appBarShift: {
             marginLeft: drawerWidth,
@@ -36,7 +35,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             marginRight: 10,
             flexGrow: 10,
             textAlign: 'right',
-            minWidth: '200px'
+            minWidth: '200px',
         },
         drawer: {
             width: drawerWidth,
@@ -54,11 +53,11 @@ export const useStyles = makeStyles((theme: Theme) =>
         toolbar: {
             display: 'flex',
             justifyContent: 'flex-end',
-            minHeight: '44px'
+            minHeight: '44px',
         },
         content: {
             flexGrow: 1,
             padding: theme.spacing(3),
-        }
-    }),
-);
+        },
+    })
+)
