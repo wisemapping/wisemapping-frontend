@@ -9,7 +9,8 @@
     },
     "private": true,
     "devDependencies": {
-        "lerna": "^3.16.4"
+        "lerna": "^3.16.4",
+        "prettier": "^2.2.1"
     },
     "workspaces": [
         "packages/*"
@@ -37,5 +38,9 @@
         ]
     },
     "homepage": "http://localhost:8080/react",
-    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL"
+    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
+    "dependencies": {
+        "husky": "^5.1.1",
+        "lint-staged": "^10.5.4"
+    }
 }
