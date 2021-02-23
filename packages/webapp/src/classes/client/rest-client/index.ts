@@ -10,9 +10,19 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     deleteMapPermission(id: number, email: string): Promise<void> {
-        throw new Error('Method not implemented.');
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios.delete(`${this.baseUrl}/c/restful/maps/${id}/collabs?email=${email}`,
+                { headers: { 'Content-Type': 'text/plain' } }
+            ).then(() => {
+                success();
+            }).catch(error => {
+                const errorInfo = this.parseResponseOnError(error.response);
+                reject(errorInfo);
+            });
+        }
+        return new Promise(handler);
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
@@ -38,8 +48,7 @@ export default class RestClient implements Client {
 
     fetchMapPermissions(id: number): Promise<Permission[]> {
         const handler = (success: (labels: Permission[]) => void, reject: (error: ErrorInfo) => void) => {
-            axios.get(
-                this.baseUrl + `/c/restful/maps/${id}/collabs`,
+            axios.get(`${this.baseUrl}/c/restful/maps/${id}/collabs`,
                 {
                     headers: { 'Content-Type': 'text/plain' }
                 }
@@ -65,7 +74,7 @@ export default class RestClient implements Client {
 
     deleteAccount(): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.delete(this.baseUrl + `/c/restful/account`,
+            axios.delete(`${this.baseUrl}/c/restful/account`,
                 { headers: { 'Content-Type': 'text/plain' } }
             ).then(() => {
                 success();
@@ -131,7 +140,7 @@ export default class RestClient implements Client {
 
     importMap(model: ImportMapInfo): Promise<number> {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
+            axios.post(`${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
                 model.content,
                 { headers: { 'Content-Type': model.contentType } }
             ).then(response => {
@@ -147,8 +156,7 @@ export default class RestClient implements Client {
 
     fetchAccountInfo(): Promise<AccountInfo> {
         const handler = (success: (account: AccountInfo) => void, reject: (error: ErrorInfo) => void) => {
-            axios.get(
-                this.baseUrl + '/c/restful/account',
+            axios.get(`${this.baseUrl}/c/restful/account`,
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
@@ -171,7 +179,7 @@ export default class RestClient implements Client {
 
     deleteMaps(ids: number[]): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.delete(this.baseUrl + `/c/restful/maps/batch?ids=${ids.join()}`,
+            axios.delete(`${this.baseUrl}/c/restful/maps/batch?ids=${ids.join()}`,
                 { headers: { 'Content-Type': 'text/plain' } }
             ).then(() => {
                 success();
@@ -202,7 +210,7 @@ export default class RestClient implements Client {
 
     revertHistory(id: number, hid: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + `/maps/${id}/history/${hid}`,
+            axios.post(`${this.baseUrl}/maps/${id}/history/${hid}`,
                 null,
                 { headers: { 'Content-Type': 'text/pain' } }
             ).then(() => {
@@ -243,7 +251,7 @@ export default class RestClient implements Client {
 
     createMap(model: BasicMapInfo): Promise<number> {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + `/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
+            axios.post(`${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''}`,
                 null,
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(response => {
@@ -259,8 +267,7 @@ export default class RestClient implements Client {
 
     fetchAllMaps(): Promise<MapInfo[]> {
         const handler = (success: (mapsInfo: MapInfo[]) => void, reject: (error: ErrorInfo) => void) => {
-            axios.get(
-                this.baseUrl + '/c/restful/maps/',
+            axios.get(`${this.baseUrl}/c/restful/maps/`,
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
@@ -298,7 +305,7 @@ export default class RestClient implements Client {
 
     registerNewUser(user: NewUser): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + '/service/users/',
+            axios.post(`${this.baseUrl}/service/users/`,
                 JSON.stringify(user),
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(() => {
@@ -316,7 +323,7 @@ export default class RestClient implements Client {
 
     deleteMap(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.delete(this.baseUrl + `/c/restful/maps/${id}`,
+            axios.delete( `${this.baseUrl}/c/restful/maps/${id}`,
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(() => {
                 success();
@@ -349,7 +356,7 @@ export default class RestClient implements Client {
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
 
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
-            axios.post(this.baseUrl + `/c/restful/maps/${id}`,
+            axios.post(`${this.baseUrl}/c/restful/maps/${id}`,
                 JSON.stringify(basicInfo),
                 { headers: { 'Content-Type': 'application/json' } }
             ).then(response => {
@@ -366,7 +373,7 @@ export default class RestClient implements Client {
 
     updateStarred(id: number, starred: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.put(this.baseUrl + `/c/restful/maps/${id}/starred`,
+            axios.put(`${this.baseUrl}/c/restful/maps/${id}/starred`,
                 starred,
                 { headers: { 'Content-Type': 'text/plain' } }
             ).then(() => {
@@ -382,8 +389,7 @@ export default class RestClient implements Client {
 
     fetchLabels(): Promise<Label[]> {
         const handler = (success: (labels: Label[]) => void, reject: (error: ErrorInfo) => void) => {
-            axios.get(
-                this.baseUrl + '/c/restful/labels/',
+            axios.get(`${this.baseUrl}/c/restful/labels/`,
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
@@ -409,7 +415,7 @@ export default class RestClient implements Client {
 
     deleteLabel(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
-            axios.delete(this.baseUrl + `/c/restful/label/${id}`).then(() => {
+            axios.delete(`${this.baseUrl}/c/restful/label/${id}`).then(() => {
                 success();
             }).catch(error => {
                 const errorInfo = this.parseResponseOnError(error.response);
