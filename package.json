@@ -4,12 +4,15 @@
         "bootstrap": "lerna bootstrap",
         "build": "lerna run build",
         "clean": "lerna clean && rm -rf node_modules",
-        "lint": "lerna run lint",
+        "lint": "lerna run lint --stream",
         "test": "lerna run test --stream"
     },
     "private": true,
     "devDependencies": {
-        "lerna": "^3.16.4"
+        "husky": "4",
+        "lerna": "^3.16.4",
+        "lint-staged": "^10.5.4",
+        "prettier": "^2.2.1"
     },
     "workspaces": [
         "packages/*"
@@ -37,5 +40,16 @@
         ]
     },
     "homepage": "http://localhost:8080/react",
-    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL"
+    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "yarn lint && yarn test"
+        }
+    },
+    "lint-staged": {
+        "**/*.{ts,tsx}": [
+            "prettier --write"
+        ]
+    }
 }

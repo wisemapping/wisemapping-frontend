@@ -1,136 +1,178 @@
-import React, { useEffect } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useMutation, useQueryClient } from "react-query";
-import Client, { ErrorInfo } from "../../../../classes/client";
-import Input from "../../../form/input";
-import BaseDialog from "../../action-dispatcher/base-dialog";
-import { useSelector } from 'react-redux';
-import { activeInstance, fetchAccount } from "../../../../redux/clientSlice";
+import React, { useEffect } from 'react'
+import { FormattedMessage, useIntl } from 'react-intl'
+import { useMutation, useQueryClient } from 'react-query'
+import Client, { ErrorInfo } from '../../../../classes/client'
+import Input from '../../../form/input'
+import BaseDialog from '../../action-dispatcher/base-dialog'
+import { useSelector } from 'react-redux'
+import { activeInstance, fetchAccount } from '../../../../redux/clientSlice'
 
-import Alert from "@material-ui/lab/Alert";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import Switch from "@material-ui/core/Switch";
-
+import Alert from '@material-ui/lab/Alert'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import Switch from '@material-ui/core/Switch'
 
 type AccountInfoDialogProps = {
     onClose: () => void
 }
 
 type AccountInfoModel = {
-    email: string,
-    firstname: string,
+    email: string
+    firstname: string
     lastname: string
 }
 
-const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' };
-const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps):React.ReactElement => {
-    const client: Client = useSelector(activeInstance);
-    const queryClient = useQueryClient();
-    const [remove, setRemove] = React.useState<boolean>(false);
+const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' }
+const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
+    const client: Client = useSelector(activeInstance)
+    const queryClient = useQueryClient()
+    const [remove, setRemove] = React.useState<boolean>(false)
 
-    const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);
-    const [error, setError] = React.useState<ErrorInfo>();
-    const intl = useIntl();
+    const [model, setModel] = React.useState<AccountInfoModel>(defaultModel)
+    const [error, setError] = React.useState<ErrorInfo>()
+    const intl = useIntl()
 
-    const mutationChangeName = useMutation<void, ErrorInfo, AccountInfoModel>((model: AccountInfoModel) => {
-        return client.updateAccountInfo(model.firstname, model.lastname);
-    },
+    const mutationChangeName = useMutation<void, ErrorInfo, AccountInfoModel>(
+        (model: AccountInfoModel) => {
+            return client.updateAccountInfo(model.firstname, model.lastname)
+        },
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('account')
                 onClose()
             },
             onError: (error) => {
-                setError(error);
-            }
+                setError(error)
+            },
         }
-    );
+    )
 
-    const mutationRemove = useMutation<void, ErrorInfo, void>(() => {
-        return client.deleteAccount();
-    },
+    const mutationRemove = useMutation<void, ErrorInfo, void>(
+        () => {
+            return client.deleteAccount()
+        },
         {
             onSuccess: () => {
                 window.location.href = '/c/logout'
                 onClose()
             },
             onError: (error) => {
-                setError(error);
-            }
+                setError(error)
+            },
         }
-    );
+    )
 
-    const account = fetchAccount();
+    const account = fetchAccount()
     useEffect(() => {
         if (account) {
             setModel({
                 email: account?.email,
                 lastname: account?.lastname,
-                firstname: account?.firstname
-            });
+                firstname: account?.firstname,
+            })
         }
     }, [account?.email])
 
-
     const handleOnClose = (): void => {
-        onClose();
-        setModel(defaultModel);
-        setError(undefined);
-    };
+        onClose()
+        setModel(defaultModel)
+        setError(undefined)
+    }
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
+        event.preventDefault()
         if (remove) {
-            mutationRemove.mutate();
+            mutationRemove.mutate()
         } else {
-            mutationChangeName.mutate(model);
+            mutationChangeName.mutate(model)
         }
-    };
+    }
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        event.preventDefault();
+        event.preventDefault()
 
-        const name = event.target.name;
-        const value = event.target.value;
-        setModel({ ...model, [name as keyof AccountInfoModel]: value });
+        const name = event.target.name
+        const value = event.target.value
+        setModel({ ...model, [name as keyof AccountInfoModel]: value })
     }
 
     const handleOnRemoveChange = (event) => {
-        setRemove(event.target.checked);
-    };
+        setRemove(event.target.checked)
+    }
 
     return (
-        <BaseDialog onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+        <BaseDialog
+            onClose={handleOnClose}
+            onSubmit={handleOnSubmit}
+            error={error}
             title={intl.formatMessage({ id: 'accountinfo.title', defaultMessage: 'Account info' })}
-            submitButton={intl.formatMessage({ id: 'accountinfo.button', defaultMessage: 'Accept' })}>
-
+            submitButton={intl.formatMessage({
+                id: 'accountinfo.button',
+                defaultMessage: 'Accept',
+            })}
+        >
             <FormControl fullWidth={true}>
-                <Input name="email" type="text" disabled={true} label={intl.formatMessage({ id: "accountinfo.email", defaultMessage: "Email" })}
-                    value={model.email} onChange={handleOnChange} error={error} fullWidth={true} />
+                <Input
+                    name="email"
+                    type="text"
+                    disabled={true}
+                    label={intl.formatMessage({ id: 'accountinfo.email', defaultMessage: 'Email' })}
+                    value={model.email}
+                    onChange={handleOnChange}
+                    error={error}
+                    fullWidth={true}
+                />
 
-                <Input name="firstname" type="text" label={intl.formatMessage({ id: "accountinfo.firstname", defaultMessage: "First Name" })}
-                    value={model.firstname} onChange={handleOnChange} required={true} fullWidth={true} />
+                <Input
+                    name="firstname"
+                    type="text"
+                    label={intl.formatMessage({
+                        id: 'accountinfo.firstname',
+                        defaultMessage: 'First Name',
+                    })}
+                    value={model.firstname}
+                    onChange={handleOnChange}
+                    required={true}
+                    fullWidth={true}
+                />
 
-                <Input name="lastname" type="text" label={intl.formatMessage({ id: "accountinfo.lastname", defaultMessage: "Last Name" })}
-                    value={model.lastname} onChange={handleOnChange} required={true} fullWidth={true} />
+                <Input
+                    name="lastname"
+                    type="text"
+                    label={intl.formatMessage({
+                        id: 'accountinfo.lastname',
+                        defaultMessage: 'Last Name',
+                    })}
+                    value={model.lastname}
+                    onChange={handleOnChange}
+                    required={true}
+                    fullWidth={true}
+                />
 
                 <FormGroup>
-                    {remove &&
+                    {remove && (
                         <Alert severity="error">
-                            <FormattedMessage id="account.delete-warning" defaultMessage="Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored." />
+                            <FormattedMessage
+                                id="account.delete-warning"
+                                defaultMessage="Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
+                            />
                         </Alert>
-                    }
+                    )}
                     <FormControlLabel
-                        control={<Switch checked={remove} onChange={(handleOnRemoveChange)} name="remove" color="primary" />}
+                        control={
+                            <Switch
+                                checked={remove}
+                                onChange={handleOnRemoveChange}
+                                name="remove"
+                                color="primary"
+                            />
+                        }
                         label="Delete Account"
                     />
                 </FormGroup>
             </FormControl>
-
         </BaseDialog>
-    );
+    )
 }
-export default AccountInfoDialog;
-
+export default AccountInfoDialog

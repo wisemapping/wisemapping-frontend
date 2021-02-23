@@ -1,76 +1,86 @@
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
-import BaseDialog from '../base-dialog';
-import { handleOnMutationSuccess, SimpleDialogProps } from '..';
-import { useStyles } from './style';
+import React from 'react'
+import { FormattedMessage, useIntl } from 'react-intl'
+import { useMutation, useQueryClient } from 'react-query'
+import { useSelector } from 'react-redux'
+import Client, { ErrorInfo } from '../../../../classes/client'
+import { activeInstance, fetchMapById } from '../../../../redux/clientSlice'
+import BaseDialog from '../base-dialog'
+import { handleOnMutationSuccess, SimpleDialogProps } from '..'
+import { useStyles } from './style'
 
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import TabContext from '@material-ui/lab/TabContext';
-import AppBar from '@material-ui/core/AppBar';
-import TabList from '@material-ui/lab/TabList';
-import Tab from '@material-ui/core/Tab';
-import TabPanel from '@material-ui/lab/TabPanel';
-import Typography from '@material-ui/core/Typography';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import TabContext from '@material-ui/lab/TabContext'
+import AppBar from '@material-ui/core/AppBar'
+import TabList from '@material-ui/lab/TabList'
+import Tab from '@material-ui/core/Tab'
+import TabPanel from '@material-ui/lab/TabPanel'
+import Typography from '@material-ui/core/Typography'
+import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-    const { map } = fetchMapById(mapId);
+    const { map } = fetchMapById(mapId)
 
-    const client: Client = useSelector(activeInstance);
-    const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
-    const [error, setError] = React.useState<ErrorInfo>();
-    const [activeTab, setActiveTab] = React.useState('1');
-    const queryClient = useQueryClient();
-    const intl = useIntl();
+    const client: Client = useSelector(activeInstance)
+    const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false)
+    const [error, setError] = React.useState<ErrorInfo>()
+    const [activeTab, setActiveTab] = React.useState('1')
+    const queryClient = useQueryClient()
+    const intl = useIntl()
 
-    const classes = useStyles();
-    const mutation = useMutation<void, ErrorInfo, boolean>((model: boolean) => {
-        return client.updateMapToPublic(mapId, model);
-    },
+    const classes = useStyles()
+    const mutation = useMutation<void, ErrorInfo, boolean>(
+        (model: boolean) => {
+            return client.updateMapToPublic(mapId, model)
+        },
         {
             onSuccess: () => {
-                setModel(model);
-                handleOnMutationSuccess(onClose, queryClient);
+                setModel(model)
+                handleOnMutationSuccess(onClose, queryClient)
             },
             onError: (error) => {
-                setError(error);
-            }
+                setError(error)
+            },
         }
-    );
+    )
 
     const handleOnClose = (): void => {
-        onClose();
-        setError(undefined);
-    };
+        onClose()
+        setError(undefined)
+    }
 
     const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        mutation.mutate(model);
-    };
+        event.preventDefault()
+        mutation.mutate(model)
+    }
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean): void => {
-        event.preventDefault();
-        setModel(checked);
+        event.preventDefault()
+        setModel(checked)
     }
 
     const handleTabChange = (event, newValue) => {
-        setActiveTab(newValue);
-    };
+        setActiveTab(newValue)
+    }
 
     return (
         <div>
-            <BaseDialog onClose={handleOnClose} onSubmit={handleOnSubmit} error={error}
+            <BaseDialog
+                onClose={handleOnClose}
+                onSubmit={handleOnSubmit}
+                error={error}
                 title={intl.formatMessage({ id: 'publish.title', defaultMessage: 'Publish' })}
-                description={intl.formatMessage({ id: 'publish.description', defaultMessage: 'By publishing the map you make it visible to everyone on the Internet.' })}
-                submitButton={intl.formatMessage({ id: 'publish.button', defaultMessage: 'Accept' })}>
-
+                description={intl.formatMessage({
+                    id: 'publish.description',
+                    defaultMessage:
+                        'By publishing the map you make it visible to everyone on the Internet.',
+                })}
+                submitButton={intl.formatMessage({
+                    id: 'publish.button',
+                    defaultMessage: 'Accept',
+                })}
+            >
                 <FormControl fullWidth={true}>
                     <FormControlLabel
                         control={
@@ -81,7 +91,10 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                 color="primary"
                             />
                         }
-                        label={intl.formatMessage({ id: 'publish.checkbox', defaultMessage: 'Enable public sharing' })}
+                        label={intl.formatMessage({
+                            id: 'publish.checkbox',
+                            defaultMessage: 'Enable public sharing',
+                        })}
                     />
                 </FormControl>
 
@@ -89,29 +102,57 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                     <TabContext value={activeTab}>
                         <AppBar position="static">
                             <TabList onChange={handleTabChange}>
-                                <Tab label={intl.formatMessage({ id: 'publish.embedded', defaultMessage: 'Embedded' })} value="1" />
-                                <Tab label={intl.formatMessage({ id: 'publish.public-url', defaultMessage: 'Public URL' })} value="2" />
+                                <Tab
+                                    label={intl.formatMessage({
+                                        id: 'publish.embedded',
+                                        defaultMessage: 'Embedded',
+                                    })}
+                                    value="1"
+                                />
+                                <Tab
+                                    label={intl.formatMessage({
+                                        id: 'publish.public-url',
+                                        defaultMessage: 'Public URL',
+                                    })}
+                                    value="2"
+                                />
                             </TabList>
                         </AppBar>
                         <TabPanel value="1">
                             <Typography variant="subtitle2">
-                                <FormattedMessage id="publish.embedded-msg" defaultMessage="Copy this snippet of code to embed in your blog or page:" />
+                                <FormattedMessage
+                                    id="publish.embedded-msg"
+                                    defaultMessage="Copy this snippet of code to embed in your blog or page:"
+                                />
                             </Typography>
-                            <TextareaAutosize className={classes.textarea} readOnly={true} spellCheck={false} rowsMax={6} defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`} />
+                            <TextareaAutosize
+                                className={classes.textarea}
+                                readOnly={true}
+                                spellCheck={false}
+                                rowsMax={6}
+                                defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
+                            />
                         </TabPanel>
                         <TabPanel value="2">
                             <Typography variant="subtitle2">
-                                <FormattedMessage id="publish.public-url-msg" defaultMessage="Copy and paste the link below to share your map with colleagues:" />
+                                <FormattedMessage
+                                    id="publish.public-url-msg"
+                                    defaultMessage="Copy and paste the link below to share your map with colleagues:"
+                                />
                             </Typography>
-                            <TextareaAutosize className={classes.textarea} readOnly={true} spellCheck={false} rowsMax={1} defaultValue={`https://app.wisemapping.com/c/maps/${mapId}/public`} />
+                            <TextareaAutosize
+                                className={classes.textarea}
+                                readOnly={true}
+                                spellCheck={false}
+                                rowsMax={1}
+                                defaultValue={`https://app.wisemapping.com/c/maps/${mapId}/public`}
+                            />
                         </TabPanel>
                     </TabContext>
                 </div>
             </BaseDialog>
         </div>
-    );
+    )
 }
 
-
-
-export default PublishDialog;
+export default PublishDialog
