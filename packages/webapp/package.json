@@ -7,6 +7,8 @@
         "build": "webpack --config webpack.prod.js",
         "build-dev": "webpack --config webpack.dev.js",
         "lint": "eslint src",
+        "cy:run": "cypress run",
+        "test": "start-server-and-test start http-get://localhost:3000 cy:run",
         "extract": "formatjs extract",
         "compile": "formatjs compile"
     },
@@ -16,6 +18,8 @@
     "private": false,
     "devDependencies": {
         "@formatjs/cli": "^2.13.15",
+        "@testing-library/cypress": "^7.0.3",
+        "@types/testing-library__cypress": "^5.0.8",
         "@typescript-eslint/eslint-plugin": "^4.8.1",
         "@typescript-eslint/parser": "^4.8.1",
         "brotli-webpack-plugin": "^1.1.0",
@@ -23,6 +27,7 @@
         "compression-webpack-plugin": "^7.1.2",
         "copy-webpack-plugin": "^7.0.0",
         "css-loader": "^5.0.1",
+        "cypress": "^6.5.0",
         "eslint": "^7.14.0",
         "eslint-plugin-react": "^7.21.5",
         "eslint-plugin-react-hooks": "^4.2.0",
@@ -56,6 +61,7 @@
         "react-redux": "^7.2.2",
         "react-router": "^5.1.8",
         "react-router-dom": "^5.2.0",
+        "start-server-and-test": "^1.12.0",
         "styled-components": "^5.1.7"
     }
 }

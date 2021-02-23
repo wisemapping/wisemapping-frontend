@@ -5,7 +5,7 @@
         "build": "lerna run build",
         "clean": "lerna clean && rm -rf node_modules",
         "lint": "lerna run lint",
-        "test": "lerna run test"
+        "test": "lerna run test --stream"
     },
     "private": true,
     "devDependencies": {
@@ -22,7 +22,7 @@
         "Ezequiel Bergamaschi"
     ],
     "engines": {
-        "node": "=14.15.5"
+        "node": "=14.15.4"
     },
     "browserslist": {
         "production": [

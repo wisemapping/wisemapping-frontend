@@ -4,16 +4,23 @@
 #  The workflow allows running tests and code linting on the default branch.
 
 # Node LTS
-image: node:14.15.5
+image: cypress/base:14.15.4
 
 pipelines:
   default:
     - parallel:
         - step:
-            name: Build and Test
+            name: Build and test
             caches:
               - node
+              - npm
+              - cypress
             script:
               - yarn install
               - yarn build
               - yarn lint
+              - yarn test
+definitions:
+  caches:
+    npm: $HOME/.npm
+    cypress: $HOME/.cache/Cypress

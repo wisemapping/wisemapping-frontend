@@ -145,6 +145,7 @@ const MapsPage = (): ReactElement => {
                     <Toolbar>
                         <Tooltip arrow={true} title={intl.formatMessage({ id: 'maps.create-tooltip', defaultMessage: 'Create a New Map' })}>
                             <Button color="primary"
+                                data-testid="create"
                                 size="medium"
                                 variant="contained"
                                 type="button"
