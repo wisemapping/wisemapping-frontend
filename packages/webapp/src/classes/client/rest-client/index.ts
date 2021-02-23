@@ -20,9 +20,22 @@ export default class RestClient implements Client {
         this.baseUrl = baseUrl
         this.sessionExpired = sessionExpired
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     deleteMapPermission(id: number, email: string): Promise<void> {
-        throw new Error('Method not implemented.')
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .delete(`${this.baseUrl}/c/restful/maps/${id}/collabs?email=${email}`, {
+                    headers: { 'Content-Type': 'text/plain' },
+                })
+                .then(() => {
+                    success()
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response)
+                    reject(errorInfo)
+                })
+        }
+        return new Promise(handler)
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
@@ -54,7 +67,7 @@ export default class RestClient implements Client {
             reject: (error: ErrorInfo) => void
         ) => {
             axios
-                .get(this.baseUrl + `/c/restful/maps/${id}/collabs`, {
+                .get(`${this.baseUrl}/c/restful/maps/${id}/collabs`, {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then((response) => {
@@ -81,7 +94,7 @@ export default class RestClient implements Client {
     deleteAccount(): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(this.baseUrl + `/c/restful/account`, {
+                .delete(`${this.baseUrl}/c/restful/account`, {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
@@ -157,10 +170,9 @@ export default class RestClient implements Client {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios
                 .post(
-                    this.baseUrl +
-                        `/c/restful/maps?title=${model.title}&description=${
-                            model.description ? model.description : ''
-                        }`,
+                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${
+                        model.description ? model.description : ''
+                    }`,
                     model.content,
                     { headers: { 'Content-Type': model.contentType } }
                 )
@@ -182,7 +194,7 @@ export default class RestClient implements Client {
             reject: (error: ErrorInfo) => void
         ) => {
             axios
-                .get(this.baseUrl + '/c/restful/account', {
+                .get(`${this.baseUrl}/c/restful/account`, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then((response) => {
@@ -206,7 +218,7 @@ export default class RestClient implements Client {
     deleteMaps(ids: number[]): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(this.baseUrl + `/c/restful/maps/batch?ids=${ids.join()}`, {
+                .delete(`${this.baseUrl}/c/restful/maps/batch?ids=${ids.join()}`, {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
@@ -242,7 +254,7 @@ export default class RestClient implements Client {
     revertHistory(id: number, hid: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .post(this.baseUrl + `/maps/${id}/history/${hid}`, null, {
+                .post(`${this.baseUrl}/maps/${id}/history/${hid}`, null, {
                     headers: { 'Content-Type': 'text/pain' },
                 })
                 .then(() => {
@@ -290,10 +302,9 @@ export default class RestClient implements Client {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios
                 .post(
-                    this.baseUrl +
-                        `/c/restful/maps?title=${model.title}&description=${
-                            model.description ? model.description : ''
-                        }`,
+                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${
+                        model.description ? model.description : ''
+                    }`,
                     null,
                     { headers: { 'Content-Type': 'application/json' } }
                 )
@@ -315,7 +326,7 @@ export default class RestClient implements Client {
             reject: (error: ErrorInfo) => void
         ) => {
             axios
-                .get(this.baseUrl + '/c/restful/maps/', {
+                .get(`${this.baseUrl}/c/restful/maps/`, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then((response) => {
@@ -353,7 +364,7 @@ export default class RestClient implements Client {
     registerNewUser(user: NewUser): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .post(this.baseUrl + '/service/users/', JSON.stringify(user), {
+                .post(`${this.baseUrl}/service/users/`, JSON.stringify(user), {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(() => {
@@ -373,7 +384,7 @@ export default class RestClient implements Client {
     deleteMap(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(this.baseUrl + `/c/restful/maps/${id}`, {
+                .delete(`${this.baseUrl}/c/restful/maps/${id}`, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(() => {
@@ -409,7 +420,7 @@ export default class RestClient implements Client {
     duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .post(this.baseUrl + `/c/restful/maps/${id}`, JSON.stringify(basicInfo), {
+                .post(`${this.baseUrl}/c/restful/maps/${id}`, JSON.stringify(basicInfo), {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then((response) => {
@@ -428,7 +439,7 @@ export default class RestClient implements Client {
     updateStarred(id: number, starred: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .put(this.baseUrl + `/c/restful/maps/${id}/starred`, starred, {
+                .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, starred, {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
@@ -449,7 +460,7 @@ export default class RestClient implements Client {
             reject: (error: ErrorInfo) => void
         ) => {
             axios
-                .get(this.baseUrl + '/c/restful/labels/', {
+                .get(`${this.baseUrl}/c/restful/labels/`, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then((response) => {
@@ -476,7 +487,7 @@ export default class RestClient implements Client {
     deleteLabel(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(this.baseUrl + `/c/restful/label/${id}`)
+                .delete(`${this.baseUrl}/c/restful/label/${id}`)
                 .then(() => {
                     success()
                 })
