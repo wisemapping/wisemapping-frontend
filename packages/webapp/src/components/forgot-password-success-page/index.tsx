@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
@@ -8,8 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const ForgotPasswordSuccessPage = (): React.ReactElement => {
+    const intl = useIntl();
+
     useEffect(() => {
-        document.title = 'Reset Password | WiseMapping';
+        document.title = intl.formatMessage({ id: 'forgotsuccess.page-title', defaultMessage: 'Password Recovered | WiseMapping' });
     });
 
     return (
@@ -19,14 +21,14 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
                 <Typography variant="h4" component="h1">
                     <FormattedMessage
                         id="forgot.success.title"
-                        defaultMessage="Your temporal password has been sent"
+                        defaultMessage="Your temporal password has been sent."
                     />
                 </Typography>
 
                 <Typography paragraph>
                     <FormattedMessage
                         id="forgot.success.desc"
-                        defaultMessage="We've sent you an email that will allow you to reset your password. Please check your email now."
+                        defaultMessage="We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
                     />
                 </Typography>
 

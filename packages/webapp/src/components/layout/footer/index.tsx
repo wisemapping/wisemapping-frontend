@@ -20,23 +20,20 @@ const Footer = (): React.ReactElement => {
                 </h4>
                 <div>
                     <a href="https://www.wisemapping.com/faq.html">
-                        {' '}
-                        <FormattedMessage id="footer.faq" defaultMessage="F.A.Q." />{' '}
+                        <FormattedMessage id="footer.faq" defaultMessage="F.A.Q." />
                     </a>
                 </div>
                 <div>
                     <a href="https://www.wisemapping.com/termsofuse.html">
-                        {' '}
                         <FormattedMessage
                             id="footer.termsandconditions"
                             defaultMessage="Term And Conditions"
-                        />{' '}
+                        />
                     </a>
                 </div>
                 <div>
                     <a href="mailto:team@wisemapping.com">
-                        {' '}
-                        <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />{' '}
+                        <FormattedMessage id="footer.contactus" defaultMessage="Contact Us" />
                     </a>
                 </div>
             </div>
@@ -46,23 +43,20 @@ const Footer = (): React.ReactElement => {
                 </h4>
                 <div>
                     <a href="https://www.wisemapping.com/aboutus.html">
-                        {' '}
                         <FormattedMessage id="footer.aboutus" defaultMessage="About Us" />
                     </a>
                 </div>
                 <div>
                     <a href="mailto:feedback@wisemapping.com">
-                        {' '}
-                        <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />{' '}
+                        <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
                     </a>
                 </div>
                 <div>
                     <a href="http://www.wisemapping.org/">
-                        {' '}
                         <FormattedMessage
                             id="footer.opensource"
                             defaultMessage="Open Source"
-                        />{' '}
+                        />
                     </a>
                 </div>
             </div>

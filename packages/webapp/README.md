@@ -42,7 +42,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 # Generate I18n resource
 
 ## Extract 
-`yarn extract 'src/**/*.ts*' --out-file lang/en.json`
+`yarn extract`
 
 ## Compile
 `yarn compile lang/en.json --ast --out-file src/compiled-lang/en.json`

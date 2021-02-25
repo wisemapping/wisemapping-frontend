@@ -46,7 +46,7 @@ const ForgotPassword = () => {
             <Typography>
                 <FormattedMessage
                     id="forgot.desc"
-                    defaultMessage="We will send you an email to reset your password"
+                    defaultMessage="We will send you an email to reset your password."
                 />
             </Typography>
 
@@ -74,8 +74,9 @@ const ForgotPassword = () => {
 };
 
 const ForgotPasswordPage = (): React.ReactElement => {
+    const intl = useIntl();
     useEffect(() => {
-        document.title = 'Reset Password | WiseMapping';
+        document.title = intl.formatMessage({id:'forgot.page-title', defaultMessage:'Forgot Password | WiseMapping' });
     });
 
     return (

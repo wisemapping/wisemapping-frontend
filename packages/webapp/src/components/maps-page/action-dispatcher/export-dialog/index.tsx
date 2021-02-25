@@ -96,9 +96,7 @@ const ExportDialog = ({
                 onClose={handleOnClose}
                 onSubmit={handleOnSubmit}
                 title={intl.formatMessage({ id: 'export.title', defaultMessage: 'Export' })}
-                description={
-                    'Export this map in the format that you want and start using it in your presentations or sharing by email'
-                }
+                description={intl.formatMessage({ id: 'export.desc', defaultMessage: 'Export this map in the format that you want and start using it in your presentations or sharing by email' })}
                 submitButton={intl.formatMessage({ id: 'export.title', defaultMessage: 'Export' })}
             >
                 <Alert severity="info">

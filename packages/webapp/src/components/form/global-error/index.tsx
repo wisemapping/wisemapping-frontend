@@ -13,7 +13,6 @@ const GlobalError = (props: GlobalErrorProps): React.ReactElement | null => {
 
     return hasError ? (
         <StyledAlert severity="error" variant="filled" hidden={!hasError}>
-            {' '}
             {errorMsg}
         </StyledAlert>
     ) : null;

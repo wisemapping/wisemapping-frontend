@@ -67,7 +67,7 @@ const MapsPage = (): ReactElement => {
     const intl = useIntl();
 
     useEffect(() => {
-        document.title = 'Maps | WiseMapping';
+        document.title = intl.formatMessage({ id: 'maps.page-title', defaultMessage: 'My Maps | WiseMapping' });
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
@@ -94,27 +94,27 @@ const MapsPage = (): ReactElement => {
     const filterButtons: ToolbarButtonInfo[] = [
         {
             filter: { type: 'all' },
-            label: 'All',
+            label: intl.formatMessage({ id: 'maps.nav-all', defaultMessage:'All' }),
             icon: <ScatterPlotTwoTone color="secondary" />,
         },
         {
             filter: { type: 'owned' },
-            label: 'Owned',
+            label: intl.formatMessage({ id: 'maps.nav-onwned', defaultMessage:'Owned' }),
             icon: <PersonOutlineTwoTone color="secondary" />,
         },
         {
             filter: { type: 'starred' },
-            label: 'Starred',
+            label: intl.formatMessage({ id: 'maps.nav-starred', defaultMessage:'Starred' }),
             icon: <StarTwoTone color="secondary" />,
         },
         {
             filter: { type: 'shared' },
-            label: 'Shared with me',
+            label: intl.formatMessage({ id: 'maps.nav-shared', defaultMessage:'Shared with me' }),
             icon: <ShareTwoTone color="secondary" />,
         },
         {
             filter: { type: 'public' },
-            label: 'Public',
+            label: intl.formatMessage({ id: 'maps.nav-public', defaultMessage:'Public' }),
             icon: <PublicTwoTone color="secondary" />,
         },
     ];
@@ -228,9 +228,8 @@ const MapsPage = (): ReactElement => {
                                     active={filter}
                                     onClick={handleMenuClick}
                                     onDelete={handleLabelDelete}
-                                    key={`${buttonInfo.filter.type}:${
-                                        (buttonInfo.filter as LabelFilter).label
-                                    }`}
+                                    key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label
+                                        }`}
                                 />
                             );
                         })}

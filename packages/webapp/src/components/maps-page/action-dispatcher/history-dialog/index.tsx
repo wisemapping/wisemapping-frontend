@@ -111,8 +111,7 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                         <TableCell align="left">
                                             <Link
                                                 href="#"
-                                                onClick={(e) => handleOnClick(e, row.id)}
-                                            >
+                                                onClick={(e) => handleOnClick(e, row.id)}>
                                                 <FormattedMessage
                                                     id="maps.revert"
                                                     defaultMessage="Revert"

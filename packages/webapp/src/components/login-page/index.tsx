@@ -67,7 +67,7 @@ const LoginPage = (): React.ReactElement => {
     const intl = useIntl();
 
     useEffect(() => {
-        document.title = 'Login | WiseMapping';
+        document.title = intl.formatMessage({id:'login.page-title',defaultMessage:'Login | WiseMapping'});
     });
 
     return (

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
@@ -8,8 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const RegistrationSuccessPage = (): React.ReactElement => {
+    const intl = useIntl();
+
     useEffect(() => {
-        document.title = 'Reset Password | WiseMapping';
+        document.title = intl.formatMessage({ id: 'registation.success-title', defaultMessage: 'Registation Success | WiseMapping' });
     });
 
     return (

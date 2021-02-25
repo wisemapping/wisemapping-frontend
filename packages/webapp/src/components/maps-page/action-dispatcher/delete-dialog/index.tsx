@@ -30,9 +30,8 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
         mutation.mutate(mapId);
     };
 
-    // Fetch map model to be rendered ...
-    const { map } = fetchMapById(mapId);
-    const alertTitle = `Delete ${map?.title}`;
+    const { map } = fetchMapById(mapId)
+    const alertTitle=`${intl.formatMessage({ id: 'action.delete-title', defaultMessage: 'Delete' })} ${map?.title}`;
     return (
         <div>
             <BaseDialog
