@@ -4,7 +4,7 @@ import { StyledFooter } from './styled';
 
 // FIXME: use SVG loader
 // eslint-disable-next-line
-const poweredByIcon = require('../../../images/pwrdby-white.svg');
+const poweredByIcon = require('./pwrdby-white.svg');
 
 const Footer = (): React.ReactElement => {
     return (

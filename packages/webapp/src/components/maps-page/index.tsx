@@ -38,8 +38,8 @@ import Link from '@material-ui/core/Link';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-import logoIcon from '../../images/logo-small.svg';
-import poweredByIcon from '../../images/pwrdby-white.svg';
+import logoIcon from './logo-small.svg';
+import poweredByIcon from './pwrdby-white.svg';
 
 export type Filter = GenericFilter | LabelFilter;
 
