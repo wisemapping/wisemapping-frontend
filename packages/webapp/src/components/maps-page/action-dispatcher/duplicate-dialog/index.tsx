@@ -58,11 +58,8 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
 
     const { map } = fetchMapById(mapId);
     useEffect(() => {
-        if (open && map) {
+        if (map) {
             setModel(map);
-        } else {
-            setModel(defaultModel);
-            setError(undefined);
         }
     }, [mapId]);
 
