@@ -552,7 +552,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                             </Tooltip>
                                                         </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}>packages/webapp/src/components/maps-page/index.tsx</TableCell>
+                                                        <TableCell className={classes.bodyCell}></TableCell>
 
                                                         <TableCell className={classes.bodyCell}>
                                                             {row.createdBy}
