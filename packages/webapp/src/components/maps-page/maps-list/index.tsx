@@ -113,12 +113,15 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             numeric: false,
             label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }),
         },
-        { id: 'labels', numeric: false },
+        {
+            id: 'labels',
+            numeric: false
+        },
         {
             id: 'createdBy',
             numeric: false,
             label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }),
-            style: { width: '70px', whiteSpace: 'nowrap' },
+            style: { width: '150px', whiteSpace: 'nowrap' },
         },
         {
             id: 'lastModificationTime',
@@ -434,13 +437,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             onChangeRowsPerPage={handleChangeRowsPerPage}
                             component="div"
                         />
-                        
+
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                placeholder={intl.formatMessage({ id: 'maps.search-action', defaultMessage:'Search ...' })}
+                                placeholder={intl.formatMessage({ id: 'maps.search-action', defaultMessage: 'Search ...' })}
                                 classes={{
                                     root: classes.searchInputRoot,
                                     input: classes.searchInputInput,
@@ -549,7 +552,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                             </Tooltip>
                                                         </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}></TableCell> 
+                                                        <TableCell className={classes.bodyCell}>packages/webapp/src/components/maps-page/index.tsx</TableCell>
 
                                                         <TableCell className={classes.bodyCell}>
                                                             {row.createdBy}
