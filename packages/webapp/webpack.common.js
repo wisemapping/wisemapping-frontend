@@ -42,15 +42,10 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 vendors: {
-                    test: /node_modules\/(?!@material-ui\/).*/,
+                    test: /node_modules\/.*/,
                     name: "vendors",
                     chunks: "all",
-                },
-                material: {
-                    test: /node_modules\/(@material-ui\/).*/,
-                    name: "material-ui",
-                    chunks: "all",
-                },
+                }
             },
         }
     },
