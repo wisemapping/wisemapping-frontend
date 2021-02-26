@@ -434,6 +434,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             onChangeRowsPerPage={handleChangeRowsPerPage}
                             component="div"
                         />
+                        
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -548,9 +549,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                             </Tooltip>
                                                         </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}>
+                                                        {/* <TableCell className={classes.bodyCell}>
                                                             {row.labels}
-                                                        </TableCell>
+                                                        </TableCell> */}
 
                                                         <TableCell className={classes.bodyCell}>
                                                             {row.createdBy}
