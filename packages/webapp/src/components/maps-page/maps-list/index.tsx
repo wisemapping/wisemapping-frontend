@@ -549,9 +549,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                             </Tooltip>
                                                         </TableCell>
 
-                                                        {/* <TableCell className={classes.bodyCell}>
-                                                            {row.labels}
-                                                        </TableCell> */}
+                                                        <TableCell className={classes.bodyCell}></TableCell> 
 
                                                         <TableCell className={classes.bodyCell}>
                                                             {row.createdBy}

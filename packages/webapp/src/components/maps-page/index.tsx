@@ -152,7 +152,7 @@ const MapsPage = (): ReactElement => {
                             arrow={true}
                             title={intl.formatMessage({
                                 id: 'maps.create-tooltip',
-                                defaultMessage: 'Create a New Map',
+                                defaultMessage: 'Create a new mindmap',
                             })}
                         >
                             <Button
@@ -166,7 +166,7 @@ const MapsPage = (): ReactElement => {
                                 className={classes.newMapButton}
                                 onClick={() => setActiveDialog('create')}
                             >
-                                <FormattedMessage id="action.new" defaultMessage="New Map" />
+                                <FormattedMessage id="action.new" defaultMessage="New map" />
                             </Button>
                         </Tooltip>
 
