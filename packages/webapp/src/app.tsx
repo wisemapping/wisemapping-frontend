@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { IntlProvider } from 'react-intl';
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
-
 import RegistrationSuccessPage from './components/registration-success-page';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
@@ -15,6 +14,10 @@ import AppI18n, { Locales } from './classes/app-i18n';
 import MapsPage from './components/maps-page';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
+import GoogleAnalytics from 'react-ga';
+
+// Google Analytics Initialization.
+GoogleAnalytics.initialize('UA-0000000-0');
 
 const queryClient = new QueryClient({
     defaultOptions: {

@@ -16,6 +16,7 @@ import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
+import AppConfig from '../../classes/server-config';
 
 export type Model = {
     email: string;
@@ -121,16 +122,17 @@ const RegistrationForm = () => {
                         error={error}
                     />
 
-                    <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>
-                        <ReCAPTCHA
-                            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                            onChange={(value: string) => {
-                                model.recaptcha = value;
-                                setModel(model);
-                            }}
-                        />
-                    </div>
-
+                    { AppConfig.isRecaptcha2Enabled() && 
+                        <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>
+                            <ReCAPTCHA
+                                sitekey={AppConfig.getRecaptcha2SiteKey()}
+                                onChange={(value: string) => {
+                                    model.recaptcha = value;
+                                    setModel(model);
+                                }}
+                            />
+                        </div>
+                    }
                     <div style={{ fontSize: '12px', padding: '10px 0px' }}>
                         <FormattedMessage
                             id="registration.termandconditions"

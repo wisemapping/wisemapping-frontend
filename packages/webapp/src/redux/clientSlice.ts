@@ -2,37 +2,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useQuery } from 'react-query';
 import Client, { AccountInfo, ErrorInfo, MapInfo } from '../classes/client';
-import MockClient from '../classes/client/mock-client';
-import RestClient from '../classes/client/rest-client';
 import { useSelector } from 'react-redux';
+import AppConfig from '../classes/server-config';
 
-interface ConfigInfo {
-    apiBaseUrl: string;
-}
-
-class RutimeConfig {
-    private config: ConfigInfo;
-    load() {
-        // Config can be inserted in the html page to define the global properties ...
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.config = (window as any).serverconfig;
-        return this;
-    }
-
-    buildClient(): Client {
-        let result: Client;
-        if (this.config) {
-            result = new RestClient(this.config.apiBaseUrl, () => {
-                sessionExpired();
-            });
-            console.log('Service using rest client. ' + JSON.stringify(this.config));
-        } else {
-            console.log('Warning:Service using mockservice client');
-            result = new MockClient();
-        }
-        return result;
-    }
-}
 
 export interface ClientStatus {
     state: 'healthy' | 'session-expired';
@@ -45,7 +17,7 @@ export interface ClientState {
 }
 
 const initialState: ClientState = {
-    instance: new RutimeConfig().load().buildClient(),
+    instance: AppConfig.buildClient(),
     status: { state: 'healthy' },
 };
 
