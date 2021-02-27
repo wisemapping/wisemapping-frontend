@@ -57,7 +57,7 @@
     "defaultMessage": "Add Label"
   },
   "action.new": {
-    "defaultMessage": "New Map"
+    "defaultMessage": "New map"
   },
   "action.open": {
     "defaultMessage": "Open"
@@ -313,7 +313,7 @@
     "defaultMessage": "Choose a file"
   },
   "maps.create-tooltip": {
-    "defaultMessage": "Create a New Map"
+    "defaultMessage": "Create a new mindmap"
   },
   "maps.empty-result": {
     "defaultMessage": "No matching record found with the current filter criteria."

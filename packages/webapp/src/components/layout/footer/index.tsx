@@ -1,11 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { StyledFooter } from './styled';
+import poweredByIcon from './pwrdby-white.svg';
 
-// FIXME: use SVG loader
 // eslint-disable-next-line
-const poweredByIcon = require('./pwrdby-white.svg');
-
 const Footer = (): React.ReactElement => {
     return (
         <StyledFooter>
