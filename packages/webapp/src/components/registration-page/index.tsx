@@ -30,6 +30,8 @@ const defaultModel: Model = { email: '', lastname: '', firstname: '', password: 
 const RegistrationForm = () => {
     const [model, setModel] = useState<Model>(defaultModel);
     const [error, setError] = useState<ErrorInfo>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [captcha, setCaptcha] = useState<any>();
     const history = useHistory();
     const intl = useIntl();
 
@@ -40,6 +42,7 @@ const RegistrationForm = () => {
             onSuccess: () => history.push('/c/registration-success'),
             onError: (error) => {
                 setError(error);
+                captcha.reset();
             },
         }
     );
@@ -125,6 +128,7 @@ const RegistrationForm = () => {
                     { AppConfig.isRecaptcha2Enabled() && 
                         <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>
                             <ReCAPTCHA
+                                ref={el => setCaptcha(el)}
                                 sitekey={AppConfig.getRecaptcha2SiteKey()}
                                 onChange={(value: string) => {
                                     model.recaptcha = value;

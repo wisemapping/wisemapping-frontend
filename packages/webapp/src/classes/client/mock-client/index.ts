@@ -310,6 +310,9 @@ class MockClient implements Client {
 
     registerNewUser(user: NewUser): Promise<void> {
         console.log('user:' + user);
+        if(user.email=="error@example.com"){
+            return Promise.reject({msg:"Unexpected error"});
+        }
         return Promise.resolve();
     }
 
