@@ -40,8 +40,8 @@ const App = (): ReactElement => {
                     defaultLocale={Locales.EN.code}
                     messages={locale.message as Record<string, string>}
                 >
-                    <CssBaseline />
                     <ThemeProvider theme={theme}>
+                        <CssBaseline />
                         <Router>
                             <Switch>
                                 <Route exact path="/">
@@ -72,8 +72,8 @@ const App = (): ReactElement => {
             </QueryClientProvider>
         </Provider>
     ) : (
-        <div>Loading ... </div>
-    );
+            <div>Loading ... </div>
+        );
 };
 
 export default App;

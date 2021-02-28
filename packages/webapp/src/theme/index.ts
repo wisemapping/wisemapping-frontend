@@ -6,6 +6,7 @@ const theme = createMuiTheme({
             '@global': {
                 body: {
                     backgroundColor: 'white',
+                    minWidth: '800px'
                 },
             },
         },
