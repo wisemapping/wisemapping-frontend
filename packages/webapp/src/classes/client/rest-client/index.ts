@@ -436,7 +436,7 @@ export default class RestClient implements Client {
     updateStarred(id: number, starred: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, starred, {
+                .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, Boolean(starred), {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
