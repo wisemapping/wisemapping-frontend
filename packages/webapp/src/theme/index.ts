@@ -26,6 +26,9 @@ const theme = createMuiTheme({
             root: {
                 color: '#f9a826',
             },
+            outlined:{
+                zIndex: 'inherit'
+            }
         },
         MuiButton: {
             root: {
@@ -42,8 +45,7 @@ const theme = createMuiTheme({
                 '&:hover': {
                     backgroundColor: 'rgba(249, 168, 38, 0.91)',
                 },
-            },
-            textPrimary: {},
+            }
         },
     },
     typography: {

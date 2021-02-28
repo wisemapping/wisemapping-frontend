@@ -27,15 +27,17 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         newMapButton: {
             marginRight: 10,
+            minWidth: '130px'
         },
         importButton: {
             marginRight: 10,
+            minWidth: '130px'
         },
         rightButtonGroup: {
             marginRight: 10,
             flexGrow: 10,
             textAlign: 'right',
-            minWidth: '200px',
+            minWidth: '280px',
         },
         drawer: {
             width: drawerWidth,

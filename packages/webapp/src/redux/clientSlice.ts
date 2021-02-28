@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useQuery } from 'react-query';
 import Client, { AccountInfo, ErrorInfo, MapInfo } from '../classes/client';
 import { useSelector } from 'react-redux';
-import AppConfig from '../classes/server-config';
+import AppConfig from '../classes/app-config';
 
 
 export interface ClientStatus {

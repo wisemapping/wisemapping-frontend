@@ -170,8 +170,7 @@ export default class RestClient implements Client {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios
                 .post(
-                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${
-                        model.description ? model.description : ''
+                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''
                     }`,
                     model.content,
                     { headers: { 'Content-Type': model.contentType } }
@@ -280,8 +279,7 @@ export default class RestClient implements Client {
                 })
                 .then(() => {
                     return axios.put(
-                        `${this.baseUrl}/c/restful/maps/${id}/description`,
-                        basicInfo.description,
+                        `${this.baseUrl}/c/restful/maps/${id}/description`, basicInfo.description || ' ',
                         { headers: { 'Content-Type': 'text/plain' } }
                     );
                 })
@@ -302,8 +300,7 @@ export default class RestClient implements Client {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios
                 .post(
-                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${
-                        model.description ? model.description : ''
+                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''
                     }`,
                     null,
                     { headers: { 'Content-Type': 'application/json' } }

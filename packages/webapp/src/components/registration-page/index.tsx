@@ -16,7 +16,7 @@ import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
-import AppConfig from '../../classes/server-config';
+import AppConfig from '../../classes/app-config';
 
 export type Model = {
     email: string;
