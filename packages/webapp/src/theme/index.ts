@@ -6,7 +6,8 @@ const theme = createMuiTheme({
             '@global': {
                 body: {
                     backgroundColor: 'white',
-                    minWidth: '800px'
+                    // Important: This size is the min to diplay all pages except maps list. 
+                    minWidth: '450px'
                 },
             },
         },

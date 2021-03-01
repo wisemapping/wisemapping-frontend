@@ -26,30 +26,36 @@ export const StyledNav = styled.nav`
         z-index: 2;
     }
 
-    /* Review ....*/
-    .header-middle {
-        grid-column-start: 2;
-    }
-
-    .header-area-right1 {
-        grid-column-start: 3;
-    }
-
     .header-area-right2 {
-        grid-column-start: 4;
+        grid-column-start: 3;
+        text-align: right;
     }
 
     .header-area-right1 span,
     .header-area-right2 span {
         font-size: 15px;
     }
+   
+  
     .header-area-content-span {
         grid-column-start: 2;
-        grid-column-end: 4;
+        grid-column-end: 3;
         text-align: right;
         font-size: 14px;
         padding: 10px;
     }
+
+    @media only screen and (max-width: 600px) {
+        .header-area-content-span {
+            display: none;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            text-align: right;
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+    
 `;
 
 export const StyledDiv = styled.nav`
@@ -63,12 +69,12 @@ export const StyledDiv = styled.nav`
 
     display: grid;
     white-space: nowrap;
-    grid-template-columns: 200px 1fr 130px 160px 50px;
+    grid-template-columns: 150px 1fr 160px 20px;
 `;
 
 export const Logo = styled.span`
     grid-column-start: 1;
-    margin-left: 50px;
+    margin-left: 20px;
     margin-top: 0px;
 
     .header-logo a {
