@@ -332,7 +332,7 @@ export default class RestClient implements Client {
                     const maps: MapInfo[] = (data.mindmapsInfo as any[]).map((m) => {
                         return {
                             id: m.id,
-                            starred: Boolean(m.starred),
+                            starred: m.starred,
                             title: m.title,
                             labels: m.labels,
                             createdBy: m.creator,
@@ -347,8 +347,7 @@ export default class RestClient implements Client {
                     success(maps);
                 })
                 .catch((error) => {
-                    const response = error.response;
-                    const errorInfo = this.parseResponseOnError(response);
+                    const errorInfo = this.parseResponseOnError(error.response);
                     reject(errorInfo);
                 });
         };
@@ -429,8 +428,7 @@ export default class RestClient implements Client {
     }
 
     updateStarred(id: number, starred: boolean): Promise<void> {
-
-        console.debug(`Starred ${starred}`)
+        console.debug(`Starred => ${starred}`)
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
                 .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, starred, {
