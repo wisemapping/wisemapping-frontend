@@ -338,6 +338,12 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
             const map = mapsInfo.find((m) => m.id == id);
+            if(!map){
+                console.error(`Map ${id} could not be found.`);
+                console.error(`MapsInfo ${mapsInfo} list`);
+            }
+            console.debug(`Starred value map?.starred: ${map?.starred}`);
+
             return client.updateStarred(id, !map?.starred);
         },
         {
