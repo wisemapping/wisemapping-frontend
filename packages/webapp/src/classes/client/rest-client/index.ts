@@ -235,11 +235,10 @@ export default class RestClient implements Client {
     updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .put(`${this.baseUrl}/c/restful/maps/${id}/publish`, isPublic, {
+                .put(`${this.baseUrl}/c/restful/maps/${id}/publish`, isPublic.toString(), {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
-                    // All was ok, let's sent to success page ...;
                     success();
                 })
                 .catch((error) => {

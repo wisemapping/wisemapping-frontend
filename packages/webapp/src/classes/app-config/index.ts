@@ -1,5 +1,6 @@
 import { sessionExpired } from "../../redux/clientSlice";
 import Client from "../client";
+import CacheDecoratorClient from "../client/cache-decorator-client";
 import MockClient from "../client/mock-client";
 import RestClient from "../client/rest-client";
 
@@ -60,7 +61,9 @@ class _AppConfig {
             console.log('Warning:Service using mockservice client');
             result = new MockClient();
         }
-        return result;
+
+        // Wrap with a cache decorator ...
+        return new CacheDecoratorClient(result);
     }
 }
 const AppConfig = new _AppConfig();

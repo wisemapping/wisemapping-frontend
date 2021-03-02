@@ -92,7 +92,7 @@ interface Client {
     updateAccountInfo(firstname: string, lastname: string): Promise<void>;
 
     updateStarred(id: number, starred: boolean): Promise<void>;
-    updateMapToPublic(id: number, starred: boolean): Promise<void>;
+    updateMapToPublic(id: number, isPublic: boolean): Promise<void>;
 
     fetchLabels(): Promise<Label[]>;
     deleteLabel(id: number): Promise<void>;
