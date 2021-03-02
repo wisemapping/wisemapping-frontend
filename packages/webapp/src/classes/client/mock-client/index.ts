@@ -104,7 +104,7 @@ class MockClient implements Client {
         perm = perm.concat(permissions);
         this.permissionsByMap.set(id, perm);
 
-        console.log(`Message ${message}`);
+        console.debug(`Message ${message}`);
         return Promise.resolve();
     }
 

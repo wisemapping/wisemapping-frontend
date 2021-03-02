@@ -347,9 +347,6 @@ export default class RestClient implements Client {
                     success(maps);
                 })
                 .catch((error) => {
-                    console.log('Maps List Error=>');
-                    console.log(error);
-
                     const response = error.response;
                     const errorInfo = this.parseResponseOnError(response);
                     reject(errorInfo);
@@ -369,9 +366,7 @@ export default class RestClient implements Client {
                     success();
                 })
                 .catch((error) => {
-                    console.log(error);
-                    const response = error.response;
-                    const errorInfo = this.parseResponseOnError(response);
+                    const errorInfo = this.parseResponseOnError(error.response);
                     reject(errorInfo);
                 });
         };
@@ -500,11 +495,13 @@ export default class RestClient implements Client {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private parseResponseOnError = (response: any): ErrorInfo => {
+        console.error("Backend error=>");
+        console.error(response.data);
+
         let result: ErrorInfo | undefined;
         if (response) {
             const status: number = response.status;
             const data = response.data;
-            console.log(data);
 
             switch (status) {
                 case 401:

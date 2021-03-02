@@ -344,7 +344,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             }
             console.debug(`Starred value map?.starred: ${map?.starred}`);
 
-            return client.updateStarred(id, !map?.starred);
+            return client.updateStarred(id, !(map?.starred));
         },
         {
             onSuccess: () => {
