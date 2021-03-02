@@ -431,7 +431,7 @@ export default class RestClient implements Client {
         console.debug(`Starred => ${starred}`)
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, starred, {
+                .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, starred.toString(), {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
