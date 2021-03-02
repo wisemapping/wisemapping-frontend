@@ -219,20 +219,18 @@ const MapsPage = (): ReactElement => {
                     </div>
 
                     <List component="nav">
-                        {filterButtons.map((buttonInfo) => {
-                            return (
-                                <StyleListItem
-                                    icon={buttonInfo.icon}
-                                    label={buttonInfo.label}
-                                    filter={buttonInfo.filter}
-                                    active={filter}
-                                    onClick={handleMenuClick}
-                                    onDelete={handleLabelDelete}
-                                    key={`${buttonInfo.filter.type}:${(buttonInfo.filter as LabelFilter).label
-                                        }`}
-                                />
-                            );
-                        })}
+                        {filterButtons.map(buttonInfo => {
+                            return (<StyleListItem
+                                icon={buttonInfo.icon}
+                                label={buttonInfo.label}
+                                filter={buttonInfo.filter}
+                                active={filter}
+                                onClick={handleMenuClick}
+                                onDelete={handleLabelDelete}
+                                key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
+                            />)
+                        }
+                        )}
                     </List>
 
                     <div

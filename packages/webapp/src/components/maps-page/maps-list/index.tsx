@@ -4,7 +4,7 @@ import { useStyles } from './styled';
 import { useSelector } from 'react-redux';
 import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import Client, { ErrorInfo, MapInfo } from '../../../classes/client';
+import Client, {ErrorInfo, Label, MapInfo} from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
 import dayjs from 'dayjs';
@@ -28,14 +28,15 @@ import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import Link from '@material-ui/core/Link';
 
-import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
+import { AddLabelButton } from './add-label-button';
 // Load fromNow pluggin
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {LabelsCell} from './labels-cell';
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -55,8 +56,8 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key
 ): (
-        a: { [key in Key]: number | string | boolean | number[] | undefined },
-        b: { [key in Key]: number | string | number[] | boolean }
+        a: { [key in Key]: number | string | boolean | Label[] | undefined },
+        b: { [key in Key]: number | string | Label[] | boolean }
     ) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
@@ -220,7 +221,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
                 break;
             case 'label':
                 result =
-                    !mapInfo.labels || mapInfo.labels.includes((filter as LabelFilter).label.id);
+                    !mapInfo.labels || mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id)
                 break;
             case 'public':
                 result = mapInfo.isPublic;
@@ -412,24 +413,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                        {selected.length > 0 && (
-                            <Tooltip arrow={true} title={intl.formatMessage({ id: 'map.tooltip-add', defaultMessage: 'Add label to selected' })}>
-                                <Button
-                                    color="primary"
-                                    size="medium"
-                                    variant="outlined"
-                                    type="button"
-                                    style={{ marginLeft: '10px' }}
-                                    disableElevation={true}
-                                    startIcon={<LabelTwoTone />}
-                                >
-                                    <FormattedMessage
-                                        id="action.label"
-                                        defaultMessage="Add Label"
-                                    />
-                                </Button>
-                            </Tooltip>
-                        )}
+                      {selected.length > 0 && <AddLabelButton/>}
                     </div>
 
                     <div className={classes.toolbarListActions}>
@@ -558,7 +542,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                             </Tooltip>
                                                         </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}></TableCell>
+                                                        <TableCell className={classes.bodyCell}>
+                                                          <LabelsCell labels={row.labels} />
+                                                        </TableCell>
 
                                                         <TableCell className={classes.bodyCell}>
                                                             {row.createdBy}

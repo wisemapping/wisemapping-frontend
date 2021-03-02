@@ -19,7 +19,6 @@ export type Label = {
     id: number;
     title: string;
     color: string;
-    iconName: string;
 };
 
 export type Role = 'owner' | 'editor' | 'viewer';
@@ -28,7 +27,7 @@ export type MapInfo = {
     id: number;
     starred: boolean;
     title: string;
-    labels: number[];
+    labels: Label[];
     createdBy: string;
     creationTime: string;
     lastModificationBy: string;

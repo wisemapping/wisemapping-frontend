@@ -10,6 +10,24 @@ import Client, {
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 
+const label1: Label = {
+  id: 1,
+  title: 'label 1',
+  color: 'black',
+}
+
+const label2: Label = {
+  id: 2,
+  title: 'label 2',
+  color: 'green',
+}
+
+const label3: Label = {
+  id: 3,
+  title: 'label 3',
+  color: 'red',
+}
+
 class MockClient implements Client {
     private maps: MapInfo[] = [];
     private labels: Label[] = [];
@@ -21,7 +39,7 @@ class MockClient implements Client {
             id: number,
             starred: boolean,
             title: string,
-            labels: number[],
+            labels: Label[],
             creator: string,
             creationTime: string,
             modifiedByUser: string,
@@ -63,7 +81,7 @@ class MockClient implements Client {
                 11,
                 false,
                 'El Mapa3',
-                [1, 2, 3],
+              [label1, label2],
                 'Paulo3',
                 '2008-06-02T00:00:00Z',
                 'Berna',
@@ -76,7 +94,7 @@ class MockClient implements Client {
                 12,
                 false,
                 'El Mapa3',
-                [1, 2, 3],
+                [label2, label3],
                 'Paulo3',
                 '2008-06-02T00:00:00Z',
                 'Berna',
@@ -87,10 +105,7 @@ class MockClient implements Client {
             ),
         ];
 
-        this.labels = [
-            { id: 1, title: 'Red Label', iconName: '', color: 'red' },
-            { id: 2, title: 'Blue Label', iconName: '', color: 'blue' },
-        ];
+        this.labels = [label1, label2, label3];
     }
     deleteMapPermission(id: number, email: string): Promise<void> {
         let perm = this.permissionsByMap.get(id) || [];
