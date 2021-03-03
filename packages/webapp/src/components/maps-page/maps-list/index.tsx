@@ -344,7 +344,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             // Follow a optimistic update approach ...
             queryClient.setQueryData<MapInfo[]>('maps', mapsInfo => {
                 if (map) {
-                    map.starred = !map.starred;
+                    map.starred = starred;
                 }
                 return mapsInfo || [];
 
