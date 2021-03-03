@@ -4,7 +4,7 @@ import { useStyles } from './styled';
 import { useSelector } from 'react-redux';
 import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import Client, {ErrorInfo, Label, MapInfo} from '../../../classes/client';
+import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
 import ActionDispatcher from '../action-dispatcher';
 import dayjs from 'dayjs';
@@ -36,7 +36,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { AddLabelButton } from './add-label-button';
 // Load fromNow pluggin
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {LabelsCell} from './labels-cell';
+import { LabelsCell } from './labels-cell';
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -335,23 +335,28 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             event.stopPropagation();
         };
     };
-
+    9
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
             const map = mapsInfo.find((m) => m.id == id);
-            if(!map){
-                console.error(`Map ${id} could not be found.`);
-                console.error(`MapsInfo ${mapsInfo} list`);
-            }
-            console.debug(`Starred value map?.starred: ${map?.starred}`);
+            const starred = !(map?.starred);
 
-            return client.updateStarred(id, !(map?.starred));
+            // Follow a optimistic update approach ...
+            queryClient.setQueryData<MapInfo[]>('maps', mapsInfo => {
+                if (map) {
+                    map.starred = !map.starred;
+                }
+                return mapsInfo || [];
+
+            });
+            return client.updateStarred(id, starred);
         },
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('maps');
             },
             onError: (error) => {
+                queryClient.invalidateQueries('maps');
                 console.error(error);
             },
         }
@@ -413,7 +418,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                      {selected.length > 0 && <AddLabelButton/>}
+                        {selected.length > 0 && <AddLabelButton />}
                     </div>
 
                     <div className={classes.toolbarListActions}>
@@ -543,7 +548,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                         </TableCell>
 
                                                         <TableCell className={classes.bodyCell}>
-                                                          <LabelsCell labels={row.labels} />
+                                                            <LabelsCell labels={row.labels} />
                                                         </TableCell>
 
                                                         <TableCell className={classes.bodyCell}>
