@@ -558,7 +558,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                         <TableCell className={classes.bodyCell}>
                                                             <Tooltip
                                                                 arrow={true}
-                                                                title={intl.formatMessage({ id: 'maps.modified-by-desc', defaultMessage: 'Modified by {by} on {on}' })}
+                                                                title={intl.formatMessage({ id: 'maps.modified-by-desc', defaultMessage: 'Modified by {by} on {on}' }, { by: row.lastModificationBy, on: dayjs(row.lastModificationTime).format('lll') })}
                                                                 placement="bottom-start"
                                                             >
                                                                 <span>
