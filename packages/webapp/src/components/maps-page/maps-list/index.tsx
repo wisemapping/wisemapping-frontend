@@ -34,9 +34,10 @@ import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { AddLabelButton } from './add-label-button';
-// Load fromNow pluggin
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
+
+// Load fromNow pluggin
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
