@@ -1,0 +1,46 @@
+{
+    "name": "@wismapping/web2d",
+    "version": "0.0.1",
+    "description": "web2d",
+    "homepage": "http://localhost:8080/react/packages/web2d",
+    "license": "ISC",
+    "main": "lib/web2d.js",
+    "directories": {
+        "lib": "lib",
+        "test": "__tests__"
+    },
+    "files": [
+        "lib"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.yarnpkg.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
+    },
+    "scripts": {
+        "start": "webpack serve --config webpack.dev.js",
+        "build": "yarn web2d:build && yarn test:build",
+        "web2d:build": "webpack --config webpack.prod.js",
+        "test:build": "webpack --config webpack.test.js"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.6",
+        "@babel/plugin-transform-modules-commonjs": "^7.14.5",
+        "@babel/preset-env": "^7.14.7",
+        "babel-loader": "^8.2.2",
+        "clean-webpack-plugin": "^4.0.0-alpha.0",
+        "core-js": "^3.15.2",
+        "html-webpack-plugin": "^5.3.2",
+        "webpack": "^5.44.0",
+        "webpack-cli": "^4.7.2",
+        "webpack-dev-server": "^3.11.2",
+        "webpack-merge": "^5.8.0"
+    },
+    "dependencies": {
+        "@wismapping/core-js": "^0.0.1",
+        "@wisemapping/mindplot": "^0.0.1",
+        "mootools": "1.4.5"
+    }
+}
