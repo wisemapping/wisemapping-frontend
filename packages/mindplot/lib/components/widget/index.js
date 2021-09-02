@@ -3,7 +3,7 @@ const floatingTip = require('./FloatingTip').default;
 const fontFamilyPanel = require('./FontFamilyPanel').default;
 const fontSizePanel = require('./FontSizePanel').default;
 const iconPanel = require('./IconPanel').default;
-const imenu = require('./IMenu').default;
+const iMenu = require('./IMenu').default;
 const keyboardShortcutTooltip = require('./KeyboardShortcutTooltip').default;
 const linkEditor = require('./LinkEditor').default;
 const linkIconTooltip = require('./LinkIconTooltip').default;
@@ -22,7 +22,7 @@ export const Widgets = {
     FontFamilyPanel: fontFamilyPanel,
     FontSizePanel: fontSizePanel,
     IconPanel: iconPanel,
-    Imenu: imenu,
+    IMenu: iMenu,
     KeyboardShortcutTooltip: keyboardShortcutTooltip,
     LinkEditor: linkEditor,
     LinkIconTooltip: linkIconTooltip,

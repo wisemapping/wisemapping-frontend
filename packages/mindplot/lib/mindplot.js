@@ -9,23 +9,27 @@ function mindplot() {
     const { Layout } = require('./components/layout');
 
     // Model
-    const { Models } = require('./components/model');
+    const { Model } = require('./components/model');
 
     // Persistence
     const { Persistence } = require('./components/persistence');
 
+    // Utils
+    const { Utils } = require('./components/util');
+
     // Widgets
     const { Widgets } = require('./components/widget');
 
-    // Commponents
+    // Components
     const { Components } = require('./components');
 
     return {
         commands: Commands,
-        layout: Layout,
-        models: Models,
+        layouts: Layout,
+        models: Model,
         persistence: Persistence,
-        widget: Widgets,
-        component: Components,
+        utils: Utils,
+        widgets: Widgets,
+        components: Components,
     };
 }

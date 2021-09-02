@@ -16,6 +16,8 @@
  *   limitations under the License.
  */
 const TestSuite = require('./TestSuite').default;
+const Mindplot = require('../../../../lib/mindplot');
+const mindplot = Mindplot();
 
 const SymmetricTestSuite = new Class({
     Extends: TestSuite,
@@ -154,6 +156,8 @@ const SymmetricTestSuite = new Class({
         console.log('\tAdded as child of node 5 and dropped at (380, -30):');
         var prediction2d = manager.predict(5, null, { x: 380, y: -30 });
         this._plotPrediction(graph2, prediction2d);
+
+        // Prediction calculator error
         $assert(
             prediction2d.position.y < manager.find(7).getPosition().y &&
                 prediction2d.position.x == manager.find(7).getPosition().x,
@@ -164,6 +168,7 @@ const SymmetricTestSuite = new Class({
         console.log('\tAdded as child of node 5 and dropped at (375, 15):');
         var prediction2a = manager.predict(5, null, { x: 375, y: 15 });
         this._plotPrediction(graph2, prediction2a);
+
         $assert(
             prediction2a.position.y > manager.find(7).getPosition().y &&
                 prediction2a.position.y < manager.find(8).getPosition().y &&
@@ -278,6 +283,7 @@ const SymmetricTestSuite = new Class({
         console.log('testSymmetricDragPredict:');
         var position = { x: 0, y: 0 };
         var manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+
         manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 1);
         manager.addNode(2, TestSuite.NODE_SIZE, position).connectNode(1, 2, 0);
         manager.layout();

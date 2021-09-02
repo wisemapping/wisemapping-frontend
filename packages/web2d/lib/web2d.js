@@ -35,7 +35,7 @@ function web2D() {
     const verdanaFont = require('./components/peer/svg/VerdanaFont').default; //eslint-disable-line
     const point = require('./components/Point').default; //eslint-disable-line
 
-    global.web2d = {
+    const web2d = {
         ElementPeer: elementPeer,
         Element: element,
         Workspace: workspace,
@@ -68,7 +68,7 @@ function web2D() {
         Point: point,
     };
 
-    return global.web2d; //eslint-disable-line
+    return web2d; //eslint-disable-line
 }
 
 module.exports = web2D; //eslint-disable-line

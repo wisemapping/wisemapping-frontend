@@ -421,5 +421,5 @@ INodeModel._nextUUID = function () {
 };
 INodeModel._uuid = 0;
 
-export default INodeModel;
 export { TopicShape };
+export default INodeModel;

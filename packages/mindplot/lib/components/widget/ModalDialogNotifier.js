@@ -6,7 +6,6 @@
  *   "powered by wisemapping" text requirement on every single page;
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the license at
- *
  *       http://www.wisemapping.org/license
  *
  *   Unless required by applicable law or agreed to in writing, software
@@ -50,5 +49,7 @@ const ModalDialogNotifier = new Class({
 
 var dialogNotifier = new ModalDialogNotifier();
 const $notifyModal = dialogNotifier.show.bind(dialogNotifier);
+$notifyModal;
 
+export { $notifyModal };
 export default ModalDialogNotifier;

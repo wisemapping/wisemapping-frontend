@@ -8,6 +8,6 @@ function coreJs() {
     require('./Utils'); // eslint-disable-line
     global.Options = require('@wisemapping/mindplot/lib/components/Options');
     global.BootstrapDialog = require('@wisemapping/mindplot/lib/components/libraries/bootstrap/BootstrapDialog');
-    //require('@wisemapping/mindplot/lib/components/libraries/bootstrap/BootstrapDialog.Request');
+    require('@wisemapping/mindplot/lib/components/libraries/bootstrap/BootstrapDialog.Request');
     return global.core; // eslint-disable-line no-undef
 }

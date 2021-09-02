@@ -15,69 +15,67 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Core = require('@wismapping/core-js')
+const Core = require('@wismapping/core-js');
 const core = Core();
 const Topic = require('./Topic').default;
 const Shape = require('./util/Shape').default;
 
-const CentralTopic = new Class(/** @lends CentralTopic*/{
+const CentralTopic = new Class(
+    /** @lends CentralTopic*/ {
+        Extends: Topic,
+        /**
+         * @extends mindplot.Topic
+         * @constructs
+         * @param model
+         * @param options
+         */
+        initialize: function (model, options) {
+            this.parent(model, options);
+        },
 
-    Extends:Topic,
-    /**
-     * @extends mindplot.Topic
-     * @constructs
-     * @param model
-     * @param options
-     */
-    initialize:function (model, options) {
-        this.parent(model, options);
-    },
+        _registerEvents: function () {
+            this.parent();
 
-    _registerEvents:function () {
-        this.parent();
+            // This disable the drag of the central topic. But solves the problem of deselecting the nodes when the screen is clicked.
+            this.addEvent('mousedown', function (event) {
+                event.stopPropagation();
+            });
+        },
 
-        // This disable the drag of the central topic. But solves the problem of deselecting the nodes when the screen is clicked.
-        this.addEvent('mousedown', function (event) {
-            event.stopPropagation();
-        });
-    },
+        /** */
+        workoutIncomingConnectionPoint: function () {
+            return this.getPosition();
+        },
 
-    /** */
-    workoutIncomingConnectionPoint:function () {
-        return this.getPosition();
-    },
+        /** */
+        setCursor: function (type) {
+            type = type == 'move' ? 'default' : type;
+            this.parent(type);
+        },
 
-    /** */
-    setCursor:function (type) {
-        type = (type == 'move') ? 'default' : type;
-        this.parent(type);
-    },
+        /** */
+        updateTopicShape: function () {},
 
-    /** */
-    updateTopicShape:function () {
+        _updatePositionOnChangeSize: function () {
+            // Center main topic ...
+            var zeroPoint = new core.Point(0, 0);
+            this.setPosition(zeroPoint);
+        },
 
-    },
+        /** */
+        getShrinkConnector: function () {
+            return null;
+        },
 
-    _updatePositionOnChangeSize:function () {
-
-        // Center main topic ...
-        var zeroPoint = new core.Point(0, 0);
-        this.setPosition(zeroPoint);
-    },
-
-    /** */
-    getShrinkConnector:function () {
-        return null;
-    },
-
-    /** */
-    workoutOutgoingConnectionPoint:function (targetPosition) {
-        $assert(targetPosition, 'targetPoint can not be null');
-        var pos = this.getPosition();
-        var isAtRight = Shape.isAtRight(targetPosition, pos);
-        var size = this.getSize();
-        return Shape.calculateRectConnectionPoint(pos, size, !isAtRight);
+        /** */
+        workoutOutgoingConnectionPoint: function (targetPosition) {
+            $assert(targetPosition, 'targetPoint can not be null');
+            var pos = this.getPosition();
+            var isAtRight = Shape.isAtRight(targetPosition, pos);
+            var size = this.getSize();
+            return Shape.calculateRectConnectionPoint(pos, size, !isAtRight);
+        },
     }
-});
+);
 
 export default CentralTopic;

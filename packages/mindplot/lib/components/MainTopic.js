@@ -24,8 +24,7 @@ const Topic = require('./Topic').default;
 const { TopicShape } = require('./model/INodeModel');
 const Shape = require('./util/Shape').default;
 
-const MainTopic = new Class(
-    /** @lends MainTopic */ {
+const MainTopic = new Class(/** @lends MainTopic */ {
         Extends: Topic,
         /**
          * @extends mindplot.Topic

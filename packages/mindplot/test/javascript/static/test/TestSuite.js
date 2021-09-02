@@ -15,12 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+const Mindplot = require('../../../../lib/mindplot');
+const mindplot = Mindplot();
+
 const TestSuite = new Class({
     Extends: mindplot.layout.ChildrenSorterStrategy,
 
     initialize: function () {
         $('#basicTest').css('display', 'block');
-
         //        this.testAligned();
         this.testBaselineAligned1();
         this.testBaselineAligned2();
@@ -230,6 +232,9 @@ const TestSuite = new Class({
         manager.plot('testEventsComplex2', { width: 800, height: 200 });
 
         // Check only 4 nodes were repositioned
+
+        console.log(events.length);
+
         $assert(events.length == 4, 'Only 4 nodes should be repositioned.');
 
         console.log('OK!\n\n');

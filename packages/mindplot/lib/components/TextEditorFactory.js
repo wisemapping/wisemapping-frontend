@@ -15,14 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const RichTextEditor = require('./Ri')
 const TextEditor = require('./TextEditor').default;
 
 const TextEditorFactory = {};
 
 TextEditorFactory.getTextEditorFromName = function (name) {
     var editorClass = null;
-    if (name == "RichTextEditor") {
+    if (name == 'RichTextEditor') {
         editorClass = RichTextEditor;
     } else {
         editorClass = TextEditor;

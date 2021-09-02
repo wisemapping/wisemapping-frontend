@@ -31,7 +31,7 @@ const Messages = new Class({
     },
 });
 
-global.$msg = function (key) {
+const $msg = function (key) {
     if (!Messages.__bundle) {
         Messages.init('en');
     }

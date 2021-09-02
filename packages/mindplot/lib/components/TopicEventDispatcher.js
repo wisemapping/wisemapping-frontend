@@ -17,7 +17,6 @@
  */
 const Events = require('./Events').default;
 const MultilineTextEditor = require('./MultilineTextEditor').default;
-//const TopicEvent = require('./Topic').default;
 const { TopicShape } = require('./model/INodeModel');
 
 const TopicEventDispatcher = new Class({

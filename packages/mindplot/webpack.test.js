@@ -4,15 +4,21 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 /** @type {import('webpack').Configuration} */
 module.exports = {
     entry: {
-        palette: path.resolve(__dirname, './test/javascript/static/test/testPalette'),
-        layout: path.resolve(__dirname, './test/javascript/static/test/testLayout'),
+        testingLayout: './test/javascript/static/test/testingLayout',
+        testingPallete: './test/javascript/static/test/testingPalette',
     },
     output: {
-        path: path.resolve(__dirname, 'dist', 'test'),
-        filename: '[name].test.js',
+        path: path.resolve(__dirname, 'dist', 'tests'),
+        filename: '[name].js',
         publicPath: '',
     },
-    mode: 'production',
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            minSize: 2000000,
+        },
+    },
+    devtool: 'source-map',
     module: {
         rules: [
             {

@@ -46,4 +46,5 @@ const $notify = function (msg) {
     toolbarNotifier.logMessage(msg);
 };
 
+export { $notify };
 export default ToolbarNotifier;

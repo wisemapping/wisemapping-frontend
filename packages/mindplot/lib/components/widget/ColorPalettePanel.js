@@ -18,47 +18,46 @@
 const ToolbarPaneItem = require('./ToolbarPaneItem').default;
 
 const ColorPalettePanel = new Class({
-    Extends:ToolbarPaneItem,
+    Extends: ToolbarPaneItem,
 
-    initialize:function (buttonId, model, baseUrl) {
+    initialize: function (buttonId, model, baseUrl) {
         this._baseUrl = baseUrl;
         this.parent(buttonId, model);
-        $assert($defined(baseUrl), "baseUrl can not be null");
+        $assert($defined(baseUrl), 'baseUrl can not be null');
     },
 
-    _load:function () {
-
+    _load: function () {
         if (!ColorPalettePanel._panelContent) {
-
             // Load all the CSS styles ...
             $('<link>')
                 .appendTo($('head'))
-                .attr({type : 'text/css', rel : 'stylesheet'})
+                .attr({ type: 'text/css', rel: 'stylesheet' })
                 .attr('href', this._baseUrl + '/colorPalette.css');
 
             // Load panel html fragment ...
             var result;
             $.ajax({
-                url:this._baseUrl + '/colorPalette.html',
-                method:'get',
-                async:false,
-                success:function (responseText) {
+                url: `${this._baseUrl}/colorPalette.html`,
+                method: 'GET',
+                async: false,
+                success: function (responseText) {
                     result = responseText;
                 },
-                error:function () {
+                error: function () {
                     result = '<div>Sorry, your request failed :(</div>';
-                }
+                },
             });
 
             ColorPalettePanel._panelContent = result;
-
         }
         return ColorPalettePanel._panelContent;
     },
 
-
-    buildPanel:function () {
-        var content = $('<div class="toolbarPanel"></div>').attr('id', this._buttonId + 'colorPalette');
+    buildPanel: function () {
+        var content = $('<div class="toolbarPanel"></div>').attr(
+            'id',
+            this._buttonId + 'colorPalette'
+        );
         content.html(this._load());
 
         // Register on toolbar elements ...
@@ -67,7 +66,7 @@ const ColorPalettePanel = new Class({
         var me = this;
         _.each(colorCells, function (elem) {
             $(elem).on('click', function () {
-                var color = $(elem).css("background-color");
+                var color = $(elem).css('background-color');
                 model.setValue(color);
                 me.hide();
             });
@@ -76,18 +75,20 @@ const ColorPalettePanel = new Class({
         return content;
     },
 
-    _updateSelectedItem:function () {
+    _updateSelectedItem: function () {
         var panelElem = this.getPanelElem();
 
         // Clear selected cell based on the color  ...
-        panelElem.find("td[class='palette-cell palette-cell-selected']").attr('class', 'palette-cell');
+        panelElem
+            .find("td[class='palette-cell palette-cell-selected']")
+            .attr('class', 'palette-cell');
 
         // Mark the cell as selected ...
         var colorCells = panelElem.find('div[class=palette-colorswatch]');
         var model = this.getModel();
         var modelValue = model.getValue();
         _.each(colorCells, function (elem) {
-            var color = $(elem).css("background-color").rgbToHex();
+            var color = $(elem).css('background-color').rgbToHex();
             if (modelValue != null && modelValue[0] == 'r') {
                 modelValue = modelValue.rgbToHex();
             }
@@ -97,8 +98,7 @@ const ColorPalettePanel = new Class({
             }
         });
         return panelElem;
-    }
-
+    },
 });
 
 export default ColorPalettePanel;

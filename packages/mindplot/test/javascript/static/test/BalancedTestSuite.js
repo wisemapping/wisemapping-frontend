@@ -17,6 +17,9 @@
  */
 const TestSuite = require('./TestSuite').default;
 
+const Mindplot = require('../../../../lib/mindplot');
+const mindplot = Mindplot();
+
 const BalancedTestSuite = new Class({
     Extends: TestSuite,
 

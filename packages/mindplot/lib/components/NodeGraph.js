@@ -201,6 +201,7 @@ const NodeGraph = new Class(
 NodeGraph.create = function (nodeModel, options) {
     const CentralTopic = require('./CentralTopic').default;
     const MainTopic = require('./MainTopic').default;
+
     $assert(nodeModel, 'Model can not be null');
 
     var type = nodeModel.getType();

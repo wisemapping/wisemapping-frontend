@@ -16,6 +16,9 @@
  *   limitations under the License.
  */
 const TestSuite = require('./TestSuite').default;
+const Mindplot = require('../../../../lib/mindplot');
+const mindplot = Mindplot();
+
 const FreeTestSuite = new Class({
     Extends: TestSuite,
 

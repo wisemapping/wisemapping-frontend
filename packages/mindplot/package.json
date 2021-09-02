@@ -20,9 +20,9 @@
         "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
     },
     "scripts": {
-        "build": "yarn build:dev && yarn build:test",
-        "build:dev": "webpack --config webpack.prod.js",
-        "build:test": "webpack --config webpack.test.js",
+        "build": "yarn mindplot:build && yarn test:build",
+        "test:build": "webpack --config webpack.test.js",
+        "mindplot:build": "webpack --config webpack.prod.js",
         "start": "webpack serve --config webpack.dev.js"
     },
     "dependencies": {
@@ -31,7 +31,6 @@
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
-        "@babel/preset-env": "^7.14.7",
         "babel-loader": "^8.2.2",
         "clean-webpack-plugin": "^4.0.0-alpha.0",
         "webpack": "^5.44.0",
