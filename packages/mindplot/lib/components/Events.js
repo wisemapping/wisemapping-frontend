@@ -1,5 +1,4 @@
 const Events = new Class({
-
     $events: {},
 
     _removeOn: function (string) {
@@ -20,11 +19,15 @@ const Events = new Class({
         type = this._removeOn(type);
         var events = this.$events[type];
         if (!events) return this;
-        args = Array.from(args);
-        _.each(events, function (fn) {
-            if (delay) fn.delay(delay, this, args);
-            else fn.apply(this, args);
-        }, this);
+        args = Array.isArray(args) ? args : [args];
+        _.each(
+            events,
+            function (fn) {
+                if (delay) fn.delay(delay, this, args);
+                else fn.apply(this, args);
+            },
+            this
+        );
         return this;
     },
 
@@ -36,8 +39,7 @@ const Events = new Class({
             if (index != -1) events.splice(index, 1);
         }
         return this;
-    }
-
+    },
 });
 
 export default Events;

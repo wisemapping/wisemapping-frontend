@@ -20,8 +20,8 @@ const core = Core();
 const web2D = require('@wismapping/web2d');
 const web2d = web2D();
 
-const INodeModel,
-    { TopicShape } = require('./model/INodeModel').default;
+const INodeModel = require('./model/INodeModel').default;
+const { TopicShape } = require('./model/INodeModel').default;
 const Topic = require('./Topic').default;
 
 const ConnectionLine = new Class({
