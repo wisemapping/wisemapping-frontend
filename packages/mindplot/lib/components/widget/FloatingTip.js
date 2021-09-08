@@ -31,7 +31,7 @@ const FloatingTip = new Class({
         content: '',
         delay: 0,
         container: false,
-        destroyOnExit: false
+        destroyOnExit: false,
     },
 
     initialize: function (element, options) {
@@ -41,11 +41,11 @@ const FloatingTip = new Class({
     },
 
     //FIXME: find a better way to do that...
-    _createPopover: function() {
+    _createPopover: function () {
         this.element.popover(this.options);
         var me = this;
         if (this.options.destroyOnExit) {
-            this.element.one('hidden.bs.popover', function() {
+            this.element.one('hidden.bs.popover', function () {
                 me.element.popover('destroy');
                 me._createPopover();
             });
@@ -62,7 +62,7 @@ const FloatingTip = new Class({
         this.element.popover('hide');
         this.fireEvent('hide');
         return this;
-    }
+    },
 });
 
 export default FloatingTip;

@@ -21,11 +21,11 @@ function mindplot() {
     const { Components } = require('./components');
 
     return {
-        Commands,
-        Layout,
-        Models,
-        Persistence,
-        Widgets,
-        Components,
+        commands: Commands,
+        layout: Layout,
+        models: Models,
+        persistence: Persistence,
+        widget: Widgets,
+        component: Components,
     };
 }

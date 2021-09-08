@@ -3,12 +3,16 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
-    entry: './lib/mindplot',
+    entry: {
+        palette: path.resolve(__dirname, './test/javascript/static/test/testPalette'),
+        layout: path.resolve(__dirname, './test/javascript/static/test/testLayout'),
+    },
     output: {
         path: path.resolve(__dirname, 'dist', 'test'),
-        filename: '[name].js',
+        filename: '[name].test.js',
         publicPath: '',
     },
+    mode: 'production',
     module: {
         rules: [
             {

@@ -11,6 +11,6 @@ window.addEventListener('load', function (e) {
     var palette = new mindplot.widget.ColorPalettePanel(
         'myButton',
         model,
-        '/mindplot/src/main/javascript/widget'
+        '../../../lib/components/widget'
     );
 });

@@ -9,12 +9,12 @@ const linkEditor = require('./LinkEditor').default;
 const linkIconTooltip = require('./LinkIconTooltip').default;
 const listToolbarPanel = require('./ListToolbarPanel').default;
 const menu = require('./Menu').default;
-const modalDialogNotifier = require('./ModalDialogNotifier');
-const noteEditor = require('./NoteEditor');
-const toolbarItem = require('./ToolbarItem');
-const toolbarNotifier = require('./ToolbarNotifier');
-const toolbarPanelItem = require('./ToolbarPaneItem');
-const topicShapePanel = require('./TopicShapePanel');
+const modalDialogNotifier = require('./ModalDialogNotifier').default;
+const noteEditor = require('./NoteEditor').default;
+const toolbarItem = require('./ToolbarItem').default;
+const toolbarNotifier = require('./ToolbarNotifier').default;
+const toolbarPanelItem = require('./ToolbarPaneItem').default;
+const topicShapePanel = require('./TopicShapePanel').default;
 
 export const Widgets = {
     ColorPalettePanel: colorPalettePanel,

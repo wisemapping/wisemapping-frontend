@@ -15,31 +15,29 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Core = require('@wismapping/core-js')
+const Core = require('@wismapping/core-js');
 const core = Core();
 const XMLSerializerFactory = require('./persistence/XMLSerializerFactory');
 
 const PersistenceManager = new Class({
     Static: {
         loadFromDom: function (mapId, mapDom) {
-            $assert(mapId, "mapId can not be null");
-            $assert(mapDom, "mapDom can not be null");
+            $assert(mapId, 'mapId can not be null');
+            $assert(mapDom, 'mapDom can not be null');
 
             var serializer = XMLSerializerFactory.getSerializerFromDocument(mapDom);
             return serializer.loadFromDom(mapDom, mapId);
-        }
+        },
     },
 
-    initialize: function () {
-
-    },
+    initialize: function () {},
 
     save: function (mindmap, editorProperties, saveHistory, events, sync) {
-        $assert(mindmap, "mindmap can not be null");
-        $assert(editorProperties, "editorProperties can not be null");
+        $assert(mindmap, 'mindmap can not be null');
+        $assert(editorProperties, 'editorProperties can not be null');
 
         var mapId = mindmap.getId();
-        $assert(mapId, "mapId can not be null");
+        $assert(mapId, 'mapId can not be null');
 
         var serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
         var domMap = serializer.toXML(mindmap);
@@ -55,26 +53,26 @@ const PersistenceManager = new Class({
     },
 
     load: function (mapId) {
-        $assert(mapId, "mapId can not be null");
+        $assert(mapId, 'mapId can not be null');
         var domDocument = this.loadMapDom(mapId);
         return PersistenceManager.loadFromDom(mapId, domDocument);
     },
 
     discardChanges: function (mapId) {
-        throw new Error("Method must be implemented");
+        throw new Error('Method must be implemented');
     },
 
     loadMapDom: function (mapId) {
-        throw new Error("Method must be implemented");
+        throw new Error('Method must be implemented');
     },
 
     saveMapXml: function (mapId, mapXml, pref, saveHistory, events, sync) {
-        throw new Error("Method must be implemented");
+        throw new Error('Method must be implemented');
     },
 
     unlockMap: function (mindmap) {
-        throw new Error("Method must be implemented");
-    }
+        throw new Error('Method must be implemented');
+    },
 });
 
 PersistenceManager.init = function (instance) {

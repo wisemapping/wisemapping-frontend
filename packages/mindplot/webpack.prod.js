@@ -8,6 +8,7 @@ const prodConfig = {
     optimization: {
         splitChunks: {
             chunks: 'all',
+            minSize: 2000000,
         },
     },
 };

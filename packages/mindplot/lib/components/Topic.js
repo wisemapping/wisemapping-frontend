@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const web2D = require('@wismapping/web2d')
-const web2d = web2D()
+const web2D = require('@wismapping/web2d');
+const web2d = web2D();
 const NodeGraph = require('./NodeGraph').default;
 const { TopicShape } = require('./model/INodeModel');
 const TopicStyle = require('./TopicStyle').default;
@@ -240,10 +240,7 @@ const Topic = new Class(
         /** @return outer shape */
         getOuterShape: function () {
             if (!$defined(this._outerShape)) {
-                var rect = this._buildShape(
-                    Topic.OUTER_SHAPE_ATTRIBUTES,
-                    TopicShape.ROUNDED_RECT
-                );
+                var rect = this._buildShape(Topic.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
                 rect.setPosition(-2, -3);
                 rect.setOpacity(0);
                 this._outerShape = rect;
@@ -991,9 +988,7 @@ const Topic = new Class(
             }
 
             var textShape = this.getTextShape();
-            textShape.setVisibility(
-                this.getShapeType() != TopicShape.IMAGE ? value : false
-            );
+            textShape.setVisibility(this.getShapeType() != TopicShape.IMAGE ? value : false);
         },
 
         /** */
@@ -1091,10 +1086,7 @@ const Topic = new Class(
                 outgoingLine.removeFromWorkspace(workspace);
 
                 // Remove from workspace.
-                EventBus.instance.fireEvent(
-                    EventBus.events.NodeDisconnectEvent,
-                    this.getModel()
-                );
+                EventBus.instance.fireEvent(EventBus.events.NodeDisconnectEvent, this.getModel());
 
                 // Change text based on the current connection ...
                 var model = this.getModel();
@@ -1216,10 +1208,7 @@ const Topic = new Class(
                 workspace.removeChild(line);
             }
             this._isInWorkspace = false;
-            EventBus.instance.fireEvent(
-                EventBus.events.NodeRemoved,
-                this.getModel()
-            );
+            EventBus.instance.fireEvent(EventBus.events.NodeRemoved, this.getModel());
         },
 
         /** */
@@ -1228,20 +1217,14 @@ const Topic = new Class(
             workspace.append(elem);
             if (!this.isInWorkspace()) {
                 if (!this.isCentralTopic()) {
-                    EventBus.instance.fireEvent(
-                        EventBus.events.NodeAdded,
-                        this.getModel()
-                    );
+                    EventBus.instance.fireEvent(EventBus.events.NodeAdded, this.getModel());
                 }
 
                 if (this.getModel().isConnected())
-                    EventBus.instance.fireEvent(
-                        EventBus.events.NodeConnectEvent,
-                        {
-                            parentNode: this.getOutgoingConnectedTopic().getModel(),
-                            childNode: this.getModel(),
-                        }
-                    );
+                    EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
+                        parentNode: this.getOutgoingConnectedTopic().getModel(),
+                        childNode: this.getModel(),
+                    });
             }
             this._isInWorkspace = true;
             this._adjustShapes();

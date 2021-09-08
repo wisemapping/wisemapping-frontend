@@ -378,4 +378,4 @@ const CommandContext = new Class(
     }
 );
 
-export {StandaloneActionDispatcher, CommandContext}
+export { StandaloneActionDispatcher, CommandContext };

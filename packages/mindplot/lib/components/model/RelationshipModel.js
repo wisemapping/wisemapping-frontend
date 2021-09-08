@@ -17,7 +17,7 @@
  */
 const ConnectionLine = require('../ConnectionLine').default;
 
-RelationshipModel = new Class(
+const RelationshipModel = new Class(
     /** @lends RelationshipModel */ {
         Static: {
             _nextUUID: function () {

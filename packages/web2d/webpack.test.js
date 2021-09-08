@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     entry: './test/javascript/render/testing.js',
     output: {
-        path: path.resolve(__dirname, 'target', 'tests'),
+        path: path.resolve(__dirname, 'dist', 'tests'),
         filename: '[name].js',
         publicPath: '',
     },

@@ -21,17 +21,17 @@ const Messages = new Class({
         init: function (locale) {
             locale = $defined(locale) ? locale : 'en';
             var bundle = Messages.BUNDLES[locale];
-            if (bundle == null && locale.indexOf("_") != -1) {
+            if (bundle == null && locale.indexOf('_') != -1) {
                 // Try to locate without the specialization ...
-                locale = locale.substring(0, locale.indexOf("_"));
+                locale = locale.substring(0, locale.indexOf('_'));
                 bundle = Messages.BUNDLES[locale];
             }
             Messages.__bundle = bundle;
-        }
-    }
+        },
+    },
 });
 
-$msg = function (key) {
+global.$msg = function (key) {
     if (!Messages.__bundle) {
         Messages.init('en');
     }

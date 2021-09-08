@@ -977,8 +977,7 @@ const Designer = new Class(
         changeTopicShape: function (shape) {
             var validateFunc = function (topic) {
                 return !(
-                    topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE &&
-                    shape == TopicShape.LINE
+                    topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE && shape == TopicShape.LINE
                 );
             };
 
@@ -1001,11 +1000,9 @@ const Designer = new Class(
         addIconType: function (iconType) {
             var topicsIds = this.getModel().filterTopicsIds();
             if (topicsIds.length > 0) {
-                this._actionDispatcher.addFeatureToTopic(
-                    topicsIds[0],
-                    TopicFeature.Icon.id,
-                    { id: iconType }
-                );
+                this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeature.Icon.id, {
+                    id: iconType,
+                });
             }
         },
 
