@@ -20,10 +20,9 @@
         "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
     },
     "scripts": {
-        "start": "webpack serve --config webpack.dev.js",
-        "build": "yarn web2d:build && yarn test:build",
-        "web2d:build": "webpack --config webpack.prod.js",
-        "test:build": "webpack --config webpack.test.js"
+        "start": "nodemon --watch lib",
+        "build": "webpack --config webpack.prod.js",
+        "test": "webpack serve --config webpack.test.js"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
@@ -33,14 +32,16 @@
         "clean-webpack-plugin": "^4.0.0-alpha.0",
         "core-js": "^3.15.2",
         "html-webpack-plugin": "^5.3.2",
+        "nodemon": "^2.0.12",
         "webpack": "^5.44.0",
         "webpack-cli": "^4.7.2",
         "webpack-dev-server": "^3.11.2",
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
-        "@wismapping/core-js": "^0.0.1",
         "@wisemapping/mindplot": "^0.0.1",
+        "@wismapping/core-js": "^0.0.1",
+        "jquery": "2.1.0",
         "mootools": "1.4.5"
     }
 }

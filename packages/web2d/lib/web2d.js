@@ -1,7 +1,9 @@
 'use strict';
 
 function web2D() {
-    const coreJs = require('@wismapping/core-js'); //eslint-disable-line 
+    global.$ = require('jquery');
+    require('mootools');
+    const coreJs = require('@wismapping/core-js'); //eslint-disable-line
     global.core = coreJs(); //eslint-disable-line
 
     const elementPeer = require('./components/peer/svg/ElementPeer').default; //eslint-disable-line
