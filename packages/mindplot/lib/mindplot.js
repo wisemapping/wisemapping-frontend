@@ -2,6 +2,31 @@
 module.exports = mindplot; //eslint-disable-line
 
 function mindplot() {
+    // Jquery for mindplot and bootstrap
+    global.$ = require('jquery');
+    global.jQuery = require('jquery');
+
+    // Mootools for the classes of Mindplot
+    require('mootools');
+
+    // Underscore handling common tasks
+    global._ = require('underscore');
+
+    // Core-js packages of Wisemapping
+    global.core = require('@wismapping/core-js');
+
+    define(['raphael'], (Raphael) => {
+        global.Raphael = Raphael;
+    });
+    require('../test/javascript/static/test/raphael-plugins');
+
+    // Bootsrap for styles
+    require('./components/libraries/bootstrap/js/bootstrap.min');
+
+    /* * * * * * * *
+     *   MINDPLOT  *
+     * * * * * * * */
+
     // Commands
     const { Commands } = require('./components/commands');
 
@@ -9,13 +34,11 @@ function mindplot() {
     const { Layout } = require('./components/layout');
 
     // Model
+
     const { Model } = require('./components/model');
 
     // Persistence
     const { Persistence } = require('./components/persistence');
-
-    // Utils
-    const { Utils } = require('./components/util');
 
     // Widgets
     const { Widgets } = require('./components/widget');
@@ -25,11 +48,10 @@ function mindplot() {
 
     return {
         commands: Commands,
-        layouts: Layout,
+        layout: Layout,
         models: Model,
         persistence: Persistence,
-        utils: Utils,
-        widgets: Widgets,
-        components: Components,
+        widget: Widgets,
+        component: Components,
     };
 }

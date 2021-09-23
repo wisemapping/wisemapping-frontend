@@ -1,17 +1,19 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
     entry: {
-        testingLayout: './test/javascript/static/test/testingLayout',
-        testingPallete: './test/javascript/static/test/testingPalette',
+        palette: path.resolve(__dirname, './test/javascript/static/test/testPalette'),
+        layout: path.resolve(__dirname, './test/javascript/static/test/testLayout'),
     },
     output: {
-        path: path.resolve(__dirname, 'dist', 'tests'),
-        filename: '[name].js',
+        path: path.resolve(__dirname, 'dist', 'test'),
+        filename: '[name].test.js',
         publicPath: '',
     },
+    mode: 'production',
     optimization: {
         splitChunks: {
             chunks: 'all',
@@ -35,5 +37,20 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
     },
-    plugins: [new CleanWebpackPlugin()],
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: 'test/javascript/static/index.html',
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['palette'],
+            filename: 'palette',
+            template: 'test/javascript/static/palette.html',
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['layout'],
+            filename: 'layout',
+            template: 'test/javascript/static/layout.html',
+        }),
+    ],
 };

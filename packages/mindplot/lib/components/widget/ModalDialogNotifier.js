@@ -49,7 +49,6 @@ const ModalDialogNotifier = new Class({
 
 var dialogNotifier = new ModalDialogNotifier();
 const $notifyModal = dialogNotifier.show.bind(dialogNotifier);
-$notifyModal;
 
 export { $notifyModal };
 export default ModalDialogNotifier;
