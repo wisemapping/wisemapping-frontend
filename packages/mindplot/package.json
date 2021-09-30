@@ -20,8 +20,7 @@
         "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
     },
     "scripts": {
-        "build": "yarn build:dev && yarn build:test",
-        "build:dev": "webpack --config webpack.prod.js",
+        "build": "webpack --config webpack.prod.js",
         "test": "webpack serve --config webpack.test.js",
         "start": "webpack serve --config webpack.dev.js"
     },
