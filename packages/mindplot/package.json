@@ -17,11 +17,11 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
+        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "payground": "webpack serve --config webpack.test.js",
+        "test": "webpack serve --config webpack.playground.js",
         "start": "webpack serve --config webpack.dev.js"
     },
     "dependencies": {
