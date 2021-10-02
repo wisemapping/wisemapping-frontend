@@ -28,9 +28,9 @@ cd packages/mindplot
 
 To build up the package mindplot and use in production, you have to use command `yarn build`
 
-## Testing
+## Payground
 
-For the testings of mindplot you need use command `yarn test` for run this enviroment.
+For the testings of mindplot you need use command `yarn payground` for run this enviroment.
 once this is done, it will open the explorer where you can see a menu with the tests carried out.
 
 ## Usage
