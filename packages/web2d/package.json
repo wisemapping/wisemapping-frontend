@@ -22,7 +22,7 @@
     "scripts": {
         "start": "nodemon --watch lib",
         "build": "webpack --config webpack.prod.js",
-        "tests": "webpack serve --config webpack.test.js"
+        "test": "webpack serve --config webpack.test.js"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
