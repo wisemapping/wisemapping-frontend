@@ -21,7 +21,7 @@
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "test": "webpack serve --config webpack.playground.js",
+        "playground": "webpack serve --config webpack.playground.js",
         "start": "webpack serve --config webpack.dev.js"
     },
     "dependencies": {
