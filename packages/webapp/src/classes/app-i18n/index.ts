@@ -41,11 +41,12 @@ export default class AppI18n {
 export type LocaleCode = 'en' | 'es' | 'fr' | 'de';
 
 export const Locales = {
-    EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')),
-    ES: new Locale('es', 'Español', require('./../../compiled-lang/es.json')),
-    DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')),
-    FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')),
+    EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
+    ES: new Locale('es', 'Español', require('./../../compiled-lang/es.json')), // eslint-disable-line
+    DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
+    FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
 };
+
 
 export const localeFromStr = (code: string): Locale => {
     const locales: Locale[] = Object.values(Locales);
