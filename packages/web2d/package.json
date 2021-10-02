@@ -17,7 +17,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
+        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
     },
     "scripts": {
         "start": "nodemon --watch lib",
