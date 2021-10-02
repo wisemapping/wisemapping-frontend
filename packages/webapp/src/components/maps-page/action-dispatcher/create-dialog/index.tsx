@@ -66,7 +66,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 error={error}
                 title={intl.formatMessage({
                     id: 'create.title',
-                    defaultMessage: 'Create a new mindmap.',
+                    defaultMessage: 'Create a new mindmap',
                 })}
                 description={intl.formatMessage({
                     id: 'create.description',

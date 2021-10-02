@@ -67,7 +67,10 @@ const MapsPage = (): ReactElement => {
     const intl = useIntl();
 
     useEffect(() => {
-        document.title = intl.formatMessage({ id: 'maps.page-title', defaultMessage: 'My Maps | WiseMapping' });
+        document.title = intl.formatMessage({
+            id: 'maps.page-title',
+            defaultMessage: 'My Maps | WiseMapping',
+        });
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
@@ -94,27 +97,27 @@ const MapsPage = (): ReactElement => {
     const filterButtons: ToolbarButtonInfo[] = [
         {
             filter: { type: 'all' },
-            label: intl.formatMessage({ id: 'maps.nav-all', defaultMessage:'All' }),
+            label: intl.formatMessage({ id: 'maps.nav-all', defaultMessage: 'All' }),
             icon: <ScatterPlotTwoTone color="secondary" />,
         },
         {
             filter: { type: 'owned' },
-            label: intl.formatMessage({ id: 'maps.nav-onwned', defaultMessage:'Owned' }),
+            label: intl.formatMessage({ id: 'maps.nav-onwned', defaultMessage: 'Owned' }),
             icon: <PersonOutlineTwoTone color="secondary" />,
         },
         {
             filter: { type: 'starred' },
-            label: intl.formatMessage({ id: 'maps.nav-starred', defaultMessage:'Starred' }),
+            label: intl.formatMessage({ id: 'maps.nav-starred', defaultMessage: 'Starred' }),
             icon: <StarTwoTone color="secondary" />,
         },
         {
             filter: { type: 'shared' },
-            label: intl.formatMessage({ id: 'maps.nav-shared', defaultMessage:'Shared with me' }),
+            label: intl.formatMessage({ id: 'maps.nav-shared', defaultMessage: 'Shared with me' }),
             icon: <ShareTwoTone color="secondary" />,
         },
         {
             filter: { type: 'public' },
-            label: intl.formatMessage({ id: 'maps.nav-public', defaultMessage:'Public' }),
+            label: intl.formatMessage({ id: 'maps.nav-public', defaultMessage: 'Public' }),
             icon: <PublicTwoTone color="secondary" />,
         },
     ];
@@ -219,18 +222,19 @@ const MapsPage = (): ReactElement => {
                     </div>
 
                     <List component="nav">
-                        {filterButtons.map(buttonInfo => {
-                            return (<StyleListItem
-                                icon={buttonInfo.icon}
-                                label={buttonInfo.label}
-                                filter={buttonInfo.filter}
-                                active={filter}
-                                onClick={handleMenuClick}
-                                onDelete={handleLabelDelete}
-                                key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
-                            />)
-                        }
-                        )}
+                        {filterButtons.map((buttonInfo) => {
+                            return (
+                                <StyleListItem
+                                    icon={buttonInfo.icon}
+                                    label={buttonInfo.label}
+                                    filter={buttonInfo.filter}
+                                    active={filter}
+                                    onClick={handleMenuClick}
+                                    onDelete={handleLabelDelete}
+                                    key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
+                                />
+                            );
+                        })}
                     </List>
 
                     <div

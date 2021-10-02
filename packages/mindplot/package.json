@@ -21,7 +21,7 @@
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "test": "webpack serve --config webpack.test.js",
+        "tests": "webpack serve --config webpack.test.js",
         "start": "webpack serve --config webpack.dev.js"
     },
     "dependencies": {

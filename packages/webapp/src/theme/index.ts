@@ -1,4 +1,4 @@
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import createMuiTheme from '@material-ui/core/styles/createTheme';
 
 const theme = createMuiTheme({
     overrides: {
@@ -6,8 +6,8 @@ const theme = createMuiTheme({
             '@global': {
                 body: {
                     backgroundColor: 'white',
-                    // Important: This size is the min to diplay all pages except maps list. 
-                    minWidth: '450px'
+                    // Important: This size is the min to diplay all pages except maps list.
+                    minWidth: '450px',
                 },
             },
         },
@@ -28,9 +28,9 @@ const theme = createMuiTheme({
             root: {
                 color: '#f9a826',
             },
-            outlined:{
-                zIndex: 'inherit'
-            }
+            outlined: {
+                zIndex: 'inherit',
+            },
         },
         MuiButton: {
             root: {
@@ -47,7 +47,7 @@ const theme = createMuiTheme({
                 '&:hover': {
                     backgroundColor: 'rgba(249, 168, 38, 0.91)',
                 },
-            }
+            },
         },
     },
     typography: {
