@@ -28,9 +28,9 @@ cd packages/web2d
 
 To build up the package web2d and use in production, you have to use command `yarn build`
 
-## Payground
+## Playground
 
-For the testings of web2d you need use command `yarn payground` for run this enviroment.
+For the testings of web2d you need use command `yarn playground` for run this enviroment.
 once this is done, it will open the explorer where you can see a menu with the tests carried out.
 
 ## Usage
