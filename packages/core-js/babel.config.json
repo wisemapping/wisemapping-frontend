@@ -4,7 +4,13 @@
             "@babel/preset-env",
             {
                 "corejs": "3.15",
-                "useBuiltIns": "usage"
+                "useBuiltIns": "usage",
+                "targets": {
+                    "browsers": [
+                        "last 5 versions",
+                        "ie >= 8"
+                    ]
+                }
             }
         ]
     ]

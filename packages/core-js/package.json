@@ -20,7 +20,7 @@
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "start": "webpack serve --config webpack.dev.js"
+        "dev": "webpack --mode development"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",

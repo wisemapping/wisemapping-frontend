@@ -20,7 +20,7 @@
         "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
     },
     "scripts": {
-        "start": "nodemon --watch lib",
+        "dev": "webpack --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js",
         "playground": "webpack serve --config webpack.playground.js"
     },
