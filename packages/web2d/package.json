@@ -12,6 +12,7 @@
     "files": [
         "lib"
     ],
+    "type": "commonjs",
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
     },
@@ -31,6 +32,7 @@
         "babel-loader": "^8.2.2",
         "clean-webpack-plugin": "^4.0.0-alpha.0",
         "core-js": "^3.15.2",
+        "eslint-loader": "^4.0.2",
         "html-webpack-plugin": "^5.3.2",
         "nodemon": "^2.0.12",
         "webpack": "^5.44.0",
@@ -41,6 +43,7 @@
     "dependencies": {
         "@wisemapping/mindplot": "^0.0.1",
         "@wismapping/core-js": "^0.0.1",
+        "babel-eslint": "^10.1.0",
         "jquery": "2.1.0",
         "mootools": "1.4.5"
     }
