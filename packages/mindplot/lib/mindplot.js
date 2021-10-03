@@ -18,7 +18,7 @@ function mindplot() {
     define(['raphael'], (Raphael) => {
         global.Raphael = Raphael;
     });
-    require('../test/javascript/static/test/raphael-plugins');
+    require('../test/playground/lib/raphael-plugins');
 
     // Bootsrap for styles
     require('./components/libraries/bootstrap/js/bootstrap.min');

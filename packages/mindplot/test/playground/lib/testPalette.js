@@ -1,4 +1,4 @@
-const Mindplot = require('../../../../lib/mindplot');
+const Mindplot = require('../../../lib/mindplot');
 const mindplot = Mindplot();
 
 window.addEventListener('load', function (e) {

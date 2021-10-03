@@ -1,4 +1,4 @@
-const Mindplot = require('../../../../lib/mindplot');
+const Mindplot = require('../../../lib/mindplot');
 global.mindplot = Mindplot();
 
 const TestSuite = require('./TestSuite').default;

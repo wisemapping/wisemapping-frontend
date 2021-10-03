@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 /** @type {import('webpack').Configuration} */
 module.exports = {
     entry: {
-        palette: path.resolve(__dirname, './test/javascript/static/test/testPalette'),
-        layout: path.resolve(__dirname, './test/javascript/static/test/testLayout'),
+        palette: path.resolve(__dirname, './test/playground/lib/testPalette'),
+        layout: path.resolve(__dirname, './test/playground/lib/testLayout'),
     },
     output: {
         path: path.resolve(__dirname, 'dist', 'test'),
@@ -40,17 +40,12 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: 'test/javascript/static/index.html',
-        }),
-        new HtmlWebpackPlugin({
-            chunks: ['palette'],
-            filename: 'palette',
-            template: 'test/javascript/static/palette.html',
+            template: 'test/playground/index.html',
         }),
         new HtmlWebpackPlugin({
             chunks: ['layout'],
             filename: 'layout',
-            template: 'test/javascript/static/layout.html',
+            template: 'test/playground/layout.html',
         }),
     ],
 };

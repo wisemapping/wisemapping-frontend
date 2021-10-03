@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Mindplot = require('../../../../lib/mindplot');
+const Mindplot = require('../../../lib/mindplot');
 const mindplot = Mindplot();
 
 const TestSuite = new Class({
