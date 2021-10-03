@@ -5,8 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 /** @type {import('webpack').Configuration} */
 module.exports = {
     entry: {
-        palette: path.resolve(__dirname, './test/playground/lib/testPalette'),
-        layout: path.resolve(__dirname, './test/playground/lib/testLayout'),
+        layout: path.resolve(__dirname, './test/playground/context-loader'),
     },
     output: {
         path: path.resolve(__dirname, 'dist', 'test'),
@@ -27,15 +26,11 @@ module.exports = {
                 use: 'babel-loader',
                 test: /.(js|jsx)$/,
                 exclude: /node_modules/,
-            },
-            {
-                type: 'asset',
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            },
+            }
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
+        extensions: ['.js','.json'],
     },
     plugins: [
         new CleanWebpackPlugin(),
