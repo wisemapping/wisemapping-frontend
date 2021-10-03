@@ -25,14 +25,13 @@ const multiHtmlPlugin = namesHTML.map((name) => {
     });
 });
 
-/** @type {import('webpack').Configuration} */
 module.exports = {
     entry: {
-        testing: './test/playground/testing.js',
+        testing: './test/playground/context-loader.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist', 'tests'),
-        filename: 'testing.js',
+        filename: 'context-loader.js',
         publicPath: '/',
     },
     devServer: {
@@ -46,17 +45,13 @@ module.exports = {
         rules: [
             {
                 use: 'babel-loader',
-                test: /.(js|jsx)$/,
+                test: /.js$/,
                 exclude: /node_modules/,
-            },
-            {
-                type: 'asset',
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            },
+            }
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
+        extensions: ['.js','.json'],
     },
     plugins: [
         new CleanWebpackPlugin(),
