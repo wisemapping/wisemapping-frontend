@@ -8,6 +8,7 @@ module.exports = {
         filename: 'core.js',
         publicPath: '',
     },
+    target: 'web',
     module: {
         rules: [
             {

@@ -4,7 +4,6 @@ const common = require('./webpack.common');
 
 const devConfig = {
     mode: 'development',
-    target: 'web',
     plugins: [new HotModuleReplacementPlugin()],
     devtool: 'eval-source-map'
 };

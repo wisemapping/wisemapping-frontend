@@ -22,8 +22,9 @@ module.exports = {
             },
         ],
     },
+    target: 'web',
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
+        extensions: ['.js', '.json'],
     },
     plugins: [new CleanWebpackPlugin()],
 };

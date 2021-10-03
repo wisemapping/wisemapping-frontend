@@ -41,7 +41,6 @@ module.exports = {
         open: true,
     },
     mode: 'development',
-    target: 'web',
     devtool: 'source-map',
     module: {
         rules: [

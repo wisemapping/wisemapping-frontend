@@ -10,7 +10,6 @@ const devConfig = {
         port: 8080,
         open: true,
     },
-    target: 'web',
     plugins: [new HotModuleReplacementPlugin()],
     devtool: 'eval-source-map',
 };
