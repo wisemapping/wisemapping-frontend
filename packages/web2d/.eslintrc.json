@@ -11,5 +11,12 @@
         "ecmaVersion": 12
     },
     "rules": {
-    }
+        "max-len": [0, 200],
+        "no-underscore-dangle": "off",
+        "no-restricted-syntax": "off",
+        "guard-for-in": "off",
+        "no-plusplus": "off"
+    },
+    "plugins": ["only-warn"]
+
 }
