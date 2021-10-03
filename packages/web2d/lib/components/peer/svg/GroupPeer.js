@@ -19,32 +19,31 @@ const ElementPeer = require('./ElementPeer').default;
 const EventUtils = require('../utils/EventUtils').default;
 
 const GroupPeer = new Class({
-    Extends: ElementPeer,
-    initialize: function () {
-        var svgElement = window.document.createElementNS(this.svgNamespace, 'g');
-        this.parent(svgElement);
-        this._native.setAttribute("preserveAspectRatio", "none");
-        this._coordSize = {width: 1, height: 1};
-        this._native.setAttribute("focusable", "true");
-        this._position = {x: 0, y: 0};
-        this._coordOrigin = {x: 0, y: 0};
-    },
+  Extends: ElementPeer,
+  initialize() {
+    const svgElement = window.document.createElementNS(this.svgNamespace, 'g');
+    this.parent(svgElement);
+    this._native.setAttribute('preserveAspectRatio', 'none');
+    this._coordSize = { width: 1, height: 1 };
+    this._native.setAttribute('focusable', 'true');
+    this._position = { x: 0, y: 0 };
+    this._coordOrigin = { x: 0, y: 0 };
+  },
 
-    setCoordSize: function (width, height) {
-        var change = this._coordSize.width != width || this._coordSize.height != height;
-        this._coordSize.width = width;
-        this._coordSize.height = height;
+  setCoordSize(width, height) {
+    const change = this._coordSize.width != width || this._coordSize.height != height;
+    this._coordSize.width = width;
+    this._coordSize.height = height;
 
-        if (change)
-            this.updateTransform();
-        EventUtils.broadcastChangeEvent(this, "strokeStyle");
-    },
+    if (change) { this.updateTransform(); }
+    EventUtils.broadcastChangeEvent(this, 'strokeStyle');
+  },
 
-    getCoordSize: function () {
-        return {width: this._coordSize.width, height: this._coordSize.height};
-    },
+  getCoordSize() {
+    return { width: this._coordSize.width, height: this._coordSize.height };
+  },
 
-    /**
+  /**
      * http://www.w3.org/TR/SVG/coords.html#TransformAttribute
      * 7.6 The transform  attribute
      *
@@ -63,73 +62,70 @@ const GroupPeer = new Class({
      *    * skewX(<skew-angle>), which specifies a skew transformation along the x-axis.
      *
      *    * skewY(<skew-angle>), which specifies a skew transformation along the y-axis.
-     **/
+     * */
 
-    updateTransform: function () {
-        var sx = this._size.width / this._coordSize.width;
-        var sy = this._size.height / this._coordSize.height;
+  updateTransform() {
+    let sx = this._size.width / this._coordSize.width;
+    let sy = this._size.height / this._coordSize.height;
 
-        var cx = this._position.x - this._coordOrigin.x * sx;
-        var cy = this._position.y - this._coordOrigin.y * sy;
+    let cx = this._position.x - this._coordOrigin.x * sx;
+    let cy = this._position.y - this._coordOrigin.y * sy;
 
-        //FIXME: are we sure of this values?
-        cx = isNaN(cx) ? 0 : cx;
-        cy = isNaN(cy) ? 0 : cy;
-        sx = isNaN(sx) ? 0 : sx;
-        sy = isNaN(sy) ? 0 : sy;
+    // FIXME: are we sure of this values?
+    cx = isNaN(cx) ? 0 : cx;
+    cy = isNaN(cy) ? 0 : cy;
+    sx = isNaN(sx) ? 0 : sx;
+    sy = isNaN(sy) ? 0 : sy;
 
-        this._native.setAttribute("transform", "translate(" + cx + "," + cy + ") scale(" + sx + "," + sy + ")");
-    },
+    this._native.setAttribute('transform', `translate(${cx},${cy}) scale(${sx},${sy})`);
+  },
 
-    setOpacity: function (value) {
-        this._native.setAttribute("opacity", value);
-    },
+  setOpacity(value) {
+    this._native.setAttribute('opacity', value);
+  },
 
-    setCoordOrigin: function (x, y) {
-        var change = x != this._coordOrigin.x || y != this._coordOrigin.y;
-        if ($defined(x)) {
-            this._coordOrigin.x = x;
-        }
-
-        if ($defined(y)) {
-            this._coordOrigin.y = y;
-        }
-        if (change)
-            this.updateTransform();
-    },
-
-    setSize: function (width, height) {
-        var change = width != this._size.width || height != this._size.height;
-        this.parent(width, height);
-        if (change)
-            this.updateTransform();
-    },
-
-    setPosition: function (x, y) {
-        var change = x != this._position.x || y != this._position.y;
-        if ($defined(x)) {
-            this._position.x = parseInt(x);
-        }
-
-        if ($defined(y)) {
-            this._position.y = parseInt(y);
-        }
-        if (change)
-            this.updateTransform();
-    },
-
-    getPosition: function () {
-        return {x: this._position.x, y: this._position.y};
-    },
-
-    append: function (child) {
-        this.parent(child);
-        EventUtils.broadcastChangeEvent(child, "onChangeCoordSize");
-    },
-
-    getCoordOrigin: function () {
-        return {x: this._coordOrigin.x, y: this._coordOrigin.y};
+  setCoordOrigin(x, y) {
+    const change = x != this._coordOrigin.x || y != this._coordOrigin.y;
+    if ($defined(x)) {
+      this._coordOrigin.x = x;
     }
+
+    if ($defined(y)) {
+      this._coordOrigin.y = y;
+    }
+    if (change) { this.updateTransform(); }
+  },
+
+  setSize(width, height) {
+    const change = width != this._size.width || height != this._size.height;
+    this.parent(width, height);
+    if (change) { this.updateTransform(); }
+  },
+
+  setPosition(x, y) {
+    const change = x != this._position.x || y != this._position.y;
+    if ($defined(x)) {
+      this._position.x = parseInt(x);
+    }
+
+    if ($defined(y)) {
+      this._position.y = parseInt(y);
+    }
+    if (change) { this.updateTransform(); }
+  },
+
+  getPosition() {
+    return { x: this._position.x, y: this._position.y };
+  },
+
+  append(child) {
+    this.parent(child);
+    EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
+  },
+
+  getCoordOrigin() {
+    return { x: this._coordOrigin.x, y: this._coordOrigin.y };
+  },
 });
 
 export default GroupPeer;
