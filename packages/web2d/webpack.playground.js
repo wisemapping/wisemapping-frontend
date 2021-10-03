@@ -21,14 +21,14 @@ const multiHtmlPlugin = namesHTML.map((name) => {
     return new HtmlWebpackPlugin({
         chunks: ['testing'],
         filename: `${name}`,
-        template: `test/javascript/render/${name}.html`,
+        template: `test/playground/${name}.html`,
     });
 });
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
     entry: {
-        testing: './test/javascript/render/testing.js',
+        testing: './test/playground/testing.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist', 'tests'),
@@ -61,6 +61,6 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({ template: 'test/javascript/render/index.html' }),
+        new HtmlWebpackPlugin({ template: 'test/playground/index.html' }),
     ].concat(multiHtmlPlugin),
 };
