@@ -1,12 +1,10 @@
-const path = require('path'); // eslint-disable-line
-const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // eslint-disable-line
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
 
-/** @type {import('webpack').Configuration} */
 module.exports = {
-    // eslint-disable-line
     entry: './lib/core.js',
     output: {
-        path: path.resolve(__dirname, 'dist'), // eslint-disable-line
+        path: path.resolve(__dirname, 'dist'), 
         filename: 'core.js',
         publicPath: '',
     },
@@ -14,17 +12,13 @@ module.exports = {
         rules: [
             {
                 use: 'babel-loader',
-                test: /.(js|jsx)$/,
+                test: /.js$/,
                 exclude: /node_modules/,
-            },
-            {
-                type: 'asset',
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            },
+            }
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json'],
+        extensions: ['.js'],
     },
     plugins: [new CleanWebpackPlugin()],
 };
