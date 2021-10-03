@@ -3,6 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    <style>
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+
     <script type="text/javascript">
         web2d = {
             peer: {}
@@ -31,7 +38,7 @@
             this._listener = function logger(event) {
                 var oldColor = element.getAttribute('fillColor');
                 element.setFill("yellow");
-          
+
                 alert("Event on:" + element.getType() + ", Type:" + type);
                 element.setFill(oldColor);
             };
@@ -131,14 +138,9 @@
 </head>
 
 <body onload="initialize();">
-
-    <script type="text/javascript">
-    //    Logger.setEnabled(true);
-    </script>
-
     <h1>Elements Event Handling</h1>
 
-    <table border="1">
+    <table>
         <colgroup style="width:80%;">
             <col style="width:30%" />
             <col style="width:60%" />

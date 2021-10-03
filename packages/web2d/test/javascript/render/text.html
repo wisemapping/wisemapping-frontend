@@ -1,7 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
+    <style>
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+    
     <script type="text/javascript">
         web2d = {
             peer: {}
@@ -72,34 +80,35 @@
 
 <body onload="initialize();">
 
-<h1>Text Render Tests </h1>
+    <h1>Text Render Tests </h1>
 
-<table border="1">
-    <colgroup style="width:80%;">
-        <col style="width:30%"/>
-        <col style="width:60%"/>
-    </colgroup>
-    <tr>
-        <td>
-            Simple text
-        </td>
-        <td>
-            <div id="text0"></div>
-            <div id="text1"></div>
-            <div id="text2"></div>
-            <div id="text3"></div>
-            <div id="text4"></div>
-            <div id="text5"></div>
+    <table>
+        <colgroup style="width:80%;">
+            <col style="width:30%" />
+            <col style="width:60%" />
+        </colgroup>
+        <tr>
+            <td>
+                Simple text
+            </td>
+            <td>
+                <div id="text0"></div>
+                <div id="text1"></div>
+                <div id="text2"></div>
+                <div id="text3"></div>
+                <div id="text4"></div>
+                <div id="text5"></div>
 
-        </td>
+            </td>
 
-    </tr>
-    <!--**************************************************************************-->
+        </tr>
+        <!--**************************************************************************-->
 
-</table>
-<span>Text to Inspect: </span><input type="text" id="iesimo">
-<input type="button" value="Inspect"
-       onclick="alert(document.getElementById('textoHTML'+document.id('iesimo').value).offsetWidth);">
-<input type="button" value="Zoom In" onclick="zoomIn()">
+    </table>
+    <span>Text to Inspect: </span><input type="text" id="iesimo">
+    <input type="button" value="Inspect"
+        onclick="alert(document.getElementById('textoHTML'+document.id('iesimo').value).offsetWidth);">
+    <input type="button" value="Zoom In" onclick="zoomIn()">
 </body>
+
 </html>

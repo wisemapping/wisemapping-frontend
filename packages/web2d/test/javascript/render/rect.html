@@ -1,8 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
 
+<head>
+    <style>
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
     <script type="text/javascript">
         web2d = {
             peer: {}
@@ -68,35 +74,36 @@
 <body onload="initialize();">
 
 
-<h1>Rect Render Tests </h1>
+    <h1>Rect Render Tests </h1>
 
-<table border="1">
-    <colgroup style="width:80%;">
-        <col style="width:10%"/>
-        <col style="width:90%"/>
-    </colgroup>
-    <tr>
-        <td>
-            Straight Lines.
-        </td>
-        <td>
-            <div id="rectExample"></div>
-        </td>
+    <table>
+        <colgroup style="width:80%;">
+            <col style="width:10%" />
+            <col style="width:90%" />
+        </colgroup>
+        <tr>
+            <td>
+                Straight Lines.
+            </td>
+            <td>
+                <div id="rectExample"></div>
+            </td>
 
-    </tr>
+        </tr>
 
-    <!-- ********************************************************** -->
-    <tr>
-        <td>
-            Straight Lines.
-        </td>
-        <td>
-            <div id="roundRect" style="float:left;margin:10px"></div>
-        </td>
+        <!-- ********************************************************** -->
+        <tr>
+            <td>
+                Straight Lines.
+            </td>
+            <td>
+                <div id="roundRect" style="float:left;margin:10px"></div>
+            </td>
 
-    </tr>
+        </tr>
 
 
-</table>
+    </table>
 </body>
+
 </html>

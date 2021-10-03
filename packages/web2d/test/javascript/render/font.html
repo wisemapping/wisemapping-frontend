@@ -1,7 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
+    <style>
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
     <script type="text/javascript">
         web2d = {
             peer: {}
@@ -16,13 +23,13 @@
     </script>
 
     <script type="text/javascript">
-        function multiline(text, family, elemId) { 
+        function multiline(text, family, elemId) {
             var overflowWorkspace = new web2d.Workspace();
             overflowWorkspace.setSize('200px', '240px');
             overflowWorkspace.setCoordSize('200', '240');
             overflowWorkspace.setCoordOrigin(0, 0);
 
-            [6,8,10,15].forEach(function(size, i) {
+            [6, 8, 10, 15].forEach(function (size, i) {
                 var wText = new web2d.Text();
                 overflowWorkspace.append(wText);
 
@@ -32,7 +39,7 @@
                 wText.setColor('red');
             });
 
-            overflowWorkspace.addItAsChildTo($("#"+elemId));
+            overflowWorkspace.addItAsChildTo($("#" + elemId));
         }
 
         function alignments(text, family, elemId) {
@@ -41,7 +48,7 @@
             overflowWorkspace.setCoordSize('260', '240');
             overflowWorkspace.setCoordOrigin(0, 0);
 
-            ['center','left','right'].forEach(function(align, i) {
+            ['center', 'left', 'right'].forEach(function (align, i) {
                 var wText = new web2d.Text();
                 overflowWorkspace.append(wText);
 
@@ -52,18 +59,18 @@
                 wText.setTextAlignment(align);
             });
 
-            overflowWorkspace.addItAsChildTo($("#"+elemId));
+            overflowWorkspace.addItAsChildTo($("#" + elemId));
         }
 
         function initialize() {
             web2d.Toolkit.init();
             // Multine tests ...
-            ['Arial','Tahoma','Verdana','Times'].forEach(function(family, i) {
+            ['Arial', 'Tahoma', 'Verdana', 'Times'].forEach(function (family, i) {
                 multiline('This multine text.\nLine 1 :)\nLine2', family, 'multi' + i);
             });
 
             // Multine tests and alingments .. ...
-            ['Arial','Tahoma','Verdana','Times'].forEach(function(family, i) {
+            ['Arial', 'Tahoma', 'Verdana', 'Times'].forEach(function (family, i) {
                 alignments('This multine text.\nThis is the long line just because :)\nShort line', family, 'amulti' + i);
             })
         }
@@ -72,59 +79,60 @@
 
 <body onload="initialize();">
 
-<h1>Web2d Fonts Tests</h1>
+    <h1>Web2d Fonts Tests</h1>
 
-<table border="1">
-    <colgroup>
-        <col style="width:30%"/>
-        <col style="width:60%"/>
-    </colgroup>
-    <thead>
-    <tr>
-        <td></td>
-        <td>Arial</td>
-        <td>Tahoma</td>
-        <td>Verdana</td>
-        <td>Times</td>
-    </tr>
-    </thead>
-    <tr>
-        <td>
-            Multiline Text
-        </td>
-        <td>
-            <div id="multi0"></div>
-        </td>
-        <td>
-            <div id="multi1"></div>
-        </td>
-        <td>
-            <div id="multi2"></div>
-        </td>
-        <td>
-            <div id="multi3"></div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Multiline Aligment
-        </td>
-        <td>
-            <div id="amulti0"></div>
-        </td>
-        <td>
-            <div id="amulti1"></div>
-        </td>
-        <td>
-            <div id="amulti2"></div>
-        </td>
-        <td>
-            <div id="amulti3"></div>
-        </td>
-    </tr>
-    <!--**************************************************************************-->
+    <table>
+        <colgroup>
+            <col style="width:30%" />
+            <col style="width:60%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <td></td>
+                <td>Arial</td>
+                <td>Tahoma</td>
+                <td>Verdana</td>
+                <td>Times</td>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                Multiline Text
+            </td>
+            <td>
+                <div id="multi0"></div>
+            </td>
+            <td>
+                <div id="multi1"></div>
+            </td>
+            <td>
+                <div id="multi2"></div>
+            </td>
+            <td>
+                <div id="multi3"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Multiline Aligment
+            </td>
+            <td>
+                <div id="amulti0"></div>
+            </td>
+            <td>
+                <div id="amulti1"></div>
+            </td>
+            <td>
+                <div id="amulti2"></div>
+            </td>
+            <td>
+                <div id="amulti3"></div>
+            </td>
+        </tr>
+        <!--**************************************************************************-->
 
-</table>
-<input type="button" value="Zoom In" onclick="zoomIn()">
+    </table>
+    <input type="button" value="Zoom In" onclick="zoomIn()">
 </body>
+
 </html>

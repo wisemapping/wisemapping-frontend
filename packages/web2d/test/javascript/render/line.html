@@ -1,7 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
+    <style>
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
     <script type="text/javascript">
         web2d = {
             peer: {}
@@ -18,7 +25,7 @@
     <script type="text/javascript">
         function initialize() {
             web2d.Toolkit.init();
-            var workspaceAttributes = { width:'700px',height:'100px',coordSize:'350 50',fillColor:'#ffffcc'};
+            var workspaceAttributes = { width: '700px', height: '100px', coordSize: '350 50', fillColor: '#ffffcc' };
             var strokeWidthWorkspace = new web2d.Workspace(workspaceAttributes);
 
             var rect = new web2d.Rect();
@@ -51,7 +58,7 @@
             strokeOpacityWorkspace.addItAsChildTo($('#strokeOpacitySample'));
 
             var strokeStyleWorkspace = new web2d.Workspace(workspaceAttributes);
-            var styles = ['solid','dot','dash','dashdot','longdash'];
+            var styles = ['solid', 'dot', 'dash', 'dashdot', 'longdash'];
             for (var i = 0; i < styles.length; i++) {
                 var line = new web2d.Line();
                 line.setFrom(25 + (i * 30), 5);
@@ -64,7 +71,7 @@
             strokeStyleWorkspace.addItAsChildTo($('#strokeStyleSample'));
 
             var strokeArrowWorkspace = new web2d.Workspace(workspaceAttributes);
-            var styles = ['none ','block ','classic','diamond ','oval','open','chevron','doublechevron'];
+            var styles = ['none ', 'block ', 'classic', 'diamond ', 'oval', 'open', 'chevron', 'doublechevron'];
             for (var i = 0; i < styles.length; i++) {
                 var line = new web2d.Line();
                 line.setFrom(25 + (i * 30), 5);
@@ -81,53 +88,54 @@
 
 <body onload="initialize();">
 
-<h1>Lines Render Tests </h1>
+    <h1>Lines Render Tests </h1>
 
-<table border="1">
-    <colgroup style="width:80%;">
-        <col style="width:30%"/>
-        <col style="width:60%"/>
-    </colgroup>
-    <tr>
-        <td>
-            Lines.
-        </td>
-        <td>
-            <div id="strokeWidthSample"/>
-        </td>
+    <table>
+        <colgroup style="width:80%;">
+            <col style="width:30%" />
+            <col style="width:60%" />
+        </colgroup>
+        <tr>
+            <td>
+                Lines.
+            </td>
+            <td>
+                <div id="strokeWidthSample" />
+            </td>
 
-    </tr>
+        </tr>
 
-    <tr>
-        <td>
-            Lines Opacity.
-        </td>
-        <td>
-            <div id="strokeOpacitySample"/>
-        </td>
+        <tr>
+            <td>
+                Lines Opacity.
+            </td>
+            <td>
+                <div id="strokeOpacitySample" />
+            </td>
 
-    </tr>
+        </tr>
 
-    <tr>
-        <td>
-            Line Styles.
-        </td>
-        <td>
-            <div id="strokeStyleSample"/>
-        </td>
+        <tr>
+            <td>
+                Line Styles.
+            </td>
+            <td>
+                <div id="strokeStyleSample" />
+            </td>
 
-    </tr>
+        </tr>
 
-    <tr>
-        <td>
-            Line Arrows.
-        </td>
-        <td>
-            <div id="strokeArrowSample"/>
-        </td>
+        <tr>
+            <td>
+                Line Arrows.
+            </td>
+            <td>
+                <div id="strokeArrowSample" />
+            </td>
 
-    </tr>
+        </tr>
 
-</table>
+    </table>
 </body>
+
 </html>

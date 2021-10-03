@@ -2,6 +2,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <style>
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
     <script type="text/javascript">
         web2d = {
             peer: {}
@@ -78,16 +84,16 @@
             workspace.append(nodeGroup);
 
             // Add behaviour ...
-            inerRect.addEvent("mouseover", function() {
+            inerRect.addEvent("mouseover", function () {
                 outerRect.setVisibility(true);
             });
-            inerRect.addEvent("mouseout", function() {
+            inerRect.addEvent("mouseout", function () {
                 if (!nodeGroup._drag) {
                     outerRect.setVisibility(false);
                 }
             });
 
-            nodeGroup.addEvent("mousedown", function(e) {
+            nodeGroup.addEvent("mousedown", function (e) {
                 var shadowGroup = new web2d.Group();
                 shadowGroup.setSize(200, 60);
                 shadowGroup.setCoordSize(200, 60);
@@ -107,7 +113,7 @@
                 this._shadowGroup = shadowGroup;
                 if (!this._moveFunction) {
                     nodeGroup._drag = true;
-                    workspace._moveFunction = function(event) {
+                    workspace._moveFunction = function (event) {
                         // Esto mas o menos funciona por que el size del workspace es 1 a uno con
                         // el del la pantalla.
                         var posx = 0;
@@ -118,16 +124,16 @@
                         }
                         else if (event.clientX || event.clientY) {
                             posx = event.clientX + document.body.scrollLeft
-                                    + document.documentElement.scrollLeft;
+                                + document.documentElement.scrollLeft;
                             posy = event.clientY + document.body.scrollTop
-                                    + document.documentElement.scrollTop;
+                                + document.documentElement.scrollTop;
                         }
 
                         shadowGroup.setPosition(posx - 50, posy - 150);
                     };
                 }
                 workspace.addEvent("mousemove", workspace._moveFunction);
-                var mouseUp = function(e) {
+                var mouseUp = function (e) {
 
                     workspace.removeChild(shadowGroup);
 
@@ -149,20 +155,21 @@
 
 <body onload="initialize();">
 
-<h1>Chart prototype Tests </h1>
+    <h1>Chart prototype Tests </h1>
 
-<input type="button" value="Create Shape" name="Create Shape" onclick="createShape();"/>
-<input type="button" value="Zoom In" name="Create Shape" onclick="zoomIn();"/>
-<input type="button" value="Zoom Out" name="Create Shape" onclick="zoomOut();"/>
+    <input type="button" value="Create Shape" name="Create Shape" onclick="createShape();" />
+    <input type="button" value="Zoom In" name="Create Shape" onclick="zoomIn();" />
+    <input type="button" value="Zoom Out" name="Create Shape" onclick="zoomOut();" />
 
 
-<div id="divWorkspace" style="overflow:scroll;width:1020px;height:620px;position:relative;">
-</div>
+    <div id="divWorkspace" style="overflow:scroll;width:1020px;height:620px;position:relative;">
+    </div>
 
-Notas:
-<li>El evento de mousemove se debe agregar al workspace.
-<li>Cuando se esta drageando un elemento se deberia deshabilitar los eventos del resto de los elementos.
-<li>Definir comportamiento del area.
+    Notes:
+    <li>El evento de mousemove se debe agregar al workspace.
+    <li>Cuando se esta drageando un elemento se deberia deshabilitar los eventos del resto de los elementos.
+    <li>Definir comportamiento del area.
 
 </body>
+
 </html>
