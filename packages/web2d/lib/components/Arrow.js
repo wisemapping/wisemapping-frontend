@@ -20,44 +20,44 @@ const Element = require('./Element').default;
 const Toolkit = require('./Toolkit').default;
 
 const Arrow = new Class({
-  Extends: Element,
-  initialize(attributes) {
-    const peer = Toolkit.createArrow();
-    const defaultAttributes = {
-      strokeColor: 'black',
-      strokeWidth: 1,
-      strokeStyle: 'solid',
-      strokeOpacity: 1,
-    };
-    for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
-    }
-    this.parent(peer, defaultAttributes);
-  },
+    Extends: Element,
+    initialize: function (attributes) {
+        var peer = Toolkit.createArrow();
+        var defaultAttributes = {
+            strokeColor: 'black',
+            strokeWidth: 1,
+            strokeStyle: 'solid',
+            strokeOpacity: 1,
+        };
+        for (var key in attributes) {
+            defaultAttributes[key] = attributes[key];
+        }
+        this.parent(peer, defaultAttributes);
+    },
 
-  getType() {
-    return 'Arrow';
-  },
+    getType: function () {
+        return 'Arrow';
+    },
 
-  setFrom(x, y) {
-    this._peer.setFrom(x, y);
-  },
+    setFrom: function (x, y) {
+        this._peer.setFrom(x, y);
+    },
 
-  setControlPoint(point) {
-    this._peer.setControlPoint(point);
-  },
+    setControlPoint: function (point) {
+        this._peer.setControlPoint(point);
+    },
 
-  setStrokeColor(color) {
-    this._peer.setStrokeColor(color);
-  },
+    setStrokeColor: function (color) {
+        this._peer.setStrokeColor(color);
+    },
 
-  setStrokeWidth(width) {
-    this._peer.setStrokeWidth(width);
-  },
+    setStrokeWidth: function (width) {
+        this._peer.setStrokeWidth(width);
+    },
 
-  setDashed(isDashed, length, spacing) {
-    this._peer.setDashed(isDashed, length, spacing);
-  },
+    setDashed: function (isDashed, length, spacing) {
+        this._peer.setDashed(isDashed, length, spacing);
+    },
 });
 
-export default Arrow;
+export default Arrow

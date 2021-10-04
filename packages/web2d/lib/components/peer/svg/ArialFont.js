@@ -15,22 +15,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Font = require('./Font').default;
+const Font = require('./Font').default
 
 const ArialFont = new Class({
-  Extends: Font,
-  initialize() {
-    this.parent();
-    this._fontFamily = 'Arial';
-  },
+    Extends: Font,
+    initialize :function() {
+        this.parent();
+        this._fontFamily = "Arial";
+    },
 
-  getFontFamily() {
-    return this._fontFamily;
-  },
+    getFontFamily : function () {
+        return this._fontFamily;
+    },
 
-  getFont() {
-    return Font.ARIAL;
-  },
+    getFont : function () {
+        return Font.ARIAL;
+    }
 });
 
-export default ArialFont;
+export default ArialFont

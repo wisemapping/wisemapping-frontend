@@ -40,5 +40,15 @@
     },
     "homepage": "http://localhost:8080/react",
     "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
-
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "yarn lint && yarn test"
+        }
+    },
+    "lint-staged": {
+        "**/*.{ts,tsx}": [
+            "prettier --write"
+        ]
+    }
 }

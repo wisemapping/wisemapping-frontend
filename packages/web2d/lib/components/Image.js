@@ -19,27 +19,27 @@ const Element = require('./Element').default;
 const Toolkit = require('./Toolkit').default;
 
 const Image = new Class({
-  Extends: Element,
-  initialize(attributes) {
-    const peer = Toolkit.createImage();
-    this.parent(peer, attributes);
-  },
+    Extends: Element,
+    initialize : function(attributes) {
+        var peer = Toolkit.createImage();
+        this.parent(peer, attributes);
+    },
 
-  getType() {
-    return 'Image';
-  },
+    getType : function() {
+        return "Image";
+    },
 
-  setHref(href) {
-    this._peer.setHref(href);
-  },
+    setHref : function(href) {
+        this._peer.setHref(href);
+    },
 
-  getHref() {
-    return this._peer.getHref();
-  },
+    getHref : function() {
+        return this._peer.getHref();
+    },
 
-  getSize() {
-    return this._peer.getSize();
-  },
+    getSize : function() {
+        return this._peer.getSize();
+    }
 });
 
 export default Image;

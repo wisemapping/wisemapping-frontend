@@ -19,176 +19,186 @@ const Shape = require('@wisemapping/mindplot/lib/components/util/Shape').default
 const ElementPeer = require('./ElementPeer').default;
 
 const CurvedLinePeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'path');
-    this.parent(svgElement);
-    this._style = { fill: '#495879' };
-    this._updateStyle();
-    this._customControlPoint_1 = false;
-    this._customControlPoint_2 = false;
-    this._control1 = new core.Point();
-    this._control2 = new core.Point();
-    this._lineStyle = true;
-  },
+    Extends: ElementPeer,
+    initialize :function() {
+        var svgElement = window.document.createElementNS(this.svgNamespace, 'path');
+        this.parent(svgElement);
+        this._style = {fill:'#495879'};
+        this._updateStyle();
+        this._customControlPoint_1 = false;
+        this._customControlPoint_2 = false;
+        this._control1 = new core.Point();
+        this._control2 = new core.Point();
+        this._lineStyle = true;
+    },
 
-  setSrcControlPoint(control) {
-    this._customControlPoint_1 = true;
-    const change = this._control1.x != control.x || this._control1.y != control.y;
-    if ($defined(control.x)) {
-      this._control1 = control;
-      this._control1.x = parseInt(this._control1.x);
-      this._control1.y = parseInt(this._control1.y);
+
+    setSrcControlPoint : function(control) {
+        this._customControlPoint_1 = true;
+        var change = this._control1.x != control.x || this._control1.y != control.y;
+        if ($defined(control.x)) {
+            this._control1 = control;
+            this._control1.x = parseInt(this._control1.x);
+            this._control1.y = parseInt(this._control1.y)
+        }
+        if (change)
+            this._updatePath();
+    },
+
+    setDestControlPoint : function(control) {
+        this._customControlPoint_2 = true;
+        var change = this._control2.x != control.x || this._control2.y != control.y;
+        if ($defined(control.x)) {
+            this._control2 = control;
+            this._control2.x = parseInt(this._control2.x);
+            this._control2.y = parseInt(this._control2.y)
+        }
+        if (change)
+            this._updatePath();
+    },
+
+    isSrcControlPointCustom : function() {
+        return this._customControlPoint_1;
+    },
+
+    isDestControlPointCustom : function() {
+        return this._customControlPoint_2;
+    },
+
+    setIsSrcControlPointCustom : function(isCustom) {
+        this._customControlPoint_1 = isCustom;
+    },
+
+    setIsDestControlPointCustom : function(isCustom) {
+        this._customControlPoint_2 = isCustom;
+    },
+
+
+    getControlPoints : function() {
+        return [this._control1, this._control2];
+    },
+
+    setFrom : function(x1, y1) {
+        var change = this._x1 != parseInt(x1) || this._y1 != parseInt(y1);
+        this._x1 = parseInt(x1);
+        this._y1 = parseInt(y1);
+        if (change)
+            this._updatePath();
+    },
+
+    setTo : function(x2, y2) {
+        var change = this._x2 != parseInt(x2) || this._y2 != parseInt(y2);
+        this._x2 = parseInt(x2);
+        this._y2 = parseInt(y2);
+        if (change)
+            this._updatePath();
+    },
+
+    getFrom : function() {
+        return new core.Point(this._x1, this._y1);
+    },
+
+    getTo : function() {
+        return new core.Point(this._x2, this._y2);
+    },
+
+    setStrokeWidth : function(width) {
+        this._style['stroke-width'] = width;
+        this._updateStyle();
+    },
+
+    setColor : function(color) {
+        this._style['stroke'] = color;
+        this._style['fill'] = color;
+        this._updateStyle();
+    },
+
+    updateLine : function(avoidControlPointFix) {
+        this._updatePath(avoidControlPointFix);
+    },
+
+    setLineStyle : function (style) {
+        this._lineStyle = style;
+        if (this._lineStyle) {
+            this._style['fill'] = this._fill;
+        } else {
+            this._fill = this._style['fill'];
+            this._style['fill'] = 'none';
+        }
+        this._updateStyle();
+        this.updateLine();
+    },
+
+    getLineStyle : function () {
+        return this._lineStyle;
+    },
+
+
+    setShowEndArrow : function(visible) {
+        this._showEndArrow = visible;
+        this.updateLine();
+    },
+
+    isShowEndArrow : function() {
+        return this._showEndArrow;
+    },
+
+    setShowStartArrow : function(visible) {
+        this._showStartArrow = visible;
+        this.updateLine();
+    },
+
+    isShowStartArrow : function() {
+        return this._showStartArrow;
+    },
+
+
+    _updatePath : function(avoidControlPointFix) {
+        if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
+            this._calculateAutoControlPoints(avoidControlPointFix);
+            var path = "M" + this._x1 + "," + this._y1
+                + " C" + (this._control1.x + this._x1) + "," + (this._control1.y + this._y1) + " "
+                + (this._control2.x + this._x2) + "," + (this._control2.y + this._y2) + " "
+                + this._x2 + "," + this._y2 +
+                (this._lineStyle ? " "
+                    + (this._control2.x + this._x2) + "," + (this._control2.y + this._y2 + 3) + " "
+                    + (this._control1.x + this._x1) + "," + (this._control1.y + this._y1 + 5) + " "
+                    + this._x1 + "," + (this._y1 + 7) + " Z"
+                    : ""
+                    );
+            this._native.setAttribute("d", path);
+        }
+    },
+
+    _updateStyle : function() {
+        var style = "";
+        for (var key in this._style) {
+            style += key + ":" + this._style[key] + " ";
+        }
+        this._native.setAttribute("style", style);
+    },
+
+    _calculateAutoControlPoints : function(avoidControlPointFix) {
+        //Both points available, calculate real points
+        var defaultpoints = Shape.calculateDefaultControlPoints(new core.Point(this._x1, this._y1), new core.Point(this._x2, this._y2));
+        if (!this._customControlPoint_1 && !($defined(avoidControlPointFix) && avoidControlPointFix == 0)) {
+            this._control1.x = defaultpoints[0].x;
+            this._control1.y = defaultpoints[0].y;
+        }
+        if (!this._customControlPoint_2 && !($defined(avoidControlPointFix) && avoidControlPointFix == 1)) {
+            this._control2.x = defaultpoints[1].x;
+            this._control2.y = defaultpoints[1].y;
+        }
+    },
+
+    setDashed : function(length, spacing) {
+        if ($defined(length) && $defined(spacing)) {
+            this._native.setAttribute("stroke-dasharray", length + "," + spacing);
+        } else {
+            this._native.setAttribute("stroke-dasharray", "");
+        }
+
     }
-    if (change) this._updatePath();
-  },
-
-  setDestControlPoint(control) {
-    this._customControlPoint_2 = true;
-    const change = this._control2.x != control.x || this._control2.y != control.y;
-    if ($defined(control.x)) {
-      this._control2 = control;
-      this._control2.x = parseInt(this._control2.x);
-      this._control2.y = parseInt(this._control2.y);
-    }
-    if (change) this._updatePath();
-  },
-
-  isSrcControlPointCustom() {
-    return this._customControlPoint_1;
-  },
-
-  isDestControlPointCustom() {
-    return this._customControlPoint_2;
-  },
-
-  setIsSrcControlPointCustom(isCustom) {
-    this._customControlPoint_1 = isCustom;
-  },
-
-  setIsDestControlPointCustom(isCustom) {
-    this._customControlPoint_2 = isCustom;
-  },
-
-  getControlPoints() {
-    return [this._control1, this._control2];
-  },
-
-  setFrom(x1, y1) {
-    const change = this._x1 != parseInt(x1) || this._y1 != parseInt(y1);
-    this._x1 = parseInt(x1);
-    this._y1 = parseInt(y1);
-    if (change) this._updatePath();
-  },
-
-  setTo(x2, y2) {
-    const change = this._x2 != parseInt(x2) || this._y2 != parseInt(y2);
-    this._x2 = parseInt(x2);
-    this._y2 = parseInt(y2);
-    if (change) this._updatePath();
-  },
-
-  getFrom() {
-    return new core.Point(this._x1, this._y1);
-  },
-
-  getTo() {
-    return new core.Point(this._x2, this._y2);
-  },
-
-  setStrokeWidth(width) {
-    this._style['stroke-width'] = width;
-    this._updateStyle();
-  },
-
-  setColor(color) {
-    this._style.stroke = color;
-    this._style.fill = color;
-    this._updateStyle();
-  },
-
-  updateLine(avoidControlPointFix) {
-    this._updatePath(avoidControlPointFix);
-  },
-
-  setLineStyle(style) {
-    this._lineStyle = style;
-    if (this._lineStyle) {
-      this._style.fill = this._fill;
-    } else {
-      this._fill = this._style.fill;
-      this._style.fill = 'none';
-    }
-    this._updateStyle();
-    this.updateLine();
-  },
-
-  getLineStyle() {
-    return this._lineStyle;
-  },
-
-  setShowEndArrow(visible) {
-    this._showEndArrow = visible;
-    this.updateLine();
-  },
-
-  isShowEndArrow() {
-    return this._showEndArrow;
-  },
-
-  setShowStartArrow(visible) {
-    this._showStartArrow = visible;
-    this.updateLine();
-  },
-
-  isShowStartArrow() {
-    return this._showStartArrow;
-  },
-
-  _updatePath(avoidControlPointFix) {
-    if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
-      this._calculateAutoControlPoints(avoidControlPointFix);
-      const path = `M${this._x1},${this._y1
-      } C${this._control1.x + this._x1},${this._control1.y + this._y1} ${
-        this._control2.x + this._x2},${this._control2.y + this._y2} ${
-        this._x2},${this._y2
-      }${this._lineStyle ? ` ${
-        this._control2.x + this._x2},${this._control2.y + this._y2 + 3} ${
-        this._control1.x + this._x1},${this._control1.y + this._y1 + 5} ${
-        this._x1},${this._y1 + 7} Z`
-        : ''}`;
-      this._native.setAttribute('d', path);
-    }
-  },
-
-  _updateStyle() {
-    let style = '';
-    for (const key in this._style) {
-      style += `${key}:${this._style[key]} `;
-    }
-    this._native.setAttribute('style', style);
-  },
-
-  _calculateAutoControlPoints(avoidControlPointFix) {
-    // Both points available, calculate real points
-    const defaultpoints = Shape.calculateDefaultControlPoints(new core.Point(this._x1, this._y1), new core.Point(this._x2, this._y2));
-    if (!this._customControlPoint_1 && !($defined(avoidControlPointFix) && avoidControlPointFix == 0)) {
-      this._control1.x = defaultpoints[0].x;
-      this._control1.y = defaultpoints[0].y;
-    }
-    if (!this._customControlPoint_2 && !($defined(avoidControlPointFix) && avoidControlPointFix == 1)) {
-      this._control2.x = defaultpoints[1].x;
-      this._control2.y = defaultpoints[1].y;
-    }
-  },
-
-  setDashed(length, spacing) {
-    if ($defined(length) && $defined(spacing)) {
-      this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
-    } else {
-      this._native.setAttribute('stroke-dasharray', '');
-    }
-  },
 });
 
 export default CurvedLinePeer;

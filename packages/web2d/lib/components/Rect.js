@@ -25,33 +25,31 @@ const Toolkit = require('./Toolkit').default;
  *     For rounded rectangles, radius of the ellipse used to round off the corners of the rectangle.
  */
 const Rect = new Class({
-  Extends: Element,
-  initialize(arc, attributes) {
-    if (arc && arc > 1) {
-      throw 'Arc must be 0<=arc<=1';
-    }
-    if (arguments.length <= 0) {
-      const rx = 0;
-      const ry = 0;
-    }
+    Extends: Element,
+    initialize : function(arc, attributes) {
+        if (arc && arc > 1) {
+            throw "Arc must be 0<=arc<=1";
+        }
+        if (arguments.length <= 0) {
+            var rx = 0;
+            var ry = 0;
+        }
 
-    const peer = Toolkit.createRect(arc);
-    const defaultAttributes = {
-      width: 40, height: 40, x: 5, y: 5, stroke: '1 solid black', fillColor: 'green',
-    };
-    for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+        var peer = Toolkit.createRect(arc);
+        var defaultAttributes = {width:40, height:40, x:5, y:5,stroke:'1 solid black',fillColor:'green'};
+        for (var key in attributes) {
+            defaultAttributes[key] = attributes[key];
+        }
+        this.parent(peer, defaultAttributes);
+    },
+
+    getType : function() {
+        return "Rect";
+    },
+
+    getSize : function() {
+        return this._peer.getSize();
     }
-    this.parent(peer, defaultAttributes);
-  },
-
-  getType() {
-    return 'Rect';
-  },
-
-  getSize() {
-    return this._peer.getSize();
-  },
 });
 
 export default Rect;

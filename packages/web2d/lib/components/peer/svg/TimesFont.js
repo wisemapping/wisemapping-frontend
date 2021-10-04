@@ -15,22 +15,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Font = require('./Font').default;
+const Font = require('./Font').default
 
 const TimesFont = new Class({
-  Extends: Font,
-  initialize() {
-    this.parent();
-    this._fontFamily = 'times';
-  },
+    Extends: Font,
+    initialize : function() {
+        this.parent();
+        this._fontFamily = "times";
+    },
 
-  getFontFamily() {
-    return this._fontFamily;
-  },
+    getFontFamily :function () {
+        return this._fontFamily;
+    },
 
-  getFont() {
-    return TIMES;
-  },
+    getFont : function () {
+        return TIMES;
+    }
 });
 
 export default TimesFont;

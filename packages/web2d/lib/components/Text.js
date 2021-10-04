@@ -19,81 +19,81 @@ const Element = require('./Element').default;
 const Toolkit = require('./Toolkit');
 
 const Text = new Class({
-  Extends: Element,
-  initialize(attributes) {
-    const peer = Toolkit.default.createText();
-    this.parent(peer, attributes);
-  },
+    Extends: Element,
+    initialize:function(attributes) {
+        var peer = Toolkit.default.createText();
+        this.parent(peer, attributes);
+    },
 
-  getType() {
-    return 'Text';
-  },
+    getType  : function() {
+        return "Text";
+    },
 
-  setText(text) {
-    this._peer.setText(text);
-  },
+    setText  : function(text) {
+        this._peer.setText(text);
+    },
 
-  setTextAlignment(align) {
-    $assert(align, 'align can not be null');
-    this._peer.setTextAlignment(align);
-  },
+    setTextAlignment : function(align) {
+        $assert(align, "align can not be null");
+        this._peer.setTextAlignment(align);
+    },
 
-  setTextSize(width, height) {
-    this._peer.setContentSize(width, height);
-  },
+    setTextSize  : function(width, height) {
+        this._peer.setContentSize(width, height);
+    },
 
-  getText() {
-    return this._peer.getText();
-  },
+    getText  : function() {
+        return this._peer.getText();
+    },
 
-  setFont(font, size, style, weight) {
-    this._peer.setFont(font, size, style, weight);
-  },
+    setFont  : function(font, size, style, weight) {
+        this._peer.setFont(font, size, style, weight);
+    },
 
-  setColor(color) {
-    this._peer.setColor(color);
-  },
+    setColor  : function(color) {
+        this._peer.setColor(color);
+    },
 
-  getColor() {
-    return this._peer.getColor();
-  },
+    getColor  : function() {
+        return this._peer.getColor();
+    },
 
-  setStyle(style) {
-    this._peer.setStyle(style);
-  },
+    setStyle  : function(style) {
+        this._peer.setStyle(style);
+    },
 
-  setWeight(weight) {
-    this._peer.setWeight(weight);
-  },
+    setWeight  : function(weight) {
+        this._peer.setWeight(weight);
+    },
 
-  setFontFamily(family) {
-    this._peer.setFontFamily(family);
-  },
+    setFontFamily  : function(family) {
+        this._peer.setFontFamily(family);
+    },
 
-  getFont() {
-    return this._peer.getFont();
-  },
+    getFont  : function() {
+        return this._peer.getFont();
+    },
 
-  setSize(size) {
-    this._peer.setSize(size);
-  },
+    setSize  : function(size) {
+        this._peer.setSize(size);
+    },
 
-  getHtmlFontSize() {
-    return this._peer.getHtmlFontSize();
-  },
+    getHtmlFontSize  : function() {
+        return this._peer.getHtmlFontSize();
+    },
 
-  getWidth() {
-    return this._peer.getWidth();
-  },
+    getWidth  : function() {
+        return this._peer.getWidth();
+    },
 
-  getHeight() {
-    return parseInt(this._peer.getHeight());
-  },
+    getHeight  : function() {
+        return parseInt(this._peer.getHeight());
+    },
 
-  getFontHeight() {
-    const lines = this._peer.getText().split('\n').length;
-    return Math.round(this.getHeight() / lines);
-  },
+    getFontHeight : function() {
+        var lines = this._peer.getText().split('\n').length;
+        return Math.round(this.getHeight() / lines);
+    }
 });
 
 export default Text;

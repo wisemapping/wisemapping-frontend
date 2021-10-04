@@ -12,15 +12,19 @@ module.exports = {
     module: {
         rules: [
             {
-                use: ["babel-loader", "eslint-loader"],
-                test: /.js$/,
+                use: 'babel-loader',
+                test: /.(js|jsx)$/,
                 exclude: /node_modules/,
-            }
+            },
+            {
+                type: 'asset',
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            },
         ],
     },
     target: 'web',
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: ['.js', '.jsx', '.json'],
     },
     plugins: [new CleanWebpackPlugin()],
 };

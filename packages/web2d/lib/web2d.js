@@ -1,6 +1,8 @@
+'use strict';
+
 function web2D() {
-  global.$ = require('jquery');
-  require('mootools');
+    global.$ = require('jquery');
+    require('mootools');
     const coreJs = require('@wismapping/core-js'); //eslint-disable-line
     global.core = coreJs(); //eslint-disable-line
 
@@ -35,38 +37,38 @@ function web2D() {
     const verdanaFont = require('./components/peer/svg/VerdanaFont').default; //eslint-disable-line
     const point = require('./components/Point').default; //eslint-disable-line
 
-  const web2d = {
-    ElementPeer: elementPeer,
-    Element: element,
-    Workspace: workspace,
-    WorkspacePeer: workspacePeer,
-    Toolkit: toolkit,
-    Elipse: elipse,
-    ElipsePeer: elipsePeer,
-    LinePeer: linePeer,
-    Line: line,
-    PolyLine: polyLine,
-    CurvedLine: curvedLine,
-    Arrow: arrow,
-    PolyLinePeer: polyLinePeer,
-    CurvedLinePeer: curvedLinePeer,
-    ArrowPeer: arrowPeer,
-    GroupPeer: groupPeer,
-    Group: group,
-    Rect: rect,
-    RectPeer: rectPeer,
-    Text: text,
-    TextPeer: textPeer,
-    TransformUtils: transformUtils,
-    EventUtils: eventUtils,
-    Font: font,
-    FontPeer: fontPeer,
-    TahomaFont: tahomaFont,
-    TimesFont: timesFont,
-    ArialFont: arialFont,
-    VerdanaFont: verdanaFont,
-    Point: point,
-  };
+    const web2d = {
+        ElementPeer: elementPeer,
+        Element: element,
+        Workspace: workspace,
+        WorkspacePeer: workspacePeer,
+        Toolkit: toolkit,
+        Elipse: elipse,
+        ElipsePeer: elipsePeer,
+        LinePeer: linePeer,
+        Line: line,
+        PolyLine: polyLine,
+        CurvedLine: curvedLine,
+        Arrow: arrow,
+        PolyLinePeer: polyLinePeer,
+        CurvedLinePeer: curvedLinePeer,
+        ArrowPeer: arrowPeer,
+        GroupPeer: groupPeer,
+        Group: group,
+        Rect: rect,
+        RectPeer: rectPeer,
+        Text: text,
+        TextPeer: textPeer,
+        TransformUtils: transformUtils,
+        EventUtils: eventUtils,
+        Font: font,
+        FontPeer: fontPeer,
+        TahomaFont: tahomaFont,
+        TimesFont: timesFont,
+        ArialFont: arialFont,
+        VerdanaFont: verdanaFont,
+        Point: point,
+    };
 
     return web2d; //eslint-disable-line
 }

@@ -16,58 +16,58 @@
  *   limitations under the License.
  */
 
-const Element = new Class({ // eslint-disable-line no-undef
-  initialize(peer, attributes) {
-    this._peer = peer;
-    if (peer == null) {
-      throw new Error('Element peer can not be null');
-    }
+const Element = new Class({ //eslint-disable-line no-undef
+    initialize: function (peer, attributes) {
+        this._peer = peer;
+        if (peer == null) {
+            throw new Error('Element peer can not be null');
+        }
 
-    if ($defined(attributes)) { // eslint-disable-line no-undef
-      this._initialize(attributes);
-    }
-  },
+        if ($defined(attributes)) { //eslint-disable-line no-undef
+            this._initialize(attributes);
+        }
+    },
 
-  _initialize(attributes) {
-    const batchExecute = {};
+    _initialize: function (attributes) {
+        var batchExecute = {};
 
-    // Collect arguments ...
-    for (var key in attributes) {
-      const funcName = this._attributeNameToFuncName(key, 'set');
-      let funcArgs = batchExecute[funcName];
-      if (!$defined(funcArgs)) { // eslint-disable-line no-undef
-        funcArgs = [];
-      }
+        // Collect arguments ...
+        for (var key in attributes) {
+            var funcName = this._attributeNameToFuncName(key, 'set');
+            var funcArgs = batchExecute[funcName];
+            if (!$defined(funcArgs)) { //eslint-disable-line no-undef
+                funcArgs = [];
+            }
 
-      const signature = Element._propertyNameToSignature[key];
-      const argPositions = signature[1];
-      if (argPositions != Element._SIGNATURE_MULTIPLE_ARGUMENTS) {
-        funcArgs[argPositions] = attributes[key];
-      } else {
-        funcArgs = attributes[key].split(' ');
-      }
-      batchExecute[funcName] = funcArgs;
-    }
+            var signature = Element._propertyNameToSignature[key];
+            var argPositions = signature[1];
+            if (argPositions != Element._SIGNATURE_MULTIPLE_ARGUMENTS) {
+                funcArgs[argPositions] = attributes[key];
+            } else {
+                funcArgs = attributes[key].split(' ');
+            }
+            batchExecute[funcName] = funcArgs;
+        }
 
-    // Call functions ...
-    for (var key in batchExecute) { // eslint-disable-line no-redeclare
-      const func = this[key];
-      if (!$defined(func)) { // eslint-disable-line no-undef
-        throw new Error(`Could not find function: ${key}`);
-      }
-      func.apply(this, batchExecute[key]);
-    }
-  },
+        // Call functions ...
+        for (var key in batchExecute) { //eslint-disable-line no-redeclare
+            var func = this[key];
+            if (!$defined(func)) { //eslint-disable-line no-undef
+                throw new Error('Could not find function: ' + key);
+            }
+            func.apply(this, batchExecute[key]);
+        }
+    },
 
-  setSize(width, height) {
-    this._peer.setSize(width, height);
-  },
+    setSize: function (width, height) {
+        this._peer.setSize(width, height);
+    },
 
-  setPosition(cx, cy) {
-    this._peer.setPosition(cx, cy);
-  },
+    setPosition: function (cx, cy) {
+        this._peer.setPosition(cx, cy);
+    },
 
-  /**
+    /**
      * Allows the registration of event listeners on the event target.
      * type
      *     A string representing the event type to listen for.
@@ -77,18 +77,18 @@ const Element = new Class({ // eslint-disable-line no-undef
      * The following events types are supported:
      *
      */
-  addEvent(type, listener) {
-    this._peer.addEvent(type, listener);
-  },
+    addEvent: function (type, listener) {
+        this._peer.addEvent(type, listener);
+    },
 
-  trigger(type, event) {
-    this._peer.trigger(type, event);
-  },
+    trigger: function (type, event) {
+        this._peer.trigger(type, event);
+    },
 
-  cloneEvents(from) {
-    this._peer.cloneEvents(from);
-  },
-  /**
+    cloneEvents: function (from) {
+        this._peer.cloneEvents(from);
+    },
+    /**
      *
      * Allows the removal of event listeners from the event target.
      *
@@ -99,221 +99,221 @@ const Element = new Class({ // eslint-disable-line no-undef
      *     The listener parameter takes an interface implemented by the user which contains the methods to be called when the event occurs.
      *     This interace will be invoked passing an event as argument and the 'this' referece in the function will be the element.
      */
-  removeEvent(type, listener) {
-    this._peer.removeEvent(type, listener);
-  },
+    removeEvent: function (type, listener) {
+        this._peer.removeEvent(type, listener);
+    },
 
-  /**
+    /**
      * /*
      * Returns element type name.
      */
-  getType() {
-    throw new Error(
-      'Not implemeneted yet. This method must be implemented by all the inherited objects.',
-    );
-  },
+    getType: function () {
+        throw new Error(
+            'Not implemeneted yet. This method must be implemented by all the inherited objects.'
+        );
+    },
 
-  /**
+    /**
      * Todo: Doc
      */
-  getFill() {
-    return this._peer.getFill();
-  },
+    getFill: function () {
+        return this._peer.getFill();
+    },
 
-  /**
+    /**
      * Used to define the fill element color and element opacity.
      * color: Fill color
      * opacity: Opacity of the fill. It must be less than 1.
      */
-  setFill(color, opacity) {
-    this._peer.setFill(color, opacity);
-  },
+    setFill: function (color, opacity) {
+        this._peer.setFill(color, opacity);
+    },
 
-  getPosition() {
-    return this._peer.getPosition();
-  },
+    getPosition: function () {
+        return this._peer.getPosition();
+    },
 
-  getNativePosition() {
-    return this._peer.getNativePosition();
-  },
+    getNativePosition: function () {
+        return this._peer.getNativePosition();
+    },
 
-  /*
+    /*
      *  Defines the element stroke properties.
      *  width: stroke width
      *  style: "solid|dot|dash|dashdot|longdash".
      *  color: stroke color
      *  opacity: stroke visibility
      */
-  setStroke(width, style, color, opacity) {
-    if (
-      style != null
-            && style != undefined
-            && style != 'dash'
-            && style != 'dot'
-            && style != 'solid'
-            && style != 'longdash'
-            && style != 'dashdot'
-    ) {
-      throw new Error(`Unsupported stroke style: '${style}'`);
-    }
-    this._peer.setStroke(width, style, color, opacity);
-  },
+    setStroke: function (width, style, color, opacity) {
+        if (
+            style != null &&
+            style != undefined &&
+            style != 'dash' &&
+            style != 'dot' &&
+            style != 'solid' &&
+            style != 'longdash' &&
+            style != 'dashdot'
+        ) {
+            throw new Error("Unsupported stroke style: '" + style + "'");
+        }
+        this._peer.setStroke(width, style, color, opacity);
+    },
 
-  _attributeNameToFuncName(attributeKey, prefix) {
-    const signature = Element._propertyNameToSignature[attributeKey];
-    if (!$defined(signature)) { // eslint-disable-line no-undef
-      throw `Unsupported attribute: ${attributeKey}`;
-    }
+    _attributeNameToFuncName: function (attributeKey, prefix) {
+        var signature = Element._propertyNameToSignature[attributeKey];
+        if (!$defined(signature)) { //eslint-disable-line no-undef
+            throw 'Unsupported attribute: ' + attributeKey;
+        }
 
-    const firstLetter = signature[0].charAt(0);
-    return prefix + firstLetter.toUpperCase() + signature[0].substring(1);
-  },
+        var firstLetter = signature[0].charAt(0);
+        return prefix + firstLetter.toUpperCase() + signature[0].substring(1);
+    },
 
-  /**
+    /**
      * All element properties can be setted using either a method invocation or attribute invocation.
      *  key: size, width, height, position, x, y, stroke, strokeWidth, strokeStyle, strokeColor, strokeOpacity,
      *       fill, fillColor, fillOpacity, coordSize, coordSizeWidth, coordSizeHeight, coordOrigin, coordOriginX, coordOrigiY
      */
-  setAttribute(key, value) {
-    const funcName = this._attributeNameToFuncName(key, 'set');
+    setAttribute: function (key, value) {
+        var funcName = this._attributeNameToFuncName(key, 'set');
 
-    const signature = Element._propertyNameToSignature[key];
-    if (signature == null) {
-      throw `Could not find the signature for:${key}`;
-    }
+        var signature = Element._propertyNameToSignature[key];
+        if (signature == null) {
+            throw 'Could not find the signature for:' + key;
+        }
 
-    // Parse arguments ..
-    const argPositions = signature[1];
-    let args = [];
-    if (argPositions !== this._SIGNATURE_MULTIPLE_ARGUMENTS) {
-      args[argPositions] = value;
-    } else if (typeof value === 'array') { // eslint-disable-line valid-typeof
-      args = value;
-    } else {
-      const strValue = String(value);
-      args = strValue.split(' ');
-    }
+        // Parse arguments ..
+        var argPositions = signature[1];
+        var args = [];
+        if (argPositions !== this._SIGNATURE_MULTIPLE_ARGUMENTS) {
+            args[argPositions] = value;
+        } else if (typeof value == 'array') { //eslint-disable-line valid-typeof
+            args = value;
+        } else {
+            var strValue = String(value);
+            args = strValue.split(' ');
+        }
 
-    // Look up method ...
-    const setter = this[funcName];
-    if (setter == null) {
-      throw `Could not find the function name:${funcName}`;
-    }
-    setter.apply(this, args);
-  },
+        // Look up method ...
+        var setter = this[funcName];
+        if (setter == null) {
+            throw 'Could not find the function name:' + funcName;
+        }
+        setter.apply(this, args);
+    },
 
-  getAttribute(key) {
-    const funcName = this._attributeNameToFuncName(key, 'get');
+    getAttribute: function (key) {
+        var funcName = this._attributeNameToFuncName(key, 'get');
 
-    const signature = Element._propertyNameToSignature[key];
-    if (signature == null) {
-      throw `Could not find the signature for:${key}`;
-    }
+        var signature = Element._propertyNameToSignature[key];
+        if (signature == null) {
+            throw 'Could not find the signature for:' + key;
+        }
 
-    const getter = this[funcName];
-    if (getter == null) {
-      throw `Could not find the function name:${funcName}`;
-    }
+        var getter = this[funcName];
+        if (getter == null) {
+            throw 'Could not find the function name:' + funcName;
+        }
 
-    const getterResult = getter.apply(this, []);
-    const attibuteName = signature[2];
-    if (!$defined(attibuteName)) { // eslint-disable-line no-undef
-      throw `Could not find attribute mapping for:${key}`;
-    }
+        var getterResult = getter.apply(this, []);
+        var attibuteName = signature[2];
+        if (!$defined(attibuteName)) { //eslint-disable-line no-undef
+            throw 'Could not find attribute mapping for:' + key;
+        }
 
-    const result = getterResult[attibuteName];
-    if (!$defined(result)) { // eslint-disable-line no-undef
-      throw `Could not find attribute with name:${attibuteName}`;
-    }
+        var result = getterResult[attibuteName];
+        if (!$defined(result)) { //eslint-disable-line no-undef
+            throw 'Could not find attribute with name:' + attibuteName;
+        }
 
-    return result;
-  },
+        return result;
+    },
 
-  /**
+    /**
      * Defines the element opacity.
      * Parameters:
      *   opacity: A value between 0 and 1.
      */
-  setOpacity(opacity) {
-    this._peer.setStroke(null, null, null, opacity);
-    this._peer.setFill(null, opacity);
-  },
+    setOpacity: function (opacity) {
+        this._peer.setStroke(null, null, null, opacity);
+        this._peer.setFill(null, opacity);
+    },
 
-  setVisibility(isVisible) {
-    this._peer.setVisibility(isVisible);
-  },
+    setVisibility: function (isVisible) {
+        this._peer.setVisibility(isVisible);
+    },
 
-  isVisible() {
-    return this._peer.isVisible();
-  },
+    isVisible: function () {
+        return this._peer.isVisible();
+    },
 
-  /**
+    /**
      * Move the element to the front
      */
-  moveToFront() {
-    this._peer.moveToFront();
-  },
+    moveToFront: function () {
+        this._peer.moveToFront();
+    },
 
-  /**
+    /**
      * Move the element to the back
      */
-  moveToBack() {
-    this._peer.moveToBack();
-  },
+    moveToBack: function () {
+        this._peer.moveToBack();
+    },
 
-  getStroke() {
-    return this._peer.getStroke();
-  },
+    getStroke: function () {
+        return this._peer.getStroke();
+    },
 
-  setCursor(type) {
-    this._peer.setCursor(type);
-  },
+    setCursor: function (type) {
+        this._peer.setCursor(type);
+    },
 
-  getParent() {
-    return this._peer.getParent();
-  },
+    getParent: function () {
+        return this._peer.getParent();
+    }, 
 });
 
 Element._SIGNATURE_MULTIPLE_ARGUMENTS = -1;
 Element._supportedEvents = [
-  'click',
-  'dblclick',
-  'mousemove',
-  'mouseout',
-  'mouseover',
-  'mousedown',
-  'mouseup',
+    'click',
+    'dblclick',
+    'mousemove',
+    'mouseout',
+    'mouseover',
+    'mousedown',
+    'mouseup',
 ];
 Element._propertyNameToSignature = {
-  // Format: [attribute name, argument position on setter, attribute name on getter]
-  size: ['size', -1],
-  width: ['size', 0, 'width'],
-  height: ['size', 1, 'height'],
+    // Format: [attribute name, argument position on setter, attribute name on getter]
+    size: ['size', -1],
+    width: ['size', 0, 'width'],
+    height: ['size', 1, 'height'],
 
-  position: ['position', -1],
-  x: ['position', 0, 'x'],
-  y: ['position', 1, 'y'],
+    position: ['position', -1],
+    x: ['position', 0, 'x'],
+    y: ['position', 1, 'y'],
 
-  stroke: ['stroke', -1],
-  strokeWidth: ['stroke', 0, 'width'],
-  strokeStyle: ['stroke', 1, 'style'],
-  strokeColor: ['stroke', 2, 'color'],
-  strokeOpacity: ['stroke', 3, 'opacity'],
+    stroke: ['stroke', -1],
+    strokeWidth: ['stroke', 0, 'width'],
+    strokeStyle: ['stroke', 1, 'style'],
+    strokeColor: ['stroke', 2, 'color'],
+    strokeOpacity: ['stroke', 3, 'opacity'],
 
-  fill: ['fill', -1],
-  fillColor: ['fill', 0, 'color'],
-  fillOpacity: ['fill', 1, 'opacity'],
+    fill: ['fill', -1],
+    fillColor: ['fill', 0, 'color'],
+    fillOpacity: ['fill', 1, 'opacity'],
 
-  coordSize: ['coordSize', -1],
-  coordSizeWidth: ['coordSize', 0, 'width'],
-  coordSizeHeight: ['coordSize', 1, 'height'],
+    coordSize: ['coordSize', -1],
+    coordSizeWidth: ['coordSize', 0, 'width'],
+    coordSizeHeight: ['coordSize', 1, 'height'],
 
-  coordOrigin: ['coordOrigin', -1],
-  coordOriginX: ['coordOrigin', 0, 'x'],
-  coordOriginY: ['coordOrigin', 1, 'y'],
+    coordOrigin: ['coordOrigin', -1],
+    coordOriginX: ['coordOrigin', 0, 'x'],
+    coordOriginY: ['coordOrigin', 1, 'y'],
 
-  visibility: ['visibility', 0],
-  opacity: ['opacity', 0],
+    visibility: ['visibility', 0],
+    opacity: ['opacity', 0],
 };
 
 export default Element;
