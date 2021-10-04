@@ -16,9 +16,8 @@
 *   limitations under the License.
 */
 
-var web2d = {};
-web2d.peer =
-{
-svg: {}
+const web2d = {};
+web2d.peer = {
+  svg: {},
 };
 web2d.peer.utils = {};

@@ -19,61 +19,61 @@ const Toolkit = require('./Toolkit');
 const TransformUtil = require('./peer/utils/TransformUtils').default;
 
 const Font = new Class({
-    initialize: function (fontFamily, textPeer) { 
-        var font = 'Toolkit.default.create' + fontFamily + 'Font();';
-        this._peer = eval(font);
-        this._textPeer = textPeer;
-    },
+  initialize(fontFamily, textPeer) {
+    const font = `Toolkit.default.create${fontFamily}Font();`;
+    this._peer = eval(font);
+    this._textPeer = textPeer;
+  },
 
-    getHtmlSize: function () {
-        var scale = TransformUtil.workoutScale(this._textPeer);
-        return this._peer.getHtmlSize(scale);
-    },
+  getHtmlSize() {
+    const scale = TransformUtil.workoutScale(this._textPeer);
+    return this._peer.getHtmlSize(scale);
+  },
 
-    getGraphSize: function () {
-        var scale = TransformUtil.workoutScale(this._textPeer);
-        return this._peer.getGraphSize(scale);
-    },
+  getGraphSize() {
+    const scale = TransformUtil.workoutScale(this._textPeer);
+    return this._peer.getGraphSize(scale);
+  },
 
-    getFontScale: function () {
-        return TransformUtil.workoutScale(this._textPeer).height;
-    },
+  getFontScale() {
+    return TransformUtil.workoutScale(this._textPeer).height;
+  },
 
-    getSize: function () {
-        return this._peer.getSize();
-    },
+  getSize() {
+    return this._peer.getSize();
+  },
 
-    getStyle: function () {
-        return this._peer.getStyle();
-    },
+  getStyle() {
+    return this._peer.getStyle();
+  },
 
-    getWeight: function () {
-        return this._peer.getWeight();
-    },
+  getWeight() {
+    return this._peer.getWeight();
+  },
 
-    getFontFamily: function () {
-        return this._peer.getFontFamily();
-    },
+  getFontFamily() {
+    return this._peer.getFontFamily();
+  },
 
-    setSize: function (size) {
-        return this._peer.setSize(size);
-    },
+  setSize(size) {
+    return this._peer.setSize(size);
+  },
 
-    setStyle: function (style) {
-        return this._peer.setStyle(style);
-    },
+  setStyle(style) {
+    return this._peer.setStyle(style);
+  },
 
-    setWeight: function (weight) {
-        return this._peer.setWeight(weight);
-    },
+  setWeight(weight) {
+    return this._peer.setWeight(weight);
+  },
 
-    getFont: function () {
-        return this._peer.getFont();
-    },
+  getFont() {
+    return this._peer.getFont();
+  },
 
-    getWidthMargin: function () {
-        return this._peer.getWidthMargin();
-    },
+  getWidthMargin() {
+    return this._peer.getWidthMargin();
+  },
 });
 
 Font.ARIAL = 'Arial';

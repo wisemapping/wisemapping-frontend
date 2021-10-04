@@ -1,0 +1,11 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "plugins": ["only-warn"], // Remove this once all error are fixed.
+    "rules": {}
+}

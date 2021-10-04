@@ -19,21 +19,20 @@
 const TransformUtil = {
 
     workoutScale: function(elementPeer) //eslint-disable-line
-    {
-        var current = elementPeer.getParent();
-        var width = 1;
-        var height = 1;
-        while (current)
-        {
-            var coordSize = current.getCoordSize();
-            var size = current.getSize();
+  {
+    let current = elementPeer.getParent();
+    let width = 1;
+    let height = 1;
+    while (current) {
+      const coordSize = current.getCoordSize();
+      const size = current.getSize();
 
-            width = width * (parseInt(size.width) / coordSize.width);
-            height = height * (parseInt(size.height) / coordSize.height);
-            current = current.getParent();
-        }
-        return {width:width,height:height};
+      width *= (parseInt(size.width) / coordSize.width);
+      height *= (parseInt(size.height) / coordSize.height);
+      current = current.getParent();
     }
+    return { width, height };
+  },
 };
 
 export default TransformUtil;

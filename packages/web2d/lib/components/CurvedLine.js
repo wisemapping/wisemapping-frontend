@@ -19,102 +19,103 @@ const Element = require('./Element').default;
 const Toolkit = require('./Toolkit').default;
 
 const CurvedLine = new Class({
-    Extends: Element,
-    initialize: function(attributes) {
-        var peer = Toolkit.createCurvedLine();
-        var defaultAttributes = {strokeColor:'blue',strokeWidth:1,strokeStyle:'solid',strokeOpacity:1};
-        for (var key in attributes) {
-            defaultAttributes[key] = attributes[key];
-        }
-        this.parent(peer, defaultAttributes);
-    },
-
-    getType : function() {
-        return "CurvedLine";
-    },
-
-    setFrom : function(x, y) {
-        $assert(!isNaN(x), "x must be defined");
-        $assert(!isNaN(y), "y must be defined");
-
-        this._peer.setFrom(x, y);
-    },
-
-    setTo : function(x, y) {
-        $assert(!isNaN(x), "x must be defined");
-        $assert(!isNaN(y), "y must be defined");
-
-        this._peer.setTo(x, y);
-    },
-
-    getFrom : function() {
-        return this._peer.getFrom();
-    },
-
-    getTo : function() {
-        return this._peer.getTo();
-    },
-
-    setShowEndArrow : function(visible) {
-        this._peer.setShowEndArrow(visible);
-    },
-
-    isShowEndArrow : function() {
-        return this._peer.isShowEndArrow();
-    },
-
-    setShowStartArrow : function(visible) {
-        this._peer.setShowStartArrow(visible);
-    },
-
-    isShowStartArrow : function() {
-        return this._peer.isShowStartArrow();
-    },
-
-    setSrcControlPoint : function(control) {
-        this._peer.setSrcControlPoint(control);
-    },
-
-    setDestControlPoint : function(control) {
-        this._peer.setDestControlPoint(control);
-    },
-
-    getControlPoints : function() {
-        return this._peer.getControlPoints();
-    },
-
-    isSrcControlPointCustom : function() {
-        return this._peer.isSrcControlPointCustom();
-    },
-
-    isDestControlPointCustom : function() {
-        return this._peer.isDestControlPointCustom();
-    },
-
-    setIsSrcControlPointCustom : function(isCustom) {
-        this._peer.setIsSrcControlPointCustom(isCustom);
-    },
-
-    setIsDestControlPointCustom : function(isCustom) {
-        this._peer.setIsDestControlPointCustom(isCustom);
-    },
-
-    updateLine : function(avoidControlPointFix) {
-        return this._peer.updateLine(avoidControlPointFix);
-    },
-
-    setStyle : function(style) {
-        this._peer.setLineStyle(style);
-
-    },
-
-    getStyle : function() {
-        return this._peer.getLineStyle();
-    },
-
-    setDashed : function(length, spacing) {
-        this._peer.setDashed(length, spacing);
+  Extends: Element,
+  initialize(attributes) {
+    const peer = Toolkit.createCurvedLine();
+    const defaultAttributes = {
+      strokeColor: 'blue', strokeWidth: 1, strokeStyle: 'solid', strokeOpacity: 1,
+    };
+    for (const key in attributes) {
+      defaultAttributes[key] = attributes[key];
     }
+    this.parent(peer, defaultAttributes);
+  },
+
+  getType() {
+    return 'CurvedLine';
+  },
+
+  setFrom(x, y) {
+    $assert(!isNaN(x), 'x must be defined');
+    $assert(!isNaN(y), 'y must be defined');
+
+    this._peer.setFrom(x, y);
+  },
+
+  setTo(x, y) {
+    $assert(!isNaN(x), 'x must be defined');
+    $assert(!isNaN(y), 'y must be defined');
+
+    this._peer.setTo(x, y);
+  },
+
+  getFrom() {
+    return this._peer.getFrom();
+  },
+
+  getTo() {
+    return this._peer.getTo();
+  },
+
+  setShowEndArrow(visible) {
+    this._peer.setShowEndArrow(visible);
+  },
+
+  isShowEndArrow() {
+    return this._peer.isShowEndArrow();
+  },
+
+  setShowStartArrow(visible) {
+    this._peer.setShowStartArrow(visible);
+  },
+
+  isShowStartArrow() {
+    return this._peer.isShowStartArrow();
+  },
+
+  setSrcControlPoint(control) {
+    this._peer.setSrcControlPoint(control);
+  },
+
+  setDestControlPoint(control) {
+    this._peer.setDestControlPoint(control);
+  },
+
+  getControlPoints() {
+    return this._peer.getControlPoints();
+  },
+
+  isSrcControlPointCustom() {
+    return this._peer.isSrcControlPointCustom();
+  },
+
+  isDestControlPointCustom() {
+    return this._peer.isDestControlPointCustom();
+  },
+
+  setIsSrcControlPointCustom(isCustom) {
+    this._peer.setIsSrcControlPointCustom(isCustom);
+  },
+
+  setIsDestControlPointCustom(isCustom) {
+    this._peer.setIsDestControlPointCustom(isCustom);
+  },
+
+  updateLine(avoidControlPointFix) {
+    return this._peer.updateLine(avoidControlPointFix);
+  },
+
+  setStyle(style) {
+    this._peer.setLineStyle(style);
+  },
+
+  getStyle() {
+    return this._peer.getLineStyle();
+  },
+
+  setDashed(length, spacing) {
+    this._peer.setDashed(length, spacing);
+  },
 });
 
 CurvedLine.SIMPLE_LINE = false;

@@ -15,22 +15,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Font = require('./Font').default
+const Font = require('./Font').default;
 
 const TahomaFont = new Class({
-    Extends: Font,
-    initialize : function() {
-        this.parent();
-        this._fontFamily = "tahoma";
-    },
+  Extends: Font,
+  initialize() {
+    this.parent();
+    this._fontFamily = 'tahoma';
+  },
 
-    getFontFamily : function () {
-        return this._fontFamily;
-    },
+  getFontFamily() {
+    return this._fontFamily;
+  },
 
-    getFont : function () {
-        return Font.TAHOMA;
-    }
+  getFont() {
+    return Font.TAHOMA;
+  },
 });
 
 export default TahomaFont;

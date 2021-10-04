@@ -18,20 +18,20 @@
 
 const EventUtils = {
     broadcastChangeEvent: function (elementPeer, type) { //eslint-disable-line
-        var listeners = elementPeer.getChangeEventListeners(type);
+    const listeners = elementPeer.getChangeEventListeners(type);
         if ($defined(listeners)) { //eslint-disable-line
-            for (var i = 0; i < listeners.length; i++) {
-                var listener = listeners[i];
-                listener.call(elementPeer, null);
-            }
-        }
+      for (let i = 0; i < listeners.length; i++) {
+        const listener = listeners[i];
+        listener.call(elementPeer, null);
+      }
+    }
 
-        var children = elementPeer.getChildren();
-        for (var j = 0; j < children.length; j++) {
-            var child = children[j];
-            EventUtils.broadcastChangeEvent(child, type);
-        }
-    },
+    const children = elementPeer.getChildren();
+    for (let j = 0; j < children.length; j++) {
+      const child = children[j];
+      EventUtils.broadcastChangeEvent(child, type);
+    }
+  },
 };
 
 export default EventUtils;
