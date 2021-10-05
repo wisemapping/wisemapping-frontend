@@ -19,96 +19,94 @@ const PersistenceManager = require('../PersistenceManager').default;
 
 const IMenu = new Class({
 
-    initialize:function (designer, containerId, mapId) {
-        $assert(designer, "designer can not be null");
-        $assert(containerId, "containerId can not be null");
+  initialize(designer, containerId, mapId) {
+    $assert(designer, 'designer can not be null');
+    $assert(containerId, 'containerId can not be null');
 
-        this._designer = designer;
-        this._toolbarElems = [];
-        this._containerId = containerId;
-        this._mapId = mapId;
-        this._mindmapUpdated = false;
-        var me = this;
-        // Register update events ...
-        this._designer.addEvent('modelUpdate', function () {
-            me.setRequireChange(true);
-        });
-    },
+    this._designer = designer;
+    this._toolbarElems = [];
+    this._containerId = containerId;
+    this._mapId = mapId;
+    this._mindmapUpdated = false;
+    const me = this;
+    // Register update events ...
+    this._designer.addEvent('modelUpdate', () => {
+      me.setRequireChange(true);
+    });
+  },
 
-    clear:function () {
-        _.each(this._toolbarElems, function (item) {
-            item.hide();
-        });
-    },
+  clear() {
+    _.each(this._toolbarElems, (item) => {
+      item.hide();
+    });
+  },
 
-    discardChanges:function (designer) {
-        // Avoid autosave before leaving the page ....
-        this.setRequireChange(false);
+  discardChanges(designer) {
+    // Avoid autosave before leaving the page ....
+    this.setRequireChange(false);
 
-        // Finally call discard function ...
-        var persistenceManager = PersistenceManager.getInstance();
-        var mindmap = designer.getMindmap();
-        persistenceManager.discardChanges(mindmap.getId());
+    // Finally call discard function ...
+    const persistenceManager = PersistenceManager.getInstance();
+    const mindmap = designer.getMindmap();
+    persistenceManager.discardChanges(mindmap.getId());
 
-        // Unlock map ...
-        this.unlockMap(designer);
+    // Unlock map ...
+    this.unlockMap(designer);
 
-        // Reload the page ...
-        window.location.reload();
+    // Reload the page ...
+    window.location.reload();
+  },
 
-    },
+  unlockMap(designer) {
+    const mindmap = designer.getMindmap();
+    const persistenceManager = PersistenceManager.getInstance();
+    persistenceManager.unlockMap(mindmap);
+  },
 
-    unlockMap:function (designer) {
-        var mindmap = designer.getMindmap();
-        var persistenceManager = PersistenceManager.getInstance();
-        persistenceManager.unlockMap(mindmap);
-    },
+  save(saveElem, designer, saveHistory, sync) {
+    // Load map content ...
+    const mindmap = designer.getMindmap();
+    const mindmapProp = designer.getMindmapProperties();
 
-    save:function (saveElem, designer, saveHistory, sync) {
-        // Load map content ...
-        var mindmap = designer.getMindmap();
-        var mindmapProp = designer.getMindmapProperties();
-
-        // Display save message ..
-        if (saveHistory) {
-            $notify($msg('SAVING'));
-            saveElem.css('cursor', 'wait');
-        }
-
-        // Call persistence manager for saving ...
-        var menu = this;
-        var persistenceManager = PersistenceManager.getInstance();
-        persistenceManager.save(mindmap, mindmapProp, saveHistory, {
-            onSuccess:function () {
-                if (saveHistory) {
-                    saveElem.css('cursor', 'pointer');
-                    $notify($msg('SAVE_COMPLETE'));
-                }
-                menu.setRequireChange(false);
-            },
-
-            onError:function (error) {
-                if (saveHistory) {
-                    saveElem.css('cursor', 'pointer');
-
-                    if (error.severity != "FATAL") {
-                        $notify(error.message);
-                    } else {
-                        $notifyModal(error.message);
-                    }
-                }
-            }
-        }, sync);
-
-    },
-
-    isSaveRequired:function () {
-        return this._mindmapUpdated;
-    },
-
-    setRequireChange:function (value) {
-        this._mindmapUpdated = value;
+    // Display save message ..
+    if (saveHistory) {
+      $notify($msg('SAVING'));
+      saveElem.css('cursor', 'wait');
     }
+
+    // Call persistence manager for saving ...
+    const menu = this;
+    const persistenceManager = PersistenceManager.getInstance();
+    persistenceManager.save(mindmap, mindmapProp, saveHistory, {
+      onSuccess() {
+        if (saveHistory) {
+          saveElem.css('cursor', 'pointer');
+          $notify($msg('SAVE_COMPLETE'));
+        }
+        menu.setRequireChange(false);
+      },
+
+      onError(error) {
+        if (saveHistory) {
+          saveElem.css('cursor', 'pointer');
+
+          if (error.severity != 'FATAL') {
+            $notify(error.message);
+          } else {
+            $notifyModal(error.message);
+          }
+        }
+      },
+    }, sync);
+  },
+
+  isSaveRequired() {
+    return this._mindmapUpdated;
+  },
+
+  setRequireChange(value) {
+    this._mindmapUpdated = value;
+  },
 });
 
-export default IMenu
+export default IMenu;

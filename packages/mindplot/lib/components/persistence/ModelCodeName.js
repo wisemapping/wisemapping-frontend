@@ -21,9 +21,9 @@
  * @enum {String}
  */
 const ModelCodeName = {
-    BETA : "beta",
-    PELA : "pela",
-    TANGO : "tango"
+  BETA: 'beta',
+  PELA: 'pela',
+  TANGO: 'tango',
 };
 
-export default ModelCodeName
+export default ModelCodeName;

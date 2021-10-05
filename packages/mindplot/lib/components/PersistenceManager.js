@@ -16,71 +16,72 @@
  *   limitations under the License.
  */
 const Core = require('@wismapping/core-js');
+
 const core = Core();
 const XMLSerializerFactory = require('./persistence/XMLSerializerFactory');
 
 const PersistenceManager = new Class({
-    Static: {
-        loadFromDom: function (mapId, mapDom) {
-            $assert(mapId, 'mapId can not be null');
-            $assert(mapDom, 'mapDom can not be null');
+  Static: {
+    loadFromDom(mapId, mapDom) {
+      $assert(mapId, 'mapId can not be null');
+      $assert(mapDom, 'mapDom can not be null');
 
-            var serializer = XMLSerializerFactory.getSerializerFromDocument(mapDom);
-            return serializer.loadFromDom(mapDom, mapId);
-        },
+      const serializer = XMLSerializerFactory.getSerializerFromDocument(mapDom);
+      return serializer.loadFromDom(mapDom, mapId);
     },
+  },
 
-    initialize: function () {},
+  initialize() {},
 
-    save: function (mindmap, editorProperties, saveHistory, events, sync) {
-        $assert(mindmap, 'mindmap can not be null');
-        $assert(editorProperties, 'editorProperties can not be null');
+  save(mindmap, editorProperties, saveHistory, events, sync) {
+    $assert(mindmap, 'mindmap can not be null');
+    $assert(editorProperties, 'editorProperties can not be null');
 
-        var mapId = mindmap.getId();
-        $assert(mapId, 'mapId can not be null');
+    const mapId = mindmap.getId();
+    $assert(mapId, 'mapId can not be null');
 
-        var serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
-        var domMap = serializer.toXML(mindmap);
-        var mapXml = core.Utils.innerXML(domMap);
+    const serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
+    const domMap = serializer.toXML(mindmap);
+    const mapXml = core.Utils.innerXML(domMap);
 
-        var pref = JSON.stringify(editorProperties);
-        try {
-            this.saveMapXml(mapId, mapXml, pref, saveHistory, events, sync);
-        } catch (e) {
-            console.log(e);
-            events.onError(this._buildError());
-        }
-    },
+    const pref = JSON.stringify(editorProperties);
+    try {
+      this.saveMapXml(mapId, mapXml, pref, saveHistory, events, sync);
+    } catch (e) {
+      console.log(e);
+      events.onError(this._buildError());
+    }
+  },
 
-    load: function (mapId) {
-        $assert(mapId, 'mapId can not be null');
-        var domDocument = this.loadMapDom(mapId);
-        return PersistenceManager.loadFromDom(mapId, domDocument);
-    },
+  load(mapId) {
+    $assert(mapId, 'mapId can not be null');
+    const domDocument = this.loadMapDom(mapId);
+    return PersistenceManager.loadFromDom(mapId, domDocument);
+  },
 
-    discardChanges: function (mapId) {
-        throw new Error('Method must be implemented');
-    },
+  discardChanges(mapId) {
+    throw new Error('Method must be implemented');
+  },
 
-    loadMapDom: function (mapId) {
-        throw new Error('Method must be implemented');
-    },
+  loadMapDom(mapId) {
+    throw new Error('Method must be implemented');
+  },
 
-    saveMapXml: function (mapId, mapXml, pref, saveHistory, events, sync) {
-        throw new Error('Method must be implemented');
-    },
+  saveMapXml(mapId, mapXml, pref, saveHistory, events, sync) {
+    throw new Error('Method must be implemented');
+  },
 
-    unlockMap: function (mindmap) {
-        throw new Error('Method must be implemented');
-    },
+  unlockMap(mindmap) {
+    throw new Error('Method must be implemented');
+  },
 });
 
 PersistenceManager.init = function (instance) {
-    PersistenceManager._instance = instance;
+  PersistenceManager._instance = instance;
 };
 
 PersistenceManager.getInstance = function () {
-    return PersistenceManager._instance;
+  return PersistenceManager._instance;
 };
 
 export default PersistenceManager;

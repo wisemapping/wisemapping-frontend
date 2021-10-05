@@ -15,30 +15,30 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const FeatureModel = require('./FeatureModel').default
+const FeatureModel = require('./FeatureModel').default;
 
 const IconModel = new Class(/** @lends IconModel */{
-    Extends: FeatureModel,
-    /**
+  Extends: FeatureModel,
+  /**
      * @constructs
      * @param attributes
      * @extends mindplot.model.FeatureModel
      */
-    initialize:function (attributes) {
-        this.parent(IconModel.FEATURE_TYPE);
-        this.setIconType(attributes.id);
-    },
+  initialize(attributes) {
+    this.parent(IconModel.FEATURE_TYPE);
+    this.setIconType(attributes.id);
+  },
 
-    /** @return the icon type id */
-    getIconType:function () {
-        return this.getAttribute('id');
-    },
+  /** @return the icon type id */
+  getIconType() {
+    return this.getAttribute('id');
+  },
 
-    /** @param {String} iconType the icon type id*/
-    setIconType:function (iconType) {
-        $assert(iconType, 'iconType id can not be null');
-        this.setAttribute('id', iconType);
-    }
+  /** @param {String} iconType the icon type id */
+  setIconType(iconType) {
+    $assert(iconType, 'iconType id can not be null');
+    this.setAttribute('id', iconType);
+  },
 });
 
 /**
@@ -46,6 +46,6 @@ const IconModel = new Class(/** @lends IconModel */{
  * @type {String}
  * @default
  */
-IconModel.FEATURE_TYPE = "icon";
+IconModel.FEATURE_TYPE = 'icon';
 
 export default IconModel;

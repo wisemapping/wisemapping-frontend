@@ -17,53 +17,53 @@
  */
 
 const ChildrenSorterStrategy = new Class(/** @lends ChildrenSorterStrategy */{
-    /** 
+  /**
      * @constructs
      */
-    initialize:function() {
+  initialize() {
 
-    },
+  },
 
-    /** @abstract */
-    computeChildrenIdByHeights: function(treeSet, node) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  computeChildrenIdByHeights(treeSet, node) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    computeOffsets:function(treeSet, node) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  computeOffsets(treeSet, node) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    insert: function(treeSet, parent, child, order) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  insert(treeSet, parent, child, order) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    detach:function(treeSet, node) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  detach(treeSet, node) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    predict:function(treeSet, parent, node, position, free) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  predict(treeSet, parent, node, position, free) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    verify:function(treeSet, node) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  verify(treeSet, node) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    getChildDirection: function(treeSet, node) {
-        throw "Method must be implemented";
-    },
+  /** @abstract */
+  getChildDirection(treeSet, node) {
+    throw 'Method must be implemented';
+  },
 
-    /** @abstract */
-    toString:function() {
-        throw "Method must be implemented: print name";
-    }
+  /** @abstract */
+  toString() {
+    throw 'Method must be implemented: print name';
+  },
 
 });
 
-export default ChildrenSorterStrategy
+export default ChildrenSorterStrategy;

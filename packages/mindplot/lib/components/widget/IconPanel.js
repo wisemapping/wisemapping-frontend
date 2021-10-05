@@ -15,57 +15,56 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const ToolbarPaneItem = require('./ToolbarPaneItem').default
+const ToolbarPaneItem = require('./ToolbarPaneItem').default;
 const ImageIcon = require('../ImageIcon').default;
 
 const IconPanel = new Class({
-    Extends:ToolbarPaneItem,
-    initialize:function (buttonId, model) {
-        this.parent(buttonId, model);
-    },
+  Extends: ToolbarPaneItem,
+  initialize(buttonId, model) {
+    this.parent(buttonId, model);
+  },
 
-    _updateSelectedItem:function () {
-        return this.getPanelElem();
+  _updateSelectedItem() {
+    return this.getPanelElem();
+  },
 
-    },
+  buildPanel() {
+    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>').css({ width: 245, height: 230 });
+    content.on('click', (event) => {
+      event.stopPropagation();
+    });
 
-    buildPanel:function () {
-        var content = $('<div class="toolbarPanel" id="IconsPanel"></div>').css({width: 245, height: 230});
-        content.on('click', function (event) {
-            event.stopPropagation()
+    let count = 0;
+    for (let i = 0; i < ImageIcon.prototype.ICON_FAMILIES.length; i += 1) {
+      const familyIcons = ImageIcon.prototype.ICON_FAMILIES[i].icons;
+      for (let j = 0; j < familyIcons.length; j += 1) {
+        // Separate icons by line ...
+        var familyContent;
+        if ((count % 12) == 0) {
+          familyContent = $('<div></div>');
+          content.append(familyContent);
+        }
+
+        const iconId = familyIcons[j];
+        const img = $('<img>')
+          .attr('id', iconId)
+          .attr('src', ImageIcon.prototype._getImageUrl(iconId))
+          .attr('class', 'panelIcon');
+
+        familyContent.append(img);
+
+        var panel = this;
+        var model = this.getModel();
+        img.on('click', function (event) {
+          model.setValue($(this).attr('id'));
+          panel.hide();
         });
 
-        var count = 0;
-        for (var i = 0; i < ImageIcon.prototype.ICON_FAMILIES.length; i = i + 1) {
-            var familyIcons = ImageIcon.prototype.ICON_FAMILIES[i].icons;
-            for (var j = 0; j < familyIcons.length; j = j + 1) {
-                // Separate icons by line ...
-                var familyContent;
-                if ((count % 12) == 0) {
-                    familyContent = $('<div></div>');
-                    content.append(familyContent);
-                }
-
-                var iconId = familyIcons[j];
-                var img = $('<img>')
-                    .attr('id', iconId)
-                    .attr('src', ImageIcon.prototype._getImageUrl(iconId))
-                    .attr('class', 'panelIcon');
-
-                familyContent.append(img);
-
-                var panel = this;
-                var model = this.getModel();
-                img.on('click', function (event) {
-                    model.setValue($(this).attr('id'));
-                    panel.hide();
-                });
-
-                count = count + 1;
-            }
-        }
-        return content;
+        count += 1;
+      }
     }
+    return content;
+  },
 });
 
 export default IconPanel;

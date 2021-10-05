@@ -16,11 +16,10 @@
  *   limitations under the License.
  */
 
-const EditorOptions =
-{
-    LayoutManager:"OriginalLayout",
-//    LayoutManager:"FreeMindLayout",
-    textEditor:"TextEditor"
+const EditorOptions = {
+  LayoutManager: 'OriginalLayout',
+  //    LayoutManager:"FreeMindLayout",
+  textEditor: 'TextEditor',
 //    textEditor:"RichTextEditor"
 };
 

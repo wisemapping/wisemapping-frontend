@@ -16,138 +16,135 @@
  *   limitations under the License.
  */
 const Core = require('@wismapping/core-js');
+
 const core = Core();
 
 const ScreenManager = new Class({
-    initialize: function (divElement) {
-        $assert(divElement, "can not be null");
-        this._divContainer = divElement;
-        this._padding = {x: 0, y: 0};
+  initialize(divElement) {
+    $assert(divElement, 'can not be null');
+    this._divContainer = divElement;
+    this._padding = { x: 0, y: 0 };
 
-        // Ignore default click event propagation. Prevent 'click' event on drag.
-        this._clickEvents = [];
-        this._divContainer.bind('click', function (event) {
-            event.stopPropagation()
-        });
+    // Ignore default click event propagation. Prevent 'click' event on drag.
+    this._clickEvents = [];
+    this._divContainer.bind('click', (event) => {
+      event.stopPropagation();
+    });
 
-        this._divContainer.bind('dblclick', function (event) {
-            event.stopPropagation();
-            event.preventDefault();
-        });
-    },
+    this._divContainer.bind('dblclick', (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+    });
+  },
 
-    setScale: function (scale) {
-        $assert(scale, 'Screen scale can not be null');
-        this._scale = scale;
-    },
+  setScale(scale) {
+    $assert(scale, 'Screen scale can not be null');
+    this._scale = scale;
+  },
 
-    addEvent: function (event, listener) {
-        if (event == 'click')
-            this._clickEvents.push(listener);
-        else
-            this._divContainer.bind(event, listener);
-    },
+  addEvent(event, listener) {
+    if (event == 'click') this._clickEvents.push(listener);
+    else this._divContainer.bind(event, listener);
+  },
 
-    removeEvent: function (event, listener) {
-        if (event == 'click') {
-            this._clickEvents.remove(listener);
-        }
-        else {
-            this._divContainer.unbind(event, listener);
-        }
-    },
-
-    fireEvent: function (type, event) {
-        if (type == 'click') {
-            _.each(this._clickEvents, function (listener) {
-                listener(type, event);
-            });
-        }
-        else {
-            this._divContainer.trigger(type, event);
-        }
-    },
-
-    _getElementPosition: function (elem) {
-        // Retrieve current element position.
-        var elementPosition = elem.getPosition();
-        var x = elementPosition.x;
-        var y = elementPosition.y;
-
-        // Add workspace offset.
-        x = x - this._padding.x;
-        y = y - this._padding.y;
-
-        // Scale coordinate in order to be relative to the workspace. That's coord/size;
-        x = x / this._scale;
-        y = y / this._scale;
-
-        // Remove decimal part..
-        return {x: x, y: y};
-    },
-
-    getWorkspaceIconPosition: function (e) {
-        // Retrieve current icon position.
-        var image = e.getImage();
-        var elementPosition = image.getPosition();
-        var imageSize = e.getSize();
-
-        //Add group offset
-        var iconGroup = e.getGroup();
-        var group = iconGroup.getNativeElement();
-        var coordOrigin = group.getCoordOrigin();
-        var groupSize = group.getSize();
-        var coordSize = group.getCoordSize();
-
-        var scale = {x: coordSize.width / parseInt(groupSize.width), y: coordSize.height / parseInt(groupSize.height)};
-
-        var x = (elementPosition.x - coordOrigin.x - (parseInt(imageSize.width) / 2)) / scale.x;
-        var y = (elementPosition.y - coordOrigin.y - (parseInt(imageSize.height) / 2)) / scale.y;
-
-        //Retrieve iconGroup Position
-        var groupPosition = iconGroup.getPosition();
-        x = x + groupPosition.x;
-        y = y + groupPosition.y;
-
-        //Retrieve topic Position
-        var topic = iconGroup.getTopic();
-        var topicPosition = this._getElementPosition(topic);
-        topicPosition.x = topicPosition.x - (parseInt(topic.getSize().width) / 2);
-
-        // Remove decimal part..
-        return {x: x + topicPosition.x, y: y + topicPosition.y};
-    },
-
-    getWorkspaceMousePosition: function (event) {
-        // Retrieve current mouse position.
-        var x = event.clientX;
-        var y = event.clientY;
-
-        //FIXME: paulo: why? Subtract div position.
-        /*var containerPosition = this.getContainer().position();
-         x = x - containerPosition.x;
-         y = y - containerPosition.y;*/
-
-        // Scale coordinate in order to be relative to the workspace. That's coordSize/size;
-        x = x * this._scale;
-        y = y * this._scale;
-
-        // Add workspace offset.
-        x = x + this._padding.x;
-        y = y + this._padding.y;
-
-        // Remove decimal part..
-        return new core.Point(x, y);
-    },
-
-    getContainer: function () {
-        return this._divContainer;
-    },
-
-    setOffset: function (x, y) {
-        this._padding.x = x;
-        this._padding.y = y;
+  removeEvent(event, listener) {
+    if (event == 'click') {
+      this._clickEvents.remove(listener);
+    } else {
+      this._divContainer.unbind(event, listener);
     }
+  },
+
+  fireEvent(type, event) {
+    if (type == 'click') {
+      _.each(this._clickEvents, (listener) => {
+        listener(type, event);
+      });
+    } else {
+      this._divContainer.trigger(type, event);
+    }
+  },
+
+  _getElementPosition(elem) {
+    // Retrieve current element position.
+    const elementPosition = elem.getPosition();
+    let { x } = elementPosition;
+    let { y } = elementPosition;
+
+    // Add workspace offset.
+    x -= this._padding.x;
+    y -= this._padding.y;
+
+    // Scale coordinate in order to be relative to the workspace. That's coord/size;
+    x /= this._scale;
+    y /= this._scale;
+
+    // Remove decimal part..
+    return { x, y };
+  },
+
+  getWorkspaceIconPosition(e) {
+    // Retrieve current icon position.
+    const image = e.getImage();
+    const elementPosition = image.getPosition();
+    const imageSize = e.getSize();
+
+    // Add group offset
+    const iconGroup = e.getGroup();
+    const group = iconGroup.getNativeElement();
+    const coordOrigin = group.getCoordOrigin();
+    const groupSize = group.getSize();
+    const coordSize = group.getCoordSize();
+
+    const scale = { x: coordSize.width / parseInt(groupSize.width), y: coordSize.height / parseInt(groupSize.height) };
+
+    let x = (elementPosition.x - coordOrigin.x - (parseInt(imageSize.width) / 2)) / scale.x;
+    let y = (elementPosition.y - coordOrigin.y - (parseInt(imageSize.height) / 2)) / scale.y;
+
+    // Retrieve iconGroup Position
+    const groupPosition = iconGroup.getPosition();
+    x += groupPosition.x;
+    y += groupPosition.y;
+
+    // Retrieve topic Position
+    const topic = iconGroup.getTopic();
+    const topicPosition = this._getElementPosition(topic);
+    topicPosition.x -= (parseInt(topic.getSize().width) / 2);
+
+    // Remove decimal part..
+    return { x: x + topicPosition.x, y: y + topicPosition.y };
+  },
+
+  getWorkspaceMousePosition(event) {
+    // Retrieve current mouse position.
+    let x = event.clientX;
+    let y = event.clientY;
+
+    // FIXME: paulo: why? Subtract div position.
+    /* var containerPosition = this.getContainer().position();
+         x = x - containerPosition.x;
+         y = y - containerPosition.y; */
+
+    // Scale coordinate in order to be relative to the workspace. That's coordSize/size;
+    x *= this._scale;
+    y *= this._scale;
+
+    // Add workspace offset.
+    x += this._padding.x;
+    y += this._padding.y;
+
+    // Remove decimal part..
+    return new core.Point(x, y);
+  },
+
+  getContainer() {
+    return this._divContainer;
+  },
+
+  setOffset(x, y) {
+    this._padding.x = x;
+    this._padding.y = y;
+  },
 });
 
 export default ScreenManager;

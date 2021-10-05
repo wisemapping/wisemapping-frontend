@@ -15,232 +15,232 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Core = require('@wismapping/core-js')
+const Core = require('@wismapping/core-js');
+
 const core = Core();
-const Mindmap = require('../model/Mindmap').default
+const Mindmap = require('../model/Mindmap').default;
 const INodeModel = require('../model/INodeModel').default;
 const { TopicShape } = require('../model/INodeModel');
-const TopicFeature = require('../TopicFeature').default
+const TopicFeature = require('../TopicFeature').default;
 const ConnectionLine = require('../ConnectionLine').default;
 
 /**
  * @class
  */
 const XMLSerializer_Pela = new Class(
-    /** @lends XMLSerializer_Pela */ {
-        /**
+  /** @lends XMLSerializer_Pela */ {
+    /**
          * @param mindmap
          * @throws will throw an error if mindmap is null or undefined
          * @return the created XML document (using the cross-browser implementation in core)
          */
-        toXML: function (mindmap) {
-            $assert(mindmap, 'Can not save a null mindmap');
+    toXML(mindmap) {
+      $assert(mindmap, 'Can not save a null mindmap');
 
-            var document = core.Utils.createDocument();
+      const document = core.Utils.createDocument();
 
-            // Store map attributes ...
-            var mapElem = document.createElement('map');
-            var name = mindmap.getId();
-            if ($defined(name)) {
-                mapElem.setAttribute('name', this.rmXmlInv(name));
-            }
-            var version = mindmap.getVersion();
-            if ($defined(version)) {
-                mapElem.setAttribute('version', version);
-            }
+      // Store map attributes ...
+      const mapElem = document.createElement('map');
+      const name = mindmap.getId();
+      if ($defined(name)) {
+        mapElem.setAttribute('name', this.rmXmlInv(name));
+      }
+      const version = mindmap.getVersion();
+      if ($defined(version)) {
+        mapElem.setAttribute('version', version);
+      }
 
-            document.appendChild(mapElem);
+      document.appendChild(mapElem);
 
-            // Create branches ...
-            var topics = mindmap.getBranches();
-            for (var i = 0; i < topics.length; i++) {
-                var topic = topics[i];
-                var topicDom = this._topicToXML(document, topic);
-                mapElem.appendChild(topicDom);
-            }
+      // Create branches ...
+      const topics = mindmap.getBranches();
+      for (let i = 0; i < topics.length; i++) {
+        const topic = topics[i];
+        const topicDom = this._topicToXML(document, topic);
+        mapElem.appendChild(topicDom);
+      }
 
-            // Create Relationships
-            var relationships = mindmap.getRelationships();
-            if (relationships.length > 0) {
-                for (var j = 0; j < relationships.length; j++) {
-                    var relationship = relationships[j];
-                    if (
-                        mindmap.findNodeById(relationship.getFromNode()) !== null &&
-                        mindmap.findNodeById(relationship.getToNode()) !== null
-                    ) {
-                        // Isolated relationships are not persisted ....
-                        var relationDom = this._relationshipToXML(document, relationship);
-                        mapElem.appendChild(relationDom);
-                    }
-                }
-            }
+      // Create Relationships
+      const relationships = mindmap.getRelationships();
+      if (relationships.length > 0) {
+        for (let j = 0; j < relationships.length; j++) {
+          const relationship = relationships[j];
+          if (
+            mindmap.findNodeById(relationship.getFromNode()) !== null
+                        && mindmap.findNodeById(relationship.getToNode()) !== null
+          ) {
+            // Isolated relationships are not persisted ....
+            const relationDom = this._relationshipToXML(document, relationship);
+            mapElem.appendChild(relationDom);
+          }
+        }
+      }
 
-            return document;
-        },
+      return document;
+    },
 
-        _topicToXML: function (document, topic) {
-            var parentTopic = document.createElement('topic');
+    _topicToXML(document, topic) {
+      const parentTopic = document.createElement('topic');
 
-            // Set topic attributes...
-            if (topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
-                parentTopic.setAttribute('central', 'true');
-            } else {
-                var pos = topic.getPosition();
-                parentTopic.setAttribute('position', pos.x + ',' + pos.y);
+      // Set topic attributes...
+      if (topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+        parentTopic.setAttribute('central', 'true');
+      } else {
+        const pos = topic.getPosition();
+        parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
 
-                var order = topic.getOrder();
-                if (typeof order === 'number' && isFinite(order))
-                    parentTopic.setAttribute('order', order);
-            }
+        const order = topic.getOrder();
+        if (typeof order === 'number' && isFinite(order)) parentTopic.setAttribute('order', order);
+      }
 
-            var text = topic.getText();
-            if ($defined(text)) {
-                this._noteTextToXML(document, parentTopic, text);
-            }
+      const text = topic.getText();
+      if ($defined(text)) {
+        this._noteTextToXML(document, parentTopic, text);
+      }
 
-            var shape = topic.getShapeType();
-            if ($defined(shape)) {
-                parentTopic.setAttribute('shape', shape);
+      const shape = topic.getShapeType();
+      if ($defined(shape)) {
+        parentTopic.setAttribute('shape', shape);
 
-                if (shape == TopicShape.IMAGE) {
-                    parentTopic.setAttribute(
-                        'image',
-                        topic.getImageSize().width +
-                            ',' +
-                            topic.getImageSize().height +
-                            ':' +
-                            topic.getImageUrl()
-                    );
-                }
-            }
+        if (shape == TopicShape.IMAGE) {
+          parentTopic.setAttribute(
+            'image',
+            `${topic.getImageSize().width
+            },${
+              topic.getImageSize().height
+            }:${
+              topic.getImageUrl()}`,
+          );
+        }
+      }
 
-            if (
-                topic.areChildrenShrunken() &&
-                topic.getType() != INodeModel.CENTRAL_TOPIC_TYPE
-            ) {
-                parentTopic.setAttribute('shrink', 'true');
-            }
+      if (
+        topic.areChildrenShrunken()
+                && topic.getType() != INodeModel.CENTRAL_TOPIC_TYPE
+      ) {
+        parentTopic.setAttribute('shrink', 'true');
+      }
 
-            // Font properties ...
-            var id = topic.getId();
-            parentTopic.setAttribute('id', id);
+      // Font properties ...
+      const id = topic.getId();
+      parentTopic.setAttribute('id', id);
 
-            var font = '';
+      let font = '';
 
-            var fontFamily = topic.getFontFamily();
-            font += (fontFamily ? fontFamily : '') + ';';
+      const fontFamily = topic.getFontFamily();
+      font += `${fontFamily || ''};`;
 
-            var fontSize = topic.getFontSize();
-            font += (fontSize ? fontSize : '') + ';';
+      const fontSize = topic.getFontSize();
+      font += `${fontSize || ''};`;
 
-            var fontColor = topic.getFontColor();
-            font += (fontColor ? fontColor : '') + ';';
+      const fontColor = topic.getFontColor();
+      font += `${fontColor || ''};`;
 
-            var fontWeight = topic.getFontWeight();
-            font += (fontWeight ? fontWeight : '') + ';';
+      const fontWeight = topic.getFontWeight();
+      font += `${fontWeight || ''};`;
 
-            var fontStyle = topic.getFontStyle();
-            font += (fontStyle ? fontStyle : '') + ';';
+      const fontStyle = topic.getFontStyle();
+      font += `${fontStyle || ''};`;
 
-            if (
-                $defined(fontFamily) ||
-                $defined(fontSize) ||
-                $defined(fontColor) ||
-                $defined(fontWeight) ||
-                $defined(fontStyle)
-            ) {
-                parentTopic.setAttribute('fontStyle', font);
-            }
+      if (
+        $defined(fontFamily)
+                || $defined(fontSize)
+                || $defined(fontColor)
+                || $defined(fontWeight)
+                || $defined(fontStyle)
+      ) {
+        parentTopic.setAttribute('fontStyle', font);
+      }
 
-            var bgColor = topic.getBackgroundColor();
-            if ($defined(bgColor)) {
-                parentTopic.setAttribute('bgColor', bgColor);
-            }
+      const bgColor = topic.getBackgroundColor();
+      if ($defined(bgColor)) {
+        parentTopic.setAttribute('bgColor', bgColor);
+      }
 
-            var brColor = topic.getBorderColor();
-            if ($defined(brColor)) {
-                parentTopic.setAttribute('brColor', brColor);
-            }
+      const brColor = topic.getBorderColor();
+      if ($defined(brColor)) {
+        parentTopic.setAttribute('brColor', brColor);
+      }
 
-            var metadata = topic.getMetadata();
-            if ($defined(metadata)) {
-                parentTopic.setAttribute('metadata', metadata);
-            }
+      const metadata = topic.getMetadata();
+      if ($defined(metadata)) {
+        parentTopic.setAttribute('metadata', metadata);
+      }
 
-            // Serialize features ...
-            var features = topic.getFeatures();
-            for (var i = 0; i < features.length; i++) {
-                var feature = features[i];
+      // Serialize features ...
+      const features = topic.getFeatures();
+      for (let i = 0; i < features.length; i++) {
+        const feature = features[i];
 
-                var featureType = feature.getType();
-                var featureDom = document.createElement(featureType);
-                var attributes = feature.getAttributes();
+        const featureType = feature.getType();
+        const featureDom = document.createElement(featureType);
+        const attributes = feature.getAttributes();
 
-                for (var key in attributes) {
-                    var value = attributes[key];
-                    if (key == 'text') {
-                        var cdata = document.createCDATASection(this.rmXmlInv(value));
-                        featureDom.appendChild(cdata);
-                    } else {
-                        featureDom.setAttribute(key, this.rmXmlInv(value));
-                    }
-                }
-                parentTopic.appendChild(featureDom);
-            }
+        for (const key in attributes) {
+          const value = attributes[key];
+          if (key == 'text') {
+            const cdata = document.createCDATASection(this.rmXmlInv(value));
+            featureDom.appendChild(cdata);
+          } else {
+            featureDom.setAttribute(key, this.rmXmlInv(value));
+          }
+        }
+        parentTopic.appendChild(featureDom);
+      }
 
-            //CHILDREN TOPICS
-            var childTopics = topic.getChildren();
-            for (var j = 0; j < childTopics.length; j++) {
-                var childTopic = childTopics[j];
-                var childDom = this._topicToXML(document, childTopic);
-                parentTopic.appendChild(childDom);
-            }
-            return parentTopic;
-        },
+      // CHILDREN TOPICS
+      const childTopics = topic.getChildren();
+      for (let j = 0; j < childTopics.length; j++) {
+        const childTopic = childTopics[j];
+        const childDom = this._topicToXML(document, childTopic);
+        parentTopic.appendChild(childDom);
+      }
+      return parentTopic;
+    },
 
-        _noteTextToXML: function (document, elem, text) {
-            if (text.indexOf('\n') == -1) {
-                elem.setAttribute('text', this.rmXmlInv(text));
-            } else {
-                var textDom = document.createElement('text');
-                var cdata = document.createCDATASection(this.rmXmlInv(text));
-                textDom.appendChild(cdata);
-                elem.appendChild(textDom);
-            }
-        },
+    _noteTextToXML(document, elem, text) {
+      if (text.indexOf('\n') == -1) {
+        elem.setAttribute('text', this.rmXmlInv(text));
+      } else {
+        const textDom = document.createElement('text');
+        const cdata = document.createCDATASection(this.rmXmlInv(text));
+        textDom.appendChild(cdata);
+        elem.appendChild(textDom);
+      }
+    },
 
-        _relationshipToXML: function (document, relationship) {
-            var result = document.createElement('relationship');
-            result.setAttribute('srcTopicId', relationship.getFromNode());
-            result.setAttribute('destTopicId', relationship.getToNode());
+    _relationshipToXML(document, relationship) {
+      const result = document.createElement('relationship');
+      result.setAttribute('srcTopicId', relationship.getFromNode());
+      result.setAttribute('destTopicId', relationship.getToNode());
 
-            var lineType = relationship.getLineType();
-            result.setAttribute('lineType', lineType);
-            if (
-                lineType == ConnectionLine.CURVED ||
-                lineType == ConnectionLine.SIMPLE_CURVED
-            ) {
-                if ($defined(relationship.getSrcCtrlPoint())) {
-                    var srcPoint = relationship.getSrcCtrlPoint();
-                    result.setAttribute(
-                        'srcCtrlPoint',
-                        Math.round(srcPoint.x) + ',' + Math.round(srcPoint.y)
-                    );
-                }
-                if ($defined(relationship.getDestCtrlPoint())) {
-                    var destPoint = relationship.getDestCtrlPoint();
-                    result.setAttribute(
-                        'destCtrlPoint',
-                        Math.round(destPoint.x) + ',' + Math.round(destPoint.y)
-                    );
-                }
-            }
-            result.setAttribute('endArrow', relationship.getEndArrow());
-            result.setAttribute('startArrow', relationship.getStartArrow());
-            return result;
-        },
+      const lineType = relationship.getLineType();
+      result.setAttribute('lineType', lineType);
+      if (
+        lineType == ConnectionLine.CURVED
+                || lineType == ConnectionLine.SIMPLE_CURVED
+      ) {
+        if ($defined(relationship.getSrcCtrlPoint())) {
+          const srcPoint = relationship.getSrcCtrlPoint();
+          result.setAttribute(
+            'srcCtrlPoint',
+            `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`,
+          );
+        }
+        if ($defined(relationship.getDestCtrlPoint())) {
+          const destPoint = relationship.getDestCtrlPoint();
+          result.setAttribute(
+            'destCtrlPoint',
+            `${Math.round(destPoint.x)},${Math.round(destPoint.y)}`,
+          );
+        }
+      }
+      result.setAttribute('endArrow', relationship.getEndArrow());
+      result.setAttribute('startArrow', relationship.getStartArrow());
+      return result;
+    },
 
-        /**
+    /**
          * @param dom
          * @param mapId
          * @throws will throw an error if dom is null or undefined
@@ -248,245 +248,244 @@ const XMLSerializer_Pela = new Class(
          * @throws will throw an error if the document element is not consistent with a wisemap's root
          * element
          */
-        loadFromDom: function (dom, mapId) {
-            $assert(dom, 'dom can not be null');
-            $assert(mapId, 'mapId can not be null');
+    loadFromDom(dom, mapId) {
+      $assert(dom, 'dom can not be null');
+      $assert(mapId, 'mapId can not be null');
 
-            var rootElem = dom.documentElement;
+      const rootElem = dom.documentElement;
 
-            // Is a wisemap?.
-            $assert(
-                rootElem.tagName == XMLSerializer_Pela.MAP_ROOT_NODE,
-                'This seem not to be a map document.'
-            );
+      // Is a wisemap?.
+      $assert(
+        rootElem.tagName == XMLSerializer_Pela.MAP_ROOT_NODE,
+        'This seem not to be a map document.',
+      );
 
-            this._idsMap = {};
-            // Start the loading process ...
-            var version = rootElem.getAttribute('version');
+      this._idsMap = {};
+      // Start the loading process ...
+      const version = rootElem.getAttribute('version');
 
-            var mindmap = new Mindmap(mapId, version);
-            var children = rootElem.childNodes;
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                if (child.nodeType == 1) {
-                    switch (child.tagName) {
-                        case 'topic':
-                            var topic = this._deserializeNode(child, mindmap);
-                            mindmap.addBranch(topic);
-                            break;
-                        case 'relationship':
-                            var relationship = this._deserializeRelationship(child, mindmap);
-                            if (relationship != null) mindmap.addRelationship(relationship);
-                            break;
-                    }
-                }
-            }
-            this._idsMap = null;
-            mindmap.setId(mapId);
-            return mindmap;
-        },
+      const mindmap = new Mindmap(mapId, version);
+      const children = rootElem.childNodes;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child.nodeType == 1) {
+          switch (child.tagName) {
+            case 'topic':
+              var topic = this._deserializeNode(child, mindmap);
+              mindmap.addBranch(topic);
+              break;
+            case 'relationship':
+              var relationship = this._deserializeRelationship(child, mindmap);
+              if (relationship != null) mindmap.addRelationship(relationship);
+              break;
+          }
+        }
+      }
+      this._idsMap = null;
+      mindmap.setId(mapId);
+      return mindmap;
+    },
 
-        _deserializeNode: function (domElem, mindmap) {
-            var type =
-                domElem.getAttribute('central') != null
-                    ? INodeModel.CENTRAL_TOPIC_TYPE
-                    : INodeModel.MAIN_TOPIC_TYPE;
+    _deserializeNode(domElem, mindmap) {
+      const type = domElem.getAttribute('central') != null
+        ? INodeModel.CENTRAL_TOPIC_TYPE
+        : INodeModel.MAIN_TOPIC_TYPE;
 
-            // Load attributes...
-            var id = domElem.getAttribute('id');
-            if ($defined(id)) {
-                id = parseInt(id);
-            }
+      // Load attributes...
+      let id = domElem.getAttribute('id');
+      if ($defined(id)) {
+        id = parseInt(id);
+      }
 
-            if (this._idsMap[id]) {
-                id = null;
-            } else {
-                this._idsMap[id] = domElem;
-            }
+      if (this._idsMap[id]) {
+        id = null;
+      } else {
+        this._idsMap[id] = domElem;
+      }
 
-            var topic = mindmap.createNode(type, id);
+      const topic = mindmap.createNode(type, id);
 
-            // Set text property is it;s defined...
-            var text = domElem.getAttribute('text');
-            if ($defined(text) && text) {
-                topic.setText(text);
-            }
+      // Set text property is it;s defined...
+      const text = domElem.getAttribute('text');
+      if ($defined(text) && text) {
+        topic.setText(text);
+      }
 
-            var fontStyle = domElem.getAttribute('fontStyle');
-            if ($defined(fontStyle) && fontStyle) {
-                var font = fontStyle.split(';');
+      const fontStyle = domElem.getAttribute('fontStyle');
+      if ($defined(fontStyle) && fontStyle) {
+        const font = fontStyle.split(';');
 
-                if (font[0]) {
-                    topic.setFontFamily(font[0]);
-                }
+        if (font[0]) {
+          topic.setFontFamily(font[0]);
+        }
 
-                if (font[1]) {
-                    topic.setFontSize(font[1]);
-                }
+        if (font[1]) {
+          topic.setFontSize(font[1]);
+        }
 
-                if (font[2]) {
-                    topic.setFontColor(font[2]);
-                }
+        if (font[2]) {
+          topic.setFontColor(font[2]);
+        }
 
-                if (font[3]) {
-                    topic.setFontWeight(font[3]);
-                }
+        if (font[3]) {
+          topic.setFontWeight(font[3]);
+        }
 
-                if (font[4]) {
-                    topic.setFontStyle(font[4]);
-                }
-            }
+        if (font[4]) {
+          topic.setFontStyle(font[4]);
+        }
+      }
 
-            var shape = domElem.getAttribute('shape');
-            if ($defined(shape)) {
-                topic.setShapeType(shape);
+      const shape = domElem.getAttribute('shape');
+      if ($defined(shape)) {
+        topic.setShapeType(shape);
 
-                if (shape == TopicShape.IMAGE) {
-                    var image = domElem.getAttribute('image');
-                    var size = image.substring(0, image.indexOf(':'));
-                    var url = image.substring(image.indexOf(':') + 1, image.length);
-                    topic.setImageUrl(url);
+        if (shape == TopicShape.IMAGE) {
+          const image = domElem.getAttribute('image');
+          const size = image.substring(0, image.indexOf(':'));
+          const url = image.substring(image.indexOf(':') + 1, image.length);
+          topic.setImageUrl(url);
 
-                    var split = size.split(',');
-                    topic.setImageSize(split[0], split[1]);
-                }
-            }
+          const split = size.split(',');
+          topic.setImageSize(split[0], split[1]);
+        }
+      }
 
-            var bgColor = domElem.getAttribute('bgColor');
-            if ($defined(bgColor)) {
-                topic.setBackgroundColor(bgColor);
-            }
+      const bgColor = domElem.getAttribute('bgColor');
+      if ($defined(bgColor)) {
+        topic.setBackgroundColor(bgColor);
+      }
 
-            var borderColor = domElem.getAttribute('brColor');
-            if ($defined(borderColor)) {
-                topic.setBorderColor(borderColor);
-            }
+      const borderColor = domElem.getAttribute('brColor');
+      if ($defined(borderColor)) {
+        topic.setBorderColor(borderColor);
+      }
 
-            var order = domElem.getAttribute('order');
-            if ($defined(order) && order != 'NaN') {
-                // Hack for broken maps ...
-                topic.setOrder(parseInt(order));
-            }
+      const order = domElem.getAttribute('order');
+      if ($defined(order) && order != 'NaN') {
+        // Hack for broken maps ...
+        topic.setOrder(parseInt(order));
+      }
 
-            var isShrink = domElem.getAttribute('shrink');
-            // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
-            if ($defined(isShrink) && type != INodeModel.CENTRAL_TOPIC_TYPE) {
-                topic.setChildrenShrunken(isShrink);
-            }
+      const isShrink = domElem.getAttribute('shrink');
+      // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
+      if ($defined(isShrink) && type != INodeModel.CENTRAL_TOPIC_TYPE) {
+        topic.setChildrenShrunken(isShrink);
+      }
 
-            var position = domElem.getAttribute('position');
-            if ($defined(position)) {
-                var pos = position.split(',');
-                topic.setPosition(pos[0], pos[1]);
-            }
+      const position = domElem.getAttribute('position');
+      if ($defined(position)) {
+        const pos = position.split(',');
+        topic.setPosition(pos[0], pos[1]);
+      }
 
-            var metadata = domElem.getAttribute('metadata');
-            if ($defined(metadata)) {
-                topic.setMetadata(metadata);
-            }
+      const metadata = domElem.getAttribute('metadata');
+      if ($defined(metadata)) {
+        topic.setMetadata(metadata);
+      }
 
-            //Creating icons and children nodes
-            var children = domElem.childNodes;
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                if (child.nodeType == Node.ELEMENT_NODE) {
-                    if (child.tagName == 'topic') {
-                        var childTopic = this._deserializeNode(child, mindmap);
-                        childTopic.connectTo(topic);
-                    } else if (TopicFeature.isSupported(child.tagName)) {
-                        // Load attributes ...
-                        var namedNodeMap = child.attributes;
-                        var attributes = {};
-                        for (var j = 0; j < namedNodeMap.length; j++) {
-                            var attribute = namedNodeMap.item(j);
-                            attributes[attribute.name] = attribute.value;
-                        }
-
-                        // Has text node ?.
-                        var textAttr = this._deserializeTextAttr(child);
-                        if (textAttr) {
-                            attributes['text'] = textAttr;
-                        }
-
-                        // Create a new element ....
-                        var featureType = child.tagName;
-                        var feature = TopicFeature.createModel(featureType, attributes);
-                        topic.addFeature(feature);
-                    } else if (child.tagName == 'text') {
-                        var nodeText = this._deserializeNodeText(child);
-                        topic.setText(nodeText);
-                    }
-                }
-            }
-            return topic;
-        },
-
-        _deserializeTextAttr: function (domElem) {
-            var value = domElem.getAttribute('text');
-            if (!$defined(value)) {
-                var children = domElem.childNodes;
-                for (var i = 0; i < children.length; i++) {
-                    var child = children[i];
-                    if (child.nodeType == Node.CDATA_SECTION_NODE) {
-                        value = child.nodeValue;
-                    }
-                }
-            } else {
-                // Notes must be decoded ...
-                value = unescape(value);
-
-                // Hack for empty nodes ...
-                if (value == '') {
-                    value = ' ';
-                }
+      // Creating icons and children nodes
+      const children = domElem.childNodes;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child.nodeType == Node.ELEMENT_NODE) {
+          if (child.tagName == 'topic') {
+            const childTopic = this._deserializeNode(child, mindmap);
+            childTopic.connectTo(topic);
+          } else if (TopicFeature.isSupported(child.tagName)) {
+            // Load attributes ...
+            const namedNodeMap = child.attributes;
+            const attributes = {};
+            for (let j = 0; j < namedNodeMap.length; j++) {
+              const attribute = namedNodeMap.item(j);
+              attributes[attribute.name] = attribute.value;
             }
 
-            return value;
-        },
-
-        _deserializeNodeText: function (domElem) {
-            var children = domElem.childNodes;
-            var value = null;
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                if (child.nodeType == Node.CDATA_SECTION_NODE) {
-                    value = child.nodeValue;
-                }
-            }
-            return value;
-        },
-
-        _deserializeRelationship: function (domElement, mindmap) {
-            var srcId = domElement.getAttribute('srcTopicId');
-            var destId = domElement.getAttribute('destTopicId');
-            var lineType = domElement.getAttribute('lineType');
-            var srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
-            var destCtrlPoint = domElement.getAttribute('destCtrlPoint');
-            var endArrow = domElement.getAttribute('endArrow');
-            var startArrow = domElement.getAttribute('startArrow');
-            //If for some reason a relationship lines has source and dest nodes the same, don't import it.
-            if (srcId == destId) {
-                return null;
-            }
-            // Is the connections points valid ?. If it's not, do not load the relationship ...
-            if (mindmap.findNodeById(srcId) == null || mindmap.findNodeById(destId) == null) {
-                return null;
+            // Has text node ?.
+            const textAttr = this._deserializeTextAttr(child);
+            if (textAttr) {
+              attributes.text = textAttr;
             }
 
-            var model = mindmap.createRelationship(srcId, destId);
-            model.setLineType(lineType);
-            if ($defined(srcCtrlPoint) && srcCtrlPoint != '') {
-                model.setSrcCtrlPoint(core.Point.fromString(srcCtrlPoint));
-            }
-            if ($defined(destCtrlPoint) && destCtrlPoint != '') {
-                model.setDestCtrlPoint(core.Point.fromString(destCtrlPoint));
-            }
-            model.setEndArrow('false');
-            model.setStartArrow('true');
-            return model;
-        },
+            // Create a new element ....
+            const featureType = child.tagName;
+            const feature = TopicFeature.createModel(featureType, attributes);
+            topic.addFeature(feature);
+          } else if (child.tagName == 'text') {
+            const nodeText = this._deserializeNodeText(child);
+            topic.setText(nodeText);
+          }
+        }
+      }
+      return topic;
+    },
 
-        /**
+    _deserializeTextAttr(domElem) {
+      let value = domElem.getAttribute('text');
+      if (!$defined(value)) {
+        const children = domElem.childNodes;
+        for (let i = 0; i < children.length; i++) {
+          const child = children[i];
+          if (child.nodeType == Node.CDATA_SECTION_NODE) {
+            value = child.nodeValue;
+          }
+        }
+      } else {
+        // Notes must be decoded ...
+        value = unescape(value);
+
+        // Hack for empty nodes ...
+        if (value == '') {
+          value = ' ';
+        }
+      }
+
+      return value;
+    },
+
+    _deserializeNodeText(domElem) {
+      const children = domElem.childNodes;
+      let value = null;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child.nodeType == Node.CDATA_SECTION_NODE) {
+          value = child.nodeValue;
+        }
+      }
+      return value;
+    },
+
+    _deserializeRelationship(domElement, mindmap) {
+      const srcId = domElement.getAttribute('srcTopicId');
+      const destId = domElement.getAttribute('destTopicId');
+      const lineType = domElement.getAttribute('lineType');
+      const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
+      const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
+      const endArrow = domElement.getAttribute('endArrow');
+      const startArrow = domElement.getAttribute('startArrow');
+      // If for some reason a relationship lines has source and dest nodes the same, don't import it.
+      if (srcId == destId) {
+        return null;
+      }
+      // Is the connections points valid ?. If it's not, do not load the relationship ...
+      if (mindmap.findNodeById(srcId) == null || mindmap.findNodeById(destId) == null) {
+        return null;
+      }
+
+      const model = mindmap.createRelationship(srcId, destId);
+      model.setLineType(lineType);
+      if ($defined(srcCtrlPoint) && srcCtrlPoint != '') {
+        model.setSrcCtrlPoint(core.Point.fromString(srcCtrlPoint));
+      }
+      if ($defined(destCtrlPoint) && destCtrlPoint != '') {
+        model.setDestCtrlPoint(core.Point.fromString(destCtrlPoint));
+      }
+      model.setEndArrow('false');
+      model.setStartArrow('true');
+      return model;
+    },
+
+    /**
          * This method ensures that the output String has only
          * valid XML unicode characters as specified by the
          * XML 1.0 standard. For reference, please see
@@ -497,26 +496,26 @@ const XMLSerializer_Pela = new Class(
          * @param in The String whose non-valid characters we want to remove.
          * @return The in String, stripped of non-valid characters.
          */
-        rmXmlInv: function (str) {
-            if (str == null || str == undefined) return null;
+    rmXmlInv(str) {
+      if (str == null || str == undefined) return null;
 
-            var result = '';
-            for (var i = 0; i < str.length; i++) {
-                var c = str.charCodeAt(i);
-                if (
-                    c == 0x9 ||
-                    c == 0xa ||
-                    c == 0xd ||
-                    (c >= 0x20 && c <= 0xd7ff) ||
-                    (c >= 0xe000 && c <= 0xfffd) ||
-                    (c >= 0x10000 && c <= 0x10ffff)
-                ) {
-                    result = result + str.charAt(i);
-                }
-            }
-            return result;
-        },
-    }
+      let result = '';
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        if (
+          c == 0x9
+                    || c == 0xa
+                    || c == 0xd
+                    || (c >= 0x20 && c <= 0xd7ff)
+                    || (c >= 0xe000 && c <= 0xfffd)
+                    || (c >= 0x10000 && c <= 0x10ffff)
+        ) {
+          result += str.charAt(i);
+        }
+      }
+      return result;
+    },
+  },
 );
 
 /**

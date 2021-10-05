@@ -12,14 +12,10 @@ module.exports = {
     module: {
         rules: [
             {
-                use: 'babel-loader',
-                test: /.(js|jsx)$/,
+                use: ['babel-loader', 'eslint-loader'],
+                test: /.js$/,
                 exclude: /node_modules/,
-            },
-            {
-                type: 'asset',
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            },
+            }
         ],
     },
     target: 'web',

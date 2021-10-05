@@ -12,16 +12,16 @@ const rootedTreeSet = require('./RootedTreeSet').default;
 const symmetricSorter = require('./SymmetricSorter').default;
 
 export const Layout = {
-    AbstractBasicSorter: abstractBasicSorter,
-    BalancedSorter: balancedSorter,
-    ChangeEvent: changeEvent,
-    ChildrenSorterStrategy: childrenSorterStrategy,
-    EventBus: eventBus,
-    EventBusDispatcher: eventBusDispatcher,
-    GridSorter: gridSorter,
-    LayoutManager: layoutManager,
-    Node: node,
-    OriginalLayout: originalLayout,
-    RootedTreeSet: rootedTreeSet,
-    SymmetricSorter: symmetricSorter,
+  AbstractBasicSorter: abstractBasicSorter,
+  BalancedSorter: balancedSorter,
+  ChangeEvent: changeEvent,
+  ChildrenSorterStrategy: childrenSorterStrategy,
+  EventBus: eventBus,
+  EventBusDispatcher: eventBusDispatcher,
+  GridSorter: gridSorter,
+  LayoutManager: layoutManager,
+  Node: node,
+  OriginalLayout: originalLayout,
+  RootedTreeSet: rootedTreeSet,
+  SymmetricSorter: symmetricSorter,
 };

@@ -16,33 +16,33 @@
  *   limitations under the License.
  */
 
-//FIXME: this Class should be reimplemented
+// FIXME: this Class should be reimplemented
 const Events = require('../Events').default;
 
 const FadeEffect = new Class(/** @lends FadeEffect */{
-    Extends: Events,
-    /**
+  Extends: Events,
+  /**
      * @extends mindplot.Events
      * @constructs
      * @param elements
      * @param isVisible
      */
-    initialize: function(elements, isVisible) {
-        this._isVisible = isVisible;
-        this._element = elements;
-    },
+  initialize(elements, isVisible) {
+    this._isVisible = isVisible;
+    this._element = elements;
+  },
 
-    /** */
-    start: function(){
-        var visible = this._isVisible;
-        _.each(this._element, function(elem) {
-            if(elem){
-                elem.setVisibility(visible);
-            }
-        });
-        this._isVisible = !visible;
-        this.fireEvent('complete');
-    }
+  /** */
+  start() {
+    const visible = this._isVisible;
+    _.each(this._element, (elem) => {
+      if (elem) {
+        elem.setVisibility(visible);
+      }
+    });
+    this._isVisible = !visible;
+    this.fireEvent('complete');
+  },
 });
 
 export default FadeEffect;

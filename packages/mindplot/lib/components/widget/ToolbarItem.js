@@ -15,65 +15,65 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Events = require('../Events').default
+const Events = require('../Events').default;
 
 const ToolbarItem = new Class({
-    Implements: Events, //FIXME: should be extends?
-    initialize : function(buttonId, fn, options) {
-        $assert(buttonId, "buttonId can not be null");
-        $assert(fn, "fn can not be null");
-        this._buttonId = buttonId;
-        this._fn = fn;
-        this._options = options;
-        this._enable = false;
-        this.enable();
-    },
+  Implements: Events, // FIXME: should be extends?
+  initialize(buttonId, fn, options) {
+    $assert(buttonId, 'buttonId can not be null');
+    $assert(fn, 'fn can not be null');
+    this._buttonId = buttonId;
+    this._fn = fn;
+    this._options = options;
+    this._enable = false;
+    this.enable();
+  },
 
-    getButtonElem : function() {
-        var elem = $('#'+this._buttonId);
-        $assert(elem, "Could not find element for " + this._buttonId);
-        return elem;
-    }.protect(),
+  getButtonElem: function () {
+    const elem = $(`#${this._buttonId}`);
+    $assert(elem, `Could not find element for ${this._buttonId}`);
+    return elem;
+  }.protect(),
 
-    show : function() {
-        this.fireEvent('show');
-    },
+  show() {
+    this.fireEvent('show');
+  },
 
-    hide : function() {
-        this.fireEvent('hide');
-    },
+  hide() {
+    this.fireEvent('hide');
+  },
 
-    isTopicAction : function() {
-        return this._options.topicAction;
-    },
+  isTopicAction() {
+    return this._options.topicAction;
+  },
 
-    isRelAction : function() {
-        return this._options.relAction;
-    },
+  isRelAction() {
+    return this._options.relAction;
+  },
 
-    disable : function() {
-        var elem = this.getButtonElem();
-        if (this._enable) {
-            elem.unbind('click', this._fn);
-            elem.removeClass('buttonOn');
-            elem.addClass('buttonOff');
-            this._enable = false;
-        }
-    },
+  disable() {
+    const elem = this.getButtonElem();
+    if (this._enable) {
+      elem.unbind('click', this._fn);
+      elem.removeClass('buttonOn');
+      elem.addClass('buttonOff');
+      this._enable = false;
+    }
+  },
 
-    enable : function() {
-        var elem = this.getButtonElem();
-        if (!this._enable) {
-            elem.bind('click', this._fn);
-            elem.removeClass('buttonOff');
-            elem.addClass('buttonOn');
-            this._enable = true;
-        }
-    },
+  enable() {
+    const elem = this.getButtonElem();
+    if (!this._enable) {
+      elem.bind('click', this._fn);
+      elem.removeClass('buttonOff');
+      elem.addClass('buttonOn');
+      this._enable = true;
+    }
+  },
 
-    getTip : function() {
-        return this._tip;
-    }.protect()
+  getTip: function () {
+    return this._tip;
+  }.protect(),
 });
 
 export default ToolbarItem;

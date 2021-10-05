@@ -29,353 +29,347 @@ const ChangeFeatureToTopicCommand = require('./commands/ChangeFeatureToTopicComm
 const NodeModel = require('./model/NodeModel').default;
 
 const StandaloneActionDispatcher = new Class(
-    /** @lends StandaloneActionDispatcher */ {
-        Extends: ActionDispatcher,
-        /**
+  /** @lends StandaloneActionDispatcher */ {
+    Extends: ActionDispatcher,
+    /**
          * @extends mindplot.ActionDispatcher
          * @constructs
          * @param {mindplot.CommandContext} commandContext
          */
-        initialize: function (commandContext) {
-            this.parent(commandContext);
-            this._actionRunner = new DesignerActionRunner(commandContext, this);
-        },
+    initialize(commandContext) {
+      this.parent(commandContext);
+      this._actionRunner = new DesignerActionRunner(commandContext, this);
+    },
 
-        /** */
-        addTopics: function (models, parentTopicsId) {
-            var command = new AddTopicCommand(models, parentTopicsId);
-            this.execute(command);
-        },
+    /** */
+    addTopics(models, parentTopicsId) {
+      const command = new AddTopicCommand(models, parentTopicsId);
+      this.execute(command);
+    },
 
-        /** */
-        addRelationship: function (model) {
-            var command = new AddRelationshipCommand(model);
-            this.execute(command);
-        },
+    /** */
+    addRelationship(model) {
+      const command = new AddRelationshipCommand(model);
+      this.execute(command);
+    },
 
-        /** */
-        deleteEntities: function (topicsIds, relIds) {
-            var command = new DeleteCommand(topicsIds, relIds);
-            this.execute(command);
-        },
+    /** */
+    deleteEntities(topicsIds, relIds) {
+      const command = new DeleteCommand(topicsIds, relIds);
+      this.execute(command);
+    },
 
-        /** */
-        dragTopic: function (topicId, position, order, parentTopic) {
-            var command = new DragTopicCommand(topicId, position, order, parentTopic);
-            this.execute(command);
-        },
+    /** */
+    dragTopic(topicId, position, order, parentTopic) {
+      const command = new DragTopicCommand(topicId, position, order, parentTopic);
+      this.execute(command);
+    },
 
-        /** */
-        moveTopic: function (topicId, position) {
-            $assert($defined(topicId), 'topicsId can not be null');
-            $assert($defined(position), 'position can not be null');
+    /** */
+    moveTopic(topicId, position) {
+      $assert($defined(topicId), 'topicsId can not be null');
+      $assert($defined(position), 'position can not be null');
 
-            var commandFunc = function (topic, value) {
-                var result = topic.getPosition();
-                EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
-                    node: topic.getModel(),
-                    position: value,
-                });
-                return result;
-            };
+      const commandFunc = function (topic, value) {
+        const result = topic.getPosition();
+        EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
+          node: topic.getModel(),
+          position: value,
+        });
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicId, position);
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicId, position);
+      this.execute(command);
+    },
 
-        /** */
-        moveControlPoint: function (ctrlPoint, point) {
-            var command = new MoveControlPointCommand(ctrlPoint, point);
-            this.execute(command);
-        },
+    /** */
+    moveControlPoint(ctrlPoint, point) {
+      const command = new MoveControlPointCommand(ctrlPoint, point);
+      this.execute(command);
+    },
 
-        /** */
-        changeFontStyleToTopic: function (topicsIds) {
-            var commandFunc = function (topic) {
-                var result = topic.getFontStyle();
-                var style = result == 'italic' ? 'normal' : 'italic';
-                topic.setFontStyle(style, true);
-                return result;
-            };
-            var command = new GenericFunctionCommand(commandFunc, topicsIds);
-            this.execute(command);
-        },
+    /** */
+    changeFontStyleToTopic(topicsIds) {
+      const commandFunc = function (topic) {
+        const result = topic.getFontStyle();
+        const style = result == 'italic' ? 'normal' : 'italic';
+        topic.setFontStyle(style, true);
+        return result;
+      };
+      const command = new GenericFunctionCommand(commandFunc, topicsIds);
+      this.execute(command);
+    },
 
-        /** */
-        changeTextToTopic: function (topicsIds, text) {
-            $assert($defined(topicsIds), 'topicsIds can not be null');
+    /** */
+    changeTextToTopic(topicsIds, text) {
+      $assert($defined(topicsIds), 'topicsIds can not be null');
 
-            var commandFunc = function (topic, value) {
-                var result = topic.getText();
-                topic.setText(value);
-                return result;
-            };
-            commandFunc.commandType = 'changeTextToTopic';
+      const commandFunc = function (topic, value) {
+        const result = topic.getText();
+        topic.setText(value);
+        return result;
+      };
+      commandFunc.commandType = 'changeTextToTopic';
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, text);
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, text);
+      this.execute(command);
+    },
 
-        /** */
-        changeFontFamilyToTopic: function (topicIds, fontFamily) {
-            $assert(topicIds, 'topicIds can not be null');
-            $assert(fontFamily, 'fontFamily can not be null');
+    /** */
+    changeFontFamilyToTopic(topicIds, fontFamily) {
+      $assert(topicIds, 'topicIds can not be null');
+      $assert(fontFamily, 'fontFamily can not be null');
 
-            var commandFunc = function (topic, fontFamily) {
-                var result = topic.getFontFamily();
-                topic.setFontFamily(fontFamily, true);
+      const commandFunc = function (topic, fontFamily) {
+        const result = topic.getFontFamily();
+        topic.setFontFamily(fontFamily, true);
 
-                topic._adjustShapes();
-                return result;
-            };
+        topic._adjustShapes();
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicIds, fontFamily);
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicIds, fontFamily);
+      this.execute(command);
+    },
 
-        /** */
-        changeFontColorToTopic: function (topicsIds, color) {
-            $assert(topicsIds, 'topicIds can not be null');
-            $assert(color, 'color can not be null');
+    /** */
+    changeFontColorToTopic(topicsIds, color) {
+      $assert(topicsIds, 'topicIds can not be null');
+      $assert(color, 'color can not be null');
 
-            var commandFunc = function (topic, color) {
-                var result = topic.getFontColor();
-                topic.setFontColor(color, true);
-                return result;
-            };
+      const commandFunc = function (topic, color) {
+        const result = topic.getFontColor();
+        topic.setFontColor(color, true);
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-            command.discardDuplicated = 'fontColorCommandId';
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
+      command.discardDuplicated = 'fontColorCommandId';
+      this.execute(command);
+    },
 
-        /** */
-        changeBackgroundColorToTopic: function (topicsIds, color) {
-            $assert(topicsIds, 'topicIds can not be null');
-            $assert(color, 'color can not be null');
+    /** */
+    changeBackgroundColorToTopic(topicsIds, color) {
+      $assert(topicsIds, 'topicIds can not be null');
+      $assert(color, 'color can not be null');
 
-            var commandFunc = function (topic, color) {
-                var result = topic.getBackgroundColor();
-                topic.setBackgroundColor(color);
-                return result;
-            };
+      const commandFunc = function (topic, color) {
+        const result = topic.getBackgroundColor();
+        topic.setBackgroundColor(color);
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-            command.discardDuplicated = 'backColor';
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
+      command.discardDuplicated = 'backColor';
+      this.execute(command);
+    },
 
-        /** */
-        changeBorderColorToTopic: function (topicsIds, color) {
-            $assert(topicsIds, 'topicIds can not be null');
-            $assert(color, 'topicIds can not be null');
+    /** */
+    changeBorderColorToTopic(topicsIds, color) {
+      $assert(topicsIds, 'topicIds can not be null');
+      $assert(color, 'topicIds can not be null');
 
-            var commandFunc = function (topic, color) {
-                var result = topic.getBorderColor();
-                topic.setBorderColor(color);
-                return result;
-            };
+      const commandFunc = function (topic, color) {
+        const result = topic.getBorderColor();
+        topic.setBorderColor(color);
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-            command.discardDuplicated = 'borderColorCommandId';
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
+      command.discardDuplicated = 'borderColorCommandId';
+      this.execute(command);
+    },
 
-        /** */
-        changeFontSizeToTopic: function (topicsIds, size) {
-            $assert(topicsIds, 'topicIds can not be null');
-            $assert(size, 'size can not be null');
+    /** */
+    changeFontSizeToTopic(topicsIds, size) {
+      $assert(topicsIds, 'topicIds can not be null');
+      $assert(size, 'size can not be null');
 
-            var commandFunc = function (topic, size) {
-                var result = topic.getFontSize();
-                topic.setFontSize(size, true);
+      const commandFunc = function (topic, size) {
+        const result = topic.getFontSize();
+        topic.setFontSize(size, true);
 
-                topic._adjustShapes();
-                return result;
-            };
+        topic._adjustShapes();
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, size);
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, size);
+      this.execute(command);
+    },
 
-        /** */
-        changeShapeTypeToTopic: function (topicsIds, shapeType) {
-            $assert(topicsIds, 'topicsIds can not be null');
-            $assert(shapeType, 'shapeType can not be null');
+    /** */
+    changeShapeTypeToTopic(topicsIds, shapeType) {
+      $assert(topicsIds, 'topicsIds can not be null');
+      $assert(shapeType, 'shapeType can not be null');
 
-            var commandFunc = function (topic, shapeType) {
-                var result = topic.getShapeType();
-                topic.setShapeType(shapeType, true);
-                return result;
-            };
+      const commandFunc = function (topic, shapeType) {
+        const result = topic.getShapeType();
+        topic.setShapeType(shapeType, true);
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, shapeType);
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, shapeType);
+      this.execute(command);
+    },
 
-        /** */
-        changeFontWeightToTopic: function (topicsIds) {
-            $assert(topicsIds, 'topicsIds can not be null');
+    /** */
+    changeFontWeightToTopic(topicsIds) {
+      $assert(topicsIds, 'topicsIds can not be null');
 
-            var commandFunc = function (topic) {
-                var result = topic.getFontWeight();
-                var weight = result == 'bold' ? 'normal' : 'bold';
-                topic.setFontWeight(weight, true);
+      const commandFunc = function (topic) {
+        const result = topic.getFontWeight();
+        const weight = result == 'bold' ? 'normal' : 'bold';
+        topic.setFontWeight(weight, true);
 
-                topic._adjustShapes();
-                return result;
-            };
+        topic._adjustShapes();
+        return result;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds);
-            this.execute(command);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds);
+      this.execute(command);
+    },
 
-        /** */
-        shrinkBranch: function (topicsIds, collapse) {
-            $assert(topicsIds, 'topicsIds can not be null');
+    /** */
+    shrinkBranch(topicsIds, collapse) {
+      $assert(topicsIds, 'topicsIds can not be null');
 
-            var commandFunc = function (topic, isShrink) {
-                topic.setChildrenShrunken(isShrink);
-                return !isShrink;
-            };
+      const commandFunc = function (topic, isShrink) {
+        topic.setChildrenShrunken(isShrink);
+        return !isShrink;
+      };
 
-            var command = new GenericFunctionCommand(commandFunc, topicsIds, collapse);
-            this.execute(command, false);
-        },
+      const command = new GenericFunctionCommand(commandFunc, topicsIds, collapse);
+      this.execute(command, false);
+    },
 
-        /** */
-        addFeatureToTopic: function (topicId, featureType, attributes) {
-            var command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
-            this.execute(command);
-        },
+    /** */
+    addFeatureToTopic(topicId, featureType, attributes) {
+      const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
+      this.execute(command);
+    },
 
-        /** */
-        changeFeatureToTopic: function (topicId, featureId, attributes) {
-            var command = new ChangeFeatureToTopicCommand(topicId, featureId, attributes);
-            this.execute(command);
-        },
+    /** */
+    changeFeatureToTopic(topicId, featureId, attributes) {
+      const command = new ChangeFeatureToTopicCommand(topicId, featureId, attributes);
+      this.execute(command);
+    },
 
-        /** */
-        removeFeatureFromTopic: function (topicId, featureId) {
-            var command = new RemoveFeatureFromTopicCommand(topicId, featureId);
-            this.execute(command);
-        },
+    /** */
+    removeFeatureFromTopic(topicId, featureId) {
+      const command = new RemoveFeatureFromTopicCommand(topicId, featureId);
+      this.execute(command);
+    },
 
-        /** */
-        execute: function (command) {
-            this._actionRunner.execute(command);
-        },
-    }
+    /** */
+    execute(command) {
+      this._actionRunner.execute(command);
+    },
+  },
 );
 
 const CommandContext = new Class(
-    /** @lends CommandContext */ {
-        /**
+  /** @lends CommandContext */ {
+    /**
          * @constructs
          * @param {mindplot.Designer} designer
          */
-        initialize: function (designer) {
-            $assert(designer, 'designer can not be null');
-            this._designer = designer;
-        },
+    initialize(designer) {
+      $assert(designer, 'designer can not be null');
+      this._designer = designer;
+    },
 
-        /** */
-        findTopics: function (topicsIds) {
-            $assert($defined(topicsIds), 'topicsIds can not be null');
-            if (!(topicsIds instanceof Array)) {
-                topicsIds = [topicsIds];
-            }
+    /** */
+    findTopics(topicsIds) {
+      $assert($defined(topicsIds), 'topicsIds can not be null');
+      if (!(topicsIds instanceof Array)) {
+        topicsIds = [topicsIds];
+      }
 
-            var designerTopics = this._designer.getModel().getTopics();
-            var result = designerTopics.filter(function (topic) {
-                return topicsIds.contains(topic.getId());
-            });
+      const designerTopics = this._designer.getModel().getTopics();
+      const result = designerTopics.filter((topic) => topicsIds.contains(topic.getId()));
 
-            if (result.length != topicsIds.length) {
-                var ids = designerTopics.map(function (topic) {
-                    return topic.getId();
-                });
-                $assert(
-                    result.length == topicsIds.length,
-                    'Could not find topic. Result:' +
-                        result +
-                        ', Filter Criteria:' +
-                        topicsIds +
-                        ', Current Topics: [' +
-                        ids +
-                        ']'
-                );
-            }
-            return result;
-        },
+      if (result.length != topicsIds.length) {
+        const ids = designerTopics.map((topic) => topic.getId());
+        $assert(
+          result.length == topicsIds.length,
+          `Could not find topic. Result:${
+            result
+          }, Filter Criteria:${
+            topicsIds
+          }, Current Topics: [${
+            ids
+          }]`,
+        );
+      }
+      return result;
+    },
 
-        /** */
-        deleteTopic: function (topic) {
-            this._designer.removeTopic(topic);
-        },
+    /** */
+    deleteTopic(topic) {
+      this._designer.removeTopic(topic);
+    },
 
-        /** */
-        createTopic: function (model) {
-            $assert(model, 'model can not be null');
-            return this._designer.nodeModelToNodeGraph(model);
-        },
+    /** */
+    createTopic(model) {
+      $assert(model, 'model can not be null');
+      return this._designer.nodeModelToNodeGraph(model);
+    },
 
-        /** */
-        createModel: function () {
-            var mindmap = this._designer.getMindmap();
-            return mindmap.createNode(NodeModel.MAIN_TOPIC_TYPE);
-        },
+    /** */
+    createModel() {
+      const mindmap = this._designer.getMindmap();
+      return mindmap.createNode(NodeModel.MAIN_TOPIC_TYPE);
+    },
 
-        /** */
-        addTopic: function (topic) {
-            var mindmap = this._designer.getMindmap();
-            return mindmap.addBranch(topic.getModel());
-        },
+    /** */
+    addTopic(topic) {
+      const mindmap = this._designer.getMindmap();
+      return mindmap.addBranch(topic.getModel());
+    },
 
-        /** */
-        connect: function (childTopic, parentTopic) {
-            childTopic.connectTo(parentTopic, this._designer._workspace);
-        },
+    /** */
+    connect(childTopic, parentTopic) {
+      childTopic.connectTo(parentTopic, this._designer._workspace);
+    },
 
-        /** */
-        disconnect: function (topic) {
-            topic.disconnect(this._designer._workspace);
-        },
+    /** */
+    disconnect(topic) {
+      topic.disconnect(this._designer._workspace);
+    },
 
-        /** */
-        addRelationship: function (model) {
-            $assert(model, 'model cannot be null');
-            return this._designer.addRelationship(model);
-        },
+    /** */
+    addRelationship(model) {
+      $assert(model, 'model cannot be null');
+      return this._designer.addRelationship(model);
+    },
 
-        /** */
-        deleteRelationship: function (relationship) {
-            this._designer.deleteRelationship(relationship);
-        },
+    /** */
+    deleteRelationship(relationship) {
+      this._designer.deleteRelationship(relationship);
+    },
 
-        /** */
-        findRelationships: function (relIds) {
-            $assert($defined(relIds), 'relId can not be null');
-            if (!(relIds instanceof Array)) {
-                relIds = [relIds];
-            }
+    /** */
+    findRelationships(relIds) {
+      $assert($defined(relIds), 'relId can not be null');
+      if (!(relIds instanceof Array)) {
+        relIds = [relIds];
+      }
 
-            var designerRel = this._designer.getModel().getRelationships();
-            return designerRel.filter(function (rel) {
-                return relIds.contains(rel.getId());
-            });
-        },
+      const designerRel = this._designer.getModel().getRelationships();
+      return designerRel.filter((rel) => relIds.contains(rel.getId()));
+    },
 
-        /** */
-        moveTopic: function (topic, position) {
-            $assert(topic, 'topic cannot be null');
-            $assert(position, 'position cannot be null');
-            EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
-                node: topic.getModel(),
-                position: position,
-            });
-        },
-    }
+    /** */
+    moveTopic(topic, position) {
+      $assert(topic, 'topic cannot be null');
+      $assert(position, 'position cannot be null');
+      EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
+        node: topic.getModel(),
+        position,
+      });
+    },
+  },
 );
 
 export { StandaloneActionDispatcher, CommandContext };

@@ -16,8 +16,10 @@
  *   limitations under the License.
  */
 const Core = require('@wismapping/core-js');
+
 const core = Core();
 const web2D = require('@wismapping/web2d');
+
 const web2d = web2D();
 
 const INodeModel = require('./model/INodeModel').default;
@@ -25,182 +27,184 @@ const { TopicShape } = require('./model/INodeModel');
 const Topic = require('./Topic').default;
 
 const ConnectionLine = new Class({
-    initialize: function (sourceNode, targetNode, lineType) {
-        $assert(targetNode, 'parentNode node can not be null');
-        $assert(sourceNode, 'childNode node can not be null');
-        $assert(sourceNode != targetNode, 'Circular connection');
+  initialize(sourceNode, targetNode, lineType) {
+    $assert(targetNode, 'parentNode node can not be null');
+    $assert(sourceNode, 'childNode node can not be null');
+    $assert(sourceNode != targetNode, 'Circular connection');
 
-        this._targetTopic = targetNode;
-        this._sourceTopic = sourceNode;
+    this._targetTopic = targetNode;
+    this._sourceTopic = sourceNode;
 
-        var line;
-        var ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
-        if (targetNode.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
-            line = this._createLine(lineType, ConnectionLine.CURVED);
-            line.setSrcControlPoint(ctrlPoints[0]);
-            line.setDestControlPoint(ctrlPoints[1]);
-        } else {
-            line = this._createLine(lineType, ConnectionLine.SIMPLE_CURVED);
-            line.setSrcControlPoint(ctrlPoints[0]);
-            line.setDestControlPoint(ctrlPoints[1]);
-        }
-        // Set line styles ...
-        var strokeColor = ConnectionLine.getStrokeColor();
-        line.setStroke(1, 'solid', strokeColor, 1);
-        line.setFill(strokeColor, 1);
+    let line;
+    const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
+    if (targetNode.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+      line = this._createLine(lineType, ConnectionLine.CURVED);
+      line.setSrcControlPoint(ctrlPoints[0]);
+      line.setDestControlPoint(ctrlPoints[1]);
+    } else {
+      line = this._createLine(lineType, ConnectionLine.SIMPLE_CURVED);
+      line.setSrcControlPoint(ctrlPoints[0]);
+      line.setDestControlPoint(ctrlPoints[1]);
+    }
+    // Set line styles ...
+    const strokeColor = ConnectionLine.getStrokeColor();
+    line.setStroke(1, 'solid', strokeColor, 1);
+    line.setFill(strokeColor, 1);
 
-        this._line2d = line;
-    },
+    this._line2d = line;
+  },
 
-    _getCtrlPoints: function (sourceNode, targetNode) {
-        var srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
-        var destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
-        var deltaX = (srcPos.x - destPos.x) / 3;
-        return [new core.Point(deltaX, 0), new core.Point(-deltaX, 0)];
-    },
+  _getCtrlPoints(sourceNode, targetNode) {
+    const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
+    const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
+    const deltaX = (srcPos.x - destPos.x) / 3;
+    return [new core.Point(deltaX, 0), new core.Point(-deltaX, 0)];
+  },
 
-    _createLine: function (lineType, defaultStyle) {
-        if (!$defined(lineType)) {
-            lineType = defaultStyle;
-        }
-        lineType = parseInt(lineType);
-        this._lineType = lineType;
-        var line = null;
-        switch (lineType) {
-            case ConnectionLine.POLYLINE:
-                line = new web2d.PolyLine();
-                break;
-            case ConnectionLine.CURVED:
-                line = new web2d.CurvedLine();
-                break;
-            case ConnectionLine.SIMPLE_CURVED:
-                line = new web2d.CurvedLine();
-                line.setStyle(web2d.CurvedLine.SIMPLE_LINE);
-                break;
-            default:
-                line = new web2d.Line();
-                break;
-        }
-        return line;
-    },
+  _createLine(lineType, defaultStyle) {
+    if (!$defined(lineType)) {
+      lineType = defaultStyle;
+    }
+    lineType = parseInt(lineType);
+    this._lineType = lineType;
+    let line = null;
+    switch (lineType) {
+      case ConnectionLine.POLYLINE:
+        line = new web2d.PolyLine();
+        break;
+      case ConnectionLine.CURVED:
+        line = new web2d.CurvedLine();
+        break;
+      case ConnectionLine.SIMPLE_CURVED:
+        line = new web2d.CurvedLine();
+        line.setStyle(web2d.CurvedLine.SIMPLE_LINE);
+        break;
+      default:
+        line = new web2d.Line();
+        break;
+    }
+    return line;
+  },
 
-    setVisibility: function (value) {
-        this._line2d.setVisibility(value);
-    },
+  setVisibility(value) {
+    this._line2d.setVisibility(value);
+  },
 
-    isVisible: function () {
-        return this._line2d.isVisible();
-    },
+  isVisible() {
+    return this._line2d.isVisible();
+  },
 
-    setOpacity: function (opacity) {
-        this._line2d.setOpacity(opacity);
-    },
+  setOpacity(opacity) {
+    this._line2d.setOpacity(opacity);
+  },
 
-    redraw: function () {
-        var line2d = this._line2d;
-        var sourceTopic = this._sourceTopic;
-        var sourcePosition = sourceTopic.getPosition();
+  redraw() {
+    const line2d = this._line2d;
+    const sourceTopic = this._sourceTopic;
+    const sourcePosition = sourceTopic.getPosition();
 
-        var targetTopic = this._targetTopic;
-        var targetPosition = targetTopic.getPosition();
+    const targetTopic = this._targetTopic;
+    const targetPosition = targetTopic.getPosition();
 
-        var sPos, tPos;
-        sPos = sourceTopic.workoutOutgoingConnectionPoint(targetPosition);
-        tPos = targetTopic.workoutIncomingConnectionPoint(sourcePosition);
+    let sPos; let
+      tPos;
+    sPos = sourceTopic.workoutOutgoingConnectionPoint(targetPosition);
+    tPos = targetTopic.workoutIncomingConnectionPoint(sourcePosition);
 
-        line2d.setFrom(tPos.x, tPos.y);
-        line2d.setTo(sPos.x, sPos.y);
+    line2d.setFrom(tPos.x, tPos.y);
+    line2d.setTo(sPos.x, sPos.y);
 
-        if (line2d.getType() == 'CurvedLine') {
-            var ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
-            line2d.setSrcControlPoint(ctrlPoints[0]);
-            line2d.setDestControlPoint(ctrlPoints[1]);
-        }
+    if (line2d.getType() == 'CurvedLine') {
+      const ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
+      line2d.setSrcControlPoint(ctrlPoints[0]);
+      line2d.setDestControlPoint(ctrlPoints[1]);
+    }
 
-        // Add connector ...
-        this._positionateConnector(targetTopic);
-    },
+    // Add connector ...
+    this._positionateConnector(targetTopic);
+  },
 
-    _positionateConnector: function (targetTopic) {
-        var targetPosition = targetTopic.getPosition();
-        var offset = Topic.CONNECTOR_WIDTH / 2;
-        var targetTopicSize = targetTopic.getSize();
-        var y, x;
-        if (targetTopic.getShapeType() == TopicShape.LINE) {
-            y = targetTopicSize.height;
-        } else {
-            y = targetTopicSize.height / 2;
-        }
-        y = y - offset;
+  _positionateConnector(targetTopic) {
+    const targetPosition = targetTopic.getPosition();
+    const offset = Topic.CONNECTOR_WIDTH / 2;
+    const targetTopicSize = targetTopic.getSize();
+    let y; let
+      x;
+    if (targetTopic.getShapeType() == TopicShape.LINE) {
+      y = targetTopicSize.height;
+    } else {
+      y = targetTopicSize.height / 2;
+    }
+    y -= offset;
 
-        var connector = targetTopic.getShrinkConnector();
-        if ($defined(connector)) {
-            if (Math.sign(targetPosition.x) > 0) {
-                x = targetTopicSize.width;
-                connector.setPosition(x, y);
-            } else {
-                x = -Topic.CONNECTOR_WIDTH;
-            }
-            connector.setPosition(x, y);
-        }
-    },
+    const connector = targetTopic.getShrinkConnector();
+    if ($defined(connector)) {
+      if (Math.sign(targetPosition.x) > 0) {
+        x = targetTopicSize.width;
+        connector.setPosition(x, y);
+      } else {
+        x = -Topic.CONNECTOR_WIDTH;
+      }
+      connector.setPosition(x, y);
+    }
+  },
 
-    setStroke: function (color, style, opacity) {
-        this._line2d.setStroke(null, null, color, opacity);
-    },
+  setStroke(color, style, opacity) {
+    this._line2d.setStroke(null, null, color, opacity);
+  },
 
-    addToWorkspace: function (workspace) {
-        workspace.append(this._line2d);
-        this._line2d.moveToBack();
-    },
+  addToWorkspace(workspace) {
+    workspace.append(this._line2d);
+    this._line2d.moveToBack();
+  },
 
-    removeFromWorkspace: function (workspace) {
-        workspace.removeChild(this._line2d);
-    },
+  removeFromWorkspace(workspace) {
+    workspace.removeChild(this._line2d);
+  },
 
-    getTargetTopic: function () {
-        return this._targetTopic;
-    },
+  getTargetTopic() {
+    return this._targetTopic;
+  },
 
-    getSourceTopic: function () {
-        return this._sourceTopic;
-    },
+  getSourceTopic() {
+    return this._sourceTopic;
+  },
 
-    getLineType: function () {
-        return this._lineType;
-    },
+  getLineType() {
+    return this._lineType;
+  },
 
-    getLine: function () {
-        return this._line2d;
-    },
+  getLine() {
+    return this._line2d;
+  },
 
-    getModel: function () {
-        return this._model;
-    },
+  getModel() {
+    return this._model;
+  },
 
-    setModel: function (model) {
-        this._model = model;
-    },
+  setModel(model) {
+    this._model = model;
+  },
 
-    getType: function () {
-        return 'ConnectionLine';
-    },
+  getType() {
+    return 'ConnectionLine';
+  },
 
-    getId: function () {
-        return this._model.getId();
-    },
+  getId() {
+    return this._model.getId();
+  },
 
-    moveToBack: function () {
-        this._line2d.moveToBack();
-    },
+  moveToBack() {
+    this._line2d.moveToBack();
+  },
 
-    moveToFront: function () {
-        this._line2d.moveToFront();
-    },
+  moveToFront() {
+    this._line2d.moveToFront();
+  },
 });
 
 ConnectionLine.getStrokeColor = function () {
-    return '#495879';
+  return '#495879';
 };
 
 ConnectionLine.SIMPLE = 0;

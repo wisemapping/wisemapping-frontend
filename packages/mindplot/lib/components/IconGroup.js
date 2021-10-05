@@ -15,157 +15,154 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const web2D = require('@wismapping/web2d')
+const web2D = require('@wismapping/web2d');
+
 const web2d = web2D();
 const Icon = require('./Icon');
 
-const IconGroup = new Class(/**@lends IconGroup */{
-    /**
+const IconGroup = new Class(/** @lends IconGroup */{
+  /**
      * @constructs
      * @param topicId
      * @param iconSize
      * @throws will throw an error if topicId is null or undefined
      * @throws will throw an error if iconSize is null or undefined
      */
-    initialize: function (topicId, iconSize) {
-        $assert($defined(topicId), "topicId can not be null");
-        $assert($defined(iconSize), "iconSize can not be null");
+  initialize(topicId, iconSize) {
+    $assert($defined(topicId), 'topicId can not be null');
+    $assert($defined(iconSize), 'iconSize can not be null');
 
-        this._icons = [];
-        this._group = new web2d.Group({
-            width: 0,
-            height: iconSize,
-            x: 0,
-            y: 0,
-            coordSizeWidth: 0,
-            coordSizeHeight: 100
-        });
-        this._removeTip = new IconGroup.RemoveTip(this._group, topicId);
-        this.seIconSize(iconSize, iconSize);
+    this._icons = [];
+    this._group = new web2d.Group({
+      width: 0,
+      height: iconSize,
+      x: 0,
+      y: 0,
+      coordSizeWidth: 0,
+      coordSizeHeight: 100,
+    });
+    this._removeTip = new IconGroup.RemoveTip(this._group, topicId);
+    this.seIconSize(iconSize, iconSize);
 
-        this._registerListeners();
+    this._registerListeners();
+  },
 
-    },
+  /** */
+  setPosition(x, y) {
+    this._group.setPosition(x, y);
+  },
 
-    /** */
-    setPosition: function (x, y) {
-        this._group.setPosition(x, y);
-    },
+  /** */
+  getPosition() {
+    return this._group.getPosition();
+  },
 
-    /** */
-    getPosition: function () {
-        return this._group.getPosition();
-    },
+  /** */
+  getNativeElement() {
+    return this._group;
+  },
 
-    /** */
-    getNativeElement: function () {
-        return this._group;
-    },
+  /** */
+  getSize() {
+    return this._group.getSize();
+  },
 
-    /** */
-    getSize: function () {
-        return this._group.getSize();
-    },
+  /** */
+  seIconSize(width, height) {
+    this._iconSize = { width, height };
+    this._resize(this._icons.length);
+  },
 
-    /** */
-    seIconSize: function (width, height) {
-        this._iconSize = {width: width, height: height};
-        this._resize(this._icons.length);
-    },
-
-    /**
+  /**
      * @param icon the icon to be added to the icon group
      * @param {Boolean} remove
      * @throws will throw an error if icon is not defined
      */
-    addIcon: function (icon, remove) {
-        $defined(icon, "icon is not defined");
+  addIcon(icon, remove) {
+    $defined(icon, 'icon is not defined');
 
-        icon.setGroup(this);
-        this._icons.push(icon);
+    icon.setGroup(this);
+    this._icons.push(icon);
 
-        // Adjust group and position ...
-        this._resize(this._icons.length);
-        this._positionIcon(icon, this._icons.length - 1);
+    // Adjust group and position ...
+    this._resize(this._icons.length);
+    this._positionIcon(icon, this._icons.length - 1);
 
-        var imageShape = icon.getImage();
-        this._group.append(imageShape);
+    const imageShape = icon.getImage();
+    this._group.append(imageShape);
 
-        // Register event for the group ..
-        if (remove) {
-            this._removeTip.decorate(this._topicId, icon);
-        }
-    },
-
-    _findIconFromModel: function (iconModel) {
-        var result = null;
-        _.each(this._icons, function (icon) {
-            var elModel = icon.getModel();
-            if (elModel.getId() == iconModel.getId()) {
-                result = icon;
-            }
-        }, this);
-
-        if (result == null) {
-            throw new Error("Icon can no be found:" + iconModel.getId() + ", Icons:" + this._icons);
-        }
-
-        return result;
-    },
-
-    /** */
-    removeIconByModel: function (featureModel) {
-        $assert(featureModel, "featureModel can not be null");
-
-        var icon = this._findIconFromModel(featureModel);
-        this._removeIcon(icon);
-    },
-
-    _removeIcon: function (icon) {
-        $assert(icon, "icon can not be null");
-
-        this._removeTip.close(0);
-        this._group.removeChild(icon.getImage());
-
-        this._icons.erase(icon);
-        this._resize(this._icons.length);
-        var me = this;
-        // Add all again ...
-        _.each(this._icons, function (elem, i) {
-            me._positionIcon(elem, i);
-        });
-    },
-
-    /** */
-    moveToFront: function () {
-        this._group.moveToFront();
-    },
-
-    _registerListeners: function () {
-        this._group.addEvent('click', function (event) {
-            // Avoid node creation ...
-            event.stopPropagation();
-
-        });
-
-        this._group.addEvent('dblclick', function (event) {
-            event.stopPropagation();
-
-        });
-    },
-
-    _resize: function (iconsLength) {
-        this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
-
-        var iconSize = Icon.SIZE + (IconGroup.ICON_PADDING * 2);
-        this._group.setCoordSize(iconsLength * iconSize, iconSize);
-    },
-
-    _positionIcon: function (icon, order) {
-
-        var iconSize = Icon.SIZE + (IconGroup.ICON_PADDING * 2);
-        icon.getImage().setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
+    // Register event for the group ..
+    if (remove) {
+      this._removeTip.decorate(this._topicId, icon);
     }
+  },
+
+  _findIconFromModel(iconModel) {
+    let result = null;
+    _.each(this._icons, (icon) => {
+      const elModel = icon.getModel();
+      if (elModel.getId() == iconModel.getId()) {
+        result = icon;
+      }
+    }, this);
+
+    if (result == null) {
+      throw new Error(`Icon can no be found:${iconModel.getId()}, Icons:${this._icons}`);
+    }
+
+    return result;
+  },
+
+  /** */
+  removeIconByModel(featureModel) {
+    $assert(featureModel, 'featureModel can not be null');
+
+    const icon = this._findIconFromModel(featureModel);
+    this._removeIcon(icon);
+  },
+
+  _removeIcon(icon) {
+    $assert(icon, 'icon can not be null');
+
+    this._removeTip.close(0);
+    this._group.removeChild(icon.getImage());
+
+    this._icons.erase(icon);
+    this._resize(this._icons.length);
+    const me = this;
+    // Add all again ...
+    _.each(this._icons, (elem, i) => {
+      me._positionIcon(elem, i);
+    });
+  },
+
+  /** */
+  moveToFront() {
+    this._group.moveToFront();
+  },
+
+  _registerListeners() {
+    this._group.addEvent('click', (event) => {
+      // Avoid node creation ...
+      event.stopPropagation();
+    });
+
+    this._group.addEvent('dblclick', (event) => {
+      event.stopPropagation();
+    });
+  },
+
+  _resize(iconsLength) {
+    this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
+
+    const iconSize = Icon.SIZE + (IconGroup.ICON_PADDING * 2);
+    this._group.setCoordSize(iconsLength * iconSize, iconSize);
+  },
+
+  _positionIcon(icon, order) {
+    const iconSize = Icon.SIZE + (IconGroup.ICON_PADDING * 2);
+    icon.getImage().setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
+  },
 });
 
 /**
@@ -176,169 +173,164 @@ const IconGroup = new Class(/**@lends IconGroup */{
 IconGroup.ICON_PADDING = 5;
 
 IconGroup.RemoveTip = new Class(/** @lends IconGroup.RemoveTip */{
-    /**
+  /**
      * @classdesc inner class of IconGroup
      * @constructs
      * @param container
      */
-    initialize: function (container) {
-        $assert(container, "group can not be null");
-        this._fadeElem = container;
-    },
+  initialize(container) {
+    $assert(container, 'group can not be null');
+    this._fadeElem = container;
+  },
 
-
-    /**
+  /**
      * @param topicId
      * @param icon
      * @throws will throw an error if icon is null or undefined
      */
-    show: function (topicId, icon) {
-        $assert(icon, 'icon can not be null');
+  show(topicId, icon) {
+    $assert(icon, 'icon can not be null');
 
-        // Nothing to do ...
-        if (this._activeIcon != icon) {
-            // If there is an active icon, close it first ...
-            if (this._activeIcon) {
-                this.close(0);
-            }
+    // Nothing to do ...
+    if (this._activeIcon != icon) {
+      // If there is an active icon, close it first ...
+      if (this._activeIcon) {
+        this.close(0);
+      }
 
-            // Now, let move the position the icon...
-            var pos = icon.getPosition();
+      // Now, let move the position the icon...
+      const pos = icon.getPosition();
 
-            // Register events ...
-            var widget = this._buildWeb2d();
-            widget.addEvent('click', function () {
-                icon.remove();
-            });
+      // Register events ...
+      const widget = this._buildWeb2d();
+      widget.addEvent('click', () => {
+        icon.remove();
+      });
 
-            var me = this;
+      const me = this;
 
-            widget.addEvent('mouseover', function () {
-                me.show(topicId, icon);
-            });
+      widget.addEvent('mouseover', () => {
+        me.show(topicId, icon);
+      });
 
-            widget.addEvent('mouseout', function () {
-                me.hide();
-            });
+      widget.addEvent('mouseout', () => {
+        me.hide();
+      });
 
-            widget.setPosition(pos.x + 80, pos.y - 50);
-            this._fadeElem.append(widget);
+      widget.setPosition(pos.x + 80, pos.y - 50);
+      this._fadeElem.append(widget);
 
-            // Setup current element ...
-            this._activeIcon = icon;
-            this._widget = widget;
+      // Setup current element ...
+      this._activeIcon = icon;
+      this._widget = widget;
+    } else {
+      clearTimeout(this._closeTimeoutId);
+    }
+  },
 
-        } else {
-            clearTimeout(this._closeTimeoutId);
-        }
-    },
+  /** */
+  hide() {
+    this.close(200);
+  },
 
-    /** */
-    hide: function () {
-        this.close(200);
-    },
-
-    /**
+  /**
      * @param delay
      */
-    close: function (delay) {
+  close(delay) {
+    // This is not ok, trying to close the same dialog twice ?
+    if (this._closeTimeoutId) {
+      clearTimeout(this._closeTimeoutId);
+    }
 
-        // This is not ok, trying to close the same dialog twice ?
-        if (this._closeTimeoutId) {
-            clearTimeout(this._closeTimeoutId)
-        }
+    const me = this;
+    if (this._activeIcon) {
+      const widget = this._widget;
+      const close = function () {
+        me._activeIcon = null;
+        me._fadeElem.removeChild(widget);
+        me._widget = null;
+        me._closeTimeoutId = null;
+      };
 
-        var me = this;
-        if (this._activeIcon) {
-            var widget = this._widget;
-            var close = function () {
-                me._activeIcon = null;
-                me._fadeElem.removeChild(widget);
-                me._widget = null;
-                me._closeTimeoutId = null;
-            };
+      if (!$defined(delay) || delay == 0) {
+        close();
+      } else {
+        this._closeTimeoutId = close.delay(delay);
+      }
+    }
+  },
 
-            if (!$defined(delay) || delay == 0) {
-                close();
-            }
-            else {
-                this._closeTimeoutId = close.delay(delay);
-            }
-        }
-    },
+  _buildWeb2d() {
+    const result = new web2d.Group({
+      width: 10,
+      height: 10,
+      x: 0,
+      y: 0,
+      coordSizeWidth: 10,
+      coordSizeHeight: 10,
+    });
 
-    _buildWeb2d: function () {
-        var result = new web2d.Group({
-            width: 10,
-            height: 10,
-            x: 0,
-            y: 0,
-            coordSizeWidth: 10,
-            coordSizeHeight: 10
-        });
+    const outerRect = new web2d.Rect(0, {
+      x: 0,
+      y: 0,
+      width: 10,
+      height: 10,
+      stroke: '0',
+      fillColor: 'black',
+    });
+    result.append(outerRect);
+    outerRect.setCursor('pointer');
 
-        var outerRect = new web2d.Rect(0, {
-            x: 0,
-            y: 0,
-            width: 10,
-            height: 10,
-            stroke: '0',
-            fillColor: 'black'
-        });
-        result.append(outerRect);
-        outerRect.setCursor('pointer');
+    const innerRect = new web2d.Rect(0, {
+      x: 1,
+      y: 1,
+      width: 8,
+      height: 8,
+      stroke: '1 solid white',
+      fillColor: 'gray',
+    });
+    result.append(innerRect);
 
-        var innerRect = new web2d.Rect(0, {
-            x: 1,
-            y: 1,
-            width: 8,
-            height: 8,
-            stroke: '1 solid white',
-            fillColor: 'gray'
-        });
-        result.append(innerRect);
+    const line = new web2d.Line({ stroke: '1 solid white' });
+    line.setFrom(1, 1);
+    line.setTo(9, 9);
+    result.append(line);
 
-        var line = new web2d.Line({stroke: '1 solid white'});
-        line.setFrom(1, 1);
-        line.setTo(9, 9);
-        result.append(line);
+    const line2 = new web2d.Line({ stroke: '1 solid white' });
+    line2.setFrom(1, 9);
+    line2.setTo(9, 1);
+    result.append(line2);
 
-        var line2 = new web2d.Line({stroke: '1 solid white'});
-        line2.setFrom(1, 9);
-        line2.setTo(9, 1);
-        result.append(line2);
+    // Some events ...
+    result.addEvent('mouseover', () => {
+      innerRect.setFill('#CC0033');
+    });
+    result.addEvent('mouseout', () => {
+      innerRect.setFill('gray');
+    });
 
-        // Some events ...
-        result.addEvent('mouseover', function () {
-            innerRect.setFill('#CC0033');
-        });
-        result.addEvent('mouseout', function () {
-            innerRect.setFill('gray');
-        });
+    result.setSize(50, 50);
+    return result;
+  },
 
-        result.setSize(50, 50);
-        return result;
-    },
-
-    /**
+  /**
      * @param topicId
      * @param icon
      */
-    decorate: function (topicId, icon) {
+  decorate(topicId, icon) {
+    const me = this;
 
-        var me = this;
+    if (!icon.__remove) {
+      icon.addEvent('mouseover', () => {
+        me.show(topicId, icon);
+      });
 
-        if (!icon.__remove) {
-            icon.addEvent('mouseover', function () {
-                me.show(topicId, icon);
-            });
-
-            icon.addEvent('mouseout', function () {
-                me.hide();
-            });
-            icon.__remove = true;
-        }
+      icon.addEvent('mouseout', () => {
+        me.hide();
+      });
+      icon.__remove = true;
     }
+  },
 
 });
 

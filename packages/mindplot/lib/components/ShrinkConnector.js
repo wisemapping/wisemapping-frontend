@@ -15,100 +15,97 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const web2D = require('@wismapping/web2d')
+const web2D = require('@wismapping/web2d');
+
 const web2d = web2D();
 
-const Topic = require('./Topic').default
+const Topic = require('./Topic').default;
 const ActionDispatcher = require('./ActionDispatcher').default;
 
 const ShirinkConnector = new Class({
-    initialize: function (topic) {
+  initialize(topic) {
+    const ellipse = new web2D.Elipse(Topic.prototype.INNER_RECT_ATTRIBUTES);
+    this._ellipse = ellipse;
+    ellipse.setFill('rgb(62,118,179)');
 
-        var ellipse = new web2D.Elipse(Topic.prototype.INNER_RECT_ATTRIBUTES);
-        this._ellipse = ellipse;
-        ellipse.setFill('rgb(62,118,179)');
+    ellipse.setSize(Topic.CONNECTOR_WIDTH, Topic.CONNECTOR_WIDTH);
+    ellipse.addEvent('click', (event) => {
+      const model = topic.getModel();
+      const collapse = !model.areChildrenShrunken();
 
-        ellipse.setSize(Topic.CONNECTOR_WIDTH, Topic.CONNECTOR_WIDTH);
-        ellipse.addEvent('click', function (event) {
-            var model = topic.getModel();
-            var collapse = !model.areChildrenShrunken();
+      const topicId = topic.getId();
+      const actionDispatcher = ActionDispatcher.getInstance();
+      actionDispatcher.shrinkBranch([topicId], collapse);
 
-            var topicId = topic.getId();
-            var actionDispatcher = ActionDispatcher.getInstance();
-            actionDispatcher.shrinkBranch([topicId], collapse);
+      event.stopPropagation();
+    });
 
-            event.stopPropagation();
+    ellipse.addEvent('mousedown', (event) => {
+      // Avoid node creation ...
+      event.stopPropagation();
+    });
 
-        });
+    ellipse.addEvent('dblclick', (event) => {
+      // Avoid node creation ...
+      event.stopPropagation();
+    });
 
-        ellipse.addEvent('mousedown', function (event) {
-            // Avoid node creation ...
-            event.stopPropagation();
-        });
+    ellipse.addEvent('mouseover', (event) => {
+      ellipse.setFill('rgb(153, 0, 255)');
+    });
+    const me = this;
+    ellipse.addEvent('mouseout', (event) => {
+      const color = topic.getBackgroundColor();
+      me.setFill(color);
+    });
 
-        ellipse.addEvent('dblclick', function (event) {
-            // Avoid node creation ...
-            event.stopPropagation();
-        });
+    ellipse.setCursor('default');
+    this._fillColor = '#f7f7f7';
+    const model = topic.getModel();
+    this.changeRender(model.areChildrenShrunken());
+  },
 
-        ellipse.addEvent('mouseover', function (event) {
-
-            ellipse.setFill('rgb(153, 0, 255)');
-        });
-        var me = this;
-        ellipse.addEvent('mouseout', function (event) {
-            var color = topic.getBackgroundColor();
-            me.setFill(color);
-        });
-
-        ellipse.setCursor('default');
-        this._fillColor = '#f7f7f7';
-        var model = topic.getModel();
-        this.changeRender(model.areChildrenShrunken());
-
-    },
-
-    changeRender: function (isShrink) {
-        var elipse = this._ellipse;
-        if (isShrink) {
-            elipse.setStroke('2', 'solid');
-        } else {
-            elipse.setStroke('1', 'solid');
-        }
-    },
-
-    setVisibility: function (value) {
-        this._ellipse.setVisibility(value);
-    },
-
-    setOpacity: function (opacity) {
-        this._ellipse.setOpacity(opacity);
-    },
-
-    setFill: function (color) {
-        this._fillColor = color;
-        this._ellipse.setFill(color);
-    },
-
-    setAttribute: function (name, value) {
-        this._ellipse.setAttribute(name, value);
-    },
-
-    addToWorkspace: function (group) {
-        group.append(this._ellipse);
-    },
-
-    setPosition: function (x, y) {
-        this._ellipse.setPosition(x, y);
-    },
-
-    moveToBack: function () {
-        this._ellipse.moveToBack();
-    },
-
-    moveToFront: function () {
-        this._ellipse.moveToFront();
+  changeRender(isShrink) {
+    const elipse = this._ellipse;
+    if (isShrink) {
+      elipse.setStroke('2', 'solid');
+    } else {
+      elipse.setStroke('1', 'solid');
     }
+  },
+
+  setVisibility(value) {
+    this._ellipse.setVisibility(value);
+  },
+
+  setOpacity(opacity) {
+    this._ellipse.setOpacity(opacity);
+  },
+
+  setFill(color) {
+    this._fillColor = color;
+    this._ellipse.setFill(color);
+  },
+
+  setAttribute(name, value) {
+    this._ellipse.setAttribute(name, value);
+  },
+
+  addToWorkspace(group) {
+    group.append(this._ellipse);
+  },
+
+  setPosition(x, y) {
+    this._ellipse.setPosition(x, y);
+  },
+
+  moveToBack() {
+    this._ellipse.moveToBack();
+  },
+
+  moveToFront() {
+    this._ellipse.moveToFront();
+  },
 });
 
 export default ShirinkConnector;

@@ -17,22 +17,22 @@
  */
 
 const EditorProperties = new Class({
-    initialize: function () {
-        this._zoom = 0;
-        this._position = 0;
-    },
+  initialize() {
+    this._zoom = 0;
+    this._position = 0;
+  },
 
-    setZoom: function (zoom) {
-        this._zoom = zoom;
-    },
+  setZoom(zoom) {
+    this._zoom = zoom;
+  },
 
-    getZoom: function () {
-        return this._zoom;
-    },
+  getZoom() {
+    return this._zoom;
+  },
 
-    asProperties: function () {
-        return "zoom=" + this._zoom + "\n";
-    }
+  asProperties() {
+    return `zoom=${this._zoom}\n`;
+  },
 });
 
 export default EditorProperties;

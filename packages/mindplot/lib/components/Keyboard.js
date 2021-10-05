@@ -18,17 +18,17 @@
 
 const Keyboard = new Class({
 
-    initialize: function () {
-    },
+  initialize() {
+  },
 
-    addShortcut: function (shortcuts, callback) {
-        if (!$.isArray(shortcuts)) {
-            shortcuts = [shortcuts];
-        }
-        _.each(shortcuts, function (shortcut) {
-            $(document).bind('keydown', shortcut, callback);
-        });
+  addShortcut(shortcuts, callback) {
+    if (!$.isArray(shortcuts)) {
+      shortcuts = [shortcuts];
     }
+    _.each(shortcuts, (shortcut) => {
+      $(document).bind('keydown', shortcut, callback);
+    });
+  },
 
 });
 

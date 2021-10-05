@@ -7,11 +7,11 @@ const xmlSerializer_Tango = require('./XMLSerializer_Tango').default;
 const xmlSerializerFactory = require('./XMLSerializerFactory').default;
 
 export const Persistence = {
-    Beta2PelaMigrator: beta2PelaMigrator,
-    ModelCodeName: modelCodeName,
-    Pela2TangoMigrator: pela2TangoMigrator,
-    XMLSerializer_Beta: xmlSerializer_Beta,
-    XMLSerializer_Pela: xmlSerializer_Pela,
-    XMLSerializer_Tango: xmlSerializer_Tango,
-    XMLSerializerFactory: xmlSerializerFactory,
+  Beta2PelaMigrator: beta2PelaMigrator,
+  ModelCodeName: modelCodeName,
+  Pela2TangoMigrator: pela2TangoMigrator,
+  XMLSerializer_Beta: xmlSerializer_Beta,
+  XMLSerializer_Pela: xmlSerializer_Pela,
+  XMLSerializer_Tango: xmlSerializer_Tango,
+  XMLSerializerFactory: xmlSerializerFactory,
 };

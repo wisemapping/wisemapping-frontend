@@ -9,13 +9,13 @@ const nodeModel = require('./NodeModel').default;
 const relationshipModel = require('./RelationshipModel').default;
 
 export const Model = {
-    FeatureModel: featureModel,
-    IconModel: iconModel,
-    IMindmap: iMindmap,
-    INodeModel: iNodeModel,
-    LinkModel: linkModel,
-    NoteModel: noteModel,
-    Mindmap: mindmap,
-    NodeModel: nodeModel,
-    RelationshipModel: relationshipModel,
+  FeatureModel: featureModel,
+  IconModel: iconModel,
+  IMindmap: iMindmap,
+  INodeModel: iNodeModel,
+  LinkModel: linkModel,
+  NoteModel: noteModel,
+  Mindmap: mindmap,
+  NodeModel: nodeModel,
+  RelationshipModel: relationshipModel,
 };

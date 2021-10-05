@@ -18,13 +18,13 @@
 const Events = require('../Events').default;
 
 const EventBus = new Class(/** @lends EventBus */{
-    Implements: Events,
-    /**
+  Implements: Events,
+  /**
      * @constructs
      * @implements mindplot.Events
      */
-    initialize: function() {
-    }
+  initialize() {
+  },
 });
 
 /**
@@ -32,14 +32,14 @@ const EventBus = new Class(/** @lends EventBus */{
  * @enum {String}
  */
 EventBus.events = {
-    NodeResizeEvent:'NodeResizeEvent',
-    NodeMoveEvent:'NodeMoveEvent',
-    NodeShrinkEvent:'NodeShrinkEvent',
-    NodeConnectEvent:'NodeConnectEvent',
-    NodeDisconnectEvent:'NodeDisconnectEvent',
-    NodeAdded:'NodeAdded',
-    NodeRemoved:'NodeRemoved',
-    DoLayout:'DoLayout'
+  NodeResizeEvent: 'NodeResizeEvent',
+  NodeMoveEvent: 'NodeMoveEvent',
+  NodeShrinkEvent: 'NodeShrinkEvent',
+  NodeConnectEvent: 'NodeConnectEvent',
+  NodeDisconnectEvent: 'NodeDisconnectEvent',
+  NodeAdded: 'NodeAdded',
+  NodeRemoved: 'NodeRemoved',
+  DoLayout: 'DoLayout',
 };
 
 /** instance */

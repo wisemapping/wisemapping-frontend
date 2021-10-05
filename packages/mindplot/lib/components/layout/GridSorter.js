@@ -15,66 +15,63 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const AbstractBasicSorter = require('./AbstractBasicSorter').default
+const AbstractBasicSorter = require('./AbstractBasicSorter').default;
 
 /**
  * @class
  * @extends mindplot.layout.AbstractBasicSorter
  */
 const GridSorter = new Class(/** @lends GridSorter */{
-    Extends: AbstractBasicSorter,
+  Extends: AbstractBasicSorter,
 
-    /**
+  /**
      * @param {} treeSet
      * @param {} node
      * @return offsets
      */
-    computeOffsets: function(treeSet, node) {
-        $assert(treeSet, "treeSet can no be null.");
-        $assert(node, "node can no be null.");
-        $assert("order can no be null.");
+  computeOffsets(treeSet, node) {
+    $assert(treeSet, 'treeSet can no be null.');
+    $assert(node, 'node can no be null.');
+    $assert('order can no be null.');
 
-        var children = this._getSortedChildren(treeSet, node);
+    const children = this._getSortedChildren(treeSet, node);
 
-        // Compute heights ...
-        var me = this;
-        var heights = children.map(function(child) {
-            return {
-                id: child.getId(),
-                height: me._computeChildrenHeight(treeSet, child)
-            };
-        });
+    // Compute heights ...
+    const me = this;
+    const heights = children.map((child) => ({
+      id: child.getId(),
+      height: me._computeChildrenHeight(treeSet, child),
+    }));
 
-        // Calculate the offsets ...
-        var result = {};
-        for (var i = 0; i < heights.length; i++) {
-            var even = i%2 == 0 ? 1 : -1;
+    // Calculate the offsets ...
+    const result = {};
+    for (let i = 0; i < heights.length; i++) {
+      const even = i % 2 == 0 ? 1 : -1;
 
-            var zeroHeight = i == 0 ? 0 : heights[0].height/2 * even;
-            var middleHeight = 0;
-            for (var j=i-2; j>0; j=j-2) {
-                middleHeight += heights[j].height * even;
-            }
-            var finalHeight = i == 0 ? 0 : heights[i].height/2 * even;
+      const zeroHeight = i == 0 ? 0 : heights[0].height / 2 * even;
+      let middleHeight = 0;
+      for (let j = i - 2; j > 0; j -= 2) {
+        middleHeight += heights[j].height * even;
+      }
+      const finalHeight = i == 0 ? 0 : heights[i].height / 2 * even;
 
-            var yOffset = zeroHeight + middleHeight +finalHeight;
-            var xOffset = node.getSize().width + GridSorter.GRID_HORIZONTAR_SIZE;
+      const yOffset = zeroHeight + middleHeight + finalHeight;
+      const xOffset = node.getSize().width + GridSorter.GRID_HORIZONTAR_SIZE;
 
-            $assert(!isNaN(xOffset), "xOffset can not be null");
-            $assert(!isNaN(yOffset), "yOffset can not be null");
+      $assert(!isNaN(xOffset), 'xOffset can not be null');
+      $assert(!isNaN(yOffset), 'yOffset can not be null');
 
-            result[heights[i].id] = {x:xOffset,y:yOffset};
+      result[heights[i].id] = { x: xOffset, y: yOffset };
+    }
+    return result;
+  },
 
-        }
-        return result;
-    },
-
-    /**
+  /**
      * @return {String} the print name of this class
      */
-    toString:function() {
-        return "Grid Sorter";
-    }
+  toString() {
+    return 'Grid Sorter';
+  },
 
 });
 

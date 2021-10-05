@@ -18,134 +18,129 @@
 const DragTopic = require('./DragTopic').default;
 
 const DragManager = new Class({
-    initialize:function(workspace, eventDispatcher) {
-        this._workspace = workspace;
-        this._designerModel = workspace;
-        this._listeners = {};
-        this._isDragInProcess = false;
-        this._eventDispatcher = eventDispatcher;
-        DragTopic.init(this._workspace);
-    },
+  initialize(workspace, eventDispatcher) {
+    this._workspace = workspace;
+    this._designerModel = workspace;
+    this._listeners = {};
+    this._isDragInProcess = false;
+    this._eventDispatcher = eventDispatcher;
+    DragTopic.init(this._workspace);
+  },
 
-    add : function(node) {
-        // Add behaviour ...
-        var workspace = this._workspace;
-        var screen = workspace.getScreenManager();
-        var dragManager = this;
-        var me = this;
-        var mouseDownListener = function(event) {
-            if (workspace.isWorkspaceEventsEnabled()) {
-                // Disable double drag...
-                workspace.enableWorkspaceEvents(false);
+  add(node) {
+    // Add behaviour ...
+    const workspace = this._workspace;
+    const screen = workspace.getScreenManager();
+    const dragManager = this;
+    const me = this;
+    const mouseDownListener = function (event) {
+      if (workspace.isWorkspaceEventsEnabled()) {
+        // Disable double drag...
+        workspace.enableWorkspaceEvents(false);
 
-                // Set initial position.
-                var layoutManager = me._eventDispatcher.getLayoutManager();
-                var dragNode = node.createDragNode(layoutManager);
+        // Set initial position.
+        const layoutManager = me._eventDispatcher.getLayoutManager();
+        const dragNode = node.createDragNode(layoutManager);
 
-                // Register mouse move listener ...
-                var mouseMoveListener = dragManager._buildMouseMoveListener(workspace, dragNode, dragManager);
-                screen.addEvent('mousemove', mouseMoveListener);
+        // Register mouse move listener ...
+        const mouseMoveListener = dragManager._buildMouseMoveListener(workspace, dragNode, dragManager);
+        screen.addEvent('mousemove', mouseMoveListener);
 
-                // Register mouse up listeners ...
-                var mouseUpListener = dragManager._buildMouseUpListener(workspace, node, dragNode, dragManager);
-                screen.addEvent('mouseup', mouseUpListener);
+        // Register mouse up listeners ...
+        const mouseUpListener = dragManager._buildMouseUpListener(workspace, node, dragNode, dragManager);
+        screen.addEvent('mouseup', mouseUpListener);
 
-                // Change cursor.
-                window.document.body.style.cursor = 'move';
-            }
-        };
-        node.addEvent('mousedown', mouseDownListener);
-    },
+        // Change cursor.
+        window.document.body.style.cursor = 'move';
+      }
+    };
+    node.addEvent('mousedown', mouseDownListener);
+  },
 
-    remove : function(node) {
-        var nodes = this._topics;
-        var contained = false;
-        var index = -1;
-        for (var i = 0; i < nodes.length; i++) {
-            if (nodes[i] == node) {
-                contained = true;
-                index = i;
-            }
-        }
-    },
+  remove(node) {
+    const nodes = this._topics;
+    let contained = false;
+    let index = -1;
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i] == node) {
+        contained = true;
+        index = i;
+      }
+    }
+  },
 
-    _buildMouseMoveListener : function(workspace, dragNode, dragManager) {
-        var screen = workspace.getScreenManager();
-        var me = this;
-        var result = function(event) {
+  _buildMouseMoveListener(workspace, dragNode, dragManager) {
+    const screen = workspace.getScreenManager();
+    const me = this;
+    const result = function (event) {
+      if (!me._isDragInProcess) {
+        // Execute Listeners ..
+        const startDragListener = dragManager._listeners.startdragging;
+        startDragListener(event, dragNode);
 
-            if (!me._isDragInProcess) {
-                // Execute Listeners ..
-                var startDragListener = dragManager._listeners['startdragging'];
-                startDragListener(event, dragNode);
+        // Add shadow node to the workspace.
+        workspace.append(dragNode);
 
-                // Add shadow node to the workspace.
-                workspace.append(dragNode);
+        me._isDragInProcess = true;
+      }
 
-                me._isDragInProcess = true;
-            }
+      const pos = screen.getWorkspaceMousePosition(event);
+      dragNode.setPosition(pos.x, pos.y);
 
-            var pos = screen.getWorkspaceMousePosition(event);
-            dragNode.setPosition(pos.x, pos.y);
+      // Call mouse move listeners ...
+      const dragListener = dragManager._listeners.dragging;
+      if ($defined(dragListener)) {
+        dragListener(event, dragNode);
+      }
 
-            // Call mouse move listeners ...
-            var dragListener = dragManager._listeners['dragging'];
-            if ($defined(dragListener)) {
-                dragListener(event, dragNode);
-            }
+      event.preventDefault();
+    };
+    dragManager._mouseMoveListener = result;
+    return result;
+  },
 
-            event.preventDefault();
+  _buildMouseUpListener(workspace, node, dragNode, dragManager) {
+    const screen = workspace.getScreenManager();
+    const me = this;
+    const result = function (event) {
+      $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
-        };
-        dragManager._mouseMoveListener = result;
-        return result;
-    },
+      // Remove all the events.
+      screen.removeEvent('mousemove', dragManager._mouseMoveListener);
+      screen.removeEvent('mouseup', dragManager._mouseUpListener);
 
-    _buildMouseUpListener : function(workspace, node, dragNode, dragManager) {
-        var screen = workspace.getScreenManager();
-        var me = this;
-        var result = function(event) {
-            $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
+      // Help GC
+      dragManager._mouseMoveListener = null;
+      dragManager._mouseUpListener = null;
 
-            // Remove all the events.
-            screen.removeEvent('mousemove', dragManager._mouseMoveListener);
-            screen.removeEvent('mouseup', dragManager._mouseUpListener);
+      workspace.enableWorkspaceEvents(true);
+      // Change the cursor to the default.
+      window.document.body.style.cursor = 'default';
 
-            // Help GC
-            dragManager._mouseMoveListener = null;
-            dragManager._mouseUpListener = null;
+      if (me._isDragInProcess) {
+        // Execute Listeners only if the node has been moved.
+        const endDragListener = dragManager._listeners.enddragging;
+        endDragListener(event, dragNode);
 
-            workspace.enableWorkspaceEvents(true);
-            // Change the cursor to the default.
-            window.document.body.style.cursor = 'default';
+        // Remove drag node from the workspace.
+        dragNode.removeFromWorkspace(workspace);
 
-            if (me._isDragInProcess) {
+        me._isDragInProcess = false;
+      }
+    };
+    dragManager._mouseUpListener = result;
+    return result;
+  },
 
-                // Execute Listeners only if the node has been moved.
-                var endDragListener = dragManager._listeners['enddragging'];
-                endDragListener(event, dragNode);
-
-                // Remove drag node from the workspace.
-                dragNode.removeFromWorkspace(workspace);
-
-                me._isDragInProcess = false;
-            }
-
-
-        };
-        dragManager._mouseUpListener = result;
-        return result;
-    },
-
-    /**
+  /**
      * type:
      *  - startdragging.
      *  - dragging
      *  - enddragging
      */
-    addEvent : function(type, listener) {
-        this._listeners[type] = listener;
-    }
+  addEvent(type, listener) {
+    this._listeners[type] = listener;
+  },
 });
 
 export default DragManager;

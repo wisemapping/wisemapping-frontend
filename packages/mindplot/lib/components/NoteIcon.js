@@ -19,66 +19,64 @@ const Icon = require('./Icon').default;
 const FloatingTip = require('./widget/FloatingTip').default;
 
 const NoteIcon = new Class({
-    Extends: Icon,
-    initialize: function (topic, noteModel, readOnly) {
-        $assert(topic, 'topic can not be null');
+  Extends: Icon,
+  initialize(topic, noteModel, readOnly) {
+    $assert(topic, 'topic can not be null');
 
-        this.parent(NoteIcon.IMAGE_URL);
-        this._linksModel = noteModel;
-        this._topic = topic;
-        this._readOnly = readOnly;
+    this.parent(NoteIcon.IMAGE_URL);
+    this._linksModel = noteModel;
+    this._topic = topic;
+    this._readOnly = readOnly;
 
-        this._registerEvents();
-    },
+    this._registerEvents();
+  },
 
-    _registerEvents: function () {
-        this._image.setCursor('pointer');
-        var me = this;
+  _registerEvents() {
+    this._image.setCursor('pointer');
+    const me = this;
 
-        if (!this._readOnly) {
-            // Add on click event to open the editor ...
-            this.addEvent('click', function (event) {
-                me._topic.showNoteEditor();
-                event.stopPropagation();
-            });
-        }
-        this._tip = new FloatingTip($(me.getImage()._peer._native), {
-            title: $msg('NOTE'),
-            container: 'body',
-            // Content can also be a function of the target element!
-            content: function () {
-                return me._buildTooltipContent();
-            },
-            html: true,
-            placement: 'bottom',
-            destroyOnExit: true
-        });
-
-    },
-
-    _buildTooltipContent: function () {
-        if ($("body").find("#textPopoverNote").length == 1) {
-            var text = $("body").find("#textPopoverNote");
-            text.text(this._linksModel.getText());
-        } else {
-            var result = $('<div id="textPopoverNote"></div>').css({padding: '5px'});
-
-            var text = $('<div></div>').text(this._linksModel.getText())
-                .css({
-                    'white-space': 'pre-wrap',
-                    'word-wrap': 'break-word'
-                }
-            );
-            result.append(text);
-            return result;
-        }
-    },
-
-    getModel: function () {
-        return this._linksModel;
+    if (!this._readOnly) {
+      // Add on click event to open the editor ...
+      this.addEvent('click', (event) => {
+        me._topic.showNoteEditor();
+        event.stopPropagation();
+      });
     }
+    this._tip = new FloatingTip($(me.getImage()._peer._native), {
+      title: $msg('NOTE'),
+      container: 'body',
+      // Content can also be a function of the target element!
+      content() {
+        return me._buildTooltipContent();
+      },
+      html: true,
+      placement: 'bottom',
+      destroyOnExit: true,
+    });
+  },
+
+  _buildTooltipContent() {
+    if ($('body').find('#textPopoverNote').length == 1) {
+      var text = $('body').find('#textPopoverNote');
+      text.text(this._linksModel.getText());
+    } else {
+      const result = $('<div id="textPopoverNote"></div>').css({ padding: '5px' });
+
+      var text = $('<div></div>').text(this._linksModel.getText())
+        .css({
+          'white-space': 'pre-wrap',
+          'word-wrap': 'break-word',
+        });
+      result.append(text);
+      return result;
+    }
+  },
+
+  getModel() {
+    return this._linksModel;
+  },
 });
 
-NoteIcon.IMAGE_URL = "images/notes.png";
+NoteIcon.IMAGE_URL = 'images/notes.png';
 
-export default NoteIcon
+export default NoteIcon;

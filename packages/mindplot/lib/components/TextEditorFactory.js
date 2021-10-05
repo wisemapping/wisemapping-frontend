@@ -20,11 +20,11 @@ const TextEditor = require('./TextEditor').default;
 const TextEditorFactory = {};
 
 TextEditorFactory.getTextEditorFromName = function (name) {
-    var editorClass = null;
-    if (name == 'RichTextEditor') {
-        editorClass = RichTextEditor;
-    } else {
-        editorClass = TextEditor;
-    }
-    return editorClass;
+  let editorClass = null;
+  if (name == 'RichTextEditor') {
+    editorClass = RichTextEditor;
+  } else {
+    editorClass = TextEditor;
+  }
+  return editorClass;
 };

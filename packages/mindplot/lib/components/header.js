@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-var mindplot = {};
+const mindplot = {};
 mindplot.util = {};
 mindplot.commands = {};
 mindplot.layout = {};
@@ -31,5 +31,5 @@ mindplot.persistence = {};
 mindplot.layout = {};
 
 Class.Mutators.Static = function (items) {
-    this.extend(items);
+  this.extend(items);
 };

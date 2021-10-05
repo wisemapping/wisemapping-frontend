@@ -17,27 +17,27 @@
  */
 
 const Messages = new Class({
-    Static: {
-        init: function (locale) {
-            locale = $defined(locale) ? locale : 'en';
-            var bundle = Messages.BUNDLES[locale];
-            if (bundle == null && locale.indexOf('_') != -1) {
-                // Try to locate without the specialization ...
-                locale = locale.substring(0, locale.indexOf('_'));
-                bundle = Messages.BUNDLES[locale];
-            }
-            Messages.__bundle = bundle;
-        },
+  Static: {
+    init(locale) {
+      locale = $defined(locale) ? locale : 'en';
+      let bundle = Messages.BUNDLES[locale];
+      if (bundle == null && locale.indexOf('_') != -1) {
+        // Try to locate without the specialization ...
+        locale = locale.substring(0, locale.indexOf('_'));
+        bundle = Messages.BUNDLES[locale];
+      }
+      Messages.__bundle = bundle;
     },
+  },
 });
 
 global.$msg = function (key) {
-    if (!Messages.__bundle) {
-        Messages.init('en');
-    }
+  if (!Messages.__bundle) {
+    Messages.init('en');
+  }
 
-    var msg = Messages.__bundle[key];
-    return msg ? msg : key;
+  const msg = Messages.__bundle[key];
+  return msg || key;
 };
 
 Messages.BUNDLES = {};

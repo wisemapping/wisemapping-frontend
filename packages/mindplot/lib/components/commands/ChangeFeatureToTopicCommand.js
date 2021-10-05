@@ -15,11 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const Command = require('../Command').default
+const Command = require('../Command').default;
 
 const ChangeFeatureToTopicCommand = new Class(/** @lends ChangeFeatureToTopicCommand */{
-    Extends:Command,
-    /**
+  Extends: Command,
+  /**
      * @extends mindplot.Command
      * @constructs
      * @param topicId
@@ -29,36 +29,36 @@ const ChangeFeatureToTopicCommand = new Class(/** @lends ChangeFeatureToTopicCom
      * @throws will throw an error if featureId is null or undefined
      * @throws will throw an error if attributes is null or undefined
      */
-    initialize: function(topicId, featureId, attributes) {
-        $assert($defined(topicId), 'topicId can not be null');
-        $assert($defined(featureId), 'featureId can not be null');
-        $assert($defined(attributes), 'attributes can not be null');
+  initialize(topicId, featureId, attributes) {
+    $assert($defined(topicId), 'topicId can not be null');
+    $assert($defined(featureId), 'featureId can not be null');
+    $assert($defined(attributes), 'attributes can not be null');
 
-        this.parent();
-        this._topicId = topicId;
-        this._featureId = featureId;
-        this._attributes = attributes;
-    },
+    this.parent();
+    this._topicId = topicId;
+    this._featureId = featureId;
+    this._attributes = attributes;
+  },
 
-    /** 
+  /**
      * Overrides abstract parent method
      */
-    execute: function(commandContext) {
-        var topic = commandContext.findTopics(this._topicId)[0];
-        var feature = topic.findFeatureById(this._featureId);
+  execute(commandContext) {
+    const topic = commandContext.findTopics(this._topicId)[0];
+    const feature = topic.findFeatureById(this._featureId);
 
-        var oldAttributes = feature.getAttributes();
-        feature.setAttributes(this._attributes);
-        this._attributes = oldAttributes;
-    },
+    const oldAttributes = feature.getAttributes();
+    feature.setAttributes(this._attributes);
+    this._attributes = oldAttributes;
+  },
 
-    /** 
+  /**
      * Overrides abstract parent method
      * @see {@link mindplot.Command.undoExecute}
      */
-    undoExecute: function(commandContext) {
-        this.execute(commandContext);
-    }
+  undoExecute(commandContext) {
+    this.execute(commandContext);
+  },
 });
 
 export default ChangeFeatureToTopicCommand;

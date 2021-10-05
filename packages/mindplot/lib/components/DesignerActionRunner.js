@@ -19,40 +19,38 @@ const DesignerUndoManager = require('./DesignerUndoManager').default;
 const EventBus = require('./layout/EventBus').default;
 
 const DesignerActionRunner = new Class({
-    initialize: function (commandContext, notifier) {
-        $assert(commandContext, "commandContext can not be null");
+  initialize(commandContext, notifier) {
+    $assert(commandContext, 'commandContext can not be null');
 
-        this._undoManager = new DesignerUndoManager();
-        this._context = commandContext;
-        this._notifier = notifier;
-    },
+    this._undoManager = new DesignerUndoManager();
+    this._context = commandContext;
+    this._notifier = notifier;
+  },
 
-    execute: function (command) {
-        $assert(command, "command can not be null");
-        command.execute(this._context);
-        this._undoManager.enqueue(command);
-        this.fireChangeEvent();
-        EventBus.instance.fireEvent(EventBus.events.DoLayout);
+  execute(command) {
+    $assert(command, 'command can not be null');
+    command.execute(this._context);
+    this._undoManager.enqueue(command);
+    this.fireChangeEvent();
+    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+  },
 
-    },
+  undo() {
+    this._undoManager.execUndo(this._context);
+    this.fireChangeEvent();
+    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+  },
 
-    undo: function () {
-        this._undoManager.execUndo(this._context);
-        this.fireChangeEvent();
-        EventBus.instance.fireEvent(EventBus.events.DoLayout);
-    },
+  redo() {
+    this._undoManager.execRedo(this._context);
+    this.fireChangeEvent();
+    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+  },
 
-    redo: function () {
-        this._undoManager.execRedo(this._context);
-        this.fireChangeEvent();
-        EventBus.instance.fireEvent(EventBus.events.DoLayout);
-
-    },
-
-    fireChangeEvent: function () {
-        var event = this._undoManager.buildEvent();
-        this._notifier.fireEvent("modelUpdate", event);
-    }
+  fireChangeEvent() {
+    const event = this._undoManager.buildEvent();
+    this._notifier.fireEvent('modelUpdate', event);
+  },
 });
 
 export default DesignerActionRunner;

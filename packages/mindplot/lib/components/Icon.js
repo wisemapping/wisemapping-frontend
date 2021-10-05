@@ -15,44 +15,45 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const web2D = require('@wismapping/web2d')
-const web2d = web2D()
+const web2D = require('@wismapping/web2d');
+
+const web2d = web2D();
 
 const Icon = new Class({
-    initialize: function (url) {
-        $assert(url, 'topic can not be null');
-        this._image = new web2d.Image();
-        this._image.setHref(url);
-        this._image.setSize(Icon.SIZE, Icon.SIZE);
-    },
+  initialize(url) {
+    $assert(url, 'topic can not be null');
+    this._image = new web2d.Image();
+    this._image.setHref(url);
+    this._image.setSize(Icon.SIZE, Icon.SIZE);
+  },
 
-    getImage: function () {
-        return this._image;
-    },
+  getImage() {
+    return this._image;
+  },
 
-    setGroup: function (group) {
-        this._group = group;
-    },
+  setGroup(group) {
+    this._group = group;
+  },
 
-    getGroup: function () {
-        return this._group;
-    },
+  getGroup() {
+    return this._group;
+  },
 
-    getSize: function () {
-        return this._image.getSize();
-    },
+  getSize() {
+    return this._image.getSize();
+  },
 
-    getPosition: function () {
-        return this._image.getPosition();
-    },
+  getPosition() {
+    return this._image.getPosition();
+  },
 
-    addEvent: function (type, fnc) {
-        this._image.addEvent(type, fnc);
-    },
+  addEvent(type, fnc) {
+    this._image.addEvent(type, fnc);
+  },
 
-    remove: function () {
-        throw "Unsupported operation";
-    }
+  remove() {
+    throw 'Unsupported operation';
+  },
 });
 
 Icon.SIZE = 90;

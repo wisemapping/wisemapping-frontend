@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 const web2D = require('@wismapping/web2d');
+
 const web2d = web2D();
 const NodeGraph = require('./NodeGraph').default;
 const { TopicShape } = require('./model/INodeModel');
@@ -33,1307 +34,1304 @@ const TopicEventDispatcher = require('./TopicEventDispatcher').default;
 const INodeModel = require('./model/INodeModel').default;
 
 const Topic = new Class(
-    /** @lends Topic */ {
-        Extends: NodeGraph,
-        /**
+  /** @lends Topic */ {
+    Extends: NodeGraph,
+    /**
          * @extends mindplot.NodeGraph
          * @constructs
          * @param model
          * @param options
          */
-        initialize: function (model, options) {
-            this.parent(model, options);
-            this._children = [];
-            this._parent = null;
-            this._relationships = [];
-            this._isInWorkspace = false;
-            this._buildTopicShape();
+    initialize(model, options) {
+      this.parent(model, options);
+      this._children = [];
+      this._parent = null;
+      this._relationships = [];
+      this._isInWorkspace = false;
+      this._buildTopicShape();
 
-            // Position a topic ....
-            var pos = model.getPosition();
-            if (pos != null && this.isCentralTopic()) {
-                this.setPosition(pos);
-            }
+      // Position a topic ....
+      const pos = model.getPosition();
+      if (pos != null && this.isCentralTopic()) {
+        this.setPosition(pos);
+      }
 
-            // Register events for the topic ...
-            if (!this.isReadOnly()) {
-                this._registerEvents();
-            }
-        },
+      // Register events for the topic ...
+      if (!this.isReadOnly()) {
+        this._registerEvents();
+      }
+    },
 
-        _registerEvents: function () {
-            this.setMouseEventsEnabled(true);
+    _registerEvents() {
+      this.setMouseEventsEnabled(true);
 
-            // Prevent click on the topics being propagated ...
-            this.addEvent('click', function (event) {
-                event.stopPropagation();
-            });
-            var me = this;
-            this.addEvent('dblclick', function (event) {
-                me._getTopicEventDispatcher().show(me);
-                event.stopPropagation();
-            });
-        },
+      // Prevent click on the topics being propagated ...
+      this.addEvent('click', (event) => {
+        event.stopPropagation();
+      });
+      const me = this;
+      this.addEvent('dblclick', (event) => {
+        me._getTopicEventDispatcher().show(me);
+        event.stopPropagation();
+      });
+    },
 
-        /**
+    /**
          * @param {String} type the topic shape type
          * @see {@link mindplot.model.INodeModel}
          */
-        setShapeType: function (type) {
-            this._setShapeType(type, true);
-        },
+    setShapeType(type) {
+      this._setShapeType(type, true);
+    },
 
-        /** @return {mindplot.Topic} parent topic */
-        getParent: function () {
-            return this._parent;
-        },
+    /** @return {mindplot.Topic} parent topic */
+    getParent() {
+      return this._parent;
+    },
 
-        _setShapeType: function (type, updateModel) {
-            // Remove inner shape figure ...
-            var model = this.getModel();
-            if ($defined(updateModel) && updateModel) {
-                model.setShapeType(type);
-            }
+    _setShapeType(type, updateModel) {
+      // Remove inner shape figure ...
+      const model = this.getModel();
+      if ($defined(updateModel) && updateModel) {
+        model.setShapeType(type);
+      }
 
-            var oldInnerShape = this.getInnerShape();
-            if (oldInnerShape != null) {
-                this._removeInnerShape();
+      const oldInnerShape = this.getInnerShape();
+      if (oldInnerShape != null) {
+        this._removeInnerShape();
 
-                // Create a new one ...
-                var innerShape = this.getInnerShape();
+        // Create a new one ...
+        const innerShape = this.getInnerShape();
 
-                // Update figure size ...
-                var size = this.getSize();
-                this.setSize(size, true);
+        // Update figure size ...
+        const size = this.getSize();
+        this.setSize(size, true);
 
-                var group = this.get2DElement();
-                group.append(innerShape);
+        const group = this.get2DElement();
+        group.append(innerShape);
 
-                // Move text to the front ...
-                var text = this.getTextShape();
-                text.moveToFront();
+        // Move text to the front ...
+        const text = this.getTextShape();
+        text.moveToFront();
 
-                //Move iconGroup to front ...
-                var iconGroup = this.getIconGroup();
-                if ($defined(iconGroup)) {
-                    iconGroup.moveToFront();
-                }
+        // Move iconGroup to front ...
+        const iconGroup = this.getIconGroup();
+        if ($defined(iconGroup)) {
+          iconGroup.moveToFront();
+        }
 
-                //Move connector to front
-                var connector = this.getShrinkConnector();
-                if ($defined(connector)) {
-                    connector.moveToFront();
-                }
-            }
-        },
+        // Move connector to front
+        const connector = this.getShrinkConnector();
+        if ($defined(connector)) {
+          connector.moveToFront();
+        }
+      }
+    },
 
-        /** @return {String} topic shape type */
-        getShapeType: function () {
-            var model = this.getModel();
-            var result = model.getShapeType();
-            if (!$defined(result)) {
-                result = TopicStyle.defaultShapeType(this);
-            }
-            return result;
-        },
+    /** @return {String} topic shape type */
+    getShapeType() {
+      const model = this.getModel();
+      let result = model.getShapeType();
+      if (!$defined(result)) {
+        result = TopicStyle.defaultShapeType(this);
+      }
+      return result;
+    },
 
-        _removeInnerShape: function () {
-            var group = this.get2DElement();
-            var innerShape = this.getInnerShape();
-            group.removeChild(innerShape);
-            this._innerShape = null;
-            return innerShape;
-        },
+    _removeInnerShape() {
+      const group = this.get2DElement();
+      const innerShape = this.getInnerShape();
+      group.removeChild(innerShape);
+      this._innerShape = null;
+      return innerShape;
+    },
 
-        /** @return {web2d.Line|web2d.Rect|web2d.Image} inner shape of the topic */
-        getInnerShape: function () {
-            if (!$defined(this._innerShape)) {
-                // Create inner box.
-                this._innerShape = this._buildShape(
-                    Topic.INNER_RECT_ATTRIBUTES,
-                    this.getShapeType()
-                );
+    /** @return {web2d.Line|web2d.Rect|web2d.Image} inner shape of the topic */
+    getInnerShape() {
+      if (!$defined(this._innerShape)) {
+        // Create inner box.
+        this._innerShape = this._buildShape(
+          Topic.INNER_RECT_ATTRIBUTES,
+          this.getShapeType(),
+        );
 
-                // Update bgcolor ...
-                var bgColor = this.getBackgroundColor();
-                this._setBackgroundColor(bgColor, false);
+        // Update bgcolor ...
+        const bgColor = this.getBackgroundColor();
+        this._setBackgroundColor(bgColor, false);
 
-                // Update border color ...
-                var brColor = this.getBorderColor();
-                this._setBorderColor(brColor, false);
+        // Update border color ...
+        const brColor = this.getBorderColor();
+        this._setBorderColor(brColor, false);
 
-                // Define the pointer ...
-                if (!this.isCentralTopic() && !this.isReadOnly()) {
-                    this._innerShape.setCursor('move');
-                } else {
-                    this._innerShape.setCursor('default');
-                }
-            }
-            return this._innerShape;
-        },
+        // Define the pointer ...
+        if (!this.isCentralTopic() && !this.isReadOnly()) {
+          this._innerShape.setCursor('move');
+        } else {
+          this._innerShape.setCursor('default');
+        }
+      }
+      return this._innerShape;
+    },
 
-        _buildShape: function (attributes, shapeType) {
-            $assert(attributes, 'attributes can not be null');
-            $assert(shapeType, 'shapeType can not be null');
+    _buildShape(attributes, shapeType) {
+      $assert(attributes, 'attributes can not be null');
+      $assert(shapeType, 'shapeType can not be null');
 
-            var result;
-            if (shapeType == TopicShape.RECTANGLE) {
-                result = new web2d.Rect(0, attributes);
-            } else if (shapeType == TopicShape.IMAGE) {
-                var model = this.getModel();
-                var url = model.getImageUrl();
-                var size = model.getImageSize();
+      let result;
+      if (shapeType == TopicShape.RECTANGLE) {
+        result = new web2d.Rect(0, attributes);
+      } else if (shapeType == TopicShape.IMAGE) {
+        const model = this.getModel();
+        const url = model.getImageUrl();
+        const size = model.getImageSize();
 
-                result = new web2d.Image();
-                result.setHref(url);
-                result.setSize(size.width, size.height);
+        result = new web2d.Image();
+        result.setHref(url);
+        result.setSize(size.width, size.height);
 
-                result.getSize = function () {
-                    return model.getImageSize();
-                };
+        result.getSize = function () {
+          return model.getImageSize();
+        };
 
-                result.setPosition = function () {};
-            } else if (shapeType == TopicShape.ELLIPSE) {
-                result = new web2d.Rect(0.9, attributes);
-            } else if (shapeType == TopicShape.ROUNDED_RECT) {
-                result = new web2d.Rect(0.3, attributes);
-            } else if (shapeType == TopicShape.LINE) {
-                result = new web2d.Line({ strokeColor: '#495879', strokeWidth: 1 });
-                result.setSize = function (width, height) {
-                    this.size = { width: width, height: height };
-                    result.setFrom(0, height);
-                    result.setTo(width, height);
+        result.setPosition = function () {};
+      } else if (shapeType == TopicShape.ELLIPSE) {
+        result = new web2d.Rect(0.9, attributes);
+      } else if (shapeType == TopicShape.ROUNDED_RECT) {
+        result = new web2d.Rect(0.3, attributes);
+      } else if (shapeType == TopicShape.LINE) {
+        result = new web2d.Line({ strokeColor: '#495879', strokeWidth: 1 });
+        result.setSize = function (width, height) {
+          this.size = { width, height };
+          result.setFrom(0, height);
+          result.setTo(width, height);
 
-                    // Lines will have the same color of the default connection lines...
-                    var stokeColor = ConnectionLine.getStrokeColor();
-                    result.setStroke(1, 'solid', stokeColor);
-                };
+          // Lines will have the same color of the default connection lines...
+          const stokeColor = ConnectionLine.getStrokeColor();
+          result.setStroke(1, 'solid', stokeColor);
+        };
 
-                result.getSize = function () {
-                    return this.size;
-                };
+        result.getSize = function () {
+          return this.size;
+        };
 
-                result.setPosition = function () {};
+        result.setPosition = function () {};
 
-                result.setFill = function () {};
+        result.setFill = function () {};
 
-                result.setStroke = function () {};
-            } else {
-                $assert(false, 'Unsupported figure shapeType:' + shapeType);
-            }
-            result.setPosition(0, 0);
-            return result;
-        },
+        result.setStroke = function () {};
+      } else {
+        $assert(false, `Unsupported figure shapeType:${shapeType}`);
+      }
+      result.setPosition(0, 0);
+      return result;
+    },
 
-        /** @param {String} type the cursor type, either 'pointer', 'default' or 'move' */
-        setCursor: function (type) {
-            var innerShape = this.getInnerShape();
-            innerShape.setCursor(type);
+    /** @param {String} type the cursor type, either 'pointer', 'default' or 'move' */
+    setCursor(type) {
+      const innerShape = this.getInnerShape();
+      innerShape.setCursor(type);
 
-            var outerShape = this.getOuterShape();
-            outerShape.setCursor(type);
+      const outerShape = this.getOuterShape();
+      outerShape.setCursor(type);
 
-            var textShape = this.getTextShape();
-            textShape.setCursor(type);
-        },
+      const textShape = this.getTextShape();
+      textShape.setCursor(type);
+    },
 
-        /** @return outer shape */
-        getOuterShape: function () {
-            if (!$defined(this._outerShape)) {
-                var rect = this._buildShape(Topic.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
-                rect.setPosition(-2, -3);
-                rect.setOpacity(0);
-                this._outerShape = rect;
-            }
+    /** @return outer shape */
+    getOuterShape() {
+      if (!$defined(this._outerShape)) {
+        const rect = this._buildShape(Topic.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
+        rect.setPosition(-2, -3);
+        rect.setOpacity(0);
+        this._outerShape = rect;
+      }
 
-            return this._outerShape;
-        },
+      return this._outerShape;
+    },
 
-        /** @return text shape */
-        getTextShape: function () {
-            if (!$defined(this._text)) {
-                this._text = this._buildTextShape(false);
+    /** @return text shape */
+    getTextShape() {
+      if (!$defined(this._text)) {
+        this._text = this._buildTextShape(false);
 
-                // Set Text ...
-                var text = this.getText();
-                this._setText(text, false);
-            }
+        // Set Text ...
+        const text = this.getText();
+        this._setText(text, false);
+      }
 
-            return this._text;
-        },
+      return this._text;
+    },
 
-        /** @return icon group */
-        getOrBuildIconGroup: function () {
-            if (!$defined(this._iconsGroup)) {
-                this._iconsGroup = this._buildIconGroup();
-                var group = this.get2DElement();
-                group.append(this._iconsGroup.getNativeElement());
-                this._iconsGroup.moveToFront();
-            }
-            return this._iconsGroup;
-        },
+    /** @return icon group */
+    getOrBuildIconGroup() {
+      if (!$defined(this._iconsGroup)) {
+        this._iconsGroup = this._buildIconGroup();
+        const group = this.get2DElement();
+        group.append(this._iconsGroup.getNativeElement());
+        this._iconsGroup.moveToFront();
+      }
+      return this._iconsGroup;
+    },
 
-        /** */
-        getIconGroup: function () {
-            return this._iconsGroup;
-        },
+    /** */
+    getIconGroup() {
+      return this._iconsGroup;
+    },
 
-        _buildIconGroup: function () {
-            var textHeight = this.getTextShape().getFontHeight();
-            var result = new IconGroup(this.getId(), textHeight);
-            var padding = TopicStyle.getInnerPadding(this);
-            result.setPosition(padding, padding);
+    _buildIconGroup() {
+      const textHeight = this.getTextShape().getFontHeight();
+      const result = new IconGroup(this.getId(), textHeight);
+      const padding = TopicStyle.getInnerPadding(this);
+      result.setPosition(padding, padding);
 
-            // Load topic features ...
-            var model = this.getModel();
-            var featuresModel = model.getFeatures();
-            for (var i = 0; i < featuresModel.length; i++) {
-                var featureModel = featuresModel[i];
-                var icon = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
-                result.addIcon(
-                    icon,
-                    featureModel.getType() == TopicFeature.Icon.id && !this.isReadOnly()
-                );
-            }
+      // Load topic features ...
+      const model = this.getModel();
+      const featuresModel = model.getFeatures();
+      for (let i = 0; i < featuresModel.length; i++) {
+        const featureModel = featuresModel[i];
+        const icon = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
+        result.addIcon(
+          icon,
+          featureModel.getType() == TopicFeature.Icon.id && !this.isReadOnly(),
+        );
+      }
 
-            return result;
-        },
+      return result;
+    },
 
-        /**
+    /**
          * assigns the new feature model to the topic's node model and adds the respective icon
          * @param {mindplot.model.FeatureModel} featureModel
          * @return {mindplot.Icon} the icon corresponding to the feature model
          */
-        addFeature: function (featureModel) {
-            var iconGroup = this.getOrBuildIconGroup();
-            this.closeEditors();
+    addFeature(featureModel) {
+      const iconGroup = this.getOrBuildIconGroup();
+      this.closeEditors();
 
-            // Update model ...
-            var model = this.getModel();
-            model.addFeature(featureModel);
+      // Update model ...
+      const model = this.getModel();
+      model.addFeature(featureModel);
 
-            var result = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
-            iconGroup.addIcon(
-                result,
-                featureModel.getType() == TopicFeature.Icon.id && !this.isReadOnly()
-            );
+      const result = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
+      iconGroup.addIcon(
+        result,
+        featureModel.getType() == TopicFeature.Icon.id && !this.isReadOnly(),
+      );
 
-            this._adjustShapes();
-            return result;
+      this._adjustShapes();
+      return result;
+    },
+
+    /** */
+    findFeatureById(id) {
+      const model = this.getModel();
+      return model.findFeatureById(id);
+    },
+
+    /** */
+    removeFeature(featureModel) {
+      $assert(featureModel, 'featureModel could not be null');
+
+      // Removing the icon from MODEL
+      const model = this.getModel();
+      model.removeFeature(featureModel);
+
+      // Removing the icon from UI
+      const iconGroup = this.getIconGroup();
+      if ($defined(iconGroup)) {
+        iconGroup.removeIconByModel(featureModel);
+      }
+      this._adjustShapes();
+    },
+
+    /** */
+    addRelationship(relationship) {
+      this._relationships.push(relationship);
+    },
+
+    /** */
+    deleteRelationship(relationship) {
+      this._relationships.erase(relationship);
+    },
+
+    /** */
+    getRelationships() {
+      return this._relationships;
+    },
+
+    _buildTextShape(readOnly) {
+      const result = new web2d.Text();
+      const family = this.getFontFamily();
+      const size = this.getFontSize();
+      const weight = this.getFontWeight();
+      const style = this.getFontStyle();
+      result.setFont(family, size, style, weight);
+
+      const color = this.getFontColor();
+      result.setColor(color);
+
+      if (!readOnly) {
+        // Propagate mouse events ...
+        if (!this.isCentralTopic()) {
+          result.setCursor('move');
+        } else {
+          result.setCursor('default');
+        }
+      }
+
+      return result;
+    },
+
+    /** */
+    setFontFamily(value, updateModel) {
+      const textShape = this.getTextShape();
+      textShape.setFontFamily(value);
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setFontFamily(value);
+      }
+      this._adjustShapes(updateModel);
+    },
+
+    /** */
+    setFontSize(value, updateModel) {
+      const textShape = this.getTextShape();
+      textShape.setSize(value);
+
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setFontSize(value);
+      }
+      this._adjustShapes(updateModel);
+    },
+
+    /** */
+    setFontStyle(value, updateModel) {
+      const textShape = this.getTextShape();
+      textShape.setStyle(value);
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setFontStyle(value);
+      }
+      this._adjustShapes(updateModel);
+    },
+
+    /** */
+    setFontWeight(value, updateModel) {
+      const textShape = this.getTextShape();
+      textShape.setWeight(value);
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setFontWeight(value);
+      }
+      this._adjustShapes();
+    },
+
+    /** */
+    getFontWeight() {
+      const model = this.getModel();
+      let result = model.getFontWeight();
+      if (!$defined(result)) {
+        const font = TopicStyle.defaultFontStyle(this);
+        result = font.weight;
+      }
+      return result;
+    },
+
+    /** */
+    getFontFamily() {
+      const model = this.getModel();
+      let result = model.getFontFamily();
+      if (!$defined(result)) {
+        const font = TopicStyle.defaultFontStyle(this);
+        result = font.font;
+      }
+      return result;
+    },
+
+    /** */
+    getFontColor() {
+      const model = this.getModel();
+      let result = model.getFontColor();
+      if (!$defined(result)) {
+        const font = TopicStyle.defaultFontStyle(this);
+        result = font.color;
+      }
+      return result;
+    },
+
+    /** */
+    getFontStyle() {
+      const model = this.getModel();
+      let result = model.getFontStyle();
+      if (!$defined(result)) {
+        const font = TopicStyle.defaultFontStyle(this);
+        result = font.style;
+      }
+      return result;
+    },
+
+    /** */
+    getFontSize() {
+      const model = this.getModel();
+      let result = model.getFontSize();
+      if (!$defined(result)) {
+        const font = TopicStyle.defaultFontStyle(this);
+        result = font.size;
+      }
+      return result;
+    },
+
+    /** */
+    setFontColor(value, updateModel) {
+      const textShape = this.getTextShape();
+      textShape.setColor(value);
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setFontColor(value);
+      }
+    },
+
+    _setText(text, updateModel) {
+      const textShape = this.getTextShape();
+      textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
+
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setText(text);
+      }
+    },
+
+    /** */
+    setText(text) {
+      // Avoid empty nodes ...
+      if (!text || $.trim(text).length == 0) {
+        text = null;
+      }
+
+      this._setText(text, true);
+      this._adjustShapes();
+    },
+
+    /** */
+    getText() {
+      const model = this.getModel();
+      let result = model.getText();
+      if (!$defined(result)) {
+        result = TopicStyle.defaultText(this);
+      }
+      return result;
+    },
+
+    /** */
+    setBackgroundColor(color) {
+      this._setBackgroundColor(color, true);
+    },
+
+    _setBackgroundColor(color, updateModel) {
+      const innerShape = this.getInnerShape();
+      innerShape.setFill(color);
+
+      const connector = this.getShrinkConnector();
+      if (connector) {
+        connector.setFill(color);
+      }
+
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setBackgroundColor(color);
+      }
+    },
+
+    /** */
+    getBackgroundColor() {
+      const model = this.getModel();
+      let result = model.getBackgroundColor();
+      if (!$defined(result)) {
+        result = TopicStyle.defaultBackgroundColor(this);
+      }
+      return result;
+    },
+
+    /** */
+    setBorderColor(color) {
+      this._setBorderColor(color, true);
+    },
+
+    _setBorderColor(color, updateModel) {
+      const innerShape = this.getInnerShape();
+      innerShape.setAttribute('strokeColor', color);
+
+      const connector = this.getShrinkConnector();
+      if (connector) {
+        connector.setAttribute('strokeColor', color);
+      }
+
+      if ($defined(updateModel) && updateModel) {
+        const model = this.getModel();
+        model.setBorderColor(color);
+      }
+    },
+
+    /** */
+    getBorderColor() {
+      const model = this.getModel();
+      let result = model.getBorderColor();
+      if (!$defined(result)) {
+        result = TopicStyle.defaultBorderColor(this);
+      }
+      return result;
+    },
+
+    _buildTopicShape() {
+      const groupAttributes = {
+        width: 100,
+        height: 100,
+        coordSizeWidth: 100,
+        coordSizeHeight: 100,
+      };
+      const group = new web2d.Group(groupAttributes);
+      this._set2DElement(group);
+
+      // Shape must be build based on the model width ...
+      const outerShape = this.getOuterShape();
+      const innerShape = this.getInnerShape();
+      const textShape = this.getTextShape();
+
+      // Add to the group ...
+      group.append(outerShape);
+      group.append(innerShape);
+      group.append(textShape);
+
+      // Update figure size ...
+      const model = this.getModel();
+      if (model.getFeatures().length != 0) {
+        this.getOrBuildIconGroup();
+      }
+
+      const shrinkConnector = this.getShrinkConnector();
+      if ($defined(shrinkConnector)) {
+        shrinkConnector.addToWorkspace(group);
+      }
+
+      // Register listeners ...
+      this._registerDefaultListenersToElement(group, this);
+    },
+
+    _registerDefaultListenersToElement(elem, topic) {
+      const mouseOver = function (event) {
+        if (topic.isMouseEventsEnabled()) {
+          topic.handleMouseOver(event);
+        }
+      };
+      elem.addEvent('mouseover', mouseOver);
+
+      const outout = function (event) {
+        if (topic.isMouseEventsEnabled()) {
+          topic.handleMouseOut(event);
+        }
+      };
+      elem.addEvent('mouseout', outout);
+
+      const me = this;
+      // Focus events ...
+      elem.addEvent('mousedown', (event) => {
+        if (!me.isReadOnly()) {
+          // Disable topic selection of readOnly mode ...
+          let value = true;
+          if (
+            (event.metaKey && Browser.Platform.mac)
+                        || (event.ctrlKey && !Browser.Platform.mac)
+          ) {
+            value = !me.isOnFocus();
+            event.stopPropagation();
+            event.preventDefault();
+          }
+          topic.setOnFocus(value);
+        }
+
+        const eventDispatcher = me._getTopicEventDispatcher();
+        eventDispatcher.process(TopicEvent.CLICK, me);
+        event.stopPropagation();
+      });
+    },
+
+    /** */
+    areChildrenShrunken() {
+      const model = this.getModel();
+      return model.areChildrenShrunken() && !this.isCentralTopic();
+    },
+
+    /** */
+    isCollapsed() {
+      let result = false;
+
+      let current = this.getParent();
+      while (current && !result) {
+        result = current.areChildrenShrunken();
+        current = current.getParent();
+      }
+      return result;
+    },
+
+    /** */
+    setChildrenShrunken(value) {
+      // Update Model ...
+      const model = this.getModel();
+      model.setChildrenShrunken(value);
+
+      // Change render base on the state.
+      const shrinkConnector = this.getShrinkConnector();
+      if ($defined(shrinkConnector)) {
+        shrinkConnector.changeRender(value);
+      }
+
+      // Do some fancy animation ....
+      const elements = this._flatten2DElements(this);
+      const fade = new FadeEffect(elements, !value);
+      const me = this;
+      fade.addEvent('complete', () => {
+        // Set focus on the parent node ...
+        if (value) {
+          me.setOnFocus(true);
+        }
+
+        // Set focus in false for all the children ...
+        elements.forEach((elem) => {
+          if (elem.setOnFocus) {
+            elem.setOnFocus(false);
+          }
+        });
+      });
+      fade.start();
+
+      EventBus.instance.fireEvent(EventBus.events.NodeShrinkEvent, model);
+    },
+
+    /** */
+    getShrinkConnector() {
+      let result = this._connector;
+      if (this._connector == null) {
+        this._connector = new ShirinkConnector(this);
+        this._connector.setVisibility(false);
+        result = this._connector;
+      }
+      return result;
+    },
+
+    /** */
+    handleMouseOver() {
+      const outerShape = this.getOuterShape();
+      outerShape.setOpacity(1);
+    },
+
+    /** */
+    handleMouseOut() {
+      const outerShape = this.getOuterShape();
+      if (!this.isOnFocus()) {
+        outerShape.setOpacity(0);
+      }
+    },
+
+    /** */
+    showTextEditor(text) {
+      this._getTopicEventDispatcher().show(this, { text });
+    },
+
+    /** */
+    showNoteEditor() {
+      const topicId = this.getId();
+      const model = this.getModel();
+      const editorModel = {
+        getValue() {
+          const notes = model.findFeatureByType(TopicFeature.Note.id);
+          let result;
+          if (notes.length > 0) result = notes[0].getText();
+
+          return result;
         },
 
-        /** */
-        findFeatureById: function (id) {
-            var model = this.getModel();
-            return model.findFeatureById(id);
-        },
-
-        /** */
-        removeFeature: function (featureModel) {
-            $assert(featureModel, 'featureModel could not be null');
-
-            //Removing the icon from MODEL
-            var model = this.getModel();
-            model.removeFeature(featureModel);
-
-            //Removing the icon from UI
-            var iconGroup = this.getIconGroup();
-            if ($defined(iconGroup)) {
-                iconGroup.removeIconByModel(featureModel);
-            }
-            this._adjustShapes();
-        },
-
-        /** */
-        addRelationship: function (relationship) {
-            this._relationships.push(relationship);
-        },
-
-        /** */
-        deleteRelationship: function (relationship) {
-            this._relationships.erase(relationship);
-        },
-
-        /** */
-        getRelationships: function () {
-            return this._relationships;
-        },
-
-        _buildTextShape: function (readOnly) {
-            var result = new web2d.Text();
-            var family = this.getFontFamily();
-            var size = this.getFontSize();
-            var weight = this.getFontWeight();
-            var style = this.getFontStyle();
-            result.setFont(family, size, style, weight);
-
-            var color = this.getFontColor();
-            result.setColor(color);
-
-            if (!readOnly) {
-                // Propagate mouse events ...
-                if (!this.isCentralTopic()) {
-                    result.setCursor('move');
-                } else {
-                    result.setCursor('default');
-                }
-            }
-
-            return result;
-        },
-
-        /** */
-        setFontFamily: function (value, updateModel) {
-            var textShape = this.getTextShape();
-            textShape.setFontFamily(value);
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setFontFamily(value);
-            }
-            this._adjustShapes(updateModel);
-        },
-
-        /** */
-        setFontSize: function (value, updateModel) {
-            var textShape = this.getTextShape();
-            textShape.setSize(value);
-
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setFontSize(value);
-            }
-            this._adjustShapes(updateModel);
-        },
-
-        /** */
-        setFontStyle: function (value, updateModel) {
-            var textShape = this.getTextShape();
-            textShape.setStyle(value);
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setFontStyle(value);
-            }
-            this._adjustShapes(updateModel);
-        },
-
-        /** */
-        setFontWeight: function (value, updateModel) {
-            var textShape = this.getTextShape();
-            textShape.setWeight(value);
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setFontWeight(value);
-            }
-            this._adjustShapes();
-        },
-
-        /** */
-        getFontWeight: function () {
-            var model = this.getModel();
-            var result = model.getFontWeight();
-            if (!$defined(result)) {
-                var font = TopicStyle.defaultFontStyle(this);
-                result = font.weight;
-            }
-            return result;
-        },
-
-        /** */
-        getFontFamily: function () {
-            var model = this.getModel();
-            var result = model.getFontFamily();
-            if (!$defined(result)) {
-                var font = TopicStyle.defaultFontStyle(this);
-                result = font.font;
-            }
-            return result;
-        },
-
-        /** */
-        getFontColor: function () {
-            var model = this.getModel();
-            var result = model.getFontColor();
-            if (!$defined(result)) {
-                var font = TopicStyle.defaultFontStyle(this);
-                result = font.color;
-            }
-            return result;
-        },
-
-        /** */
-        getFontStyle: function () {
-            var model = this.getModel();
-            var result = model.getFontStyle();
-            if (!$defined(result)) {
-                var font = TopicStyle.defaultFontStyle(this);
-                result = font.style;
-            }
-            return result;
-        },
-
-        /** */
-        getFontSize: function () {
-            var model = this.getModel();
-            var result = model.getFontSize();
-            if (!$defined(result)) {
-                var font = TopicStyle.defaultFontStyle(this);
-                result = font.size;
-            }
-            return result;
-        },
-
-        /** */
-        setFontColor: function (value, updateModel) {
-            var textShape = this.getTextShape();
-            textShape.setColor(value);
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setFontColor(value);
-            }
-        },
-
-        _setText: function (text, updateModel) {
-            var textShape = this.getTextShape();
-            textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
-
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setText(text);
-            }
-        },
-
-        /** */
-        setText: function (text) {
-            // Avoid empty nodes ...
-            if (!text || $.trim(text).length == 0) {
-                text = null;
-            }
-
-            this._setText(text, true);
-            this._adjustShapes();
-        },
-
-        /** */
-        getText: function () {
-            var model = this.getModel();
-            var result = model.getText();
-            if (!$defined(result)) {
-                result = TopicStyle.defaultText(this);
-            }
-            return result;
-        },
-
-        /** */
-        setBackgroundColor: function (color) {
-            this._setBackgroundColor(color, true);
-        },
-
-        _setBackgroundColor: function (color, updateModel) {
-            var innerShape = this.getInnerShape();
-            innerShape.setFill(color);
-
-            var connector = this.getShrinkConnector();
-            if (connector) {
-                connector.setFill(color);
-            }
-
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setBackgroundColor(color);
-            }
-        },
-
-        /** */
-        getBackgroundColor: function () {
-            var model = this.getModel();
-            var result = model.getBackgroundColor();
-            if (!$defined(result)) {
-                result = TopicStyle.defaultBackgroundColor(this);
-            }
-            return result;
-        },
-
-        /** */
-        setBorderColor: function (color) {
-            this._setBorderColor(color, true);
-        },
-
-        _setBorderColor: function (color, updateModel) {
-            var innerShape = this.getInnerShape();
-            innerShape.setAttribute('strokeColor', color);
-
-            var connector = this.getShrinkConnector();
-            if (connector) {
-                connector.setAttribute('strokeColor', color);
-            }
-
-            if ($defined(updateModel) && updateModel) {
-                var model = this.getModel();
-                model.setBorderColor(color);
-            }
-        },
-
-        /** */
-        getBorderColor: function () {
-            var model = this.getModel();
-            var result = model.getBorderColor();
-            if (!$defined(result)) {
-                result = TopicStyle.defaultBorderColor(this);
-            }
-            return result;
-        },
-
-        _buildTopicShape: function () {
-            var groupAttributes = {
-                width: 100,
-                height: 100,
-                coordSizeWidth: 100,
-                coordSizeHeight: 100,
-            };
-            var group = new web2d.Group(groupAttributes);
-            this._set2DElement(group);
-
-            // Shape must be build based on the model width ...
-            var outerShape = this.getOuterShape();
-            var innerShape = this.getInnerShape();
-            var textShape = this.getTextShape();
-
-            // Add to the group ...
-            group.append(outerShape);
-            group.append(innerShape);
-            group.append(textShape);
-
-            // Update figure size ...
-            var model = this.getModel();
-            if (model.getFeatures().length != 0) {
-                this.getOrBuildIconGroup();
-            }
-
-            var shrinkConnector = this.getShrinkConnector();
-            if ($defined(shrinkConnector)) {
-                shrinkConnector.addToWorkspace(group);
-            }
-
-            // Register listeners ...
-            this._registerDefaultListenersToElement(group, this);
-        },
-
-        _registerDefaultListenersToElement: function (elem, topic) {
-            var mouseOver = function (event) {
-                if (topic.isMouseEventsEnabled()) {
-                    topic.handleMouseOver(event);
-                }
-            };
-            elem.addEvent('mouseover', mouseOver);
-
-            var outout = function (event) {
-                if (topic.isMouseEventsEnabled()) {
-                    topic.handleMouseOut(event);
-                }
-            };
-            elem.addEvent('mouseout', outout);
-
-            var me = this;
-            // Focus events ...
-            elem.addEvent('mousedown', function (event) {
-                if (!me.isReadOnly()) {
-                    // Disable topic selection of readOnly mode ...
-                    var value = true;
-                    if (
-                        (event.metaKey && Browser.Platform.mac) ||
-                        (event.ctrlKey && !Browser.Platform.mac)
-                    ) {
-                        value = !me.isOnFocus();
-                        event.stopPropagation();
-                        event.preventDefault();
-                    }
-                    topic.setOnFocus(value);
-                }
-
-                var eventDispatcher = me._getTopicEventDispatcher();
-                eventDispatcher.process(TopicEvent.CLICK, me);
-                event.stopPropagation();
+        setValue(value) {
+          const dispatcher = ActionDispatcher.getInstance();
+          const notes = model.findFeatureByType(TopicFeature.Note.id);
+          if (!$defined(value)) {
+            const featureId = notes[0].getId();
+            dispatcher.removeFeatureFromTopic(topicId, featureId);
+          } else if (notes.length > 0) {
+            dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
+              text: value,
             });
-        },
-
-        /** */
-        areChildrenShrunken: function () {
-            var model = this.getModel();
-            return model.areChildrenShrunken() && !this.isCentralTopic();
-        },
-
-        /** */
-        isCollapsed: function () {
-            var result = false;
-
-            var current = this.getParent();
-            while (current && !result) {
-                result = current.areChildrenShrunken();
-                current = current.getParent();
-            }
-            return result;
-        },
-
-        /** */
-        setChildrenShrunken: function (value) {
-            // Update Model ...
-            var model = this.getModel();
-            model.setChildrenShrunken(value);
-
-            // Change render base on the state.
-            var shrinkConnector = this.getShrinkConnector();
-            if ($defined(shrinkConnector)) {
-                shrinkConnector.changeRender(value);
-            }
-
-            // Do some fancy animation ....
-            var elements = this._flatten2DElements(this);
-            var fade = new FadeEffect(elements, !value);
-            var me = this;
-            fade.addEvent('complete', function () {
-                // Set focus on the parent node ...
-                if (value) {
-                    me.setOnFocus(true);
-                }
-
-                // Set focus in false for all the children ...
-                elements.forEach(function (elem) {
-                    if (elem.setOnFocus) {
-                        elem.setOnFocus(false);
-                    }
-                });
+          } else {
+            dispatcher.addFeatureToTopic(topicId, TopicFeature.Note.id, {
+              text: value,
             });
-            fade.start();
+          }
+        },
+      };
+      const editor = new NoteEditor(editorModel);
+      this.closeEditors();
+      editor.show();
+    },
 
-            EventBus.instance.fireEvent(EventBus.events.NodeShrinkEvent, model);
+    /** opens a dialog where the user can enter or edit an existing link associated with this topic */
+    showLinkEditor() {
+      const topicId = this.getId();
+      const model = this.getModel();
+      const editorModel = {
+        getValue() {
+          // @param {mindplot.model.LinkModel[]} links
+          const links = model.findFeatureByType(TopicFeature.Link.id);
+          let result;
+          if (links.length > 0) result = links[0].getUrl();
+
+          return result;
         },
 
-        /** */
-        getShrinkConnector: function () {
-            var result = this._connector;
-            if (this._connector == null) {
-                this._connector = new ShirinkConnector(this);
-                this._connector.setVisibility(false);
-                result = this._connector;
-            }
-            return result;
+        setValue(value) {
+          const dispatcher = ActionDispatcher.getInstance();
+          const links = model.findFeatureByType(TopicFeature.Link.id);
+          if (!$defined(value)) {
+            const featureId = links[0].getId();
+            dispatcher.removeFeatureFromTopic(topicId, featureId);
+          } else if (links.length > 0) {
+            dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
+              url: value,
+            });
+          } else {
+            dispatcher.addFeatureToTopic(topicId, TopicFeature.Link.id, {
+              url: value,
+            });
+          }
         },
+      };
 
-        /** */
-        handleMouseOver: function () {
-            var outerShape = this.getOuterShape();
-            outerShape.setOpacity(1);
-        },
+      this.closeEditors();
+      const editor = new LinkEditor(editorModel);
+      editor.show();
+    },
 
-        /** */
-        handleMouseOut: function () {
-            var outerShape = this.getOuterShape();
-            if (!this.isOnFocus()) {
-                outerShape.setOpacity(0);
-            }
-        },
+    /** */
+    closeEditors() {
+      this._getTopicEventDispatcher().close(true);
+    },
 
-        /** */
-        showTextEditor: function (text) {
-            this._getTopicEventDispatcher().show(this, { text: text });
-        },
+    _getTopicEventDispatcher() {
+      return TopicEventDispatcher.getInstance();
+    },
 
-        /** */
-        showNoteEditor: function () {
-            var topicId = this.getId();
-            var model = this.getModel();
-            var editorModel = {
-                getValue: function () {
-                    var notes = model.findFeatureByType(TopicFeature.Note.id);
-                    var result;
-                    if (notes.length > 0) result = notes[0].getText();
-
-                    return result;
-                },
-
-                setValue: function (value) {
-                    var dispatcher = ActionDispatcher.getInstance();
-                    var notes = model.findFeatureByType(TopicFeature.Note.id);
-                    if (!$defined(value)) {
-                        var featureId = notes[0].getId();
-                        dispatcher.removeFeatureFromTopic(topicId, featureId);
-                    } else {
-                        if (notes.length > 0) {
-                            dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
-                                text: value,
-                            });
-                        } else {
-                            dispatcher.addFeatureToTopic(topicId, TopicFeature.Note.id, {
-                                text: value,
-                            });
-                        }
-                    }
-                },
-            };
-            var editor = new NoteEditor(editorModel);
-            this.closeEditors();
-            editor.show();
-        },
-
-        /** opens a dialog where the user can enter or edit an existing link associated with this topic */
-        showLinkEditor: function () {
-            var topicId = this.getId();
-            var model = this.getModel();
-            var editorModel = {
-                getValue: function () {
-                    //@param {mindplot.model.LinkModel[]} links
-                    var links = model.findFeatureByType(TopicFeature.Link.id);
-                    var result;
-                    if (links.length > 0) result = links[0].getUrl();
-
-                    return result;
-                },
-
-                setValue: function (value) {
-                    var dispatcher = ActionDispatcher.getInstance();
-                    var links = model.findFeatureByType(TopicFeature.Link.id);
-                    if (!$defined(value)) {
-                        var featureId = links[0].getId();
-                        dispatcher.removeFeatureFromTopic(topicId, featureId);
-                    } else {
-                        if (links.length > 0) {
-                            dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
-                                url: value,
-                            });
-                        } else {
-                            dispatcher.addFeatureToTopic(topicId, TopicFeature.Link.id, {
-                                url: value,
-                            });
-                        }
-                    }
-                },
-            };
-
-            this.closeEditors();
-            var editor = new LinkEditor(editorModel);
-            editor.show();
-        },
-
-        /** */
-        closeEditors: function () {
-            this._getTopicEventDispatcher().close(true);
-        },
-
-        _getTopicEventDispatcher: function () {
-            return TopicEventDispatcher.getInstance();
-        },
-
-        /**
+    /**
          * Point: references the center of the rect shape.!!!
          */
-        setPosition: function (point) {
-            $assert(point, 'position can not be null');
-            point.x = Math.ceil(point.x);
-            point.y = Math.ceil(point.y);
-
-            // Update model's position ...
-            var model = this.getModel();
-            model.setPosition(point.x, point.y);
-
-            // Elements are positioned in the center.
-            // All topic element must be positioned based on the innerShape.
-            var size = this.getSize();
-
-            var cx = point.x - size.width / 2;
-            var cy = point.y - size.height / 2;
-
-            // Update visual position.
-            this._elem2d.setPosition(cx, cy);
-
-            // Update connection lines ...
-            this._updateConnectionLines();
-
-            // Check object state.
-            this.invariant();
-        },
-
-        /** */
-        getOutgoingLine: function () {
-            return this._outgoingLine;
-        },
-
-        /** */
-        getIncomingLines: function () {
-            var result = [];
-            var children = this.getChildren();
-            for (var i = 0; i < children.length; i++) {
-                var node = children[i];
-                var line = node.getOutgoingLine();
-                if ($defined(line)) {
-                    result.push(line);
-                }
-            }
-            return result;
-        },
-
-        /** */
-        getOutgoingConnectedTopic: function () {
-            var result = null;
-            var line = this.getOutgoingLine();
-            if ($defined(line)) {
-                result = line.getTargetTopic();
-            }
-            return result;
-        },
-
-        _updateConnectionLines: function () {
-            // Update this to parent line ...
-            var outgoingLine = this.getOutgoingLine();
-            if ($defined(outgoingLine)) {
-                outgoingLine.redraw();
-            }
-
-            // Update all the incoming lines ...
-            var incomingLines = this.getIncomingLines();
-            for (var i = 0; i < incomingLines.length; i++) {
-                incomingLines[i].redraw();
-            }
-
-            // Update relationship lines
-            for (var j = 0; j < this._relationships.length; j++) {
-                this._relationships[j].redraw();
-            }
-        },
-
-        /** */
-        setBranchVisibility: function (value) {
-            var current = this;
-            var parent = this;
-            while (parent != null && !parent.isCentralTopic()) {
-                current = parent;
-                parent = current.getParent();
-            }
-            current.setVisibility(value);
-        },
-
-        /** */
-        setVisibility: function (value) {
-            this._setTopicVisibility(value);
-
-            // Hide all children...
-            this._setChildrenVisibility(value);
-
-            // If there there are connection to the node, topic must be hidden.
-            this._setRelationshipLinesVisibility(value);
-
-            // If it's connected, the connection must be rendered.
-            var outgoingLine = this.getOutgoingLine();
-            if (outgoingLine) {
-                outgoingLine.setVisibility(value);
-            }
-        },
-
-        /** */
-        moveToBack: function () {
-            // Update relationship lines
-            for (var j = 0; j < this._relationships.length; j++) {
-                this._relationships[j].moveToBack();
-            }
-            var connector = this.getShrinkConnector();
-            if ($defined(connector)) {
-                connector.moveToBack();
-            }
-
-            this.get2DElement().moveToBack();
-        },
-
-        /** */
-        moveToFront: function () {
-            this.get2DElement().moveToFront();
-            var connector = this.getShrinkConnector();
-            if ($defined(connector)) {
-                connector.moveToFront();
-            }
-            // Update relationship lines
-            for (var j = 0; j < this._relationships.length; j++) {
-                this._relationships[j].moveToFront();
-            }
-        },
-
-        /** */
-        isVisible: function () {
-            var elem = this.get2DElement();
-            return elem.isVisible();
-        },
-
-        _setRelationshipLinesVisibility: function (value) {
-            _.each(this._relationships, function (relationship) {
-                var sourceTopic = relationship.getSourceTopic();
-                var targetTopic = relationship.getTargetTopic();
-
-                var targetParent = targetTopic.getModel().getParent();
-                var sourceParent = sourceTopic.getModel().getParent();
-                relationship.setVisibility(
-                    value &&
-                        (targetParent == null || !targetParent.areChildrenShrunken()) &&
-                        (sourceParent == null || !sourceParent.areChildrenShrunken())
-                );
-            });
-        },
-
-        _setTopicVisibility: function (value) {
-            var elem = this.get2DElement();
-            elem.setVisibility(value);
-
-            if (this.getIncomingLines().length > 0) {
-                var connector = this.getShrinkConnector();
-                if ($defined(connector)) {
-                    connector.setVisibility(value);
-                }
-            }
-
-            var textShape = this.getTextShape();
-            textShape.setVisibility(this.getShapeType() != TopicShape.IMAGE ? value : false);
-        },
-
-        /** */
-        setOpacity: function (opacity) {
-            var elem = this.get2DElement();
-            elem.setOpacity(opacity);
-
-            var connector = this.getShrinkConnector();
-            if ($defined(connector)) {
-                connector.setOpacity(opacity);
-            }
-            var textShape = this.getTextShape();
-            textShape.setOpacity(opacity);
-        },
-
-        _setChildrenVisibility: function (isVisible) {
-            // Hide all children.
-            var children = this.getChildren();
-            var model = this.getModel();
-
-            isVisible = isVisible ? !model.areChildrenShrunken() : isVisible;
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                child.setVisibility(isVisible);
-
-                var outgoingLine = child.getOutgoingLine();
-                outgoingLine.setVisibility(isVisible);
-            }
-        },
-
-        /** */
-        invariant: function () {
-            var line = this._outgoingLine;
-            var model = this.getModel();
-            var isConnected = model.isConnected();
-
-            // Check consistency...
-            if ((isConnected && !line) || (!isConnected && line)) {
-                // $assert(false,'Illegal state exception.');
-            }
-        },
-
-        /** */
-        setSize: function (size, force) {
-            $assert(size, 'size can not be null');
-            $assert($defined(size.width), 'size seem not to be a valid element');
-            size = { width: Math.ceil(size.width), height: Math.ceil(size.height) };
-
-            var oldSize = this.getSize();
-            var hasSizeChanged = oldSize.width != size.width || oldSize.height != size.height;
-            if (hasSizeChanged || force) {
-                NodeGraph.prototype.setSize.call(this, size);
-
-                var outerShape = this.getOuterShape();
-                var innerShape = this.getInnerShape();
-
-                outerShape.setSize(size.width + 4, size.height + 6);
-                innerShape.setSize(size.width, size.height);
-
-                // Update the figure position(ej: central topic must be centered) and children position.
-                this._updatePositionOnChangeSize(oldSize, size);
-
-                if (hasSizeChanged) {
-                    EventBus.instance.fireEvent(EventBus.events.NodeResizeEvent, {
-                        node: this.getModel(),
-                        size: size,
-                    });
-                }
-            }
-        },
-
-        _updatePositionOnChangeSize: function () {
-            $assert(false, 'this method must be overwrited.');
-        },
-
-        /** */
-        disconnect: function (workspace) {
-            var outgoingLine = this.getOutgoingLine();
-            if ($defined(outgoingLine)) {
-                $assert(workspace, 'workspace can not be null');
-
-                this._outgoingLine = null;
-
-                // Disconnect nodes ...
-                var targetTopic = outgoingLine.getTargetTopic();
-                targetTopic.removeChild(this);
-
-                // Update model ...
-                var childModel = this.getModel();
-                childModel.disconnect();
-
-                this._parent = null;
-
-                // Remove graphical element from the workspace...
-                outgoingLine.removeFromWorkspace(workspace);
-
-                // Remove from workspace.
-                EventBus.instance.fireEvent(EventBus.events.NodeDisconnectEvent, this.getModel());
-
-                // Change text based on the current connection ...
-                var model = this.getModel();
-                if (!model.getText()) {
-                    var text = this.getText();
-                    this._setText(text, false);
-                }
-                if (!model.getFontSize()) {
-                    var size = this.getFontSize();
-                    this.setFontSize(size, false);
-                }
-
-                // Hide connection line?.
-                if (targetTopic.getChildren().length == 0) {
-                    var connector = targetTopic.getShrinkConnector();
-                    if ($defined(connector)) {
-                        connector.setVisibility(false);
-                    }
-                }
-            }
-        },
-
-        /** */
-        getOrder: function () {
-            var model = this.getModel();
-            return model.getOrder();
-        },
-
-        /** */
-        setOrder: function (value) {
-            var model = this.getModel();
-            model.setOrder(value);
-        },
-
-        /** */
-        connectTo: function (targetTopic, workspace) {
-            $assert(!this._outgoingLine, 'Could not connect an already connected node');
-            $assert(targetTopic != this, 'Circular connection are not allowed');
-            $assert(targetTopic, 'Parent Graph can not be null');
-            $assert(workspace, 'Workspace can not be null');
-
-            // Connect Graphical Nodes ...
-            targetTopic.append(this);
-            this._parent = targetTopic;
-
-            // Update model ...
-            var targetModel = targetTopic.getModel();
-            var childModel = this.getModel();
-            childModel.connectTo(targetModel);
-
-            // Create a connection line ...
-            var outgoingLine = new ConnectionLine(this, targetTopic);
-            outgoingLine.setVisibility(false);
-
-            this._outgoingLine = outgoingLine;
-            workspace.append(outgoingLine);
-
-            // Update figure is necessary.
-            this.updateTopicShape(targetTopic);
-
-            // Change text based on the current connection ...
-            var model = this.getModel();
-            if (!model.getText()) {
-                var text = this.getText();
-                this._setText(text, false);
-            }
-            if (!model.getFontSize()) {
-                var size = this.getFontSize();
-                this.setFontSize(size, false);
-            }
-            this.getTextShape();
-
-            // Display connection node...
-            var connector = targetTopic.getShrinkConnector();
-            if ($defined(connector)) {
-                connector.setVisibility(true);
-            }
-
-            // Redraw line ...
-            outgoingLine.redraw();
-
-            // Fire connection event ...
-            if (this.isInWorkspace()) {
-                EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
-                    parentNode: targetTopic.getModel(),
-                    childNode: this.getModel(),
-                });
-            }
-        },
-
-        /** */
-        append: function (child) {
-            var children = this.getChildren();
-            children.push(child);
-        },
-
-        /** */
-        removeChild: function (child) {
-            var children = this.getChildren();
-            children.erase(child);
-        },
-
-        /** */
-        getChildren: function () {
-            var result = this._children;
-            if (!$defined(result)) {
-                this._children = [];
-                result = this._children;
-            }
-            return result;
-        },
-
-        /** */
-        removeFromWorkspace: function (workspace) {
-            var elem2d = this.get2DElement();
-            workspace.removeChild(elem2d);
-            var line = this.getOutgoingLine();
-            if ($defined(line)) {
-                workspace.removeChild(line);
-            }
-            this._isInWorkspace = false;
-            EventBus.instance.fireEvent(EventBus.events.NodeRemoved, this.getModel());
-        },
-
-        /** */
-        addToWorkspace: function (workspace) {
-            var elem = this.get2DElement();
-            workspace.append(elem);
-            if (!this.isInWorkspace()) {
-                if (!this.isCentralTopic()) {
-                    EventBus.instance.fireEvent(EventBus.events.NodeAdded, this.getModel());
-                }
-
-                if (this.getModel().isConnected())
-                    EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
-                        parentNode: this.getOutgoingConnectedTopic().getModel(),
-                        childNode: this.getModel(),
-                    });
-            }
-            this._isInWorkspace = true;
-            this._adjustShapes();
-        },
-
-        /** */
-        isInWorkspace: function () {
-            return this._isInWorkspace;
-        },
-
-        /** */
-        createDragNode: function (layoutManager) {
-            var result = this.parent(layoutManager);
-
-            // Is the node already connected ?
-            var targetTopic = this.getOutgoingConnectedTopic();
-            if ($defined(targetTopic)) {
-                result.connectTo(targetTopic);
-                result.setVisibility(false);
-            }
-
-            // If a drag node is create for it, let's hide the editor.
-            this._getTopicEventDispatcher().close();
-
-            return result;
-        },
-
-        _adjustShapes: function () {
-            if (this._isInWorkspace) {
-                var textShape = this.getTextShape();
-                if (this.getShapeType() != TopicShape.IMAGE) {
-                    var textWidth = textShape.getWidth();
-
-                    var textHeight = textShape.getHeight();
-                    textHeight = textHeight != 0 ? textHeight : 20;
-
-                    var topicPadding = TopicStyle.getInnerPadding(this);
-
-                    // Adjust the icon size to the size of the text ...
-                    var iconGroup = this.getOrBuildIconGroup();
-                    var fontHeight = this.getTextShape().getFontHeight();
-                    iconGroup.setPosition(topicPadding, topicPadding);
-                    iconGroup.seIconSize(fontHeight, fontHeight);
-
-                    // Add a extra padding between the text and the icons
-                    var iconsWidth = iconGroup.getSize().width;
-                    if (iconsWidth != 0) {
-                        iconsWidth = iconsWidth + textHeight / 4;
-                    }
-
-                    var height = textHeight + topicPadding * 2;
-                    var width = textWidth + iconsWidth + topicPadding * 2;
-
-                    this.setSize({ width: width, height: height });
-
-                    // Position node ...
-                    textShape.setPosition(topicPadding + iconsWidth, topicPadding);
-                } else {
-                    // In case of images, the size if fixed ...
-                    var size = this.getModel().getImageSize();
-                    this.setSize(size);
-                }
-            }
-        },
-
-        _flatten2DElements: function (topic) {
-            var result = [];
-
-            var children = topic.getChildren();
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                result.push(child);
-                result.push(child.getOutgoingLine());
-
-                var relationships = child.getRelationships();
-                result = result.concat(relationships);
-
-                if (!child.areChildrenShrunken()) {
-                    var innerChilds = this._flatten2DElements(child);
-                    result = result.concat(innerChilds);
-                }
-            }
-            return result;
-        },
-
-        /**
+    setPosition(point) {
+      $assert(point, 'position can not be null');
+      point.x = Math.ceil(point.x);
+      point.y = Math.ceil(point.y);
+
+      // Update model's position ...
+      const model = this.getModel();
+      model.setPosition(point.x, point.y);
+
+      // Elements are positioned in the center.
+      // All topic element must be positioned based on the innerShape.
+      const size = this.getSize();
+
+      const cx = point.x - size.width / 2;
+      const cy = point.y - size.height / 2;
+
+      // Update visual position.
+      this._elem2d.setPosition(cx, cy);
+
+      // Update connection lines ...
+      this._updateConnectionLines();
+
+      // Check object state.
+      this.invariant();
+    },
+
+    /** */
+    getOutgoingLine() {
+      return this._outgoingLine;
+    },
+
+    /** */
+    getIncomingLines() {
+      const result = [];
+      const children = this.getChildren();
+      for (let i = 0; i < children.length; i++) {
+        const node = children[i];
+        const line = node.getOutgoingLine();
+        if ($defined(line)) {
+          result.push(line);
+        }
+      }
+      return result;
+    },
+
+    /** */
+    getOutgoingConnectedTopic() {
+      let result = null;
+      const line = this.getOutgoingLine();
+      if ($defined(line)) {
+        result = line.getTargetTopic();
+      }
+      return result;
+    },
+
+    _updateConnectionLines() {
+      // Update this to parent line ...
+      const outgoingLine = this.getOutgoingLine();
+      if ($defined(outgoingLine)) {
+        outgoingLine.redraw();
+      }
+
+      // Update all the incoming lines ...
+      const incomingLines = this.getIncomingLines();
+      for (let i = 0; i < incomingLines.length; i++) {
+        incomingLines[i].redraw();
+      }
+
+      // Update relationship lines
+      for (let j = 0; j < this._relationships.length; j++) {
+        this._relationships[j].redraw();
+      }
+    },
+
+    /** */
+    setBranchVisibility(value) {
+      let current = this;
+      let parent = this;
+      while (parent != null && !parent.isCentralTopic()) {
+        current = parent;
+        parent = current.getParent();
+      }
+      current.setVisibility(value);
+    },
+
+    /** */
+    setVisibility(value) {
+      this._setTopicVisibility(value);
+
+      // Hide all children...
+      this._setChildrenVisibility(value);
+
+      // If there there are connection to the node, topic must be hidden.
+      this._setRelationshipLinesVisibility(value);
+
+      // If it's connected, the connection must be rendered.
+      const outgoingLine = this.getOutgoingLine();
+      if (outgoingLine) {
+        outgoingLine.setVisibility(value);
+      }
+    },
+
+    /** */
+    moveToBack() {
+      // Update relationship lines
+      for (let j = 0; j < this._relationships.length; j++) {
+        this._relationships[j].moveToBack();
+      }
+      const connector = this.getShrinkConnector();
+      if ($defined(connector)) {
+        connector.moveToBack();
+      }
+
+      this.get2DElement().moveToBack();
+    },
+
+    /** */
+    moveToFront() {
+      this.get2DElement().moveToFront();
+      const connector = this.getShrinkConnector();
+      if ($defined(connector)) {
+        connector.moveToFront();
+      }
+      // Update relationship lines
+      for (let j = 0; j < this._relationships.length; j++) {
+        this._relationships[j].moveToFront();
+      }
+    },
+
+    /** */
+    isVisible() {
+      const elem = this.get2DElement();
+      return elem.isVisible();
+    },
+
+    _setRelationshipLinesVisibility(value) {
+      _.each(this._relationships, (relationship) => {
+        const sourceTopic = relationship.getSourceTopic();
+        const targetTopic = relationship.getTargetTopic();
+
+        const targetParent = targetTopic.getModel().getParent();
+        const sourceParent = sourceTopic.getModel().getParent();
+        relationship.setVisibility(
+          value
+                        && (targetParent == null || !targetParent.areChildrenShrunken())
+                        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+        );
+      });
+    },
+
+    _setTopicVisibility(value) {
+      const elem = this.get2DElement();
+      elem.setVisibility(value);
+
+      if (this.getIncomingLines().length > 0) {
+        const connector = this.getShrinkConnector();
+        if ($defined(connector)) {
+          connector.setVisibility(value);
+        }
+      }
+
+      const textShape = this.getTextShape();
+      textShape.setVisibility(this.getShapeType() != TopicShape.IMAGE ? value : false);
+    },
+
+    /** */
+    setOpacity(opacity) {
+      const elem = this.get2DElement();
+      elem.setOpacity(opacity);
+
+      const connector = this.getShrinkConnector();
+      if ($defined(connector)) {
+        connector.setOpacity(opacity);
+      }
+      const textShape = this.getTextShape();
+      textShape.setOpacity(opacity);
+    },
+
+    _setChildrenVisibility(isVisible) {
+      // Hide all children.
+      const children = this.getChildren();
+      const model = this.getModel();
+
+      isVisible = isVisible ? !model.areChildrenShrunken() : isVisible;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        child.setVisibility(isVisible);
+
+        const outgoingLine = child.getOutgoingLine();
+        outgoingLine.setVisibility(isVisible);
+      }
+    },
+
+    /** */
+    invariant() {
+      const line = this._outgoingLine;
+      const model = this.getModel();
+      const isConnected = model.isConnected();
+
+      // Check consistency...
+      if ((isConnected && !line) || (!isConnected && line)) {
+        // $assert(false,'Illegal state exception.');
+      }
+    },
+
+    /** */
+    setSize(size, force) {
+      $assert(size, 'size can not be null');
+      $assert($defined(size.width), 'size seem not to be a valid element');
+      size = { width: Math.ceil(size.width), height: Math.ceil(size.height) };
+
+      const oldSize = this.getSize();
+      const hasSizeChanged = oldSize.width != size.width || oldSize.height != size.height;
+      if (hasSizeChanged || force) {
+        NodeGraph.prototype.setSize.call(this, size);
+
+        const outerShape = this.getOuterShape();
+        const innerShape = this.getInnerShape();
+
+        outerShape.setSize(size.width + 4, size.height + 6);
+        innerShape.setSize(size.width, size.height);
+
+        // Update the figure position(ej: central topic must be centered) and children position.
+        this._updatePositionOnChangeSize(oldSize, size);
+
+        if (hasSizeChanged) {
+          EventBus.instance.fireEvent(EventBus.events.NodeResizeEvent, {
+            node: this.getModel(),
+            size,
+          });
+        }
+      }
+    },
+
+    _updatePositionOnChangeSize() {
+      $assert(false, 'this method must be overwrited.');
+    },
+
+    /** */
+    disconnect(workspace) {
+      const outgoingLine = this.getOutgoingLine();
+      if ($defined(outgoingLine)) {
+        $assert(workspace, 'workspace can not be null');
+
+        this._outgoingLine = null;
+
+        // Disconnect nodes ...
+        const targetTopic = outgoingLine.getTargetTopic();
+        targetTopic.removeChild(this);
+
+        // Update model ...
+        const childModel = this.getModel();
+        childModel.disconnect();
+
+        this._parent = null;
+
+        // Remove graphical element from the workspace...
+        outgoingLine.removeFromWorkspace(workspace);
+
+        // Remove from workspace.
+        EventBus.instance.fireEvent(EventBus.events.NodeDisconnectEvent, this.getModel());
+
+        // Change text based on the current connection ...
+        const model = this.getModel();
+        if (!model.getText()) {
+          const text = this.getText();
+          this._setText(text, false);
+        }
+        if (!model.getFontSize()) {
+          const size = this.getFontSize();
+          this.setFontSize(size, false);
+        }
+
+        // Hide connection line?.
+        if (targetTopic.getChildren().length == 0) {
+          const connector = targetTopic.getShrinkConnector();
+          if ($defined(connector)) {
+            connector.setVisibility(false);
+          }
+        }
+      }
+    },
+
+    /** */
+    getOrder() {
+      const model = this.getModel();
+      return model.getOrder();
+    },
+
+    /** */
+    setOrder(value) {
+      const model = this.getModel();
+      model.setOrder(value);
+    },
+
+    /** */
+    connectTo(targetTopic, workspace) {
+      $assert(!this._outgoingLine, 'Could not connect an already connected node');
+      $assert(targetTopic != this, 'Circular connection are not allowed');
+      $assert(targetTopic, 'Parent Graph can not be null');
+      $assert(workspace, 'Workspace can not be null');
+
+      // Connect Graphical Nodes ...
+      targetTopic.append(this);
+      this._parent = targetTopic;
+
+      // Update model ...
+      const targetModel = targetTopic.getModel();
+      const childModel = this.getModel();
+      childModel.connectTo(targetModel);
+
+      // Create a connection line ...
+      const outgoingLine = new ConnectionLine(this, targetTopic);
+      outgoingLine.setVisibility(false);
+
+      this._outgoingLine = outgoingLine;
+      workspace.append(outgoingLine);
+
+      // Update figure is necessary.
+      this.updateTopicShape(targetTopic);
+
+      // Change text based on the current connection ...
+      const model = this.getModel();
+      if (!model.getText()) {
+        const text = this.getText();
+        this._setText(text, false);
+      }
+      if (!model.getFontSize()) {
+        const size = this.getFontSize();
+        this.setFontSize(size, false);
+      }
+      this.getTextShape();
+
+      // Display connection node...
+      const connector = targetTopic.getShrinkConnector();
+      if ($defined(connector)) {
+        connector.setVisibility(true);
+      }
+
+      // Redraw line ...
+      outgoingLine.redraw();
+
+      // Fire connection event ...
+      if (this.isInWorkspace()) {
+        EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
+          parentNode: targetTopic.getModel(),
+          childNode: this.getModel(),
+        });
+      }
+    },
+
+    /** */
+    append(child) {
+      const children = this.getChildren();
+      children.push(child);
+    },
+
+    /** */
+    removeChild(child) {
+      const children = this.getChildren();
+      children.erase(child);
+    },
+
+    /** */
+    getChildren() {
+      let result = this._children;
+      if (!$defined(result)) {
+        this._children = [];
+        result = this._children;
+      }
+      return result;
+    },
+
+    /** */
+    removeFromWorkspace(workspace) {
+      const elem2d = this.get2DElement();
+      workspace.removeChild(elem2d);
+      const line = this.getOutgoingLine();
+      if ($defined(line)) {
+        workspace.removeChild(line);
+      }
+      this._isInWorkspace = false;
+      EventBus.instance.fireEvent(EventBus.events.NodeRemoved, this.getModel());
+    },
+
+    /** */
+    addToWorkspace(workspace) {
+      const elem = this.get2DElement();
+      workspace.append(elem);
+      if (!this.isInWorkspace()) {
+        if (!this.isCentralTopic()) {
+          EventBus.instance.fireEvent(EventBus.events.NodeAdded, this.getModel());
+        }
+
+        if (this.getModel().isConnected()) {
+          EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
+            parentNode: this.getOutgoingConnectedTopic().getModel(),
+            childNode: this.getModel(),
+          });
+        }
+      }
+      this._isInWorkspace = true;
+      this._adjustShapes();
+    },
+
+    /** */
+    isInWorkspace() {
+      return this._isInWorkspace;
+    },
+
+    /** */
+    createDragNode(layoutManager) {
+      const result = this.parent(layoutManager);
+
+      // Is the node already connected ?
+      const targetTopic = this.getOutgoingConnectedTopic();
+      if ($defined(targetTopic)) {
+        result.connectTo(targetTopic);
+        result.setVisibility(false);
+      }
+
+      // If a drag node is create for it, let's hide the editor.
+      this._getTopicEventDispatcher().close();
+
+      return result;
+    },
+
+    _adjustShapes() {
+      if (this._isInWorkspace) {
+        const textShape = this.getTextShape();
+        if (this.getShapeType() != TopicShape.IMAGE) {
+          const textWidth = textShape.getWidth();
+
+          let textHeight = textShape.getHeight();
+          textHeight = textHeight != 0 ? textHeight : 20;
+
+          const topicPadding = TopicStyle.getInnerPadding(this);
+
+          // Adjust the icon size to the size of the text ...
+          const iconGroup = this.getOrBuildIconGroup();
+          const fontHeight = this.getTextShape().getFontHeight();
+          iconGroup.setPosition(topicPadding, topicPadding);
+          iconGroup.seIconSize(fontHeight, fontHeight);
+
+          // Add a extra padding between the text and the icons
+          let iconsWidth = iconGroup.getSize().width;
+          if (iconsWidth != 0) {
+            iconsWidth += textHeight / 4;
+          }
+
+          const height = textHeight + topicPadding * 2;
+          const width = textWidth + iconsWidth + topicPadding * 2;
+
+          this.setSize({ width, height });
+
+          // Position node ...
+          textShape.setPosition(topicPadding + iconsWidth, topicPadding);
+        } else {
+          // In case of images, the size if fixed ...
+          const size = this.getModel().getImageSize();
+          this.setSize(size);
+        }
+      }
+    },
+
+    _flatten2DElements(topic) {
+      let result = [];
+
+      const children = topic.getChildren();
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        result.push(child);
+        result.push(child.getOutgoingLine());
+
+        const relationships = child.getRelationships();
+        result = result.concat(relationships);
+
+        if (!child.areChildrenShrunken()) {
+          const innerChilds = this._flatten2DElements(child);
+          result = result.concat(innerChilds);
+        }
+      }
+      return result;
+    },
+
+    /**
          * @param childTopic
          * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
          */
-        isChildTopic: function (childTopic) {
-            var result = this.getId() == childTopic.getId();
-            if (!result) {
-                var children = this.getChildren();
-                for (var i = 0; i < children.length; i++) {
-                    var parent = children[i];
-                    result = parent.isChildTopic(childTopic);
-                    if (result) {
-                        break;
-                    }
-                }
-            }
-            return result;
-        },
+    isChildTopic(childTopic) {
+      let result = this.getId() == childTopic.getId();
+      if (!result) {
+        const children = this.getChildren();
+        for (let i = 0; i < children.length; i++) {
+          const parent = children[i];
+          result = parent.isChildTopic(childTopic);
+          if (result) {
+            break;
+          }
+        }
+      }
+      return result;
+    },
 
-        /** @return {Boolean} true if the topic is the central topic of the map */
-        isCentralTopic: function () {
-            return this.getModel().getType() == INodeModel.CENTRAL_TOPIC_TYPE;
-        },
-    }
+    /** @return {Boolean} true if the topic is the central topic of the map */
+    isCentralTopic() {
+      return this.getModel().getType() == INodeModel.CENTRAL_TOPIC_TYPE;
+    },
+  },
 );
 
 /**
@@ -1348,10 +1346,10 @@ Topic.CONNECTOR_WIDTH = 6;
  * @default
  */
 Topic.OUTER_SHAPE_ATTRIBUTES = {
-    fillColor: 'rgb(252,235,192)',
-    stroke: '1 dot rgb(241,163,39)',
-    x: 0,
-    y: 0,
+  fillColor: 'rgb(252,235,192)',
+  stroke: '1 dot rgb(241,163,39)',
+  x: 0,
+  y: 0,
 };
 /**
  * @constant

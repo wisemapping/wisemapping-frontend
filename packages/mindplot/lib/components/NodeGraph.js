@@ -20,171 +20,171 @@ const DragTopic = require('./DragTopic').default;
 const INodeModel = require('./model/INodeModel').default;
 
 const NodeGraph = new Class(
-    /** @lends NodeGraph */ {
-        /**
+  /** @lends NodeGraph */ {
+    /**
          * @constructs
          * @param {mindplot.model.NodeModel} nodeModel
          * @param {Object<Number, String, Boolean>} options
          * @throws will throw an error if nodeModel is null or undefined
          */
-        initialize: function (nodeModel, options) {
-            $assert(nodeModel, 'model can not be null');
+    initialize(nodeModel, options) {
+      $assert(nodeModel, 'model can not be null');
 
-            this._options = options;
-            this._mouseEvents = true;
-            this.setModel(nodeModel);
-            this._onFocus = false;
-            this._size = { width: 50, height: 20 };
-        },
+      this._options = options;
+      this._mouseEvents = true;
+      this.setModel(nodeModel);
+      this._onFocus = false;
+      this._size = { width: 50, height: 20 };
+    },
 
-        /** @return true if option is set to read-only */
-        isReadOnly: function () {
-            return this._options.readOnly;
-        },
+    /** @return true if option is set to read-only */
+    isReadOnly() {
+      return this._options.readOnly;
+    },
 
-        /** @return model type */
-        getType: function () {
-            var model = this.getModel();
-            return model.getType();
-        },
+    /** @return model type */
+    getType() {
+      const model = this.getModel();
+      return model.getType();
+    },
 
-        /**
+    /**
          * @param {String} id
          * @throws will throw an error if the topic id is not a number
          */
-        setId: function (id) {
-            $assert(typeof topic.getId() == 'number', 'id is not a number:' + id);
-            this.getModel().setId(id);
-        },
+    setId(id) {
+      $assert(typeof topic.getId() === 'number', `id is not a number:${id}`);
+      this.getModel().setId(id);
+    },
 
-        _set2DElement: function (elem2d) {
-            this._elem2d = elem2d;
-        },
+    _set2DElement(elem2d) {
+      this._elem2d = elem2d;
+    },
 
-        /**
+    /**
          * @return 2D element
          * @throws will throw an error if the element is null or undefined within node graph
          */
-        get2DElement: function () {
-            $assert(this._elem2d, 'NodeGraph has not been initialized properly');
-            return this._elem2d;
-        },
+    get2DElement() {
+      $assert(this._elem2d, 'NodeGraph has not been initialized properly');
+      return this._elem2d;
+    },
 
-        /** @abstract */
-        setPosition: function (point, fireEvent) {
-            throw 'Unsupported operation';
-        },
+    /** @abstract */
+    setPosition(point, fireEvent) {
+      throw 'Unsupported operation';
+    },
 
-        /** */
-        addEvent: function (type, listener) {
-            var elem = this.get2DElement();
-            elem.addEvent(type, listener);
-        },
+    /** */
+    addEvent(type, listener) {
+      const elem = this.get2DElement();
+      elem.addEvent(type, listener);
+    },
 
-        /** */
-        removeEvent: function (type, listener) {
-            var elem = this.get2DElement();
-            elem.removeEvent(type, listener);
-        },
+    /** */
+    removeEvent(type, listener) {
+      const elem = this.get2DElement();
+      elem.removeEvent(type, listener);
+    },
 
-        /** */
-        fireEvent: function (type, event) {
-            var elem = this.get2DElement();
-            elem.trigger(type, event);
-        },
+    /** */
+    fireEvent(type, event) {
+      const elem = this.get2DElement();
+      elem.trigger(type, event);
+    },
 
-        /** */
-        setMouseEventsEnabled: function (isEnabled) {
-            this._mouseEvents = isEnabled;
-        },
+    /** */
+    setMouseEventsEnabled(isEnabled) {
+      this._mouseEvents = isEnabled;
+    },
 
-        /** */
-        isMouseEventsEnabled: function () {
-            return this._mouseEvents;
-        },
+    /** */
+    isMouseEventsEnabled() {
+      return this._mouseEvents;
+    },
 
-        /** @return {Object<Number>} size*/
-        getSize: function () {
-            return this._size;
-        },
+    /** @return {Object<Number>} size */
+    getSize() {
+      return this._size;
+    },
 
-        /** @param {Object<Number>} size*/
-        setSize: function (size) {
-            this._size.width = parseInt(size.width);
-            this._size.height = parseInt(size.height);
-        },
+    /** @param {Object<Number>} size */
+    setSize(size) {
+      this._size.width = parseInt(size.width);
+      this._size.height = parseInt(size.height);
+    },
 
-        /**
+    /**
          * @return {mindplot.model.NodeModel} the node model
          */
-        getModel: function () {
-            $assert(this._model, 'Model has not been initialized yet');
-            return this._model;
-        },
+    getModel() {
+      $assert(this._model, 'Model has not been initialized yet');
+      return this._model;
+    },
 
-        /**
+    /**
          * @param {mindplot.NodeModel} model the node model
          * @throws will throw an error if model is null or undefined
          */
-        setModel: function (model) {
-            $assert(model, 'Model can not be null');
-            this._model = model;
-        },
+    setModel(model) {
+      $assert(model, 'Model can not be null');
+      this._model = model;
+    },
 
-        /** */
-        getId: function () {
-            return this._model.getId();
-        },
+    /** */
+    getId() {
+      return this._model.getId();
+    },
 
-        /** */
-        setOnFocus: function (focus) {
-            if (this._onFocus != focus) {
-                this._onFocus = focus;
-                var outerShape = this.getOuterShape();
-                if (focus) {
-                    outerShape.setFill(Topic.OUTER_SHAPE_ATTRIBUTES_FOCUS.fillColor);
-                    outerShape.setOpacity(1);
-                } else {
-                    outerShape.setFill(Topic.OUTER_SHAPE_ATTRIBUTES.fillColor);
-                    outerShape.setOpacity(0);
-                }
-                this.setCursor('move');
+    /** */
+    setOnFocus(focus) {
+      if (this._onFocus != focus) {
+        this._onFocus = focus;
+        const outerShape = this.getOuterShape();
+        if (focus) {
+          outerShape.setFill(Topic.OUTER_SHAPE_ATTRIBUTES_FOCUS.fillColor);
+          outerShape.setOpacity(1);
+        } else {
+          outerShape.setFill(Topic.OUTER_SHAPE_ATTRIBUTES.fillColor);
+          outerShape.setOpacity(0);
+        }
+        this.setCursor('move');
 
-                // In any case, always try to hide the editor ...
-                this.closeEditors();
+        // In any case, always try to hide the editor ...
+        this.closeEditors();
 
-                // Fire event ...
-                this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
-            }
-        },
+        // Fire event ...
+        this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
+      }
+    },
 
-        /** @return {Boolean} true if the node graph is on focus */
-        isOnFocus: function () {
-            return this._onFocus;
-        },
+    /** @return {Boolean} true if the node graph is on focus */
+    isOnFocus() {
+      return this._onFocus;
+    },
 
-        /** */
-        dispose: function (workspace) {
-            this.setOnFocus(false);
-            workspace.removeChild(this);
-        },
+    /** */
+    dispose(workspace) {
+      this.setOnFocus(false);
+      workspace.removeChild(this);
+    },
 
-        /** */
-        createDragNode: function (layoutManager) {
-            var dragShape = this._buildDragShape();
-            return new DragTopic(dragShape, this, layoutManager);
-        },
+    /** */
+    createDragNode(layoutManager) {
+      const dragShape = this._buildDragShape();
+      return new DragTopic(dragShape, this, layoutManager);
+    },
 
-        _buildDragShape: function () {
-            $assert(false, '_buildDragShape must be implemented by all nodes.');
-        },
+    _buildDragShape() {
+      $assert(false, '_buildDragShape must be implemented by all nodes.');
+    },
 
-        /** */
-        getPosition: function () {
-            var model = this.getModel();
-            return model.getPosition();
-        },
-    }
+    /** */
+    getPosition() {
+      const model = this.getModel();
+      return model.getPosition();
+    },
+  },
 );
 
 /**
@@ -199,24 +199,24 @@ const NodeGraph = new Class(
  * @return {mindplot.CentralTopic|mindplot.MainTopic} the new topic
  */
 NodeGraph.create = function (nodeModel, options) {
-    const CentralTopic = require('./CentralTopic').default;
-    const MainTopic = require('./MainTopic').default;
+  const CentralTopic = require('./CentralTopic').default;
+  const MainTopic = require('./MainTopic').default;
 
-    $assert(nodeModel, 'Model can not be null');
+  $assert(nodeModel, 'Model can not be null');
 
-    var type = nodeModel.getType();
-    $assert(type, 'Node model type can not be null');
+  const type = nodeModel.getType();
+  $assert(type, 'Node model type can not be null');
 
-    var result;
-    if (type == INodeModel.CENTRAL_TOPIC_TYPE) {
-        result = new CentralTopic(nodeModel, options);
-    } else if (type == INodeModel.MAIN_TOPIC_TYPE) {
-        result = new MainTopic(nodeModel, options);
-    } else {
-        $assert(false, 'unsupported node type:' + type);
-    }
+  let result;
+  if (type == INodeModel.CENTRAL_TOPIC_TYPE) {
+    result = new CentralTopic(nodeModel, options);
+  } else if (type == INodeModel.MAIN_TOPIC_TYPE) {
+    result = new MainTopic(nodeModel, options);
+  } else {
+    $assert(false, `unsupported node type:${type}`);
+  }
 
-    return result;
+  return result;
 };
 
 export default NodeGraph;

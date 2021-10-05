@@ -18,47 +18,47 @@
 const Icon = require('./Icon').default;
 
 const ActionIcon = new Class({
-    Extends:Icon,
-    initialize: function(topic, url) {
-        this.parent(url);
-        this._node = topic;
-    },
-    getNode:function() {
-        return this._node;
-    },
+  Extends: Icon,
+  initialize(topic, url) {
+    this.parent(url);
+    this._node = topic;
+  },
+  getNode() {
+    return this._node;
+  },
 
-    setPosition:function(x, y) {
-        var size = this.getSize();
-        this.getImage().setPosition(x - size.width / 2, y - size.height / 2);
-    },
+  setPosition(x, y) {
+    const size = this.getSize();
+    this.getImage().setPosition(x - size.width / 2, y - size.height / 2);
+  },
 
-    addEvent:function(event, fn) {
-        this.getImage().addEvent(event, fn);
-    },
+  addEvent(event, fn) {
+    this.getImage().addEvent(event, fn);
+  },
 
-    addToGroup:function(group) {
-        group.append(this.getImage());
-    },
+  addToGroup(group) {
+    group.append(this.getImage());
+  },
 
-    setVisibility:function(visible) {
-        this.getImage().setVisibility(visible);
-    },
+  setVisibility(visible) {
+    this.getImage().setVisibility(visible);
+  },
 
-    isVisible:function() {
-        return this.getImage().isVisible();
-    },
+  isVisible() {
+    return this.getImage().isVisible();
+  },
 
-    setCursor:function(cursor) {
-        return this.getImage().setCursor(cursor);
-    },
+  setCursor(cursor) {
+    return this.getImage().setCursor(cursor);
+  },
 
-    moveToBack:function(cursor) {
-        return this.getImage().moveToBack(cursor);
-    },
+  moveToBack(cursor) {
+    return this.getImage().moveToBack(cursor);
+  },
 
-    moveToFront:function(cursor) {
-        return this.getImage().moveToFront(cursor);
-    }
+  moveToFront(cursor) {
+    return this.getImage().moveToFront(cursor);
+  },
 });
 
 export default ActionIcon;

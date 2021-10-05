@@ -15,31 +15,31 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-const FeatureModel = require('./FeatureModel').default
+const FeatureModel = require('./FeatureModel').default;
 
 const NoteModel = new Class(/** @lends NoteModel */{
-    Extends:FeatureModel,
-    /**
+  Extends: FeatureModel,
+  /**
      * @constructs
      * @param attributes
      * @extends mindplot.model.FeatureModel
      */
-    initialize:function (attributes) {
-        this.parent(NoteModel.FEATURE_TYPE);
-        var noteText = attributes.text ? attributes.text : " ";
-        this.setText(noteText);
-    },
+  initialize(attributes) {
+    this.parent(NoteModel.FEATURE_TYPE);
+    const noteText = attributes.text ? attributes.text : ' ';
+    this.setText(noteText);
+  },
 
-    /** */
-    getText:function () {
-        return this.getAttribute('text');
-    },
+  /** */
+  getText() {
+    return this.getAttribute('text');
+  },
 
-    /** */
-    setText:function (text) {
-        $assert(text, 'text can not be null');
-        this.setAttribute('text', text);
-    }
+  /** */
+  setText(text) {
+    $assert(text, 'text can not be null');
+    this.setAttribute('text', text);
+  },
 });
 
 /**
@@ -47,6 +47,6 @@ const NoteModel = new Class(/** @lends NoteModel */{
  * @type {String}
  * @default
  */
-NoteModel.FEATURE_TYPE = "note";
+NoteModel.FEATURE_TYPE = 'note';
 
 export default NoteModel;

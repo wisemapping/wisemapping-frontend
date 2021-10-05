@@ -22,64 +22,62 @@ const ChildrenSorterStrategy = require('./ChildrenSorterStrategy').default;
  * @extends mindplot.layout.ChildrenSorterStrategy
  */
 const AbstractBasicSorter = new Class(
-    /** @lends AbstractBasicSorter */ {
-        Extends: ChildrenSorterStrategy,
+  /** @lends AbstractBasicSorter */ {
+    Extends: ChildrenSorterStrategy,
 
-        /**
+    /**
          * @param {} treeSet
          * @param {} node
          * @return the height of a node and its children if existing and not shrunken
          */
-        computeChildrenIdByHeights: function (treeSet, node) {
-            var result = {};
-            this._computeChildrenHeight(treeSet, node, result);
-            return result;
-        },
+    computeChildrenIdByHeights(treeSet, node) {
+      const result = {};
+      this._computeChildrenHeight(treeSet, node, result);
+      return result;
+    },
 
-        _getVerticalPadding: function () {
-            return AbstractBasicSorter.INTERNODE_VERTICAL_PADDING;
-        },
+    _getVerticalPadding() {
+      return AbstractBasicSorter.INTERNODE_VERTICAL_PADDING;
+    },
 
-        _computeChildrenHeight: function (treeSet, node, heightCache) {
-            var height = node.getSize().height + this._getVerticalPadding() * 2; // 2* Top and down padding;
+    _computeChildrenHeight(treeSet, node, heightCache) {
+      const height = node.getSize().height + this._getVerticalPadding() * 2; // 2* Top and down padding;
 
-            var result;
-            var children = treeSet.getChildren(node);
-            if (children.length == 0 || node.areChildrenShrunken()) {
-                result = height;
-            } else {
-                var childrenHeight = 0;
-                _.each(
-                    children,
-                    function (child) {
-                        childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-                    },
-                    this
-                );
+      let result;
+      const children = treeSet.getChildren(node);
+      if (children.length == 0 || node.areChildrenShrunken()) {
+        result = height;
+      } else {
+        let childrenHeight = 0;
+        _.each(
+          children,
+          function (child) {
+            childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
+          },
+          this,
+        );
 
-                result = Math.max(height, childrenHeight);
-            }
+        result = Math.max(height, childrenHeight);
+      }
 
-            if (heightCache) {
-                heightCache[node.getId()] = result;
-            }
+      if (heightCache) {
+        heightCache[node.getId()] = result;
+      }
 
-            return result;
-        },
+      return result;
+    },
 
-        _getSortedChildren: function (treeSet, node) {
-            var result = treeSet.getChildren(node);
-            result.sort(function (a, b) {
-                return a.getOrder() - b.getOrder();
-            });
-            return result;
-        },
+    _getSortedChildren(treeSet, node) {
+      const result = treeSet.getChildren(node);
+      result.sort((a, b) => a.getOrder() - b.getOrder());
+      return result;
+    },
 
-        _getRelativeDirection: function (reference, position) {
-            var offset = position.x - reference.x;
-            return offset >= 0 ? 1 : -1;
-        },
-    }
+    _getRelativeDirection(reference, position) {
+      const offset = position.x - reference.x;
+      return offset >= 0 ? 1 : -1;
+    },
+  },
 );
 
 /**

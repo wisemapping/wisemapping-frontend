@@ -20,66 +20,66 @@ const MultilineTextEditor = require('./MultilineTextEditor').default;
 const { TopicShape } = require('./model/INodeModel');
 
 const TopicEventDispatcher = new Class({
-    Extends: Events,
-    Static: {
-        _instance: null,
+  Extends: Events,
+  Static: {
+    _instance: null,
 
-        configure: function (readOnly) {
-            this._instance = new TopicEventDispatcher(readOnly);
-        },
-
-        getInstance: function () {
-            return this._instance;
-        },
+    configure(readOnly) {
+      this._instance = new TopicEventDispatcher(readOnly);
     },
 
-    initialize: function (readOnly) {
-        this._readOnly = readOnly;
-        this._activeEditor = null;
-        this._multilineEditor = new MultilineTextEditor();
+    getInstance() {
+      return this._instance;
     },
+  },
 
-    close: function (update) {
-        if (this.isVisible()) {
-            this._activeEditor.close(update);
-            this._activeEditor = null;
-        }
-    },
+  initialize(readOnly) {
+    this._readOnly = readOnly;
+    this._activeEditor = null;
+    this._multilineEditor = new MultilineTextEditor();
+  },
 
-    show: function (topic, options) {
-        this.process(TopicEvent.EDIT, topic, options);
-    },
+  close(update) {
+    if (this.isVisible()) {
+      this._activeEditor.close(update);
+      this._activeEditor = null;
+    }
+  },
 
-    process: function (eventType, topic, options) {
-        $assert(eventType, 'eventType can not be null');
+  show(topic, options) {
+    this.process(TopicEvent.EDIT, topic, options);
+  },
 
-        // Close all previous open editor ....
-        if (this.isVisible()) {
-            this.close();
-        }
+  process(eventType, topic, options) {
+    $assert(eventType, 'eventType can not be null');
 
-        // Open the new editor ...
-        var model = topic.getModel();
-        if (
-            model.getShapeType() != TopicShape.IMAGE &&
-            !this._readOnly &&
-            eventType == TopicEvent.EDIT
-        ) {
-            this._multilineEditor.show(topic, options ? options.text : null);
-            this._activeEditor = this._multilineEditor;
-        } else {
-            this.fireEvent(eventType, { model: model, readOnly: this._readOnly });
-        }
-    },
+    // Close all previous open editor ....
+    if (this.isVisible()) {
+      this.close();
+    }
 
-    isVisible: function () {
-        return this._activeEditor != null && this._activeEditor.isVisible();
-    },
+    // Open the new editor ...
+    const model = topic.getModel();
+    if (
+      model.getShapeType() != TopicShape.IMAGE
+            && !this._readOnly
+            && eventType == TopicEvent.EDIT
+    ) {
+      this._multilineEditor.show(topic, options ? options.text : null);
+      this._activeEditor = this._multilineEditor;
+    } else {
+      this.fireEvent(eventType, { model, readOnly: this._readOnly });
+    }
+  },
+
+  isVisible() {
+    return this._activeEditor != null && this._activeEditor.isVisible();
+  },
 });
 
 const TopicEvent = {
-    EDIT: 'editnode',
-    CLICK: 'clicknode',
+  EDIT: 'editnode',
+  CLICK: 'clicknode',
 };
 
 export { TopicEvent };

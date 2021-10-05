@@ -9,13 +9,13 @@ const moveControlPointCommand = require('./MoveControlPointCommand').default;
 const removeFeatureFromTopicCommand = require('./RemoveFeatureFromTopicCommand').default;
 
 export const Commands = {
-    AddFeatureToTopicCommand: addFeatureToTopicCommand,
-    AddRelationshipCommand: addRelationshipCommand,
-    AddTopicCommand: addTopicCommand,
-    ChangeFeatureToTopicCommand: changeFeatureToTopicCommand,
-    DeleteCommand: deleteCommand,
-    DragTopicCommand: dragTopicCommand,
-    GenericFunctionCommand: genericFunctionCommand,
-    MoveControlPointCommand: moveControlPointCommand,
-    RemoveFeatureFromTopicCommand: removeFeatureFromTopicCommand,
+  AddFeatureToTopicCommand: addFeatureToTopicCommand,
+  AddRelationshipCommand: addRelationshipCommand,
+  AddTopicCommand: addTopicCommand,
+  ChangeFeatureToTopicCommand: changeFeatureToTopicCommand,
+  DeleteCommand: deleteCommand,
+  DragTopicCommand: dragTopicCommand,
+  GenericFunctionCommand: genericFunctionCommand,
+  MoveControlPointCommand: moveControlPointCommand,
+  RemoveFeatureFromTopicCommand: removeFeatureFromTopicCommand,
 };

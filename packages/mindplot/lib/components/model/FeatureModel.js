@@ -17,75 +17,75 @@
  */
 
 const FeatureModel = new Class(/** @lends FeatureModel */{
-    Static:{
-        _nextUUID:function () {
-            if (!$defined(FeatureModel._uuid)) {
-                FeatureModel._uuid = 0;
-            }
+  Static: {
+    _nextUUID() {
+      if (!$defined(FeatureModel._uuid)) {
+        FeatureModel._uuid = 0;
+      }
 
-            FeatureModel._uuid = FeatureModel._uuid + 1;
-            return FeatureModel._uuid;
-        }
+      FeatureModel._uuid += 1;
+      return FeatureModel._uuid;
     },
+  },
 
-    /**
+  /**
      * @constructs
      * @param type
      * @throws will throw an exception if type is null or undefined
      * assigns a unique id and the given type to the new model
      */
-    initialize:function (type) {
-        $assert(type, 'type can not be null');
-        this._id = FeatureModel._nextUUID();
+  initialize(type) {
+    $assert(type, 'type can not be null');
+    this._id = FeatureModel._nextUUID();
 
-        this._type = type;
-        this._attributes = {};
+    this._type = type;
+    this._attributes = {};
 
-        // Create type method ...
-        this['is' + $.camelCase(type) + 'Model'] = function () {
-            return true;
-        };
-    },
+    // Create type method ...
+    this[`is${$.camelCase(type)}Model`] = function () {
+      return true;
+    };
+  },
 
-    /** */
-    getAttributes:function () {
-        return Object.clone(this._attributes);
-    },
+  /** */
+  getAttributes() {
+    return Object.clone(this._attributes);
+  },
 
-    /** */
-    setAttributes:function (attributes) {
-        for (key in attributes) {
-            this["set" + key.capitalize()](attributes[key]);
-        }
-    },
-
-    /** */
-    setAttribute:function (key, value) {
-        $assert(key, 'key id can not be null');
-        this._attributes[key] = value;
-    },
-
-    /** */
-    getAttribute:function (key) {
-        $assert(key, 'key id can not be null');
-
-        return this._attributes[key];
-    },
-
-    /** */
-    getId:function () {
-        return this._id;
-    },
-
-    /** */
-    setId:function (id) {
-        this._id = id;
-    },
-
-    /** */
-    getType:function () {
-        return this._type;
+  /** */
+  setAttributes(attributes) {
+    for (key in attributes) {
+      this[`set${key.capitalize()}`](attributes[key]);
     }
+  },
+
+  /** */
+  setAttribute(key, value) {
+    $assert(key, 'key id can not be null');
+    this._attributes[key] = value;
+  },
+
+  /** */
+  getAttribute(key) {
+    $assert(key, 'key id can not be null');
+
+    return this._attributes[key];
+  },
+
+  /** */
+  getId() {
+    return this._id;
+  },
+
+  /** */
+  setId(id) {
+    this._id = id;
+  },
+
+  /** */
+  getType() {
+    return this._type;
+  },
 });
 
 export default FeatureModel;

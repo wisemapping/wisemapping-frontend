@@ -25,38 +25,36 @@ const NoteModel = require('./model/NoteModel').default;
 const NoteIcon = require('./NoteIcon').default;
 
 const TopicFeature = {
-    /** the icon object */
-    Icon: {
-        id: IconModel.FEATURE_TYPE,
-        model: IconModel,
-        icon: ImageIcon
-    },
+  /** the icon object */
+  Icon: {
+    id: IconModel.FEATURE_TYPE,
+    model: IconModel,
+    icon: ImageIcon,
+  },
 
-    /** the link object */
-    Link: {
-        id: LinkModel.FEATURE_TYPE,
-        model: LinkModel,
-        icon: LinkIcon
-    },
+  /** the link object */
+  Link: {
+    id: LinkModel.FEATURE_TYPE,
+    model: LinkModel,
+    icon: LinkIcon,
+  },
 
-    /** the note object */
-    Note: {
-        id: NoteModel.FEATURE_TYPE,
-        model: NoteModel,
-        icon: NoteIcon
-    },
+  /** the note object */
+  Note: {
+    id: NoteModel.FEATURE_TYPE,
+    model: NoteModel,
+    icon: NoteIcon,
+  },
 
-    /**
+  /**
      * @param id the feature metadata id
      * @return {Boolean} returns true if the given id is contained in the metadata array
      */
-    isSupported: function (id) {
-        return TopicFeature._featuresMetadataById.some(function (elem) {
-            return elem.id == id;
-        });
-    },
+  isSupported(id) {
+    return TopicFeature._featuresMetadataById.some((elem) => elem.id == id);
+  },
 
-    /**
+  /**
      * @param type
      * @param attributes
      * @throws will throw an error if type is null or undefined
@@ -64,17 +62,15 @@ const TopicFeature = {
      * @return {mindplot.model.FeatureModel} a new instance of the feature model subclass matching
      * the topic feature
      */
-    createModel: function (type, attributes) {
-        $assert(type, 'type can not be null');
-        $assert(attributes, 'attributes can not be null');
+  createModel(type, attributes) {
+    $assert(type, 'type can not be null');
+    $assert(attributes, 'attributes can not be null');
 
-        var model = TopicFeature._featuresMetadataById.filter(function (elem) {
-            return elem.id == type;
-        })[0].model;
-        return new model(attributes);
-    },
+    const { model } = TopicFeature._featuresMetadataById.filter((elem) => elem.id == type)[0];
+    return new model(attributes);
+  },
 
-    /**
+  /**
      * @param {mindplot.Topic} topic
      * @param {mindplot.model.FeatureModel} model
      * @param {Boolean} readOnly true if the editor is running in read-only mode
@@ -82,15 +78,13 @@ const TopicFeature = {
      * @throws will throw an error if model is null or undefined
      * @return {mindplot.Icon} a new instance of the icon subclass matching the topic feature
      */
-    createIcon: function (topic, model, readOnly) {
-        $assert(topic, 'topic can not be null');
-        $assert(model, 'model can not be null');
+  createIcon(topic, model, readOnly) {
+    $assert(topic, 'topic can not be null');
+    $assert(model, 'model can not be null');
 
-        var icon = TopicFeature._featuresMetadataById.filter(function (elem) {
-            return elem.id == model.getType();
-        })[0].icon;
-        return new icon(topic, model, readOnly);
-    }
+    const { icon } = TopicFeature._featuresMetadataById.filter((elem) => elem.id == model.getType())[0];
+    return new icon(topic, model, readOnly);
+  },
 };
 
 TopicFeature._featuresMetadataById = [TopicFeature.Icon, TopicFeature.Link, TopicFeature.Note];

@@ -17,51 +17,45 @@
 */
 
 const Command = new Class(/** @lends mindplot.Command */{
-    /**
+  /**
      * @classdesc The command base class for handling do/undo mindmap operations
      * @constructs
      */
-    initialize: function()
-    {
-        this._id = Command._nextUUID();
-    },
+  initialize() {
+    this._id = Command._nextUUID();
+  },
 
-    /** 
+  /**
      * @abstract
      */
-    execute: function(commandContext)
-    {
-        throw "execute must be implemented.";
-    },
+  execute(commandContext) {
+    throw 'execute must be implemented.';
+  },
 
-    /** 
-     * Triggered by the undo button - reverses the executed command 
+  /**
+     * Triggered by the undo button - reverses the executed command
      * @abstract
      */
-    undoExecute: function(commandContext)
-    {
-        throw "undo must be implemented.";
-    },
+  undoExecute(commandContext) {
+    throw 'undo must be implemented.';
+  },
 
-    /** 
+  /**
      * Returns the unique id of this command
      * @returns {Number} command id
      */
-    getId:function()
-    {
-        return this._id;
-    }
+  getId() {
+    return this._id;
+  },
 });
 
-Command._nextUUID = function()
-{
-    if (!$defined(Command._uuid))
-    {
-        Command._uuid = 1;
-    }
+Command._nextUUID = function () {
+  if (!$defined(Command._uuid)) {
+    Command._uuid = 1;
+  }
 
-    Command._uuid = Command._uuid + 1;
-    return Command._uuid;
+  Command._uuid += 1;
+  return Command._uuid;
 };
 
 export default Command;
