@@ -23,4 +23,5 @@ module.exports = {
     extensions: ['.js', '.json'],
   },
   plugins: [new CleanWebpackPlugin()],
+  
 };
