@@ -1,39 +1,40 @@
+/* eslint-disable global-require */
 function web2D() {
   global.$ = require('jquery');
   require('mootools');
-    const coreJs = require('@wismapping/core-js'); //eslint-disable-line
-    global.core = coreJs(); //eslint-disable-line
+  const coreJs = require('@wismapping/core-js'); 
+  global.core = coreJs(); 
 
-    const elementPeer = require('./components/peer/svg/ElementPeer').default; //eslint-disable-line
-    const element = require('./components/Element').default; //eslint-disable-line
-    const workspace = require('./components/Workspace').default; //eslint-disable-line
-    const workspacePeer = require('./components/peer/svg/WorkspacePeer').default; //eslint-disable-line
-    const toolkit = require('./components/Toolkit').default; //eslint-disable-line
-    const elipse = require('./components/Elipse').default; //eslint-disable-line
-    const elipsePeer = require('./components/peer/svg/ElipsePeer').default; //eslint-disable-line
-    const linePeer = require('./components/peer/svg/LinePeer').default; //eslint-disable-line
-    const line = require('./components/Line').default; //eslint-disable-line
-    const polyLine = require('./components/PolyLine').default; //eslint-disable-line
-    const curvedLine = require('./components/CurvedLine').default; //eslint-disable-line
-    const arrow = require('./components/Arrow').default; //eslint-disable-line
-    const polyLinePeer = require('./components/peer/svg/PolyLinePeer').default; //eslint-disable-line
-    const curvedLinePeer = require('./components/peer/svg/CurvedLinePeer').default; //eslint-disable-line
-    const arrowPeer = require('./components/peer/svg/ArrowPeer').default; //eslint-disable-line
-    const groupPeer = require('./components/peer/svg/GroupPeer').default; //eslint-disable-line
-    const group = require('./components/Group').default; //eslint-disable-line
-    const rect = require('./components/Rect').default; //eslint-disable-line
-    const rectPeer = require('./components/peer/svg/RectPeer').default; //eslint-disable-line
-    const text = require('./components/Text').default; //eslint-disable-line
-    const textPeer = require('./components/peer/svg/TextPeer').default; //eslint-disable-line
-    const transformUtils = require('./components/peer/utils/TransformUtils').default; //eslint-disable-line
-    const eventUtils = require('./components/peer/utils/EventUtils').default; //eslint-disable-line
-    const font = require('./components/Font').default; //eslint-disable-line
-    const fontPeer = require('./components/peer/svg/Font').default; //eslint-disable-line
-    const tahomaFont = require('./components/peer/svg/TahomaFont').default; //eslint-disable-line
-    const timesFont = require('./components/peer/svg/TimesFont').default; //eslint-disable-line
-    const arialFont = require('./components/peer/svg/ArialFont').default; //eslint-disable-line
-    const verdanaFont = require('./components/peer/svg/VerdanaFont').default; //eslint-disable-line
-    const point = require('./components/Point').default; //eslint-disable-line
+  const elementPeer = require('./components/peer/svg/ElementPeer').default; 
+  const element = require('./components/Element').default; 
+  const workspace = require('./components/Workspace').default; 
+  const workspacePeer = require('./components/peer/svg/WorkspacePeer').default; 
+  const toolkit = require('./components/Toolkit').default; 
+  const elipse = require('./components/Elipse').default; 
+  const elipsePeer = require('./components/peer/svg/ElipsePeer').default; 
+  const linePeer = require('./components/peer/svg/LinePeer').default; 
+  const line = require('./components/Line').default; 
+  const polyLine = require('./components/PolyLine').default; 
+  const curvedLine = require('./components/CurvedLine').default; 
+  const arrow = require('./components/Arrow').default; 
+  const polyLinePeer = require('./components/peer/svg/PolyLinePeer').default; 
+  const curvedLinePeer = require('./components/peer/svg/CurvedLinePeer').default; 
+  const arrowPeer = require('./components/peer/svg/ArrowPeer').default; 
+  const groupPeer = require('./components/peer/svg/GroupPeer').default; 
+  const group = require('./components/Group').default; 
+  const rect = require('./components/Rect').default; 
+  const rectPeer = require('./components/peer/svg/RectPeer').default; 
+  const text = require('./components/Text').default; 
+  const textPeer = require('./components/peer/svg/TextPeer').default; 
+  const transformUtils = require('./components/peer/utils/TransformUtils').default; 
+  const eventUtils = require('./components/peer/utils/EventUtils').default; 
+  const font = require('./components/Font').default; 
+  const fontPeer = require('./components/peer/svg/Font').default; 
+  const tahomaFont = require('./components/peer/svg/TahomaFont').default; 
+  const timesFont = require('./components/peer/svg/TimesFont').default; 
+  const arialFont = require('./components/peer/svg/ArialFont').default; 
+  const verdanaFont = require('./components/peer/svg/VerdanaFont').default; 
+  const point = require('./components/Point').default; 
 
   const web2d = {
     ElementPeer: elementPeer,
@@ -68,7 +69,7 @@ function web2D() {
     Point: point,
   };
 
-    return web2d; //eslint-disable-line
+  return web2d; 
 }
 
-module.exports = web2D; //eslint-disable-line
+module.exports = web2D; 

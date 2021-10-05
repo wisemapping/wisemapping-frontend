@@ -36,7 +36,7 @@ const ToolkitSVG = {
   createWorkspace(element) {
     return new WorkspacePeer(element);
   },
-  createGroup(element) {
+  createGroup() {
     return new GroupPeer();
   },
   createElipse() {

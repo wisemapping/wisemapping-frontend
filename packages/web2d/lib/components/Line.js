@@ -57,16 +57,16 @@ const Line = new Class({
     this.peer.setArrowStyle(startStyle, endStyle);
   },
 
-  setPosition(cx, cy) {
-    throw 'Unsupported operation';
+  setPosition() {
+    throw new Error('Unsupported operation');
   },
 
-  setSize(width, height) {
-    throw 'Unsupported operation';
+  setSize() {
+    throw new Error('Unsupported operation');
   },
 
-  setFill(color, opacity) {
-    throw 'Unsupported operation';
+  setFill() {
+    throw new Error('Unsupported operation');
   },
 });
 
