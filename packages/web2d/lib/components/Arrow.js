@@ -40,23 +40,23 @@ const Arrow = new Class({
   },
 
   setFrom(x, y) {
-    this._peer.setFrom(x, y);
+    this.peer.setFrom(x, y);
   },
 
   setControlPoint(point) {
-    this._peer.setControlPoint(point);
+    this.peer.setControlPoint(point);
   },
 
   setStrokeColor(color) {
-    this._peer.setStrokeColor(color);
+    this.peer.setStrokeColor(color);
   },
 
   setStrokeWidth(width) {
-    this._peer.setStrokeWidth(width);
+    this.peer.setStrokeWidth(width);
   },
 
   setDashed(isDashed, length, spacing) {
-    this._peer.setDashed(isDashed, length, spacing);
+    this.peer.setDashed(isDashed, length, spacing);
   },
 });
 

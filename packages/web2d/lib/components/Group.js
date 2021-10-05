@@ -39,19 +39,19 @@ const Group = new Class({
      */
   removeChild(element) {
     if (!$defined(element)) {
-      throw 'Child element can not be null';
+      throw new Error('Child element can not be null');
     }
 
     if (element == this) {
-      throw "It's not possible to add the group as a child of itself";
+      throw new Error("It's not possible to add the group as a child of itself");
     }
 
     const elementType = element.getType();
     if (elementType == null) {
-      throw `It seems not to be an element ->${element}`;
+      throw new Error(`It seems not to be an element ->${element}`);
     }
 
-    this._peer.removeChild(element._peer);
+    this.peer.removeChild(element.peer);
   },
 
   /**
@@ -59,23 +59,23 @@ const Group = new Class({
      */
   append(element) {
     if (!$defined(element)) {
-      throw 'Child element can not be null';
+      throw Error('Child element can not be null');
     }
 
     if (element == this) {
-      throw "It's not posible to add the group as a child of itself";
+      throw new Error("It's not posible to add the group as a child of itself");
     }
 
     const elementType = element.getType();
     if (elementType == null) {
-      throw `It seems not to be an element ->${element}`;
+      throw new Error(`It seems not to be an element ->${element}`);
     }
 
     if (elementType == 'Workspace') {
-      throw 'A group can not have a workspace as a child';
+      throw new Error('A group can not have a workspace as a child');
     }
 
-    this._peer.append(element._peer);
+    this.peer.append(element.peer);
   },
 
   getType() {
@@ -90,46 +90,46 @@ const Group = new Class({
      * they are simple numbers, not CSS length quantities.
      */
   setCoordSize(width, height) {
-    this._peer.setCoordSize(width, height);
+    this.peer.setCoordSize(width, height);
   },
 
   setCoordOrigin(x, y) {
-    this._peer.setCoordOrigin(x, y);
+    this.peer.setCoordOrigin(x, y);
   },
 
   getCoordOrigin() {
-    return this._peer.getCoordOrigin();
+    return this.peer.getCoordOrigin();
   },
   getSize() {
-    return this._peer.getSize();
+    return this.peer.getSize();
   },
 
-  setFill(color, opacity) {
-    throw 'Unsupported operation. Fill can not be set to a group';
+  setFill() {
+    throw new Error('Unsupported operation. Fill can not be set to a group');
   },
 
-  setStroke(width, style, color, opacity) {
-    throw 'Unsupported operation. Stroke can not be set to a group';
+  setStroke() {
+    throw new Error('Unsupported operation. Stroke can not be set to a group');
   },
 
   getCoordSize() {
-    return this._peer.getCoordSize();
+    return this.peer.getCoordSize();
   },
 
   appendDomChild(DomElement) {
     if (!$defined(DomElement)) {
-      throw 'Child element can not be null';
+      throw new Error('Child element can not be null');
     }
 
     if (DomElement == this) {
-      throw "It's not possible to add the group as a child of itself";
+      throw new Error('Its not possible to add the group as a child of itself');
     }
 
-    this._peer._native.append(DomElement);
+    this.peer._native.append(DomElement);
   },
 
   setOpacity(value) {
-    this._peer.setOpacity(value);
+    this.peer.setOpacity(value);
   },
 
 });

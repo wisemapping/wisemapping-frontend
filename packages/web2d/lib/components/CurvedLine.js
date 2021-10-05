@@ -39,82 +39,82 @@ const CurvedLine = new Class({
     $assert(!isNaN(x), 'x must be defined');
     $assert(!isNaN(y), 'y must be defined');
 
-    this._peer.setFrom(x, y);
+    this.peer.setFrom(x, y);
   },
 
   setTo(x, y) {
     $assert(!isNaN(x), 'x must be defined');
     $assert(!isNaN(y), 'y must be defined');
 
-    this._peer.setTo(x, y);
+    this.peer.setTo(x, y);
   },
 
   getFrom() {
-    return this._peer.getFrom();
+    return this.peer.getFrom();
   },
 
   getTo() {
-    return this._peer.getTo();
+    return this.peer.getTo();
   },
 
   setShowEndArrow(visible) {
-    this._peer.setShowEndArrow(visible);
+    this.peer.setShowEndArrow(visible);
   },
 
   isShowEndArrow() {
-    return this._peer.isShowEndArrow();
+    return this.peer.isShowEndArrow();
   },
 
   setShowStartArrow(visible) {
-    this._peer.setShowStartArrow(visible);
+    this.peer.setShowStartArrow(visible);
   },
 
   isShowStartArrow() {
-    return this._peer.isShowStartArrow();
+    return this.peer.isShowStartArrow();
   },
 
   setSrcControlPoint(control) {
-    this._peer.setSrcControlPoint(control);
+    this.peer.setSrcControlPoint(control);
   },
 
   setDestControlPoint(control) {
-    this._peer.setDestControlPoint(control);
+    this.peer.setDestControlPoint(control);
   },
 
   getControlPoints() {
-    return this._peer.getControlPoints();
+    return this.peer.getControlPoints();
   },
 
   isSrcControlPointCustom() {
-    return this._peer.isSrcControlPointCustom();
+    return this.peer.isSrcControlPointCustom();
   },
 
   isDestControlPointCustom() {
-    return this._peer.isDestControlPointCustom();
+    return this.peer.isDestControlPointCustom();
   },
 
   setIsSrcControlPointCustom(isCustom) {
-    this._peer.setIsSrcControlPointCustom(isCustom);
+    this.peer.setIsSrcControlPointCustom(isCustom);
   },
 
   setIsDestControlPointCustom(isCustom) {
-    this._peer.setIsDestControlPointCustom(isCustom);
+    this.peer.setIsDestControlPointCustom(isCustom);
   },
 
   updateLine(avoidControlPointFix) {
-    return this._peer.updateLine(avoidControlPointFix);
+    return this.peer.updateLine(avoidControlPointFix);
   },
 
   setStyle(style) {
-    this._peer.setLineStyle(style);
+    this.peer.setLineStyle(style);
   },
 
   getStyle() {
-    return this._peer.getLineStyle();
+    return this.peer.getLineStyle();
   },
 
   setDashed(length, spacing) {
-    this._peer.setDashed(length, spacing);
+    this.peer.setDashed(length, spacing);
   },
 });
 

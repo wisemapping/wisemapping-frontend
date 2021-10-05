@@ -18,7 +18,7 @@
 
 const Element = new Class({ // eslint-disable-line no-undef
   initialize(peer, attributes) {
-    this._peer = peer;
+    this.peer = peer;
     if (peer == null) {
       throw new Error('Element peer can not be null');
     }
@@ -60,11 +60,11 @@ const Element = new Class({ // eslint-disable-line no-undef
   },
 
   setSize(width, height) {
-    this._peer.setSize(width, height);
+    this.peer.setSize(width, height);
   },
 
   setPosition(cx, cy) {
-    this._peer.setPosition(cx, cy);
+    this.peer.setPosition(cx, cy);
   },
 
   /**
@@ -78,15 +78,15 @@ const Element = new Class({ // eslint-disable-line no-undef
      *
      */
   addEvent(type, listener) {
-    this._peer.addEvent(type, listener);
+    this.peer.addEvent(type, listener);
   },
 
   trigger(type, event) {
-    this._peer.trigger(type, event);
+    this.peer.trigger(type, event);
   },
 
   cloneEvents(from) {
-    this._peer.cloneEvents(from);
+    this.peer.cloneEvents(from);
   },
   /**
      *
@@ -100,7 +100,7 @@ const Element = new Class({ // eslint-disable-line no-undef
      *     This interace will be invoked passing an event as argument and the 'this' referece in the function will be the element.
      */
   removeEvent(type, listener) {
-    this._peer.removeEvent(type, listener);
+    this.peer.removeEvent(type, listener);
   },
 
   /**
@@ -117,7 +117,7 @@ const Element = new Class({ // eslint-disable-line no-undef
      * Todo: Doc
      */
   getFill() {
-    return this._peer.getFill();
+    return this.peer.getFill();
   },
 
   /**
@@ -126,15 +126,15 @@ const Element = new Class({ // eslint-disable-line no-undef
      * opacity: Opacity of the fill. It must be less than 1.
      */
   setFill(color, opacity) {
-    this._peer.setFill(color, opacity);
+    this.peer.setFill(color, opacity);
   },
 
   getPosition() {
-    return this._peer.getPosition();
+    return this.peer.getPosition();
   },
 
   getNativePosition() {
-    return this._peer.getNativePosition();
+    return this.peer.getNativePosition();
   },
 
   /*
@@ -156,7 +156,7 @@ const Element = new Class({ // eslint-disable-line no-undef
     ) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
-    this._peer.setStroke(width, style, color, opacity);
+    this.peer.setStroke(width, style, color, opacity);
   },
 
   _attributeNameToFuncName(attributeKey, prefix) {
@@ -235,42 +235,42 @@ const Element = new Class({ // eslint-disable-line no-undef
      *   opacity: A value between 0 and 1.
      */
   setOpacity(opacity) {
-    this._peer.setStroke(null, null, null, opacity);
-    this._peer.setFill(null, opacity);
+    this.peer.setStroke(null, null, null, opacity);
+    this.peer.setFill(null, opacity);
   },
 
   setVisibility(isVisible) {
-    this._peer.setVisibility(isVisible);
+    this.peer.setVisibility(isVisible);
   },
 
   isVisible() {
-    return this._peer.isVisible();
+    return this.peer.isVisible();
   },
 
   /**
      * Move the element to the front
      */
   moveToFront() {
-    this._peer.moveToFront();
+    this.peer.moveToFront();
   },
 
   /**
      * Move the element to the back
      */
   moveToBack() {
-    this._peer.moveToBack();
+    this.peer.moveToBack();
   },
 
   getStroke() {
-    return this._peer.getStroke();
+    return this.peer.getStroke();
   },
 
   setCursor(type) {
-    this._peer.setCursor(type);
+    this.peer.setCursor(type);
   },
 
   getParent() {
-    return this._peer.getParent();
+    return this.peer.getParent();
   },
 });
 

@@ -36,7 +36,7 @@ const Workspace = new Class({
       defaultAttributes[key] = attributes[key];
     }
     this.parent(peer, defaultAttributes);
-    this._htmlContainer.append(this._peer._native);
+    this._htmlContainer.append(this.peer._native);
   },
 
   getType() {
@@ -59,7 +59,7 @@ const Workspace = new Class({
       throw 'A workspace can not have a workspace as a child';
     }
 
-    this._peer.append(element._peer);
+    this.peer.append(element.peer);
   },
 
   addItAsChildTo(element) {
@@ -102,7 +102,7 @@ const Workspace = new Class({
     if ($defined(height)) {
       this._htmlContainer.css('height', height);
     }
-    this._peer.setSize(width, height);
+    this.peer.setSize(width, height);
   },
 
   /**
@@ -113,21 +113,21 @@ const Workspace = new Class({
      * they are simple numbers, not CSS length quantities.
      */
   setCoordSize(width, height) {
-    this._peer.setCoordSize(width, height);
+    this.peer.setCoordSize(width, height);
   },
 
   /**
      * @Todo: Complete Doc
      */
   setCoordOrigin(x, y) {
-    this._peer.setCoordOrigin(x, y);
+    this.peer.setCoordOrigin(x, y);
   },
 
   /**
      * @Todo: Complete Doc
      */
   getCoordOrigin() {
-    return this._peer.getCoordOrigin();
+    return this.peer.getCoordOrigin();
   },
 
   // Private method declaration area
@@ -168,7 +168,7 @@ const Workspace = new Class({
   },
 
   getCoordSize() {
-    return this._peer.getCoordSize();
+    return this.peer.getCoordSize();
   },
 
   /**
@@ -188,7 +188,7 @@ const Workspace = new Class({
       throw `It seems not to be an element ->${element}`;
     }
 
-    this._peer.removeChild(element._peer);
+    this.peer.removeChild(element.peer);
   },
 
   dumpNativeChart() {

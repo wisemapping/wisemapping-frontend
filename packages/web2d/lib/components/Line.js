@@ -34,19 +34,19 @@ const Line = new Class({
   },
 
   setFrom(x, y) {
-    this._peer.setFrom(x, y);
+    this.peer.setFrom(x, y);
   },
 
   setTo(x, y) {
-    this._peer.setTo(x, y);
+    this.peer.setTo(x, y);
   },
 
   getFrom() {
-    return this._peer.getFrom();
+    return this.peer.getFrom();
   },
 
   getTo() {
-    return this._peer.getTo();
+    return this.peer.getTo();
   },
 
   /**
@@ -54,7 +54,7 @@ const Line = new Class({
      * Can have values "none | block | classic | diamond | oval | open | chevron | doublechevron"
      * */
   setArrowStyle(startStyle, endStyle) {
-    this._peer.setArrowStyle(startStyle, endStyle);
+    this.peer.setArrowStyle(startStyle, endStyle);
   },
 
   setPosition(cx, cy) {

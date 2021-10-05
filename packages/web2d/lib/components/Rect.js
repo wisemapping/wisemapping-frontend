@@ -50,7 +50,7 @@ const Rect = new Class({
   },
 
   getSize() {
-    return this._peer.getSize();
+    return this.peer.getSize();
   },
 });
 

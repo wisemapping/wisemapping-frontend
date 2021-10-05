@@ -36,19 +36,19 @@ const PolyLine = new Class({
   },
 
   setFrom(x, y) {
-    this._peer.setFrom(x, y);
+    this.peer.setFrom(x, y);
   },
 
   setTo(x, y) {
-    this._peer.setTo(x, y);
+    this.peer.setTo(x, y);
   },
 
   setStyle(style) {
-    this._peer.setStyle(style);
+    this.peer.setStyle(style);
   },
 
   getStyle() {
-    return this._peer.getStyle();
+    return this.peer.getStyle();
   },
 
   buildCurvedPath(dist, x1, y1, x2, y2) {

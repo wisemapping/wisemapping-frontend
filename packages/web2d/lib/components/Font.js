@@ -21,18 +21,18 @@ const TransformUtil = require('./peer/utils/TransformUtils').default;
 const Font = new Class({
   initialize(fontFamily, textPeer) {
     const font = `Toolkit.default.create${fontFamily}Font();`;
-    this._peer = eval(font);
+    this.peer = eval(font);
     this._textPeer = textPeer;
   },
 
   getHtmlSize() {
     const scale = TransformUtil.workoutScale(this._textPeer);
-    return this._peer.getHtmlSize(scale);
+    return this.peer.getHtmlSize(scale);
   },
 
   getGraphSize() {
     const scale = TransformUtil.workoutScale(this._textPeer);
-    return this._peer.getGraphSize(scale);
+    return this.peer.getGraphSize(scale);
   },
 
   getFontScale() {
@@ -40,39 +40,39 @@ const Font = new Class({
   },
 
   getSize() {
-    return this._peer.getSize();
+    return this.peer.getSize();
   },
 
   getStyle() {
-    return this._peer.getStyle();
+    return this.peer.getStyle();
   },
 
   getWeight() {
-    return this._peer.getWeight();
+    return this.peer.getWeight();
   },
 
   getFontFamily() {
-    return this._peer.getFontFamily();
+    return this.peer.getFontFamily();
   },
 
   setSize(size) {
-    return this._peer.setSize(size);
+    return this.peer.setSize(size);
   },
 
   setStyle(style) {
-    return this._peer.setStyle(style);
+    return this.peer.setStyle(style);
   },
 
   setWeight(weight) {
-    return this._peer.setWeight(weight);
+    return this.peer.setWeight(weight);
   },
 
   getFont() {
-    return this._peer.getFont();
+    return this.peer.getFont();
   },
 
   getWidthMargin() {
-    return this._peer.getWidthMargin();
+    return this.peer.getWidthMargin();
   },
 });
 

@@ -30,15 +30,15 @@ const Image = new Class({
   },
 
   setHref(href) {
-    this._peer.setHref(href);
+    this.peer.setHref(href);
   },
 
   getHref() {
-    return this._peer.getHref();
+    return this.peer.getHref();
   },
 
   getSize() {
-    return this._peer.getSize();
+    return this.peer.getSize();
   },
 });
 

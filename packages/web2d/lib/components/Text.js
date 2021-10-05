@@ -30,68 +30,68 @@ const Text = new Class({
   },
 
   setText(text) {
-    this._peer.setText(text);
+    this.peer.setText(text);
   },
 
   setTextAlignment(align) {
     $assert(align, 'align can not be null');
-    this._peer.setTextAlignment(align);
+    this.peer.setTextAlignment(align);
   },
 
   setTextSize(width, height) {
-    this._peer.setContentSize(width, height);
+    this.peer.setContentSize(width, height);
   },
 
   getText() {
-    return this._peer.getText();
+    return this.peer.getText();
   },
 
   setFont(font, size, style, weight) {
-    this._peer.setFont(font, size, style, weight);
+    this.peer.setFont(font, size, style, weight);
   },
 
   setColor(color) {
-    this._peer.setColor(color);
+    this.peer.setColor(color);
   },
 
   getColor() {
-    return this._peer.getColor();
+    return this.peer.getColor();
   },
 
   setStyle(style) {
-    this._peer.setStyle(style);
+    this.peer.setStyle(style);
   },
 
   setWeight(weight) {
-    this._peer.setWeight(weight);
+    this.peer.setWeight(weight);
   },
 
   setFontFamily(family) {
-    this._peer.setFontFamily(family);
+    this.peer.setFontFamily(family);
   },
 
   getFont() {
-    return this._peer.getFont();
+    return this.peer.getFont();
   },
 
   setSize(size) {
-    this._peer.setSize(size);
+    this.peer.setSize(size);
   },
 
   getHtmlFontSize() {
-    return this._peer.getHtmlFontSize();
+    return this.peer.getHtmlFontSize();
   },
 
   getWidth() {
-    return this._peer.getWidth();
+    return this.peer.getWidth();
   },
 
   getHeight() {
-    return parseInt(this._peer.getHeight());
+    return parseInt(this.peer.getHeight());
   },
 
   getFontHeight() {
-    const lines = this._peer.getText().split('\n').length;
+    const lines = this.peer.getText().split('\n').length;
     return Math.round(this.getHeight() / lines);
   },
 });

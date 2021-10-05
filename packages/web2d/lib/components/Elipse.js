@@ -36,7 +36,7 @@ const Elipse = new Class({
   },
 
   getSize() {
-    return this._peer.getSize();
+    return this.peer.getSize();
   },
 });
 

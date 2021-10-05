@@ -40,7 +40,7 @@
 
             var text = new web2d.Text();
             overflowWorkspace.append(text);
-            var scale = web2d.TransformUtils.workoutScale(text._peer);
+            var scale = web2d.TransformUtils.workoutScale(text.peer);
             text.setText(textval + " " + scale.height);
             text.setFont(font, fontSizeval, style, modifier);
             text.setPosition(0, 0);
