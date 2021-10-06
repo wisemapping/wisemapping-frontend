@@ -29,7 +29,9 @@ const Group = new Class({
       width: 50, height: 50, x: 50, y: 50, coordOrigin: '0 0', coordSize: '50 50',
     };
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
   },
@@ -62,7 +64,7 @@ const Group = new Class({
       throw Error('Child element can not be null');
     }
 
-    if (element == this) {
+    if (element === this) {
       throw new Error("It's not posible to add the group as a child of itself");
     }
 
@@ -71,7 +73,7 @@ const Group = new Class({
       throw new Error(`It seems not to be an element ->${element}`);
     }
 
-    if (elementType == 'Workspace') {
+    if (elementType === 'Workspace') {
       throw new Error('A group can not have a workspace as a child');
     }
 

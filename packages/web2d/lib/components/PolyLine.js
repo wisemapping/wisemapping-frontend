@@ -26,7 +26,9 @@ const PolyLine = new Class({
       strokeColor: 'blue', strokeWidth: 1, strokeStyle: 'solid', strokeOpacity: 1,
     };
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
   },

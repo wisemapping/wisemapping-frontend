@@ -23,7 +23,7 @@ const Element = new Class({ // eslint-disable-line no-undef
       throw new Error('Element peer can not be null');
     }
 
-    if ($defined(attributes)) { // eslint-disable-line no-undef
+    if ($defined(attributes)) {
       this._initialize(attributes);
     }
   },
@@ -32,30 +32,39 @@ const Element = new Class({ // eslint-disable-line no-undef
     const batchExecute = {};
 
     // Collect arguments ...
-    for (var key in attributes) {
-      const funcName = this._attributeNameToFuncName(key, 'set');
-      let funcArgs = batchExecute[funcName];
-      if (!$defined(funcArgs)) { // eslint-disable-line no-undef
-        funcArgs = [];
-      }
+    for (const key in attributes) {
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
 
-      const signature = Element._propertyNameToSignature[key];
-      const argPositions = signature[1];
-      if (argPositions != Element._SIGNATURE_MULTIPLE_ARGUMENTS) {
-        funcArgs[argPositions] = attributes[key];
-      } else {
-        funcArgs = attributes[key].split(' ');
+        const funcName = this._attributeNameToFuncName(key, 'set');
+        let funcArgs = batchExecute[funcName];
+
+        if (!$defined(funcArgs)) {
+          funcArgs = [];
+        }
+
+        const signature = Element._propertyNameToSignature[key];
+        const argPositions = signature[1];
+
+        if (argPositions !== Element._SIGNATURE_MULTIPLE_ARGUMENTS) {
+          funcArgs[argPositions] = attributes[key];
+        } else {
+          funcArgs = attributes[key].split(' ');
+        }
+        batchExecute[funcName] = funcArgs;
+
       }
-      batchExecute[funcName] = funcArgs;
     }
 
     // Call functions ...
-    for (var key in batchExecute) { // eslint-disable-line no-redeclare
-      const func = this[key];
-      if (!$defined(func)) { // eslint-disable-line no-undef
-        throw new Error(`Could not find function: ${key}`);
+    for (const key in batchExecute) {
+      if (Object.prototype.hasOwnProperty.call(batchExecute, key)) {
+
+        const func = this[key];
+        if (!$defined(func)) {
+          throw new Error(`Could not find function: ${key}`);
+        }
+        func.apply(this, batchExecute[key]);
       }
-      func.apply(this, batchExecute[key]);
     }
   },
 
@@ -72,7 +81,8 @@ const Element = new Class({ // eslint-disable-line no-undef
      * type
      *     A string representing the event type to listen for.
      * listener
-     *     The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a function in JavaScript.
+     *     The object that receives a notification when an event of the specified type occurs. This must be an object
+     * implementing the EventListener interface, or simply a function in JavaScript.
      *
      * The following events types are supported:
      *
@@ -146,13 +156,13 @@ const Element = new Class({ // eslint-disable-line no-undef
      */
   setStroke(width, style, color, opacity) {
     if (
-      style != null
-            && style != undefined
-            && style != 'dash'
-            && style != 'dot'
-            && style != 'solid'
-            && style != 'longdash'
-            && style != 'dashdot'
+      style !== null
+      && style !== undefined
+      && style !== 'dash'
+      && style !== 'dot'
+      && style !== 'solid'
+      && style !== 'longdash'
+      && style !== 'dashdot'
     ) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
@@ -161,8 +171,8 @@ const Element = new Class({ // eslint-disable-line no-undef
 
   _attributeNameToFuncName(attributeKey, prefix) {
     const signature = Element._propertyNameToSignature[attributeKey];
-    if (!$defined(signature)) { // eslint-disable-line no-undef
-      throw `Unsupported attribute: ${attributeKey}`;
+    if (!$defined(signature)) {
+      throw new Error(`Unsupported attribute: ${attributeKey}`);
     }
 
     const firstLetter = signature[0].charAt(0);
@@ -175,11 +185,12 @@ const Element = new Class({ // eslint-disable-line no-undef
      *       fill, fillColor, fillOpacity, coordSize, coordSizeWidth, coordSizeHeight, coordOrigin, coordOriginX, coordOrigiY
      */
   setAttribute(key, value) {
+
     const funcName = this._attributeNameToFuncName(key, 'set');
 
     const signature = Element._propertyNameToSignature[key];
     if (signature == null) {
-      throw `Could not find the signature for:${key}`;
+      throw new Error(`Could not find the signature for:${key}`);
     }
 
     // Parse arguments ..
@@ -187,7 +198,7 @@ const Element = new Class({ // eslint-disable-line no-undef
     let args = [];
     if (argPositions !== this._SIGNATURE_MULTIPLE_ARGUMENTS) {
       args[argPositions] = value;
-    } else if (typeof value === 'array') { // eslint-disable-line valid-typeof
+    } else if (Array.isArray(value)) {
       args = value;
     } else {
       const strValue = String(value);
@@ -197,7 +208,7 @@ const Element = new Class({ // eslint-disable-line no-undef
     // Look up method ...
     const setter = this[funcName];
     if (setter == null) {
-      throw `Could not find the function name:${funcName}`;
+      throw new Error(`Could not find the function name:${funcName}`);
     }
     setter.apply(this, args);
   },
@@ -207,23 +218,23 @@ const Element = new Class({ // eslint-disable-line no-undef
 
     const signature = Element._propertyNameToSignature[key];
     if (signature == null) {
-      throw `Could not find the signature for:${key}`;
+      throw new Error(`Could not find the signature for:${key}`);
     }
 
     const getter = this[funcName];
     if (getter == null) {
-      throw `Could not find the function name:${funcName}`;
+      throw new Error(`Could not find the function name:${funcName}`);
     }
 
     const getterResult = getter.apply(this, []);
     const attibuteName = signature[2];
-    if (!$defined(attibuteName)) { // eslint-disable-line no-undef
-      throw `Could not find attribute mapping for:${key}`;
+    if (!$defined(attibuteName)) {
+      throw new Error(`Could not find attribute mapping for:${key}`);
     }
 
     const result = getterResult[attibuteName];
-    if (!$defined(result)) { // eslint-disable-line no-undef
-      throw `Could not find attribute with name:${attibuteName}`;
+    if (!$defined(result)) {
+      throw new Error(`Could not find attribute with name:${attibuteName}`);
     }
 
     return result;

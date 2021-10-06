@@ -24,7 +24,9 @@ const Line = new Class({
     const peer = Toolkit.createLine();
     const defaultAttributes = { strokeColor: '#495879', strokeWidth: 1, strokeOpacity: 1 };
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
   },

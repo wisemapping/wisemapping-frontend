@@ -28,19 +28,17 @@ const Rect = new Class({
   Extends: Element,
   initialize(arc, attributes) {
     if (arc && arc > 1) {
-      throw 'Arc must be 0<=arc<=1';
+      throw new Error('Arc must be 0<=arc<=1');
     }
-    if (arguments.length <= 0) {
-      const rx = 0;
-      const ry = 0;
-    }
-
     const peer = Toolkit.createRect(arc);
     const defaultAttributes = {
       width: 40, height: 40, x: 5, y: 5, stroke: '1 solid black', fillColor: 'green',
     };
+
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
   },

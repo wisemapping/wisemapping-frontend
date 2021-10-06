@@ -33,7 +33,9 @@ const Workspace = new Class({
       coordSize: '200 200',
     };
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
     this._htmlContainer.append(this.peer._native);
@@ -48,15 +50,15 @@ const Workspace = new Class({
      */
   append(element) {
     if (!$defined(element)) {
-      throw 'Child element can not be null';
+      throw new Error('Child element can not be null');
     }
     const elementType = element.getType();
     if (elementType == null) {
-      throw `It seems not to be an element ->${element}`;
+      throw new Error(`It seems not to be an element ->${element}`);
     }
 
-    if (elementType == 'Workspace') {
-      throw 'A workspace can not have a workspace as a child';
+    if (elementType === 'Workspace') {
+      throw new Error('A workspace can not have a workspace as a child');
     }
 
     this.peer.append(element.peer);
@@ -64,7 +66,7 @@ const Workspace = new Class({
 
   addItAsChildTo(element) {
     if (!$defined(element)) {
-      throw 'Workspace div container can not be null';
+      throw new Error('Workspace div container can not be null');
     }
     element.append(this._htmlContainer);
   },
@@ -157,13 +159,13 @@ const Workspace = new Class({
   },
 
   setStroke(width, style, color, opacity) {
-    if (style != 'solid') {
-      throw `Not supported style stroke style:${style}`;
+    if (style !== 'solid') {
+      throw new Error(`Not supported style stroke style:${style}`);
     }
     this._htmlContainer.css('border', `${width} ${style} ${color}`);
 
     if (opacity || opacity === 0) {
-      throw 'Unsupported operation. Opacity not supported.';
+      throw new Error('Unsupported operation. Opacity not supported.');
     }
   },
 
@@ -176,16 +178,16 @@ const Workspace = new Class({
      */
   removeChild(element) {
     if (!$defined(element)) {
-      throw 'Child element can not be null';
+      throw new Error('Child element can not be null');
     }
 
-    if (element == this) {
-      throw "It's not possible to add the group as a child of itself";
+    if (element === this) {
+      throw new Error("It's not possible to add the group as a child of itself");
     }
 
     const elementType = element.getType();
     if (elementType == null) {
-      throw `It seems not to be an element ->${element}`;
+      throw new Error(`It seems not to be an element ->${element}`);
     }
 
     this.peer.removeChild(element.peer);

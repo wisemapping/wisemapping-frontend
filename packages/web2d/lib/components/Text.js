@@ -87,7 +87,7 @@ const Text = new Class({
   },
 
   getHeight() {
-    return parseInt(this.peer.getHeight());
+    return parseInt(this.peer.getHeight(), 10);
   },
 
   getFontHeight() {

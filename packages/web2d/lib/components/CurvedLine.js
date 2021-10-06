@@ -26,7 +26,9 @@ const CurvedLine = new Class({
       strokeColor: 'blue', strokeWidth: 1, strokeStyle: 'solid', strokeOpacity: 1,
     };
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
   },
@@ -36,15 +38,15 @@ const CurvedLine = new Class({
   },
 
   setFrom(x, y) {
-    $assert(!isNaN(x), 'x must be defined');
-    $assert(!isNaN(y), 'y must be defined');
+    $assert(!Number.isNaN(x), 'x must be defined');
+    $assert(!Number.isNaN(y), 'y must be defined');
 
     this.peer.setFrom(x, y);
   },
 
   setTo(x, y) {
-    $assert(!isNaN(x), 'x must be defined');
-    $assert(!isNaN(y), 'y must be defined');
+    $assert(!Number.isNaN(x), 'x must be defined');
+    $assert(!Number.isNaN(y), 'y must be defined');
 
     this.peer.setTo(x, y);
   },

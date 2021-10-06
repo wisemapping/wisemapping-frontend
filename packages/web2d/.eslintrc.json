@@ -6,6 +6,12 @@
     "extends": [
         "airbnb-base"
     ],
-    "plugins": ["only-warn"],
-    "rules": {}
+    "plugins": [
+        "only-warn"
+    ],
+    "rules": {
+        "no-underscore-dangle": "off",
+        "no-restricted-syntax": "off",
+        "max-len": [1,250]
+    }
 }

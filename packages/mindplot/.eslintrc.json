@@ -7,5 +7,7 @@
         "airbnb-base"
     ],
     "plugins": ["only-warn"],
-    "rules": {}
+    "rules": {
+        "no-underscore-dangle": "off"
+    }
 }

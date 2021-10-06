@@ -27,8 +27,8 @@ const TransformUtil = {
       const coordSize = current.getCoordSize();
       const size = current.getSize();
 
-      width *= (parseInt(size.width) / coordSize.width);
-      height *= (parseInt(size.height) / coordSize.height);
+      width *= (parseInt(size.width,10) / coordSize.width);
+      height *= (parseInt(size.height,10) / coordSize.height);
       current = current.getParent();
     }
     return { width, height };

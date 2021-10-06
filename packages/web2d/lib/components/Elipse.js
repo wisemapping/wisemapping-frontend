@@ -26,7 +26,9 @@ const Elipse = new Class({
       width: 40, height: 40, x: 5, y: 5, stroke: '1 solid black', fillColor: 'blue',
     };
     for (const key in attributes) {
-      defaultAttributes[key] = attributes[key];
+      if (Object.prototype.hasOwnProperty.call(attributes, key)) {
+        defaultAttributes[key] = attributes[key];
+      }
     }
     this.parent(peer, defaultAttributes);
   },
