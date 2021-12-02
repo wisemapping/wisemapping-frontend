@@ -1,5 +1,5 @@
 {
-  "name": "webcomponent",
+  "name": "@wisemapping/webcomponent",
   "version": "0.0.1",
   "description": "webcomponent Wisemapping",
   "author": "Ezequiel-Vega <vegaezequiel51@gmail.com>",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://ezequielVega@bitbucket.org/lilabyus/wisemapping-frontend.git"
+    "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
   },
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "@wisemapping/mindplot": "^0.0.1",
-    "@wismapping/core-js": "^0.0.1",
-    "@wismapping/web2d": "^0.0.1",
+    "@wisemapping/core-js": "^0.0.1",
+    "@wisemapping/web2d": "^0.0.1",
     "mootools": "1.4.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

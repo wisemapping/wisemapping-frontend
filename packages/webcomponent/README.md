@@ -5,7 +5,7 @@
 ## Usage
 
 ```
-const webcomponent = require('webcomponent');
+import webcomponent from 'webcomponent';
 
 // TODO: DEMONSTRATE API
 ```

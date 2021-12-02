@@ -38,6 +38,6 @@ once this is done, it will open the explorer where you can see a menu with the t
 To start using mindplot it has to be required as a module and then intanciarce as a function
 
 ```
-const mindplot = require('@wisemapping/mindplot');
+import mindplot from '@wisemapping/mindplot';
 mindplot();
 ```

@@ -1,43 +1,41 @@
-var TestClass = new Class({
-    Extends: mindplot.Events,
+const TestClass = new Class({
+  Extends: mindplot.Events,
 
-    getEvents: function() {
-        return this.$events;
-    },
+  getEvents() {
+    return this.$events;
+  },
 
-    removeEvents: function() {
-        this.$events = {};
-    }
+  removeEvents() {
+    this.$events = {};
+  },
 });
 
 // Test class and variables
-var expectedChangeFn1 = function () {return 'change1';};
-var expectedChangeFn2 = function () {return 'change2';};
-var expectedLoadFn = function() {return 'loaded';};
-var myTestClass = new TestClass();
+const expectedChangeFn1 = function () { return 'change1'; };
+const expectedChangeFn2 = function () { return 'change2'; };
+const expectedLoadFn = function () { return 'loaded'; };
+const myTestClass = new TestClass();
 
+describe('Events class suite', () => {
+  afterEach(() => {
+    myTestClass.removeEvents();
+  });
 
-describe("Events class suite", function() {
-
-    afterEach(function() {
-        myTestClass.removeEvents();
-    });
-
-    it("addEventTest", function() {
-        expect(myTestClass.getEvents()).toEqual({});
-        myTestClass.addEvent('change', expectedChangeFn1);
-        expect(myTestClass.getEvents()).toEqual({change: [expectedChangeFn1]});
-        myTestClass.addEvent('change', expectedChangeFn2);
-        expect(myTestClass.getEvents()).toEqual({change: [expectedChangeFn1, expectedChangeFn2]});
-        myTestClass.addEvent('load', expectedLoadFn);
-        expect(myTestClass.getEvents()).toEqual({change: [expectedChangeFn1, expectedChangeFn2], load: [expectedLoadFn]});
-    });
-    it("removeEventTest", function() {
-        expect(myTestClass.getEvents()).toEqual({});
-        myTestClass.addEvent('change', expectedChangeFn1);
-        myTestClass.addEvent('change', expectedChangeFn2);
-        expect(myTestClass.getEvents()).toEqual({change: [expectedChangeFn1, expectedChangeFn2]});
-        myTestClass.removeEvent('change', expectedChangeFn1);
-        expect(myTestClass.getEvents()).toEqual({change: [expectedChangeFn2]});
-    });
+  it('addEventTest', () => {
+    expect(myTestClass.getEvents()).toEqual({});
+    myTestClass.addEvent('change', expectedChangeFn1);
+    expect(myTestClass.getEvents()).toEqual({ change: [expectedChangeFn1] });
+    myTestClass.addEvent('change', expectedChangeFn2);
+    expect(myTestClass.getEvents()).toEqual({ change: [expectedChangeFn1, expectedChangeFn2] });
+    myTestClass.addEvent('load', expectedLoadFn);
+    expect(myTestClass.getEvents()).toEqual({ change: [expectedChangeFn1, expectedChangeFn2], load: [expectedLoadFn] });
+  });
+  it('removeEventTest', () => {
+    expect(myTestClass.getEvents()).toEqual({});
+    myTestClass.addEvent('change', expectedChangeFn1);
+    myTestClass.addEvent('change', expectedChangeFn2);
+    expect(myTestClass.getEvents()).toEqual({ change: [expectedChangeFn1, expectedChangeFn2] });
+    myTestClass.removeEvent('change', expectedChangeFn1);
+    expect(myTestClass.getEvents()).toEqual({ change: [expectedChangeFn2] });
+  });
 });

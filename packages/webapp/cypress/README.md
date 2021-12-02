@@ -24,3 +24,11 @@ We leverage the [Page Object Pattern](https://martinfowler.com/bliki/PageObject.
 Finally any common functionality such as for example `login` should be abstracted into a command. CY Commands can be added into the `cypress/support` folder. Feel free to group similar commands into files (You only need to make sure those get imported into the `cypress/support/index.ts` file) 
 
 Happy testing!!!
+
+## snapshot testing
+
+We use [cypress-image-snapshot](https://www.npmjs.com/package/cypress-image-snapshot) for snapshot testing (`yarn run test:snapshots`). This is a relatively cheap way of identifying changes based on page screenshots.
+
+When a test that contains a `matchImageSnapshot` call is run, it compares the snapshot to the corresponding one in the `snapshots` directory. If Any change is detected, the test will fail, and the diff can be found in the `snapshots/*/__diff_output__` folder. If the change is intentional, we should "accept" those changes by updating the snapshot and include it in the commit. To update the snapshots run `yarn run test:snapshots:update`
+
+Is is not yet included in CI because there is an [existing issue](https://github.com/jaredpalmer/cypress-image-snapshot/issues/98) where colors differ depending on the host machine running the tests.

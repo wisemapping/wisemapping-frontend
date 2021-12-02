@@ -1,7 +1,5 @@
-'use strict';
-
-const mindplot = require('..');
+import mindplot from '..';
 
 describe('mindplot', () => {
-    it('needs tests');
+  it('needs tests');
 });

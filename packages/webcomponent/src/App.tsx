@@ -1,5 +1,5 @@
 import React from 'react';
-import Mindplot from '@wismapping/web2d';
+import Mindplot from '@wisemapping/web2d';
 
 const App = (): React.ReactElement => {
     const mindplot = Mindplot();

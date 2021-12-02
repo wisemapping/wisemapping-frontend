@@ -1,3 +1,5 @@
-import { default as web2D } from '../../lib/web2d';
+import Grid from './utils';
+import web2d from '../../src/web2d';
 
-global.web2d = web2D();
+global.Grid = Grid;
+global.web2d = web2d;

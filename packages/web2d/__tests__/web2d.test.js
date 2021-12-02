@@ -1,7 +1,5 @@
-'use strict';
-
-const web2D = require('..');
+import web2D from '..';
 
 describe('web2d', () => {
-    it('needs tests');
+  it('needs tests');
 });

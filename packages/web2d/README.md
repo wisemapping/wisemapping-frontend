@@ -38,6 +38,6 @@ once this is done, it will open the explorer where you can see a menu with the t
 To start using web2d it has to be required as a module and then intanciarce as a function
 
 ```
-const Web2d = require('web2d');
+import Web2d from 'web2d';
 Web2d();
 ```

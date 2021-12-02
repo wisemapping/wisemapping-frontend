@@ -2,15 +2,15 @@
     "name": "@wisemapping/mindplot",
     "version": "0.0.1",
     "description": "mindplot",
-    "homepage": "http://localhost:8080/react/packages/mindplot",
+    "homepage": "http://localhost:8081/react/packages/mindplot",
     "license": "ISC",
-    "main": "lib/mindplot.js",
+    "main": "dist/main.js",
     "directories": {
-        "lib": "lib",
+        "lib": "src",
         "test": "__tests__"
     },
     "files": [
-        "lib"
+        "src"
     ],
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
@@ -22,14 +22,18 @@
     "scripts": {
         "build": "webpack --config webpack.prod.js",
         "dev": "webpack serve --config webpack.dev.js",
-        "playground": "webpack serve --config webpack.playground.js"
+        "lint": "eslint src",
+        "playground": "webpack serve --config webpack.playground.js",
+        "cy:run": "cypress run",
+        "cy:run:update": "cypress run --env updateSnapshots=true",
+        "test:snapshots": "start-server-and-test playground http-get://localhost:8081 cy:run",
+        "test:snapshots:update": "start-server-and-test playground http-get://localhost:8081 cy:run:update"
     },
     "dependencies": {
-        "@wismapping/core-js": "^0.0.1",
-        "@wismapping/web2d": "^0.0.1",
+        "@wisemapping/core-js": "^0.0.1",
+        "@wisemapping/web2d": "^0.0.1",
         "jquery": "2.1.0",
         "mootools": "1.4.5",
-        "raphael": "^2.3.0",
         "underscore": "^1.13.1"
     },
     "devDependencies": {
@@ -38,15 +42,20 @@
         "@babel/preset-env": "^7.14.7",
         "babel-loader": "^8.2.2",
         "clean-webpack-plugin": "^4.0.0-alpha.0",
+        "copy-webpack-plugin": "^10.0.0",
         "core-js": "^3.15.2",
+        "cypress": "^8.6.0",
+        "cypress-image-snapshot": "^4.0.1",
         "eslint": "^5.16.0",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-config-standard": "^16.0.3",
         "eslint-loader": "^4.0.2",
+        "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-import": "^2.24.2",
         "eslint-plugin-only-warn": "^1.0.3",
         "html-webpack-plugin": "^5.3.2",
         "nodemon": "^2.0.12",
+        "start-server-and-test": "^1.14.0",
         "webpack": "^5.44.0",
         "webpack-cli": "^4.7.2",
         "webpack-dev-server": "^3.11.2",

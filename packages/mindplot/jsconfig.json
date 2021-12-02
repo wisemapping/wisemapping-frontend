@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "paths": {
+      "@libraries/*": ["../../libraries/*"],
+      "@commands/*": ["./src/components/commands/*"],
+      "@layout/*": ["./src/components/layout/*"],
+      "@libs/*": ["./src/components/libraries/*"],
+      "@model/*": ["./src/components/model/*"],
+      "@persistence/*": ["./src/components/persistence/*"],
+      "@util/*": ["./src/components/util/*"],
+      "@widget/*": ["./src/components/widget/*"],
+      "@components/*": ["./src/components/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-const webcomponent = require('..');
+import webcomponent from '..';
 
 describe('webcomponent', () => {
     it('needs tests');

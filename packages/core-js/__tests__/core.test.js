@@ -1,6 +1,6 @@
 'use strict';
 
-const coreJs = require('..');
+import coreJs from '..';
 
 describe('core-js', () => {
     it('needs tests');

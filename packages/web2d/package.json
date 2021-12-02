@@ -1,16 +1,16 @@
 {
-    "name": "@wismapping/web2d",
+    "name": "@wisemapping/web2d",
     "version": "0.0.1",
     "description": "web2d",
     "homepage": "http://localhost:8080/react/packages/web2d",
     "license": "ISC",
-    "main": "lib/web2d.js",
+    "main": "dist/main.js",
     "directories": {
-        "lib": "lib",
+        "src": "src",
         "test": "__tests__"
     },
     "files": [
-        "lib"
+        "src"
     ],
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
@@ -22,7 +22,12 @@
     "scripts": {
         "dev": "webpack --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js",
-        "playground": "webpack serve --config webpack.playground.js"
+        "lint": "eslint src",
+        "playground": "webpack serve --config webpack.playground.js",
+        "cy:run": "cypress run",
+        "cy:run:update": "cypress run --env updateSnapshots=true",
+        "test:snapshots": "start-server-and-test playground http-get://localhost:8080 cy:run",
+        "test:snapshots:update": "start-server-and-test playground http-get://localhost:8080 cy:run:update"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
@@ -31,23 +36,24 @@
         "babel-loader": "^8.2.2",
         "clean-webpack-plugin": "^4.0.0-alpha.0",
         "core-js": "^3.15.2",
+        "cypress": "^8.4.1",
+        "cypress-image-snapshot": "^4.0.1",
         "eslint": "^5.16.0",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-config-standard": "^16.0.3",
+        "eslint-import-resolver-webpack": "^0.13.2",
         "eslint-loader": "^4.0.2",
-        "eslint-plugin-import": "^2.24.2",
-        "eslint-plugin-only-warn": "^1.0.3",
+        "eslint-plugin-cypress": "^2.12.1",
+        "eslint-plugin-import": "^2.25.3",
         "html-webpack-plugin": "^5.3.2",
         "nodemon": "^2.0.12",
+        "start-server-and-test": "^1.14.0",
         "webpack": "^5.44.0",
         "webpack-cli": "^4.7.2",
         "webpack-dev-server": "^3.11.2",
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
-        "@wisemapping/mindplot": "^0.0.1",
-        "@wismapping/core-js": "^0.0.1",
-        "jquery": "2.1.0",
-        "mootools": "1.4.5"
+        "@wisemapping/core-js": "^0.0.1"
     }
 }

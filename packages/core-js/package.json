@@ -1,15 +1,15 @@
 {
-    "name": "@wismapping/core-js",
+    "name": "@wisemapping/core-js",
     "version": "0.0.1",
     "description": "core-js",
     "license": "ISC",
-    "main": "lib/core.js",
+    "main": "dist/core.js",
     "directories": {
-        "lib": "lib",
+        "lib": "src",
         "test": "__tests__"
     },
     "files": [
-        "lib"
+        "src"
     ],
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
@@ -20,7 +20,7 @@
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "dev": "webpack --mode development"
+        "dev": "webpack --mode development --config webpack.dev.js"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
@@ -32,7 +32,5 @@
         "webpack-cli": "^4.7.2",
         "webpack-merge": "^5.8.0"
     },
-    "dependencies": {
-        "@wisemapping/mindplot": "^0.0.1"
-    }
+    "dependencies": {}
 }

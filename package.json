@@ -5,7 +5,8 @@
         "build": "lerna run build",
         "clean": "lerna clean && rm -rf node_modules",
         "lint": "lerna run lint --stream",
-        "test": "lerna run test --stream"
+        "test": "lerna run test --stream",
+        "test:snapshots": "lerna run test:snapshots --stream"
     },
     "private": true,
     "devDependencies": {

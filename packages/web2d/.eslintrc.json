@@ -4,14 +4,28 @@
         "commonjs": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:cypress/recommended"
     ],
-    "plugins": [
-        "only-warn"
-    ],
+    "globals":{
+        "Class": "readonly",
+        "$": "readonly"
+    },
     "rules": {
         "no-underscore-dangle": "off",
         "no-restricted-syntax": "off",
-        "max-len": [1,250]
-    }
+        "no-plusplus": "off",
+        "max-len": [1,250],
+        "import/no-extraneous-dependencies": ["warn", {
+            "packageDir": ["./"],
+            "devDependencies": ["!cypress/**/*.js"]
+        }]
+    },
+    "settings": {
+		    "import/resolver": {
+			    "webpack": {
+				    "config": "./webpack.common.js"
+			    }
+		    }
+	  } 
 }

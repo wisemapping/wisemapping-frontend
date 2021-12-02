@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "paths": {
+      "@libraries/*": ["../../libraries/*"],
+      "@svg/*": ["./src/components/peer/svg/*"],
+      "@utils/*": ["./src/components/peer/utils/*"],
+      "@components/*": ["./src/components/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
