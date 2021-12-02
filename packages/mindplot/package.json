@@ -1,8 +1,8 @@
 {
     "name": "@wisemapping/mindplot",
     "version": "0.0.1",
-    "description": "mindplot",
-    "homepage": "http://localhost:8081/react/packages/mindplot",
+    "description": "WiseMapping - Mindplot Canvas Library",
+    "homepage": "http://www.wisemapping.org/",
     "license": "ISC",
     "main": "dist/main.js",
     "directories": {

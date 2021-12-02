@@ -1,8 +1,8 @@
 {
     "name": "@wisemapping/web2d",
     "version": "0.0.1",
-    "description": "web2d",
-    "homepage": "http://localhost:8080/react/packages/web2d",
+    "description": "WiseMapping - Web2D Render Library",
+    "homepage": "http://www.wisemapping.org/",
     "license": "ISC",
     "main": "dist/main.js",
     "directories": {
