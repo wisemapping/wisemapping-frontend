@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
+import $ from '@libraries/jquery-2.1.0';
 import ElementPeer from './ElementPeer';
 
 const TextPeer = new Class({

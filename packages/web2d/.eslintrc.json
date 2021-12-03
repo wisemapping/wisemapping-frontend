@@ -8,8 +8,7 @@
         "plugin:cypress/recommended"
     ],
     "globals":{
-        "Class": "readonly",
-        "$": "readonly"
+        "Class": "readonly"
     },
     "rules": {
         "no-underscore-dangle": "off",

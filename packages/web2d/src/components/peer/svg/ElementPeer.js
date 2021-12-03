@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
+import $ from '@libraries/jquery-2.1.0';
 import { $assert, $defined } from '@wisemapping/core-js';
 import EventUtils from '../utils/EventUtils';
 import TransformUtil from '../utils/TransformUtils';
