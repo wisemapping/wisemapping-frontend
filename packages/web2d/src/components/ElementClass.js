@@ -19,8 +19,8 @@ import CoreJS from '@wisemapping/core-js';
 
 const core = CoreJS();
 
-const Element = new Class({
-  initialize(peer, attributes) {
+class ElementClass {
+  constructor(peer, attributes) {
     this.peer = peer;
     if (peer == null) {
       throw new Error('Element peer can not be null');
@@ -29,7 +29,7 @@ const Element = new Class({
     if (core.Function.$defined(attributes)) {
       this._initialize(attributes);
     }
-  },
+  }
 
   _initialize(attributes) {
     const batchExecute = {};
@@ -64,15 +64,15 @@ const Element = new Class({
       }
       func.apply(this, batchExecute[key]);
     }
-  },
+  }
 
   setSize(width, height) {
     this.peer.setSize(width, height);
-  },
+  }
 
   setPosition(cx, cy) {
     this.peer.setPosition(cx, cy);
-  },
+  }
 
   /**
      * Allows the registration of event listeners on the event target.
@@ -88,15 +88,16 @@ const Element = new Class({
      */
   addEvent(type, listener) {
     this.peer.addEvent(type, listener);
-  },
+  }
 
   trigger(type, event) {
     this.peer.trigger(type, event);
-  },
+  }
 
   cloneEvents(from) {
     this.peer.cloneEvents(from);
-  },
+  }
+
   /**
      *
      * Allows the removal of event listeners from the event target.
@@ -112,24 +113,25 @@ const Element = new Class({
      */
   removeEvent(type, listener) {
     this.peer.removeEvent(type, listener);
-  },
+  }
 
   /**
-     * /*
-     * Returns element type name.
-     */
+   * /*
+   * Returns element type name.
+   */
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     throw new Error(
       'Not implemeneted yet. This method must be implemented by all the inherited objects.',
     );
-  },
+  }
 
   /**
      * Todo: Doc
      */
   getFill() {
     return this.peer.getFill();
-  },
+  }
 
   /**
      * Used to define the fill element color and element opacity.
@@ -138,15 +140,15 @@ const Element = new Class({
      */
   setFill(color, opacity) {
     this.peer.setFill(color, opacity);
-  },
+  }
 
   getPosition() {
     return this.peer.getPosition();
-  },
+  }
 
   getNativePosition() {
     return this.peer.getNativePosition();
-  },
+  }
 
   /*
      *  Defines the element stroke properties.
@@ -168,8 +170,9 @@ const Element = new Class({
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
     this.peer.setStroke(width, style, color, opacity);
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   _attributeNameToFuncName(attributeKey, prefix) {
     const signature = Element._propertyNameToSignature[attributeKey];
     if (!core.Function.$defined(signature)) {
@@ -178,7 +181,7 @@ const Element = new Class({
 
     const firstLetter = signature[0].charAt(0);
     return prefix + firstLetter.toUpperCase() + signature[0].substring(1);
-  },
+  }
 
   /**
      * All element properties can be setted using either a method
@@ -212,7 +215,7 @@ const Element = new Class({
       throw new Error(`Could not find the function name:${funcName}`);
     }
     setter.apply(this, args);
-  },
+  }
 
   getAttribute(key) {
     const funcName = this._attributeNameToFuncName(key, 'get');
@@ -239,7 +242,7 @@ const Element = new Class({
     }
 
     return result;
-  },
+  }
 
   /**
      * Defines the element opacity.
@@ -249,42 +252,42 @@ const Element = new Class({
   setOpacity(opacity) {
     this.peer.setStroke(null, null, null, opacity);
     this.peer.setFill(null, opacity);
-  },
+  }
 
   setVisibility(isVisible) {
     this.peer.setVisibility(isVisible);
-  },
+  }
 
   isVisible() {
     return this.peer.isVisible();
-  },
+  }
 
   /**
      * Move the element to the front
      */
   moveToFront() {
     this.peer.moveToFront();
-  },
+  }
 
   /**
      * Move the element to the back
      */
   moveToBack() {
     this.peer.moveToBack();
-  },
+  }
 
   getStroke() {
     return this.peer.getStroke();
-  },
+  }
 
   setCursor(type) {
     this.peer.setCursor(type);
-  },
+  }
 
   getParent() {
     return this.peer.getParent();
-  },
-});
+  }
+}
 
 Element._SIGNATURE_MULTIPLE_ARGUMENTS = -1;
 Element._supportedEvents = [
@@ -328,4 +331,4 @@ Element._propertyNameToSignature = {
   opacity: ['opacity', 0],
 };
 
-export default Element;
+export default ElementClass;

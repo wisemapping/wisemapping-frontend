@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
 /**
@@ -24,9 +24,10 @@ import Toolkit from './Toolkit';
  * arc = "<length>"
  *     For rounded rectangles, radius of the ellipse used to round off the corners of the rectangle.
  */
-const Rect = new Class({
-  Extends: Element,
-  initialize(arc, attributes) {
+class Rect extends ElementClass {
+
+  constructor(arc, attributes) {
+
     if (arc && arc > 1) {
       throw new Error('Arc must be 0<=arc<=1');
     }
@@ -45,16 +46,16 @@ const Rect = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
   getType() {
     return 'Rect';
-  },
+  }
 
   getSize() {
     return this.peer.getSize();
-  },
-});
+  }
+}
 
 export default Rect;

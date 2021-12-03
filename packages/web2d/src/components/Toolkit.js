@@ -1,5 +1,5 @@
 /*
-*    Copyright [2015] [wisemapping]
+*    Copyright [2021] [wisemapping]
 *
 *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
 *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -30,51 +30,66 @@ import TimesFont from './peer/svg/TimesFont';
 import VerdanaFont from './peer/svg/VerdanaFont';
 import TahomaFont from './peer/svg/TahomaFont';
 
-const Toolkit = {
-  init() {
-  },
-  createWorkspace(element) {
+class Toolkit {
+  static init() {
+
+  }
+
+  static createWorkspace(element) {
     return new WorkspacePeer(element);
-  },
-  createGroup() {
+  }
+
+  static createGroup() {
     return new GroupPeer();
-  },
-  createElipse() {
+  }
+
+  static createElipse() {
     return new ElipsePeer();
-  },
-  createLine() {
+  }
+
+  static createLine() {
     return new LinePeer();
-  },
-  createPolyLine() {
+  }
+
+  static createPolyLine() {
     return new PolyLinePeer();
-  },
-  createCurvedLine() {
+  }
+
+  static createCurvedLine() {
     return new CurvedLinePeer();
-  },
-  createArrow() {
+  }
+
+  static createArrow() {
     return new ArrowPeer();
-  },
-  createText(Font) {
+  }
+
+  static createText(Font) {
     return new TextPeer(Font);
-  },
-  createImage() {
+  }
+
+  static createImage() {
     return new ImagePeer();
-  },
-  createRect(arc) {
+  }
+
+  static createRect(arc) {
     return new RectPeer(arc);
-  },
-  createArialFont() {
+  }
+
+  static reateArialFont() {
     return new ArialFont();
-  },
-  createTimesFont() {
+  }
+
+  static createTimesFont() {
     return new TimesFont();
-  },
-  createVerdanaFont() {
+  }
+
+  static createVerdanaFont() {
     return new VerdanaFont();
-  },
-  createTahomaFont() {
+  }
+
+  static createTahomaFont() {
     return new TahomaFont();
-  },
-};
+  }
+}
 
 export default Toolkit;

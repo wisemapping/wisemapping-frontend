@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -18,66 +18,66 @@
 import Toolkit from './Toolkit';
 import TransformUtil from './peer/utils/TransformUtils';
 
-const Font = new Class({
-  initialize(fontFamily, textPeer) {
+class Font {
+  constructor(fontFamily, textPeer) {
     // eslint-disable-next-line no-unused-vars
     const tools = Toolkit; // Used as of the defined object.
     const font = `tools.create${fontFamily}Font();`;
     // eslint-disable-next-line no-eval
     this.peer = eval(font);
     this._textPeer = textPeer;
-  },
+  }
 
   getHtmlSize() {
     const scale = TransformUtil.workoutScale(this._textPeer);
     return this.peer.getHtmlSize(scale);
-  },
+  }
 
   getGraphSize() {
     const scale = TransformUtil.workoutScale(this._textPeer);
     return this.peer.getGraphSize(scale);
-  },
+  }
 
   getFontScale() {
     return TransformUtil.workoutScale(this._textPeer).height;
-  },
+  }
 
   getSize() {
     return this.peer.getSize();
-  },
+  }
 
   getStyle() {
     return this.peer.getStyle();
-  },
+  }
 
   getWeight() {
     return this.peer.getWeight();
-  },
+  }
 
   getFontFamily() {
     return this.peer.getFontFamily();
-  },
+  }
 
   setSize(size) {
     return this.peer.setSize(size);
-  },
+  }
 
   setStyle(style) {
     return this.peer.setStyle(style);
-  },
+  }
 
   setWeight(weight) {
     return this.peer.setWeight(weight);
-  },
+  }
 
   getFont() {
     return this.peer.getFont();
-  },
+  }
 
   getWidthMargin() {
     return this.peer.getWidthMargin();
-  },
-});
+  }
+}
 
 Font.ARIAL = 'Arial';
 Font.TIMES = 'Times';
