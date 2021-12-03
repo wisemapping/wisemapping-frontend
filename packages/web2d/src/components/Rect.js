@@ -48,7 +48,8 @@ class Rect extends ElementClass {
     super(peer, defaultAttributes);
   }
 
-  static getType() {
+  // eslint-disable-next-line class-methods-use-this
+  getType() {
     return 'Rect';
   }
 

@@ -21,11 +21,7 @@ import TransformUtil from './peer/utils/TransformUtils';
 
 class Font {
   constructor(fontFamily, textPeer) {
-    // eslint-disable-next-line no-unused-vars
-    const tools = Toolkit; // Used as of the defined object.
-    const font = `tools.create${fontFamily}Font();`;
-    // eslint-disable-next-line no-eval
-    this.peer = eval(font);
+    this.peer = Toolkit[`create${fontFamily}Font`]();
     this._textPeer = textPeer;
   }
 

@@ -27,7 +27,8 @@ class Text extends ElementClass {
     super(peer, attributes);
   }
 
-  static getType() {
+  // eslint-disable-next-line class-methods-use-this
+  getType() {
     return 'Text';
   }
 

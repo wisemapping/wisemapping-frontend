@@ -75,7 +75,7 @@ class Toolkit {
     return new RectPeer(arc);
   }
 
-  static reateArialFont() {
+  static createArialFont() {
     return new ArialFont();
   }
 
