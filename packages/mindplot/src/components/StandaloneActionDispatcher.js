@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $defined, $assert } from '@wisemapping/core-js';
 import ActionDispatcher from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
@@ -27,6 +28,7 @@ import GenericFunctionCommand from './commands/GenericFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
 import NodeModel from './model/NodeModel';
+import EventBus from './layout/EventBus';
 
 const StandaloneActionDispatcher = new Class(
   /** @lends StandaloneActionDispatcher */ {
@@ -70,7 +72,7 @@ const StandaloneActionDispatcher = new Class(
       $assert($defined(topicId), 'topicsId can not be null');
       $assert($defined(position), 'position can not be null');
 
-      const commandFunc = function (topic, value) {
+      const commandFunc = (topic, value) => {
         const result = topic.getPosition();
         EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
           node: topic.getModel(),
@@ -91,7 +93,7 @@ const StandaloneActionDispatcher = new Class(
 
     /** */
     changeFontStyleToTopic(topicsIds) {
-      const commandFunc = function (topic) {
+      const commandFunc = (topic) => {
         const result = topic.getFontStyle();
         const style = result === 'italic' ? 'normal' : 'italic';
         topic.setFontStyle(style, true);
@@ -105,7 +107,7 @@ const StandaloneActionDispatcher = new Class(
     changeTextToTopic(topicsIds, text) {
       $assert($defined(topicsIds), 'topicsIds can not be null');
 
-      const commandFunc = function (topic, value) {
+      const commandFunc = (topic, value) => {
         const result = topic.getText();
         topic.setText(value);
         return result;
@@ -121,7 +123,7 @@ const StandaloneActionDispatcher = new Class(
       $assert(topicIds, 'topicIds can not be null');
       $assert(fontFamily, 'fontFamily can not be null');
 
-      const commandFunc = function (topic, fontFamily) {
+      const commandFunc = (topic, fontFamily) => {
         const result = topic.getFontFamily();
         topic.setFontFamily(fontFamily, true);
 
@@ -138,7 +140,7 @@ const StandaloneActionDispatcher = new Class(
       $assert(topicsIds, 'topicIds can not be null');
       $assert(color, 'color can not be null');
 
-      const commandFunc = function (topic, color) {
+      const commandFunc = (topic, color) => {
         const result = topic.getFontColor();
         topic.setFontColor(color, true);
         return result;
@@ -154,7 +156,7 @@ const StandaloneActionDispatcher = new Class(
       $assert(topicsIds, 'topicIds can not be null');
       $assert(color, 'color can not be null');
 
-      const commandFunc = function (topic, color) {
+      const commandFunc = (topic, color) => {
         const result = topic.getBackgroundColor();
         topic.setBackgroundColor(color);
         return result;
@@ -170,7 +172,7 @@ const StandaloneActionDispatcher = new Class(
       $assert(topicsIds, 'topicIds can not be null');
       $assert(color, 'topicIds can not be null');
 
-      const commandFunc = function (topic, color) {
+      const commandFunc = (topic, color) => {
         const result = topic.getBorderColor();
         topic.setBorderColor(color);
         return result;
@@ -186,7 +188,7 @@ const StandaloneActionDispatcher = new Class(
       $assert(topicsIds, 'topicIds can not be null');
       $assert(size, 'size can not be null');
 
-      const commandFunc = function (topic, size) {
+      const commandFunc = (topic, size) => {
         const result = topic.getFontSize();
         topic.setFontSize(size, true);
 
@@ -203,7 +205,7 @@ const StandaloneActionDispatcher = new Class(
       $assert(topicsIds, 'topicsIds can not be null');
       $assert(shapeType, 'shapeType can not be null');
 
-      const commandFunc = function (topic, shapeType) {
+      const commandFunc = (topic, shapeType) => {
         const result = topic.getShapeType();
         topic.setShapeType(shapeType, true);
         return result;
@@ -217,7 +219,7 @@ const StandaloneActionDispatcher = new Class(
     changeFontWeightToTopic(topicsIds) {
       $assert(topicsIds, 'topicsIds can not be null');
 
-      const commandFunc = function (topic) {
+      const commandFunc = (topic) => {
         const result = topic.getFontWeight();
         const weight = result === 'bold' ? 'normal' : 'bold';
         topic.setFontWeight(weight, true);
@@ -234,7 +236,7 @@ const StandaloneActionDispatcher = new Class(
     shrinkBranch(topicsIds, collapse) {
       $assert(topicsIds, 'topicsIds can not be null');
 
-      const commandFunc = function (topic, isShrink) {
+      const commandFunc = (topic, isShrink) => {
         topic.setChildrenShrunken(isShrink);
         return !isShrink;
       };
@@ -293,12 +295,9 @@ const CommandContext = new Class(
         const ids = designerTopics.map((topic) => topic.getId());
         $assert(
           result.length === topicsIds.length,
-          `Could not find topic. Result:${
-            result
-          }, Filter Criteria:${
-            topicsIds
-          }, Current Topics: [${
-            ids
+          `Could not find topic. Result:${result
+          }, Filter Criteria:${topicsIds
+          }, Current Topics: [${ids
           }]`,
         );
       }

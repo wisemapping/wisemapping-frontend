@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import web2d from '@wisemapping/web2d';
 
-const Workspace = new Class({
-  initialize(screenManager, zoom) {
+class Workspace {
+  constructor(screenManager, zoom) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
     $assert(zoom, 'zoom container can not be null');
@@ -41,7 +42,7 @@ const Workspace = new Class({
     // Register drag events ...
     this._registerDragEvents();
     this._eventsEnabled = true;
-  },
+  }
 
   _createWorkspace() {
     // Initialize workspace ...
@@ -60,7 +61,7 @@ const Workspace = new Class({
     };
     web2d.Toolkit.init();
     return new web2d.Workspace(workspaceProfile);
-  },
+  }
 
   append(shape) {
     if ($defined(shape.addToWorkspace)) {
@@ -68,7 +69,7 @@ const Workspace = new Class({
     } else {
       this._workspace.append(shape);
     }
-  },
+  }
 
   removeChild(shape) {
     // Element is a node, not a web2d element?
@@ -77,21 +78,21 @@ const Workspace = new Class({
     } else {
       this._workspace.removeChild(shape);
     }
-  },
+  }
 
   addEvent(type, listener) {
     this._workspace.addEvent(type, listener);
-  },
+  }
 
   removeEvent(type, listener) {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);
-  },
+  }
 
   getSize() {
     return this._workspace.getCoordSize();
-  },
+  }
 
   setZoom(zoom, center) {
     this._zoom = zoom;
@@ -134,23 +135,23 @@ const Workspace = new Class({
 
     // Some changes in the screen. Let's fire an update event...
     this._screenManager.fireEvent('update');
-  },
+  }
 
   getScreenManager() {
     return this._screenManager;
-  },
+  }
 
   enableWorkspaceEvents(value) {
     this._eventsEnabled = value;
-  },
+  }
 
   isWorkspaceEventsEnabled() {
     return this._eventsEnabled;
-  },
+  }
 
   dumpNativeChart() {
     return this._workspace.dumpNativeChart();
-  },
+  }
 
   _registerDragEvents() {
     const workspace = this._workspace;
@@ -191,7 +192,7 @@ const Workspace = new Class({
           screenManager.addEvent('mousemove', workspace._mouseMoveListener);
 
           // Register mouse up listeners ...
-          workspace._mouseUpListener = function (event) {
+          workspace._mouseUpListener = function () {
             screenManager.removeEvent('mousemove', workspace._mouseMoveListener);
             screenManager.removeEvent('mouseup', workspace._mouseUpListener);
             workspace._mouseUpListener = null;
@@ -214,11 +215,11 @@ const Workspace = new Class({
       }
     };
     screenManager.addEvent('mousedown', mouseDownListener);
-  },
+  }
 
   setViewPort(size) {
     this._viewPort = size;
-  },
-});
+  }
+}
 
 export default Workspace;

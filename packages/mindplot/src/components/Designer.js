@@ -15,6 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
+
 import Events from './Events';
 import Messages from './Messages';
 
@@ -35,7 +37,7 @@ import Relationship from './Relationship';
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeature from './TopicFeature';
 
-import NodeGraphUtils from './NodeGraphUtils';
+import { create } from './NodeGraphUtils';
 
 import EventBus from './layout/EventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
@@ -129,7 +131,7 @@ const Designer = new Class(
          * forwards to the TopicEventDispatcher or the parent Events class, depending on the type
          */
     addEvent(type, listener) {
-      if (type == TopicEvent.EDIT || type == TopicEvent.CLICK) {
+      if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
         const editor = TopicEventDispatcher.getInstance();
         editor.addEvent(type, listener);
       } else {
@@ -238,7 +240,7 @@ const Designer = new Class(
          */
     _buildNodeGraph(model, readOnly) {
       // Create node graph ...
-      const topic = NodeGraphUtils.create(model, { readOnly });
+      const topic = create(model, { readOnly });
       this.getModel().addTopic(topic);
       const me = this;
       // Add Topic events ...
@@ -249,7 +251,7 @@ const Designer = new Class(
         });
 
         // Register node listeners ...
-        if (topic.getType() != INodeModel.CENTRAL_TOPIC_TYPE) {
+        if (topic.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
           // Central Topic doesn't support to be dragged
           this._dragManager.add(topic);
         }
@@ -265,7 +267,7 @@ const Designer = new Class(
         const topics = this.getModel().getTopics();
         for (let i = 0; i < topics.length; i++) {
           const t = topics[i];
-          if (t.getModel() == targetTopicModel) {
+          if (t.getModel() === targetTopicModel) {
             targetTopic = t;
             // Disconnect the node. It will be connected again later ...
             model.disconnect();
@@ -280,7 +282,7 @@ const Designer = new Class(
         const topics = me.getModel().filterSelectedTopics();
         const rels = me.getModel().filterSelectedRelationships();
 
-        if (topics.length == 0 || rels.length == 0) {
+        if (topics.length === 0 || rels.length === 0) {
           me.fireEvent('onblur');
         }
       });
@@ -289,7 +291,7 @@ const Designer = new Class(
         const topics = me.getModel().filterSelectedTopics();
         const rels = me.getModel().filterSelectedRelationships();
 
-        if (topics.length == 1 || rels.length == 1) {
+        if (topics.length === 1 || rels.length === 1) {
           me.fireEvent('onfocus');
         }
       });
@@ -315,7 +317,7 @@ const Designer = new Class(
       _.each(objects, (object) => {
         // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
         if (!$defined(event) || (!event.ctrlKey && !event.metaKey)) {
-          if (object.isOnFocus() && object != currentObject) {
+          if (object.isOnFocus() && object !== currentObject) {
             object.setOnFocus(false);
           }
         }
@@ -357,7 +359,9 @@ const Designer = new Class(
          * zoom out by the given factor, or 1.2, if undefined
          */
     zoomOut(factor) {
-      if (!factor) factor = 1.2;
+      if (!factor) {
+        factor = 1.2;
+      }
 
       const model = this.getModel();
       const scale = model.getZoom() * factor;
@@ -414,7 +418,7 @@ const Designer = new Class(
 
     /** paste clipboard contents to the mindmap */
     pasteClipboard() {
-      if (this._clipboard.length == 0) {
+      if (this._clipboard.length === 0) {
         $notify($msg('CLIPBOARD_IS_EMPTY'));
         return;
       }
@@ -430,14 +434,14 @@ const Designer = new Class(
     /** collapse the subtree of the selected topic */
     shrinkSelectedBranch() {
       const nodes = this.getModel().filterSelectedTopics();
-      if (nodes.length <= 0 || nodes.length != 1) {
+      if (nodes.length <= 0 || nodes.length !== 1) {
         // If there are more than one node selected,
         $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE'));
         return;
       }
       // Execute event ...
       const topic = nodes[0];
-      if (topic.getType() != INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (topic.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
         this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
       }
     },
@@ -450,7 +454,7 @@ const Designer = new Class(
         $notify($msg('ONE_TOPIC_MUST_BE_SELECTED'));
         return;
       }
-      if (nodes.length != 1) {
+      if (nodes.length !== 1) {
         // If there are more than one node selected,
         $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED'));
         return;
@@ -470,7 +474,7 @@ const Designer = new Class(
          */
     _copyNodeProps(sourceModel, targetModel) {
       // I don't copy the font size if the target is the source is the central topic.
-      if (sourceModel.getType() != INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (sourceModel.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
         const fontSize = sourceModel.getFontSize();
         if (fontSize) {
           targetModel.setFontSize(fontSize);
@@ -585,7 +589,7 @@ const Designer = new Class(
 
         // Hack: if parent is central topic, add node below not on opposite side.
         // This should be done in the layout
-        if (parentTopic.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+        if (parentTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
           siblingModel.setOrder(topic.getOrder() + 2);
         }
 
@@ -601,10 +605,11 @@ const Designer = new Class(
          */
     _createSiblingModel(topic) {
       let result = null;
+      let model = null;
       const parentTopic = topic.getOutgoingConnectedTopic();
       if (parentTopic != null) {
         // Create a new node ...
-        var model = topic.getModel();
+        model = topic.getModel();
         const mindmap = model.getMindmap();
         result = mindmap.createNode();
 
@@ -812,7 +817,7 @@ const Designer = new Class(
         const topics = me.getModel().filterSelectedTopics();
         const rels = me.getModel().filterSelectedRelationships();
 
-        if (topics.length == 0 || rels.length == 0) {
+        if (topics.length === 0 || rels.length === 0) {
           me.fireEvent('onblur');
         }
       });
@@ -821,7 +826,7 @@ const Designer = new Class(
         const topics = me.getModel().filterSelectedTopics();
         const rels = me.getModel().filterSelectedRelationships();
 
-        if (topics.length == 1 || rels.length == 1) {
+        if (topics.length === 1 || rels.length === 1) {
           me.fireEvent('onfocus');
         }
       });
@@ -881,7 +886,7 @@ const Designer = new Class(
         $notify($msg('ENTITIES_COULD_NOT_BE_DELETED'));
         return;
       }
-      if (topics.length == 1 && topics[0].isCentralTopic()) {
+      if (topics.length === 1 && topics[0].isCentralTopic()) {
         $notify($msg('CENTRAL_TOPIC_CAN_NOT_BE_DELETED'));
         return;
       }
@@ -927,9 +932,7 @@ const Designer = new Class(
 
     /** */
     changeBackgroundColor(color) {
-      const validateFunc = function (topic) {
-        return topic.getShapeType() != TopicShape.LINE;
-      };
+      const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
       const validateError = 'Color can not be set to line topics.';
 
       const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -940,9 +943,7 @@ const Designer = new Class(
 
     /** */
     changeBorderColor(color) {
-      const validateFunc = function (topic) {
-        return topic.getShapeType() != TopicShape.LINE;
-      };
+      const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
       const validateError = 'Color can not be set to line topics.';
       const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
       if (topicsIds.length > 0) {
@@ -960,11 +961,8 @@ const Designer = new Class(
 
     /** */
     changeTopicShape(shape) {
-      const validateFunc = function (topic) {
-        return !(
-          topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE && shape == TopicShape.LINE
-        );
-      };
+      const validateFunc = (topic) => !(topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE && shape === TopicShape.LINE
+      );
 
       const validateError = 'Central Topic shape can not be changed to line figure.';
       const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);

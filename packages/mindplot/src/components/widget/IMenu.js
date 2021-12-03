@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from "@wisemapping/core-js";
 import PersistenceManager from '../PersistenceManager';
 
 const IMenu = new Class({
@@ -90,7 +91,7 @@ const IMenu = new Class({
         if (saveHistory) {
           saveElem.css('cursor', 'pointer');
 
-          if (error.severity != 'FATAL') {
+          if (error.severity !== 'FATAL') {
             $notify(error.message);
           } else {
             $notifyModal(error.message);

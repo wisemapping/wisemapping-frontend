@@ -17,29 +17,23 @@
  */
 import FeatureModel from './FeatureModel';
 
-const IconModel = new Class(/** @lends IconModel */{
-  Extends: FeatureModel,
-  /**
-     * @constructs
-     * @param attributes
-     * @extends mindplot.model.FeatureModel
-     */
-  initialize(attributes) {
-    this.parent(IconModel.FEATURE_TYPE);
+class IconModel extends FeatureModel {
+  constructor(attributes) {
+    super(IconModel.FEATURE_TYPE);
     this.setIconType(attributes.id);
-  },
+  }
 
   /** @return the icon type id */
   getIconType() {
     return this.getAttribute('id');
-  },
+  }
 
   /** @param {String} iconType the icon type id */
   setIconType(iconType) {
     $assert(iconType, 'iconType id can not be null');
     this.setAttribute('id', iconType);
-  },
-});
+  }
+}
 
 /**
  * @constant

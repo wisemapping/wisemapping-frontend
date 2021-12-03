@@ -14,19 +14,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Core from '@wisemapping/core-js';
+import { createDocument, innerXML } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import INodeModel from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
 
-const core = Core();
-
 const XMLSerializer_Beta = new Class({
   toXML(mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
 
-    const document = core.Utils.createDocument();
+    const document = createDocument();
 
     // Store map attributes ...
     const mapElem = document.createElement('map');
@@ -51,11 +49,11 @@ const XMLSerializer_Beta = new Class({
     const parentTopic = document.createElement('topic');
 
     // Set topic attributes...
-    if (topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
       parentTopic.setAttribute('central', true);
     } else {
       const parent = topic.getParent();
-      if (parent == null || parent.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (parent == null || parent.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
         const pos = topic.getPosition();
         parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
       } else {
@@ -98,10 +96,10 @@ const XMLSerializer_Beta = new Class({
 
     if (
       $defined(fontFamily)
-            || $defined(fontSize)
-            || $defined(fontColor)
-            || $defined(fontWeight)
-            || $defined(fontStyle)
+      || $defined(fontSize)
+      || $defined(fontColor)
+      || $defined(fontWeight)
+      || $defined(fontStyle)
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -176,16 +174,15 @@ const XMLSerializer_Beta = new Class({
     // Is a valid object ?
     const { documentElement } = dom;
     $assert(
-      documentElement.nodeName != 'parsererror',
+      documentElement.nodeName !== 'parsererror',
       `Error while parsing: '${documentElement.childNodes[0].nodeValue}`,
     );
 
     // Is a wisemap?.
     $assert(
-      documentElement.tagName == XMLSerializer_Beta.MAP_ROOT_NODE,
-      `This seem not to be a map document. Root Tag: '${documentElement.tagName},',HTML:${
-        dom.innerHTML
-      },XML:${core.Utils.innerXML(dom)}`,
+      documentElement.tagName === XMLSerializer_Beta.MAP_ROOT_NODE,
+      `This seem not to be a map document. Root Tag: '${documentElement.tagName},',HTML:${dom.innerHTML
+      },XML:${innerXML(dom)}`,
     );
 
     // Start the loading process ...
@@ -196,7 +193,7 @@ const XMLSerializer_Beta = new Class({
     const children = documentElement.childNodes;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      if (child.nodeType == 1) {
+      if (child.nodeType === 1) {
         const topic = this._deserializeNode(child, mindmap);
         mindmap.addBranch(topic);
       }
@@ -219,7 +216,7 @@ const XMLSerializer_Beta = new Class({
 
     const order = domElem.getAttribute('order');
     if ($defined(order)) {
-      topic.setOrder(parseInt(order));
+      topic.setOrder(parseInt(order, 10));
     }
 
     const shape = domElem.getAttribute('shape');
@@ -277,24 +274,24 @@ const XMLSerializer_Beta = new Class({
     const children = domElem.childNodes;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
-      if (child.nodeType == 1) {
+      if (child.nodeType === 1) {
         $assert(
-          child.tagName == 'topic'
-                        || child.tagName == 'icon'
-                        || child.tagName == 'link'
-                        || child.tagName == 'note',
+          child.tagName === 'topic'
+          || child.tagName === 'icon'
+          || child.tagName === 'link'
+          || child.tagName === 'note',
           `Illegal node type:${child.tagName}`,
         );
-        if (child.tagName == 'topic') {
+        if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
-        } else if (child.tagName == 'icon') {
+        } else if (child.tagName === 'icon') {
           const icon = this._deserializeIcon(child, topic);
           topic.addFeature(icon);
-        } else if (child.tagName == 'link') {
+        } else if (child.tagName === 'link') {
           const link = this._deserializeLink(child, topic);
           topic.addFeature(link);
-        } else if (child.tagName == 'note') {
+        } else if (child.tagName === 'note') {
           const note = this._deserializeNote(child, topic);
           topic.addFeature(note);
         }

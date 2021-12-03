@@ -15,17 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import DesignerUndoManager from './DesignerUndoManager';
 import EventBus from './layout/EventBus';
 
-const DesignerActionRunner = new Class({
-  initialize(commandContext, notifier) {
+class DesignerActionRunner {
+  constructor(commandContext, notifier) {
     $assert(commandContext, 'commandContext can not be null');
 
     this._undoManager = new DesignerUndoManager();
     this._context = commandContext;
     this._notifier = notifier;
-  },
+  }
 
   execute(command) {
     $assert(command, 'command can not be null');
@@ -33,24 +34,24 @@ const DesignerActionRunner = new Class({
     this._undoManager.enqueue(command);
     this.fireChangeEvent();
     EventBus.instance.fireEvent(EventBus.events.DoLayout);
-  },
+  }
 
   undo() {
     this._undoManager.execUndo(this._context);
     this.fireChangeEvent();
     EventBus.instance.fireEvent(EventBus.events.DoLayout);
-  },
+  }
 
   redo() {
     this._undoManager.execRedo(this._context);
     this.fireChangeEvent();
     EventBus.instance.fireEvent(EventBus.events.DoLayout);
-  },
+  }
 
   fireChangeEvent() {
     const event = this._undoManager.buildEvent();
     this._notifier.fireEvent('modelUpdate', event);
-  },
-});
+  }
+}
 
 export default DesignerActionRunner;

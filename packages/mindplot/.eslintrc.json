@@ -19,6 +19,7 @@
     "plugins": ["only-warn"],
     "rules": {
         "no-underscore-dangle": "off",
+        "no-plusplus": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": ["!cypress/**/*.js"]}]
     },
     "settings": {

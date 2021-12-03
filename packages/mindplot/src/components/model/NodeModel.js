@@ -18,27 +18,19 @@
 import INodeModel from './INodeModel';
 import TopicFeature from '../TopicFeature';
 
-const NodeModel = new Class(/** @lends NodeModel */{
-  Extends: INodeModel,
-  /**
-     * @constructs
-     * @param {String} type node type
-     * @param mindmap
-     * @param id
-     */
-  initialize(type, mindmap, id) {
+class NodeModel extends INodeModel {
+  constructor(type, mindmap, id) {
     $assert(type, 'Node type can not be null');
     $assert(mindmap, 'mindmap can not be null');
+    super(mindmap);
     this._properties = {};
-
-    this.parent(mindmap);
     this.setId(id);
     this.setType(type);
     this.areChildrenShrunken(false);
 
     this._children = [];
     this._feature = [];
-  },
+  }
 
   /**
      * @param type
@@ -47,7 +39,7 @@ const NodeModel = new Class(/** @lends NodeModel */{
      */
   createFeature(type, attributes) {
     return TopicFeature.createModel(type, attributes);
-  },
+  }
 
   /**
      * @param feature
@@ -56,12 +48,12 @@ const NodeModel = new Class(/** @lends NodeModel */{
   addFeature(feature) {
     $assert(feature, 'feature can not be null');
     this._feature.push(feature);
-  },
+  }
 
   /** */
   getFeatures() {
     return this._feature;
-  },
+  }
 
   /**
      * @param feature
@@ -72,8 +64,8 @@ const NodeModel = new Class(/** @lends NodeModel */{
     $assert(feature, 'feature can not be null');
     const size = this._feature.length;
     this._feature = this._feature.filter((f) => feature.getId() != f.getId());
-    $assert(size - 1 == this._feature.length, 'Could not be removed ...');
-  },
+    $assert(size - 1 === this._feature.length, 'Could not be removed ...');
+  }
 
   /**
      * @param {String} type the feature type, e.g. icon or link
@@ -81,8 +73,8 @@ const NodeModel = new Class(/** @lends NodeModel */{
      */
   findFeatureByType(type) {
     $assert(type, 'type can not be null');
-    return this._feature.filter((feature) => feature.getType() == type);
-  },
+    return this._feature.filter((feature) => feature.getType() === type);
+  }
 
   /**
      * @param {String} id
@@ -92,15 +84,15 @@ const NodeModel = new Class(/** @lends NodeModel */{
      */
   findFeatureById(id) {
     $assert($defined(id), 'id can not be null');
-    const result = this._feature.filter((feature) => feature.getId() == id);
-    $assert(result.length == 1, `Feature could not be found:${id}`);
+    const result = this._feature.filter((feature) => feature.getId() === id);
+    $assert(result.length === 1, `Feature could not be found:${id}`);
     return result[0];
-  },
+  }
 
   /** */
   getPropertiesKeys() {
     return Object.keys(this._properties);
-  },
+  }
 
   /**
      * @param key
@@ -110,19 +102,19 @@ const NodeModel = new Class(/** @lends NodeModel */{
   putProperty(key, value) {
     $defined(key, 'key can not be null');
     this._properties[key] = value;
-  },
+  }
 
   /** */
   getProperties() {
     return this._properties;
-  },
+  }
 
   /** */
   getProperty(key) {
     $defined(key, 'key can not be null');
     const result = this._properties[key];
     return !$defined(result) ? null : result;
-  },
+  }
 
   /**
      * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
@@ -138,7 +130,7 @@ const NodeModel = new Class(/** @lends NodeModel */{
     result._properties = Object.clone(this._properties);
     result._feature = this._feature.clone();
     return result;
-  },
+  }
 
   /**
      * Similar to clone, assign new id to the elements ...
@@ -158,7 +150,7 @@ const NodeModel = new Class(/** @lends NodeModel */{
 
     result._feature = this._feature.clone();
     return result;
-  },
+  }
 
   /**
      * @param {mindplot.model.NodeModel} child
@@ -168,7 +160,7 @@ const NodeModel = new Class(/** @lends NodeModel */{
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
     child._parent = this;
-  },
+  }
 
   /**
      * @param {mindplot.model.NodeModel} child
@@ -178,23 +170,23 @@ const NodeModel = new Class(/** @lends NodeModel */{
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children.erase(child);
     child._parent = null;
-  },
+  }
 
   /** */
   getChildren() {
     return this._children;
-  },
+  }
 
   /** */
   getParent() {
     return this._parent;
-  },
+  }
 
   /** */
   setParent(parent) {
-    $assert(parent != this, 'The same node can not be parent and child if itself.');
+    $assert(parent !== this, 'The same node can not be parent and child if itself.');
     this._parent = parent;
-  },
+  }
 
   _isChildNode(node) {
     let result = false;
@@ -211,7 +203,7 @@ const NodeModel = new Class(/** @lends NodeModel */{
       }
     }
     return result;
-  },
+  }
 
   /**
      * @id
@@ -232,7 +224,7 @@ const NodeModel = new Class(/** @lends NodeModel */{
       }
     }
     return result;
-  },
-});
+  }
+}
 
 export default NodeModel;

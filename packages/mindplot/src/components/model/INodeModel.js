@@ -1,11 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-throw-literal */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-eval */
-/* eslint-disable radix */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -23,365 +15,357 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $assert, $defined } from '@wisemapping/core-js';
 import _ from '../../../../../libraries/underscore-min';
 
-const core = coreJs();
+class INodeModel {
+  constructor(mindmap) {
+    $assert(mindmap && mindmap.getBranches, 'mindmap can not be null');
+    this._mindmap = mindmap;
+  }
 
-const INodeModel = new Class(
-  /** @lends INodeModel */ {
-    /**
-         * @constructs
-         * @param mindmap
-         */
-    initialize(mindmap) {
-      core.Function.$assert(mindmap && mindmap.getBranches, 'mindmap can not be null');
-      this._mindmap = mindmap;
-    },
+  /** */
+  getId() {
+    return this.getProperty('id');
+  }
 
-    /** */
-    getId() {
-      return this.getProperty('id');
-    },
+  /** */
+  setId(id) {
+    if ($defined(id) && id > INodeModel._uuid) {
+      INodeModel._uuid = id;
+    }
+    if (!$defined(id)) {
+      id = INodeModel._nextUUID();
+    }
 
-    /** */
-    setId(id) {
-      if (core.Function.$defined(id) && id > INodeModel._uuid) {
-        INodeModel._uuid = id;
-      }
-      if (!core.Function.$defined(id)) {
-        id = INodeModel._nextUUID();
-      }
+    this.putProperty('id', id);
+  }
 
-      this.putProperty('id', id);
-    },
+  /** */
+  getType() {
+    return this.getProperty('type');
+  }
 
-    /** */
-    getType() {
-      return this.getProperty('type');
-    },
+  /** */
+  setType(type) {
+    this.putProperty('type', type);
+  }
 
-    /** */
-    setType(type) {
-      this.putProperty('type', type);
-    },
+  /** */
+  setText(text) {
+    this.putProperty('text', text);
+  }
 
-    /** */
-    setText(text) {
-      this.putProperty('text', text);
-    },
+  /** */
+  getText() {
+    return this.getProperty('text');
+  }
 
-    /** */
-    getText() {
-      return this.getProperty('text');
-    },
+  /** */
+  setPosition(x, y) {
+    $assert(!Number.isNaN(parseInt(x, 10)), `x position is not valid:${x}`);
+    $assert(!Number.isNaN(parseInt(y, 10)), `y position is not valid:${y}`);
+    this.putProperty('position', `{x:${parseInt(x, 10)},y:${parseInt(y, 10)}}`);
+  }
 
-    /** */
-    setPosition(x, y) {
-      core.Function.$assert(!isNaN(parseInt(x)), `x position is not valid:${x}`);
-      core.Function.$assert(!isNaN(parseInt(y)), `y position is not valid:${y}`);
-      this.putProperty('position', `{x:${parseInt(x)},y:${parseInt(y)}}`);
-    },
+  /** */
+  getPosition() {
+    const value = this.getProperty('position');
+    let result = null;
+    if (value != null) {
+      result = eval(`(${value})`);
+    }
+    return result;
+  }
 
-    /** */
-    getPosition() {
-      const value = this.getProperty('position');
-      let result = null;
-      if (value != null) {
-        result = eval(`(${value})`);
-      }
-      return result;
-    },
+  /** */
+  setImageSize(width, height) {
+    this.putProperty('imageSize', `{width:${width},height:${height}}`);
+  }
 
-    /** */
-    setImageSize(width, height) {
-      this.putProperty('imageSize', `{width:${width},height:${height}}`);
-    },
+  /** */
+  getImageSize() {
+    const value = this.getProperty('imageSize');
+    let result = null;
+    if (value != null) {
+      result = eval(`(${value})`);
+    }
+    return result;
+  }
 
-    /** */
-    getImageSize() {
-      const value = this.getProperty('imageSize');
-      let result = null;
-      if (value != null) {
-        result = eval(`(${value})`);
-      }
-      return result;
-    },
+  /** */
+  setImageUrl(url) {
+    this.putProperty('imageUrl', url);
+  }
 
-    /** */
-    setImageUrl(url) {
-      this.putProperty('imageUrl', url);
-    },
+  /** */
+  getMetadata() {
+    return this.getProperty('metadata');
+  }
 
-    /** */
-    getMetadata() {
-      return this.getProperty('metadata');
-    },
+  /** */
+  setMetadata(json) {
+    this.putProperty('metadata', json);
+  }
 
-    /** */
-    setMetadata(json) {
-      this.putProperty('metadata', json);
-    },
+  /** */
+  getImageUrl() {
+    return this.getProperty('imageUrl');
+  }
 
-    /** */
-    getImageUrl() {
-      return this.getProperty('imageUrl');
-    },
+  /** */
+  getMindmap() {
+    return this._mindmap;
+  }
 
-    /** */
-    getMindmap() {
-      return this._mindmap;
-    },
+  /**
+       * lets the mindmap handle the disconnect node operation
+       * @see mindplot.model.IMindmap.disconnect
+       */
+  disconnect() {
+    const mindmap = this.getMindmap();
+    mindmap.disconnect(this);
+  }
 
-    /**
-         * lets the mindmap handle the disconnect node operation
-         * @see mindplot.model.IMindmap.disconnect
-         */
-    disconnect() {
-      const mindmap = this.getMindmap();
-      mindmap.disconnect(this);
-    },
+  /** */
+  getShapeType() {
+    return this.getProperty('shapeType');
+  }
 
-    /** */
-    getShapeType() {
-      return this.getProperty('shapeType');
-    },
+  /** */
+  setShapeType(type) {
+    this.putProperty('shapeType', type);
+  }
 
-    /** */
-    setShapeType(type) {
-      this.putProperty('shapeType', type);
-    },
+  /** */
+  setOrder(value) {
+    $assert(
+      (typeof value === 'number' && isFinite(value)) || value == null,
+      'Order must be null or a number',
+    );
+    this.putProperty('order', value);
+  }
 
-    /** */
-    setOrder(value) {
-      core.Function.$assert(
-        (typeof value === 'number' && isFinite(value)) || value == null,
-        'Order must be null or a number',
-      );
-      this.putProperty('order', value);
-    },
+  /** */
+  getOrder() {
+    return this.getProperty('order');
+  }
 
-    /** */
-    getOrder() {
-      return this.getProperty('order');
-    },
+  /** */
+  setFontFamily(fontFamily) {
+    this.putProperty('fontFamily', fontFamily);
+  }
 
-    /** */
-    setFontFamily(fontFamily) {
-      this.putProperty('fontFamily', fontFamily);
-    },
+  /** */
+  getFontFamily() {
+    return this.getProperty('fontFamily');
+  }
 
-    /** */
-    getFontFamily() {
-      return this.getProperty('fontFamily');
-    },
+  /** */
+  setFontStyle(fontStyle) {
+    this.putProperty('fontStyle', fontStyle);
+  }
 
-    /** */
-    setFontStyle(fontStyle) {
-      this.putProperty('fontStyle', fontStyle);
-    },
+  /** */
+  getFontStyle() {
+    return this.getProperty('fontStyle');
+  }
 
-    /** */
-    getFontStyle() {
-      return this.getProperty('fontStyle');
-    },
+  /** */
+  setFontWeight(weight) {
+    this.putProperty('fontWeight', weight);
+  }
 
-    /** */
-    setFontWeight(weight) {
-      this.putProperty('fontWeight', weight);
-    },
+  /** */
+  getFontWeight() {
+    return this.getProperty('fontWeight');
+  }
 
-    /** */
-    getFontWeight() {
-      return this.getProperty('fontWeight');
-    },
+  /** */
+  setFontColor(color) {
+    this.putProperty('fontColor', color);
+  }
 
-    /** */
-    setFontColor(color) {
-      this.putProperty('fontColor', color);
-    },
+  /** */
+  getFontColor() {
+    return this.getProperty('fontColor');
+  }
 
-    /** */
-    getFontColor() {
-      return this.getProperty('fontColor');
-    },
+  /** */
+  setFontSize(size) {
+    this.putProperty('fontSize', size);
+  }
 
-    /** */
-    setFontSize(size) {
-      this.putProperty('fontSize', size);
-    },
+  /** */
+  getFontSize() {
+    return this.getProperty('fontSize');
+  }
 
-    /** */
-    getFontSize() {
-      return this.getProperty('fontSize');
-    },
+  /** */
+  getBorderColor() {
+    return this.getProperty('borderColor');
+  }
 
-    /** */
-    getBorderColor() {
-      return this.getProperty('borderColor');
-    },
+  /** */
+  setBorderColor(color) {
+    this.putProperty('borderColor', color);
+  }
 
-    /** */
-    setBorderColor(color) {
-      this.putProperty('borderColor', color);
-    },
+  /** */
+  getBackgroundColor() {
+    return this.getProperty('backgroundColor');
+  }
 
-    /** */
-    getBackgroundColor() {
-      return this.getProperty('backgroundColor');
-    },
+  /** */
+  setBackgroundColor(color) {
+    this.putProperty('backgroundColor', color);
+  }
 
-    /** */
-    setBackgroundColor(color) {
-      this.putProperty('backgroundColor', color);
-    },
+  /** */
+  areChildrenShrunken() {
+    const result = this.getProperty('shrunken');
+    $defined(result) ? result : false;
+  }
 
-    /** */
-    areChildrenShrunken() {
-      const result = this.getProperty('shrunken');
-      return core.Function.$defined(result) ? result : false;
-    },
+  /**
+       * @return {Boolean} true if the children nodes are hidden by the shrink option
+       */
+  setChildrenShrunken(value) {
+    this.putProperty('shrunken', value);
+  }
 
-    /**
-         * @return {Boolean} true if the children nodes are hidden by the shrink option
-         */
-    setChildrenShrunken(value) {
-      this.putProperty('shrunken', value);
-    },
+  /**
+       * @return {Boolean} true
+       */
+  isNodeModel() {
+    return true;
+  }
 
-    /**
-         * @return {Boolean} true
-         */
-    isNodeModel() {
-      return true;
-    },
+  /**
+       * @return {Boolean} true if the node model has a parent assigned to it
+       */
+  isConnected() {
+    return this.getParent() != null;
+  }
 
-    /**
-         * @return {Boolean} true if the node model has a parent assigned to it
-         */
-    isConnected() {
-      return this.getParent() != null;
-    },
+  /** @abstract */
+  append(node) {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    append(node) {
-      throw 'Unsupported operation';
-    },
+  /**
+       * lets the mindmap handle the connect node operation
+       * @throws will throw an error if parent is null or undefined
+       * @see mindplot.model.IMindmap.connect
+       */
+  connectTo(parent) {
+    $assert(parent, 'parent can not be null');
+    const mindmap = this.getMindmap();
+    mindmap.connect(parent, this);
+  }
 
-    /**
-         * lets the mindmap handle the connect node operation
-         * @throws will throw an error if parent is null or undefined
-         * @see mindplot.model.IMindmap.connect
-         */
-    connectTo(parent) {
-      core.Function.$assert(parent, 'parent can not be null');
-      const mindmap = this.getMindmap();
-      mindmap.connect(parent, this);
-    },
+  /**
+       * @param target
+       * @return target
+       */
+  copyTo(target) {
+    const source = this;
+    // Copy properties ...
+    const keys = source.getPropertiesKeys();
+    _.each(keys, (key) => {
+      const value = source.getProperty(key);
+      target.putProperty(key, value);
+    });
 
-    /**
-         * @param target
-         * @return target
-         */
-    copyTo(target) {
-      const source = this;
-      // Copy properties ...
-      const keys = source.getPropertiesKeys();
-      _.each(keys, (key) => {
-        const value = source.getProperty(key);
-        target.putProperty(key, value);
-      });
+    // Copy children ...
+    const children = this.getChildren();
+    const tmindmap = target.getMindmap();
 
-      // Copy children ...
-      const children = this.getChildren();
-      const tmindmap = target.getMindmap();
+    _.each((children, snode) => {
+      const tnode = tmindmap.createNode(snode.getType(), snode.getId());
+      snode.copyTo(tnode);
+      target.append(tnode);
+    });
 
-      _.each((children, snode) => {
-        const tnode = tmindmap.createNode(snode.getType(), snode.getId());
-        snode.copyTo(tnode);
-        target.append(tnode);
-      });
+    return target;
+  }
 
-      return target;
-    },
+  /**
+       * lets parent handle the delete node operation, or, if none defined, calls the mindmap to
+       * remove the respective branch
+       */
+  deleteNode() {
+    const mindmap = this.getMindmap();
 
-    /**
-         * lets parent handle the delete node operation, or, if none defined, calls the mindmap to
-         * remove the respective branch
-         */
-    deleteNode() {
-      const mindmap = this.getMindmap();
+    //        console.log("Before:" + mindmap.inspect());
+    const parent = this.getParent();
+    if ($defined(parent)) {
+      parent.removeChild(this);
+    } else {
+      // If it has not parent, it must be an isolate topic ...
+      mindmap.removeBranch(this);
+    }
+    // It's an isolated node. It must be a hole branch ...
+    //        console.log("After:" + mindmap.inspect());
+  }
 
-      //        console.log("Before:" + mindmap.inspect());
-      const parent = this.getParent();
-      if (core.Function.$defined(parent)) {
-        parent.removeChild(this);
-      } else {
-        // If it has not parent, it must be an isolate topic ...
-        mindmap.removeBranch(this);
-      }
-      // It's an isolated node. It must be a hole branch ...
-      //        console.log("After:" + mindmap.inspect());
-    },
+  /** @abstract */
+  getPropertiesKeys() {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    getPropertiesKeys() {
-      throw 'Unsupported operation';
-    },
+  /** @abstract */
+  putProperty(key, value) {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    putProperty(key, value) {
-      throw 'Unsupported operation';
-    },
+  /** @abstract */
+  setParent(parent) {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    setParent(parent) {
-      throw 'Unsupported operation';
-    },
+  /** @abstract */
+  getChildren() {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    getChildren() {
-      throw 'Unsupported operation';
-    },
+  /** @abstract */
+  getParent() {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    getParent() {
-      throw 'Unsupported operation';
-    },
+  /** @abstract */
+  clone() {
+    throw 'Unsupported operation';
+  }
 
-    /** @abstract */
-    clone() {
-      throw 'Unsupported operation';
-    },
+  /** */
+  inspect() {
+    let result = `{ type: ${this.getType()} , id: ${this.getId()} , text: ${this.getText()}`;
 
-    /** */
-    inspect() {
-      let result = `{ type: ${this.getType()} , id: ${this.getId()} , text: ${this.getText()}`;
-
-      const children = this.getChildren();
-      if (children.length > 0) {
-        result = `${result}, children: {(size:${children.length}`;
-        _.each(children, (node) => {
-          result = `${result}=> (`;
-          const keys = node.getPropertiesKeys();
-          _.each(keys, (key) => {
-            const value = node.getProperty(key);
-            result = `${result + key}:${value},`;
-          });
-          result = `${result}}`;
+    const children = this.getChildren();
+    if (children.length > 0) {
+      result = `${result}, children: {(size:${children.length}`;
+      _.each(children, (node) => {
+        result = `${result}=> (`;
+        const keys = node.getPropertiesKeys();
+        _.each(keys, (key) => {
+          const value = node.getProperty(key);
+          result = `${result + key}:${value},`;
         });
-      }
+        result = `${result}}`;
+      });
+    }
 
-      result = `${result} }`;
-      return result;
-    },
+    result = `${result} }`;
+    return result;
+  }
 
-    /** @abstract */
-    removeChild(child) {
-      throw 'Unsupported operation';
-    },
-  },
-);
+  /** @abstract */
+  removeChild(child) {
+    throw 'Unsupported operation';
+  }
+}
 
 /**
  * @enum {String}
@@ -418,7 +402,7 @@ INodeModel.MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
  * @todo: This method must be implemented. (unascribed)
  */
 INodeModel._nextUUID = () => {
-  if (!core.Function.$defined(INodeModel._uuid)) {
+  if (!$defined(INodeModel._uuid)) {
     INodeModel._uuid = 0;
   }
 

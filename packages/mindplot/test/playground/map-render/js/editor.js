@@ -15,8 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
-import mindplot from '../../../../src/mindplot';
+import { $assert } from '@wisemapping/core-js';
+import Mindmap from '../../../../src/components/model/Mindmap';
+import PersistenceManager from '../../../../src/components/PersistenceManager';
+import $ from '@libraries/jquery-2.1.0'
 
 let designer = null;
 
@@ -191,28 +193,27 @@ global.editor.WaitDialog = new Class({
 
 // Show loading dialog ...
 $(() => {
-    global.jQuery = global.$;
-    import('./bootstrap').then(() => {
-        global.waitDialog = new global.editor.WaitDialog();
-        global.waitDialog.show();
+  import('./bootstrap').then(() => {
+    global.waitDialog = new global.editor.WaitDialog();
+    global.waitDialog.show();
 
-        // from viewmode.html ---------
-        var mapId = 'welcome';
-        // Set readonly option ...
-        var options = loadDesignerOptions();
-        options.readOnly = true;
-        var designer = buildDesigner(options);
+    // from viewmode.html ---------
+    var mapId = 'welcome';
+    // Set readonly option ...
+    var options = loadDesignerOptions();
+    options.readOnly = true;
+    var designer = buildDesigner(options);
 
-        // Load map from XML file persisted on disk...
-        var persistence = mindplot.PersistenceManager.getInstance();
-        var mindmap;
-        try {
-            mindmap = persistence.load(mapId);
-        } catch (e) {
-            // If the map could not be loaded, create a new empty map...
-            mindmap = mindplot.model.Mindmap.buildEmpty(mapId);
-        }
-        designer.loadMap(mindmap);
-        // from viewmode.html ---------
-    });
+    // Load map from XML file persisted on disk...
+    var persistence = PersistenceManager.getInstance();
+    var mindmap;
+    try {
+      mindmap = persistence.load(mapId);
+    } catch (e) {
+      // If the map could not be loaded, create a new empty map...
+      mindmap = Mindmap.buildEmpty(mapId);
+    }
+    designer.loadMap(mindmap);
+    // from viewmode.html ---------
+  });
 });

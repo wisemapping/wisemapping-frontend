@@ -15,22 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $defined } from '@wisemapping/core-js';
 
-const Messages = new Class({
+class Messages {
+  static init(locale) {
+    let userLocale = $defined(locale) ? locale : 'en';
+    let bundle = Messages.BUNDLES[locale];
 
-});
-
-Messages.init = (locale) => {
-  locale = $defined(locale) ? locale : 'en';
-  let bundle = Messages.BUNDLES[locale];
-  if (bundle == null && locale.indexOf('_') !== -1) {
-    // Try to locate without the specialization ...
-    locale = locale.substring(0, locale.indexOf('_'));
-    bundle = Messages.BUNDLES[locale];
+    if (bundle == null && locale.indexOf('_') !== -1) {
+      // Try to locate without the specialization ...
+      userLocale = locale.substring(0, locale.indexOf('_'));
+      bundle = Messages.BUNDLES[locale];
+    }
+    global.locale = userLocale;
+    Messages.__bundle = bundle || {};
   }
-  Messages.__bundle = bundle || {};
-};
+}
 
+// @Todo: fix global assignment.
 global.$msg = function $msg(key) {
   if (!Messages.__bundle) {
     Messages.init('en');
@@ -40,5 +42,4 @@ global.$msg = function $msg(key) {
 };
 
 Messages.BUNDLES = {};
-
 export default Messages;

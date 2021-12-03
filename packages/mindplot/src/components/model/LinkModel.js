@@ -17,22 +17,16 @@
  */
 import FeatureModel from './FeatureModel';
 
-const LinkModel = new Class(/** @lends LinkModel */{
-  Extends: FeatureModel,
-  /**
-     * @constructs
-     * @param attributes
-     * @extends mindplot.model.FeatureModel
-     */
-  initialize(attributes) {
-    this.parent(LinkModel.FEATURE_TYPE);
+class LinkModel extends FeatureModel {
+  constructor(attributes) {
+    super(LinkModel.FEATURE_TYPE);
     this.setUrl(attributes.url);
-  },
+  }
 
   /** @return {String} the url attribute value */
   getUrl() {
     return this.getAttribute('url');
-  },
+  }
 
   /**
      * @param {String} url a URL provided by the user to set the link to
@@ -46,7 +40,7 @@ const LinkModel = new Class(/** @lends LinkModel */{
 
     const type = fixedUrl.contains('mailto:') ? 'mail' : 'url';
     this.setAttribute('urlType', type);
-  },
+  }
 
   // url format is already checked in LinkEditor.checkUrl
   _fixUrl(url) {
@@ -55,7 +49,7 @@ const LinkModel = new Class(/** @lends LinkModel */{
       result = `http://${result}`;
     }
     return result;
-  },
+  }
 
   /**
      * @param {String} urlType the url type, either 'mail' or 'url'
@@ -64,8 +58,8 @@ const LinkModel = new Class(/** @lends LinkModel */{
   setUrlType(urlType) {
     $assert(urlType, 'urlType can not be null');
     this.setAttribute('urlType', urlType);
-  },
-});
+  }
+}
 
 /**
  * @constant

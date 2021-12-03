@@ -16,6 +16,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import Events from './Events';
 
 // noinspection JSUnusedLocalSymbols
@@ -102,12 +103,10 @@ const ActionDispatcher = new Class({
   },
 });
 
-ActionDispatcher.setInstance = function (dispatcher) {
+ActionDispatcher.setInstance = (dispatcher) => {
   ActionDispatcher._instance = dispatcher;
 };
 
-ActionDispatcher.getInstance = function () {
-  return ActionDispatcher._instance;
-};
+ActionDispatcher.getInstance = () => ActionDispatcher._instance;
 
 export default ActionDispatcher;

@@ -16,69 +16,60 @@
  *   limitations under the License.
  */
 
-const IMindmap = new Class(/** @lends IMindmap */{
-  /**
-     * @constructs
-     * @abstract
-     */
-  initialize() {
-    throw 'Unsupported operation';
-  },
-
-  /** */
+class IMindmap {
   getCentralTopic() {
     return this.getBranches()[0];
-  },
+  }
 
   /** @abstract */
   getDescription() {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   setDescription(value) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   getId() {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   setId(id) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   getVersion() {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   setVersion(version) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   addBranch(nodeModel) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   getBranches() {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   removeBranch(node) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   getRelationships() {
     throw 'Unsupported operation';
-  },
+  }
 
   /**
      * @param parent
@@ -94,7 +85,7 @@ const IMindmap = new Class(/** @lends IMindmap */{
 
     // Remove from the branch ...
     this.removeBranch(child);
-  },
+  }
 
   /**
      * @param child
@@ -108,32 +99,32 @@ const IMindmap = new Class(/** @lends IMindmap */{
 
     parent.removeChild(child);
     this.addBranch(child);
-  },
+  }
 
   /** @abstract */
   hasAlreadyAdded(node) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   createNode(type, id) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   createRelationship(fromNode, toNode) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   addRelationship(rel) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** @abstract */
   deleteRelationship(relationship) {
     throw 'Unsupported operation';
-  },
+  }
 
   /** */
   inspect() {
@@ -155,7 +146,7 @@ const IMindmap = new Class(/** @lends IMindmap */{
 
     result = `${result} } `;
     return result;
-  },
+  }
 
   /**
      * @param target
@@ -175,7 +166,7 @@ const IMindmap = new Class(/** @lends IMindmap */{
       snode.copyTo(tnode);
       target.addBranch(tnode);
     });
-  },
-});
+  }
+}
 
 export default IMindmap;

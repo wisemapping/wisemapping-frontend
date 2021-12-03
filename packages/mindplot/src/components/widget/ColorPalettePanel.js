@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import ToolbarPaneItem from './ToolbarPaneItem';
 
 const ColorPalettePanel = new Class({
@@ -89,11 +90,11 @@ const ColorPalettePanel = new Class({
     let modelValue = model.getValue();
     _.each(colorCells, (elem) => {
       const color = $(elem).css('background-color').rgbToHex();
-      if (modelValue != null && modelValue[0] == 'r') {
+      if (modelValue != null && modelValue[0] === 'r') {
         modelValue = modelValue.rgbToHex();
       }
 
-      if (modelValue != null && modelValue.toUpperCase() == color.toUpperCase()) {
+      if (modelValue != null && modelValue.toUpperCase() === color.toUpperCase()) {
         $(elem).parent().attr('class', 'palette-cell palette-cell-selected');
       }
     });

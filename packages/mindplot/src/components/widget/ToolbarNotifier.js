@@ -16,16 +16,18 @@
  *   limitations under the License.
  */
 
-const ToolbarNotifier = new Class({
-  initialize() {
+import $ from '@libraries/jquery-2.1.0';
+
+class ToolbarNotifier {
+  constructor() {
     this.container = $('#headerNotifier');
-  },
+  }
 
   hide() {
     this.container.hide();
-  },
+  }
 
-  logMessage(msg, fade) {
+  logMessage(msg) {
     $assert(msg, 'msg can not be null');
     // In case of print,embedded no message is displayed ....
     if (this.container && !this.container.data('transitioning')) {
@@ -38,11 +40,11 @@ const ToolbarNotifier = new Class({
       this.container.show().fadeOut(5000);
     }
     this.container.data('transitioning', false);
-  },
-});
+  }
+}
 
 const toolbarNotifier = new ToolbarNotifier();
-const $notify = function (msg) {
+const $notify = (msg) => {
   toolbarNotifier.logMessage(msg);
 };
 

@@ -21,52 +21,46 @@ import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
 
-const Mindmap = new Class(/** @lends Mindmap */{
-  Extends: IMindmap,
-  /**
-         * @constructs
-         * @param id
-         * @param version
-         * @extends mindplot.model.IMindmap
-         */
-  initialize(id, version) {
+class Mindmap extends IMindmap {
+  constructor(id, version) {
+    super();
     $assert(id, 'Id can not be null');
     this._branches = [];
     this._description = null;
     this._relationships = [];
     this._version = $defined(version) ? version : ModelCodeName.TANGO;
     this._id = id;
-  },
+  }
 
   /** */
   getDescription() {
     return this._description;
-  },
+  }
 
   /** */
   setDescription(value) {
     this._description = value;
-  },
+  }
 
   /** */
   getId() {
     return this._id;
-  },
+  }
 
   /** */
   setId(id) {
     this._id = id;
-  },
+  }
 
   /** */
   getVersion() {
     return this._version;
-  },
+  }
 
   /** */
   setVersion(version) {
     this._version = version;
-  },
+  }
 
   /**
          * @param {mindplot.model.NodeModel} nodeModel
@@ -76,7 +70,7 @@ const Mindmap = new Class(/** @lends Mindmap */{
   addBranch(nodeModel) {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Add node must be invoked with model objects');
     const branches = this.getBranches();
-    if (branches.length == 0) {
+    if (branches.length === 0) {
       $assert(nodeModel.getType() == INodeModel.CENTRAL_TOPIC_TYPE, 'First element must be the central topic');
       nodeModel.setPosition(0, 0);
     } else {
@@ -84,7 +78,7 @@ const Mindmap = new Class(/** @lends Mindmap */{
     }
 
     this._branches.push(nodeModel);
-  },
+  }
 
   /**
          * @param nodeModel
@@ -92,17 +86,17 @@ const Mindmap = new Class(/** @lends Mindmap */{
   removeBranch(nodeModel) {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     return this._branches.erase(nodeModel);
-  },
+  }
 
   /** */
   getBranches() {
     return this._branches;
-  },
+  }
 
   /** */
   getRelationships() {
     return this._relationships;
-  },
+  }
 
   /**
          * @param node
@@ -119,7 +113,7 @@ const Mindmap = new Class(/** @lends Mindmap */{
         break;
       }
     }
-  },
+  }
 
   /**
          * @param type
@@ -129,7 +123,7 @@ const Mindmap = new Class(/** @lends Mindmap */{
   createNode(type, id) {
     type = !$defined(type) ? INodeModel.MAIN_TOPIC_TYPE : type;
     return new NodeModel(type, this, id);
-  },
+  }
 
   /**
          * @param sourceNodeId
@@ -143,21 +137,21 @@ const Mindmap = new Class(/** @lends Mindmap */{
     $assert($defined(targetNodeId), 'to node cannot be null');
 
     return new RelationshipModel(sourceNodeId, targetNodeId);
-  },
+  }
 
   /**
          * @param relationship
          */
   addRelationship(relationship) {
     this._relationships.push(relationship);
-  },
+  }
 
   /**
          * @param relationship
          */
   deleteRelationship(relationship) {
     this._relationships.erase(relationship);
-  },
+  }
 
   /**
          * @param id
@@ -173,14 +167,14 @@ const Mindmap = new Class(/** @lends Mindmap */{
       }
     }
     return result;
-  },
-});
+  }
+}
 
 /**
  * @param mapId
  * @return an empty mindmap with central topic only
  */
-Mindmap.buildEmpty = function (mapId) {
+Mindmap.buildEmpty = (mapId) => {
   const result = new Mindmap(mapId);
   const node = result.createNode(INodeModel.CENTRAL_TOPIC_TYPE, 0);
   result.addBranch(node);

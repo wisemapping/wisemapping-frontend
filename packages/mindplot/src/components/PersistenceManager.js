@@ -15,13 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Core from '@wisemapping/core-js';
+import { $assert, innerXML } from '@wisemapping/core-js';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
-const core = Core();
-
 const PersistenceManager = new Class({
-  initialize() {},
+  initialize() { },
 
   save(mindmap, editorProperties, saveHistory, events, sync) {
     $assert(mindmap, 'mindmap can not be null');
@@ -32,7 +30,7 @@ const PersistenceManager = new Class({
 
     const serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
-    const mapXml = core.Utils.innerXML(domMap);
+    const mapXml = innerXML(domMap);
 
     const pref = JSON.stringify(editorProperties);
     try {

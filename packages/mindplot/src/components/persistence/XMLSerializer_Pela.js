@@ -15,18 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Core from '@wisemapping/core-js';
+import { $assert, createDocument } from '@wisemapping/core-js';
 import web2d from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
 import INodeModel, { TopicShape } from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
 import ConnectionLine from '../ConnectionLine';
 
-const core = Core();
-
 /**
  * @class
  */
+// eslint-disable-next-line camelcase
 const XMLSerializer_Pela = new Class(
   /** @lends XMLSerializer_Pela */ {
     /**
@@ -37,7 +36,7 @@ const XMLSerializer_Pela = new Class(
     toXML(mindmap) {
       $assert(mindmap, 'Can not save a null mindmap');
 
-      const document = core.Utils.createDocument();
+      const document = createDocument();
 
       // Store map attributes ...
       const mapElem = document.createElement('map');
@@ -67,7 +66,7 @@ const XMLSerializer_Pela = new Class(
           const relationship = relationships[j];
           if (
             mindmap.findNodeById(relationship.getFromNode()) !== null
-                        && mindmap.findNodeById(relationship.getToNode()) !== null
+            && mindmap.findNodeById(relationship.getToNode()) !== null
           ) {
             // Isolated relationships are not persisted ....
             const relationDom = this._relationshipToXML(document, relationship);
@@ -83,14 +82,14 @@ const XMLSerializer_Pela = new Class(
       const parentTopic = document.createElement('topic');
 
       // Set topic attributes...
-      if (topic.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
         parentTopic.setAttribute('central', 'true');
       } else {
         const pos = topic.getPosition();
         parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
 
         const order = topic.getOrder();
-        if (typeof order === 'number' && isFinite(order)) { parentTopic.setAttribute('order', order); }
+        if (typeof order === 'number' && Number.isFinite(order)) { parentTopic.setAttribute('order', order); }
       }
 
       const text = topic.getText();
@@ -102,17 +101,16 @@ const XMLSerializer_Pela = new Class(
       if ($defined(shape)) {
         parentTopic.setAttribute('shape', shape);
 
-        if (shape == TopicShape.IMAGE) {
+        if (shape === TopicShape.IMAGE) {
           parentTopic.setAttribute(
             'image',
-            `${topic.getImageSize().width},${
-              topic.getImageSize().height
+            `${topic.getImageSize().width},${topic.getImageSize().height
             }:${topic.getImageUrl()}`,
           );
         }
       }
 
-      if (topic.areChildrenShrunken() && topic.getType() != INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (topic.areChildrenShrunken() && topic.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
         parentTopic.setAttribute('shrink', 'true');
       }
 
@@ -139,10 +137,10 @@ const XMLSerializer_Pela = new Class(
 
       if (
         $defined(fontFamily)
-                || $defined(fontSize)
-                || $defined(fontColor)
-                || $defined(fontWeight)
-                || $defined(fontStyle)
+        || $defined(fontSize)
+        || $defined(fontColor)
+        || $defined(fontWeight)
+        || $defined(fontStyle)
       ) {
         parentTopic.setAttribute('fontStyle', font);
       }
@@ -173,7 +171,7 @@ const XMLSerializer_Pela = new Class(
 
         for (const key in attributes) {
           const value = attributes[key];
-          if (key == 'text') {
+          if (key === 'text') {
             const cdata = document.createCDATASection(this.rmXmlInv(value));
             featureDom.appendChild(cdata);
           } else {
@@ -194,7 +192,7 @@ const XMLSerializer_Pela = new Class(
     },
 
     _noteTextToXML(document, elem, text) {
-      if (text.indexOf('\n') == -1) {
+      if (text.indexOf('\n') === -1) {
         elem.setAttribute('text', this.rmXmlInv(text));
       } else {
         const textDom = document.createElement('text');
@@ -211,7 +209,7 @@ const XMLSerializer_Pela = new Class(
 
       const lineType = relationship.getLineType();
       result.setAttribute('lineType', lineType);
-      if (lineType == ConnectionLine.CURVED || lineType == ConnectionLine.SIMPLE_CURVED) {
+      if (lineType === ConnectionLine.CURVED || lineType === ConnectionLine.SIMPLE_CURVED) {
         if ($defined(relationship.getSrcCtrlPoint())) {
           const srcPoint = relationship.getSrcCtrlPoint();
           result.setAttribute(
@@ -233,13 +231,13 @@ const XMLSerializer_Pela = new Class(
     },
 
     /**
-         * @param dom
-         * @param mapId
-         * @throws will throw an error if dom is null or undefined
-         * @throws will throw an error if mapId is null or undefined
-         * @throws will throw an error if the document element is not consistent with a wisemap's root
-         * element
-         */
+     * @param dom
+     * @param mapId
+     * @throws will throw an error if dom is null or undefined
+     * @throws will throw an error if mapId is null or undefined
+     * @throws will throw an error if the document element is not consistent with a wisemap's root
+     * element
+     */
     loadFromDom(dom, mapId) {
       $assert(dom, 'dom can not be null');
       $assert(mapId, 'mapId can not be null');
@@ -248,7 +246,7 @@ const XMLSerializer_Pela = new Class(
 
       // Is a wisemap?.
       $assert(
-        rootElem.tagName == XMLSerializer_Pela.MAP_ROOT_NODE,
+        rootElem.tagName === XMLSerializer_Pela.MAP_ROOT_NODE,
         'This seem not to be a map document.',
       );
 
@@ -260,15 +258,21 @@ const XMLSerializer_Pela = new Class(
       const children = rootElem.childNodes;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        if (child.nodeType == 1) {
+        if (child.nodeType === 1) {
           switch (child.tagName) {
-            case 'topic':
-              var topic = this._deserializeNode(child, mindmap);
+            case 'topic': {
+              const topic = this._deserializeNode(child, mindmap);
               mindmap.addBranch(topic);
               break;
-            case 'relationship':
-              var relationship = this._deserializeRelationship(child, mindmap);
-              if (relationship != null) mindmap.addRelationship(relationship);
+            }
+            case 'relationship': {
+              const relationship = this._deserializeRelationship(child, mindmap);
+              if (relationship != null) {
+                mindmap.addRelationship(relationship);
+              }
+              break;
+            }
+            default:
               break;
           }
         }
@@ -286,7 +290,7 @@ const XMLSerializer_Pela = new Class(
       // Load attributes...
       let id = domElem.getAttribute('id');
       if ($defined(id)) {
-        id = parseInt(id);
+        id = parseInt(id, 10);
       }
 
       if (this._idsMap[id]) {
@@ -332,7 +336,7 @@ const XMLSerializer_Pela = new Class(
       if ($defined(shape)) {
         topic.setShapeType(shape);
 
-        if (shape == TopicShape.IMAGE) {
+        if (shape === TopicShape.IMAGE) {
           const image = domElem.getAttribute('image');
           const size = image.substring(0, image.indexOf(':'));
           const url = image.substring(image.indexOf(':') + 1, image.length);
@@ -354,14 +358,14 @@ const XMLSerializer_Pela = new Class(
       }
 
       const order = domElem.getAttribute('order');
-      if ($defined(order) && order != 'NaN') {
+      if ($defined(order) && order !== 'NaN') {
         // Hack for broken maps ...
-        topic.setOrder(parseInt(order));
+        topic.setOrder(parseInt(order, 10));
       }
 
       const isShrink = domElem.getAttribute('shrink');
       // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
-      if ($defined(isShrink) && type != INodeModel.CENTRAL_TOPIC_TYPE) {
+      if ($defined(isShrink) && type !== INodeModel.CENTRAL_TOPIC_TYPE) {
         topic.setChildrenShrunken(isShrink);
       }
 
@@ -380,8 +384,8 @@ const XMLSerializer_Pela = new Class(
       const children = domElem.childNodes;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        if (child.nodeType == Node.ELEMENT_NODE) {
-          if (child.tagName == 'topic') {
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          if (child.tagName === 'topic') {
             const childTopic = this._deserializeNode(child, mindmap);
             childTopic.connectTo(topic);
           } else if (TopicFeature.isSupported(child.tagName)) {
@@ -403,7 +407,7 @@ const XMLSerializer_Pela = new Class(
             const featureType = child.tagName;
             const feature = TopicFeature.createModel(featureType, attributes);
             topic.addFeature(feature);
-          } else if (child.tagName == 'text') {
+          } else if (child.tagName === 'text') {
             const nodeText = this._deserializeNodeText(child);
             topic.setText(nodeText);
           }
@@ -418,7 +422,7 @@ const XMLSerializer_Pela = new Class(
         const children = domElem.childNodes;
         for (let i = 0; i < children.length; i++) {
           const child = children[i];
-          if (child.nodeType == Node.CDATA_SECTION_NODE) {
+          if (child.nodeType === Node.CDATA_SECTION_NODE) {
             value = child.nodeValue;
           }
         }
@@ -427,7 +431,7 @@ const XMLSerializer_Pela = new Class(
         value = unescape(value);
 
         // Hack for empty nodes ...
-        if (value == '') {
+        if (value === '') {
           value = ' ';
         }
       }
@@ -440,7 +444,7 @@ const XMLSerializer_Pela = new Class(
       let value = null;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        if (child.nodeType == Node.CDATA_SECTION_NODE) {
+        if (child.nodeType === Node.CDATA_SECTION_NODE) {
           value = child.nodeValue;
         }
       }
@@ -453,10 +457,9 @@ const XMLSerializer_Pela = new Class(
       const lineType = domElement.getAttribute('lineType');
       const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
       const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
-      const endArrow = domElement.getAttribute('endArrow');
-      const startArrow = domElement.getAttribute('startArrow');
+
       // If for some reason a relationship lines has source and dest nodes the same, don't import it.
-      if (srcId == destId) {
+      if (srcId === destId) {
         return null;
       }
       // Is the connections points valid ?. If it's not, do not load the relationship ...
@@ -466,10 +469,10 @@ const XMLSerializer_Pela = new Class(
 
       const model = mindmap.createRelationship(srcId, destId);
       model.setLineType(lineType);
-      if ($defined(srcCtrlPoint) && srcCtrlPoint != '') {
+      if ($defined(srcCtrlPoint) && srcCtrlPoint !== '') {
         model.setSrcCtrlPoint(web2d.Point.fromString(srcCtrlPoint));
       }
-      if ($defined(destCtrlPoint) && destCtrlPoint != '') {
+      if ($defined(destCtrlPoint) && destCtrlPoint !== '') {
         model.setDestCtrlPoint(web2d.Point.fromString(destCtrlPoint));
       }
       model.setEndArrow('false');
@@ -489,18 +492,18 @@ const XMLSerializer_Pela = new Class(
          * @return The in String, stripped of non-valid characters.
          */
     rmXmlInv(str) {
-      if (str == null || str == undefined) return null;
+      if (str == null || str === undefined) return null;
 
       let result = '';
       for (let i = 0; i < str.length; i++) {
         const c = str.charCodeAt(i);
         if (
-          c == 0x9
-                    || c == 0xa
-                    || c == 0xd
-                    || (c >= 0x20 && c <= 0xd7ff)
-                    || (c >= 0xe000 && c <= 0xfffd)
-                    || (c >= 0x10000 && c <= 0x10ffff)
+          c === 0x9
+          || c === 0xa
+          || c === 0xd
+          || (c >= 0x20 && c <= 0xd7ff)
+          || (c >= 0xe000 && c <= 0xfffd)
+          || (c >= 0x10000 && c <= 0x10ffff)
         ) {
           result += str.charAt(i);
         }

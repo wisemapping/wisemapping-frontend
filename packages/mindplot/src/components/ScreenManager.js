@@ -15,10 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import web2d from '@wisemapping/web2d';
 
-const ScreenManager = new Class({
-  initialize(divElement) {
+class ScreenManager {
+  constructor(divElement) {
     $assert(divElement, 'can not be null');
     this._divContainer = divElement;
     this._padding = { x: 0, y: 0 };
@@ -33,17 +34,17 @@ const ScreenManager = new Class({
       event.stopPropagation();
       event.preventDefault();
     });
-  },
+  }
 
   setScale(scale) {
     $assert(scale, 'Screen scale can not be null');
     this._scale = scale;
-  },
+  }
 
   addEvent(event, listener) {
     if (event === 'click') this._clickEvents.push(listener);
     else this._divContainer.bind(event, listener);
-  },
+  }
 
   removeEvent(event, listener) {
     if (event === 'click') {
@@ -51,7 +52,7 @@ const ScreenManager = new Class({
     } else {
       this._divContainer.unbind(event, listener);
     }
-  },
+  }
 
   fireEvent(type, event) {
     if (type === 'click') {
@@ -61,7 +62,7 @@ const ScreenManager = new Class({
     } else {
       this._divContainer.trigger(type, event);
     }
-  },
+  }
 
   _getElementPosition(elem) {
     // Retrieve current element position.
@@ -79,7 +80,7 @@ const ScreenManager = new Class({
 
     // Remove decimal part..
     return { x, y };
-  },
+  }
 
   getWorkspaceIconPosition(e) {
     // Retrieve current icon position.
@@ -114,7 +115,7 @@ const ScreenManager = new Class({
 
     // Remove decimal part..
     return { x: x + topicPosition.x, y: y + topicPosition.y };
-  },
+  }
 
   getWorkspaceMousePosition(event) {
     // Retrieve current mouse position.
@@ -136,16 +137,16 @@ const ScreenManager = new Class({
 
     // Remove decimal part..
     return new web2d.Point(x, y);
-  },
+  }
 
   getContainer() {
     return this._divContainer;
-  },
+  }
 
   setOffset(x, y) {
     this._padding.x = x;
     this._padding.y = y;
-  },
-});
+  }
+}
 
 export default ScreenManager;

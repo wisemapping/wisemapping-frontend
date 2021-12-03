@@ -16,23 +16,21 @@
  *   limitations under the License.
  */
 import web2d from '@wisemapping/web2d';
-import coreJs from '@wisemapping/core-js';
+import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from '../model/INodeModel';
 import TopicConfig from '../TopicConfig';
 
-const core = coreJs();
-
 const Shape = {
   isAtRight(sourcePoint, targetPoint) {
-    core.Function.$assert(sourcePoint, 'Source can not be null');
-    core.Function.$assert(targetPoint, 'Target can not be null');
+    $assert(sourcePoint, 'Source can not be null');
+    $assert(targetPoint, 'Target can not be null');
     return sourcePoint.x < targetPoint.x;
   },
 
   calculateRectConnectionPoint(rectCenterPoint, rectSize, isAtRight) {
-    core.Function.$assert(rectCenterPoint, 'rectCenterPoint can  not be null');
-    core.Function.$assert(rectSize, 'rectSize can  not be null');
-    core.Function.$assert(core.Function.$defined(isAtRight), 'isRight can  not be null');
+    $assert(rectCenterPoint, 'rectCenterPoint can  not be null');
+    $assert(rectSize, 'rectSize can  not be null');
+    $assert($defined(isAtRight), 'isRight can  not be null');
 
     // Node is placed at the right ?
     const result = new web2d.Point();
@@ -115,7 +113,7 @@ const Shape = {
   },
 
   workoutIncomingConnectionPoint(targetNode, sourcePosition) {
-    core.Function.$assert(sourcePosition, 'sourcePoint can not be null');
+    $assert(sourcePosition, 'sourcePoint can not be null');
     const pos = targetNode.getPosition();
     const size = targetNode.getSize();
 

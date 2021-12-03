@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import ToolbarItem from './ToolbarItem';
 import FloatingTip from './FloatingTip';
 
@@ -25,10 +26,10 @@ const ToolbarPaneItem = new Class({
     $assert(model, 'model can not be null');
     this._model = model;
     const me = this;
-    const fn = function () {
-      // Is the panel being displayed ?
-      me.isVisible() ? me.hide() : me.show();
+    const fn = () => {
+      return me.isVisible() ? me.hide() : me.show();
     };
+    
     this.parent(buttonId, fn, { topicAction: true, relAction: false });
     this._panelElem = this._init();
     this._visible = false;
@@ -118,7 +119,7 @@ const ToolbarPaneItem = new Class({
   },
 
   buildPanel: function () {
-    throw 'Method must be implemented';
+    throw new Error('Method must be implemented');
   }.protect(),
 });
 

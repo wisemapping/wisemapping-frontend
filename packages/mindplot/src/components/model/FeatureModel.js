@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 
-const FeatureModel = new Class(/** @lends FeatureModel */{
+class FeatureModel {
   /**
      * @constructs
      * @param type
      * @throws will throw an exception if type is null or undefined
      * assigns a unique id and the given type to the new model
      */
-  initialize(type) {
+  constructor(type) {
     $assert(type, 'type can not be null');
     this._id = FeatureModel._nextUUID();
 
@@ -31,51 +31,49 @@ const FeatureModel = new Class(/** @lends FeatureModel */{
     this._attributes = {};
 
     // Create type method ...
-    this[`is${$.camelCase(type)}Model`] = function () {
-      return true;
-    };
-  },
+    this[`is${$.camelCase(type)}Model`] = () => true;
+  }
 
   /** */
   getAttributes() {
     return Object.clone(this._attributes);
-  },
+  }
 
   /** */
   setAttributes(attributes) {
     for (key in attributes) {
       this[`set${key.capitalize()}`](attributes[key]);
     }
-  },
+  }
 
   /** */
   setAttribute(key, value) {
     $assert(key, 'key id can not be null');
     this._attributes[key] = value;
-  },
+  }
 
   /** */
   getAttribute(key) {
     $assert(key, 'key id can not be null');
 
     return this._attributes[key];
-  },
+  }
 
   /** */
   getId() {
     return this._id;
-  },
+  }
 
   /** */
   setId(id) {
     this._id = id;
-  },
+  }
 
   /** */
   getType() {
     return this._type;
-  },
-});
+  }
+}
 
 FeatureModel._nextUUID = function _nextUUID() {
   if (!$defined(FeatureModel._uuid)) {

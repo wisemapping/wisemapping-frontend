@@ -17,30 +17,24 @@
  */
 import FeatureModel from './FeatureModel';
 
-const NoteModel = new Class(/** @lends NoteModel */{
-  Extends: FeatureModel,
-  /**
-     * @constructs
-     * @param attributes
-     * @extends mindplot.model.FeatureModel
-     */
-  initialize(attributes) {
-    this.parent(NoteModel.FEATURE_TYPE);
+class NoteModel extends FeatureModel {
+  constructor(attributes) {
+    super(NoteModel.FEATURE_TYPE);
     const noteText = attributes.text ? attributes.text : ' ';
     this.setText(noteText);
-  },
+  }
 
   /** */
   getText() {
     return this.getAttribute('text');
-  },
+  }
 
   /** */
   setText(text) {
     $assert(text, 'text can not be null');
     this.setAttribute('text', text);
-  },
-});
+  }
+}
 
 /**
  * @constant
