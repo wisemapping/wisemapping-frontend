@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import * as PolyLineUtils from '../utils/PolyLineUtils';
 import ElementPeer from './ElementPeer';
-
-const core = coreJs();
 
 const PolyLinePeer = new Class({
   Extends: ElementPeer,
@@ -71,10 +69,10 @@ const PolyLinePeer = new Class({
 
   _updateStraightPath() {
     if (
-      core.Function.$defined(this._x1)
-            && core.Function.$defined(this._x2)
-            && core.Function.$defined(this._y1)
-            && core.Function.$defined(this._y2)
+      $defined(this._x1)
+            && $defined(this._x2)
+            && $defined(this._y1)
+            && $defined(this._y2)
     ) {
       const path = PolyLineUtils.buildStraightPath.call(
         this,
@@ -94,10 +92,10 @@ const PolyLinePeer = new Class({
     const x2 = this._x2;
     const y2 = this._y2;
     if (
-      core.Function.$defined(x1)
-            && core.Function.$defined(x2)
-            && core.Function.$defined(y1)
-            && core.Function.$defined(y2)
+      $defined(x1)
+            && $defined(x2)
+            && $defined(y1)
+            && $defined(y2)
     ) {
       const diff = x2 - x1;
       const middlex = diff / 2 + x1;
@@ -118,10 +116,10 @@ const PolyLinePeer = new Class({
 
   _updateCurvePath() {
     if (
-      core.Function.$defined(this._x1)
-            && core.Function.$defined(this._x2)
-            && core.Function.$defined(this._y1)
-            && core.Function.$defined(this._y2)
+      $defined(this._x1)
+            && $defined(this._x2)
+            && $defined(this._y1)
+            && $defined(this._y2)
     ) {
       const path = PolyLineUtils.buildCurvedPath.call(
         this,

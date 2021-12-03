@@ -15,10 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
-
-const core = coreJs();
 
 /**
  * http://www.w3.org/TR/SVG/shapes.html#RectElement
@@ -33,10 +31,10 @@ const RectPeer = new Class({
   },
 
   setPosition(x, y) {
-    if (core.Function.$defined(x)) {
+    if ($defined(x)) {
       this._native.setAttribute('x', parseInt(x, 10));
     }
-    if (core.Function.$defined(y)) {
+    if ($defined(y)) {
       this._native.setAttribute('y', parseInt(y, 10));
     }
   },
@@ -51,7 +49,7 @@ const RectPeer = new Class({
     this.parent(width, height);
 
     const min = width < height ? width : height;
-    if (core.Function.$defined(this._arc)) {
+    if ($defined(this._arc)) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
       this._native.setAttribute('rx', arc);

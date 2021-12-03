@@ -15,14 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import CoreJS from '@wisemapping/core-js';
-
-const core = CoreJS();
+import { $defined } from '@wisemapping/core-js';
 
 const EventUtils = {
   broadcastChangeEvent(elementPeer, type) {
     const listeners = elementPeer.getChangeEventListeners(type);
-    if (core.Function.$defined(listeners)) {
+    if ($defined(listeners)) {
       for (let i = 0; i < listeners.length; i++) {
         const listener = listeners[i];
         listener.call(elementPeer, null);

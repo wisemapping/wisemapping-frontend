@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import Element from './Element';
 import Toolkit from './Toolkit';
-
-const core = coreJs();
 
 const Workspace = new Class({
   Extends: Element,
@@ -52,7 +50,7 @@ const Workspace = new Class({
      * Appends an element as a child to the object.
      */
   append(element) {
-    if (!core.Function.$defined(element)) {
+    if (!$defined(element)) {
       throw new Error('Child element can not be null');
     }
     const elementType = element.getType();
@@ -68,7 +66,7 @@ const Workspace = new Class({
   },
 
   addItAsChildTo(element) {
-    if (!core.Function.$defined(element)) {
+    if (!$defined(element)) {
       throw new Error('Workspace div container can not be null');
     }
     element.append(this._htmlContainer);
@@ -100,11 +98,11 @@ const Workspace = new Class({
      */
   setSize(width, height) {
     // HTML container must have the size of the group element.
-    if (core.Function.$defined(width)) {
+    if ($defined(width)) {
       this._htmlContainer.css('width', width);
     }
 
-    if (core.Function.$defined(height)) {
+    if ($defined(height)) {
       this._htmlContainer.css('height', height);
     }
     this.peer.setSize(width, height);
@@ -183,7 +181,7 @@ const Workspace = new Class({
      * Remove an element as a child to the object.
      */
   removeChild(element) {
-    if (!core.Function.$defined(element)) {
+    if (!$defined(element)) {
       throw new Error('Child element can not be null');
     }
 

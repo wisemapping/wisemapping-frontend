@@ -15,11 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import Point from '../../Point';
-
-const core = coreJs();
 
 const ArrowPeer = new Class({
   Extends: ElementPeer,
@@ -52,10 +51,10 @@ const ArrowPeer = new Class({
 
   setDashed(isDashed, length, spacing) {
     if (
-      core.Function.$defined(isDashed)
+      $defined(isDashed)
       && isDashed
-      && core.Function.$defined(length)
-      && core.Function.$defined(spacing)
+      && $defined(length)
+      && $defined(spacing)
     ) {
       this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
     } else {
@@ -79,10 +78,10 @@ const ArrowPeer = new Class({
     let xp;
     let yp;
     if (
-      core.Function.$defined(this._fromPoint.x)
-      && core.Function.$defined(this._fromPoint.y)
-      && core.Function.$defined(this._controlPoint.x)
-      && core.Function.$defined(this._controlPoint.y)
+      $defined(this._fromPoint.x)
+      && $defined(this._fromPoint.y)
+      && $defined(this._controlPoint.x)
+      && $defined(this._controlPoint.y)
     ) {
       if (this._controlPoint.y === 0) this._controlPoint.y = 1;
 

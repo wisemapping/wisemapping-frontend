@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import Point from '../../Point';
-
-const core = coreJs();
 
 const LinePeer = new Class({
   Extends: ElementPeer,
@@ -55,11 +53,11 @@ const LinePeer = new Class({
      * http://www.zvon.org/HowTo/Output/howto_jj_svg_27.html?at=marker-end
      */
   setArrowStyle(startStyle, endStyle) {
-    if (core.Function.$defined(startStyle)) {
+    if ($defined(startStyle)) {
       // Todo: This must be implemented ...
     }
 
-    if (core.Function.$defined(endStyle)) {
+    if ($defined(endStyle)) {
       // Todo: This must be implemented ...
     }
   },

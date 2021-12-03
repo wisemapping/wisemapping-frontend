@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import EventUtils from '../utils/EventUtils';
-
-const core = coreJs();
 
 const GroupPeer = new Class({
   Extends: ElementPeer,
@@ -103,11 +101,11 @@ const GroupPeer = new Class({
 
   setCoordOrigin(x, y) {
     const change = x !== this._coordOrigin.x || y !== this._coordOrigin.y;
-    if (core.Function.$defined(x)) {
+    if ($defined(x)) {
       this._coordOrigin.x = x;
     }
 
-    if (core.Function.$defined(y)) {
+    if ($defined(y)) {
       this._coordOrigin.y = y;
     }
     if (change) {
@@ -125,11 +123,11 @@ const GroupPeer = new Class({
 
   setPosition(x, y) {
     const change = x !== this._position.x || y !== this._position.y;
-    if (core.Function.$defined(x)) {
+    if ($defined(x)) {
       this._position.x = parseInt(x, 10);
     }
 
-    if (core.Function.$defined(y)) {
+    if ($defined(y)) {
       this._position.y = parseInt(y, 10);
     }
     if (change) {

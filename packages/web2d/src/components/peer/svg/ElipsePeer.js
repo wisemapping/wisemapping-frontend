@@ -15,10 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
-
-const core = coreJs();
 
 const ElipsePeer = new Class({
   Extends: ElementPeer,
@@ -31,11 +29,11 @@ const ElipsePeer = new Class({
 
   setSize(width, height) {
     this.parent(width, height);
-    if (core.Function.$defined(width)) {
+    if ($defined(width)) {
       this._native.setAttribute('rx', width / 2);
     }
 
-    if (core.Function.$defined(height)) {
+    if ($defined(height)) {
       this._native.setAttribute('ry', height / 2);
     }
 
@@ -49,11 +47,11 @@ const ElipsePeer = new Class({
     const cx = (size.width / 2) + pcx;
     const cy = (size.height / 2) + pcy;
 
-    if (core.Function.$defined(cx)) {
+    if ($defined(cx)) {
       this._native.setAttribute('cx', cx);
     }
 
-    if (core.Function.$defined(cy)) {
+    if ($defined(cy)) {
       this._native.setAttribute('cy', cy);
     }
   },

@@ -15,9 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import CoreJS from '@wisemapping/core-js';
-
-const core = CoreJS();
+import { $defined } from '@wisemapping/core-js';
 
 const Font = new Class({
   initialize() {
@@ -27,13 +25,13 @@ const Font = new Class({
   },
 
   init(args) {
-    if (core.Function.$defined(args.size)) {
+    if ($defined(args.size)) {
       this._size = parseInt(args.size, 10);
     }
-    if (core.Function.$defined(args.style)) {
+    if ($defined(args.style)) {
       this._style = args.style;
     }
-    if (core.Function.$defined(args.weight)) {
+    if ($defined(args.weight)) {
       this._weight = args.weight;
     }
   },

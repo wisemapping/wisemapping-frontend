@@ -15,9 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import CoreJS from '@wisemapping/core-js';
 
-const core = CoreJS();
+import { $defined } from '@wisemapping/core-js';
 
 const Element = new Class({
   initialize(peer, attributes) {
@@ -26,7 +25,7 @@ const Element = new Class({
       throw new Error('Element peer can not be null');
     }
 
-    if (core.Function.$defined(attributes)) {
+    if ($defined(attributes)) {
       this._initialize(attributes);
     }
   },
@@ -39,7 +38,7 @@ const Element = new Class({
       if (Object.prototype.hasOwnProperty.call(attributes, key)) {
         const funcName = this._attributeNameToFuncName(key, 'set');
         let funcArgs = batchExecute[funcName];
-        if (!core.Function.$defined(funcArgs)) {
+        if (!$defined(funcArgs)) {
           funcArgs = [];
         }
 
@@ -59,7 +58,7 @@ const Element = new Class({
     // eslint-disable-next-line guard-for-in
     for (const key in batchExecute) {
       const func = this[key];
-      if (!core.Function.$defined(func)) {
+      if (!$defined(func)) {
         throw new Error(`Could not find function: ${key}`);
       }
       func.apply(this, batchExecute[key]);
@@ -172,7 +171,7 @@ const Element = new Class({
 
   _attributeNameToFuncName(attributeKey, prefix) {
     const signature = Element._propertyNameToSignature[attributeKey];
-    if (!core.Function.$defined(signature)) {
+    if (!$defined(signature)) {
       throw new Error(`Unsupported attribute: ${attributeKey}`);
     }
 
@@ -229,12 +228,12 @@ const Element = new Class({
 
     const getterResult = getter.apply(this, []);
     const attibuteName = signature[2];
-    if (!core.Function.$defined(attibuteName)) {
+    if (!$defined(attibuteName)) {
       throw new Error(`Could not find attribute mapping for:${key}`);
     }
 
     const result = getterResult[attibuteName];
-    if (!core.Function.$defined(result)) {
+    if (!$defined(result)) {
       throw new Error(`Could not find attribute with name:${attibuteName}`);
     }
 

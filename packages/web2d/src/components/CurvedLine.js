@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import Element from './Element';
 import Toolkit from './Toolkit';
-
-const core = coreJs();
 
 const CurvedLine = new Class({
   Extends: Element,
@@ -45,15 +43,15 @@ const CurvedLine = new Class({
   },
 
   setFrom(x, y) {
-    core.Function.$assert(!Number.isNaN(x), 'x must be defined');
-    core.Function.$assert(!Number.isNaN(y), 'y must be defined');
+    $assert(!Number.isNaN(x), 'x must be defined');
+    $assert(!Number.isNaN(y), 'y must be defined');
 
     this.peer.setFrom(x, y);
   },
 
   setTo(x, y) {
-    core.Function.$assert(!Number.isNaN(x), 'x must be defined');
-    core.Function.$assert(!Number.isNaN(y), 'y must be defined');
+    $assert(!Number.isNaN(x), 'x must be defined');
+    $assert(!Number.isNaN(y), 'y must be defined');
 
     this.peer.setTo(x, y);
   },

@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import EventUtils from '../utils/EventUtils';
-
-const core = coreJs();
 
 const WorkspacePeer = new Class({
   Extends: ElementPeer,
@@ -58,11 +56,11 @@ const WorkspacePeer = new Class({
     if (viewBox != null) {
       coords = viewBox.split(/ /);
     }
-    if (core.Function.$defined(width)) {
+    if ($defined(width)) {
       coords[2] = width;
     }
 
-    if (core.Function.$defined(height)) {
+    if ($defined(height)) {
       coords[3] = height;
     }
 
@@ -89,11 +87,11 @@ const WorkspacePeer = new Class({
       coords = viewBox.split(/ /);
     }
 
-    if (core.Function.$defined(x)) {
+    if ($defined(x)) {
       coords[0] = x;
     }
 
-    if (core.Function.$defined(y)) {
+    if ($defined(y)) {
       coords[1] = y;
     }
 

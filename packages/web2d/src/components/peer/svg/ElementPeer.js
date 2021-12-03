@@ -15,12 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import CoreJS from '@wisemapping/core-js';
+
+import { $assert, $defined } from '@wisemapping/core-js';
 import EventUtils from '../utils/EventUtils';
 import TransformUtil from '../utils/TransformUtils';
 import Element from '../../Element';
-
-const core = CoreJS();
 
 const ElementPeer = new Class({
   initialize(svgElement) {
@@ -45,7 +44,7 @@ const ElementPeer = new Class({
 
   getChildren() {
     let result = this._children;
-    if (!core.Function.$defined(result)) {
+    if (!$defined(result)) {
       result = [];
       this._children = result;
     }
@@ -82,7 +81,7 @@ const ElementPeer = new Class({
     const oldLength = children.length;
 
     children.erase(elementPeer);
-    core.Function.$assert(
+    $assert(
       children.length < oldLength,
       `element could not be removed:${elementPeer}`,
     );
@@ -112,12 +111,12 @@ const ElementPeer = new Class({
   },
 
   setSize(width, height) {
-    if (core.Function.$defined(width) && this._size.width !== parseInt(width, 10)) {
+    if ($defined(width) && this._size.width !== parseInt(width, 10)) {
       this._size.width = parseInt(width, 10);
       this._native.setAttribute('width', parseInt(width, 10));
     }
 
-    if (core.Function.$defined(height) && this._size.height !== parseInt(height, 10)) {
+    if ($defined(height) && this._size.height !== parseInt(height, 10)) {
       this._size.height = parseInt(height, 10);
       this._native.setAttribute('height', parseInt(height, 10));
     }
@@ -130,10 +129,10 @@ const ElementPeer = new Class({
   },
 
   setFill(color, opacity) {
-    if (core.Function.$defined(color)) {
+    if ($defined(color)) {
       this._native.setAttribute('fill', color);
     }
-    if (core.Function.$defined(opacity)) {
+    if ($defined(opacity)) {
       this._native.setAttribute('fill-opacity', opacity);
     }
   },
@@ -159,13 +158,13 @@ const ElementPeer = new Class({
   },
 
   setStroke(width, style, color, opacity) {
-    if (core.Function.$defined(width)) {
+    if ($defined(width)) {
       this._native.setAttribute('stroke-width', `${width}px`);
     }
-    if (core.Function.$defined(color)) {
+    if ($defined(color)) {
       this._native.setAttribute('stroke', color);
     }
-    if (core.Function.$defined(style)) {
+    if ($defined(style)) {
       // Scale the dash array in order to be equal to VML. In VML, stroke style doesn't scale.
       const dashArrayPoints = this.__stokeStyleToStrokDasharray[style];
       const scale = 1 / TransformUtil.workoutScale(this).width;
@@ -186,7 +185,7 @@ const ElementPeer = new Class({
       this._stokeStyle = style;
     }
 
-    if (core.Function.$defined(opacity)) {
+    if ($defined(opacity)) {
       this._native.setAttribute('stroke-opacity', opacity);
     }
   },
@@ -214,7 +213,7 @@ const ElementPeer = new Class({
 
   attachChangeEventListener(type, listener) {
     const listeners = this.getChangeEventListeners(type);
-    if (!core.Function.$defined(listener)) {
+    if (!$defined(listener)) {
       throw new Error('Listener can not be null');
     }
     listeners.push(listener);
@@ -222,7 +221,7 @@ const ElementPeer = new Class({
 
   getChangeEventListeners(type) {
     let listeners = this._changeListeners[type];
-    if (!core.Function.$defined(listeners)) {
+    if (!$defined(listeners)) {
       listeners = [];
       this._changeListeners[type] = listeners;
     }

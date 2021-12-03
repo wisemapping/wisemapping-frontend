@@ -15,11 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+
+import { $defined } from '@wisemapping/core-js';
 import Element from './Element';
 import Toolkit from './Toolkit';
-
-const core = coreJs();
 
 /**
  * A group object can be used to collect shapes.
@@ -48,7 +47,7 @@ const Group = new Class({
      * Remove an element as a child to the object.
      */
   removeChild(element) {
-    if (!core.Function.$defined(element)) {
+    if (!$defined(element)) {
       throw new Error('Child element can not be null');
     }
 
@@ -68,7 +67,7 @@ const Group = new Class({
      * Appends an element as a child to the object.
      */
   append(element) {
-    if (!core.Function.$defined(element)) {
+    if (!$defined(element)) {
       throw Error('Child element can not be null');
     }
 
@@ -130,7 +129,7 @@ const Group = new Class({
   },
 
   appendDomChild(DomElement) {
-    if (!core.Function.$defined(DomElement)) {
+    if (!$defined(DomElement)) {
       throw new Error('Child element can not be null');
     }
 

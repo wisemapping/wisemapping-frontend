@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
 import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
@@ -25,9 +26,7 @@ import Toolkit from './Toolkit';
  *     For rounded rectangles, radius of the ellipse used to round off the corners of the rectangle.
  */
 class Rect extends ElementClass {
-
   constructor(arc, attributes) {
-
     if (arc && arc > 1) {
       throw new Error('Arc must be 0<=arc<=1');
     }
@@ -49,7 +48,7 @@ class Rect extends ElementClass {
     super(peer, defaultAttributes);
   }
 
-  getType() {
+  static getType() {
     return 'Rect';
   }
 

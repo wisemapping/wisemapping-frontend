@@ -15,10 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
-
-const core = coreJs();
 
 const TextPeer = new Class({
   Extends: ElementPeer,
@@ -39,7 +37,7 @@ const TextPeer = new Class({
   },
 
   getTextAlignment() {
-    return core.Function.$defined(this._textAlign) ? this._textAlign : 'left';
+    return $defined(this._textAlign) ? this._textAlign : 'left';
   },
 
   setText(text) {
@@ -86,16 +84,16 @@ const TextPeer = new Class({
   },
 
   setFont(font, size, style, weight) {
-    if (core.Function.$defined(font)) {
+    if ($defined(font)) {
       this._font = new this.Font(font, this);
     }
-    if (core.Function.$defined(style)) {
+    if ($defined(style)) {
       this._font.setStyle(style);
     }
-    if (core.Function.$defined(weight)) {
+    if ($defined(weight)) {
       this._font.setWeight(weight);
     }
-    if (core.Function.$defined(size)) {
+    if ($defined(size)) {
       this._font.setSize(size);
     }
     this._updateFontStyle();

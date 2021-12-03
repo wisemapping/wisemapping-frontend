@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import coreJs from '@wisemapping/core-js';
+import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import Point from '../../Point';
-
-const core = coreJs();
 
 const CurvedLinePeer = new Class({
   Extends: ElementPeer,
@@ -38,7 +36,7 @@ const CurvedLinePeer = new Class({
   setSrcControlPoint(control) {
     this._customControlPoint_1 = true;
     const change = this._control1.x !== control.x || this._control1.y !== control.y;
-    if (core.Function.$defined(control.x)) {
+    if ($defined(control.x)) {
       this._control1 = control;
       this._control1.x = parseInt(this._control1.x, 10);
       this._control1.y = parseInt(this._control1.y, 10);
@@ -49,7 +47,7 @@ const CurvedLinePeer = new Class({
   setDestControlPoint(control) {
     this._customControlPoint_2 = true;
     const change = this._control2.x !== control.x || this._control2.y !== control.y;
-    if (core.Function.$defined(control.x)) {
+    if ($defined(control.x)) {
       this._control2 = control;
       this._control2.x = parseInt(this._control2.x, 10);
       this._control2.y = parseInt(this._control2.y, 10);
@@ -150,10 +148,10 @@ const CurvedLinePeer = new Class({
 
   _updatePath(avoidControlPointFix) {
     if (
-      core.Function.$defined(this._x1)
-      && core.Function.$defined(this._y1)
-      && core.Function.$defined(this._x2)
-      && core.Function.$defined(this._y2)
+      $defined(this._x1)
+      && $defined(this._y1)
+      && $defined(this._x2)
+      && $defined(this._y2)
     ) {
       this._calculateAutoControlPoints(avoidControlPointFix);
       const path = `M${this._x1},${this._y1} C${this._control1.x + this._x1},${this._control1.y + this._y1
@@ -209,14 +207,14 @@ const CurvedLinePeer = new Class({
     );
     if (
       !this._customControlPoint_1
-      && !(core.Function.$defined(avoidControlPointFix) && avoidControlPointFix === 0)
+      && !($defined(avoidControlPointFix) && avoidControlPointFix === 0)
     ) {
       this._control1.x = defaultpoints[0].x;
       this._control1.y = defaultpoints[0].y;
     }
     if (
       !this._customControlPoint_2
-      && !(core.Function.$defined(avoidControlPointFix) && avoidControlPointFix === 1)
+      && !($defined(avoidControlPointFix) && avoidControlPointFix === 1)
     ) {
       this._control2.x = defaultpoints[1].x;
       this._control2.y = defaultpoints[1].y;
@@ -224,7 +222,7 @@ const CurvedLinePeer = new Class({
   },
 
   setDashed(length, spacing) {
-    if (core.Function.$defined(length) && core.Function.$defined(spacing)) {
+    if ($defined(length) && $defined(spacing)) {
       this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
     } else {
       this._native.setAttribute('stroke-dasharray', '');
