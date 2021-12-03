@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -15,13 +16,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 import * as PolyLineUtils from './peer/utils/PolyLineUtils';
 
-const PolyLine = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class PolyLine extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createPolyLine();
     const defaultAttributes = {
       strokeColor: 'blue',
@@ -34,36 +34,36 @@ const PolyLine = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
   getType() {
     return 'PolyLine';
-  },
+  }
 
   setFrom(x, y) {
     this.peer.setFrom(x, y);
-  },
+  }
 
   setTo(x, y) {
     this.peer.setTo(x, y);
-  },
+  }
 
   setStyle(style) {
     this.peer.setStyle(style);
-  },
+  }
 
   getStyle() {
     return this.peer.getStyle();
-  },
+  }
 
   buildCurvedPath(dist, x1, y1, x2, y2) {
     return PolyLineUtils.buildCurvedPath(dist, x1, y1, x2, y2);
-  },
+  }
 
   buildStraightPath(dist, x1, y1, x2, y2) {
     return PolyLineUtils.buildStraightPath(dist, x1, y1, x2, y2);
-  },
-});
+  }
+}
 
 export default PolyLine;

@@ -15,31 +15,31 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
-const Image = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class Image extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createImage();
-    this.parent(peer, attributes);
-  },
+    super(peer, attributes);
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'Image';
-  },
+  }
 
   setHref(href) {
     this.peer.setHref(href);
-  },
+  }
 
   getHref() {
     return this.peer.getHref();
-  },
+  }
 
   getSize() {
     return this.peer.getSize();
-  },
-});
+  }
+}
 
 export default Image;

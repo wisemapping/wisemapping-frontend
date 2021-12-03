@@ -19,7 +19,8 @@
 import { $defined } from '@wisemapping/core-js';
 
 class ElementClass {
-  constructor(peer, attributes) {
+  constructor(peer, attributes, htmlContainer) {
+    this._htmlContainer = htmlContainer;
     this.peer = peer;
     if (peer == null) {
       throw new Error('Element peer can not be null');

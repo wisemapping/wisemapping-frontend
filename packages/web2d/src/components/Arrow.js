@@ -16,12 +16,11 @@
  *   limitations under the License.
  *
  */
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
-const Arrow = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class Arrow extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createArrow();
     const defaultAttributes = {
       strokeColor: 'black',
@@ -36,32 +35,33 @@ const Arrow = new Class({
       }
     }
 
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'Arrow';
-  },
+  }
 
   setFrom(x, y) {
     this.peer.setFrom(x, y);
-  },
+  }
 
   setControlPoint(point) {
     this.peer.setControlPoint(point);
-  },
+  }
 
   setStrokeColor(color) {
     this.peer.setStrokeColor(color);
-  },
+  }
 
   setStrokeWidth(width) {
     this.peer.setStrokeWidth(width);
-  },
+  }
 
   setDashed(isDashed, length, spacing) {
     this.peer.setDashed(isDashed, length, spacing);
-  },
-});
+  }
+}
 
 export default Arrow;

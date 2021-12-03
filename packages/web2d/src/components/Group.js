@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -17,15 +18,14 @@
  */
 
 import { $defined } from '@wisemapping/core-js';
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
 /**
  * A group object can be used to collect shapes.
  */
-const Group = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class Group extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createGroup();
     const defaultAttributes = {
       width: 50,
@@ -40,8 +40,8 @@ const Group = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
   /**
      * Remove an element as a child to the object.
@@ -61,7 +61,7 @@ const Group = new Class({
     }
 
     this.peer.removeChild(element.peer);
-  },
+  }
 
   /**
      * Appends an element as a child to the object.
@@ -85,11 +85,11 @@ const Group = new Class({
     }
 
     this.peer.append(element.peer);
-  },
+  }
 
   getType() {
     return 'Group';
-  },
+  }
 
   /**
      * The group element is a containing blocks for this content
@@ -103,30 +103,31 @@ const Group = new Class({
      */
   setCoordSize(width, height) {
     this.peer.setCoordSize(width, height);
-  },
+  }
 
   setCoordOrigin(x, y) {
     this.peer.setCoordOrigin(x, y);
-  },
+  }
 
   getCoordOrigin() {
     return this.peer.getCoordOrigin();
-  },
+  }
+
   getSize() {
     return this.peer.getSize();
-  },
+  }
 
   setFill() {
     throw new Error('Unsupported operation. Fill can not be set to a group');
-  },
+  }
 
   setStroke() {
     throw new Error('Unsupported operation. Stroke can not be set to a group');
-  },
+  }
 
   getCoordSize() {
     return this.peer.getCoordSize();
-  },
+  }
 
   appendDomChild(DomElement) {
     if (!$defined(DomElement)) {
@@ -138,11 +139,11 @@ const Group = new Class({
     }
 
     this.peer._native.append(DomElement);
-  },
+  }
 
   setOpacity(value) {
     this.peer.setOpacity(value);
-  },
-});
+  }
+}
 
 export default Group;

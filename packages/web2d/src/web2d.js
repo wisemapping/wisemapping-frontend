@@ -23,7 +23,6 @@ import eventUtils from '@utils/EventUtils';
 import transformUtils from '@utils/TransformUtils';
 
 // Import Components
-import element from '@components/Element';
 import workspace from '@components/Workspace';
 import toolkit from '@components/Toolkit';
 import elipse from '@components/Elipse';
@@ -65,7 +64,6 @@ export default {
   // Components
   Arrow: arrow,
   CurvedLine: curvedLine,
-  Element: element,
   Elipse: elipse,
   Font: font,
   Group: group,

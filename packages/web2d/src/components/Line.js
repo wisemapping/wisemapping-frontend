@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -15,12 +16,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Element from './Element';
+
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
-const Line = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class Line extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createLine();
     const defaultAttributes = { strokeColor: '#495879', strokeWidth: 1, strokeOpacity: 1 };
     for (const key in attributes) {
@@ -28,28 +29,28 @@ const Line = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
   getType() {
     return 'Line';
-  },
+  }
 
   setFrom(x, y) {
     this.peer.setFrom(x, y);
-  },
+  }
 
   setTo(x, y) {
     this.peer.setTo(x, y);
-  },
+  }
 
   getFrom() {
     return this.peer.getFrom();
-  },
+  }
 
   getTo() {
     return this.peer.getTo();
-  },
+  }
 
   /**
      * Defines the start and the end line arrow style.
@@ -57,19 +58,19 @@ const Line = new Class({
      * */
   setArrowStyle(startStyle, endStyle) {
     this.peer.setArrowStyle(startStyle, endStyle);
-  },
+  }
 
   setPosition() {
     throw new Error('Unsupported operation');
-  },
+  }
 
   setSize() {
     throw new Error('Unsupported operation');
-  },
+  }
 
   setFill() {
     throw new Error('Unsupported operation');
-  },
-});
+  }
+}
 
 export default Line;

@@ -16,12 +16,11 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
-const CurvedLine = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class CurvedLine extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createCurvedLine();
     const defaultAttributes = {
       strokeColor: 'blue',
@@ -35,95 +34,96 @@ const CurvedLine = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'CurvedLine';
-  },
+  }
 
   setFrom(x, y) {
     $assert(!Number.isNaN(x), 'x must be defined');
     $assert(!Number.isNaN(y), 'y must be defined');
 
     this.peer.setFrom(x, y);
-  },
+  }
 
   setTo(x, y) {
     $assert(!Number.isNaN(x), 'x must be defined');
     $assert(!Number.isNaN(y), 'y must be defined');
 
     this.peer.setTo(x, y);
-  },
+  }
 
   getFrom() {
     return this.peer.getFrom();
-  },
+  }
 
   getTo() {
     return this.peer.getTo();
-  },
+  }
 
   setShowEndArrow(visible) {
     this.peer.setShowEndArrow(visible);
-  },
+  }
 
   isShowEndArrow() {
     return this.peer.isShowEndArrow();
-  },
+  }
 
   setShowStartArrow(visible) {
     this.peer.setShowStartArrow(visible);
-  },
+  }
 
   isShowStartArrow() {
     return this.peer.isShowStartArrow();
-  },
+  }
 
   setSrcControlPoint(control) {
     this.peer.setSrcControlPoint(control);
-  },
+  }
 
   setDestControlPoint(control) {
     this.peer.setDestControlPoint(control);
-  },
+  }
 
   getControlPoints() {
     return this.peer.getControlPoints();
-  },
+  }
 
   isSrcControlPointCustom() {
     return this.peer.isSrcControlPointCustom();
-  },
+  }
 
   isDestControlPointCustom() {
     return this.peer.isDestControlPointCustom();
-  },
+  }
 
   setIsSrcControlPointCustom(isCustom) {
     this.peer.setIsSrcControlPointCustom(isCustom);
-  },
+  }
 
   setIsDestControlPointCustom(isCustom) {
     this.peer.setIsDestControlPointCustom(isCustom);
-  },
+  }
 
   updateLine(avoidControlPointFix) {
     return this.peer.updateLine(avoidControlPointFix);
-  },
+  }
 
   setStyle(style) {
     this.peer.setLineStyle(style);
-  },
+  }
 
   getStyle() {
     return this.peer.getLineStyle();
-  },
+  }
 
   setDashed(length, spacing) {
     this.peer.setDashed(length, spacing);
-  },
-});
+  }
+}
 
 CurvedLine.SIMPLE_LINE = false;
 CurvedLine.NICE_LINE = true;

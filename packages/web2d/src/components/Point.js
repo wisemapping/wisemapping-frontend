@@ -16,16 +16,16 @@
  *   limitations under the License.
  */
 
-const Point = new Class({
+class Point {
   /**
      * @constructs
      * @param {Number} x coordinate
      * @param {Number} y coordinate
      */
-  initialize(x, y) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-  },
+  }
 
   /**
      * @param {Number} x coordinate
@@ -34,16 +34,16 @@ const Point = new Class({
   setValue(x, y) {
     this.x = x;
     this.y = y;
-  },
+  }
 
   inspect() {
     return `{x:${this.x},y:${this.y}}`;
-  },
+  }
 
   clone() {
     return new Point(this.x, this.y);
-  },
-});
+  }
+}
 
 Point.fromString = function pointFromString(point) {
   const values = point.split(',');

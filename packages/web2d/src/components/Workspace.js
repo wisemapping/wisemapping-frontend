@@ -16,15 +16,14 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
-import Element from './Element';
+import ElementClass from '@components/ElementClass';
 import Toolkit from './Toolkit';
 
-const Workspace = new Class({
-  Extends: Element,
-  initialize(attributes) {
-    this._htmlContainer = this._createDivContainer();
+class Workspace extends ElementClass {
+  constructor(attributes) {
+    const htmlContainer = Workspace._createDivContainer();
 
-    const peer = Toolkit.createWorkspace(this._htmlContainer);
+    const peer = Toolkit.createWorkspace(htmlContainer);
     const defaultAttributes = {
       width: '200px',
       height: '200px',
@@ -38,13 +37,14 @@ const Workspace = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-    this._htmlContainer.append(this.peer._native);
-  },
+    super(peer, defaultAttributes, htmlContainer);
+    htmlContainer.append(this.peer._native);
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'Workspace';
-  },
+  }
 
   /**
      * Appends an element as a child to the object.
@@ -63,19 +63,19 @@ const Workspace = new Class({
     }
 
     this.peer.append(element.peer);
-  },
+  }
 
   addItAsChildTo(element) {
     if (!$defined(element)) {
       throw new Error('Workspace div container can not be null');
     }
     element.append(this._htmlContainer);
-  },
+  }
 
   /**
      * Create a new div element that will be responsible for containing the workspace elements.
      */
-  _createDivContainer() {
+  static _createDivContainer() {
     const container = window.document.createElement('div');
     container.id = 'workspaceContainer';
     //        container.style.overflow = "hidden";
@@ -86,7 +86,7 @@ const Workspace = new Class({
     container.style.border = '1px solid red';
 
     return $(container);
-  },
+  }
 
   /**
      *  Set the workspace area size. It can be defined using different units:
@@ -106,7 +106,7 @@ const Workspace = new Class({
       this._htmlContainer.css('height', height);
     }
     this.peer.setSize(width, height);
-  },
+  }
 
   /**
      * The workspace element is a containing blocks for this content
@@ -120,21 +120,21 @@ const Workspace = new Class({
      */
   setCoordSize(width, height) {
     this.peer.setCoordSize(width, height);
-  },
+  }
 
   /**
      * @Todo: Complete Doc
      */
   setCoordOrigin(x, y) {
     this.peer.setCoordOrigin(x, y);
-  },
+  }
 
   /**
      * @Todo: Complete Doc
      */
   getCoordOrigin() {
     return this.peer.getCoordOrigin();
-  },
+  }
 
   // Private method declaration area
   /**
@@ -142,25 +142,25 @@ const Workspace = new Class({
      */
   _getHtmlContainer() {
     return this._htmlContainer;
-  },
+  }
 
   setFill(color, opacity) {
     this._htmlContainer.css('background-color', color);
     if (opacity || opacity === 0) {
       throw new Error('Unsupported operation. Opacity not supported.');
     }
-  },
+  }
 
   getFill() {
     const color = this._htmlContainer.css('background-color');
     return { color };
-  },
+  }
 
   getSize() {
     const width = this._htmlContainer.css('width');
     const height = this._htmlContainer.css('height');
     return { width, height };
-  },
+  }
 
   setStroke(width, style, color, opacity) {
     if (style !== 'solid') {
@@ -171,11 +171,11 @@ const Workspace = new Class({
     if (opacity || opacity === 0) {
       throw new Error('Unsupported operation. Opacity not supported.');
     }
-  },
+  }
 
   getCoordSize() {
     return this.peer.getCoordSize();
-  },
+  }
 
   /**
      * Remove an element as a child to the object.
@@ -195,12 +195,12 @@ const Workspace = new Class({
     }
 
     this.peer.removeChild(element.peer);
-  },
+  }
 
   dumpNativeChart() {
     const elem = this._htmlContainer;
     return elem.innerHTML;
-  },
-});
+  }
+}
 
 export default Workspace;

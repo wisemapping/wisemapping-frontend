@@ -19,7 +19,6 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import EventUtils from '../utils/EventUtils';
 import TransformUtil from '../utils/TransformUtils';
-import Element from '../../Element';
 
 const ElementPeer = new Class({
   initialize(svgElement) {

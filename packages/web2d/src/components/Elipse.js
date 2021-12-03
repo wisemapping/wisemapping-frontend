@@ -15,12 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Element from './Element';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
-const Elipse = new Class({
-  Extends: Element,
-  initialize(attributes) {
+class Elipse extends ElementClass {
+  constructor(attributes) {
     const peer = Toolkit.createElipse();
     const defaultAttributes = {
       width: 40,
@@ -35,16 +34,17 @@ const Elipse = new Class({
         defaultAttributes[key] = attributes[key];
       }
     }
-    this.parent(peer, defaultAttributes);
-  },
+    super(peer, defaultAttributes);
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'Elipse';
-  },
+  }
 
   getSize() {
     return this.peer.getSize();
-  },
-});
+  }
+}
 
 export default Elipse;
