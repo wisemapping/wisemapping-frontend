@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import $ from '@libraries/jquery-2.1.0';
-import { $defined } from '@wisemapping/core-js';
+import { $defined, $assert } from '@wisemapping/core-js';
 import ElementClass from '@components/ElementClass';
 import Toolkit from './Toolkit';
 
