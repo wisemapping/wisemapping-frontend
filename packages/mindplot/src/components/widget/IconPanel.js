@@ -15,18 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
 import ToolbarPaneItem from './ToolbarPaneItem';
 import ImageIcon from '../ImageIcon';
 
-const IconPanel = new Class({
-  Extends: ToolbarPaneItem,
-  initialize(buttonId, model) {
-    this.parent(buttonId, model);
-  },
-
+class IconPanel extends ToolbarPaneItem {
   _updateSelectedItem() {
     return this.getPanelElem();
-  },
+  }
 
   buildPanel() {
     const content = $('<div class="toolbarPanel" id="IconsPanel"></div>').css({ width: 245, height: 230 });
@@ -44,7 +40,7 @@ const IconPanel = new Class({
           familyContent = $('<div></div>');
           content.append(familyContent);
         }
-
+ 
         const iconId = familyIcons[j];
         const img = $('<img>')
           .attr('id', iconId)
@@ -53,8 +49,8 @@ const IconPanel = new Class({
 
         familyContent.append(img);
 
-        var panel = this;
-        var model = this.getModel();
+        const panel = this;
+        const model = this.getModel();
         img.on('click', function (event) {
           model.setValue($(this).attr('id'));
           panel.hide();
@@ -64,7 +60,7 @@ const IconPanel = new Class({
       }
     }
     return content;
-  },
-});
+  }
+}
 
 export default IconPanel;

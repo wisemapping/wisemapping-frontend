@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import INodeModel from './INodeModel';
 import TopicFeature from '../TopicFeature';
 
@@ -63,7 +64,7 @@ class NodeModel extends INodeModel {
   removeFeature(feature) {
     $assert(feature, 'feature can not be null');
     const size = this._feature.length;
-    this._feature = this._feature.filter((f) => feature.getId() != f.getId());
+    this._feature = this._feature.filter((f) => feature.getId() !== f.getId());
     $assert(size - 1 === this._feature.length, 'Could not be removed ...');
   }
 
@@ -190,7 +191,7 @@ class NodeModel extends INodeModel {
 
   _isChildNode(node) {
     let result = false;
-    if (node == this) {
+    if (node === this) {
       result = true;
     } else {
       const children = this.getChildren();
@@ -211,7 +212,7 @@ class NodeModel extends INodeModel {
      */
   findNodeById(id) {
     let result = null;
-    if (this.getId() == id) {
+    if (this.getId() === id) {
       result = this;
     } else {
       const children = this.getChildren();

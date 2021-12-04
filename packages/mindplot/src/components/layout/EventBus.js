@@ -17,15 +17,8 @@
  */
 import Events from '../Events';
 
-const EventBus = new Class(/** @lends EventBus */{
-  Implements: Events,
-  /**
-     * @constructs
-     * @implements mindplot.Events
-     */
-  initialize() {
-  },
-});
+class EventBus extends Events {
+}
 
 /**
  * Enum for events

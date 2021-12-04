@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from './model/INodeModel';
 
 const TopicStyle = new Class({});

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import TestSuite from './TestSuite';
-import mindplot from '../../../src/mindplot';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 const SymmetricTestSuite = new Class({
   Extends: TestSuite,
@@ -32,7 +32,7 @@ const SymmetricTestSuite = new Class({
   testSymmetry() {
     console.log('testSymmetry:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -68,26 +68,26 @@ const SymmetricTestSuite = new Class({
 
     // All nodes should be positioned symmetrically with respect to their common ancestors
     $assert(
-      manager.find(14).getPosition().y == manager.find(13).getPosition().y,
+      manager.find(14).getPosition().y === manager.find(13).getPosition().y,
       'Symmetry is not respected',
     );
     $assert(
-      manager.find(5).getPosition().y == manager.find(10).getPosition().y,
+      manager.find(5).getPosition().y === manager.find(10).getPosition().y,
       'Symmetry is not respected',
     );
     $assert(
       manager.find(11).getPosition().y - manager.find(6).getPosition().y
-                == -(manager.find(12).getPosition().y - manager.find(6).getPosition().y),
+      === -(manager.find(12).getPosition().y - manager.find(6).getPosition().y),
       'Symmetry is not respected',
     );
     $assert(
       manager.find(8).getPosition().y - manager.find(1).getPosition().y
-                == -(manager.find(11).getPosition().y - manager.find(1).getPosition().y),
+      == -(manager.find(11).getPosition().y - manager.find(1).getPosition().y),
       'Symmetry is not respected',
     );
     $assert(
       manager.find(9).getPosition().y - manager.find(1).getPosition().y
-                == -(manager.find(11).getPosition().y - manager.find(1).getPosition().y),
+      == -(manager.find(11).getPosition().y - manager.find(1).getPosition().y),
       'Symmetry is not respected',
     );
 
@@ -97,7 +97,7 @@ const SymmetricTestSuite = new Class({
   testSymmetricPredict() {
     console.log('testSymmetricPredict:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -134,7 +134,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1a);
     $assert(
       prediction1a.position.x < manager.find(9).getPosition().x
-                && prediction1a.position.y == manager.find(9).getPosition().y,
+      && prediction1a.position.y == manager.find(9).getPosition().y,
       'Prediction incorrectly positioned',
     );
     $assert(prediction1a.order == 0, 'Prediction order should be 0');
@@ -144,7 +144,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1b);
     $assert(
       prediction1b.position.x > manager.find(1).getPosition().x
-                && prediction1b.position.y == manager.find(1).getPosition().y,
+      && prediction1b.position.y == manager.find(1).getPosition().y,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction1b.order == 0, 'Prediction order should be 0');
@@ -159,7 +159,7 @@ const SymmetricTestSuite = new Class({
     // Prediction calculator error
     $assert(
       prediction2d.position.y < manager.find(7).getPosition().y
-                && prediction2d.position.x == manager.find(7).getPosition().x,
+      && prediction2d.position.x == manager.find(7).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction2d.order == 0, 'Prediction order should be 0');
@@ -170,8 +170,8 @@ const SymmetricTestSuite = new Class({
 
     $assert(
       prediction2a.position.y > manager.find(7).getPosition().y
-                && prediction2a.position.y < manager.find(8).getPosition().y
-                && prediction2a.position.x == manager.find(7).getPosition().x,
+      && prediction2a.position.y < manager.find(8).getPosition().y
+      && prediction2a.position.x == manager.find(7).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction2a.order == 1, 'Prediction order should be 1');
@@ -181,8 +181,8 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph2, prediction2b);
     $assert(
       prediction2b.position.y > manager.find(8).getPosition().y
-                && prediction2b.position.y < manager.find(11).getPosition().y
-                && prediction2b.position.x == manager.find(7).getPosition().x,
+      && prediction2b.position.y < manager.find(11).getPosition().y
+      && prediction2b.position.x == manager.find(7).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction2b.order == 2, 'Prediction order should be 2');
@@ -192,7 +192,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph2, prediction2c);
     $assert(
       prediction2c.position.y > manager.find(11).getPosition().y
-                && prediction2c.position.x == manager.find(11).getPosition().x,
+      && prediction2c.position.x == manager.find(11).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction2c.order == 3, 'Prediction order should be 3');
@@ -205,8 +205,8 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph3, prediction3a);
     $assert(
       prediction3a.position.y > manager.find(5).getPosition().y
-                && prediction3a.position.y < manager.find(6).getPosition().y
-                && prediction3a.position.x == manager.find(5).getPosition().x,
+      && prediction3a.position.y < manager.find(6).getPosition().y
+      && prediction3a.position.x == manager.find(5).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction3a.order == 2, 'Prediction order should be 2');
@@ -216,7 +216,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph3, prediction3b);
     $assert(
       prediction3b.position.y > manager.find(6).getPosition().y
-                && prediction3b.position.x == manager.find(6).getPosition().x,
+      && prediction3b.position.x == manager.find(6).getPosition().x,
       'Prediction incorrectly positioned',
     );
     $assert(prediction3b.order == 3, 'Prediction order should be 3');
@@ -228,8 +228,8 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph4, prediction4);
     $assert(
       prediction4.position.y > manager.find(9).getPosition().y
-                && prediction4.position.y < manager.find(10).getPosition().y
-                && prediction4.position.x == manager.find(9).getPosition().x,
+      && prediction4.position.y < manager.find(10).getPosition().y
+      && prediction4.position.x == manager.find(9).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction4.order == 1, 'Prediction order should be 1');
@@ -241,7 +241,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph5, prediction5a);
     $assert(
       prediction5a.position.y == manager.find(1).getPosition().y
-                && prediction5a.position.x > manager.find(1).getPosition().x,
+      && prediction5a.position.x > manager.find(1).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction5a.order == 0, 'Prediction order should be 0');
@@ -250,8 +250,8 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph5, prediction5b);
     $assert(
       prediction5b.position.y > manager.find(10).getPosition().y
-                && prediction5b.position.x < manager.find(2).getPosition().x
-                && prediction5b.position.x == manager.find(10).getPosition().x,
+      && prediction5b.position.x < manager.find(2).getPosition().x
+      && prediction5b.position.x == manager.find(10).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction5b.order == 2, 'Prediction order should be 2');
@@ -260,8 +260,8 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph5, prediction5c);
     $assert(
       prediction5c.position.y > manager.find(6).getPosition().y
-                && prediction5c.position.x > manager.find(3).getPosition().x
-                && prediction5c.position.x == manager.find(6).getPosition().x,
+      && prediction5c.position.x > manager.find(3).getPosition().x
+      && prediction5c.position.x == manager.find(6).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction5c.order == 3, 'Prediction order should be 3');
@@ -270,7 +270,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph5, prediction5d);
     $assert(
       prediction5d.position.y == manager.find(10).getPosition().y
-                && prediction5d.position.x < manager.find(10).getPosition().x,
+      && prediction5d.position.x < manager.find(10).getPosition().x,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction5d.order == 0, 'Prediction order should be 0');
@@ -281,7 +281,7 @@ const SymmetricTestSuite = new Class({
   testSymmetricDragPredict() {
     console.log('testSymmetricDragPredict:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 1);
     manager.addNode(2, TestSuite.NODE_SIZE, position).connectNode(1, 2, 0);
@@ -294,7 +294,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1a);
     $assert(
       prediction1a.position.x == manager.find(2).getPosition().x
-                && prediction1a.position.y == manager.find(2).getPosition().y,
+      && prediction1a.position.y == manager.find(2).getPosition().y,
       'Prediction position should be the same as node 2',
     );
     $assert(
@@ -306,7 +306,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1b);
     $assert(
       prediction1b.position.x == manager.find(2).getPosition().x
-                && prediction1b.position.y == manager.find(2).getPosition().y,
+      && prediction1b.position.y == manager.find(2).getPosition().y,
       'Prediction position should be the same as node 2',
     );
     $assert(
@@ -318,7 +318,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1c);
     $assert(
       prediction1c.position.x == manager.find(1).getPosition().x
-                && prediction1c.position.y < manager.find(1).getPosition().y,
+      && prediction1c.position.y < manager.find(1).getPosition().y,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction1c.order == 1, 'Prediction order should be 1');
@@ -327,7 +327,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1d);
     $assert(
       prediction1d.position.x == manager.find(1).getPosition().x
-                && prediction1d.position.y > manager.find(1).getPosition().y,
+      && prediction1d.position.y > manager.find(1).getPosition().y,
       'Prediction is incorrectly positioned',
     );
     $assert(prediction1d.order == 3, 'Prediction order should be 3');
@@ -336,7 +336,7 @@ const SymmetricTestSuite = new Class({
     this._plotPrediction(graph1, prediction1e);
     $assert(
       prediction1e.position.x == manager.find(2).getPosition().x
-                && prediction1e.position.y == manager.find(2).getPosition().y,
+      && prediction1e.position.y == manager.find(2).getPosition().y,
       'Prediction position should be the same as node 2',
     );
     $assert(

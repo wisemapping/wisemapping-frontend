@@ -19,21 +19,18 @@ import { $assert } from '@wisemapping/core-js';
 import ToolbarItem from './ToolbarItem';
 import FloatingTip from './FloatingTip';
 
-const ToolbarPaneItem = new Class({
-  Extends: ToolbarItem,
-  initialize(buttonId, model) {
+class ToolbarPaneItem extends ToolbarItem {
+  constructor(buttonId, model) {
     $assert(buttonId, 'buttonId can not be null');
     $assert(model, 'model can not be null');
+    super(buttonId, null, { topicAction: true, relAction: false });
+
+    const handler = () => (this.isVisible() ? this.hide() : this.show());
+    this.setEventHandler(handler);
     this._model = model;
-    const me = this;
-    const fn = () => {
-      return me.isVisible() ? me.hide() : me.show();
-    };
-    
-    this.parent(buttonId, fn, { topicAction: true, relAction: false });
     this._panelElem = this._init();
     this._visible = false;
-  },
+  }
 
   _init() {
     // Load the context of the panel ...
@@ -51,7 +48,7 @@ const ToolbarPaneItem = new Class({
       className: 'toolbarPaneTip',
       trigger: 'manual',
       template:
-                '<div class="popover popoverGray" role="tooltip"><div class="arrow arrowGray"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+        '<div class="popover popoverGray" role="tooltip"><div class="arrow arrowGray"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     });
 
     this._tip.addEvent('hide', () => {
@@ -63,15 +60,15 @@ const ToolbarPaneItem = new Class({
     });
 
     return panelElem;
-  },
+  }
 
   getModel() {
     return this._model;
-  },
+  }
 
-  getPanelElem: function () {
+  getPanelElem() {
     return this._panelElem;
-  }.protect(),
+  }
 
   show() {
     if (!this.isVisible()) {
@@ -79,7 +76,7 @@ const ToolbarPaneItem = new Class({
       this._tip.show();
       this.getButtonElem().className = 'buttonExtActive';
     }
-  },
+  }
 
   hide() {
     if (this.isVisible()) {
@@ -87,11 +84,11 @@ const ToolbarPaneItem = new Class({
       this._tip.hide();
       this.getButtonElem().className = 'buttonExtOn';
     }
-  },
+  }
 
   isVisible() {
     return this._visible;
-  },
+  }
 
   disable() {
     this.hide();
@@ -106,7 +103,7 @@ const ToolbarPaneItem = new Class({
       elem.addClass('buttonExtOff');
       this._enable = false;
     }
-  },
+  }
 
   enable() {
     const elem = this.getButtonElem();
@@ -116,11 +113,12 @@ const ToolbarPaneItem = new Class({
       elem.addClass('buttonExtOn');
       this._enable = true;
     }
-  },
+  }
 
-  buildPanel: function () {
+  // eslint-disable-next-line class-methods-use-this
+  buildPanel() {
     throw new Error('Method must be implemented');
-  }.protect(),
-});
+  }
+}
 
 export default ToolbarPaneItem;

@@ -15,6 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
+import { _ } from '@libraries/underscore-min';
 import web2d from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
@@ -192,7 +194,7 @@ const Topic = new Class(
           return model.getImageSize();
         };
 
-        result.setPosition = function () {};
+        result.setPosition = function () { };
       } else if (shapeType === TopicShape.ELLIPSE) {
         result = new web2d.Rect(0.9, attributes);
       } else if (shapeType === TopicShape.ROUNDED_RECT) {
@@ -213,11 +215,11 @@ const Topic = new Class(
           return this.size;
         };
 
-        result.setPosition = function () {};
+        result.setPosition = function () { };
 
-        result.setFill = function () {};
+        result.setFill = function () { };
 
-        result.setStroke = function () {};
+        result.setStroke = function () { };
       } else {
         $assert(false, `Unsupported figure shapeType:${shapeType}`);
       }
@@ -644,7 +646,7 @@ const Topic = new Class(
           let value = true;
           if (
             (event.metaKey && Browser.Platform.mac)
-                        || (event.ctrlKey && !Browser.Platform.mac)
+            || (event.ctrlKey && !Browser.Platform.mac)
           ) {
             value = !me.isOnFocus();
             event.stopPropagation();
@@ -969,8 +971,8 @@ const Topic = new Class(
         const sourceParent = sourceTopic.getModel().getParent();
         relationship.setVisibility(
           value
-                        && (targetParent == null || !targetParent.areChildrenShrunken())
-                        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+          && (targetParent == null || !targetParent.areChildrenShrunken())
+          && (sourceParent == null || !sourceParent.areChildrenShrunken()),
         );
       });
     },

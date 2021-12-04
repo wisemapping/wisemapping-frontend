@@ -15,42 +15,49 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
 import { $assert } from '@wisemapping/core-js';
 import Events from '../Events';
 
-const ToolbarItem = new Class({
-  Implements: Events, // FIXME: should be extends?
-  initialize(buttonId, fn, options) {
+class ToolbarItem extends Events {
+  constructor(buttonId, fn, options) {
     $assert(buttonId, 'buttonId can not be null');
-    $assert(fn, 'fn can not be null');
+    super();
     this._buttonId = buttonId;
-    this._fn = fn;
     this._options = options;
+    if (fn) {
+      this.setEventHandler(fn);
+    }
+  }
+
+  setEventHandler(fn) {
+    $assert(fn, 'fn can not be null');
+    this._fn = fn;
     this._enable = false;
     this.enable();
-  },
+  }
 
-  getButtonElem: function () {
+  getButtonElem() {
     const elem = $(`#${this._buttonId}`);
     $assert(elem, `Could not find element for ${this._buttonId}`);
     return elem;
-  }.protect(),
+  }
 
   show() {
     this.fireEvent('show');
-  },
+  }
 
   hide() {
     this.fireEvent('hide');
-  },
+  }
 
   isTopicAction() {
     return this._options.topicAction;
-  },
+  }
 
   isRelAction() {
     return this._options.relAction;
-  },
+  }
 
   disable() {
     const elem = this.getButtonElem();
@@ -60,7 +67,7 @@ const ToolbarItem = new Class({
       elem.addClass('buttonOff');
       this._enable = false;
     }
-  },
+  }
 
   enable() {
     const elem = this.getButtonElem();
@@ -70,11 +77,11 @@ const ToolbarItem = new Class({
       elem.addClass('buttonOn');
       this._enable = true;
     }
-  },
+  }
 
-  getTip: function () {
+  getTip() {
     return this._tip;
-  }.protect(),
-});
+  }
+}
 
 export default ToolbarItem;

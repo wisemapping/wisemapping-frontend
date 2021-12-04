@@ -15,24 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
 import ListToolbarPanel from './ListToolbarPanel';
 
-const TopicShapePanel = new Class({
-  Extends: ListToolbarPanel,
-  initialize(buttonId, model) {
-    this.parent(buttonId, model);
-  },
-
+class TopicShapePanel extends ListToolbarPanel {
+  // eslint-disable-next-line class-methods-use-this
   buildPanel() {
     const content = $("<div class='toolbarPanel' id='topicShapePanel'></div>");
     content[0].innerHTML = ''
-            + '<div id="rectagle" model="rectagle"><img src="images/shape-rectangle.png" alt="Rectangle"></div>'
-            + '<div id="rounded_rectagle" model="rounded rectagle" ><img src="images/shape-rectangle-round.png" alt="Rounded Rectangle"></div>'
-            + '<div id="line" model="line"><img src="images/shape-line.png" alt="Line"></div>'
-            + '<div id="elipse" model="elipse"><img src="images/shape-circle.png"></div>';
+      + '<div id="rectagle" model="rectagle"><img src="images/shape-rectangle.png" alt="Rectangle"></div>'
+      + '<div id="rounded_rectagle" model="rounded rectagle" ><img src="images/shape-rectangle-round.png" alt="Rounded Rectangle"></div>'
+      + '<div id="line" model="line"><img src="images/shape-line.png" alt="Line"></div>'
+      + '<div id="elipse" model="elipse"><img src="images/shape-circle.png"></div>';
 
     return content;
-  },
-});
+  }
+}
 
 export default TopicShapePanel;

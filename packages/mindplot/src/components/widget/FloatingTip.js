@@ -15,32 +15,29 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Options from '../Options';
 import Events from '../Events';
 
-const FloatingTip = new Class({
-  Implements: [Options, Events],
+// const options = {
+//   animation: true,
+//   html: false,
+//   placement: 'right',
+//   selector: false,
+//   trigger: 'hover',
+//   title: '',
+//   content: '',
+//   delay: 0,
+//   container: false,
+//   destroyOnExit: false,
+// };
 
-  options: {
-    animation: true,
-    html: false,
-    placement: 'right',
-    selector: false,
-    trigger: 'hover',
-    title: '',
-    content: '',
-    delay: 0,
-    container: false,
-    destroyOnExit: false,
-  },
-
-  initialize(element, options) {
+class FloatingTip extends Events {
+  constructor(element, options) {
+    super(element, options);
     this.setOptions(options);
     this.element = element;
     this._createPopover();
-  },
+  }
 
-  // FIXME: find a better way to do that...
   _createPopover() {
     this.element.popover(this.options);
     const me = this;
@@ -50,19 +47,30 @@ const FloatingTip = new Class({
         me._createPopover();
       });
     }
-  },
+  }
 
   show() {
     this.element.popover('show');
     this.fireEvent('show');
     return this;
-  },
+  }
 
   hide() {
     this.element.popover('hide');
     this.fireEvent('hide');
     return this;
-  },
-});
+  }
 
+  setOptions() {
+    const options = this.options = Object.merge.apply(null, [{}, this.options].append(arguments));
+    if (this.addEvent) {
+      for (const option in options) {
+        if (typeOf(options[option]) != 'function' || !(/^on[A-Z]/).test(option)) continue;
+        this.addEvent(option, options[option]);
+        delete options[option];
+      }
+    }
+    return this;
+  }
+}
 export default FloatingTip;

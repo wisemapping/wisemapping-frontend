@@ -15,24 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
 import ListToolbarPanel from './ListToolbarPanel';
 
-const FontFamilyPanel = new Class({
-  Extends: ListToolbarPanel,
-  initialize(buttonId, model) {
-    this.parent(buttonId, model);
-  },
-
+class FontFamilyPanel extends ListToolbarPanel {
+  // eslint-disable-next-line class-methods-use-this
   buildPanel() {
     const content = $("<div class='toolbarPanel' id='fontFamilyPanel'></div>");
     content.html(
       '<div id="times" model="Times" class="toolbarPanelLink" style="font-family:times;">Times</div>'
-            + '<div id="arial"  model="Arial" style="font-family:arial;">Arial</div>'
-            + '<div id="tahoma" model="Tahoma" style="font-family:tahoma;">Tahoma</div>'
-            + '<div id="verdana" model="Verdana" style="font-family:verdana;">Verdana</div>',
+      + '<div id="arial"  model="Arial" style="font-family:arial;">Arial</div>'
+      + '<div id="tahoma" model="Tahoma" style="font-family:tahoma;">Tahoma</div>'
+      + '<div id="verdana" model="Verdana" style="font-family:verdana;">Verdana</div>',
     );
     return content;
-  },
-});
+  }
+}
 
 export default FontFamilyPanel;

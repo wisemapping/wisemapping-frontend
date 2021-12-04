@@ -16,11 +16,8 @@
  *   limitations under the License.
  */
 
-const Keyboard = new Class({
-
-  initialize() {
-  },
-
+class Keyboard {
+  // eslint-disable-next-line class-methods-use-this
   addShortcut(shortcuts, callback) {
     if (!$.isArray(shortcuts)) {
       shortcuts = [shortcuts];
@@ -28,8 +25,7 @@ const Keyboard = new Class({
     _.each(shortcuts, (shortcut) => {
       $(document).bind('keydown', shortcut, callback);
     });
-  },
-
-});
+  }
+}
 
 export default Keyboard;

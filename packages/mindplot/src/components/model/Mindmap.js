@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import IMindmap from './IMindmap';
 import INodeModel from './INodeModel';
 import NodeModel from './NodeModel';
@@ -71,10 +72,10 @@ class Mindmap extends IMindmap {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Add node must be invoked with model objects');
     const branches = this.getBranches();
     if (branches.length === 0) {
-      $assert(nodeModel.getType() == INodeModel.CENTRAL_TOPIC_TYPE, 'First element must be the central topic');
+      $assert(nodeModel.getType() === INodeModel.CENTRAL_TOPIC_TYPE, 'First element must be the central topic');
       nodeModel.setPosition(0, 0);
     } else {
-      $assert(nodeModel.getType() != INodeModel.CENTRAL_TOPIC_TYPE, 'Mindmaps only have one cental topic');
+      $assert(nodeModel.getType() !== INodeModel.CENTRAL_TOPIC_TYPE, 'Mindmaps only have one cental topic');
     }
 
     this._branches.push(nodeModel);

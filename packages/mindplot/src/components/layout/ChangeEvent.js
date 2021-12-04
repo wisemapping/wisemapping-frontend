@@ -15,34 +15,30 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 
-const ChangeEvent = new Class(/** @lends ChangeEvent */{
-  /**
-     * @constructs
-     * @param {} id
-     * @throws will throw an error if the given id is not/cannot be converted to a numerical value
-     */
-  initialize(id) {
-    $assert(!isNaN(id), 'id can not be null');
+class ChangeEvent {
+  constructor(id) {
+    $assert(!Number.isNaN(id), 'id can not be null');
     this._id = id;
     this._position = null;
     this._order = null;
-  },
+  }
 
   /** @return id */
   getId() {
     return this._id;
-  },
+  }
 
   /** @return order */
   getOrder() {
     return this._order;
-  },
+  }
 
   /** @return position */
   getPosition() {
     return this._position;
-  },
+  }
 
   /**
      * @param {} value the order to set
@@ -50,21 +46,21 @@ const ChangeEvent = new Class(/** @lends ChangeEvent */{
      * value
      */
   setOrder(value) {
-    $assert(!isNaN(value), 'value can not be null');
+    $assert(!Number.isNaN(value), 'value can not be null');
     this._order = value;
-  },
+  }
 
   /** @param {} value
      *  @throws will throw an error if the value is null or undefined */
   setPosition(value) {
     $assert(value, 'value can not be null');
     this._position = value;
-  },
+  }
 
   /** @return {String} order and position */
   toString() {
     return `[order:${this.getOrder()}, position: {${this.getPosition().x},${this.getPosition().y}}]`;
-  },
-});
+  }
+}
 
 export default ChangeEvent;

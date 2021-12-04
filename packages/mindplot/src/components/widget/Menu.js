@@ -15,6 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
+import _ from '@libraries/underscore-min';
+
 import { $defined } from '@wisemapping/core-js';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 import IMenu from './IMenu';
@@ -26,11 +29,10 @@ import ColorPalettePanel from './ColorPalettePanel';
 import ToolbarItem from './ToolbarItem';
 import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
 
-const Menu = new Class({
-  Extends: IMenu,
-
-  initialize(designer, containerId, mapId, readOnly, baseUrl) {
-    this.parent(designer, containerId, mapId);
+class Menu extends IMenu {
+  constructor(designer, containerId, mapId, readOnly, baseUrl) {
+    super(designer, containerId, mapId);
+    const saveElem = $('#save');
 
     baseUrl = !$defined(baseUrl) ? '' : baseUrl;
     const widgetsBaseUrl = `${baseUrl}css/widget`;
@@ -57,7 +59,7 @@ const Menu = new Class({
           let result = null;
           for (let i = 0; i < nodes.length; i++) {
             const fontFamily = nodes[i].getFontFamily();
-            if (result != null && result != fontFamily) {
+            if (result != null && result !== fontFamily) {
               result = null;
               break;
             }
@@ -71,7 +73,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new FontFamilyPanel('fontFamily', fontFamilyModel));
-      this._registerTooltip('fontFamily', $msg('FONT_FAMILY'));
+      Menu._registerTooltip('fontFamily', $msg('FONT_FAMILY'));
     }
 
     const fontSizeBtn = $('#fontSize');
@@ -82,7 +84,7 @@ const Menu = new Class({
           let result = null;
           for (let i = 0; i < nodes.length; i++) {
             const fontSize = nodes[i].getFontSize();
-            if (result != null && result != fontSize) {
+            if (result != null && result !== fontSize) {
               result = null;
               break;
             }
@@ -95,7 +97,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new FontSizePanel('fontSize', fontSizeModel));
-      this._registerTooltip('fontSize', $msg('FONT_SIZE'));
+      Menu._registerTooltip('fontSize', $msg('FONT_SIZE'));
     }
 
     const topicShapeBtn = $('#topicShape');
@@ -106,7 +108,7 @@ const Menu = new Class({
           let result = null;
           for (let i = 0; i < nodes.length; i++) {
             const shapeType = nodes[i].getShapeType();
-            if (result != null && result != shapeType) {
+            if (result != null && result !== shapeType) {
               result = null;
               break;
             }
@@ -119,7 +121,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new TopicShapePanel('topicShape', topicShapeModel));
-      this._registerTooltip('topicShape', $msg('TOPIC_SHAPE'));
+      Menu._registerTooltip('topicShape', $msg('TOPIC_SHAPE'));
     }
 
     const topicIconBtn = $('#topicIcon');
@@ -134,7 +136,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new IconPanel('topicIcon', topicIconModel));
-      this._registerTooltip('topicIcon', $msg('TOPIC_ICON'));
+      Menu._registerTooltip('topicIcon', $msg('TOPIC_ICON'));
     }
 
     // Topic color item ...
@@ -146,7 +148,7 @@ const Menu = new Class({
           let result = null;
           for (let i = 0; i < nodes.length; i++) {
             const color = nodes[i].getBackgroundColor();
-            if (result != null && result != color) {
+            if (result != null && result !== color) {
               result = null;
               break;
             }
@@ -159,7 +161,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new ColorPalettePanel('topicColor', topicColorModel, widgetsBaseUrl));
-      this._registerTooltip('topicColor', $msg('TOPIC_COLOR'));
+      Menu._registerTooltip('topicColor', $msg('TOPIC_COLOR'));
     }
 
     // Border color item ...
@@ -171,7 +173,7 @@ const Menu = new Class({
           let result = null;
           for (let i = 0; i < nodes.length; i++) {
             const color = nodes[i].getBorderColor();
-            if (result != null && result != color) {
+            if (result != null && result !== color) {
               result = null;
               break;
             }
@@ -184,7 +186,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl));
-      this._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
+      Menu._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
     }
 
     // Font color item ...
@@ -196,7 +198,7 @@ const Menu = new Class({
           const nodes = designerModel.filterSelectedTopics();
           for (let i = 0; i < nodes.length; i++) {
             const color = nodes[i].getFontColor();
-            if (result != null && result != color) {
+            if (result != null && result !== color) {
               result = null;
               break;
             }
@@ -209,7 +211,7 @@ const Menu = new Class({
         },
       };
       this._toolbarElems.push(new ColorPalettePanel('fontColor', fontColorModel, baseUrl));
-      this._registerTooltip('fontColor', $msg('FONT_COLOR'));
+      Menu._registerTooltip('fontColor', $msg('FONT_COLOR'));
     }
 
     this._addButton('export', false, false, () => {
@@ -218,7 +220,7 @@ const Menu = new Class({
         closeButton: true,
       });
     });
-    this._registerTooltip('export', $msg('EXPORT'));
+    Menu._registerTooltip('export', $msg('EXPORT'));
 
     const me = this;
 
@@ -228,17 +230,17 @@ const Menu = new Class({
       window.open(`${baseUrl}c/maps/${mapId}/print`);
     });
 
-    this._registerTooltip('print', $msg('PRINT'));
+    Menu._registerTooltip('print', $msg('PRINT'));
 
     this._addButton('zoomIn', false, false, () => {
       designer.zoomIn();
     });
-    this._registerTooltip('zoomIn', $msg('ZOOM_IN'));
+    Menu._registerTooltip('zoomIn', $msg('ZOOM_IN'));
 
     this._addButton('zoomOut', false, false, () => {
       designer.zoomOut();
     });
-    this._registerTooltip('zoomOut', $msg('ZOOM_OUT'));
+    Menu._registerTooltip('zoomOut', $msg('ZOOM_OUT'));
 
     const undoButton = this._addButton('undoEdition', false, false, () => {
       designer.undo();
@@ -246,7 +248,7 @@ const Menu = new Class({
     if (undoButton) {
       undoButton.disable();
     }
-    this._registerTooltip('undoEdition', $msg('UNDO'), 'meta+Z');
+    Menu._registerTooltip('undoEdition', $msg('UNDO'), 'meta+Z');
 
     const redoButton = this._addButton('redoEdition', false, false, () => {
       designer.redo();
@@ -254,7 +256,7 @@ const Menu = new Class({
     if (redoButton) {
       redoButton.disable();
     }
-    this._registerTooltip('redoEdition', $msg('REDO'), 'meta+shift+Z');
+    Menu._registerTooltip('redoEdition', $msg('REDO'), 'meta+shift+Z');
 
     if (redoButton && undoButton) {
       designer.addEvent('modelUpdate', (event) => {
@@ -274,45 +276,44 @@ const Menu = new Class({
     this._addButton('addTopic', true, false, () => {
       designer.createSiblingForSelectedNode();
     });
-    this._registerTooltip('addTopic', $msg('ADD_TOPIC'), 'Enter');
+    Menu._registerTooltip('addTopic', $msg('ADD_TOPIC'), 'Enter');
 
     this._addButton('deleteTopic', true, true, () => {
       designer.deleteSelectedEntities();
     });
-    this._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), 'Delete');
+    Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), 'Delete');
 
     this._addButton('topicLink', true, false, () => {
       designer.addLink();
     });
-    this._registerTooltip('topicLink', $msg('TOPIC_LINK'));
+    Menu._registerTooltip('topicLink', $msg('TOPIC_LINK'));
 
     this._addButton('topicRelation', true, false, (event) => {
       designer.showRelPivot(event);
     });
-    this._registerTooltip('topicRelation', $msg('TOPIC_RELATIONSHIP'));
+    Menu._registerTooltip('topicRelation', $msg('TOPIC_RELATIONSHIP'));
 
     this._addButton('topicNote', true, false, () => {
       designer.addNote();
     });
-    this._registerTooltip('topicNote', $msg('TOPIC_NOTE'));
+    Menu._registerTooltip('topicNote', $msg('TOPIC_NOTE'));
 
     this._addButton('fontBold', true, false, () => {
       designer.changeFontWeight();
     });
-    this._registerTooltip('fontBold', $msg('FONT_BOLD'), 'meta+B');
+    Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), 'meta+B');
 
     this._addButton('fontItalic', true, false, () => {
       designer.changeFontStyle();
     });
-    this._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
+    Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
 
-    var saveElem = $('#save');
     if (saveElem) {
       this._addButton('save', false, false,
         () => {
           me.save(saveElem, designer, true);
         });
-      this._registerTooltip('save', $msg('SAVE'), 'meta+S');
+      Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
 
       if (!readOnly) {
         // To prevent the user from leaving the page with changes ...
@@ -340,7 +341,7 @@ const Menu = new Class({
       this._addButton('discard', false, false, () => {
         me.discardChanges(designer);
       });
-      this._registerTooltip('discard', $msg('DISCARD_CHANGES'));
+      Menu._registerTooltip('discard', $msg('DISCARD_CHANGES'));
     }
 
     const shareElem = $('#shareIt');
@@ -352,7 +353,7 @@ const Menu = new Class({
         });
         designer.onObjectFocusEvent();
       });
-      this._registerTooltip('shareIt', $msg('COLLABORATE'));
+      Menu._registerTooltip('shareIt', $msg('COLLABORATE'));
     }
 
     const publishElem = $('#publishIt');
@@ -364,7 +365,7 @@ const Menu = new Class({
         });
         designer.onObjectFocusEvent();
       });
-      this._registerTooltip('publishIt', $msg('PUBLISH'));
+      Menu._registerTooltip('publishIt', $msg('PUBLISH'));
     }
 
     const historyElem = $('#history');
@@ -376,7 +377,7 @@ const Menu = new Class({
         });
         designer.onObjectFocusEvent();
       });
-      this._registerTooltip('history', $msg('HISTORY'));
+      Menu._registerTooltip('history', $msg('HISTORY'));
     }
 
     this._registerEvents(designer);
@@ -406,7 +407,7 @@ const Menu = new Class({
         event.preventDefault();
       });
     }
-  },
+  }
 
   _registerEvents(designer) {
     const me = this;
@@ -454,7 +455,7 @@ const Menu = new Class({
         }
       });
     });
-  },
+  }
 
   _addButton(buttonId, topic, rel, fn) {
     const me = this;
@@ -470,18 +471,18 @@ const Menu = new Class({
       result = button;
     }
     return result;
-  },
+  }
 
-  _registerTooltip(buttonId, text, shortcut) {
+  static _registerTooltip(buttonId, text, shortcut) {
     if ($(`#${buttonId}`)) {
       let tooltip = text;
       if (shortcut) {
-        shortcut = navigator.appVersion.indexOf('Mac') != -1 ? shortcut.replace('meta+', '⌘') : shortcut.replace('meta+', 'ctrl+');
+        shortcut = navigator.appVersion.indexOf('Mac') !== -1 ? shortcut.replace('meta+', '⌘') : shortcut.replace('meta+', 'ctrl+');
         tooltip = `${tooltip} (${shortcut})`;
       }
       new KeyboardShortcutTooltip($(`#${buttonId}`), tooltip);
     }
-  },
-});
+  }
+}
 
 export default Menu;

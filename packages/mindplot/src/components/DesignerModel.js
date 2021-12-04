@@ -15,51 +15,42 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import Events from './Events';
 
-const DesignerModel = new Class(/** @lends DesignerModel */{
-  Implements: [Events],
-  /**
-     * @implements {mindplot.Events}
-     * @constructs
-     * @param {{readOnly: Boolean, zoom: Number, saveOnLoad: Boolean, size: {width: Number,
-     * height: Number}, viewPort: {width: Number, height: Number}, container: String,
-     * persistenceManager: String, mapId: String, locale: String}} options
-     * options loaded from json config
-     * @see {@link ConfigParameters.md}
-     * @see {@link editor.html}
-     */
-  initialize(options) {
+class DesignerModel extends Events {
+  constructor(options) {
+    super();
     this._zoom = options.zoom;
     this._topics = [];
     this._relationships = [];
-  },
+  }
 
   /** @return {Number} zoom between 0.3 (largest text) and 1.9 */
   getZoom() {
     return this._zoom;
-  },
+  }
 
   /** @param {Number} zoom number between 0.3 and 1.9 to set the zoom to */
   setZoom(zoom) {
     this._zoom = zoom;
-  },
+  }
 
   /** @return {@link mindplot.Topic[]} all topics */
   getTopics() {
     return this._topics;
-  },
+  }
 
   /** @return {mindplot.Relationship[]} all relationships */
   getRelationships() {
     return this._relationships;
-  },
+  }
 
   /** @return {mindplot.CentralTopic} the central topic */
   getCentralTopic() {
     const topics = this.getTopics();
     return topics[0];
-  },
+  }
 
   /** @return {mindplot.Topic[]} selected topics */
   filterSelectedTopics() {
@@ -70,7 +61,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
       }
     }
     return result;
-  },
+  }
 
   /**
      * @return {mindplot.Relationship[]} selected relationships
@@ -83,7 +74,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
       }
     }
     return result;
-  },
+  }
 
   /**
      * @return {Array.<mindplot.Relationship, mindplot.Topic>} all topics and relationships
@@ -92,7 +83,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
     const result = [].append(this._topics);
     result.append(this._relationships);
     return result;
-  },
+  }
 
   /**
      * removes occurrences of the given topic from the topic array
@@ -101,7 +92,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
   removeTopic(topic) {
     $assert(topic, 'topic can not be null');
     this._topics.erase(topic);
-  },
+  }
 
   /**
      * removes occurrences of the given relationship from the relationship array
@@ -110,7 +101,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
   removeRelationship(rel) {
     $assert(rel, 'rel can not be null');
     this._relationships.erase(rel);
-  },
+  }
 
   /**
      * adds the given topic to the topic array
@@ -122,7 +113,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
     $assert(topic, 'topic can not be null');
     $assert(typeof topic.getId() === 'number', `id is not a number:${topic.getId()}`);
     this._topics.push(topic);
-  },
+  }
 
   /**
      * adds the given relationship to the relationship array
@@ -132,7 +123,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
   addRelationship(rel) {
     $assert(rel, 'rel can not be null');
     this._relationships.push(rel);
-  },
+  }
 
   /**
      * @param {Function=} validate a function to validate nodes
@@ -158,7 +149,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
       }
     }
     return result;
-  },
+  }
 
   /**
      * @return {mindplot.Topic} the first selected topic if one or more are found by the
@@ -167,7 +158,7 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
   selectedTopic() {
     const topics = this.filterSelectedTopics();
     return (topics.length > 0) ? topics[0] : null;
-  },
+  }
 
   /**
      * @param {String} id the id of the topic to be retrieved
@@ -177,13 +168,13 @@ const DesignerModel = new Class(/** @lends DesignerModel */{
     let result = null;
     for (let i = 0; i < this._topics.length; i++) {
       const topic = this._topics[i];
-      if (topic.getId() == id) {
+      if (topic.getId() === id) {
         result = topic;
         break;
       }
     }
     return result;
-  },
-});
+  }
+}
 
 export default DesignerModel;

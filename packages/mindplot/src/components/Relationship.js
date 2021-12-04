@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import web2d from '@wisemapping/web2d';
+import { $assert, $defined } from '@wisemapping/core-js';
 
 import ConnectionLine from './ConnectionLine';
 import ControlPoint from './ControlPoint';

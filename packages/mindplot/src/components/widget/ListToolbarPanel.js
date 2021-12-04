@@ -17,12 +17,11 @@
  */
 import ToolbarPaneItem from './ToolbarPaneItem';
 
-const ListToolbarPanel = new Class({
-  Extends: ToolbarPaneItem,
-  initialize(buttonId, model) {
-    this.parent(buttonId, model);
+class ListToolbarPanel extends ToolbarPaneItem {
+  constructor(buttonId, model) {
+    super(buttonId, model);
     this._initPanel();
-  },
+  }
 
   _initPanel() {
     // Register on toolbar elements ...
@@ -33,7 +32,7 @@ const ListToolbarPanel = new Class({
       const value = $defined($(this).attr('model')) ? $(this).attr('model') : $(this).attr('id');
       me.getModel().setValue(value);
     });
-  },
+  }
 
   _updateSelectedItem() {
     const panelElem = this.getPanelElem();
@@ -42,11 +41,11 @@ const ListToolbarPanel = new Class({
     _.each(menuElems, (elem) => {
       const elemValue = $defined($(elem).attr('model')) ? $(elem).attr('model') : $(elem).attr('id');
       $assert(elemValue, 'elemValue can not be null');
-      if (elemValue == value) $(elem).attr('class', 'toolbarPanelLinkSelectedLink');
+      if (elemValue === value) $(elem).attr('class', 'toolbarPanelLinkSelectedLink');
       else $(elem).attr('class', 'toolbarPanelLink');
     });
     return panelElem;
-  },
-});
+  }
+}
 
 export default ListToolbarPanel;

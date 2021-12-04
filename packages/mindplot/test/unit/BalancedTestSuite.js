@@ -1,7 +1,9 @@
+import LayoutManager from '../../../src/components/layout/LayoutManager';
+
 describe('Balanced Test Suite', () => {
   it('balancedTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.connectNode(0, 1, 0);
     manager.layout();
@@ -96,7 +98,7 @@ describe('Balanced Test Suite', () => {
 
   it('balancedPredictTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -198,7 +200,7 @@ describe('Balanced Test Suite', () => {
 
   it('balancedNodeDragPredictTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
     manager.layout();

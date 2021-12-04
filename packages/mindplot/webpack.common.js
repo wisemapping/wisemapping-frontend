@@ -3,7 +3,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
-  entry: './src/mindplot',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -29,14 +28,6 @@ module.exports = {
   resolve: {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),
-      '@commands': path.resolve(__dirname, './src/components/commands/'),
-      '@layout': path.resolve(__dirname, './src/components/layout/'),
-      '@libs': path.resolve(__dirname, './src/components/libraries/'),
-      '@model': path.resolve(__dirname, './src/components/model'),
-      '@persistence': path.resolve(__dirname, './src/components/persistence/'),
-      '@util': path.resolve(__dirname, './src/components/util/'),
-      '@widget': path.resolve(__dirname, './src/components/widget/'),
-      '@components': path.resolve(__dirname, './src/components/'),
     },
     extensions: ['.js', '.json'],
   },

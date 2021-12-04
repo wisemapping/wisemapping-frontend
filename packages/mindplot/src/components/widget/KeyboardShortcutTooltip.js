@@ -15,16 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
 import { $assert } from '@wisemapping/core-js';
 import FloatingTip from './FloatingTip';
 
-const KeyboardShortcutTooltip = new Class({
-  Extends: FloatingTip,
-
-  initialize(buttonElem, text) {
+class KeyboardShortcutTooltip extends FloatingTip {
+  constructor(buttonElem, text) {
     $assert(buttonElem, 'buttonElem can not be null');
     $assert(text, 'text can not be null');
-    this._text = text;
 
     const children = buttonElem.children().first();
     const tipElemId = `${buttonElem.attr('id')}Tip`;
@@ -32,21 +30,21 @@ const KeyboardShortcutTooltip = new Class({
     tipDiv.append(children);
     buttonElem.append(tipDiv);
 
-    this.parent(tipDiv, {
+    super(tipDiv, {
       // Content can also be a function of the target element!
-      content: this._buildContent(),
+      content: KeyboardShortcutTooltip._buildContent(),
       html: true,
       placement: 'bottom',
       className: 'keyboardShortcutTip',
       template: '<div class="popover popoverBlack" role="tooltip"><div class="arrow arrowBlack"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     });
-
+    this._text = text;
     tipDiv.on('click', (e) => {
       tipDiv.trigger('mouseleave', e);
     });
-  },
+  }
 
-  _buildContent() {
+  static _buildContent() {
     const result = $('<div></div>');
     result.css({
       padding: '3px 0px',
@@ -64,7 +62,7 @@ const KeyboardShortcutTooltip = new Class({
 
     result.append(textContainer);
     return result;
-  },
-});
+  }
+}
 
 export default KeyboardShortcutTooltip;

@@ -363,7 +363,7 @@ class INodeModel {
 
   /** @abstract */
   removeChild(child) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 }
 

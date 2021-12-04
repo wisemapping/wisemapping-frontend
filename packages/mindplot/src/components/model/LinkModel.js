@@ -43,7 +43,7 @@ class LinkModel extends FeatureModel {
   }
 
   // url format is already checked in LinkEditor.checkUrl
-  _fixUrl(url) {
+  static _fixUrl(url) {
     let result = url;
     if (!result.contains('http://') && !result.contains('https://') && !result.contains('mailto://')) {
       result = `http://${result}`;

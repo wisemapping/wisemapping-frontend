@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import Mindmap from '../../../../src/components/model/Mindmap';
-import PersistenceManager from '../../../../src/components/PersistenceManager';
-import $ from '@libraries/jquery-2.1.0'
+import { Mindmap, PersistenceManager, Designer, LocalStorageManager, Menu } from '../../../../src/';
+
+import $ from '@libraries/jquery-2.1.0';
+global.jQuery = $;
 
 let designer = null;
 
@@ -48,7 +49,7 @@ function buildDesigner(options) {
   $assert(container, 'container could not be null');
 
   // Register load events ...
-  designer = new mindplot.Designer(options, container);
+  designer = new Designer(options, container);
   designer.addEvent('loadSuccess', () => {
     window.waitDialog.close();
     window.waitDialog = null;
@@ -109,13 +110,13 @@ function buildDesigner(options) {
       persistence = options.persistenceManager;
     }
   } else {
-    persistence = new mindplot.LocalStorageManager('samples/{id}.xml');
+    persistence = new LocalStorageManager('samples/{id}.xml');
   }
-  mindplot.PersistenceManager.init(persistence);
+  PersistenceManager.init(persistence);
 
   // Register toolbar event ...
   if ($('#toolbar')) {
-    const menu = new mindplot.widget.Menu(designer, 'toolbar', options.mapId, '');
+    const menu = new Menu(designer, 'toolbar', options.mapId, '');
 
     //  If a node has focus, focus can be move to another node using the keys.
     designer._cleanScreen = function () {
@@ -193,7 +194,7 @@ global.editor.WaitDialog = new Class({
 
 // Show loading dialog ...
 $(() => {
-  import('./bootstrap').then(() => {
+  import('../../../../../../libraries/bootstrap').then(() => {
     global.waitDialog = new global.editor.WaitDialog();
     global.waitDialog.show();
 

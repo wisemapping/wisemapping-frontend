@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import TestSuite from './TestSuite';
-import mindplot from '../../../src/mindplot';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 const FreeTestSuite = new Class({
   Extends: TestSuite,
@@ -37,7 +37,7 @@ const FreeTestSuite = new Class({
   testFreePosition() {
     console.log('testFreePosition:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -104,7 +104,7 @@ const FreeTestSuite = new Class({
     this._assertFreePosition(manager, 11, { x: 250, y: -50 });
     $assert(
       manager.find(13).getPosition().x == node13Pos.x
-                && manager.find(13).getPosition().y == node13Pos.y,
+      && manager.find(13).getPosition().y == node13Pos.y,
       "Node 13 shouldn't have moved",
     );
 
@@ -147,7 +147,7 @@ const FreeTestSuite = new Class({
   testFreePredict() {
     console.log('testFreePredict:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -217,7 +217,7 @@ const FreeTestSuite = new Class({
   testReconnectFreeNode() {
     console.log('testReconnectFreeNode:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -260,7 +260,7 @@ const FreeTestSuite = new Class({
     manager.plot('testReconnectFreeNode3', { width: 1000, height: 400 });
     $assert(
       manager.find(5).getPosition().y > manager.find(10).getPosition().y
-                && manager.find(5).getPosition().x == manager.find(10).getPosition().x,
+      && manager.find(5).getPosition().x == manager.find(10).getPosition().x,
       'Node 5 is incorrectly positioned',
     );
     $assert(manager.find(5).getOrder() == 2, 'Node 5 should have order 2');
@@ -278,7 +278,7 @@ const FreeTestSuite = new Class({
     manager.plot('testReconnectFreeNode5', { width: 1000, height: 400 });
     $assert(
       manager.find(5).getPosition().y == manager.find(10).getPosition().y
-                && manager.find(5).getPosition().x < manager.find(10).getPosition().x,
+      && manager.find(5).getPosition().x < manager.find(10).getPosition().x,
       'Node 5 is incorrectly positioned',
     );
     $assert(manager.find(5).getOrder() == 0, 'Node 5 should have order 0');
@@ -290,7 +290,7 @@ const FreeTestSuite = new Class({
     manager.plot('testReconnectFreeNode6', { width: 1000, height: 400 });
     $assert(
       manager.find(5).getPosition().y > manager.find(6).getPosition().y
-                && manager.find(5).getPosition().x == manager.find(6).getPosition().x,
+      && manager.find(5).getPosition().x == manager.find(6).getPosition().x,
       'Node 5 is incorrectly positioned',
     );
     $assert(manager.find(5).getOrder() == 2, 'Node 5 should have order 2');
@@ -307,7 +307,7 @@ const FreeTestSuite = new Class({
   testSiblingOverlapping() {
     console.log('testSiblingOverlapping:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -340,7 +340,7 @@ const FreeTestSuite = new Class({
   testRootNodeChildrenPositioning() {
     console.log('testRootNodeChildrenPositioning:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -383,7 +383,7 @@ const FreeTestSuite = new Class({
   testBalancedFreePredict() {
     console.log('testBalancedFreePredict:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -403,7 +403,7 @@ const FreeTestSuite = new Class({
   testFreeReorder() {
     console.log('testFreeReorder:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -440,7 +440,7 @@ const FreeTestSuite = new Class({
   testFreeOverlap() {
     console.log('testFreeOverlap:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
@@ -481,18 +481,13 @@ const FreeTestSuite = new Class({
       const node = manager.find(id);
       $assert(
         node.getPosition().x == position.x && node.getPosition().y == position.y,
-        `Freely moved node ${
-          id
-        } is not left at free position (${
-          position.x
-        },${
-          position.y
+        `Freely moved node ${id
+        } is not left at free position (${position.x
+        },${position.y
         }). `
-                    + `Actual position: (${
-                      node.getPosition().x
-                    },${
-                      node.getPosition().y
-                    })`,
+        + `Actual position: (${node.getPosition().x
+        },${node.getPosition().y
+        })`,
       );
     }
 

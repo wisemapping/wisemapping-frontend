@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import web2d from '@wisemapping/web2d';
 
 import ActionDispatcher from './ActionDispatcher';

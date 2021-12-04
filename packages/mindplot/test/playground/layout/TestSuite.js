@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import mindplot from '../../../src/mindplot';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 const TestSuite = new Class({
-  Extends: mindplot.layout.ChildrenSorterStrategy,
+  Extends: ChildrenSorterStrategy,
 
   initialize() {
     $('#basicTest').css('display', 'block');
@@ -37,7 +37,7 @@ const TestSuite = new Class({
   testAligned() {
     console.log('testAligned:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
     manager.addNode(2, TestSuite.NODE_SIZE, position).connectNode(1, 2, 0);
@@ -84,7 +84,7 @@ const TestSuite = new Class({
   testBaselineAligned1() {
     console.log('testBaselineAligned1:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
     manager.addNode(3, TestSuite.NODE_SIZE, position).connectNode(1, 3, 0);
@@ -130,7 +130,7 @@ const TestSuite = new Class({
   testBaselineAligned2() {
     console.log('testBaselineAligned2:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
     manager.addNode(2, { width: 130, height: 200 }, position).connectNode(1, 2, 0);
@@ -148,7 +148,7 @@ const TestSuite = new Class({
   testEvents() {
     console.log('testEvents:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -161,14 +161,10 @@ const TestSuite = new Class({
     const events = [];
     manager.addEvent('change', (event) => {
       console.log(
-        `\tUpdated nodes: {id:${
-          event.getId()
-        }, order: ${
-          event.getOrder()
-        },position: {${
-          event.getPosition().x
-        },${
-          event.getPosition().y
+        `\tUpdated nodes: {id:${event.getId()
+        }, order: ${event.getOrder()
+        },position: {${event.getPosition().x
+        },${event.getPosition().y
         }}`,
       );
       events.push(event);
@@ -190,7 +186,7 @@ const TestSuite = new Class({
   testEventsComplex() {
     console.log('testEventsComplex:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -207,14 +203,10 @@ const TestSuite = new Class({
     const events = [];
     manager.addEvent('change', (event) => {
       console.log(
-        `\tUpdated nodes: {id:${
-          event.getId()
-        }, order: ${
-          event.getOrder()
-        },position: {${
-          event.getPosition().x
-        },${
-          event.getPosition().y
+        `\tUpdated nodes: {id:${event.getId()
+        }, order: ${event.getOrder()
+        },position: {${event.getPosition().x
+        },${event.getPosition().y
         }}`,
       );
       events.push(event);
@@ -242,7 +234,7 @@ const TestSuite = new Class({
   testDisconnect() {
     console.log('testDisconnect:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -265,10 +257,8 @@ const TestSuite = new Class({
       const posStr = pos ? `,position: {${pos.x},${pos.y}` : '';
       const node = manager.find(event.getId());
       console.log(
-        `\tUpdated nodes: {id:${
-          event.getId()
-        }, order: ${
-          event.getOrder()
+        `\tUpdated nodes: {id:${event.getId()
+        }, order: ${event.getOrder()
         }${posStr
         }}`,
       );
@@ -305,7 +295,7 @@ const TestSuite = new Class({
   testReconnect() {
     console.log('testReconnect:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -357,7 +347,7 @@ const TestSuite = new Class({
     );
     $assert(
       manager.find(6).getPosition().x > manager.find(11).getPosition().x
-                && manager.find(11).getPosition().x == manager.find(12).getPosition().x,
+      && manager.find(11).getPosition().x == manager.find(12).getPosition().x,
       'Nodes 11 and 12 should be to the left of node 6 and horizontally aligned',
     );
 
@@ -367,7 +357,7 @@ const TestSuite = new Class({
   testRemoveNode() {
     console.log('testRemoveNode:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -437,7 +427,7 @@ const TestSuite = new Class({
   testSize() {
     console.log('testSize:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, { width: 60, height: 60 }, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
@@ -479,7 +469,7 @@ const TestSuite = new Class({
     // Check that all enlarged nodes shift children accordingly
     $assert(
       manager.find(10).getPosition().x > manager.find(3).getPosition().x
-                && manager.find(10).getPosition().x == manager.find(11).getPosition().x,
+      && manager.find(10).getPosition().x == manager.find(11).getPosition().x,
       'Nodes 10 and 11 should be horizontally algined and to the right of enlarged node 3',
     );
     const xPosNode7 = manager.find(7).getPosition().x;
@@ -534,7 +524,7 @@ const TestSuite = new Class({
   testReconnectSingleNode() {
     console.log('testReconnectSingleNode:');
     const position = { x: 0, y: 0 };
-    const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
     manager.addNode(1, TestSuite.NODE_SIZE, position);
@@ -565,19 +555,16 @@ const TestSuite = new Class({
   },
 
   _plotPrediction(canvas, prediction) {
-    if(!canvas) {
+    if (!canvas) {
       console.warn('no canvas in _plotPrediction. Remove this method if plot() not in use');
       return;
     }
     const { position } = prediction;
     const { order } = prediction;
     console.log(
-      `\t\tprediction {order:${
-        order
-      }, position: (${
-        position.x
-      },${
-        position.y
+      `\t\tprediction {order:${order
+      }, position: (${position.x
+      },${position.y
       })}`,
     );
     const cx = position.x + canvas.width / 2 - TestSuite.NODE_SIZE.width / 2;
@@ -587,6 +574,6 @@ const TestSuite = new Class({
 });
 
 (TestSuite.NODE_SIZE = { width: 80, height: 30 }),
-(TestSuite.ROOT_NODE_SIZE = { width: 120, height: 40 });
+  (TestSuite.ROOT_NODE_SIZE = { width: 120, height: 40 });
 
 export default TestSuite;

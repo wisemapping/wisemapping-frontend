@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 
 const Node = new Class(
   /** @lends Node */ {
@@ -30,7 +31,7 @@ const Node = new Class(
          * @throws will throw an error if sorter is null or undefined
          */
     initialize(id, size, position, sorter) {
-      $assert(typeof id === 'number' && isFinite(id), 'id can not be null');
+      $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
       $assert(size, 'size can not be null');
       $assert(position, 'position can not be null');
       $assert(sorter, 'sorter can not be null');
@@ -82,7 +83,7 @@ const Node = new Class(
     /** */
     setOrder(order) {
       $assert(
-        typeof order === 'number' && isFinite(order),
+        typeof order === 'number' && Number.isFinite(order),
         `Order can not be null. Value:${order}`,
       );
       this._setProperty('order', order);
@@ -199,7 +200,7 @@ const Node = new Class(
       }
 
       // Only update if the property has changed ...
-      if (JSON.stringify(prop.value) != JSON.stringify(value)) {
+      if (JSON.stringify(prop.value) !== JSON.stringify(value)) {
         prop.oldValue = prop.value;
         prop.value = value;
         prop.hasChanged = true;

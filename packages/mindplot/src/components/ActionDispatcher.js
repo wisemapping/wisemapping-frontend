@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -19,89 +19,88 @@
 import { $assert } from '@wisemapping/core-js';
 import Events from './Events';
 
-// noinspection JSUnusedLocalSymbols
-const ActionDispatcher = new Class({
-  Implements: [Events],
-  initialize(commandContext) {
+class ActionDispatcher extends Events {
+  constructor(commandContext) {
     $assert(commandContext, 'commandContext can not be null');
-  },
+    super();
+  }
 
   addRelationship(model, mindmap) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   addTopics(models, parentTopicId) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   deleteEntities(topicsIds, relIds) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   dragTopic(topicId, position, order, parentTopic) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   moveTopic(topicId, position) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   moveControlPoint(ctrlPoint, point) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeFontFamilyToTopic(topicIds, fontFamily) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeFontStyleToTopic(topicsIds) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeFontColorToTopic(topicsIds, color) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeFontSizeToTopic(topicsIds, size) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeBackgroundColorToTopic(topicsIds, color) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeBorderColorToTopic(topicsIds, color) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeShapeTypeToTopic(topicsIds, shapeType) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeFontWeightToTopic(topicsIds) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeTextToTopic(topicsIds, text) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   shrinkBranch(topicsIds, collapse) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   addFeatureToTopic(topicId, type, attributes) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   changeFeatureToTopic(topicId, featureId, attributes) {
     throw new Error('method must be implemented.');
-  },
+  }
 
   removeFeatureFromTopic(topicId, featureId) {
     throw new Error('method must be implemented.');
-  },
-});
+  }
+}
 
 ActionDispatcher.setInstance = (dispatcher) => {
   ActionDispatcher._instance = dispatcher;

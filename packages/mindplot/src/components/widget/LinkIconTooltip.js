@@ -17,15 +17,13 @@
  */
 import FloatingTip from './FloatingTip';
 
-const LinkIconTooltip = new Class({
-  Extends: FloatingTip,
-
-  initialize(linkIcon) {
+class LinkIconTooltip extends FloatingTip {
+  constructor(linkIcon) {
     $assert(linkIcon, 'linkIcon can not be null');
     const nativeElement = $(linkIcon.getImage().peer._native);
-    this.parent(nativeElement, {
+    super(nativeElement, {
       // Content can also be a function of the target element!
-      content: this._buildContent(linkIcon),
+      content: LinkIconTooltip._buildContent(linkIcon),
       html: true,
       placement: 'bottom',
       container: 'body',
@@ -33,9 +31,9 @@ const LinkIconTooltip = new Class({
       trigger: 'manual',
       template: '<div id="linkPopover" class="popover" onmouseover="$(this).mouseleave(function() {$(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     });
-  },
+  }
 
-  _buildContent(linkIcon) {
+  static _buildContent(linkIcon) {
     const result = $('<div></div>').css({
       padding: '5px',
       width: '100%',
@@ -73,7 +71,7 @@ const LinkIconTooltip = new Class({
     imgContainer.append(link);
     result.append(imgContainer);
     return result;
-  },
-});
+  }
+}
 
 export default LinkIconTooltip;

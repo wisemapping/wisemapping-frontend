@@ -15,17 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from '@libraries/jquery-2.1.0';
+import _ from '@libraries/underscore-min';
 import { $assert, $defined } from '@wisemapping/core-js';
 import ToolbarPaneItem from './ToolbarPaneItem';
 
-const ColorPalettePanel = new Class({
-  Extends: ToolbarPaneItem,
-
-  initialize(buttonId, model, baseUrl) {
+class ColorPalettePanel extends ToolbarPaneItem {
+  constructor(buttonId, model, baseUrl) {
+    super(buttonId, model);
     this._baseUrl = baseUrl;
-    this.parent(buttonId, model);
     $assert($defined(baseUrl), 'baseUrl can not be null');
-  },
+  }
 
   _load() {
     if (!ColorPalettePanel._panelContent) {
@@ -52,7 +52,7 @@ const ColorPalettePanel = new Class({
       ColorPalettePanel._panelContent = result;
     }
     return ColorPalettePanel._panelContent;
-  },
+  }
 
   buildPanel() {
     const content = $('<div class="toolbarPanel"></div>').attr(
@@ -74,7 +74,7 @@ const ColorPalettePanel = new Class({
     });
 
     return content;
-  },
+  }
 
   _updateSelectedItem() {
     const panelElem = this.getPanelElem();
@@ -99,7 +99,7 @@ const ColorPalettePanel = new Class({
       }
     });
     return panelElem;
-  },
-});
+  }
+}
 
 export default ColorPalettePanel;
