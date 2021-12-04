@@ -17,6 +17,7 @@
  */
 import { $assert } from "@wisemapping/core-js";
 
+
 class CommandContext {
     constructor(designer) {
         $assert(designer, 'designer can not be null');

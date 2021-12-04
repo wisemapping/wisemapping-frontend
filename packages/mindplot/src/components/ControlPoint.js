@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import web2d from '@wisemapping/web2d';
+import { $defined } from '@wisemapping/core-js';
 
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';

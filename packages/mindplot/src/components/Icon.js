@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from "@wisemapping/core-js";
 import web2d from '@wisemapping/web2d';
 
 const Icon = new Class({
@@ -50,7 +51,7 @@ const Icon = new Class({
   },
 
   remove() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   },
 });
 

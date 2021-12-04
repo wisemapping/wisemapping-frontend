@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import web2d from '@wisemapping/web2d';
 
 import INodeModel, { TopicShape } from './model/INodeModel';
@@ -24,14 +25,14 @@ const ConnectionLine = new Class({
   initialize(sourceNode, targetNode, lineType) {
     $assert(targetNode, 'parentNode node can not be null');
     $assert(sourceNode, 'childNode node can not be null');
-    $assert(sourceNode != targetNode, 'Circular connection');
+    $assert(sourceNode !== targetNode, 'Circular connection');
 
     this._targetTopic = targetNode;
     this._sourceTopic = sourceNode;
 
     let line;
     const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
-    if (targetNode.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (targetNode.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
       line = this._createLine(lineType, ConnectionLine.CURVED);
       line.setSrcControlPoint(ctrlPoints[0]);
       line.setDestControlPoint(ctrlPoints[1]);
@@ -59,7 +60,7 @@ const ConnectionLine = new Class({
     if (!$defined(lineType)) {
       lineType = defaultStyle;
     }
-    lineType = parseInt(lineType);
+    lineType = parseInt(lineType, 10);
     this._lineType = lineType;
     let line = null;
     switch (lineType) {
@@ -124,7 +125,7 @@ const ConnectionLine = new Class({
     const targetTopicSize = targetTopic.getSize();
     let y;
     let x;
-    if (targetTopic.getShapeType() == TopicShape.LINE) {
+    if (targetTopic.getShapeType() === TopicShape.LINE) {
       y = targetTopicSize.height;
     } else {
       y = targetTopicSize.height / 2;
@@ -197,9 +198,7 @@ const ConnectionLine = new Class({
   },
 });
 
-ConnectionLine.getStrokeColor = function () {
-  return '#495879';
-};
+ConnectionLine.getStrokeColor = () => '#495879';
 
 ConnectionLine.SIMPLE = 0;
 ConnectionLine.POLYLINE = 1;

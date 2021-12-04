@@ -166,38 +166,9 @@ function loadDesignerOptions(jsonConf) {
   return result;
 }
 
-global.editor = {};
-global.editor.WaitDialog = new Class({
-  initialize() {
-    this.panel = this._buildPanel();
-  },
-
-  _buildPanel() {
-    const result = $('#load');
-    const content = result.find('.modal-content');
-    const winH = $(window).height();
-    // Set the popup window to center
-    content.css('margin-top', winH / 2 - content.height() / 2);
-    return result;
-  },
-
-  show() {
-    this.panel.modal({
-      backdrop: 'static',
-    });
-  },
-
-  close() {
-    this.panel.modal('hide');
-  },
-});
-
 // Show loading dialog ...
 $(() => {
   import('../../../../../../libraries/bootstrap').then(() => {
-    global.waitDialog = new global.editor.WaitDialog();
-    global.waitDialog.show();
-
     // from viewmode.html ---------
     var mapId = 'welcome';
     // Set readonly option ...
@@ -207,13 +178,7 @@ $(() => {
 
     // Load map from XML file persisted on disk...
     var persistence = PersistenceManager.getInstance();
-    var mindmap;
-    try {
-      mindmap = persistence.load(mapId);
-    } catch (e) {
-      // If the map could not be loaded, create a new empty map...
-      mindmap = Mindmap.buildEmpty(mapId);
-    }
+    var mindmap = persistence.load(mapId);
     designer.loadMap(mindmap);
     // from viewmode.html ---------
   });

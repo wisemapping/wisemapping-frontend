@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -15,6 +16,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from "@wisemapping/core-js";
 
 class IMindmap {
   getCentralTopic() {
@@ -23,52 +25,52 @@ class IMindmap {
 
   /** @abstract */
   getDescription() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   setDescription(value) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   getId() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   setId(id) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   getVersion() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   setVersion(version) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   addBranch(nodeModel) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   getBranches() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   removeBranch(node) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   getRelationships() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /**
@@ -103,27 +105,27 @@ class IMindmap {
 
   /** @abstract */
   hasAlreadyAdded(node) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   createNode(type, id) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   createRelationship(fromNode, toNode) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   addRelationship(rel) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   deleteRelationship(relationship) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** */
@@ -137,7 +139,7 @@ class IMindmap {
 
     for (let i = 0; i < branches.length; i++) {
       const node = branches[i];
-      if (i != 0) {
+      if (i !== 0) {
         result = `${result},\n `;
       }
       result = `${result}(${i}) =>${node.inspect()}`;

@@ -224,7 +224,7 @@ class INodeModel {
   /** */
   areChildrenShrunken() {
     const result = this.getProperty('shrunken');
-    $defined(result) ? result : false;
+    return $defined(result) ? result : false;
   }
 
   /**
@@ -250,7 +250,7 @@ class INodeModel {
 
   /** @abstract */
   append(node) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /**
@@ -311,32 +311,32 @@ class INodeModel {
 
   /** @abstract */
   getPropertiesKeys() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   putProperty(key, value) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   setParent(parent) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   getChildren() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   getParent() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** @abstract */
   clone() {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   /** */

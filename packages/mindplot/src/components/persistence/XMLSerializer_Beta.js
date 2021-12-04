@@ -14,7 +14,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createDocument, innerXML } from '@wisemapping/core-js';
+import { $defined, $assert, createDocument, innerXML } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import INodeModel from '../model/INodeModel';
