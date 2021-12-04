@@ -16,15 +16,16 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-const DragConnector = new Class({
-  initialize(designerModel, workspace) {
+
+class DragConnector {
+  constructor(designerModel, workspace) {
     $assert(designerModel, 'designerModel can not be null');
     $assert(workspace, 'workspace can not be null');
 
     // this._layoutManager = layoutManager;
     this._designerModel = designerModel;
     this._workspace = workspace;
-  },
+  }
 
   checkConnection(dragTopic) {
     const topics = this._designerModel.getTopics();
@@ -41,7 +42,7 @@ const DragConnector = new Class({
     if (!dragTopic.isConnected() && candidates.length > 0) {
       dragTopic.connectTo(candidates[0]);
     }
-  },
+  }
 
   _searchConnectionCandidates(dragTopic) {
     let topics = this._designerModel.getTopics();
@@ -92,18 +93,18 @@ const DragConnector = new Class({
       return me._proximityWeight(av, a, sPos, currentConnection) - me._proximityWeight(bv, b, sPos, currentConnection);
     });
     return topics;
-  },
+  }
 
   _proximityWeight(isAligned, target, sPos, currentConnection) {
     const tPos = target.getPosition();
     return (isAligned ? 0 : 200) + Math.abs(tPos.x - sPos.x) + Math.abs(tPos.y - sPos.y) + (currentConnection == target ? 0 : 100);
-  },
+  }
 
   _isVerticallyAligned(targetSize, targetPosition, sourcePosition) {
     return Math.abs(sourcePosition.y - targetPosition.y) < targetSize.height / 2;
-  },
+  }
 
-});
+}
 
 DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE = 80;
 

@@ -19,8 +19,7 @@ import { $defined, $assert } from '@wisemapping/core-js';
 import _ from '@libraries/underscore-min';
 import Command from '../Command';
 
-const GenericFunctionCommand = new Class(/** @lends GenericFunctionCommand */{
-  Extends: Command,
+class GenericFunctionCommand extends Command {
   /**
      * @classdesc This command handles do/undo of different actions, e.g. moving topics to
      * a different position, changing text or font,... (for full reference check the
@@ -32,16 +31,16 @@ const GenericFunctionCommand = new Class(/** @lends GenericFunctionCommand */{
      * e.g. color, font family or text
      * @extends mindplot.Command
      */
-  initialize(commandFunc, topicsIds, value) {
+  constructor(commandFunc, topicsIds, value) {
     $assert(commandFunc, 'commandFunc must be defined');
     $assert($defined(topicsIds), 'topicsIds must be defined');
 
-    this.parent();
+    super();
     this._value = value;
     this._topicsId = topicsIds;
     this._commandFunc = commandFunc;
     this._oldValues = [];
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -72,7 +71,7 @@ const GenericFunctionCommand = new Class(/** @lends GenericFunctionCommand */{
     } else {
       throw 'Command can not be applied two times in a row.';
     }
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -91,7 +90,7 @@ const GenericFunctionCommand = new Class(/** @lends GenericFunctionCommand */{
     } else {
       throw new Error('undo can not be applied.');
     }
-  },
-});
+  }
+}
 
 export default GenericFunctionCommand;

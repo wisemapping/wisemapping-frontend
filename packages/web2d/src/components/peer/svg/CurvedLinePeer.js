@@ -19,11 +19,10 @@ import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import Point from '../../Point';
 
-const CurvedLinePeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'path');
-    this.parent(svgElement);
+class CurvedLinePeer extends ElementPeer {
+  constructor() {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'path');
+    super(svgElement);
     this._style = { fill: '#495879' };
     this._updateStyle();
     this._customControlPoint_1 = false;
@@ -31,7 +30,7 @@ const CurvedLinePeer = new Class({
     this._control1 = new Point();
     this._control2 = new Point();
     this._lineStyle = true;
-  },
+  }
 
   setSrcControlPoint(control) {
     this._customControlPoint_1 = true;
@@ -42,7 +41,7 @@ const CurvedLinePeer = new Class({
       this._control1.y = parseInt(this._control1.y, 10);
     }
     if (change) this._updatePath();
-  },
+  }
 
   setDestControlPoint(control) {
     this._customControlPoint_2 = true;
@@ -53,64 +52,64 @@ const CurvedLinePeer = new Class({
       this._control2.y = parseInt(this._control2.y, 10);
     }
     if (change) this._updatePath();
-  },
+  }
 
   isSrcControlPointCustom() {
     return this._customControlPoint_1;
-  },
+  }
 
   isDestControlPointCustom() {
     return this._customControlPoint_2;
-  },
+  }
 
   setIsSrcControlPointCustom(isCustom) {
     this._customControlPoint_1 = isCustom;
-  },
+  }
 
   setIsDestControlPointCustom(isCustom) {
     this._customControlPoint_2 = isCustom;
-  },
+  }
 
   getControlPoints() {
     return [this._control1, this._control2];
-  },
+  }
 
   setFrom(x1, y1) {
     const change = this._x1 !== parseInt(x1, 10) || this._y1 !== parseInt(y1, 10);
     this._x1 = parseInt(x1, 10);
     this._y1 = parseInt(y1, 10);
     if (change) this._updatePath();
-  },
+  }
 
   setTo(x2, y2) {
     const change = this._x2 !== parseInt(x2, 10) || this._y2 !== parseInt(y2, 10);
     this._x2 = parseInt(x2, 10);
     this._y2 = parseInt(y2, 10);
     if (change) this._updatePath();
-  },
+  }
 
   getFrom() {
     return new Point(this._x1, this._y1);
-  },
+  }
 
   getTo() {
     return new Point(this._x2, this._y2);
-  },
+  }
 
   setStrokeWidth(width) {
     this._style['stroke-width'] = width;
     this._updateStyle();
-  },
+  }
 
   setColor(color) {
     this._style.stroke = color;
     this._style.fill = color;
     this._updateStyle();
-  },
+  }
 
   updateLine(avoidControlPointFix) {
     this._updatePath(avoidControlPointFix);
-  },
+  }
 
   setLineStyle(style) {
     this._lineStyle = style;
@@ -122,29 +121,29 @@ const CurvedLinePeer = new Class({
     }
     this._updateStyle();
     this.updateLine();
-  },
+  }
 
   getLineStyle() {
     return this._lineStyle;
-  },
+  }
 
   setShowEndArrow(visible) {
     this._showEndArrow = visible;
     this.updateLine();
-  },
+  }
 
   isShowEndArrow() {
     return this._showEndArrow;
-  },
+  }
 
   setShowStartArrow(visible) {
     this._showStartArrow = visible;
     this.updateLine();
-  },
+  }
 
   isShowStartArrow() {
     return this._showStartArrow;
-  },
+  }
 
   _updatePath(avoidControlPointFix) {
     if (
@@ -163,7 +162,7 @@ const CurvedLinePeer = new Class({
       }`;
       this._native.setAttribute('d', path);
     }
-  },
+  }
 
   _updateStyle() {
     let style = '';
@@ -173,10 +172,10 @@ const CurvedLinePeer = new Class({
       }
     }
     this._native.setAttribute('style', style);
-  },
+  }
 
   // TODO: deduplicate this method, extracted from mindplot/src/components/util/Shape.js to avoid circular ref
-  _calculateDefaultControlPoints(srcPos, tarPos) {
+  static _calculateDefaultControlPoints(srcPos, tarPos) {
     const y = srcPos.y - tarPos.y;
     const x = srcPos.x - tarPos.x;
     const div = Math.abs(x) > 0.1 ? x : 0.1; // Prevent division by 0.
@@ -197,11 +196,11 @@ const CurvedLinePeer = new Class({
       new Point(-srcPos.x + x1, -srcPos.y + y1),
       new Point(-tarPos.x + x2, -tarPos.y + y2),
     ];
-  },
+  }
 
   _calculateAutoControlPoints(avoidControlPointFix) {
     // Both points available, calculate real points
-    const defaultpoints = this._calculateDefaultControlPoints(
+    const defaultpoints = CurvedLinePeer._calculateDefaultControlPoints(
       new Point(this._x1, this._y1),
       new Point(this._x2, this._y2),
     );
@@ -219,7 +218,7 @@ const CurvedLinePeer = new Class({
       this._control2.x = defaultpoints[1].x;
       this._control2.y = defaultpoints[1].y;
     }
-  },
+  }
 
   setDashed(length, spacing) {
     if ($defined(length) && $defined(spacing)) {
@@ -227,7 +226,7 @@ const CurvedLinePeer = new Class({
     } else {
       this._native.setAttribute('stroke-dasharray', '');
     }
-  },
-});
+  }
+}
 
 export default CurvedLinePeer;

@@ -18,53 +18,53 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from './model/INodeModel';
 
-const TopicStyle = new Class({});
+class TopicStyle {
+  static _getStyles(topic) {
+    $assert(topic, 'topic can not be null');
 
-TopicStyle._getStyles = function _getStyles(topic) {
-  $assert(topic, 'topic can not be null');
-
-  let result;
-  if (topic.isCentralTopic()) {
-    result = TopicStyle.STYLES.CENTRAL_TOPIC;
-  } else {
-    const targetTopic = topic.getOutgoingConnectedTopic();
-    if ($defined(targetTopic)) {
-      if (targetTopic.isCentralTopic()) {
-        result = TopicStyle.STYLES.MAIN_TOPIC;
-      } else {
-        result = TopicStyle.STYLES.SUB_TOPIC;
-      }
+    let result;
+    if (topic.isCentralTopic()) {
+      result = TopicStyle.STYLES.CENTRAL_TOPIC;
     } else {
-      result = TopicStyle.STYLES.ISOLATED_TOPIC;
+      const targetTopic = topic.getOutgoingConnectedTopic();
+      if ($defined(targetTopic)) {
+        if (targetTopic.isCentralTopic()) {
+          result = TopicStyle.STYLES.MAIN_TOPIC;
+        } else {
+          result = TopicStyle.STYLES.SUB_TOPIC;
+        }
+      } else {
+        result = TopicStyle.STYLES.ISOLATED_TOPIC;
+      }
     }
+    return result;
   }
-  return result;
-};
 
-TopicStyle.defaultText = function defaultText(topic) {
-  const { msgKey } = this._getStyles(topic);
-  return $msg(msgKey);
-};
+  static defaultText(topic) {
+    const { msgKey } = this._getStyles(topic);
+    return $msg(msgKey);
+  }
 
-TopicStyle.defaultFontStyle = function defaultFontStyle(topic) {
-  return this._getStyles(topic).fontStyle;
-};
+  static defaultFontStyle(topic) {
+    return this._getStyles(topic).fontStyle;
+  }
 
-TopicStyle.defaultBackgroundColor = function defaultBackgroundColor(topic) {
-  return this._getStyles(topic).backgroundColor;
-};
+  static defaultBackgroundColor(topic) {
+    return this._getStyles(topic).backgroundColor;
+  }
 
-TopicStyle.defaultBorderColor = function defaultBorderColor(topic) {
-  return this._getStyles(topic).borderColor;
-};
+  static defaultBorderColor(topic) {
+    return this._getStyles(topic).borderColor;
+  }
 
-TopicStyle.getInnerPadding = function getInnerPadding(topic) {
-  return this._getStyles(topic).innerPadding;
-};
+  static getInnerPadding(topic) {
+    return this._getStyles(topic).innerPadding;
+  }
 
-TopicStyle.defaultShapeType = function defaultShapeType(topic) {
-  return this._getStyles(topic).shapeType;
-};
+  static defaultShapeType(topic) {
+    return this._getStyles(topic).shapeType;
+  }
+}
 
 TopicStyle.STYLES = {
   CENTRAL_TOPIC: {

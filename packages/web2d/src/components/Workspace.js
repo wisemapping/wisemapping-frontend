@@ -16,14 +16,13 @@
  *   limitations under the License.
  */
 import $ from '@libraries/jquery-2.1.0';
-import { $defined, $assert } from '@wisemapping/core-js';
-import ElementClass from '@components/ElementClass';
+import { $defined } from '@wisemapping/core-js';
+import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
 
 class Workspace extends ElementClass {
   constructor(attributes) {
     const htmlContainer = Workspace._createDivContainer();
-
     const peer = Toolkit.createWorkspace(htmlContainer);
     const defaultAttributes = {
       width: '200px',
@@ -38,7 +37,9 @@ class Workspace extends ElementClass {
         defaultAttributes[key] = attributes[key];
       }
     }
-    super(peer, defaultAttributes, htmlContainer);
+    super(peer, defaultAttributes, true);
+    this._htmlContainer = htmlContainer;
+    this._initialize(defaultAttributes);
     htmlContainer.append(this.peer._native);
   }
 
@@ -78,8 +79,8 @@ class Workspace extends ElementClass {
      */
   static _createDivContainer() {
     const container = window.document.createElement('div');
-    container.id = 'workspaceContainer';
-    //        container.style.overflow = "hidden";
+    // container.id = 'workspaceContainer';
+    //    container.style.overflow = 'hidden';
     container.style.position = 'relative';
     container.style.top = '0px';
     container.style.left = '0px';

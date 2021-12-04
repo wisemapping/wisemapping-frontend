@@ -16,23 +16,23 @@
  *   limitations under the License.
  */
 
-const EditorProperties = new Class({
-  initialize() {
+class EditorProperties {
+  constructor() {
     this._zoom = 0;
     this._position = 0;
-  },
+  }
 
   setZoom(zoom) {
     this._zoom = zoom;
-  },
+  }
 
   getZoom() {
     return this._zoom;
-  },
+  }
 
   asProperties() {
     return `zoom=${this._zoom}\n`;
-  },
-});
+  }
+}
 
 export default EditorProperties;

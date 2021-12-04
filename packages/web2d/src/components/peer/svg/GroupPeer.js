@@ -19,17 +19,16 @@ import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import EventUtils from '../utils/EventUtils';
 
-const GroupPeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'g');
-    this.parent(svgElement);
+class GroupPeer extends ElementPeer {
+  constructor() {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'g');
+    super(svgElement);
     this._native.setAttribute('preserveAspectRatio', 'none');
     this._coordSize = { width: 1, height: 1 };
     this._native.setAttribute('focusable', 'true');
     this._position = { x: 0, y: 0 };
     this._coordOrigin = { x: 0, y: 0 };
-  },
+  }
 
   setCoordSize(width, height) {
     const change = this._coordSize.width !== width || this._coordSize.height !== height;
@@ -40,11 +39,11 @@ const GroupPeer = new Class({
       this.updateTransform();
     }
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');
-  },
+  }
 
   getCoordSize() {
     return { width: this._coordSize.width, height: this._coordSize.height };
-  },
+  }
 
   /**
      * http://www.w3.org/TR/SVG/coords.html#TransformAttribute
@@ -93,11 +92,11 @@ const GroupPeer = new Class({
     sy = Number.isNaN(sy) ? 0 : sy;
 
     this._native.setAttribute('transform', `translate(${cx},${cy}) scale(${sx},${sy})`);
-  },
+  }
 
   setOpacity(value) {
     this._native.setAttribute('opacity', value);
-  },
+  }
 
   setCoordOrigin(x, y) {
     const change = x !== this._coordOrigin.x || y !== this._coordOrigin.y;
@@ -111,15 +110,15 @@ const GroupPeer = new Class({
     if (change) {
       this.updateTransform();
     }
-  },
+  }
 
   setSize(width, height) {
     const change = width !== this._size.width || height !== this._size.height;
-    this.parent(width, height);
+    super.setSize(width, height);
     if (change) {
       this.updateTransform();
     }
-  },
+  }
 
   setPosition(x, y) {
     const change = x !== this._position.x || y !== this._position.y;
@@ -133,20 +132,20 @@ const GroupPeer = new Class({
     if (change) {
       this.updateTransform();
     }
-  },
+  }
 
   getPosition() {
     return { x: this._position.x, y: this._position.y };
-  },
+  }
 
   append(child) {
-    this.parent(child);
+    super.append(child);
     EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
-  },
+  }
 
   getCoordOrigin() {
     return { x: this._coordOrigin.x, y: this._coordOrigin.y };
-  },
-});
+  }
+}
 
 export default GroupPeer;

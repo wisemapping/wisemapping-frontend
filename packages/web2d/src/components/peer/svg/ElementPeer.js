@@ -20,8 +20,8 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import EventUtils from '../utils/EventUtils';
 import TransformUtil from '../utils/TransformUtils';
 
-const ElementPeer = new Class({
-  initialize(svgElement) {
+class ElementPeer {
+  constructor(svgElement) {
     this._native = svgElement;
     if (!this._native.addEvent) {
       // Hack bug: https://bugzilla.mozilla.org/show_bug.cgi?id=740811
@@ -35,11 +35,11 @@ const ElementPeer = new Class({
     this._size = { width: 1, height: 1 };
     this._changeListeners = {};
     // http://support.adobe.com/devsup/devsup.nsf/docs/50493.htm
-  },
+  }
 
   setChildren(children) {
     this._children = children;
-  },
+  }
 
   getChildren() {
     let result = this._children;
@@ -48,28 +48,28 @@ const ElementPeer = new Class({
       this._children = result;
     }
     return result;
-  },
+  }
 
   getParent() {
     return this._parent;
-  },
+  }
 
   setParent(parent) {
     this._parent = parent;
-  },
+  }
 
   append(elementPeer) {
     // Store parent and child relationship.
     elementPeer.setParent(this);
     const children = this.getChildren();
-    children.include(elementPeer);
+    children.push(elementPeer);
 
     // Append element as a child.
     this._native.appendChild(elementPeer._native);
 
     // Broadcast events ...
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');
-  },
+  }
 
   removeChild(elementPeer) {
     // Store parent and child relationship.
@@ -87,7 +87,7 @@ const ElementPeer = new Class({
 
     // Append element as a child.
     this._native.removeChild(elementPeer._native);
-  },
+  }
 
   /**
      * http://www.w3.org/TR/DOM-Level-3-Events/events.html
@@ -95,19 +95,19 @@ const ElementPeer = new Class({
      */
   addEvent(type, listener) {
     $(this._native).bind(type, listener);
-  },
+  }
 
   trigger(type, event) {
     $(this._native).trigger(type, event);
-  },
+  }
 
   cloneEvents(from) {
     this._native.cloneEvents(from);
-  },
+  }
 
   removeEvent(type, listener) {
     $(this._native).unbind(type, listener);
-  },
+  }
 
   setSize(width, height) {
     if ($defined(width) && this._size.width !== parseInt(width, 10)) {
@@ -121,11 +121,11 @@ const ElementPeer = new Class({
     }
 
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');
-  },
+  }
 
   getSize() {
     return { width: this._size.width, height: this._size.height };
-  },
+  }
 
   setFill(color, opacity) {
     if ($defined(color)) {
@@ -134,13 +134,13 @@ const ElementPeer = new Class({
     if ($defined(opacity)) {
       this._native.setAttribute('fill-opacity', opacity);
     }
-  },
+  }
 
   getFill() {
     const color = this._native.getAttribute('fill');
     const opacity = this._native.getAttribute('fill-opacity');
     return { color, opacity: Number(opacity) };
-  },
+  }
 
   getStroke() {
     const vmlStroke = this._native;
@@ -154,7 +154,7 @@ const ElementPeer = new Class({
       opacity,
       width,
     };
-  },
+  }
 
   setStroke(width, style, color, opacity) {
     if ($defined(width)) {
@@ -165,7 +165,7 @@ const ElementPeer = new Class({
     }
     if ($defined(style)) {
       // Scale the dash array in order to be equal to VML. In VML, stroke style doesn't scale.
-      const dashArrayPoints = this.__stokeStyleToStrokDasharray[style];
+      const dashArrayPoints = ElementPeer.stokeStyleToStrokDasharray()[style];
       const scale = 1 / TransformUtil.workoutScale(this).width;
 
       let strokeWidth = this._native.getAttribute('stroke-width');
@@ -187,19 +187,19 @@ const ElementPeer = new Class({
     if ($defined(opacity)) {
       this._native.setAttribute('stroke-opacity', opacity);
     }
-  },
+  }
 
   /*
      * style='visibility: visible'
      */
   setVisibility(isVisible) {
     this._native.setAttribute('visibility', isVisible ? 'visible' : 'hidden');
-  },
+  }
 
   isVisible() {
     const visibility = this._native.getAttribute('visibility');
     return !(visibility === 'hidden');
-  },
+  }
 
   updateStrokeStyle() {
     const strokeStyle = this._stokeStyle;
@@ -208,7 +208,7 @@ const ElementPeer = new Class({
         this.setStroke(null, strokeStyle);
       }
     }
-  },
+  }
 
   attachChangeEventListener(type, listener) {
     const listeners = this.getChangeEventListeners(type);
@@ -216,7 +216,7 @@ const ElementPeer = new Class({
       throw new Error('Listener can not be null');
     }
     listeners.push(listener);
-  },
+  }
 
   getChangeEventListeners(type) {
     let listeners = this._changeListeners[type];
@@ -225,35 +225,38 @@ const ElementPeer = new Class({
       this._changeListeners[type] = listeners;
     }
     return listeners;
-  },
+  }
 
   /**
      * Move element to the front
      */
   moveToFront() {
     this._native.parentNode.appendChild(this._native);
-  },
+  }
 
   /**
      * Move element to the back
      */
   moveToBack() {
     this._native.parentNode.insertBefore(this._native, this._native.parentNode.firstChild);
-  },
+  }
 
   setCursor(type) {
     this._native.style.cursor = type;
-  },
-});
+  }
 
-ElementPeer.prototype.svgNamespace = 'http://www.w3.org/2000/svg';
-ElementPeer.prototype.linkNamespace = 'http://www.w3.org/1999/xlink';
-ElementPeer.prototype.__stokeStyleToStrokDasharray = {
-  solid: [],
-  dot: [1, 3],
-  dash: [4, 3],
-  longdash: [10, 2],
-  dashdot: [5, 3, 1, 3],
-};
+  static stokeStyleToStrokDasharray() {
+    return {
+      solid: [],
+      dot: [1, 3],
+      dash: [4, 3],
+      longdash: [10, 2],
+      dashdot: [5, 3, 1, 3],
+    };
+  }
+}
+
+ElementPeer.svgNamespace = 'http://www.w3.org/2000/svg';
+ElementPeer.linkNamespace = 'http://www.w3.org/1999/xlink';
 
 export default ElementPeer;

@@ -18,15 +18,15 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import DragTopic from './DragTopic';
 
-const DragManager = new Class({
-  initialize(workspace, eventDispatcher) {
+class DragManager {
+  constructor(workspace, eventDispatcher) {
     this._workspace = workspace;
     this._designerModel = workspace;
     this._listeners = {};
     this._isDragInProcess = false;
     this._eventDispatcher = eventDispatcher;
     DragTopic.init(this._workspace);
-  },
+  }
 
   add(node) {
     // Add behaviour ...
@@ -34,7 +34,7 @@ const DragManager = new Class({
     const screen = workspace.getScreenManager();
     const dragManager = this;
     const me = this;
-    const mouseDownListener = function (event) {
+    const mouseDownListener = function mouseDownListener(event) {
       if (workspace.isWorkspaceEventsEnabled()) {
         // Disable double drag...
         workspace.enableWorkspaceEvents(false);
@@ -56,7 +56,7 @@ const DragManager = new Class({
       }
     };
     node.addEvent('mousedown', mouseDownListener);
-  },
+  }
 
   remove(node) {
     const nodes = this._topics;
@@ -68,7 +68,7 @@ const DragManager = new Class({
         index = i;
       }
     }
-  },
+  }
 
   _buildMouseMoveListener(workspace, dragNode, dragManager) {
     const screen = workspace.getScreenManager();
@@ -98,7 +98,7 @@ const DragManager = new Class({
     };
     dragManager._mouseMoveListener = result;
     return result;
-  },
+  }
 
   _buildMouseUpListener(workspace, node, dragNode, dragManager) {
     const screen = workspace.getScreenManager();
@@ -131,7 +131,7 @@ const DragManager = new Class({
     };
     dragManager._mouseUpListener = result;
     return result;
-  },
+  }
 
   /**
      * type:
@@ -141,7 +141,7 @@ const DragManager = new Class({
      */
   addEvent(type, listener) {
     this._listeners[type] = listener;
-  },
-});
+  }
+}
 
 export default DragManager;

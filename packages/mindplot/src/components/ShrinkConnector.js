@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
 
-const ShirinkConnector = new Class({
-  initialize(topic) {
+class ShirinkConnector {
+  constructor(topic) {
     const ellipse = new web2d.Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
     this._ellipse = ellipse;
     ellipse.setFill('rgb(62,118,179)');
@@ -61,7 +61,7 @@ const ShirinkConnector = new Class({
     this._fillColor = '#f7f7f7';
     const model = topic.getModel();
     this.changeRender(model.areChildrenShrunken());
-  },
+  }
 
   changeRender(isShrink) {
     const elipse = this._ellipse;
@@ -70,40 +70,40 @@ const ShirinkConnector = new Class({
     } else {
       elipse.setStroke('1', 'solid');
     }
-  },
+  }
 
   setVisibility(value) {
     this._ellipse.setVisibility(value);
-  },
+  }
 
   setOpacity(opacity) {
     this._ellipse.setOpacity(opacity);
-  },
+  }
 
   setFill(color) {
     this._fillColor = color;
     this._ellipse.setFill(color);
-  },
+  }
 
   setAttribute(name, value) {
     this._ellipse.setAttribute(name, value);
-  },
+  }
 
   addToWorkspace(group) {
     group.append(this._ellipse);
-  },
+  }
 
   setPosition(x, y) {
     this._ellipse.setPosition(x, y);
-  },
+  }
 
   moveToBack() {
     this._ellipse.moveToBack();
-  },
+  }
 
   moveToFront() {
     this._ellipse.moveToFront();
-  },
-});
+  }
+}
 
 export default ShirinkConnector;

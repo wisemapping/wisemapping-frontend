@@ -23,8 +23,7 @@ import XMLSerializer_Pela from './XMLSerializer_Pela';
  * @class
  * @extends mindplot.persistence.XMLSerializer_Pela
  */
-const XMLSerializer_Tango = new Class({
-  Extends: XMLSerializer_Pela,
-});
+class XMLSerializer_Tango extends XMLSerializer_Pela{
+};
 
 export default XMLSerializer_Tango;

@@ -21,10 +21,10 @@ import Node from './Node';
 import SymmetricSorter from './SymmetricSorter';
 import BalancedSorter from './BalancedSorter';
 
-const OriginalLayout = new Class({
-  initialize(treeSet) {
+class OriginalLayout {
+  constructor(treeSet) {
     this._treeSet = treeSet;
-  },
+  }
 
   /** */
   createNode(id, size, position, type) {
@@ -35,7 +35,7 @@ const OriginalLayout = new Class({
 
     const strategy = type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
     return new Node(id, size, position, strategy);
-  },
+  }
 
   /** */
   connectNode(parentId, childId, order) {
@@ -51,7 +51,7 @@ const OriginalLayout = new Class({
 
     // Fire a basic validation ...
     sorter.verify(this._treeSet, parent);
-  },
+  }
 
   /** */
   disconnectNode(nodeId) {
@@ -72,7 +72,7 @@ const OriginalLayout = new Class({
 
     // Fire a basic validation ...
     parent.getSorter().verify(this._treeSet, parent);
-  },
+  }
 
   /** */
   layout() {
@@ -91,7 +91,7 @@ const OriginalLayout = new Class({
       },
       this,
     );
-  },
+  }
 
   _layoutChildren(node, heightById) {
     const nodeId = node.getId();
@@ -154,7 +154,7 @@ const OriginalLayout = new Class({
       },
       this,
     );
-  },
+  }
 
   _calculateAlignOffset(node, child, heightById) {
     if (child.isFree()) {
@@ -191,14 +191,14 @@ const OriginalLayout = new Class({
     }
 
     return offset;
-  },
+  }
 
   _branchIsTaller(node, heightById) {
     return (
       heightById[node.getId()]
       > node.getSize().height + node.getSorter()._getVerticalPadding() * 2
     );
-  },
+  }
 
   _fixOverlapping(node, heightById) {
     const children = this._treeSet.getChildren(node);
@@ -214,7 +214,7 @@ const OriginalLayout = new Class({
       },
       this,
     );
-  },
+  }
 
   _shiftBranches(node, heightById) {
     const shiftedBranches = [node];
@@ -254,7 +254,7 @@ const OriginalLayout = new Class({
       },
       this,
     );
-  },
+  }
 
   _branchesOverlap(branchA, branchB, heightById) {
     // a branch doesn't really overlap with itself
@@ -268,9 +268,8 @@ const OriginalLayout = new Class({
     const bottomB = branchB.getPosition().y + heightById[branchB.getId()] / 2;
 
     return !(topA >= bottomB || bottomA <= topB);
-  },
-},
-);
+  }
+}
 
 /**
  * @type {mindplot.layout.SymmetricSorter}

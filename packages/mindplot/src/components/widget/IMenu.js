@@ -18,9 +18,9 @@
 import { $assert } from "@wisemapping/core-js";
 import PersistenceManager from '../PersistenceManager';
 
-const IMenu = new Class({
+class IMenu {
 
-  initialize(designer, containerId, mapId) {
+  constructor(designer, containerId, mapId) {
     $assert(designer, 'designer can not be null');
     $assert(containerId, 'containerId can not be null');
 
@@ -34,13 +34,13 @@ const IMenu = new Class({
     this._designer.addEvent('modelUpdate', () => {
       me.setRequireChange(true);
     });
-  },
+  }
 
   clear() {
     _.each(this._toolbarElems, (item) => {
       item.hide();
     });
-  },
+  }
 
   discardChanges(designer) {
     // Avoid autosave before leaving the page ....
@@ -56,13 +56,13 @@ const IMenu = new Class({
 
     // Reload the page ...
     window.location.reload();
-  },
+  }
 
   unlockMap(designer) {
     const mindmap = designer.getMindmap();
     const persistenceManager = PersistenceManager.getInstance();
     persistenceManager.unlockMap(mindmap);
-  },
+  }
 
   save(saveElem, designer, saveHistory, sync) {
     // Load map content ...
@@ -86,7 +86,6 @@ const IMenu = new Class({
         }
         menu.setRequireChange(false);
       },
-
       onError(error) {
         if (saveHistory) {
           saveElem.css('cursor', 'pointer');
@@ -97,17 +96,17 @@ const IMenu = new Class({
             $notifyModal(error.message);
           }
         }
-      },
+      }
     }, sync);
-  },
+  }
 
   isSaveRequired() {
     return this._mindmapUpdated;
-  },
+  }
 
   setRequireChange(value) {
     this._mindmapUpdated = value;
-  },
-});
+  }
+}
 
 export default IMenu;

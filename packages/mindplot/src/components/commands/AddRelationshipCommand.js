@@ -17,20 +17,19 @@
  */
 import Command from '../Command';
 
-const AddRelationshipCommand = new Class(/** @lends AddRelationshipCommand */{
-  Extends: Command,
+class AddRelationshipCommand extends Command {
   /**
      * @classdesc This command class handles do/undo of adding a relationship to a topic.
      * @constructs
      * @param {XMLDOM} model
      * @extends mindplot.Command
      */
-  initialize(model) {
+  constructor(model) {
     $assert(model, 'Relationship model can not be null');
 
-    this.parent();
+    super();
     this._model = model;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -38,7 +37,7 @@ const AddRelationshipCommand = new Class(/** @lends AddRelationshipCommand */{
   execute(commandContext) {
     const relationship = commandContext.addRelationship(this._model);
     relationship.setOnFocus(true);
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -47,7 +46,7 @@ const AddRelationshipCommand = new Class(/** @lends AddRelationshipCommand */{
   undoExecute(commandContext) {
     const rel = commandContext.findRelationships(this._model.getId());
     commandContext.deleteRelationship(rel[0]);
-  },
-});
+  }
+}
 
 export default AddRelationshipCommand;

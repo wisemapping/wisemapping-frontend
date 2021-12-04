@@ -25,25 +25,25 @@ const TopicEvent = {
   CLICK: 'clicknode',
 };
 
-const TopicEventDispatcher = new Class({
-  Extends: Events,
-
-  initialize(readOnly) {
+class TopicEventDispatcher extends Events {
+  constructor(readOnly) 
+  {
+    super();
     this._readOnly = readOnly;
     this._activeEditor = null;
     this._multilineEditor = new MultilineTextEditor();
-  },
+  }
 
   close(update) {
     if (this.isVisible()) {
       this._activeEditor.close(update);
       this._activeEditor = null;
     }
-  },
+  }
 
   show(topic, options) {
     this.process(TopicEvent.EDIT, topic, options);
-  },
+  }
 
   process(eventType, topic, options) {
     $assert(eventType, 'eventType can not be null');
@@ -57,20 +57,20 @@ const TopicEventDispatcher = new Class({
     const model = topic.getModel();
     if (
       model.getShapeType() !== TopicShape.IMAGE
-            && !this._readOnly
-            && eventType === TopicEvent.EDIT
+      && !this._readOnly
+      && eventType === TopicEvent.EDIT
     ) {
       this._multilineEditor.show(topic, options ? options.text : null);
       this._activeEditor = this._multilineEditor;
     } else {
       this.fireEvent(eventType, { model, readOnly: this._readOnly });
     }
-  },
+  }
 
   isVisible() {
     return this._activeEditor != null && this._activeEditor.isVisible();
-  },
-});
+  }
+}
 
 TopicEventDispatcher._instance = null;
 

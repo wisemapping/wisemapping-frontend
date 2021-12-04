@@ -17,20 +17,20 @@
  */
 import Font from './Font';
 
-const TimesFont = new Class({
-  Extends: Font,
-  initialize() {
-    this.parent();
+class TimesFont extends Font {
+  constructor() {
+    super();
     this._fontFamily = 'times';
-  },
+  }
 
   getFontFamily() {
     return this._fontFamily;
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getFont() {
     return Font.TIMES;
-  },
-});
+  }
+}
 
 export default TimesFont;

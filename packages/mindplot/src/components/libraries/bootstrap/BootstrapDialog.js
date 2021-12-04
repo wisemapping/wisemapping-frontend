@@ -1,23 +1,26 @@
 import Options from '../../Options';
 
-const BootstrapDialog = new Class({
-  Implements: Options,
+import $ from '@libraries/jquery-2.1.0';
 
-  options: {
-    cancelButton: false,
-    closeButton: false,
-    acceptButton: true,
-    removeButton: false,
-    errorMessage: false,
-    onEventData: {},
-  },
-
-  initialize(title, options) {
+class BootstrapDialog extends Options {
+  
+  constructor(title, options) {
+    super();
+    this.options = {
+      cancelButton: false,
+      closeButton: false,
+      acceptButton: true,
+      removeButton: false,
+      errorMessage: false,
+      onEventData: {},
+    };
+  
     this.setOptions(options);
     this.options.onEventData.dialog = this;
     this._native = $('<div class="modal fade" tabindex="-1"></div>').append('<div class="modal-dialog"></div>');
     const content = $('<div class="modal-content"></div>');
     const header = this._buildHeader(title);
+
     if (header) {
       content.append(header);
     }
@@ -37,7 +40,7 @@ const BootstrapDialog = new Class({
       $(this).remove();
     });
     this._native.on('shown.bs.modal', this.onDialogShown);
-  },
+  }
 
   _buildFooter() {
     let footer = null;
@@ -58,7 +61,7 @@ const BootstrapDialog = new Class({
       footer.append(`<button type="button" class="btn btn-secondary" data-dismiss="modal">${$msg('CANCEL')}</button>`);
     }
     return footer;
-  },
+  }
 
   _buildHeader(title) {
     let header = null;
@@ -74,42 +77,42 @@ const BootstrapDialog = new Class({
       header.append(`<h2 class="modal-title">${title}</h2>`);
     }
     return header;
-  },
+  }
 
   onAcceptClick(event) {
     throw 'Unsupported operation';
-  },
+  }
 
-  onDialogShown() {},
+  onDialogShown() {}
   onRemoveClick(event) {
     throw 'Unsupported operation';
-  },
+  }
 
   show() {
     this._native.modal();
-  },
+  }
 
   setContent(content) {
     const modalBody = this._native.find('.modal-body');
     modalBody.append(content);
-  },
+  }
 
   css(options) {
     this._native.find('.modal-dialog').css(options);
-  },
+  }
 
   close() {
     this._native.modal('hide');
-  },
+  }
 
   alertError(message) {
     this._native.find('.alert-danger').text(message);
     this._native.find('.alert-danger').show();
-  },
+  }
 
   cleanError() {
     this._native.find('.alert-danger').hide();
-  },
-});
+  }
+}
 
 export default BootstrapDialog;

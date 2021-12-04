@@ -17,21 +17,21 @@
 */
 import { $defined } from '@wisemapping/core-js';
 
-const Command = new Class(/** @lends mindplot.Command */{
+class Command {
   /**
      * @classdesc The command base class for handling do/undo mindmap operations
      * @constructs
      */
-  initialize() {
+  constructor() {
     this._id = Command._nextUUID();
-  },
+  }
 
   /**
      * @abstract
      */
   execute(commandContext) {
     throw 'execute must be implemented.';
-  },
+  }
 
   /**
      * Triggered by the undo button - reverses the executed command
@@ -39,7 +39,7 @@ const Command = new Class(/** @lends mindplot.Command */{
      */
   undoExecute(commandContext) {
     throw 'undo must be implemented.';
-  },
+  }
 
   /**
      * Returns the unique id of this command
@@ -47,13 +47,13 @@ const Command = new Class(/** @lends mindplot.Command */{
      */
   getId() {
     return this._id;
-  },
-});
+  }
+}
 
 Command._nextUUID = function () {
   if (!$defined(Command._uuid)) {
     Command._uuid = 1;
-  }
+}
 
   Command._uuid += 1;
   return Command._uuid;

@@ -17,8 +17,7 @@
  */
 import Command from '../Command';
 
-const RemoveFeatureFromTopicCommand = new Class(/** @lends RemoveFeatureFromTopicCommand */{
-  Extends: Command,
+class RemoveFeatureFromTopicCommand extends Command {
   /**
      * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
      * a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}.
@@ -27,15 +26,15 @@ const RemoveFeatureFromTopicCommand = new Class(/** @lends RemoveFeatureFromTopi
      * @param {String} featureId id of the feature to remove
      * @extends mindplot.Command
      */
-  initialize(topicId, featureId) {
+  constructor(topicId, featureId) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert(featureId, 'iconModel can not be null');
 
-    this.parent();
+    super();
     this._topicId = topicId;
     this._featureId = featureId;
     this._oldFeature = null;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -45,7 +44,7 @@ const RemoveFeatureFromTopicCommand = new Class(/** @lends RemoveFeatureFromTopi
     const feature = topic.findFeatureById(this._featureId);
     topic.removeFeature(feature);
     this._oldFeature = feature;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -55,7 +54,7 @@ const RemoveFeatureFromTopicCommand = new Class(/** @lends RemoveFeatureFromTopi
     const topic = commandContext.findTopics(this._topicId)[0];
     topic.addFeature(this._oldFeature);
     this._oldFeature = null;
-  },
-});
+  }
+}
 
 export default RemoveFeatureFromTopicCommand;

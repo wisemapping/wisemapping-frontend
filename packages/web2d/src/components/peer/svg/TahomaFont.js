@@ -17,20 +17,20 @@
  */
 import Font from './Font';
 
-const TahomaFont = new Class({
-  Extends: Font,
-  initialize() {
-    this.parent();
+class TahomaFont extends Font {
+  constructor() {
+    super();
     this._fontFamily = 'tahoma';
-  },
+  }
 
   getFontFamily() {
     return this._fontFamily;
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getFont() {
     return Font.TAHOMA;
-  },
-});
+  }
+}
 
 export default TahomaFont;

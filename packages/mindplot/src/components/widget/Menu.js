@@ -19,7 +19,7 @@ import $ from '@libraries/jquery-2.1.0';
 import _ from '@libraries/underscore-min';
 
 import { $defined } from '@wisemapping/core-js';
-import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
+import BootstrapDialogRequest from "../libraries/bootstrap/BootstrapDialogRequest";
 import IMenu from './IMenu';
 import FontFamilyPanel from './FontFamilyPanel';
 import FontSizePanel from './FontSizePanel';
@@ -215,7 +215,7 @@ class Menu extends IMenu {
     }
 
     this._addButton('export', false, false, () => {
-      BootstrapDialog.Request.active = new BootstrapDialog.Request(`c/maps/${mapId}/exportf`, $msg('EXPORT'), {
+      BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/exportf`, $msg('EXPORT'), {
         cancelButton: true,
         closeButton: true,
       });
@@ -347,7 +347,7 @@ class Menu extends IMenu {
     const shareElem = $('#shareIt');
     if (shareElem) {
       this._addButton('shareIt', false, false, () => {
-        BootstrapDialog.Request.active = new BootstrapDialog.Request(`c/maps/${mapId}/sharef`, $msg('COLLABORATE'), {
+        BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/sharef`, $msg('COLLABORATE'), {
           closeButton: true,
           cancelButton: true,
         });
@@ -359,7 +359,7 @@ class Menu extends IMenu {
     const publishElem = $('#publishIt');
     if (publishElem) {
       this._addButton('publishIt', false, false, () => {
-        BootstrapDialog.Request.active = new BootstrapDialog.Request(`c/maps/${mapId}/publishf`, $msg('PUBLISH'), {
+        BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/publishf`, $msg('PUBLISH'), {
           closeButton: true,
           cancelButton: true,
         });
@@ -371,7 +371,7 @@ class Menu extends IMenu {
     const historyElem = $('#history');
     if (historyElem) {
       this._addButton('history', false, false, () => {
-        BootstrapDialog.Request.active = new BootstrapDialog.Request(`c/maps/${mapId}/historyf`, $msg('HISTORY'), {
+        BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/historyf`, $msg('HISTORY'), {
           closeButton: true,
           cancelButton: true,
         });
@@ -386,7 +386,7 @@ class Menu extends IMenu {
     const keyboardShortcut = $('#keyboardShortcuts');
     if (keyboardShortcut) {
       keyboardShortcut.bind('click', (event) => {
-        BootstrapDialog.Request.active = new BootstrapDialog.Request('c/keyboard', $msg('SHORTCUTS'), {
+        BootstrapDialogRequest.active = new BootstrapDialogRequest('c/keyboard', $msg('SHORTCUTS'), {
           closeButton: true,
           cancelButton: true,
         });

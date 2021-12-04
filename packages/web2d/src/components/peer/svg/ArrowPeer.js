@@ -20,34 +20,33 @@ import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import Point from '../../Point';
 
-const ArrowPeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'path');
-    this.parent(svgElement);
+class ArrowPeer extends ElementPeer {
+  constructor() {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'path');
+    super(svgElement);
     this._style = {};
     this._controlPoint = new Point();
     this._fromPoint = new Point();
-  },
+  }
 
   setFrom(x, y) {
     this._fromPoint.x = x;
     this._fromPoint.y = y;
     this._redraw();
-  },
+  }
 
   setControlPoint(point) {
     this._controlPoint = point;
     this._redraw();
-  },
+  }
 
   setStrokeColor(color) {
     this.setStroke(null, null, color, null);
-  },
+  }
 
   setStrokeWidth(width) {
     this.setStroke(width);
-  },
+  }
 
   setDashed(isDashed, length, spacing) {
     if (
@@ -56,11 +55,11 @@ const ArrowPeer = new Class({
       && $defined(length)
       && $defined(spacing)
     ) {
-      this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
+      this._native.setAttribute('stroke-dasharray', `${length}${spacing}`);
     } else {
       this._native.setAttribute('stroke-dasharray', '');
     }
-  },
+  }
 
   _updateStyle() {
     let style = '';
@@ -70,7 +69,7 @@ const ArrowPeer = new Class({
       }
     }
     this._native.setAttribute('style', style);
-  },
+  }
 
   _redraw() {
     let x;
@@ -110,7 +109,7 @@ const ArrowPeer = new Class({
         + `L${xp + this._fromPoint.x},${yp + this._fromPoint.y}`;
       this._native.setAttribute('d', path);
     }
-  },
-});
+  }
+}
 
 export default ArrowPeer;

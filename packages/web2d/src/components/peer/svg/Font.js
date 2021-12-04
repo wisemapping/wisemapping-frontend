@@ -17,12 +17,12 @@
  */
 import { $defined } from '@wisemapping/core-js';
 
-const Font = new Class({
-  initialize() {
+class Font {
+  constructor() {
     this._size = 10;
     this._style = 'normal';
     this._weight = 'normal';
-  },
+  }
 
   init(args) {
     if ($defined(args.size)) {
@@ -34,7 +34,7 @@ const Font = new Class({
     if ($defined(args.weight)) {
       this._weight = args.weight;
     }
-  },
+  }
 
   getHtmlSize(scale) {
     let result = 0;
@@ -50,35 +50,35 @@ const Font = new Class({
     }
 
     return result;
-  },
+  }
 
   getGraphSize() {
     return (this._size * 43) / 32;
-  },
+  }
 
   getSize() {
     return parseInt(this._size, 10);
-  },
+  }
 
   getStyle() {
     return this._style;
-  },
+  }
 
   getWeight() {
     return this._weight;
-  },
+  }
 
   setSize(size) {
     this._size = size;
-  },
+  }
 
   setStyle(style) {
     this._style = style;
-  },
+  }
 
   setWeight(weight) {
     this._weight = weight;
-  },
+  }
 
   getWidthMargin() {
     let result = 0;
@@ -86,7 +86,7 @@ const Font = new Class({
       result = 4;
     }
     return result;
-  },
-});
+  }
+}
 
 export default Font;

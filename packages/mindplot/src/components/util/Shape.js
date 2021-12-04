@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from '../model/INodeModel';
 import TopicConfig from '../TopicConfig';

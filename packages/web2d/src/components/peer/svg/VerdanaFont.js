@@ -17,20 +17,20 @@
  */
 import Font from './Font';
 
-const VerdanaFont = new Class({
-  Extends: Font,
-  initialize() {
-    this.parent();
+class VerdanaFont extends Font {
+  constructor() {
+    super();
     this._fontFamily = 'verdana';
-  },
+  }
 
   getFontFamily() {
     return this._fontFamily;
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getFont() {
     return Font.VERDANA;
-  },
-});
+  }
+}
 
 export default VerdanaFont;

@@ -18,15 +18,15 @@
 import ModelCodeName from './ModelCodeName';
 import XMLSerializer_Pela from './XMLSerializer_Pela';
 
-const Beta2PelaMigrator = new Class({
-  initialize(betaSerializer) {
+class Beta2PelaMigrator {
+  constructor(betaSerializer) {
     this._betaSerializer = betaSerializer;
     this._pelaSerializer = new XMLSerializer_Pela();
-  },
+  }
 
   toXML(mindmap) {
     return this._pelaSerializer.toXML(mindmap);
-  },
+  }
 
   loadFromDom(dom, mapId) {
     $assert($defined(mapId), 'mapId can not be null');
@@ -41,7 +41,7 @@ const Beta2PelaMigrator = new Class({
     });
 
     return mindmap;
-  },
+  }
 
   _fixPosition(parentModel) {
     const parentPos = parentModel.getPosition();
@@ -53,7 +53,7 @@ const Beta2PelaMigrator = new Class({
       }
       me._fixPosition(child);
     });
-  },
-});
+  }
+}
 
 export default Beta2PelaMigrator;

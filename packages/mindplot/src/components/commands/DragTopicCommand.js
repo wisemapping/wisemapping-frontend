@@ -17,8 +17,7 @@
  */
 import Command from '../Command';
 
-const DragTopicCommand = new Class(/** @lends DragTopicCommand */{
-  Extends: Command,
+class DragTopicCommand extends Command {
   /**
      * @classdesc This command class handles do/undo of dragging a topic to a new position.
      * @constructs
@@ -28,7 +27,7 @@ const DragTopicCommand = new Class(/** @lends DragTopicCommand */{
      * @param {mindplot.Topic} parentTopic the topic to be made the dragged topic's new parent
      * @extends mindplot.Command
      */
-  initialize(topicId, position, order, parentTopic) {
+  constructor(topicId, position, order, parentTopic) {
     $assert(topicId, 'topicId must be defined');
 
     this._topicsId = topicId;
@@ -37,7 +36,7 @@ const DragTopicCommand = new Class(/** @lends DragTopicCommand */{
     this.parent();
     this._position = position;
     this._order = order;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -85,7 +84,7 @@ const DragTopicCommand = new Class(/** @lends DragTopicCommand */{
     // Store for undo ...
     this._order = origOrder;
     this._position = origPosition;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -93,7 +92,7 @@ const DragTopicCommand = new Class(/** @lends DragTopicCommand */{
      */
   undoExecute(commandContext) {
     this.execute(commandContext);
-  },
-});
+  }
+}
 
 export default DragTopicCommand;

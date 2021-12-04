@@ -18,13 +18,12 @@
 import { $assert } from '@wisemapping/core-js';
 import Keyboard from './Keyboard';
 
-const DesignerKeyboard = new Class({
-  Extends: Keyboard,
-
-  initialize(designer) {
+class DesignerKeyboard extends Keyboard {
+  constructor(designer) {
+    super(designer);
     $assert(designer, 'designer can not be null');
     this._registerEvents(designer);
-  },
+  }
 
   _registerEvents(designer) {
     // Try with the keyboard ..
@@ -264,7 +263,7 @@ const DesignerKeyboard = new Class({
         }
       }
     });
-  },
+  }
 
   _goToBrother(designer, node, direction) {
     const parent = node.getParent();
@@ -277,10 +276,10 @@ const DesignerKeyboard = new Class({
       let dist = null;
       for (let i = 0; i < brothers.length; i++) {
         const sameSide = (x * brothers[i].getPosition().x) >= 0;
-        if (brothers[i] != node && sameSide) {
+        if (brothers[i] !== node && sameSide) {
           const brother = brothers[i];
           const brotherY = brother.getPosition().y;
-          if (direction == 'DOWN' && brotherY > y) {
+          if (direction === 'DOWN' && brotherY > y) {
             let distancia = y - brotherY;
             if (distancia < 0) {
               distancia *= (-1);
@@ -289,7 +288,7 @@ const DesignerKeyboard = new Class({
               dist = distancia;
               target = brothers[i];
             }
-          } else if (direction == 'UP' && brotherY < y) {
+          } else if (direction === 'UP' && brotherY < y) {
             let distance = y - brotherY;
             if (distance < 0) {
               distance *= (-1);
@@ -303,7 +302,7 @@ const DesignerKeyboard = new Class({
       }
       this._goToNode(designer, target);
     }
-  },
+  }
 
   _goToSideChild(designer, node, side) {
     const children = node.getChildren();
@@ -313,13 +312,13 @@ const DesignerKeyboard = new Class({
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
         const childY = child.getPosition().y;
-        if (side == 'LEFT' && child.getPosition().x < 0) {
+        if (side === 'LEFT' && child.getPosition().x < 0) {
           if (top == null || childY < top) {
             target = child;
             top = childY;
           }
         }
-        if (side == 'RIGHT' && child.getPosition().x > 0) {
+        if (side === 'RIGHT' && child.getPosition().x > 0) {
           if (top == null || childY < top) {
             target = child;
             top = childY;
@@ -329,14 +328,14 @@ const DesignerKeyboard = new Class({
 
       this._goToNode(designer, target);
     }
-  },
+  }
 
   _goToParent(designer, node) {
     const parent = node.getParent();
     if (parent) {
       this._goToNode(designer, parent);
     }
-  },
+  }
 
   _goToChild(designer, node) {
     const children = node.getChildren();
@@ -352,7 +351,7 @@ const DesignerKeyboard = new Class({
       }
       this._goToNode(designer, target);
     }
-  },
+  }
 
   _goToNode(designer, node) {
     // First deselect all the nodes ...
@@ -360,9 +359,8 @@ const DesignerKeyboard = new Class({
 
     // Give focus to the selected node....
     node.setOnFocus(true);
-  },
-
-});
+  }
+}
 
 DesignerKeyboard.specialKeys = {
   8: 'backspace',

@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
 import ActionDispatcher from './ActionDispatcher';
 import DragPivot from './DragPivot';
 
-const DragTopic = new Class({
-  initialize(dragShape, draggedNode, layoutManger) {
+class DragTopic {
+  constructor(dragShape, draggedNode, layoutManger) {
     $assert(dragShape, 'Rect can not be null.');
     $assert(draggedNode, 'draggedNode can not be null.');
     $assert(layoutManger, 'layoutManger can not be null.');
@@ -34,11 +34,11 @@ const DragTopic = new Class({
     this._position = new web2d.Point();
     this._isInWorkspace = false;
     this._isFreeLayoutEnabled = false;
-  },
+  }
 
   setOrder(order) {
     this._order = order;
-  },
+  }
 
   setPosition(x, y) {
     // Update drag shadow position ....
@@ -78,7 +78,7 @@ const DragTopic = new Class({
         this.setOrder(predict.order);
       }
     }
-  },
+  }
 
   updateFreeLayout(event) {
     const isFreeEnabled = (event.metaKey && Browser.Platform.mac) || (event.ctrlKey && !Browser.Platform.mac);
@@ -87,27 +87,27 @@ const DragTopic = new Class({
       dragPivot.setVisibility(!isFreeEnabled);
       this._isFreeLayoutEnabled = isFreeEnabled;
     }
-  },
+  }
 
   setVisibility(value) {
     const dragPivot = this._getDragPivot();
     dragPivot.setVisibility(value);
-  },
+  }
 
   isVisible() {
     const dragPivot = this._getDragPivot();
     return dragPivot.isVisible();
-  },
+  }
 
   getInnerShape() {
     return this._elem2d;
-  },
+  }
 
   disconnect(workspace) {
     // Clear connection line ...
     const dragPivot = this._getDragPivot();
     dragPivot.disconnect(workspace);
-  },
+  }
 
   connectTo(parent) {
     $assert(parent, 'Parent connection node can not be null.');
@@ -126,11 +126,11 @@ const DragTopic = new Class({
     dragPivot.setVisibility(true);
 
     this.setOrder(predict.order);
-  },
+  }
 
   getDraggedTopic() {
     return this._draggedNode;
-  },
+  }
 
   removeFromWorkspace(workspace) {
     if (this._isInWorkspace) {
@@ -143,11 +143,11 @@ const DragTopic = new Class({
 
       this._isInWorkspace = false;
     }
-  },
+  }
 
   isInWorkspace() {
     return this._isInWorkspace;
-  },
+  }
 
   addToWorkspace(workspace) {
     if (!this._isInWorkspace) {
@@ -156,19 +156,19 @@ const DragTopic = new Class({
       dragPivot.addToWorkspace(workspace);
       this._isInWorkspace = true;
     }
-  },
+  }
 
   _getDragPivot() {
     return DragTopic.__getDragPivot();
-  },
+  }
 
   getPosition() {
     return this._position;
-  },
+  }
 
   isDragTopic() {
     return true;
-  },
+  }
 
   applyChanges(workspace) {
     $assert(workspace, 'workspace can not be null');
@@ -193,23 +193,23 @@ const DragTopic = new Class({
     } else {
       actionDispatcher.moveTopic(topicId, position);
     }
-  },
+  }
 
   getConnectedToTopic() {
     const dragPivot = this._getDragPivot();
     return dragPivot.getTargetTopic();
-  },
+  }
 
   isConnected() {
     return this.getConnectedToTopic() != null;
-  },
+  }
 
   isFreeLayoutOn() {
     //        return  this._isFreeLayoutEnabled;
     // Disable free layout ...
     return false;
-  },
-});
+  }
+}
 
 DragTopic.init = function (workspace) {
   $assert(workspace, 'workspace can not be null');

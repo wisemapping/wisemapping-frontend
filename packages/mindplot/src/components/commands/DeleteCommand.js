@@ -17,8 +17,7 @@
  */
 import Command from '../Command';
 
-const DeleteCommand = new Class(/** @lends mindplot.commands.DeleteCommand */{
-  Extends: Command,
+class DeleteCommand extends Command {
   /**
      * @classdesc This command class handles do/undo of deleting a topic.
      * @constructs
@@ -26,16 +25,16 @@ const DeleteCommand = new Class(/** @lends mindplot.commands.DeleteCommand */{
      * @param {Array<String>} relIds ids of the relationships connected to the topics
      * @extends mindplot.Command
      */
-  initialize(topicIds, relIds) {
+  constructor(topicIds, relIds) {
     $assert($defined(relIds), 'topicIds can not be null');
 
-    this.parent();
+    super();
     this._relIds = relIds;
     this._topicIds = topicIds;
     this._deletedTopicModels = [];
     this._deletedRelModel = [];
     this._parentTopicIds = [];
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -81,7 +80,7 @@ const DeleteCommand = new Class(/** @lends mindplot.commands.DeleteCommand */{
         commandContext.deleteRelationship(rel);
       }, this);
     }
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -125,7 +124,7 @@ const DeleteCommand = new Class(/** @lends mindplot.commands.DeleteCommand */{
     this._deletedTopicModels = [];
     this._parentTopicIds = [];
     this._deletedRelModel = [];
-  },
+  }
 
   _filterChildren(topicIds, commandContext) {
     const topics = commandContext.findTopics(topicIds);
@@ -148,7 +147,7 @@ const DeleteCommand = new Class(/** @lends mindplot.commands.DeleteCommand */{
     });
 
     return result;
-  },
+  }
 
   _collectInDepthRelationships(topic) {
     let result = [];
@@ -172,8 +171,8 @@ const DeleteCommand = new Class(/** @lends mindplot.commands.DeleteCommand */{
       result = ret;
     }
     return result;
-  },
+  }
 
-});
+}
 
 export default DeleteCommand;

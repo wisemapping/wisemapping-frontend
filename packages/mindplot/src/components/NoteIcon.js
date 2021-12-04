@@ -20,18 +20,17 @@ import $ from '@libraries/jquery-2.1.0';
 import Icon from './Icon';
 import FloatingTip from './widget/FloatingTip';
 
-const NoteIcon = new Class({
-  Extends: Icon,
-  initialize(topic, noteModel, readOnly) {
+class NoteIcon extends Icon {
+  constructor(topic, noteModel, readOnly) {
     $assert(topic, 'topic can not be null');
 
-    this.parent(NoteIcon.IMAGE_URL);
+    super(NoteIcon.IMAGE_URL);
     this._linksModel = noteModel;
     this._topic = topic;
     this._readOnly = readOnly;
 
     this._registerEvents();
-  },
+  }
 
   _registerEvents() {
     this._image.setCursor('pointer');
@@ -55,7 +54,7 @@ const NoteIcon = new Class({
       placement: 'bottom',
       destroyOnExit: true,
     });
-  },
+  }
 
   _buildTooltipContent() {
     if ($('body').find('#textPopoverNote').length === 1) {
@@ -72,12 +71,12 @@ const NoteIcon = new Class({
       result.append(text);
       return result;
     }
-  },
+  }
 
   getModel() {
     return this._linksModel;
-  },
-});
+  }
+}
 
 NoteIcon.IMAGE_URL = 'images/notes.png';
 

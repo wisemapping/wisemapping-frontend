@@ -18,12 +18,12 @@
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
 
-const MultilineTextEditor = new Class({
-  Extends: Events,
-  initialize() {
+class MultilineTextEditor extends Events {
+  constructor() {
+    super();
     this._topic = null;
     this._timeoutId = -1;
-  },
+  }
 
   _buildEditor() {
     const result = $('<div></div>')
@@ -46,7 +46,7 @@ const MultilineTextEditor = new Class({
 
     result.append(textareaElem);
     return result;
-  },
+  }
 
   _registerEvents(containerElem) {
     const textareaElem = this._getTextareaElem();
@@ -120,7 +120,7 @@ const MultilineTextEditor = new Class({
     containerElem.on('mousedown', (event) => {
       event.stopPropagation();
     });
-  },
+  }
 
   _adjustEditorSize() {
     if (this.isVisible()) {
@@ -140,11 +140,11 @@ const MultilineTextEditor = new Class({
         height: textElem.height(),
       });
     }
-  },
+  }
 
   isVisible() {
     return $defined(this._containerElem) && this._containerElem.css('display') == 'block';
-  },
+  }
 
   _updateModel() {
     if (this._topic.getText() != this._getText()) {
@@ -154,7 +154,7 @@ const MultilineTextEditor = new Class({
       const actionDispatcher = ActionDispatcher.getInstance();
       actionDispatcher.changeTextToTopic([topicId], text);
     }
-  },
+  }
 
   show(topic, text) {
     // Close a previous node editor if it's opened ...
@@ -172,7 +172,7 @@ const MultilineTextEditor = new Class({
       this._registerEvents(containerElem);
       this._showEditor(text);
     }
-  },
+  }
 
   _showEditor(defaultText) {
     const topic = this._topic;
@@ -208,7 +208,7 @@ const MultilineTextEditor = new Class({
     };
 
     this._timeoutId = displayFunc.delay(10);
-  },
+  }
 
   _setStyle(fontStyle) {
     const inputField = this._getTextareaElem();
@@ -233,21 +233,21 @@ const MultilineTextEditor = new Class({
     };
     inputField.css(style);
     this._containerElem.css(style);
-  },
+  }
 
   _setText(text) {
     const textareaElem = this._getTextareaElem();
     textareaElem.val(text);
     this._adjustEditorSize();
-  },
+  }
 
   _getText() {
     return this._getTextareaElem().val();
-  },
+  }
 
   _getTextareaElem() {
     return this._containerElem.find('textarea');
-  },
+  }
 
   _positionCursor(textareaElem, selectText) {
     textareaElem.focus();
@@ -277,7 +277,7 @@ const MultilineTextEditor = new Class({
         textareaElem.focus();
       }
     }
-  },
+  }
 
   close(update) {
     if (this.isVisible() && this._topic) {
@@ -297,7 +297,7 @@ const MultilineTextEditor = new Class({
       this._timeoutId = -1;
     }
     this._topic = null;
-  },
-});
+  }
+}
 
 export default MultilineTextEditor;

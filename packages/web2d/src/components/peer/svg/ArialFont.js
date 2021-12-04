@@ -17,20 +17,20 @@
  */
 import Font from './Font';
 
-const ArialFont = new Class({
-  Extends: Font,
-  initialize() {
-    this.parent();
-    this._fontFamily = 'Arial';
-  },
+class ArialFont extends Font {
+  constructor() {
+    super();
+    this._fontFamily = 'arial';
+  }
 
   getFontFamily() {
     return this._fontFamily;
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getFont() {
     return Font.ARIAL;
-  },
-});
+  }
+}
 
 export default ArialFont;

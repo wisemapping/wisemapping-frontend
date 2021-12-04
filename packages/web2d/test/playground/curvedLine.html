@@ -9,47 +9,9 @@
             border: 1px solid black;
         }
     </style>
-    <script type="text/javascript">
-        web2d = {
-            peer: {}
-        };
-
-        web2d.peer =
-        {
-            svg: {}
-        };
-
-        web2d.peer.utils = {};
-    </script>
-    <script type="text/javascript">
-        function initialize() {
-            web2d.Toolkit.init();
-
-            var overflowWorkspace = new web2d.Workspace({ fillColor: 'green' });
-            overflowWorkspace.setSize("400px", "400px");
-            var line1 = new web2d.CurvedLine();
-            line1.setStyle(web2d.CurvedLine.SIMPLE_LINE);
-            line1.setFrom(200, 200);
-            line1.setTo(100, 100);
-            line1.setSrcControlPoint(new web2d.Point(-100, 0));
-            line1.setDestControlPoint(new web2d.Point(100, 0));
-            overflowWorkspace.append(line1);
-
-            var line2 = new web2d.CurvedLine();
-            line2.setStyle(web2d.CurvedLine.NICE_LINE);
-            line2.setFrom(0, 0);
-            line2.setTo(150, 90);
-            line2.setSrcControlPoint(new web2d.Point(100, 0));
-            line2.setDestControlPoint(new web2d.Point(-100, 0));
-            overflowWorkspace.append(line2);
-
-            overflowWorkspace.addItAsChildTo($('#overflowExample').first());
-
-        }
-    </script>
 </head>
 
-<body onload="initialize();">
+<body>
 
     <h1>PolyLines Render Tests </h1>
 
@@ -64,15 +26,6 @@
             </td>
             <td>
                 <div id="overflowExample" />
-            </td>
-
-        </tr>
-        <tr>
-            <td>
-                This is how multiple childs will look in each style line
-            </td>
-            <td>
-                <div id="multipleLineExample" />
             </td>
 
         </tr>

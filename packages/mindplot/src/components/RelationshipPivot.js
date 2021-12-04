@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
 import Relationship from './Relationship';
 import INodeModel from './model/INodeModel';
 import Shape from './util/Shape';
 
-const RelationshipPivot = new Class({
-  initialize(workspace, designer) {
+class RelationshipPivot {
+  constructor(workspace, designer) {
     $assert(workspace, 'workspace can not be null');
     $assert(designer, 'designer can not be null');
     this._workspace = workspace;
@@ -32,7 +32,7 @@ const RelationshipPivot = new Class({
     this._mouseMoveEvent = this._mouseMove.bind(this);
     this._onClickEvent = this._cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
-  },
+  }
 
   start(sourceTopic, targetPos) {
     $assert(sourceTopic, 'sourceTopic can not be null');
@@ -74,7 +74,7 @@ const RelationshipPivot = new Class({
         topic.addEvent('ontfocus', this._onTopicClick);
       });
     }
-  },
+  }
 
   dispose() {
     const workspace = this._workspace;
@@ -98,7 +98,7 @@ const RelationshipPivot = new Class({
       this._pivot = null;
       this._startArrow = null;
     }
-  },
+  }
 
   _mouseMove(event) {
     const screen = this._workspace.getScreenManager();
@@ -120,13 +120,13 @@ const RelationshipPivot = new Class({
 
     event.stopPropagation();
     return false;
-  },
+  }
 
   _cleanOnMouseClick(event) {
     // The user clicks on a desktop on in other element that is not a node.
     this.dispose();
     event.stopPropagation();
-  },
+  }
 
   _calculateFromPosition(toPosition) {
     // Calculate origin position ...
@@ -140,7 +140,7 @@ const RelationshipPivot = new Class({
     spoint.x = parseInt(controlPoint[0].x, 10) + parseInt(sourcePosition.x, 10);
     spoint.y = parseInt(controlPoint[0].y, 10) + parseInt(sourcePosition.y, 10);
     return Shape.calculateRelationShipPointCoordinates(this._sourceTopic, spoint);
-  },
+  }
 
   _connectOnFocus(event, targetTopic) {
     const sourceTopic = this._sourceTopic;
@@ -152,11 +152,11 @@ const RelationshipPivot = new Class({
       this._designer._actionDispatcher.addRelationship(relModel);
     }
     this.dispose();
-  },
+  }
 
   _isActive() {
     return this._pivot != null;
-  },
-});
+  }
+}
 
 export default RelationshipPivot;

@@ -19,27 +19,26 @@ import { $defined } from '@wisemapping/core-js';
 import $ from '@libraries/jquery-2.1.0';
 import ElementPeer from './ElementPeer';
 
-const TextPeer = new Class({
-  Extends: ElementPeer,
-  initialize(Font) {
+class TextPeer extends ElementPeer {
+  constructor(Font) {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'text');
+    super(svgElement);
     this.Font = Font;
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'text');
-    this.parent(svgElement);
     this._position = { x: 0, y: 0 };
     this._font = new Font('Arial', this);
-  },
+  }
 
   append(element) {
     this._native.appendChild(element._native);
-  },
+  }
 
   setTextAlignment(align) {
     this._textAlign = align;
-  },
+  }
 
   getTextAlignment() {
     return $defined(this._textAlign) ? this._textAlign : 'left';
-  },
+  }
 
   setText(text) {
     // Remove all previous nodes ...
@@ -61,11 +60,11 @@ const TextPeer = new Class({
         me._native.appendChild(tspan);
       });
     }
-  },
+  }
 
   getText() {
     return this._text;
-  },
+  }
 
   setPosition(x, y) {
     this._position = { x, y };
@@ -74,15 +73,15 @@ const TextPeer = new Class({
 
     // tspan must be positioned manually.
     $(this._native).children('tspan').attr('x', x);
-  },
+  }
 
   getPosition() {
     return this._position;
-  },
+  }
 
   getNativePosition() {
     return $(this._native).position();
-  },
+  }
 
   setFont(font, size, style, weight) {
     if ($defined(font)) {
@@ -98,41 +97,41 @@ const TextPeer = new Class({
       this._font.setSize(size);
     }
     this._updateFontStyle();
-  },
+  }
 
   _updateFontStyle() {
     this._native.setAttribute('font-family', this._font.getFontFamily());
     this._native.setAttribute('font-size', this._font.getGraphSize());
     this._native.setAttribute('font-style', this._font.getStyle());
     this._native.setAttribute('font-weight', this._font.getWeight());
-  },
+  }
 
   setColor(color) {
     this._native.setAttribute('fill', color);
-  },
+  }
 
   getColor() {
     return this._native.getAttribute('fill');
-  },
+  }
 
   setTextSize(size) {
     this._font.setSize(size);
     this._updateFontStyle();
-  },
+  }
 
   setContentSize(width, height) {
     this._native.xTextSize = `${width.toFixed(1)},${height.toFixed(1)}`;
-  },
+  }
 
   setStyle(style) {
     this._font.setStyle(style);
     this._updateFontStyle();
-  },
+  }
 
   setWeight(weight) {
     this._font.setWeight(weight);
     this._updateFontStyle();
-  },
+  }
 
   setFontFamily(family) {
     const oldFont = this._font;
@@ -141,7 +140,7 @@ const TextPeer = new Class({
     this._font.setStyle(oldFont.getStyle());
     this._font.setWeight(oldFont.getWeight());
     this._updateFontStyle();
-  },
+  }
 
   getFont() {
     return {
@@ -150,12 +149,12 @@ const TextPeer = new Class({
       style: this._font.getStyle(),
       weight: this._font.getWeight(),
     };
-  },
+  }
 
   setSize(size) {
     this._font.setSize(size);
     this._updateFontStyle();
-  },
+  }
 
   getWidth() {
     let computedWidth;
@@ -170,13 +169,14 @@ const TextPeer = new Class({
         computedWidth = bbox.width;
       }
     } catch (e) {
+      console.error(e);
       computedWidth = 10;
     }
 
     let width = parseInt(computedWidth, 10);
     width += this._font.getWidthMargin();
     return width;
-  },
+  }
 
   getHeight() {
     // Firefox hack for this
@@ -188,11 +188,11 @@ const TextPeer = new Class({
       computedHeight = 10;
     }
     return parseInt(computedHeight, 10);
-  },
+  }
 
   getHtmlFontSize() {
     return this._font.getHtmlSize();
-  },
-});
+  }
+}
 
 export default TextPeer;

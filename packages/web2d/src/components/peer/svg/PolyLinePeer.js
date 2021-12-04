@@ -19,43 +19,42 @@ import { $defined } from '@wisemapping/core-js';
 import * as PolyLineUtils from '../utils/PolyLineUtils';
 import ElementPeer from './ElementPeer';
 
-const PolyLinePeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'polyline');
-    this.parent(svgElement);
+class PolyLinePeer extends ElementPeer {
+  constructor() {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'polyline');
+    super(svgElement);
     this.setFill('none');
     this.breakDistance = 10;
-  },
+  }
 
   setFrom(x1, y1) {
     this._x1 = x1;
     this._y1 = y1;
     this._updatePath();
-  },
+  }
 
   setTo(x2, y2) {
     this._x2 = x2;
     this._y2 = y2;
     this._updatePath();
-  },
+  }
 
   setStrokeWidth(width) {
     this._native.setAttribute('stroke-width', width);
-  },
+  }
 
   setColor(color) {
     this._native.setAttribute('stroke', color);
-  },
+  }
 
   setStyle(style) {
     this._style = style;
     this._updatePath();
-  },
+  }
 
   getStyle() {
     return this._style;
-  },
+  }
 
   _updatePath() {
     if (this._style === 'Curved') {
@@ -65,7 +64,7 @@ const PolyLinePeer = new Class({
     } else {
       this._updateCurvePath();
     }
-  },
+  }
 
   _updateStraightPath() {
     if (
@@ -84,7 +83,7 @@ const PolyLinePeer = new Class({
       );
       this._native.setAttribute('points', path);
     }
-  },
+  }
 
   _updateMiddleCurvePath() {
     const x1 = this._x1;
@@ -112,7 +111,7 @@ const PolyLinePeer = new Class({
       } ${middlex}, ${y2 - 10 * signy} ${middlex + 10 * signx}, ${y2} ${x2}, ${y2}`;
       this._native.setAttribute('points', path);
     }
-  },
+  }
 
   _updateCurvePath() {
     if (
@@ -131,7 +130,7 @@ const PolyLinePeer = new Class({
       );
       this._native.setAttribute('points', path);
     }
-  },
-});
+  }
+}
 
 export default PolyLinePeer;

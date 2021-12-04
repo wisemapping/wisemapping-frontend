@@ -18,23 +18,21 @@
 import jQuery from '@libraries/jquery-2.1.0';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 
-const NoteEditor = new Class({
-  Extends: BootstrapDialog,
-
-  initialize(model) {
+class NoteEditor extends BootstrapDialog{
+  constructor(model) {
     $assert(model, 'model can not be null');
     this._model = model;
-    this.parent($msg('Note'), {
+    super($msg('Note'), {
       cancelButton: true,
       closeButton: true,
       acceptButton: true,
       removeButton: typeof model.getValue() !== 'undefined',
-      onEventData: { model: this._model },
+      onEventData: { model: this._model }
     });
     this.css({ margin: '150px auto' });
     const panel = this._buildPanel(model);
     this.setContent(panel);
-  },
+  }
 
   _buildPanel(model) {
     const result = $('<div></div>').css('padding-top', '5px');
@@ -66,11 +64,11 @@ const NoteEditor = new Class({
 
     result.append(form);
     return result;
-  },
+  }
 
   onAcceptClick(event) {
     event.data.dialog._submitForm(event.data.model);
-  },
+  }
 
   _submitForm(model) {
     const textarea = this._native.find('textarea');
@@ -78,16 +76,16 @@ const NoteEditor = new Class({
       model.setValue(textarea.val());
     }
     this.close();
-  },
+  }
 
   onDialogShown() {
     $(this).find('textarea').focus();
-  },
+  }
 
   onRemoveClick(event) {
     event.data.model.setValue(null);
     event.data.dialog.close();
-  },
-});
+  }
+}
 
 export default NoteEditor;

@@ -13,14 +13,14 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 import ActionDispatcher from './ActionDispatcher';
 
 // FIXME: Not used!
-const TextEditor = new Class({
-  initialize(topic) {
+class TextEditor {
+  constructor(topic) {
     this._topic = topic;
-  },
+  }
 
   _buildEditor() {
     this._size = { width: 500, height: 100 };
@@ -61,7 +61,7 @@ const TextEditor = new Class({
     spanElem.inject(spanContainer);
 
     return result;
-  },
+  }
 
   _registerEvents(divElem) {
     const inputElem = this._getTextareaElem();
@@ -99,11 +99,11 @@ const TextEditor = new Class({
     divElem.addEvent('mousedown', (event) => {
       event.stopPropagation();
     });
-  },
+  }
 
   isVisible() {
     return $defined(this._containerElem) && this._containerElem.getStyle('display') === 'block';
-  },
+  }
 
   _updateModel() {
     if (this._topic.getText() !== this._getText()) {
@@ -113,7 +113,7 @@ const TextEditor = new Class({
       const actionDispatcher = ActionDispatcher.getInstance();
       actionDispatcher.changeTextToTopic([topicId], text);
     }
-  },
+  }
 
   show(text) {
     if (!this.isVisible()) {
@@ -125,7 +125,7 @@ const TextEditor = new Class({
       this._registerEvents(editorElem);
       this._showEditor(text);
     }
-  },
+  }
 
   _showEditor(defaultText) {
     const topic = this._topic;
@@ -163,7 +163,7 @@ const TextEditor = new Class({
     };
 
     displayFunc.delay(10);
-  },
+  }
 
   _setStyle(fontStyle) {
     const inputField = this._getTextareaElem();
@@ -189,7 +189,7 @@ const TextEditor = new Class({
     spanField.style.fontStyle = fontStyle.style;
     spanField.style.fontWeight = fontStyle.weight;
     spanField.style.fontSize = `${fontStyle.size}px`;
-  },
+  }
 
   _setText(text) {
     const inputField = this._getTextareaElem();
@@ -200,19 +200,19 @@ const TextEditor = new Class({
     const spanField = this._getSpanElem();
     spanField.innerHTML = text;
     inputField.value = text;
-  },
+  }
 
   _getText() {
     return this._getTextareaElem().value;
-  },
+  }
 
   _getTextareaElem() {
     return this._containerElem.getElement('input');
-  },
+  }
 
   _getSpanElem() {
     return this._containerElem.getElement('span');
-  },
+  }
 
   _setEditorSize(width, height) {
     const textShape = this._topic.getTextShape();
@@ -220,7 +220,7 @@ const TextEditor = new Class({
     this._size = { width: width * scale.width, height: height * scale.height };
     this._containerElem.style.width = `${this._size.width * 2}px`;
     this._containerElem.style.height = `${this._size.height}px`;
-  },
+  }
 
   _positionCursor(inputElem, selectText) {
     // Select text if it's required ...
@@ -238,7 +238,7 @@ const TextEditor = new Class({
     } else if (!selectText) {
       inputElem.setSelectionRange(0, inputElem.value.length);
     }
-  },
+  }
 
   close(update) {
     if (this.isVisible()) {
@@ -254,7 +254,7 @@ const TextEditor = new Class({
       this._containerElem.dispose();
       this._containerElem = null;
     }
-  },
-});
+  }
+}
 
 export default TextEditor;

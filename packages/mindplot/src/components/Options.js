@@ -1,4 +1,4 @@
-const Options = new Class({
+class Options {
 
   setOptions() {
     const options = this.options = Object.merge.apply(null, [{}, this.options].append(arguments));
@@ -10,8 +10,8 @@ const Options = new Class({
       }
     }
     return this;
-  },
+  }
 
-});
+}
 
 export default Options;

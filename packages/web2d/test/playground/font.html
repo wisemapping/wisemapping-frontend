@@ -1,7 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
     <style>
         th,
@@ -9,78 +7,9 @@
             border: 1px solid black;
         }
     </style>
-    <script type="text/javascript">
-        web2d = {
-            peer: {}
-        };
-
-        web2d.peer =
-        {
-            svg: {}
-        };
-
-        web2d.peer.utils = {};
-    </script>
-
-    <script type="text/javascript">
-        function multiline(text, family, elemId) {
-            var overflowWorkspace = new web2d.Workspace();
-            overflowWorkspace.setSize('200px', '240px');
-            overflowWorkspace.setCoordSize('200', '240');
-            overflowWorkspace.setCoordOrigin(0, 0);
-
-            [6, 8, 10, 15].forEach(function (size, i) {
-                var wText = new web2d.Text();
-                overflowWorkspace.append(wText);
-
-                wText.setText(text);
-                wText.setFont(family, size, 'bold');
-                wText.setPosition(30, 50 * i);
-                wText.setColor('red');
-            });
-
-            overflowWorkspace.addItAsChildTo($("#" + elemId));
-        }
-
-        function alignments(text, family, elemId) {
-            var overflowWorkspace = new web2d.Workspace();
-            overflowWorkspace.setSize('260px', '240px');
-            overflowWorkspace.setCoordSize('260', '240');
-            overflowWorkspace.setCoordOrigin(0, 0);
-
-            ['center', 'left', 'right'].forEach(function (align, i) {
-                var wText = new web2d.Text();
-                overflowWorkspace.append(wText);
-
-                wText.setText(text);
-                wText.setFont(family, 8, 'bold');
-                wText.setPosition(30, 80 * i);
-                wText.setColor('red');
-                wText.setTextAlignment(align);
-            });
-
-            overflowWorkspace.addItAsChildTo($("#" + elemId));
-        }
-
-        function initialize() {
-            web2d.Toolkit.init();
-            // Multine tests ...
-            ['Arial', 'Tahoma', 'Verdana', 'Times'].forEach(function (family, i) {
-                multiline('This multine text.\nLine 1 :)\nLine2', family, 'multi' + i);
-            });
-
-            // Multine tests and alingments .. ...
-            ['Arial', 'Tahoma', 'Verdana', 'Times'].forEach(function (family, i) {
-                alignments('This multine text.\nThis is the long line just because :)\nShort line', family, 'amulti' + i);
-            })
-        }
-    </script>
 </head>
-
-<body onload="initialize();">
-
+<body>
     <h1>Web2d Fonts Tests</h1>
-
     <table>
         <colgroup>
             <col style="width:30%" />

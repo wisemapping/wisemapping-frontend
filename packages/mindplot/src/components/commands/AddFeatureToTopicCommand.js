@@ -17,10 +17,8 @@
  */
 import Command from '../Command';
 
-const AddFeatureToTopicCommand = new Class(
-  /** @lends AddFeatureToTopicCommand */ {
-    Extends: Command,
-    /*
+class AddFeatureToTopicCommand extends Command {
+  /*
     * @classdesc This command class handles do/undo of adding features to topics, e.g. an
     * icon or a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}
     * @constructs
@@ -30,41 +28,40 @@ const AddFeatureToTopicCommand = new Class(
     * @extends mindplot.Command
     * @see mindplot.model.FeatureModel and subclasses
     */
-    initialize(topicId, featureType, attributes) {
-      $assert($defined(topicId), 'topicId can not be null');
-      $assert(featureType, 'featureType can not be null');
-      $assert(attributes, 'attributes can not be null');
+  constructor(topicId, featureType, attributes) {
+    $assert($defined(topicId), 'topicId can not be null');
+    $assert(featureType, 'featureType can not be null');
+    $assert(attributes, 'attributes can not be null');
 
-      this.parent();
-      this._topicId = topicId;
-      this._featureType = featureType;
-      this._attributes = attributes;
-      this._featureModel = null;
-    },
+    super();
+    this._topicId = topicId;
+    this._featureType = featureType;
+    this._attributes = attributes;
+    this._featureModel = null;
+  }
 
-    /**
+  /**
          * Overrides abstract parent method
          */
-    execute(commandContext) {
-      const topic = commandContext.findTopics(this._topicId)[0];
+  execute(commandContext) {
+    const topic = commandContext.findTopics(this._topicId)[0];
 
-      // Feature must be created only one time.
-      if (!this._featureModel) {
-        const model = topic.getModel();
-        this._featureModel = model.createFeature(this._featureType, this._attributes);
-      }
-      topic.addFeature(this._featureModel);
-    },
+    // Feature must be created only one time.
+    if (!this._featureModel) {
+      const model = topic.getModel();
+      this._featureModel = model.createFeature(this._featureType, this._attributes);
+    }
+    topic.addFeature(this._featureModel);
+  }
 
-    /**
+  /**
          * Overrides abstract parent method
          * @see {@link mindplot.Command.undoExecute}
          */
-    undoExecute(commandContext) {
-      const topic = commandContext.findTopics(this._topicId)[0];
-      topic.removeFeature(this._featureModel);
-    },
-  },
-);
+  undoExecute(commandContext) {
+    const topic = commandContext.findTopics(this._topicId)[0];
+    topic.removeFeature(this._featureModel);
+  }
+}
 
 export default AddFeatureToTopicCommand;

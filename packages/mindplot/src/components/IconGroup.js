@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
 import Icon from './Icon';
 

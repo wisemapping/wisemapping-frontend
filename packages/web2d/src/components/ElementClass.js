@@ -19,15 +19,16 @@
 import { $defined } from '@wisemapping/core-js';
 
 class ElementClass {
-  constructor(peer, attributes, htmlContainer) {
-    this._htmlContainer = htmlContainer;
+  constructor(peer, attributes, delayInit) {
     this.peer = peer;
     if (peer == null) {
       throw new Error('Element peer can not be null');
     }
 
-    if ($defined(attributes)) {
-      this._initialize(attributes);
+    if (!delayInit) {
+      if ($defined(attributes)) {
+        this._initialize(attributes);
+      }
     }
   }
 

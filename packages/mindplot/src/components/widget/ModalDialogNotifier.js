@@ -15,9 +15,7 @@
  *   limitations under the License.
  */
 
-const ModalDialogNotifier = new Class({
-  initialize() {},
-
+class ModalDialogNotifier {
   // FIXME: replace by alert()
   show(message, title) {
     $assert(message, 'message can not be null');

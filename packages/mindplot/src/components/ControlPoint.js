@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 import { $defined } from '@wisemapping/core-js';
 
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
 
-const ControlPoint = new Class({
-  initialize() {
+class ControlPoint {
+  constructor() {
     const control1 = new web2d.Elipse({
       width: 6,
       height: 6,
@@ -68,7 +68,7 @@ const ControlPoint = new Class({
     this._controlPointsController[1].addEvent('dblclick', (event) => {
       me._mouseClick(event);
     });
-  },
+  }
 
   setLine(line) {
     if ($defined(this._line)) {
@@ -82,11 +82,11 @@ const ControlPoint = new Class({
     this._orignalCtrlPoint[1] = this._controls[1].clone();
     this._endPoint[0] = this._line.getLine().getFrom().clone();
     this._endPoint[1] = this._line.getLine().getTo().clone();
-  },
+  }
 
   redraw() {
     if ($defined(this._line)) this._createControlPoint();
-  },
+  }
 
   _createControlPoint() {
     this._controls = this._line.getLine().getControlPoints();
@@ -110,9 +110,9 @@ const ControlPoint = new Class({
       this._controls[ControlPoint.TO].x + pos.x,
       this._controls[ControlPoint.TO].y + pos.y - 3,
     );
-  },
+  }
 
-  _removeLine() {},
+  _removeLine() {}
 
   _mouseDown(event, point, me) {
     if (!this._isBinded) {
@@ -130,7 +130,7 @@ const ControlPoint = new Class({
     event.preventDefault();
     event.stopPropagation();
     return false;
-  },
+  }
 
   _mouseMoveEvent(event, point) {
     const screen = this._workspace.getScreenManager();
@@ -153,7 +153,7 @@ const ControlPoint = new Class({
     this._controlLines[point].setFrom(cords.x, cords.y);
     this._controlLines[point].setTo(pos.x - 2, pos.y);
     this._line.getLine().updateLine(point);
-  },
+  }
 
   _mouseUp(event, point) {
     this._workspace.getScreenManager().removeEvent('mousemove', this._mouseMoveFunction);
@@ -162,13 +162,13 @@ const ControlPoint = new Class({
     const actionDispatcher = ActionDispatcher.getInstance();
     actionDispatcher.moveControlPoint(this, point);
     this._isBinded = false;
-  },
+  }
 
   _mouseClick(event) {
     event.preventDefault();
     event.stopPropagation();
     return false;
-  },
+  }
 
   setVisibility(visible) {
     if (visible) {
@@ -181,7 +181,7 @@ const ControlPoint = new Class({
     this._controlPointsController[1].setVisibility(visible);
     this._controlLines[0].setVisibility(visible);
     this._controlLines[1].setVisibility(visible);
-  },
+  }
 
   addToWorkspace(workspace) {
     this._workspace = workspace;
@@ -189,7 +189,7 @@ const ControlPoint = new Class({
     workspace.append(this._controlPointsController[1]);
     workspace.append(this._controlLines[0]);
     workspace.append(this._controlLines[1]);
-  },
+  }
 
   removeFromWorkspace(workspace) {
     this._workspace = null;
@@ -197,20 +197,20 @@ const ControlPoint = new Class({
     workspace.removeChild(this._controlPointsController[1]);
     workspace.removeChild(this._controlLines[0]);
     workspace.removeChild(this._controlLines[1]);
-  },
+  }
 
   getControlPoint(index) {
     return this._controls[index];
-  },
+  }
 
   getOriginalEndPoint(index) {
     return this._endPoint[index];
-  },
+  }
 
   getOriginalCtrlPoint(index) {
     return this._orignalCtrlPoint[index];
-  },
-});
+  }
+}
 
 ControlPoint.FROM = 0;
 ControlPoint.TO = 1;

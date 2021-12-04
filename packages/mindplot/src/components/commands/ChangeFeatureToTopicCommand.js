@@ -17,8 +17,7 @@
  */
 import Command from '../Command';
 
-const ChangeFeatureToTopicCommand = new Class(/** @lends ChangeFeatureToTopicCommand */{
-  Extends: Command,
+class ChangeFeatureToTopicCommand extends Command {
   /**
      * @extends mindplot.Command
      * @constructs
@@ -29,16 +28,16 @@ const ChangeFeatureToTopicCommand = new Class(/** @lends ChangeFeatureToTopicCom
      * @throws will throw an error if featureId is null or undefined
      * @throws will throw an error if attributes is null or undefined
      */
-  initialize(topicId, featureId, attributes) {
+  constructor(topicId, featureId, attributes) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert($defined(featureId), 'featureId can not be null');
     $assert($defined(attributes), 'attributes can not be null');
 
-    this.parent();
+    super();
     this._topicId = topicId;
     this._featureId = featureId;
     this._attributes = attributes;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -50,7 +49,7 @@ const ChangeFeatureToTopicCommand = new Class(/** @lends ChangeFeatureToTopicCom
     const oldAttributes = feature.getAttributes();
     feature.setAttributes(this._attributes);
     this._attributes = oldAttributes;
-  },
+  }
 
   /**
      * Overrides abstract parent method
@@ -58,7 +57,7 @@ const ChangeFeatureToTopicCommand = new Class(/** @lends ChangeFeatureToTopicCom
      */
   undoExecute(commandContext) {
     this.execute(commandContext);
-  },
-});
+  }
+}
 
 export default ChangeFeatureToTopicCommand;

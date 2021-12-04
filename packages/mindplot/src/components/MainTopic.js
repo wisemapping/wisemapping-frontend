@@ -16,148 +16,144 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
 import Topic from './Topic';
 import { TopicShape } from './model/INodeModel';
 import Shape from './util/Shape';
 
-const MainTopic = new Class(
-  /** @lends MainTopic */ {
-    Extends: Topic,
-    /**
+class MainTopic extends Topic {
+  /**
          * @extends mindplot.Topic
          * @constructs
          * @param model
          * @param options
          */
-    initialize(model, options) {
-      this.parent(model, options);
-    },
+  constructor(model, options) {
+    super(model, options);
+    this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
+  }
 
-    INNER_RECT_ATTRIBUTES: { stroke: '0.5 solid #009900' },
+  _buildDragShape() {
+    const innerShape = this._buildShape(this.INNER_RECT_ATTRIBUTES, this.getShapeType());
+    const size = this.getSize();
+    innerShape.setSize(size.width, size.height);
+    innerShape.setPosition(0, 0);
+    innerShape.setOpacity(0.5);
+    innerShape.setCursor('default');
+    innerShape.setVisibility(true);
 
-    _buildDragShape() {
-      const innerShape = this._buildShape(this.INNER_RECT_ATTRIBUTES, this.getShapeType());
-      const size = this.getSize();
-      innerShape.setSize(size.width, size.height);
-      innerShape.setPosition(0, 0);
-      innerShape.setOpacity(0.5);
-      innerShape.setCursor('default');
-      innerShape.setVisibility(true);
+    const brColor = this.getBorderColor();
+    innerShape.setAttribute('strokeColor', brColor);
 
-      const brColor = this.getBorderColor();
-      innerShape.setAttribute('strokeColor', brColor);
+    const bgColor = this.getBackgroundColor();
+    innerShape.setAttribute('fillColor', bgColor);
 
-      const bgColor = this.getBackgroundColor();
-      innerShape.setAttribute('fillColor', bgColor);
+    //  Create group ...
+    const groupAttributes = {
+      width: 100,
+      height: 100,
+      coordSizeWidth: 100,
+      coordSizeHeight: 100,
+    };
+    const group = new web2d.Group(groupAttributes);
+    group.append(innerShape);
 
-      //  Create group ...
-      const groupAttributes = {
-        width: 100,
-        height: 100,
-        coordSizeWidth: 100,
-        coordSizeHeight: 100,
-      };
-      const group = new web2d.Group(groupAttributes);
-      group.append(innerShape);
+    // Add Text ...
+    if (this.getShapeType() !== TopicShape.IMAGE) {
+      const textShape = this._buildTextShape(true);
+      const text = this.getText();
+      textShape.setText(text);
+      textShape.setOpacity(0.5);
+      group.append(textShape);
+    }
+    return group;
+  }
 
-      // Add Text ...
-      if (this.getShapeType() !== TopicShape.IMAGE) {
-        const textShape = this._buildTextShape(true);
-        const text = this.getText();
-        textShape.setText(text);
-        textShape.setOpacity(0.5);
-        group.append(textShape);
-      }
-      return group;
-    },
-
-    /** */
-    updateTopicShape(targetTopic, workspace) {
-      // Change figure based on the connected topic ...
-      const model = this.getModel();
-      let shapeType = model.getShapeType();
-      if (!targetTopic.isCentralTopic()) {
-        if (!$defined(shapeType)) {
-          // Get the real shape type ...
-          shapeType = this.getShapeType();
-          this._setShapeType(shapeType, false);
-        }
-      }
-    },
-
-    /** */
-    disconnect(workspace) {
-      this.parent(workspace);
-      const size = this.getSize();
-
-      const model = this.getModel();
-      let shapeType = model.getShapeType();
+  /** */
+  updateTopicShape(targetTopic, workspace) {
+    // Change figure based on the connected topic ...
+    const model = this.getModel();
+    let shapeType = model.getShapeType();
+    if (!targetTopic.isCentralTopic()) {
       if (!$defined(shapeType)) {
-        // Change figure ...
+        // Get the real shape type ...
         shapeType = this.getShapeType();
-        this._setShapeType(TopicShape.ROUNDED_RECT, false);
+        this._setShapeType(shapeType, false);
       }
-      const innerShape = this.getInnerShape();
-      innerShape.setVisibility(true);
-    },
+    }
+  }
 
-    _updatePositionOnChangeSize(oldSize, newSize) {
-      const xOffset = Math.round((newSize.width - oldSize.width) / 2);
-      const pos = this.getPosition();
-      if ($defined(pos)) {
-        if (pos.x > 0) {
-          pos.x += xOffset;
-        } else {
-          pos.x -= xOffset;
-        }
-        this.setPosition(pos);
-      }
-    },
+  /** */
+  disconnect(workspace) {
+    this.parent(workspace);
+    const size = this.getSize();
 
-    /** */
-    workoutIncomingConnectionPoint(sourcePosition) {
-      return Shape.workoutIncomingConnectionPoint(this, sourcePosition);
-    },
+    const model = this.getModel();
+    let shapeType = model.getShapeType();
+    if (!$defined(shapeType)) {
+      // Change figure ...
+      shapeType = this.getShapeType();
+      this._setShapeType(TopicShape.ROUNDED_RECT, false);
+    }
+    const innerShape = this.getInnerShape();
+    innerShape.setVisibility(true);
+  }
 
-    /** */
-    workoutOutgoingConnectionPoint(targetPosition) {
-      $assert(targetPosition, 'targetPoint can not be null');
-      const pos = this.getPosition();
-      const isAtRight = Shape.isAtRight(targetPosition, pos);
-      const size = this.getSize();
-
-      let result;
-      if (this.getShapeType() === TopicShape.LINE) {
-        result = new web2d.Point();
-        const groupPosition = this._elem2d.getPosition();
-        const innerShareSize = this.getInnerShape().getSize();
-
-        if (innerShareSize) {
-          const magicCorrectionNumber = 0.3;
-          if (!isAtRight) {
-            result.x = groupPosition.x + innerShareSize.width - magicCorrectionNumber;
-          } else {
-            result.x = groupPosition.x + magicCorrectionNumber;
-          }
-          result.y = groupPosition.y + innerShareSize.height;
-        } else {
-          // Hack: When the size has not being defined. This is because the node has not being added.
-          // Try to do our best ...
-          if (!isAtRight) {
-            result.x = pos.x + size.width / 2;
-          } else {
-            result.x = pos.x - size.width / 2;
-          }
-          result.y = pos.y + size.height / 2;
-        }
+  _updatePositionOnChangeSize(oldSize, newSize) {
+    const xOffset = Math.round((newSize.width - oldSize.width) / 2);
+    const pos = this.getPosition();
+    if ($defined(pos)) {
+      if (pos.x > 0) {
+        pos.x += xOffset;
       } else {
-        result = Shape.calculateRectConnectionPoint(pos, size, isAtRight, true);
+        pos.x -= xOffset;
       }
-      return result;
-    },
-  },
-);
+      this.setPosition(pos);
+    }
+  }
+
+  /** */
+  workoutIncomingConnectionPoint(sourcePosition) {
+    return Shape.workoutIncomingConnectionPoint(this, sourcePosition);
+  }
+
+  /** */
+  workoutOutgoingConnectionPoint(targetPosition) {
+    $assert(targetPosition, 'targetPoint can not be null');
+    const pos = this.getPosition();
+    const isAtRight = Shape.isAtRight(targetPosition, pos);
+    const size = this.getSize();
+
+    let result;
+    if (this.getShapeType() === TopicShape.LINE) {
+      result = new web2d.Point();
+      const groupPosition = this._elem2d.getPosition();
+      const innerShareSize = this.getInnerShape().getSize();
+
+      if (innerShareSize) {
+        const magicCorrectionNumber = 0.3;
+        if (!isAtRight) {
+          result.x = groupPosition.x + innerShareSize.width - magicCorrectionNumber;
+        } else {
+          result.x = groupPosition.x + magicCorrectionNumber;
+        }
+        result.y = groupPosition.y + innerShareSize.height;
+      } else {
+        // Hack: When the size has not being defined. This is because the node has not being added.
+        // Try to do our best ...
+        if (!isAtRight) {
+          result.x = pos.x + size.width / 2;
+        } else {
+          result.x = pos.x - size.width / 2;
+        }
+        result.y = pos.y + size.height / 2;
+      }
+    } else {
+      result = Shape.calculateRectConnectionPoint(pos, size, isAtRight, true);
+    }
+    return result;
+  }
+}
 
 export default MainTopic;

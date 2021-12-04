@@ -18,15 +18,15 @@
 import XMLSerializer_Tango from './XMLSerializer_Tango';
 import ModelCodeName from './ModelCodeName';
 
-const Pela2TangoMigrator = new Class({
-  initialize(pelaSerializer) {
+class Pela2TangoMigrator {
+  constructor(pelaSerializer) {
     this._pelaSerializer = pelaSerializer;
     this._tangoSerializer = new XMLSerializer_Tango();
-  },
+  }
 
   toXML(mindmap) {
     return this._tangoSerializer.toXML(mindmap);
-  },
+  }
 
   loadFromDom(dom, mapId) {
     $assert($defined(mapId), 'mapId can not be null');
@@ -35,7 +35,7 @@ const Pela2TangoMigrator = new Class({
     this._fixOrder(mindmap);
     this._fixPosition(mindmap);
     return mindmap;
-  },
+  }
 
   _fixOrder(mindmap) {
     // First level node policies has been changed.
@@ -62,7 +62,7 @@ const Pela2TangoMigrator = new Class({
     for (i = 0; i < leftNodes.length; i++) {
       leftNodes[i].setOrder(i * 2 + 1);
     }
-  },
+  }
 
   _fixPosition(mindmap) {
     // Position was not required in previous versions. Try to synthesize one .
@@ -73,7 +73,7 @@ const Pela2TangoMigrator = new Class({
       const position = child.getPosition();
       this._fixNodePosition(child, position);
     }
-  },
+  }
   _fixNodePosition(node, parentPosition) {
     // Position was not required in previous versions. Try to synthesize one .
     let position = node.getPosition();
@@ -86,7 +86,7 @@ const Pela2TangoMigrator = new Class({
       const child = children[i];
       this._fixNodePosition(child, position);
     }
-  },
-});
+  }
+}
 
 export default Pela2TangoMigrator;

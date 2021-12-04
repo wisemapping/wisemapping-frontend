@@ -18,17 +18,16 @@
 import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 
-const ElipsePeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'ellipse');
-    this.parent(svgElement);
+class ElipsePeer extends ElementPeer {
+  constructor() {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'ellipse');
+    super(svgElement);
     this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
     this._position = { x: 0, y: 0 };
-  },
+  }
 
   setSize(width, height) {
-    this.parent(width, height);
+    super.setSize(width, height);
     if ($defined(width)) {
       this._native.setAttribute('rx', width / 2);
     }
@@ -39,7 +38,7 @@ const ElipsePeer = new Class({
 
     const pos = this.getPosition();
     this.setPosition(pos.x, pos.y);
-  },
+  }
 
   setPosition(pcx, pcy) {
     const size = this.getSize();
@@ -54,11 +53,11 @@ const ElipsePeer = new Class({
     if ($defined(cy)) {
       this._native.setAttribute('cy', cy);
     }
-  },
+  }
 
   getPosition() {
     return this._position;
-  },
-});
+  }
+}
 
 export default ElipsePeer;

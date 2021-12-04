@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
 
 import ConnectionLine from './ConnectionLine';
@@ -25,14 +25,12 @@ import INodeModel from './model/INodeModel';
 
 import Shape from './util/Shape';
 
-const Relationship = new Class({
-  Extends: ConnectionLine,
-
-  initialize(sourceNode, targetNode, model) {
+class Relationship extends ConnectionLine {
+  constructor(sourceNode, targetNode, model) {
     $assert(sourceNode, 'sourceNode can not be null');
     $assert(targetNode, 'targetNode can not be null');
 
-    this.parent(sourceNode, targetNode, model.getLineType());
+    super(sourceNode, targetNode, model.getLineType());
     this.setModel(model);
 
     const strokeColor = Relationship.getStrokeColor();
@@ -74,12 +72,12 @@ const Relationship = new Class({
       const destPoint = model.getDestCtrlPoint().clone();
       this.setDestControlPoint(destPoint);
     }
-  },
+  }
 
   setStroke(color, style, opacity) {
     this.parent(color, style, opacity);
     this._startArrow.setStrokeColor(color);
-  },
+  }
 
   redraw() {
     const line2d = this._line2d;
@@ -134,7 +132,7 @@ const Relationship = new Class({
     }
     this._focusShape.moveToBack();
     this._controlPointsController.redraw();
-  },
+  }
 
   _positionArrows() {
     const tpos = this._line2d.getTo();
@@ -165,7 +163,7 @@ const Relationship = new Class({
       this._endArrow.setVisibility(this.isVisible());
     }
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
-  },
+  }
 
   addToWorkspace(workspace) {
     workspace.append(this._focusShape);
@@ -181,11 +179,11 @@ const Relationship = new Class({
     this.parent(workspace);
     this._positionArrows();
     this.redraw();
-  },
+  }
 
   _initializeControlPointController() {
     this.setOnFocus(true);
-  },
+  }
 
   removeFromWorkspace(workspace) {
     workspace.removeChild(this._focusShape);
@@ -196,11 +194,11 @@ const Relationship = new Class({
     if (this._endArrow) workspace.removeChild(this._endArrow);
 
     this.parent(workspace);
-  },
+  }
 
   getType() {
     return Relationship.type;
-  },
+  }
 
   setOnFocus(focus) {
     // Change focus shape
@@ -215,7 +213,7 @@ const Relationship = new Class({
       this._onFocus = focus;
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
     }
-  },
+  }
 
   _refreshShape() {
     const sPos = this._line2d.getFrom();
@@ -229,7 +227,7 @@ const Relationship = new Class({
     shapeCtrlPoints[1].x = ctrlPoints[1].x;
     shapeCtrlPoints[1].y = ctrlPoints[1].y;
     this._focusShape.updateLine();
-  },
+  }
 
   addEvent(type, listener) {
     // Translate to web 2d events ...
@@ -239,37 +237,37 @@ const Relationship = new Class({
 
     const line = this._line2d;
     line.addEvent(type, listener);
-  },
+  }
 
   isOnFocus() {
     return this._onFocus;
-  },
+  }
 
   isInWorkspace() {
     return this._isInWorkspace;
-  },
+  }
 
   setVisibility(value) {
     this.parent(value);
     if (this._showEndArrow) this._endArrow.setVisibility(this._showEndArrow);
     this._startArrow.setVisibility(this._showStartArrow && value);
-  },
+  }
 
   setOpacity(opacity) {
     this.parent(opacity);
     if (this._showEndArrow) this._endArrow.setOpacity(opacity);
     if (this._showStartArrow) this._startArrow.setOpacity(opacity);
-  },
+  }
 
   setShowEndArrow(visible) {
     this._showEndArrow = visible;
     if (this._isInWorkspace) this.redraw();
-  },
+  }
 
   setShowStartArrow(visible) {
     this._showStartArrow = visible;
     if (this._isInWorkspace) this.redraw();
-  },
+  }
 
   setFrom(x, y) {
     $assert($defined(x), 'x must be defined');
@@ -277,7 +275,7 @@ const Relationship = new Class({
 
     this._line2d.setFrom(x, y);
     this._startArrow.setFrom(x, y);
-  },
+  }
 
   setTo(x, y) {
     $assert($defined(x), 'x must be defined');
@@ -285,47 +283,47 @@ const Relationship = new Class({
 
     this._line2d.setTo(x, y);
     if (this._endArrow) this._endArrow.setFrom(x, y);
-  },
+  }
 
   setSrcControlPoint(control) {
     this._line2d.setSrcControlPoint(control);
     this._startArrow.setControlPoint(control);
-  },
+  }
 
   setDestControlPoint(control) {
     this._line2d.setDestControlPoint(control);
     if (this._showEndArrow) this._endArrow.setControlPoint(control);
-  },
+  }
 
   getControlPoints() {
     return this._line2d.getControlPoints();
-  },
+  }
 
   isSrcControlPointCustom() {
     return this._line2d.isSrcControlPointCustom();
-  },
+  }
 
   isDestControlPointCustom() {
     return this._line2d.isDestControlPointCustom();
-  },
+  }
 
   setIsSrcControlPointCustom(isCustom) {
     this._line2d.setIsSrcControlPointCustom(isCustom);
-  },
+  }
 
   setIsDestControlPointCustom(isCustom) {
     this._line2d.setIsDestControlPointCustom(isCustom);
-  },
+  }
 
   getId() {
     return this._model.getId();
-  },
+  }
 
   fireEvent(type, event) {
     const elem = this._line2d;
     elem.trigger(type, event);
-  },
-});
+  }
+}
 
 Relationship.getStrokeColor = function getStrokeColor() {
   return '#9b74e6';

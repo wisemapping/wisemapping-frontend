@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
 import DragTopicConfig from './DragTopicConfig';
 import Shape from './util/Shape';
 import INodeModel from './model/INodeModel';
 
-const DragPivot = new Class({
-  initialize() {
+class DragPivot {
+  constructor() {
     this._position = new web2d.Point();
     this._size = DragTopicConfig.PIVOT_SIZE;
 
@@ -33,15 +33,15 @@ const DragPivot = new Class({
     this._connectRect = this._buildRect();
     this._targetTopic = null;
     this._isVisible = false;
-  },
+  }
 
   isVisible() {
     return this._isVisible;
-  },
+  }
 
   getTargetTopic() {
     return this._targetTopic;
-  },
+  }
 
   _buildStraightLine() {
     const line = new web2d.CurvedLine();
@@ -50,7 +50,7 @@ const DragPivot = new Class({
     line.setOpacity(0.4);
     line.setVisibility(false);
     return line;
-  },
+  }
 
   _buildCurvedLine() {
     const line = new web2d.CurvedLine();
@@ -59,7 +59,7 @@ const DragPivot = new Class({
     line.setOpacity(0.4);
     line.setVisibility(false);
     return line;
-  },
+  }
 
   _redrawLine() {
     // Update line position.
@@ -90,16 +90,16 @@ const DragPivot = new Class({
     // This solve several strange effects ;)
     const targetPoint = targetTopic.workoutIncomingConnectionPoint(pivotPoint);
     line.setTo(targetPoint.x, targetPoint.y);
-  },
+  }
 
   setPosition(point) {
     this._position = point;
     this._redrawLine();
-  },
+  }
 
   getPosition() {
     return this._position;
-  },
+  }
 
   _buildRect() {
     const size = this._size;
@@ -113,16 +113,16 @@ const DragPivot = new Class({
     const rect = new web2d.Rect(0, rectAttributes);
     rect.setVisibility(false);
     return rect;
-  },
+  }
 
   _getPivotRect() {
     return this._dragPivot;
-  },
+  }
 
   getSize() {
     const elem2d = this._getPivotRect();
     return elem2d.getSize();
-  },
+  }
 
   setVisibility(value) {
     if (this.isVisible() != value) {
@@ -138,7 +138,7 @@ const DragPivot = new Class({
       }
       this._isVisible = value;
     }
-  },
+  }
 
   // If the node is connected, validate that there is a line connecting both...
   _getConnectionLine() {
@@ -152,7 +152,7 @@ const DragPivot = new Class({
       }
     }
     return result;
-  },
+  }
 
   addToWorkspace(workspace) {
     const pivotRect = this._getPivotRect();
@@ -178,7 +178,7 @@ const DragPivot = new Class({
     connectRect.setVisibility(false);
     workspace.append(connectRect);
     connectRect.moveToBack();
-  },
+  }
 
   removeFromWorkspace(workspace) {
     const shape = this._getPivotRect();
@@ -194,7 +194,7 @@ const DragPivot = new Class({
     if ($defined(this._curvedLine)) {
       workspace.removeChild(this._curvedLine);
     }
-  },
+  }
 
   connectTo(targetTopic, position) {
     $assert(!this._outgoingLine, 'Could not connect an already connected node');
@@ -226,7 +226,7 @@ const DragPivot = new Class({
     pivotRect.setPosition(position.x, position.y);
 
     this._redrawLine();
-  },
+  }
 
   disconnect(workspace) {
     $assert(workspace, 'workspace can not be null.');
@@ -234,7 +234,7 @@ const DragPivot = new Class({
 
     this.setVisibility(false);
     this._targetTopic = null;
-  },
-});
+  }
+}
 
 export default DragPivot;

@@ -19,16 +19,15 @@ import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import EventUtils from '../utils/EventUtils';
 
-const WorkspacePeer = new Class({
-  Extends: ElementPeer,
-  initialize(element) {
+class WorkspacePeer extends ElementPeer {
+  constructor(element) {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'svg');
+    super(svgElement);
     this._element = element;
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'svg');
-    this.parent(svgElement);
     this._native.setAttribute('focusable', 'true');
-    this._native.setAttribute('id', 'workspace');
+    // this._native.setAttribute('id', 'workspace');
     this._native.setAttribute('preserveAspectRatio', 'none');
-  },
+  }
 
   /**
      * http://www.w3.org/TR/SVG/coords.html 7.7 The viewBox  attribute
@@ -67,7 +66,7 @@ const WorkspacePeer = new Class({
     this._native.setAttribute('viewBox', coords.join(' '));
     this._native.setAttribute('preserveAspectRatio', 'none');
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');
-  },
+  }
 
   getCoordSize() {
     const viewBox = this._native.getAttribute('viewBox');
@@ -76,7 +75,7 @@ const WorkspacePeer = new Class({
       coords = viewBox.split(/ /);
     }
     return { width: coords[2], height: coords[3] };
-  },
+  }
 
   setCoordOrigin(x, y) {
     const viewBox = this._native.getAttribute('viewBox');
@@ -96,12 +95,12 @@ const WorkspacePeer = new Class({
     }
 
     this._native.setAttribute('viewBox', coords.join(' '));
-  },
+  }
 
   append(child) {
-    this.parent(child);
+    super.append(child);
     EventUtils.broadcastChangeEvent(child, 'onChangeCoordSize');
-  },
+  }
 
   getCoordOrigin() {
     const viewBox = this._native.getAttribute('viewBox');
@@ -112,11 +111,12 @@ const WorkspacePeer = new Class({
     const x = parseFloat(coords[0]);
     const y = parseFloat(coords[1]);
     return { x, y };
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   getPosition() {
     return { x: 0, y: 0 };
-  },
-});
+  }
+}
 
 export default WorkspacePeer;

@@ -20,20 +20,18 @@ import $ from '@libraries/jquery-2.1.0';
 import Icon from './Icon';
 import LinkIconTooltip from './widget/LinkIconTooltip';
 
-const LinkIcon = new Class({
-
-  Extends: Icon,
-  initialize(topic, linkModel, readOnly) {
+class LinkIcon extends Icon {
+  constructor(topic, linkModel, readOnly) {
     $assert(topic, 'topic can not be null');
     $assert(linkModel, 'linkModel can not be null');
 
-    this.parent(LinkIcon.IMAGE_URL);
+    super(LinkIcon.IMAGE_URL);
     this._linksModel = linkModel;
     this._topic = topic;
     this._readOnly = readOnly;
 
     this._registerEvents();
-  },
+  }
 
   _registerEvents() {
     this._image.setCursor('pointer');
@@ -61,12 +59,12 @@ const LinkIcon = new Class({
     $(this.getImage().peer._native).mouseenter(() => {
       me._tip.show();
     });
-  },
+  }
 
   getModel() {
     return this._linksModel;
-  },
-});
+  }
+}
 LinkIcon.IMAGE_URL = 'images/links.png';
 
 export default LinkIcon;

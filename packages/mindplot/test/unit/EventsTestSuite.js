@@ -1,14 +1,12 @@
-const TestClass = new Class({
-  Extends: mindplot.Events,
-
+class TestClass extends Events{
   getEvents() {
     return this.$events;
-  },
+  }
 
   removeEvents() {
     this.$events = {};
-  },
-});
+  }
+}
 
 // Test class and variables
 const expectedChangeFn1 = function () { return 'change1'; };

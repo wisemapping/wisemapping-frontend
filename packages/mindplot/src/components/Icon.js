@@ -16,44 +16,45 @@
  *   limitations under the License.
  */
 import { $assert } from "@wisemapping/core-js";
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
-const Icon = new Class({
-  initialize(url) {
+class Icon {
+  constructor(url) {
     $assert(url, 'topic can not be null');
     this._image = new web2d.Image();
     this._image.setHref(url);
     this._image.setSize(Icon.SIZE, Icon.SIZE);
-  },
+  }
 
   getImage() {
     return this._image;
-  },
+  }
 
   setGroup(group) {
     this._group = group;
-  },
+  }
 
   getGroup() {
     return this._group;
-  },
+  }
 
   getSize() {
     return this._image.getSize();
-  },
+  }
 
   getPosition() {
     return this._image.getPosition();
-  },
+  }
 
   addEvent(type, fnc) {
     this._image.addEvent(type, fnc);
-  },
+  }
 
+  // eslint-disable-next-line class-methods-use-this
   remove() {
     throw new Error('Unsupported operation');
-  },
-});
+  }
+}
 
 Icon.SIZE = 90;
 

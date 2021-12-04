@@ -17,34 +17,33 @@
  */
 import ElementPeer from './ElementPeer';
 
-const ImagePeer = new Class({
-  Extends: ElementPeer,
-  initialize() {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'image');
-    this.parent(svgElement);
+class ImagePeer extends ElementPeer {
+  constructor() {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'image');
+    super(svgElement);
     this._position = { x: 0, y: 0 };
     this._href = '';
     this._native.setAttribute('preserveAspectRatio', 'none');
-  },
+  }
 
   setPosition(x, y) {
     this._position = { x, y };
     this._native.setAttribute('y', y);
     this._native.setAttribute('x', x);
-  },
+  }
 
   getPosition() {
     return this._position;
-  },
+  }
 
   setHref(url) {
-    this._native.setAttributeNS(this.linkNamespace, 'href', url);
+    this._native.setAttributeNS(ElementPeer.linkNamespace, 'href', url);
     this._href = url;
-  },
+  }
 
   getHref() {
     return this._href;
-  },
-});
+  }
+}
 
 export default ImagePeer;

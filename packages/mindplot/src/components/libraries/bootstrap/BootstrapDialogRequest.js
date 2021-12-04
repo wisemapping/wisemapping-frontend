@@ -1,11 +1,8 @@
 import BootstrapDialog from './BootstrapDialog';
 
-BootstrapDialog.Request = new Class({
-
-  Extends: BootstrapDialog,
-
-  initialize(url, title, options) {
-    this.parent(title, options);
+class BootstrapDialogRequest extends BootstrapDialog {
+  constructor(url, title, options) {
+    super(title, options);
     this.requestOptions = {};
     this.requestOptions.cache = false;
     const me = this;
@@ -39,12 +36,13 @@ BootstrapDialog.Request = new Class({
       });
       me.show();
     });
-  },
+  }
 
   onDialogShown() {
     if (typeof (onDialogShown) === 'function') {
       onDialogShown();
     }
-  },
+  }
+}
 
-});
+export default BootstrapDialogRequest;

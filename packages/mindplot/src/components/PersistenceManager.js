@@ -18,8 +18,7 @@
 import { $assert, innerXML } from '@wisemapping/core-js';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
-const PersistenceManager = new Class({
-  initialize() { },
+class PersistenceManager {
 
   save(mindmap, editorProperties, saveHistory, events, sync) {
     $assert(mindmap, 'mindmap can not be null');
@@ -39,30 +38,30 @@ const PersistenceManager = new Class({
       console.log(e);
       events.onError(this._buildError());
     }
-  },
+ }
 
   load(mapId) {
     $assert(mapId, 'mapId can not be null');
     const domDocument = this.loadMapDom(mapId);
     return PersistenceManager.loadFromDom(mapId, domDocument);
-  },
+ }
 
   discardChanges(mapId) {
     throw new Error('Method must be implemented');
-  },
+ }
 
   loadMapDom(mapId) {
     throw new Error('Method must be implemented');
-  },
+ }
 
   saveMapXml(mapId, mapXml, pref, saveHistory, events, sync) {
     throw new Error('Method must be implemented');
-  },
+ }
 
   unlockMap(mindmap) {
     throw new Error('Method must be implemented');
-  },
-});
+ }
+}
 
 PersistenceManager.init = function (instance) {
   PersistenceManager._instance = instance;

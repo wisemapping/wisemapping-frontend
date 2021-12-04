@@ -15,57 +15,56 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from "@wisemapping/core-js";
+import { $assert } from '@wisemapping/core-js';
 import Icon from './Icon';
 import ActionDispatcher from './ActionDispatcher';
 
-const ImageIcon = new Class({
-  Extends: Icon,
-  initialize(topic, iconModel, readOnly) {
+class ImageIcon extends Icon {
+  constructor(topic, iconModel, readOnly) {
     $assert(iconModel, 'iconModel can not be null');
     $assert(topic, 'topic can not be null');
 
-    this._topicId = topic.getId();
-    this._featureModel = iconModel;
-
     // Build graph image representation ...
     const iconType = iconModel.getIconType();
-    const imgUrl = this._getImageUrl(iconType);
-    this.parent(imgUrl);
+    const imgUrl = ImageIcon._getImageUrl(iconType);
+    super(imgUrl);
 
+    this._topicId = topic.getId();
+    this._featureModel = iconModel;
+    
     if (!readOnly) {
       // Icon
       const image = this.getImage();
       const me = this;
       image.addEvent('click', () => {
         const iconType = iconModel.getIconType();
-        const newIconType = me._getNextFamilyIconId(iconType);
+        const newIconType = ImageIcon._getNextFamilyIconId(iconType);
         iconModel.setIconType(newIconType);
 
-        const imgUrl = me._getImageUrl(newIconType);
+        const imgUrl = ImageIcon._getImageUrl(newIconType);
         me._image.setHref(imgUrl);
       });
       this._image.setCursor('pointer');
     }
-  },
+  }
 
-  _getImageUrl(iconId) {
+  static _getImageUrl(iconId) {
     return `icons/${iconId}.png`;
-  },
+  }
 
   getModel() {
     return this._featureModel;
-  },
+  }
 
-  _getNextFamilyIconId(iconId) {
-    const familyIcons = this._getFamilyIcons(iconId);
+  static _getNextFamilyIconId(iconId) {
+    const familyIcons = ImageIcon._getFamilyIcons(iconId);
     $assert(familyIcons != null, 'Family Icon not found!');
 
     let result = null;
     for (let i = 0; i < familyIcons.length && result == null; i++) {
-      if (familyIcons[i] == iconId) {
+      if (familyIcons[i] === iconId) {
         // Is last one?
-        if (i == (familyIcons.length - 1)) {
+        if (i === (familyIcons.length - 1)) {
           result = familyIcons[0];
         } else {
           result = familyIcons[i + 1];
@@ -75,32 +74,32 @@ const ImageIcon = new Class({
     }
 
     return result;
-  },
+  }
 
-  _getFamilyIcons(iconId) {
+  static _getFamilyIcons(iconId) {
     $assert(iconId != null, 'id must not be null');
-    $assert(iconId.indexOf('_') != -1, "Invalid icon id (it must contain '_')");
+    $assert(iconId.indexOf('_') !== -1, "Invalid icon id (it must contain '_')");
 
     let result = null;
     for (let i = 0; i < ImageIcon.prototype.ICON_FAMILIES.length; i++) {
       const family = ImageIcon.prototype.ICON_FAMILIES[i];
       const iconFamilyId = iconId.substr(0, iconId.indexOf('_'));
 
-      if (family.id == iconFamilyId) {
+      if (family.id === iconFamilyId) {
         result = family.icons;
         break;
       }
     }
     return result;
-  },
+  }
 
   remove() {
     const actionDispatcher = ActionDispatcher.getInstance();
     const featureId = this._featureModel.getId();
     const topicId = this._topicId;
     actionDispatcher.removeFeatureFromTopic(topicId, featureId);
-  },
-});
+  }
+}
 
 ImageIcon.prototype.ICON_FAMILIES = [
   { id: 'face', icons: ['face_plain', 'face_sad', 'face_crying', 'face_smile', 'face_surprise', 'face_wink'] },

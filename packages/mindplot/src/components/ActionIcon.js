@@ -17,48 +17,49 @@
  */
 import Icon from './Icon';
 
-const ActionIcon = new Class({
-  Extends: Icon,
-  initialize(topic, url) {
-    this.parent(url);
+class ActionIcon extends Icon {
+
+  constructor(topic, url) {
+    super(url);
     this._node = topic;
-  },
+  }
+
   getNode() {
     return this._node;
-  },
+  }
 
   setPosition(x, y) {
     const size = this.getSize();
     this.getImage().setPosition(x - size.width / 2, y - size.height / 2);
-  },
+  }
 
   addEvent(event, fn) {
     this.getImage().addEvent(event, fn);
-  },
+  }
 
   addToGroup(group) {
     group.append(this.getImage());
-  },
+  }
 
   setVisibility(visible) {
     this.getImage().setVisibility(visible);
-  },
+  }
 
   isVisible() {
     return this.getImage().isVisible();
-  },
+  }
 
   setCursor(cursor) {
     return this.getImage().setCursor(cursor);
-  },
+  }
 
   moveToBack(cursor) {
     return this.getImage().moveToBack(cursor);
-  },
+  }
 
   moveToFront(cursor) {
     return this.getImage().moveToFront(cursor);
-  },
-});
+  }
+}
 
 export default ActionIcon;

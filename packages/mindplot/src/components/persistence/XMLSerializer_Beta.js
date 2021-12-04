@@ -20,7 +20,7 @@ import Mindmap from '../model/Mindmap';
 import INodeModel from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
 
-const XMLSerializer_Beta = new Class({
+class XMLSerializer_Beta {
   toXML(mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
 
@@ -43,7 +43,7 @@ const XMLSerializer_Beta = new Class({
     }
 
     return document;
-  },
+  }
 
   _topicToXML(document, topic) {
     const parentTopic = document.createElement('topic');
@@ -55,7 +55,7 @@ const XMLSerializer_Beta = new Class({
       const parent = topic.getParent();
       if (parent == null || parent.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
         const pos = topic.getPosition();
-        parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
+        parentTopic.setAttribute('position', `${pos.x}${pos.y}`);
       } else {
         const order = topic.getOrder();
         parentTopic.setAttribute('order', order);
@@ -147,25 +147,25 @@ const XMLSerializer_Beta = new Class({
     }
 
     return parentTopic;
-  },
+  }
 
   _iconToXML(document, icon) {
     const iconDom = document.createElement('icon');
     iconDom.setAttribute('id', icon.getIconType());
     return iconDom;
-  },
+  }
 
   _linkToXML(document, link) {
     const linkDom = document.createElement('link');
     linkDom.setAttribute('url', link.getUrl());
     return linkDom;
-  },
+  }
 
   _noteToXML(document, note) {
     const noteDom = document.createElement('note');
     noteDom.setAttribute('text', note.getText());
     return noteDom;
-  },
+  }
 
   loadFromDom(dom, mapId) {
     $assert(dom, 'Dom can not be null');
@@ -181,8 +181,8 @@ const XMLSerializer_Beta = new Class({
     // Is a wisemap?.
     $assert(
       documentElement.tagName === XMLSerializer_Beta.MAP_ROOT_NODE,
-      `This seem not to be a map document. Root Tag: '${documentElement.tagName},',HTML:${dom.innerHTML
-      },XML:${innerXML(dom)}`,
+      `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${dom.innerHTML
+      }XML:${innerXML(dom)}`,
     );
 
     // Start the loading process ...
@@ -200,7 +200,7 @@ const XMLSerializer_Beta = new Class({
     }
     mindmap.setId(mapId);
     return mindmap;
-  },
+  }
 
   _deserializeNode(domElem, mindmap) {
     const type = domElem.getAttribute('central') != null
@@ -299,23 +299,23 @@ const XMLSerializer_Beta = new Class({
     }
 
     return topic;
-  },
+  }
 
   _deserializeIcon(domElem) {
     let icon = domElem.getAttribute('id');
     icon = icon.replace('images/', 'icons/legacy/');
     return TopicFeature.createModel(TopicFeature.Icon.id, { id: icon });
-  },
+  }
 
   _deserializeLink(domElem) {
     return TopicFeature.createModel(TopicFeature.Link.id, { url: domElem.getAttribute('url') });
-  },
+  }
 
   _deserializeNote(domElem) {
     const text = domElem.getAttribute('text');
     return TopicFeature.createModel(TopicFeature.Note.id, { text: text == null ? ' ' : text });
-  },
-});
+  }
+}
 
 XMLSerializer_Beta.MAP_ROOT_NODE = 'map';
 

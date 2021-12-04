@@ -21,14 +21,13 @@ import ElementPeer from './ElementPeer';
 /**
  * http://www.w3.org/TR/SVG/shapes.html#RectElement
  */
-const RectPeer = new Class({
-  Extends: ElementPeer,
-  initialize(arc) {
-    const svgElement = window.document.createElementNS(this.svgNamespace, 'rect');
-    this.parent(svgElement);
+class RectPeer extends ElementPeer {
+  constructor(arc) {
+    const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'rect');
+    super(svgElement);
     this._arc = arc;
     this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
-  },
+  }
 
   setPosition(x, y) {
     if ($defined(x)) {
@@ -37,17 +36,16 @@ const RectPeer = new Class({
     if ($defined(y)) {
       this._native.setAttribute('y', parseInt(y, 10));
     }
-  },
+  }
 
   getPosition() {
     const x = this._native.getAttribute('x');
     const y = this._native.getAttribute('y');
     return { x: parseInt(x, 10), y: parseInt(y, 10) };
-  },
+  }
 
   setSize(width, height) {
-    this.parent(width, height);
-
+    super.setSize(width, height);
     const min = width < height ? width : height;
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.
@@ -55,7 +53,7 @@ const RectPeer = new Class({
       this._native.setAttribute('rx', arc);
       this._native.setAttribute('ry', arc);
     }
-  },
-});
+  }
+}
 
 export default RectPeer;

@@ -18,21 +18,20 @@
 import $ from '@libraries/jquery-2.1.0';
 import PersistenceManager from './PersistenceManager';
 
-const LocalStorageManager = new Class({
-  Extends: PersistenceManager,
-  initialize(documentUrl, forceLoad) {
-    this.parent();
+class LocalStorageManager extends PersistenceManager {
+  constructor(documentUrl, forceLoad) {
+    super();
     this.documentUrl = documentUrl;
     this.forceLoad = forceLoad;
-  },
+  }
 
   saveMapXml(mapId, mapXml, pref, saveHistory, events) {
     localStorage.setItem(`${mapId}-xml`, mapXml);
-  },
+  }
 
   discardChanges(mapId) {
     localStorage.removeItem(`${mapId}-xml`);
-  },
+  }
 
   loadMapDom(mapId) {
     let xml = localStorage.getItem(`${mapId}-xml`);
@@ -54,11 +53,11 @@ const LocalStorageManager = new Class({
     }
 
     return jQuery.parseXML(xml);
-  },
+  }
 
   unlockMap(mindmap) {
     // Ignore, no implementation required ...
-  },
-});
+  }
+}
 
 export default LocalStorageManager;

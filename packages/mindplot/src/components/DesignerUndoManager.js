@@ -17,12 +17,12 @@
  */
 import { $assert } from '@wisemapping/core-js';
 
-const DesignerUndoManager = new Class({
-  initialize(fireChange) {
+class DesignerUndoManager {
+  constructor() {
     this._undoQueue = [];
     this._redoQueue = [];
     this._baseId = 0;
-  },
+  }
 
   enqueue(command) {
     $assert(command, 'Command can  not be null');
@@ -37,7 +37,7 @@ const DesignerUndoManager = new Class({
       this._undoQueue.push(command);
     }
     this._redoQueue = [];
-  },
+  }
 
   execUndo(commandContext) {
     if (this._undoQueue.length > 0) {
@@ -46,7 +46,7 @@ const DesignerUndoManager = new Class({
 
       command.undoExecute(commandContext);
     }
-  },
+  }
 
   execRedo(commandContext) {
     if (this._redoQueue.length > 0) {
@@ -54,11 +54,11 @@ const DesignerUndoManager = new Class({
       this._undoQueue.push(command);
       command.execute(commandContext);
     }
-  },
+  }
 
   buildEvent() {
     return { undoSteps: this._undoQueue.length, redoSteps: this._redoQueue.length };
-  },
+  }
 
   markAsChangeBase() {
     const undoLength = this._undoQueue.length;
@@ -68,7 +68,7 @@ const DesignerUndoManager = new Class({
     } else {
       this._baseId = 0;
     }
-  },
+  }
 
   hasBeenChanged() {
     let result = true;
@@ -80,7 +80,7 @@ const DesignerUndoManager = new Class({
       result = (this._baseId != command.getId());
     }
     return result;
-  },
-});
+  }
+}
 
 export default DesignerUndoManager;

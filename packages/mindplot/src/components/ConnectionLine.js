@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import web2d from '@wisemapping/web2d';
+import * as web2d from '@wisemapping/web2d';
 
 import INodeModel, { TopicShape } from './model/INodeModel';
 import TopicConfig from './TopicConfig';
 
-const ConnectionLine = new Class({
-  initialize(sourceNode, targetNode, lineType) {
+class ConnectionLine {
+  constructor(sourceNode, targetNode, lineType) {
     $assert(targetNode, 'parentNode node can not be null');
     $assert(sourceNode, 'childNode node can not be null');
     $assert(sourceNode !== targetNode, 'Circular connection');
@@ -47,14 +47,14 @@ const ConnectionLine = new Class({
     line.setFill(strokeColor, 1);
 
     this._line2d = line;
-  },
+  }
 
   _getCtrlPoints(sourceNode, targetNode) {
     const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
     const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
     const deltaX = (srcPos.x - destPos.x) / 3;
     return [new web2d.Point(deltaX, 0), new web2d.Point(-deltaX, 0)];
-  },
+  }
 
   _createLine(lineType, defaultStyle) {
     if (!$defined(lineType)) {
@@ -79,19 +79,19 @@ const ConnectionLine = new Class({
         break;
     }
     return line;
-  },
+  }
 
   setVisibility(value) {
     this._line2d.setVisibility(value);
-  },
+  }
 
   isVisible() {
     return this._line2d.isVisible();
-  },
+  }
 
   setOpacity(opacity) {
     this._line2d.setOpacity(opacity);
-  },
+  }
 
   redraw() {
     const line2d = this._line2d;
@@ -117,7 +117,7 @@ const ConnectionLine = new Class({
 
     // Add connector ...
     this._positionateConnector(targetTopic);
-  },
+  }
 
   _positionateConnector(targetTopic) {
     const targetPosition = targetTopic.getPosition();
@@ -142,61 +142,61 @@ const ConnectionLine = new Class({
       }
       connector.setPosition(x, y);
     }
-  },
+  }
 
   setStroke(color, style, opacity) {
     this._line2d.setStroke(null, null, color, opacity);
-  },
+  }
 
   addToWorkspace(workspace) {
     workspace.append(this._line2d);
     this._line2d.moveToBack();
-  },
+  }
 
   removeFromWorkspace(workspace) {
     workspace.removeChild(this._line2d);
-  },
+  }
 
   getTargetTopic() {
     return this._targetTopic;
-  },
+  }
 
   getSourceTopic() {
     return this._sourceTopic;
-  },
+  }
 
   getLineType() {
     return this._lineType;
-  },
+  }
 
   getLine() {
     return this._line2d;
-  },
+  }
 
   getModel() {
     return this._model;
-  },
+  }
 
   setModel(model) {
     this._model = model;
-  },
+  }
 
   getType() {
     return 'ConnectionLine';
-  },
+  }
 
   getId() {
     return this._model.getId();
-  },
+  }
 
   moveToBack() {
     this._line2d.moveToBack();
-  },
+  }
 
   moveToFront() {
     this._line2d.moveToFront();
-  },
-});
+  }
+}
 
 ConnectionLine.getStrokeColor = () => '#495879';
 
