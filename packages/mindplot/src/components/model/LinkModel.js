@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
 
 class LinkModel extends FeatureModel {
@@ -35,7 +36,7 @@ class LinkModel extends FeatureModel {
   setUrl(url) {
     $assert(url, 'url can not be null');
 
-    const fixedUrl = this._fixUrl(url);
+    const fixedUrl = LinkModel._fixUrl(url);
     this.setAttribute('url', fixedUrl);
 
     const type = fixedUrl.contains('mailto:') ? 'mail' : 'url';

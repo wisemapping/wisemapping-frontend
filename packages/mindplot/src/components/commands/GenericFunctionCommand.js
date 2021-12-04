@@ -15,6 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $defined, $assert } from '@wisemapping/core-js';
+import _ from '@libraries/underscore-min';
 import Command from '../Command';
 
 const GenericFunctionCommand = new Class(/** @lends GenericFunctionCommand */{

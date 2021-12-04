@@ -51,9 +51,8 @@ function buildDesigner(options) {
   // Register load events ...
   designer = new Designer(options, container);
   designer.addEvent('loadSuccess', () => {
-    window.waitDialog.close();
-    window.waitDialog = null;
     window.mindmapLoadReady = true;
+    console.log("Map loadded successfully");
   });
 
   const onerrorFn = function onerror(message, url, lineNo) {

@@ -15,6 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from "@wisemapping/core-js";
+import $ from '@libraries/jquery-2.1.0';
 import FloatingTip from './FloatingTip';
 
 class LinkIconTooltip extends FloatingTip {
