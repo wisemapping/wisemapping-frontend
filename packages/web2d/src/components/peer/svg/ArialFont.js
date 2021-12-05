@@ -20,7 +20,7 @@ import Font from './Font';
 class ArialFont extends Font {
   constructor() {
     super();
-    this._fontFamily = 'arial';
+    this._fontFamily = 'Arial';
   }
 
   getFontFamily() {

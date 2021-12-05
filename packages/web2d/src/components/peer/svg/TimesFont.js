@@ -20,7 +20,7 @@ import Font from './Font';
 class TimesFont extends Font {
   constructor() {
     super();
-    this._fontFamily = 'times';
+    this._fontFamily = 'Times';
   }
 
   getFontFamily() {

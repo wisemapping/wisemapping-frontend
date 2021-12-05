@@ -20,7 +20,7 @@ import Font from './Font';
 class TahomaFont extends Font {
   constructor() {
     super();
-    this._fontFamily = 'tahoma';
+    this._fontFamily = 'Tahoma';
   }
 
   getFontFamily() {

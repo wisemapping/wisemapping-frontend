@@ -20,7 +20,7 @@ import Font from './Font';
 class VerdanaFont extends Font {
   constructor() {
     super();
-    this._fontFamily = 'verdana';
+    this._fontFamily = 'Verdana';
   }
 
   getFontFamily() {
