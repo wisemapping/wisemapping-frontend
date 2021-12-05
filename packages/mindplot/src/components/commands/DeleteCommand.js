@@ -44,7 +44,7 @@ class DeleteCommand extends Command {
     const topics = this._filterChildren(this._topicIds, commandContext);
 
     if (topics.length > 0) {
-      _.each(topics, function (topic) {
+      topics.forEach(((topic) => {
         // In case that it's editing text node, force close without update ...
         topic.closeEditors();
 
@@ -54,7 +54,7 @@ class DeleteCommand extends Command {
         const relationships = this._collectInDepthRelationships(topic);
         this._deletedRelModel.append(relationships.map((rel) => rel.getModel().clone()));
 
-        _.each(relationships, (relationship) => {
+        relationships.forEach((relationship) => {
           commandContext.deleteRelationship(relationship);
         });
 
@@ -70,15 +70,15 @@ class DeleteCommand extends Command {
 
         // Finally, delete the topic from the workspace...
         commandContext.deleteTopic(topic);
-      }, this);
+      }));
     }
 
     const rels = commandContext.findRelationships(this._relIds);
     if (rels.length > 0) {
-      _.each(rels, function (rel) {
+      rels.forEach(((rel) => {
         this._deletedRelModel.push(rel.getModel().clone());
         commandContext.deleteRelationship(rel);
-      }, this);
+      }).bind(this));
     }
   }
 
@@ -88,12 +88,12 @@ class DeleteCommand extends Command {
      */
   undoExecute(commandContext) {
     // Add all the topics ...
-    _.each(this._deletedTopicModels, (model) => {
+    this._deletedTopicModels.forEach((model) => {
       commandContext.createTopic(model);
-    }, this);
+    });
 
     // Do they need to be connected ?
-    _.each(this._deletedTopicModels, function (topicModel, index) {
+    this._deletedTopicModels.forEach(((topicModel, index) => {
       const topics = commandContext.findTopics(topicModel.getId());
 
       const parentId = this._parentTopicIds[index];
@@ -101,18 +101,18 @@ class DeleteCommand extends Command {
         const parentTopics = commandContext.findTopics(parentId);
         commandContext.connect(topics[0], parentTopics[0]);
       }
-    }, this);
+    }).bind(this));
 
     // Add rebuild relationships ...
-    _.each(this._deletedRelModel, (model) => {
+    this._deletedRelModel.forEach((model) => {
       commandContext.addRelationship(model);
     });
 
     // Finally display the topics ...
-    _.each(this._deletedTopicModels, (topicModel) => {
+    this._deletedTopicModels.forEach((topicModel) => {
       const topics = commandContext.findTopics(topicModel.getId());
       topics[0].setBranchVisibility(true);
-    }, this);
+    });
 
     // Focus on last recovered topic ..
     if (this._deletedTopicModels.length > 0) {
@@ -130,7 +130,7 @@ class DeleteCommand extends Command {
     const topics = commandContext.findTopics(topicIds);
 
     const result = [];
-    _.each(topics, (topic) => {
+    topics.forEach((topic) => {
       let parent = topic.getParent();
       let found = false;
       while (parent != null && !found) {
@@ -172,7 +172,6 @@ class DeleteCommand extends Command {
     }
     return result;
   }
-
 }
 
 export default DeleteCommand;

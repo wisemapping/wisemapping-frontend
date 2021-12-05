@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
 
 /**
@@ -50,13 +49,10 @@ const AbstractBasicSorter = new Class(
         result = height;
       } else {
         let childrenHeight = 0;
-        _.each(
-          children,
-          function (child) {
-            childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-          },
-          this,
-        );
+
+        children.forEach(((child) => {
+          childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
+        }));
 
         result = Math.max(height, childrenHeight);
       }

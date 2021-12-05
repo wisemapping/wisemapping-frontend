@@ -56,7 +56,7 @@ class ScreenManager {
 
   fireEvent(type, event) {
     if (type === 'click') {
-      _.each(this._clickEvents, (listener) => {
+      this._clickEvents.forEach((listener) => {
         listener(type, event);
       });
     } else {

@@ -17,7 +17,6 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import _ from '../../../../../libraries/underscore-min';
 
 class INodeModel {
   constructor(mindmap) {
@@ -273,7 +272,7 @@ class INodeModel {
     const source = this;
     // Copy properties ...
     const keys = source.getPropertiesKeys();
-    _.each(keys, (key) => {
+    keys.forEach((key) => {
       const value = source.getProperty(key);
       target.putProperty(key, value);
     });
@@ -282,7 +281,7 @@ class INodeModel {
     const children = this.getChildren();
     const tmindmap = target.getMindmap();
 
-    _.each((children, snode) => {
+    children.forEach((snode) => {
       const tnode = tmindmap.createNode(snode.getType(), snode.getId());
       snode.copyTo(tnode);
       target.append(tnode);
@@ -347,10 +346,10 @@ class INodeModel {
     const children = this.getChildren();
     if (children.length > 0) {
       result = `${result}, children: {(size:${children.length}`;
-      _.each(children, (node) => {
+      children.forEach((node) => {
         result = `${result}=> (`;
         const keys = node.getPropertiesKeys();
-        _.each(keys, (key) => {
+        keys.forEach((key) => {
           const value = node.getProperty(key);
           result = `${result + key}:${value},`;
         });

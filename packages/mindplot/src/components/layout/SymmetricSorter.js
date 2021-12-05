@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 import { $assert, $defined } from '@wisemapping/core-js';
 import AbstractBasicSorter from './AbstractBasicSorter';
 
@@ -248,7 +247,7 @@ const SymmetricSorter = new Class(
 
       // Compute the center of the branch ...
       let totalHeight = 0;
-      _.each(heights, (elem) => {
+      heights.forEach((elem) => {
         totalHeight += elem.height;
       });
       let ysum = totalHeight / 2;

@@ -36,7 +36,7 @@ class Beta2PelaMigrator {
     // Beta does not set position on second level nodes ...
     const branches = mindmap.getBranches();
     const me = this;
-    _.each(branches, (model) => {
+    branches.forEach((model) => {
       me._fixPosition(model);
     });
 
@@ -47,7 +47,7 @@ class Beta2PelaMigrator {
     const parentPos = parentModel.getPosition();
     const isRight = parentPos.x > 0;
     const me = this;
-    _.each(parentModel.getChildren(), (child) => {
+    parentModel.getChildren().forEach((child) => {
       if (!child.getPosition()) {
         child.setPosition(parentPos.x + (50 * isRight ? 1 : -1), parentPos.y);
       }

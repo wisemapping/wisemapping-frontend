@@ -26,7 +26,7 @@ class ListToolbarPanel extends ToolbarPaneItem {
   _initPanel() {
     // Register on toolbar elements ...
     const me = this;
-    this.getPanelElem().children('div').bind('click', function (event) {
+    this.getPanelElem().children('div').bind('click', function click(event) {
       event.stopPropagation();
       me.hide();
       const value = $defined($(this).attr('model')) ? $(this).attr('model') : $(this).attr('id');
@@ -38,7 +38,7 @@ class ListToolbarPanel extends ToolbarPaneItem {
     const panelElem = this.getPanelElem();
     const menuElems = panelElem.find('div');
     const value = this.getModel().getValue();
-    _.each(menuElems, (elem) => {
+    menuElems.forEach((elem) => {
       const elemValue = $defined($(elem).attr('model')) ? $(elem).attr('model') : $(elem).attr('id');
       $assert(elemValue, 'elemValue can not be null');
       if (elemValue === value) $(elem).attr('class', 'toolbarPanelLinkSelectedLink');

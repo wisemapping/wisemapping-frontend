@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $defined, $assert } from '@wisemapping/core-js';
-import _ from '@libraries/underscore-min';
 import Command from '../Command';
 
 class GenericFunctionCommand extends Command {
@@ -62,14 +61,14 @@ class GenericFunctionCommand extends Command {
 
       if (topics != null) {
         const me = this;
-        _.each(topics, (topic) => {
+        topics.forEach((topic) => {
           const oldValue = me._commandFunc(topic, me._value);
           me._oldValues.push(oldValue);
         });
       }
       this.applied = true;
     } else {
-      throw 'Command can not be applied two times in a row.';
+      throw new Error('Command can not be applied two times in a row.');
     }
   }
 
@@ -80,10 +79,10 @@ class GenericFunctionCommand extends Command {
   undoExecute(commandContext) {
     if (this.applied) {
       const topics = commandContext.findTopics(this._topicsId);
-      const me = this;
-      _.each(topics, (topic, index) => {
-        me._commandFunc(topic, me._oldValues[index]);
-      });
+
+      topics.forEach( ((topic, index) => {
+        this._commandFunc(topic, this._oldValues[index]);
+      }).bind(this));
 
       this.applied = false;
       this._oldValues = [];

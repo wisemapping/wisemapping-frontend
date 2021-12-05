@@ -35,7 +35,6 @@ module.exports = {
         test: /.js$/,
         exclude: [
           /node_modules/,
-          path.resolve(__dirname, '../../libraries/underscore-min'),
         ],
       },
     ],

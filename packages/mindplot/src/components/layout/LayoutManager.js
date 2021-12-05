@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 import $ from '@libraries/jquery-2.1.0';
 import { $assert, $defined } from '@wisemapping/core-js';
 import Events from '../Events';
@@ -238,45 +237,37 @@ class LayoutManager extends Events {
   }
 
   _flushEvents() {
-    _.each(
-      this._events,
-      function (event) {
-        this.fireEvent('change', event);
-      },
-      this,
-    );
+    this._events.forEach(((event) => {
+      this.fireEvent('change', event);
+    }));
     this._events = [];
   }
 
   _collectChanges(nodes) {
-    if (!nodes) { 
-      nodes = this._treeSet.getTreeRoots(); 
+    if (!nodes) {
+      nodes = this._treeSet.getTreeRoots();
     }
 
-    _.each(
-      nodes,
-      function (node) {
-        if (node.hasOrderChanged() || node.hasPositionChanged()) {
-          // Find or create a event ...
-          const id = node.getId();
-          let event = this._events.some((event) => event.id == id);
-          if (!event) {
-            event = new ChangeEvent(id);
-          }
-
-          // Update nodes ...
-          event.setOrder(node.getOrder());
-          event.setPosition(node.getPosition());
-
-          node.resetPositionState();
-          node.resetOrderState();
-          node.resetFreeState();
-          this._events.push(event);
+    nodes.forEach(((node) => {
+      if (node.hasOrderChanged() || node.hasPositionChanged()) {
+        // Find or create a event ...
+        const id = node.getId();
+        let event = this._events.some((e) => e.id === id);
+        if (!event) {
+          event = new ChangeEvent(id);
         }
-        this._collectChanges(this._treeSet.getChildren(node));
-      },
-      this,
-    );
+
+        // Update nodes ...
+        event.setOrder(node.getOrder());
+        event.setPosition(node.getPosition());
+
+        node.resetPositionState();
+        node.resetOrderState();
+        node.resetFreeState();
+        this._events.push(event);
+      }
+      this._collectChanges(this._treeSet.getChildren(node));
+    }));
   }
 }
 

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 import { $assert, $defined } from '@wisemapping/core-js';
 import Node from './Node';
 import SymmetricSorter from './SymmetricSorter';
@@ -27,6 +26,7 @@ class OriginalLayout {
   }
 
   /** */
+  // eslint-disable-next-line class-methods-use-this
   createNode(id, size, position, type) {
     $assert($defined(id), 'id can not be null');
     $assert(size, 'size can not be null');
@@ -77,20 +77,15 @@ class OriginalLayout {
   /** */
   layout() {
     const roots = this._treeSet.getTreeRoots();
-    _.each(
-      roots,
-      function (node) {
-        // Calculate all node heights ...
-        const sorter = node.getSorter();
+    roots.each(((node) => {
+      // Calculate all node heights ...
+      const sorter = node.getSorter();
 
-        const heightById = sorter.computeChildrenIdByHeights(this._treeSet, node);
+      const heightById = sorter.computeChildrenIdByHeights(this._treeSet, node);
+      this._layoutChildren(node, heightById);
 
-        this._layoutChildren(node, heightById);
-
-        this._fixOverlapping(node, heightById);
-      },
-      this,
-    );
+      this._fixOverlapping(node, heightById);
+    }));
   }
 
   _layoutChildren(node, heightById) {
@@ -113,7 +108,8 @@ class OriginalLayout {
       const offsetById = sorter.computeOffsets(this._treeSet, node);
       const parentPosition = node.getPosition();
       const me = this;
-      _.each(children, (child) => {
+
+      children.each((child) => {
         const offset = offsetById[child.getId()];
 
         const childFreeDisplacement = child.getFreeDisplacement();
@@ -147,13 +143,9 @@ class OriginalLayout {
     }
 
     // Continue reordering the children nodes ...
-    _.each(
-      children,
-      function (child) {
-        this._layoutChildren(child, heightById);
-      },
-      this,
-    );
+    children.each(((child) => {
+      this._layoutChildren(child, heightById);
+    }));
   }
 
   _calculateAlignOffset(node, child, heightById) {
@@ -168,7 +160,7 @@ class OriginalLayout {
 
     if (
       this._treeSet.isStartOfSubBranch(child)
-      && this._branchIsTaller(child, heightById)
+      && OriginalLayout._branchIsTaller(child, heightById)
     ) {
       if (this._treeSet.hasSinglePathToSingleLeaf(child)) {
         offset = heightById[child.getId()] / 2
@@ -193,7 +185,7 @@ class OriginalLayout {
     return offset;
   }
 
-  _branchIsTaller(node, heightById) {
+  static _branchIsTaller(node, heightById) {
     return (
       heightById[node.getId()]
       > node.getSize().height + node.getSorter()._getVerticalPadding() * 2
@@ -206,14 +198,9 @@ class OriginalLayout {
     if (node.isFree()) {
       this._shiftBranches(node, heightById);
     }
-
-    _.each(
-      children,
-      function (child) {
-        this._fixOverlapping(child, heightById);
-      },
-      this,
-    );
+    children.each(((child) => {
+      this._fixOverlapping(child, heightById);
+    }));
   }
 
   _shiftBranches(node, heightById) {
@@ -223,40 +210,31 @@ class OriginalLayout {
       node,
       node.getFreeDisplacement().y,
     );
-    let last = node;
-    _.each(
-      siblingsToShift,
-      function (sibling) {
-        const overlappingOccurs = shiftedBranches.some(function (shiftedBranch) {
-          return this._branchesOverlap(shiftedBranch, sibling, heightById);
-        }, this);
 
-        if (!sibling.isFree() || overlappingOccurs) {
-          const sAmount = node.getFreeDisplacement().y;
-          this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
-          shiftedBranches.push(sibling);
-        }
-      },
-      this,
-    );
+    siblingsToShift.each(((sibling) => {
+      const overlappingOccurs = shiftedBranches.some(((shiftedBranch) =>{
+        return OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById);
+      }).bind(this));
+
+      if (!sibling.isFree() || overlappingOccurs) {
+        const sAmount = node.getFreeDisplacement().y;
+        this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
+        shiftedBranches.push(sibling);
+      }
+    }).bind(this));
 
     const branchesToShift = this._treeSet
       .getBranchesInVerticalDirection(node, node.getFreeDisplacement().y)
       .filter((branch) => !shiftedBranches.contains(branch));
 
-    _.each(
-      branchesToShift,
-      function (branch) {
-        const bAmount = node.getFreeDisplacement().y;
-        this._treeSet.shiftBranchPosition(branch, 0, bAmount);
-        shiftedBranches.push(branch);
-        last = branch;
-      },
-      this,
-    );
+    branchesToShift.each(((branch) =>{
+      const bAmount = node.getFreeDisplacement().y;
+      this._treeSet.shiftBranchPosition(branch, 0, bAmount);
+      shiftedBranches.push(branch);
+    }).bind(this));
   }
 
-  _branchesOverlap(branchA, branchB, heightById) {
+  static _branchesOverlap(branchA, branchB, heightById) {
     // a branch doesn't really overlap with itself
     if (branchA === branchB) {
       return false;

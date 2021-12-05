@@ -100,16 +100,14 @@ const IconGroup = new Class(
 
     _findIconFromModel(iconModel) {
       let result = null;
-      _.each(
-        this._icons,
-        (icon) => {
-          const elModel = icon.getModel();
-          if (elModel.getId() == iconModel.getId()) {
-            result = icon;
-          }
-        },
-        this,
-      );
+
+      this._icons.forEach((icon) => {
+        const elModel = icon.getModel();
+
+        if (elModel.getId() === iconModel.getId()) {
+          result = icon;
+        }
+      });
 
       if (result == null) {
         throw new Error(`Icon can no be found:${iconModel.getId()}, Icons:${this._icons}`);
@@ -135,8 +133,9 @@ const IconGroup = new Class(
       this._icons.erase(icon);
       this._resize(this._icons.length);
       const me = this;
+
       // Add all again ...
-      _.each(this._icons, (elem, i) => {
+      this._icons.forEach((elem, i) => {
         me._positionIcon(elem, i);
       });
     },

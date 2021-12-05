@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 import { $assert, $defined } from '@wisemapping/core-js';
 
 const RootedTreeSet = new Class(
@@ -376,7 +375,7 @@ const RootedTreeSet = new Class(
 
       const children = this.getChildren(node);
       const me = this;
-      _.each(children, (child) => {
+      children.forEach( (child) => {
         me.shiftBranchPosition(child, xOffset, yOffset);
       });
     },
@@ -392,7 +391,7 @@ const RootedTreeSet = new Class(
 
       const children = this.getChildren(node);
       const me = this;
-      _.each(children, (child) => {
+      children.forEach((child) => {
         me.shiftBranchPosition(child, xOffset, yOffset);
       });
     },

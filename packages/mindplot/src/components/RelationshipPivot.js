@@ -70,7 +70,7 @@ class RelationshipPivot {
       // Register focus events on all topics ...
       const model = this._designer.getModel();
       const topics = model.getTopics();
-      _.each(topics, (topic) => {
+      topics.forEach((topic) => {
         topic.addEvent('ontfocus', this._onTopicClick);
       });
     }
@@ -85,10 +85,10 @@ class RelationshipPivot {
 
       const model = this._designer.getModel();
       const topics = model.getTopics();
-      const me = this;
-      _.each(topics, (topic) => {
-        topic.removeEvent('ontfocus', me._onTopicClick);
-      });
+
+      topics.forEach(((topic) => {
+        topic.removeEvent('ontfocus', this._onTopicClick);
+      }).bind(this));
 
       workspace.removeChild(this._pivot);
       workspace.removeChild(this._startArrow);

@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import $ from '@libraries/jquery-2.1.0';
-import _ from '@libraries/underscore-min';
 
 import { $defined } from '@wisemapping/core-js';
 import BootstrapDialogRequest from "../libraries/bootstrap/BootstrapDialogRequest";
@@ -412,7 +411,7 @@ class Menu extends IMenu {
   _registerEvents(designer) {
     const me = this;
     // Register on close events ...
-    _.each(this._toolbarElems, (elem) => {
+    this._toolbarElems.forEach((elem) => {
       elem.addEvent('show', () => {
         me.clear();
       });
@@ -422,12 +421,12 @@ class Menu extends IMenu {
       const topics = designer.getModel().filterSelectedTopics();
       const rels = designer.getModel().filterSelectedRelationships();
 
-      _.each(me._toolbarElems, (button) => {
+      me._toolbarElems.forEach((button) => {
         const isTopicAction = button.isTopicAction();
         const isRelAction = button.isRelAction();
 
         if (isTopicAction || isRelAction) {
-          if ((isTopicAction && topics.length != 0) || (isRelAction && rels.length != 0)) {
+          if ((isTopicAction && topics.length !== 0) || (isRelAction && rels.length !== 0)) {
             button.enable();
           } else {
             button.disable();
@@ -440,7 +439,7 @@ class Menu extends IMenu {
       const topics = designer.getModel().filterSelectedTopics();
       const rels = designer.getModel().filterSelectedRelationships();
 
-      _.each(me._toolbarElems, (button) => {
+      me._toolbarElems.forEach((button) => {
         const isTopicAction = button.isTopicAction();
         const isRelAction = button.isRelAction();
 

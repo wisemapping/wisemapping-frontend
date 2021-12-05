@@ -163,7 +163,7 @@ class IMindmap {
 
     // Then the rest of the branches ...
     const sbranchs = source.getBranches();
-    _.each(sbranchs, (snode) => {
+    sbranchs.forEach((snode) => {
       const tnode = target.createNode(snode.getType(), snode.getId());
       snode.copyTo(tnode);
       target.addBranch(tnode);

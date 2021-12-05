@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import $ from '@libraries/jquery-2.1.0';
-import _ from '@libraries/underscore-min';
 import { $assert, $defined } from '@wisemapping/core-js';
 import ToolbarPaneItem from './ToolbarPaneItem';
 
@@ -65,7 +64,7 @@ class ColorPalettePanel extends ToolbarPaneItem {
     const colorCells = content.find('div[class=palette-colorswatch]');
     const model = this.getModel();
     const me = this;
-    _.each(colorCells, (elem) => {
+    colorCells.each((elem) => {
       $(elem).on('click', () => {
         const color = $(elem).css('background-color');
         model.setValue(color);
@@ -88,7 +87,7 @@ class ColorPalettePanel extends ToolbarPaneItem {
     const colorCells = panelElem.find('div[class=palette-colorswatch]');
     const model = this.getModel();
     let modelValue = model.getValue();
-    _.each(colorCells, (elem) => {
+    colorCells.forEach((elem) => {
       const color = $(elem).css('background-color').rgbToHex();
       if (modelValue != null && modelValue[0] === 'r') {
         modelValue = modelValue.rgbToHex();

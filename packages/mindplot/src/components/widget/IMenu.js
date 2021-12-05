@@ -37,7 +37,7 @@ class IMenu {
   }
 
   clear() {
-    _.each(this._toolbarElems, (item) => {
+    this._toolbarElems.forEach((item) => {
       item.hide();
     });
   }

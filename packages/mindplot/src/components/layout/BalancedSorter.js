@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 import { $assert, $defined } from '@wisemapping/core-js';
 import AbstractBasicSorter from './AbstractBasicSorter';
 
@@ -26,7 +25,7 @@ const BalancedSorter = new Class(
          * @constructs
          * @extends mindplot.layout.AbstractBasicSorter
          */
-    initialize() {},
+    initialize() { },
 
     /**
          * @param {} graph
@@ -52,10 +51,10 @@ const BalancedSorter = new Class(
         );
 
         const limitXPos = parent.getPosition().x
-                    + direction
-                        * (parent.getSize().width / 2
-                            + node.getSize().width / 2
-                            + BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
+          + direction
+          * (parent.getSize().width / 2
+            + node.getSize().width / 2
+            + BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
 
         const xPos = direction > 0
           ? position.x >= limitXPos
@@ -112,10 +111,10 @@ const BalancedSorter = new Class(
           order,
           {
             x:
-                            parent.getPosition().x
-                            + direction
-                                * (parent.getSize().width / 2
-                                    + BalancedSorter.INTERNODE_HORIZONTAL_PADDING * 2),
+              parent.getPosition().x
+              + direction
+              * (parent.getSize().width / 2
+                + BalancedSorter.INTERNODE_HORIZONTAL_PADDING * 2),
             y: parent.getPosition().y,
           },
         ];
@@ -125,7 +124,7 @@ const BalancedSorter = new Class(
       let result = null;
       const last = children.getLast();
       position = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
-      _.each(children, (child, index) => {
+      children.forEach((child, index) => {
         const cpos = child.getPosition();
         if (position.y > cpos.y) {
           const yOffset = child == last
@@ -143,9 +142,9 @@ const BalancedSorter = new Class(
           {
             x: first.getPosition().x,
             y:
-                            first.getPosition().y
-                            - first.getSize().height
-                            - BalancedSorter.INTERNODE_VERTICAL_PADDING * 2,
+              first.getPosition().y
+              - first.getSize().height
+              - BalancedSorter.INTERNODE_VERTICAL_PADDING * 2,
           },
         ];
       }
@@ -193,7 +192,7 @@ const BalancedSorter = new Class(
       // Filter nodes on one side..
       const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
 
-      _.each(children, (child, index) => {
+      children.forEach((child) => {
         if (child.getOrder() > node.getOrder()) {
           child.setOrder(child.getOrder() - 2);
         }
@@ -228,8 +227,8 @@ const BalancedSorter = new Class(
       let totalPHeight = 0;
       let totalNHeight = 0;
 
-      _.each(heights, (elem) => {
-        if (elem.order % 2 == 0) {
+      heights.forEach((elem) => {
+        if (elem.order % 2 === 0) {
           totalPHeight += elem.height;
         } else {
           totalNHeight += elem.height;
@@ -254,9 +253,9 @@ const BalancedSorter = new Class(
 
         const yOffset = ysum + heights[i].height / 2;
         const xOffset = direction
-                    * (node.getSize().width / 2
-                        + heights[i].width / 2
-                        + +BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
+          * (node.getSize().width / 2
+            + heights[i].width / 2
+            + +BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
 
         $assert(!isNaN(xOffset), 'xOffset can not be null');
         $assert(!isNaN(yOffset), 'yOffset can not be null');
@@ -282,12 +281,9 @@ const BalancedSorter = new Class(
         const order = i == 0 && factor == 1 ? 1 : factor * i;
         $assert(
           children[i].getOrder() == order,
-          `Missing order elements. Missing order: ${
-            i * factor
-          }. Parent:${
-            node.getId()
-          },Node:${
-            children[i].getId()}`,
+          `Missing order elements. Missing order: ${i * factor
+          }. Parent:${node.getId()
+          },Node:${children[i].getId()}`,
         );
       }
     },

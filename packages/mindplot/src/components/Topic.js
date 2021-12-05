@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { _ } from '@libraries/underscore-min';
 import * as web2d from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
@@ -961,7 +960,7 @@ class Topic extends NodeGraph {
   }
 
   _setRelationshipLinesVisibility(value) {
-    _.each(this._relationships, (relationship) => {
+    this._relationships.forEach((relationship) => {
       const sourceTopic = relationship.getSourceTopic();
       const targetTopic = relationship.getTargetTopic();
 

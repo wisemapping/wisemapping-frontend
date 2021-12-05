@@ -12,10 +12,10 @@ class BootstrapDialogRequest extends BootstrapDialog {
       console.log(xhr);
     };
 
-    this.requestOptions.success = function () {
+    this.requestOptions.success = function success() {
       // Intercept form requests ...
       const forms = me._native.find('form');
-      _.each(forms, (form) => {
+      forms.forEach((form) => {
         $(form).on('submit', (event) => {
           // Intercept form ...
           me.requestOptions.url = form.action;

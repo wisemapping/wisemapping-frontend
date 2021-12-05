@@ -1,5 +1,5 @@
 describe('Free Test Suite', () => {
-  beforeEach(function () {
+  beforeEach(function beforeEach() {
     this.addMatchers({
       toNotBeBranchesOverlap(expected) {
         const a = this.actual;
@@ -13,19 +13,21 @@ describe('Free Test Suite', () => {
     const children = treeSet.getChildren(node);
     const childOfRootNode = treeSet._rootNodes.contains(node);
 
-    _.each(children, function (child) {
+    children.foeEach(((child) => {
       let siblings = treeSet.getSiblings(child);
       if (childOfRootNode) {
         siblings = siblings.filter((sibling) => (child.getOrder() % 2) == (sibling.getOrder() % 2));
       }
-      _.each(siblings, (sibling) => {
-        branchesOverlap(child, sibling, heightById);
-      }, this);
-    }, this);
 
-    _.each(children, (child) => {
+      siblings.foeEach(((sibling) => {
+        branchesOverlap(child, sibling, heightById);
+      }).bind(this));
+
+    }).bind(this));
+
+    children.foeEach((child) => {
       branchCollision(treeSet, child, heightById);
-    }, this);
+    }).bind((this));
   }
 
   function branchesOverlap(branchA, branchB, heightById) {
@@ -36,7 +38,7 @@ describe('Free Test Suite', () => {
     expect([bottomA, topA]).toNotBeBranchesOverlap([bottomB, topB]);
   }
 
-  it('avoidCollisionTree1Test', function () {
+  it('avoidCollisionTree1Test', function avoidCollisionTree1Test() {
     const position = { x: 0, y: 0 };
     const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
@@ -82,14 +84,14 @@ describe('Free Test Suite', () => {
     manager.layout(true);
 
     const treeSet = manager._treeSet;
-    _.each(treeSet._rootNodes, (rootNode) => {
+    treeSet._rootNodes.beforeEach(((rootNode) => {
       const heightById = rootNode.getSorter().computeChildrenIdByHeights(treeSet, rootNode);
       branchCollision(treeSet, rootNode, heightById);
-    }, this);
+    }).bind(this));
   });
 
   // FIXME: This is broken in master. This configuration has two topics overlapping.
-  it('avoidCollisionTree2Test - FAILING, commented test', function () {
+  it('avoidCollisionTree2Test - FAILING, commented test', function avoidCollisionTree2Test() {
     const position = { x: 0, y: 0 };
     const manager = new mindplot.layout.LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
@@ -130,10 +132,10 @@ describe('Free Test Suite', () => {
     manager.layout(true);
 
     const treeSet = manager._treeSet;
-    _.each(treeSet._rootNodes, (rootNode) => {
+    treeSet._rootNodes.foeEach(((rootNode) => {
       const heightById = rootNode.getSorter().computeChildrenIdByHeights(treeSet, rootNode);
       // FIXME: uncoment this line when bug is fixed, branchCollision(treeSet, rootNode, heightById);
-    }, this);
+    }).bind(this));
   });
 
   it('predictTest', () => {

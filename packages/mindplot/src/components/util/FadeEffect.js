@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 
 // FIXME: this Class should be reimplemented
 import Events from '../Events';
@@ -36,7 +35,7 @@ const FadeEffect = new Class(/** @lends FadeEffect */{
   /** */
   start() {
     const visible = this._isVisible;
-    _.each(this._element, (elem) => {
+    this._element.forEach((elem) => {
       if (elem) {
         elem.setVisibility(visible);
       }

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import _ from '@libraries/underscore-min';
 
 class Events {
   constructor() {
@@ -38,15 +37,16 @@ class Events {
     type = Events._removeOn(type);
     const events = this.$events[type];
     if (!events) return this;
+
     args = Array.isArray(args) ? args : [args];
-    _.each(
-      events,
-      function (fn) {
-        if (delay) fn.delay(delay, this, args);
-        else fn.apply(this, args);
-      },
-      this,
-    );
+    events.forEach(((fn) => {
+      if (delay) {
+        fn.delay(delay, this, args);
+      }
+      else {
+        fn.apply(this, args);
+      }
+    }).bind(this));
     return this;
   }
 

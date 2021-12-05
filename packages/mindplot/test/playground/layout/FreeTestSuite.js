@@ -17,13 +17,12 @@
  */
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+import OriginalLayout from '../../../src/components/layout/OriginalLayout';
 
-const FreeTestSuite = new Class({
-  Extends: TestSuite,
-
-  initialize() {
+class FreeTestSuite extends TestSuite {
+  constructor() {
     $('#freeTest').css('display', 'block');
-
+    super();
     this.testFreePosition();
     this.testFreePredict();
     this.testReconnectFreeNode();
@@ -32,7 +31,7 @@ const FreeTestSuite = new Class({
     this.testBalancedFreePredict();
     this.testFreeReorder();
     this.testFreeOverlap();
-  },
+  }
 
   testFreePosition() {
     console.log('testFreePosition:');
@@ -142,7 +141,7 @@ const FreeTestSuite = new Class({
     this._assertFreePosition(manager, null, null);
 
     console.log('OK!\n\n');
-  },
+  }
 
   testFreePredict() {
     console.log('testFreePredict:');
@@ -212,7 +211,7 @@ const FreeTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testReconnectFreeNode() {
     console.log('testReconnectFreeNode:');
@@ -302,7 +301,7 @@ const FreeTestSuite = new Class({
     this._assertFreePosition(manager, 8, { x: 370, y: 30 });
 
     console.log('OK!\n\n');
-  },
+  }
 
   testSiblingOverlapping() {
     console.log('testSiblingOverlapping:');
@@ -335,7 +334,7 @@ const FreeTestSuite = new Class({
     this._assertFreePosition(manager, 7, { x: 250, y: 100 });
 
     console.log('OK!\n\n');
-  },
+  }
 
   testRootNodeChildrenPositioning() {
     console.log('testRootNodeChildrenPositioning:');
@@ -378,7 +377,7 @@ const FreeTestSuite = new Class({
     //        this._assertFreePosition(manager, 6, {x:-150, y:-50});
 
     console.log('OK!\n\n');
-  },
+  }
 
   testBalancedFreePredict() {
     console.log('testBalancedFreePredict:');
@@ -398,7 +397,7 @@ const FreeTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testFreeReorder() {
     console.log('testFreeReorder:');
@@ -435,7 +434,7 @@ const FreeTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testFreeOverlap() {
     console.log('testFreeOverlap:');
@@ -474,7 +473,7 @@ const FreeTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   _assertFreePosition(manager, id, position) {
     if (id != null && position.x != null && position.y != null) {
@@ -492,49 +491,35 @@ const FreeTestSuite = new Class({
     }
 
     const treeSet = manager._treeSet;
-    _.each(
-      treeSet._rootNodes,
-      function (rootNode) {
-        const heightById = rootNode.getSorter().computeChildrenIdByHeights(treeSet, rootNode);
-        this._assertBranchCollision(treeSet, rootNode, heightById);
-      },
-      this,
-    );
-  },
+    treeSet._rootNodes.forEach(((rootNode) => {
+      const heightById = rootNode.getSorter().computeChildrenIdByHeights(treeSet, rootNode);
+      this._assertBranchCollision(treeSet, rootNode, heightById);
+    }));
+  }
 
   _assertBranchCollision(treeSet, node, heightById) {
     const children = treeSet.getChildren(node);
     const childOfRootNode = treeSet._rootNodes.contains(node);
 
-    _.each(
-      children,
-      function (child) {
-        const height = heightById[child.getId()];
-        let siblings = treeSet.getSiblings(child);
-        if (childOfRootNode) {
-          siblings = siblings.filter((sibling) => child.getOrder() % 2 == sibling.getOrder() % 2);
-        }
-        _.each(
-          siblings,
-          function (sibling) {
-            this._branchesOverlap(child, sibling, heightById);
-          },
-          this,
-        );
-      },
-      this,
-    );
+    children.forEach((child) => {
+      const height = heightById[child.getId()];
+      let siblings = treeSet.getSiblings(child);
+      if (childOfRootNode) {
+        siblings = siblings.filter((sibling) => child.getOrder() % 2 == sibling.getOrder() % 2);
+      }
 
-    _.each(
-      children,
-      function (child) {
-        this._assertBranchCollision(treeSet, child, heightById);
-      },
-      this,
-    );
-  },
+      siblings.forEach((sibling) => {
+        this._branchesOverlap(child, sibling, heightById);
+      });
 
-  _branchesOverlap(branchA, branchB, heightById) {
+    });
+
+    children.forEach(((child) => {
+      OriginalLayout._assertBranchCollision(treeSet, child, heightById);
+    }).bind(this));
+  }
+
+  static _branchesOverlap(branchA, branchB, heightById) {
     const topA = branchA.getPosition().y - heightById[branchA.getId()] / 2;
     const bottomA = branchA.getPosition().y + heightById[branchA.getId()] / 2;
     const topB = branchB.getPosition().y - heightById[branchB.getId()] / 2;
@@ -544,7 +529,7 @@ const FreeTestSuite = new Class({
       topA >= bottomB || bottomA <= topB,
       `Branches ${branchA.getId()} and ${branchB.getId()} overlap`,
     );
-  },
-});
+  }
+}
 
 export default FreeTestSuite;

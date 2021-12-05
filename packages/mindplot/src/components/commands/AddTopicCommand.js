@@ -41,7 +41,7 @@ class AddTopicCommand extends Command {
        */
   execute(commandContext) {
     const me = this;
-    _.each(this._models, (model, index) => {
+    this._models.forEach((model, index) => {
       // Add a new topic ...
       const topic = commandContext.createTopic(model);
 
@@ -73,12 +73,12 @@ class AddTopicCommand extends Command {
   undoExecute(commandContext) {
     // Delete disconnected the nodes. Create a copy of the topics ...
     const clonedModel = [];
-    _.each(this._models, (model) => {
+    this._models.forEach((model) => {
       clonedModel.push(model.clone());
     });
 
     // Finally, remove the nodes ...
-    _.each(this._models, (model) => {
+    this._models.forEach((model) => {
       const topicId = model.getId();
       const topic = commandContext.findTopics(topicId)[0];
       commandContext.deleteTopic(topic);

@@ -17,7 +17,6 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import $ from '@libraries/jquery-2.1.0';
-import _ from '@libraries/underscore-min';
 
 import Events from './Events';
 import Messages from './Messages';
@@ -146,7 +145,7 @@ class Designer extends Events {
     screenManager.addEvent('update', () => {
       // Topic must be set to his original state. All editors must be closed.
       const topics = me.getModel().getTopics();
-      _.each(topics, (object) => {
+      topics.forEach((object) => {
         object.closeEditors();
       });
 
@@ -304,13 +303,13 @@ class Designer extends Events {
   onObjectFocusEvent(currentObject, event) {
     // Close node editors ..
     const topics = this.getModel().getTopics();
-    _.each(topics, (topic) => {
+    topics.forEach((topic) => {
       topic.closeEditors();
     });
 
     const model = this.getModel();
     const objects = model.getEntities();
-    _.each(objects, (object) => {
+    objects.forEach((object) => {
       // Disable all nodes on focus but not the current if Ctrl key isn't being pressed
       if (!$defined(event) || (!event.ctrlKey && !event.metaKey)) {
         if (object.isOnFocus() && object !== currentObject) {
@@ -324,7 +323,7 @@ class Designer extends Events {
   selectAll() {
     const model = this.getModel();
     const objects = model.getEntities();
-    _.each(objects, (object) => {
+    objects.forEach((object) => {
       object.setOnFocus(true);
     });
   }
@@ -332,7 +331,7 @@ class Designer extends Events {
   /** removes focus from all model entities, i.e. relationships and topics */
   deselectAll() {
     const objects = this.getModel().getEntities();
-    _.each(objects, (object) => {
+    objects.forEach((object) => {
       object.setOnFocus(false);
     });
   }
