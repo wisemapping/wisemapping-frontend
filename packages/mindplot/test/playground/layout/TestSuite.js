@@ -259,7 +259,7 @@ const TestSuite = new Class({
       console.log(
         `\tUpdated nodes: {id:${event.getId()
         }, order: ${event.getOrder()
-        }${posStr
+        },${posStr
         }}`,
       );
       events.push(event);

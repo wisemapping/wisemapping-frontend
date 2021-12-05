@@ -63,7 +63,7 @@ class XMLSerializer_Pela {
           && mindmap.findNodeById(relationship.getToNode()) !== null
         ) {
           // Isolated relationships are not persisted ....
-          const relationDom = this._relationshipToXML(document, relationship);
+          const relationDom = XMLSerializer_Pela._relationshipToXML(document, relationship);
           mapElem.appendChild(relationDom);
         }
       }
@@ -80,7 +80,7 @@ class XMLSerializer_Pela {
       parentTopic.setAttribute('central', 'true');
     } else {
       const pos = topic.getPosition();
-      parentTopic.setAttribute('position', `${pos.x}${pos.y}`);
+      parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
 
       const order = topic.getOrder();
       if (typeof order === 'number' && Number.isFinite(order)) { parentTopic.setAttribute('order', order); }
@@ -98,7 +98,7 @@ class XMLSerializer_Pela {
       if (shape === TopicShape.IMAGE) {
         parentTopic.setAttribute(
           'image',
-          `${topic.getImageSize().width}${topic.getImageSize().height
+          `${topic.getImageSize().width},${topic.getImageSize().height
           }:${topic.getImageUrl()}`,
         );
       }
@@ -196,7 +196,7 @@ class XMLSerializer_Pela {
     }
   }
 
-  _relationshipToXML(document, relationship) {
+  static _relationshipToXML(document, relationship) {
     const result = document.createElement('relationship');
     result.setAttribute('srcTopicId', relationship.getFromNode());
     result.setAttribute('destTopicId', relationship.getToNode());
@@ -208,14 +208,14 @@ class XMLSerializer_Pela {
         const srcPoint = relationship.getSrcCtrlPoint();
         result.setAttribute(
           'srcCtrlPoint',
-          `${Math.round(srcPoint.x)}${Math.round(srcPoint.y)}`,
+          `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`,
         );
       }
       if ($defined(relationship.getDestCtrlPoint())) {
         const destPoint = relationship.getDestCtrlPoint();
         result.setAttribute(
           'destCtrlPoint',
-          `${Math.round(destPoint.x)}${Math.round(destPoint.y)}`,
+          `${Math.round(destPoint.x)},${Math.round(destPoint.y)}`,
         );
       }
     }
@@ -260,7 +260,7 @@ class XMLSerializer_Pela {
             break;
           }
           case 'relationship': {
-            const relationship = this._deserializeRelationship(child, mindmap);
+            const relationship = XMLSerializer_Pela._deserializeRelationship(child, mindmap);
             if (relationship != null) {
               mindmap.addRelationship(relationship);
             }
@@ -392,7 +392,7 @@ class XMLSerializer_Pela {
           }
 
           // Has text node ?.
-          const textAttr = this._deserializeTextAttr(child);
+          const textAttr = XMLSerializer_Pela._deserializeTextAttr(child);
           if (textAttr) {
             attributes.text = textAttr;
           }
@@ -402,7 +402,7 @@ class XMLSerializer_Pela {
           const feature = TopicFeature.createModel(featureType, attributes);
           topic.addFeature(feature);
         } else if (child.tagName === 'text') {
-          const nodeText = this._deserializeNodeText(child);
+          const nodeText = XMLSerializer_Pela._deserializeNodeText(child);
           topic.setText(nodeText);
         }
       }
@@ -410,7 +410,7 @@ class XMLSerializer_Pela {
     return topic;
   }
 
-  _deserializeTextAttr(domElem) {
+  static _deserializeTextAttr(domElem) {
     let value = domElem.getAttribute('text');
     if (!$defined(value)) {
       const children = domElem.childNodes;
@@ -433,7 +433,7 @@ class XMLSerializer_Pela {
     return value;
   }
 
-  _deserializeNodeText(domElem) {
+  static _deserializeNodeText(domElem) {
     const children = domElem.childNodes;
     let value = null;
     for (let i = 0; i < children.length; i++) {
@@ -445,7 +445,7 @@ class XMLSerializer_Pela {
     return value;
   }
 
-  _deserializeRelationship(domElement, mindmap) {
+  static _deserializeRelationship(domElement, mindmap) {
     const srcId = domElement.getAttribute('srcTopicId');
     const destId = domElement.getAttribute('destTopicId');
     const lineType = domElement.getAttribute('lineType');
@@ -485,6 +485,7 @@ class XMLSerializer_Pela {
        * @param in The String whose non-valid characters we want to remove.
        * @return The in String, stripped of non-valid characters.
        */
+  // eslint-disable-next-line class-methods-use-this
   rmXmlInv(str) {
     if (str == null || str === undefined) return null;
 

@@ -53,7 +53,7 @@ XMLSerializerFactory.getSerializerFromDocument = function (domDocument) {
  * @param {String} version the version name
  * @return serializer
  */
-XMLSerializerFactory.getSerializer = function (version) {
+XMLSerializerFactory.getSerializer = function getSerializer(version) {
   if (!$defined(version)) {
     version = ModelCodeName.BETA;
   }

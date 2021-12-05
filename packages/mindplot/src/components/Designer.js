@@ -798,7 +798,7 @@ class Designer extends Events {
     const targetTopic = dmodel.findTopicById(targetTopicId);
     $assert(
       targetTopic,
-      `targetTopic could not be found:${targetTopicId}${dmodel
+      `targetTopic could not be found:${targetTopicId},${dmodel
         .getTopics()
         .map((e) => e.getId())}`,
     );

@@ -55,7 +55,7 @@ class XMLSerializer_Beta {
       const parent = topic.getParent();
       if (parent == null || parent.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
         const pos = topic.getPosition();
-        parentTopic.setAttribute('position', `${pos.x}${pos.y}`);
+        parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
       } else {
         const order = topic.getOrder();
         parentTopic.setAttribute('order', order);
