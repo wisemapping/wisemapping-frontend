@@ -15,14 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
 
 class Keyboard {
   // eslint-disable-next-line class-methods-use-this
   addShortcut(shortcuts, callback) {
-    if (!$.isArray(shortcuts)) {
+    if (!Array.isArray(shortcuts)) {
       shortcuts = [shortcuts];
     }
-    _.each(shortcuts, (shortcut) => {
+    shortcuts.forEach((shortcut) => {
       $(document).bind('keydown', shortcut, callback);
     });
   }

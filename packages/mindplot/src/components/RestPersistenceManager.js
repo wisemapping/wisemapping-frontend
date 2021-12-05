@@ -20,12 +20,12 @@ import PersistenceManager from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager{
   constructor(options) {
-    this.parent();
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
     $assert(options.session, 'session can not be null');
     $assert(options.timestamp, 'timestamp can not be null');
+    super()
 
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;

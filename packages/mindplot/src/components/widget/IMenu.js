@@ -17,6 +17,7 @@
  */
 import { $assert } from "@wisemapping/core-js";
 import PersistenceManager from '../PersistenceManager';
+import { $notify } from './ToolbarNotifier';
 
 class IMenu {
 

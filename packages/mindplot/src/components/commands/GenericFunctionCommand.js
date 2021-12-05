@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined, $assert } from '@wisemapping/core-js';
+import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 
 class GenericFunctionCommand extends Command {

@@ -103,8 +103,13 @@ function buildDesigner(options) {
   // Configure default persistence manager ...
   let persistence;
   if (options.persistenceManager) {
-    if (options.persistenceManager instanceof String) {
-      persistence = eval(`new ${options.persistenceManager}()`);
+    if (typeof options.persistenceManager === 'string') {
+      const managerClass = /^mindplot\.(\w+)/.exec(options.persistenceManager);
+      if (managerClass){
+        persistence = new mindplot[managerClass[1]]('samples/{id}.xml');
+      } else {
+        persistence = eval(`new ${options.persistenceManager}()`);
+      }
     } else {
       persistence = options.persistenceManager;
     }
@@ -122,14 +127,13 @@ function buildDesigner(options) {
       menu.clear();
     };
   }
-
+  
   return designer;
 }
 
 function loadDesignerOptions(jsonConf) {
   // Load map options ...
   let result;
-  const me = this;
   if (jsonConf) {
     $.ajax({
       url: jsonConf,
@@ -137,10 +141,9 @@ function loadDesignerOptions(jsonConf) {
       async: false,
       method: 'get',
       success(options) {
-        me.options = options;
+        result = options;
       },
     });
-    result = this.options;
   } else {
     // Set workspace screen size as default. In this way, resize issues are solved.
     const containerSize = {
@@ -172,11 +175,11 @@ $(() => {
     var mapId = 'welcome';
     // Set readonly option ...
     var options = loadDesignerOptions();
-    options.readOnly = true;
+    // options.readOnly = true;
     var designer = buildDesigner(options);
 
     // Load map from XML file persisted on disk...
-    var persistence = PersistenceManager.getInstance();
+    const persistence = PersistenceManager.getInstance();
     var mindmap = persistence.load(mapId);
     designer.loadMap(mindmap);
     // from viewmode.html ---------

@@ -13,7 +13,6 @@
         "$assert": "readonly",
         "$defined": "readonly",
         "$msg": "readonly",
-        "$notify": "readonly",
         "_": "readonly"
     },
     "plugins": ["only-warn"],

@@ -15,8 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $defined } from '@wisemapping/core-js';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
+import $ from 'jquery';
+import initHotKeyPluggin from '@libraries/jquery.hotkeys';
+
+initHotKeyPluggin($);
 
 class MultilineTextEditor extends Events {
   constructor() {
@@ -25,7 +30,7 @@ class MultilineTextEditor extends Events {
     this._timeoutId = -1;
   }
 
-  _buildEditor() {
+  static _buildEditor() {
     const result = $('<div></div>')
       .attr('id', 'textContainer')
       .css({
@@ -51,7 +56,7 @@ class MultilineTextEditor extends Events {
   _registerEvents(containerElem) {
     const textareaElem = this._getTextareaElem();
     const me = this;
-    textareaElem.on('keydown', function (event) {
+    textareaElem.on('keydown', function keydown (event) {
       switch (jQuery.hotkeys.specialKeys[event.keyCode]) {
         case 'esc':
           me.close(false);
@@ -128,7 +133,7 @@ class MultilineTextEditor extends Events {
 
       const lines = textElem.val().split('\n');
       let maxLineLength = 1;
-      _.each(lines, (line) => {
+      lines.forEach((line) => {
         if (maxLineLength < line.length) maxLineLength = line.length;
       });
 
@@ -143,7 +148,7 @@ class MultilineTextEditor extends Events {
   }
 
   isVisible() {
-    return $defined(this._containerElem) && this._containerElem.css('display') == 'block';
+    return $defined(this._containerElem) && this._containerElem.css('display') === 'block';
   }
 
   _updateModel() {
@@ -165,7 +170,7 @@ class MultilineTextEditor extends Events {
     this._topic = topic;
     if (!this.isVisible()) {
       // Create editor ui
-      const containerElem = this._buildEditor();
+      const containerElem = MultilineTextEditor._buildEditor();
       $('body').append(containerElem);
 
       this._containerElem = containerElem;

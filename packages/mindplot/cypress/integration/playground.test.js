@@ -14,4 +14,15 @@ context('Playground', () => {
     cy.visit(`${BASE_URL}/viewmode.html`);
     cy.matchImageSnapshot('viewmode');
   });
+  it('the playground container.html page should match its snapshot', () => {
+    cy.visit(`${BASE_URL}/container.html`);
+    cy.matchImageSnapshot('container');
+  });
+  it('the playground editor.html page should match its snapshot', () => {
+    cy.visit(`${BASE_URL}/editor.html`);
+    // TODO: wait for #load modal to hide instead of arbitrary wait time
+    cy.wait(5000);
+    // TODO: why is the editor appearing twice in the snapshot?
+    cy.matchImageSnapshot('editor');
+  });
 });

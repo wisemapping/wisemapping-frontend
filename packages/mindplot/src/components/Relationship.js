@@ -75,7 +75,7 @@ class Relationship extends ConnectionLine {
   }
 
   setStroke(color, style, opacity) {
-    this.parent(color, style, opacity);
+    super.setStroke(color, style, opacity);
     this._startArrow.setStrokeColor(color);
   }
 
@@ -176,7 +176,7 @@ class Relationship extends ConnectionLine {
     workspace.append(this._startArrow);
     if (this._endArrow) workspace.append(this._endArrow);
 
-    this.parent(workspace);
+    super.addToWorkspace(workspace);
     this._positionArrows();
     this.redraw();
   }
@@ -193,9 +193,10 @@ class Relationship extends ConnectionLine {
     workspace.removeChild(this._startArrow);
     if (this._endArrow) workspace.removeChild(this._endArrow);
 
-    this.parent(workspace);
+    super.removeFromWorkspace(workspace);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getType() {
     return Relationship.type;
   }
@@ -248,13 +249,13 @@ class Relationship extends ConnectionLine {
   }
 
   setVisibility(value) {
-    this.parent(value);
+    super.setVisibility(value);
     if (this._showEndArrow) this._endArrow.setVisibility(this._showEndArrow);
     this._startArrow.setVisibility(this._showStartArrow && value);
   }
 
   setOpacity(opacity) {
-    this.parent(opacity);
+    super.setOpacity(opacity);
     if (this._showEndArrow) this._endArrow.setOpacity(opacity);
     if (this._showStartArrow) this._startArrow.setOpacity(opacity);
   }

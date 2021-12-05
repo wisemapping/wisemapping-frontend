@@ -46,6 +46,7 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 import LayoutManager from './layout/LayoutManager';
 
 import INodeModel, { TopicShape } from './model/INodeModel';
+import { $notify } from './widget/ToolbarNotifier';
 
 class Designer extends Events {
   constructor(options, divElement) {
@@ -101,6 +102,9 @@ class Designer extends Events {
 
     TopicEventDispatcher.configure(this.isReadOnly());
     this._clipboard = [];
+
+    // Hack: There are static reference to designer variable. Needs to be reviewed.
+    global.designer = this;
   }
 
   /**

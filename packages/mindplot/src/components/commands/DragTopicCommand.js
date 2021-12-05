@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 
 class DragTopicCommand extends Command {
@@ -29,11 +30,13 @@ class DragTopicCommand extends Command {
      */
   constructor(topicId, position, order, parentTopic) {
     $assert(topicId, 'topicId must be defined');
+    super();
 
     this._topicsId = topicId;
-    if ($defined(parentTopic)) this._parentId = parentTopic.getId();
+    if ($defined(parentTopic)) {
+      this._parentId = parentTopic.getId();
+    }
 
-    this.parent();
     this._position = position;
     this._order = order;
   }

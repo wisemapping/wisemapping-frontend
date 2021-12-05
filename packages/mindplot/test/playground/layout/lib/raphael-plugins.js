@@ -1,4 +1,4 @@
-Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color) {
+export function drawGrid (x, y, w, h, wv, hv, color) {
   color = color || '#999';
   let path = ['M', x, y, 'L', x + w, y, x + w, y + h, x, y + h, x, y];
   const rowHeight = h / hv;

@@ -113,6 +113,8 @@ class DragTopic {
     $assert(parent, 'Parent connection node can not be null.');
 
     // Where it should be connected ?
+
+    // @todo: This is a hack for the access of the editor. It's required to review why this is needed forcing the declaration of a global variable.
     const predict = designer._eventBussDispatcher._layoutManager.predict(
       parent.getId(),
       this._draggedNode.getId(),

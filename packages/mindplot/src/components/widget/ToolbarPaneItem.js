@@ -72,7 +72,7 @@ class ToolbarPaneItem extends ToolbarItem {
 
   show() {
     if (!this.isVisible()) {
-      this.parent();
+      super.show();
       this._tip.show();
       this.getButtonElem().className = 'buttonExtActive';
     }
@@ -80,7 +80,7 @@ class ToolbarPaneItem extends ToolbarItem {
 
   hide() {
     if (this.isVisible()) {
-      this.parent();
+      super.hide();
       this._tip.hide();
       this.getButtonElem().className = 'buttonExtOn';
     }

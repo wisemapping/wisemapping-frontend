@@ -17,6 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Events from './Events';
+import { $notify } from './widget/ToolbarNotifier';
 
 class DesignerModel extends Events {
   constructor(options) {

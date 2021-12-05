@@ -17,6 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import * as web2d from '@wisemapping/web2d';
+import $ from 'jquery';
 
 import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
@@ -1236,7 +1237,7 @@ class Topic extends NodeGraph {
 
   /** */
   createDragNode(layoutManager) {
-    const result = this.parent(layoutManager);
+    const result = super.createDragNode(layoutManager);
 
     // Is the node already connected ?
     const targetTopic = this.getOutgoingConnectedTopic();

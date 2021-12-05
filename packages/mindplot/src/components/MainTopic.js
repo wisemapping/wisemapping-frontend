@@ -86,7 +86,7 @@ class MainTopic extends Topic {
 
   /** */
   disconnect(workspace) {
-    this.parent(workspace);
+    super.disconnect(workspace);
     const size = this.getSize();
 
     const model = this.getModel();

@@ -17,6 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import Keyboard from './Keyboard';
+import $ from 'jquery';
 
 class DesignerKeyboard extends Keyboard {
   constructor(designer) {
