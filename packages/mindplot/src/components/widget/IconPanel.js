@@ -34,8 +34,10 @@ class IconPanel extends ToolbarPaneItem {
     for (let i = 0; i < ImageIcon.prototype.ICON_FAMILIES.length; i += 1) {
       const familyIcons = ImageIcon.prototype.ICON_FAMILIES[i].icons;
       for (let j = 0; j < familyIcons.length; j += 1) {
-        // Separate icons by line ...
-        let familyContent;
+        
+
+        // @TODO: This is a bug, for some reason is working because is a var. This must change to let.
+        var familyContent;
         if ((count % 12) == 0) {
           familyContent = $('<div></div>');
           content.append(familyContent);
