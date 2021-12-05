@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 import ElementPeer from './ElementPeer';
 
 class TextPeer extends ElementPeer {
@@ -169,6 +169,7 @@ class TextPeer extends ElementPeer {
         computedWidth = bbox.width;
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       computedWidth = 10;
     }

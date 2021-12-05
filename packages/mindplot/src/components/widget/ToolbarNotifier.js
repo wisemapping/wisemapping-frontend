@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 
 class ToolbarNotifier {
   constructor() {

@@ -23,11 +23,5 @@ module.exports = {
     ],
   },
   target: 'web',
-  resolve: {
-    alias: {
-      '@libraries': path.resolve(__dirname, '../../libraries/'),
-    },
-    extensions: ['.js', '.json'],
-  },
   plugins: [new CleanWebpackPlugin()],
 };

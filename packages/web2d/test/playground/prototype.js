@@ -1,4 +1,4 @@
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 import {
   Toolkit, Workspace, Rect, Group,
 } from '../../src';

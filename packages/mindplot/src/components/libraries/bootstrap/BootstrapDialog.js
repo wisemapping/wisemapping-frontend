@@ -1,6 +1,6 @@
 import Options from '../../Options';
 
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 
 class BootstrapDialog extends Options {
   

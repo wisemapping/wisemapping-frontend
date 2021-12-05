@@ -1,4 +1,4 @@
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 
 try {
   $(document).trigger('loadcomplete', 'mind');

@@ -18,7 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import { Mindmap, PersistenceManager, Designer, LocalStorageManager, Menu } from '../../../../src/';
 
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 global.jQuery = $;
 
 let designer = null;

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import ListToolbarPanel from './ListToolbarPanel';
-import $ from '@libraries/jquery-2.1.0';
+import $ from 'jquery';
 
 class FontSizePanel extends ListToolbarPanel {
   // eslint-disable-next-line class-methods-use-this
