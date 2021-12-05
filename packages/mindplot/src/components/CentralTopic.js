@@ -20,10 +20,6 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 
 class CentralTopic extends Topic {
-  constructor(model, options) {
-    super(model, options);
-  }
-
   _registerEvents() {
     super._registerEvents();
 

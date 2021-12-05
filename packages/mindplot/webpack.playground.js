@@ -35,7 +35,6 @@ module.exports = {
         exclude: [
           /node_modules/,
           path.resolve(__dirname, '../../libraries/mootools-core-1.4.5'),
-          path.resolve(__dirname, '../../libraries/underscore-min'),
           /lib\/raphael/ig,
         ],
       },

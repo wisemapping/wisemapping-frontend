@@ -135,7 +135,7 @@ const RootedTreeSet = new Class(
     },
 
     _find(id, parent) {
-      if (parent.getId() == id) {
+      if (parent.getId() === id) {
         return parent;
       }
 
@@ -203,7 +203,7 @@ const RootedTreeSet = new Class(
       if (!$defined(node._parent)) {
         return [];
       }
-      const siblings = node._parent._children.filter((child) => child != node);
+      const siblings = node._parent._children.filter((child) => child !== node);
       return siblings;
     },
 
@@ -220,18 +220,18 @@ const RootedTreeSet = new Class(
     _hasSinglePathToSingleLeaf(node) {
       const children = this.getChildren(node);
 
-      if (children.length == 1) {
+      if (children.length === 1) {
         return this._hasSinglePathToSingleLeaf(children[0]);
       }
 
-      return children.length == 0;
+      return children.length === 0;
     },
 
     /**
          * @param node
          * @return {Boolean} whether the node is the start of a subbranch */
     isStartOfSubBranch(node) {
-      return this.getSiblings(node).length > 0 && this.getChildren(node).length == 1;
+      return this.getSiblings(node).length > 0 && this.getChildren(node).length === 1;
     },
 
     /**
@@ -241,7 +241,7 @@ const RootedTreeSet = new Class(
          */
     isLeaf(node) {
       $assert(node, 'node cannot be null');
-      return this.getChildren(node).length == 0;
+      return this.getChildren(node).length === 0;
     },
 
     /**
@@ -375,7 +375,7 @@ const RootedTreeSet = new Class(
 
       const children = this.getChildren(node);
       const me = this;
-      children.forEach( (child) => {
+      children.forEach((child) => {
         me.shiftBranchPosition(child, xOffset, yOffset);
       });
     },
@@ -397,10 +397,10 @@ const RootedTreeSet = new Class(
     },
 
     /**
-         * @param node
-         * @param yOffset
-         * @return siblings in the offset (vertical) direction, i.e. with lower or higher order, respectively
-         */
+     * @param node
+     * @param yOffset
+     * @return siblings in the offset (vertical) direction, i.e. with lower or higher order, respectively
+     */
     getSiblingsInVerticalDirection(node, yOffset) {
       // siblings with lower or higher order, depending on the direction of the offset and on the same side as their parent
       const parent = this.getParent(node);
@@ -431,9 +431,9 @@ const RootedTreeSet = new Class(
       // direct descendants of the root that do not contain the node and are on the same side
       // and on the direction of the offset
       const rootNode = this.getRootNode(node);
-      const branches = this.getChildren(rootNode).filter(function (child) {
+      const branches = this.getChildren(rootNode).filter(((child) => {
         return this._find(node.getId(), child);
-      }, this);
+      }).bind(this));
 
       const branch = branches[0];
       const rootDescendants = this.getSiblings(branch).filter((sibling) => {

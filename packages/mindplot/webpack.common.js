@@ -19,7 +19,6 @@ module.exports = {
         exclude: [
           /node_modules/,
           path.resolve(__dirname, '../../libraries/mootools-core-1.4.5'),
-          path.resolve(__dirname, '../../libraries/underscore-min'),
         ],
       },
     ],
@@ -28,6 +27,7 @@ module.exports = {
   resolve: {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),
+      '@wisemapping/web2d': path.resolve(__dirname, '../web2d/'),
     },
     extensions: ['.js', '.json'],
   },

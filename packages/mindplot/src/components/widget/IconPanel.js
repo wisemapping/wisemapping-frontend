@@ -35,12 +35,12 @@ class IconPanel extends ToolbarPaneItem {
       const familyIcons = ImageIcon.prototype.ICON_FAMILIES[i].icons;
       for (let j = 0; j < familyIcons.length; j += 1) {
         // Separate icons by line ...
-        var familyContent;
+        let familyContent;
         if ((count % 12) == 0) {
           familyContent = $('<div></div>');
           content.append(familyContent);
         }
- 
+
         const iconId = familyIcons[j];
         const img = $('<img>')
           .attr('id', iconId)
@@ -51,10 +51,10 @@ class IconPanel extends ToolbarPaneItem {
 
         const panel = this;
         const model = this.getModel();
-        img.on('click', function (event) {
+        img.on('click', ((event) => {
           model.setValue($(this).attr('id'));
           panel.hide();
-        });
+        }).bind(this));
 
         count += 1;
       }

@@ -2,9 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "commonjs",
-    "paths": {
-      "@libraries/*": ["../../libraries/*"]
-    }
   },
   "exclude": ["node_modules"]
 }

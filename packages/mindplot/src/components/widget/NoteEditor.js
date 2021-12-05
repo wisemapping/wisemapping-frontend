@@ -15,20 +15,19 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import jQuery from 'jquery';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 
-class NoteEditor extends BootstrapDialog{
+class NoteEditor extends BootstrapDialog {
   constructor(model) {
     $assert(model, 'model can not be null');
-    this._model = model;
     super($msg('Note'), {
       cancelButton: true,
       closeButton: true,
       acceptButton: true,
       removeButton: typeof model.getValue() !== 'undefined',
-      onEventData: { model: this._model }
+      onEventData: { model: model },
     });
+    this._model = model;
     this.css({ margin: '150px auto' });
     const panel = this._buildPanel(model);
     this.setContent(panel);
