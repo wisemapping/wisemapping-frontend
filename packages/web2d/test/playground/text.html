@@ -1,91 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <style>
-        th,
-        td {
-            border: 1px solid black;
-        }
-    </style>
-    
-    <script type="text/javascript">
-        web2d = {
-            peer: {}
-        };
-
-        web2d.peer =
-        {
-            svg: {}
-        };
-
-        web2d.peer.utils = {};
-    </script>
-    <script type="text/javascript">
-        function zoomIn() {
-            for (i = 0; i < workspaces.length; i++) {
-                var coordSize = workspaces[i].getCoordSize();
-                workspaces[i].setCoordSize(coordSize.width * 2, coordSize.height * 2);
-            }
-        }
-
-        workspaces = [];
-
-        var TextTest = function (size, coordSize, textval, font, fontSizeval, style, modifier, fontColor, owner, iesimo) {
-            var overflowWorkspace = new web2d.Workspace();
-            overflowWorkspace.setSize(size, size);
-            overflowWorkspace.setCoordSize(coordSize, coordSize);
-            overflowWorkspace.setCoordOrigin(0, 0);
-
-            var text = new web2d.Text();
-            overflowWorkspace.append(text);
-            var scale = web2d.TransformUtils.workoutScale(text.peer);
-            text.setText(textval + " " + scale.height);
-            text.setFont(font, fontSizeval, style, modifier);
-            text.setPosition(0, 0);
-            text.setColor(fontColor);
-            textot = text;
-
-            overflowWorkspace.addItAsChildTo(document.getElementById(owner));
-
-            var parent = document.getElementById(owner);
-            var span = document.createElement("span");
-            span.setAttribute("id", "textoHTML" + iesimo);
-            var textsize = text.offsetWidth;
-            var textHtml = document.createTextNode(textsize);
-            var fontSize = text.getHtmlFontSize();
-            span.append(textHtml);
-            //var fontSize=20*scale.height*2;
-            span.setAttribute("style", "font-weight:" + modifier + ";font-style: " + style + "; font-size:" + fontSize + "pt; font-family: " + font + ";width:30;height:30;");
-
-            parent.append(span);
-            workspaces[iesimo] = overflowWorkspace;
-        };
-
-        function initialize() {
-            web2d.Toolkit.init();
-            TextTest("100px", 200, "Test Text", "Arial", 10, "normal", "normal", "red", "text0", 0);
-            TextTest("100px", 100, "Test Text", "Arial", 10, "normal", "normal", "blue", "text1", 1);
-            TextTest("100px", 50, "Test Text", "Arial", 10, "normal", "normal", "blue", "text2", 2);
-            TextTest("100px", 100, "Test Text", "Arial", 10, "italic", "normal", "blue", "text3", 3);
-            TextTest("100px", 100, "Test Text", "Arial", 10, "italic", "bold", "green", "text4", 4);
-            TextTest("100px", 100, "Test Text\nMultiline", "Arial", 10, "italic", "bold", "green", "text5", 5);
-
-        }
-
-    </script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body onload="initialize();">
-
+<body>
     <h1>Text Render Tests </h1>
-
     <table>
-        <colgroup style="width:80%;">
-            <col style="width:30%" />
-            <col style="width:60%" />
-        </colgroup>
+        </tbody>
         <tr>
             <td>
                 Simple text
@@ -99,11 +22,11 @@
                 <div id="text5"></div>
 
             </td>
-
         </tr>
         <!--**************************************************************************-->
-
+        </tbody>
     </table>
+    
     <span>Text to Inspect: </span><input type="text" id="iesimo">
     <input type="button" value="Inspect"
         onclick="alert(document.getElementById('textoHTML'+document.id('iesimo').value).offsetWidth);">

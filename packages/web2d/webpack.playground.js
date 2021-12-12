@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -15,6 +16,7 @@ module.exports = {
     shapes: './test/playground/shapes.js',
     group: './test/playground/group.js',
     prototype: './test/playground/prototype.js',
+    text: './test/playground/text.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist', 'tests'),
@@ -47,8 +49,14 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'test/playground/styles.css', to: 'styles.css' },
+      ],
+    }),
     new HtmlWebpackPlugin(
       {
+        chunks: ['index'],
         filename: 'index.html',
         template: 'test/playground/index.html',
       },
@@ -128,6 +136,13 @@ module.exports = {
         chunks: ['prototype'],
         filename: 'prototype.html',
         template: 'test/playground/prototype.html',
+      },
+    ),
+    new HtmlWebpackPlugin(
+      {
+        chunks: ['text'],
+        filename: 'text.html',
+        template: 'test/playground/text.html',
       },
     ),
   ],
