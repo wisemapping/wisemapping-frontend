@@ -20,20 +20,17 @@ import ToolbarItem from './ToolbarItem';
 import FloatingTip from './FloatingTip';
 
 class ToolbarPaneItem extends ToolbarItem {
-  constructor(buttonId, model, lazyInit) {
+  constructor(buttonId, model, delayInit) {
     $assert(buttonId, 'buttonId can not be null');
     $assert(model, 'model can not be null');
     super(buttonId, null, { topicAction: true, relAction: false });
 
-    // delay initialization in case of bring required.
-    if (lazyInit) {
-      lazyInit.bind(this)();
-    }
-
     const handler = () => (this.isVisible() ? this.hide() : this.show());
     this.setEventHandler(handler);
     this._model = model;
-    this._panelElem = this._init();
+    if (!delayInit) {
+      this._panelElem = this._init();
+    }
     this._visible = false;
   }
 
