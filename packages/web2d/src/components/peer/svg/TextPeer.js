@@ -50,7 +50,6 @@ class TextPeer extends ElementPeer {
     if (text) {
       const lines = text.split('\n');
       const me = this;
-      // FIXME: we could use underscorejs here
       lines.forEach((line) => {
         const tspan = window.document.createElementNS(ElementPeer.svgNamespace, 'tspan');
         tspan.setAttribute('dy', '1em');
