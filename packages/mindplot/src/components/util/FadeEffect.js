@@ -19,14 +19,9 @@
 // FIXME: this Class should be reimplemented
 import Events from '../Events';
 
-class FadeEffect extends Events {/** @lends FadeEffect */
-  /**
-     * @extends mindplot.Events
-     * @constructs
-     * @param elements
-     * @param isVisible
-     */
-  initialize(elements, isVisible) {
+class FadeEffect extends Events {
+  constructor(elements, isVisible) {
+    super();
     this._isVisible = isVisible;
     this._element = elements;
   }
