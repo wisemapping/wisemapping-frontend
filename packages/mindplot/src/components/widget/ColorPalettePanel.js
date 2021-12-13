@@ -21,9 +21,12 @@ import ToolbarPaneItem from './ToolbarPaneItem';
 
 class ColorPalettePanel extends ToolbarPaneItem {
   constructor(buttonId, model, baseUrl) {
-    super(buttonId, model);
-    this._baseUrl = baseUrl;
     $assert($defined(baseUrl), 'baseUrl can not be null');
+    super(buttonId, model, (() => this._setUrl(baseUrl)));
+  }
+
+  _setUrl(baseUrl) {
+    this._baseUrl = baseUrl;
   }
 
   _load() {
