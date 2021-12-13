@@ -18,7 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 
-class LinkEditor extends BootstrapDialog {/** @lends LinkEditor */
+class LinkEditor extends BootstrapDialog {
   /**
      * @constructs
      * @param model
