@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -15,12 +16,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
+import { $assert } from '@wisemapping/core-js';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-
-const TestSuite = new Class({
-  Extends: ChildrenSorterStrategy,
-
-  initialize() {
+import ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
+class TestSuite extends ChildrenSorterStrategy {
+  constructor() {
+    super();
     $('#basicTest').css('display', 'block');
     //        this.testAligned();
     this.testBaselineAligned1();
@@ -32,7 +34,7 @@ const TestSuite = new Class({
     this.testRemoveNode();
     this.testSize();
     this.testReconnectSingleNode();
-  },
+  }
 
   testAligned() {
     console.log('testAligned:');
@@ -79,7 +81,7 @@ const TestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testBaselineAligned1() {
     console.log('testBaselineAligned1:');
@@ -125,7 +127,7 @@ const TestSuite = new Class({
     //        manager.plot("testBaselineAligned1", {width:1600,height:800});
 
     console.log('OK!\n\n');
-  },
+  }
 
   testBaselineAligned2() {
     console.log('testBaselineAligned2:');
@@ -143,7 +145,7 @@ const TestSuite = new Class({
     manager.plot('testBaselineAligned2', { width: 1600, height: 800 });
 
     console.log('OK!\n\n');
-  },
+  }
 
   testEvents() {
     console.log('testEvents:');
@@ -181,7 +183,7 @@ const TestSuite = new Class({
     $assert(events.length == 0, 'Unnecessary tree updated.');
 
     console.log('OK!\n\n');
-  },
+  }
 
   testEventsComplex() {
     console.log('testEventsComplex:');
@@ -229,7 +231,7 @@ const TestSuite = new Class({
     $assert(events.length == 4, 'Only 4 nodes should be repositioned.');
 
     console.log('OK!\n\n');
-  },
+  }
 
   testDisconnect() {
     console.log('testDisconnect:');
@@ -290,7 +292,7 @@ const TestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testReconnect() {
     console.log('testReconnect:');
@@ -352,7 +354,7 @@ const TestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testRemoveNode() {
     console.log('testRemoveNode:');
@@ -422,7 +424,7 @@ const TestSuite = new Class({
     $assert(manager.find(9).getOrder() == 3, 'Node 9 should have order 3');
 
     console.log('OK!\n\n');
-  },
+  }
 
   testSize() {
     console.log('testSize:');
@@ -519,7 +521,7 @@ const TestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testReconnectSingleNode() {
     console.log('testReconnectSingleNode:');
@@ -552,7 +554,7 @@ const TestSuite = new Class({
       'Node 1 should now be to the left of the root node',
     );
     $assert(manager.find(1).getOrder() == 1, 'Node 1 should now have order 0');
-  },
+  }
 
   _plotPrediction(canvas, prediction) {
     if (!canvas) {
@@ -570,10 +572,10 @@ const TestSuite = new Class({
     const cx = position.x + canvas.width / 2 - TestSuite.NODE_SIZE.width / 2;
     const cy = position.y + canvas.height / 2 - TestSuite.NODE_SIZE.height / 2;
     canvas.rect(cx, cy, TestSuite.NODE_SIZE.width, TestSuite.NODE_SIZE.height);
-  },
-});
+  }
+}
 
-(TestSuite.NODE_SIZE = { width: 80, height: 30 }),
-  (TestSuite.ROOT_NODE_SIZE = { width: 120, height: 40 });
+TestSuite.NODE_SIZE = { width: 80, height: 30 };
+TestSuite.ROOT_NODE_SIZE = { width: 120, height: 40 };
 
 export default TestSuite;

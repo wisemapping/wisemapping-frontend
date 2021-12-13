@@ -16,10 +16,10 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
-import Events from './Events';
-import ActionDispatcher from './ActionDispatcher';
 import $ from 'jquery';
 import initHotKeyPluggin from '@libraries/jquery.hotkeys';
+import Events from './Events';
+import ActionDispatcher from './ActionDispatcher';
 
 initHotKeyPluggin($);
 
@@ -56,7 +56,7 @@ class MultilineTextEditor extends Events {
   _registerEvents(containerElem) {
     const textareaElem = this._getTextareaElem();
     const me = this;
-    textareaElem.on('keydown', function keydown (event) {
+    textareaElem.on('keydown', function keydown(event) {
       switch (jQuery.hotkeys.specialKeys[event.keyCode]) {
         case 'esc':
           me.close(false);

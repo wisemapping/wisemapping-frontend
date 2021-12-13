@@ -17,20 +17,20 @@
  */
 import EventBus from './EventBus';
 
-const EventBusDispatcher = new Class(/** @lends EventBusDispatcher */{
+class EventBusDispatcher {/** @lends EventBusDispatcher */
   /**
      * @constructs
      */
-  initialize() {
+  constructor() {
     this.registerBusEvents();
-  },
+  }
 
   /**
      * @param {mindplot.layout.LayoutManager} layoutManager
      */
   setLayoutManager(layoutManager) {
     this._layoutManager = layoutManager;
-  },
+  }
 
   /**
      * register bus events
@@ -44,27 +44,27 @@ const EventBusDispatcher = new Class(/** @lends EventBusDispatcher */{
     EventBus.instance.addEvent(EventBus.events.NodeConnectEvent, this._nodeConnectEvent.bind(this));
     EventBus.instance.addEvent(EventBus.events.NodeShrinkEvent, this._nodeShrinkEvent.bind(this));
     EventBus.instance.addEvent(EventBus.events.DoLayout, this._doLayout.bind(this));
-  },
+  }
 
   _nodeResizeEvent(args) {
     this._layoutManager.updateNodeSize(args.node.getId(), args.size);
-  },
+  }
 
   _nodeMoveEvent(args) {
     this._layoutManager.moveNode(args.node.getId(), args.position);
-  },
+  }
 
   _nodeDisconnectEvent(node) {
     this._layoutManager.disconnectNode(node.getId());
-  },
+  }
 
   _nodeConnectEvent(args) {
     this._layoutManager.connectNode(args.parentNode.getId(), args.childNode.getId(), args.childNode.getOrder());
-  },
+  }
 
   _nodeShrinkEvent(node) {
     this._layoutManager.updateShrinkState(node.getId(), node.areChildrenShrunken());
-  },
+  }
 
   _nodeAdded(node) {
     // Central topic must not be added twice ...
@@ -72,11 +72,11 @@ const EventBusDispatcher = new Class(/** @lends EventBusDispatcher */{
       this._layoutManager.addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
       this._layoutManager.updateShrinkState(node.getId(), node.areChildrenShrunken());
     }
-  },
+  }
 
   _nodeRemoved(node) {
     this._layoutManager.removeNode(node.getId());
-  },
+  }
 
   _doLayout() {
     //        (function() {
@@ -86,13 +86,12 @@ const EventBusDispatcher = new Class(/** @lends EventBusDispatcher */{
     //        console.log("---------");
     //        console.log("---------");
     //        }).delay(0, this);
-  },
+  }
 
   /** @return layout manager */
   getLayoutManager() {
     return this._layoutManager;
-  },
-
-});
+  }
+}
 
 export default EventBusDispatcher;

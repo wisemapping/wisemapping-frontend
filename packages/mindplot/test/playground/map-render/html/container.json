@@ -12,5 +12,6 @@
     },
     "persistenceManager": "mindplot.LocalStorageManager",
     "mapId": "welcome",
-    "container":"mindplot"
+    "container":"mindplot",
+    "locale": "en"
 }

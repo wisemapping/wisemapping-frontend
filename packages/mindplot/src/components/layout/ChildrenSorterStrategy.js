@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -16,54 +17,49 @@
  *   limitations under the License.
  */
 
-const ChildrenSorterStrategy = new Class(/** @lends ChildrenSorterStrategy */{
+class ChildrenSorterStrategy {/** @lends ChildrenSorterStrategy */
   /**
      * @constructs
      */
-  initialize() {
-
-  },
-
   /** @abstract */
   computeChildrenIdByHeights(treeSet, node) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   computeOffsets(treeSet, node) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   insert(treeSet, parent, child, order) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   detach(treeSet, node) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   predict(treeSet, parent, node, position, free) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   verify(treeSet, node) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   getChildDirection(treeSet, node) {
-    throw 'Method must be implemented';
-  },
+    throw new Error('Method must be implemented');
+  }
 
   /** @abstract */
   toString() {
-    throw 'Method must be implemented: print name';
-  },
-
-});
+    throw new Error('Method must be implemented: print name');
+  }
+}
 
 export default ChildrenSorterStrategy;

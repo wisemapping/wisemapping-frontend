@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -15,19 +16,20 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
+import { $assert } from '@wisemapping/core-js';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 
-const SymmetricTestSuite = new Class({
-  Extends: TestSuite,
-
-  initialize() {
+class SymmetricTestSuite extends TestSuite {
+  constructor() {
     $('#symmetricTest').css('display', 'block');
+    super();
 
     this.testSymmetry();
     this.testSymmetricPredict();
     this.testSymmetricDragPredict();
-  },
+  }
 
   testSymmetry() {
     console.log('testSymmetry:');
@@ -92,7 +94,7 @@ const SymmetricTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testSymmetricPredict() {
     console.log('testSymmetricPredict:');
@@ -276,7 +278,7 @@ const SymmetricTestSuite = new Class({
     $assert(prediction5d.order == 0, 'Prediction order should be 0');
 
     console.log('OK!\n\n');
-  },
+  }
 
   testSymmetricDragPredict() {
     console.log('testSymmetricDragPredict:');
@@ -345,7 +347,7 @@ const SymmetricTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
-});
+  }
+}
 
 export default SymmetricTestSuite;

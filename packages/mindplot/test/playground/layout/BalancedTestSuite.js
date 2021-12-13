@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -15,19 +16,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
+import { $assert } from '@wisemapping/core-js';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
-
-const BalancedTestSuite = new Class({
-  Extends: TestSuite,
-
-  initialize() {
+class BalancedTestSuite extends TestSuite {
+  constructor() {
     $('#balancedTest').css('display', 'block');
-
+    super();
     this.testBalanced();
     this.testBalancedPredict();
     this.testBalancedNodeDragPredict();
-  },
+  }
 
   testBalanced() {
     console.log('testBalanced:');
@@ -176,7 +176,7 @@ const BalancedTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
+  }
 
   testBalancedPredict() {
     console.log('testBalancedPredict:');
@@ -335,7 +335,7 @@ const BalancedTestSuite = new Class({
     $assert(prediction5a.order == prediction5b.order, 'Both predictions should be the same');
 
     console.log('OK!\n\n');
-  },
+  }
 
   testBalancedNodeDragPredict() {
     console.log('testBalancedNodeDragPredict:');
@@ -493,7 +493,7 @@ const BalancedTestSuite = new Class({
     );
 
     console.log('OK!\n\n');
-  },
-});
+  }
+}
 
 export default BalancedTestSuite;

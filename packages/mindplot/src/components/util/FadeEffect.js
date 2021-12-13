@@ -19,8 +19,7 @@
 // FIXME: this Class should be reimplemented
 import Events from '../Events';
 
-const FadeEffect = new Class(/** @lends FadeEffect */{
-  Extends: Events,
+class FadeEffect extends Events {/** @lends FadeEffect */
   /**
      * @extends mindplot.Events
      * @constructs
@@ -30,7 +29,7 @@ const FadeEffect = new Class(/** @lends FadeEffect */{
   initialize(elements, isVisible) {
     this._isVisible = isVisible;
     this._element = elements;
-  },
+  }
 
   /** */
   start() {
@@ -42,7 +41,7 @@ const FadeEffect = new Class(/** @lends FadeEffect */{
     });
     this._isVisible = !visible;
     this.fireEvent('complete');
-  },
-});
+  }
+}
 
 export default FadeEffect;

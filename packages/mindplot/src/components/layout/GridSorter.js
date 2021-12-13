@@ -22,9 +22,7 @@ import AbstractBasicSorter from './AbstractBasicSorter';
  * @class
  * @extends mindplot.layout.AbstractBasicSorter
  */
-const GridSorter = new Class(/** @lends GridSorter */{
-  Extends: AbstractBasicSorter,
-
+class GridSorter extends AbstractBasicSorter {/** @lends GridSorter */
   /**
      * @param {} treeSet
      * @param {} node
@@ -59,22 +57,21 @@ const GridSorter = new Class(/** @lends GridSorter */{
       const yOffset = zeroHeight + middleHeight + finalHeight;
       const xOffset = node.getSize().width + GridSorter.GRID_HORIZONTAR_SIZE;
 
-      $assert(!isNaN(xOffset), 'xOffset can not be null');
-      $assert(!isNaN(yOffset), 'yOffset can not be null');
+      $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
+      $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
 
       result[heights[i].id] = { x: xOffset, y: yOffset };
     }
     return result;
-  },
+  }
 
   /**
      * @return {String} the print name of this class
      */
   toString() {
     return 'Grid Sorter';
-  },
-
-});
+  }
+}
 
 /**
  * @constant

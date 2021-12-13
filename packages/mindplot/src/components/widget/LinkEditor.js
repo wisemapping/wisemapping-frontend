@@ -17,30 +17,28 @@
  */
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 
-const LinkEditor = new Class(/** @lends LinkEditor */{
-  Extends: BootstrapDialog,
-
+class LinkEditor extends BootstrapDialog {/** @lends LinkEditor */
   /**
      * @constructs
      * @param model
      * @throws will throw an error if model is null or undefined
      * @extends BootstrapDialog
      */
-  initialize(model) {
+  constructor(model) {
     $assert(model, 'model can not be null');
-    this._model = model;
-    this.parent($msg('LINK'), {
+    super($msg('LINK'), {
       cancelButton: true,
       closeButton: true,
       acceptButton: true,
       removeButton: typeof model.getValue() !== 'undefined',
       errorMessage: true,
-      onEventData: { model: this._model },
+      onEventData: { model },
     });
+    this._model = model;
     this.css({ margin: '150px auto' });
     const panel = this._buildPanel(model);
     this.setContent(panel);
-  },
+  }
 
   _buildPanel(model) {
     const result = $('<div></div>').css('padding-top', '5px');
@@ -109,7 +107,7 @@ const LinkEditor = new Class(/** @lends LinkEditor */{
 
     result.append(this.form);
     return result;
-  },
+  }
 
   /**
      * checks whether the input is a valid url
@@ -118,7 +116,7 @@ const LinkEditor = new Class(/** @lends LinkEditor */{
   checkURL(url) {
     const regex = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
     return (regex.test(url));
-  },
+  }
 
   /**
      * overrides abstract parent method
@@ -131,7 +129,7 @@ const LinkEditor = new Class(/** @lends LinkEditor */{
     if (!this.formSubmitted) {
       event.stopPropagation();
     }
-  },
+  }
 
   /**
      * overrides parent method
@@ -139,7 +137,7 @@ const LinkEditor = new Class(/** @lends LinkEditor */{
      */
   onDialogShown() {
     $(this).find('#inputUrl').focus();
-  },
+  }
 
   /**
      * overrides abstract parent method
@@ -148,8 +146,8 @@ const LinkEditor = new Class(/** @lends LinkEditor */{
   onRemoveClick(event) {
     event.data.model.setValue(null);
     event.data.dialog.close();
-  },
+  }
 
-});
+}
 
 export default LinkEditor;

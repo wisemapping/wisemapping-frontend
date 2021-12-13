@@ -65,7 +65,7 @@ class ColorPalettePanel extends ToolbarPaneItem {
     const colorCells = content.find('div[class=palette-colorswatch]');
     const model = this.getModel();
     const me = this;
-    colorCells.each((elem) => {
+    colorCells.each((index, elem) => {
       $(elem).on('click', () => {
         const color = $(elem).css('background-color');
         model.setValue(color);

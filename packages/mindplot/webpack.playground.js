@@ -7,6 +7,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: {
     layout: path.resolve(__dirname, './test/playground/layout/context-loader'),
+    viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
+    embedded: path.resolve(__dirname, './test/playground/map-render/js/embedded'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
   },
   output: {
@@ -35,7 +37,17 @@ module.exports = {
         exclude: [
           /node_modules/,
           path.resolve(__dirname, '../../libraries/mootools-core-1.4.5'),
+          path.resolve(__dirname, '../../libraries/underscore-min'),
           /lib\/raphael/ig,
+        ],
+      },
+      {
+        test: /\.less$/i,
+        use: [
+          // compiles Less to CSS
+          'style-loader',
+          'css-loader?url=false',
+          'less-loader',
         ],
       },
     ],
@@ -54,13 +66,13 @@ module.exports = {
         { from: 'test/playground/map-render/images/favicon.ico', to: 'favicon.ico' },
         { from: 'test/playground/map-render/images', to: 'images' },
         { from: 'test/playground/map-render/icons', to: 'icons' },
-        { from: 'test/playground/map-render/css', to: 'css' },
         { from: 'test/playground/map-render/js', to: 'js' },
         { from: 'test/playground/map-render/samples', to: 'samples' },
         { from: 'test/playground/map-render/bootstrap', to: 'bootstrap' },
         { from: 'test/playground/index.html', to: 'index.html' },
         { from: 'test/playground/map-render/html/container.json', to: 'html/container.json' },
         { from: 'test/playground/map-render/html/container.html', to: 'container.html' },
+        { from: 'test/playground/map-render/css/widget', to: 'css/widget' },
       ],
     }),
     new HtmlWebpackPlugin({
@@ -69,12 +81,12 @@ module.exports = {
       template: 'test/playground/layout/index.html',
     }),
     new HtmlWebpackPlugin({
-      chunks: ['editor'],
+      chunks: ['viewmode'],
       filename: 'viewmode.html',
       template: 'test/playground/map-render/html/viewmode.html',
     }),
     new HtmlWebpackPlugin({
-      chunks: ['editor'],
+      chunks: ['embedded'],
       filename: 'embedded.html',
       template: 'test/playground/map-render/html/embedded.html',
     }),

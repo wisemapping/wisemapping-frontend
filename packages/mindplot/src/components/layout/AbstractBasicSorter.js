@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -21,61 +22,59 @@ import ChildrenSorterStrategy from './ChildrenSorterStrategy';
  * @class
  * @extends mindplot.layout.ChildrenSorterStrategy
  */
-const AbstractBasicSorter = new Class(
-  /** @lends AbstractBasicSorter */ {
-    Extends: ChildrenSorterStrategy,
+class AbstractBasicSorter extends ChildrenSorterStrategy {
+  /** @lends AbstractBasicSorter */
 
-    /**
+  /**
          * @param {} treeSet
          * @param {} node
          * @return the height of a node and its children if existing and not shrunken
          */
-    computeChildrenIdByHeights(treeSet, node) {
-      const result = {};
-      this._computeChildrenHeight(treeSet, node, result);
-      return result;
-    },
+  computeChildrenIdByHeights(treeSet, node) {
+    const result = {};
+    this._computeChildrenHeight(treeSet, node, result);
+    return result;
+  }
 
-    _getVerticalPadding() {
-      return AbstractBasicSorter.INTERNODE_VERTICAL_PADDING;
-    },
+  _getVerticalPadding() {
+    return AbstractBasicSorter.INTERNODE_VERTICAL_PADDING;
+  }
 
-    _computeChildrenHeight(treeSet, node, heightCache) {
-      const height = node.getSize().height + this._getVerticalPadding() * 2; // 2* Top and down padding;
+  _computeChildrenHeight(treeSet, node, heightCache) {
+    const height = node.getSize().height + this._getVerticalPadding() * 2; // 2* Top and down padding;
 
-      let result;
-      const children = treeSet.getChildren(node);
-      if (children.length === 0 || node.areChildrenShrunken()) {
-        result = height;
-      } else {
-        let childrenHeight = 0;
+    let result;
+    const children = treeSet.getChildren(node);
+    if (children.length === 0 || node.areChildrenShrunken()) {
+      result = height;
+    } else {
+      let childrenHeight = 0;
 
-        children.forEach(((child) => {
-          childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-        }));
+      children.forEach(((child) => {
+        childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
+      }));
 
-        result = Math.max(height, childrenHeight);
-      }
+      result = Math.max(height, childrenHeight);
+    }
 
-      if (heightCache) {
-        heightCache[node.getId()] = result;
-      }
+    if (heightCache) {
+      heightCache[node.getId()] = result;
+    }
 
-      return result;
-    },
+    return result;
+  }
 
-    _getSortedChildren(treeSet, node) {
-      const result = treeSet.getChildren(node);
-      result.sort((a, b) => a.getOrder() - b.getOrder());
-      return result;
-    },
+  _getSortedChildren(treeSet, node) {
+    const result = treeSet.getChildren(node);
+    result.sort((a, b) => a.getOrder() - b.getOrder());
+    return result;
+  }
 
-    _getRelativeDirection(reference, position) {
-      const offset = position.x - reference.x;
-      return offset >= 0 ? 1 : -1;
-    },
-  },
-);
+  _getRelativeDirection(reference, position) {
+    const offset = position.x - reference.x;
+    return offset >= 0 ? 1 : -1;
+  }
+}
 
 /**
  * @constant
