@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 
 class LinkEditor extends BootstrapDialog {/** @lends LinkEditor */
