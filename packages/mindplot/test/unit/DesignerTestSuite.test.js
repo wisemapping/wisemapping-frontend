@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import '../../../../libraries/mootools-core-1.4.5';
 import { Designer, LocalStorageManager } from '../../src';
 
 // FIXME: The tests Map could not be loaded.

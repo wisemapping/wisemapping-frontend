@@ -1,18 +1,16 @@
-import '../../../../libraries/mootools-core-1.4.5';
 import Events from '../../src/components/Events';
 
 describe('Events class suite', () => {
-  const TestClass = new Class({
-    Extends: Events,
+  class TestClass extends Events {
 
     getEvents() {
       return this.$events;
-    },
+    }
 
     removeEvents() {
       this.$events = {};
-    },
-  });
+    }
+  }
 
   const expectedChangeFn1 = () => 'change1';
   const expectedChangeFn2 = () => 'change2';

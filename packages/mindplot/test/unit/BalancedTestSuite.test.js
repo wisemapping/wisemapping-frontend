@@ -1,4 +1,3 @@
-import '../../../../libraries/mootools-core-1.4.5';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../src/components/layout/LayoutManager';
 
