@@ -15,6 +15,7 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import $ from 'jquery';
 
 class ModalDialogNotifier {
   show(message, title) {
