@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
 import ToolbarPaneItem from './ToolbarPaneItem';
 
 class ListToolbarPanel extends ToolbarPaneItem {

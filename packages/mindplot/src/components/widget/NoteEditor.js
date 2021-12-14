@@ -17,6 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
+import $ from 'jquery';
 
 class NoteEditor extends BootstrapDialog {
   constructor(model) {
@@ -26,7 +27,7 @@ class NoteEditor extends BootstrapDialog {
       closeButton: true,
       acceptButton: true,
       removeButton: typeof model.getValue() !== 'undefined',
-      onEventData: { model: model },
+      onEventData: { model },
     });
     this._model = model;
     this.css({ margin: '150px auto' });

@@ -1,4 +1,5 @@
 import BootstrapDialog from './BootstrapDialog';
+import { $assert, $defined } from '@wisemapping/core-js';
 
 class BootstrapDialogRequest extends BootstrapDialog {
   constructor(url, title, options) {

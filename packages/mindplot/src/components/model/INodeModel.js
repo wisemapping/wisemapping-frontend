@@ -17,7 +17,6 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import $ from 'jquery';
 
 class INodeModel {
   constructor(mindmap) {

@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import XMLSerializer_Pela from './XMLSerializer_Pela';
 
