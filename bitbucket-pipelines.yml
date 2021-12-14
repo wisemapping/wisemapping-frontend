@@ -18,8 +18,7 @@ pipelines:
             script:
               - yarn install
               - yarn build
-              # - yarn lint
-              - yarn test
+              - yarn --cwd packages/mindplot test:jest
 definitions:
   caches:
     npm: $HOME/.npm
