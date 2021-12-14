@@ -31,6 +31,7 @@ import ShirinkConnector from './ShrinkConnector';
 import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
 import LinkEditor from './widget/LinkEditor';
+
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import INodeModel, { TopicShape } from './model/INodeModel';
 
@@ -769,7 +770,7 @@ class Topic extends NodeGraph {
             text: value,
           });
         }
-      }
+      },
     };
     const editor = new NoteEditor(editorModel);
     this.closeEditors();
@@ -805,7 +806,7 @@ class Topic extends NodeGraph {
             url: value,
           });
         }
-      }
+      },
     };
 
     this.closeEditors();

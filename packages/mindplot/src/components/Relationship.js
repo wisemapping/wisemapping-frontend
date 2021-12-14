@@ -105,6 +105,7 @@ class Relationship extends ConnectionLine {
       ctrlPoints[1].x = defaultPoints[1].x;
       ctrlPoints[1].y = defaultPoints[1].y;
     }
+
     const spoint = new web2d.Point();
     spoint.x = parseInt(ctrlPoints[0].x, 10) + parseInt(sourcePosition.x, 10);
     spoint.y = parseInt(ctrlPoints[0].y, 10) + parseInt(sourcePosition.y, 10);

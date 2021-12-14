@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true
+        "commonjs": true,
+        "jest": true
     },
     "extends": [
         "airbnb-base",
@@ -15,6 +16,7 @@
     },
     "plugins": ["only-warn"],
     "rules": {
+        "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "class-methods-use-this": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": ["!cypress/**/*.js"]}]

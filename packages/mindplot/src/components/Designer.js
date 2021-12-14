@@ -43,6 +43,7 @@ import { create } from './NodeGraphUtils';
 
 import EventBus from './layout/EventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
+
 import LayoutManager from './layout/LayoutManager';
 
 import INodeModel, { TopicShape } from './model/INodeModel';

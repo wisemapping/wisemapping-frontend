@@ -8,7 +8,7 @@ module.exports = {
         publicPath: '',
         library: {
             type: 'umd',
-        },
+        }
     },
     target: 'web',
     module: {

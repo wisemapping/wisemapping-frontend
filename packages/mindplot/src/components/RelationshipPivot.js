@@ -88,7 +88,7 @@ class RelationshipPivot {
 
       topics.forEach(((topic) => {
         topic.removeEvent('ontfocus', this._onTopicClick);
-      }).bind(this));
+      }));
 
       workspace.removeChild(this._pivot);
       workspace.removeChild(this._startArrow);
