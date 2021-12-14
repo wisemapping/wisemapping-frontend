@@ -169,7 +169,7 @@ class NodeModel extends INodeModel {
      */
   removeChild(child) {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
-    this._children.erase(child);
+    this._children = this._children.filter((c) => c !== child);
     child._parent = null;
   }
 

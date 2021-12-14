@@ -65,11 +65,11 @@ class Relationship extends ConnectionLine {
 
     // Position the line ...
     if ($defined(model.getSrcCtrlPoint())) {
-      const srcPoint = model.getSrcCtrlPoint().clone();
+      const srcPoint = { ...model.getSrcCtrlPoint() };
       this.setSrcControlPoint(srcPoint);
     }
     if ($defined(model.getDestCtrlPoint())) {
-      const destPoint = model.getDestCtrlPoint().clone();
+      const destPoint = { ...model.getDestCtrlPoint() };
       this.setDestControlPoint(destPoint);
     }
   }

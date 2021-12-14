@@ -59,8 +59,8 @@ class DragConnector {
     //  - Nodes that are collapsed
     //  - It's not part of the branch dragged itself
     topics = topics.filter((topic) => {
-      let result = draggedNode != topic;
-      result = result && topic != draggedNode;
+      let result = draggedNode !== topic;
+      result = result && topic !== draggedNode;
       result = result && !topic.areChildrenShrunken() && !topic.isCollapsed();
       result = result && !draggedNode.isChildTopic(topic);
       return result;

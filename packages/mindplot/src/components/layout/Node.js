@@ -18,18 +18,6 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 
 class Node {
-  /** @lends Node */
-  /**
-         * @constructs
-         * @param id
-         * @param size
-         * @param position
-         * @param sorter
-         * @throws will throw an error if id is not a finite number or is null or undefined
-         * @throws will throw an error if size is null or undefined
-         * @throws will throw an error if position is null or undefined
-         * @throws will throw an error if sorter is null or undefined
-         */
   constructor(id, size, position, sorter) {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     $assert(size, 'size can not be null');
@@ -141,7 +129,7 @@ class Node {
   /** */
   setSize(size) {
     $assert($defined(size), 'Size can not be null');
-    this._setProperty('size', Object.clone(size));
+    this._setProperty('size', { ...size });
   }
 
   /** */
@@ -244,6 +232,5 @@ class Node {
     );
   }
 }
-
 
 export default Node;

@@ -18,6 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import { PersistenceManager, Designer, LocalStorageManager, Menu } from '../../../../src/';
 import * as mindplot from '../../../../src/';
+import $notifyModal from '../../../../src/components/widget/ModalDialogNotifier';
 
 import $ from 'jquery';
 global.jQuery = $;

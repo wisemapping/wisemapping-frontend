@@ -53,14 +53,14 @@ class DeleteCommand extends Command {
 
         // Delete relationships
         const relationships = this._collectInDepthRelationships(topic);
-        this._deletedRelModel.append(relationships.map((rel) => rel.getModel().clone()));
+        this._deletedRelModel.append(relationships.map((rel) => ({ ...rel.getModel() })));
 
         relationships.forEach((relationship) => {
           commandContext.deleteRelationship(relationship);
         });
 
         // Store information for undo ...
-        const clonedModel = model.clone();
+        const clonedModel = { ...model };
         this._deletedTopicModels.push(clonedModel);
         const outTopic = topic.getOutgoingConnectedTopic();
         let outTopicId = null;
@@ -77,9 +77,9 @@ class DeleteCommand extends Command {
     const rels = commandContext.findRelationships(this._relIds);
     if (rels.length > 0) {
       rels.forEach(((rel) => {
-        this._deletedRelModel.push(rel.getModel().clone());
+        this._deletedRelModel.push({ ...rel.getModel() });
         commandContext.deleteRelationship(rel);
-      }).bind(this));
+      }));
     }
   }
 
@@ -102,7 +102,7 @@ class DeleteCommand extends Command {
         const parentTopics = commandContext.findTopics(parentId);
         commandContext.connect(topics[0], parentTopics[0]);
       }
-    }).bind(this));
+    }));
 
     // Add rebuild relationships ...
     this._deletedRelModel.forEach((model) => {
@@ -135,7 +135,7 @@ class DeleteCommand extends Command {
       let parent = topic.getParent();
       let found = false;
       while (parent != null && !found) {
-        found = topicIds.contains(parent.getId());
+        found = topicIds.includes(parent.getId());
         if (found) {
           break;
         }
@@ -152,12 +152,10 @@ class DeleteCommand extends Command {
 
   _collectInDepthRelationships(topic) {
     let result = [];
-    result.append(topic.getRelationships());
+    result = result.concat(topic.getRelationships());
 
     const children = topic.getChildren();
-    const rels = children.map(function (topic) {
-      return this._collectInDepthRelationships(topic);
-    }, this);
+    const rels = children.map(((t) => this._collectInDepthRelationships(t)));
     result.append(rels.flatten());
 
     if (result.length > 0) {

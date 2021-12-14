@@ -13,6 +13,7 @@
     "rules": {
         "no-underscore-dangle": "off",
         "no-restricted-syntax": "off",
+        "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "max-len": [1,250],
         "import/no-extraneous-dependencies": ["warn", {

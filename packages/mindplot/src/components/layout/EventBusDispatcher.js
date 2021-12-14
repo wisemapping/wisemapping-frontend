@@ -17,10 +17,7 @@
  */
 import EventBus from './EventBus';
 
-class EventBusDispatcher {/** @lends EventBusDispatcher */
-  /**
-     * @constructs
-     */
+class EventBusDispatcher {
   constructor() {
     this.registerBusEvents();
   }

@@ -18,7 +18,6 @@ module.exports = {
         test: /.(js$)/,
         exclude: [
           /node_modules/,
-          path.resolve(__dirname, '../../libraries/mootools-core-1.4.5'),
         ],
       },
     ],

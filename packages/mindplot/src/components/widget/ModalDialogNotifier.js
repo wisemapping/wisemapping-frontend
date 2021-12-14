@@ -14,9 +14,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 
 class ModalDialogNotifier {
-  // FIXME: replace by alert()
   show(message, title) {
     $assert(message, 'message can not be null');
 
@@ -42,11 +42,10 @@ class ModalDialogNotifier {
 
     modalDialog.find('.alert-content').append(h4 + p);
     modalDialog.modal();
-  },
-});
+  }
+}
 
 const dialogNotifier = new ModalDialogNotifier();
 const $notifyModal = dialogNotifier.show.bind(dialogNotifier);
 
-export { $notifyModal };
-export default ModalDialogNotifier;
+export default { $notifyModal };

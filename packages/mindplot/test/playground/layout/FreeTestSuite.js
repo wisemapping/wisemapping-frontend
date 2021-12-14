@@ -501,13 +501,13 @@ class FreeTestSuite extends TestSuite {
 
   _assertBranchCollision(treeSet, node, heightById) {
     const children = treeSet.getChildren(node);
-    const childOfRootNode = treeSet._rootNodes.contains(node);
+    const childOfRootNode = treeSet._rootNodes.includes(node);
 
     children.forEach((child) => {
       const height = heightById[child.getId()];
       let siblings = treeSet.getSiblings(child);
       if (childOfRootNode) {
-        siblings = siblings.filter((sibling) => child.getOrder() % 2 == sibling.getOrder() % 2);
+        siblings = siblings.filter((sibling) => child.getOrder() % 2 === sibling.getOrder() % 2);
       }
 
       siblings.forEach((sibling) => {

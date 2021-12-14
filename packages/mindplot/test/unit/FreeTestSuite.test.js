@@ -33,7 +33,7 @@ describe('Free Test Suite', () => {
 
   function branchCollision(treeSet, node, heightById) {
     const children = treeSet.getChildren(node);
-    const childOfRootNode = treeSet._rootNodes.contains(node);
+    const childOfRootNode = treeSet._rootNodes.includes(node);
 
     children.forEach(((child) => {
       let siblings = treeSet.getSiblings(child);

@@ -81,8 +81,8 @@ class DesignerModel extends Events {
      * @return {Array.<mindplot.Relationship, mindplot.Topic>} all topics and relationships
      */
   getEntities() {
-    const result = [].append(this._topics);
-    result.append(this._relationships);
+    let result = [].concat(this._topics);
+    result = result.concat(this._relationships);
     return result;
   }
 
@@ -92,7 +92,7 @@ class DesignerModel extends Events {
      */
   removeTopic(topic) {
     $assert(topic, 'topic can not be null');
-    this._topics.erase(topic);
+    this._topics = this._topics.filter((t) => t !== topic);
   }
 
   /**
@@ -101,7 +101,7 @@ class DesignerModel extends Events {
      */
   removeRelationship(rel) {
     $assert(rel, 'rel can not be null');
-    this._relationships.erase(rel);
+    this._relationships = this._relationships.filter((r) => r !== rel);
   }
 
   /**

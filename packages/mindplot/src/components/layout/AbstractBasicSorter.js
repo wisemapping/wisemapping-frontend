@@ -23,13 +23,6 @@ import ChildrenSorterStrategy from './ChildrenSorterStrategy';
  * @extends mindplot.layout.ChildrenSorterStrategy
  */
 class AbstractBasicSorter extends ChildrenSorterStrategy {
-  /** @lends AbstractBasicSorter */
-
-  /**
-         * @param {} treeSet
-         * @param {} node
-         * @return the height of a node and its children if existing and not shrunken
-         */
   computeChildrenIdByHeights(treeSet, node) {
     const result = {};
     this._computeChildrenHeight(treeSet, node, result);

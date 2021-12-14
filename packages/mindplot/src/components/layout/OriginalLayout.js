@@ -77,7 +77,7 @@ class OriginalLayout {
   /** */
   layout() {
     const roots = this._treeSet.getTreeRoots();
-    roots.each(((node) => {
+    roots.forEach(((node) => {
       // Calculate all node heights ...
       const sorter = node.getSorter();
 
@@ -109,7 +109,7 @@ class OriginalLayout {
       const parentPosition = node.getPosition();
       const me = this;
 
-      children.each((child) => {
+      children.forEach((child) => {
         const offset = offsetById[child.getId()];
 
         const childFreeDisplacement = child.getFreeDisplacement();
@@ -143,7 +143,7 @@ class OriginalLayout {
     }
 
     // Continue reordering the children nodes ...
-    children.each(((child) => {
+    children.forEach(((child) => {
       this._layoutChildren(child, heightById);
     }));
   }
@@ -198,7 +198,7 @@ class OriginalLayout {
     if (node.isFree()) {
       this._shiftBranches(node, heightById);
     }
-    children.each(((child) => {
+    children.forEach(((child) => {
       this._fixOverlapping(child, heightById);
     }));
   }
@@ -211,27 +211,25 @@ class OriginalLayout {
       node.getFreeDisplacement().y,
     );
 
-    siblingsToShift.each(((sibling) => {
-      const overlappingOccurs = shiftedBranches.some(((shiftedBranch) =>{
-        return OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById);
-      }).bind(this));
+    siblingsToShift.forEach(((sibling) => {
+      const overlappingOccurs = shiftedBranches.some(((shiftedBranch) => OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById)));
 
       if (!sibling.isFree() || overlappingOccurs) {
         const sAmount = node.getFreeDisplacement().y;
         this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
         shiftedBranches.push(sibling);
       }
-    }).bind(this));
+    }));
 
     const branchesToShift = this._treeSet
       .getBranchesInVerticalDirection(node, node.getFreeDisplacement().y)
-      .filter((branch) => !shiftedBranches.contains(branch));
+      .filter((branch) => !shiftedBranches.includes(branch));
 
-    branchesToShift.each(((branch) =>{
+    branchesToShift.forEach(((branch) => {
       const bAmount = node.getFreeDisplacement().y;
       this._treeSet.shiftBranchPosition(branch, 0, bAmount);
       shiftedBranches.push(branch);
-    }).bind(this));
+    }));
   }
 
   static _branchesOverlap(branchA, branchB, heightById) {

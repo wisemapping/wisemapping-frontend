@@ -20,6 +20,7 @@ import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
+
 class BalancedTestSuite extends TestSuite {
   constructor() {
     $('#balancedTest').css('display', 'block');

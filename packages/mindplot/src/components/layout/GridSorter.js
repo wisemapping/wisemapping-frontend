@@ -22,12 +22,7 @@ import AbstractBasicSorter from './AbstractBasicSorter';
  * @class
  * @extends mindplot.layout.AbstractBasicSorter
  */
-class GridSorter extends AbstractBasicSorter {/** @lends GridSorter */
-  /**
-     * @param {} treeSet
-     * @param {} node
-     * @return offsets
-     */
+class GridSorter extends AbstractBasicSorter {
   computeOffsets(treeSet, node) {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');

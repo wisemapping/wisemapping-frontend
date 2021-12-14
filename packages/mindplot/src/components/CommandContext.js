@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from "@wisemapping/core-js";
+import EventBus from "./layout/EventBus";
 
 class CommandContext {
   constructor(designer) {
@@ -31,7 +32,7 @@ class CommandContext {
     }
 
     const designerTopics = this._designer.getModel().getTopics();
-    const result = designerTopics.filter((topic) => topicsIds.contains(topic.getId()));
+    const result = designerTopics.filter((topic) => topicsIds.includes(topic.getId()));
 
     if (result.length !== topicsIds.length) {
       const ids = designerTopics.map((topic) => topic.getId());
@@ -98,7 +99,7 @@ class CommandContext {
     }
 
     const designerRel = this._designer.getModel().getRelationships();
-    return designerRel.filter((rel) => relIds.contains(rel.getId()));
+    return designerRel.filter((rel) => relIds.includes(rel.getId()));
   }
 
   /** */

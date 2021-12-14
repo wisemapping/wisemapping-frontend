@@ -34,8 +34,7 @@
         "@wisemapping/core-js": "^0.0.1",
         "@wisemapping/web2d": "^0.0.1",
         "jest": "^27.4.3",
-        "jquery": "^3.6.0",
-        "mootools": "1.4.5"
+        "jquery": "^3.6.0"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",

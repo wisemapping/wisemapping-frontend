@@ -20,19 +20,6 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import AbstractBasicSorter from './AbstractBasicSorter';
 
 class BalancedSorter extends AbstractBasicSorter {
-  /** @lends BalancedSorter */
-  /**
-         * @constructs
-         * @extends mindplot.layout.AbstractBasicSorter
-         */
-  /**
-         * @param {} graph
-         * @param {} parent
-         * @param {} node
-         * @param {} position
-         * @param {Boolean} free
-         * @return an array with order and position
-         */
   predict(graph, parent, node, position, free) {
     // If its a free node...
     if (free) {
@@ -42,8 +29,8 @@ class BalancedSorter extends AbstractBasicSorter {
       );
       $assert($defined(node), 'node cannot be null for predict in free positioning');
 
-      var rootNode = graph.getRootNode(parent);
-      var direction = this._getRelativeDirection(
+      const rootNode = graph.getRootNode(parent);
+      const direction = this._getRelativeDirection(
         rootNode.getPosition(),
         node.getPosition(),
       );
@@ -65,7 +52,7 @@ class BalancedSorter extends AbstractBasicSorter {
       return [0, { x: xPos, y: position.y }];
     }
 
-    var rootNode = graph.getRootNode(parent);
+    const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
     if (node) {
@@ -86,9 +73,10 @@ class BalancedSorter extends AbstractBasicSorter {
       }
     }
 
+    let right; let left;
     if (!position) {
-      var right = this._getChildrenForOrder(parent, graph, 0);
-      var left = this._getChildrenForOrder(parent, graph, 1);
+      right = this._getChildrenForOrder(parent, graph, 0);
+      left = this._getChildrenForOrder(parent, graph, 1);
     }
     // Filter nodes on one side..
     const order = position
@@ -101,7 +89,7 @@ class BalancedSorter extends AbstractBasicSorter {
     var direction = order % 2 == 0 ? 1 : -1;
 
     // Exclude the dragged node (if set)
-    const children = this._getChildrenForOrder(parent, graph, order).filter((child) => child != node);
+    const children = this._getChildrenForOrder(parent, graph, order).filter((child) => child !== node);
 
     // No children?
     if (children.length == 0) {
@@ -120,7 +108,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
     // Try to fit within ...
     let result = null;
-    const last = children.getLast();
+    const last = children[children.length - 1];
     position = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
       const cpos = child.getPosition();
@@ -303,7 +291,7 @@ class BalancedSorter extends AbstractBasicSorter {
   }
 
   _getChildrenForOrder(parent, graph, order) {
-    return this._getSortedChildren(graph, parent).filter((child) => child.getOrder() % 2 == order % 2);
+    return this._getSortedChildren(graph, parent).filter((child) => child.getOrder() % 2 === order % 2);
   }
 
   _getVerticalPadding() {

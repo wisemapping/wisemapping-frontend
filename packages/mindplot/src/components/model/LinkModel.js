@@ -39,14 +39,14 @@ class LinkModel extends FeatureModel {
     const fixedUrl = LinkModel._fixUrl(url);
     this.setAttribute('url', fixedUrl);
 
-    const type = fixedUrl.contains('mailto:') ? 'mail' : 'url';
+    const type = fixedUrl.includes('mailto:') ? 'mail' : 'url';
     this.setAttribute('urlType', type);
   }
 
   // url format is already checked in LinkEditor.checkUrl
   static _fixUrl(url) {
     let result = url;
-    if (!result.contains('http://') && !result.contains('https://') && !result.contains('mailto://')) {
+    if (!result.includes('http://') && !result.includes('https://') && !result.includes('mailto://')) {
       result = `http://${result}`;
     }
     return result;

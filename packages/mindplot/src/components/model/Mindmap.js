@@ -86,7 +86,7 @@ class Mindmap extends IMindmap {
          */
   removeBranch(nodeModel) {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
-    return this._branches.erase(nodeModel);
+    this._branches = this._branches.filter((b) => b !== nodeModel);
   }
 
   /** */
@@ -151,7 +151,7 @@ class Mindmap extends IMindmap {
          * @param relationship
          */
   deleteRelationship(relationship) {
-    this._relationships.erase(relationship);
+    this._relationships = this._branches.filter((r) => r !== relationship);
   }
 
   /**

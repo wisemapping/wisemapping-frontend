@@ -74,12 +74,14 @@ class ElementPeer {
   removeChild(elementPeer) {
     // Store parent and child relationship.
     elementPeer.setParent(null);
-    const children = this.getChildren();
+    let children = this.getChildren();
 
     // Remove from children array ...
     const oldLength = children.length;
 
-    children.erase(elementPeer);
+    children = children.filter((c) => c !== elementPeer);
+    this.setChildren(children);
+
     $assert(
       children.length < oldLength,
       `element could not be removed:${elementPeer}`,

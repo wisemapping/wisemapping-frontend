@@ -25,16 +25,24 @@ class Events {
     return string.replace(/^on([A-Z])/, (full, first) => first.toLowerCase());
   }
 
-  addEvent(type, fn, internal) {
-    type = Events._removeOn(type);
+  addEvent(typeName, fn, internal) {
+    const type = Events._removeOn(typeName);
 
-    this.$events[type] = (this.$events[type] || []).include(fn);
-    if (internal) fn.internal = true;
+    // Add function had not been added yet
+    const funByType = this.$events[type] ? this.$events[type] : [];
+    if (!funByType.includes(fn)) {
+      funByType.push(fn);
+      this.$events[type] = funByType;
+    }
+
+    // Mark reference ...
+    // eslint-disable-next-line no-param-reassign
+    fn.internal = Boolean(internal);
     return this;
   }
 
-  fireEvent(type, args, delay) {
-    type = Events._removeOn(type);
+  fireEvent(typeName, args, delay) {
+    const type = Events._removeOn(typeName);
     const events = this.$events[type];
     if (!events) return this;
 
@@ -42,16 +50,15 @@ class Events {
     events.forEach(((fn) => {
       if (delay) {
         fn.delay(delay, this, args);
-      }
-      else {
+      } else {
         fn.apply(this, args);
       }
-    }).bind(this));
+    }));
     return this;
   }
 
-  removeEvent(type, fn) {
-    type = Events._removeOn(type);
+  removeEvent(typeName, fn) {
+    const type = Events._removeOn(typeName);
     const events = this.$events[type];
     if (events && !fn.internal) {
       const index = events.indexOf(fn);

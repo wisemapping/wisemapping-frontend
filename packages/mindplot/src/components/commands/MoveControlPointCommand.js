@@ -37,17 +37,17 @@ class MoveControlPointCommand extends Command {
     super();
     this._ctrlPointControler = ctrlPointController;
     this._line = ctrlPointController._line;
-    this._controlPoint = this._ctrlPointControler.getControlPoint(point).clone();
-    this._oldControlPoint = this._ctrlPointControler.getOriginalCtrlPoint(point).clone();
-    this._originalEndPoint = this._ctrlPointControler.getOriginalEndPoint(point).clone();
+    this._controlPoint = { ...this._ctrlPointControler.getControlPoint(point) };
+    this._oldControlPoint = { ...this._ctrlPointControler.getOriginalCtrlPoint(point) };
+    this._originalEndPoint = this._ctrlPointControler.getOriginalEndPoint(point);
     switch (point) {
       case 0:
         this._wasCustom = this._line.getLine().isSrcControlPointCustom();
-        this._endPoint = this._line.getLine().getFrom().clone();
+        this._endPoint = { ...this._line.getLine().getFrom() };
         break;
       case 1:
         this._wasCustom = this._line.getLine().isDestControlPointCustom();
-        this._endPoint = this._line.getLine().getTo().clone();
+        this._endPoint = { ...this._line.getLine().getTo() };
         break;
       default:
         break;
@@ -62,17 +62,17 @@ class MoveControlPointCommand extends Command {
     const model = this._line.getModel();
     switch (this._point) {
       case 0:
-        model.setSrcCtrlPoint(this._controlPoint.clone());
+        model.setSrcCtrlPoint({ ...this._controlPoint });
         this._line.setFrom(this._endPoint.x, this._endPoint.y);
         this._line.setIsSrcControlPointCustom(true);
-        this._line.setSrcControlPoint(this._controlPoint.clone());
+        this._line.setSrcControlPoint({ ...this._controlPoint });
         break;
       case 1:
-        model.setDestCtrlPoint(this._controlPoint.clone());
+        model.setDestCtrlPoint({ ...this._controlPoint });
         this._wasCustom = this._line.getLine().isDestControlPointCustom();
         this._line.setTo(this._endPoint.x, this._endPoint.y);
         this._line.setIsDestControlPointCustom(true);
-        this._line.setDestControlPoint(this._controlPoint.clone());
+        this._line.setDestControlPoint({ ...this._controlPoint });
         break;
       default:
         break;
@@ -95,16 +95,16 @@ class MoveControlPointCommand extends Command {
       case 0:
         if ($defined(this._oldControlPoint)) {
           line.setFrom(this._originalEndPoint.x, this._originalEndPoint.y);
-          model.setSrcCtrlPoint(this._oldControlPoint.clone());
-          line.setSrcControlPoint(this._oldControlPoint.clone());
+          model.setSrcCtrlPoint({ ...this._oldControlPoint });
+          line.setSrcControlPoint({ ...this._oldControlPoint });
           line.setIsSrcControlPointCustom(this._wasCustom);
         }
         break;
       case 1:
         if ($defined(this._oldControlPoint)) {
           line.setTo(this._originalEndPoint.x, this._originalEndPoint.y);
-          model.setDestCtrlPoint(this._oldControlPoint.clone());
-          line.setDestControlPoint(this._oldControlPoint.clone());
+          model.setDestCtrlPoint({ ...this._oldControlPoint });
+          line.setDestControlPoint({ ...this._oldControlPoint });
           line.setIsDestControlPointCustom(this._wasCustom);
         }
         break;

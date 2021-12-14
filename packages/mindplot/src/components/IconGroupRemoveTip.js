@@ -22,7 +22,7 @@ export default class RemoveTip {
     $assert(icon, 'icon can not be null');
 
     // Nothing to do ...
-    if (this._activeIcon != icon) {
+    if (this._activeIcon !== icon) {
       // If there is an active icon, close it first ...
       if (this._activeIcon) {
         this.close(0);
@@ -82,10 +82,10 @@ export default class RemoveTip {
         me._closeTimeoutId = null;
       };
 
-      if (!$defined(delay) || delay == 0) {
+      if (!$defined(delay) || delay === 0) {
         close();
       } else {
-        this._closeTimeoutId = close.delay(delay);
+        this._closeTimeoutId = $(close).delay(delay);
       }
     }
   }

@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+// eslint-disable-next-line max-classes-per-file
 import { $assert, $defined } from '@wisemapping/core-js';
 import * as web2d from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
@@ -22,14 +23,6 @@ import IconGroupRemoveTip from './IconGroupRemoveTip';
 import Icon from './Icon';
 
 class IconGroup {
-  /** @lends IconGroup */
-  /**
-         * @constructs
-         * @param topicId
-         * @param iconSize
-         * @throws will throw an error if topicId is null or undefined
-         * @throws will throw an error if iconSize is null or undefined
-         */
   constructor(topicId, iconSize) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert($defined(iconSize), 'iconSize can not be null');
@@ -43,7 +36,7 @@ class IconGroup {
       coordSizeWidth: 0,
       coordSizeHeight: 100,
     });
-    this._removeTip = new IconGroup.RemoveTip(this._group, topicId);
+    this._removeTip = new IconGroupRemoveTip(this._group, topicId);
     this.seIconSize(iconSize, iconSize);
 
     this._registerListeners();
@@ -76,10 +69,10 @@ class IconGroup {
   }
 
   /**
-         * @param icon the icon to be added to the icon group
-         * @param {Boolean} remove
-         * @throws will throw an error if icon is not defined
-         */
+       * @param icon the icon to be added to the icon group
+       * @param {Boolean} remove
+       * @throws will throw an error if icon is not defined
+       */
   addIcon(icon, remove) {
     $defined(icon, 'icon is not defined');
 
@@ -111,7 +104,7 @@ class IconGroup {
     });
 
     if (result == null) {
-      throw new Error(`Icon can no be found:${iconModel.getId()}, Icons:${this._icons}`);
+      throw new Error(`Icon can no be found:${iconModel.getId()} Icons:${this._icons}`);
     }
 
     return result;
@@ -131,7 +124,7 @@ class IconGroup {
     this._removeTip.close(0);
     this._group.removeChild(icon.getImage());
 
-    this._icons.erase(icon);
+    this._icons = this._icons.filter((i) => i !== icon);
     this._resize(this._icons.length);
     const me = this;
 
@@ -164,7 +157,6 @@ class IconGroup {
     this._group.setCoordSize(iconsLength * iconSize, iconSize);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   _positionIcon(icon, order) {
     const iconSize = Icon.SIZE + IconGroup.ICON_PADDING * 2;
     icon.getImage().setPosition(
@@ -180,7 +172,5 @@ class IconGroup {
  * @default
  */
 IconGroup.ICON_PADDING = 5;
-
-IconGroup.RemoveTip = IconGroupRemoveTip;
 
 export default IconGroup;

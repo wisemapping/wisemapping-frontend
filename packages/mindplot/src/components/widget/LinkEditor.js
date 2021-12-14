@@ -111,19 +111,19 @@ class LinkEditor extends BootstrapDialog {
   }
 
   /**
-     * checks whether the input is a valid url
-     * @return {Boolean} true if the url is valid
-     */
+   * checks whether the input is a valid url
+   * @return {Boolean} true if the url is valid
+   */
   checkURL(url) {
     const regex = /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
     return (regex.test(url));
   }
 
   /**
-     * overrides abstract parent method
-     * triggered when the user clicks the accept button - submits the url input
-     * @param event
-     */
+   * overrides abstract parent method
+   * triggered when the user clicks the accept button - submits the url input
+   * @param event
+   */
   onAcceptClick(event) {
     this.formSubmitted = false;
     $('#linkFormId').trigger('submit');
@@ -133,22 +133,21 @@ class LinkEditor extends BootstrapDialog {
   }
 
   /**
-     * overrides parent method
-     * sets the url input on focus
-     */
+   * overrides parent method
+   * sets the url input on focus
+   */
   onDialogShown() {
     $(this).find('#inputUrl').focus();
   }
 
   /**
-     * overrides abstract parent method
-     * triggered when the user clicks the remove button - deletes the link
-     */
+   * overrides abstract parent method
+   * triggered when the user clicks the remove button - deletes the link
+   */
   onRemoveClick(event) {
     event.data.model.setValue(null);
     event.data.dialog.close();
   }
-
 }
 
 export default LinkEditor;

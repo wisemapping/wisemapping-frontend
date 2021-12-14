@@ -355,7 +355,7 @@ class Topic extends NodeGraph {
 
   /** */
   deleteRelationship(relationship) {
-    this._relationships.erase(relationship);
+    this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
   /** */
@@ -1186,7 +1186,7 @@ class Topic extends NodeGraph {
   /** */
   removeChild(child) {
     const children = this.getChildren();
-    children.erase(child);
+    this._children = children.filter((c) => c !== child);
   }
 
   /** */

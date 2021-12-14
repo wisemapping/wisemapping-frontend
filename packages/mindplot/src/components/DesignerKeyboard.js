@@ -240,7 +240,7 @@ class DesignerKeyboard extends Keyboard {
     $(document).on('keypress', (event) => {
       let keyCode;
       // Firefox doesn't skip special keys for keypress event...
-      if (event.key && excludes.contains(event.key.toLowerCase())) {
+      if (event.key && excludes.includes(event.key.toLowerCase())) {
         return;
       }
       // Sometimes Firefox doesn't contain keyCode value

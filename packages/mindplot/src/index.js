@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-import '@libraries/mootools-core-1.4.5';
-
 import Mindmap from './components/model/Mindmap';
 import PersistenceManager from './components/PersistenceManager';
 import Designer from './components/Designer';

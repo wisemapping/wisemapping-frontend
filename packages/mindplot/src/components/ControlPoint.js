@@ -78,10 +78,10 @@ class ControlPoint {
     this._createControlPoint();
     this._endPoint = [];
     this._orignalCtrlPoint = [];
-    this._orignalCtrlPoint[0] = this._controls[0].clone();
-    this._orignalCtrlPoint[1] = this._controls[1].clone();
-    this._endPoint[0] = this._line.getLine().getFrom().clone();
-    this._endPoint[1] = this._line.getLine().getTo().clone();
+    this._orignalCtrlPoint[0] = { ...this._controls[0] };
+    this._orignalCtrlPoint[1] = { ...this._controls[1] };
+    this._endPoint[0] = { ...this._line.getLine().getFrom() };
+    this._endPoint[1] = { ...this._line.getLine().getTo() };
   }
 
   redraw() {

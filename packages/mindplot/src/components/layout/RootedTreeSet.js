@@ -18,8 +18,6 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 
 class RootedTreeSet {
-  /** @lends RootedTreeSet */
-  /** @constructs */
   constructor() {
     this._rootNodes = [];
   }
@@ -53,20 +51,20 @@ class RootedTreeSet {
     $assert(node, 'node can not be null');
     $assert(
       !this.find(node.getId(), false),
-      `node already exits with this id. Id:${node.getId()}`,
+      `node already exits with this id. Id:${node.getId()}: ${this.dump()}`,
     );
     $assert(!node._children, 'node already added');
     this._rootNodes.push(this._decodate(node));
   }
 
   /**
-         * @param nodeId
-         * @throws will throw an error if nodeId is null or undefined
-         */
+   * @param nodeId
+   * @throws will throw an error if nodeId is null or undefined
+   */
   remove(nodeId) {
     $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
-    this._rootNodes.erase(node);
+    this._rootNodes = this._rootNodes.filter((n) => n !== node);
   }
 
   /**
@@ -89,7 +87,7 @@ class RootedTreeSet {
 
     parent._children.push(child);
     child._parent = parent;
-    this._rootNodes.erase(child);
+    this._rootNodes = this._rootNodes.filter((c) => c !== child);
   }
 
   /**
@@ -102,7 +100,7 @@ class RootedTreeSet {
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
 
-    node._parent._children.erase(node);
+    node._parent._children = node._parent._children.filter((n)=> node !== n);
     this._rootNodes.push(node);
     node._parent = null;
   }
@@ -301,7 +299,7 @@ class RootedTreeSet {
       `${node.getId()}[${order}]`,
     );
     text.attr('fill', '#FFF');
-    const fillColor = this._rootNodes.contains(node)
+    const fillColor = this._rootNodes.includes(node)
       ? '#000'
       : node.isFree()
         ? '#abc'
@@ -321,11 +319,11 @@ class RootedTreeSet {
           node.getOrder()
         }, position:(${
           rectPosition.x
-        },${
+        }, ${
           rectPosition.y
         }), size:${
           rectSize.width
-        }x${
+        },${
           rectSize.height
         }, freeDisplacement:(${
           node.getFreeDisplacement().x

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from "@wisemapping/core-js";
+import { $assert, $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
 
 class FeatureModel {
@@ -33,18 +33,24 @@ class FeatureModel {
     this._attributes = {};
 
     // Create type method ...
-    this[`is${$.camelCase(type)}Model`] = () => true;
+    this[`is${FeatureModel.camelize(type)}Model`] = () => true;
   }
 
   /** */
   getAttributes() {
-    return Object.clone(this._attributes);
+    return { ...this._attributes };
+  }
+
+  static camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())).replace(/\s+/g, '');
   }
 
   /** */
   setAttributes(attributes) {
-    for (const key in attributes) {
-      this[`set${key.capitalize()}`](attributes[key]);
+    for (const attr in attributes) {
+      const funName = `set${FeatureModel.camelize(attr)}`;
+      const value = attributes[attr];
+      this[funName](value);
     }
   }
 

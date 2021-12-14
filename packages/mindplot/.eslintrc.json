@@ -8,12 +8,6 @@
         "airbnb-base",
         "plugin:cypress/recommended"
     ],
-    "globals":{
-        "Class": "readonly",
-        "$": "readonly",
-        "$msg": "readonly",
-        "_": "readonly"
-    },
     "plugins": ["only-warn"],
     "rules": {
         "no-underscore-dangle": "off",

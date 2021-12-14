@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from "@wisemapping/core-js";
+import { $assert } from '@wisemapping/core-js';
 import PersistenceManager from '../PersistenceManager';
 import { $notify } from './ToolbarNotifier';
+import $notifyModal from './ModalDialogNotifier';
 
 class IMenu {
-
   constructor(designer, containerId, mapId) {
     $assert(designer, 'designer can not be null');
     $assert(containerId, 'containerId can not be null');
@@ -97,7 +97,7 @@ class IMenu {
             $notifyModal(error.message);
           }
         }
-      }
+      },
     }, sync);
   }
 
