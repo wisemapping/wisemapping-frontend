@@ -53,14 +53,14 @@ class DeleteCommand extends Command {
 
         // Delete relationships
         const relationships = this._collectInDepthRelationships(topic);
-        this._deletedRelModel.append(relationships.map((rel) => ({ ...rel.getModel() })));
+        this._deletedRelModel = this._deletedRelModel.concat(relationships.map((rel) => rel.getModel().clone()));
 
         relationships.forEach((relationship) => {
           commandContext.deleteRelationship(relationship);
         });
 
         // Store information for undo ...
-        const clonedModel = { ...model };
+        const clonedModel = model.clone();
         this._deletedTopicModels.push(clonedModel);
         const outTopic = topic.getOutgoingConnectedTopic();
         let outTopicId = null;
@@ -77,7 +77,7 @@ class DeleteCommand extends Command {
     const rels = commandContext.findRelationships(this._relIds);
     if (rels.length > 0) {
       rels.forEach(((rel) => {
-        this._deletedRelModel.push({ ...rel.getModel() });
+        this._deletedRelModel.push(rel.getModel().clone());
         commandContext.deleteRelationship(rel);
       }));
     }
@@ -156,7 +156,7 @@ class DeleteCommand extends Command {
 
     const children = topic.getChildren();
     const rels = children.map(((t) => this._collectInDepthRelationships(t)));
-    result.append(rels.flatten());
+    result = result.concat(rels.flat());
 
     if (result.length > 0) {
       // Filter for unique ...

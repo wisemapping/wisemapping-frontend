@@ -128,8 +128,8 @@ class NodeModel extends INodeModel {
       return cnode;
     });
 
-    result._properties = Object.clone(this._properties);
-    result._feature = this._feature.clone();
+    result._properties = { ...this._properties };
+    result._feature = { ...this._feature };
     return result;
   }
 
