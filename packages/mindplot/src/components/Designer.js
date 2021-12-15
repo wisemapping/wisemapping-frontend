@@ -192,11 +192,9 @@ class Designer extends Events {
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
     const topics = designerModel.getTopics();
 
+    // Enable all mouse events.
     dragManager.addEvent('startdragging', () => {
-      // Enable all mouse events.
-      for (let i = 0; i < topics.length; i++) {
-        topics[i].setMouseEventsEnabled(false);
-      }
+      topics.forEach((topic) => topic.setMouseEventsEnabled(false));
     });
 
     dragManager.addEvent('dragging', (event, dragTopic) => {
@@ -212,9 +210,7 @@ class Designer extends Events {
     });
 
     dragManager.addEvent('enddragging', (event, dragTopic) => {
-      for (let i = 0; i < topics.length; i++) {
-        topics[i].setMouseEventsEnabled(true);
-      }
+      topics.forEach((topic) => topic.setMouseEventsEnabled(true));
       dragTopic.applyChanges(workspace);
     });
 
@@ -308,9 +304,7 @@ class Designer extends Events {
   onObjectFocusEvent(currentObject, event) {
     // Close node editors ..
     const topics = this.getModel().getTopics();
-    topics.forEach((topic) => {
-      topic.closeEditors();
-    });
+    topics.forEach((topic) => topic.closeEditors());
 
     const model = this.getModel();
     const objects = model.getEntities();
@@ -666,19 +660,14 @@ class Designer extends Events {
 
     // Building node graph ...
     const branches = mindmapModel.getBranches();
-    for (let i = 0; i < branches.length; i++) {
-      // NodeModel -> NodeGraph ...
-      const nodeModel = branches[i];
-      const nodeGraph = this.nodeModelToNodeGraph(nodeModel);
-
-      // Update shrink render state...
+    branches.forEach((branch) => {
+      const nodeGraph = this.nodeModelToNodeGraph(branch);
       nodeGraph.setBranchVisibility(true);
-    }
+    });
 
+    // Connect relationships ...
     const relationships = mindmapModel.getRelationships();
-    for (let j = 0; j < relationships.length; j++) {
-      this._relationshipModelToRelationship(relationships[j]);
-    }
+    relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
     // Place the focus on the Central Topic
     const centralTopic = this.getModel().getCentralTopic();
@@ -720,16 +709,16 @@ class Designer extends Events {
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder() - b.getOrder());
 
-    const nodeGraph = this._buildNodeGraph(nodeModel, this.isReadOnly());
-    nodeGraph.setVisibility(false);
+    const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
+    result.setVisibility(false);
 
-    this._workspace.append(nodeGraph);
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      if ($defined(child)) this.nodeModelToNodeGraph(child);
-    }
-
-    return nodeGraph;
+    this._workspace.append(result);
+    children.forEach((child) => {
+      if ($defined(child)) {
+        this.nodeModelToNodeGraph(child);
+      }
+    });
+    return result;
   }
 
   /**
