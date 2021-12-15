@@ -32,7 +32,7 @@ class FeatureModel {
     this._attributes = {};
 
     // Create type method ...
-    this[`is${FeatureModel.camelize(type)}Model`] = () => true;
+    this[`is${FeatureModel.capitalize(type)}Model`] = () => true;
   }
 
   /** */
@@ -40,17 +40,18 @@ class FeatureModel {
     return { ...this._attributes };
   }
 
-  static camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())).replace(/\s+/g, '');
+  static capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   /** */
   setAttributes(attributes) {
-    for (const attr in attributes) {
-      const funName = `set${FeatureModel.camelize(attr)}`;
+
+    Object.keys(attributes).forEach((attr) => {
+      const funName = `set${FeatureModel.capitalize(attr)}`;
       const value = attributes[attr];
       this[funName](value);
-    }
+    });
   }
 
   /** */
