@@ -92,14 +92,17 @@ class MultilineTextEditor extends Events {
           break;
         case 'tab':
           event.preventDefault();
-          var start = $(this).get(0).selectionStart;
-          var end = $(this).get(0).selectionEnd;
+          const start = $(this).get(0).selectionStart;
+          const end = $(this).get(0).selectionEnd;
 
           // set textarea value to: text before caret + tab + text after caret
           $(this).val(`${$(this).val().substring(0, start)}\t${$(this).val().substring(end)}`);
 
           // put caret at right position again
           $(this).get(0).selectionStart = $(this).get(0).selectionEnd = start + 1;
+          break;
+        default:
+          // No actions...
           break;
       }
       event.stopPropagation();
@@ -192,8 +195,9 @@ class MultilineTextEditor extends Events {
     font.color = nodeText.getColor();
     this._setStyle(font);
     const me = this;
+
     // Set editor's initial size
-    const displayFunc = function () {
+    const displayFunc = function displayFunc() {
       // Position the editor and set the size...
       const textShape = topic.getTextShape();
 
@@ -212,7 +216,7 @@ class MultilineTextEditor extends Events {
       me._positionCursor(inputElem, !$defined(defaultText));
     };
 
-    this._timeoutId = displayFunc.delay(10);
+    this._timeoutId = setTimeout(() => displayFunc(), 10);
   }
 
   _setStyle(fontStyle) {
