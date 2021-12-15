@@ -16,17 +16,18 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import $ from 'jquery';
 import { $msg } from './Messages';
 import PersistenceManager from './PersistenceManager';
 
-class RESTPersistenceManager extends PersistenceManager{
+class RESTPersistenceManager extends PersistenceManager {
   constructor(options) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
     $assert(options.session, 'session can not be null');
     $assert(options.timestamp, 'timestamp can not be null');
-    super()
+    super();
 
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;
@@ -53,7 +54,7 @@ class RESTPersistenceManager extends PersistenceManager{
       persistence.clearTimeout = setTimeout(() => {
         persistence.clearTimeout = null;
         persistence.onSave = false;
-      } 10000);
+      }, 10000);
 
       $.ajax({
         url: `${this.documentUrl.replace('{id}', mapId)}?${query}`,
@@ -66,17 +67,17 @@ class RESTPersistenceManager extends PersistenceManager{
         success(data, textStatus, jqXHRresponseText) {
           persistence.timestamp = data;
           events.onSuccess();
-        }
+        },
         error(jqXHR, textStatus, errorThrown) {
           events.onError(persistence._buildError());
-        }
+        },
         complete() {
           // Clear event timeout ...
           if (persistence.clearTimeout) {
             clearTimeout(persistence.clearTimeout);
           }
           persistence.onSave = false;
-        }
+        },
         fail(xhr, textStatus) {
           const { responseText } = xhr;
           let userMsg = { severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED') };
@@ -96,7 +97,7 @@ class RESTPersistenceManager extends PersistenceManager{
           }
           events.onError(userMsg);
           persistence.onSave = false;
-        }
+        },
       });
     }
   }
@@ -106,7 +107,7 @@ class RESTPersistenceManager extends PersistenceManager{
       url: this.revertUrl.replace('{id}', mapId),
       async: false,
       method: 'post',
-      headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' }
+      headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
     });
   }
 
@@ -116,7 +117,7 @@ class RESTPersistenceManager extends PersistenceManager{
       url: this.lockUrl.replace('{id}', mapId),
       async: false,
       method: 'put',
-      headers: { 'Content-Type': 'text/plain' }
+      headers: { 'Content-Type': 'text/plain' },
       data: 'false',
     });
   }
@@ -142,10 +143,10 @@ class RESTPersistenceManager extends PersistenceManager{
       url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
       method: 'get',
       async: false,
-      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml' }
+      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml' },
       success(responseText) {
         xml = responseText;
-      }
+      },
     });
 
     // If I could not load it from a file, hard code one.
