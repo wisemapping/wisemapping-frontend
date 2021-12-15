@@ -17,9 +17,9 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
+import Messages, { $msg } from './Messages';
 
 import Events from './Events';
-import Messages from './Messages';
 import StandaloneActionDispatcher from './StandaloneActionDispatcher';
 
 import CommandContext from './CommandContext';
@@ -258,19 +258,15 @@ class Designer extends Events {
     if (isConnected) {
       // Improve this ...
       const targetTopicModel = model.getParent();
-      let targetTopic = null;
 
+      // Find target topic with the same model ...
       const topics = this.getModel().getTopics();
-      for (let i = 0; i < topics.length; i++) {
-        const t = topics[i];
-        if (t.getModel() === targetTopicModel) {
-          targetTopic = t;
-          // Disconnect the node. It will be connected again later ...
-          model.disconnect();
-          break;
-        }
+      const targetTopic = topics.find((t) => t.getModel() === targetTopicModel);
+      if (targetTopic) {
+        model.disconnect();
+      } else {
+        $assert(targetTopic, 'Could not find a topic to connect');
       }
-      $assert(targetTopic, 'Could not find a topic to connect');
       topic.connectTo(targetTopic, this._workspace);
     }
 

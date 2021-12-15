@@ -17,6 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
+import { $msg } from './Messages';
 import Icon from './Icon';
 import FloatingTip from './widget/FloatingTip';
 

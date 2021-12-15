@@ -17,6 +17,7 @@
  */
 import { $assert } from "@wisemapping/core-js";
 import $ from 'jquery';
+import { $msg } from '../Messages';
 import FloatingTip from './FloatingTip';
 
 class LinkIconTooltip extends FloatingTip {

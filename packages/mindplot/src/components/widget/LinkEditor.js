@@ -17,6 +17,7 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
+import { $msg } from '../Messages';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 
 class LinkEditor extends BootstrapDialog {

@@ -1,5 +1,5 @@
 import Options from '../../Options';
-
+import { $msg } from '../../Messages';
 import $ from 'jquery';
 
 class BootstrapDialog extends Options {
@@ -36,7 +36,7 @@ class BootstrapDialog extends Options {
       content.append(footer);
     }
     this._native.find('.modal-dialog').append(content);
-    this._native.on('hidden.bs.modal', function () {
+    this._native.on('hidden.bs.modal', function remove() {
       $(this).remove();
     });
     this._native.on('shown.bs.modal', this.onDialogShown);

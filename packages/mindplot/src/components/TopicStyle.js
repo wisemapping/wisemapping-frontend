@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { $msg } from './Messages';
 import { TopicShape } from './model/INodeModel';
 
 class TopicStyle {

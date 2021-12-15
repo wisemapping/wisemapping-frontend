@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { $msg } from '../Messages';
 import PersistenceManager from '../PersistenceManager';
 import { $notify } from './ToolbarNotifier';
 import $notifyModal from './ModalDialogNotifier';

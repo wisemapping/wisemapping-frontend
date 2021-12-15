@@ -33,7 +33,7 @@ class Messages {
 }
 
 // @Todo: fix global assignment.
-global.$msg = function $msg(key) {
+const $msg = function $msg(key) {
   if (!Messages.__bundle) {
     Messages.init('en');
   }
@@ -43,3 +43,4 @@ global.$msg = function $msg(key) {
 
 Messages.BUNDLES = {};
 export default Messages;
+export { $msg };

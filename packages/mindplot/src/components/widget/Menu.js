@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-
 import { $defined } from '@wisemapping/core-js';
+import { $msg } from '../Messages';
 import BootstrapDialogRequest from "../libraries/bootstrap/BootstrapDialogRequest";
 import IMenu from './IMenu';
 import FontFamilyPanel from './FontFamilyPanel';

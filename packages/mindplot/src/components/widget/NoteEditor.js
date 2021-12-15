@@ -18,6 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 import $ from 'jquery';
+import { $msg } from '../Messages';
 
 class NoteEditor extends BootstrapDialog {
   constructor(model) {
