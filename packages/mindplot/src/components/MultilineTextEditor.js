@@ -270,21 +270,13 @@ class MultilineTextEditor extends Events {
       } else {
         textareaElem[0].setSelectionRange(0, lengh);
       }
+    } else if (textareaElem.createTextRange) {
+      const range = textareaElem.createTextRange();
+      range.move('character', lengh);
     } else {
-      // Move the cursor to the last character ..
-      if (textareaElem.createTextRange) {
-        const range = textareaElem.createTextRange();
-        range.move('character', lengh);
-      } else {
-        if (Browser.ie11) {
-          textareaElem[0].selectionStart = lengh;
-          textareaElem[0].selectionEnd = lengh;
-        } else {
-          textareaElem.selectionStart = lengh;
-          textareaElem.selectionEnd = lengh;
-        }
-        textareaElem.focus();
-      }
+      textareaElem.selectionStart = lengh;
+      textareaElem.selectionEnd = lengh;
+      textareaElem.focus();
     }
   }
 

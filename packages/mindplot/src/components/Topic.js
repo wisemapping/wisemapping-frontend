@@ -189,18 +189,18 @@ class Topic extends NodeGraph {
       result.setHref(url);
       result.setSize(size.width, size.height);
 
-      result.getSize = function () {
+      result.getSize = function getSize() {
         return model.getImageSize();
       };
 
-      result.setPosition = function () { };
+      result.setPosition = function setPosition() { };
     } else if (shapeType === TopicShape.ELLIPSE) {
       result = new web2d.Rect(0.9, attributes);
     } else if (shapeType === TopicShape.ROUNDED_RECT) {
       result = new web2d.Rect(0.3, attributes);
     } else if (shapeType === TopicShape.LINE) {
       result = new web2d.Line({ strokeColor: '#495879', strokeWidth: 1 });
-      result.setSize = function (width, height) {
+      result.setSize = function setSize(width, height) {
         this.size = { width, height };
         result.setFrom(0, height);
         result.setTo(width, height);
@@ -210,15 +210,13 @@ class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = function () {
+      result.getSize = function getSize() {
         return this.size;
       };
 
-      result.setPosition = function () { };
-
-      result.setFill = function () { };
-
-      result.setStroke = function () { };
+      result.setPosition = function setPosition() { };
+      result.setFill = function setFill() { };
+      result.setStroke = function setStroke() { };
     } else {
       $assert(false, `Unsupported figure shapeType:${shapeType}`);
     }
@@ -623,14 +621,14 @@ class Topic extends NodeGraph {
   }
 
   _registerDefaultListenersToElement(elem, topic) {
-    const mouseOver = function (event) {
+    const mouseOver = function mouseOver(event) {
       if (topic.isMouseEventsEnabled()) {
         topic.handleMouseOver(event);
       }
     };
     elem.addEvent('mouseover', mouseOver);
 
-    const outout = function (event) {
+    const outout = function outout(event) {
       if (topic.isMouseEventsEnabled()) {
         topic.handleMouseOut(event);
       }
@@ -988,7 +986,7 @@ class Topic extends NodeGraph {
     }
 
     const textShape = this.getTextShape();
-    textShape.setVisibility(this.getShapeType() != TopicShape.IMAGE ? value : false);
+    textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false);
   }
 
   /** */
@@ -1010,13 +1008,11 @@ class Topic extends NodeGraph {
     const model = this.getModel();
 
     isVisible = isVisible ? !model.areChildrenShrunken() : isVisible;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    children.forEach((child) => {
       child.setVisibility(isVisible);
-
       const outgoingLine = child.getOutgoingLine();
       outgoingLine.setVisibility(isVisible);
-    }
+    });
   }
 
   /** */
@@ -1038,7 +1034,7 @@ class Topic extends NodeGraph {
     size = { width: Math.ceil(size.width), height: Math.ceil(size.height) };
 
     const oldSize = this.getSize();
-    const hasSizeChanged = oldSize.width != size.width || oldSize.height != size.height;
+    const hasSizeChanged = oldSize.width !== size.width || oldSize.height !== size.height;
     if (hasSizeChanged || force) {
       NodeGraph.prototype.setSize.call(this, size);
 
@@ -1100,7 +1096,7 @@ class Topic extends NodeGraph {
       }
 
       // Hide connection line?.
-      if (targetTopic.getChildren().length == 0) {
+      if (targetTopic.getChildren().length === 0) {
         const connector = targetTopic.getShrinkConnector();
         if ($defined(connector)) {
           connector.setVisibility(false);
@@ -1124,7 +1120,7 @@ class Topic extends NodeGraph {
   /** */
   connectTo(targetTopic, workspace) {
     $assert(!this._outgoingLine, 'Could not connect an already connected node');
-    $assert(targetTopic != this, 'Circular connection are not allowed');
+    $assert(targetTopic !== this, 'Circular connection are not allowed');
     $assert(targetTopic, 'Parent Graph can not be null');
     $assert(workspace, 'Workspace can not be null');
 
@@ -1256,11 +1252,11 @@ class Topic extends NodeGraph {
   _adjustShapes() {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
-      if (this.getShapeType() != TopicShape.IMAGE) {
+      if (this.getShapeType() !== TopicShape.IMAGE) {
         const textWidth = textShape.getWidth();
 
         let textHeight = textShape.getHeight();
-        textHeight = textHeight != 0 ? textHeight : 20;
+        textHeight = textHeight !== 0 ? textHeight : 20;
 
         const topicPadding = TopicStyle.getInnerPadding(this);
 
@@ -1272,7 +1268,7 @@ class Topic extends NodeGraph {
 
         // Add a extra padding between the text and the icons
         let iconsWidth = iconGroup.getSize().width;
-        if (iconsWidth != 0) {
+        if (iconsWidth !== 0) {
           iconsWidth += textHeight / 4;
         }
 
@@ -1295,8 +1291,7 @@ class Topic extends NodeGraph {
     let result = [];
 
     const children = topic.getChildren();
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    children.forEach((child) => {
       result.push(child);
       result.push(child.getOutgoingLine());
 
@@ -1307,7 +1302,7 @@ class Topic extends NodeGraph {
         const innerChilds = this._flatten2DElements(child);
         result = result.concat(innerChilds);
       }
-    }
+    });
     return result;
   }
 
@@ -1316,7 +1311,7 @@ class Topic extends NodeGraph {
        * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
        */
   isChildTopic(childTopic) {
-    let result = this.getId() == childTopic.getId();
+    let result = this.getId() === childTopic.getId();
     if (!result) {
       const children = this.getChildren();
       for (let i = 0; i < children.length; i++) {
@@ -1332,7 +1327,7 @@ class Topic extends NodeGraph {
 
   /** @return {Boolean} true if the topic is the central topic of the map */
   isCentralTopic() {
-    return this.getModel().getType() == INodeModel.CENTRAL_TOPIC_TYPE;
+    return this.getModel().getType() === INodeModel.CENTRAL_TOPIC_TYPE;
   }
 }
 
