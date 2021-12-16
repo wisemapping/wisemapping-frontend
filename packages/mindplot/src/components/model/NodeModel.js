@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { cloneDeep } from 'lodash';
 import INodeModel from './INodeModel';
 import TopicFeature from '../TopicFeature';
 
@@ -121,16 +122,7 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
      */
   clone() {
-    const result = new NodeModel(this.getType(), this._mindmap);
-    result._children = this._children.map((node) => {
-      const cnode = node.clone();
-      cnode._parent = result;
-      return cnode;
-    });
-
-    result._properties = { ...this._properties };
-    result._feature = { ...this._feature };
-    return result;
+    return cloneDeep(this);
   }
 
   /**
@@ -211,6 +203,7 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.NodeModel} the node with the respective id
      */
   findNodeById(id) {
+    $assert(Number.isFinite(id));
     let result = null;
     if (this.getId() === id) {
       result = this;

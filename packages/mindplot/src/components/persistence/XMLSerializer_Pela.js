@@ -247,30 +247,28 @@ class XMLSerializer_Pela {
     this._idsMap = {};
     // Start the loading process ...
     const version = rootElem.getAttribute('version');
-
     const mindmap = new Mindmap(mapId, version);
-    const children = rootElem.childNodes;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      if (child.nodeType === 1) {
-        switch (child.tagName) {
-          case 'topic': {
-            const topic = this._deserializeNode(child, mindmap);
-            mindmap.addBranch(topic);
-            break;
-          }
-          case 'relationship': {
-            const relationship = XMLSerializer_Pela._deserializeRelationship(child, mindmap);
-            if (relationship != null) {
-              mindmap.addRelationship(relationship);
-            }
-            break;
-          }
-          default:
-            break;
-        }
+
+    // Add all the topics nodes ...
+    const childNodes = Array.from(rootElem.childNodes);
+    const topicsNodes = childNodes.filter((child) => (child.nodeType === 1 && child.tagName === 'topic'));
+    topicsNodes.forEach((child) => {
+      const topic = this._deserializeNode(child, mindmap);
+      mindmap.addBranch(topic);
+    });
+
+    // Then all relationshops, they are connected to topics ...
+    const relationshipsNodes = childNodes.filter((child) => (child.nodeType === 1 && child.tagName === 'relationship'));
+    relationshipsNodes.forEach((child) => {
+      try {
+        const relationship = XMLSerializer_Pela._deserializeRelationship(child, mindmap);
+        mindmap.addRelationship(relationship);
+      } catch (e) {
+        console.error(e);
       }
-    }
+    });
+
+    // Clean up from the recursion ...
     this._idsMap = null;
     mindmap.setId(mapId);
     return mindmap;
@@ -446,19 +444,19 @@ class XMLSerializer_Pela {
   }
 
   static _deserializeRelationship(domElement, mindmap) {
-    const srcId = domElement.getAttribute('srcTopicId');
-    const destId = domElement.getAttribute('destTopicId');
+    const srcId = Number.parseInt(domElement.getAttribute('srcTopicId'), 10);
+    const destId = Number.parseInt(domElement.getAttribute('destTopicId'), 10);
     const lineType = domElement.getAttribute('lineType');
     const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
     const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
 
     // If for some reason a relationship lines has source and dest nodes the same, don't import it.
     if (srcId === destId) {
-      return null;
+      throw new Error('Invalid relationship, dest and source are equals');
     }
     // Is the connections points valid ?. If it's not, do not load the relationship ...
     if (mindmap.findNodeById(srcId) == null || mindmap.findNodeById(destId) == null) {
-      return null;
+      throw new Error('Transition could not created, missing node for relationship');
     }
 
     const model = mindmap.createRelationship(srcId, destId);

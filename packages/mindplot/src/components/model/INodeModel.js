@@ -31,6 +31,7 @@ class INodeModel {
 
   /** */
   setId(id) {
+    $assert(Number.isFinite(id));
     if ($defined(id) && id > INodeModel._uuid) {
       INodeModel._uuid = id;
     }
@@ -140,7 +141,7 @@ class INodeModel {
   /** */
   setOrder(value) {
     $assert(
-      (typeof value === 'number' && isFinite(value)) || value == null,
+      (typeof value === 'number' && Number.isFinite(value)) || value == null,
       'Order must be null or a number',
     );
     this.putProperty('order', value);

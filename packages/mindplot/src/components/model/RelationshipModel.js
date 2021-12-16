@@ -22,6 +22,8 @@ class RelationshipModel {
   constructor(sourceTopicId, targetTopicId) {
     $assert($defined(sourceTopicId), 'from node type can not be null');
     $assert($defined(targetTopicId), 'to node type can not be null');
+    $assert(Number.isFinite(sourceTopicId), 'sourceTopicId is not a number');
+    $assert(Number.isFinite(targetTopicId), 'targetTopicId is not a number');
 
     this._id = RelationshipModel._nextUUID();
     this._sourceTargetId = sourceTopicId;

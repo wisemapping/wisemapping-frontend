@@ -635,16 +635,16 @@ class Designer extends Events {
   }
 
   /**
-       * @param {mindplot.Mindmap} mindmapModel
+       * @param {mindplot.Mindmap} model
        * @throws will throw an error if mindmapModel is null or undefined
        */
-  loadMap(mindmapModel) {
-    $assert(mindmapModel, 'mindmapModel can not be null');
-    this._mindmap = mindmapModel;
+  loadMap(model) {
+    $assert(model, 'mindmapModel can not be null');
+    this._mindmap = model;
 
     // Init layout manager ...
     const size = { width: 25, height: 25 };
-    const layoutManager = new LayoutManager(mindmapModel.getCentralTopic().getId(), size);
+    const layoutManager = new LayoutManager(model.getCentralTopic().getId(), size);
     const me = this;
     layoutManager.addEvent('change', (event) => {
       const id = event.getId();
@@ -655,14 +655,14 @@ class Designer extends Events {
     this._eventBussDispatcher.setLayoutManager(layoutManager);
 
     // Building node graph ...
-    const branches = mindmapModel.getBranches();
+    const branches = model.getBranches();
     branches.forEach((branch) => {
       const nodeGraph = this.nodeModelToNodeGraph(branch);
       nodeGraph.setBranchVisibility(true);
     });
 
     // Connect relationships ...
-    const relationships = mindmapModel.getRelationships();
+    const relationships = model.getRelationships();
     relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
     // Place the focus on the Central Topic

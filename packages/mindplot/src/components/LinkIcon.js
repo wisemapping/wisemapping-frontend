@@ -47,7 +47,7 @@ class LinkIcon extends Icon {
       });
       // FIXME: we shouldn't have timeout of that..
       this.addEvent('mouseleave', (event) => {
-        window.setTimeout(() => {
+        setTimeout(() => {
           if (!$('#linkPopover:hover').length) {
             me._tip.hide();
           }

@@ -74,6 +74,7 @@ class FeatureModel {
 
   /** */
   setId(id) {
+    $assert(Number.isFinite(id));
     this._id = id;
   }
 
