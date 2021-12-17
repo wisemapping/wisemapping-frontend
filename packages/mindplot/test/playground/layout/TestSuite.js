@@ -160,7 +160,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(0, 2, 1);
     manager.connectNode(1, 3, 0);
 
-    const events = [];
+    let events = [];
     manager.addEvent('change', (event) => {
       console.log(
         `\tUpdated nodes: {id:${event.getId()
@@ -175,12 +175,12 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.plot('testEvents1', { width: 800, height: 200 });
 
     console.log('\t--- Layout without changes should not affect the tree  ---');
-    events.empty();
+    events = [];
     manager.layout(true);
     manager.plot('testEvents2', { width: 800, height: 200 });
 
     // Check no events where fired
-    $assert(events.length == 0, 'Unnecessary tree updated.');
+    $assert(events.length === 0, 'Unnecessary tree updated.');
 
     console.log('OK!\n\n');
   }
@@ -202,7 +202,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(3, 4, 0);
     manager.connectNode(3, 5, 1);
 
-    const events = [];
+    let events = [];
     manager.addEvent('change', (event) => {
       console.log(
         `\tUpdated nodes: {id:${event.getId()
@@ -219,7 +219,7 @@ class TestSuite extends ChildrenSorterStrategy {
 
     console.log('\t--- Connect a new node  ---');
 
-    events.empty();
+    events = [];
     manager.connectNode(3, 6, 2);
     manager.layout(true);
     manager.plot('testEventsComplex2', { width: 800, height: 200 });
@@ -253,7 +253,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.connectNode(5, 6, 0);
     manager.connectNode(5, 7, 1);
 
-    const events = [];
+    let events = [];
     manager.addEvent('change', (event) => {
       const pos = event.getPosition();
       const posStr = pos ? `,position: {${pos.x}${pos.y}` : '';
@@ -270,7 +270,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.plot('testDisconnect1', { width: 1200, height: 400 });
 
     console.log('--- Disconnect node 2 ---');
-    events.empty();
+    events = [];
     manager.disconnectNode(2);
     manager.layout(true);
     manager.plot('testDisconnect2', { width: 1200, height: 400 });

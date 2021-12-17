@@ -1,0 +1,28 @@
+version: '3'
+services:
+    e2e:
+        image: cypress/included:8.4.1
+        container_name: wisemapping-integration-tests
+        entrypoint: '/bin/sh -c "yarn install && yarn bootstrap && yarn test:integration"'
+        working_dir: /e2e
+        environment:
+            - CYPRESS_imageSnaphots=true
+        volumes:
+            - .:/e2e
+            - node-modules:/e2e/node_modules
+            - node-modules-core-js:/e2e/packages/core-js/node_modules
+            - node-modules-editor:/e2e/packages/editor/node_modules
+            - node-modules-mindplot:/e2e/packages/mindplot/node_modules
+            - node-modules-web2d:/e2e/packages/web2d/node_modules
+            - node-modules-webapp:/e2e/packages/webapp/node_modules
+            - node-modules-webcomponent:/e2e/packages/webcomponent/node_modules
+            - cypress-binary-cache:/root/.cache/Cypress
+volumes:
+    node-modules: {}
+    node-modules-core-js: {}
+    node-modules-editor: {}
+    node-modules-mindplot: {}
+    node-modules-web2d: {}
+    node-modules-webapp: {}
+    node-modules-webcomponent: {}
+    cypress-binary-cache: {}

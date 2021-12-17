@@ -6,10 +6,12 @@
         "clean": "lerna clean && rm -rf node_modules",
         "lint": "lerna run lint --stream",
         "test": "lerna run test --stream",
-        "test:snapshots": "lerna run test:snapshots --stream"
+        "test:unit": "lerna run test:unit --stream",
+        "test:integration": "lerna run test:integration --stream"
     },
     "private": true,
     "devDependencies": {
+        "cypress": "^8.4.1",
         "husky": "4",
         "lerna": "^3.16.4",
         "lint-staged": "^10.5.4"
@@ -25,7 +27,7 @@
         "Ezequiel Bergamaschi"
     ],
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=14.0.0"
     },
     "browserslist": {
         "production": [

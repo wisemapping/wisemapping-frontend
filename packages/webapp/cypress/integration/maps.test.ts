@@ -2,7 +2,7 @@ import MapsPage from '../pageObject/MapsPage';
 
 context('Maps Page', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000/c/maps');
+        cy.visit('/c/maps');
     });
 
     it('should load the maps page', () => {

@@ -25,9 +25,8 @@
         "lint": "eslint src",
         "playground": "webpack serve --config webpack.playground.js",
         "cy:run": "cypress run",
-        "cy:run:update": "cypress run --env updateSnapshots=true",
-        "test:snapshots": "start-server-and-test playground http-get://localhost:8080 cy:run",
-        "test:snapshots:update": "start-server-and-test playground http-get://localhost:8080 cy:run:update"
+        "test:integration": "start-server-and-test playground http-get://localhost:8080 cy:run",
+        "test": "yarn test:integration"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
