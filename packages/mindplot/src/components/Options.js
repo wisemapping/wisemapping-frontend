@@ -1,7 +1,9 @@
+import { merge } from 'lodash';
+
 class Options {
   setOptions(...args) {
-    this.options = { ...this.options, ...args };
-    const { options } = this;
+    const options = merge({}, this.options, ...args);
+    this.options = options;
 
     if (this.addEvent) {
       for (const option in options) {

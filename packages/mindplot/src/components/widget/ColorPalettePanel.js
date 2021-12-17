@@ -19,12 +19,19 @@ import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import ToolbarPaneItem from './ToolbarPaneItem';
 
+// rgbToHex implementation from https://stackoverflow.com/a/3627747/58128
+export const rgb2hex = (rgb) => `#${
+  rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+    .slice(1)
+    .map((n) => parseInt(n, 10)
+      .toString(16).padStart(2, '0')).join('')}`;
+
 class ColorPalettePanel extends ToolbarPaneItem {
   constructor(buttonId, model, baseUrl) {
     $assert($defined(baseUrl), 'baseUrl can not be null');
     super(buttonId, model, true);
     this._baseUrl = baseUrl;
-    super._init();
+    this._panelElem = super._init();
   }
 
   _load() {
@@ -88,10 +95,10 @@ class ColorPalettePanel extends ToolbarPaneItem {
     const colorCells = panelElem.find('div[class=palette-colorswatch]');
     const model = this.getModel();
     let modelValue = model.getValue();
-    colorCells.forEach((elem) => {
-      const color = $(elem).css('background-color').rgbToHex();
+    colorCells.each((index, elem) => {
+      const color = rgb2hex($(elem).css('background-color'));
       if (modelValue != null && modelValue[0] === 'r') {
-        modelValue = modelValue.rgbToHex();
+        modelValue = rgb2hex(modelValue);
       }
 
       if (modelValue != null && modelValue.toUpperCase() === color.toUpperCase()) {

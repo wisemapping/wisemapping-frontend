@@ -31,8 +31,8 @@ class INodeModel {
 
   /** */
   setId(id) {
-    $assert(Number.isFinite(id));
     if ($defined(id) && id > INodeModel._uuid) {
+      $assert(Number.isFinite(id));
       INodeModel._uuid = id;
     }
     if (!$defined(id)) {

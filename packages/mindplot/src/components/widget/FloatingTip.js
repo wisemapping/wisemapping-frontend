@@ -15,25 +15,27 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { merge } from 'lodash';
 import Events from '../Events';
 
-// const options = {
-//   animation: true,
-//   html: false,
-//   placement: 'right',
-//   selector: false,
-//   trigger: 'hover',
-//   title: '',
-//   content: '',
-//   delay: 0,
-//   container: false,
-//   destroyOnExit: false,
-// };
+const defaultOptions = {
+  animation: true,
+  html: false,
+  placement: 'right',
+  selector: false,
+  trigger: 'hover',
+  title: '',
+  content: '',
+  delay: 0,
+  container: false,
+  destroyOnExit: false,
+};
 
 class FloatingTip extends Events {
   constructor(element, options) {
-    super(element, options);
-    this.setOptions(options);
+    const opts = { ...defaultOptions, ...options };
+    super(element, opts);
+    this.setOptions(opts);
     this.element = element;
     this._createPopover();
   }
@@ -62,8 +64,8 @@ class FloatingTip extends Events {
   }
 
   setOptions(...args) {
-    this.options = { ...this.options, ...args };
-    const { options } = this;
+    const options = merge({}, this.options, ...args);
+    this.options = options;
 
     if (this.addEvent) {
       for (const option in options) {

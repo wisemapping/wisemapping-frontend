@@ -54,9 +54,9 @@ class IconPanel extends ToolbarPaneItem {
         const panel = this;
         const model = this.getModel();
         img.on('click', ((event) => {
-          model.setValue($(this).attr('id'));
+          model.setValue($(event.target).attr('id'));
           panel.hide();
-        }).bind(this));
+        }));
 
         count += 1;
       }

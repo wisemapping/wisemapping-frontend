@@ -76,7 +76,7 @@ class ToolbarPaneItem extends ToolbarItem {
     if (!this.isVisible()) {
       super.show();
       this._tip.show();
-      this.getButtonElem().className = 'buttonExtActive';
+      this.getButtonElem().get(0).className = 'buttonExtActive';
     }
   }
 
@@ -84,7 +84,7 @@ class ToolbarPaneItem extends ToolbarItem {
     if (this.isVisible()) {
       super.hide();
       this._tip.hide();
-      this.getButtonElem().className = 'buttonExtOn';
+      this.getButtonElem().get(0).className = 'buttonExtOn';
     }
   }
 

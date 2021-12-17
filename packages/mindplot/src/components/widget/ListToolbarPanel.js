@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
+import { $assert, $defined } from '@wisemapping/core-js';
 import ToolbarPaneItem from './ToolbarPaneItem';
 
 class ListToolbarPanel extends ToolbarPaneItem {
@@ -39,7 +40,7 @@ class ListToolbarPanel extends ToolbarPaneItem {
     const panelElem = this.getPanelElem();
     const menuElems = panelElem.find('div');
     const value = this.getModel().getValue();
-    menuElems.forEach((elem) => {
+    menuElems.each((index, elem) => {
       const elemValue = $defined($(elem).attr('model')) ? $(elem).attr('model') : $(elem).attr('id');
       $assert(elemValue, 'elemValue can not be null');
       if (elemValue === value) $(elem).attr('class', 'toolbarPanelLinkSelectedLink');
