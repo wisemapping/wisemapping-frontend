@@ -1,21 +1,17 @@
 {
     "name": "@wisemapping/web2d",
-    "version": "0.0.1",
+    "version": "0.4.0",
     "description": "WiseMapping - Web2D Render Library",
     "homepage": "http://www.wisemapping.org/",
-    "license": "ISC",
-    "main": "dist/main.js",
-    "directories": {
-        "src": "src",
-        "test": "__tests__"
-    },
+    "license": "MIT",
+    "main": "dist/web2d.js",
     "files": [
         "src"
     ],
+    "private": false,
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
     },
-    "private": false,
     "repository": {
         "type": "git",
         "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"

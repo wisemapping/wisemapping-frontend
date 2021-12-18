@@ -1,13 +1,10 @@
 {
     "name": "@wisemapping/core-js",
-    "version": "0.0.1",
-    "description": "core-js",
-    "license": "ISC",
+    "version": "0.4.0",
+    "description": "WiseMapping - Core Common Libraries",
+    "homepage": "http://www.wisemapping.org/",
+    "license": "MIT",
     "main": "dist/core.js",
-    "directories": {
-        "lib": "src",
-        "test": "__tests__"
-    },
     "files": [
         "src"
     ],

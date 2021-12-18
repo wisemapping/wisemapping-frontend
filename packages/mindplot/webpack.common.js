@@ -26,7 +26,6 @@ module.exports = {
   resolve: {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),
-      '@wisemapping/web2d': path.resolve(__dirname, '../web2d/'),
     },
     extensions: ['.js', '.json'],
   },

@@ -3,9 +3,7 @@
     "baseUrl": ".",
     "module": "ES6",
     "paths": {
-      "@libraries/*": ["../../libraries/*"],
-      "@wisemapping/web2d": ["../web2d/*"]
-    }
+      "@libraries/*": ["../../libraries/*"]    }
   },
   "exclude": ["node_modules"]
 }
