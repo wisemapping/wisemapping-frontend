@@ -12,6 +12,7 @@
     "files": [
         "src"
     ],
+    "private": false,
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
     },
