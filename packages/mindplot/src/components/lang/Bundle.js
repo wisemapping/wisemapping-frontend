@@ -15,31 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '@wisemapping/core-js';
-import Bundle from './lang/Bundle';
+import CA from './ca';
+import ES from './es';
+import EN from './en';
+import DE from './de';
+import FR from './fr';
+import PT_BR from './pt_BR';
+import ZH_CN from './zh_CN';
+import ZH_TW from './zh_TW';
 
-class Messages {
-  static init(locale) {
-    let userLocale = $defined(locale) ? locale : 'en';
-    let bundle = Bundle[locale];
-
-    if (bundle == null && locale.indexOf('_') !== -1) {
-      // Try to locate without the specialization ...
-      userLocale = locale.substring(0, locale.indexOf('_'));
-      bundle = Bundle[locale];
-    }
-    global.locale = userLocale;
-    Messages.__bundle = bundle || {};
-  }
-}
-
-const $msg = function $msg(key) {
-  if (!Messages.__bundle) {
-    Messages.init('en');
-  }
-  const msg = Messages.__bundle[key];
-  return msg || key;
+const Bundle = {
+  ca: CA,
+  es: ES,
+  en: EN,
+  de: DE,
+  fe: FR,
+  pt_BR: PT_BR,
+  zh_CN: ZH_CN,
+  zh_TW: ZH_TW,
 };
 
-export default Messages;
-export { $msg };
+export default Bundle;
