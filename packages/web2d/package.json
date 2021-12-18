@@ -50,7 +50,7 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
-        "@wisemapping/core-js": "^0.0.1",
+        "@wisemapping/core-js": "^0.4.0",
         "jquery": "^3.6.0"
     }
 }
