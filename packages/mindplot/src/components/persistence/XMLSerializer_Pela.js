@@ -47,27 +47,23 @@ class XMLSerializer_Pela {
 
     // Create branches ...
     const topics = mindmap.getBranches();
-    for (let i = 0; i < topics.length; i++) {
-      const topic = topics[i];
+    topics.forEach((topic) => {
       const topicDom = this._topicToXML(document, topic);
       mapElem.appendChild(topicDom);
-    }
+    });
 
     // Create Relationships
     const relationships = mindmap.getRelationships();
-    if (relationships.length > 0) {
-      for (let j = 0; j < relationships.length; j++) {
-        const relationship = relationships[j];
-        if (
-          mindmap.findNodeById(relationship.getFromNode()) !== null
-          && mindmap.findNodeById(relationship.getToNode()) !== null
-        ) {
-          // Isolated relationships are not persisted ....
-          const relationDom = XMLSerializer_Pela._relationshipToXML(document, relationship);
-          mapElem.appendChild(relationDom);
-        }
+    relationships.forEach((relationship) => {
+      if (
+        mindmap.findNodeById(relationship.getFromNode()) !== null
+        && mindmap.findNodeById(relationship.getToNode()) !== null
+      ) {
+        // Isolated relationships are not persisted ....
+        const relationDom = XMLSerializer_Pela._relationshipToXML(document, relationship);
+        mapElem.appendChild(relationDom);
       }
-    }
+    });
 
     return document;
   }
@@ -156,9 +152,7 @@ class XMLSerializer_Pela {
 
     // Serialize features ...
     const features = topic.getFeatures();
-    for (let i = 0; i < features.length; i++) {
-      const feature = features[i];
-
+    features.forEach((feature) => {
       const featureType = feature.getType();
       const featureDom = document.createElement(featureType);
       const attributes = feature.getAttributes();
@@ -173,15 +167,15 @@ class XMLSerializer_Pela {
         }
       }
       parentTopic.appendChild(featureDom);
-    }
+    });
 
     // CHILDREN TOPICS
     const childTopics = topic.getChildren();
-    for (let j = 0; j < childTopics.length; j++) {
-      const childTopic = childTopics[j];
+    childTopics.forEach((childTopic) => {
       const childDom = this._topicToXML(document, childTopic);
       parentTopic.appendChild(childDom);
-    }
+    });
+
     return parentTopic;
   }
 
@@ -373,9 +367,8 @@ class XMLSerializer_Pela {
     }
 
     // Creating icons and children nodes
-    const children = domElem.childNodes;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    const children = Array.from(domElem.childNodes);
+    children.forEach((child) => {
       if (child.nodeType === Node.ELEMENT_NODE) {
         if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
@@ -404,7 +397,8 @@ class XMLSerializer_Pela {
           topic.setText(nodeText);
         }
       }
-    }
+    });
+
     return topic;
   }
 
@@ -446,7 +440,7 @@ class XMLSerializer_Pela {
   static _deserializeRelationship(domElement, mindmap) {
     const srcId = Number.parseInt(domElement.getAttribute('srcTopicId'), 10);
     const destId = Number.parseInt(domElement.getAttribute('destTopicId'), 10);
-    const lineType = domElement.getAttribute('lineType');
+    const lineType = Number.parseInt(domElement.getAttribute('lineType'), 10);
     const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
     const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
 
