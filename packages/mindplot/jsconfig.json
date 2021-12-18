@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "commonjs",
+    "module": "ES6",
     "paths": {
       "@libraries/*": ["../../libraries/*"],
       "@wisemapping/web2d": ["../web2d/*"]
