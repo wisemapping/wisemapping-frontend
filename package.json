@@ -1,5 +1,5 @@
 {
-    "name": "wisemapping-react",
+    "name": "wisemapping-font-end",
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "build": "lerna run build",
@@ -42,5 +42,6 @@
         ]
     },
     "homepage": "http://localhost:8080/react",
-    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL"
+    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
+    "version": "0.4.0"
 }
