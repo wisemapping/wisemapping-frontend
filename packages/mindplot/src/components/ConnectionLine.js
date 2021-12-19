@@ -17,7 +17,7 @@
  */
 
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Point, CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
 import INodeModel, { TopicShape } from './model/INodeModel';
 import TopicConfig from './TopicConfig';
 
@@ -53,7 +53,7 @@ class ConnectionLine {
     const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
     const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
     const deltaX = (srcPos.x - destPos.x) / 3;
-    return [new web2d.Point(deltaX, 0), new web2d.Point(-deltaX, 0)];
+    return [new Point(deltaX, 0), new Point(-deltaX, 0)];
   }
 
   _createLine(lineType, defaultStyle) {
@@ -65,17 +65,17 @@ class ConnectionLine {
     let line = null;
     switch (lineType) {
       case ConnectionLine.POLYLINE:
-        line = new web2d.PolyLine();
+        line = new PolyLine();
         break;
       case ConnectionLine.CURVED:
-        line = new web2d.CurvedLine();
+        line = new CurvedLine();
         break;
       case ConnectionLine.SIMPLE_CURVED:
-        line = new web2d.CurvedLine();
-        line.setStyle(web2d.CurvedLine.SIMPLE_LINE);
+        line = new CurvedLine();
+        line.setStyle(CurvedLine.SIMPLE_LINE);
         break;
       default:
-        line = new web2d.Line();
+        line = new Line();
         break;
     }
     return line;
@@ -109,7 +109,7 @@ class ConnectionLine {
     line2d.setFrom(tPos.x, tPos.y);
     line2d.setTo(sPos.x, sPos.y);
 
-    if (line2d.getType() == 'CurvedLine') {
+    if (line2d.getType() === 'CurvedLine') {
       const ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
       line2d.setSrcControlPoint(ctrlPoints[0]);
       line2d.setDestControlPoint(ctrlPoints[1]);

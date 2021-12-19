@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Image } from '@wisemapping/web2d';
 
 class Icon {
   constructor(url) {
     $assert(url, 'topic can not be null');
-    this._image = new web2d.Image();
+    this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(Icon.SIZE, Icon.SIZE);
   }

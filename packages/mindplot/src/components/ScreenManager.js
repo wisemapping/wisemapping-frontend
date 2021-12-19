@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Point } from '@wisemapping/web2d';
 
 class ScreenManager {
   constructor(divElement) {
@@ -136,7 +136,7 @@ class ScreenManager {
     y += this._padding.y;
 
     // Remove decimal part..
-    return new web2d.Point(x, y);
+    return new Point(x, y);
   }
 
   getContainer() {

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import * as web2d from '@wisemapping/web2d';
+import { CurvedLine, Arrow, Point } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
 import Relationship from './Relationship';
 import INodeModel from './model/INodeModel';
@@ -46,8 +46,8 @@ class RelationshipPivot {
       const sourcePos = sourceTopic.getPosition();
       const strokeColor = Relationship.getStrokeColor();
 
-      this._pivot = new web2d.CurvedLine();
-      this._pivot.setStyle(web2d.CurvedLine.SIMPLE_LINE);
+      this._pivot = new CurvedLine();
+      this._pivot.setStyle(CurvedLine.SIMPLE_LINE);
 
       const fromPos = this._calculateFromPosition(sourcePos);
       this._pivot.setFrom(fromPos.x, fromPos.y);
@@ -56,7 +56,7 @@ class RelationshipPivot {
       this._pivot.setStroke(2, 'solid', strokeColor);
       this._pivot.setDashed(4, 2);
 
-      this._startArrow = new web2d.Arrow();
+      this._startArrow = new Arrow();
       this._startArrow.setStrokeColor(strokeColor);
       this._startArrow.setStrokeWidth(2);
       this._startArrow.setFrom(sourcePos.x, sourcePos.y);
@@ -136,7 +136,7 @@ class RelationshipPivot {
     }
     const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);
 
-    const spoint = new web2d.Point();
+    const spoint = new Point();
     spoint.x = parseInt(controlPoint[0].x, 10) + parseInt(sourcePosition.x, 10);
     spoint.y = parseInt(controlPoint[0].y, 10) + parseInt(sourcePosition.y, 10);
     return Shape.calculateRelationShipPointCoordinates(this._sourceTopic, spoint);

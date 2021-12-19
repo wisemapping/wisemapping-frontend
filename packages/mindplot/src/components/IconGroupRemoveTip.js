@@ -1,4 +1,5 @@
-import * as web2d from '@wisemapping/web2d';
+import { Group, Rect, Line } from '@wisemapping/web2d';
+import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 
 export default class RemoveTip {
@@ -92,7 +93,7 @@ export default class RemoveTip {
 
   // eslint-disable-next-line class-methods-use-this
   _buildWeb2d() {
-    const result = new web2d.Group({
+    const result = new Group({
       width: 10,
       height: 10,
       x: 0,
@@ -101,7 +102,7 @@ export default class RemoveTip {
       coordSizeHeight: 10,
     });
 
-    const outerRect = new web2d.Rect(0, {
+    const outerRect = new Rect(0, {
       x: 0,
       y: 0,
       width: 10,
@@ -112,7 +113,7 @@ export default class RemoveTip {
     result.append(outerRect);
     outerRect.setCursor('pointer');
 
-    const innerRect = new web2d.Rect(0, {
+    const innerRect = new Rect(0, {
       x: 1,
       y: 1,
       width: 8,
@@ -122,12 +123,12 @@ export default class RemoveTip {
     });
     result.append(innerRect);
 
-    const line = new web2d.Line({ stroke: '1 solid white' });
+    const line = new Line({ stroke: '1 solid white' });
     line.setFrom(1, 1);
     line.setTo(9, 9);
     result.append(line);
 
-    const line2 = new web2d.Line({ stroke: '1 solid white' });
+    const line2 = new Line({ stroke: '1 solid white' });
     line2.setFrom(1, 9);
     line2.setTo(9, 1);
     result.append(line2);

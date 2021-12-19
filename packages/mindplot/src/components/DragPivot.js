@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Point, CurvedLine, Rect } from '@wisemapping/web2d';
 
 import DragTopicConfig from './DragTopicConfig';
 import Shape from './util/Shape';
@@ -24,7 +24,7 @@ import INodeModel from './model/INodeModel';
 
 class DragPivot {
   constructor() {
-    this._position = new web2d.Point();
+    this._position = new Point();
     this._size = DragTopicConfig.PIVOT_SIZE;
 
     this._straightLine = this._buildStraightLine();
@@ -44,8 +44,8 @@ class DragPivot {
   }
 
   _buildStraightLine() {
-    const line = new web2d.CurvedLine();
-    line.setStyle(web2d.CurvedLine.SIMPLE_LINE);
+    const line = new CurvedLine();
+    line.setStyle(CurvedLine.SIMPLE_LINE);
     line.setStroke(1, 'solid', '#CC0033');
     line.setOpacity(0.4);
     line.setVisibility(false);
@@ -53,8 +53,8 @@ class DragPivot {
   }
 
   _buildCurvedLine() {
-    const line = new web2d.CurvedLine();
-    line.setStyle(web2d.CurvedLine.SIMPLE_LINE);
+    const line = new CurvedLine();
+    line.setStyle(CurvedLine.SIMPLE_LINE);
     line.setStroke(1, 'solid', '#CC0033');
     line.setOpacity(0.4);
     line.setVisibility(false);
@@ -82,8 +82,8 @@ class DragPivot {
     line.setFrom(pivotPoint.x, pivotPoint.y);
 
     // Update rect position
-    const cx = position.x - parseInt(size.width) / 2;
-    const cy = position.y - parseInt(size.height) / 2;
+    const cx = position.x - parseInt(size.width, 10) / 2;
+    const cy = position.y - parseInt(size.height, 10) / 2;
     pivotRect.setPosition(cx, cy);
 
     // Make line visible only when the position has been already changed.
@@ -110,7 +110,7 @@ class DragPivot {
       height: size.height,
       strokeColor: '#FF9933',
     };
-    const rect = new web2d.Rect(0, rectAttributes);
+    const rect = new Rect(0, rectAttributes);
     rect.setVisibility(false);
     return rect;
   }

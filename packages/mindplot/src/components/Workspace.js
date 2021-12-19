@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Workspace as Workspace2D, Toolkit } from '@wisemapping/web2d';
 
 class Workspace {
   constructor(screenManager, zoom) {
@@ -59,8 +59,8 @@ class Workspace {
       fillColor: 'transparent',
       strokeWidth: 0,
     };
-    web2d.Toolkit.init();
-    return new web2d.Workspace(workspaceProfile);
+    Toolkit.init();
+    return new Workspace2D(workspaceProfile);
   }
 
   append(shape) {
@@ -157,7 +157,7 @@ class Workspace {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
     const mWorkspace = this;
-    const mouseDownListener = function (event) {
+    const mouseDownListener = function mouseDownListener(event) {
       if (!$defined(workspace._mouseMoveListener)) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
@@ -166,7 +166,7 @@ class Workspace {
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
-          workspace._mouseMoveListener = function (event) {
+          workspace._mouseMoveListener = function _mouseMoveListener(event) {
             const currentMousePosition = screenManager.getWorkspaceMousePosition(event);
 
             const offsetX = currentMousePosition.x - mouseDownPosition.x;
@@ -192,7 +192,7 @@ class Workspace {
           screenManager.addEvent('mousemove', workspace._mouseMoveListener);
 
           // Register mouse up listeners ...
-          workspace._mouseUpListener = function () {
+          workspace._mouseUpListener = function mouseUpListener() {
             screenManager.removeEvent('mousemove', workspace._mouseMoveListener);
             screenManager.removeEvent('mouseup', workspace._mouseUpListener);
             workspace._mouseUpListener = null;

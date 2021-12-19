@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import * as web2d from '@wisemapping/web2d';
+import { Point } from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from '../model/INodeModel';
 import { CONNECTOR_WIDTH } from '../TopicConfig';
@@ -33,7 +33,7 @@ const Shape = {
     $assert($defined(isAtRight), 'isRight can  not be null');
 
     // Node is placed at the right ?
-    const result = new web2d.Point();
+    const result = new Point();
 
     // This is used fix a minor difference ...z
     const correctionHardcode = 2;
@@ -86,7 +86,7 @@ const Shape = {
       y = !disable ? position.y - (yGap / xGap) * (position.x - x) : position.y;
     }
 
-    return new web2d.Point(x, y);
+    return new Point(x, y);
   },
 
   calculateDefaultControlPoints(srcPos, tarPos) {
@@ -107,8 +107,8 @@ const Shape = {
     const y2 = m * (x2 - tarPos.x) + tarPos.y;
 
     return [
-      new web2d.Point(-srcPos.x + x1, -srcPos.y + y1),
-      new web2d.Point(-tarPos.x + x2, -tarPos.y + y2),
+      new Point(-srcPos.x + x1, -srcPos.y + y1),
+      new Point(-tarPos.x + x2, -tarPos.y + y2),
     ];
   },
 

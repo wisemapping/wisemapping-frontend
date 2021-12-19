@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import * as web2d from '@wisemapping/web2d';
+import { Elipse, Line, Point } from '@wisemapping/web2d';
 import { $defined } from '@wisemapping/core-js';
 
 import Shape from './util/Shape';
@@ -23,7 +23,7 @@ import ActionDispatcher from './ActionDispatcher';
 
 class ControlPoint {
   constructor() {
-    const control1 = new web2d.Elipse({
+    const control1 = new Elipse({
       width: 6,
       height: 6,
       stroke: '1 solid #6589de',
@@ -32,7 +32,7 @@ class ControlPoint {
     });
     control1.setCursor('pointer');
 
-    const control2 = new web2d.Elipse({
+    const control2 = new Elipse({
       width: 6,
       height: 6,
       stroke: '1 solid #6589de',
@@ -43,8 +43,8 @@ class ControlPoint {
 
     this._controlPointsController = [control1, control2];
     this._controlLines = [
-      new web2d.Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 }),
-      new web2d.Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 }),
+      new Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 }),
+      new Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 }),
     ];
 
     this._isBinded = false;
@@ -112,17 +112,17 @@ class ControlPoint {
     );
   }
 
-  _removeLine() {}
+  _removeLine() { }
 
   _mouseDown(event, point, me) {
     if (!this._isBinded) {
       this._isBinded = true;
-      this._mouseMoveFunction = function (event) {
+      this._mouseMoveFunction = function mouseMoveFunction(event) {
         me._mouseMoveEvent(event, point, me);
       };
 
       this._workspace.getScreenManager().addEvent('mousemove', this._mouseMoveFunction);
-      this._mouseUpFunction = function (event) {
+      this._mouseUpFunction = function mouseUpFunction(event) {
         me._mouseUp(event, point, me);
       };
       this._workspace.getScreenManager().addEvent('mouseup', this._mouseUpFunction);
@@ -140,11 +140,11 @@ class ControlPoint {
     if (point == 0) {
       cords = Shape.calculateRelationShipPointCoordinates(this._line.getSourceTopic(), pos);
       this._line.setFrom(cords.x, cords.y);
-      this._line.setSrcControlPoint(new web2d.Point(pos.x - cords.x, pos.y - cords.y));
+      this._line.setSrcControlPoint(new Point(pos.x - cords.x, pos.y - cords.y));
     } else {
       cords = Shape.calculateRelationShipPointCoordinates(this._line.getTargetTopic(), pos);
       this._line.setTo(cords.x, cords.y);
-      this._line.setDestControlPoint(new web2d.Point(pos.x - cords.x, pos.y - cords.y));
+      this._line.setDestControlPoint(new Point(pos.x - cords.x, pos.y - cords.y));
     }
 
     this._controls[point].x = pos.x - cords.x;

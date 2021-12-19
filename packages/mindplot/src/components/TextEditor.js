@@ -13,7 +13,7 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { TransformUtil } from '@wisemapping/web2d';
 import ActionDispatcher from './ActionDispatcher';
 
 // FIXME: Not used!
@@ -194,9 +194,8 @@ class TextEditor {
   _setText(text) {
     const inputField = this._getTextareaElem();
     inputField.size = text.length + 1;
-    this._containerElem.style.width = `${
-      inputField.size * parseInt(inputField.style.fontSize, 10) + 100
-    }px`;
+    this._containerElem.style.width = `${inputField.size * parseInt(inputField.style.fontSize, 10) + 100
+      }px`;
     const spanField = this._getSpanElem();
     spanField.innerHTML = text;
     inputField.value = text;
@@ -216,7 +215,7 @@ class TextEditor {
 
   _setEditorSize(width, height) {
     const textShape = this._topic.getTextShape();
-    const scale = web2d.utils.TransformUtil.workoutScale(textShape.peer);
+    const scale = TransformUtil.workoutScale(textShape.peer);
     this._size = { width: width * scale.width, height: height * scale.height };
     this._containerElem.style.width = `${this._size.width * 2}px`;
     this._containerElem.style.height = `${this._size.height}px`;

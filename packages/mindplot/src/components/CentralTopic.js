@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import * as web2d from '@wisemapping/web2d';
+import { Point } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
 import Topic from './Topic';
 import Shape from './util/Shape';
@@ -42,11 +42,11 @@ class CentralTopic extends Topic {
   }
 
   /** */
-  updateTopicShape() {}
+  updateTopicShape() { }
 
   _updatePositionOnChangeSize() {
     // Center main topic ...
-    const zeroPoint = new web2d.Point(0, 0);
+    const zeroPoint = new Point(0, 0);
     this.setPosition(zeroPoint);
   }
 

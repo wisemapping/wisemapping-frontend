@@ -503,9 +503,9 @@ class Designer extends Events {
 
   /**
        * @private
-       * @param {mindplot.Topic} topic the parent topic of the child to create the NodeModel for
-       * @param {web2d.Point} mousePos the mouse position
-       * @return {mindplot.NodeModel} the node model for the new child
+       * @param {Topic} topic the parent topic of the child to create the NodeModel for
+       * @param {Point} mousePos the mouse position
+       * @return {NodeModel} the node model for the new child
        */
   _createChildModel(topic, mousePos) {
     // Create a new node ...

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Rect, Image, Line, Text, Group } from '@wisemapping/web2d';
 import $ from 'jquery';
 
 import NodeGraph from './NodeGraph';
@@ -146,7 +146,6 @@ class Topic extends NodeGraph {
     return innerShape;
   }
 
-  /** @return {web2d.Line|web2d.Rect|web2d.Image} inner shape of the topic */
   getInnerShape() {
     if (!$defined(this._innerShape)) {
       // Create inner box.
@@ -179,13 +178,13 @@ class Topic extends NodeGraph {
 
     let result;
     if (shapeType === TopicShape.RECTANGLE) {
-      result = new web2d.Rect(0, attributes);
+      result = new Rect(0, attributes);
     } else if (shapeType === TopicShape.IMAGE) {
       const model = this.getModel();
       const url = model.getImageUrl();
       const size = model.getImageSize();
 
-      result = new web2d.Image();
+      result = new Image();
       result.setHref(url);
       result.setSize(size.width, size.height);
 
@@ -195,11 +194,11 @@ class Topic extends NodeGraph {
 
       result.setPosition = function setPosition() { };
     } else if (shapeType === TopicShape.ELLIPSE) {
-      result = new web2d.Rect(0.9, attributes);
+      result = new Rect(0.9, attributes);
     } else if (shapeType === TopicShape.ROUNDED_RECT) {
-      result = new web2d.Rect(0.3, attributes);
+      result = new Rect(0.3, attributes);
     } else if (shapeType === TopicShape.LINE) {
-      result = new web2d.Line({ strokeColor: '#495879', strokeWidth: 1 });
+      result = new Line({ strokeColor: '#495879', strokeWidth: 1 });
       result.setSize = function setSize(width, height) {
         this.size = { width, height };
         result.setFrom(0, height);
@@ -362,7 +361,7 @@ class Topic extends NodeGraph {
   }
 
   _buildTextShape(readOnly) {
-    const result = new web2d.Text();
+    const result = new Text();
     const family = this.getFontFamily();
     const size = this.getFontSize();
     const weight = this.getFontWeight();
@@ -592,7 +591,7 @@ class Topic extends NodeGraph {
       coordSizeWidth: 100,
       coordSizeHeight: 100,
     };
-    const group = new web2d.Group(groupAttributes);
+    const group = new Group(groupAttributes);
     this._set2DElement(group);
 
     // Shape must be build based on the model width ...

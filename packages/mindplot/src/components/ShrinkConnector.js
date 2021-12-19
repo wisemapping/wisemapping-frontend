@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import * as web2d from '@wisemapping/web2d';
+import { Elipse } from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
 
 class ShirinkConnector {
   constructor(topic) {
-    const ellipse = new web2d.Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
+    const ellipse = new Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
     this._ellipse = ellipse;
     ellipse.setFill('rgb(62,118,179)');
 

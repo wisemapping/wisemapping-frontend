@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import * as web2d from '@wisemapping/web2d';
+import { Arrow, Point } from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
 
 import ConnectionLine from './ConnectionLine';
@@ -51,14 +51,14 @@ class Relationship extends ConnectionLine {
     this._isInWorkspace = false;
     this._controlPointsController = new ControlPoint();
 
-    this._startArrow = new web2d.Arrow();
+    this._startArrow = new Arrow();
     this._startArrow.setStrokeColor(strokeColor);
     this._startArrow.setStrokeWidth(2);
     this.setShowStartArrow(true);
 
     // Share style is disable ...
     if (this._showEndArrow) {
-      this._endArrow = new web2d.Arrow();
+      this._endArrow = new Arrow();
       this._endArrow.setStrokeColor(strokeColor);
       this._endArrow.setStrokeWidth(2);
     }
@@ -106,11 +106,11 @@ class Relationship extends ConnectionLine {
       ctrlPoints[1].y = defaultPoints[1].y;
     }
 
-    const spoint = new web2d.Point();
+    const spoint = new Point();
     spoint.x = parseInt(ctrlPoints[0].x, 10) + parseInt(sourcePosition.x, 10);
     spoint.y = parseInt(ctrlPoints[0].y, 10) + parseInt(sourcePosition.y, 10);
 
-    const tpoint = new web2d.Point();
+    const tpoint = new Point();
     tpoint.x = parseInt(ctrlPoints[1].x, 10) + parseInt(targetPosition.x, 10);
     tpoint.y = parseInt(ctrlPoints[1].y, 10) + parseInt(targetPosition.y, 10);
 

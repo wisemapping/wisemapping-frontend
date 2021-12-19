@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Point, Group } from '@wisemapping/web2d';
 
 import Topic from './Topic';
 import { TopicShape } from './model/INodeModel';
@@ -56,7 +56,7 @@ class MainTopic extends Topic {
       coordSizeWidth: 100,
       coordSizeHeight: 100,
     };
-    const group = new web2d.Group(groupAttributes);
+    const group = new Group(groupAttributes);
     group.append(innerShape);
 
     // Add Text ...
@@ -127,7 +127,7 @@ class MainTopic extends Topic {
 
     let result;
     if (this.getShapeType() === TopicShape.LINE) {
-      result = new web2d.Point();
+      result = new Point();
       const groupPosition = this._elem2d.getPosition();
       const innerShareSize = this.getInnerShape().getSize();
 

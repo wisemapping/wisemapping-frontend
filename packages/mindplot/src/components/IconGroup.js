@@ -17,7 +17,7 @@
  */
 // eslint-disable-next-line max-classes-per-file
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Group, Rect, Line } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 
 import Icon from './Icon';
@@ -28,7 +28,7 @@ class IconGroup {
     $assert($defined(iconSize), 'iconSize can not be null');
 
     this._icons = [];
-    this._group = new web2d.Group({
+    this._group = new Group({
       width: 0,
       height: iconSize,
       x: 0,

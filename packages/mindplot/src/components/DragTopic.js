@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Point } from '@wisemapping/web2d';
 
 import ActionDispatcher from './ActionDispatcher';
 import DragPivot from './DragPivot';
@@ -31,7 +31,7 @@ class DragTopic {
     this._order = null;
     this._draggedNode = draggedNode;
     this._layoutManager = layoutManger;
-    this._position = new web2d.Point();
+    this._position = new Point();
     this._isInWorkspace = false;
     this._isFreeLayoutEnabled = false;
   }

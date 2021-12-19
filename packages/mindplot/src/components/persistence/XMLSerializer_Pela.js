@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined, createDocument } from '@wisemapping/core-js';
-import * as web2d from '@wisemapping/web2d';
+import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
 import INodeModel, { TopicShape } from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
@@ -456,10 +456,10 @@ class XMLSerializer_Pela {
     const model = mindmap.createRelationship(srcId, destId);
     model.setLineType(lineType);
     if ($defined(srcCtrlPoint) && srcCtrlPoint !== '') {
-      model.setSrcCtrlPoint(web2d.Point.fromString(srcCtrlPoint));
+      model.setSrcCtrlPoint(Point.fromString(srcCtrlPoint));
     }
     if ($defined(destCtrlPoint) && destCtrlPoint !== '') {
-      model.setDestCtrlPoint(web2d.Point.fromString(destCtrlPoint));
+      model.setDestCtrlPoint(Point.fromString(destCtrlPoint));
     }
     model.setEndArrow('false');
     model.setStartArrow('true');
