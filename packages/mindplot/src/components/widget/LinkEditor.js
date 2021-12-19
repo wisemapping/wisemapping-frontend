@@ -90,23 +90,21 @@ class LinkEditor extends BootstrapDialog {
     this.form.append(section);
 
     const me = this;
-    this.form.unbind('submit').submit(
-      function (event) {
-        event.preventDefault();
-        if (me.checkURL(input.val())) {
-          me.cleanError();
-          const inputValue = input.val();
-          if (inputValue != null && $.trim(inputValue) != '') {
-            model.setValue(inputValue);
-          }
-          me.close();
-          this.formSubmitted = true;
-        } else {
-          me.alertError($msg('URL_ERROR'));
-          event.stopPropagation();
+    this.form.unbind('submit').submit((event) => {
+      event.preventDefault();
+      if (me.checkURL(input.val())) {
+        me.cleanError();
+        const inputValue = input.val();
+        if (inputValue != null && $.trim(inputValue) !== '') {
+          model.setValue(inputValue);
         }
-      },
-    );
+        me.close();
+        this.formSubmitted = true;
+      } else {
+        me.alertError($msg('URL_ERROR'));
+        event.stopPropagation();
+      }
+    });
 
     result.append(this.form);
     return result;

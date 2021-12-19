@@ -244,14 +244,14 @@ class DesignerKeyboard extends Keyboard {
         return;
       }
       // Sometimes Firefox doesn't contain keyCode value
-      if (event.key && event.keyCode == 0) {
+      if (event.key && event.keyCode === 0) {
         keyCode = event.charCode;
       } else {
         keyCode = event.keyCode;
       }
 
-      const specialKey = jQuery.hotkeys.specialKeys[keyCode];
-      if (['enter', 'capslock'].indexOf(specialKey) == -1 && !jQuery.hotkeys.shiftNums[keyCode]) {
+      const specialKey = $.hotkeys.specialKeys[keyCode];
+      if (['enter', 'capslock'].indexOf(specialKey) === -1 && !$.hotkeys.shiftNums[keyCode]) {
         const nodes = designer.getModel().filterSelectedTopics();
         if (nodes.length > 0) {
           // If a modifier is press, the key selected must be ignored.

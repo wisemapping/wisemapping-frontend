@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  *    Copyright [2015] [wisemapping]
  *
@@ -34,7 +35,7 @@ class PersistenceManager {
     try {
       this.saveMapXml(mapId, mapXml, pref, saveHistory, events, sync);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       events.onError(this._buildError());
     }
   }
@@ -62,11 +63,11 @@ class PersistenceManager {
   }
 }
 
-PersistenceManager.init = function (instance) {
+PersistenceManager.init = function init(instance) {
   PersistenceManager._instance = instance;
 };
 
-PersistenceManager.getInstance = function () {
+PersistenceManager.getInstance = function getInstance() {
   return PersistenceManager._instance;
 };
 

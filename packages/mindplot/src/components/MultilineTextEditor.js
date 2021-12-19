@@ -57,7 +57,7 @@ class MultilineTextEditor extends Events {
     const textareaElem = this._getTextareaElem();
     const me = this;
     textareaElem.on('keydown', function keydown(event) {
-      switch (jQuery.hotkeys.specialKeys[event.keyCode]) {
+      switch ($.hotkeys.specialKeys[event.keyCode]) {
         case 'esc':
           me.close(false);
           break;
@@ -90,7 +90,7 @@ class MultilineTextEditor extends Events {
             me.close(true);
           }
           break;
-        case 'tab':
+        case 'tab': {
           event.preventDefault();
           const start = $(this).get(0).selectionStart;
           const end = $(this).get(0).selectionEnd;
@@ -99,8 +99,10 @@ class MultilineTextEditor extends Events {
           $(this).val(`${$(this).val().substring(0, start)}\t${$(this).val().substring(end)}`);
 
           // put caret at right position again
-          $(this).get(0).selectionStart = $(this).get(0).selectionEnd = start + 1;
+          $(this).get(0).selectionEnd = start + 1;
+          $(this).get(0).selectionStart = $(this).get(0).selectionEnd;
           break;
+        }
         default:
           // No actions...
           break;

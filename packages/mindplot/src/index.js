@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Mindmap from './components/model/Mindmap';
 import PersistenceManager from './components/PersistenceManager';
 import Designer from './components/Designer';

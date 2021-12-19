@@ -117,13 +117,13 @@ class ControlPoint {
   _mouseDown(event, point, me) {
     if (!this._isBinded) {
       this._isBinded = true;
-      this._mouseMoveFunction = function mouseMoveFunction(event) {
-        me._mouseMoveEvent(event, point, me);
+      this._mouseMoveFunction = (e) => {
+        me._mouseMoveEvent(e, point, me);
       };
 
       this._workspace.getScreenManager().addEvent('mousemove', this._mouseMoveFunction);
-      this._mouseUpFunction = function mouseUpFunction(event) {
-        me._mouseUp(event, point, me);
+      this._mouseUpFunction = (e) => {
+        me._mouseUp(e, point, me);
       };
       this._workspace.getScreenManager().addEvent('mouseup', this._mouseUpFunction);
     }

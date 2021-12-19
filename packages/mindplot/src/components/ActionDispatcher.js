@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
 /*
  *    Copyright [2015] [wisemapping]
  *

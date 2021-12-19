@@ -507,4 +507,5 @@ class XMLSerializer_Pela {
  */
 XMLSerializer_Pela.MAP_ROOT_NODE = 'map';
 
+// eslint-disable-next-line camelcase
 export default XMLSerializer_Pela;

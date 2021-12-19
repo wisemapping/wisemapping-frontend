@@ -71,6 +71,7 @@ class MainTopic extends Topic {
   }
 
   /** */
+  // eslint-disable-next-line no-unused-vars
   updateTopicShape(targetTopic, workspace) {
     // Change figure based on the connected topic ...
     const model = this.getModel();
@@ -87,8 +88,6 @@ class MainTopic extends Topic {
   /** */
   disconnect(workspace) {
     super.disconnect(workspace);
-    const size = this.getSize();
-
     const model = this.getModel();
     let shapeType = model.getShapeType();
     if (!$defined(shapeType)) {

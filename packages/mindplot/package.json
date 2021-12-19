@@ -3,7 +3,6 @@
     "version": "0.0.1",
     "description": "WiseMapping - Mindplot Canvas Library",
     "homepage": "http://www.wisemapping.org/",
-    "license": "ISC",
     "main": "dist/main.js",
     "directories": {
         "lib": "src",

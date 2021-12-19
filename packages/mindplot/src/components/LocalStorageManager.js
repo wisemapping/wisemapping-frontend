@@ -52,7 +52,7 @@ class LocalStorageManager extends PersistenceManager {
       }
     }
 
-    return jQuery.parseXML(xml);
+    return $.parseXML(xml);
   }
 
   unlockMap(mindmap) {

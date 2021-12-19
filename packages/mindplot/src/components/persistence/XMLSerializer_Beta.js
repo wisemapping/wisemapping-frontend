@@ -22,6 +22,7 @@ import Mindmap from '../model/Mindmap';
 import INodeModel from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
 
+// eslint-disable-next-line camelcase
 class XMLSerializer_Beta {
   toXML(mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
@@ -321,4 +322,5 @@ class XMLSerializer_Beta {
 
 XMLSerializer_Beta.MAP_ROOT_NODE = 'map';
 
+// eslint-disable-next-line camelcase
 export default XMLSerializer_Beta;

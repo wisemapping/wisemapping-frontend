@@ -9,7 +9,7 @@
         "test:unit": "lerna run test:unit --stream",
         "test:integration": "lerna run test:integration --stream"
     },
-    "private": true,
+    "private": false,
     "devDependencies": {
         "cypress": "^8.4.1",
         "husky": "4",

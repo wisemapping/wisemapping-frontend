@@ -15,15 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import XMLSerializer_Pela from './XMLSerializer_Pela';
+import XMLSerializer from './XMLSerializer_Pela';
 
 /**
  * This serializer works exactly the same way as for the former version Pela
  * {@link mindplot.persistence.XMLSerializer_Pela}
  * @class
- * @extends mindplot.persistence.XMLSerializer_Pela
  */
-class XMLSerializer_Tango extends XMLSerializer_Pela {
+// eslint-disable-next-line camelcase
+class XMLSerializer_Tango extends XMLSerializer {
 }
 
+// eslint-disable-next-line camelcase
 export default XMLSerializer_Tango;
