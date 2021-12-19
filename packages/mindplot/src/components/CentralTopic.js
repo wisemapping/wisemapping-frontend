@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import * as web2d from '@wisemapping/web2d';
+import { $assert } from '@wisemapping/core-js';
 import Topic from './Topic';
 import Shape from './util/Shape';
 

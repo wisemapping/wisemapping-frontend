@@ -30,7 +30,7 @@ class Command {
      * @abstract
      */
   execute(commandContext) {
-    throw 'execute must be implemented.';
+    throw new Error('execute must be implemented.');
   }
 
   /**
@@ -38,7 +38,7 @@ class Command {
      * @abstract
      */
   undoExecute(commandContext) {
-    throw 'undo must be implemented.';
+    throw new Error('undo must be implemented.');
   }
 
   /**
@@ -50,10 +50,10 @@ class Command {
   }
 }
 
-Command._nextUUID = function () {
+Command._nextUUID = function _nextUUID() {
   if (!$defined(Command._uuid)) {
     Command._uuid = 1;
-}
+  }
 
   Command._uuid += 1;
   return Command._uuid;

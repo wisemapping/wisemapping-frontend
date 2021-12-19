@@ -18,7 +18,7 @@
 import $ from 'jquery';
 import { $defined } from '@wisemapping/core-js';
 import { $msg } from '../Messages';
-import BootstrapDialogRequest from "../libraries/bootstrap/BootstrapDialogRequest";
+import BootstrapDialogRequest from '../libraries/bootstrap/BootstrapDialogRequest';
 import IMenu from './IMenu';
 import FontFamilyPanel from './FontFamilyPanel';
 import FontSizePanel from './FontSizePanel';

@@ -15,8 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from "@wisemapping/core-js";
-import EventBus from "./layout/EventBus";
+import { $assert, $defined } from '@wisemapping/core-js';
+import EventBus from './layout/EventBus';
+import NodeModel from './model/NodeModel';
 
 class CommandContext {
   constructor(designer) {

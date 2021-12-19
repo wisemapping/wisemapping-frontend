@@ -1,7 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-/** @type {import('webpack').Configuration} */
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -22,7 +21,6 @@ module.exports = {
       },
     ],
   },
-  target: 'web',
   resolve: {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),

@@ -33,7 +33,7 @@
         "@wisemapping/core-js": "^0.4.0",
         "@wisemapping/web2d": "^0.4.0",
         "jest": "^27.4.3",
-        "jquery": "^3.6.0",
+        "jquery": "3.6.0",
         "lodash": "^4.17.21"
     },
     "devDependencies": {

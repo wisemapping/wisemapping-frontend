@@ -44,7 +44,7 @@ class Pela2TangoMigrator {
     const children = centralNode.getChildren();
     const leftNodes = [];
     const rightNodes = [];
-    for (var i = 0; i < children.length; i++) {
+    for (let i = 0; i < children.length; i++) {
       const child = children[i];
       const position = child.getPosition();
       if (position.x < 0) {
@@ -56,11 +56,11 @@ class Pela2TangoMigrator {
     rightNodes.sort((a, b) => a.getOrder() > b.getOrder());
     leftNodes.sort((a, b) => a.getOrder() > b.getOrder());
 
-    for (i = 0; i < rightNodes.length; i++) {
+    for (let i = 0; i < rightNodes.length; i++) {
       rightNodes[i].setOrder(i * 2);
     }
 
-    for (i = 0; i < leftNodes.length; i++) {
+    for (let i = 0; i < leftNodes.length; i++) {
       leftNodes[i].setOrder(i * 2 + 1);
     }
   }
@@ -75,6 +75,7 @@ class Pela2TangoMigrator {
       this._fixNodePosition(child, position);
     }
   }
+
   _fixNodePosition(node, parentPosition) {
     // Position was not required in previous versions. Try to synthesize one .
     let position = node.getPosition();
