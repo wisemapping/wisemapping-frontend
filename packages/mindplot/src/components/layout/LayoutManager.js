@@ -27,12 +27,11 @@ class LayoutManager extends Events {
     super();
     $assert($defined(rootNodeId), 'rootNodeId can not be null');
     $assert(rootSize, 'rootSize can not be null');
-    var position = position || { x: 0, y: 0 };
 
     this._treeSet = new RootedTreeSet();
     this._layout = new OriginalLayout(this._treeSet);
 
-    const rootNode = this._layout.createNode(rootNodeId, rootSize, position, 'root');
+    const rootNode = this._layout.createNode(rootNodeId, rootSize, { x: 0, y: 0 }, 'root');
     this._treeSet.setRoot(rootNode);
     this._events = [];
   }

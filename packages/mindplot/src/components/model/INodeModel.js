@@ -250,6 +250,7 @@ class INodeModel {
   }
 
   /** @abstract */
+  // eslint-disable-next-line no-unused-vars
   append(node) {
     throw new Error('Unsupported operation');
   }
@@ -316,11 +317,13 @@ class INodeModel {
   }
 
   /** @abstract */
+  // eslint-disable-next-line no-unused-vars
   putProperty(key, value) {
     throw new Error('Unsupported operation');
   }
 
   /** @abstract */
+  // eslint-disable-next-line no-unused-vars
   setParent(parent) {
     throw new Error('Unsupported operation');
   }
@@ -363,6 +366,7 @@ class INodeModel {
   }
 
   /** @abstract */
+  // eslint-disable-next-line no-unused-vars
   removeChild(child) {
     throw new Error('Unsupported operation');
   }

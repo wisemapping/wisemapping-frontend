@@ -19,9 +19,9 @@ import { $defined } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
-import XMLSerializer_Beta from './XMLSerializer_Beta';
-import XMLSerializer_Pela from './XMLSerializer_Pela';
-import XMLSerializer_Tango from './XMLSerializer_Tango';
+import XMLSerializerBeta from './XMLSerializer_Beta';
+import XMLSerializerPela from './XMLSerializer_Pela';
+import XMLSerializerTango from './XMLSerializer_Tango';
 
 /**
  * @class mindplot.persistence.XMLSerializerFactory
@@ -33,7 +33,7 @@ const XMLSerializerFactory = {};
  * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
  * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
  */
-XMLSerializerFactory.getSerializerFromMindmap = function (mindmap) {
+XMLSerializerFactory.getSerializerFromMindmap = function getSerializerFromMindmap(mindmap) {
   return XMLSerializerFactory.getSerializer(mindmap.getVersion());
 };
 
@@ -41,7 +41,7 @@ XMLSerializerFactory.getSerializerFromMindmap = function (mindmap) {
  * @param domDocument
  * @return serializer corresponding to the mindmap's version
  */
-XMLSerializerFactory.getSerializerFromDocument = function (domDocument) {
+XMLSerializerFactory.getSerializerFromDocument = function getSerializerFromDocument(domDocument) {
   const rootElem = domDocument.documentElement;
   return XMLSerializerFactory.getSerializer(rootElem.getAttribute('version'));
 };
@@ -76,18 +76,18 @@ XMLSerializerFactory.getSerializer = function getSerializer(version) {
 XMLSerializerFactory._codeNames = [
   {
     codeName: ModelCodeName.BETA,
-    serializer: XMLSerializer_Beta,
+    serializer: XMLSerializerBeta,
     migrator() {
     },
   },
   {
     codeName: ModelCodeName.PELA,
-    serializer: XMLSerializer_Pela,
+    serializer: XMLSerializerPela,
     migrator: Beta2PelaMigrator,
   },
   {
     codeName: ModelCodeName.TANGO,
-    serializer: XMLSerializer_Tango,
+    serializer: XMLSerializerTango,
     migrator: Pela2TangoMigrator,
   },
 ];

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2015] [wisemapping]
@@ -134,7 +135,7 @@ class IMindmap {
     result = '{ ';
 
     const branches = this.getBranches();
-    result = `${result}version:${this.getVersion()}`;
+    result = `${result} , version:${this.getVersion()}`;
     result = `${result} , [`;
 
     for (let i = 0; i < branches.length; i++) {
