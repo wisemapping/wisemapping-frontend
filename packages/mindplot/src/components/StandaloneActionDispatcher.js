@@ -27,7 +27,6 @@ import DragTopicCommand from './commands/DragTopicCommand';
 import GenericFunctionCommand from './commands/GenericFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
-import NodeModel from './model/NodeModel';
 import EventBus from './layout/EventBus';
 
 class StandaloneActionDispatcher extends ActionDispatcher {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2015] [wisemapping]
@@ -16,11 +17,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-class ChildrenSorterStrategy {/** @lends ChildrenSorterStrategy */
-  /**
-     * @constructs
-     */
-  /** @abstract */
+class ChildrenSorterStrategy {
   computeChildrenIdByHeights(treeSet, node) {
     throw new Error('Method must be implemented');
   }

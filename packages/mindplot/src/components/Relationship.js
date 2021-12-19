@@ -90,8 +90,6 @@ class Relationship extends ConnectionLine {
       targetPosition = Shape.workoutIncomingConnectionPoint(targetTopic, sourcePosition);
     }
 
-    let sPos;
-    let tPos;
     this._line2d.setStroke(2);
     const ctrlPoints = this._line2d.getControlPoints();
     if (!this._line2d.isDestControlPointCustom() && !this._line2d.isSrcControlPointCustom()) {
@@ -114,8 +112,8 @@ class Relationship extends ConnectionLine {
     tpoint.x = parseInt(ctrlPoints[1].x, 10) + parseInt(targetPosition.x, 10);
     tpoint.y = parseInt(ctrlPoints[1].y, 10) + parseInt(targetPosition.y, 10);
 
-    sPos = Shape.calculateRelationShipPointCoordinates(sourceTopic, spoint);
-    tPos = Shape.calculateRelationShipPointCoordinates(targetTopic, tpoint);
+    const sPos = Shape.calculateRelationShipPointCoordinates(sourceTopic, spoint);
+    const tPos = Shape.calculateRelationShipPointCoordinates(targetTopic, tpoint);
 
     line2d.setFrom(sPos.x, sPos.y);
     line2d.setTo(tPos.x, tPos.y);

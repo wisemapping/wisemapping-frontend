@@ -49,6 +49,7 @@ class SymmetricSorter extends AbstractBasicSorter {
           + node.getSize().width / 2
           + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
 
+      // eslint-disable-next-line no-nested-ternary
       const xPos = direction > 0
         ? position.x >= limitXPos
           ? position.x
@@ -88,7 +89,7 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     // node has no siblings and its trying to reconnect to its own parent
     const sameParent = parent === graph.getParent(node);
-    if (siblings.length == 0 && nodeDirection == positionDirection && sameParent) {
+    if (siblings.length === 0 && nodeDirection === positionDirection && sameParent) {
       return [node.getOrder(), node.getPosition()];
     }
 
@@ -269,7 +270,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     const children = this._getSortedChildren(treeSet, node);
 
     for (let i = 0; i < children.length; i++) {
-      $assert(children[i].getOrder() == i, 'missing order elements');
+      $assert(children[i].getOrder() === i, 'missing order elements');
     }
   }
 
@@ -283,7 +284,7 @@ class SymmetricSorter extends AbstractBasicSorter {
 
     let result;
     const rootNode = treeSet.getRootNode(child);
-    if (treeSet.getParent(child) == rootNode) {
+    if (treeSet.getParent(child) === rootNode) {
       // This is the case of a isolated child ... In this case, the directions is based on the root.
       result = Math.sign(rootNode.getPosition().x);
     } else {

@@ -13,6 +13,7 @@
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
+        "max-len": [1,250],
         "class-methods-use-this": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": ["!cypress/**/*.js"]}]
     },
