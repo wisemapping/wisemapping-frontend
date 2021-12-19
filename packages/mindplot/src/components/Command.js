@@ -26,17 +26,12 @@ class Command {
     this._id = Command._nextUUID();
   }
 
-  /**
-     * @abstract
-     */
+  // eslint-disable-next-line no-unused-vars
   execute(commandContext) {
     throw new Error('execute must be implemented.');
   }
 
-  /**
-     * Triggered by the undo button - reverses the executed command
-     * @abstract
-     */
+  // eslint-disable-next-line no-unused-vars
   undoExecute(commandContext) {
     throw new Error('undo must be implemented.');
   }

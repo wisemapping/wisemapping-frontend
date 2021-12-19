@@ -17,7 +17,9 @@
  */
 
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Point, CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
+import {
+  Point, CurvedLine, PolyLine, Line,
+} from '@wisemapping/web2d';
 import INodeModel, { TopicShape } from './model/INodeModel';
 import TopicConfig from './TopicConfig';
 
@@ -101,10 +103,8 @@ class ConnectionLine {
     const targetTopic = this._targetTopic;
     const targetPosition = targetTopic.getPosition();
 
-    let sPos;
-    let tPos;
-    sPos = sourceTopic.workoutOutgoingConnectionPoint(targetPosition);
-    tPos = targetTopic.workoutIncomingConnectionPoint(sourcePosition);
+    const sPos = sourceTopic.workoutOutgoingConnectionPoint(targetPosition);
+    const tPos = targetTopic.workoutIncomingConnectionPoint(sourcePosition);
 
     line2d.setFrom(tPos.x, tPos.y);
     line2d.setTo(sPos.x, sPos.y);
