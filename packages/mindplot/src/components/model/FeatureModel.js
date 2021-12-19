@@ -46,7 +46,6 @@ class FeatureModel {
 
   /** */
   setAttributes(attributes) {
-
     Object.keys(attributes).forEach((attr) => {
       const funName = `set${FeatureModel.capitalize(attr)}`;
       const value = attributes[attr];

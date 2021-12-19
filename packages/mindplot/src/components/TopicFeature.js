@@ -67,6 +67,7 @@ const TopicFeature = {
     $assert(attributes, 'attributes can not be null');
 
     const { model } = TopicFeature._featuresMetadataById.filter((elem) => elem.id === type)[0];
+    // eslint-disable-next-line new-cap
     return new model(attributes);
   },
 
@@ -83,6 +84,7 @@ const TopicFeature = {
     $assert(model, 'model can not be null');
 
     const { icon } = TopicFeature._featuresMetadataById.filter((elem) => elem.id === model.getType())[0];
+    // eslint-disable-next-line new-cap
     return new icon(topic, model, readOnly);
   },
 };

@@ -86,7 +86,7 @@ class BalancedSorter extends AbstractBasicSorter {
       : right.length - left.length > 0
         ? 1
         : 0;
-    var direction = order % 2 == 0 ? 1 : -1;
+    const direction = order % 2 == 0 ? 1 : -1;
 
     // Exclude the dragged node (if set)
     const children = this._getChildrenForOrder(parent, graph, order).filter((child) => child !== node);

@@ -69,7 +69,7 @@ class FloatingTip extends Events {
 
     if (this.addEvent) {
       for (const option in options) {
-        if (typeof (options[option]) != 'function' || !(/^on[A-Z]/).test(option)) {
+        if (typeof (options[option]) !== 'function' || !(/^on[A-Z]/).test(option)) {
           continue;
         }
         this.addEvent(option, options[option]);

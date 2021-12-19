@@ -18,7 +18,6 @@
 import Icon from './Icon';
 
 class ActionIcon extends Icon {
-
   constructor(topic, url) {
     super(url);
     this._node = topic;

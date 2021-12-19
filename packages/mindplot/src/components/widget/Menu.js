@@ -225,8 +225,8 @@ class Menu extends IMenu {
 
     this._addButton('print', false, false, () => {
       me.save(saveElem, designer, false);
-      const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('c/maps/'));
-      window.open(`${baseUrl}c/maps/${mapId}/print`);
+      const url = window.location.href.substring(0, window.location.href.lastIndexOf('c/maps/'));
+      window.open(`${url}c/maps/${mapId}/print`);
     });
 
     Menu._registerTooltip('print', $msg('PRINT'));
@@ -479,7 +479,7 @@ class Menu extends IMenu {
         shortcut = navigator.appVersion.indexOf('Mac') !== -1 ? shortcut.replace('meta+', '⌘') : shortcut.replace('meta+', 'ctrl+');
         tooltip = `${tooltip} (${shortcut})`;
       }
-      new KeyboardShortcutTooltip($(`#${buttonId}`), tooltip);
+      return new KeyboardShortcutTooltip($(`#${buttonId}`), tooltip);
     }
   }
 }

@@ -1,9 +1,8 @@
+import $ from 'jquery';
 import Options from '../../Options';
 import { $msg } from '../../Messages';
-import $ from 'jquery';
 
 class BootstrapDialog extends Options {
-  
   constructor(title, options) {
     super();
     this.options = {
@@ -14,7 +13,7 @@ class BootstrapDialog extends Options {
       errorMessage: false,
       onEventData: {},
     };
-  
+
     this.setOptions(options);
     this.options.onEventData.dialog = this;
     this._native = $('<div class="modal fade" tabindex="-1"></div>').append('<div class="modal-dialog"></div>');
@@ -84,6 +83,7 @@ class BootstrapDialog extends Options {
   }
 
   onDialogShown() {}
+
   onRemoveClick(event) {
     throw 'Unsupported operation';
   }

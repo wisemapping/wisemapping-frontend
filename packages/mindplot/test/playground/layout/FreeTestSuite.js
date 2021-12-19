@@ -513,12 +513,11 @@ class FreeTestSuite extends TestSuite {
       siblings.forEach((sibling) => {
         this._branchesOverlap(child, sibling, heightById);
       });
-
     });
 
     children.forEach(((child) => {
       OriginalLayout._assertBranchCollision(treeSet, child, heightById);
-    }).bind(this));
+    }));
   }
 
   static _branchesOverlap(branchA, branchB, heightById) {

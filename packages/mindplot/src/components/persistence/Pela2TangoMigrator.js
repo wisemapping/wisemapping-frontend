@@ -16,13 +16,13 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import XMLSerializer_Tango from './XMLSerializer_Tango';
+import XMLSerializer from './XMLSerializer_Tango';
 import ModelCodeName from './ModelCodeName';
 
 class Pela2TangoMigrator {
   constructor(pelaSerializer) {
     this._pelaSerializer = pelaSerializer;
-    this._tangoSerializer = new XMLSerializer_Tango();
+    this._tangoSerializer = new XMLSerializer();
   }
 
   toXML(mindmap) {

@@ -100,7 +100,7 @@ class RootedTreeSet {
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
 
-    node._parent._children = node._parent._children.filter((n)=> node !== n);
+    node._parent._children = node._parent._children.filter((n) => node !== n);
     this._rootNodes.push(node);
     node._parent = null;
   }
@@ -429,9 +429,7 @@ class RootedTreeSet {
     // direct descendants of the root that do not contain the node and are on the same side
     // and on the direction of the offset
     const rootNode = this.getRootNode(node);
-    const branches = this.getChildren(rootNode).filter(((child) => {
-      return this._find(node.getId(), child);
-    }).bind(this));
+    const branches = this.getChildren(rootNode).filter(((child) => this._find(node.getId(), child)));
 
     const branch = branches[0];
     const rootDescendants = this.getSiblings(branch).filter((sibling) => {

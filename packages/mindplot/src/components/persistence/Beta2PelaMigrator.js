@@ -17,12 +17,12 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
-import XMLSerializer_Pela from './XMLSerializer_Pela';
+import XMLSerializer from './XMLSerializer_Pela';
 
 class Beta2PelaMigrator {
   constructor(betaSerializer) {
     this._betaSerializer = betaSerializer;
-    this._pelaSerializer = new XMLSerializer_Pela();
+    this._pelaSerializer = new XMLSerializer();
   }
 
   toXML(mindmap) {

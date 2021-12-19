@@ -103,7 +103,6 @@ class DragConnector {
   _isVerticallyAligned(targetSize, targetPosition, sourcePosition) {
     return Math.abs(sourcePosition.y - targetPosition.y) < targetSize.height / 2;
   }
-
 }
 
 DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE = 80;

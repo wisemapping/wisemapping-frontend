@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from "@wisemapping/core-js";
+import { $assert } from '@wisemapping/core-js';
 import * as web2d from '@wisemapping/web2d';
 
 class Icon {

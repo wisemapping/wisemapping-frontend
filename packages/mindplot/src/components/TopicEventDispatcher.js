@@ -26,8 +26,7 @@ const TopicEvent = {
 };
 
 class TopicEventDispatcher extends Events {
-  constructor(readOnly) 
-  {
+  constructor(readOnly) {
     super();
     this._readOnly = readOnly;
     this._activeEditor = null;

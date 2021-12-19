@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from "@wisemapping/core-js";
+import { $assert } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
 
 class NoteModel extends FeatureModel {

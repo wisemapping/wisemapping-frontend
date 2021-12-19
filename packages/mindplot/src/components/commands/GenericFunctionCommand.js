@@ -80,9 +80,9 @@ class GenericFunctionCommand extends Command {
     if (this.applied) {
       const topics = commandContext.findTopics(this._topicsId);
 
-      topics.forEach( ((topic, index) => {
+      topics.forEach(((topic, index) => {
         this._commandFunc(topic, this._oldValues[index]);
-      }).bind(this));
+      }));
 
       this.applied = false;
       this._oldValues = [];

@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert, $defined } from '@wisemapping/core-js';
 import ConnectionLine from '../ConnectionLine';
-import { $assert, $defined } from "@wisemapping/core-js";
 
 class RelationshipModel {
   constructor(sourceTopicId, targetTopicId) {

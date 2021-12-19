@@ -262,6 +262,4 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 }
 
-
-
-export default StandaloneActionDispatcher ;
+export default StandaloneActionDispatcher;

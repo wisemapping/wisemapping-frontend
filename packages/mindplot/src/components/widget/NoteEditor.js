@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 import $ from 'jquery';
+import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
 import { $msg } from '../Messages';
 
 class NoteEditor extends BootstrapDialog {

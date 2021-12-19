@@ -172,12 +172,6 @@ class Designer extends Events {
         this._actionDispatcher.addTopics([model], [centralTopic.getId()]);
       }
     });
-
-    // Register mouse drag and drop event ...
-    function noopHandler(evt) {
-      evt.stopPropagation();
-      evt.preventDefault();
-    }
   }
 
   /**

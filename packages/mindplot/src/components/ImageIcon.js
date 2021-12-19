@@ -31,7 +31,7 @@ class ImageIcon extends Icon {
 
     this._topicId = topic.getId();
     this._featureModel = iconModel;
-    
+
     if (!readOnly) {
       // Icon
       const image = this.getImage();

@@ -20,6 +20,7 @@ import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import ChildrenSorterStrategy from '../../../src/components/layout/ChildrenSorterStrategy';
+
 class TestSuite extends ChildrenSorterStrategy {
   constructor() {
     super();
@@ -91,7 +92,7 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
     manager.addNode(3, TestSuite.NODE_SIZE, position).connectNode(1, 3, 0);
     manager.addNode(5, TestSuite.NODE_SIZE, position).connectNode(3, 5, 0);
-    manager.addNode(6, { width: 140, height: 130 } , position).connectNode(3, 6, 1);
+    manager.addNode(6, { width: 140, height: 130 }, position).connectNode(3, 6, 1);
     manager.addNode(7, TestSuite.NODE_SIZE, position).connectNode(6, 7, 0);
     manager.addNode(8, TestSuite.NODE_SIZE, position).connectNode(7, 8, 0);
     manager.addNode(9, TestSuite.NODE_SIZE, position).connectNode(7, 9, 1);
@@ -105,10 +106,10 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.addNode(17, TestSuite.NODE_SIZE, position).connectNode(7, 17, 9);
     manager.addNode(29, TestSuite.NODE_SIZE, position).connectNode(6, 29, 1);
     manager.addNode(30, TestSuite.NODE_SIZE, position).connectNode(6, 30, 2);
-    manager.addNode(31, { width: 100, height: 50 } , position).connectNode(6, 31, 3);
+    manager.addNode(31, { width: 100, height: 50 }, position).connectNode(6, 31, 3);
 
     manager.addNode(4, TestSuite.NODE_SIZE, position).connectNode(1, 4, 1);
-    manager.addNode(18, { width: 80, height: 70 } , position).connectNode(4, 18, 0);
+    manager.addNode(18, { width: 80, height: 70 }, position).connectNode(4, 18, 0);
     manager.addNode(19, TestSuite.NODE_SIZE, position).connectNode(18, 19, 0);
     manager.addNode(20, TestSuite.NODE_SIZE, position).connectNode(19, 20, 0);
     manager.addNode(21, TestSuite.NODE_SIZE, position).connectNode(20, 21, 0);
@@ -117,11 +118,11 @@ class TestSuite extends ChildrenSorterStrategy {
     manager.addNode(22, TestSuite.NODE_SIZE, position).connectNode(2, 22, 0);
     manager.addNode(24, TestSuite.NODE_SIZE, position).connectNode(22, 24, 0);
 
-    manager.addNode(23, { width: 80, height: 50 } , position).connectNode(2, 23, 1);
-    manager.addNode(25, { width: 80, height: 40 } , position).connectNode(23, 25, 0);
-    manager.addNode(26, { width: 80, height: 80 } , position).connectNode(25, 26, 0);
+    manager.addNode(23, { width: 80, height: 50 }, position).connectNode(2, 23, 1);
+    manager.addNode(25, { width: 80, height: 40 }, position).connectNode(23, 25, 0);
+    manager.addNode(26, { width: 80, height: 80 }, position).connectNode(25, 26, 0);
     manager.addNode(27, TestSuite.NODE_SIZE, position).connectNode(26, 27, 0);
-    manager.addNode(28, { width: 80, height: 80 } , position).connectNode(27, 28, 0);
+    manager.addNode(28, { width: 80, height: 80 }, position).connectNode(27, 28, 0);
 
     //        manager.layout();
     //        manager.plot("testBaselineAligned1", {width:1600,height:800});
@@ -135,7 +136,7 @@ class TestSuite extends ChildrenSorterStrategy {
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
     manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
-    manager.addNode(2, { width: 130, height: 200 } , position).connectNode(1, 2, 0);
+    manager.addNode(2, { width: 130, height: 200 }, position).connectNode(1, 2, 0);
     manager.addNode(3, TestSuite.NODE_SIZE, position).connectNode(2, 3, 0);
     manager.addNode(4, TestSuite.NODE_SIZE, position).connectNode(2, 4, 1);
     manager.addNode(5, TestSuite.NODE_SIZE, position).connectNode(2, 5, 2);
@@ -431,17 +432,17 @@ class TestSuite extends ChildrenSorterStrategy {
     const position = { x: 0, y: 0 };
     const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
 
-    manager.addNode(1, { width: 60, height: 60 } ,position);
+    manager.addNode(1, { width: 60, height: 60 }, position);
     manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, { width: 260, height: 30 } ,position);
+    manager.addNode(3, { width: 260, height: 30 }, position);
     manager.addNode(4, TestSuite.NODE_SIZE, position);
     manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, { width: 80, height: 80 } ,position);
+    manager.addNode(7, { width: 80, height: 80 }, position);
     manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, { width: 30, height: 30 } ,position);
+    manager.addNode(9, { width: 30, height: 30 }, position);
     manager.addNode(10, TestSuite.NODE_SIZE, position);
     manager.addNode(11, TestSuite.NODE_SIZE, position);
-    manager.addNode(12, { width: 100, height: 70 } ,position);
+    manager.addNode(12, { width: 100, height: 70 }, position);
     manager.addNode(13, TestSuite.NODE_SIZE, position);
     manager.addNode(14, TestSuite.NODE_SIZE, position);
     manager.addNode(15, TestSuite.NODE_SIZE, position);

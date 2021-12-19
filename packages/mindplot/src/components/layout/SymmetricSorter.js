@@ -229,7 +229,7 @@ class SymmetricSorter extends AbstractBasicSorter {
         position: child.getPosition(),
         width: child.getSize().width,
         height: this._computeChildrenHeight(treeSet, child),
-      })).bind(this)).reverse();
+      }))).reverse();
 
     // Compute the center of the branch ...
     let totalHeight = 0;

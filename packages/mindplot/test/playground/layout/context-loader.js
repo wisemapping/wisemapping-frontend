@@ -10,8 +10,8 @@ global.Raphael = Raphael;
 global.Raphael.fn.drawGrid = drawGrid;
 
 window.addEventListener('DOMContentLoaded', () => {
-    new TestSuite();
-    new BalancedTestSuite();
-    new SymmetricTestSuite();
-    new FreeTestSuite();
+  new TestSuite();
+  new BalancedTestSuite();
+  new SymmetricTestSuite();
+  new FreeTestSuite();
 });
