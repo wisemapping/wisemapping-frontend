@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
-import $ from 'jquery';
 import ElementPeer from './ElementPeer';
 
 class TextPeer extends ElementPeer {
@@ -71,7 +70,9 @@ class TextPeer extends ElementPeer {
     this._native.setAttribute('x', x);
 
     // tspan must be positioned manually.
-    $(this._native).children('tspan').attr('x', x);
+    Array.from(this._native.querySelectorAll('tspan')).forEach((element) => {
+      element.setAttribute('x', x);
+    });
   }
 
   getPosition() {
@@ -79,7 +80,13 @@ class TextPeer extends ElementPeer {
   }
 
   getNativePosition() {
-    return $(this._native).position();
+    const computedStyles = window.getComputedStyle(this._native);
+    const marginTop = computedStyles.getPropertyValue('margin-top') || 0;
+    const marginLeft = computedStyles.getPropertyValue('margin-left') || 0;
+    return {
+      top: this._native.offsetTop - parseFloat(marginTop),
+      left: this._native.offsetLeft - parseFloat(marginLeft),
+    };
   }
 
   setFont(font, size, style, weight) {

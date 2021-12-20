@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $defined } from '@wisemapping/core-js';
 import ElementClass from './ElementClass';
 import Toolkit from './Toolkit';
@@ -87,7 +86,7 @@ class Workspace extends ElementClass {
     container.style.height = '688px';
     container.style.border = '1px solid red';
 
-    return $(container);
+    return container;
   }
 
   /**
@@ -101,11 +100,11 @@ class Workspace extends ElementClass {
   setSize(width, height) {
     // HTML container must have the size of the group element.
     if ($defined(width)) {
-      this._htmlContainer.css('width', width);
+      this._htmlContainer.style.width = width;
     }
 
     if ($defined(height)) {
-      this._htmlContainer.css('height', height);
+      this._htmlContainer.style.height = height;
     }
     this.peer.setSize(width, height);
   }
@@ -147,20 +146,19 @@ class Workspace extends ElementClass {
   }
 
   setFill(color, opacity) {
-    this._htmlContainer.css('background-color', color);
+    this._htmlContainer.style.backgroundColor = color;
     if (opacity || opacity === 0) {
       throw new Error('Unsupported operation. Opacity not supported.');
     }
   }
 
   getFill() {
-    const color = this._htmlContainer.css('background-color');
+    const color = this._htmlContainer.style.backgroundColor;
     return { color };
   }
 
   getSize() {
-    const width = this._htmlContainer.css('width');
-    const height = this._htmlContainer.css('height');
+    const { width, height } = this._htmlContainer.style;
     return { width, height };
   }
 
@@ -168,7 +166,7 @@ class Workspace extends ElementClass {
     if (style !== 'solid') {
       throw new Error(`Not supported style stroke style:${style}`);
     }
-    this._htmlContainer.css('border', `${width} ${style} ${color}`);
+    this._htmlContainer.style.border = `${width} ${style} ${color}`;
 
     if (opacity || opacity === 0) {
       throw new Error('Unsupported operation. Opacity not supported.');

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import EventUtils from '../utils/EventUtils';
 import TransformUtil from '../utils/TransformUtils';
@@ -96,19 +95,21 @@ class ElementPeer {
      * http://developer.mozilla.org/en/docs/addEvent
      */
   addEvent(type, listener) {
-    $(this._native).bind(type, listener);
+    this._native.addEventListener(type, listener);
   }
 
   trigger(type, event) {
-    $(this._native).trigger(type, event);
+    // TODO: check this for correctness and for real jQuery.trigger replacement
+    this._native.dispatchEvent(new CustomEvent(type, event));
   }
 
-  cloneEvents(from) {
-    this._native.cloneEvents(from);
+  // eslint-disable-next-line class-methods-use-this
+  cloneEvents(/* from */) {
+    throw new Error('cloneEvents not implemented');
   }
 
   removeEvent(type, listener) {
-    $(this._native).unbind(type, listener);
+    this._native.removeEventListener(type, listener);
   }
 
   setSize(width, height) {
