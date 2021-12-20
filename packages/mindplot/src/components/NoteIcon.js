@@ -61,17 +61,17 @@ class NoteIcon extends Icon {
     if ($('body').find('#textPopoverNote').length === 1) {
       const text = $('body').find('#textPopoverNote');
       text.text(this._linksModel.getText());
-    } else {
-      const result = $('<div id="textPopoverNote"></div>').css({ padding: '5px' });
-
-      const text = $('<div></div>').text(this._linksModel.getText())
-        .css({
-          'white-space': 'pre-wrap',
-          'word-wrap': 'break-word',
-        });
-      result.append(text);
-      return result;
+      return text;
     }
+    const result = $('<div id="textPopoverNote"></div>').css({ padding: '5px' });
+
+    const text = $('<div></div>').text(this._linksModel.getText())
+      .css({
+        'white-space': 'pre-wrap',
+        'word-wrap': 'break-word',
+      });
+    result.append(text);
+    return result;
   }
 
   getModel() {

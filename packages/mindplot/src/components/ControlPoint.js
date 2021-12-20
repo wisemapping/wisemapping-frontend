@@ -137,7 +137,7 @@ class ControlPoint {
     const pos = screen.getWorkspaceMousePosition(event);
 
     let cords;
-    if (point == 0) {
+    if (point === 0) {
       cords = Shape.calculateRelationShipPointCoordinates(this._line.getSourceTopic(), pos);
       this._line.setFrom(cords.x, cords.y);
       this._line.setSrcControlPoint(new Point(pos.x - cords.x, pos.y - cords.y));

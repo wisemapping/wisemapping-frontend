@@ -18,6 +18,9 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
+// regex taken from https://stackoverflow.com/a/34763398/58128
+const parseJsObject = (str) => JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
+
 class INodeModel {
   constructor(mindmap) {
     $assert(mindmap && mindmap.getBranches, 'mindmap can not be null');
@@ -31,15 +34,16 @@ class INodeModel {
 
   /** */
   setId(id) {
-    if ($defined(id) && id > INodeModel._uuid) {
-      $assert(Number.isFinite(id));
-      INodeModel._uuid = id;
-    }
     if (!$defined(id)) {
-      id = INodeModel._nextUUID();
+      const newId = INodeModel._nextUUID();
+      this.putProperty('id', newId);
+    } else {
+      if (id > INodeModel._uuid) {
+        $assert(Number.isFinite(id));
+        INodeModel._uuid = id;
+      }
+      this.putProperty('id', id);
     }
-
-    this.putProperty('id', id);
   }
 
   /** */
@@ -74,7 +78,7 @@ class INodeModel {
     const value = this.getProperty('position');
     let result = null;
     if (value != null) {
-      result = eval(`(${value})`);
+      result = parseJsObject(value);
     }
     return result;
   }
@@ -89,7 +93,7 @@ class INodeModel {
     const value = this.getProperty('imageSize');
     let result = null;
     if (value != null) {
-      result = eval(`(${value})`);
+      result = parseJsObject(value);
     }
     return result;
   }

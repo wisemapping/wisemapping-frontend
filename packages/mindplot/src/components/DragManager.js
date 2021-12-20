@@ -44,11 +44,15 @@ class DragManager {
         const dragNode = node.createDragNode(layoutManager);
 
         // Register mouse move listener ...
-        const mouseMoveListener = dragManager._buildMouseMoveListener(workspace, dragNode, dragManager);
+        const mouseMoveListener = dragManager._buildMouseMoveListener(
+          workspace, dragNode, dragManager,
+        );
         screen.addEvent('mousemove', mouseMoveListener);
 
         // Register mouse up listeners ...
-        const mouseUpListener = dragManager._buildMouseUpListener(workspace, node, dragNode, dragManager);
+        const mouseUpListener = dragManager._buildMouseUpListener(
+          workspace, node, dragNode, dragManager,
+        );
         screen.addEvent('mouseup', mouseUpListener);
 
         // Change cursor.
@@ -59,15 +63,7 @@ class DragManager {
   }
 
   remove(node) {
-    const nodes = this._topics;
-    let contained = false;
-    let index = -1;
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i] == node) {
-        contained = true;
-        index = i;
-      }
-    }
+    throw new Error('Not implemented: DragManager.prototype.remove');
   }
 
   _buildMouseMoveListener(workspace, dragNode, dragManager) {
@@ -96,6 +92,8 @@ class DragManager {
 
       event.preventDefault();
     };
+    // allowed param reassign to avoid risks of existing code relying in this side-effect
+    // eslint-disable-next-line no-param-reassign
     dragManager._mouseMoveListener = result;
     return result;
   }
@@ -111,8 +109,11 @@ class DragManager {
       screen.removeEvent('mouseup', dragManager._mouseUpListener);
 
       // Help GC
+      // allowed param reassign to avoid risks of existing code relying in this side-effect
+      /* eslint-disable no-param-reassign */
       dragManager._mouseMoveListener = null;
       dragManager._mouseUpListener = null;
+      /* eslint-enable no-param-reassign */
 
       workspace.enableWorkspaceEvents(true);
       // Change the cursor to the default.
@@ -129,6 +130,7 @@ class DragManager {
         me._isDragInProcess = false;
       }
     };
+    // eslint-disable-next-line no-param-reassign
     dragManager._mouseUpListener = result;
     return result;
   }

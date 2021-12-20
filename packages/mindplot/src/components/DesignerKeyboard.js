@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
+import { $assert } from '@wisemapping/core-js';
 import Keyboard from './Keyboard';
 
 class DesignerKeyboard extends Keyboard {

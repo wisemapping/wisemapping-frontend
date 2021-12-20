@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
@@ -33,15 +32,14 @@ const XMLSerializerFactory = {};
  * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
  * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
  */
-XMLSerializerFactory.getSerializerFromMindmap = function getSerializerFromMindmap(mindmap) {
-  return XMLSerializerFactory.getSerializer(mindmap.getVersion());
-};
+XMLSerializerFactory.getSerializerFromMindmap = (mindmap) => XMLSerializerFactory
+  .getSerializer(mindmap.getVersion());
 
 /**
  * @param domDocument
  * @return serializer corresponding to the mindmap's version
  */
-XMLSerializerFactory.getSerializerFromDocument = function getSerializerFromDocument(domDocument) {
+XMLSerializerFactory.getSerializerFromDocument = (domDocument) => {
   const rootElem = domDocument.documentElement;
   return XMLSerializerFactory.getSerializer(rootElem.getAttribute('version'));
 };
@@ -53,20 +51,17 @@ XMLSerializerFactory.getSerializerFromDocument = function getSerializerFromDocum
  * @param {String} version the version name
  * @return serializer
  */
-XMLSerializerFactory.getSerializer = function getSerializer(version) {
-  if (!$defined(version)) {
-    version = ModelCodeName.BETA;
-  }
+XMLSerializerFactory.getSerializer = function getSerializer(version = ModelCodeName.BETA) {
   const codeNames = XMLSerializerFactory._codeNames;
   let found = false;
   let serializer = null;
   for (let i = 0; i < codeNames.length; i++) {
     if (!found) {
-      found = codeNames[i].codeName == version;
+      found = codeNames[i].codeName === version;
       if (found) serializer = new (codeNames[i].serializer)();
     } else {
-      const { migrator } = codeNames[i];
-      serializer = new migrator(serializer);
+      const { migrator: Migrator } = codeNames[i];
+      serializer = new Migrator(serializer);
     }
   }
 

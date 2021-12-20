@@ -42,14 +42,16 @@ class BalancedSorter extends AbstractBasicSorter {
           + node.getSize().width / 2
           + BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
 
-      const xPos = direction > 0
-        ? position.x >= limitXPos
-          ? position.x
-          : limitXPos
-        : position.x <= limitXPos
+      let xPos;
+      if (direction > 0) {
+        xPos = position.x >= limitXPos
           ? position.x
           : limitXPos;
-
+      } else {
+        xPos = position.x <= limitXPos
+          ? position.x
+          : limitXPos;
+      }
       return [0, { x: xPos, y: position.y }];
     }
 
@@ -80,17 +82,21 @@ class BalancedSorter extends AbstractBasicSorter {
       left = this._getChildrenForOrder(parent, graph, 1);
     }
     // Filter nodes on one side..
-    const order = position
-      ? position.x > rootNode.getPosition().x
+    let order;
+    if (position) {
+      order = position.x > rootNode.getPosition().x
         ? 0
-        : 1
-      : right.length - left.length > 0
+        : 1;
+    } else {
+      order = right.length - left.length > 0
         ? 1
         : 0;
+    }
     const direction = order % 2 === 0 ? 1 : -1;
 
     // Exclude the dragged node (if set)
-    const children = this._getChildrenForOrder(parent, graph, order).filter((child) => child !== node);
+    const children = this._getChildrenForOrder(parent, graph, order)
+      .filter((child) => child !== node);
 
     // No children?
     if (children.length === 0) {
@@ -110,10 +116,10 @@ class BalancedSorter extends AbstractBasicSorter {
     // Try to fit within ...
     let result = null;
     const last = children[children.length - 1];
-    position = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
+    const newestPosition = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
       const cpos = child.getPosition();
-      if (position.y > cpos.y) {
+      if (newestPosition.y > cpos.y) {
         const yOffset = child === last
           ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
           : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
@@ -205,7 +211,8 @@ class BalancedSorter extends AbstractBasicSorter {
         order: child.getOrder(),
         width: child.getSize().width,
         height: this._computeChildrenHeight(treeSet, child),
-      })).reverse();
+      }))
+      .reverse();
 
     // Compute the center of the branch ...
     let totalPHeight = 0;
@@ -289,7 +296,8 @@ class BalancedSorter extends AbstractBasicSorter {
   }
 
   _getChildrenForOrder(parent, graph, order) {
-    return this._getSortedChildren(graph, parent).filter((child) => child.getOrder() % 2 === order % 2);
+    return this._getSortedChildren(graph, parent)
+      .filter((child) => child.getOrder() % 2 === order % 2);
   }
 
   _getVerticalPadding() {

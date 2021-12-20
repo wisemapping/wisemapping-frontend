@@ -24,7 +24,7 @@ class DragTopicCommand extends Command {
      * @constructs
      * @param {String} topicId id of the topic to drag
      * @param {Object} position
-     * @param {Number} order the order property (children of one node are displayed in order from 0 to n)
+     * @param {Number} order the order property (children are displayed in order from 0 to n)
      * @param {mindplot.Topic} parentTopic the topic to be made the dragged topic's new parent
      * @extends mindplot.Command
      */

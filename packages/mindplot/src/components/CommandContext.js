@@ -26,12 +26,9 @@ class CommandContext {
   }
 
   /** */
-  findTopics(topicsIds) {
-    $assert($defined(topicsIds), 'topicsIds can not be null');
-    if (!(topicsIds instanceof Array)) {
-      topicsIds = [topicsIds];
-    }
-
+  findTopics(topicIds) {
+    $assert($defined(topicIds), 'topicsIds can not be null');
+    const topicsIds = Array.isArray(topicIds) ? topicIds : [topicIds];
     const designerTopics = this._designer.getModel().getTopics();
     const result = designerTopics.filter((topic) => topicsIds.includes(topic.getId()));
 
@@ -93,11 +90,9 @@ class CommandContext {
   }
 
   /** */
-  findRelationships(relIds) {
-    $assert($defined(relIds), 'relId can not be null');
-    if (!(relIds instanceof Array)) {
-      relIds = [relIds];
-    }
+  findRelationships(relationshipIds) {
+    $assert($defined(relationshipIds), 'relId can not be null');
+    const relIds = Array.isArray(relationshipIds) ? relationshipIds : [relationshipIds];
 
     const designerRel = this._designer.getModel().getRelationships();
     return designerRel.filter((rel) => relIds.includes(rel.getId()));

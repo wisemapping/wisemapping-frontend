@@ -50,11 +50,12 @@ class GenericFunctionCommand extends Command {
       try {
         topics = commandContext.findTopics(this._topicsId);
       } catch (e) {
-        if (this._commandFunc.commandType != 'changeTextToTopic') {
+        if (this._commandFunc.commandType !== 'changeTextToTopic') {
           // Workaround: For some reason, there is a combination of events that involves
           // making some modification and firing out of focus event. This is causing
-          // that a remove node try to be removed.  In some other life, I will come with the solution.
-          // Almost aways occurs with IE9. I could be related with some change of order in sets o something similar.
+          // that a remove node try to be removed.
+          // In some other life, I will come with the solution. Almost aways occurs with IE9.
+          // I could be related with some change of order in sets o something similar.
           throw e;
         }
       }

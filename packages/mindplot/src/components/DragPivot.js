@@ -125,7 +125,7 @@ class DragPivot {
   }
 
   setVisibility(value) {
-    if (this.isVisible() != value) {
+    if (this.isVisible() !== value) {
       const pivotRect = this._getPivotRect();
       pivotRect.setVisibility(value);
 
@@ -145,7 +145,7 @@ class DragPivot {
     let result = null;
     const parentTopic = this._targetTopic;
     if (parentTopic) {
-      if (parentTopic.getType() == INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (parentTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
         result = this._straightLine;
       } else {
         result = this._curvedLine;
@@ -198,7 +198,7 @@ class DragPivot {
 
   connectTo(targetTopic, position) {
     $assert(!this._outgoingLine, 'Could not connect an already connected node');
-    $assert(targetTopic != this, 'Circular connection are not allowed');
+    $assert(targetTopic !== this, 'Circular connection are not allowed');
     $assert(position, 'position can not be null');
     $assert(targetTopic, 'parent can not be null');
 

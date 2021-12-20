@@ -34,7 +34,8 @@ class AbstractBasicSorter extends ChildrenSorterStrategy {
   }
 
   _computeChildrenHeight(treeSet, node, heightCache) {
-    const height = node.getSize().height + this._getVerticalPadding() * 2; // 2* Top and down padding;
+    // 2* Top and down padding;
+    const height = node.getSize().height + this._getVerticalPadding() * 2;
 
     let result;
     const children = treeSet.getChildren(node);
@@ -51,6 +52,7 @@ class AbstractBasicSorter extends ChildrenSorterStrategy {
     }
 
     if (heightCache) {
+      // eslint-disable-next-line no-param-reassign
       heightCache[node.getId()] = result;
     }
 

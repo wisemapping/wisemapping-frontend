@@ -105,8 +105,8 @@ class Workspace {
 
     // View port coords ...
     if (this._viewPort) {
-      this._viewPort.width = this._viewPort.width * zoom;
-      this._viewPort.height = this._viewPort.height * zoom;
+      this._viewPort.width *= zoom;
+      this._viewPort.height *= zoom;
     }
 
     // Center topic....
@@ -166,8 +166,8 @@ class Workspace {
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
-          workspace._mouseMoveListener = function _mouseMoveListener(event) {
-            const currentMousePosition = screenManager.getWorkspaceMousePosition(event);
+          workspace._mouseMoveListener = (mouseMoveEvent) => {
+            const currentMousePosition = screenManager.getWorkspaceMousePosition(mouseMoveEvent);
 
             const offsetX = currentMousePosition.x - mouseDownPosition.x;
             const coordOriginX = -offsetX + originalCoordOrigin.x;
@@ -183,7 +183,7 @@ class Workspace {
             } else {
               window.document.body.style.cursor = 'move';
             }
-            event.preventDefault();
+            mouseMoveEvent.preventDefault();
 
             // Fire drag event ...
             screenManager.fireEvent('update');
@@ -192,7 +192,7 @@ class Workspace {
           screenManager.addEvent('mousemove', workspace._mouseMoveListener);
 
           // Register mouse up listeners ...
-          workspace._mouseUpListener = function mouseUpListener() {
+          workspace._mouseUpListener = () => {
             screenManager.removeEvent('mousemove', workspace._mouseMoveListener);
             screenManager.removeEvent('mouseup', workspace._mouseUpListener);
             workspace._mouseUpListener = null;

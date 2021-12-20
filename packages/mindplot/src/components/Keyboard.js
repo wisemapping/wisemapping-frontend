@@ -18,12 +18,9 @@
 import $ from 'jquery';
 
 class Keyboard {
-  // eslint-disable-next-line class-methods-use-this
   addShortcut(shortcuts, callback) {
-    if (!Array.isArray(shortcuts)) {
-      shortcuts = [shortcuts];
-    }
-    shortcuts.forEach((shortcut) => {
+    const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
+    shortcutsArray.forEach((shortcut) => {
       $(document).bind('keydown', shortcut, callback);
     });
   }

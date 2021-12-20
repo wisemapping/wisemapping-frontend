@@ -6,12 +6,13 @@ class Options {
     this.options = options;
 
     if (this.addEvent) {
-      for (const option in options) {
-        if (typeof (options[option]) !== 'function' || !(/^on[A-Z]/).test(option)) {
-          continue;
+      const optionsKeys = Object.keys(options);
+      for (let index = 0; index < optionsKeys.length; index++) {
+        const option = optionsKeys[index];
+        if (typeof (options[option]) === 'function' && (/^on[A-Z]/).test(option)) {
+          this.addEvent(option, options[option]);
+          delete options[option];
         }
-        this.addEvent(option, options[option]);
-        delete options[option];
       }
     }
     return this;

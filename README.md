@@ -21,7 +21,7 @@ If you want to contribute, please check out [CONTRIBUTING.md](./CONTRIBUTING.md)
 ## Scripts
 
 Each package might provide the following scripts.  
-You can run these for all packages by running it from the root folder. Alternatively you can run it for a specific package from inside the package folder you want to.
+You can run these for all packages by running it from the root folder. Alternatively you can run it for a specific package by passing the `--scope` option.
 
 ### build
 
@@ -39,7 +39,8 @@ You can run these for all packages by running it from the root folder. Alternati
 
 > start a devServer with some browsable examples
 
-`yarn playground`
+`yarn playground --scope @wisemapping/web2d`
+`yarn playground --scope @wisemapping/mindplot`
 
 ## test
 

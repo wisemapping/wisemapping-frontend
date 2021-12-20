@@ -53,7 +53,9 @@ class DeleteCommand extends Command {
 
         // Delete relationships
         const relationships = this._collectInDepthRelationships(topic);
-        this._deletedRelModel = this._deletedRelModel.concat(relationships.map((rel) => rel.getModel().clone()));
+        this._deletedRelModel = this._deletedRelModel.concat(
+          relationships.map((rel) => rel.getModel().clone()),
+        );
 
         relationships.forEach((relationship) => {
           commandContext.deleteRelationship(relationship);
@@ -162,7 +164,8 @@ class DeleteCommand extends Command {
       // Filter for unique ...
       result = result.sort((a, b) => a.getModel().getId() - b.getModel().getId());
       const ret = [result[0]];
-      for (let i = 1; i < result.length; i++) { // start loop at 1 as element 0 can never be a duplicate
+      // start loop at 1 as element 0 can never be a duplicate
+      for (let i = 1; i < result.length; i++) {
         if (result[i - 1] !== result[i]) {
           ret.push(result[i]);
         }

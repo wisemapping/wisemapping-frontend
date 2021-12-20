@@ -30,7 +30,7 @@ class DesignerUndoManager {
     if (command.discardDuplicated && length > 0) {
       // Skip duplicated events ...
       const lastItem = this._undoQueue[length - 1];
-      if (lastItem.discardDuplicated != command.discardDuplicated) {
+      if (lastItem.discardDuplicated !== command.discardDuplicated) {
         this._undoQueue.push(command);
       }
     } else {
@@ -73,11 +73,11 @@ class DesignerUndoManager {
   hasBeenChanged() {
     let result = true;
     const undoLength = this._undoQueue.length;
-    if (undoLength == 0 && this._baseId == 0) {
+    if (undoLength === 0 && this._baseId === 0) {
       result = false;
     } else if (undoLength > 0) {
       const command = this._undoQueue[undoLength - 1];
-      result = (this._baseId != command.getId());
+      result = (this._baseId !== command.getId());
     }
     return result;
   }

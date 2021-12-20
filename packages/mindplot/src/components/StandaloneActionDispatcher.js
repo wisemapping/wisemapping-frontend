@@ -115,9 +115,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicIds, 'topicIds can not be null');
     $assert(fontFamily, 'fontFamily can not be null');
 
-    const commandFunc = (topic, fontFamily) => {
+    const commandFunc = (topic, commandFontFamily) => {
       const result = topic.getFontFamily();
-      topic.setFontFamily(fontFamily, true);
+      topic.setFontFamily(commandFontFamily, true);
 
       topic._adjustShapes();
       return result;
@@ -132,9 +132,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
-    const commandFunc = (topic, color) => {
+    const commandFunc = (topic, commandColor) => {
       const result = topic.getFontColor();
-      topic.setFontColor(color, true);
+      topic.setFontColor(commandColor, true);
       return result;
     };
 
@@ -148,9 +148,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
-    const commandFunc = (topic, color) => {
+    const commandFunc = (topic, commandColor) => {
       const result = topic.getBackgroundColor();
-      topic.setBackgroundColor(color);
+      topic.setBackgroundColor(commandColor);
       return result;
     };
 
@@ -164,9 +164,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'topicIds can not be null');
 
-    const commandFunc = (topic, color) => {
+    const commandFunc = (topic, commandColor) => {
       const result = topic.getBorderColor();
-      topic.setBorderColor(color);
+      topic.setBorderColor(commandColor);
       return result;
     };
 
@@ -180,9 +180,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(size, 'size can not be null');
 
-    const commandFunc = (topic, size) => {
+    const commandFunc = (topic, commandSize) => {
       const result = topic.getFontSize();
-      topic.setFontSize(size, true);
+      topic.setFontSize(commandSize, true);
 
       topic._adjustShapes();
       return result;
@@ -197,9 +197,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicsIds can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
-    const commandFunc = (topic, shapeType) => {
+    const commandFunc = (topic, commandShapeType) => {
       const result = topic.getShapeType();
-      topic.setShapeType(shapeType, true);
+      topic.setShapeType(commandShapeType, true);
       return result;
     };
 

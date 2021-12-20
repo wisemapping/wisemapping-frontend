@@ -1,6 +1,6 @@
-import { Group, Rect, Line } from '@wisemapping/web2d';
 import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
+import { Group, Rect, Line } from '@wisemapping/web2d';
 
 export default class RemoveTip {
   /** @lends IconGroup.RemoveTip */
@@ -160,6 +160,7 @@ export default class RemoveTip {
       icon.addEvent('mouseout', () => {
         me.hide();
       });
+      // eslint-disable-next-line no-param-reassign
       icon.__remove = true;
     }
   }

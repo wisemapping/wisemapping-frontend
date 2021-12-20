@@ -17,6 +17,8 @@
  */
 import { $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
+// TODO: use jquery.hotkeys from npm or setup eslint-import-resolver-alias plugin
+// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 import initHotKeyPluggin from '@libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
@@ -56,6 +58,8 @@ class MultilineTextEditor extends Events {
   _registerEvents(containerElem) {
     const textareaElem = this._getTextareaElem();
     const me = this;
+    let start;
+    let end;
     textareaElem.on('keydown', function keydown(event) {
       switch ($.hotkeys.specialKeys[event.keyCode]) {
         case 'esc':
@@ -92,8 +96,8 @@ class MultilineTextEditor extends Events {
           break;
         case 'tab': {
           event.preventDefault();
-          const start = $(this).get(0).selectionStart;
-          const end = $(this).get(0).selectionEnd;
+          start = $(this).get(0).selectionStart;
+          end = $(this).get(0).selectionEnd;
 
           // set textarea value to: text before caret + tab + text after caret
           $(this).val(`${$(this).val().substring(0, start)}\t${$(this).val().substring(end)}`);
@@ -157,7 +161,7 @@ class MultilineTextEditor extends Events {
   }
 
   _updateModel() {
-    if (this._topic.getText() != this._getText()) {
+    if (this._topic.getText() !== this._getText()) {
       const text = this._getText();
       const topicId = this._topic.getId();
 
@@ -223,6 +227,8 @@ class MultilineTextEditor extends Events {
 
   _setStyle(fontStyle) {
     const inputField = this._getTextareaElem();
+    // allowed param reassign to avoid risks of existing code relying in this side-effect
+    /* eslint-disable no-param-reassign */
     if (!$defined(fontStyle.font)) {
       fontStyle.font = 'Arial';
     }
@@ -235,6 +241,7 @@ class MultilineTextEditor extends Events {
     if (!$defined(fontStyle.size)) {
       fontStyle.size = 12;
     }
+    /* eslint-enable no-param-reassign */
     const style = {
       fontSize: `${fontStyle.size}px`,
       fontFamily: fontStyle.font,
@@ -276,8 +283,12 @@ class MultilineTextEditor extends Events {
       const range = textareaElem.createTextRange();
       range.move('character', lengh);
     } else {
+      // allowed param reassign to avoid risks of existing code relying in this side-effect
+      /* eslint-disable no-param-reassign */
       textareaElem.selectionStart = lengh;
       textareaElem.selectionEnd = lengh;
+      /* eslint-enable no-param-reassign */
+
       textareaElem.focus();
     }
   }

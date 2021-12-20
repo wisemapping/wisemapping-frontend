@@ -5,6 +5,7 @@
         "build": "lerna run build",
         "clean": "lerna clean && rm -rf node_modules",
         "lint": "lerna run lint --stream",
+        "playground": "lerna run playground --stream",
         "test": "lerna run test --stream",
         "test:unit": "lerna run test:unit --stream",
         "test:integration": "lerna run test:integration --stream"

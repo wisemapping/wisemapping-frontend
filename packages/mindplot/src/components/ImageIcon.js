@@ -37,12 +37,11 @@ class ImageIcon extends Icon {
       const image = this.getImage();
       const me = this;
       image.addEvent('click', () => {
-        const iconType = iconModel.getIconType();
-        const newIconType = ImageIcon._getNextFamilyIconId(iconType);
+        const iconTypeClick = iconModel.getIconType();
+        const newIconType = ImageIcon._getNextFamilyIconId(iconTypeClick);
         iconModel.setIconType(newIconType);
 
-        const imgUrl = ImageIcon._getImageUrl(newIconType);
-        me._image.setHref(imgUrl);
+        me._image.setHref(ImageIcon._getImageUrl(newIconType));
       });
       this._image.setCursor('pointer');
     }
@@ -65,7 +64,7 @@ class ImageIcon extends Icon {
       if (familyIcons[i] === iconId) {
         // Is last one?
         if (i === (familyIcons.length - 1)) {
-          result = familyIcons[0];
+          [result] = familyIcons;
         } else {
           result = familyIcons[i + 1];
         }
@@ -150,7 +149,8 @@ ImageIcon.prototype.ICON_FAMILIES = [
   { id: 'tag', icons: ['tag_blue', 'tag_green', 'tag_orange', 'tag_red', 'tag_pink', 'tag_yellow'] },
   {
     id: 'object',
-    icons: ['object_bell', 'object_clanbomber', 'object_key', 'object_pencil', 'object_phone', 'object_magnifier', 'object_clip', 'object_music', 'object_star', 'object_wizard', 'object_house', 'object_cake', 'object_camera', 'object_palette', 'object_rainbow'],
+    icons: ['object_bell', 'object_clanbomber', 'object_key', 'object_pencil', 'object_phone', 'object_magnifier', 'object_clip',
+      'object_music', 'object_star', 'object_wizard', 'object_house', 'object_cake', 'object_camera', 'object_palette', 'object_rainbow'],
   },
   {
     id: 'weather',

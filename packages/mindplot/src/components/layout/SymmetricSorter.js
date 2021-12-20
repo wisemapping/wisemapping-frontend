@@ -49,15 +49,16 @@ class SymmetricSorter extends AbstractBasicSorter {
           + node.getSize().width / 2
           + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
 
-      // eslint-disable-next-line no-nested-ternary
-      const xPos = direction > 0
-        ? position.x >= limitXPos
-          ? position.x
-          : limitXPos
-        : position.x <= limitXPos
+      let xPos;
+      if (direction > 0) {
+        xPos = position.x >= limitXPos
           ? position.x
           : limitXPos;
-
+      } else {
+        xPos = position.x <= limitXPos
+          ? position.x
+          : limitXPos;
+      }
       return [0, { x: xPos, y: position.y }];
     }
 
@@ -97,7 +98,9 @@ class SymmetricSorter extends AbstractBasicSorter {
     if (parentChildren.length === 0) {
       // Fit as a child of the parent node...
       const result = {
-        x: parent.getPosition().x + positionDirection * (parent.getSize().width + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING),
+        x: parent.getPosition().x
+          + positionDirection
+          * (parent.getSize().width + SymmetricSorter.INTERNODE_HORIZONTAL_PADDING),
         y: parent.getPosition().y,
       };
 

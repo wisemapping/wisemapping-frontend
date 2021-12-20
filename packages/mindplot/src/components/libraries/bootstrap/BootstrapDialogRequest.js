@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
+import { $defined } from '@wisemapping/core-js';
 import BootstrapDialog from './BootstrapDialog';
 
 class BootstrapDialogRequest extends BootstrapDialog {
@@ -48,9 +49,11 @@ class BootstrapDialogRequest extends BootstrapDialog {
 
     this._native.find('.modal-body').load(url, () => {
       me.acceptButton.unbind('click').click(() => {
-        submitDialogForm();
+        if ($defined(global.submitDialogForm) && typeof (global.submitDialogForm) === 'function') {
+          global.submitDialogForm();
+        }
       });
-      me._native.on('hidden.bs.modal', () => {
+      me._native.on('hidden.bs.modal', function onModalHide() {
         $(this).remove();
       });
       me.show();
@@ -58,8 +61,8 @@ class BootstrapDialogRequest extends BootstrapDialog {
   }
 
   onDialogShown() {
-    if (onDialogShown instanceof Function) {
-      onDialogShown();
+    if ($defined(global.onDialogShown) && typeof (global.onDialogShown) === 'function') {
+      global.onDialogShown();
     }
   }
 }

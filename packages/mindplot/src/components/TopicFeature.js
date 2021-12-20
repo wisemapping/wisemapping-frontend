@@ -66,9 +66,9 @@ const TopicFeature = {
     $assert(type, 'type can not be null');
     $assert(attributes, 'attributes can not be null');
 
-    const { model } = TopicFeature._featuresMetadataById.filter((elem) => elem.id === type)[0];
-    // eslint-disable-next-line new-cap
-    return new model(attributes);
+    const { model: Model } = TopicFeature._featuresMetadataById
+      .filter((elem) => elem.id === type)[0];
+    return new Model(attributes);
   },
 
   /**
@@ -83,9 +83,9 @@ const TopicFeature = {
     $assert(topic, 'topic can not be null');
     $assert(model, 'model can not be null');
 
-    const { icon } = TopicFeature._featuresMetadataById.filter((elem) => elem.id === model.getType())[0];
-    // eslint-disable-next-line new-cap
-    return new icon(topic, model, readOnly);
+    const { icon: Icon } = TopicFeature._featuresMetadataById
+      .filter((elem) => elem.id === model.getType())[0];
+    return new Icon(topic, model, readOnly);
   },
 };
 

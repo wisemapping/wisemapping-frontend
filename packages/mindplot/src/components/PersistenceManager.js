@@ -63,13 +63,11 @@ class PersistenceManager {
   }
 }
 
-PersistenceManager.init = function init(instance) {
+PersistenceManager.init = (instance) => {
   PersistenceManager._instance = instance;
 };
 
-PersistenceManager.getInstance = function getInstance() {
-  return PersistenceManager._instance;
-};
+PersistenceManager.getInstance = () => PersistenceManager._instance;
 
 PersistenceManager.loadFromDom = function loadFromDom(mapId, mapDom) {
   $assert(mapId, 'mapId can not be null');

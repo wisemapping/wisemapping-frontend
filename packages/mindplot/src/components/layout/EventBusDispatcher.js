@@ -37,7 +37,9 @@ class EventBusDispatcher {
     EventBus.instance.addEvent(EventBus.events.NodeRemoved, this._nodeRemoved.bind(this));
     EventBus.instance.addEvent(EventBus.events.NodeResizeEvent, this._nodeResizeEvent.bind(this));
     EventBus.instance.addEvent(EventBus.events.NodeMoveEvent, this._nodeMoveEvent.bind(this));
-    EventBus.instance.addEvent(EventBus.events.NodeDisconnectEvent, this._nodeDisconnectEvent.bind(this));
+    EventBus.instance.addEvent(
+      EventBus.events.NodeDisconnectEvent, this._nodeDisconnectEvent.bind(this),
+    );
     EventBus.instance.addEvent(EventBus.events.NodeConnectEvent, this._nodeConnectEvent.bind(this));
     EventBus.instance.addEvent(EventBus.events.NodeShrinkEvent, this._nodeShrinkEvent.bind(this));
     EventBus.instance.addEvent(EventBus.events.DoLayout, this._doLayout.bind(this));
@@ -56,7 +58,9 @@ class EventBusDispatcher {
   }
 
   _nodeConnectEvent(args) {
-    this._layoutManager.connectNode(args.parentNode.getId(), args.childNode.getId(), args.childNode.getOrder());
+    this._layoutManager.connectNode(
+      args.parentNode.getId(), args.childNode.getId(), args.childNode.getOrder(),
+    );
   }
 
   _nodeShrinkEvent(node) {

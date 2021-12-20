@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import { $defined } from '@wisemapping/core-js';
 import { $msg } from '../Messages';
 import BootstrapDialogRequest from '../libraries/bootstrap/BootstrapDialogRequest';
 import IMenu from './IMenu';
@@ -29,11 +28,10 @@ import ToolbarItem from './ToolbarItem';
 import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
 
 class Menu extends IMenu {
-  constructor(designer, containerId, mapId, readOnly, baseUrl) {
+  constructor(designer, containerId, mapId, readOnly, baseUrl = '') {
     super(designer, containerId, mapId);
     const saveElem = $('#save');
 
-    baseUrl = !$defined(baseUrl) ? '' : baseUrl;
     const widgetsBaseUrl = `${baseUrl}css/widget`;
 
     // Stop event propagation ...
@@ -225,8 +223,8 @@ class Menu extends IMenu {
 
     this._addButton('print', false, false, () => {
       me.save(saveElem, designer, false);
-      const url = window.location.href.substring(0, window.location.href.lastIndexOf('c/maps/'));
-      window.open(`${url}c/maps/${mapId}/print`);
+      const urlPrefix = window.location.href.substring(0, window.location.href.lastIndexOf('c/maps/'));
+      window.open(`${urlPrefix}c/maps/${mapId}/print`);
     });
 
     Menu._registerTooltip('print', $msg('PRINT'));
@@ -398,8 +396,8 @@ class Menu extends IMenu {
     if (videoElem) {
       const width = 900;
       const height = 500;
-      const left = (screen.width / 2) - (width / 2);
-      const top = (screen.height / 2) - (height / 2);
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
 
       videoElem.bind('click', (event) => {
         window.open('https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE', '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`);
@@ -476,11 +474,14 @@ class Menu extends IMenu {
     if ($(`#${buttonId}`)) {
       let tooltip = text;
       if (shortcut) {
-        shortcut = navigator.appVersion.indexOf('Mac') !== -1 ? shortcut.replace('meta+', '⌘') : shortcut.replace('meta+', 'ctrl+');
-        tooltip = `${tooltip} (${shortcut})`;
+        const platformedShortcut = navigator.appVersion.indexOf('Mac') !== -1
+          ? shortcut.replace('meta+', '⌘')
+          : shortcut.replace('meta+', 'ctrl+');
+        tooltip = `${tooltip} (${platformedShortcut})`;
       }
       return new KeyboardShortcutTooltip($(`#${buttonId}`), tooltip);
     }
+    return undefined;
   }
 }
 

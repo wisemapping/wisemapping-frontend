@@ -342,11 +342,7 @@ class Designer extends Events {
        * @param {Number=} factor
        * zoom out by the given factor, or 1.2, if undefined
        */
-  zoomOut(factor) {
-    if (!factor) {
-      factor = 1.2;
-    }
-
+  zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
     if (scale <= 1.9) {
@@ -361,9 +357,7 @@ class Designer extends Events {
        * @param {Number=} factor
        * zoom in by the given factor, or 1.2, if undefined
        */
-  zoomIn(factor) {
-    if (!factor) factor = 1.2;
-
+  zoomIn(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
@@ -935,7 +929,8 @@ class Designer extends Events {
 
   /** */
   changeTopicShape(shape) {
-    const validateFunc = (topic) => !(topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE && shape === TopicShape.LINE
+    const validateFunc = (topic) => !(
+      topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE && shape === TopicShape.LINE
     );
 
     const validateError = 'Central Topic shape can not be changed to line figure.';

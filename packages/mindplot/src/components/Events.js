@@ -41,12 +41,12 @@ class Events {
     return this;
   }
 
-  fireEvent(typeName, args, delay) {
+  fireEvent(typeName, eventArgs, delay) {
     const type = Events._removeOn(typeName);
     const events = this.$events[type];
     if (!events) return this;
 
-    args = Array.isArray(args) ? args : [args];
+    const args = Array.isArray(eventArgs) ? eventArgs : [eventArgs];
     events.forEach(((fn) => {
       if (delay) {
         fn.delay(delay, this, args);

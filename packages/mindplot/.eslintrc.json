@@ -8,14 +8,23 @@
         "airbnb-base",
         "plugin:cypress/recommended"
     ],
-    "plugins": ["only-warn"],
+    "globals": {
+        // Browser is a mootools polyfill. Remove when moving from browser checks to feature detection
+        "Browser": true,
+        // designer is a global currently used as a hack. Remove this when fixing the hack.
+        "designer": true
+    },
     "rules": {
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
         "max-len": [1,250],
         "class-methods-use-this": "off",
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["!cypress/**/*.js"]}]
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["!cypress/**/*.js"]}],
+        "func-names": ["error", "as-needed"],
+        "no-unused-vars": ["error", { "args": "none" }],
+        "camelcase": ["error", {"allow": ["XML"]}],
+        "new-cap": ["error", { "properties": false }]
     },
     "settings": {
 		    "import/resolver": {

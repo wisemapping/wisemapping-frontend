@@ -58,11 +58,8 @@ class ConnectionLine {
     return [new Point(deltaX, 0), new Point(-deltaX, 0)];
   }
 
-  _createLine(lineType, defaultStyle) {
-    if (!$defined(lineType)) {
-      lineType = defaultStyle;
-    }
-    lineType = parseInt(lineType, 10);
+  _createLine(lineTypeParam, defaultStyle) {
+    const lineType = $defined(lineTypeParam) ? parseInt(lineTypeParam, 10) : defaultStyle;
     this._lineType = lineType;
     let line = null;
     switch (lineType) {

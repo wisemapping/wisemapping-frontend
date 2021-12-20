@@ -37,6 +37,7 @@ class RootedTreeSet {
   }
 
   _decodate(node) {
+    // eslint-disable-next-line no-param-reassign
     node._children = [];
     return node;
   }
@@ -112,7 +113,7 @@ class RootedTreeSet {
          * @throws will throw an error if node cannot be found
          * @return node
          */
-  find(id, validate) {
+  find(id, validate = true) {
     $assert($defined(id), 'id can not be null');
 
     const graphs = this._rootNodes;
@@ -124,7 +125,6 @@ class RootedTreeSet {
         break;
       }
     }
-    validate = !$defined(validate) ? true : validate;
     $assert(
       validate ? result : true,
       `node could not be found id:${id}\n,RootedTreeSet${this.dump()}`,
@@ -299,11 +299,14 @@ class RootedTreeSet {
       `${node.getId()}[${order}]`,
     );
     text.attr('fill', '#FFF');
-    const fillColor = this._rootNodes.includes(node)
-      ? '#000'
-      : node.isFree()
+    let fillColor;
+    if (this._rootNodes.includes(node)) {
+      fillColor = '#000';
+    } else {
+      fillColor = node.isFree()
         ? '#abc'
         : '#c00';
+    }
     rect.attr('fill', fillColor);
 
     const rectPosition = {
@@ -397,10 +400,11 @@ class RootedTreeSet {
   /**
      * @param node
      * @param yOffset
-     * @return siblings in the offset (vertical) direction, i.e. with lower or higher order, respectively
+     * @return siblings in the offset (vertical) direction, i.e. with lower or higher order
      */
   getSiblingsInVerticalDirection(node, yOffset) {
-    // siblings with lower or higher order, depending on the direction of the offset and on the same side as their parent
+    // siblings with lower or higher order
+    // (depending on the direction of the offset and on the same side as their parent)
     const parent = this.getParent(node);
     const siblings = this.getSiblings(node).filter((sibling) => {
       const sameSide = node.getPosition().x > parent.getPosition().x
@@ -429,7 +433,8 @@ class RootedTreeSet {
     // direct descendants of the root that do not contain the node and are on the same side
     // and on the direction of the offset
     const rootNode = this.getRootNode(node);
-    const branches = this.getChildren(rootNode).filter(((child) => this._find(node.getId(), child)));
+    const branches = this.getChildren(rootNode)
+      .filter(((child) => this._find(node.getId(), child)));
 
     const branch = branches[0];
     const rootDescendants = this.getSiblings(branch).filter((sibling) => {

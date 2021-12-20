@@ -157,7 +157,9 @@ class XMLSerializer_Pela {
       const featureDom = document.createElement(featureType);
       const attributes = feature.getAttributes();
 
-      for (const key in attributes) {
+      const attributesKeys = Object.keys(attributes);
+      for (let attrIndex = 0; attrIndex < attributesKeys.length; attrIndex++) {
+        const key = attributesKeys[attrIndex];
         const value = attributes[key];
         if (key === 'text') {
           const cdata = document.createCDATASection(this.rmXmlInv(value));

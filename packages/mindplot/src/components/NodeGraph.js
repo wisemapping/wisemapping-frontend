@@ -52,7 +52,7 @@ class NodeGraph {
          * @throws will throw an error if the topic id is not a number
          */
   setId(id) {
-    $assert(typeof topic.getId() === 'number', `id is not a number:${id}`);
+    $assert(typeof id === 'number', `id is not a number:${id}`);
     this.getModel().setId(id);
   }
 

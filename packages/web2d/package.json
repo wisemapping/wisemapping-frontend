@@ -37,7 +37,6 @@
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-config-standard": "^16.0.3",
         "eslint-import-resolver-webpack": "^0.13.2",
-        "eslint-loader": "^4.0.2",
         "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-import": "^2.25.3",
         "nodemon": "^2.0.12",

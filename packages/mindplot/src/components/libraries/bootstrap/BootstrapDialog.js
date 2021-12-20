@@ -97,13 +97,13 @@ class BootstrapDialog extends Options {
   }
 
   onAcceptClick(event) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   onDialogShown() {}
 
   onRemoveClick(event) {
-    throw 'Unsupported operation';
+    throw new Error('Unsupported operation');
   }
 
   show() {

@@ -64,8 +64,8 @@ class RESTPersistenceManager extends PersistenceManager {
         contentType: 'application/json; charset=utf-8',
         async: !sync,
 
-        success(data, textStatus, jqXHRresponseText) {
-          persistence.timestamp = data;
+        success(successData, textStatus, jqXHRresponseText) {
+          persistence.timestamp = successData;
           events.onSuccess();
         },
         error(jqXHR, textStatus, errorThrown) {
@@ -92,7 +92,7 @@ class RESTPersistenceManager extends PersistenceManager {
               // Message could not be decoded ...
             }
             userMsg = persistence._buildError(serverMsg);
-          } else if (this.status == 405) {
+          } else if (this.status === 405) {
             userMsg = { severity: 'SEVERE', message: $msg('SESSION_EXPIRED') };
           }
           events.onError(userMsg);

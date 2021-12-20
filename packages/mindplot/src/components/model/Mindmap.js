@@ -121,8 +121,7 @@ class Mindmap extends IMindmap {
          * @param id
          * @return the node model created
          */
-  createNode(type, id) {
-    type = !$defined(type) ? INodeModel.MAIN_TOPIC_TYPE : type;
+  createNode(type = INodeModel.MAIN_TOPIC_TYPE, id) {
     return new NodeModel(type, this, id);
   }
 

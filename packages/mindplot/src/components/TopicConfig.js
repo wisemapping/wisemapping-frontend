@@ -3,13 +3,13 @@
  * @type {Number}
  * @default
  */
-export const CONNECTOR_WIDTH = 6;
+const CONNECTOR_WIDTH = 6;
 /**
  * @constant
  * @type {Object<String, Number>}
  * @default
  */
-export const OUTER_SHAPE_ATTRIBUTES = {
+const OUTER_SHAPE_ATTRIBUTES = {
   fillColor: 'rgb(252,235,192)',
   stroke: '1 dot rgb(241,163,39)',
   x: 0,
@@ -20,13 +20,13 @@ export const OUTER_SHAPE_ATTRIBUTES = {
  * @type {Object<String, Number>}
  * @default
  */
-export const OUTER_SHAPE_ATTRIBUTES_FOCUS = { fillColor: 'rgb(244,184,45)', x: 0, y: 0 };
+const OUTER_SHAPE_ATTRIBUTES_FOCUS = { fillColor: 'rgb(244,184,45)', x: 0, y: 0 };
 /**
  * @constant
  * @type {Object<String>}
  * @default
  * */
-export const INNER_RECT_ATTRIBUTES = { stroke: '2 solid' };
+const INNER_RECT_ATTRIBUTES = { stroke: '2 solid' };
 
 export default {
   CONNECTOR_WIDTH,

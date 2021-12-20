@@ -15,9 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Rect, Image, Line, Text, Group } from '@wisemapping/web2d';
 import $ from 'jquery';
+import { $assert, $defined } from '@wisemapping/core-js';
+import {
+  Rect, Image, Line, Text, Group,
+} from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
@@ -507,10 +509,11 @@ class Topic extends NodeGraph {
   setText(text) {
     // Avoid empty nodes ...
     if (!text || $.trim(text).length === 0) {
-      text = null;
+      this._setText(null, true);
+    } else {
+      this._setText(text, true);
     }
 
-    this._setText(text, true);
     this._adjustShapes();
   }
 
@@ -825,7 +828,10 @@ class Topic extends NodeGraph {
        */
   setPosition(point) {
     $assert(point, 'position can not be null');
+    // allowed param reassign to avoid risks of existing code relying in this side-effect
+    // eslint-disable-next-line no-param-reassign
     point.x = Math.ceil(point.x);
+    // eslint-disable-next-line no-param-reassign
     point.y = Math.ceil(point.y);
 
     // Update model's position ...
@@ -1006,11 +1012,11 @@ class Topic extends NodeGraph {
     const children = this.getChildren();
     const model = this.getModel();
 
-    isVisible = isVisible ? !model.areChildrenShrunken() : isVisible;
+    const visibility = isVisible ? !model.areChildrenShrunken() : isVisible;
     children.forEach((child) => {
-      child.setVisibility(isVisible);
+      child.setVisibility(visibility);
       const outgoingLine = child.getOutgoingLine();
-      outgoingLine.setVisibility(isVisible);
+      outgoingLine.setVisibility(visibility);
     });
   }
 
@@ -1030,26 +1036,27 @@ class Topic extends NodeGraph {
   setSize(size, force) {
     $assert(size, 'size can not be null');
     $assert($defined(size.width), 'size seem not to be a valid element');
-    size = { width: Math.ceil(size.width), height: Math.ceil(size.height) };
+    const roundedSize = { width: Math.ceil(size.width), height: Math.ceil(size.height) };
 
     const oldSize = this.getSize();
-    const hasSizeChanged = oldSize.width !== size.width || oldSize.height !== size.height;
+    const hasSizeChanged = oldSize.width !== roundedSize.width
+      || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
-      NodeGraph.prototype.setSize.call(this, size);
+      NodeGraph.prototype.setSize.call(this, roundedSize);
 
       const outerShape = this.getOuterShape();
       const innerShape = this.getInnerShape();
 
-      outerShape.setSize(size.width + 4, size.height + 6);
-      innerShape.setSize(size.width, size.height);
+      outerShape.setSize(roundedSize.width + 4, roundedSize.height + 6);
+      innerShape.setSize(roundedSize.width, roundedSize.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this._updatePositionOnChangeSize(oldSize, size);
+      this._updatePositionOnChangeSize(oldSize, roundedSize);
 
       if (hasSizeChanged) {
         EventBus.instance.fireEvent(EventBus.events.NodeResizeEvent, {
           node: this.getModel(),
-          size,
+          size: roundedSize,
         });
       }
     }

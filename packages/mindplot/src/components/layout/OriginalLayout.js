@@ -101,6 +101,7 @@ class OriginalLayout {
 
     const parentHeightChanged = $defined(parent) ? parent._heightChanged : false;
     const heightChanged = node._branchHeight !== newBranchHeight;
+    // eslint-disable-next-line no-param-reassign
     node._heightChanged = heightChanged || parentHeightChanged;
 
     if (childrenOrderMoved || childrenSizeChanged || heightChanged || parentHeightChanged) {
@@ -139,6 +140,7 @@ class OriginalLayout {
         me._treeSet.updateBranchPosition(child, newPos);
       });
 
+      // eslint-disable-next-line no-param-reassign
       node._branchHeight = newBranchHeight;
     }
 
@@ -212,9 +214,9 @@ class OriginalLayout {
     );
 
     siblingsToShift.forEach(((sibling) => {
-      const overlappingOccurs = shiftedBranches
-        // eslint-disable-next-line max-len
-        .some(((shiftedBranch) => OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById)));
+      const overlappingOccurs = shiftedBranches.some(
+        ((shiftedBranch) => OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById)),
+      );
 
       if (!sibling.isFree() || overlappingOccurs) {
         const sAmount = node.getFreeDisplacement().y;

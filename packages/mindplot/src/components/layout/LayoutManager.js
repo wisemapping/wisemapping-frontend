@@ -90,7 +90,9 @@ class LayoutManager extends Events {
     const node = this._treeSet.find(id);
     // @Todo: this should not be here. This is broking the isolated node support...
     //        node.setFree(true);
-    //        node.setFreeDisplacement({x:position.x - node.getPosition().x, y:position.y - node.getPosition().y});
+    //        node.setFreeDisplacement(
+    //          {x:position.x - node.getPosition().x, y:position.y - node.getPosition().y}
+    //        );
     node.setPosition(position);
   }
 
@@ -193,14 +195,13 @@ class LayoutManager extends Events {
        * @throws will throw an error if containerId is null or undefined
        * @return canvas
        */
-  plot(containerId, size) {
+  plot(containerId, size = { width: 200, height: 200 }) {
     // this method is only used from tests that include Raphael
     if (!global.Raphael) {
       console.warn('Raphael.js not found, exiting plot()');
       return null;
     }
     $assert(containerId, 'containerId cannot be null');
-    size = size || { width: 200, height: 200 };
     const squaresize = 10;
     const canvas = global.Raphael(containerId, size.width, size.height);
     canvas.drawGrid(
@@ -243,11 +244,9 @@ class LayoutManager extends Events {
   }
 
   _collectChanges(nodes) {
-    if (!nodes) {
-      nodes = this._treeSet.getTreeRoots();
-    }
+    const nodesToCollect = nodes || this._treeSet.getTreeRoots();
 
-    nodes.forEach(((node) => {
+    nodesToCollect.forEach(((node) => {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();

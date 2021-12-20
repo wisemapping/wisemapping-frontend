@@ -18,7 +18,7 @@
 import { Point } from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from '../model/INodeModel';
-import { CONNECTOR_WIDTH } from '../TopicConfig';
+import TopicConfig from '../TopicConfig';
 
 const Shape = {
   isAtRight(sourcePoint, targetPoint) {
@@ -124,7 +124,7 @@ const Shape = {
     }
 
     // Move a little the position...
-    const offset = CONNECTOR_WIDTH / 2;
+    const offset = TopicConfig.CONNECTOR_WIDTH / 2;
     if (!isAtRight) {
       result.x += offset;
     } else {

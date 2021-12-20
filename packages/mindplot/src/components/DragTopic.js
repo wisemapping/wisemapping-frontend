@@ -71,7 +71,7 @@ class DragTopic {
         this._draggedNode.getId(),
         this.getPosition(),
       );
-      if (this._order != predict.order) {
+      if (this._order !== predict.order) {
         const dragPivot = this._getDragPivot();
         const pivotPosition = predict.position;
         dragPivot.connectTo(parent, pivotPosition);
@@ -81,8 +81,10 @@ class DragTopic {
   }
 
   updateFreeLayout(event) {
-    const isFreeEnabled = (event.metaKey && Browser.Platform.mac) || (event.ctrlKey && !Browser.Platform.mac);
-    if (this.isFreeLayoutOn() != isFreeEnabled) {
+    const isFreeEnabled = (event.metaKey && Browser.Platform.mac)
+      || (event.ctrlKey && !Browser.Platform.mac);
+
+    if (this.isFreeLayoutOn() !== isFreeEnabled) {
       const dragPivot = this._getDragPivot();
       dragPivot.setVisibility(!isFreeEnabled);
       this._isFreeLayoutEnabled = isFreeEnabled;
@@ -114,7 +116,8 @@ class DragTopic {
 
     // Where it should be connected ?
 
-    // @todo: This is a hack for the access of the editor. It's required to review why this is needed forcing the declaration of a global variable.
+    // @todo: This is a hack for the access of the editor.
+    // It's required to review why this is needed forcing the declaration of a global variable.
     const predict = designer._eventBussDispatcher._layoutManager.predict(
       parent.getId(),
       this._draggedNode.getId(),
@@ -139,7 +142,8 @@ class DragTopic {
       // Remove drag shadow.
       workspace.removeChild(this._elem2d);
 
-      // Remove pivot shape. To improve performance it will not be removed. Only the visibility will be changed.
+      // Remove pivot shape. To improve performance it will not be removed.
+      // Only the visibility will be changed.
       const dragPivot = this._getDragPivot();
       dragPivot.setVisibility(false);
 
@@ -213,13 +217,13 @@ class DragTopic {
   }
 }
 
-DragTopic.init = function (workspace) {
+DragTopic.init = function init(workspace) {
   $assert(workspace, 'workspace can not be null');
   const pivot = DragTopic.__getDragPivot();
   workspace.append(pivot);
 };
 
-DragTopic.__getDragPivot = function () {
+DragTopic.__getDragPivot = function __getDragPivot() {
   let result = DragTopic._dragPivot;
   if (!$defined(result)) {
     result = new DragPivot();

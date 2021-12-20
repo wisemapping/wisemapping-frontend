@@ -229,7 +229,8 @@ class Relationship extends ConnectionLine {
     this._focusShape.updateLine();
   }
 
-  addEvent(type, listener) {
+  addEvent(eventType, listener) {
+    let type = eventType;
     // Translate to web 2d events ...
     if (type === 'onfocus') {
       type = 'mousedown';
