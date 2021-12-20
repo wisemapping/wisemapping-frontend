@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/mindplot",
-    "version": "0.0.1",
+    "version": "0.4.0",
     "description": "WiseMapping - Mindplot Canvas Library",
     "homepage": "http://www.wisemapping.org/",
     "main": "dist/main.js",
@@ -28,6 +28,7 @@
         "test:integration": "start-server-and-test playground http-get://localhost:8081 cy:run",
         "test": "yarn test:unit && yarn test:integration"
     },
+    "private": false,
     "dependencies": {
         "@wisemapping/core-js": "^0.4.0",
         "@wisemapping/web2d": "^0.4.0",

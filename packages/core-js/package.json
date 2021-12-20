@@ -19,6 +19,7 @@
         "build": "webpack --config webpack.prod.js",
         "dev": "webpack --mode development --config webpack.dev.js"
     },
+    "private": false,
     "devDependencies": {
         "@babel/core": "^7.14.6",
         "@babel/preset-env": "^7.14.7",
