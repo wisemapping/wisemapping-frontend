@@ -31,20 +31,19 @@ class KeyboardShortcutTooltip extends FloatingTip {
     buttonElem.append(tipDiv);
 
     super(tipDiv, {
-      // Content can also be a function of the target element!
-      content: KeyboardShortcutTooltip._buildContent(),
+      // content can be a function or string
+      content: KeyboardShortcutTooltip._buildContent(text),
       html: true,
       placement: 'bottom',
       className: 'keyboardShortcutTip',
       template: '<div class="popover popoverBlack" role="tooltip"><div class="arrow arrowBlack"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     });
-    this._text = text;
     tipDiv.on('click', (e) => {
       tipDiv.trigger('mouseleave', e);
     });
   }
 
-  static _buildContent() {
+  static _buildContent(text) {
     const result = $('<div></div>');
     result.css({
       padding: '3px 0px',
@@ -52,7 +51,7 @@ class KeyboardShortcutTooltip extends FloatingTip {
       color: 'white',
     });
 
-    const textContainer = $('<div></div>').text(this._text);
+    const textContainer = $('<div></div>').text(text);
     textContainer.css({
       width: '100%',
       'font-size': '90%',

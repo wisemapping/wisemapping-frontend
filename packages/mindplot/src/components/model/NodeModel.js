@@ -122,7 +122,16 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
      */
   clone() {
-    return cloneDeep(this);
+    const result = new NodeModel(this.getType(), this._mindmap);
+    result._children = this._children.map((node) => {
+      const cnode = node.clone();
+      cnode._parent = result;
+      return cnode;
+    });
+
+    result._properties = cloneDeep(this._properties);
+    result._feature = cloneDeep(this._feature);
+    return result;
   }
 
   /**
