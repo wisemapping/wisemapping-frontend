@@ -10,6 +10,9 @@ module.exports = {
       type: 'umd',
     },
   },
+  optimization: {
+    usedExports: true,
+  },
   module: {
     rules: [
       {
