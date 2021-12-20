@@ -11,6 +11,9 @@ module.exports = {
         }
     },
     target: 'web',
+    optimization: {
+        usedExports: true,
+    },
     module: {
         rules: [
             {
