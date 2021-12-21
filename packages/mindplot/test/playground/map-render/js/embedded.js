@@ -10,6 +10,9 @@ const example = async () => {
   const options = await loadDesignerOptions(confUrl);
   const designer = buildDesigner(options);
 
+  designer.addEvent('loadSuccess', () => {
+    document.getElementById('mindplot').classList.add('ready');
+  });
   // Load map from XML file persisted on disk...
   const persistence = PersistenceManager.getInstance();
   let mindmap;

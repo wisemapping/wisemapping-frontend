@@ -13,3 +13,9 @@ if (Cypress.env('imageSnaphots')) {
     () => Promise.resolve(),
   );
 }
+
+// https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
+Cypress.Commands.add('getIframeBody', () => cy
+  .get('iframe')
+  .its('0.contentDocument.body').should('not.be.empty')
+  .then(cy.wrap));
