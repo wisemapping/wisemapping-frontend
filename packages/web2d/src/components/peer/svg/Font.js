@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '@wisemapping/core-js';
+import { $assert, $defined } from '@wisemapping/core-js';
 
 class Font {
   constructor() {
@@ -26,7 +26,7 @@ class Font {
 
   init(args) {
     if ($defined(args.size)) {
-      this._size = parseInt(args.size, 10);
+      this._size = Number.parseInt(args.size, 10);
     }
     if ($defined(args.style)) {
       this._style = args.style;
@@ -68,7 +68,9 @@ class Font {
     return this._weight;
   }
 
-  setSize(size) {
+  setSize(value) {
+    const size = Number.parseInt(value, 10);
+    $assert(!Number.isFinite(size), 'size must be a valid integer');
     this._size = size;
   }
 
