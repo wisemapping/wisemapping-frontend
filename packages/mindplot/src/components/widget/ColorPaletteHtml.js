@@ -1,5 +1,3 @@
-import EditorImage from '../../../assets/images/editortoolbar.png';
-
 export const css = `
 .palette-panel {
     cursor: default;
@@ -63,7 +61,6 @@ tr {
 }
 
 .palette-cell-selected .palette-colorswatch {
-    background: url(${EditorImage}) no-repeat -368px 0;
     border: 1px solid #333;
     color: white;
     font-weight: bold;
