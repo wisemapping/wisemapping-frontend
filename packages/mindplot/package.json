@@ -9,7 +9,8 @@
         "test": "__tests__"
     },
     "files": [
-        "src"
+        "src",
+        "assets"
     ],
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
