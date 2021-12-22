@@ -2,42 +2,23 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const common = require('./webpack.common');
+const { merge } = require('webpack-merge');
 
-module.exports = {
+const playgroundConfig = {
   entry: {
     layout: path.resolve(__dirname, './test/playground/layout/context-loader'),
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
     embedded: path.resolve(__dirname, './test/playground/map-render/js/embedded'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
   },
-  output: {
-    path: path.resolve(__dirname, 'dist', 'test'),
-    filename: '[name].test.js',
-    publicPath: '',
-  },
   devServer: {
     historyApiFallback: true,
     port: 8081,
     open: false,
   },
-  mode: 'production',
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minSize: 2000000,
-    },
-  },
-  devtool: 'source-map',
   module: {
     rules: [
-      {
-        use: 'babel-loader',
-        test: /.js$/,
-        exclude: [
-          /node_modules/,
-          /lib\/raphael/ig,
-        ],
-      },
       {
         test: /\.less$/i,
         use: [
@@ -47,18 +28,7 @@ module.exports = {
           'less-loader',
         ],
       },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
     ],
-  },
-  resolve: {
-    alias: {
-      '@libraries': path.resolve(__dirname, '../../libraries/'),
-
-    },
-    extensions: ['.js', '.json'],
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -97,3 +67,5 @@ module.exports = {
     }),
   ],
 };
+
+module.exports = merge(common, playgroundConfig);

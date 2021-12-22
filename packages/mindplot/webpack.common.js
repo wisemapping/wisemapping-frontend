@@ -13,6 +13,8 @@ module.exports = {
   optimization: {
     usedExports: true,
   },
+  mode: 'production',
+  devtool: 'source-map',
   module: {
     rules: [
       {

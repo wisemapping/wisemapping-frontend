@@ -3,14 +3,8 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const common = require('./webpack.common');
 
 const prodConfig = {
-  mode: 'production',
-  devtool: 'source-map',
   optimization: {
     minimize: true,
-    splitChunks: {
-      chunks: 'all',
-      minSize: 2000000,
-    },
   },
   plugins: [
     new CompressionPlugin({
