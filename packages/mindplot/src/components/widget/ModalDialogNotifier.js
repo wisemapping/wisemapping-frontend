@@ -16,26 +16,28 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
+import AlertImage from '../../../assets/images/alert-sign.png';
 
 class ModalDialogNotifier {
   show(message, title) {
     $assert(message, 'message can not be null');
 
     const modalDialog = $(
-      '<div class="modal fade">'
-                + '<div class="modal-dialog">'
-                + '<div class="modal-content">'
-                + '<div class="modal-body"></div>'
-                + '<div class="alert alert-block alert-warning">'
-                + '<img src="images/alert-sign.png">'
-                + '<div style="display: inline-block" class="alert-content"></div>'
-                + '</div>'
-                + '<div class="modal-footer">'
-                + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                + '</div>'
-                + '</div>'
-                + '</div>'
-                + '</div>',
+      `<div class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+            </div>
+            <div class="alert alert-block alert-warning">
+              <img src="${AlertImage}">
+              <div style="display: inline-block" class="alert-content"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>`,
     );
 
     const p = `<p>${message}</p>`;

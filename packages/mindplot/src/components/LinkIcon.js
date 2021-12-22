@@ -19,6 +19,7 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import Icon from './Icon';
 import LinkIconTooltip from './widget/LinkIconTooltip';
+import LinksImage from '../../assets/images/links.png';
 
 class LinkIcon extends Icon {
   constructor(topic, linkModel, readOnly) {
@@ -65,6 +66,6 @@ class LinkIcon extends Icon {
     return this._linksModel;
   }
 }
-LinkIcon.IMAGE_URL = 'images/links.png';
+LinkIcon.IMAGE_URL = LinksImage;
 
 export default LinkIcon;

@@ -47,6 +47,10 @@ module.exports = {
           'less-loader',
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {
@@ -62,7 +66,6 @@ module.exports = {
       patterns: [
         { from: 'test/playground/map-render/images/favicon.ico', to: 'favicon.ico' },
         { from: 'test/playground/map-render/images', to: 'images' },
-        { from: 'test/playground/map-render/icons', to: 'icons' },
         { from: 'test/playground/map-render/js', to: 'js' },
         { from: 'test/playground/map-render/samples', to: 'samples' },
         { from: 'test/playground/map-render/bootstrap', to: 'bootstrap' },

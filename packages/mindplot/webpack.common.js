@@ -22,6 +22,10 @@ module.exports = {
           /node_modules/,
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {

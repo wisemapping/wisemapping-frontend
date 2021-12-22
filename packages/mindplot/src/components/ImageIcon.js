@@ -19,6 +19,14 @@ import { $assert } from '@wisemapping/core-js';
 import Icon from './Icon';
 import ActionDispatcher from './ActionDispatcher';
 
+function importAll(r) {
+  const images = {};
+  r.keys().forEach((item) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+
+const images = importAll(require.context('../../assets/icons', false, /\.png$/));
+
 class ImageIcon extends Icon {
   constructor(topic, iconModel, readOnly) {
     $assert(iconModel, 'iconModel can not be null');
@@ -48,7 +56,7 @@ class ImageIcon extends Icon {
   }
 
   static _getImageUrl(iconId) {
-    return `icons/${iconId}.png`;
+    return images[`${iconId}.png`];
   }
 
   getModel() {

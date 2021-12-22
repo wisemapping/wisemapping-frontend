@@ -17,17 +17,20 @@
  */
 import $ from 'jquery';
 import ListToolbarPanel from './ListToolbarPanel';
+import RectangleImage from '../../../assets/images/shape-rectangle.png';
+import RectangleRoundImage from '../../../assets/images/shape-rectangle-round.png';
+import LineImage from '../../../assets/images/shape-line.png';
+import CircleImage from '../../../assets/images/shape-circle.png';
 
 class TopicShapePanel extends ListToolbarPanel {
   // eslint-disable-next-line class-methods-use-this
   buildPanel() {
     const content = $("<div class='toolbarPanel' id='topicShapePanel'></div>");
-    content[0].innerHTML = ''
-      + '<div id="rectagle" model="rectagle"><img src="images/shape-rectangle.png" alt="Rectangle"></div>'
-      + '<div id="rounded_rectagle" model="rounded rectagle" ><img src="images/shape-rectangle-round.png" alt="Rounded Rectangle"></div>'
-      + '<div id="line" model="line"><img src="images/shape-line.png" alt="Line"></div>'
-      + '<div id="elipse" model="elipse"><img src="images/shape-circle.png"></div>';
-
+    content[0].innerHTML = `
+      <div id="rectagle" model="rectagle"><img src="${RectangleImage}" alt="Rectangle"></div>
+      <div id="rounded_rectagle" model="rounded rectagle" ><img src="${RectangleRoundImage}" alt="Rounded Rectangle"></div>
+      <div id="line" model="line"><img src="${LineImage}" alt="Line"></div>
+      <div id="elipse" model="elipse"><img src="${CircleImage}"></div>`;
     return content;
   }
 }
