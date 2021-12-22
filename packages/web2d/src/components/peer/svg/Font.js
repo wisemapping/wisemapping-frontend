@@ -26,7 +26,7 @@ class Font {
 
   init(args) {
     if ($defined(args.size)) {
-      this._size = parseInt(args.size, 10);
+      this._size = Number.parseInt(args.size, 10);
     }
     if ($defined(args.style)) {
       this._style = args.style;
@@ -69,8 +69,8 @@ class Font {
   }
 
   setSize(value) {
-    const size = parseInt(value, 10);
-    $assert(!Number.isNaN(size), 'size must be a valid integer');
+    const size = Number.parseInt(value, 10);
+    $assert(!Number.isFinite(size), 'size must be a valid integer');
     this._size = size;
   }
 
