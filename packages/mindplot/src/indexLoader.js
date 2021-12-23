@@ -1,6 +1,5 @@
 import { $notify } from '@wisemapping/core-js';
 import { buildDesigner, loadDesignerOptions } from './components/DesignerBuilder';
-import LocalStorageManager from './components/LocalStorageManager';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
 
