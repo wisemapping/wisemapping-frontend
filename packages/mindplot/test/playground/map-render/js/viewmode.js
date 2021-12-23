@@ -1,25 +1,19 @@
 import '../css/embedded.less';
-import { buildDesigner, loadDesignerOptions, loadExample } from './loader';
-import { Mindmap, PersistenceManager } from '../../../../src';
+import { buildDesigner, buildDefaultOptions, loadExample } from '../../../../src/components/DesignerBuilder';
+import { PersistenceManager, LocalStorageManager } from '../../../../src';
 
 const example = async () => {
+  const p = new LocalStorageManager('samples/{id}.xml');
+  const options = buildDefaultOptions(p, true);
+
   const mapId = 'welcome';
-  // Set readonly option ...
-  const options = await loadDesignerOptions();
-  options.readOnly = true;
   const designer = buildDesigner(options);
   designer.addEvent('loadSuccess', () => {
     document.getElementById('mindplot').classList.add('ready');
   });
   // Load map from XML file persisted on disk...
   const persistence = PersistenceManager.getInstance();
-  let mindmap;
-  try {
-    mindmap = persistence.load(mapId);
-  } catch (e) {
-    console.error('The map could not be loaded, loading an empty map instead.', e);
-    mindmap = Mindmap.buildEmpty(mapId);
-  }
+  const mindmap = persistence.load(mapId);
   designer.loadMap(mindmap);
 };
 

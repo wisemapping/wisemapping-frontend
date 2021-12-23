@@ -1,10 +1,10 @@
 import '../css/editor.less';
-import { buildDesigner, loadDesignerOptions, loadExample } from './loader';
-import { PersistenceManager } from '../../../../src';
+import { buildDesigner, buildDefaultOptions, loadExample } from '../../../../src/components/DesignerBuilder';
+import { PersistenceManager, LocalStorageManager } from '../../../../src';
 
 const example = async () => {
-  const mapId = 'welcome';
-  const options = await loadDesignerOptions();
+  const p = new LocalStorageManager('samples/{id}.xml');
+  const options = buildDefaultOptions(p, true);
   const designer = buildDesigner(options);
 
   designer.addEvent('loadSuccess', () => {
@@ -12,6 +12,7 @@ const example = async () => {
   });
 
   // Load map from XML file persisted on disk...
+  const mapId = 'welcome';
   const persistence = PersistenceManager.getInstance();
   const mindmap = persistence.load(mapId);
   designer.loadMap(mindmap);
