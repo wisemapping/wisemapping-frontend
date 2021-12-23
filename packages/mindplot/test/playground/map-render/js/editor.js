@@ -4,7 +4,7 @@ import { PersistenceManager, LocalStorageManager } from '../../../../src';
 
 const example = async () => {
   const p = new LocalStorageManager('samples/{id}.xml');
-  const options = buildDefaultOptions(p, true);
+  const options = buildDefaultOptions(p);
   const designer = buildDesigner(options);
 
   designer.addEvent('loadSuccess', () => {
