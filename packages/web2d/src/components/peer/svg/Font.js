@@ -70,7 +70,7 @@ class Font {
 
   setSize(value) {
     const size = Number.parseInt(value, 10);
-    $assert(!Number.isFinite(size), 'size must be a valid integer');
+    $assert(Number.isFinite(size), `size must be a valid integer: ${value}`);
     this._size = size;
   }
 
