@@ -19,12 +19,9 @@ import XMLSerializer from './XMLSerializerPela';
 
 /**
  * This serializer works exactly the same way as for the former version Pela
- * {@link mindplot.persistence.XMLSerializer_Pela}
- * @class
  */
-// eslint-disable-next-line camelcase
-class XMLSerializer_Tango extends XMLSerializer {
+class XMLSerializerTango extends XMLSerializer {
 }
 
 // eslint-disable-next-line camelcase
-export default XMLSerializer_Tango;
+export default XMLSerializerTango;

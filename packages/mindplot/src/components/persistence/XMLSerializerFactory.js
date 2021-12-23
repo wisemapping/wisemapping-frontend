@@ -22,9 +22,6 @@ import XMLSerializerBeta from './XMLSerializerBeta';
 import XMLSerializerPela from './XMLSerializerPela';
 import XMLSerializerTango from './XMLSerializerTango';
 
-/**
- * @class mindplot.persistence.XMLSerializerFactory
- */
 const XMLSerializerFactory = {};
 
 /**
