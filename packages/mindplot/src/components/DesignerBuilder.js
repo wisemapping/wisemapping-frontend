@@ -56,7 +56,7 @@ export function buildDesigner(options) {
 
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;
-  $assert(persistence, "persistence must be defined");
+  $assert(persistence, 'persistence must be defined');
   PersistenceManager.init(persistence);
 
   // Register toolbar event ...
@@ -73,7 +73,7 @@ export function buildDesigner(options) {
 }
 
 export function buildDefaultOptions(persistence, readOnly = false) {
-  $assert(persistence, "persistence must be defined");
+  $assert(persistence, 'persistence must be defined');
   // Set workspace screen size as default. In this way, resize issues are solved.
   const containerSize = {
     height: Number.parseInt(window.screen.height, 10),
@@ -85,7 +85,7 @@ export function buildDefaultOptions(persistence, readOnly = false) {
     width: Number.parseInt(window.innerWidth, 10),
   };
   return {
-    readOnly: readOnly,
+    readOnly,
     zoom: 0.85,
     saveOnLoad: true,
     size: containerSize,
@@ -109,7 +109,7 @@ export async function loadOptions(jsonConf, persistence, readOnly = false) {
 
 export function loadExample(exampleFn) {
   $(() => {
-    // Hack: load bootstrap first
+    // eslint-disable-next-line import/no-extraneous-dependencies
     import('@libraries/bootstrap').then(exampleFn);
   });
 }

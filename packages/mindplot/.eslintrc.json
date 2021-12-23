@@ -8,6 +8,9 @@
         "airbnb-base",
         "plugin:cypress/recommended"
     ],
+    "parserOptions": {
+        "ecmaVersion": 11
+    },
     "globals": {
         // designer is a global currently used as a hack. Remove this when fixing the hack.
         "designer": true

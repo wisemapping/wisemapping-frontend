@@ -1,5 +1,5 @@
 import { $notify } from '@wisemapping/core-js';
-import { buildDesigner, loadDesignerOptions } from './components/DesignerBuilder';
+import { buildDesigner, buildDefaultOptions } from './components/DesignerBuilder';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
 
@@ -13,7 +13,7 @@ global.lockSession = 111111;
 global.lockTimestamp = 11111;
 
 // Configure designer options ...
-const options = loadDesignerOptions();
+const options = buildDefaultOptions();
 
 if (!global.memoryPersistence && !global.readOnlyMode) {
   options.persistenceManager = new RESTPersistenceManager(
