@@ -58,6 +58,7 @@ XMLSerializerFactory.getSerializer = function getSerializer(version = ModelCodeN
   for (let i = 0; i < codeNames.length; i++) {
     if (!found) {
       found = codeNames[i].codeName === version;
+      // eslint-disable-next-line new-cap
       if (found) serializer = new (codeNames[i].serializer)();
     } else {
       const { migrator: Migrator } = codeNames[i];

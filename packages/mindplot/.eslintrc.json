@@ -19,13 +19,12 @@
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
-        "max-len": [1,250],
+        "max-len": [1,300],
         "class-methods-use-this": "off",
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["!cypress/**/*.js"]}],
         "func-names": ["error", "as-needed"],
+        "no-console" : "off",
         "no-unused-vars": ["error", { "args": "none" }],
-        "camelcase": ["error", {"allow": ["XML"]}],
-        "new-cap": ["error", { "properties": false }]
+        "camelcase": ["error", {"allow": ["XML"]}]
     },
     "settings": {
 		    "import/resolver": {

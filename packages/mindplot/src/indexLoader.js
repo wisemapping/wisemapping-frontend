@@ -2,6 +2,7 @@ import { $notify } from '@wisemapping/core-js';
 import { buildDesigner, buildDefaultOptions } from './components/DesignerBuilder';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
+import LocalStorageManager from './components/LocalStorageManager';
 
 global.memoryPersistence = false;
 global.readOnlyMode = false;
@@ -13,10 +14,9 @@ global.lockSession = 111111;
 global.lockTimestamp = 11111;
 
 // Configure designer options ...
-const options = buildDefaultOptions();
-
+let persistenceManager;
 if (!global.memoryPersistence && !global.readOnlyMode) {
-  options.persistenceManager = new RESTPersistenceManager(
+  persistenceManager = new RESTPersistenceManager(
     {
       documentUrl: 'c/restful/maps/{id}/document',
       revertUrl: 'c/restful/maps/{id}/history/latest',
@@ -26,11 +26,12 @@ if (!global.memoryPersistence && !global.readOnlyMode) {
     },
   );
 } else {
-//   options.persistenceManager = new LocalStorageManager("c/restful/maps/{id}${hid != null ? '/' : ''}${hid != null ? hid : ''}/document/xml${principal != null ? '' : '-pub'}", true);
+  // persistenceManager = new LocalStorageManager('c/restful/maps/{id}${hid != null ? '/' : ''}${hid != null ? hid : ''}/document/xml${principal != null ? '' : '-pub'}", true);
+  // @todo: review ...
+  persistenceManager = new LocalStorageManager('c/restful/maps/{id}', true);
 }
-
+const options = buildDefaultOptions(persistenceManager, false);
 options.zoom = global.userOptions.zoom;
-options.readOnly = false;
 
 // Set map id ...
 options.mapId = global.mapId;
