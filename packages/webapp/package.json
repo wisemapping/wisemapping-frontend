@@ -13,6 +13,10 @@
         "compile": "formatjs compile",
         "test": "yarn test:integration"
     },
+    "files": [
+        "src",
+        "dist"
+    ],
     "repository": "http://www.wisemapping.com",
     "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
     "license": "MIT",

@@ -10,7 +10,8 @@
     },
     "files": [
         "src",
-        "assets"
+        "assets",
+        "dist"
     ],
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"

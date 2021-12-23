@@ -6,7 +6,8 @@
     "license": "MIT",
     "main": "dist/web2d.js",
     "files": [
-        "src"
+        "src",
+        "dist"
     ],
     "private": false,
     "publishConfig": {
