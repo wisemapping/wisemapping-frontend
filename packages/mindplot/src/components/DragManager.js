@@ -69,7 +69,7 @@ class DragManager {
   _buildMouseMoveListener(workspace, dragNode, dragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
-    const result = function (event) {
+    const result = (event) => {
       if (!me._isDragInProcess) {
         // Execute Listeners ..
         const startDragListener = dragManager._listeners.startdragging;
@@ -101,7 +101,7 @@ class DragManager {
   _buildMouseUpListener(workspace, node, dragNode, dragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
-    const result = function (event) {
+    const result = (event) => {
       $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
       // Remove all the events.

@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
-import XMLSerializer from './XMLSerializer_Pela';
+import XMLSerializer from './XMLSerializerPela';
 
 class Beta2PelaMigrator {
   constructor(betaSerializer) {

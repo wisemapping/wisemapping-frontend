@@ -22,11 +22,7 @@ import INodeModel, { TopicShape } from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
 import ConnectionLine from '../ConnectionLine';
 
-/**
- * @class
- */
-// eslint-disable-next-line camelcase
-class XMLSerializer_Pela {
+class XMLSerializerPela {
   toXML(mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
 
@@ -60,7 +56,7 @@ class XMLSerializer_Pela {
         && mindmap.findNodeById(relationship.getToNode()) !== null
       ) {
         // Isolated relationships are not persisted ....
-        const relationDom = XMLSerializer_Pela._relationshipToXML(document, relationship);
+        const relationDom = XMLSerializerPela._relationshipToXML(document, relationship);
         mapElem.appendChild(relationDom);
       }
     });
@@ -236,7 +232,7 @@ class XMLSerializer_Pela {
 
     // Is a wisemap?.
     $assert(
-      rootElem.tagName === XMLSerializer_Pela.MAP_ROOT_NODE,
+      rootElem.tagName === XMLSerializerPela.MAP_ROOT_NODE,
       'This seem not to be a map document.',
     );
 
@@ -257,7 +253,7 @@ class XMLSerializer_Pela {
     const relationshipsNodes = childNodes.filter((child) => (child.nodeType === 1 && child.tagName === 'relationship'));
     relationshipsNodes.forEach((child) => {
       try {
-        const relationship = XMLSerializer_Pela._deserializeRelationship(child, mindmap);
+        const relationship = XMLSerializerPela._deserializeRelationship(child, mindmap);
         mindmap.addRelationship(relationship);
       } catch (e) {
         console.error(e);
@@ -385,7 +381,7 @@ class XMLSerializer_Pela {
           }
 
           // Has text node ?.
-          const textAttr = XMLSerializer_Pela._deserializeTextAttr(child);
+          const textAttr = XMLSerializerPela._deserializeTextAttr(child);
           if (textAttr) {
             attributes.text = textAttr;
           }
@@ -395,7 +391,7 @@ class XMLSerializer_Pela {
           const feature = TopicFeature.createModel(featureType, attributes);
           topic.addFeature(feature);
         } else if (child.tagName === 'text') {
-          const nodeText = XMLSerializer_Pela._deserializeNodeText(child);
+          const nodeText = XMLSerializerPela._deserializeNodeText(child);
           topic.setText(nodeText);
         }
       }
@@ -507,7 +503,7 @@ class XMLSerializer_Pela {
  * @type {String}
  * @default
  */
-XMLSerializer_Pela.MAP_ROOT_NODE = 'map';
+XMLSerializerPela.MAP_ROOT_NODE = 'map';
 
 // eslint-disable-next-line camelcase
-export default XMLSerializer_Pela;
+export default XMLSerializerPela;

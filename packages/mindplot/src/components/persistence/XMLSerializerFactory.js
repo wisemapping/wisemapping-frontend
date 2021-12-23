@@ -18,9 +18,9 @@
 import ModelCodeName from './ModelCodeName';
 import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
-import XMLSerializerBeta from './XMLSerializer_Beta';
-import XMLSerializerPela from './XMLSerializer_Pela';
-import XMLSerializerTango from './XMLSerializer_Tango';
+import XMLSerializerBeta from './XMLSerializerBeta';
+import XMLSerializerPela from './XMLSerializerPela';
+import XMLSerializerTango from './XMLSerializerTango';
 
 /**
  * @class mindplot.persistence.XMLSerializerFactory

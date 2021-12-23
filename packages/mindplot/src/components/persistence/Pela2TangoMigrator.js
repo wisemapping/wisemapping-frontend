@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import XMLSerializer from './XMLSerializer_Tango';
+import XMLSerializer from './XMLSerializerTango';
 import ModelCodeName from './ModelCodeName';
 
 class Pela2TangoMigrator {

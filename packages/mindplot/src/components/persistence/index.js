@@ -1,9 +1,9 @@
 import beta2PelaMigrator from './Beta2PelaMigrator';
 import modelCodeName from './ModelCodeName';
 import pela2TangoMigrator from './Pela2TangoMigrator';
-import xmlSerializerBeta from './XMLSerializer_Beta';
-import xmlSerializerPela from './XMLSerializer_Pela';
-import xmlSerializerTango from './XMLSerializer_Tango';
+import xmlSerializerBeta from './XMLSerializerBeta';
+import xmlSerializerPela from './XMLSerializerPela';
+import xmlSerializerTango from './XMLSerializerTango';
 import xmlSerializerFactory from './XMLSerializerFactory';
 
 export default {

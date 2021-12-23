@@ -23,7 +23,7 @@ import INodeModel from '../model/INodeModel';
 import TopicFeature from '../TopicFeature';
 
 // eslint-disable-next-line camelcase
-class XMLSerializer_Beta {
+class XMLSerializerBeta {
   toXML(mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
 
@@ -183,7 +183,7 @@ class XMLSerializer_Beta {
 
     // Is a wisemap?.
     $assert(
-      documentElement.tagName === XMLSerializer_Beta.MAP_ROOT_NODE,
+      documentElement.tagName === XMLSerializerBeta.MAP_ROOT_NODE,
       `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${dom.innerHTML
       }XML:${innerXML(dom)}`,
     );
@@ -320,7 +320,7 @@ class XMLSerializer_Beta {
   }
 }
 
-XMLSerializer_Beta.MAP_ROOT_NODE = 'map';
+XMLSerializerBeta.MAP_ROOT_NODE = 'map';
 
 // eslint-disable-next-line camelcase
-export default XMLSerializer_Beta;
+export default XMLSerializerBeta;

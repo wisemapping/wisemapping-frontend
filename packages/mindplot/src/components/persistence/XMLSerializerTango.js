@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import XMLSerializer from './XMLSerializer_Pela';
+import XMLSerializer from './XMLSerializerPela';
 
 /**
  * This serializer works exactly the same way as for the former version Pela
