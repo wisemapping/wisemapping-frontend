@@ -178,11 +178,7 @@ class Workspace {
             workspace.setCoordOrigin(coordOriginX, coordOriginY);
 
             // Change cursor.
-            if (Browser.firefox) {
-              window.document.body.style.cursor = '-moz-grabbing';
-            } else {
-              window.document.body.style.cursor = 'move';
-            }
+            window.document.body.style.cursor = 'move';
             mouseMoveEvent.preventDefault();
 
             // Fire drag event ...

@@ -9,8 +9,6 @@
         "plugin:cypress/recommended"
     ],
     "globals": {
-        // Browser is a mootools polyfill. Remove when moving from browser checks to feature detection
-        "Browser": true,
         // designer is a global currently used as a hack. Remove this when fixing the hack.
         "designer": true
     },

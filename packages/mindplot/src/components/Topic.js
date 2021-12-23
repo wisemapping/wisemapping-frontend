@@ -640,13 +640,11 @@ class Topic extends NodeGraph {
     const me = this;
     // Focus events ...
     elem.addEvent('mousedown', (event) => {
+      const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
-        if (
-          (event.metaKey && Browser.Platform.mac)
-          || (event.ctrlKey && !Browser.Platform.mac)
-        ) {
+        if ((event.metaKey && isMac) || (event.ctrlKey && !isMac)) {
           value = !me.isOnFocus();
           event.stopPropagation();
           event.preventDefault();

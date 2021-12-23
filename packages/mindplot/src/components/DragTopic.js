@@ -81,8 +81,8 @@ class DragTopic {
   }
 
   updateFreeLayout(event) {
-    const isFreeEnabled = (event.metaKey && Browser.Platform.mac)
-      || (event.ctrlKey && !Browser.Platform.mac);
+    const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const isFreeEnabled = (event.metaKey && isMac) || (event.ctrlKey && !isMac);
 
     if (this.isFreeLayoutOn() !== isFreeEnabled) {
       const dragPivot = this._getDragPivot();
