@@ -1,10 +1,10 @@
 import '../css/editor.less';
-import { buildDesigner, buildDefaultOptions, loadExample } from '../../../../src/components/DesignerBuilder';
+import { buildDesigner, buildOptions, loadExample } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 
 const example = async () => {
   const p = new LocalStorageManager('samples/{id}.xml');
-  const options = buildDefaultOptions(p);
+  const options = buildOptions({ persistenceManager: p });
   const designer = buildDesigner(options);
 
   designer.addEvent('loadSuccess', () => {

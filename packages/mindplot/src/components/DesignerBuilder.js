@@ -29,11 +29,11 @@ global.$ = $;
 let designer = null;
 
 export function buildDesigner(options) {
-  const container = $(`#${options.container}`);
-  $assert(container, 'container could not be null');
+  const divContainer = $(`#${options.container}`);
+  $assert(divContainer, 'container could not be null');
 
   // Register load events ...
-  designer = new Designer(options, container);
+  designer = new Designer(options, divContainer);
   designer.addEvent('loadSuccess', () => {
     window.mindmapLoadReady = true;
     console.log('Map loadded successfully');
@@ -72,8 +72,9 @@ export function buildDesigner(options) {
   return designer;
 }
 
-export function buildDefaultOptions(persistence, readOnly = false) {
-  $assert(persistence, 'persistence must be defined');
+export function buildOptions(options) {
+  $assert(options.persistenceManager, 'persistence must be defined');
+
   // Set workspace screen size as default. In this way, resize issues are solved.
   const containerSize = {
     height: Number.parseInt(window.screen.height, 10),
@@ -84,27 +85,28 @@ export function buildDefaultOptions(persistence, readOnly = false) {
     height: Number.parseInt(window.innerHeight - 70, 10), // Footer and Header
     width: Number.parseInt(window.innerWidth, 10),
   };
-  return {
-    readOnly,
+
+  const defaultOptions = {
+    readOnly: false,
     zoom: 0.85,
     saveOnLoad: true,
     size: containerSize,
     viewPort,
     container: 'mindplot',
     locale: 'en',
-    persistenceManager: persistence,
   };
+
+  return { ...defaultOptions, ...options };
 }
 
-export async function loadOptions(jsonConf, persistence, readOnly = false) {
+export async function loadOptions(jsonConf, options) {
   const result = await $.ajax({
     url: jsonConf,
     dataType: 'json',
     method: 'get',
   });
-  result.readOnly = readOnly;
-  result.persistenceManager = persistence;
-  return result;
+  
+  return { ...result, ...buildOptions(options) };
 }
 
 export function loadExample(exampleFn) {

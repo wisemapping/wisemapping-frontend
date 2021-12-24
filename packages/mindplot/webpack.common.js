@@ -13,6 +13,10 @@ module.exports = {
   optimization: {
     usedExports: true,
   },
+  entry: {
+    mindplot: './src/index.js',
+    loader: './src/indexLoader.js',
+  },
   mode: 'production',
   devtool: 'source-map',
   module: {
