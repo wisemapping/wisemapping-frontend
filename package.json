@@ -1,18 +1,21 @@
 {
-    "name": "wisemapping-react",
+    "name": "wisemapping-font-end",
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "build": "lerna run build",
         "clean": "lerna clean && rm -rf node_modules",
         "lint": "lerna run lint --stream",
-        "test": "lerna run test --stream"
+        "playground": "lerna run playground --stream",
+        "test": "lerna run test --stream",
+        "test:unit": "lerna run test:unit --stream",
+        "test:integration": "lerna run test:integration --stream"
     },
     "private": true,
     "devDependencies": {
+        "cypress": "^8.4.1",
         "husky": "4",
         "lerna": "^3.16.4",
-        "lint-staged": "^10.5.4",
-        "prettier": "^2.2.1"
+        "lint-staged": "^10.5.4"
     },
     "workspaces": [
         "packages/*"
@@ -25,7 +28,7 @@
         "Ezequiel Bergamaschi"
     ],
     "engines": {
-        "node": "=14.15.4"
+        "node": ">=14.0.0"
     },
     "browserslist": {
         "production": [
@@ -41,15 +44,5 @@
     },
     "homepage": "http://localhost:8080/react",
     "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged",
-            "pre-push": "yarn lint && yarn test"
-        }
-    },
-    "lint-staged": {
-        "**/*.{ts,tsx}": [
-            "prettier --write"
-        ]
-    }
+    "version": "0.4.0"
 }

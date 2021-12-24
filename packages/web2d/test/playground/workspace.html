@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+    
+<body>
+
+    <h1>Workspace Render Tests </h1>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                The Workspace's size defines the visible work area. If an element is outside the workspace, it must not
+                be
+                visible.
+                In this example, The back circle is bigger than the workspace area. A big portion of the circle will not
+                be
+                displayed.
+            </td>
+            <td>
+                <div id="overflowExample"></div>
+            </td>
+
+        </tr>
+        <!--**************************************************************************-->
+        <tr>
+            <td>
+                Workspace will be added as child of a div element. That's why, Its parent will define this position.
+            </td>
+            <td>
+                <div id="positionExample" style="position:relative;left:0;top:0;width:100px"></div>
+            </td>
+        </tr>
+
+        <!--**************************************************************************-->
+        <tr>
+            <td>
+                Workspaces size can be defined using standard CSS measures.
+                In this example, the first workspace is defined using pixes and the second one
+                using inchs.
+            </td>
+            <td>
+                <div id="sizeExampleContainer" style="position:relative;width:400px;">
+                    <div id="sizeExamplePixels" style="float:left;margin:20px"></div>
+
+                    <div id="sizeExampleInch" style="float:left;margin:20px"></div>
+                </div>
+            </td>
+        </tr>
+        <!--**************************************************************************-->
+        <tr>
+            <td>
+                Workspace coordsize defines how many units there are along the width of the containing block.
+                In all the examples,the coordsize of the workspaces have been set to (100,100) and the circles have been
+                positioned
+                at (0,0),(0,100),(100,0),(100,100)(50,50).<br />
+                <br />
+                1) Workspace with CoordSize(100,100)<br />
+                2) Workspace with CoordSize(100,200)<br />
+                3) Workspace with CoordSize(200,100)<br />
+                4) Workspace animation changing the coordsize from (30,30) to (100,100)<br />
+            </td>
+            <td>
+                <div style="position:relative;width:100%;">
+                    <div id="coordsizeExample100x100" style="float:left;margin:20px;">
+                        (1)
+                    </div>
+
+                    <div id="coordsizeExample100x200" style="float:left;margin:20px;">
+                        (2)
+                    </div>
+
+                    <div id="coordsizeExample200x100" style="float:left;margin:20px;">
+                        (3)
+                    </div>
+
+                    <div id="coordsizeExampleDynamic" style="float:left;margin:20px;">
+                        (4)
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <!--**************************************************************************-->
+        <tr>
+            <td>
+                Workspace coordorigin defines the coordinate at the top left corner of the containing block.
+                In all the examples,the coordsize of the workspaces have been set to (100,100) and the circles have been
+                positioned
+                at (0,0),(0,100),(100,0),(100,100)(50,50). <br />
+                <br />
+                1) Workspace with CoordOrigin(0,0)<br />
+                2) Workspace with CoordOrigin(0,50)<br />
+                3) Workspace with CoordOrigin(50,0)<br />
+                4) Workspace animation changing the coordorigin from (0,0) to (50,50)<br />
+            </td>
+            <td>
+                <div style="position:relative;width:100%;">
+                    <div id="coordorigin0x0" style="float:left;margin:20px">
+                        (1)
+                    </div>
+
+                    <div id="coordorigin0x50" style="float:left;margin:20px">
+                        (2)
+                    </div>
+
+                    <div id="coordorigin50x0" style="float:left;margin:20px">
+                        (3)
+                    </div>
+
+                    <div id="coordoriginExampleDynamic" style="float:left;margin:20px">
+                        (4)
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    
+</body>
+
+</html>

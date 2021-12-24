@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ES6",
+  },
+  "exclude": ["node_modules"]
+}

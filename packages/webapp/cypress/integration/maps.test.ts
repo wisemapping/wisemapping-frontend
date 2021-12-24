@@ -2,7 +2,7 @@ import MapsPage from '../pageObject/MapsPage';
 
 context('Maps Page', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000/c/maps');
+        cy.visit('/c/maps');
     });
 
     it('should load the maps page', () => {
@@ -12,5 +12,10 @@ context('Maps Page', () => {
     it('should open the create dialog', () => {
         MapsPage.create();
         MapsPage.isCreateDialogVisible();
+        cy.matchImageSnapshot('maps-create');
+    });
+
+    it('should match the snapshot', () => {
+        cy.matchImageSnapshot('maps');
     });
 });

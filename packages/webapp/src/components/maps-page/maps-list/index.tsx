@@ -57,9 +57,9 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key
 ): (
-        a: { [key in Key]: number | string | boolean | Label[] | undefined },
-        b: { [key in Key]: number | string | Label[] | boolean }
-    ) => number {
+    a: { [key in Key]: number | string | boolean | Label[] | undefined },
+    b: { [key in Key]: number | string | Label[] | boolean }
+) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -95,15 +95,8 @@ interface EnhancedTableProps {
 function EnhancedTableHead(props: EnhancedTableProps) {
     const intl = useIntl();
 
-    const {
-        classes,
-        onSelectAllClick,
-        order,
-        orderBy,
-        numSelected,
-        rowCount,
-        onRequestSort,
-    } = props;
+    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+        props;
 
     const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
@@ -117,7 +110,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         },
         {
             id: 'labels',
-            numeric: false
+            numeric: false,
         },
         {
             id: 'createdBy',
@@ -222,7 +215,8 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
                 break;
             case 'label':
                 result =
-                    !mapInfo.labels || mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id)
+                    !mapInfo.labels ||
+                    mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id);
                 break;
             case 'public':
                 result = mapInfo.isPublic;
@@ -336,19 +330,18 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             event.stopPropagation();
         };
     };
-    9
+    9;
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
             const map = mapsInfo.find((m) => m.id == id);
-            const starred = !(map?.starred);
+            const starred = !map?.starred;
 
             // Follow a optimistic update approach ...
-            queryClient.setQueryData<MapInfo[]>('maps', mapsInfo => {
+            queryClient.setQueryData<MapInfo[]>('maps', (mapsInfo) => {
                 if (map) {
                     map.starred = starred;
                 }
                 return mapsInfo || [];
-
             });
             return client.updateStarred(id, starred);
         },
@@ -404,7 +397,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 <Toolbar className={classes.toolbar} variant="dense">
                     <div className={classes.toolbarActions}>
                         {selected.length > 0 && (
-                            <Tooltip arrow={true} title={intl.formatMessage({ id: 'map.delete-selected', defaultMessage: 'Delete selected' })}>
+                            <Tooltip
+                                arrow={true}
+                                title={intl.formatMessage({
+                                    id: 'map.delete-selected',
+                                    defaultMessage: 'Delete selected',
+                                })}
+                            >
                                 <Button
                                     color="primary"
                                     size="medium"
@@ -429,8 +428,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             rowsPerPageOptions={[]}
                             rowsPerPage={rowsPerPage}
                             page={page}
-                            onChangePage={handleChangePage}
-                            onChangeRowsPerPage={handleChangeRowsPerPage}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
                             component="div"
                         />
 
@@ -439,7 +438,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                placeholder={intl.formatMessage({ id: 'maps.search-action', defaultMessage: 'Search ...' })}
+                                placeholder={intl.formatMessage({
+                                    id: 'maps.search-action',
+                                    defaultMessage: 'Search ...',
+                                })}
                                 classes={{
                                     root: classes.searchInputRoot,
                                     input: classes.searchInputInput,
@@ -478,119 +480,140 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                     </TableCell>
                                 </TableRow>
                             ) : (
-                                        stableSort(mapsInfo, getComparator(order, orderBy))
-                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            .map((row: MapInfo) => {
-                                                const isItemSelected = isSelected(row.id);
-                                                const labelId = row.id;
+                                stableSort(mapsInfo, getComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row: MapInfo) => {
+                                        const isItemSelected = isSelected(row.id);
+                                        const labelId = row.id;
 
-                                                return (
-                                                    <TableRow
-                                                        hover
-                                                        onClick={(event) => handleRowClick(event, row.id)}
-                                                        role="checkbox"
-                                                        aria-checked={isItemSelected}
-                                                        tabIndex={-1}
-                                                        key={row.id}
-                                                        selected={isItemSelected}
-                                                        style={{ border: '0' }}
+                                        return (
+                                            <TableRow
+                                                hover
+                                                onClick={(event) => handleRowClick(event, row.id)}
+                                                role="checkbox"
+                                                aria-checked={isItemSelected}
+                                                tabIndex={-1}
+                                                key={row.id}
+                                                selected={isItemSelected}
+                                                style={{ border: '0' }}
+                                            >
+                                                <TableCell
+                                                    padding="checkbox"
+                                                    className={classes.bodyCell}
+                                                >
+                                                    <Checkbox
+                                                        checked={isItemSelected}
+                                                        inputProps={{
+                                                            'aria-labelledby': String(labelId),
+                                                        }}
+                                                        size="small"
+                                                    />
+                                                </TableCell>
+
+                                                <TableCell
+                                                    padding="checkbox"
+                                                    className={classes.bodyCell}
+                                                >
+                                                    <Tooltip
+                                                        arrow={true}
+                                                        title={intl.formatMessage({
+                                                            id: 'maps.tooltip-starred',
+                                                            defaultMessage: 'Starred',
+                                                        })}
                                                     >
-                                                        <TableCell
-                                                            padding="checkbox"
-                                                            className={classes.bodyCell}
+                                                        <IconButton
+                                                            size="small"
+                                                            onClick={(e) =>
+                                                                handleStarred(e, row.id)
+                                                            }
                                                         >
-                                                            <Checkbox
-                                                                checked={isItemSelected}
-                                                                inputProps={{
-                                                                    'aria-labelledby': String(labelId),
+                                                            <StarRateRoundedIcon
+                                                                color="action"
+                                                                style={{
+                                                                    color: row.starred
+                                                                        ? 'yellow'
+                                                                        : 'gray',
                                                                 }}
-                                                                size="small"
                                                             />
-                                                        </TableCell>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </TableCell>
 
-                                                        <TableCell
-                                                            padding="checkbox"
-                                                            className={classes.bodyCell}
+                                                <TableCell className={classes.bodyCell}>
+                                                    <Tooltip
+                                                        arrow={true}
+                                                        title={intl.formatMessage({
+                                                            id: 'maps.tooltip-open',
+                                                            defaultMessage: 'Open for edition',
+                                                        })}
+                                                        placement="bottom-start"
+                                                    >
+                                                        <Link
+                                                            href={`/c/maps/${row.id}/edit`}
+                                                            color="textPrimary"
+                                                            underline="always"
+                                                            onClick={(e) => e.stopPropagation()}
                                                         >
-                                                            <Tooltip arrow={true} title={intl.formatMessage({ id: 'maps.tooltip-starred', defaultMessage: 'Starred' })}>
-                                                                <IconButton
-                                                                    size="small"
-                                                                    onClick={(e) =>
-                                                                        handleStarred(e, row.id)
-                                                                    }
-                                                                >
-                                                                    <StarRateRoundedIcon
-                                                                        color="action"
-                                                                        style={{
-                                                                            color: row.starred
-                                                                                ? 'yellow'
-                                                                                : 'gray',
-                                                                        }}
-                                                                    />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </TableCell>
+                                                            {row.title}
+                                                        </Link>
+                                                    </Tooltip>
+                                                </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}>
-                                                            <Tooltip
-                                                                arrow={true}
-                                                                title={intl.formatMessage({ id: 'maps.tooltip-open', defaultMessage: 'Open for edition' })}
-                                                                placement="bottom-start"
-                                                            >
-                                                                <Link
-                                                                    href={`/c/maps/${row.id}/edit`}
-                                                                    color="textPrimary"
-                                                                    underline="always"
-                                                                    onClick={(e) => e.stopPropagation()}
-                                                                >
-                                                                    {row.title}
-                                                                </Link>
-                                                            </Tooltip>
-                                                        </TableCell>
+                                                <TableCell className={classes.bodyCell}>
+                                                    <LabelsCell labels={row.labels} />
+                                                </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}>
-                                                            <LabelsCell labels={row.labels} />
-                                                        </TableCell>
+                                                <TableCell className={classes.bodyCell}>
+                                                    {row.createdBy}
+                                                </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}>
-                                                            {row.createdBy}
-                                                        </TableCell>
+                                                <TableCell className={classes.bodyCell}>
+                                                    <Tooltip
+                                                        arrow={true}
+                                                        title={intl.formatMessage(
+                                                            {
+                                                                id: 'maps.modified-by-desc',
+                                                                defaultMessage:
+                                                                    'Modified by {by} on {on}',
+                                                            },
+                                                            {
+                                                                by: row.lastModificationBy,
+                                                                on: dayjs(
+                                                                    row.lastModificationTime
+                                                                ).format('lll'),
+                                                            }
+                                                        )}
+                                                        placement="bottom-start"
+                                                    >
+                                                        <span>
+                                                            {dayjs(
+                                                                row.lastModificationTime
+                                                            ).fromNow()}
+                                                        </span>
+                                                    </Tooltip>
+                                                </TableCell>
 
-                                                        <TableCell className={classes.bodyCell}>
-                                                            <Tooltip
-                                                                arrow={true}
-                                                                title={intl.formatMessage({ id: 'maps.modified-by-desc', defaultMessage: 'Modified by {by} on {on}' }, { by: row.lastModificationBy, on: dayjs(row.lastModificationTime).format('lll') })}
-                                                                placement="bottom-start"
-                                                            >
-                                                                <span>
-                                                                    {dayjs(
-                                                                        row.lastModificationTime
-                                                                    ).fromNow()}
-                                                                </span>
-                                                            </Tooltip>
-                                                        </TableCell>
-
-                                                        <TableCell className={classes.bodyCell}>
-                                                            <Tooltip
-                                                                arrow={true}
-                                                                title={intl.formatMessage({
-                                                                    id: 'map.more-actions',
-                                                                    defaultMessage: 'More Actions',
-                                                                })}
-                                                            >
-                                                                <IconButton
-                                                                    aria-label="Others"
-                                                                    size="small"
-                                                                    onClick={handleActionClick(row.id)}
-                                                                >
-                                                                    <MoreHorizIcon color="action" />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                );
-                                            })
-                                    )}
+                                                <TableCell className={classes.bodyCell}>
+                                                    <Tooltip
+                                                        arrow={true}
+                                                        title={intl.formatMessage({
+                                                            id: 'map.more-actions',
+                                                            defaultMessage: 'More Actions',
+                                                        })}
+                                                    >
+                                                        <IconButton
+                                                            aria-label="Others"
+                                                            size="small"
+                                                            onClick={handleActionClick(row.id)}
+                                                        >
+                                                            <MoreHorizIcon color="action" />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -601,6 +624,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                 onClose={() => setActiveDialog(undefined)}
                 mapsId={activeDialog ? activeDialog.mapsId : []}
             />
-        </div >
+        </div>
     );
 };

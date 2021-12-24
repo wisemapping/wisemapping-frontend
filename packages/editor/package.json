@@ -2,9 +2,7 @@
   "name": "@wisemapping/editor",
   "version": "1.0.0",
   "main": "src/index.tsx",
-  "scripts": {
-    "lint": "eslint src"
-  },
+  "scripts": {},
   "repository": "http://www.wisemapping.com",
   "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
   "license": "MIT",

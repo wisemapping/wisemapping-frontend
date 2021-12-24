@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:cypress/recommended"
+    ],
+    "rules": {
+        "no-restricted-syntax": "off",
+        "no-underscore-dangle": "off",
+        "no-plusplus": "off",
+        "max-len": [1,250],
+        "import/no-extraneous-dependencies": ["warn", {
+            "packageDir": ["./"],
+            "devDependencies": ["!cypress/**/*.js"]
+        }]
+    },
+    "settings": {
+		    "import/resolver": {
+			    "webpack": {
+				    "config": "./webpack.common.js"
+			    }
+		    }
+	  } 
+}

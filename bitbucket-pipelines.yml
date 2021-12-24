@@ -4,7 +4,7 @@
 #  The workflow allows running tests and code linting on the default branch.
 
 # Node LTS
-image: cypress/base:14.15.4
+image: cypress/included:8.4.1
 
 pipelines:
   default:
@@ -16,10 +16,14 @@ pipelines:
               - npm
               - cypress
             script:
+              - export CYPRESS_imageSnaphots="true"
               - yarn install
+              - yarn bootstrap
               - yarn build
               - yarn lint
               - yarn test
+            artifacts:
+              - packages/**/cypress/snapshots/**/__diff_output__/*.diff.png
 definitions:
   caches:
     npm: $HOME/.npm

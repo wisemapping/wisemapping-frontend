@@ -1,0 +1,35 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "jest": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:cypress/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 11
+    },
+    "globals": {
+        // designer is a global currently used as a hack. Remove this when fixing the hack.
+        "designer": true
+    },
+    "rules": {
+        "no-underscore-dangle": "off",
+        "no-plusplus": "off",
+        "no-param-reassign": "off",
+        "max-len": [1,300],
+        "class-methods-use-this": "off",
+        "no-console" : "off",
+        "no-unused-vars": ["error", { "args": "none" }]
+
+    },
+    "settings": {
+		    "import/resolver": {
+			    "webpack": {
+				    "config": "./webpack.common.js"
+			    }
+		    }
+	  }
+}

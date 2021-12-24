@@ -72,8 +72,8 @@ const App = (): ReactElement => {
             </QueryClientProvider>
         </Provider>
     ) : (
-            <div>Loading ... </div>
-        );
+        <div>Loading ... </div>
+    );
 };
 
 export default App;

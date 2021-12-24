@@ -1,0 +1,71 @@
+{
+    "name": "@wisemapping/mindplot",
+    "version": "0.4.2",
+    "description": "WiseMapping - Mindplot Canvas Library",
+    "homepage": "http://www.wisemapping.org/",
+    "main": "dist/main.js",
+    "directories": {
+        "lib": "src",
+        "test": "__tests__"
+    },
+    "files": [
+        "src",
+        "assets",
+        "dist"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.yarnpkg.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+    },
+    "scripts": {
+        "build": "webpack --config webpack.prod.js",
+        "dev": "webpack serve --config webpack.dev.js",
+        "lint": "eslint src",
+        "playground": "webpack serve --config webpack.playground.js",
+        "cy:run": "cypress run",
+        "test:unit": "jest ./test/unit/*.js",
+        "test:integration": "start-server-and-test playground http-get://localhost:8081 cy:run",
+        "test": "yarn test:unit && yarn test:integration"
+    },
+    "private": false,
+    "dependencies": {
+        "@wisemapping/core-js": "^0.4.0",
+        "@wisemapping/web2d": "^0.4.0",
+        "jest": "^27.4.3",
+        "jquery": "3.6.0",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.6",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/register": "^7.16.0",
+        "babel-loader": "^8.2.2",
+        "clean-webpack-plugin": "^4.0.0-alpha.0",
+        "compression-webpack-plugin": "^9.2.0",
+        "copy-webpack-plugin": "^10.0.0",
+        "core-js": "^3.15.2",
+        "cypress": "^8.4.1",
+        "cypress-image-snapshot": "^4.0.1",
+        "eslint": "^8.4.1",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-nibble": "^8.0.0",
+        "eslint-plugin-cypress": "^2.12.1",
+        "eslint-plugin-import": "^2.24.2",
+        "html-webpack-plugin": "^5.3.2",
+        "jest-webpack": "^0.5.1",
+        "less": "^4.1.2",
+        "less-loader": "^10.2.0",
+        "mocha": "^9.1.3",
+        "nodemon": "^2.0.12",
+        "start-server-and-test": "^1.14.0",
+        "webpack": "^5.44.0",
+        "webpack-bundle-analyzer": "^4.5.0",
+        "webpack-cli": "^4.7.2",
+        "webpack-dev-server": "^3.11.2",
+        "webpack-merge": "^5.8.0"
+    }
+}

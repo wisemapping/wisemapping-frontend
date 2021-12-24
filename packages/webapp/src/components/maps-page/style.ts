@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -27,11 +27,11 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         newMapButton: {
             marginRight: 10,
-            minWidth: '130px'
+            minWidth: '130px',
         },
         importButton: {
             marginRight: 10,
-            minWidth: '130px'
+            minWidth: '130px',
         },
         rightButtonGroup: {
             marginRight: 10,
