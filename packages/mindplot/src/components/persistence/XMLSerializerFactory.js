@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
@@ -22,51 +23,7 @@ import XMLSerializerBeta from './XMLSerializerBeta';
 import XMLSerializerPela from './XMLSerializerPela';
 import XMLSerializerTango from './XMLSerializerTango';
 
-const XMLSerializerFactory = {};
-
-/**
- * @param {mindplot.model.IMindmap} mindmap
- * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
- * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
- */
-XMLSerializerFactory.getSerializerFromMindmap = (mindmap) => XMLSerializerFactory
-  .getSerializer(mindmap.getVersion());
-
-/**
- * @param domDocument
- * @return serializer corresponding to the mindmap's version
- */
-XMLSerializerFactory.getSerializerFromDocument = (domDocument) => {
-  const rootElem = domDocument.documentElement;
-  return XMLSerializerFactory.getSerializer(rootElem.getAttribute('version'));
-};
-
-/**
- * retrieves the serializer for the mindmap's version and migrates to the current version,
- * e.g. for a Beta mindmap and current version Tango:
- * serializer = new Pela2TangoMigrator(new Beta2PelaMigrator(new XMLSerializer_Beta()))
- * @param {String} version the version name
- * @return serializer
- */
-XMLSerializerFactory.getSerializer = function getSerializer(version = ModelCodeName.BETA) {
-  const codeNames = XMLSerializerFactory._codeNames;
-  let found = false;
-  let serializer = null;
-  for (let i = 0; i < codeNames.length; i++) {
-    if (!found) {
-      found = codeNames[i].codeName === version;
-      // eslint-disable-next-line new-cap
-      if (found) serializer = new (codeNames[i].serializer)();
-    } else {
-      const { migrator: Migrator } = codeNames[i];
-      serializer = new Migrator(serializer);
-    }
-  }
-
-  return serializer;
-};
-
-XMLSerializerFactory._codeNames = [
+const codeToSerializer = [
   {
     codeName: ModelCodeName.BETA,
     serializer: XMLSerializerBeta,
@@ -85,4 +42,49 @@ XMLSerializerFactory._codeNames = [
   },
 ];
 
+class XMLSerializerFactory {
+  /**
+   * @param {mindplot.model.IMindmap} mindmap
+   * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
+   * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
+   */
+  static getSerializerFromMindmap(mindmap) {
+    return XMLSerializerFactory
+      .getSerializer(mindmap.getVersion());
+  }
+
+  /**
+   * @param domDocument
+   * @return serializer corresponding to the mindmap's version
+   */
+  static getSerializerFromDocument(domDocument) {
+    const rootElem = domDocument.documentElement;
+    return XMLSerializerFactory.getSerializer(rootElem.getAttribute('version'));
+  }
+
+  /**
+   * retrieves the serializer for the mindmap's version and migrates to the current version,
+   * e.g. for a Beta mindmap and current version Tango:
+   * serializer = new Pela2TangoMigrator(new Beta2PelaMigrator(new XMLSerializer_Beta()))
+   * @param {String} version the version name
+   * @return serializer
+   */
+  static getSerializer(version) {
+    version = version || ModelCodeName.TANGO;
+    let found = false;
+    let result = null;
+    for (let i = 0; i < codeToSerializer.length; i++) {
+      if (!found) {
+        found = codeToSerializer[i].codeName === version;
+        // eslint-disable-next-line new-cap
+        if (found) result = new (codeToSerializer[i].serializer)();
+      } else {
+        const { migrator: Migrator } = codeToSerializer[i];
+        result = new Migrator(result);
+      }
+    }
+    $assert(result, `Cound not find serialized for ${version}`);
+    return result;
+  }
+}
 export default XMLSerializerFactory;
