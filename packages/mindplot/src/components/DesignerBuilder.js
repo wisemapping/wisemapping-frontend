@@ -23,9 +23,6 @@ import Menu from './widget/Menu';
 import $notifyModal from './widget/ModalDialogNotifier';
 import { $msg } from './Messages';
 
-global.jQuery = $;
-global.$ = $;
-
 let designer = null;
 
 export function buildDesigner(options) {
@@ -105,13 +102,6 @@ export async function loadOptions(jsonConf, options) {
     dataType: 'json',
     method: 'get',
   });
-  
-  return { ...result, ...buildOptions(options) };
-}
 
-export function loadExample(exampleFn) {
-  $(() => {
-    // eslint-disable-next-line import/no-extraneous-dependencies
-    import('@libraries/bootstrap').then(exampleFn);
-  });
+  return { ...result, ...buildOptions(options) };
 }

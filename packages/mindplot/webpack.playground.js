@@ -38,7 +38,7 @@ const playgroundConfig = {
         { from: 'test/playground/map-render/images', to: 'images' },
         { from: 'test/playground/map-render/js', to: 'js' },
         { from: 'test/playground/map-render/samples', to: 'samples' },
-        { from: 'test/playground/map-render/bootstrap', to: 'bootstrap' },
+        { from: '../../libraries/bootstrap', to: 'bootstrap' },
         { from: 'test/playground/index.html', to: 'index.html' },
         { from: 'test/playground/map-render/html/container.json', to: 'html/container.json' },
         { from: 'test/playground/map-render/html/container.html', to: 'container.html' },
