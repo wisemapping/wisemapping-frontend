@@ -1,4 +1,4 @@
-import '../css/embedded.less';
+import '../css/viewmode.less';
 import { buildDesigner, buildOptions } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 

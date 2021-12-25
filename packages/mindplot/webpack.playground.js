@@ -42,7 +42,6 @@ const playgroundConfig = {
         { from: 'test/playground/index.html', to: 'index.html' },
         { from: 'test/playground/map-render/html/container.json', to: 'html/container.json' },
         { from: 'test/playground/map-render/html/container.html', to: 'container.html' },
-        { from: 'test/playground/map-render/css/widget', to: 'css/widget' },
       ],
     }),
     new HtmlWebpackPlugin({
