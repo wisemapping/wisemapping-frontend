@@ -1,9 +1,16 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-undef */
 /* eslint-disable vars-on-top */
-import { $notify } from '@wisemapping/core-js';
+import jquery from 'jquery';
+import { $notify } from './components/widget/ToolbarNotifier';
 import { buildDesigner, buildOptions } from './components/DesignerBuilder';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
+
+// This hack is required to initialize Bootstrap. In future, this should be removed.
+global.jQuery = jquery;
+require('@libraries/bootstrap/js/bootstrap');
 
 // Configure designer options ...
 let persistence;
@@ -25,7 +32,7 @@ if (!global.memoryPersistence && !global.readOnlyMode) {
 
 const options = buildOptions({
   persistenceManager: persistence,
-  isReadOnly: global.readOnlyMode || false,
+  readOnly: global.readOnly || false,
   mapId: global.mapId,
   zoom: global.userOptions.zoom,
 });
