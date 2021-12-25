@@ -51,4 +51,5 @@ class ModalDialogNotifier {
 const dialogNotifier = new ModalDialogNotifier();
 const $notifyModal = dialogNotifier.show.bind(dialogNotifier);
 
-export default { $notifyModal };
+// eslint-disable-next-line import/prefer-default-export
+export { $notifyModal };

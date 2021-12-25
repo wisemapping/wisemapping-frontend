@@ -20,7 +20,7 @@ import $ from 'jquery';
 import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import Menu from './widget/Menu';
-import $notifyModal from './widget/ModalDialogNotifier';
+import { $notifyModal } from './widget/ModalDialogNotifier';
 import { $msg } from './Messages';
 
 let designer = null;
