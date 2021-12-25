@@ -45,6 +45,9 @@ class LocalStorageManager extends PersistenceManager {
         success(response) {
           xml = response;
         },
+        error(xhr, ajaxOptions, thrownError) {
+          console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
+        },
       });
       // If I could not load it from a file, hard code one.
       if (xml == null) {
