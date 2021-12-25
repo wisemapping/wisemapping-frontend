@@ -48,7 +48,7 @@ class LocalStorageManager extends PersistenceManager {
       });
       // If I could not load it from a file, hard code one.
       if (xml == null) {
-        throw new Error('Map could not be loaded');
+        throw new Error(`Map could not be loaded with id:${mapId}`);
       }
     }
 

@@ -18,3 +18,14 @@ designer.addEvent('loadSuccess', () => {
 const persistence = PersistenceManager.getInstance();
 const mindmap = persistence.load(mapId);
 designer.loadMap(mindmap);
+
+// Code for selector of map.
+const mapSelectElem = document.getElementById('map-select');
+mapSelectElem.addEventListener('change', (e) => {
+  const selectMap = e.target.value;
+  window.location = `${window.location.pathname}?id=${selectMap}`;
+});
+
+Array.from(mapSelectElem.options).forEach((option) => {
+  option.selected = option.value === mapId;
+});
