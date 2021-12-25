@@ -1,5 +1,5 @@
 <map name="3" version="tango">
-    <topic central="true" text="Welcome To WiseMapping" id="1" fontStyle=";;#ffffff;;;" bgColor="#509dc0">
+    <topic central="true" text="Welcome To WiseMapping" id="1" fontStyle=";;#ffffff;;;">
         <icon id="sign_info"/>
         <topic position="199,-112" order="0" id="30">
             <text><![CDATA[5 min tutorial video ?
