@@ -19,8 +19,13 @@
  *   limitations under the License.
  */
 import jquery from 'jquery';
-import { $notify } from './components/widget/ToolbarNotifier';
-import { buildDesigner, buildOptions } from './components/DesignerBuilder';
+import {
+  $notify,
+} from './components/widget/ToolbarNotifier';
+import {
+  buildDesigner,
+  buildOptions,
+} from './components/DesignerBuilder';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
@@ -32,19 +37,15 @@ require('@libraries/bootstrap/js/bootstrap');
 // Configure designer options ...
 let persistence;
 if (!global.memoryPersistence && !global.readOnly) {
-  persistence = new RESTPersistenceManager(
-    {
-      documentUrl: '/c/restful/maps/{id}/document',
-      revertUrl: '/c/restful/maps/{id}/history/latest',
-      lockUrl: '/c/restful/maps/{id}/lock',
-      timestamp: global.lockTimestamp,
-      session: global.lockSession,
-    },
-  );
+  persistence = new RESTPersistenceManager({
+    documentUrl: '/c/restful/maps/{id}/document',
+    revertUrl: '/c/restful/maps/{id}/history/latest',
+    lockUrl: '/c/restful/maps/{id}/lock',
+    timestamp: global.lockTimestamp,
+    session: global.lockSession,
+  });
 } else {
-  // @todo: review ...
-  // persistenceManager = new LocalStorageManager('c/restful/maps/{id}${hid != null ? '/' : ''}${hid != null ? hid : ''}/document/xml${principal != null ? '' : '-pub'}", true);
-  persistence = new LocalStorageManager('/c/restful/maps/{id}', true);
+  persistence = new LocalStorageManager(`/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}${!global.isAuth ? '-pub' : ''}`, true);
 }
 
 const options = buildOptions({
