@@ -31,7 +31,7 @@ require('@libraries/bootstrap/js/bootstrap');
 
 // Configure designer options ...
 let persistence;
-if (!global.memoryPersistence && !global.readOnlyMode) {
+if (!global.memoryPersistence && !global.readOnly) {
   persistence = new RESTPersistenceManager(
     {
       documentUrl: '/c/restful/maps/{id}/document',
