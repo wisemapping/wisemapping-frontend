@@ -45,7 +45,7 @@ if (!global.memoryPersistence && !global.readOnly) {
     session: global.lockSession,
   });
 } else {
-  persistence = new LocalStorageManager(`/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}${!global.isAuth ? '-pub' : ''}`, true);
+  persistence = new LocalStorageManager(`/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''}`, true);
 }
 
 const options = buildOptions({
