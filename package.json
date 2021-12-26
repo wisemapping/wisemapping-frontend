@@ -44,5 +44,6 @@
     },
     "homepage": "http://localhost:8080/react",
     "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
-    "version": "0.4.0"
+    "version": "0.4.0",
+    "dependencies": {}
 }
