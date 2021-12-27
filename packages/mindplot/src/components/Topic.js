@@ -972,9 +972,10 @@ class Topic extends NodeGraph {
 
       const targetParent = targetTopic.getModel().getParent();
       const sourceParent = sourceTopic.getModel().getParent();
-      relationship.setVisibility(value &&
-        (targetParent == null || !targetParent.areChildrenShrunken()) &&
-        (sourceParent == null || !sourceParent.areChildrenShrunken()),
+      relationship.setVisibility(
+        value
+        && (targetParent == null || !targetParent.areChildrenShrunken())
+        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
       );
     });
   }
@@ -1042,8 +1043,8 @@ class Topic extends NodeGraph {
     };
 
     const oldSize = this.getSize();
-    const hasSizeChanged = oldSize.width !== roundedSize.width ||
-      oldSize.height !== roundedSize.height;
+    const hasSizeChanged = oldSize.width !== roundedSize.width
+      || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
       NodeGraph.prototype.setSize.call(this, roundedSize);
 
