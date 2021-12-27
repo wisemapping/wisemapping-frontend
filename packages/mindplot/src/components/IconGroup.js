@@ -16,11 +16,24 @@
  *   limitations under the License.
  */
 // eslint-disable-next-line max-classes-per-file
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Group } from '@wisemapping/web2d';
+import {
+  $assert,
+  $defined
+} from '@wisemapping/core-js';
+import {
+  Group
+} from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 
+import NoteModel from './model/NoteModel';
+import LinkModel from './model/LinkModel';
+import IconModel from './model/IconModel';
 import Icon from './Icon';
+
+const ORDER_BY_TYPE = new Map();
+ORDER_BY_TYPE.set(IconModel.FEATURE_TYPE, 0);
+ORDER_BY_TYPE.set(NoteModel.FEATURE_TYPE, 1);
+ORDER_BY_TYPE.set(LinkModel.FEATURE_TYPE, 2);
 
 class IconGroup {
   constructor(topicId, iconSize) {
@@ -64,27 +77,38 @@ class IconGroup {
 
   /** */
   seIconSize(width, height) {
-    this._iconSize = { width, height };
+    this._iconSize = {
+      width,
+      height,
+    };
     this._resize(this._icons.length);
   }
 
   /**
-       * @param icon the icon to be added to the icon group
-       * @param {Boolean} remove
-       * @throws will throw an error if icon is not defined
-       */
+   * @param icon the icon to be added to the icon group
+   * @param {Boolean} remove
+   * @throws will throw an error if icon is not defined
+   */
   addIcon(icon, remove) {
     $defined(icon, 'icon is not defined');
 
+    // Order could have change, need to re-add all.
+    const icons = this._icons.slice();
+    this._icons.forEach((i) => {
+      this._removeIcon(i);
+    });
+
     icon.setGroup(this);
-    this._icons.push(icon);
+    icons.push(icon);
+    this._icons = icons.sort((a, b) => ORDER_BY_TYPE.get(a.getModel().getType()) - ORDER_BY_TYPE.get(b.getModel().getType()));
 
-    // Adjust group and position ...
+    // Add all the nodes back ...
     this._resize(this._icons.length);
-    this._positionIcon(icon, this._icons.length - 1);
-
-    const imageShape = icon.getImage();
-    this._group.append(imageShape);
+    this._icons.forEach((i, index) => {
+      this._positionIcon(i, index);
+      const imageShape = i.getImage();
+      this._group.append(imageShape);
+    });
 
     // Register event for the group ..
     if (remove) {
@@ -166,11 +190,5 @@ class IconGroup {
   }
 }
 
-/**
- * @constant
- * @type {Number}
- * @default
- */
 IconGroup.ICON_PADDING = 5;
-
 export default IconGroup;

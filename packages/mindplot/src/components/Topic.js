@@ -48,7 +48,7 @@ import INodeModel, {
   TopicShape,
 } from './model/INodeModel';
 
-const ICON_SCALING_FACTOR = 1;
+const ICON_SCALING_FACTOR = 1.8;
 
 class Topic extends NodeGraph {
   /**
@@ -1263,37 +1263,31 @@ class Topic extends NodeGraph {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
       if (this.getShapeType() !== TopicShape.IMAGE) {
+        // Calculate topic size and adjust elements ...
         const textWidth = textShape.getWidth();
+        const textHeight = textShape.getHeight();
+        const padding = TopicStyle.getInnerPadding(this);
 
-        let textHeight = textShape.getHeight();
-        textHeight = textHeight !== 0 ? textHeight : 20;
-
-        const topicPadding = TopicStyle.getInnerPadding(this);
-
-        // Adjust the icon size to the size of the text ...
+        // Adjust icons group based on the font size ...
         const iconGroup = this.getOrBuildIconGroup();
         const fontHeight = this.getTextShape().getFontHeight();
+        const iconHeight = ICON_SCALING_FACTOR * fontHeight;
+        iconGroup.seIconSize(iconHeight, iconHeight);
 
-        const iconSize = ICON_SCALING_FACTOR * fontHeight;
-        iconGroup.setPosition(topicPadding, topicPadding);
-        iconGroup.seIconSize(iconSize, iconSize);
-
-        // Add a extra padding between the text and the icons
-        let iconsWidth = iconGroup.getSize().width;
-        if (iconsWidth !== 0) {
-          iconsWidth += textHeight / 4;
-        }
-
-        const height = textHeight + topicPadding * 2;
-        const width = textWidth + iconsWidth + topicPadding * 2;
+        // Calculate size and adjust ...
+        const topicHeight = Math.max(iconHeight, textHeight) + padding * 2;
+        const textIconSpacing = Math.round(fontHeight / 4);
+        const iconGroupWith = iconGroup.getSize().width;
+        const topicWith = iconGroupWith + textIconSpacing + textWidth + padding * 2;
 
         this.setSize({
-          width,
-          height,
+          width: topicWith,
+          height: topicHeight,
         });
 
-        // Position node ...
-        textShape.setPosition(topicPadding + iconsWidth, topicPadding);
+        // Adjust all topic elements positions ...
+        iconGroup.setPosition(padding, (topicHeight - iconHeight) / 2);
+        textShape.setPosition(padding + iconGroupWith + textIconSpacing, (topicHeight - textHeight) / 2);
       } else {
         // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
