@@ -1286,8 +1286,9 @@ class Topic extends NodeGraph {
         });
 
         // Adjust all topic elements positions ...
-        iconGroup.setPosition(padding, (topicHeight - iconHeight) / 2);
-        textShape.setPosition(padding + iconGroupWith + textIconSpacing, (topicHeight - textHeight) / 2);
+        const yPosition = Math.round((topicHeight - textHeight) / 2);
+        iconGroup.setPosition(padding, yPosition);
+        textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
       } else {
         // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
