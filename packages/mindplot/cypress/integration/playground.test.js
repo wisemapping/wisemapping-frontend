@@ -9,7 +9,7 @@ context('Playground', () => {
     cy.matchImageSnapshot('layout');
   });
   it('viewmode page should match its snapshot', () => {
-    ['welcome', 'sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample6', 'complex', 'img-support'].forEach((mapId) => {
+    ['welcome', 'sample1', 'sample2', 'sample3', 'sample4', 'sample5', 'sample6', 'complex', 'img-support', 'icon-sample'].forEach((mapId) => {
       cy.visit(`/viewmode.html?id=${mapId}`);
       cy.get('#mindplot.ready').should('exist');
       cy.matchImageSnapshot(`viewmode-${mapId}`);

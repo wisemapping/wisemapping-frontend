@@ -48,7 +48,7 @@ import INodeModel, {
   TopicShape,
 } from './model/INodeModel';
 
-const ICON_SCALING_FACTOR = 1.8;
+const ICON_SCALING_FACTOR = 1.2;
 
 class Topic extends NodeGraph {
   /**
