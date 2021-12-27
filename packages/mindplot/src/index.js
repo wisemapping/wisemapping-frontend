@@ -30,5 +30,10 @@ global.jQuery = jquery;
 require('@libraries/bootstrap/js/bootstrap');
 
 export {
-  Mindmap, PersistenceManager, Designer, LocalStorageManager, Menu, DesignerBuilder,
+  Mindmap,
+  PersistenceManager,
+  Designer,
+  LocalStorageManager,
+  Menu,
+  DesignerBuilder,
 };
