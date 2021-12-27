@@ -972,8 +972,7 @@ class Topic extends NodeGraph {
 
       const targetParent = targetTopic.getModel().getParent();
       const sourceParent = sourceTopic.getModel().getParent();
-      relationship.setVisibility(
-        value &&
+      relationship.setVisibility(value &&
         (targetParent == null || !targetParent.areChildrenShrunken()) &&
         (sourceParent == null || !sourceParent.areChildrenShrunken()),
       );
