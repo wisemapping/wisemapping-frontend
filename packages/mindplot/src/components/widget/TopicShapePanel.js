@@ -17,10 +17,10 @@
  */
 import $ from 'jquery';
 import ListToolbarPanel from './ListToolbarPanel';
-import RectangleImage from '../../../assets/images/shape-rectangle.png';
-import RectangleRoundImage from '../../../assets/images/shape-rectangle-round.png';
-import LineImage from '../../../assets/images/shape-line.png';
-import CircleImage from '../../../assets/images/shape-circle.png';
+import RectangleImage from '../../../assets/images/shape-rectangle.svg';
+import RectangleRoundImage from '../../../assets/images/shape-rectangle-round.svg';
+import LineImage from '../../../assets/images/shape-line.svg';
+import CircleImage from '../../../assets/images/shape-circle.svg';
 
 class TopicShapePanel extends ListToolbarPanel {
   // eslint-disable-next-line class-methods-use-this
