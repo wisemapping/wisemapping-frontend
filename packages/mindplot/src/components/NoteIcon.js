@@ -20,7 +20,7 @@ import $ from 'jquery';
 import { $msg } from './Messages';
 import Icon from './Icon';
 import FloatingTip from './widget/FloatingTip';
-import NotesImage from '../../assets/images/notes.svg';
+import NotesImage from '../../assets/icons/notes.svg';
 
 class NoteIcon extends Icon {
   constructor(topic, noteModel, readOnly) {
