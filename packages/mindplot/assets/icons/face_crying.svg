@@ -1,50 +1,117 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 473.931 473.931" style="enable-background:new 0 0 473.931 473.931;" xml:space="preserve">
-<circle style="fill:#FFC10E;" cx="236.966" cy="236.966" r="236.966"/>
-<g>
-	<path style="fill:#75CDDE;" d="M366.532,278.29c-13.205,0-25.736-7.817-31.113-20.771c-11.113-26.765-24.928-49.754-39.951-66.484
-		c-12.426-13.837-11.285-35.131,2.552-47.558c13.837-12.426,35.128-11.289,47.554,2.556c20.336,22.645,37.848,51.464,52.044,85.66
-		c7.132,17.178-1.01,36.883-18.189,44.014C375.209,277.459,370.835,278.29,366.532,278.29z"/>
-	<path style="fill:#75CDDE;" d="M113.465,278.29c-4.303,0-8.677-0.831-12.902-2.582c-17.178-7.128-25.32-26.836-18.189-44.014
-		c14.196-34.196,31.708-63.015,52.044-85.66c12.426-13.833,33.717-14.982,47.554-2.556c13.837,12.426,14.978,33.721,2.552,47.558
-		c-15.023,16.729-28.838,39.715-39.951,66.484C139.201,270.473,126.666,278.29,113.465,278.29z"/>
+
+<svg
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 473.931 473.931"
+   style="enable-background:new 0 0 473.931 473.931;"
+   xml:space="preserve"
+   sodipodi:docname="face_crying.svg"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs6686" /><sodipodi:namedview
+   id="namedview6684"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1.0"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   showgrid="false"
+   inkscape:zoom="1.1689465"
+   inkscape:cx="68.009954"
+   inkscape:cy="236.9655"
+   inkscape:window-width="1296"
+   inkscape:window-height="776"
+   inkscape:window-x="0"
+   inkscape:window-y="25"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="Layer_1" />
+<circle
+   style="fill:#FFC10E;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke:#000000;stroke-opacity:1"
+   cx="236.966"
+   cy="236.966"
+   r="236.966"
+   id="circle6637" />
+<g
+   id="g6643">
+	<path
+   style="fill:#75CDDE;"
+   d="M366.532,278.29c-13.205,0-25.736-7.817-31.113-20.771c-11.113-26.765-24.928-49.754-39.951-66.484   c-12.426-13.837-11.285-35.131,2.552-47.558c13.837-12.426,35.128-11.289,47.554,2.556c20.336,22.645,37.848,51.464,52.044,85.66   c7.132,17.178-1.01,36.883-18.189,44.014C375.209,277.459,370.835,278.29,366.532,278.29z"
+   id="path6639" />
+	<path
+   style="fill:#75CDDE;"
+   d="M113.465,278.29c-4.303,0-8.677-0.831-12.902-2.582c-17.178-7.128-25.32-26.836-18.189-44.014   c14.196-34.196,31.708-63.015,52.044-85.66c12.426-13.833,33.717-14.982,47.554-2.556c13.837,12.426,14.978,33.721,2.552,47.558   c-15.023,16.729-28.838,39.715-39.951,66.484C139.201,270.473,126.666,278.29,113.465,278.29z"
+   id="path6641" />
 </g>
-<g>
-	<circle style="fill:#333333;" cx="164.937" cy="155.227" r="37.216"/>
-	<circle style="fill:#333333;" cx="305.664" cy="155.227" r="37.216"/>
-	<path style="fill:#333333;" d="M296.381,302.024c0,43.805-26.57,79.344-59.356,79.344s-59.356-35.539-59.356-79.344
-		c0-43.827,26.57-79.348,59.356-79.348S296.381,258.196,296.381,302.024z"/>
+<g
+   id="g6651">
+	<circle
+   style="fill:#333333;"
+   cx="164.937"
+   cy="155.227"
+   r="37.216"
+   id="circle6645" />
+	<circle
+   style="fill:#333333;"
+   cx="305.664"
+   cy="155.227"
+   r="37.216"
+   id="circle6647" />
+	<path
+   style="fill:#333333;"
+   d="M296.381,302.024c0,43.805-26.57,79.344-59.356,79.344s-59.356-35.539-59.356-79.344   c0-43.827,26.57-79.348,59.356-79.348S296.381,258.196,296.381,302.024z"
+   id="path6649" />
 </g>
-<g>
+<g
+   id="g6653">
 </g>
-<g>
+<g
+   id="g6655">
 </g>
-<g>
+<g
+   id="g6657">
 </g>
-<g>
+<g
+   id="g6659">
 </g>
-<g>
+<g
+   id="g6661">
 </g>
-<g>
+<g
+   id="g6663">
 </g>
-<g>
+<g
+   id="g6665">
 </g>
-<g>
+<g
+   id="g6667">
 </g>
-<g>
+<g
+   id="g6669">
 </g>
-<g>
+<g
+   id="g6671">
 </g>
-<g>
+<g
+   id="g6673">
 </g>
-<g>
+<g
+   id="g6675">
 </g>
-<g>
+<g
+   id="g6677">
 </g>
-<g>
+<g
+   id="g6679">
 </g>
-<g>
+<g
+   id="g6681">
 </g>
 </svg>
