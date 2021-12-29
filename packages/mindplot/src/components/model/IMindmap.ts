@@ -18,68 +18,35 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import NodeModel from './NodeModel';
+import RelationshipModel from './RelationshipModel';
 
-class IMindmap {
-  getCentralTopic() {
+abstract class IMindmap {
+  getCentralTopic(): NodeModel {
     return this.getBranches()[0];
   }
 
-  /** @abstract */
-  getDescription() {
-    throw new Error('Unsupported operation');
-  }
+  abstract getDescription(): string;
 
-  /** @abstract */
-  setDescription(value) {
-    throw new Error('Unsupported operation');
-  }
+  abstract setDescription(value: string);
 
-  /** @abstract */
-  getId() {
-    throw new Error('Unsupported operation');
-  }
+  abstract getId(): string
 
-  /** @abstract */
-  setId(id) {
-    throw new Error('Unsupported operation');
-  }
+  abstract setId(id: string);
 
-  /** @abstract */
-  getVersion() {
-    throw new Error('Unsupported operation');
-  }
+  abstract getVersion(): string;
 
-  /** @abstract */
-  setVersion(version) {
-    throw new Error('Unsupported operation');
-  }
+  abstract setVersion(version: string): void;
 
-  /** @abstract */
-  addBranch(nodeModel) {
-    throw new Error('Unsupported operation');
-  }
+  abstract addBranch(nodeModel: NodeModel): void;
 
-  /** @abstract */
-  getBranches() {
-    throw new Error('Unsupported operation');
-  }
+  abstract getBranches(): Array<NodeModel>;
 
-  /** @abstract */
-  removeBranch(node) {
-    throw new Error('Unsupported operation');
-  }
+  abstract removeBranch(node: NodeModel): void;
 
-  /** @abstract */
-  getRelationships() {
-    throw new Error('Unsupported operation');
-  }
+  abstract getRelationships(): Array<RelationshipModel>;
 
-  /**
-     * @param parent
-     * @param child
-     * @throws will throw an error if child already has a connection to a parent node
-     */
-  connect(parent, child) {
+  connect(parent: NodeModel, child: NodeModel): void {
     // Child already has a parent ?
     $assert(!child.getParent(), 'Child model seems to be already connected');
 
@@ -95,7 +62,7 @@ class IMindmap {
      * @throws will throw an error if child is null or undefined
      * @throws will throw an error if child's parent cannot be found
      */
-  disconnect(child) {
+  disconnect(child: NodeModel): void {
     const parent = child.getParent();
     $assert(child, 'Child can not be null.');
     $assert(parent, 'Child model seems to be already connected');
@@ -114,18 +81,11 @@ class IMindmap {
     throw new Error('Unsupported operation');
   }
 
-  /** @abstract */
-  createRelationship(fromNode, toNode) {
-    throw new Error('Unsupported operation');
-  }
+  abstract createRelationship(fromNode: NodeModel, toNode: NodeModel): void;
 
-  /** @abstract */
-  addRelationship(rel) {
-    throw new Error('Unsupported operation');
-  }
+  abstract addRelationship(rel: RelationshipModel): void;
 
-  /** @abstract */
-  deleteRelationship(relationship) {
+  deleteRelationship(relationship: RelationshipModel): void {
     throw new Error('Unsupported operation');
   }
 

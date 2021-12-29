@@ -19,8 +19,8 @@ import { $assert, $defined, createDocument } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
 import INodeModel, { TopicShape } from '../model/INodeModel';
-import TopicFeature from '../TopicFeature';
 import ConnectionLine from '../ConnectionLine';
+import FeatureModelFactory from '../model/FeatureModelFactory';
 
 class XMLSerializerPela {
   toXML(mindmap) {
@@ -371,7 +371,7 @@ class XMLSerializerPela {
         if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
-        } else if (TopicFeature.isSupported(child.tagName)) {
+        } else if (FeatureModelFactory.isSupported(child.tagName)) {
           // Load attributes ...
           const namedNodeMap = child.attributes;
           const attributes = {};
@@ -388,7 +388,7 @@ class XMLSerializerPela {
 
           // Create a new element ....
           const featureType = child.tagName;
-          const feature = TopicFeature.createModel(featureType, attributes);
+          const feature = FeatureModelFactory.createModel(featureType, attributes);
           topic.addFeature(feature);
         } else if (child.tagName === 'text') {
           const nodeText = XMLSerializerPela._deserializeNodeText(child);
