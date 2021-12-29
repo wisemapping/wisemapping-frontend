@@ -1,110 +1,92 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
 <svg
+   width="2050px"
+   height="2050px"
+   viewBox="0 0 2050 2050"
    version="1.1"
-   id="Layer_1"
-   x="0px"
-   y="0px"
-   viewBox="0 0 473.931 473.931"
-   style="enable-background:new 0 0 473.931 473.931;"
-   xml:space="preserve"
+   id="svg3566"
    sodipodi:docname="face_wink.svg"
    inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs1509" /><sodipodi:namedview
-   id="namedview1507"
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1.0"
-   inkscape:pageshadow="2"
-   inkscape:pageopacity="0.0"
-   inkscape:pagecheckerboard="0"
-   showgrid="false"
-   inkscape:zoom="1.1689465"
-   inkscape:cx="236.53776"
-   inkscape:cy="236.9655"
-   inkscape:window-width="1296"
-   inkscape:window-height="776"
-   inkscape:window-x="0"
-   inkscape:window-y="25"
-   inkscape:window-maximized="0"
-   inkscape:current-layer="Layer_1" />
-<circle
-   style="fill:#FFC10E;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke:#000000;stroke-opacity:1"
-   cx="236.966"
-   cy="236.966"
-   r="236.966"
-   id="circle1464" />
-<path
-   style="fill:#CA2027;"
-   d="M262.327,342.379c24.074,44.916,62.944,70.959,86.828,58.162  c23.884-12.808,23.73-59.603-0.341-104.522L262.327,342.379z"
-   id="path1466" />
-<g
-   id="g1474">
-	<circle
-   style="fill:#333333;"
-   cx="164.937"
-   cy="155.227"
-   r="37.216"
-   id="circle1468" />
-	<circle
-   style="fill:#333333;"
-   cx="305.664"
-   cy="155.227"
-   r="37.216"
-   id="circle1470" />
-	<path
-   style="fill:#333333;"
-   d="M343.25,285.055c-59.281,60.328-154.662,59.846-213.449-0.898   c-8.4-8.681-21.616,4.561-13.227,13.227c65.769,67.965,173.64,68.336,239.903,0.898   C364.938,289.676,351.718,276.441,343.25,285.055L343.25,285.055z"
-   id="path1472" />
-</g>
-<g
-   id="g1476">
-</g>
-<g
-   id="g1478">
-</g>
-<g
-   id="g1480">
-</g>
-<g
-   id="g1482">
-</g>
-<g
-   id="g1484">
-</g>
-<g
-   id="g1486">
-</g>
-<g
-   id="g1488">
-</g>
-<g
-   id="g1490">
-</g>
-<g
-   id="g1492">
-</g>
-<g
-   id="g1494">
-</g>
-<g
-   id="g1496">
-</g>
-<g
-   id="g1498">
-</g>
-<g
-   id="g1500">
-</g>
-<g
-   id="g1502">
-</g>
-<g
-   id="g1504">
-</g>
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3568"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.2702439"
+     inkscape:cx="1026.8502"
+     inkscape:cy="1025"
+     inkscape:window-width="1296"
+     inkscape:window-height="776"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3566" />
+  <defs
+     id="defs3540">
+    <style
+       id="style3538">.cls-1{fill:#fff;}.cls-2{fill:#ffc500;}.cls-3{fill:#ff9f1e;}.cls-4{fill:#ffe059;}.cls-5{fill:#00305f;}.cls-6{fill:#ea1700;}</style>
+  </defs>
+  <title
+     id="title3542" />
+  <g
+     data-name="Layer 3"
+     id="Layer_3"
+     transform="matrix(1.6632546,0,0,1.6602398,-679.83573,-674.89533)">
+    <circle
+       class="cls-2"
+       cx="1025"
+       cy="1025"
+       r="613.70001"
+       id="circle3547" />
+    <path
+       class="cls-3"
+       d="m 1068.5,1551.8 c -339,0 -613.7,-274.8 -613.7,-613.7 A 613.5,613.5 0 0 1 499.2,708.3 610.7,610.7 0 0 0 411.3,1025 c 0,338.9 274.8,613.7 613.7,613.7 257.7,0 478.3,-158.8 569.2,-383.9 -107.4,178 -302.7,297 -525.7,297 z"
+       id="path3549" />
+    <path
+       class="cls-4"
+       d="m 1025,411.3 a 610.4,610.4 0 0 0 -365.1,120.4 706.9,706.9 0 0 1 453.2,-18.9 27.8,27.8 0 0 0 -3.3,5.1 c -18.2,33.9 18.9,89.1 82.7,123.3 63.8,34.2 130.4,34.6 148.6,0.8 a 38.6,38.6 0 0 0 3.7,-10.5 c 165.2,128 271.9,328.1 272.9,553.1 a 613.3,613.3 0 0 0 21,-159.6 c 0,-338.9 -274.8,-613.7 -613.7,-613.7 z"
+       id="path3551" />
+    <ellipse
+       class="cls-4"
+       cx="1077.2"
+       cy="561.59998"
+       rx="17.200001"
+       ry="25"
+       transform="rotate(-60,1077.195,561.64347)"
+       id="ellipse3553" />
+    <path
+       class="cls-5"
+       d="m 1025,1356.6 v 0 c -121.4,0 -219.8,-98.4 -219.8,-219.8 v -25 0 a 756.7,756.7 0 0 1 439.6,0 v 0 25 c 0,121.4 -98.4,219.8 -219.8,219.8 z"
+       id="path3555" />
+    <path
+       class="cls-6"
+       d="m 1025,1356.6 v 0 a 219.2,219.2 0 0 0 106,-27.2 c -18.1,-58.4 -58.8,-99.1 -106,-99.1 -47.2,0 -87.9,40.7 -106,99.1 a 219.2,219.2 0 0 0 106,27.2 z"
+       id="path3557" />
+    <ellipse
+       class="cls-5"
+       cx="817.20001"
+       cy="868.40002"
+       rx="109.1"
+       ry="69.199997"
+       transform="rotate(-87.5,817.44378,868.41392)"
+       id="ellipse3559" />
+    <circle
+       class="cls-1"
+       cx="855.40002"
+       cy="870.09998"
+       r="19.1"
+       id="circle3561" />
+    <path
+       class="cls-5"
+       d="m 1146.1,883.2 a 30.6,30.6 0 0 1 -13.7,-3.2 30,30 0 0 1 -13,-40.4 c 26.2,-51.3 63.4,-79.5 104.7,-79.5 41.3,0 78.5,28.2 104.7,79.5 a 30,30 0 1 1 -53.4,27.3 c -15,-29.3 -34.2,-46.8 -51.3,-46.8 -17.1,0 -36.3,17.5 -51.3,46.8 a 29.9,29.9 0 0 1 -26.7,16.3 z"
+       id="path3563" />
+  </g>
 </svg>
