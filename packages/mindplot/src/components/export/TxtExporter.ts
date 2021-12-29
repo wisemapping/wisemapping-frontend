@@ -4,10 +4,7 @@ import Mindmap from "src/components/model/Mindmap";
 
 class TextExporter implements Exporter {
     export(mindplot: Mindmap): string {
-
-
-
-        throw new Error("Method not implemented.");
+        return "some value";
     }
 }
 export default TextExporter;

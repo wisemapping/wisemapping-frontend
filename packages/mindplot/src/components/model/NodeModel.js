@@ -18,7 +18,7 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import cloneDeep from 'lodash/cloneDeep';
 import INodeModel from './INodeModel';
-import TopicFeature from '../TopicFeature';
+import FeatureModelFactory from './FeatureModelFactory';
 
 class NodeModel extends INodeModel {
   constructor(type, mindmap, id) {
@@ -40,7 +40,7 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.FeatureModel} the created feature model
      */
   createFeature(type, attributes) {
-    return TopicFeature.createModel(type, attributes);
+    return FeatureModelFactory.createModel(type, attributes);
   }
 
   /**

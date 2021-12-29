@@ -37,7 +37,7 @@ import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
-import TopicFeature from './TopicFeature';
+import TopicFeatureFactory from './TopicFeature';
 
 import { create } from './NodeGraphUtils';
 
@@ -952,7 +952,7 @@ class Designer extends Events {
   addIconType(iconType) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeature.Icon.id, {
+      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id, {
         id: iconType,
       });
     }

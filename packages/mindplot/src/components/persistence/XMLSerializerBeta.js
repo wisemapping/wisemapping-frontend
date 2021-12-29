@@ -20,7 +20,7 @@ import {
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import INodeModel from '../model/INodeModel';
-import TopicFeature from '../TopicFeature';
+import FeatureModelFactory from '../model/FeatureModelFactory';
 
 class XMLSerializerBeta {
   toXML(mindmap) {
@@ -306,16 +306,16 @@ class XMLSerializerBeta {
   _deserializeIcon(domElem) {
     let icon = domElem.getAttribute('id');
     icon = icon.replace('images/', 'icons/legacy/');
-    return TopicFeature.createModel(TopicFeature.Icon.id, { id: icon });
+    return FeatureModelFactory.createModel(FeatureModelFactory.Icon.id, { id: icon });
   }
 
   _deserializeLink(domElem) {
-    return TopicFeature.createModel(TopicFeature.Link.id, { url: domElem.getAttribute('url') });
+    return FeatureModelFactory.createModel(FeatureModelFactory.Link.id, { url: domElem.getAttribute('url') });
   }
 
   _deserializeNote(domElem) {
     const text = domElem.getAttribute('text');
-    return TopicFeature.createModel(TopicFeature.Note.id, { text: text == null ? ' ' : text });
+    return FeatureModelFactory.createModel(FeatureModelFactory.Note.id, { text: text == null ? ' ' : text });
   }
 }
 

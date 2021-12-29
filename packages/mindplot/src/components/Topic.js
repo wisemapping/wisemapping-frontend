@@ -31,7 +31,7 @@ import {
 import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
-import TopicFeature from './TopicFeature';
+import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine from './ConnectionLine';
 import IconGroup from './IconGroup';
 import FadeEffect from './util/FadeEffect';
@@ -311,8 +311,8 @@ class Topic extends NodeGraph {
     const model = this.getModel();
     const featuresModel = model.getFeatures();
     featuresModel.forEach((f) => {
-      const icon = TopicFeature.createIcon(this, f, this.isReadOnly());
-      result.addIcon(icon, f.getType() === TopicFeature.Icon.id && !this.isReadOnly());
+      const icon = TopicFeatureFactory.createIcon(this, f, this.isReadOnly());
+      result.addIcon(icon, f.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly());
     });
 
     return result;
@@ -331,10 +331,10 @@ class Topic extends NodeGraph {
     const model = this.getModel();
     model.addFeature(featureModel);
 
-    const result = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
+    const result = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
     iconGroup.addIcon(
       result,
-      featureModel.getType() === TopicFeature.Icon.id && !this.isReadOnly(),
+      featureModel.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly(),
     );
 
     this._adjustShapes();
@@ -764,7 +764,7 @@ class Topic extends NodeGraph {
     const model = this.getModel();
     const editorModel = {
       getValue() {
-        const notes = model.findFeatureByType(TopicFeature.Note.id);
+        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
         let result;
         if (notes.length > 0) result = notes[0].getText();
 
@@ -773,7 +773,7 @@ class Topic extends NodeGraph {
 
       setValue(value) {
         const dispatcher = ActionDispatcher.getInstance();
-        const notes = model.findFeatureByType(TopicFeature.Note.id);
+        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
         if (!$defined(value)) {
           const featureId = notes[0].getId();
           dispatcher.removeFeatureFromTopic(topicId, featureId);
@@ -782,7 +782,7 @@ class Topic extends NodeGraph {
             text: value,
           });
         } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeature.Note.id, {
+          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
             text: value,
           });
         }
@@ -800,7 +800,7 @@ class Topic extends NodeGraph {
     const editorModel = {
       getValue() {
         // @param {mindplot.model.LinkModel[]} links
-        const links = model.findFeatureByType(TopicFeature.Link.id);
+        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
         let result;
         if (links.length > 0) result = links[0].getUrl();
 
@@ -809,7 +809,7 @@ class Topic extends NodeGraph {
 
       setValue(value) {
         const dispatcher = ActionDispatcher.getInstance();
-        const links = model.findFeatureByType(TopicFeature.Link.id);
+        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
         if (!$defined(value)) {
           const featureId = links[0].getId();
           dispatcher.removeFeatureFromTopic(topicId, featureId);
@@ -818,7 +818,7 @@ class Topic extends NodeGraph {
             url: value,
           });
         } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeature.Link.id, {
+          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
             url: value,
           });
         }
