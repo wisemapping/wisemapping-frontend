@@ -150,7 +150,7 @@ class Mindmap extends IMindmap {
          * @param relationship
          */
   deleteRelationship(relationship) {
-    this._relationships = this._branches.filter((r) => r !== relationship);
+    this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
   findNodeById(id) {

@@ -169,7 +169,11 @@ class Relationship extends ConnectionLine {
     workspace.append(this._controlPointsController);
 
     this._controlPointControllerListener = this._initializeControlPointController.bind(this);
-    this._line2d.addEvent('click', this._controlPointControllerListener);
+    if (workspace.isReadOnly) {
+      this._line2d.setCursor('default');
+    } else {
+      this._line2d.addEvent('click', this._controlPointControllerListener);
+    }
     this._isInWorkspace = true;
 
     workspace.append(this._startArrow);
@@ -187,7 +191,9 @@ class Relationship extends ConnectionLine {
   removeFromWorkspace(workspace) {
     workspace.removeChild(this._focusShape);
     workspace.removeChild(this._controlPointsController);
-    this._line2d.removeEvent('click', this._controlPointControllerListener);
+    if (!workspace.isReadOnly) {
+      this._line2d.removeEvent('click', this._controlPointControllerListener);
+    }
     this._isInWorkspace = false;
     workspace.removeChild(this._startArrow);
     if (this._endArrow) workspace.removeChild(this._endArrow);
