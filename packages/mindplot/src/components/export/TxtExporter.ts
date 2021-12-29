@@ -1,5 +1,5 @@
-import Exporter from "src/components/export/Exporter";
-import Mindmap from "src/components/model/Mindmap";
+import Exporter from "./Exporter";
+import Mindmap from "../model/Mindmap";
 
 
 class TextExporter implements Exporter {

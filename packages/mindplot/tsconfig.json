@@ -4,6 +4,7 @@
       "sourceMap": true,
       "noImplicitAny": false,
       "module": "es6",
+      "moduleResolution": "Node",
       "target": "es6",
       "allowJs": true,
       "esModuleInterop": true
