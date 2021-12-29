@@ -8,7 +8,7 @@ const prodConfig = {
   },
   plugins: [
     new CompressionPlugin({
-      test: /\.js(\?.*)?$/i
+      test: /\.js(\?.*)?$/i,
     }),
   ],
 };

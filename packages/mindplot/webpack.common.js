@@ -22,11 +22,17 @@ module.exports = {
   module: {
     rules: [
       {
-        use: ['babel-loader'],
         test: /.(js$)/,
+        use: ['babel-loader'],
         exclude: [
           /node_modules/,
         ],
+        enforce: 'pre',
+      },
+      {
+        test: /\.(ts)$/,
+        use: 'ts-loader',
+        exclude: '/node_modules/',
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -38,7 +44,7 @@ module.exports = {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),
     },
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.ts', '.json'],
   },
   plugins: [new CleanWebpackPlugin()],
 };
