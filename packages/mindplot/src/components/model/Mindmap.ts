@@ -23,43 +23,51 @@ import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
 
 class Mindmap extends IMindmap {
-  constructor(id, version) {
+  _description: string;
+  _version: string;
+  _id: string;
+  _branches: Array<NodeModel>;
+  _relationships: Array<RelationshipModel>;
+
+  constructor(id: string, version: string = ModelCodeName.TANGO) {
     super();
     $assert(id, 'Id can not be null');
+    $assert($defined(version), 'Version can not be null');
+
     this._branches = [];
     this._description = null;
     this._relationships = [];
-    this._version = $defined(version) ? version : ModelCodeName.TANGO;
+    this._version = version;
     this._id = id;
   }
 
   /** */
-  getDescription() {
+  getDescription(): string {
     return this._description;
   }
 
   /** */
-  setDescription(value) {
+  setDescription(value: string) {
     this._description = value;
   }
 
   /** */
-  getId() {
+  getId(): string {
     return this._id;
   }
 
   /** */
-  setId(id) {
+  setId(id: string) {
     this._id = id;
   }
 
   /** */
-  getVersion() {
+  getVersion(): string {
     return this._version;
   }
 
   /** */
-  setVersion(version) {
+  setVersion(version: string): void {
     this._version = version;
   }
 
@@ -68,7 +76,7 @@ class Mindmap extends IMindmap {
          * @throws will throw an error if nodeModel is null, undefined or not a node model object
          * @throws will throw an error if
          */
-  addBranch(nodeModel) {
+  addBranch(nodeModel: NodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Add node must be invoked with model objects');
     const branches = this.getBranches();
     if (branches.length === 0) {
@@ -84,18 +92,16 @@ class Mindmap extends IMindmap {
   /**
          * @param nodeModel
          */
-  removeBranch(nodeModel) {
+  removeBranch(nodeModel: NodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     this._branches = this._branches.filter((b) => b !== nodeModel);
   }
 
-  /** */
   getBranches() {
     return this._branches;
   }
 
-  /** */
-  getRelationships() {
+  getRelationships(): Array<RelationshipModel> {
     return this._relationships;
   }
 
@@ -103,7 +109,7 @@ class Mindmap extends IMindmap {
          * @param node
          * @return {Boolean} true if node already exists
          */
-  hasAlreadyAdded(node) {
+  hasAlreadyAdded(node: any) {
     let result = false;
 
     // Check in not connected nodes.
@@ -121,7 +127,7 @@ class Mindmap extends IMindmap {
          * @param id
          * @return the node model created
          */
-  createNode(type = INodeModel.MAIN_TOPIC_TYPE, id) {
+  createNode(type = INodeModel.MAIN_TOPIC_TYPE, id: number) {
     return new NodeModel(type, this, id);
   }
 
@@ -132,7 +138,7 @@ class Mindmap extends IMindmap {
    * @throws will throw an error if target node is null or undefined
    * @return the relationship model created
    */
-  createRelationship(sourceNodeId, targetNodeId) {
+  createRelationship(sourceNodeId: any, targetNodeId: any) {
     $assert($defined(sourceNodeId), 'from node cannot be null');
     $assert($defined(targetNodeId), 'to node cannot be null');
 
@@ -142,18 +148,18 @@ class Mindmap extends IMindmap {
   /**
    * @param relationship
    */
-  addRelationship(relationship) {
+  addRelationship(relationship: RelationshipModel) {
     this._relationships.push(relationship);
   }
 
   /**
-         * @param relationship
-         */
-  deleteRelationship(relationship) {
-    this._relationships = this._branches.filter((r) => r !== relationship);
+   * @param relationship
+   */
+  deleteRelationship(relationship: RelationshipModel) {
+    this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
-  findNodeById(id) {
+  findNodeById(id: any) {
     let result = null;
     for (let i = 0; i < this._branches.length; i++) {
       const branch = this._branches[i];
@@ -164,17 +170,13 @@ class Mindmap extends IMindmap {
     }
     return result;
   }
-}
 
-/**
- * @param mapId
- * @return an empty mindmap with central topic only
- */
-Mindmap.buildEmpty = (mapId) => {
-  const result = new Mindmap(mapId);
-  const node = result.createNode(INodeModel.CENTRAL_TOPIC_TYPE, 0);
-  result.addBranch(node);
-  return result;
-};
+  static buildEmpty = (mapId: string) => {
+    const result = new Mindmap(mapId);
+    const node = result.createNode(INodeModel.CENTRAL_TOPIC_TYPE, 0);
+    result.addBranch(node);
+    return result;
+  };
+}
 
 export default Mindmap;
