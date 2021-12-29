@@ -79,7 +79,7 @@ class Designer extends Events {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElement);
-    this._workspace = new Workspace(screenManager, this._model.getZoom());
+    this._workspace = new Workspace(screenManager, this._model.getZoom(), !!options.readOnly);
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher(this.getModel());

@@ -34,6 +34,9 @@ class ElementPeer {
     this._size = { width: 1, height: 1 };
     this._changeListeners = {};
     // http://support.adobe.com/devsup/devsup.nsf/docs/50493.htm
+
+    // __handlers stores handlers references so they can be removed afterwards
+    this.__handlers = new Map();
   }
 
   setChildren(children) {
@@ -95,12 +98,15 @@ class ElementPeer {
      * http://developer.mozilla.org/en/docs/addEvent
      */
   addEvent(type, listener) {
-    this._native.addEventListener(type, listener);
+    // wrap it so it can be ~backward compatible with jQuery.trigger
+    const wrappedListener = (e) => listener(e, e.detail);
+    this.__handlers.set(listener, wrappedListener);
+    this._native.addEventListener(type, wrappedListener);
   }
 
   trigger(type, event) {
     // TODO: check this for correctness and for real jQuery.trigger replacement
-    this._native.dispatchEvent(new CustomEvent(type, event));
+    this._native.dispatchEvent(new CustomEvent(type, { detail: event }));
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -109,7 +115,8 @@ class ElementPeer {
   }
 
   removeEvent(type, listener) {
-    this._native.removeEventListener(type, listener);
+    this._native.removeEventListener(type, this.__handlers.get(listener));
+    this.__handlers.delete(listener);
   }
 
   setSize(width, height) {

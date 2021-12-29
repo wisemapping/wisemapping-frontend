@@ -1,5 +1,5 @@
 {
-    "name": "wisemapping-font-end",
+    "name": "wisemapping-front-end",
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "build": "lerna run build",

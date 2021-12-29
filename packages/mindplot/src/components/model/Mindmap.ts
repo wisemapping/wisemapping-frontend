@@ -153,8 +153,8 @@ class Mindmap extends IMindmap {
   }
 
   /**
-   * @param relationship
-   */
+         * @param relationship
+         */
   deleteRelationship(relationship: RelationshipModel) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }

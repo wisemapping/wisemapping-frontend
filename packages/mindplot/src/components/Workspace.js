@@ -19,13 +19,14 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import { Workspace as Workspace2D, Toolkit } from '@wisemapping/web2d';
 
 class Workspace {
-  constructor(screenManager, zoom) {
+  constructor(screenManager, zoom, isReadOnly) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
     $assert(zoom, 'zoom container can not be null');
 
     this._zoom = zoom;
     this._screenManager = screenManager;
+    this._isReadOnly = isReadOnly;
 
     const divContainer = screenManager.getContainer();
     this._screenWidth = parseInt(divContainer.css('width'), 10);
@@ -42,6 +43,10 @@ class Workspace {
     // Register drag events ...
     this._registerDragEvents();
     this._eventsEnabled = true;
+  }
+
+  get isReadOnly() {
+    return this._isReadOnly;
   }
 
   _createWorkspace() {
