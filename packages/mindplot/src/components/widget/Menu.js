@@ -212,17 +212,17 @@ class Menu extends IMenu {
     }
 
     this._addButton('export', false, false, () => {
-      BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/exportf`, $msg('EXPORT'), {
-        cancelButton: true,
-        closeButton: true,
-      });
+      // BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/exportf`, $msg('EXPORT'), {
+      //   cancelButton: true,
+      //   closeButton: true,
+      // });
+      const svgContent = designer.export('svg');
+      console.log(svgContent);
     });
     Menu._registerTooltip('export', $msg('EXPORT'));
 
-    const me = this;
-
     this._addButton('print', false, false, () => {
-      me.save(saveElem, designer, false);
+      this.save(saveElem, designer, false);
       const urlPrefix = window.location.href.substring(0, window.location.href.lastIndexOf('c/maps/'));
       window.open(`${urlPrefix}c/maps/${mapId}/print`);
     });
@@ -308,7 +308,7 @@ class Menu extends IMenu {
     if (saveElem) {
       this._addButton('save', false, false,
         () => {
-          me.save(saveElem, designer, true);
+          this.save(saveElem, designer, true);
         });
       Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
 
@@ -316,17 +316,17 @@ class Menu extends IMenu {
         // To prevent the user from leaving the page with changes ...
         //                Element.NativeEvents.unload = 1;
         $(window).bind('unload', () => {
-          if (me.isSaveRequired()) {
-            me.save(saveElem, designer, false, true);
+          if (this.isSaveRequired()) {
+            this.save(saveElem, designer, false, true);
           }
-          me.unlockMap(designer);
+          this.unlockMap(designer);
         });
 
         // Autosave on a fixed period of time ...
         setInterval(
           () => {
-            if (me.isSaveRequired()) {
-              me.save(saveElem, designer, false);
+            if (this.isSaveRequired()) {
+              this.save(saveElem, designer, false);
             }
           }, 30000,
         );
@@ -336,7 +336,7 @@ class Menu extends IMenu {
     const discardElem = $('#discard');
     if (discardElem) {
       this._addButton('discard', false, false, () => {
-        me.discardChanges(designer);
+        this.discardChanges(designer);
       });
       Menu._registerTooltip('discard', $msg('DISCARD_CHANGES'));
     }

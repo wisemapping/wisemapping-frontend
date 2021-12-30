@@ -29,8 +29,8 @@ class Workspace {
     this._isReadOnly = isReadOnly;
 
     const divContainer = screenManager.getContainer();
-    this._screenWidth = parseInt(divContainer.css('width'), 10);
-    this._screenHeight = parseInt(divContainer.css('height'), 10);
+    this._screenWidth = Number.parseInt(divContainer.css('width'), 10);
+    this._screenHeight = Number.parseInt(divContainer.css('height'), 10);
 
     // Initialize web2d workspace.
     const workspace = this._createWorkspace();
@@ -154,8 +154,8 @@ class Workspace {
     return this._eventsEnabled;
   }
 
-  dumpNativeChart() {
-    return this._workspace.dumpNativeChart();
+  getSVGElement() {
+    return this._workspace.getSVGElement();
   }
 
   _registerDragEvents() {

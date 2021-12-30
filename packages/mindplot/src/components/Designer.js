@@ -35,6 +35,7 @@ import DragConnector from './DragConnector';
 import DragManager from './DragManager';
 import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
+import SVGExporter from './export/SVGExporter';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
@@ -339,9 +340,9 @@ class Designer extends Events {
   }
 
   /**
-       * @param {Number=} factor
-       * zoom out by the given factor, or 1.2, if undefined
-       */
+     * @param {Number=} factor
+     * zoom out by the given factor, or 1.2, if undefined
+     */
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
@@ -351,6 +352,18 @@ class Designer extends Events {
     } else {
       $notify($msg('ZOOM_ERROR'));
     }
+  }
+
+  export(formatType) {
+    const svgElement = this._workspace.getSVGElement();
+    const mindmap = this._mindmap;
+
+    let result = '';
+    if (formatType === 'svg') {
+      const exporter = new SVGExporter(mindmap, svgElement);
+      result = exporter.export();
+    }
+    return result;
   }
 
   /**

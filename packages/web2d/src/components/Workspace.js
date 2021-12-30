@@ -197,9 +197,8 @@ class Workspace extends ElementClass {
     this.peer.removeChild(element.peer);
   }
 
-  dumpNativeChart() {
-    const elem = this._htmlContainer;
-    return elem.innerHTML;
+  getSVGElement() {
+    return this._htmlContainer.firstChild;
   }
 }
 
