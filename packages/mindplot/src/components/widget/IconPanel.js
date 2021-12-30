@@ -43,7 +43,7 @@ class IconPanel extends ToolbarPaneItem {
         const iconId = familyIcons[j];
         const img = $('<img>')
           .attr('id', iconId)
-          .attr('src', ImageIcon._getImageUrl(iconId))
+          .attr('src', ImageIcon.getImageUrl(iconId))
           .attr('class', 'panelIcon');
 
         familyContent.append(img);

@@ -1,22 +1,20 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Arrow, Point,
+  Workspace, Arrow, Point,
 } from '../../src';
 
-Toolkit.init();
-
-const overflowWorkspace = new Workspace({ fillColor: 'green' });
-overflowWorkspace.setSize('200px', '200px');
+const workspace = new Workspace({ fillColor: 'green' });
+workspace.setSize('200px', '200px');
 const arrow = new Arrow();
 arrow.setFrom(50, 50);
 arrow.setControlPoint(new Point(-50, 0));
 
-overflowWorkspace.append(arrow);
+workspace.append(arrow);
 
 const arrow2 = new Arrow();
 arrow2.setFrom(100, 50);
 arrow2.setControlPoint(new Point(50, 50));
 
-overflowWorkspace.append(arrow2);
+workspace.append(arrow2);
 
-overflowWorkspace.addItAsChildTo($('#overflowExample').first());
+workspace.addItAsChildTo($('#overflowExample').first());

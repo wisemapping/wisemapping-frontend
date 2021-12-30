@@ -1,5 +1,5 @@
 import TestSuite from './TestSuite';
-import LayoutManager from '../../src/components/layout/LayoutManager';
+import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 describe('Symmetric Test Suite', () => {
   describe('symmetricTest', () => {

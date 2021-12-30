@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+import { $defined } from '@wisemapping/core-js';
 
 // quick hand-made version of $.css()
 export const getStyle = (elem, prop) => {

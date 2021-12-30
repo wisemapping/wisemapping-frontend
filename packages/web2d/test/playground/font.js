@@ -25,14 +25,14 @@ function multiline(text, family, elemId) {
 }
 
 function alignments(text, family, elemId) {
-  const overflowWorkspace = new Workspace();
-  overflowWorkspace.setSize('260px', '240px');
-  overflowWorkspace.setCoordSize('260', '240');
-  overflowWorkspace.setCoordOrigin(0, 0);
+  const workspace = new Workspace();
+  workspace.setSize('260px', '240px');
+  workspace.setCoordSize('260', '240');
+  workspace.setCoordOrigin(0, 0);
 
   ['center', 'left', 'right'].forEach((align, i) => {
     const wText = new Text();
-    overflowWorkspace.append(wText);
+    workspace.append(wText);
 
     wText.setText(text);
     wText.setFont(family, 8, 'bold');
@@ -41,10 +41,8 @@ function alignments(text, family, elemId) {
     wText.setTextAlignment(align);
   });
 
-  overflowWorkspace.addItAsChildTo($(`#${elemId}`));
+  workspace.addItAsChildTo($(`#${elemId}`));
 }
-
-Toolkit.init();
 
 // Multine tests ...
 ['Arial', 'Tahoma', 'Verdana', 'Times'].forEach((family, i) => {

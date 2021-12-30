@@ -38,7 +38,7 @@ class ImageIcon extends Icon {
 
     // Build graph image representation ...
     const iconType = iconModel.getIconType();
-    const imgUrl = ImageIcon._getImageUrl(iconType);
+    const imgUrl = ImageIcon.getImageUrl(iconType);
     super(imgUrl);
 
     this._topicId = topic.getId();
@@ -53,13 +53,13 @@ class ImageIcon extends Icon {
         const newIconType = ImageIcon._getNextFamilyIconId(iconTypeClick);
         iconModel.setIconType(newIconType);
 
-        me._image.setHref(ImageIcon._getImageUrl(newIconType));
+        me._image.setHref(ImageIcon.getImageUrl(newIconType));
       });
       this._image.setCursor('pointer');
     }
   }
 
-  static _getImageUrl(iconId) {
+  static getImageUrl(iconId) {
     let result = images[`${iconId}.svg`];
     if (!result) {
       result = images[`${iconId}.png`];

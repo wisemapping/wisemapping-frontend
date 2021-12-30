@@ -17,7 +17,6 @@
  */
 
 import Workspace from './components/Workspace';
-import Toolkit from './components/Toolkit';
 import Elipse from './components/Elipse';
 import Line from './components/Line';
 import PolyLine from './components/PolyLine';
@@ -42,6 +41,5 @@ export {
   PolyLine,
   Rect,
   Text,
-  Toolkit,
   Workspace,
 };

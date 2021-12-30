@@ -233,7 +233,7 @@ class XMLSerializerPela {
     // Is a wisemap?.
     $assert(
       rootElem.tagName === XMLSerializerPela.MAP_ROOT_NODE,
-      'This seem not to be a map document.',
+      `This seem not to be a map document. Found tag: ${rootElem.tagName}`,
     );
 
     this._idsMap = {};
@@ -492,6 +492,18 @@ class XMLSerializerPela {
       ) {
         result += str.charAt(i);
       }
+    }
+    return result;
+  }
+
+  static innerXML(element) {
+    let result = null;
+    if ($defined(element.innerXML)) {
+      result = element.innerXML;
+    } if ($defined(element.xml)) {
+      result = element.xml;
+    } if ($defined(XMLSerializer)) {
+      result = new XMLSerializer().serializeToString(element);
     }
     return result;
   }

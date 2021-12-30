@@ -1,4 +1,4 @@
-import Events from '../../src/components/Events';
+import Events from '../../../src/components/Events';
 
 describe('Events class suite', () => {
   class TestClass extends Events {
