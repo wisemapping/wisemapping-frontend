@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import XMLSerializer from './XMLSerializerPela';
+import XMLSerializerPela from './XMLSerializerPela';
 
 /**
  * This serializer works exactly the same way as for the former version Pela
  */
-class XMLSerializerTango extends XMLSerializer {
+class XMLSerializerTango extends XMLSerializerPela {
 }
 
 // eslint-disable-next-line camelcase

@@ -26,7 +26,7 @@
         "lint": "eslint src",
         "playground": "webpack serve --config webpack.playground.js",
         "cy:run": "cypress run",
-        "test:unit": "jest ./test/unit/*.ts ./test/unit/*.js",
+        "test:unit": "jest ./test/unit/export/*.ts ./test/unit/layout/*.js",
         "test:integration": "start-server-and-test playground http-get://localhost:8081 cy:run",
         "test": "yarn test:unit && yarn test:integration"
     },
@@ -70,6 +70,6 @@
         "webpack-bundle-analyzer": "^4.5.0",
         "webpack-cli": "^4.7.2",
         "webpack-dev-server": "^3.11.2",
-        "webpack-merge": "^5.8.0"
+        "webpack-merge": "^5.8.0"    
     }
 }

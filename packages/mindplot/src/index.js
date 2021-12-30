@@ -22,7 +22,7 @@ import Mindmap from './components/model/Mindmap';
 import PersistenceManager from './components/PersistenceManager';
 import Designer from './components/Designer';
 import LocalStorageManager from './components/LocalStorageManager';
-import TxtExporter from './components/export/TxtExporter';
+import TxtExporter from './components/export/PlainTextExporter';
 
 import Menu from './components/widget/Menu';
 
