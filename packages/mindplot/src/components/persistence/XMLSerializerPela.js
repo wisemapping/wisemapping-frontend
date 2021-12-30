@@ -233,7 +233,7 @@ class XMLSerializerPela {
     // Is a wisemap?.
     $assert(
       rootElem.tagName === XMLSerializerPela.MAP_ROOT_NODE,
-      'This seem not to be a map document.',
+      `This seem not to be a map document. Found tag: ${rootElem.tagName}`,
     );
 
     this._idsMap = {};
