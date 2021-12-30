@@ -90,7 +90,7 @@ class Text extends ElementClass {
   }
 
   getHeight() {
-    return parseInt(this.peer.getHeight(), 10);
+    return Number.parseInt(this.peer.getHeight(), 10);
   }
 
   getFontHeight() {

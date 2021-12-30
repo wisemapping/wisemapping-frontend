@@ -57,7 +57,7 @@ class Font {
   }
 
   getSize() {
-    return parseInt(this._size, 10);
+    return Number.parseInt(this._size, 10);
   }
 
   getStyle() {

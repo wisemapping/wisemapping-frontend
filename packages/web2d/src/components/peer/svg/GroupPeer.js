@@ -132,11 +132,11 @@ class GroupPeer extends ElementPeer {
   setPosition(x, y) {
     const change = x !== this._position.x || y !== this._position.y;
     if ($defined(x)) {
-      this._position.x = parseInt(x, 10);
+      this._position.x = Number.parseFloat(x, 10);
     }
 
     if ($defined(y)) {
-      this._position.y = parseInt(y, 10);
+      this._position.y = Number.parseFloat(y, 10);
     }
     if (change) {
       this.updateTransform();

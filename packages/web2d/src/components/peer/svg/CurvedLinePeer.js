@@ -37,8 +37,8 @@ class CurvedLinePeer extends ElementPeer {
     const change = this._control1.x !== control.x || this._control1.y !== control.y;
     if ($defined(control.x)) {
       this._control1 = control;
-      this._control1.x = Number.parseInt(this._control1.x, 10);
-      this._control1.y = Number.parseInt(this._control1.y, 10);
+      this._control1.x = Number.parseFloat(this._control1.x, 10);
+      this._control1.y = Number.parseFloat(this._control1.y, 10);
     }
     if (change) {
         this._updatePath();
@@ -50,8 +50,8 @@ class CurvedLinePeer extends ElementPeer {
     const change = this._control2.x !== control.x || this._control2.y !== control.y;
     if ($defined(control.x)) {
       this._control2 = control;
-      this._control2.x = Number.parseInt(this._control2.x, 10);
-      this._control2.y = Number.parseInt(this._control2.y, 10);
+      this._control2.x = Number.parseFloat(this._control2.x, 10);
+      this._control2.y = Number.parseFloat(this._control2.y, 10);
     }
     if (change) this._updatePath();
   }
@@ -77,16 +77,16 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setFrom(x1, y1) {
-    const change = this._x1 !== parseInt(x1, 10) || this._y1 !== parseInt(y1, 10);
-    this._x1 = Number.parseInt(x1, 10);
-    this._y1 = Number.parseInt(y1, 10);
+    const change = this._x1 !== Number.parseFloat(x1, 10) || this._y1 !== Number.parseFloat(y1, 10);
+    this._x1 = Number.parseFloat(x1, 10);
+    this._y1 = Number.parseFloat(y1, 10);
     if (change) this._updatePath();
   }
 
   setTo(x2, y2) {
-    const change = this._x2 !== parseInt(x2, 10) || this._y2 !== parseInt(y2, 10);
-    this._x2 = Number.parseInt(x2, 10);
-    this._y2 = Number.parseInt(y2, 10);
+    const change = this._x2 !== Number.parseFloat(x2, 10) || this._y2 !== parseFloat(y2, 10);
+    this._x2 = Number.parseFloat(x2, 10);
+    this._y2 = Number.parseFloat(y2, 10);
     if (change) this._updatePath();
   }
 
@@ -196,8 +196,8 @@ class CurvedLinePeer extends ElementPeer {
     const y2 = m * (x2 - tarPos.x) + tarPos.y;
 
     return [
-      new Point(Number.toFixed(-srcPos.x + x1, 5), Number.toFixed(-srcPos.y + y1), 5),
-      new Point(Number.toFixed(-tarPos.x + x2, 5), Number.toFixed(-tarPos.y + y2, 5)),
+      new Point(-srcPos.x + x1, -srcPos.y + y1),
+      new Point(-tarPos.x + x2, -tarPos.y + y2),
     ];
   }
 

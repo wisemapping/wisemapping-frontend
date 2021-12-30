@@ -1,6 +1,5 @@
 
 import { Mindmap } from "../..";
-import ImageIcon from "../ImageIcon";
 import Exporter from "./Exporter";
 
 class SVGExporter implements Exporter {
@@ -12,14 +11,14 @@ class SVGExporter implements Exporter {
     export(): string {
         // Replace all images for in-line images ...
         const imagesElements: HTMLCollection = this.svgElement.getElementsByTagName('image');
-        console.log(imagesElements.length);
+        let result:string = new XMLSerializer().serializeToString(this.svgElement);
 
-        const image = ImageIcon.getImageUrl('face_smile');
-        Array.from(imagesElements).forEach((image) => {
-            const imgValue = image.attributes['xlink:href'].value;
-            console.log(image.attributes);
-        });
-        return "";
+        // Are namespace declared ?. Otherwise, force the declaration ...
+        if(result.indexOf('xmlns=')!=-1){
+            result.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink" ')
+        }
+
+        return result;
 
     }
 }

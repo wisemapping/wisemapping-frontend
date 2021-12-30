@@ -120,13 +120,13 @@ class ElementPeer {
   }
 
   setSize(width, height) {
-    if ($defined(width) && this._size.width !== parseInt(width, 10)) {
-      this._size.width = parseInt(width, 10);
+    if ($defined(width) && this._size.width !== Number.parseFloat(width, 10)) {
+      this._size.width = Number.parseFloat(width, 10);
       this._native.setAttribute('width', this._size.width);
     }
 
-    if ($defined(height) && this._size.height !== parseInt(height, 10)) {
-      this._size.height = parseInt(height, 10);
+    if ($defined(height) && this._size.height !== Number.parseFloat(height, 10)) {
+      this._size.height = Number.parseFloat(height, 10);
       this._native.setAttribute('height', this._size.height);
     }
 

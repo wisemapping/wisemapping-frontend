@@ -169,18 +169,6 @@ class XMLSerializerBeta {
     return noteDom;
   }
 
-  static innerXML(element) {
-    let result = null;
-    if ($defined(element.innerXML)) {
-      result = element.innerXML;
-    } if ($defined(element.xml)) {
-      result = element.xml;
-    } if ($defined(XMLSerializer)) {
-      result = new XMLSerializer().serializeToString(element);
-    }
-    return result;
-  }
-
   loadFromDom(dom, mapId) {
     $assert(dom, 'Dom can not be null');
     $assert(mapId, 'mapId can not be null');
@@ -196,7 +184,7 @@ class XMLSerializerBeta {
     $assert(
       documentElement.tagName === XMLSerializerBeta.MAP_ROOT_NODE,
       `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${dom.innerHTML
-      },XML:,${XMLSerializerBeta.innerXML(dom)}`,
+      },XML:,${new XMLSerializer().serializeToString(dom)}`,
     );
 
     // Start the loading process ...

@@ -495,18 +495,6 @@ class XMLSerializerPela {
     }
     return result;
   }
-
-  static innerXML(element) {
-    let result = null;
-    if ($defined(element.innerXML)) {
-      result = element.innerXML;
-    } if ($defined(element.xml)) {
-      result = element.xml;
-    } if ($defined(XMLSerializer)) {
-      result = new XMLSerializer().serializeToString(element);
-    }
-    return result;
-  }
 }
 
 /**

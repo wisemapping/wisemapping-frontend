@@ -31,10 +31,6 @@ import VerdanaFont from './peer/svg/VerdanaFont';
 import TahomaFont from './peer/svg/TahomaFont';
 
 class Toolkit {
-  static init() {
-
-  }
-
   static createWorkspace(element) {
     return new WorkspacePeer(element);
   }

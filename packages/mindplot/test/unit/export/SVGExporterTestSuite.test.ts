@@ -19,7 +19,8 @@ test('mindplot generation of simple maps', () => {
 
   // Inspect ...
   const exporter = new SVGExporter(mindmap, svgDocument.documentElement);
-  console.log(exporter.export());
+  console.log('Exported map:' + exporter.export());
+
 
   function parseXMLFile(filePath: fs.PathOrFileDescriptor, mimeType: DOMParserSupportedType) {
     const parser = new DOMParser();
@@ -28,8 +29,10 @@ test('mindplot generation of simple maps', () => {
 
     // Is there any parsing error ?.
     if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
+      console.log(new XMLSerializer().serializeToString(xmlDoc));
       throw new Error(`Unexpected error parsing: ${filePath}. Error: ${new XMLSerializer().serializeToString(xmlDoc)}`);
     }
+  
     return xmlDoc;
   }
 });

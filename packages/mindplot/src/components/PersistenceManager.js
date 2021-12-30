@@ -16,7 +16,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, innerXML } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
 class PersistenceManager {
@@ -29,7 +29,7 @@ class PersistenceManager {
 
     const serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
-    const mapXml = innerXML(domMap);
+    const mapXml = new XMLSerializer().serializeToString(domMap);
 
     const pref = JSON.stringify(editorProperties);
     try {

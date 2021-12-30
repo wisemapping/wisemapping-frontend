@@ -51,16 +51,17 @@ class WorkspacePeer extends ElementPeer {
 
   setCoordSize(width, height) {
     const viewBox = this._native.getAttribute('viewBox');
+
     let coords = [0, 0, 0, 0];
     if (viewBox != null) {
       coords = viewBox.split(/ /);
     }
     if ($defined(width)) {
-      coords[2] = width;
+      coords[2] = width.toFixed(5);
     }
 
     if ($defined(height)) {
-      coords[3] = height;
+      coords[3] = height.toFixed(5);
     }
 
     this._native.setAttribute('viewBox', coords.join(' '));
