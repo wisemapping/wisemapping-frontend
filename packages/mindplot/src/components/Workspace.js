@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Workspace as Workspace2D, Toolkit } from '@wisemapping/web2d';
+import { Workspace as Workspace2D } from '@wisemapping/web2d';
 
 class Workspace {
   constructor(screenManager, zoom, isReadOnly) {
@@ -64,7 +64,7 @@ class Workspace {
       fillColor: 'transparent',
       strokeWidth: 0,
     };
-    Toolkit.init();
+
     return new Workspace2D(workspaceProfile);
   }
 

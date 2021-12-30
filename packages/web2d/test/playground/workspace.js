@@ -1,12 +1,10 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Elipse,
+  Workspace, Elipse,
 } from '../../src';
 import Grid from './Grid';
 
 global.$ = $;
-
-Toolkit.init();
 
 const overflowWorkspace = new Workspace();
 overflowWorkspace.setSize('100px', '100px');

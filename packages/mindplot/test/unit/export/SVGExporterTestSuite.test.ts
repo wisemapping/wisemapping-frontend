@@ -5,22 +5,31 @@ import XMLSerializerFactory from '../../../src/components/persistence/XMLSeriali
 import SVGExporter from '../../../src/components/export/SVGExporter';
 
 test('mindplot generation of simple maps', () => {
-  const parser = new DOMParser();
-
-  // Load DOM ...
-  const mapStream = fs.readFileSync(path.resolve(__dirname, './samples/welcome.xml'), { encoding: 'utf-8' });
-  const mapDocument = parser.parseFromString(mapStream.toString(), 'text/xml')
+  // Load mindmap DOM ...
+  const mindmapPath = path.resolve(__dirname, './samples/welcome.xml');
+  const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
 
   // Convert to mindmap ...
   const serializer = XMLSerializerFactory.getSerializerFromDocument(mapDocument);
   const mindmap: Mindmap = serializer.loadFromDom(mapDocument, 'welcome');
 
   // Load SVG ...
-  const svgStream = fs.readFileSync(path.resolve(__dirname, './samples/welcome.svg'), { encoding: 'utf-8' });
-  const svgDocument = parser.parseFromString(svgStream.toString(), 'application/xml')
-  console.log(svgDocument);
+  const svgPath = path.resolve(__dirname, './samples/welcome.svg');
+  const svgDocument = parseXMLFile(svgPath, 'image/svg+xml');
 
   // Inspect ...
   const exporter = new SVGExporter(mindmap, svgDocument.documentElement);
   console.log(exporter.export());
+
+  function parseXMLFile(filePath: fs.PathOrFileDescriptor, mimeType: DOMParserSupportedType) {
+    const parser = new DOMParser();
+    const stream = fs.readFileSync(filePath, { encoding: 'utf-8' });
+    const xmlDoc = parser.parseFromString(stream.toString(), mimeType);
+
+    // Is there any parsing error ?.
+    if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
+      throw new Error(`Unexpected error parsing: ${filePath}. Error: ${new XMLSerializer().serializeToString(xmlDoc)}`);
+    }
+    return xmlDoc;
+  }
 });

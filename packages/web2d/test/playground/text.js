@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Text,
+  Workspace, Text,
 } from '../../src';
 import TransformUtils from '../../src/components/peer/utils/TransformUtils';
 
@@ -44,7 +44,6 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   workspaces[iesimo] = workspace;
 };
 
-Toolkit.init();
 textTestHelper(200, 'Test Text 1', 'Arial', 10, 'normal', 'normal', 'red', 'text0', 0);
 textTestHelper(100, 'Test Text 2', 'Arial', 10, 'normal', 'normal', 'blue', 'text1', 1);
 textTestHelper(50, 'Test Text 3', 'Arial', 10, 'normal', 'normal', 'blue', 'text2', 2);

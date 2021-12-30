@@ -1,11 +1,9 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Rect,
+  Workspace, Rect,
 } from '../../src';
 
 global.$ = $;
-
-Toolkit.init();
 
 const strokeStyleTest = () => {
   function builder(parent, scale, strokeWidth) {

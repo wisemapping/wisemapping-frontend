@@ -17,6 +17,7 @@ module.exports = {
     group: './test/playground/group.js',
     prototype: './test/playground/prototype.js',
     text: './test/playground/text.js',
+    image: './test/playground/image.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist', 'tests'),
@@ -38,6 +39,10 @@ module.exports = {
         exclude: [
           /node_modules/,
         ],
+      },
+      {
+        test: /\.(png|svg)$/i,
+        type: 'asset/inline',
       },
     ],
   },
@@ -143,6 +148,13 @@ module.exports = {
         chunks: ['text'],
         filename: 'text.html',
         template: 'test/playground/text.html',
+      },
+    ),
+    new HtmlWebpackPlugin(
+      {
+        chunks: ['image'],
+        filename: 'image.html',
+        template: 'test/playground/image.html',
       },
     ),
   ],
