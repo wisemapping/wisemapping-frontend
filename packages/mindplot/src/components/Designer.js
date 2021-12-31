@@ -36,7 +36,7 @@ import DragManager from './DragManager';
 import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 import SVGExporter from './export/SVGExporter';
-import BinaryImageExporter from './export/PNGExporter';
+import BinaryImageExporter from './export/BinaryImageExporter';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
