@@ -4,7 +4,7 @@ import Exporter from "./Exporter";
 
 class SVGExporter implements Exporter {
     svgElement: Element;
-    constructor(mindmap: Mindmap, svgElement: Element) {
+    constructor(mindmap: Mindmap, svgElement: Element, centerImgage:boolean=false) {
         this.svgElement = svgElement;
     }
 
