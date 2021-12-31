@@ -11,12 +11,16 @@ class SVGExporter implements Exporter {
     export(): Promise<string> {
         // Replace all images for in-line images ...
         const imagesElements: HTMLCollection = this.svgElement.getElementsByTagName('image');
-        let svgTxt:string = new XMLSerializer().serializeToString(this.svgElement);
+        let svgTxt:string = new XMLSerializer()
+            .serializeToString(this.svgElement);
 
         // Are namespace declared ?. Otherwise, force the declaration ...
         if(svgTxt.indexOf('xmlns:xlink=')!==-1){
-            svgTxt.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
+            svgTxt = svgTxt.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
         }
+
+        // Add white background. This is mainly for PNG export ...
+        svgTxt = svgTxt.replace('<svg ', '<svg style="background-color:white" ');        
 
         const blob = new Blob([svgTxt], { type: 'image/svg+xml' });
         const result = URL.createObjectURL(blob);

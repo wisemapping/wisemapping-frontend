@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
 import SVGExporter from '../../../src/components/export/SVGExporter';
-import PNGExporter from '../../../src/components/export/PNGExporter';
+import BinaryImageExporter from '../../../src/components/export/PNGExporter';
 
 test('mindplot generation of simple maps', async () => {
   // Load mindmap DOM ...

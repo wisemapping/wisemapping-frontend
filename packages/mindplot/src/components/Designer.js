@@ -36,7 +36,7 @@ import DragManager from './DragManager';
 import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 import SVGExporter from './export/SVGExporter';
-import PNGExporter from './export/PNGExporter';
+import BinaryImageExporter from './export/PNGExporter';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
@@ -369,7 +369,11 @@ class Designer extends Events {
         break;
       }
       case 'png': {
-        exporter = new PNGExporter(mindmap, svgElement, size.width, size.height);
+        exporter = new BinaryImageExporter(mindmap, svgElement, size.width, size.height, 'image/png');
+        break;
+      }
+      case 'jpeg': {
+        exporter = new BinaryImageExporter(mindmap, svgElement, size.width, size.height, 'image/jpeg');
         break;
       }
       default:

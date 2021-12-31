@@ -213,20 +213,22 @@ class Menu extends IMenu {
 
     this._addButton('export', false, false, () => {
       const formatType = 'png';
-      designer.export(formatType).then((url) => {
-        // Create hidden anchor to force download ...
-        const anchor = document.createElement('a');
-        anchor.style = 'display: none';
-        anchor.download = `${mapId}.${formatType}`;
-        anchor.href = url;
-        document.body.appendChild(anchor);
 
-        // Trigger click ...
-        anchor.click();
+      designer.export(formatType)
+        .then((url) => {
+          // Create hidden anchor to force download ...
+          const anchor = document.createElement('a');
+          anchor.style = 'display: none';
+          anchor.download = `${mapId}.${formatType}`;
+          anchor.href = url;
+          document.body.appendChild(anchor);
 
-        // Clean up ...
-        document.body.removeChild(anchor);
-      });
+          // Trigger click ...
+          anchor.click();
+
+          // Clean up ...
+          document.body.removeChild(anchor);
+        });
 
       // Create anchor element ...
     });

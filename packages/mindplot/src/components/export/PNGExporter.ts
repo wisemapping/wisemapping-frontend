@@ -2,16 +2,21 @@
 import { Mindmap } from "../..";
 import Exporter from "./Exporter";
 import SVGExporter from "./SVGExporter";
-
-class PNGExporter implements Exporter {
+/**
+ * Based on https://mybyways.com/blog/convert-svg-to-png-using-your-browser
+ */
+class BinaryImageExporter implements Exporter {
     svgElement: Element;
     mindmap: Mindmap;
     width: number;
     height: number;
+    imgFormat: string;
 
-    constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number) {
+    constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg') {
         this.svgElement = svgElement;
         this.mindmap = mindmap;
+        this.imgFormat = imgFormat;
+
         this.width = width;
         this.height = height;
     }
@@ -19,19 +24,28 @@ class PNGExporter implements Exporter {
     async export(): Promise<string> {
         const svgExporter = new SVGExporter(this.mindmap, this.svgElement);
         const svgUrl = await svgExporter.export();
-
+        
+        // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
+        const dpr = (window.devicePixelRatio || 1) * 2;
+        
         // Create canvas ...
         const canvas = document.createElement('canvas');
-        canvas.setAttribute('width', this.width.toString());
-        canvas.setAttribute('height', this.height.toString());
+        canvas.setAttribute('width', (this.width * dpr).toString() );
+        canvas.setAttribute('height', (this.height * dpr).toString());
 
         // Render the image and wait for the response ...
         const img = new Image();
         const result = new Promise<string>((resolve, reject) => {
 
             img.onload = () => {
-                canvas.getContext('2d').drawImage(img, 0, 0);
-                const imgDataUri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
+                const ctx = canvas.getContext('2d');
+                // Scale for retina ...
+                ctx.scale(dpr, dpr);
+                ctx.drawImage(img, 0, 0);
+
+                const imgDataUri = canvas
+                    .toDataURL(this.imgFormat)
+                    .replace('image/png', 'octet/stream');
                 URL.revokeObjectURL(imgDataUri);
                 resolve(imgDataUri);
             }
@@ -40,4 +54,4 @@ class PNGExporter implements Exporter {
         return result;
     }
 }
-export default PNGExporter;
+export default BinaryImageExporter;
