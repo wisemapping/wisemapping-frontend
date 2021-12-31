@@ -1,6 +1,6 @@
 
 interface Exporter {
-    export(): string;
+    export(): Promise<string>;
 }
 
 export default Exporter;

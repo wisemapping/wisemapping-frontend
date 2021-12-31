@@ -36,6 +36,7 @@ import DragManager from './DragManager';
 import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 import SVGExporter from './export/SVGExporter';
+import PNGExporter from './export/PNGExporter';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
@@ -355,15 +356,27 @@ class Designer extends Events {
   }
 
   export(formatType) {
-    const svgElement = this._workspace.getSVGElement();
+    const workspace = this._workspace;
+    const svgElement = workspace.getSVGElement();
+    const size = workspace.getSize();
+
     const mindmap = this._mindmap;
 
-    let result = '';
-    if (formatType === 'svg') {
-      const exporter = new SVGExporter(mindmap, svgElement);
-      result = exporter.export();
+    let exporter;
+    switch (formatType) {
+      case 'svg': {
+        exporter = new SVGExporter(mindmap, svgElement);
+        break;
+      }
+      case 'png': {
+        exporter = new PNGExporter(mindmap, svgElement, size.width, size.height);
+        break;
+      }
+      default:
+        throw new Error('Unsupported encoding');
     }
-    return result;
+
+    return exporter.export();
   }
 
   /**

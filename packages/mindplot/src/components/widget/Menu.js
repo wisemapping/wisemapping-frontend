@@ -212,27 +212,25 @@ class Menu extends IMenu {
     }
 
     this._addButton('export', false, false, () => {
-      const svgContent = designer.export('svg');
+      const formatType = 'png';
+      designer.export(formatType).then((url) => {
+        // Create hidden anchor to force download ...
+        const anchor = document.createElement('a');
+        anchor.style = 'display: none';
+        anchor.download = `${mapId}.${formatType}`;
+        anchor.href = url;
+        document.body.appendChild(anchor);
 
-      // Encode content ...
-      const blob = new Blob([svgContent], { type: 'image/svg+xml' });
-      const win = window.URL || window.webkitURL || window;
-      const svgUri = win.createObjectURL(blob);
-      console.log(svgContent);
+        // Trigger click ...
+        anchor.click();
+
+        // Clean up ...
+        document.body.removeChild(anchor);
+      });
 
       // Create anchor element ...
-      const anchor = document.createElement('a');
-      anchor.style = 'display: none';
-      anchor.download = `${mapId}.svg`;
-      anchor.href = svgUri;
-      document.body.appendChild(anchor);
-
-      // Trigger click ...
-      anchor.click();
-
-      // Clean up ...
-      document.body.removeChild(anchor);
     });
+
     Menu._registerTooltip('export', $msg('EXPORT'));
 
     this._addButton('print', false, false, () => {

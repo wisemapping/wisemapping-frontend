@@ -8,16 +8,19 @@ class SVGExporter implements Exporter {
         this.svgElement = svgElement;
     }
 
-    export(): string {
+    export(): Promise<string> {
         // Replace all images for in-line images ...
         const imagesElements: HTMLCollection = this.svgElement.getElementsByTagName('image');
-        let result:string = new XMLSerializer().serializeToString(this.svgElement);
+        let svgTxt:string = new XMLSerializer().serializeToString(this.svgElement);
 
         // Are namespace declared ?. Otherwise, force the declaration ...
-        if(result.indexOf('xmlns:xlink=')!=-1){
-            result.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
+        if(svgTxt.indexOf('xmlns:xlink=')!==-1){
+            svgTxt.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
         }
-        return result;
+
+        const blob = new Blob([svgTxt], { type: 'image/svg+xml' });
+        const result = URL.createObjectURL(blob);
+        return Promise.resolve(result);
 
     }
 }
