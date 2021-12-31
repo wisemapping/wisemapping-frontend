@@ -217,8 +217,7 @@ class Menu extends IMenu {
 
       const anchor = $('#export_anchor');
       anchor.attr('download', `${mapId}.svg`);
-      // anchor.attr('href', `data:image/svg+xml;base64,${btoa(svgContent)}`);
-      anchor.attr('href', 'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/svg.svg');
+      anchor.attr('href', `data:image/svg+xml;base64,${btoa(svgContent)}`);
 
       anchor.click();
     });
