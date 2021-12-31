@@ -212,12 +212,15 @@ class Menu extends IMenu {
     }
 
     this._addButton('export', false, false, () => {
-      // BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/exportf`, $msg('EXPORT'), {
-      //   cancelButton: true,
-      //   closeButton: true,
-      // });
       const svgContent = designer.export('svg');
       console.log(svgContent);
+
+      const anchor = $('#export_anchor');
+      anchor.attr('download', `${mapId}.svg`);
+      // anchor.attr('href', `data:image/svg+xml;base64,${btoa(svgContent)}`);
+      anchor.attr('href', 'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/svg.svg');
+
+      anchor.click();
     });
     Menu._registerTooltip('export', $msg('EXPORT'));
 
