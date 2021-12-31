@@ -213,13 +213,25 @@ class Menu extends IMenu {
 
     this._addButton('export', false, false, () => {
       const svgContent = designer.export('svg');
+
+      // Encode content ...
+      const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+      const win = window.URL || window.webkitURL || window;
+      const svgUri = win.createObjectURL(blob);
       console.log(svgContent);
 
-      const anchor = $('#export_anchor');
-      anchor.attr('download', `${mapId}.svg`);
-      anchor.attr('href', `data:image/svg+xml;base64,${btoa(svgContent)}`);
+      // Create anchor element ...
+      const anchor = document.createElement('a');
+      anchor.style = 'display: none';
+      anchor.download = `${mapId}.svg`;
+      anchor.href = svgUri;
+      document.body.appendChild(anchor);
 
+      // Trigger click ...
       anchor.click();
+
+      // Clean up ...
+      document.body.removeChild(anchor);
     });
     Menu._registerTooltip('export', $msg('EXPORT'));
 
@@ -457,13 +469,12 @@ class Menu extends IMenu {
   }
 
   _addButton(buttonId, topic, rel, fn) {
-    const me = this;
     // Register Events ...
     let result = null;
     if ($(`#${buttonId}`)) {
       const button = new ToolbarItem(buttonId, ((event) => {
         fn(event);
-        me.clear();
+        this.clear();
       }), { topicAction: topic, relAction: rel });
 
       this._toolbarElems.push(button);
