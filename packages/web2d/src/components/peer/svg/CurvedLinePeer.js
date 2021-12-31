@@ -156,11 +156,10 @@ class CurvedLinePeer extends ElementPeer {
     ) {
       this._calculateAutoControlPoints(avoidControlPointFix);
       
-      const path = `M${this._x1},${this._y1} C${this._control1.x + this._x1},${this._control1.y + this._y1
-      } ${this._control2.x + this._x2},${this._control2.y + this._y2} ${this._x2},${this._y2
-      }${this._lineStyle
-        ? ` ${this._control2.x + this._x2},${this._control2.y + this._y2 + 3} ${this._control1.x + this._x1
-        },${this._control1.y + this._y1 + 5} ${this._x1},${this._y1 + 7} Z`
+      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed(2)} C${(this._control1.x + this._x1).toFixed(2)},${this._control1.y + this._y1
+      } ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2).toFixed(2)} ${(this._x2).toFixed(2)},${(this._y2).toFixed(2)}${this._lineStyle
+        ? ` ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2 + 3).toFixed(2)} ${(this._control1.x + this._x1
+        ).toFixed(2)},${(this._control1.y + this._y1 + 5).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
         : ''
       }`;
       this._native.setAttribute('d', path);
@@ -177,7 +176,6 @@ class CurvedLinePeer extends ElementPeer {
     this._native.setAttribute('style', style);
   }
 
-  // TODO: deduplicate this method, extracted from mindplot/src/components/util/Shape.js to avoid circular ref
   static _calculateDefaultControlPoints(srcPos, tarPos) {
     const y = srcPos.y - tarPos.y;
     const x = srcPos.x - tarPos.x;

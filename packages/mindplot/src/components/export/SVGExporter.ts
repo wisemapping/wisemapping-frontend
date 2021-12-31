@@ -14,10 +14,9 @@ class SVGExporter implements Exporter {
         let result:string = new XMLSerializer().serializeToString(this.svgElement);
 
         // Are namespace declared ?. Otherwise, force the declaration ...
-        if(result.indexOf('xmlns=')!=-1){
-            result.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink" ')
+        if(result.indexOf('xmlns:xlink=')!=-1){
+            result.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
         }
-
         return result;
 
     }
