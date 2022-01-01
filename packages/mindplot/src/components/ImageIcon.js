@@ -125,10 +125,6 @@ ImageIcon.prototype.ICON_FAMILIES = [{
   icons: ['funy_angel', 'funy_devilish', 'funy_glasses', 'funy_grin', 'funy_kiss', 'funy_monkey'],
 },
 {
-  id: 'conn',
-  icons: ['conn_connect', 'conn_disconnect'],
-},
-{
   id: 'sport',
   icons: ['sport_basketball', 'sport_football', 'sport_golf', 'sport_raquet', 'sport_shuttlecock', 'sport_soccer', 'sport_tennis'],
 },
@@ -170,7 +166,11 @@ ImageIcon.prototype.ICON_FAMILIES = [{
 },
 {
   id: 'hard',
-  icons: ['hard_cd', 'hard_computer', 'hard_controller', 'hard_driver_disk', 'hard_ipod', 'hard_keyboard', 'hard_mouse', 'hard_printer'],
+  icons: ['hard_cd', 'hard_computer', 'hard_controller', 'hard_driver_disk', 'hard_ipod', 'hard_keyboard', 'hard_mouse', 'hard_printer', 'hard_webcam', 'hard_microphone'],
+},
+{
+  id: 'things',
+  icons: ['things_address_book', 'things_wrench', 'things_pin', 'things_window-layout', 'things_bubbles'],
 },
 {
   id: 'soft',
@@ -197,8 +197,16 @@ ImageIcon.prototype.ICON_FAMILIES = [{
   icons: ['flag_blue', 'flag_green', 'flag_orange', 'flag_pink', 'flag_purple', 'flag_yellow'],
 },
 {
-  id: 'bullet',
-  icons: ['bullet_black', 'bullet_blue', 'bullet_green', 'bullet_orange', 'bullet_red', 'bullet_pink', 'bullet_purple'],
+  id: 'social',
+  icons: ['social_facebook', 'social_twitter', 'social_redit', 'social_instagram', 'social_google-plus'],
+},
+{
+  id: 'meetapps',
+  icons: ['meetapps_slack', 'meetapps_google-meet', 'meetapps_whatapp', 'meetapps_ms-teams', 'meetapps_zoom', 'meeetapps_facebook-messenger'],
+},
+{
+  id: 'appsgoogle',
+  icons: ['appsgoogle_youtube', 'appsgoogle_gmail', 'appsgoogle-maps'],
 },
 {
   id: 'tag',
