@@ -212,14 +212,15 @@ class Menu extends IMenu {
     }
 
     this._addButton('export', false, false, () => {
-      const formatType = 'png';
+      // @Todo: this must be configured in the dialog...
+      const formatExtension = 'wxml';
 
-      designer.export(formatType)
+      designer.export(formatExtension)
         .then((url) => {
           // Create hidden anchor to force download ...
           const anchor = document.createElement('a');
           anchor.style = 'display: none';
-          anchor.download = `${mapId}.${formatType}`;
+          anchor.download = `${mapId}.${formatExtension}`;
           anchor.href = url;
           document.body.appendChild(anchor);
 

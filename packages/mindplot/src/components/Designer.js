@@ -35,8 +35,6 @@ import DragConnector from './DragConnector';
 import DragManager from './DragManager';
 import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
-import SVGExporter from './export/SVGExporter';
-import BinaryImageExporter from './export/BinaryImageExporter';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
@@ -50,6 +48,8 @@ import LayoutManager from './layout/LayoutManager';
 
 import INodeModel, { TopicShape } from './model/INodeModel';
 import { $notify } from './widget/ToolbarNotifier';
+import ImageExpoterFactory from './export/ImageExporterFactory';
+import TextExporterFactory from './export/TextExporterFactory';
 
 class Designer extends Events {
   constructor(options, divElement) {
@@ -360,20 +360,14 @@ class Designer extends Events {
     const svgElement = workspace.getSVGElement();
     const size = workspace.getSize();
 
-    const mindmap = this._mindmap;
-
     let exporter;
     switch (formatType) {
-      case 'svg': {
-        exporter = new SVGExporter(mindmap, svgElement);
+      case 'svg' || 'png' || 'jpg': {
+        exporter = ImageExpoterFactory.create(formatType, this._mindmap, svgElement, size.width, size.height);
         break;
       }
-      case 'png': {
-        exporter = new BinaryImageExporter(mindmap, svgElement, size.width, size.height, 'image/png');
-        break;
-      }
-      case 'jpeg': {
-        exporter = new BinaryImageExporter(mindmap, svgElement, size.width, size.height, 'image/jpeg');
+      case 'wxml': {
+        exporter = TextExporterFactory.create(formatType, this._mindmap);
         break;
       }
       default:

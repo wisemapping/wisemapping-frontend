@@ -15,8 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-interface Exporter {
-    export(): Promise<string>;
-}
+import { Mindmap } from "../..";
+import Exporter from "./Exporter";
+import WiseXMLExporter from "./WiseXMLExporter";
 
-export default Exporter;
+type type = 'wxml' | 'txt' | 'mm' | 'csv';
+class TextExporterFactory {
+    static create(type: type, mindmap: Mindmap): Exporter {
+        let result: Exporter;
+        switch (type) {
+            case 'wxml':
+                result = new WiseXMLExporter(mindmap);
+                break;
+            default:
+                throw new Error(`Unsupported type ${type}`);
+        }
+        return result;
+
+    }
+}
+export default TextExporterFactory;
