@@ -1,71 +1,71 @@
-1.1California
-1..01Northern California
-1..0.01Oakland/Berkeley
-1..0.01San Mateo
-1..0.01Other North
-1..0.01San Francisco
-1..0.01Santa Clara
-1..0.01Marin/Napa/Solano
-1..01Hawaii
-1..01Southern California
-1..0.23Los Angeles
-1..0.23Anaheim/Santa Ana
-1..0.23Ventura
-1..0.23Other South
-1..01Policy Bodies
-1..0.34Advocacy
-1..0.3.01AAO
-1..0.3.01ASCRS
-1..0.3.01EBAA
-1..0.34Military
-1..0.34United Network for Organ Sharing
-1..0.34Kaiser Hospital System
-1..0.34University of California System
-1..0.34CMS
-1..0.3.56Medicare Part A
-1..0.3.56Medicare Part B
-1..01Corneal Tissue OPS
-1..0.45Transplant Bank International
-1..0.4.01Orange County Eye and Transplant Bank
-1..0.4.01Northern California Transplant Bank
-1..0.4.0.12In 2010, 2,500 referrals forwarded to OneLegacy
-1..0.4.01Doheny Eye and Tissue Transplant Bank
-1..0.45OneLegacy
-1..0.4.12In 2010, 11,828 referrals
-1..0.45San Diego Eye Bank
-1..0.4.23In 2010, 2,555 referrals
-1..0.45California Transplant Donor Network
-1..0.45California Transplant Services
-1..0.4.45In 2010, 0 referrals
-1..0.45Lifesharing
-1..0.45DCI Donor Services
-1..0.4.67Sierra Eye and Tissue Donor Services
-1..0.4.6.01In 2010, 2.023 referrals
-1..0.45SightLife
-1..01Tools
-1..0.56Darthmouth Atlas of Health
-1..0.56HealthLandscape
-1..01QE Medicare
-1..01CMS Data
-1..01Ambulatory Payment Classification
-1..0.89CPT's which don't allow V2785
-1..0.8.01Ocular Reconstruction Transplant
-1..0.8.0.0165780 (amniotic membrane tranplant
-1..0.8.0.0165781 (limbal stem cell allograft)
-1..0.8.0.0165782 (limbal conjunctiva autograft)
-1..0.8.01Endothelial keratoplasty
-1..0.8.0.1265756
-1..0.8.01Epikeratoplasty
-1..0.8.0.2365767
-1..0.89Anterior lamellar keratoplasty
-1..0.8.1265710
-1..0.89Processing, preserving, and transporting corneal tissue
-1..0.8.23V2785
-1..0.8.23Laser incision in recepient
-1..0.8.2.120290T
-1..0.89Laser incision in donor
-1..0.8.340289T
-1..0.89Penetrating keratoplasty
-1..0.8.4565730 (in other)
-1..0.8.4565755 (in pseudoaphakia)
-1..0.8.4565750 (in aphakia)
+1.0 California
+1..00 Northern California
+1..0.00 Oakland/Berkeley
+1..0.01 San Mateo
+1..0.02 Other North
+1..0.03 San Francisco
+1..0.04 Santa Clara
+1..0.05 Marin/Napa/Solano
+1..01 Hawaii
+1..02 Southern California
+1..0.20 Los Angeles
+1..0.21 Anaheim/Santa Ana
+1..0.22 Ventura
+1..0.23 Other South
+1..03 Policy Bodies
+1..0.30 Advocacy
+1..0.3.00 AAO
+1..0.3.01 ASCRS
+1..0.3.02 EBAA
+1..0.31 Military
+1..0.32 United Network for Organ Sharing
+1..0.33 Kaiser Hospital System
+1..0.34 University of California System
+1..0.35 CMS
+1..0.3.50 Medicare Part A
+1..0.3.51 Medicare Part B
+1..04 Corneal Tissue OPS
+1..0.40 Transplant Bank International
+1..0.4.00 Orange County Eye and Transplant Bank
+1..0.4.01 Northern California Transplant Bank
+1..0.4.0.10 In 2010, 2,500 referrals forwarded to OneLegacy
+1..0.4.02 Doheny Eye and Tissue Transplant Bank
+1..0.41 OneLegacy
+1..0.4.10 In 2010, 11,828 referrals
+1..0.42 San Diego Eye Bank
+1..0.4.20 In 2010, 2,555 referrals
+1..0.43 California Transplant Donor Network
+1..0.44 California Transplant Services
+1..0.4.40 In 2010, 0 referrals
+1..0.45 Lifesharing
+1..0.46 DCI Donor Services
+1..0.4.60 Sierra Eye and Tissue Donor Services
+1..0.4.6.00 In 2010, 2.023 referrals
+1..0.47 SightLife
+1..05 Tools
+1..0.50 Darthmouth Atlas of Health
+1..0.51 HealthLandscape
+1..06 QE Medicare
+1..07 CMS Data
+1..08 Ambulatory Payment Classification
+1..0.80 CPT's which don't allow V2785
+1..0.8.00 Ocular Reconstruction Transplant
+1..0.8.0.00 65780 (amniotic membrane tranplant
+1..0.8.0.01 65781 (limbal stem cell allograft)
+1..0.8.0.02 65782 (limbal conjunctiva autograft)
+1..0.8.01 Endothelial keratoplasty
+1..0.8.0.10 65756
+1..0.8.02 Epikeratoplasty
+1..0.8.0.20 65767
+1..0.81 Anterior lamellar keratoplasty
+1..0.8.10 65710
+1..0.82 Processing, preserving, and transporting corneal tissue
+1..0.8.20 V2785
+1..0.8.21 Laser incision in recepient
+1..0.8.2.10 0290T
+1..0.83 Laser incision in donor
+1..0.8.30 0289T
+1..0.84 Penetrating keratoplasty
+1..0.8.40 65730 (in other)
+1..0.8.41 65755 (in pseudoaphakia)
+1..0.8.42 65750 (in aphakia)

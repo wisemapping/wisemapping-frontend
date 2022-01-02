@@ -1,50 +1,50 @@
-1.1La computadora
-1..01Hardware
+1.0 La computadora
+1..00 Hardware
 (componentes físicos)
-1..0.01Entrada de datos
+1..0.00 Entrada de datos
 
-1..0.0.01 Ratón, Teclado, Joystick,
+1..0.0.00  Ratón, Teclado, Joystick,
 Cámara digital, Micrófono, Escáner.
-1..0.01Salida de datos
-1..0.0.12Monitor, Impresora, Bocinas, Plóter.
+1..0.01 Salida de datos
+1..0.0.10 Monitor, Impresora, Bocinas, Plóter.
 
-1..0.01Almacenamiento
-1..0.0.23Disquete, Disco compacto, DVD,
+1..0.02 Almacenamiento
+1..0.0.20 Disquete, Disco compacto, DVD,
 BD, Disco duro, Memoria flash.
-1..01Software
+1..01 Software
 (Programas y datos con los que funciona la computadora)
 
-1..0.12Software de Sistema:Permite el entendimiento
+1..0.10 Software de Sistema:Permite el entendimiento
 entre el usuario y la maquina.
-1..0.1.01Microsoft Windows
-1..0.1.01GNU/LINUX
-1..0.1.01MAC 
-1..0.12Software de Aplicación: Permite hacer hojas de
+1..0.1.00 Microsoft Windows
+1..0.1.01 GNU/LINUX
+1..0.1.02 MAC 
+1..0.11 Software de Aplicación: Permite hacer hojas de
 calculo navegar en internet, base de datos, etc.
-1..0.1.12Office
-1..0.1.12Libre Office
-1..0.1.12Navegadores
-1..0.1.12Msn
-1..0.12Software de Desarrollo
+1..0.1.10 Office
+1..0.1.11 Libre Office
+1..0.1.12 Navegadores
+1..0.1.13 Msn
+1..0.12 Software de Desarrollo
 
-1..01Tipos de computadora
-1..0.23Computadora personal de escritorio o Desktop
-1..0.23PDA
+1..02 Tipos de computadora
+1..0.20 Computadora personal de escritorio o Desktop
+1..0.21 PDA
 
-1..0.23Laptop
-1..0.23Servidor
-1..0.23Tablet PC
-1.1CPU y sus partes internas
-1..12Ranuras de expansión o PCI
-1..12Memoria RAM
+1..0.22 Laptop
+1..0.23 Servidor
+1..0.24 Tablet PC
+1.1 CPU y sus partes internas
+1..10 Ranuras de expansión o PCI
+1..11 Memoria RAM
 
-1..12Unidades ópticas
+1..12 Unidades ópticas
 
-1..12Tarjeta Madre
+1..13 Tarjeta Madre
 
-1..12Microprocesador
+1..14 Microprocesador
 
-1..12Disco Duro
+1..15 Disco Duro
 
-1.1Máquina electrónica que sirve para:  escribir,  dibujar,  pintar,
+1.2 Máquina electrónica que sirve para:  escribir,  dibujar,  pintar,
 escuchar música, ver videos, calcular, comunicarnos con otras personas, etc-

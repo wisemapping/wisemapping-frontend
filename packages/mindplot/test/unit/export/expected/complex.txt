@@ -1,154 +1,154 @@
-1.1PPM Plan
-1..01Business Development 
-1..01Backlog Management
-1..01Freeform IT
-1..01Client Project Management
-1..01Governance & Executive
-1..01Finance
-1..01Administration
-1..01Human Resources
-1..01Freeform Hosting
-1..01Community Outreach
-1..01R&D
-1..0.1011Goals
-1..0.1011Formulize
-1..01Probono
-1..0.1112null
-1.1Strategy 2: Talent Development
-1..12Strategic Priority 2a: Personal Plans
-1..12Strategic Priority 2b: External learning matches organ. goals
-1..12Strategic Priority 2c: Learning Environment
-1..12So That...
-1.1Strategy 4: Inclusive, Positive Environment
-1..23Strategic Priority 4a:Feedback
-1..23Strategic Priority 4b: Anti Harassment
-1..23Strategic Priority 4c: Diversity
-1..23null
-1..23So That...
-1.1Strategy 1: Recruit & Retain
-1..34So that...
-1..34Strategic Priority 1a: Recruitment
-1..3.12Modify App Form
-1..3.12Strategy integrated with hiring plan
-1..34Strategic Priority 1b: Hiring
-1..34Strategic Priority 1c: Onboarding
-1..3.343 Month Onboarding Process
-1..3.34Tools & Guidelines
-1..3.34Mentoring
-1..34Strategic Priority 1d: Incentives
-1..3.45Raises
-1..3.45Benefits
-1..3.45Rewards Message
-1..34Strategic Priority 1e: Offboarding
-1.1Business Development Plan
-1..45Goals
-1..4.01Increase new clients
-1..4.0.01Academic Research
-1..4.0.01null
-1..4.01Support New Products
-1..4.0.12Formulize
-1..4.0.12null
-1..4.0.12null
-1..4.01Support CiviCRM
-1..4.01Identify Opportunites
-1..4.0.34null
-1..4.0.34null
-1..4.0.34null
-1..4.0.34null
-1.1Hosting NG Plan
-1.1Freeform IT Plan
-1..67Fragile
-1..67Tools
-1..67null
-1.1Project Teams
-1..78Projects 1-3
-1..78Projects 4-6
-1..78Projects 7 & 8
-1..78General Work
-1..78Learning Needs Plan
-1.1Restructure
-1..89Client Centric Process
-1..89Freeform Project Process
-1..89Supportive Systems Plan
-1.1Board and C Planning
-1..910Mission Statements
-1..910Values
-1..910Bylaw Review
-1..910Policies
-1..910Business Plan
-1.1Strategy 3: Safety and Wellness
-1..1011Strategic Priority 3a: H&S Policies & Practices
-1..10.01null
-1..1011Strategic Priority 3b: Health Promotion
-1..10.12Health and Wellness Committee
-1..10.12Work-life Balance Initiative
-1..1011So that...
-1.1Benefits
-1..1112As Freeform Staff
-1..1112Responsibility: HZ, JC
-1..1112Release 3
-1..1112Have Heather create list benefits against Best Practice & cost
-1..1112Have Jason  review list
-1..1112Have JC & HZ consult with staff
-1..1112Have best benefits we can afford
-1..1112So that...
-1.1Community Outreach Plan
-1..1213Goals
-1..1213CSI
-1..1213Drupal Community
-1..1213CiviCRM
-1..1213Other
-1.1Backlog Plan
-1..1314Go To Backlog Plan 
-1.1Strategy Prospecting
-1..1415null
-1..1415null
-1..1415null
-1.1Stategies:  Forecasting
-1..1516null
-1..1516null
-1..1516null
-1.1Strategies Marketing
-1.1null
-1.1Exit Interviews
-1..1819As Freeform
-1..1819Responsiblity: HZ, KS
-1..1819Release
-1..1819Have Heather write procedures for exit interview process
-1..1819So that
-1.13 Month Onboarding Process
-1.1Human Resources Plan
-1..2021Related Org Objectives
-1..20.011
-1..20.012
-1..20.013
-1..20.014
-1..2021Related Documents
-1..2021Goals
-1..20.23Goal:Staff=Optimal Bus. Growth
-1..20.2.01So that...
-1..20.2.01Related Strategic Priorities: 
-1..20.2.01KPI: HR Level equals Planned Growth
-1..20.2.01Methodology
-1..20.2.0.34Target
-1..20.23Goal: Increase Job Satisfaction
-1..20.2.12So That
-1..20.2.12Related Strategic Priorities
-1..20.2.1.12null
-1..20.2.12KPI: Employee Satisfaction
-1..20.2.1.23null
-1..20.2.12Methodology
-1..20.2.1.34Target
-1..20.23Goal: Improve Performance
-1..20.2.23So That
-1..20.2.23Related Strategic Priorities
-1..20.2.23KPI: Employee Performance
-1..20.2.23Methodology
-1..20.2.2.34Target
-1..20.23Goal: Reduce Turnover
-1..20.2.34So That
-1..20.2.34Related Strategic Priorities
-1..20.2.34KPI: Retention Rate
-1..20.2.34Methodology
-1..20.2.3.34Target
-1..20.23Risk & Compliance
+1.0 PPM Plan
+1..00 Business Development 
+1..01 Backlog Management
+1..02 Freeform IT
+1..03 Client Project Management
+1..04 Governance & Executive
+1..05 Finance
+1..06 Administration
+1..07 Human Resources
+1..08 Freeform Hosting
+1..09 Community Outreach
+1..010 R&D
+1..0.100 Goals
+1..0.101 Formulize
+1..011 Probono
+1..0.110 null
+1.1 Strategy 2: Talent Development
+1..10 Strategic Priority 2a: Personal Plans
+1..11 Strategic Priority 2b: External learning matches organ. goals
+1..12 Strategic Priority 2c: Learning Environment
+1..13 So That...
+1.2 Strategy 4: Inclusive, Positive Environment
+1..20 Strategic Priority 4a:Feedback
+1..21 Strategic Priority 4b: Anti Harassment
+1..22 Strategic Priority 4c: Diversity
+1..23 null
+1..24 So That...
+1.3 Strategy 1: Recruit & Retain
+1..30 So that...
+1..31 Strategic Priority 1a: Recruitment
+1..3.10 Modify App Form
+1..3.11 Strategy integrated with hiring plan
+1..32 Strategic Priority 1b: Hiring
+1..33 Strategic Priority 1c: Onboarding
+1..3.30 3 Month Onboarding Process
+1..3.31 Tools & Guidelines
+1..3.32 Mentoring
+1..34 Strategic Priority 1d: Incentives
+1..3.40 Raises
+1..3.41 Benefits
+1..3.42 Rewards Message
+1..35 Strategic Priority 1e: Offboarding
+1.4 Business Development Plan
+1..40 Goals
+1..4.00 Increase new clients
+1..4.0.00 Academic Research
+1..4.0.01 null
+1..4.01 Support New Products
+1..4.0.10 Formulize
+1..4.0.11 null
+1..4.0.12 null
+1..4.02 Support CiviCRM
+1..4.03 Identify Opportunites
+1..4.0.30 null
+1..4.0.31 null
+1..4.0.32 null
+1..4.0.33 null
+1.5 Hosting NG Plan
+1.6 Freeform IT Plan
+1..60 Fragile
+1..61 Tools
+1..62 null
+1.7 Project Teams
+1..70 Projects 1-3
+1..71 Projects 4-6
+1..72 Projects 7 & 8
+1..73 General Work
+1..74 Learning Needs Plan
+1.8 Restructure
+1..80 Client Centric Process
+1..81 Freeform Project Process
+1..82 Supportive Systems Plan
+1.9 Board and C Planning
+1..90 Mission Statements
+1..91 Values
+1..92 Bylaw Review
+1..93 Policies
+1..94 Business Plan
+1.10 Strategy 3: Safety and Wellness
+1..100 Strategic Priority 3a: H&S Policies & Practices
+1..10.00 null
+1..101 Strategic Priority 3b: Health Promotion
+1..10.10 Health and Wellness Committee
+1..10.11 Work-life Balance Initiative
+1..102 So that...
+1.11 Benefits
+1..110 As Freeform Staff
+1..111 Responsibility: HZ, JC
+1..112 Release 3
+1..113 Have Heather create list benefits against Best Practice & cost
+1..114 Have Jason  review list
+1..115 Have JC & HZ consult with staff
+1..116 Have best benefits we can afford
+1..117 So that...
+1.12 Community Outreach Plan
+1..120 Goals
+1..121 CSI
+1..122 Drupal Community
+1..123 CiviCRM
+1..124 Other
+1.13 Backlog Plan
+1..130 Go To Backlog Plan 
+1.14 Strategy Prospecting
+1..140 null
+1..141 null
+1..142 null
+1.15 Stategies:  Forecasting
+1..150 null
+1..151 null
+1..152 null
+1.16 Strategies Marketing
+1.17 null
+1.18 Exit Interviews
+1..180 As Freeform
+1..181 Responsiblity: HZ, KS
+1..182 Release
+1..183 Have Heather write procedures for exit interview process
+1..184 So that
+1.19 3 Month Onboarding Process
+1.20 Human Resources Plan
+1..200 Related Org Objectives
+1..20.00 1
+1..20.01 2
+1..20.02 3
+1..20.03 4
+1..201 Related Documents
+1..202 Goals
+1..20.20 Goal:Staff=Optimal Bus. Growth
+1..20.2.00 So that...
+1..20.2.01 Related Strategic Priorities: 
+1..20.2.02 KPI: HR Level equals Planned Growth
+1..20.2.03 Methodology
+1..20.2.0.30 Target
+1..20.21 Goal: Increase Job Satisfaction
+1..20.2.10 So That
+1..20.2.11 Related Strategic Priorities
+1..20.2.1.10 null
+1..20.2.12 KPI: Employee Satisfaction
+1..20.2.1.20 null
+1..20.2.13 Methodology
+1..20.2.1.30 Target
+1..20.22 Goal: Improve Performance
+1..20.2.20 So That
+1..20.2.21 Related Strategic Priorities
+1..20.2.22 KPI: Employee Performance
+1..20.2.23 Methodology
+1..20.2.2.30 Target
+1..20.23 Goal: Reduce Turnover
+1..20.2.30 So That
+1..20.2.31 Related Strategic Priorities
+1..20.2.32 KPI: Retention Rate
+1..20.2.33 Methodology
+1..20.2.3.30 Target
+1..20.24 Risk & Compliance

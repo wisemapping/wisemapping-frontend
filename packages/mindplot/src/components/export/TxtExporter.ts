@@ -17,7 +17,6 @@
  */
 import { Mindmap } from "../..";
 import NodeModel from "../model/NodeModel";
-import XMLSerializerFactory from "../persistence/XMLSerializerFactory";
 import Exporter from "./Exporter";
 
 class TxtExporter implements Exporter {
@@ -34,14 +33,14 @@ class TxtExporter implements Exporter {
         const mindmap = this.mindmap;
 
         const branches = mindmap.getBranches();
-        const retult = this.traverseBranch(1, '1.', branches);
+        const retult = this.traverseBranch(1, '', branches);
         return Promise.resolve(retult);
     }
 
     private traverseBranch(indent: number, prefix: string, branches: Array<NodeModel>) {
         let result = "";
         branches.forEach((b, index) => {
-            result = result + `${prefix}${indent}${b.getText()}\n`;
+            result = result + `${prefix}${index} ${b.getText()}\n`;
             if (b.getChildren().length > 0) {
                 result = result + this.traverseBranch(index + 1, `${prefix}.${index}`, b.getChildren());
             }

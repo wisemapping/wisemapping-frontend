@@ -1,31 +1,31 @@
-1.1SaberMás
-1..01Utilización de medios de expresión artística, digitales y analógicos
-1..01Precio también limitado: 100-120?
-1..01Talleres temáticos
-1..0.23Naturaleza
-1..0.2.01Animales, Plantas, Piedras
-1..0.23Arqueología
-1..0.23Energía
-1..0.23Astronomía
-1..0.23Arquitectura
-1..0.23Cocina
-1..0.23Poesía
-1..0.23Culturas Antiguas
-1..0.2.78Egipto, Grecia, China...
-1..0.23Paleontología
-1..01Duración limitada: 5-6 semanas
-1..01Niños y niñas que quieren saber más
-1..01Alternativa a otras actividades de ocio
-1..01Uso de la tecnología durante todo el proceso de aprendizaje
-1..01Estructura PBL: aprendemos cuando buscamos respuestas a nuestras propias preguntas 
-1..01Trabajo basado en la experimentación y en la investigación
-1..01De 8 a 12 años, sin separación por edades
-1..01Máximo 10/1 por taller
-1..01Actividades centradas en el contexto cercano
-1..01Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)
-1..01Complementamos el trabajo de la escuela
-1..0.1314Cada uno va a su ritmo, y cada cual pone sus límites
-1..0.1314Aprendemos todos de todos
-1..0.1314Valoramos lo que hemos aprendido
-1..0.1314SaberMás trabaja con, desde y para la motivación
-1..0.1314Trabajamos en equipo en nuestros proyectos 
+1.0 SaberMás
+1..00 Utilización de medios de expresión artística, digitales y analógicos
+1..01 Precio también limitado: 100-120?
+1..02 Talleres temáticos
+1..0.20 Naturaleza
+1..0.2.00 Animales, Plantas, Piedras
+1..0.21 Arqueología
+1..0.22 Energía
+1..0.23 Astronomía
+1..0.24 Arquitectura
+1..0.25 Cocina
+1..0.26 Poesía
+1..0.27 Culturas Antiguas
+1..0.2.70 Egipto, Grecia, China...
+1..0.28 Paleontología
+1..03 Duración limitada: 5-6 semanas
+1..04 Niños y niñas que quieren saber más
+1..05 Alternativa a otras actividades de ocio
+1..06 Uso de la tecnología durante todo el proceso de aprendizaje
+1..07 Estructura PBL: aprendemos cuando buscamos respuestas a nuestras propias preguntas 
+1..08 Trabajo basado en la experimentación y en la investigación
+1..09 De 8 a 12 años, sin separación por edades
+1..010 Máximo 10/1 por taller
+1..011 Actividades centradas en el contexto cercano
+1..012 Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)
+1..013 Complementamos el trabajo de la escuela
+1..0.130 Cada uno va a su ritmo, y cada cual pone sus límites
+1..0.131 Aprendemos todos de todos
+1..0.132 Valoramos lo que hemos aprendido
+1..0.133 SaberMás trabaja con, desde y para la motivación
+1..0.134 Trabajamos en equipo en nuestros proyectos 

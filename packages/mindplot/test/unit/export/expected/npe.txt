@@ -1,13 +1,13 @@
-1.1NIF (NORMAS DE INFORMACIÓN FINANCIERA)
-1.1NIF D
-1..12 Normas aplicables a problemas de determinación de resultados 
-1.1 CIRCULANTES
-1..23Adquisición temporal de acciones propias
-1.1 NIF A
-1..34 Marco conceptual
-1.1 NIF C
-1..45Normas aplicables a conceptos específicos de los estados financieros 
-1.1NIF E
-1..56 Normas aplicables alas actividades especializadas de distintos sectores
-1.1 NIF B
-1..67 Normas aplicables a los estados financieros en su conjunto
+1.0 NIF (NORMAS DE INFORMACIÓN FINANCIERA)
+1.1 NIF D
+1..10  Normas aplicables a problemas de determinación de resultados 
+1.2  CIRCULANTES
+1..20 Adquisición temporal de acciones propias
+1.3  NIF A
+1..30  Marco conceptual
+1.4  NIF C
+1..40 Normas aplicables a conceptos específicos de los estados financieros 
+1.5 NIF E
+1..50  Normas aplicables alas actividades especializadas de distintos sectores
+1.6  NIF B
+1..60  Normas aplicables a los estados financieros en su conjunto

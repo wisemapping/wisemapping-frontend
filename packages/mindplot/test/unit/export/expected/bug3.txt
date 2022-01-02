@@ -1,315 +1,315 @@
-1.1Indicator needs
-1..01Which new measures
-1..0.01Landscape of measures
-1..0.0.01Diversity index of innovation support instruments in the region
-1..0.0.01Existing investments in measures
-1..0.01What other regions do differently
-1..0.0.12Balance of measure index
-1..0.0.12Profile comparison with other regions
-1..0.0.12Number of specific types of measures per capita
-1..01How to design & implement measures
-1..0.12Good practices
-1..0.12Diagnostics
-1..0.1.12Internal business innovation factors
-1..0.1.12Return on investment to innovation
-1..0.1.1.12Firm's turnover from (new to firm)
+1.0 Indicator needs
+1..00 Which new measures
+1..0.00 Landscape of measures
+1..0.0.00 Diversity index of innovation support instruments in the region
+1..0.0.01 Existing investments in measures
+1..0.01 What other regions do differently
+1..0.0.10 Balance of measure index
+1..0.0.11 Profile comparison with other regions
+1..0.0.12 Number of specific types of measures per capita
+1..01 How to design & implement measures
+1..0.10 Good practices
+1..0.11 Diagnostics
+1..0.1.10 Internal business innovation factors
+1..0.1.11 Return on investment to innovation
+1..0.1.1.10 Firm's turnover from (new to firm)
  product innovation (as a pecentage of total turnover)
-1..0.1.1.12Increase in the probability to innovate linked to ICT use
+1..0.1.1.11 Increase in the probability to innovate linked to ICT use
  (in product innovation, process innovation, organisational innovaton, marketing innovation)
-1..0.1.1.12Scientific articles by type of collaboration (per capita)
+1..0.1.1.12 Scientific articles by type of collaboration (per capita)
  (international co-authoriship, domestic co-authoriship, single author)
-1..0.1.1.12Increase in a share of expenditures on technological
+1..0.1.1.13 Increase in a share of expenditures on technological
 innovations in the total amount of regional firms’ expenditures, %
-1..0.1.1.12Increase in the number of innovative companies with in-house R&D
-1..0.1.1.12Increase in th number of innovative companies without in-house R&D
-1..0.1.1.12Increase in th number of firms with
+1..0.1.1.14 Increase in the number of innovative companies with in-house R&D
+1..0.1.1.15 Increase in th number of innovative companies without in-house R&D
+1..0.1.1.16 Increase in th number of firms with
  international/national collaboration on innovation
-1..0.1.1.12Highly cited scientific articles (as a percentage of
+1..0.1.1.17 Highly cited scientific articles (as a percentage of
 highly cited scientific article in the whole Federation)
-1..0.1.1.12Patents filed by public research organisations
+1..0.1.1.18 Patents filed by public research organisations
 (as a percentafe of patent application filed under PCT)
-1..0.1.1.12Number of international patents
-1..0.1.1.12Start-up activity (as a percentage of start-up activity in the whole Federation)
-1..0.1.1.12Number of innovative companies to the number of students 
-1..0.1.1.12Number of innovative companies to the number of researchers  
-1..0.1.1.12Volume of license agreements to the volume of R&D support from the regional budget 
-1..01How much effort: where & how
-1..0.23The bottom-line
-1..0.2.01Wages
-1..0.2.0.01Dynamics of real wages
-1..0.2.0.01Average wage (compare to the Fed)
-1..0.2.01Productivity
-1..0.2.0.12Labor productivity
-1..0.2.0.12Labor productivity growth rate
-1..0.2.01Jobs
-1..0.2.0.23Share of high-productive jobs
-1..0.2.0.23Share of creative industries jobs
-1..0.2.0.23Uneployment rate of university graduates
-1..0.2.01Income
-1..0.2.0.34GRP per capita and its growth rate
-1..0.23Influencing  factors
-1..0.2.12Economy
-1..0.2.1.01Economic structure
-1..0.2.1.01Volume of manufacturing production per capita 
-1..0.2.1.01Manufacturing value added per capita (non-natural resource-based)
-1..0.2.12The enabling environment
-1..0.2.1.12Ease of doing business
-1..0.2.1.1.01Level of administrative barriers (number and cost of administrative procedures) 
-1..0.2.1.12Competition index
-1..0.2.1.12Workforce
-1..0.2.1.1.23Quality of education
-1..0.2.1.1.2.01Inrease in the number of International students
-1..0.2.1.1.23Quantity of education
-1..0.2.1.1.2.12Participation in life-long learning
-1..0.2.1.1.2.12Increase in literarecy 
-1..0.2.1.1.2.12Amount of university and colleague
+1..0.1.1.19 Number of international patents
+1..0.1.1.110 Start-up activity (as a percentage of start-up activity in the whole Federation)
+1..0.1.1.111 Number of innovative companies to the number of students 
+1..0.1.1.112 Number of innovative companies to the number of researchers  
+1..0.1.1.113 Volume of license agreements to the volume of R&D support from the regional budget 
+1..02 How much effort: where & how
+1..0.20 The bottom-line
+1..0.2.00 Wages
+1..0.2.0.00 Dynamics of real wages
+1..0.2.0.01 Average wage (compare to the Fed)
+1..0.2.01 Productivity
+1..0.2.0.10 Labor productivity
+1..0.2.0.11 Labor productivity growth rate
+1..0.2.02 Jobs
+1..0.2.0.20 Share of high-productive jobs
+1..0.2.0.21 Share of creative industries jobs
+1..0.2.0.22 Uneployment rate of university graduates
+1..0.2.03 Income
+1..0.2.0.30 GRP per capita and its growth rate
+1..0.21 Influencing  factors
+1..0.2.10 Economy
+1..0.2.1.00 Economic structure
+1..0.2.1.01 Volume of manufacturing production per capita 
+1..0.2.1.02 Manufacturing value added per capita (non-natural resource-based)
+1..0.2.11 The enabling environment
+1..0.2.1.10 Ease of doing business
+1..0.2.1.1.00 Level of administrative barriers (number and cost of administrative procedures) 
+1..0.2.1.11 Competition index
+1..0.2.1.12 Workforce
+1..0.2.1.1.20 Quality of education
+1..0.2.1.1.2.00 Inrease in the number of International students
+1..0.2.1.1.21 Quantity of education
+1..0.2.1.1.2.10 Participation in life-long learning
+1..0.2.1.1.2.11 Increase in literarecy 
+1..0.2.1.1.2.12 Amount of university and colleague
 students per 10 thousands population
-1..0.2.1.1.2.12Share of employees with higher education in
+1..0.2.1.1.2.13 Share of employees with higher education in
 the total amount of population at the working age
-1..0.2.1.1.2.12Increase in University students
-1..0.2.1.1.2.12Government expenditure on General University Funding
-1..0.2.1.1.2.12Access to training, information, and consulting support 
-1..0.2.1.1.23Science & engineering workforce
-1..0.2.1.1.2.23Availability of scientists and engineers
-1..0.2.1.1.2.23Amount of researches per 10 thousands population
-1..0.2.1.1.2.23Average wage of researches per average wage in the region
-1..0.2.1.1.2.23Share of researchers in the total number of employees in the region
-1..0.2.1.12Government
-1..0.2.1.1.34Total expenditure of general government as a percentage of GDP
-1..0.2.1.1.34Government expenditure on Economic Development
-1..0.2.1.12Access to finance
-1..0.2.1.1.45Deals
-1..0.2.1.1.4.01Venture capital investments for start-ups as a percentage of GDP
-1..0.2.1.1.4.01Amounts of business angel, pre-seed, seed and venture financing
-1..0.2.1.1.4.01Amount of public co-funding of business R&D
-1..0.2.1.1.4.01Number of startups received venture financing 
-1..0.2.1.1.4.01Number of companies received equity investments 
-1..0.2.1.1.45Available
-1..0.2.1.1.4.12Amount of matching grants available in the region for business R&D
-1..0.2.1.1.4.12Number of Business Angels
-1..0.2.1.12ICT
-1..0.2.1.1.56ICT use
-1..0.2.1.1.56Broadband penetration 
-1..0.2.1.1.56Internet penetration
-1..0.2.1.1.56Computer literacy 
-1..0.2.12Behavior of innovation actors
-1..0.2.1.23Access to markets
-1..0.2.1.2.01FDI
-1..0.2.1.2.0.01foreign JVs
-1..0.2.1.2.0.01Inflow of foreign direct investments in high-technology industries
-1..0.2.1.2.0.01Foreign direct investment jobs
-1..0.2.1.2.0.01FDI as a share of regional non natural resource-based GRP 
-1..0.2.1.2.0.01Number of foreign subsidiaries operating in the region
-1..0.2.1.2.0.01Share of foreign controlled enterprises
-1..0.2.1.2.01Exports
-1..0.2.1.2.0.12Export intensity in manufacturing and services
-1..0.2.1.2.0.12 Share of high-technology export in the total volume
+1..0.2.1.1.2.14 Increase in University students
+1..0.2.1.1.2.15 Government expenditure on General University Funding
+1..0.2.1.1.2.16 Access to training, information, and consulting support 
+1..0.2.1.1.22 Science & engineering workforce
+1..0.2.1.1.2.20 Availability of scientists and engineers
+1..0.2.1.1.2.21 Amount of researches per 10 thousands population
+1..0.2.1.1.2.22 Average wage of researches per average wage in the region
+1..0.2.1.1.2.23 Share of researchers in the total number of employees in the region
+1..0.2.1.13 Government
+1..0.2.1.1.30 Total expenditure of general government as a percentage of GDP
+1..0.2.1.1.31 Government expenditure on Economic Development
+1..0.2.1.14 Access to finance
+1..0.2.1.1.40 Deals
+1..0.2.1.1.4.00 Venture capital investments for start-ups as a percentage of GDP
+1..0.2.1.1.4.01 Amounts of business angel, pre-seed, seed and venture financing
+1..0.2.1.1.4.02 Amount of public co-funding of business R&D
+1..0.2.1.1.4.03 Number of startups received venture financing 
+1..0.2.1.1.4.04 Number of companies received equity investments 
+1..0.2.1.1.41 Available
+1..0.2.1.1.4.10 Amount of matching grants available in the region for business R&D
+1..0.2.1.1.4.11 Number of Business Angels
+1..0.2.1.15 ICT
+1..0.2.1.1.50 ICT use
+1..0.2.1.1.51 Broadband penetration 
+1..0.2.1.1.52 Internet penetration
+1..0.2.1.1.53 Computer literacy 
+1..0.2.12 Behavior of innovation actors
+1..0.2.1.20 Access to markets
+1..0.2.1.2.00 FDI
+1..0.2.1.2.0.00 foreign JVs
+1..0.2.1.2.0.01 Inflow of foreign direct investments in high-technology industries
+1..0.2.1.2.0.02 Foreign direct investment jobs
+1..0.2.1.2.0.03 FDI as a share of regional non natural resource-based GRP 
+1..0.2.1.2.0.04 Number of foreign subsidiaries operating in the region
+1..0.2.1.2.0.05 Share of foreign controlled enterprises
+1..0.2.1.2.01 Exports
+1..0.2.1.2.0.10 Export intensity in manufacturing and services
+1..0.2.1.2.0.11  Share of high-technology export in the total volume
  of production of goods, works and services
-1..0.2.1.2.0.12Share of innovation production/serivces that goes for export,
+1..0.2.1.2.0.12 Share of innovation production/serivces that goes for export,
 by zones (EU, US, CIS, other countries
-1..0.2.1.2.01Share of high-technology products in government procurements
-1..0.2.1.23Entrepreneurship culture
-1..0.2.1.2.12Fear of failure rate
-1..0.2.1.2.12Entrepreneurship as desirable career choice
-1..0.2.1.2.12High Status Successful Entrepreneurship
-1..0.2.1.23Collaboration & partnerships
-1..0.2.1.2.23Number of business contracts with foreign partners for R&D collaboration
-1..0.2.1.2.23Share of R&D financed from foreign sources
-1..0.2.1.2.23Firms collaborating on innovation with organizations in other countries
-1..0.2.1.2.23Share of Innovative companies collaborating
+1..0.2.1.2.02 Share of high-technology products in government procurements
+1..0.2.1.21 Entrepreneurship culture
+1..0.2.1.2.10 Fear of failure rate
+1..0.2.1.2.11 Entrepreneurship as desirable career choice
+1..0.2.1.2.12 High Status Successful Entrepreneurship
+1..0.2.1.22 Collaboration & partnerships
+1..0.2.1.2.20 Number of business contracts with foreign partners for R&D collaboration
+1..0.2.1.2.21 Share of R&D financed from foreign sources
+1..0.2.1.2.22 Firms collaborating on innovation with organizations in other countries
+1..0.2.1.2.23 Share of Innovative companies collaborating
 with research institutions on innovation
-1..0.2.1.2.23Number of joint projects conducted by the local comapnies
+1..0.2.1.2.24 Number of joint projects conducted by the local comapnies
  and local consulting/intermediary agencies
-1..0.2.1.2.23science and industry links
-1..0.2.1.23Technology absorption
-1..0.2.1.2.34Local supplier quality
-1..0.2.1.2.34Share of expenditures on technological innovations
+1..0.2.1.2.25 science and industry links
+1..0.2.1.23 Technology absorption
+1..0.2.1.2.30 Local supplier quality
+1..0.2.1.2.31 Share of expenditures on technological innovations
 in the amount of sales
-1..0.2.1.2.34Number of purchased new technologies
-1..0.2.1.2.34Investments in ICT by asset (IT equipment,
+1..0.2.1.2.32 Number of purchased new technologies
+1..0.2.1.2.33 Investments in ICT by asset (IT equipment,
  communication equipment, software)
-1..0.2.1.2.34Machinery and equipment
-1..0.2.1.2.34Software and databases
-1..0.2.1.2.34Level of energy efficiency of the regional economy
+1..0.2.1.2.34 Machinery and equipment
+1..0.2.1.2.35 Software and databases
+1..0.2.1.2.36 Level of energy efficiency of the regional economy
 (can be measured by sectors and for the whole region)
-1..0.2.1.2.34Share of wastes in the total volume of production (by sector)
-1..0.2.1.23Innovation activities in firms
-1..0.2.1.2.45Share of innovative companies
-1..0.2.1.2.45Business R&D expenditures per GRP
-1..0.2.1.2.45Factors hampering innovation
-1..0.2.1.2.45Expenditure on innovation by firm size
-1..0.2.1.2.45R&D and other intellectl property products
-1..0.2.1.2.45Growth of the number of innovative companies 
-1..0.2.1.2.45Outpus
-1..0.2.1.2.4.67Volume of new to Russian market production per GRP
-1..0.2.1.2.4.67Volume of new to world market production per total production
-1..0.2.1.2.4.67Growth of the volume of production of innovative companies 
-1..0.2.1.2.4.67Volume of innovation production per capita 
-1..0.2.1.23Entrepreneurial activities
-1..0.2.1.2.56New business density
-1..0.2.1.2.56Volume of newly registered corporations 
-1..0.2.1.2.56Share of gazelle companies in the total number of businesses
-1..0.2.1.23R&D production
-1..0.2.1.2.67Outputs
-1..0.2.1.2.6.01Amount of domestically protected intellectual
+1..0.2.1.2.37 Share of wastes in the total volume of production (by sector)
+1..0.2.1.24 Innovation activities in firms
+1..0.2.1.2.40 Share of innovative companies
+1..0.2.1.2.41 Business R&D expenditures per GRP
+1..0.2.1.2.42 Factors hampering innovation
+1..0.2.1.2.43 Expenditure on innovation by firm size
+1..0.2.1.2.44 R&D and other intellectl property products
+1..0.2.1.2.45 Growth of the number of innovative companies 
+1..0.2.1.2.46 Outpus
+1..0.2.1.2.4.60 Volume of new to Russian market production per GRP
+1..0.2.1.2.4.61 Volume of new to world market production per total production
+1..0.2.1.2.4.62 Growth of the volume of production of innovative companies 
+1..0.2.1.2.4.63 Volume of innovation production per capita 
+1..0.2.1.25 Entrepreneurial activities
+1..0.2.1.2.50 New business density
+1..0.2.1.2.51 Volume of newly registered corporations 
+1..0.2.1.2.52 Share of gazelle companies in the total number of businesses
+1..0.2.1.26 R&D production
+1..0.2.1.2.60 Outputs
+1..0.2.1.2.6.00 Amount of domestically protected intellectual
  property per 1 mln. population
-1..0.2.1.2.6.01Amount of PCT-applications per 1 mln. population
-1..0.2.1.2.6.01Number of domestic patent applications per R&D expenditures
-1..0.2.1.2.6.01Number of intellectual property exploited by regional
+1..0.2.1.2.6.01 Amount of PCT-applications per 1 mln. population
+1..0.2.1.2.6.02 Number of domestic patent applications per R&D expenditures
+1..0.2.1.2.6.03 Number of intellectual property exploited by regional
 enterprises per 1 mln. population
-1..0.2.1.2.6.01Publication activity of regional scientists and researches
-1..0.2.1.2.67Inputs
-1..0.2.1.2.6.12Regional and local budget expenditures on R&D
-1..0.2.1.2.6.12Government R&D expenditure 
-1..0.2.1.23Public sector innovation
-1..0.2.1.2.78Number of advanced ICT introduced in the budgetary organizations
+1..0.2.1.2.6.04 Publication activity of regional scientists and researches
+1..0.2.1.2.61 Inputs
+1..0.2.1.2.6.10 Regional and local budget expenditures on R&D
+1..0.2.1.2.6.11 Government R&D expenditure 
+1..0.2.1.27 Public sector innovation
+1..0.2.1.2.70 Number of advanced ICT introduced in the budgetary organizations
 (regional power, municipal bodies, social and educational organizations)	
-1..0.2.1.2.78E-government index
-1..0.2.1.2.78Number of management innovations introduced in the budgetary organizations
+1..0.2.1.2.71 E-government index
+1..0.2.1.2.72 Number of management innovations introduced in the budgetary organizations
  (regional power, municipal bodies, social and educational organizations)	
-1..0.2.12Supporting organizations
-1..0.2.1.34Research institutions
-1..0.2.1.3.01Collaboration
-1..0.2.1.3.0.01Number of interactions between universities
+1..0.2.13 Supporting organizations
+1..0.2.1.30 Research institutions
+1..0.2.1.3.00 Collaboration
+1..0.2.1.3.0.00 Number of interactions between universities
 and large companies  by university size
-1..0.2.1.3.01Resources
-1..0.2.1.3.0.12R&D expenditures per 1 researcher
-1..0.2.1.3.0.12Average wage of researches per average wage in the region
-1..0.2.1.3.0.12High education expenditure on R&D
-1..0.2.1.3.01Scientific outputs
-1..0.2.1.3.0.23Publications
-1..0.2.1.3.0.2.01Impact of publications in the ISI database (h-index)
-1..0.2.1.3.0.2.01Number of publications in international journals per worker per year
-1..0.2.1.3.0.2.01Publications: Academic articles in international peer-reviewed
+1..0.2.1.3.01 Resources
+1..0.2.1.3.0.10 R&D expenditures per 1 researcher
+1..0.2.1.3.0.11 Average wage of researches per average wage in the region
+1..0.2.1.3.0.12 High education expenditure on R&D
+1..0.2.1.3.02 Scientific outputs
+1..0.2.1.3.0.20 Publications
+1..0.2.1.3.0.2.00 Impact of publications in the ISI database (h-index)
+1..0.2.1.3.0.2.01 Number of publications in international journals per worker per year
+1..0.2.1.3.0.2.02 Publications: Academic articles in international peer-reviewed
  journals per 1,000 researchers [articles/1,000 researchers].
-1..0.2.1.3.0.23Number of foreign patents granted per staff
-1..0.2.1.3.01Supportive measures
-1..0.2.1.3.0.34Diversity index of university entrepreneurship support measures
-1..0.2.1.3.01Commercialization
-1..0.2.1.3.0.45Licensing
-1..0.2.1.3.0.4.01Academic licenses: Number of licenses
+1..0.2.1.3.0.21 Number of foreign patents granted per staff
+1..0.2.1.3.03 Supportive measures
+1..0.2.1.3.0.30 Diversity index of university entrepreneurship support measures
+1..0.2.1.3.04 Commercialization
+1..0.2.1.3.0.40 Licensing
+1..0.2.1.3.0.4.00 Academic licenses: Number of licenses
 per 1,000 researchers.[licenses/researcher] 
-1..0.2.1.3.0.45Spin-offs
-1..0.2.1.3.0.4.12Number of spin-offs with external private financing
+1..0.2.1.3.0.41 Spin-offs
+1..0.2.1.3.0.4.10 Number of spin-offs with external private financing
 as a share of the institution's R&D budget
-1..0.2.1.3.0.45Industry contracts
-1..0.2.1.3.0.4.23Industry revenue per staff 
-1..0.2.1.3.0.4.23Foreign contracts: Number of contracts with foreign industria
+1..0.2.1.3.0.42 Industry contracts
+1..0.2.1.3.0.4.20 Industry revenue per staff 
+1..0.2.1.3.0.4.21 Foreign contracts: Number of contracts with foreign industria
 l companies at scientific and educational organizations
 per 1,000 researchers [contracts/researchers]
-1..0.2.1.3.0.4.23Share of industry income from foreign companies
-1..0.2.1.3.0.4.23Revenue raised from industry R&D as a fraction
+1..0.2.1.3.0.4.22 Share of industry income from foreign companies
+1..0.2.1.3.0.4.23 Revenue raised from industry R&D as a fraction
 of total institutional budget (up to a cap)
-1..0.2.1.3.0.4.23Difficulties faced by research organization in collaborating with SMEs
-1..0.2.1.34Private market
-1..0.2.1.3.12Number of innovation & IP services organizations
-1..0.2.1.3.12Number of private innovation infrastructure organizations 
-1..0.2.1.3.12Access to certification and licensing for specific activities 
-1..0.2.1.3.12Access to suppliers of equipment, production and engineering services 
-1..0.2.1.34Innovation infrastructure
-1..0.2.1.3.23Investments
-1..0.2.1.3.2.01Public investment in innovation infrastructure
-1..0.2.1.3.2.01Increase of government investment in innovation infrastructure
-1..0.2.1.3.2.01 Number of Development institution projects performed in the region
-1..0.2.1.3.2.01Volume of seed investments by the regional budget 
-1..0.2.1.3.2.01Volume of venture financing from the regional budget 
-1..0.2.1.3.23Volume of state support per one company 
-1..01What to do about existing measures
-1..0.34Demand for measure
-1..0.3.01Quality of beneficiaries
-1..0.3.0.01Growth rates of employment in supported innovative firms
-1..0.3.0.01Growth rates of employment in supported innovative firms
-1..0.3.0.01Role of IP for tenants/clients
-1..0.3.0.01Share of tenants with innovation activities
-1..0.3.0.01Gazelle tenant: Share of tenants with
+1..0.2.1.3.0.4.24 Difficulties faced by research organization in collaborating with SMEs
+1..0.2.1.31 Private market
+1..0.2.1.3.10 Number of innovation & IP services organizations
+1..0.2.1.3.11 Number of private innovation infrastructure organizations 
+1..0.2.1.3.12 Access to certification and licensing for specific activities 
+1..0.2.1.3.13 Access to suppliers of equipment, production and engineering services 
+1..0.2.1.32 Innovation infrastructure
+1..0.2.1.3.20 Investments
+1..0.2.1.3.2.00 Public investment in innovation infrastructure
+1..0.2.1.3.2.01 Increase of government investment in innovation infrastructure
+1..0.2.1.3.2.02  Number of Development institution projects performed in the region
+1..0.2.1.3.2.03 Volume of seed investments by the regional budget 
+1..0.2.1.3.2.04 Volume of venture financing from the regional budget 
+1..0.2.1.3.21 Volume of state support per one company 
+1..03 What to do about existing measures
+1..0.30 Demand for measure
+1..0.3.00 Quality of beneficiaries
+1..0.3.0.00 Growth rates of employment in supported innovative firms
+1..0.3.0.01 Growth rates of employment in supported innovative firms
+1..0.3.0.02 Role of IP for tenants/clients
+1..0.3.0.03 Share of tenants with innovation activities
+1..0.3.0.04 Gazelle tenant: Share of tenants with
 annual revenue growth of more than 20%
  for each of the past four years or since formation [%]
-1..0.3.0.01Globalization of tenants: Median share of tenant
+1..0.3.0.05 Globalization of tenants: Median share of tenant
 revenues obtained from exports [%]
-1..0.3.01Number of beneficiaries
-1..0.3.0.12Number of projects conducted by companies in cooperation with innovation infrastructure
-1..0.3.0.12Scope and intensity of use of services offered to firms
-1..0.3.0.12Number of companies supported by the infrastructure (training, information, consultations, etc.)
-1..0.3.0.12Increase in the number of business applying for public support programmes (regional, federal, international) 
-1..0.3.01Degree of access
-1..0.3.0.23Level of awareness
-1..0.3.0.2.01Perception (opinion poll) of business managers
+1..0.3.01 Number of beneficiaries
+1..0.3.0.10 Number of projects conducted by companies in cooperation with innovation infrastructure
+1..0.3.0.11 Scope and intensity of use of services offered to firms
+1..0.3.0.12 Number of companies supported by the infrastructure (training, information, consultations, etc.)
+1..0.3.0.13 Increase in the number of business applying for public support programmes (regional, federal, international) 
+1..0.3.02 Degree of access
+1..0.3.0.20 Level of awareness
+1..0.3.0.2.00 Perception (opinion poll) of business managers
  regarding public support programmes
-1..0.3.0.23Transparency
-1..0.3.0.2.12Perception of business managers in terms
+1..0.3.0.21 Transparency
+1..0.3.0.2.10 Perception of business managers in terms
  of level of transparency of support measures in the region
-1..0.3.0.23Description by regional business managers of the way the
+1..0.3.0.22 Description by regional business managers of the way the
 select and apply for regional and federal support schemes
-1..0.3.01Number of applicants
-1..0.3.0.34Increase in the number of business applying for public support programmes
-1..0.3.0.34Number of companies that know about a particular program
-1..0.3.0.34Increase in the number of start-ups applying to receive VC investments
-1..0.3.0.34Increase in the number of start-ups applying for a place in the incubators
-1..0.34Inputs of measures
-1..0.3.12Qualified staff
-1..0.3.12Budget per beneficiary
-1..0.34Performance of measure
-1..0.3.23Implementation of measure
-1..0.3.2.01Target vs. actual KPIs
-1..0.3.2.01Intermediate outputs per budget
-1..0.3.2.01Qualification of staff
-1..0.3.23Output of measure
-1..0.3.2.12Opinion surveys
-1..0.3.2.1.01Opinions of beneficiaries
-1..0.3.2.12Hard metrics
-1..0.3.2.1.12Output per headcount (e.g. staff, researchers)
-1..0.3.2.1.12Productivity analysis
-1..0.34Impact of measure
-1..0.3.34Opinion surveys
-1..0.3.3.01Perception of support impact (opinion polls)
-1..0.3.3.01Perception of the activity of regional government by the regional companies 
-1..0.3.34Hard metrics
-1..0.3.3.12Increase in number of small innovation enterprises 
-1..0.3.3.12Growth of the total volume of salary in the supported companies (excluding inflation) 
-1..0.3.3.12Growth of the volume of regional taxes paid by the supported companies 
-1..0.3.3.12Growth of the volume of export at the supported companies 
-1..0.3.3.12Number of new products/projects at the companies that received support 
-1..0.3.34Impact assessment 
-1..0.3.34Average leverage of 1rub (there would be
+1..0.3.03 Number of applicants
+1..0.3.0.30 Increase in the number of business applying for public support programmes
+1..0.3.0.31 Number of companies that know about a particular program
+1..0.3.0.32 Increase in the number of start-ups applying to receive VC investments
+1..0.3.0.33 Increase in the number of start-ups applying for a place in the incubators
+1..0.31 Inputs of measures
+1..0.3.10 Qualified staff
+1..0.3.11 Budget per beneficiary
+1..0.32 Performance of measure
+1..0.3.20 Implementation of measure
+1..0.3.2.00 Target vs. actual KPIs
+1..0.3.2.01 Intermediate outputs per budget
+1..0.3.2.02 Qualification of staff
+1..0.3.21 Output of measure
+1..0.3.2.10 Opinion surveys
+1..0.3.2.1.00 Opinions of beneficiaries
+1..0.3.2.11 Hard metrics
+1..0.3.2.1.10 Output per headcount (e.g. staff, researchers)
+1..0.3.2.1.11 Productivity analysis
+1..0.33 Impact of measure
+1..0.3.30 Opinion surveys
+1..0.3.3.00 Perception of support impact (opinion polls)
+1..0.3.3.01 Perception of the activity of regional government by the regional companies 
+1..0.3.31 Hard metrics
+1..0.3.3.10 Increase in number of small innovation enterprises 
+1..0.3.3.11 Growth of the total volume of salary in the supported companies (excluding inflation) 
+1..0.3.3.12 Growth of the volume of regional taxes paid by the supported companies 
+1..0.3.3.13 Growth of the volume of export at the supported companies 
+1..0.3.3.14 Number of new products/projects at the companies that received support 
+1..0.3.32 Impact assessment 
+1..0.3.33 Average leverage of 1rub (there would be
 several programs with different leverage)
-1..0.3.34Volume of attracted money per one ruble
+1..0.3.34 Volume of attracted money per one ruble
 of regional budget expenditures on innovation projects
-1..01What investments in innovative projects
-1..0.45Competitive niches
-1..0.4.01Clusters behavior
-1..0.4.0.01Cluster EU star rating
-1..0.4.0.01Share of value added of cluster enterprises in GRP
-1..0.4.0.01Share of cluster products in the relevant world market segment 
-1..0.4.0.01Share of export in cluster total volume of sales
-1..0.4.0.01Growth of the volume of production in the cluster companies
-1..0.4.0.01Growth of the volume of production in the cluster companies
+1..04 What investments in innovative projects
+1..0.40 Competitive niches
+1..0.4.00 Clusters behavior
+1..0.4.0.00 Cluster EU star rating
+1..0.4.0.01 Share of value added of cluster enterprises in GRP
+1..0.4.0.02 Share of cluster products in the relevant world market segment 
+1..0.4.0.03 Share of export in cluster total volume of sales
+1..0.4.0.04 Growth of the volume of production in the cluster companies
+1..0.4.0.05 Growth of the volume of production in the cluster companies
  to the volume of state support for the cluster
-1..0.4.0.01Growth of the volume of innovation production in the cluster
-1..0.4.0.01Share of export in cluster total volume of sales (by zones: US, EU, CIS, other countries) 
-1..0.4.0.01Internal behavior
-1..0.4.0.0.89Median wage in the cluster
-1..0.4.0.0.89Growth of the volume of R&D in the cluster
-1..0.4.0.0.89Cluster collaboration
-1..0.4.01R&D
-1..0.4.0.12Patent map
-1..0.4.0.12Publications map
-1..0.4.01Industry
-1..0.4.0.23FDI map
-1..0.4.0.23Gazelle map
-1..0.4.0.23Business R&D expenditures as a share of revenues by sector
-1..0.4.0.23Share of regional products in the world market
-1..0.4.0.23Expenditure on innovation by firm size, by sector 
-1..0.4.01Entrepreneurship
-1..0.4.0.34Startup map
-1..0.4.0.34Venture investment map
-1..0.4.0.34Attractiveness to public competitive funding
-1..0.4.0.3.23Fed and regional seed fund investments
-1..0.4.0.3.23FASIE projects: Number of projects supported
+1..0.4.0.06 Growth of the volume of innovation production in the cluster
+1..0.4.0.07 Share of export in cluster total volume of sales (by zones: US, EU, CIS, other countries) 
+1..0.4.0.08 Internal behavior
+1..0.4.0.0.80 Median wage in the cluster
+1..0.4.0.0.81 Growth of the volume of R&D in the cluster
+1..0.4.0.0.82 Cluster collaboration
+1..0.4.01 R&D
+1..0.4.0.10 Patent map
+1..0.4.0.11 Publications map
+1..0.4.02 Industry
+1..0.4.0.20 FDI map
+1..0.4.0.21 Gazelle map
+1..0.4.0.22 Business R&D expenditures as a share of revenues by sector
+1..0.4.0.23 Share of regional products in the world market
+1..0.4.0.24 Expenditure on innovation by firm size, by sector 
+1..0.4.03 Entrepreneurship
+1..0.4.0.30 Startup map
+1..0.4.0.31 Venture investment map
+1..0.4.0.32 Attractiveness to public competitive funding
+1..0.4.0.3.20 Fed and regional seed fund investments
+1..0.4.0.3.21 FASIE projects: Number of projects supported
 by the FASIE per 1,000 workers [awards/worker] 
-1..0.45Competitiveness support factors
-1..0.4.12Private investment in innovation
-1..01How to improve image
-1..0.56Rankings
-1..0.5.01macro indicators
-1..0.5.01meso-indicators
-1..0.56Innovation investment climate
+1..0.41 Competitiveness support factors
+1..0.4.10 Private investment in innovation
+1..05 How to improve image
+1..0.50 Rankings
+1..0.5.00 macro indicators
+1..0.5.01 meso-indicators
+1..0.51 Innovation investment climate
