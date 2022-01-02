@@ -145,7 +145,7 @@ class DragPivot {
     let result = null;
     const parentTopic = this._targetTopic;
     if (parentTopic) {
-      if (parentTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (parentTopic.getType() === 'CentralTopic') {
         result = this._straightLine;
       } else {
         result = this._curvedLine;

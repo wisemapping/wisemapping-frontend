@@ -59,7 +59,7 @@ class CommandContext {
   /** */
   createModel() {
     const mindmap = this._designer.getMindmap();
-    return mindmap.createNode(NodeModel.MAIN_TOPIC_TYPE);
+    return mindmap.createNode('MainTopic');
   }
 
   /** */

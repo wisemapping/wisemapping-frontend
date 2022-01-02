@@ -1337,7 +1337,7 @@ class Topic extends NodeGraph {
 
   /** @return {Boolean} true if the topic is the central topic of the map */
   isCentralTopic() {
-    return this.getModel().getType() === INodeModel.CENTRAL_TOPIC_TYPE;
+    return this.getModel().getType() === 'CentralTopic';
   }
 }
 
