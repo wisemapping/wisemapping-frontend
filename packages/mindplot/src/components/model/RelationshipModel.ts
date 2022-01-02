@@ -19,7 +19,17 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import ConnectionLine from '../ConnectionLine';
 
 class RelationshipModel {
-  constructor(sourceTopicId, targetTopicId) {
+  static _next_uuid: number = 0;
+  _id: number;
+  _sourceTargetId: number;
+  _targetTopicId: number;
+  _lineType: number;
+  _srcCtrlPoint: any;
+  _destCtrlPoint: any;
+  _endArrow: boolean;
+  _startArrow: boolean;
+
+  constructor(sourceTopicId: number, targetTopicId: number) {
     $assert($defined(sourceTopicId), 'from node type can not be null');
     $assert($defined(targetTopicId), 'to node type can not be null');
     $assert(Number.isFinite(sourceTopicId), 'sourceTopicId is not a number');
@@ -118,23 +128,19 @@ class RelationshipModel {
   /**
        * @return {String} textual information about the relationship's source and target node
        */
-  inspect() {
+  inspect(): string {
     return (
-      `(fromNode:${this.getFromNode().getId()
-      } , toNode: ${this.getToNode().getId()
+      `(fromNode:${this.getFromNode()
+      } , toNode: ${this.getToNode()
       })`
     );
   }
-}
 
-function _nextUUID() {
-  if (!$defined(RelationshipModel._uuid)) {
-    RelationshipModel._uuid = 0;
+  static _nextUUID() {
+    RelationshipModel._next_uuid += 1;
+    return RelationshipModel._next_uuid;
   }
-  RelationshipModel._uuid += 1;
-  return RelationshipModel._uuid;
 }
 
-RelationshipModel._nextUUID = _nextUUID;
 
 export default RelationshipModel;

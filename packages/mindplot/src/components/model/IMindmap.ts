@@ -18,35 +18,36 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import INodeModel, { NodeModelType as NodeType } from './INodeModel';
 import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 
 abstract class IMindmap {
-  getCentralTopic(): NodeModel {
+  getCentralTopic(): INodeModel {
     return this.getBranches()[0];
   }
 
   abstract getDescription(): string;
 
-  abstract setDescription(value: string);
+  abstract setDescription(value: string): void;
 
   abstract getId(): string
 
-  abstract setId(id: string);
+  abstract setId(id: string): void;
 
   abstract getVersion(): string;
 
   abstract setVersion(version: string): void;
 
-  abstract addBranch(nodeModel: NodeModel): void;
+  abstract addBranch(nodeModel: INodeModel): void;
 
-  abstract getBranches(): Array<NodeModel>;
+  abstract getBranches(): Array<INodeModel>;
 
-  abstract removeBranch(node: NodeModel): void;
+  abstract removeBranch(node: INodeModel): void;
 
   abstract getRelationships(): Array<RelationshipModel>;
 
-  connect(parent: NodeModel, child: NodeModel): void {
+  connect(parent: INodeModel, child: INodeModel): void {
     // Child already has a parent ?
     $assert(!child.getParent(), 'Child model seems to be already connected');
 
@@ -62,7 +63,7 @@ abstract class IMindmap {
      * @throws will throw an error if child is null or undefined
      * @throws will throw an error if child's parent cannot be found
      */
-  disconnect(child: NodeModel): void {
+  disconnect(child: INodeModel): void {
     const parent = child.getParent();
     $assert(child, 'Child can not be null.');
     $assert(parent, 'Child model seems to be already connected');
@@ -71,23 +72,15 @@ abstract class IMindmap {
     this.addBranch(child);
   }
 
-  /** @abstract */
-  hasAlreadyAdded(node) {
-    throw new Error('Unsupported operation');
-  }
+  abstract hasAlreadyAdded(node: INodeModel): boolean;
 
-  /** @abstract */
-  createNode(type, id) {
-    throw new Error('Unsupported operation');
-  }
+  abstract  createNode(type: NodeType, id: number):void;
 
   abstract createRelationship(fromNode: NodeModel, toNode: NodeModel): void;
 
   abstract addRelationship(rel: RelationshipModel): void;
 
-  deleteRelationship(relationship: RelationshipModel): void {
-    throw new Error('Unsupported operation');
-  }
+  abstract deleteRelationship(relationship: RelationshipModel): void;
 
   /** */
   inspect() {

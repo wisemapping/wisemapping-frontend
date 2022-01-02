@@ -17,21 +17,28 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import cloneDeep from 'lodash/cloneDeep';
-import INodeModel from './INodeModel';
+import INodeModel, { NodeModelType } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
+import FeatureModel from './FeatureModel';
+import Mindmap from './Mindmap';
 
 class NodeModel extends INodeModel {
-  constructor(type, mindmap, id) {
+  _properties: {};
+  _children: INodeModel[];
+  _features: FeatureModel[];
+  _parent: INodeModel;
+
+  constructor(type: NodeModelType, mindmap: Mindmap, id: number) {
     $assert(type, 'Node type can not be null');
     $assert(mindmap, 'mindmap can not be null');
     super(mindmap);
     this._properties = {};
     this.setId(id);
     this.setType(type);
-    this.areChildrenShrunken(false);
+    this.areChildrenShrunken();
 
     this._children = [];
-    this._feature = [];
+    this._features = [];
   }
 
   /**
@@ -49,12 +56,12 @@ class NodeModel extends INodeModel {
      */
   addFeature(feature) {
     $assert(feature, 'feature can not be null');
-    this._feature.push(feature);
+    this._features.push(feature);
   }
 
   /** */
   getFeatures() {
-    return this._feature;
+    return this._features;
   }
 
   /**
@@ -64,9 +71,9 @@ class NodeModel extends INodeModel {
      */
   removeFeature(feature) {
     $assert(feature, 'feature can not be null');
-    const size = this._feature.length;
-    this._feature = this._feature.filter((f) => feature.getId() !== f.getId());
-    $assert(size - 1 === this._feature.length, 'Could not be removed ...');
+    const size = this._features.length;
+    this._features = this._features.filter((f) => feature.getId() !== f.getId());
+    $assert(size - 1 === this._features.length, 'Could not be removed ...');
   }
 
   /**
@@ -75,7 +82,7 @@ class NodeModel extends INodeModel {
      */
   findFeatureByType(type) {
     $assert(type, 'type can not be null');
-    return this._feature.filter((feature) => feature.getType() === type);
+    return this._features.filter((feature) => feature.getType() === type);
   }
 
   /**
@@ -86,7 +93,7 @@ class NodeModel extends INodeModel {
      */
   findFeatureById(id) {
     $assert($defined(id), 'id can not be null');
-    const result = this._feature.filter((feature) => feature.getId() === id);
+    const result = this._features.filter((feature) => feature.getId() === id);
     $assert(result.length === 1, `Feature could not be found:${id}`);
     return result[0];
   }
@@ -112,7 +119,7 @@ class NodeModel extends INodeModel {
   }
 
   /** */
-  getProperty(key) {
+  getProperty(key: string) {
     $defined(key, 'key can not be null');
     const result = this._properties[key];
     return !$defined(result) ? null : result;
@@ -122,15 +129,15 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
      */
   clone() {
-    const result = new NodeModel(this.getType(), this._mindmap);
+    const result = new NodeModel(this.getType(), this._mindmap, -1);
     result._children = this._children.map((node) => {
-      const cnode = node.clone();
+      const cnode = node.clone() as NodeModel;
       cnode._parent = result;
       return cnode;
     });
 
     result._properties = cloneDeep(this._properties);
-    result._feature = cloneDeep(this._feature);
+    result._features = cloneDeep(this._features);
     return result;
   }
 
@@ -138,19 +145,19 @@ class NodeModel extends INodeModel {
      * Similar to clone, assign new id to the elements ...
      * @return {mindplot.model.NodeModel}
      */
-  deepCopy() {
-    const result = new NodeModel(this.getType(), this._mindmap);
+  deepCopy(): NodeModel {
+    const result = new NodeModel(this.getType(), this._mindmap, -1);
     result._children = this._children.map((node) => {
-      const cnode = node.deepCopy();
+      const cnode = (node as NodeModel).deepCopy();
       cnode._parent = result;
       return cnode;
     });
 
     const id = result.getId();
-    result._properties = Object.clone(this._properties);
+    result._properties = Object.assign({}, this._properties);
     result.setId(id);
 
-    result._feature = this._feature.clone();
+    result._features = cloneDeep(this._features);
     return result;
   }
 
@@ -158,7 +165,7 @@ class NodeModel extends INodeModel {
      * @param {mindplot.model.NodeModel} child
      * @throws will throw an error if child is null, undefined or not a NodeModel object
      */
-  append(child) {
+  append(child: NodeModel) {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
     // eslint-disable-next-line no-param-reassign
@@ -169,7 +176,7 @@ class NodeModel extends INodeModel {
      * @param {mindplot.model.NodeModel} child
      * @throws will throw an error if child is null, undefined or not a NodeModel object
      */
-  removeChild(child) {
+  removeChild(child): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
     // eslint-disable-next-line no-param-reassign
@@ -192,44 +199,6 @@ class NodeModel extends INodeModel {
     this._parent = parent;
   }
 
-  _isChildNode(node) {
-    let result = false;
-    if (node === this) {
-      result = true;
-    } else {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        result = child._isChildNode(node);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
-  }
-
-  /**
-     * @id
-     * @return {mindplot.model.NodeModel} the node with the respective id
-     */
-  findNodeById(id) {
-    $assert(Number.isFinite(id));
-    let result = null;
-    if (this.getId() === id) {
-      result = this;
-    } else {
-      const children = this.getChildren();
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        result = child.findNodeById(id);
-        if (result) {
-          break;
-        }
-      }
-    }
-    return result;
-  }
 }
 
 export default NodeModel;

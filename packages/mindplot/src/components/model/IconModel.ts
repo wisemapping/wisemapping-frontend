@@ -20,27 +20,17 @@ import FeatureModel from './FeatureModel';
 
 class IconModel extends FeatureModel {
   constructor(attributes) {
-    super(IconModel.FEATURE_TYPE);
+    super('icon');
     this.setIconType(attributes.id);
   }
 
-  /** @return the icon type id */
-  getIconType() {
+  getIconType(): string {
     return this.getAttribute('id');
   }
 
-  /** @param {String} iconType the icon type id */
-  setIconType(iconType) {
+  setIconType(iconType: string) {
     $assert(iconType, 'iconType id can not be null');
     this.setAttribute('id', iconType);
   }
 }
-
-/**
- * @constant
- * @type {String}
- * @default
- */
-IconModel.FEATURE_TYPE = 'icon';
-
 export default IconModel;

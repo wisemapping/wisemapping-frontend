@@ -15,16 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
+
+export type FeatureType = 'note' | 'link' | 'icon';
 
 class FeatureModel {
+  static _next_id = 0;
+  _id: number;
+  _type: FeatureType;
+  _attributes: {};
+
   /**
      * @constructs
      * @param type
      * @throws will throw an exception if type is null or undefined
      * assigns a unique id and the given type to the new model
      */
-  constructor(type) {
+  constructor(type: FeatureType) {
     $assert(type, 'type can not be null');
     this._id = FeatureModel._nextUUID();
 
@@ -77,19 +84,15 @@ class FeatureModel {
     this._id = id;
   }
 
-  /** */
-  getType() {
+  getType(): FeatureType {
     return this._type;
   }
-}
 
-FeatureModel._nextUUID = function _nextUUID() {
-  if (!$defined(FeatureModel._uuid)) {
-    FeatureModel._uuid = 0;
+  static _nextUUID(): number {
+    const result = FeatureModel._next_id + 1;
+    FeatureModel._next_id = result;
+    return result;
   }
-
-  FeatureModel._uuid += 1;
-  return FeatureModel._uuid;
-};
+}
 
 export default FeatureModel;

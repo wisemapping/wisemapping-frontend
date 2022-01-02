@@ -20,7 +20,7 @@ import FeatureModel from './FeatureModel';
 
 class NoteModel extends FeatureModel {
   constructor(attributes) {
-    super(NoteModel.FEATURE_TYPE);
+    super('note');
     const noteText = attributes.text ? attributes.text : ' ';
     this.setText(noteText);
   }
@@ -36,12 +36,5 @@ class NoteModel extends FeatureModel {
     this.setAttribute('text', text);
   }
 }
-
-/**
- * @constant
- * @type {String}
- * @default
- */
-NoteModel.FEATURE_TYPE = 'note';
 
 export default NoteModel;
