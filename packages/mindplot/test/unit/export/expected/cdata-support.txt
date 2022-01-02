@@ -1,11 +1,11 @@
-1.0 Observation
-1.1 Data Analysis
-1.2 Organizing Data
-1.3 Questions
-1.4 Hypothesis
-1.5 Experiment
-1.6 Variable
-1.7 Independent Variable
-1.8 Control Group
-1.9 Dependent Variable
-1.10 Constant 
+1 Observation
+2 Data Analysis
+3 Organizing Data
+4 Questions
+5 Hypothesis
+6 Experiment
+7 Variable
+8 Independent Variable
+9 Control Group
+10 Dependent Variable
+11 Constant 

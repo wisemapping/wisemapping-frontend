@@ -33,16 +33,21 @@ class TxtExporter implements Exporter {
         const mindmap = this.mindmap;
 
         const branches = mindmap.getBranches();
-        const retult = this.traverseBranch(1, '', branches);
+        const retult = this.traverseBranch('', branches);
         return Promise.resolve(retult);
     }
 
-    private traverseBranch(indent: number, prefix: string, branches: Array<NodeModel>) {
-        let result = "";
-        branches.forEach((b, index) => {
-            result = result + `${prefix}${index} ${b.getText()}\n`;
-            if (b.getChildren().length > 0) {
-                result = result + this.traverseBranch(index + 1, `${prefix}.${index}`, b.getChildren());
+    private traverseBranch(prefix: string, branches: Array<NodeModel>) {
+        let result = '';
+        branches.forEach((node, index) => {
+            result = result + `${prefix}${index+1} ${node.getText()}`;
+            node.getFeatures().forEach((f)=>{
+                    
+            });
+            result = result + '\n';
+
+            if (node.getChildren().length > 0) {
+                result = result + this.traverseBranch(`${prefix}${index+1}.`, node.getChildren());
             }
         });
         return result;

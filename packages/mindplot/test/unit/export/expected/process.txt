@@ -1,71 +1,71 @@
-1.0 California
-1..00 Northern California
-1..0.00 Oakland/Berkeley
-1..0.01 San Mateo
-1..0.02 Other North
-1..0.03 San Francisco
-1..0.04 Santa Clara
-1..0.05 Marin/Napa/Solano
-1..01 Hawaii
-1..02 Southern California
-1..0.20 Los Angeles
-1..0.21 Anaheim/Santa Ana
-1..0.22 Ventura
-1..0.23 Other South
-1..03 Policy Bodies
-1..0.30 Advocacy
-1..0.3.00 AAO
-1..0.3.01 ASCRS
-1..0.3.02 EBAA
-1..0.31 Military
-1..0.32 United Network for Organ Sharing
-1..0.33 Kaiser Hospital System
-1..0.34 University of California System
-1..0.35 CMS
-1..0.3.50 Medicare Part A
-1..0.3.51 Medicare Part B
-1..04 Corneal Tissue OPS
-1..0.40 Transplant Bank International
-1..0.4.00 Orange County Eye and Transplant Bank
-1..0.4.01 Northern California Transplant Bank
-1..0.4.0.10 In 2010, 2,500 referrals forwarded to OneLegacy
-1..0.4.02 Doheny Eye and Tissue Transplant Bank
-1..0.41 OneLegacy
-1..0.4.10 In 2010, 11,828 referrals
-1..0.42 San Diego Eye Bank
-1..0.4.20 In 2010, 2,555 referrals
-1..0.43 California Transplant Donor Network
-1..0.44 California Transplant Services
-1..0.4.40 In 2010, 0 referrals
-1..0.45 Lifesharing
-1..0.46 DCI Donor Services
-1..0.4.60 Sierra Eye and Tissue Donor Services
-1..0.4.6.00 In 2010, 2.023 referrals
-1..0.47 SightLife
-1..05 Tools
-1..0.50 Darthmouth Atlas of Health
-1..0.51 HealthLandscape
-1..06 QE Medicare
-1..07 CMS Data
-1..08 Ambulatory Payment Classification
-1..0.80 CPT's which don't allow V2785
-1..0.8.00 Ocular Reconstruction Transplant
-1..0.8.0.00 65780 (amniotic membrane tranplant
-1..0.8.0.01 65781 (limbal stem cell allograft)
-1..0.8.0.02 65782 (limbal conjunctiva autograft)
-1..0.8.01 Endothelial keratoplasty
-1..0.8.0.10 65756
-1..0.8.02 Epikeratoplasty
-1..0.8.0.20 65767
-1..0.81 Anterior lamellar keratoplasty
-1..0.8.10 65710
-1..0.82 Processing, preserving, and transporting corneal tissue
-1..0.8.20 V2785
-1..0.8.21 Laser incision in recepient
-1..0.8.2.10 0290T
-1..0.83 Laser incision in donor
-1..0.8.30 0289T
-1..0.84 Penetrating keratoplasty
-1..0.8.40 65730 (in other)
-1..0.8.41 65755 (in pseudoaphakia)
-1..0.8.42 65750 (in aphakia)
+1 California
+1.1 Northern California
+1.1.1 Oakland/Berkeley
+1.1.2 San Mateo
+1.1.3 Other North
+1.1.4 San Francisco
+1.1.5 Santa Clara
+1.1.6 Marin/Napa/Solano
+1.2 Hawaii
+1.3 Southern California
+1.3.1 Los Angeles
+1.3.2 Anaheim/Santa Ana
+1.3.3 Ventura
+1.3.4 Other South
+1.4 Policy Bodies
+1.4.1 Advocacy
+1.4.1.1 AAO
+1.4.1.2 ASCRS
+1.4.1.3 EBAA
+1.4.2 Military
+1.4.3 United Network for Organ Sharing
+1.4.4 Kaiser Hospital System
+1.4.5 University of California System
+1.4.6 CMS
+1.4.6.1 Medicare Part A
+1.4.6.2 Medicare Part B
+1.5 Corneal Tissue OPS
+1.5.1 Transplant Bank International
+1.5.1.1 Orange County Eye and Transplant Bank
+1.5.1.2 Northern California Transplant Bank
+1.5.1.2.1 In 2010, 2,500 referrals forwarded to OneLegacy
+1.5.1.3 Doheny Eye and Tissue Transplant Bank
+1.5.2 OneLegacy
+1.5.2.1 In 2010, 11,828 referrals
+1.5.3 San Diego Eye Bank
+1.5.3.1 In 2010, 2,555 referrals
+1.5.4 California Transplant Donor Network
+1.5.5 California Transplant Services
+1.5.5.1 In 2010, 0 referrals
+1.5.6 Lifesharing
+1.5.7 DCI Donor Services
+1.5.7.1 Sierra Eye and Tissue Donor Services
+1.5.7.1.1 In 2010, 2.023 referrals
+1.5.8 SightLife
+1.6 Tools
+1.6.1 Darthmouth Atlas of Health
+1.6.2 HealthLandscape
+1.7 QE Medicare
+1.8 CMS Data
+1.9 Ambulatory Payment Classification
+1.9.1 CPT's which don't allow V2785
+1.9.1.1 Ocular Reconstruction Transplant
+1.9.1.1.1 65780 (amniotic membrane tranplant
+1.9.1.1.2 65781 (limbal stem cell allograft)
+1.9.1.1.3 65782 (limbal conjunctiva autograft)
+1.9.1.2 Endothelial keratoplasty
+1.9.1.2.1 65756
+1.9.1.3 Epikeratoplasty
+1.9.1.3.1 65767
+1.9.2 Anterior lamellar keratoplasty
+1.9.2.1 65710
+1.9.3 Processing, preserving, and transporting corneal tissue
+1.9.3.1 V2785
+1.9.3.2 Laser incision in recepient
+1.9.3.2.1 0290T
+1.9.4 Laser incision in donor
+1.9.4.1 0289T
+1.9.5 Penetrating keratoplasty
+1.9.5.1 65730 (in other)
+1.9.5.2 65755 (in pseudoaphakia)
+1.9.5.3 65750 (in aphakia)
