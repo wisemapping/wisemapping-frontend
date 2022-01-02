@@ -27,7 +27,7 @@ class PersistenceManager {
     const mapId = mindmap.getId();
     $assert(mapId, 'mapId can not be null');
 
-    const serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
+    const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
     const mapXml = new XMLSerializer().serializeToString(domMap);
 
@@ -73,7 +73,7 @@ PersistenceManager.loadFromDom = function loadFromDom(mapId, mapDom) {
   $assert(mapId, 'mapId can not be null');
   $assert(mapDom, 'mapDom can not be null');
 
-  const serializer = XMLSerializerFactory.getSerializerFromDocument(mapDom);
+  const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDom);
   return serializer.loadFromDom(mapDom, mapId);
 };
 

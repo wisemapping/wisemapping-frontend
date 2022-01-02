@@ -1,4 +1,4 @@
-import TestSuite from './TestSuite';
+import Constants from './Constants';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 expect.extend({
@@ -53,35 +53,35 @@ describe('Free Test Suite', () => {
 
   describe('avoidCollisionTree1Test', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(6, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
-    manager.addNode(12, TestSuite.NODE_SIZE, position);
-    manager.addNode(13, TestSuite.NODE_SIZE, position);
-    manager.addNode(14, TestSuite.NODE_SIZE, position);
-    manager.addNode(15, TestSuite.NODE_SIZE, position);
-    manager.addNode(16, TestSuite.NODE_SIZE, position);
-    manager.addNode(17, TestSuite.NODE_SIZE, position);
-    manager.addNode(18, TestSuite.NODE_SIZE, position);
-    manager.addNode(19, TestSuite.NODE_SIZE, position);
-    manager.addNode(20, TestSuite.NODE_SIZE, position);
-    manager.addNode(21, TestSuite.NODE_SIZE, position);
-    manager.addNode(22, TestSuite.NODE_SIZE, position);
-    manager.addNode(23, TestSuite.NODE_SIZE, position);
-    manager.addNode(24, TestSuite.NODE_SIZE, position);
-    manager.addNode(25, TestSuite.NODE_SIZE, position);
-    manager.addNode(26, TestSuite.NODE_SIZE, position);
+    manager.addNode(1, Constants.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
+    manager.addNode(6, Constants.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
+    manager.addNode(12, Constants.NODE_SIZE, position);
+    manager.addNode(13, Constants.NODE_SIZE, position);
+    manager.addNode(14, Constants.NODE_SIZE, position);
+    manager.addNode(15, Constants.NODE_SIZE, position);
+    manager.addNode(16, Constants.NODE_SIZE, position);
+    manager.addNode(17, Constants.NODE_SIZE, position);
+    manager.addNode(18, Constants.NODE_SIZE, position);
+    manager.addNode(19, Constants.NODE_SIZE, position);
+    manager.addNode(20, Constants.NODE_SIZE, position);
+    manager.addNode(21, Constants.NODE_SIZE, position);
+    manager.addNode(22, Constants.NODE_SIZE, position);
+    manager.addNode(23, Constants.NODE_SIZE, position);
+    manager.addNode(24, Constants.NODE_SIZE, position);
+    manager.addNode(25, Constants.NODE_SIZE, position);
+    manager.addNode(26, Constants.NODE_SIZE, position);
 
     manager.connectNode(0, 1, 0).connectNode(0, 2, 1).connectNode(0, 3, 2).connectNode(0, 4, 3);
     manager.connectNode(4, 21, 0).connectNode(4, 22, 0);
@@ -107,31 +107,31 @@ describe('Free Test Suite', () => {
 
   describe('avoidCollisionTree2Test - FAILING, commented test', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(6, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
-    manager.addNode(12, TestSuite.NODE_SIZE, position);
-    manager.addNode(13, TestSuite.NODE_SIZE, position);
-    manager.addNode(14, TestSuite.NODE_SIZE, position);
-    manager.addNode(15, TestSuite.NODE_SIZE, position);
-    manager.addNode(16, TestSuite.NODE_SIZE, position);
-    manager.addNode(17, TestSuite.NODE_SIZE, position);
-    manager.addNode(18, TestSuite.NODE_SIZE, position);
-    manager.addNode(19, TestSuite.NODE_SIZE, position);
-    manager.addNode(20, TestSuite.NODE_SIZE, position);
-    manager.addNode(21, TestSuite.NODE_SIZE, position);
-    manager.addNode(22, TestSuite.NODE_SIZE, position);
+    manager.addNode(1, Constants.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
+    manager.addNode(6, Constants.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
+    manager.addNode(12, Constants.NODE_SIZE, position);
+    manager.addNode(13, Constants.NODE_SIZE, position);
+    manager.addNode(14, Constants.NODE_SIZE, position);
+    manager.addNode(15, Constants.NODE_SIZE, position);
+    manager.addNode(16, Constants.NODE_SIZE, position);
+    manager.addNode(17, Constants.NODE_SIZE, position);
+    manager.addNode(18, Constants.NODE_SIZE, position);
+    manager.addNode(19, Constants.NODE_SIZE, position);
+    manager.addNode(20, Constants.NODE_SIZE, position);
+    manager.addNode(21, Constants.NODE_SIZE, position);
+    manager.addNode(22, Constants.NODE_SIZE, position);
 
     manager.connectNode(0, 1, 0).connectNode(0, 2, 1).connectNode(0, 3, 2).connectNode(0, 4, 3);
     manager.connectNode(4, 21, 0).connectNode(4, 22, 0);
@@ -156,20 +156,20 @@ describe('Free Test Suite', () => {
 
   describe('predict test', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(6, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
+    manager.addNode(1, Constants.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
+    manager.addNode(6, Constants.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
 
     manager.connectNode(0, 1, 0);
     manager.connectNode(0, 2, 1);
@@ -218,20 +218,20 @@ describe('Free Test Suite', () => {
 
   describe('reconnect node test', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
     // Prepare a sample graph ...
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(6, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
+    manager.addNode(1, Constants.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
+    manager.addNode(6, Constants.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
 
     manager.connectNode(0, 1, 0);
     manager.connectNode(0, 2, 1);

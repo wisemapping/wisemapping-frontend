@@ -1,0 +1,4 @@
+1.1i18n
+1..01Este es un é con acento
+1..01Este es una ñ
+1..01這是一個樣本 Japanise。

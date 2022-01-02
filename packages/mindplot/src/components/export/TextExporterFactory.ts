@@ -17,6 +17,7 @@
  */
 import { Mindmap } from "../..";
 import Exporter from "./Exporter";
+import TxtExporter from "./TxtExporter";
 import WiseXMLExporter from "./WiseXMLExporter";
 
 type type = 'wxml' | 'txt' | 'mm' | 'csv';
@@ -27,7 +28,10 @@ class TextExporterFactory {
             case 'wxml':
                 result = new WiseXMLExporter(mindmap);
                 break;
-            default:
+            case 'txt':
+                result = new TxtExporter(mindmap);
+                break;
+        default:
                 throw new Error(`Unsupported type ${type}`);
         }
         return result;

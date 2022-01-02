@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { result } from "cypress/types/lodash";
 import { Mindmap } from "../..";
 import BinaryImageExporter from "./BinaryImageExporter";
 import Exporter from "./Exporter";

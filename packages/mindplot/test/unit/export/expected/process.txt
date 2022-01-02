@@ -1,0 +1,71 @@
+1.1California
+1..01Northern California
+1..0.01Oakland/Berkeley
+1..0.01San Mateo
+1..0.01Other North
+1..0.01San Francisco
+1..0.01Santa Clara
+1..0.01Marin/Napa/Solano
+1..01Hawaii
+1..01Southern California
+1..0.23Los Angeles
+1..0.23Anaheim/Santa Ana
+1..0.23Ventura
+1..0.23Other South
+1..01Policy Bodies
+1..0.34Advocacy
+1..0.3.01AAO
+1..0.3.01ASCRS
+1..0.3.01EBAA
+1..0.34Military
+1..0.34United Network for Organ Sharing
+1..0.34Kaiser Hospital System
+1..0.34University of California System
+1..0.34CMS
+1..0.3.56Medicare Part A
+1..0.3.56Medicare Part B
+1..01Corneal Tissue OPS
+1..0.45Transplant Bank International
+1..0.4.01Orange County Eye and Transplant Bank
+1..0.4.01Northern California Transplant Bank
+1..0.4.0.12In 2010, 2,500 referrals forwarded to OneLegacy
+1..0.4.01Doheny Eye and Tissue Transplant Bank
+1..0.45OneLegacy
+1..0.4.12In 2010, 11,828 referrals
+1..0.45San Diego Eye Bank
+1..0.4.23In 2010, 2,555 referrals
+1..0.45California Transplant Donor Network
+1..0.45California Transplant Services
+1..0.4.45In 2010, 0 referrals
+1..0.45Lifesharing
+1..0.45DCI Donor Services
+1..0.4.67Sierra Eye and Tissue Donor Services
+1..0.4.6.01In 2010, 2.023 referrals
+1..0.45SightLife
+1..01Tools
+1..0.56Darthmouth Atlas of Health
+1..0.56HealthLandscape
+1..01QE Medicare
+1..01CMS Data
+1..01Ambulatory Payment Classification
+1..0.89CPT's which don't allow V2785
+1..0.8.01Ocular Reconstruction Transplant
+1..0.8.0.0165780 (amniotic membrane tranplant
+1..0.8.0.0165781 (limbal stem cell allograft)
+1..0.8.0.0165782 (limbal conjunctiva autograft)
+1..0.8.01Endothelial keratoplasty
+1..0.8.0.1265756
+1..0.8.01Epikeratoplasty
+1..0.8.0.2365767
+1..0.89Anterior lamellar keratoplasty
+1..0.8.1265710
+1..0.89Processing, preserving, and transporting corneal tissue
+1..0.8.23V2785
+1..0.8.23Laser incision in recepient
+1..0.8.2.120290T
+1..0.89Laser incision in donor
+1..0.8.340289T
+1..0.89Penetrating keratoplasty
+1..0.8.4565730 (in other)
+1..0.8.4565755 (in pseudoaphakia)
+1..0.8.4565750 (in aphakia)

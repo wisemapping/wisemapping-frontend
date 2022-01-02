@@ -17,6 +17,7 @@
  */
 interface Exporter {
     export(): Promise<string>;
+    extension(): string;
 }
 
 export default Exporter;

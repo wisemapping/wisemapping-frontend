@@ -2,7 +2,7 @@ import '../css/editor.less';
 import { buildDesigner, buildOptions } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 
-const p = new LocalStorageManager('samples/{id}.xml');
+const p = new LocalStorageManager('samples/{id}.wxml');
 const options = buildOptions({ persistenceManager: p });
 const designer = buildDesigner(options);
 

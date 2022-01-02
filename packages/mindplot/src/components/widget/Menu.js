@@ -228,6 +228,7 @@ class Menu extends IMenu {
           anchor.click();
 
           // Clean up ...
+          URL.revokeObjectURL(url);
           document.body.removeChild(anchor);
         });
 

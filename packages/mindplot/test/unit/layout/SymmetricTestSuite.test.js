@@ -1,25 +1,25 @@
-import TestSuite from './TestSuite';
+import Constants from './Constants';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 describe('Symmetric Test Suite', () => {
   describe('symmetricTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(6, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
-    manager.addNode(12, TestSuite.NODE_SIZE, position);
-    manager.addNode(13, TestSuite.NODE_SIZE, position);
-    manager.addNode(14, TestSuite.NODE_SIZE, position);
+    manager.addNode(1, Constants.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
+    manager.addNode(6, Constants.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
+    manager.addNode(12, Constants.NODE_SIZE, position);
+    manager.addNode(13, Constants.NODE_SIZE, position);
+    manager.addNode(14, Constants.NODE_SIZE, position);
     manager.connectNode(0, 14, 0);
     manager.connectNode(14, 13, 0);
     manager.connectNode(13, 1, 0);
@@ -51,9 +51,9 @@ describe('Symmetric Test Suite', () => {
 
   describe('symmetricDragPredictTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
-    manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 1);
-    manager.addNode(2, TestSuite.NODE_SIZE, position).connectNode(1, 2, 0);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
+    manager.addNode(1, Constants.NODE_SIZE, position).connectNode(0, 1, 1);
+    manager.addNode(2, Constants.NODE_SIZE, position).connectNode(1, 2, 0);
     manager.layout();
 
     test('Prediction A', () => {

@@ -2,7 +2,7 @@ import '../css/viewmode.less';
 import { buildDesigner, buildOptions } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 
-const p = new LocalStorageManager('samples/{id}.xml');
+const p = new LocalStorageManager('samples/{id}.wxml');
 const options = buildOptions({ persistenceManager: p, readOnly: true, saveOnLoad: false });
 
 // Obtain map id from query param

@@ -1,50 +1,50 @@
-import TestSuite from './TestSuite';
+import Constants from './Constants';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 describe('Balanced Test Suite', () => {
   describe('balancedTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
+    manager.addNode(1, Constants.NODE_SIZE, position);
     manager.connectNode(0, 1, 0); manager.layout();
 
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
     manager.connectNode(0, 2, 1);
     manager.layout();
 
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
     manager.connectNode(0, 3, 2);
     manager.layout();
 
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
     manager.connectNode(0, 4, 3);
     manager.layout();
 
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
     manager.connectNode(0, 5, 4);
     manager.layout();
 
-    manager.addNode(6, TestSuite.NODE_SIZE, position);
+    manager.addNode(6, Constants.NODE_SIZE, position);
     manager.connectNode(0, 6, 5);
     manager.layout();
 
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
     manager.connectNode(3, 7, 0);
     manager.connectNode(7, 8, 0);
     manager.connectNode(7, 9, 1);
     manager.layout();
 
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
-    manager.addNode(12, TestSuite.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
+    manager.addNode(12, Constants.NODE_SIZE, position);
     manager.connectNode(6, 10, 0);
     manager.connectNode(10, 11, 0);
     manager.connectNode(10, 12, 1);
     manager.layout();
 
-    manager.addNode(13, TestSuite.NODE_SIZE, position);
+    manager.addNode(13, Constants.NODE_SIZE, position);
     manager.connectNode(0, 13, 4);
     manager.layout();
 
@@ -53,14 +53,14 @@ describe('Balanced Test Suite', () => {
     });
 
     test('Check orders have shifted accordingly', () => {
-      manager.addNode(14, TestSuite.NODE_SIZE, position);
+      manager.addNode(14, Constants.NODE_SIZE, position);
       manager.connectNode(0, 14, 5);
       manager.layout();
       expect(manager.find(6).getOrder()).toEqual(7);
     });
 
     test('Check orders have shifted accordingly', () => {
-      manager.addNode(15, TestSuite.NODE_SIZE, position);
+      manager.addNode(15, Constants.NODE_SIZE, position);
       manager.connectNode(0, 15, 4);
       manager.layout();
       expect(manager.find(13).getOrder()).toEqual(6);
@@ -68,16 +68,16 @@ describe('Balanced Test Suite', () => {
     });
 
     test('Check orders have shifted accordingly', () => {
-      manager.addNode(16, TestSuite.NODE_SIZE, position);
+      manager.addNode(16, Constants.NODE_SIZE, position);
       manager.connectNode(0, 16, 25);
       manager.layout();
       expect(manager.find(16).getOrder()).toEqual(9);
     });
 
     test('Check that everything is ok', () => {
-      manager.addNode(17, TestSuite.NODE_SIZE, position);
-      manager.addNode(18, TestSuite.NODE_SIZE, position);
-      manager.addNode(19, TestSuite.NODE_SIZE, position);
+      manager.addNode(17, Constants.NODE_SIZE, position);
+      manager.addNode(18, Constants.NODE_SIZE, position);
+      manager.addNode(19, Constants.NODE_SIZE, position);
       manager.connectNode(0, 17, 11);
       manager.connectNode(0, 18, 13);
       manager.connectNode(0, 19, 10);
@@ -99,18 +99,18 @@ describe('Balanced Test Suite', () => {
 
   describe('balancedPredictTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
-    manager.addNode(1, TestSuite.NODE_SIZE, position);
-    manager.addNode(2, TestSuite.NODE_SIZE, position);
-    manager.addNode(3, TestSuite.NODE_SIZE, position);
-    manager.addNode(4, TestSuite.NODE_SIZE, position);
-    manager.addNode(5, TestSuite.NODE_SIZE, position);
-    manager.addNode(7, TestSuite.NODE_SIZE, position);
-    manager.addNode(8, TestSuite.NODE_SIZE, position);
-    manager.addNode(9, TestSuite.NODE_SIZE, position);
-    manager.addNode(10, TestSuite.NODE_SIZE, position);
-    manager.addNode(11, TestSuite.NODE_SIZE, position);
+    manager.addNode(1, Constants.NODE_SIZE, position);
+    manager.addNode(2, Constants.NODE_SIZE, position);
+    manager.addNode(3, Constants.NODE_SIZE, position);
+    manager.addNode(4, Constants.NODE_SIZE, position);
+    manager.addNode(5, Constants.NODE_SIZE, position);
+    manager.addNode(7, Constants.NODE_SIZE, position);
+    manager.addNode(8, Constants.NODE_SIZE, position);
+    manager.addNode(9, Constants.NODE_SIZE, position);
+    manager.addNode(10, Constants.NODE_SIZE, position);
+    manager.addNode(11, Constants.NODE_SIZE, position);
 
     manager.connectNode(0, 1, 0);
     manager.connectNode(0, 2, 1);
@@ -183,7 +183,7 @@ describe('Balanced Test Suite', () => {
       expect(prediction3.position.x).toEqual(manager.find(4).getPosition().x);
       expect(prediction3.order).toEqual(5);
 
-      manager.addNode(6, TestSuite.NODE_SIZE, prediction3.position);
+      manager.addNode(6, Constants.NODE_SIZE, prediction3.position);
       manager.connectNode(0, 6, prediction3.order);
       manager.layout();
 
@@ -210,9 +210,9 @@ describe('Balanced Test Suite', () => {
 
   describe('balancedNodeDragPredictTest', () => {
     const position = { x: 0, y: 0 };
-    const manager = new LayoutManager(0, TestSuite.ROOT_NODE_SIZE);
+    const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
 
-    manager.addNode(1, TestSuite.NODE_SIZE, position).connectNode(0, 1, 0);
+    manager.addNode(1, Constants.NODE_SIZE, position).connectNode(0, 1, 0);
     manager.layout();
 
     describe('Predict 1', () => {
@@ -285,7 +285,7 @@ describe('Balanced Test Suite', () => {
       beforeAll(() => {
         manager.disconnectNode(1);
         manager.connectNode(0, 1, 0);
-        manager.addNode(2, TestSuite.NODE_SIZE, position).connectNode(0, 2, 2);
+        manager.addNode(2, Constants.NODE_SIZE, position).connectNode(0, 2, 2);
         manager.layout();
       });
 

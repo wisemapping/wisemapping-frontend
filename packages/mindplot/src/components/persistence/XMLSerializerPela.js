@@ -238,7 +238,7 @@ class XMLSerializerPela {
 
     this._idsMap = {};
     // Start the loading process ...
-    const version = rootElem.getAttribute('version');
+    const version = rootElem.getAttribute('version') || 'pela';
     const mindmap = new Mindmap(mapId, version);
 
     // Add all the topics nodes ...

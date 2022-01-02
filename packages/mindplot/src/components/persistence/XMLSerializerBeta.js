@@ -184,7 +184,7 @@ class XMLSerializerBeta {
     $assert(
       documentElement.tagName === XMLSerializerBeta.MAP_ROOT_NODE,
       `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${dom.innerHTML
-      },XML:,${new XMLSerializer().serializeToString(dom)}`,
+      }, XML:,${new XMLSerializer().serializeToString(dom)}`,
     );
 
     // Start the loading process ...

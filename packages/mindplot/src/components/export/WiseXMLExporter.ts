@@ -24,14 +24,20 @@ class WiseXMLExporter implements Exporter {
     constructor(mindmap: Mindmap) {
         this.mindmap = mindmap;
     }
+    
+    extension(): string {
+        return 'wxml';
+    }
 
     export(): Promise<string> {
 
         const mindmap = this.mindmap;
-        const serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
+        const serializer = XMLSerializerFactory
+            .createInstanceFromMindmap(mindmap);
         const document: Document = serializer.toXML(mindmap);
 
-        const xmlStr: string = new XMLSerializer().serializeToString(document)
+        const xmlStr: string = new XMLSerializer()
+            .serializeToString(document)
         const blob = new Blob([xmlStr], { type: 'application/xml' });
         const result = URL.createObjectURL(blob);
         return Promise.resolve(result);

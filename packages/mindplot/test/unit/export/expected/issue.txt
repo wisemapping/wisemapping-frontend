@@ -1,0 +1,50 @@
+1.1La computadora
+1..01Hardware
+(componentes físicos)
+1..0.01Entrada de datos
+
+1..0.0.01 Ratón, Teclado, Joystick,
+Cámara digital, Micrófono, Escáner.
+1..0.01Salida de datos
+1..0.0.12Monitor, Impresora, Bocinas, Plóter.
+
+1..0.01Almacenamiento
+1..0.0.23Disquete, Disco compacto, DVD,
+BD, Disco duro, Memoria flash.
+1..01Software
+(Programas y datos con los que funciona la computadora)
+
+1..0.12Software de Sistema:Permite el entendimiento
+entre el usuario y la maquina.
+1..0.1.01Microsoft Windows
+1..0.1.01GNU/LINUX
+1..0.1.01MAC 
+1..0.12Software de Aplicación: Permite hacer hojas de
+calculo navegar en internet, base de datos, etc.
+1..0.1.12Office
+1..0.1.12Libre Office
+1..0.1.12Navegadores
+1..0.1.12Msn
+1..0.12Software de Desarrollo
+
+1..01Tipos de computadora
+1..0.23Computadora personal de escritorio o Desktop
+1..0.23PDA
+
+1..0.23Laptop
+1..0.23Servidor
+1..0.23Tablet PC
+1.1CPU y sus partes internas
+1..12Ranuras de expansión o PCI
+1..12Memoria RAM
+
+1..12Unidades ópticas
+
+1..12Tarjeta Madre
+
+1..12Microprocesador
+
+1..12Disco Duro
+
+1.1Máquina electrónica que sirve para:  escribir,  dibujar,  pintar,
+escuchar música, ver videos, calcular, comunicarnos con otras personas, etc-

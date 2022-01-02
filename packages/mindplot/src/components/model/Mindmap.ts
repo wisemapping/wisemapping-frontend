@@ -32,7 +32,6 @@ class Mindmap extends IMindmap {
   constructor(id: string, version: string = ModelCodeName.TANGO) {
     super();
     $assert(id, 'Id can not be null');
-    $assert($defined(version), 'Version can not be null');
 
     this._branches = [];
     this._description = null;

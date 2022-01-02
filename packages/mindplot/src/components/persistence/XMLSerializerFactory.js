@@ -48,7 +48,7 @@ class XMLSerializerFactory {
    * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
    * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
    */
-  static getSerializerFromMindmap(mindmap) {
+  static createInstanceFromMindmap(mindmap) {
     return XMLSerializerFactory
       .getSerializer(mindmap.getVersion());
   }
@@ -57,9 +57,14 @@ class XMLSerializerFactory {
    * @param domDocument
    * @return serializer corresponding to the mindmap's version
    */
-  static getSerializerFromDocument(domDocument) {
+  static createInstanceFromDocument(domDocument) {
     const rootElem = domDocument.documentElement;
-    return XMLSerializerFactory.getSerializer(rootElem.getAttribute('version'));
+
+    // Legacy version don't have version defined.
+    let version = rootElem.getAttribute('version');
+    version = version || ModelCodeName.BETA;
+
+    return XMLSerializerFactory.getSerializer(version);
   }
 
   /**
@@ -69,8 +74,7 @@ class XMLSerializerFactory {
    * @param {String} version the version name
    * @return serializer
    */
-  static getSerializer(version) {
-    version = version || ModelCodeName.TANGO;
+  static getSerializer(version = ModelCodeName.TANGO) {
     let found = false;
     let result = null;
     for (let i = 0; i < codeToSerializer.length; i++) {

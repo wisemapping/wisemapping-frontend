@@ -36,6 +36,9 @@ class BinaryImageExporter implements Exporter {
         this.width = width;
         this.height = height;
     }
+    extension(): string {
+        return this.imgFormat.split['/'][0];
+    }
 
     async export(): Promise<string> {
         const svgExporter = new SVGExporter(this.mindmap, this.svgElement);
@@ -62,7 +65,8 @@ class BinaryImageExporter implements Exporter {
                 const imgDataUri = canvas
                     .toDataURL(this.imgFormat)
                     .replace('image/png', 'octet/stream');
-                URL.revokeObjectURL(imgDataUri);
+
+                URL.revokeObjectURL(svgUrl);
                 resolve(imgDataUri);
             }
         });

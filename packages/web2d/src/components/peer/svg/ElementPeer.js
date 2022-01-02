@@ -122,12 +122,12 @@ class ElementPeer {
   setSize(width, height) {
     if ($defined(width) && this._size.width !== Number.parseFloat(width, 10)) {
       this._size.width = Number.parseFloat(width, 10);
-      this._native.setAttribute('width', this._size.width);
+      this._native.setAttribute('width', this._size.width.toFixed(2));
     }
 
     if ($defined(height) && this._size.height !== Number.parseFloat(height, 10)) {
       this._size.height = Number.parseFloat(height, 10);
-      this._native.setAttribute('height', this._size.height);
+      this._native.setAttribute('height', this._size.height.toFixed(2));
     }
 
     EventUtils.broadcastChangeEvent(this, 'strokeStyle');

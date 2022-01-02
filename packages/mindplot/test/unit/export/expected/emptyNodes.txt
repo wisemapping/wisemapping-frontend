@@ -1,0 +1,75 @@
+1.1
+1..01objectifs journée
+1..0.01"business plan" associatif ?
+1..0.01modèle / activités responsabilités
+1..0.01articulations / LOG
+1..01SWOT
+1..0.12
+1..0.1.01l'entreprise a aujourd'hui un potentiel important
+1..0.1.0.01compétences professionnel
+1..0.1.0.01citoyen
+1..0.1.0.01forte chance de réussite
+1..0.1.01apporter des idées et propsitions à des questions sociétales
+1..0.1.01notre manière d"y répondre avec notamment les technlogies
+1..0.1.01l'opportunité et la demande sont fortes aujourd'hui, avec peu de "concurrence"
+1..0.1.01ensemble de ressources "rares"
+1..0.1.01capacités de recherche et innovation
+1..0.1.01motivation du groupe et sens partagé entre membres
+1..0.1.01professionnellement : expérience collective et partage d'outils en pratique
+1..0.1.01ouverture vers mode de vie attractif perso / pro
+1..0.1.01potentiel humain, humaniste et citoyen
+1..0.1.01assemblage entre atelier et outillage
+1..0.1.01capacité de réponder en local et en global
+1..0.1.01associatif : contxte de crise multimorphologique / positionne référence en réflexion et usages
+1..0.1.01réseau régional et mondial de l'économie de la ,connaisance
+1..0.1.01asso prend pied dans le monde de la recherche
+1..0.1.01labo de l'innovation sociopolitique
+1..0.1.01acteur valable avec pouvoirs et acteurs en place
+1..0.1.01autonomie par prestations et services
+1..0.1.01triptique
+1..0.1.0.1819éthique de la discussion
+1..0.1.0.1819pari de la délégation
+1..0.1.0.1819art de la décision
+1..0.1.01réussir à caler leprojet en adéquation avec le contexte actuel
+1..0.1.01assoc : grouper des personnes qui développent le concept
+1..0.1.01traduire les belles pensées au niveau du citoyen
+1..0.1.0.2122compréhension
+1..0.1.0.2122adhésion
+1..0.1.01ressources contributeurs réfréents
+1..0.1.01reconnaissance et référence exemplaires
+1..0.1.01financeements suffisants pour bien exister
+1..0.1.01notre organisation est claire
+1..0.1.01prendre des "marchés émergent"
+1..0.1.01double stratup avec succes-story
+1..0.1.01engageons une activité présentielle forte, conviviale et exemplaire
+1..0.1.01attirer de nouveaux membres locomotives
+1..0.1.01pratiquons en interne et externe une gouvernance explaire etune citoyennté de rêve
+1..0.12Risques : cauchemars, dangers
+1..0.1.12disparition des forces vives, départ de membres actuels
+1..0.1.12opportunités atteignables mais difficile
+1..0.1.12difficultés de travailler ensemble dans la durée
+1..0.1.12risque de rater le train
+1..0.1.12sauter dans le dernier wagon et rester à la traîne
+1..0.1.12manquer de professionnalisme
+1..0.1.1.56perte de crédibilité
+1..0.1.12s'isoler entre nous et perdre le contact avec les autres acteurs
+1..0.1.12perdre la capacité de réponse au global
+1..0.1.12manque de concret, surdimension des reflexions
+1..0.1.12manque d'utilité socioplolitique
+1..0.1.12manque de nouveaux membres actifs, fidéliser
+1..0.1.12faire du surplace et
+1..0.1.1.1112manque innovation
+1..0.1.1.1112
+1..0.1.12ne pas vivre ce que nous affirmons
+1..0.1.1.1213cohérence entre  langage gouvernance et la pratique
+1..0.1.12groupe de base insuffisant
+1..0.1.12non attractifs / nouveaux
+1..0.1.1.1415pas ennuyants
+1..0.1.12pas efficaces en com
+1..0.1.12trop lent, rater l'opportunité actuelle
+1..0.1.12débordés par "concurrences"
+1..0.1.12départs de didier, micvhel, rené, corinne MCD etc
+1..0.1.12conclits de personnes et schisme entre 2 groupes ennemis
+1..0.1.12groupe amicale mais très merdique
+1..0.1.12système autocratique despotique ou sectaire
+1..0.1.12

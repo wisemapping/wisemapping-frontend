@@ -53,7 +53,7 @@ class GroupPeer extends ElementPeer {
   getCoordSize() {
     return {
       width: this._coordSize.width,
-      height: this._coordSize.height
+      height: this._coordSize.height,
     };
   }
 
@@ -92,11 +92,11 @@ class GroupPeer extends ElementPeer {
 
   updateTransform() {
     if (this._coordSize.width > 0) {
-      const sx = (this._size.width / this._coordSize.width).toFixed(5);
-      const sy = (this._size.height / this._coordSize.height).toFixed(5);
+      const sx = (this._size.width / this._coordSize.width).toFixed(2);
+      const sy = (this._size.height / this._coordSize.height).toFixed(2);
 
-      const cx = (this._position.x - this._coordOrigin.x * sx).toFixed(5);
-      const cy = (this._position.y - this._coordOrigin.y * sy).toFixed(5);
+      const cx = (this._position.x - this._coordOrigin.x * sx).toFixed(2);
+      const cy = (this._position.y - this._coordOrigin.y * sy).toFixed(2);
       this._native.setAttribute('transform', `translate(${cx},${cy}) scale(${sx},${sy})`);
     } else {
       this._native.removeAttribute('transform');
@@ -146,7 +146,7 @@ class GroupPeer extends ElementPeer {
   getPosition() {
     return {
       x: this._position.x,
-      y: this._position.y
+      y: this._position.y,
     };
   }
 
@@ -158,7 +158,7 @@ class GroupPeer extends ElementPeer {
   getCoordOrigin() {
     return {
       x: this._coordOrigin.x,
-      y: this._coordOrigin.y
+      y: this._coordOrigin.y,
     };
   }
 }
