@@ -46,7 +46,7 @@ class TxtExporter implements Exporter {
             node.getFeatures().forEach((f)=>{
                 const type = f.getType();
                 if(type === 'link'){
-                    result = result + ` [link: ${(f as LinkModel).getUrl}]`
+                    result = result + ` [link: ${(f as LinkModel).getUrl()}]`
                 }    
             });
             result = result + '\n';

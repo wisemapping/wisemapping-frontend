@@ -1,6 +1,6 @@
 1 PPM Plan
 1.1 Business Development 
-1.2 Backlog Management
+1.2 Backlog Management [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
 1.3 Freeform IT
 1.4 Client Project Management
 1.5 Governance & Executive
@@ -81,7 +81,7 @@
 11.1.1 null
 11.2 Strategic Priority 3b: Health Promotion
 11.2.1 Health and Wellness Committee
-11.2.2 Work-life Balance Initiative
+11.2.2 Work-life Balance Initiative [link: http://hrcouncil.ca/hr-toolkit/workplaces-health-safety.cfm]
 11.3 So that...
 12 Benefits
 12.1 As Freeform Staff
@@ -98,8 +98,8 @@
 13.3 Drupal Community
 13.4 CiviCRM
 13.5 Other
-14 Backlog Plan
-14.1 Go To Backlog Plan 
+14 Backlog Plan [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
+14.1 Go To Backlog Plan  [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
 15 Strategy Prospecting
 15.1 null
 15.2 null
