@@ -27,7 +27,7 @@ abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE: number = 220;
   static _next_uuid: number = 0;
 
-  _mindmap: Mindmap;
+  protected _mindmap: Mindmap;
 
   constructor(mindmap: Mindmap) {
     $assert(mindmap && mindmap.getBranches, 'mindmap can not be null');

@@ -21,9 +21,9 @@ export type FeatureType = 'note' | 'link' | 'icon';
 
 class FeatureModel {
   static _next_id = 0;
-  _id: number;
-  _type: FeatureType;
-  _attributes: {};
+  private _id: number;
+  private _type: FeatureType;
+  private _attributes: {};
 
   /**
      * @constructs

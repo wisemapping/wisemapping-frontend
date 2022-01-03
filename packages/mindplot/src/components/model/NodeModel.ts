@@ -23,10 +23,10 @@ import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
 
 class NodeModel extends INodeModel {
-  _properties: {};
-  _children: INodeModel[];
-  _features: FeatureModel[];
-  _parent: INodeModel;
+  private _properties: {};
+  private _children: INodeModel[];
+  private _features: FeatureModel[];
+  private _parent: INodeModel;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id: number) {
     $assert(type, 'Node type can not be null');

@@ -25,7 +25,7 @@ class LinkModel extends FeatureModel {
   }
 
   /** @return {String} the url attribute value */
-  getUrl() {
+  getUrl():string {
     return this.getAttribute('url');
   }
 

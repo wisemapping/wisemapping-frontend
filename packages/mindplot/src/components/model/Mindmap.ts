@@ -23,11 +23,11 @@ import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
 
 class Mindmap extends IMindmap {
-  _description: string;
-  _version: string;
-  _id: string;
-  _branches: Array<NodeModel>;
-  _relationships: Array<RelationshipModel>;
+  private _description: string;
+  private  _version: string;
+  private _id: string;
+  private  _branches: Array<NodeModel>;
+  private  _relationships: Array<RelationshipModel>;
 
   constructor(id: string, version: string = ModelCodeName.TANGO) {
     super();

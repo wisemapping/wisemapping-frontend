@@ -16,18 +16,19 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import Point from '@wisemapping/web2d';
 import ConnectionLine from '../ConnectionLine';
 
 class RelationshipModel {
   static _next_uuid: number = 0;
-  _id: number;
-  _sourceTargetId: number;
-  _targetTopicId: number;
-  _lineType: number;
-  _srcCtrlPoint: any;
-  _destCtrlPoint: any;
-  _endArrow: boolean;
-  _startArrow: boolean;
+  private _id: number;
+  private _sourceTargetId: number;
+  private _targetTopicId: number;
+  private _lineType: number;
+  private _srcCtrlPoint: Point;
+  private _destCtrlPoint: Point;
+  private _endArrow: boolean;
+  private _startArrow: boolean;
 
   constructor(sourceTopicId: number, targetTopicId: number) {
     $assert($defined(sourceTopicId), 'from node type can not be null');
@@ -72,22 +73,22 @@ class RelationshipModel {
   }
 
   /** */
-  getSrcCtrlPoint() {
+  getSrcCtrlPoint(): Point {
     return this._srcCtrlPoint;
   }
 
   /** */
-  setSrcCtrlPoint(srcCtrlPoint) {
+  setSrcCtrlPoint(srcCtrlPoint: Point) {
     this._srcCtrlPoint = srcCtrlPoint;
   }
 
   /** */
-  getDestCtrlPoint() {
+  getDestCtrlPoint(): Point {
     return this._destCtrlPoint;
   }
 
   /** */
-  setDestCtrlPoint(destCtrlPoint) {
+  setDestCtrlPoint(destCtrlPoint: Point) {
     this._destCtrlPoint = destCtrlPoint;
   }
 
