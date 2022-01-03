@@ -15,11 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import FontPeer from './FontPeer';
+import Font from './Font';
 
-class TahomaFont extends FontPeer {
+class TahomaFont extends Font {
   constructor() {
-    super('Verdana');
+    super();
+    this._fontFamily = 'Tahoma';
+  }
+
+  getFontFamily() {
+    return this._fontFamily;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getFont() {
+    return Font.TAHOMA;
   }
 }
 

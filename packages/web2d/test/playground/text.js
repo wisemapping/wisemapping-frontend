@@ -18,7 +18,7 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   const workspace = new Workspace();
 
   workspace.setSize('300px', '100px');
-  workspace.setCoordSize(coordSize, coordSize);
+  workspace.setCoordSize('coordSize', coordSize);
   workspace.setCoordOrigin(0, 0);
   workspace.addItAsChildTo($(`#${htmlElemId}`));
 
@@ -36,7 +36,7 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   span.setAttribute('id', `textoHTML${iesimo}`);
   const textsize = `${textval} - Scale: ${scale.height}`;
   const textHtml = document.createTextNode(textsize);
-  const fontSize = text.getHtmlFontSize(textsize);
+  const fontSize = text.getHtmlFontSize();
   span.append(textHtml);
   span.setAttribute('style', `font-weight:${modifier};font-style: ${style}; font-size:${fontSize}pt; font-family: ${font};width:30;height:30;`);
 

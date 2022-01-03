@@ -18,14 +18,14 @@
 import { $defined } from '@wisemapping/core-js';
 import ElementPeer from './ElementPeer';
 import { getPosition } from '../utils/DomUtils';
-import Toolkit from '../../Toolkit';
 
 class TextPeer extends ElementPeer {
-  constructor(fontPeer) {
+  constructor(Font) {
     const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'text');
     super(svgElement);
+    this.Font = Font;
     this._position = { x: 0, y: 0 };
-    this._font = fontPeer;
+    this._font = new Font('Arial', this);
   }
 
   append(element) {
@@ -84,11 +84,10 @@ class TextPeer extends ElementPeer {
     return getPosition(this._native);
   }
 
-  setFont(fontName, size, style, weight) {
-    if ($defined(fontName)) {
-      this._font = Toolkit.createFontByName(fontName);
+  setFont(font, size, style, weight) {
+    if ($defined(font)) {
+      this._font = new this.Font(font, this);
     }
-
     if ($defined(style)) {
       this._font.setStyle(style);
     }
@@ -102,7 +101,7 @@ class TextPeer extends ElementPeer {
   }
 
   _updateFontStyle() {
-    this._native.setAttribute('font-family', this._font.getFontName());
+    this._native.setAttribute('font-family', this._font.getFontFamily());
     this._native.setAttribute('font-size', this._font.getGraphSize());
     this._native.setAttribute('font-style', this._font.getStyle());
     this._native.setAttribute('font-weight', this._font.getWeight());
@@ -135,9 +134,9 @@ class TextPeer extends ElementPeer {
     this._updateFontStyle();
   }
 
-  setFontName(fontName) {
+  setFontFamily(family) {
     const oldFont = this._font;
-    this._font = Toolkit.createFontByName(fontName);
+    this._font = new this.Font(family, this);
     this._font.setSize(oldFont.getSize());
     this._font.setStyle(oldFont.getStyle());
     this._font.setWeight(oldFont.getWeight());
@@ -146,7 +145,7 @@ class TextPeer extends ElementPeer {
 
   getFont() {
     return {
-      font: this._font.getFontName(),
+      font: this._font.getFont(),
       size: parseInt(this._font.getSize(), 10),
       style: this._font.getStyle(),
       weight: this._font.getWeight(),
@@ -159,10 +158,21 @@ class TextPeer extends ElementPeer {
   }
 
   getWidth() {
-    let computedWidth = this._native.getBBox().width;
-    if (computedWidth === 0) {
-      const bbox = this._native.getBBox();
-      computedWidth = bbox.width;
+    let computedWidth;
+    // Firefox hack for this issue:http://stackoverflow.com/questions/6390065/doing-ajax-updates-in-svg-breaks-getbbox-is-there-a-workaround
+    try {
+      computedWidth = this._native.getBBox().width;
+      // Chrome bug is producing this error, oly during page loading.
+      // Remove the hack if it works. The issue seems to be
+      // caused when the element is hidden. I don't know why, but it works ...
+      if (computedWidth === 0) {
+        const bbox = this._native.getBBox();
+        computedWidth = bbox.width;
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+      computedWidth = 10;
     }
 
     let width = parseInt(computedWidth, 10);
@@ -171,12 +181,19 @@ class TextPeer extends ElementPeer {
   }
 
   getHeight() {
-    const computedHeight = this._native.getBBox().height;
+    // Firefox hack for this
+    // issue:http://stackoverflow.com/questions/6390065/doing-ajax-updates-in-svg-breaks-getbbox-is-there-a-workaround
+    let computedHeight;
+    try {
+      computedHeight = this._native.getBBox().height;
+    } catch (e) {
+      computedHeight = 10;
+    }
     return parseInt(computedHeight, 10);
   }
 
-  getHtmlFontSize(scale) {
-    return this._font.getHtmlSize(scale);
+  getHtmlFontSize() {
+    return this._font.getHtmlSize();
   }
 }
 

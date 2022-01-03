@@ -15,11 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import FontPeer from './FontPeer';
+import Font from './Font';
 
-class TimesFont extends FontPeer {
+class TimesFont extends Font {
   constructor() {
-    super('Times');
+    super();
+    this._fontFamily = 'Times';
+  }
+
+  getFontFamily() {
+    return this._fontFamily;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getFont() {
+    return Font.TIMES;
   }
 }
 

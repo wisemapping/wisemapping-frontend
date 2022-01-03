@@ -16,12 +16,13 @@
  *   limitations under the License.
  */
 
-import TransformUtil from './peer/utils/TransformUtils';
 import Toolkit from './Toolkit';
+import TransformUtil from './peer/utils/TransformUtils';
 
 class Font {
-  constructor(fontName) {
-    this.peer = Toolkit.createFontByName(fontName);
+  constructor(fontFamily, textPeer) {
+    this.peer = Toolkit[`create${fontFamily}Font`]();
+    this._textPeer = textPeer;
   }
 
   getHtmlSize() {
@@ -50,6 +51,10 @@ class Font {
     return this.peer.getWeight();
   }
 
+  getFontFamily() {
+    return this.peer.getFontFamily();
+  }
+
   setSize(size) {
     return this.peer.setSize(size);
   }
@@ -62,20 +67,18 @@ class Font {
     return this.peer.setWeight(weight);
   }
 
-  setFontName(fontName) {
-    return this.peer.setFontName(fontName);
-  }
-
-  getFontName() {
+  getFont() {
     return this.peer.getFont();
-  }
-
-  getFontPeer() {
-    return this.peer;
   }
 
   getWidthMargin() {
     return this.peer.getWidthMargin();
   }
 }
+
+Font.ARIAL = 'Arial';
+Font.TIMES = 'Times';
+Font.TAHOMA = 'Tahoma';
+Font.VERDANA = 'Verdana';
+
 export default Font;

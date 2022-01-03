@@ -17,12 +17,11 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-class FontPeer {
-  constructor(fontName) {
+class Font {
+  constructor() {
     this._size = 10;
     this._style = 'normal';
     this._weight = 'normal';
-    this._fontName = fontName;
   }
 
   init(args) {
@@ -90,11 +89,6 @@ class FontPeer {
     }
     return result;
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  getFontName() {
-    return this._fontName;
-  }
 }
 
-export default FontPeer;
+export default Font;
