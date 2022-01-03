@@ -24,15 +24,10 @@ class LinkModel extends FeatureModel {
     this.setUrl(attributes.url);
   }
 
-  /** @return {String} the url attribute value */
   getUrl():string {
     return this.getAttribute('url');
   }
 
-  /**
-     * @param {String} url a URL provided by the user to set the link to
-     * @throws will throw an error if url is null or undefined
-     */
   setUrl(url: string): void {
     $assert(url, 'url can not be null');
 

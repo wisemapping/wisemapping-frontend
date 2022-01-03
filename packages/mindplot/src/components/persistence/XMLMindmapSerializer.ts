@@ -16,14 +16,11 @@
  *   limitations under the License.
  */
 
-/**
- * Enum for wisemap version names
- * @enum {String}
- */
-const ModelCodeName = {
-  BETA: 'beta',
-  PELA: 'pela',
-  TANGO: 'tango',
-};
+import Mindmap from "../model/Mindmap";
 
-export default ModelCodeName;
+
+interface XMLMindmapSerializer {
+    toXML(mindmap: Mindmap): Document;
+    loadFromDom(dom: Document, mapId: string): Mindmap;
+}
+export default XMLMindmapSerializer;

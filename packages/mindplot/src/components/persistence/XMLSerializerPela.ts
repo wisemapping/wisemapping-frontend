@@ -23,12 +23,14 @@ import ConnectionLine from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import { FeatureType } from '../model/FeatureModel';
+import RelationshipModel from '../model/RelationshipModel';
+import XMLMindmapSerializer from './XMLMindmapSerializer';
 
-class XMLSerializerPela {
+class XMLSerializerPela implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
   private _idsMap: {};
 
-  toXML(mindmap: Mindmap) {
+  toXML(mindmap: Mindmap): Document {
     $assert(mindmap, 'Can not save a null mindmap');
 
     const document = createDocument();
@@ -183,7 +185,7 @@ class XMLSerializerPela {
     return parentTopic;
   }
 
-  _noteTextToXML(document, elem, text) {
+  _noteTextToXML(document: Document, elem: Element, text: string) {
     if (text.indexOf('\n') === -1) {
       elem.setAttribute('text', this.rmXmlInv(text));
     } else {
@@ -194,13 +196,13 @@ class XMLSerializerPela {
     }
   }
 
-  static _relationshipToXML(document, relationship) {
+  static _relationshipToXML(document: Document, relationship: RelationshipModel) {
     const result = document.createElement('relationship');
-    result.setAttribute('srcTopicId', relationship.getFromNode());
-    result.setAttribute('destTopicId', relationship.getToNode());
+    result.setAttribute('srcTopicId', relationship.getFromNode().toString());
+    result.setAttribute('destTopicId', relationship.getToNode().toString());
 
     const lineType = relationship.getLineType();
-    result.setAttribute('lineType', lineType);
+    result.setAttribute('lineType', lineType.toString());
     if (lineType === ConnectionLine.CURVED || lineType === ConnectionLine.SIMPLE_CURVED) {
       if ($defined(relationship.getSrcCtrlPoint())) {
         const srcPoint = relationship.getSrcCtrlPoint();
@@ -217,8 +219,8 @@ class XMLSerializerPela {
         );
       }
     }
-    result.setAttribute('endArrow', relationship.getEndArrow());
-    result.setAttribute('startArrow', relationship.getStartArrow());
+    result.setAttribute('endArrow', String(relationship.getEndArrow()));
+    result.setAttribute('startArrow', String(relationship.getStartArrow()));
     return result;
   }
 
@@ -230,7 +232,7 @@ class XMLSerializerPela {
    * @throws will throw an error if the document element is not consistent with a wisemap's root
    * element
    */
-  loadFromDom(dom, mapId) {
+  loadFromDom(dom: Document, mapId: string) {
     $assert(dom, 'dom can not be null');
     $assert(mapId, 'mapId can not be null');
 

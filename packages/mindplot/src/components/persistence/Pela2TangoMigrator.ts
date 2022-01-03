@@ -18,18 +18,23 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import XMLSerializer from './XMLSerializerTango';
 import ModelCodeName from './ModelCodeName';
+import XMLMindmapSerializer from './XMLMindmapSerializer';
+import Mindmap from '../model/Mindmap';
+import NodeModel from '../model/NodeModel';
 
-class Pela2TangoMigrator {
-  constructor(pelaSerializer) {
+class Pela2TangoMigrator implements XMLMindmapSerializer {
+  private _pelaSerializer: XMLMindmapSerializer;
+  private _tangoSerializer: XMLSerializer;
+  constructor(pelaSerializer: XMLMindmapSerializer) {
     this._pelaSerializer = pelaSerializer;
     this._tangoSerializer = new XMLSerializer();
   }
 
-  toXML(mindmap) {
+  toXML(mindmap: Mindmap): Document {
     return this._tangoSerializer.toXML(mindmap);
   }
 
-  loadFromDom(dom, mapId) {
+  loadFromDom(dom: Document, mapId: string): Mindmap {
     $assert($defined(mapId), 'mapId can not be null');
     const mindmap = this._pelaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.TANGO);
@@ -38,23 +43,23 @@ class Pela2TangoMigrator {
     return mindmap;
   }
 
-  _fixOrder(mindmap) {
+  private _fixOrder(mindmap: Mindmap) {
     // First level node policies has been changed.
-    const centralNode = mindmap.getBranches()[0];
-    const children = centralNode.getChildren();
-    const leftNodes = [];
-    const rightNodes = [];
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
+    const centralNode: NodeModel = mindmap.getBranches()[0];
+    const children: NodeModel[] = centralNode.getChildren();
+    const leftNodes: NodeModel[] = [];
+    const rightNodes: NodeModel[] = [];
+
+    children.forEach((child) => {
       const position = child.getPosition();
       if (position.x < 0) {
         leftNodes.push(child);
       } else {
         rightNodes.push(child);
       }
-    }
-    rightNodes.sort((a, b) => a.getOrder() > b.getOrder());
-    leftNodes.sort((a, b) => a.getOrder() > b.getOrder());
+      rightNodes.sort((a, b) => a.getOrder() - b.getOrder());
+      leftNodes.sort((a, b) => a.getOrder() - b.getOrder());
+    });
 
     for (let i = 0; i < rightNodes.length; i++) {
       rightNodes[i].setOrder(i * 2);
@@ -65,7 +70,7 @@ class Pela2TangoMigrator {
     }
   }
 
-  _fixPosition(mindmap) {
+  private _fixPosition(mindmap: Mindmap) {
     // Position was not required in previous versions. Try to synthesize one .
     const centralNode = mindmap.getBranches()[0];
     const children = centralNode.getChildren();
@@ -76,7 +81,7 @@ class Pela2TangoMigrator {
     }
   }
 
-  _fixNodePosition(node, parentPosition) {
+  _fixNodePosition(node: { getPosition: () => any; setPosition: (arg0: any, arg1: any) => void; getChildren: () => any; }, parentPosition: { x: number; y: any; }) {
     // Position was not required in previous versions. Try to synthesize one .
     let position = node.getPosition();
     if (!position) {

@@ -15,26 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '@wisemapping/core-js';
-import FeatureModel from './FeatureModel';
 
-class NoteModel extends FeatureModel {
-  constructor(attributes) {
-    super('note');
-    const noteText = attributes.text ? attributes.text : ' ';
-    this.setText(noteText);
-  }
+const ModelCodeName = {
+  BETA: 'beta',
+  PELA: 'pela',
+  TANGO: 'tango',
+};
 
-  /** */
-  getText():string {
-    return this.getAttribute('text');
-  }
-
-  /** */
-  setText(text:string) {
-    $assert(text, 'text can not be null');
-    this.setAttribute('text', text);
-  }
-}
-
-export default NoteModel;
+export default ModelCodeName;

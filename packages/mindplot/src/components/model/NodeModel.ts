@@ -167,7 +167,6 @@ class NodeModel extends INodeModel {
   append(child: NodeModel) {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
-    // eslint-disable-next-line no-param-reassign
     child._parent = this;
   }
 
@@ -178,7 +177,6 @@ class NodeModel extends INodeModel {
   removeChild(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
-    // eslint-disable-next-line no-param-reassign
     child._parent = null;
   }
 

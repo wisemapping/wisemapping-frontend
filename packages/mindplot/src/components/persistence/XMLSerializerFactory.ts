@@ -22,6 +22,8 @@ import Pela2TangoMigrator from './Pela2TangoMigrator';
 import XMLSerializerBeta from './XMLSerializerBeta';
 import XMLSerializerPela from './XMLSerializerPela';
 import XMLSerializerTango from './XMLSerializerTango';
+import { Mindmap } from '../..';
+import XMLMindmapSerializer from './XMLMindmapSerializer';
 
 const codeToSerializer = [
   {
@@ -48,7 +50,7 @@ class XMLSerializerFactory {
    * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
    * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
    */
-  static createInstanceFromMindmap(mindmap) {
+  static createInstanceFromMindmap(mindmap: Mindmap) {
     return XMLSerializerFactory
       .getSerializer(mindmap.getVersion());
   }
@@ -57,7 +59,7 @@ class XMLSerializerFactory {
    * @param domDocument
    * @return serializer corresponding to the mindmap's version
    */
-  static createInstanceFromDocument(domDocument) {
+  static createInstanceFromDocument(domDocument: Document) {
     const rootElem = domDocument.documentElement;
 
     // Legacy version don't have version defined.
@@ -74,7 +76,7 @@ class XMLSerializerFactory {
    * @param {String} version the version name
    * @return serializer
    */
-  static getSerializer(version = ModelCodeName.TANGO) {
+  static getSerializer(version = ModelCodeName.TANGO): XMLMindmapSerializer {
     let found = false;
     let result = null;
     for (let i = 0; i < codeToSerializer.length; i++) {
@@ -84,6 +86,7 @@ class XMLSerializerFactory {
         if (found) result = new (codeToSerializer[i].serializer)();
       } else {
         const { migrator: Migrator } = codeToSerializer[i];
+        // @ts-ignore
         result = new Migrator(result);
       }
     }

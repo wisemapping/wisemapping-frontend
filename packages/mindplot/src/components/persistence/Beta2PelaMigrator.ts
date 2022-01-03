@@ -16,20 +16,25 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { Mindmap } from '../..';
+import NodeModel from '../model/NodeModel';
 import ModelCodeName from './ModelCodeName';
-import XMLSerializer from './XMLSerializerPela';
+import XMLMindmapSerializer from './XMLMindmapSerializer';
+import XMLSerializerPela from './XMLSerializerPela';
 
-class Beta2PelaMigrator {
-  constructor(betaSerializer) {
+class Beta2PelaMigrator implements XMLMindmapSerializer {
+  private _betaSerializer: XMLMindmapSerializer;
+  private _pelaSerializer: XMLSerializerPela;
+  constructor(betaSerializer: XMLSerializerPela) {
     this._betaSerializer = betaSerializer;
-    this._pelaSerializer = new XMLSerializer();
+    this._pelaSerializer = new XMLSerializerPela();
   }
 
-  toXML(mindmap) {
+  toXML(mindmap: Mindmap) {
     return this._pelaSerializer.toXML(mindmap);
   }
 
-  loadFromDom(dom, mapId) {
+  loadFromDom(dom: Document, mapId: string): Mindmap {
     $assert($defined(mapId), 'mapId can not be null');
     const mindmap = this._betaSerializer.loadFromDom(dom, mapId);
     mindmap.setVersion(ModelCodeName.PELA);
@@ -44,13 +49,13 @@ class Beta2PelaMigrator {
     return mindmap;
   }
 
-  _fixPosition(parentModel) {
+  private _fixPosition(parentModel: NodeModel) {
     const parentPos = parentModel.getPosition();
     const isRight = parentPos.x > 0;
     const me = this;
     parentModel.getChildren().forEach((child) => {
       if (!child.getPosition()) {
-        child.setPosition(parentPos.x + (50 * isRight ? 1 : -1), parentPos.y);
+        child.setPosition(parentPos.x + (isRight ? 1 : -1), parentPos.y);
       }
       me._fixPosition(child);
     });

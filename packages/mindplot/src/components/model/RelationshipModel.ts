@@ -46,69 +46,56 @@ class RelationshipModel {
     this._startArrow = false;
   }
 
-  /** */
-  getFromNode() {
+  getFromNode(): number {
     return this._sourceTargetId;
   }
 
-  /** */
-  getToNode() {
+  getToNode(): number {
     return this._targetTopicId;
   }
 
-  /** */
-  getId():number {
+  getId(): number {
     $assert(this._id, 'id is null');
     return this._id;
   }
 
-  /** */
   getLineType() {
     return this._lineType;
   }
 
-  /** */
   setLineType(lineType: number) {
     this._lineType = lineType;
   }
 
-  /** */
   getSrcCtrlPoint(): Point {
     return this._srcCtrlPoint;
   }
 
-  /** */
   setSrcCtrlPoint(srcCtrlPoint: Point) {
     this._srcCtrlPoint = srcCtrlPoint;
   }
 
-  /** */
   getDestCtrlPoint(): Point {
     return this._destCtrlPoint;
   }
 
-  /** */
-  setDestCtrlPoint(destCtrlPoint: Point) {
+  setDestCtrlPoint(destCtrlPoint: Point): void {
     this._destCtrlPoint = destCtrlPoint;
   }
 
-  /** */
-  getEndArrow() {
+  getEndArrow(): boolean {
     return this._endArrow;
   }
 
-  /** */
   setEndArrow(endArrow: boolean) {
     this._endArrow = endArrow;
   }
 
-  /** */
-  getStartArrow() {
+  getStartArrow(): boolean {
     return this._startArrow;
   }
 
-  /** */
-  setStartArrow(startArrow: boolean) {
+  setStartArrow(startArrow: boolean): void {
     this._startArrow = startArrow;
   }
 

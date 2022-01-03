@@ -21,9 +21,10 @@ import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
+import XMLMindmapSerializer from './XMLMindmapSerializer';
 
-class XMLSerializerBeta {
-  private static  MAP_ROOT_NODE = 'map';
+class XMLSerializerBeta implements XMLMindmapSerializer {
+  private static MAP_ROOT_NODE = 'map';
 
   toXML(mindmap: Mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
@@ -119,27 +120,27 @@ class XMLSerializerBeta {
 
     // ICONS
     const icons = topic.findFeatureByType('icons');
-    icons.forEach((icon)=>{
+    icons.forEach((icon) => {
       const iconDom = this._iconToXML(document, icon);
       parentTopic.append(iconDom);
     });
- 
+
     // LINKS
     const links = topic.findFeatureByType('links');
-    icons.forEach((link)=>{
+    icons.forEach((link) => {
       const linkDom = this._linkToXML(document, link);
       parentTopic.append(linkDom);
     });
 
     const notes = topic.findFeatureByType('note');
-    notes.forEach((note)=>{
+    notes.forEach((note) => {
       const noteDom = this._noteToXML(document, note);
       parentTopic.append(noteDom);
     });
 
     // CHILDREN TOPICS
     const childTopics = topic.getChildren();
-    childTopics.forEach((childTopic)=>{
+    childTopics.forEach((childTopic) => {
       const childDom = this._topicToXML(document, childTopic);
       parentTopic.append(childDom);
     });
