@@ -86,7 +86,7 @@ class Relationship extends ConnectionLine {
 
     const targetTopic = this._targetTopic;
     let targetPosition = targetTopic.getPosition();
-    if (targetTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (targetTopic.getType() === 'CentralTopic') {
       targetPosition = Shape.workoutIncomingConnectionPoint(targetTopic, sourcePosition);
     }
 

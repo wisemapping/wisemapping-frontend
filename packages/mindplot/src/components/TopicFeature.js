@@ -17,29 +17,26 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import IconModel from './model/IconModel';
 import ImageIcon from './ImageIcon';
-import LinkModel from './model/LinkModel';
 import LinkIcon from './LinkIcon';
-import NoteModel from './model/NoteModel';
 import NoteIcon from './NoteIcon';
 
 const TopicFeatureFactory = {
   /** the icon object */
   Icon: {
-    id: IconModel.FEATURE_TYPE,
+    id: 'icon',
     icon: ImageIcon,
   },
 
   /** the link object */
   Link: {
-    id: LinkModel.FEATURE_TYPE,
+    id: 'link',
     icon: LinkIcon,
   },
 
   /** the note object */
   Note: {
-    id: NoteModel.FEATURE_TYPE,
+    id: 'note',
     icon: NoteIcon,
   },
 

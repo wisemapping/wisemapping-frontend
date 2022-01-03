@@ -17,17 +17,17 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import IMindmap from './IMindmap';
-import INodeModel from './INodeModel';
+import INodeModel, { NodeModelType } from './INodeModel';
 import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
 
 class Mindmap extends IMindmap {
-  _description: string;
-  _version: string;
-  _id: string;
-  _branches: Array<NodeModel>;
-  _relationships: Array<RelationshipModel>;
+  private _description: string;
+  private  _version: string;
+  private _id: string;
+  private  _branches: Array<NodeModel>;
+  private  _relationships: Array<RelationshipModel>;
 
   constructor(id: string, version: string = ModelCodeName.TANGO) {
     super();
@@ -79,10 +79,10 @@ class Mindmap extends IMindmap {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Add node must be invoked with model objects');
     const branches = this.getBranches();
     if (branches.length === 0) {
-      $assert(nodeModel.getType() === INodeModel.CENTRAL_TOPIC_TYPE, 'First element must be the central topic');
+      $assert(nodeModel.getType() === 'CentralTopic', 'First element must be the central topic');
       nodeModel.setPosition(0, 0);
     } else {
-      $assert(nodeModel.getType() !== INodeModel.CENTRAL_TOPIC_TYPE, 'Mindmaps only have one cental topic');
+      $assert(nodeModel.getType() !== 'CentralTopic', 'Mindmaps only have one cental topic');
     }
 
     this._branches.push(nodeModel);
@@ -91,7 +91,7 @@ class Mindmap extends IMindmap {
   /**
          * @param nodeModel
          */
-  removeBranch(nodeModel: NodeModel): void {
+  removeBranch(nodeModel: INodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     this._branches = this._branches.filter((b) => b !== nodeModel);
   }
@@ -104,29 +104,22 @@ class Mindmap extends IMindmap {
     return this._relationships;
   }
 
-  /**
-         * @param node
-         * @return {Boolean} true if node already exists
-         */
-  hasAlreadyAdded(node: any) {
+
+  hasAlreadyAdded(node: NodeModel): boolean {
     let result = false;
 
     // Check in not connected nodes.
     const branches = this._branches;
     for (let i = 0; i < branches.length; i++) {
-      result = branches[i]._isChildNode(node);
+      result = branches[i].isChildNode(node);
       if (result) {
         break;
       }
     }
+    return result;
   }
 
-  /**
-         * @param type
-         * @param id
-         * @return the node model created
-         */
-  createNode(type = INodeModel.MAIN_TOPIC_TYPE, id: number) {
+  createNode(type: NodeModelType = 'MainTopic', id: number) {
     return new NodeModel(type, this, id);
   }
 
@@ -172,7 +165,7 @@ class Mindmap extends IMindmap {
 
   static buildEmpty = (mapId: string) => {
     const result = new Mindmap(mapId);
-    const node = result.createNode(INodeModel.CENTRAL_TOPIC_TYPE, 0);
+    const node = result.createNode('CentralTopic', 0);
     result.addBranch(node);
     return result;
   };

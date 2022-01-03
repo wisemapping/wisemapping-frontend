@@ -68,7 +68,7 @@ class XMLSerializerPela {
     const parentTopic = document.createElement('topic');
 
     // Set topic attributes...
-    if (topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (topic.getType() === 'CentralTopic') {
       parentTopic.setAttribute('central', 'true');
     } else {
       const pos = topic.getPosition();
@@ -96,7 +96,7 @@ class XMLSerializerPela {
       }
     }
 
-    if (topic.areChildrenShrunken() && topic.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (topic.areChildrenShrunken() && topic.getType() !== 'CentralTopic') {
       parentTopic.setAttribute('shrink', 'true');
     }
 
@@ -268,8 +268,8 @@ class XMLSerializerPela {
 
   _deserializeNode(domElem, mindmap) {
     const type = domElem.getAttribute('central') != null
-      ? INodeModel.CENTRAL_TOPIC_TYPE
-      : INodeModel.MAIN_TOPIC_TYPE;
+      ? 'CentralTopic'
+      : 'MainTopic';
 
     // Load attributes...
     let id = domElem.getAttribute('id');
@@ -349,7 +349,7 @@ class XMLSerializerPela {
 
     const isShrink = domElem.getAttribute('shrink');
     // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
-    if ($defined(isShrink) && type !== INodeModel.CENTRAL_TOPIC_TYPE) {
+    if ($defined(isShrink) && type !== 'CentralTopic') {
       topic.setChildrenShrunken(isShrink);
     }
 

@@ -34,7 +34,7 @@ class ConnectionLine {
 
     let line;
     const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
-    if (targetNode.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (targetNode.getType() === 'CentralTopic') {
       line = this._createLine(lineType, ConnectionLine.CURVED);
       line.setSrcControlPoint(ctrlPoints[0]);
       line.setDestControlPoint(ctrlPoints[1]);

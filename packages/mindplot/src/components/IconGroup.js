@@ -25,15 +25,12 @@ import {
 } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 
-import NoteModel from './model/NoteModel';
-import LinkModel from './model/LinkModel';
-import IconModel from './model/IconModel';
 import Icon from './Icon';
 
 const ORDER_BY_TYPE = new Map();
-ORDER_BY_TYPE.set(IconModel.FEATURE_TYPE, 0);
-ORDER_BY_TYPE.set(NoteModel.FEATURE_TYPE, 1);
-ORDER_BY_TYPE.set(LinkModel.FEATURE_TYPE, 2);
+ORDER_BY_TYPE.set('icon', 0);
+ORDER_BY_TYPE.set('note', 1);
+ORDER_BY_TYPE.set('link', 2);
 
 class IconGroup {
   constructor(topicId, iconSize) {

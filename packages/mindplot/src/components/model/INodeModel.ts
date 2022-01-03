@@ -17,47 +17,53 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import FeatureModel from './FeatureModel';
+import Mindmap from './Mindmap';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
-const parseJsObject = (str) => JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
+const parseJsObject = (str: string) => JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
 
-class INodeModel {
-  constructor(mindmap) {
+abstract class INodeModel {
+  static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE: number = 220;
+  static _next_uuid: number = 0;
+
+  protected _mindmap: Mindmap;
+
+  constructor(mindmap: Mindmap) {
     $assert(mindmap && mindmap.getBranches, 'mindmap can not be null');
     this._mindmap = mindmap;
   }
 
-  /** */
-  getId() {
+  getId(): number {
     return this.getProperty('id');
   }
+  abstract getFeatures(): Array<FeatureModel>;
 
   /** */
-  setId(id) {
+  setId(id: number): void {
     if (!$defined(id)) {
       const newId = INodeModel._nextUUID();
       this.putProperty('id', newId);
     } else {
-      if (id > INodeModel._uuid) {
+      if (id > INodeModel._next_uuid) {
         $assert(Number.isFinite(id));
-        INodeModel._uuid = id;
+        INodeModel._next_uuid = id;
       }
       this.putProperty('id', id);
     }
   }
 
-  /** */
-  getType() {
+  getType(): NodeModelType {
     return this.getProperty('type');
   }
 
   /** */
-  setType(type) {
+  setType(type: NodeModelType): void {
     this.putProperty('type', type);
   }
 
   /** */
-  setText(text) {
+  setText(text: string): void {
     this.putProperty('text', text);
   }
 
@@ -315,39 +321,55 @@ class INodeModel {
     //        console.log("After:" + mindmap.inspect());
   }
 
-  /** @abstract */
-  getPropertiesKeys() {
-    throw new Error('Unsupported operation');
+  abstract getPropertiesKeys(): string[];
+
+  abstract getProperty(key: string);
+
+  abstract putProperty(key: string, value: any): void;
+
+  abstract setParent(parent: INodeModel): void;
+
+  abstract getChildren(): INodeModel[];
+
+  abstract getParent(): INodeModel;
+
+  abstract clone(): INodeModel;
+
+  isChildNode(node: INodeModel): boolean {
+    let result = false;
+    if (node === this) {
+      result = true;
+    } else {
+      const children = this.getChildren();
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        result = child.isChildNode(node);
+        if (result) {
+          break;
+        }
+      }
+    }
+    return result;
   }
 
-  /** @abstract */
-  // eslint-disable-next-line no-unused-vars
-  putProperty(key, value) {
-    throw new Error('Unsupported operation');
+  findNodeById(id: number): INodeModel {
+    $assert(Number.isFinite(id));
+    let result = null;
+    if (this.getId() === id) {
+      result = this;
+    } else {
+      const children = this.getChildren();
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        result = child.findNodeById(id);
+        if (result) {
+          break;
+        }
+      }
+    }
+    return result;
   }
 
-  /** @abstract */
-  // eslint-disable-next-line no-unused-vars
-  setParent(parent) {
-    throw new Error('Unsupported operation');
-  }
-
-  /** @abstract */
-  getChildren() {
-    throw new Error('Unsupported operation');
-  }
-
-  /** @abstract */
-  getParent() {
-    throw new Error('Unsupported operation');
-  }
-
-  /** @abstract */
-  clone() {
-    throw new Error('Unsupported operation');
-  }
-
-  /** */
   inspect() {
     let result = `{ type: ${this.getType()} , id: ${this.getId()} , text: ${this.getText()}`;
 
@@ -369,16 +391,14 @@ class INodeModel {
     return result;
   }
 
-  /** @abstract */
-  // eslint-disable-next-line no-unused-vars
-  removeChild(child) {
-    throw new Error('Unsupported operation');
-  }
+  abstract removeChild(child: INodeModel);
+
+  static _nextUUID(): number {
+    INodeModel._next_uuid += 1;
+    return INodeModel._next_uuid;
+  };
 }
 
-/**
- * @enum {String}
- */
 const TopicShape = {
   RECTANGLE: 'rectagle',
   ROUNDED_RECT: 'rounded rectagle',
@@ -387,38 +407,10 @@ const TopicShape = {
   IMAGE: 'image',
 };
 
-/**
- * @constant
- * @type {String}
- * @default
- */
-INodeModel.CENTRAL_TOPIC_TYPE = 'CentralTopic';
-/**
- * @constant
- * @type {String}
- * @default
- */
-INodeModel.MAIN_TOPIC_TYPE = 'MainTopic';
-
-/**
- * @constant
- * @type {Number}
- * @default
- */
-INodeModel.MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
+export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
 /**
  * @todo: This method must be implemented. (unascribed)
  */
-INodeModel._nextUUID = () => {
-  if (!$defined(INodeModel._uuid)) {
-    INodeModel._uuid = 0;
-  }
-
-  INodeModel._uuid += 1;
-  return INodeModel._uuid;
-};
-INodeModel._uuid = 0;
-
 export { TopicShape };
 export default INodeModel;

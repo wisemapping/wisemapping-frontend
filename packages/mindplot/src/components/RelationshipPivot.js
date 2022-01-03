@@ -131,7 +131,7 @@ class RelationshipPivot {
   _calculateFromPosition(toPosition) {
     // Calculate origin position ...
     let sourcePosition = this._sourceTopic.getPosition();
-    if (this._sourceTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (this._sourceTopic.getType() === 'CentralTopic') {
       sourcePosition = Shape.workoutIncomingConnectionPoint(this._sourceTopic, toPosition);
     }
     const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);

@@ -2,20 +2,25 @@ import { $assert } from '@wisemapping/core-js';
 import IconModel from './IconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureType } from './FeatureModel';
+
+
+interface NodeById {
+  id: FeatureType,
+  model: typeof FeatureModel;
+}
 
 class FeatureModelFactory {
-
-  private static modelById = [{
-    id: IconModel.FEATURE_TYPE,
+  static modelById: Array<NodeById> = [{
+    id: 'icon',
     model: IconModel,
   }, {
-    id: LinkModel.FEATURE_TYPE,
+    id: 'link',
     model: LinkModel,
   }, {
-    id: NoteModel.FEATURE_TYPE,
+    id: 'note',
     model: NoteModel,
-  }] as const;
+  }];
 
   static createModel(type: string, attributes): FeatureModel {
     $assert(type, 'type can not be null');

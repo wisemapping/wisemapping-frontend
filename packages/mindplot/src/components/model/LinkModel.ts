@@ -20,12 +20,12 @@ import FeatureModel from './FeatureModel';
 
 class LinkModel extends FeatureModel {
   constructor(attributes) {
-    super(LinkModel.FEATURE_TYPE);
+    super('link');
     this.setUrl(attributes.url);
   }
 
   /** @return {String} the url attribute value */
-  getUrl() {
+  getUrl():string {
     return this.getAttribute('url');
   }
 
@@ -33,7 +33,7 @@ class LinkModel extends FeatureModel {
      * @param {String} url a URL provided by the user to set the link to
      * @throws will throw an error if url is null or undefined
      */
-  setUrl(url) {
+  setUrl(url: string): void {
     $assert(url, 'url can not be null');
 
     const fixedUrl = LinkModel._fixUrl(url);
@@ -44,7 +44,7 @@ class LinkModel extends FeatureModel {
   }
 
   // url format is already checked in LinkEditor.checkUrl
-  static _fixUrl(url) {
+  static _fixUrl(url: string): string {
     let result = url;
     if (!result.includes('http://') && !result.includes('https://') && !result.includes('mailto://')) {
       result = `http://${result}`;
@@ -61,12 +61,4 @@ class LinkModel extends FeatureModel {
     this.setAttribute('urlType', urlType);
   }
 }
-
-/**
- * @constant
- * @type {String}
- * @default
- */
-LinkModel.FEATURE_TYPE = 'link';
-
 export default LinkModel;

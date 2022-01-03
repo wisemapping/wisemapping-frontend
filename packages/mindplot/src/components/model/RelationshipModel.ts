@@ -16,10 +16,21 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import Point from '@wisemapping/web2d';
 import ConnectionLine from '../ConnectionLine';
 
 class RelationshipModel {
-  constructor(sourceTopicId, targetTopicId) {
+  static _next_uuid: number = 0;
+  private _id: number;
+  private _sourceTargetId: number;
+  private _targetTopicId: number;
+  private _lineType: number;
+  private _srcCtrlPoint: Point;
+  private _destCtrlPoint: Point;
+  private _endArrow: boolean;
+  private _startArrow: boolean;
+
+  constructor(sourceTopicId: number, targetTopicId: number) {
     $assert($defined(sourceTopicId), 'from node type can not be null');
     $assert($defined(targetTopicId), 'to node type can not be null');
     $assert(Number.isFinite(sourceTopicId), 'sourceTopicId is not a number');
@@ -46,7 +57,7 @@ class RelationshipModel {
   }
 
   /** */
-  getId() {
+  getId():number {
     $assert(this._id, 'id is null');
     return this._id;
   }
@@ -57,27 +68,27 @@ class RelationshipModel {
   }
 
   /** */
-  setLineType(lineType) {
+  setLineType(lineType: number) {
     this._lineType = lineType;
   }
 
   /** */
-  getSrcCtrlPoint() {
+  getSrcCtrlPoint(): Point {
     return this._srcCtrlPoint;
   }
 
   /** */
-  setSrcCtrlPoint(srcCtrlPoint) {
+  setSrcCtrlPoint(srcCtrlPoint: Point) {
     this._srcCtrlPoint = srcCtrlPoint;
   }
 
   /** */
-  getDestCtrlPoint() {
+  getDestCtrlPoint(): Point {
     return this._destCtrlPoint;
   }
 
   /** */
-  setDestCtrlPoint(destCtrlPoint) {
+  setDestCtrlPoint(destCtrlPoint: Point) {
     this._destCtrlPoint = destCtrlPoint;
   }
 
@@ -87,7 +98,7 @@ class RelationshipModel {
   }
 
   /** */
-  setEndArrow(endArrow) {
+  setEndArrow(endArrow: boolean) {
     this._endArrow = endArrow;
   }
 
@@ -97,7 +108,7 @@ class RelationshipModel {
   }
 
   /** */
-  setStartArrow(startArrow) {
+  setStartArrow(startArrow: boolean) {
     this._startArrow = startArrow;
   }
 
@@ -118,23 +129,19 @@ class RelationshipModel {
   /**
        * @return {String} textual information about the relationship's source and target node
        */
-  inspect() {
+  inspect(): string {
     return (
-      `(fromNode:${this.getFromNode().getId()
-      } , toNode: ${this.getToNode().getId()
+      `(fromNode:${this.getFromNode()
+      } , toNode: ${this.getToNode()
       })`
     );
   }
-}
 
-function _nextUUID() {
-  if (!$defined(RelationshipModel._uuid)) {
-    RelationshipModel._uuid = 0;
+  static _nextUUID() {
+    RelationshipModel._next_uuid += 1;
+    return RelationshipModel._next_uuid;
   }
-  RelationshipModel._uuid += 1;
-  return RelationshipModel._uuid;
 }
 
-RelationshipModel._nextUUID = _nextUUID;
 
 export default RelationshipModel;

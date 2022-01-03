@@ -243,7 +243,7 @@ class Designer extends Events {
       });
 
       // Register node listeners ...
-      if (topic.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (topic.getType() !== 'CentralTopic') {
         // Central Topic doesn't support to be dragged
         this._dragManager.add(topic);
       }
@@ -443,7 +443,7 @@ class Designer extends Events {
     }
     // Execute event ...
     const topic = nodes[0];
-    if (topic.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (topic.getType() !== 'CentralTopic') {
       this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
     }
   }
@@ -476,7 +476,7 @@ class Designer extends Events {
        */
   _copyNodeProps(sourceModel, targetModel) {
     // I don't copy the font size if the target is the source is the central topic.
-    if (sourceModel.getType() !== INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (sourceModel.getType() !== 'CentralTopic') {
       const fontSize = sourceModel.getFontSize();
       if (fontSize) {
         targetModel.setFontSize(fontSize);
@@ -586,7 +586,7 @@ class Designer extends Events {
 
       // Hack: if parent is central topic, add node below not on opposite side.
       // This should be done in the layout
-      if (parentTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (parentTopic.getType() === 'CentralTopic') {
         siblingModel.setOrder(topic.getOrder() + 2);
       }
 
@@ -954,7 +954,7 @@ class Designer extends Events {
   /** */
   changeTopicShape(shape) {
     const validateFunc = (topic) => !(
-      topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE && shape === TopicShape.LINE
+      topic.getType() === 'CentralTopic' && shape === TopicShape.LINE
     );
 
     const validateError = 'Central Topic shape can not be changed to line figure.';

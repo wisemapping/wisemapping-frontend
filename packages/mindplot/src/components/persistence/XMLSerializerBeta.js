@@ -51,11 +51,11 @@ class XMLSerializerBeta {
     const parentTopic = document.createElement('topic');
 
     // Set topic attributes...
-    if (topic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (topic.getType() === 'CentralTopic') {
       parentTopic.setAttribute('central', true);
     } else {
       const parent = topic.getParent();
-      if (parent == null || parent.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (parent == null || parent.getType() === 'CentralTopic') {
         const pos = topic.getPosition();
         parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
       } else {
@@ -206,8 +206,8 @@ class XMLSerializerBeta {
 
   _deserializeNode(domElem, mindmap) {
     const type = domElem.getAttribute('central') != null
-      ? INodeModel.CENTRAL_TOPIC_TYPE
-      : INodeModel.MAIN_TOPIC_TYPE;
+      ? 'CentralTopic'
+      : 'MainTopic';
     const topic = mindmap.createNode(type);
 
     // Load attributes...
