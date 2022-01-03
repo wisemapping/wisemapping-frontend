@@ -59,7 +59,7 @@ class NodeModel extends INodeModel {
     this._features.push(feature);
   }
 
-  getFeatures() {
+  getFeatures(): FeatureModel[] {
     return this._features;
   }
 
@@ -68,7 +68,7 @@ class NodeModel extends INodeModel {
      * @throws will throw an error if feature is null or undefined
      * @throws will throw an error if the feature could not be removed
      */
-  removeFeature(feature: FeatureModel) {
+  removeFeature(feature: FeatureModel): void {
     $assert(feature, 'feature can not be null');
     const size = this._features.length;
     this._features = this._features.filter((f) => feature.getId() !== f.getId());
@@ -79,7 +79,7 @@ class NodeModel extends INodeModel {
      * @param {String} type the feature type, e.g. icon or link
      * @throws will throw an error if type is null or undefined
      */
-  findFeatureByType(type: string) {
+  findFeatureByType(type: string): FeatureModel[] {
     $assert(type, 'type can not be null');
     return this._features.filter((feature) => feature.getType() === type);
   }
@@ -90,14 +90,13 @@ class NodeModel extends INodeModel {
      * @throws will throw an error if feature could not be found
      * @return the feature with the given id
      */
-  findFeatureById(id: number) {
+  findFeatureById(id: number): FeatureModel {
     $assert($defined(id), 'id can not be null');
     const result = this._features.filter((feature) => feature.getId() === id);
     $assert(result.length === 1, `Feature could not be found:${id}`);
     return result[0];
   }
 
-  /** */
   getPropertiesKeys() {
     return Object.keys(this._properties);
   }
@@ -112,12 +111,10 @@ class NodeModel extends INodeModel {
     this._properties[key] = value;
   }
 
-  /** */
   getProperties() {
     return this._properties;
   }
 
-  /** */
   getProperty(key: string) {
     $defined(key, 'key can not be null');
     const result = this._properties[key];
@@ -127,7 +124,7 @@ class NodeModel extends INodeModel {
   /**
      * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
      */
-  clone() {
+  clone(): NodeModel {
     const result = new NodeModel(this.getType(), this._mindmap, -1);
     result._children = this._children.map((node) => {
       const cnode = node.clone() as NodeModel;

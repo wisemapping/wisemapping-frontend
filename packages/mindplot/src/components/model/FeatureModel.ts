@@ -42,16 +42,14 @@ class FeatureModel {
     this[`is${FeatureModel.capitalize(type)}Model`] = () => true;
   }
 
-  /** */
   getAttributes() {
     return { ...this._attributes };
   }
 
-  static capitalize(str) {
+  static capitalize(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  /** */
   setAttributes(attributes) {
     Object.keys(attributes).forEach((attr) => {
       const funName = `set${FeatureModel.capitalize(attr)}`;
@@ -60,26 +58,22 @@ class FeatureModel {
     });
   }
 
-  /** */
-  setAttribute(key, value) {
+  setAttribute(key: string, value: any) {
     $assert(key, 'key id can not be null');
     this._attributes[key] = value;
   }
 
-  /** */
-  getAttribute(key) {
+  getAttribute(key: string) {
     $assert(key, 'key id can not be null');
 
     return this._attributes[key];
   }
 
-  /** */
-  getId() {
+  getId(): number {
     return this._id;
   }
 
-  /** */
-  setId(id) {
+  setId(id: number) {
     $assert(Number.isFinite(id));
     this._id = id;
   }
