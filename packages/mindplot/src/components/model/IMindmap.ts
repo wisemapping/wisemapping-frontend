@@ -74,7 +74,7 @@ abstract class IMindmap {
 
   abstract hasAlreadyAdded(node: INodeModel): boolean;
 
-  abstract  createNode(type: NodeType, id: number):void;
+  abstract createNode(type: NodeType, id: number): INodeModel
 
   abstract createRelationship(fromNode: NodeModel, toNode: NodeModel): void;
 

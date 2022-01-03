@@ -18,6 +18,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
+import IMindmap from './IMindmap';
 import Mindmap from './Mindmap';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
@@ -37,7 +38,7 @@ abstract class INodeModel {
   getId(): number {
     return this.getProperty('id');
   }
-  abstract getFeatures(): Array<FeatureModel>;
+  abstract getFeatures(): FeatureModel[];
 
   /** */
   setId(id: number): void {
@@ -54,33 +55,26 @@ abstract class INodeModel {
   }
 
   getType(): NodeModelType {
-    return this.getProperty('type');
+    return this.getProperty('type') as NodeModelType;
   }
 
-  /** */
   setType(type: NodeModelType): void {
     this.putProperty('type', type);
   }
 
-  /** */
   setText(text: string): void {
     this.putProperty('text', text);
   }
 
-  /** */
-  getText() {
+  getText(): string {
     return this.getProperty('text');
   }
 
-  /** */
-  setPosition(x, y) {
-    $assert(!Number.isNaN(parseInt(x, 10)), `x position is not valid:${x}`);
-    $assert(!Number.isNaN(parseInt(y, 10)), `y position is not valid:${y}`);
-    this.putProperty('position', `{x:${parseInt(x, 10)},y:${parseInt(y, 10)}}`);
+  setPosition(x: number, y: number): void {
+    this.putProperty('position', `{x:${x},y:${y}}`);
   }
 
-  /** */
-  getPosition() {
+  getPosition(): { x: number, y: number } {
     const value = this.getProperty('position');
     let result = null;
     if (value != null) {
@@ -89,13 +83,11 @@ abstract class INodeModel {
     return result;
   }
 
-  /** */
-  setImageSize(width, height) {
+  setImageSize(width: number, height: number) {
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
-  /** */
-  getImageSize() {
+  getImageSize(): {width: number, height: number} {
     const value = this.getProperty('imageSize');
     let result = null;
     if (value != null) {
@@ -104,28 +96,23 @@ abstract class INodeModel {
     return result;
   }
 
-  /** */
-  setImageUrl(url) {
+  setImageUrl(url: string) {
     this.putProperty('imageUrl', url);
   }
 
-  /** */
-  getMetadata() {
+  getMetadata(): string {
     return this.getProperty('metadata');
   }
 
-  /** */
-  setMetadata(json) {
+  setMetadata(json: string): void {
     this.putProperty('metadata', json);
   }
 
-  /** */
-  getImageUrl() {
+  getImageUrl(): string {
     return this.getProperty('imageUrl');
   }
 
-  /** */
-  getMindmap() {
+  getMindmap(): IMindmap {
     return this._mindmap;
   }
 
@@ -133,23 +120,22 @@ abstract class INodeModel {
        * lets the mindmap handle the disconnect node operation
        * @see mindplot.model.IMindmap.disconnect
        */
-  disconnect() {
+  disconnect(): void {
     const mindmap = this.getMindmap();
     mindmap.disconnect(this);
   }
 
   /** */
-  getShapeType() {
+  getShapeType(): string {
     return this.getProperty('shapeType');
   }
 
   /** */
-  setShapeType(type) {
+  setShapeType(type: string) {
     this.putProperty('shapeType', type);
   }
 
-  /** */
-  setOrder(value) {
+  setOrder(value: number) {
     $assert(
       (typeof value === 'number' && Number.isFinite(value)) || value == null,
       'Order must be null or a number',
@@ -157,120 +143,98 @@ abstract class INodeModel {
     this.putProperty('order', value);
   }
 
-  /** */
-  getOrder() {
+  getOrder(): number {
     return this.getProperty('order');
   }
 
-  /** */
-  setFontFamily(fontFamily) {
+  setFontFamily(fontFamily: string): void {
     this.putProperty('fontFamily', fontFamily);
   }
 
-  /** */
-  getFontFamily() {
+  getFontFamily(): string {
     return this.getProperty('fontFamily');
   }
 
   /** */
-  setFontStyle(fontStyle) {
+  setFontStyle(fontStyle: string) {
     this.putProperty('fontStyle', fontStyle);
   }
 
-  /** */
-  getFontStyle() {
+  getFontStyle(): string {
     return this.getProperty('fontStyle');
   }
 
-  /** */
   setFontWeight(weight) {
     this.putProperty('fontWeight', weight);
   }
 
-  /** */
   getFontWeight() {
     return this.getProperty('fontWeight');
   }
 
-  /** */
-  setFontColor(color) {
+  setFontColor(color: string) {
     this.putProperty('fontColor', color);
   }
 
-  /** */
-  getFontColor() {
+  getFontColor(): string {
     return this.getProperty('fontColor');
   }
 
-  /** */
-  setFontSize(size) {
+  setFontSize(size: number) {
     this.putProperty('fontSize', size);
   }
 
-  /** */
-  getFontSize() {
+  getFontSize(): number {
     return this.getProperty('fontSize');
   }
 
-  /** */
-  getBorderColor() {
+  getBorderColor(): string {
     return this.getProperty('borderColor');
   }
 
-  /** */
-  setBorderColor(color) {
+  setBorderColor(color: string): void {
     this.putProperty('borderColor', color);
   }
 
-  /** */
-  getBackgroundColor() {
+  getBackgroundColor(): string {
     return this.getProperty('backgroundColor');
   }
 
-  /** */
-  setBackgroundColor(color) {
+  setBackgroundColor(color: string) {
     this.putProperty('backgroundColor', color);
   }
 
-  /** */
-  areChildrenShrunken() {
+  areChildrenShrunken(): boolean {
     const result = this.getProperty('shrunken');
     return $defined(result) ? result : false;
   }
 
   /**
-       * @return {Boolean} true if the children nodes are hidden by the shrink option
-       */
-  setChildrenShrunken(value) {
+   * @return {Boolean} true if the children nodes are hidden by the shrink option
+   */
+  setChildrenShrunken(value: boolean) {
     this.putProperty('shrunken', value);
   }
 
-  /**
-       * @return {Boolean} true
-       */
-  isNodeModel() {
+  isNodeModel(): boolean {
     return true;
   }
 
   /**
-       * @return {Boolean} true if the node model has a parent assigned to it
-       */
-  isConnected() {
+   * @return {Boolean} true if the node model has a parent assigned to it
+   */
+  isConnected(): boolean {
     return this.getParent() != null;
   }
 
-  /** @abstract */
-  // eslint-disable-next-line no-unused-vars
-  append(node) {
-    throw new Error('Unsupported operation');
-  }
+  abstract append(node): void;
 
   /**
        * lets the mindmap handle the connect node operation
        * @throws will throw an error if parent is null or undefined
        * @see mindplot.model.IMindmap.connect
        */
-  connectTo(parent) {
+  connectTo(parent: INodeModel) {
     $assert(parent, 'parent can not be null');
     const mindmap = this.getMindmap();
     mindmap.connect(parent, this);
@@ -280,7 +244,7 @@ abstract class INodeModel {
        * @param target
        * @return target
        */
-  copyTo(target) {
+  copyTo(target: INodeModel): INodeModel {
     const source = this;
     // Copy properties ...
     const keys = source.getPropertiesKeys();
@@ -306,7 +270,7 @@ abstract class INodeModel {
        * lets parent handle the delete node operation, or, if none defined, calls the mindmap to
        * remove the respective branch
        */
-  deleteNode() {
+  deleteNode(): void {
     const mindmap = this.getMindmap();
 
     //        console.log("Before:" + mindmap.inspect());
@@ -323,7 +287,7 @@ abstract class INodeModel {
 
   abstract getPropertiesKeys(): string[];
 
-  abstract getProperty(key: string);
+  abstract getProperty(key: string): any;
 
   abstract putProperty(key: string, value: any): void;
 

@@ -22,7 +22,7 @@ class FeatureModelFactory {
     model: NoteModel,
   }];
 
-  static createModel(type: string, attributes): FeatureModel {
+  static createModel(type: FeatureType, attributes): FeatureModel {
     $assert(type, 'type can not be null');
     $assert(attributes, 'attributes can not be null');
 

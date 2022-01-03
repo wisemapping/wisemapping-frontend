@@ -19,14 +19,14 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import cloneDeep from 'lodash/cloneDeep';
 import INodeModel, { NodeModelType } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
-import FeatureModel from './FeatureModel';
+import FeatureModel, { FeatureType } from './FeatureModel';
 import Mindmap from './Mindmap';
 
 class NodeModel extends INodeModel {
   private _properties: {};
-  private _children: INodeModel[];
+  private _children: NodeModel[];
   private _features: FeatureModel[];
-  private _parent: INodeModel;
+  private _parent: NodeModel;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id: number) {
     $assert(type, 'Node type can not be null');
@@ -46,7 +46,7 @@ class NodeModel extends INodeModel {
      * @param attributes
      * @return {mindplot.model.FeatureModel} the created feature model
      */
-  createFeature(type, attributes) {
+  createFeature(type: FeatureType, attributes: any): FeatureModel {
     return FeatureModelFactory.createModel(type, attributes);
   }
 
@@ -54,12 +54,11 @@ class NodeModel extends INodeModel {
      * @param feature
      * @throws will throw an error if feature is null or undefined
      */
-  addFeature(feature) {
+  addFeature(feature: FeatureModel) {
     $assert(feature, 'feature can not be null');
     this._features.push(feature);
   }
 
-  /** */
   getFeatures() {
     return this._features;
   }
@@ -69,7 +68,7 @@ class NodeModel extends INodeModel {
      * @throws will throw an error if feature is null or undefined
      * @throws will throw an error if the feature could not be removed
      */
-  removeFeature(feature) {
+  removeFeature(feature: FeatureModel) {
     $assert(feature, 'feature can not be null');
     const size = this._features.length;
     this._features = this._features.filter((f) => feature.getId() !== f.getId());
@@ -80,7 +79,7 @@ class NodeModel extends INodeModel {
      * @param {String} type the feature type, e.g. icon or link
      * @throws will throw an error if type is null or undefined
      */
-  findFeatureByType(type) {
+  findFeatureByType(type: string) {
     $assert(type, 'type can not be null');
     return this._features.filter((feature) => feature.getType() === type);
   }
@@ -91,7 +90,7 @@ class NodeModel extends INodeModel {
      * @throws will throw an error if feature could not be found
      * @return the feature with the given id
      */
-  findFeatureById(id) {
+  findFeatureById(id: number) {
     $assert($defined(id), 'id can not be null');
     const result = this._features.filter((feature) => feature.getId() === id);
     $assert(result.length === 1, `Feature could not be found:${id}`);
@@ -108,7 +107,7 @@ class NodeModel extends INodeModel {
      * @param value
      * @throws will throw an error if key is null or undefined
      */
-  putProperty(key, value) {
+  putProperty(key: string, value: string | number | boolean) {
     $defined(key, 'key can not be null');
     this._properties[key] = value;
   }
@@ -176,25 +175,22 @@ class NodeModel extends INodeModel {
      * @param {mindplot.model.NodeModel} child
      * @throws will throw an error if child is null, undefined or not a NodeModel object
      */
-  removeChild(child): void {
+  removeChild(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);
     // eslint-disable-next-line no-param-reassign
     child._parent = null;
   }
 
-  /** */
-  getChildren() {
+  getChildren(): NodeModel[] {
     return this._children;
   }
 
-  /** */
-  getParent() {
+  getParent(): NodeModel {
     return this._parent;
   }
 
-  /** */
-  setParent(parent) {
+  setParent(parent: NodeModel): void {
     $assert(parent !== this, 'The same node can not be parent and child if itself.');
     this._parent = parent;
   }

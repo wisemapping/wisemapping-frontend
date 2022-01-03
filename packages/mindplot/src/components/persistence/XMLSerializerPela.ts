@@ -18,12 +18,17 @@
 import { $assert, $defined, createDocument } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
-import INodeModel, { TopicShape } from '../model/INodeModel';
+import { TopicShape } from '../model/INodeModel';
 import ConnectionLine from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
+import NodeModel from '../model/NodeModel';
+import { FeatureType } from '../model/FeatureModel';
 
 class XMLSerializerPela {
-  toXML(mindmap) {
+  private static MAP_ROOT_NODE = 'map';
+  private _idsMap: {};
+
+  toXML(mindmap: Mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
 
     const document = createDocument();
@@ -64,7 +69,7 @@ class XMLSerializerPela {
     return document;
   }
 
-  _topicToXML(document, topic) {
+  _topicToXML(document: Document, topic: NodeModel) {
     const parentTopic = document.createElement('topic');
 
     // Set topic attributes...
@@ -75,7 +80,7 @@ class XMLSerializerPela {
       parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
 
       const order = topic.getOrder();
-      if (typeof order === 'number' && Number.isFinite(order)) { parentTopic.setAttribute('order', order); }
+      if (typeof order === 'number' && Number.isFinite(order)) { parentTopic.setAttribute('order', order.toString()); }
     }
 
     const text = topic.getText();
@@ -88,9 +93,10 @@ class XMLSerializerPela {
       parentTopic.setAttribute('shape', shape);
 
       if (shape === TopicShape.IMAGE) {
+        const size = topic.getImageSize();
         parentTopic.setAttribute(
           'image',
-          `${topic.getImageSize().width},${topic.getImageSize().height
+          `${size.width},${size.height
           }:${topic.getImageUrl()}`,
         );
       }
@@ -102,7 +108,7 @@ class XMLSerializerPela {
 
     // Font properties ...
     const id = topic.getId();
-    parentTopic.setAttribute('id', id);
+    parentTopic.setAttribute('id', id.toString());
 
     let font = '';
 
@@ -243,14 +249,18 @@ class XMLSerializerPela {
 
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
-    const topicsNodes = childNodes.filter((child) => (child.nodeType === 1 && child.tagName === 'topic'));
+    const topicsNodes = childNodes.
+      filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'topic'))
+      .map((c) => c as Element);
     topicsNodes.forEach((child) => {
       const topic = this._deserializeNode(child, mindmap);
       mindmap.addBranch(topic);
     });
 
     // Then all relationshops, they are connected to topics ...
-    const relationshipsNodes = childNodes.filter((child) => (child.nodeType === 1 && child.tagName === 'relationship'));
+    const relationshipsNodes = childNodes.
+      filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'relationship'))
+      .map((c) => c as Element);
     relationshipsNodes.forEach((child) => {
       try {
         const relationship = XMLSerializerPela._deserializeRelationship(child, mindmap);
@@ -266,15 +276,15 @@ class XMLSerializerPela {
     return mindmap;
   }
 
-  _deserializeNode(domElem, mindmap) {
+  _deserializeNode(domElem: Element, mindmap: Mindmap) {
     const type = domElem.getAttribute('central') != null
       ? 'CentralTopic'
       : 'MainTopic';
 
     // Load attributes...
-    let id = domElem.getAttribute('id');
-    if ($defined(id)) {
-      id = parseInt(id, 10);
+    let id = null;
+    if ($defined(domElem.getAttribute('id'))) {
+      id = Number.parseInt(domElem.getAttribute('id'), 10);
     }
 
     if (this._idsMap[id]) {
@@ -300,7 +310,7 @@ class XMLSerializerPela {
       }
 
       if (font[1]) {
-        topic.setFontSize(font[1]);
+        topic.setFontSize(Number.parseInt(font[1], 10));
       }
 
       if (font[2]) {
@@ -327,7 +337,7 @@ class XMLSerializerPela {
         topic.setImageUrl(url);
 
         const split = size.split(',');
-        topic.setImageSize(split[0], split[1]);
+        topic.setImageSize(Number.parseInt(split[0], 10), Number.parseInt(split[1], 10));
       }
     }
 
@@ -350,13 +360,13 @@ class XMLSerializerPela {
     const isShrink = domElem.getAttribute('shrink');
     // Hack: Some production maps has been stored with the central topic collapsed. This is a bug.
     if ($defined(isShrink) && type !== 'CentralTopic') {
-      topic.setChildrenShrunken(isShrink);
+      topic.setChildrenShrunken(Boolean(isShrink));
     }
 
     const position = domElem.getAttribute('position');
     if ($defined(position)) {
       const pos = position.split(',');
-      topic.setPosition(pos[0], pos[1]);
+      topic.setPosition(Number.parseInt(pos[0]), Number.parseInt(pos[1]));
     }
 
     const metadata = domElem.getAttribute('metadata');
@@ -368,29 +378,31 @@ class XMLSerializerPela {
     const children = Array.from(domElem.childNodes);
     children.forEach((child) => {
       if (child.nodeType === Node.ELEMENT_NODE) {
-        if (child.tagName === 'topic') {
-          const childTopic = this._deserializeNode(child, mindmap);
+        const elem = child as Element;
+        if (elem.tagName === 'topic') {
+          const childTopic = this._deserializeNode(elem, mindmap);
           childTopic.connectTo(topic);
-        } else if (FeatureModelFactory.isSupported(child.tagName)) {
+        } else if (FeatureModelFactory.isSupported(elem.tagName)) {
           // Load attributes ...
-          const namedNodeMap = child.attributes;
+          const namedNodeMap = elem.attributes;
           const attributes = {};
+
           for (let j = 0; j < namedNodeMap.length; j++) {
             const attribute = namedNodeMap.item(j);
             attributes[attribute.name] = attribute.value;
           }
 
           // Has text node ?.
-          const textAttr = XMLSerializerPela._deserializeTextAttr(child);
+          const textAttr = XMLSerializerPela._deserializeTextAttr(elem);
           if (textAttr) {
-            attributes.text = textAttr;
+            attributes['text'] = textAttr;
           }
 
           // Create a new element ....
-          const featureType = child.tagName;
+          const featureType = elem.tagName as FeatureType;
           const feature = FeatureModelFactory.createModel(featureType, attributes);
           topic.addFeature(feature);
-        } else if (child.tagName === 'text') {
+        } else if (elem.tagName === 'text') {
           const nodeText = XMLSerializerPela._deserializeNodeText(child);
           topic.setText(nodeText);
         }
@@ -400,7 +412,7 @@ class XMLSerializerPela {
     return topic;
   }
 
-  static _deserializeTextAttr(domElem) {
+  static _deserializeTextAttr(domElem: Element): string {
     let value = domElem.getAttribute('text');
     if (!$defined(value)) {
       const children = domElem.childNodes;
@@ -497,13 +509,5 @@ class XMLSerializerPela {
   }
 }
 
-/**
- * a wisemap's root element tag name
- * @constant
- * @type {String}
- * @default
- */
-XMLSerializerPela.MAP_ROOT_NODE = 'map';
 
-// eslint-disable-next-line camelcase
 export default XMLSerializerPela;

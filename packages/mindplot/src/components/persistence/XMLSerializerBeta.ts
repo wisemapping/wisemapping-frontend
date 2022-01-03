@@ -19,11 +19,13 @@ import {
 } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
-import INodeModel from '../model/INodeModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
+import NodeModel from '../model/NodeModel';
 
 class XMLSerializerBeta {
-  toXML(mindmap) {
+  private static  MAP_ROOT_NODE = 'map';
+
+  toXML(mindmap: Mindmap) {
     $assert(mindmap, 'Can not save a null mindmap');
 
     const document = createDocument();
@@ -38,21 +40,20 @@ class XMLSerializerBeta {
 
     // Create branches ...
     const topics = mindmap.getBranches();
-    for (let i = 0; i < topics.length; i++) {
-      const topic = topics[i];
+    topics.forEach((topic) => {
       const topicDom = this._topicToXML(document, topic);
       mapElem.append(topicDom);
-    }
+    });
 
     return document;
   }
 
-  _topicToXML(document, topic) {
+  _topicToXML(document: Document, topic: NodeModel) {
     const parentTopic = document.createElement('topic');
 
     // Set topic attributes...
     if (topic.getType() === 'CentralTopic') {
-      parentTopic.setAttribute('central', true);
+      parentTopic.setAttribute('central', new Boolean(true).toString());
     } else {
       const parent = topic.getParent();
       if (parent == null || parent.getType() === 'CentralTopic') {
@@ -60,7 +61,7 @@ class XMLSerializerBeta {
         parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
       } else {
         const order = topic.getOrder();
-        parentTopic.setAttribute('order', order);
+        parentTopic.setAttribute('order', order.toString());
       }
     }
 
@@ -75,7 +76,7 @@ class XMLSerializerBeta {
     }
 
     if (topic.areChildrenShrunken()) {
-      parentTopic.setAttribute('shrink', true);
+      parentTopic.setAttribute('shrink', new Boolean(true).toString());
     }
 
     // Font properties ...
@@ -117,36 +118,31 @@ class XMLSerializerBeta {
     }
 
     // ICONS
-    let i;
-    const icons = topic.getIcons();
-    for (i = 0; i < icons.length; i++) {
-      const icon = icons[i];
+    const icons = topic.findFeatureByType('icons');
+    icons.forEach((icon)=>{
       const iconDom = this._iconToXML(document, icon);
       parentTopic.append(iconDom);
-    }
-
+    });
+ 
     // LINKS
-    const links = topic.getLinks();
-    for (i = 0; i < links.length; i++) {
-      const link = links[i];
+    const links = topic.findFeatureByType('links');
+    icons.forEach((link)=>{
       const linkDom = this._linkToXML(document, link);
       parentTopic.append(linkDom);
-    }
+    });
 
-    const notes = topic.getNotes();
-    for (i = 0; i < notes.length; i++) {
-      const note = notes[i];
+    const notes = topic.findFeatureByType('note');
+    notes.forEach((note)=>{
       const noteDom = this._noteToXML(document, note);
       parentTopic.append(noteDom);
-    }
+    });
 
     // CHILDREN TOPICS
     const childTopics = topic.getChildren();
-    for (i = 0; i < childTopics.length; i++) {
-      const childTopic = childTopics[i];
+    childTopics.forEach((childTopic)=>{
       const childDom = this._topicToXML(document, childTopic);
       parentTopic.append(childDom);
-    }
+    });
 
     return parentTopic;
   }
@@ -288,13 +284,13 @@ class XMLSerializerBeta {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
         } else if (child.tagName === 'icon') {
-          const icon = this._deserializeIcon(child, topic);
+          const icon = this._deserializeIcon(child);
           topic.addFeature(icon);
         } else if (child.tagName === 'link') {
-          const link = this._deserializeLink(child, topic);
+          const link = this._deserializeLink(child);
           topic.addFeature(link);
         } else if (child.tagName === 'note') {
-          const note = this._deserializeNote(child, topic);
+          const note = this._deserializeNote(child);
           topic.addFeature(note);
         }
       }
@@ -303,23 +299,21 @@ class XMLSerializerBeta {
     return topic;
   }
 
-  _deserializeIcon(domElem) {
+  _deserializeIcon(domElem: Element) {
     let icon = domElem.getAttribute('id');
     icon = icon.replace('images/', 'icons/legacy/');
-    return FeatureModelFactory.createModel(FeatureModelFactory.Icon.id, { id: icon });
+    return FeatureModelFactory.createModel('icon', { id: icon });
   }
 
-  _deserializeLink(domElem) {
-    return FeatureModelFactory.createModel(FeatureModelFactory.Link.id, { url: domElem.getAttribute('url') });
+  _deserializeLink(domElem: Element) {
+    return FeatureModelFactory.createModel('link', { url: domElem.getAttribute('url') });
   }
 
-  _deserializeNote(domElem) {
+  _deserializeNote(domElem: Element) {
     const text = domElem.getAttribute('text');
-    return FeatureModelFactory.createModel(FeatureModelFactory.Note.id, { text: text == null ? ' ' : text });
+    return FeatureModelFactory.createModel('note', { text: text == null ? ' ' : text });
   }
 }
 
-XMLSerializerBeta.MAP_ROOT_NODE = 'map';
 
-// eslint-disable-next-line camelcase
 export default XMLSerializerBeta;
