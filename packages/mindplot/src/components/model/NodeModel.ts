@@ -161,7 +161,7 @@ class NodeModel extends INodeModel {
      * @param {mindplot.model.NodeModel} child
      * @throws will throw an error if child is null, undefined or not a NodeModel object
      */
-  append(child: NodeModel) {
+  append(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
     child._parent = this;

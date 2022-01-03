@@ -15,21 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Font from './Font';
+import FontPeer from './FontPeer';
 
-class ArialFont extends Font {
+class ArialFont extends FontPeer {
   constructor() {
-    super();
-    this._fontFamily = 'Arial';
-  }
-
-  getFontFamily() {
-    return this._fontFamily;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getFont() {
-    return Font.ARIAL;
+    super('Arial');
   }
 }
 

@@ -44,7 +44,7 @@ import LinkEditor from './widget/LinkEditor';
 import TopicEventDispatcher, {
   TopicEvent,
 } from './TopicEventDispatcher';
-import INodeModel, {
+import {
   TopicShape,
 } from './model/INodeModel';
 
@@ -271,7 +271,6 @@ class Topic extends NodeGraph {
     return this._outerShape;
   }
 
-  /** @return text shape */
   getTextShape() {
     if (!$defined(this._text)) {
       this._text = this._buildTextShape(false);
@@ -404,7 +403,7 @@ class Topic extends NodeGraph {
   /** */
   setFontFamily(value, updateModel) {
     const textShape = this.getTextShape();
-    textShape.setFontFamily(value);
+    textShape.setFontName(value);
     if ($defined(updateModel) && updateModel) {
       const model = this.getModel();
       model.setFontFamily(value);

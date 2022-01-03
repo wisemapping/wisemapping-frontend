@@ -15,29 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import FontPeer from './FontPeer';
 
-import Workspace from './components/Workspace';
-import Elipse from './components/Elipse';
-import Line from './components/Line';
-import PolyLine from './components/PolyLine';
-import CurvedLine from './components/CurvedLine';
-import Arrow from './components/Arrow';
-import Group from './components/Group';
-import Rect from './components/Rect';
-import Text from './components/Text';
-import Point from './components/Point';
-import Image from './components/Image';
+class BrushScriptMTFont extends FontPeer {
+  // eslint-disable-next-line class-methods-use-this
+  constructor() {
+    super('Brush Script MT');
+  }
+}
 
-export {
-  Arrow,
-  CurvedLine,
-  Elipse,
-  Group,
-  Image,
-  Line,
-  Point,
-  PolyLine,
-  Rect,
-  Text,
-  Workspace,
-};
+export default BrushScriptMTFont;

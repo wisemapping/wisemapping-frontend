@@ -17,11 +17,12 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-class Font {
-  constructor() {
+class FontPeer {
+  constructor(fontName) {
     this._size = 10;
     this._style = 'normal';
     this._weight = 'normal';
+    this._fontName = fontName;
   }
 
   init(args) {
@@ -89,6 +90,10 @@ class Font {
     }
     return result;
   }
+
+  getFontName() {
+    return this._fontName;
+  }
 }
 
-export default Font;
+export default FontPeer;

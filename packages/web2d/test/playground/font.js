@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Text,
+  Workspace, Text,
 } from '../../src';
 
 global.$ = $;
 
-function multiline(text, family, elemId) {
+function multiline(text, fontName, elemId) {
   const workspace = new Workspace();
   workspace.setSize('200px', '240px');
   workspace.setCoordSize('200', '240');
@@ -16,7 +16,7 @@ function multiline(text, family, elemId) {
     workspace.append(wText);
 
     wText.setText(text);
-    wText.setFont(family, size, 'bold');
+    wText.setFont(fontName, size, 'bold');
     wText.setPosition(30, 50 * i);
     wText.setColor('blue');
   });
@@ -45,11 +45,11 @@ function alignments(text, family, elemId) {
 }
 
 // Multine tests ...
-['Arial', 'Tahoma', 'Verdana', 'Times'].forEach((family, i) => {
-  multiline('This multine text.\nLine 1 :)\nLine2', family, `multi${i}`);
+['Arial', 'Tahoma', 'Verdana', 'Times', 'Brush Script MT'].forEach((fontName, i) => {
+  multiline('This multine text.\nLine 1 :)\nLine2', fontName, `multi${i}`);
 });
 
 // Multine tests and alingments .. ...
-['Arial', 'Tahoma', 'Verdana', 'Times'].forEach((family, i) => {
-  alignments('This multine text.\nThis is the long line just because :)\nShort line', family, `amulti${i}`);
+['Arial', 'Tahoma', 'Verdana', 'Times', 'Brush Script MT'].forEach((fontName, i) => {
+  alignments('This multine text.\nThis is the long line just because :)\nShort line', fontName, `amulti${i}`);
 });

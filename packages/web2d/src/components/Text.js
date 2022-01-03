@@ -18,12 +18,12 @@
 
 import { $assert } from '@wisemapping/core-js';
 import ElementClass from './ElementClass';
+import TransformUtil from './peer/utils/TransformUtils';
 import Toolkit from './Toolkit';
-import Font from './Font';
 
 class Text extends ElementClass {
   constructor(attributes) {
-    const peer = Toolkit.createText(Font);
+    const peer = Toolkit.createText('Arial');
     super(peer, attributes);
   }
 
@@ -53,6 +53,10 @@ class Text extends ElementClass {
     this.peer.setFont(font, size, style, weight);
   }
 
+  setFontName(fontName) {
+    this.peer.setFontName(fontName);
+  }
+
   setColor(color) {
     this.peer.setColor(color);
   }
@@ -69,12 +73,8 @@ class Text extends ElementClass {
     this.peer.setWeight(weight);
   }
 
-  setFontFamily(family) {
-    this.peer.setFontFamily(family);
-  }
-
-  getFont() {
-    return this.peer.getFont();
+  getFontStyle() {
+    return this.peer.getFontStyle();
   }
 
   setSize(size) {
@@ -82,7 +82,8 @@ class Text extends ElementClass {
   }
 
   getHtmlFontSize() {
-    return this.peer.getHtmlFontSize();
+    const scale = TransformUtil.workoutScale(this.peer);
+    return this.peer.getHtmlFontSize(scale);
   }
 
   getWidth() {

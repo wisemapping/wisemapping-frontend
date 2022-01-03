@@ -15,21 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Font from './Font';
+import FontPeer from './FontPeer';
 
-class VerdanaFont extends Font {
+class VerdanaFont extends FontPeer {
   constructor() {
-    super();
-    this._fontFamily = 'Verdana';
-  }
-
-  getFontFamily() {
-    return this._fontFamily;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getFont() {
-    return Font.VERDANA;
+    super('Verdana');
   }
 }
 
