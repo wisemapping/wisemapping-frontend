@@ -22,7 +22,7 @@ import fs from 'fs';
 import { diff } from 'jest-diff';
 import { expect } from '@jest/globals';
 
-const saveOutputRecord = true;
+const saveOutputRecord = false;
 
 export const setupBlob = () => {
   // Workaround for partial implementations on Jest:
