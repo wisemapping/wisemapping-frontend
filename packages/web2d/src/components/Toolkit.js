@@ -29,8 +29,14 @@ import ArialFont from './peer/svg/ArialFont';
 import TimesFont from './peer/svg/TimesFont';
 import VerdanaFont from './peer/svg/VerdanaFont';
 import TahomaFont from './peer/svg/TahomaFont';
+import BrushScriptMTFont from './peer/svg/BrushScriptFont';
 
 class Toolkit {
+  static createFontByName(fontName) {
+    const font = fontName.replaceAll(' ', '');
+    return Toolkit[`create${font}Font`]();
+  }
+
   static createWorkspace(element) {
     return new WorkspacePeer(element);
   }
@@ -59,8 +65,8 @@ class Toolkit {
     return new ArrowPeer();
   }
 
-  static createText(Font) {
-    return new TextPeer(Font);
+  static createText(font) {
+    return new TextPeer(font.getFontPeer());
   }
 
   static createImage() {
@@ -85,6 +91,10 @@ class Toolkit {
 
   static createTahomaFont() {
     return new TahomaFont();
+  }
+
+  static createBrushScriptMTFont() {
+    return new BrushScriptMTFont();
   }
 }
 

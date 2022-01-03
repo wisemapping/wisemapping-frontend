@@ -17,10 +17,11 @@
  */
 import FontPeer from './FontPeer';
 
-class TimesFont extends FontPeer {
+class BrushScriptMTFont extends FontPeer {
+  // eslint-disable-next-line class-methods-use-this
   constructor() {
-    super('Times');
+    super('Brush Script MT');
   }
 }
 
-export default TimesFont;
+export default BrushScriptMTFont;
