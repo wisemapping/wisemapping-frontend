@@ -15,6 +15,7 @@
 *   See the License for the specific language governing permissions and
 *   limitations under the License.
  */
+import FontPeer from './peer/svg/FontPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import ElipsePeer from './peer/svg/ElipsePeer';
@@ -22,23 +23,11 @@ import LinePeer from './peer/svg/LinePeer';
 import PolyLinePeer from './peer/svg/PolyLinePeer';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
 import ArrowPeer from './peer/svg/ArrowPeer';
-// eslint-disable-next-line import/no-cycle
 import TextPeer from './peer/svg/TextPeer';
 import ImagePeer from './peer/svg/ImagePeer';
 import RectPeer from './peer/svg/RectPeer';
-import ArialFont from './peer/svg/font/ArialFont';
-import TimesFont from './peer/svg/font/TimesFont';
-import VerdanaFont from './peer/svg/font/VerdanaFont';
-import TahomaFont from './peer/svg/font/TahomaFont';
-import LuminariFont from './peer/svg/font/LuminariFont';
-import BrushScriptMTFont from './peer/svg/font/BrushScriptFont';
 
 class Toolkit {
-  static createFontByName(fontName) {
-    const font = fontName.replaceAll(' ', '');
-    return Toolkit[`create${font}Font`]();
-  }
-
   static createWorkspace(element) {
     return new WorkspacePeer(element);
   }
@@ -68,7 +57,7 @@ class Toolkit {
   }
 
   static createText(fontName) {
-    const font = Toolkit.createFontByName(fontName);
+    const font = new FontPeer(fontName);
     return new TextPeer(font);
   }
 
@@ -78,30 +67,6 @@ class Toolkit {
 
   static createRect(arc) {
     return new RectPeer(arc);
-  }
-
-  static createArialFont() {
-    return new ArialFont();
-  }
-
-  static createTimesFont() {
-    return new TimesFont();
-  }
-
-  static createLuminariFont() {
-    return new LuminariFont();
-  }
-
-  static createVerdanaFont() {
-    return new VerdanaFont();
-  }
-
-  static createTahomaFont() {
-    return new TahomaFont();
-  }
-
-  static createBrushScriptMTFont() {
-    return new BrushScriptMTFont();
   }
 }
 

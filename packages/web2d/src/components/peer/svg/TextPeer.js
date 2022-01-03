@@ -16,9 +16,9 @@
  *   limitations under the License.
  */
 import { $defined } from '@wisemapping/core-js';
+import FontPeer from './FontPeer';
 import ElementPeer from './ElementPeer';
 import { getPosition } from '../utils/DomUtils';
-import Toolkit from '../../Toolkit';
 
 class TextPeer extends ElementPeer {
   constructor(fontPeer) {
@@ -86,7 +86,7 @@ class TextPeer extends ElementPeer {
 
   setFont(fontName, size, style, weight) {
     if ($defined(fontName)) {
-      this._font = Toolkit.createFontByName(fontName);
+      this._font = new FontPeer(fontName);
     }
 
     if ($defined(style)) {
@@ -137,7 +137,7 @@ class TextPeer extends ElementPeer {
 
   setFontName(fontName) {
     const oldFont = this._font;
-    this._font = Toolkit.createFontByName(fontName);
+    this._font = new FontPeer(fontName);
     this._font.setSize(oldFont.getSize());
     this._font.setStyle(oldFont.getStyle());
     this._font.setWeight(oldFont.getWeight());
