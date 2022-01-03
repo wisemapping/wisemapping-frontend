@@ -1,154 +1,154 @@
 1 PPM Plan
-1.1 Business Development 
-1.2 Backlog Management [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
-1.3 Freeform IT
-1.4 Client Project Management
-1.5 Governance & Executive
-1.6 Finance
-1.7 Administration
-1.8 Human Resources
-1.9 Freeform Hosting
-1.10 Community Outreach
-1.11 R&D
-1.11.1 Goals
-1.11.2 Formulize
-1.12 Probono
-1.12.1 null
+	1.1 Business Development 
+	1.2 Backlog Management [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
+	1.3 Freeform IT
+	1.4 Client Project Management
+	1.5 Governance & Executive
+	1.6 Finance
+	1.7 Administration
+	1.8 Human Resources
+	1.9 Freeform Hosting
+	1.10 Community Outreach
+	1.11 R&D
+		1.11.1 Goals
+		1.11.2 Formulize
+	1.12 Probono
+		1.12.1 null
 2 Strategy 2: Talent Development
-2.1 Strategic Priority 2a: Personal Plans
-2.2 Strategic Priority 2b: External learning matches organ. goals
-2.3 Strategic Priority 2c: Learning Environment
-2.4 So That...
+	2.1 Strategic Priority 2a: Personal Plans
+	2.2 Strategic Priority 2b: External learning matches organ. goals
+	2.3 Strategic Priority 2c: Learning Environment
+	2.4 So That...
 3 Strategy 4: Inclusive, Positive Environment
-3.1 Strategic Priority 4a:Feedback
-3.2 Strategic Priority 4b: Anti Harassment
-3.3 Strategic Priority 4c: Diversity
-3.4 null
-3.5 So That...
+	3.1 Strategic Priority 4a:Feedback
+	3.2 Strategic Priority 4b: Anti Harassment
+	3.3 Strategic Priority 4c: Diversity
+	3.4 null
+	3.5 So That...
 4 Strategy 1: Recruit & Retain
-4.1 So that...
-4.2 Strategic Priority 1a: Recruitment
-4.2.1 Modify App Form
-4.2.2 Strategy integrated with hiring plan
-4.3 Strategic Priority 1b: Hiring
-4.4 Strategic Priority 1c: Onboarding
-4.4.1 3 Month Onboarding Process
-4.4.2 Tools & Guidelines
-4.4.3 Mentoring
-4.5 Strategic Priority 1d: Incentives
-4.5.1 Raises
-4.5.2 Benefits
-4.5.3 Rewards Message
-4.6 Strategic Priority 1e: Offboarding
+	4.1 So that...
+	4.2 Strategic Priority 1a: Recruitment
+		4.2.1 Modify App Form
+		4.2.2 Strategy integrated with hiring plan
+	4.3 Strategic Priority 1b: Hiring
+	4.4 Strategic Priority 1c: Onboarding
+		4.4.1 3 Month Onboarding Process
+		4.4.2 Tools & Guidelines
+		4.4.3 Mentoring
+	4.5 Strategic Priority 1d: Incentives
+		4.5.1 Raises
+		4.5.2 Benefits
+		4.5.3 Rewards Message
+	4.6 Strategic Priority 1e: Offboarding
 5 Business Development Plan
-5.1 Goals
-5.1.1 Increase new clients
-5.1.1.1 Academic Research
-5.1.1.2 null
-5.1.2 Support New Products
-5.1.2.1 Formulize
-5.1.2.2 null
-5.1.2.3 null
-5.1.3 Support CiviCRM
-5.1.4 Identify Opportunites
-5.1.4.1 null
-5.1.4.2 null
-5.1.4.3 null
-5.1.4.4 null
+	5.1 Goals
+		5.1.1 Increase new clients
+			5.1.1.1 Academic Research
+			5.1.1.2 null
+		5.1.2 Support New Products
+			5.1.2.1 Formulize
+			5.1.2.2 null
+			5.1.2.3 null
+		5.1.3 Support CiviCRM
+		5.1.4 Identify Opportunites
+			5.1.4.1 null
+			5.1.4.2 null
+			5.1.4.3 null
+			5.1.4.4 null
 6 Hosting NG Plan
 7 Freeform IT Plan
-7.1 Fragile
-7.2 Tools
-7.3 null
+	7.1 Fragile
+	7.2 Tools
+	7.3 null
 8 Project Teams
-8.1 Projects 1-3
-8.2 Projects 4-6
-8.3 Projects 7 & 8
-8.4 General Work
-8.5 Learning Needs Plan
+	8.1 Projects 1-3
+	8.2 Projects 4-6
+	8.3 Projects 7 & 8
+	8.4 General Work
+	8.5 Learning Needs Plan
 9 Restructure
-9.1 Client Centric Process
-9.2 Freeform Project Process
-9.3 Supportive Systems Plan
+	9.1 Client Centric Process
+	9.2 Freeform Project Process
+	9.3 Supportive Systems Plan
 10 Board and C Planning
-10.1 Mission Statements
-10.2 Values
-10.3 Bylaw Review
-10.4 Policies
-10.5 Business Plan
+	10.1 Mission Statements
+	10.2 Values
+	10.3 Bylaw Review
+	10.4 Policies
+	10.5 Business Plan
 11 Strategy 3: Safety and Wellness
-11.1 Strategic Priority 3a: H&S Policies & Practices
-11.1.1 null
-11.2 Strategic Priority 3b: Health Promotion
-11.2.1 Health and Wellness Committee
-11.2.2 Work-life Balance Initiative [link: http://hrcouncil.ca/hr-toolkit/workplaces-health-safety.cfm]
-11.3 So that...
+	11.1 Strategic Priority 3a: H&S Policies & Practices
+		11.1.1 null
+	11.2 Strategic Priority 3b: Health Promotion
+		11.2.1 Health and Wellness Committee
+		11.2.2 Work-life Balance Initiative [link: http://hrcouncil.ca/hr-toolkit/workplaces-health-safety.cfm]
+	11.3 So that...
 12 Benefits
-12.1 As Freeform Staff
-12.2 Responsibility: HZ, JC
-12.3 Release 3
-12.4 Have Heather create list benefits against Best Practice & cost
-12.5 Have Jason  review list
-12.6 Have JC & HZ consult with staff
-12.7 Have best benefits we can afford
-12.8 So that...
+	12.1 As Freeform Staff
+	12.2 Responsibility: HZ, JC
+	12.3 Release 3
+	12.4 Have Heather create list benefits against Best Practice & cost
+	12.5 Have Jason  review list
+	12.6 Have JC & HZ consult with staff
+	12.7 Have best benefits we can afford
+	12.8 So that...
 13 Community Outreach Plan
-13.1 Goals
-13.2 CSI
-13.3 Drupal Community
-13.4 CiviCRM
-13.5 Other
+	13.1 Goals
+	13.2 CSI
+	13.3 Drupal Community
+	13.4 CiviCRM
+	13.5 Other
 14 Backlog Plan [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
-14.1 Go To Backlog Plan  [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
+	14.1 Go To Backlog Plan  [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
 15 Strategy Prospecting
-15.1 null
-15.2 null
-15.3 null
+	15.1 null
+	15.2 null
+	15.3 null
 16 Stategies:  Forecasting
-16.1 null
-16.2 null
-16.3 null
+	16.1 null
+	16.2 null
+	16.3 null
 17 Strategies Marketing
 18 null
 19 Exit Interviews
-19.1 As Freeform
-19.2 Responsiblity: HZ, KS
-19.3 Release
-19.4 Have Heather write procedures for exit interview process
-19.5 So that
+	19.1 As Freeform
+	19.2 Responsiblity: HZ, KS
+	19.3 Release
+	19.4 Have Heather write procedures for exit interview process
+	19.5 So that
 20 3 Month Onboarding Process
 21 Human Resources Plan
-21.1 Related Org Objectives
-21.1.1 1
-21.1.2 2
-21.1.3 3
-21.1.4 4
-21.2 Related Documents
-21.3 Goals
-21.3.1 Goal:Staff=Optimal Bus. Growth
-21.3.1.1 So that...
-21.3.1.2 Related Strategic Priorities: 
-21.3.1.3 KPI: HR Level equals Planned Growth
-21.3.1.4 Methodology
-21.3.1.4.1 Target
-21.3.2 Goal: Increase Job Satisfaction
-21.3.2.1 So That
-21.3.2.2 Related Strategic Priorities
-21.3.2.2.1 null
-21.3.2.3 KPI: Employee Satisfaction
-21.3.2.3.1 null
-21.3.2.4 Methodology
-21.3.2.4.1 Target
-21.3.3 Goal: Improve Performance
-21.3.3.1 So That
-21.3.3.2 Related Strategic Priorities
-21.3.3.3 KPI: Employee Performance
-21.3.3.4 Methodology
-21.3.3.4.1 Target
-21.3.4 Goal: Reduce Turnover
-21.3.4.1 So That
-21.3.4.2 Related Strategic Priorities
-21.3.4.3 KPI: Retention Rate
-21.3.4.4 Methodology
-21.3.4.4.1 Target
-21.3.5 Risk & Compliance
+	21.1 Related Org Objectives
+		21.1.1 1
+		21.1.2 2
+		21.1.3 3
+		21.1.4 4
+	21.2 Related Documents
+	21.3 Goals
+		21.3.1 Goal:Staff=Optimal Bus. Growth
+			21.3.1.1 So that...
+			21.3.1.2 Related Strategic Priorities: 
+			21.3.1.3 KPI: HR Level equals Planned Growth
+			21.3.1.4 Methodology
+				21.3.1.4.1 Target
+		21.3.2 Goal: Increase Job Satisfaction
+			21.3.2.1 So That
+			21.3.2.2 Related Strategic Priorities
+				21.3.2.2.1 null
+			21.3.2.3 KPI: Employee Satisfaction
+				21.3.2.3.1 null
+			21.3.2.4 Methodology
+				21.3.2.4.1 Target
+		21.3.3 Goal: Improve Performance
+			21.3.3.1 So That
+			21.3.3.2 Related Strategic Priorities
+			21.3.3.3 KPI: Employee Performance
+			21.3.3.4 Methodology
+				21.3.3.4.1 Target
+		21.3.4 Goal: Reduce Turnover
+			21.3.4.1 So That
+			21.3.4.2 Related Strategic Priorities
+			21.3.4.3 KPI: Retention Rate
+			21.3.4.4 Methodology
+				21.3.4.4.1 Target
+		21.3.5 Risk & Compliance

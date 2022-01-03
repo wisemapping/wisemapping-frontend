@@ -57,7 +57,7 @@ class RelationshipModel {
   }
 
   /** */
-  getId() {
+  getId():number {
     $assert(this._id, 'id is null');
     return this._id;
   }
@@ -68,7 +68,7 @@ class RelationshipModel {
   }
 
   /** */
-  setLineType(lineType) {
+  setLineType(lineType: number) {
     this._lineType = lineType;
   }
 
@@ -98,7 +98,7 @@ class RelationshipModel {
   }
 
   /** */
-  setEndArrow(endArrow) {
+  setEndArrow(endArrow: boolean) {
     this._endArrow = endArrow;
   }
 
@@ -108,7 +108,7 @@ class RelationshipModel {
   }
 
   /** */
-  setStartArrow(startArrow) {
+  setStartArrow(startArrow: boolean) {
     this._startArrow = startArrow;
   }
 

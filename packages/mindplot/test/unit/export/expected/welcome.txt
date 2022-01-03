@@ -1,32 +1,32 @@
 1 Welcome To WiseMapping
-1.1 5 min tutorial video ?
+	1.1 5 min tutorial video ?
 Follow the link ! [link: https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE]
-1.2 Try it Now!
-1.2.1 Double Click
-1.2.2 Press "enter" to add a 
+	1.2 Try it Now!
+		1.2.1 Double Click
+		1.2.2 Press "enter" to add a 
 Sibling
-1.2.3 Drag map to move
-1.3 Features
-1.3.1 Links to Sites [link: http://www.digg.com]
-1.3.2 Styles
-1.3.2.1 Fonts
-1.3.2.2 Topic Shapes
-1.3.2.3 Topic Color
-1.3.3 Icons
-1.3.4 History Changes
-1.4 Mind Mapping
-1.4.1 Share with Collegues
-1.4.2 Online
-1.4.3 Anyplace, Anytime
-1.4.4 Free!!!
-1.5 Productivity
-1.5.1 Share your ideas
-1.5.2 Brainstorming
-1.5.3 Visual 
-1.6 Install In Your Server
-1.6.1 Open Source [link: http://www.wisemapping.org/]
-1.6.2 Download [link: http://www.wisemapping.com/inyourserver.html]
-1.7 Collaborate
-1.7.1 Embed
-1.7.2 Publish
-1.7.3 Share for Edition
+		1.2.3 Drag map to move
+	1.3 Features
+		1.3.1 Links to Sites [link: http://www.digg.com]
+		1.3.2 Styles
+			1.3.2.1 Fonts
+			1.3.2.2 Topic Shapes
+			1.3.2.3 Topic Color
+		1.3.3 Icons
+		1.3.4 History Changes
+	1.4 Mind Mapping
+		1.4.1 Share with Collegues
+		1.4.2 Online
+		1.4.3 Anyplace, Anytime
+		1.4.4 Free!!!
+	1.5 Productivity
+		1.5.1 Share your ideas
+		1.5.2 Brainstorming
+		1.5.3 Visual 
+	1.6 Install In Your Server
+		1.6.1 Open Source [link: http://www.wisemapping.org/]
+		1.6.2 Download [link: http://www.wisemapping.com/inyourserver.html]
+	1.7 Collaborate
+		1.7.1 Embed
+		1.7.2 Publish
+		1.7.3 Share for Edition

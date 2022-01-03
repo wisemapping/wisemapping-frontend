@@ -52,7 +52,7 @@ class TxtExporter implements Exporter {
             result = result + '\n';
 
             if (node.getChildren().length > 0) {
-                result = result + this.traverseBranch(`${prefix}${index+1}.`, node.getChildren());
+                result = result + this.traverseBranch(`\t${prefix}${index+1}.`, node.getChildren());
             }
         });
         return result;
