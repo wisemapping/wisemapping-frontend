@@ -15,13 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import FontPeer from './FontPeer';
+import FontPeer from '../FontPeer';
 
-class BrushScriptMTFont extends FontPeer {
-  // eslint-disable-next-line class-methods-use-this
+class TimesFont extends FontPeer {
   constructor() {
-    super('Brush Script MT');
+    super('Times');
   }
 }
 
-export default BrushScriptMTFont;
+export default TimesFont;

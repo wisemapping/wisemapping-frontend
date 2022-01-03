@@ -22,14 +22,16 @@ import LinePeer from './peer/svg/LinePeer';
 import PolyLinePeer from './peer/svg/PolyLinePeer';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
 import ArrowPeer from './peer/svg/ArrowPeer';
+// eslint-disable-next-line import/no-cycle
 import TextPeer from './peer/svg/TextPeer';
 import ImagePeer from './peer/svg/ImagePeer';
 import RectPeer from './peer/svg/RectPeer';
-import ArialFont from './peer/svg/ArialFont';
-import TimesFont from './peer/svg/TimesFont';
-import VerdanaFont from './peer/svg/VerdanaFont';
-import TahomaFont from './peer/svg/TahomaFont';
-import BrushScriptMTFont from './peer/svg/BrushScriptFont';
+import ArialFont from './peer/svg/font/ArialFont';
+import TimesFont from './peer/svg/font/TimesFont';
+import VerdanaFont from './peer/svg/font/VerdanaFont';
+import TahomaFont from './peer/svg/font/TahomaFont';
+import LuminariFont from './peer/svg/font/LuminariFont';
+import BrushScriptMTFont from './peer/svg/font/BrushScriptFont';
 
 class Toolkit {
   static createFontByName(fontName) {
@@ -84,6 +86,10 @@ class Toolkit {
 
   static createTimesFont() {
     return new TimesFont();
+  }
+
+  static createLuminariFont() {
+    return new LuminariFont();
   }
 
   static createVerdanaFont() {

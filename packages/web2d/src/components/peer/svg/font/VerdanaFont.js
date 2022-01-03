@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import FontPeer from './FontPeer';
+import FontPeer from '../FontPeer';
 
-class TimesFont extends FontPeer {
+class VerdanaFont extends FontPeer {
   constructor() {
-    super('Times');
+    super('Verdana');
   }
 }
 
-export default TimesFont;
+export default VerdanaFont;

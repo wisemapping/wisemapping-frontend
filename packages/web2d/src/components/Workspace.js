@@ -120,7 +120,7 @@ class Workspace extends ElementClass {
      * they are simple numbers, not CSS length quantities.
      */
   setCoordSize(width, height) {
-    this.peer.setCoordSize(width, height);
+    this.peer.setCoordSize(parseInt(width, 10), parseInt(height, 10));
   }
 
   /**

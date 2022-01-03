@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import FontPeer from './FontPeer';
+import FontPeer from '../FontPeer';
 
-class TahomaFont extends FontPeer {
+class ArialFont extends FontPeer {
   constructor() {
-    super('Verdana');
+    super('Arial');
   }
 }
 
-export default TahomaFont;
+export default ArialFont;

@@ -15,12 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import FontPeer from './FontPeer';
+import FontPeer from '../FontPeer';
 
-class VerdanaFont extends FontPeer {
+class LuminariFont extends FontPeer {
   constructor() {
-    super('Verdana');
+    super('Luminari');
   }
 }
 
-export default VerdanaFont;
+export default LuminariFont;
