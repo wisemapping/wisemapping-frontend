@@ -213,7 +213,7 @@ class Menu extends IMenu {
 
     this._addButton('export', false, false, () => {
       // @Todo: this must be configured in the dialog...
-      const formatExtension = 'wxml';
+      const formatExtension = 'jpg';
 
       designer.export(formatExtension)
         .then((url) => {

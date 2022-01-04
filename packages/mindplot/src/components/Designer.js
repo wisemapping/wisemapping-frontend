@@ -361,7 +361,9 @@ class Designer extends Events {
 
     let exporter;
     switch (formatType) {
-      case 'svg' || 'png' || 'jpg': {
+      case 'png':
+      case 'jpg':
+      case 'svg': {
         exporter = ImageExpoterFactory.create(formatType, this._mindmap, svgElement, size.width, size.height);
         break;
       }
