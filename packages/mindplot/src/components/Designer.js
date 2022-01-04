@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import $ from 'jquery';
 import Messages, { $msg } from './Messages';
 
 import Events from './Events';
@@ -117,14 +116,14 @@ class Designer extends Events {
     const zoomFactor = 1.006;
     const me = this;
     // Zoom In and Zoom Out must active event
-    $(document).on('mousewheel', (event) => {
-      if (event.deltaY > 0) {
+    document.addEventListener('wheel', (event) => {
+      if (event.deltaX > 0 || event.deltaY > 0) {
         me.zoomIn(zoomFactor);
       } else {
         me.zoomOut(zoomFactor);
       }
       event.preventDefault();
-    });
+    }, { passive: false });
   }
 
   /**
