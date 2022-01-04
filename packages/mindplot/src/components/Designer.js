@@ -118,9 +118,9 @@ class Designer extends Events {
     // Zoom In and Zoom Out must active event
     document.addEventListener('wheel', (event) => {
       if (event.deltaX > 0 || event.deltaY > 0) {
-        me.zoomIn(zoomFactor);
-      } else {
         me.zoomOut(zoomFactor);
+      } else {
+        me.zoomIn(zoomFactor);
       }
       event.preventDefault();
     }, { passive: false });
