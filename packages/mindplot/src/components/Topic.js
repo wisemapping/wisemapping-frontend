@@ -110,6 +110,11 @@ class Topic extends NodeGraph {
     if ($defined(updateModel) && updateModel) {
       model.setShapeType(type);
     }
+    // If shape is line, reset background color to default.
+    if (type === TopicShape.LINE) {
+      const color = TopicStyle.defaultBackgroundColor(this);
+      this.setBackgroundColor(color);
+    }
 
     const oldInnerShape = this.getInnerShape();
     if (oldInnerShape != null) {
