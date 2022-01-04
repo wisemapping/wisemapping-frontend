@@ -25,7 +25,8 @@ class IconPanel extends ToolbarPaneItem {
   }
 
   buildPanel() {
-    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>').css({ width: 245, height: 245 });
+    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>')
+      .css({ width: 295, height: 305 });
     content.on('click', (event) => {
       event.stopPropagation();
     });
