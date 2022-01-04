@@ -164,3 +164,34 @@ div.shareModalDialog {
 .popoverGray.bottom .arrow:after {
     border-bottom-color: #e4e2d2;
 }
+
+#zoom-button {
+    height: 100px;
+    width: 50px;
+    border: 0;
+    position: absolute;
+    bottom: 100px;
+    right:10px;
+}
+
+#zoom-plus,
+#zoom-minus {
+    height: 50px;
+    width: 50px;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: center;
+    cursor: pointer;
+    background-color: lightgray;
+    z-index: 1000;
+}
+
+#zoom-plus {
+    border-radius: 8px 8px 0 0;
+    background-image: url('../images/add-icon.svg')
+}
+
+#zoom-minus {
+    border-radius: 0 0 8px 8px;
+    background-image: url('../images/minus-icon.svg')
+}
