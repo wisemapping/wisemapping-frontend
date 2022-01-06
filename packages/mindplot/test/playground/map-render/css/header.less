@@ -1,5 +1,5 @@
-@header-height : 75px;
-@header-toolbar-height : 35px;
+@header-height : 0px;
+@header-toolbar-height : 50px;
 @header-info-height : @header-height - @header-toolbar-height;
 
 div#header {
@@ -9,29 +9,6 @@ div#header {
     z-index: 1000;
     position: absolute;
     top: 0;
-}
-
-div#headerLogo {
-    background: url(../images/logo-small.png) no-repeat center top;
-    height: 40px;
-    width: 80px;
-    float: left;
-    padding-left: 20px;
-}
-
-div#headerInfo {
-    width: 100%;
-    height: @header-info-height;
-    color: white;
-    padding: 0px 0px
-}
-
-div#headerActions {
-    text-align: right;
-    margin-top: 13px;
-    padding-right: 10px;
-    color: white;
-    float: right;
 }
 
 div#headerActions span {
@@ -82,17 +59,6 @@ div#headerNotifier {
 }
 
 @import "toolbar.less";
-
-div#embFooter {
-    position: absolute;
-    height: 35px;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    border-top: 1px solid black;
-    background: #E5E5E5;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
 
 /* FIXME: duplicate in mindmapList
  ---------------------------- Scrollbar --------------------------------- */
