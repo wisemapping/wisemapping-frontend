@@ -17,7 +17,8 @@ body {
 }
 
 div#mindplot {
-    position: relative;
+    position: absolute;
+    top: @header-toolbar-height;
     top: 0;
     left: 0;
     width: 100%;
@@ -146,20 +147,21 @@ div.shareModalDialog {
 }
 
 #floating-panel {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 10px;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    bottom: 10px;
+    right: 20px;
 }
 
-#bottom-logo {
+div#bottom-logo {
+    position: fixed;
+    left: 20px;
+    bottom: 10px;
     background: url(../images/logo-text-black.svg) no-repeat;
-    width: 100px;
+    width: 90px;
     height: 40px;
-    margin-top: 20px;
 }
 
 #zoom-button {
