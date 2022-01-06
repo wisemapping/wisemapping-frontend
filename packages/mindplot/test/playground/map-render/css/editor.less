@@ -14,7 +14,6 @@ body {
     -ms-user-select: none;
     user-select: none;
     overflow: hidden;
-    position: fixed
 }
 
 div#mindplot {
@@ -142,48 +141,47 @@ div.shareModalDialog {
     background-color: #efefef;
 }
 
-// TODO: Review position.
-div#bottom-logo {
-    position: absolute;
-    bottom: 220px;
-    right: 0;
-    background: url(../images/logo-text-black.svg) no-repeat;
-    width: 100px;
-    height: 40px;
-    z-index: 10000;
-}
-
 .popover {
     max-width: none;
 }
 
-#zoom-button {
-    height: 100px;
-    width: 50px;
-    border: 0;
+#floating-panel {
     position: absolute;
-    bottom: 100px;
-    right:10px;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#bottom-logo {
+    background: url(../images/logo-text-black.svg) no-repeat;
+    width: 100px;
+    height: 40px;
+    margin-top: 20px;
+}
+
+#zoom-button {
+    width: 40px;
+    border: 0;
 }
 
 #zoom-plus,
 #zoom-minus {
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     background-repeat: no-repeat;
     background-size: 40px 40px;
     background-position: center;
     cursor: pointer;
-    background-color: lightgray;
-    z-index: 1000;
+    background-color: #FFF;
 }
 
 #zoom-plus {
     border-radius: 8px 8px 0 0;
-    background-image: url('../images/add-icon.svg')
 }
 
 #zoom-minus {
     border-radius: 0 0 8px 8px;
-    background-image: url('../images/minus-icon.svg')
 }
