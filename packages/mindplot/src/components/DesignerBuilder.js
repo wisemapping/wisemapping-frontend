@@ -79,7 +79,7 @@ export function buildOptions(options) {
   };
 
   const viewPort = {
-    height: Number.parseInt(window.innerHeight - 70, 10), // Footer and Header
+    height: Number.parseInt(window.innerHeight, 10),
     width: Number.parseInt(window.innerWidth, 10),
   };
 
