@@ -85,15 +85,6 @@ div.modalDialog {
     border: 1px solid #999;
     padding: 10px;
     overflow: auto;
-
-    /* IE6-7 */
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding-box;
     background-clip: padding-box;
@@ -151,21 +142,13 @@ div.shareModalDialog {
     background-color: #efefef;
 }
 
-.popoverBlack {
-    background: black;
-}
-
-.popoverBlack.bottom .arrow:after {
-    border-bottom-color: black;
-}
-
-.popoverGray {
-    background: #e4e2d2;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-    border: 3px double #bebebe;
-    max-width: none;
-}
-
-.popoverGray.bottom .arrow:after {
-    border-bottom-color: #e4e2d2;
+// TODO: Review position.
+div#bottom-logo {
+    position: absolute;
+    bottom: 220px;
+    right: 0;
+    background: url(../images/logo-text-black.svg) no-repeat;
+    width: 100px;
+    height: 40px;
+    z-index: 10000;
 }

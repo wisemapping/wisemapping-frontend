@@ -407,19 +407,6 @@ class Menu extends IMenu {
         event.preventDefault();
       });
     }
-
-    const videoElem = $('#tutorialVideo');
-    if (videoElem) {
-      const width = 900;
-      const height = 500;
-      const left = (window.screen.width / 2) - (width / 2);
-      const top = (window.screen.height / 2) - (height / 2);
-
-      videoElem.bind('click', (event) => {
-        window.open('https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE', '_blank', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`);
-        event.preventDefault();
-      });
-    }
   }
 
   _registerEvents(designer) {
