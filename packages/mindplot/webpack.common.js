@@ -9,9 +9,6 @@ module.exports = {
       type: 'umd',
     },
   },
-  optimization: {
-    usedExports: true,
-  },
   entry: {
     mindplot: './src/index.js',
     loader: './src/indexLoader.js',

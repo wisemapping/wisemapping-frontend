@@ -6,6 +6,7 @@ const common = require('./webpack.common');
 const { merge } = require('webpack-merge');
 
 const playgroundConfig = {
+  mode: 'development',
   entry: {
     layout: path.resolve(__dirname, './test/playground/layout/context-loader'),
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
