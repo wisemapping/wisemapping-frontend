@@ -48,7 +48,6 @@ class KeyboardShortcutTooltip extends FloatingTip {
     result.css({
       padding: '3px 0px',
       width: '100%',
-      color: 'white',
     });
 
     const textContainer = $('<div></div>').text(text);
