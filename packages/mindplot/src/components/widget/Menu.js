@@ -26,6 +26,7 @@ import IconPanel from './IconPanel';
 import ColorPalettePanel from './ColorPalettePanel';
 import ToolbarItem from './ToolbarItem';
 import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
+import KeyboardShortcutDialog from './KeyboardShortcutDialog';
 
 class Menu extends IMenu {
   constructor(designer, containerId, mapId, readOnly, baseUrl = '') {
@@ -399,10 +400,7 @@ class Menu extends IMenu {
     const keyboardShortcut = $('#keyboardShortcuts');
     if (keyboardShortcut) {
       keyboardShortcut.bind('click', (event) => {
-        BootstrapDialogRequest.active = new BootstrapDialogRequest('c/keyboard', $msg('SHORTCUTS'), {
-          closeButton: true,
-          cancelButton: true,
-        });
+        BootstrapDialogRequest.active = new KeyboardShortcutDialog();
         designer.onObjectFocusEvent();
         event.preventDefault();
       });
@@ -410,11 +408,10 @@ class Menu extends IMenu {
   }
 
   _registerEvents(designer) {
-    const me = this;
     // Register on close events ...
     this._toolbarElems.forEach((elem) => {
       elem.addEvent('show', () => {
-        me.clear();
+        this.clear();
       });
     });
 
@@ -422,7 +419,7 @@ class Menu extends IMenu {
       const topics = designer.getModel().filterSelectedTopics();
       const rels = designer.getModel().filterSelectedRelationships();
 
-      me._toolbarElems.forEach((button) => {
+      this._toolbarElems.forEach((button) => {
         const isTopicAction = button.isTopicAction();
         const isRelAction = button.isRelAction();
 
@@ -440,7 +437,7 @@ class Menu extends IMenu {
       const topics = designer.getModel().filterSelectedTopics();
       const rels = designer.getModel().filterSelectedRelationships();
 
-      me._toolbarElems.forEach((button) => {
+      this._toolbarElems.forEach((button) => {
         const isTopicAction = button.isTopicAction();
         const isRelAction = button.isRelAction();
 
