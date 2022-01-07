@@ -24,9 +24,6 @@
                     <div id="discard" class="buttonOn">
                         <img src="images/discard.svg" />
                     </div>
-                    <div id="export" class="buttonOn">
-                        <img src="images/export.svg" />
-                    </div>
                 </div>
                 <div id="edit" class="buttonContainer">
                     <div id="undoEdition" class="buttonOn">
@@ -83,21 +80,37 @@
                     </div>
                 </div>
             </div>
+            <div id="toolbarRight">
+                <div id="account">
+                    <img src="images/account.svg"/>
+                </div>
+                <div id="share" class="actionButton">Share</div>
+                <div id="export" class="buttonOn">
+                    <img src="images/export.svg" />
+                </div>
+            </div>
         </div>
-        <div id="headerNotifier"></div>
     </div>
+
     <div id="mindplot" onselectstart="return false;"></div>
+  
+    <!-- Side Actions -->
     <div id="floating-panel">
+        <div id="shotcuts" class="buttonExtOn">
+            <img src="images/keyboard.svg"/>
+        </div>
         <div id="zoom-button">
             <button id="zoom-plus">
-                <img src="images/add-icon.svg" />
+                <img src="images/add.svg" />
             </button>
             <button id="zoom-minus">
-                <img src="images/minus-icon.svg" />
+                <img src="images/minus.svg" />
             </button>
         </div>
     </div>
     <div id="bottom-logo"></div>
+    <div id="headerNotifier"></div>
+
 </body>
 
 </html>
