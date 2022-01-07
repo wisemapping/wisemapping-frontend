@@ -246,12 +246,15 @@ class Menu extends IMenu {
 
     Menu._registerTooltip('print', $msg('PRINT'));
 
-    $('#backToList').bind('click', (event) => {
-      event.stopPropagation();
-      window.location = '/c/maps/';
-      return false;
+    this._addButton('zoom-plus', false, false, () => {
+      designer.zoomIn();
     });
-    Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
+    Menu._registerTooltip('zoom-plus', $msg('ZOOM_IN'));
+
+    this._addButton('zoom-minus', false, false, () => {
+      designer.zoomOut();
+    });
+    Menu._registerTooltip('zoom-minus', $msg('ZOOM_OUT'));
 
     const undoButton = this._addButton('undoEdition', false, false, () => {
       designer.undo();
@@ -390,9 +393,6 @@ class Menu extends IMenu {
       });
       Menu._registerTooltip('history', $msg('HISTORY'));
     }
-
-    this._registerEvents(designer);
-
     // Keyboard Shortcuts Action ...
     const keyboardShortcut = $('#keyboardShortcuts');
     if (keyboardShortcut) {
@@ -401,7 +401,20 @@ class Menu extends IMenu {
         designer.onObjectFocusEvent();
         event.preventDefault();
       });
+      Menu._registerTooltip('keyboardShortcuts', $msg('KEYBOARD_SHOTCUTS'));
     }
+
+    const backTolist = $('#backToList');
+    if (backTolist) {
+      backTolist.bind('click', (event) => {
+        event.stopPropagation();
+        window.location = '/c/maps/';
+        return false;
+      });
+      Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
+    }
+    
+    this._registerEvents(designer);
   }
 
   _registerEvents(designer) {

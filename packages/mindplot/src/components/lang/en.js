@@ -80,6 +80,7 @@ const EN = {
 
 
   BACK_TO_MAP_LIST: 'Back to Maps List',
+  KEYBOARD_SHOTCUTS: 'Keyboard Shorcuts',
 };
 
 export default EN;

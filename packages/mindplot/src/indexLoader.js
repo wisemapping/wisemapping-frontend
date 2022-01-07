@@ -62,22 +62,6 @@ const options = buildOptions({
 // Build designer ...
 const designer = buildDesigner(options);
 
-// Hock zoom events ...
-const zoomInButton = document.getElementById('zoom-plus');
-const zoomOutButton = document.getElementById('zoom-minus');
-
-if (zoomInButton) {
-  zoomInButton.addEventListener('click', () => {
-    designer.zoomIn();
-  });
-}
-if (zoomOutButton) {
-  zoomOutButton.addEventListener('click', () => {
-    designer.zoomOut();
-  });
-}
-
-
 designer.addEvent('loadSuccess', () => {
   loadingModal.hide();
 });
