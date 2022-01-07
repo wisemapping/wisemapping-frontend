@@ -246,15 +246,12 @@ class Menu extends IMenu {
 
     Menu._registerTooltip('print', $msg('PRINT'));
 
-    this._addButton('zoomIn', false, false, () => {
-      designer.zoomIn();
+    $('#backToList').bind('click', (event) => {
+      event.stopPropagation();
+      window.location = '/c/maps/';
+      return false;
     });
-    Menu._registerTooltip('zoomIn', $msg('ZOOM_IN'));
-
-    this._addButton('zoomOut', false, false, () => {
-      designer.zoomOut();
-    });
-    Menu._registerTooltip('zoomOut', $msg('ZOOM_OUT'));
+    Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
 
     const undoButton = this._addButton('undoEdition', false, false, () => {
       designer.undo();
