@@ -35,7 +35,6 @@ class ToolbarNotifier {
       this.container.data('transitioning', true);
       this.container.text(msg);
       this.container.css({
-        top: '5px',
         left: ($(window).width() - this.container.width()) / 2 - 9,
       });
       this.container.show().fadeOut(5000);

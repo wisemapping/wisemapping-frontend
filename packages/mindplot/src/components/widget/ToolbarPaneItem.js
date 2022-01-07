@@ -50,7 +50,7 @@ class ToolbarPaneItem extends ToolbarItem {
       className: 'toolbarPaneTip',
       trigger: 'manual',
       template:
-        '<div class="popover popoverGray" role="tooltip"><div class="arrow arrowGray"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+        '<div class="popover" role="tooltip"><div class="arrow arrowGray"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     });
 
     this._tip.addEvent('hide', () => {

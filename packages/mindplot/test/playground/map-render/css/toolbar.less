@@ -1,16 +1,36 @@
 div#toolbar {
     width: 100%;
-    height: @header-toolbar-height;
-    background-color: rgb(229, 227, 209);
-    border-bottom: 3px double rgb(190, 190, 190);
-    border-top: 1px solid rgb(190, 190, 190);
-    padding: 0px 15px;
+    height: 50px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    // TODO: make toolbar responsive
+    min-width: 900px;
+    overflow: hidden;
 }
 
 div#toolbar .buttonContainer {
     height: @header-toolbar-height;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-left: 10px;
     float: left;
-    margin-left: 5px;
+    border-left: 1px solid lightgray;
+}
+
+div#mapName >span {
+    border-radius: 4px;
+    float: left;
+    padding: 8px;
+    min-width: 30px;
+    font-weight: bold;
+}
+
+div#back {
+    background: url(../images/back-icon.svg) no-repeat center center;
+    height: 40px;
+    width: 80px;
+    float: left;
+    margin: 6px 0px;
 }
 
 /******************************************************************************************/
@@ -35,17 +55,17 @@ div#toolbar .buttonOn:hover {
 div#toolbar .buttonOn:hover {
     cursor: pointer;
     opacity: 1;
-    background: url(../images/btn-bg-hover.png) no-repeat center top;
+    // background: url(../images/btn-bg-hover.png) no-repeat center top;
 }
 
 div#toolbar .buttonOn {
     opacity: 0.8;
-    background: url(../images/btn-bg-normal.png) no-repeat center top;
+    // background: url(../images/btn-bg-normal.png) no-repeat center top;
 }
 
 div#toolbar .buttonOff {
     opacity: 0.4;
-    background: url(../images/btn-bg-normal.png) no-repeat center top;
+    // background: url(../images/btn-bg-normal.png) no-repeat center top;
 }
 
 div#exportAnchor {
@@ -73,24 +93,24 @@ div#toolbar .buttonExtOn:hover {
 
 div#toolbar .buttonExtOn:hover {
     opacity: 1;
-    background: url(../images/btne-bg-hover.png) no-repeat center top;
+    // background: url(../images/btne-bg-hover.png) no-repeat center top;
 
 }
 
 div#toolbar .buttonExtActive {
     opacity: 1;
-    background: url(../images/btne-bg-selected.png) no-repeat center top;
-
+    // background: url(../images/btne-bg-selected.png) no-repeat center top;
 }
 
 div#toolbar .buttonExtOn {
     opacity: 0.8;
-    background: url(../images/btne-bg-normal.png) no-repeat center top;
+    cursor: pointer
+    // background: url(../images/btne-bg-normal.png) no-repeat center top;
 }
 
 div#toolbar .buttonExtOff {
     opacity: 0.4;
-    background: url(../images/btne-bg-normal.png) no-repeat center top;
+    // background: url(../images/btne-bg-normal.png) no-repeat center top;
 }
 
 div#exportAnchor {
