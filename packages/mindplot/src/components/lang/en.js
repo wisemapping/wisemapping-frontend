@@ -81,6 +81,7 @@ const EN = {
 
   BACK_TO_MAP_LIST: 'Back to Maps List',
   KEYBOARD_SHOTCUTS: 'Keyboard Shorcuts',
+  ACCOUNT: 'Account',
 };
 
 export default EN;
