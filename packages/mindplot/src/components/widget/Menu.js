@@ -422,7 +422,7 @@ class Menu extends IMenu {
         event.preventDefault();
       });
       this._toolbarElems.push(new AccountSettingsPanel('account'));
-      Menu._registerTooltip('account', `${$msg('ACCOUNT')}: ${global.accountEmail}`);
+      Menu._registerTooltip('account', `${global.accountEmail}`);
     }
 
     this._registerEvents(designer);

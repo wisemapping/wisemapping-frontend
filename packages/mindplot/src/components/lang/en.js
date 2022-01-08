@@ -77,11 +77,8 @@ const EN = {
   KEYBOARD_SHORTCUTS_MSG: 'Keyboard shortcuts can help you save time by allowing you to never take your hands off the keyboard to use the mouse.',
   COPY_AND_PASTE_TOPICS: 'Copy and Paste Topics',
   MULTIPLE_LINES: 'Add multiple text lines',
-
-
   BACK_TO_MAP_LIST: 'Back to Maps List',
   KEYBOARD_SHOTCUTS: 'Keyboard Shorcuts',
-  ACCOUNT: 'Account',
 };
 
 export default EN;
