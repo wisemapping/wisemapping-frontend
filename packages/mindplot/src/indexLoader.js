@@ -52,11 +52,15 @@ if (!global.memoryPersistence && !global.readOnly) {
   persistence = new LocalStorageManager(`/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''}`, true);
 }
 
+// Obtain map zoom from query param if it was specified...
+const params = new URLSearchParams(window.location.search.substring(1));
+
+const zoomParam = Number.parseFloat(params.get('zoom'), 10);
 const options = buildOptions({
   persistenceManager: persistence,
   readOnly: global.readOnly || false,
   mapId: global.mapId,
-  zoom: global.userOptions.zoom,
+  zoom: zoomParam || global.userOptions.zoom,
 });
 
 // Build designer ...

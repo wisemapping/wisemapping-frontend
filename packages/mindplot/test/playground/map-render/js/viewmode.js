@@ -14,20 +14,6 @@ designer.addEvent('loadSuccess', () => {
   document.getElementById('mindplot').classList.add('ready');
 });
 
-const zoomInButton = document.getElementById('zoom-plus');
-const zoomOutButton = document.getElementById('zoom-minus');
-
-if (zoomInButton) {
-  zoomInButton.addEventListener('click', () => {
-    designer.zoomIn();
-  });
-}
-if (zoomOutButton) {
-  zoomOutButton.addEventListener('click', () => {
-    designer.zoomOut();
-  });
-}
-
 // Load map from XML file persisted on disk...
 const persistence = PersistenceManager.getInstance();
 const mindmap = persistence.load(mapId);
