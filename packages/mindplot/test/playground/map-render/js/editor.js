@@ -3,6 +3,10 @@ import { buildDesigner, buildOptions } from '../../../../src/components/Designer
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 import LoadingModal from '../../../../src/components/widget/LoadingModal';
 
+// Account details ...
+global.accountName = 'Test User';
+global.accountEmail = 'test@example.com';
+
 const loadingModal = new LoadingModal();
 loadingModal.show();
 

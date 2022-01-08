@@ -32,6 +32,7 @@ class IMenu {
     this._mapId = mapId;
     this._mindmapUpdated = false;
     const me = this;
+
     // Register update events ...
     this._designer.addEvent('modelUpdate', () => {
       me.setRequireChange(true);

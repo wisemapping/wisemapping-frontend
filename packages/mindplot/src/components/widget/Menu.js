@@ -27,6 +27,7 @@ import ColorPalettePanel from './ColorPalettePanel';
 import ToolbarItem from './ToolbarItem';
 import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
 import KeyboardShortcutDialog from './KeyboardShortcutDialog';
+import AccountSettingsPanel from './AccountSettingsPanel';
 
 class Menu extends IMenu {
   constructor(designer, containerId, mapId, readOnly, baseUrl = '') {
@@ -413,14 +414,24 @@ class Menu extends IMenu {
       });
       Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
     }
-    
+
+    // Account dialog ...
+    const accountSettings = $('#account');
+    if (accountSettings) {
+      accountSettings.bind('click', (event) => {
+        event.preventDefault();
+      });
+      this._toolbarElems.push(new AccountSettingsPanel('account'));
+      Menu._registerTooltip('account', $msg('ACCOUNT_SETTINGS'));
+    }
+
     this._registerEvents(designer);
   }
 
   _registerEvents(designer) {
     // Register on close events ...
-    this._toolbarElems.forEach((elem) => {
-      elem.addEvent('show', () => {
+    this._toolbarElems.forEach((panel) => {
+      panel.addEvent('show', () => {
         this.clear();
       });
     });
@@ -429,15 +440,15 @@ class Menu extends IMenu {
       const topics = designer.getModel().filterSelectedTopics();
       const rels = designer.getModel().filterSelectedRelationships();
 
-      this._toolbarElems.forEach((button) => {
-        const isTopicAction = button.isTopicAction();
-        const isRelAction = button.isRelAction();
+      this._toolbarElems.forEach((panel) => {
+        const isTopicAction = panel.isTopicAction();
+        const isRelAction = panel.isRelAction();
 
         if (isTopicAction || isRelAction) {
           if ((isTopicAction && topics.length !== 0) || (isRelAction && rels.length !== 0)) {
-            button.enable();
+            panel.enable();
           } else {
-            button.disable();
+            panel.disable();
           }
         }
       });
