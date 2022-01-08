@@ -45,13 +45,30 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
 
-import INodeModel, { TopicShape } from './model/INodeModel';
+import { TopicShape } from './model/INodeModel';
 import { $notify } from './widget/ToolbarNotifier';
 import ImageExpoterFactory from './export/ImageExporterFactory';
 import TextExporterFactory from './export/TextExporterFactory';
+import RelationshipModel from './model/RelationshipModel';
+import { Mindmap } from '..';
+import NodeModel from './model/NodeModel';
+import Topic from './Topic';
+import Point from '@wisemapping/web2d';
+import { DesignerOptions } from './DesignerOptions';
 
 class Designer extends Events {
-  constructor(options, divElement) {
+  private _mindmap: Mindmap;
+  private _options: DesignerOptions;
+  private _actionDispatcher: StandaloneActionDispatcher;
+  private _model: DesignerModel;
+  private _workspace: Workspace;
+  private _eventBussDispatcher: EventBusDispatcher;
+  private _dragManager: DragManager;
+  private _relPivot: RelationshipPivot;
+  private _clipboard: any[];
+  private _cleanScreen: any;
+
+  constructor(options: DesignerOptions, divElement) {
     $assert(options, 'options must be defined');
     $assert(options.zoom, 'zoom must be defined');
     $assert(options.size, 'size must be defined');
@@ -83,7 +100,7 @@ class Designer extends Events {
     this._workspace = new Workspace(screenManager, this._model.getZoom(), !!options.readOnly);
 
     // Init layout manager ...
-    this._eventBussDispatcher = new EventBusDispatcher(this.getModel());
+    this._eventBussDispatcher = new EventBusDispatcher();
 
     // Register events
     if (!this.isReadOnly()) {
@@ -109,29 +126,20 @@ class Designer extends Events {
     global.designer = this;
   }
 
-  /**
-       * @private
-       */
-  _registerWheelEvents() {
+  private _registerWheelEvents(): void {
     const zoomFactor = 1.006;
-    const me = this;
-    // Zoom In and Zoom Out must active event
     document.addEventListener('wheel', (event) => {
       if (event.deltaX > 0 || event.deltaY > 0) {
-        me.zoomOut(zoomFactor);
+        this.zoomOut(zoomFactor);
       } else {
-        me.zoomIn(zoomFactor);
+        this.zoomIn(zoomFactor);
       }
       event.preventDefault();
     }, { passive: false });
   }
 
-  /**
-       * @param {String} type the event type
-       * @param {Function} listener
-       * forwards to the TopicEventDispatcher or the parent Events class, depending on the type
-       */
-  addEvent(type, listener) {
+  // @ts-ignore
+  addEvent(type: string, listener: Function): void {
     if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
       const editor = TopicEventDispatcher.getInstance();
       editor.addEvent(type, listener);
@@ -140,10 +148,7 @@ class Designer extends Events {
     }
   }
 
-  /**
-       * @private
-       */
-  _registerMouseEvents() {
+  private _registerMouseEvents() {
     const workspace = this._workspace;
     const screenManager = workspace.getScreenManager();
     const me = this;
@@ -181,7 +186,7 @@ class Designer extends Events {
        * @return {mindplot.DragManager} the new dragManager for the workspace with events
        * registered
        */
-  _buildDragManager(workspace) {
+  _buildDragManager(workspace: Workspace) {
     const designerModel = this.getModel();
     const dragConnector = new DragConnector(designerModel, this._workspace);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
@@ -229,7 +234,7 @@ class Designer extends Events {
        * @return {mindplot.CentralTopic|mindplot.MainTopic} the topic to the given model,
        * connected, added to the drag manager, with events registered - complying type & read mode
        */
-  _buildNodeGraph(model, readOnly) {
+  _buildNodeGraph(model: NodeModel, readOnly: boolean) {
     // Create node graph ...
     const topic = create(model, { readOnly });
     this.getModel().addTopic(topic);
@@ -292,7 +297,7 @@ class Designer extends Events {
        * sets focus to the given currentObject and removes it from any other objects if not
        * triggered with Ctrl pressed
        */
-  onObjectFocusEvent(currentObject, event) {
+  onObjectFocusEvent(currentObject: Topic = null, event = null): void {
     // Close node editors ..
     const topics = this.getModel().getTopics();
     topics.forEach((topic) => topic.closeEditors());
@@ -310,7 +315,7 @@ class Designer extends Events {
   }
 
   /** sets focus to all model entities, i.e. relationships and topics */
-  selectAll() {
+  selectAll(): void {
     const model = this.getModel();
     const objects = model.getEntities();
     objects.forEach((object) => {
@@ -319,7 +324,7 @@ class Designer extends Events {
   }
 
   /** removes focus from all model entities, i.e. relationships and topics */
-  deselectAll() {
+  deselectAll(): void {
     const objects = this.getModel().getEntities();
     objects.forEach((object) => {
       object.setOnFocus(false);
@@ -330,7 +335,7 @@ class Designer extends Events {
        * Set the zoom of the map
        * @param {Number} zoom number between 0.3 and 1.9
        */
-  setZoom(zoom) {
+  setZoom(zoom: number): void {
     if (zoom > 1.9 || zoom < 0.3) {
       $notify($msg('ZOOM_IN_ERROR'));
       return;
@@ -343,7 +348,7 @@ class Designer extends Events {
      * @param {Number=} factor
      * zoom out by the given factor, or 1.2, if undefined
      */
-  zoomOut(factor = 1.2) {
+  zoomOut(factor: number = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
     if (scale <= 1.9) {
@@ -354,7 +359,7 @@ class Designer extends Events {
     }
   }
 
-  export(formatType) {
+  export(formatType: 'png' | 'svg' | 'jpg' | 'wxml'): String {
     const workspace = this._workspace;
     const svgElement = workspace.getSVGElement();
     const size = workspace.getSize();
@@ -378,11 +383,12 @@ class Designer extends Events {
     return exporter.export();
   }
 
+
   /**
        * @param {Number=} factor
        * zoom in by the given factor, or 1.2, if undefined
        */
-  zoomIn(factor = 1.2) {
+  zoomIn(factor: number = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
@@ -395,7 +401,7 @@ class Designer extends Events {
   }
 
   /** copy selected topics to a private clipboard */
-  copyToClipboard() {
+  copyToClipboard(): void {
     let topics = this.getModel().filterSelectedTopics();
     if (topics.length <= 0) {
       // If there are more than one node selected,
@@ -420,7 +426,7 @@ class Designer extends Events {
   }
 
   /** paste clipboard contents to the mindmap */
-  pasteClipboard() {
+  pasteClipboard(): void {
     if (this._clipboard.length === 0) {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
       return;
@@ -429,8 +435,7 @@ class Designer extends Events {
     this._clipboard = [];
   }
 
-  /** @return {mindplot.DesignerModel} model */
-  getModel() {
+  getModel(): DesignerModel {
     return this._model;
   }
 
@@ -475,7 +480,7 @@ class Designer extends Events {
   /**
        * @private
        */
-  _copyNodeProps(sourceModel, targetModel) {
+  _copyNodeProps(sourceModel: NodeModel, targetModel: NodeModel) {
     // I don't copy the font size if the target is the source is the central topic.
     if (sourceModel.getType() !== 'CentralTopic') {
       const fontSize = sourceModel.getFontSize();
@@ -526,7 +531,7 @@ class Designer extends Events {
        * @param {Point} mousePos the mouse position
        * @return {NodeModel} the node model for the new child
        */
-  _createChildModel(topic, mousePos) {
+  _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
     // Create a new node ...
     const parentModel = topic.getModel();
     const mindmap = parentModel.getMindmap();
@@ -545,7 +550,7 @@ class Designer extends Events {
     return childModel;
   }
 
-  addDraggedNode(event, model) {
+  addDraggedNode(event, model: NodeModel) {
     $assert(event, 'event can not be null');
     $assert(model, 'model can not be null');
 
@@ -601,7 +606,7 @@ class Designer extends Events {
        * @param {mindplot.Topic} topic the topic to create the sibling to
        * @return {mindplot.NodeModel} the node model of the sibling
        */
-  _createSiblingModel(topic) {
+  _createSiblingModel(topic: Topic) {
     let result = null;
     let model = null;
     const parentTopic = topic.getOutgoingConnectedTopic();
@@ -648,16 +653,16 @@ class Designer extends Events {
   }
 
   /**
-       * @param {mindplot.Mindmap} model
+       * @param {mindplot.Mindmap} mindmap
        * @throws will throw an error if mindmapModel is null or undefined
        */
-  loadMap(model) {
-    $assert(model, 'mindmapModel can not be null');
-    this._mindmap = model;
+  loadMap(mindmap: Mindmap) {
+    $assert(mindmap, 'mindmapModel can not be null');
+    this._mindmap = mindmap;
 
     // Init layout manager ...
     const size = { width: 25, height: 25 };
-    const layoutManager = new LayoutManager(model.getCentralTopic().getId(), size);
+    const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
     const me = this;
     layoutManager.addEvent('change', (event) => {
       const id = event.getId();
@@ -668,14 +673,14 @@ class Designer extends Events {
     this._eventBussDispatcher.setLayoutManager(layoutManager);
 
     // Building node graph ...
-    const branches = model.getBranches();
+    const branches = mindmap.getBranches();
     branches.forEach((branch) => {
       const nodeGraph = this.nodeModelToNodeGraph(branch);
       nodeGraph.setBranchVisibility(true);
     });
 
     // Connect relationships ...
-    const relationships = model.getRelationships();
+    const relationships = mindmap.getRelationships();
     relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
     // Place the focus on the Central Topic
@@ -688,8 +693,7 @@ class Designer extends Events {
     this.fireEvent('loadSuccess');
   }
 
-  /** */
-  getMindmap() {
+  getMindmap(): Mindmap {
     return this._mindmap;
   }
 
@@ -713,7 +717,7 @@ class Designer extends Events {
        * @param {mindplot.model.NodeModel} nodeModel
        * @return {mindplot.Topic} the topic (extends mindplot.NodeGraph) created to the model
        */
-  nodeModelToNodeGraph(nodeModel) {
+  nodeModelToNodeGraph(nodeModel: NodeModel) {
     $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder() - b.getOrder());
@@ -736,7 +740,7 @@ class Designer extends Events {
        * @return {mindplot.Relationship} the relationship created to the model
        * @throws will throw an error if model is null or undefined
        */
-  _relationshipModelToRelationship(model) {
+  private _relationshipModelToRelationship(model: RelationshipModel) {
     $assert(model, 'Node model can not be null');
 
     const result = this._buildRelationshipShape(model);
@@ -757,7 +761,7 @@ class Designer extends Events {
        * @param {mindplot.model.RelationshipModel} model
        * @return {mindplot.Relationship} the relationship added to the mindmap
        */
-  addRelationship(model) {
+  addRelationship(model: RelationshipModel) {
     const mindmap = this.getMindmap();
     mindmap.addRelationship(model);
     return this._relationshipModelToRelationship(model);
@@ -787,7 +791,7 @@ class Designer extends Events {
        * @return {mindplot.Relationship} the new relationship with events registered
        * @throws will throw an error if the target topic cannot be found
        */
-  _buildRelationshipShape(model) {
+  _buildRelationshipShape(model: RelationshipModel) {
     const dmodel = this.getModel();
 
     const sourceTopicId = model.getFromNode();
@@ -898,7 +902,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeFontFamily(font) {
+  changeFontFamily(font: string) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontFamilyToTopic(topicsIds, font);
@@ -906,8 +910,9 @@ class Designer extends Events {
   }
 
   /** */
-  changeFontStyle() {
-    const topicsIds = this.getModel().filterTopicsIds();
+  changeFontStyle(): void {
+    const topicsIds = this.getModel()
+    .filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontStyleToTopic(topicsIds);
     }
@@ -917,7 +922,8 @@ class Designer extends Events {
   changeFontColor(color) {
     $assert(color, 'color can not be null');
 
-    const topicsIds = this.getModel().filterTopicsIds();
+    const topicsIds = this.getModel()
+    .filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontColorToTopic(topicsIds, color);
     }
@@ -935,7 +941,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeBorderColor(color) {
+  changeBorderColor(color:string) {
     const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
     const validateError = 'Color can not be set to line topics.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -945,7 +951,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeFontSize(size) {
+  changeFontSize(size:number) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontSizeToTopic(topicsIds, size);

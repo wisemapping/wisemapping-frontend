@@ -16,11 +16,18 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { DesignerOptions } from './DesignerOptions';
 import Events from './Events';
+import Relationship from './Relationship';
+import Topic from './Topic';
 import { $notify } from './widget/ToolbarNotifier';
 
 class DesignerModel extends Events {
-  constructor(options) {
+  _zoom: number;
+  _topics: Topic[];
+  _relationships: Relationship[];
+
+  constructor(options: DesignerOptions) {
     super();
     this._zoom = options.zoom;
     this._topics = [];
@@ -54,7 +61,7 @@ class DesignerModel extends Events {
   }
 
   /** @return {mindplot.Topic[]} selected topics */
-  filterSelectedTopics() {
+  filterSelectedTopics(): Topic[] {
     const result = [];
     for (let i = 0; i < this._topics.length; i++) {
       if (this._topics[i].isOnFocus()) {
@@ -126,37 +133,28 @@ class DesignerModel extends Events {
     this._relationships.push(rel);
   }
 
-  /**
-     * @param {Function=} validate a function to validate nodes
-     * @param {String=} errorMsg an error message to display if the validation fails
-     * @return {String} returns an array of the selected (and, if applicable, valid) topics' ids
-     */
-  filterTopicsIds(validate, errorMsg) {
+  filterTopicsIds(validate: (topic: Topic) => boolean = null, errorMsg = null): Topic[] {
     const result = [];
     const topics = this.filterSelectedTopics();
 
     let isValid = true;
-    for (let i = 0; i < topics.length; i++) {
-      const selectedNode = topics[i];
+    topics.forEach(topic => {
       if ($defined(validate)) {
-        isValid = validate(selectedNode);
+        isValid = validate(topic);
       }
 
       // Add node only if it's valid.
       if (isValid) {
-        result.push(selectedNode.getId());
+        result.push(topic.getId());
       } else {
         $notify(errorMsg);
       }
-    }
+    });
+
     return result;
   }
 
-  /**
-     * @return {mindplot.Topic} the first selected topic if one or more are found by the
-     * filterSelectedTopics function, null otherwise
-     */
-  selectedTopic() {
+  selectedTopic(): Topic {
     const topics = this.filterSelectedTopics();
     return (topics.length > 0) ? topics[0] : null;
   }
@@ -165,7 +163,7 @@ class DesignerModel extends Events {
      * @param {String} id the id of the topic to be retrieved
      * @return {mindplot.Topic} the topic with the respective id
      */
-  findTopicById(id) {
+  findTopicById(id:Number):Topic {
     let result = null;
     for (let i = 0; i < this._topics.length; i++) {
       const topic = this._topics[i];
