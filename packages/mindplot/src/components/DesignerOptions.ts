@@ -3,6 +3,6 @@ export type DesignerOptions = {
     zoom: number,
     size: { height: number, witdh: number },
     readOnly: boolean,
-    viewPort: { height: number, witdh: number },
+    viewPort: { height: number, width: number },
   };
   

@@ -40,22 +40,22 @@ class DesignerModel extends Events {
   }
 
   /** @param {Number} zoom number between 0.3 and 1.9 to set the zoom to */
-  setZoom(zoom:number) {
+  setZoom(zoom: number) {
     this._zoom = zoom;
   }
 
   /** @return {@link mindplot.Topic[]} all topics */
-  getTopics() {
+  getTopics(): Topic[] {
     return this._topics;
   }
 
   /** @return {mindplot.Relationship[]} all relationships */
-  getRelationships() {
+  getRelationships(): Relationship[] {
     return this._relationships;
   }
 
   /** @return {mindplot.CentralTopic} the central topic */
-  getCentralTopic() {
+  getCentralTopic(): Topic {
     const topics = this.getTopics();
     return topics[0];
   }
@@ -74,7 +74,7 @@ class DesignerModel extends Events {
   /**
      * @return {mindplot.Relationship[]} selected relationships
      */
-  filterSelectedRelationships() {
+  filterSelectedRelationships(): Relationship[] {
     const result = [];
     for (let i = 0; i < this._relationships.length; i++) {
       if (this._relationships[i].isOnFocus()) {
@@ -87,7 +87,7 @@ class DesignerModel extends Events {
   /**
      * @return {Array.<mindplot.Relationship, mindplot.Topic>} all topics and relationships
      */
-  getEntities() {
+  getEntities(): (Relationship | Topic)[] {
     let result = [].concat(this._topics);
     result = result.concat(this._relationships);
     return result;
@@ -117,7 +117,7 @@ class DesignerModel extends Events {
      * @throws will throw an error if topic is null or undefined
      * @throws will throw an error if the topic's id is not a number
      */
-  addTopic(topic) {
+  addTopic(topic: Topic): void {
     $assert(topic, 'topic can not be null');
     $assert(typeof topic.getId() === 'number', `id is not a number:${topic.getId()}`);
     this._topics.push(topic);
@@ -128,7 +128,7 @@ class DesignerModel extends Events {
      * @param {mindplot.Relationship} rel the relationship to add
      * @throws will throw an error if rel is null or undefined
      */
-  addRelationship(rel) {
+  addRelationship(rel: Relationship): void {
     $assert(rel, 'rel can not be null');
     this._relationships.push(rel);
   }
@@ -163,7 +163,7 @@ class DesignerModel extends Events {
      * @param {String} id the id of the topic to be retrieved
      * @return {mindplot.Topic} the topic with the respective id
      */
-  findTopicById(id:Number):Topic {
+  findTopicById(id: Number): Topic {
     let result = null;
     for (let i = 0; i < this._topics.length; i++) {
       const topic = this._topics[i];

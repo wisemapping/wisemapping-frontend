@@ -223,7 +223,7 @@ class Menu extends IMenu {
         .then((url: string) => {
           // Create hidden anchor to force download ...
           const anchor: HTMLAnchorElement = document.createElement('a');
-          anchor.style.display = 'none';
+          anchor.style.display = 'display: none';
           anchor.download = `${mapId}.${formatExtension}`;
           anchor.href = url;
           document.body.appendChild(anchor);

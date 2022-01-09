@@ -222,7 +222,7 @@ class Designer extends Events {
        * @param {{width:Number, height:Number}} size
        * sets width and height of the workspace
        */
-  setViewPort(size) {
+  setViewPort(size: { height: number, width: number }) {
     this._workspace.setViewPort(size);
     const model = this.getModel();
     this._workspace.setZoom(model.getZoom(), true);

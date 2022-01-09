@@ -17,9 +17,19 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Workspace as Workspace2D } from '@wisemapping/web2d';
+import ScreenManager from './ScreenManager';
 
 class Workspace {
-  constructor(screenManager, zoom, isReadOnly) {
+  _zoom: number;
+  _screenManager: ScreenManager;
+  _isReadOnly: boolean;
+  _screenWidth: number;
+  _screenHeight: number;
+  _workspace: Workspace2D;
+  _eventsEnabled: boolean;
+  _viewPort: { height: number, width: number };
+
+  constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
     $assert(zoom, 'zoom container can not be null');
@@ -99,7 +109,7 @@ class Workspace {
     return this._workspace.getCoordSize();
   }
 
-  setZoom(zoom, center) {
+  setZoom(zoom: number, center: boolean = false) {
     this._zoom = zoom;
     const workspace = this._workspace;
 
@@ -128,8 +138,8 @@ class Workspace {
       }
     } else {
       const coordOrigin = workspace.getCoordOrigin();
-      coordOriginX = coordOrigin.x;
-      coordOriginY = coordOrigin.y;
+      coordOriginX = coordOrigin.x / 2;
+      coordOriginY = coordOrigin.y / 2;
     }
 
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
@@ -142,15 +152,15 @@ class Workspace {
     this._screenManager.fireEvent('update');
   }
 
-  getScreenManager() {
+  getScreenManager(): ScreenManager {
     return this._screenManager;
   }
 
-  enableWorkspaceEvents(value) {
+  enableWorkspaceEvents(value: boolean) {
     this._eventsEnabled = value;
   }
 
-  isWorkspaceEventsEnabled() {
+  isWorkspaceEventsEnabled(): boolean {
     return this._eventsEnabled;
   }
 
@@ -158,7 +168,7 @@ class Workspace {
     return this._workspace.getSVGElement();
   }
 
-  _registerDragEvents() {
+  private _registerDragEvents() {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
     const mWorkspace = this;
@@ -218,7 +228,7 @@ class Workspace {
     screenManager.addEvent('mousedown', mouseDownListener);
   }
 
-  setViewPort(size) {
+  setViewPort(size:{ height: number, width: number }) {
     this._viewPort = size;
   }
 }
