@@ -22,29 +22,35 @@ import Designer from './Designer';
 import Menu from './widget/Menu';
 import { $notifyModal } from './widget/ModalDialogNotifier';
 import { $msg } from './Messages';
+import { DesignerOptions } from './DesignerOptionsBuilder';
 
 let designer = null;
 
-export function buildDesigner(options) {
+export function buildDesigner(options: DesignerOptions): Designer {
   const divContainer = $(`#${options.container}`);
   $assert(divContainer, 'container could not be null');
 
   // Register load events ...
   designer = new Designer(options, divContainer);
   designer.addEvent('loadSuccess', () => {
+    // @ts-ignore
     window.mindmapLoadReady = true;
     console.log('Map loadded successfully');
   });
 
-  const onerrorFn = (message, url, lineNo) => {
+  const onerrorFn = (message:string, url, lineNo) => {
     // Close loading dialog ...
+    // @ts-ignore
     if (window.waitDialog) {
-      window.waitDialog.close();
+      // @ts-ignore
+      window.waitDialog.close();  
+      // @ts-ignore
       window.waitDialog = null;
     }
 
     // Open error dialog only in case of mindmap loading errors. The rest of the error are reported but not display the dialog.
     // Remove this in the near future.
+    // @ts-ignore
     if (!window.mindmapLoadReady) {
       $notifyModal($msg('UNEXPECTED_ERROR_LOADING'));
     }
@@ -58,7 +64,7 @@ export function buildDesigner(options) {
 
   // Register toolbar event ...
   if ($('#toolbar').length) {
-    const menu = new Menu(designer, 'toolbar', options.mapId, '');
+    const menu = new Menu(designer, 'toolbar', options.mapId);
 
     //  If a node has focus, focus can be move to another node using the keys.
     designer._cleanScreen = function _cleanScreen() {
@@ -69,39 +75,3 @@ export function buildDesigner(options) {
   return designer;
 }
 
-export function buildOptions(options) {
-  $assert(options.persistenceManager, 'persistence must be defined');
-
-  // Set workspace screen size as default. In this way, resize issues are solved.
-  const containerSize = {
-    height: Number.parseInt(window.screen.height, 10),
-    width: Number.parseInt(window.screen.width, 10),
-  };
-
-  const viewPort = {
-    height: Number.parseInt(window.innerHeight, 10),
-    width: Number.parseInt(window.innerWidth, 10),
-  };
-
-  const defaultOptions = {
-    readOnly: false,
-    zoom: 0.85,
-    saveOnLoad: true,
-    size: containerSize,
-    viewPort,
-    container: 'mindplot',
-    locale: 'en',
-  };
-
-  return { ...defaultOptions, ...options };
-}
-
-export async function loadOptions(jsonConf, options) {
-  const result = await $.ajax({
-    url: jsonConf,
-    dataType: 'json',
-    method: 'get',
-  });
-
-  return { ...result, ...buildOptions(options) };
-}

@@ -19,44 +19,50 @@ import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 
 class ScreenManager {
-  constructor(divElement) {
+  _divContainer: JQuery;
+  _padding: { x: number; y: number; };
+  _clickEvents: ((event: UIEvent)=>void)[];
+  _scale: number;
+
+  constructor(divElement: JQuery) {
     $assert(divElement, 'can not be null');
     this._divContainer = divElement;
     this._padding = { x: 0, y: 0 };
 
     // Ignore default click event propagation. Prevent 'click' event on drag.
     this._clickEvents = [];
-    this._divContainer.bind('click', (event) => {
+    this._divContainer.bind('click', (event: { stopPropagation: () => void; }) => {
       event.stopPropagation();
     });
 
-    this._divContainer.bind('dblclick', (event) => {
+    this._divContainer.bind('dblclick', (event: { stopPropagation: () => void; preventDefault: () => void; }) => {
       event.stopPropagation();
       event.preventDefault();
     });
   }
 
-  setScale(scale) {
+  setScale(scale: number) {
     $assert(scale, 'Screen scale can not be null');
     this._scale = scale;
   }
 
-  addEvent(event, listener) {
-    if (event === 'click') this._clickEvents.push(listener);
-    else this._divContainer.bind(event, listener);
+  addEvent(eventType: string, listener:any) {
+    if (eventType === 'click') this._clickEvents.push(listener);
+    else this._divContainer.bind(eventType, listener);
   }
 
-  removeEvent(event, listener) {
+  removeEvent(event: string, listener: any) {
     if (event === 'click') {
+      // @ts-ignore @Todo: needs review ...
       this._clickEvents.remove(listener);
     } else {
       this._divContainer.unbind(event, listener);
     }
   }
 
-  fireEvent(type, event) {
+  fireEvent(type: string, event: UIEvent = null) {
     if (type === 'click') {
-      this._clickEvents.forEach((listener) => {
+      this._clickEvents.forEach((listener: (arg0: any, arg1: any) => void) => {
         listener(type, event);
       });
     } else {
@@ -64,7 +70,7 @@ class ScreenManager {
     }
   }
 
-  _getElementPosition(elem) {
+  _getElementPosition(elem: { getPosition: () => any; }) {
     // Retrieve current element position.
     const elementPosition = elem.getPosition();
     let { x } = elementPosition;
@@ -82,7 +88,7 @@ class ScreenManager {
     return { x, y };
   }
 
-  getWorkspaceIconPosition(e) {
+  getWorkspaceIconPosition(e: { getImage: () => any; getSize: () => any; getGroup: () => any; }) {
     // Retrieve current icon position.
     const image = e.getImage();
     const elementPosition = image.getPosition();
@@ -117,15 +123,15 @@ class ScreenManager {
     return { x: x + topicPosition.x, y: y + topicPosition.y };
   }
 
-  getWorkspaceMousePosition(event) {
+  getWorkspaceMousePosition(event: MouseEvent) {
     // Retrieve current mouse position.
     let x = event.clientX;
     let y = event.clientY;
 
-    // FIXME: paulo: why? Subtract div position.
-    /* var containerPosition = this.getContainer().position();
-         x = x - containerPosition.x;
-         y = y - containerPosition.y; */
+    // Adjust the deviation of the container positioning ...
+    const containerPosition = this.getContainer().position();
+    x = x - containerPosition.left;
+    y = y - containerPosition.top; 
 
     // Scale coordinate in order to be relative to the workspace. That's coordSize/size;
     x *= this._scale;
@@ -143,7 +149,7 @@ class ScreenManager {
     return this._divContainer;
   }
 
-  setOffset(x, y) {
+  setOffset(x: number, y: number) {
     this._padding.x = x;
     this._padding.y = y;
   }

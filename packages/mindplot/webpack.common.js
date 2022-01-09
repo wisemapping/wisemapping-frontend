@@ -11,7 +11,7 @@ module.exports = {
   },
   entry: {
     mindplot: './src/index.js',
-    loader: './src/indexLoader.js',
+    loader: './src/indexLoader.ts',
   },
   mode: 'production',
   devtool: 'source-map',

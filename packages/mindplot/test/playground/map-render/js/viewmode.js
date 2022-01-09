@@ -1,9 +1,11 @@
 import '../css/viewmode.less';
-import { buildDesigner, buildOptions } from '../../../../src/components/DesignerBuilder';
+import { buildDesigner } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
+import DesignerOptionsBuilder from '../../../../src/components/DesignerOptionsBuilder';
+
 
 const p = new LocalStorageManager('samples/{id}.wxml');
-const options = buildOptions({ persistenceManager: p, readOnly: true, saveOnLoad: false });
+const options = DesignerOptionsBuilder.buildOptions({ persistenceManager: p, readOnly: true, saveOnLoad: false });
 
 // Obtain map id from query param
 const params = new URLSearchParams(window.location.search.substring(1));

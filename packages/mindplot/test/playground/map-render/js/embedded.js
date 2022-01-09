@@ -1,10 +1,11 @@
 import '../css/embedded.less';
-import { buildDesigner, buildOptions } from '../../../../src/components/DesignerBuilder';
+import { buildDesigner } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
+import DesignerOptionsBuilder from '../../../../src/components/DesignerOptionsBuilder';
 
 // Options has been defined in by a external ile ?
 const p = new LocalStorageManager('samples/{id}.wxml');
-const options = buildOptions({ persistenceManager: p });
+const options = DesignerOptionsBuilder.buildOptions({ persistenceManager: p });
 const designer = buildDesigner(options);
 
 designer.addEvent('loadSuccess', () => {

@@ -54,8 +54,9 @@ import { Mindmap } from '..';
 import NodeModel from './model/NodeModel';
 import Topic from './Topic';
 import Point from '@wisemapping/web2d';
-import { DesignerOptions } from './DesignerOptions';
+import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
+import DragTopic from './DragTopic';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -69,7 +70,7 @@ class Designer extends Events {
   private _clipboard: any[];
   private _cleanScreen: any;
 
-  constructor(options: DesignerOptions, divElement) {
+  constructor(options: DesignerOptions, divElement:JQuery) {
     $assert(options, 'options must be defined');
     $assert(options.zoom, 'zoom must be defined');
     $assert(options.size, 'size must be defined');
@@ -166,12 +167,12 @@ class Designer extends Events {
     });
 
     // Deselect on click ...
-    screenManager.addEvent('click', (event) => {
+    screenManager.addEvent('click', (event:UIEvent) => {
       me.onObjectFocusEvent(null, event);
     });
 
     // Create nodes on double click...
-    screenManager.addEvent('dblclick', (event) => {
+    screenManager.addEvent('dblclick', (event:MouseEvent) => {
       if (workspace.isWorkspaceEventsEnabled()) {
         const mousePos = screenManager.getWorkspaceMousePosition(event);
         const centralTopic = me.getModel().getCentralTopic();
@@ -181,13 +182,7 @@ class Designer extends Events {
     });
   }
 
-  /**
-       * @private
-       * @param {mindplot.Workspace} workspace
-       * @return {mindplot.DragManager} the new dragManager for the workspace with events
-       * registered
-       */
-  _buildDragManager(workspace: Workspace) {
+  private _buildDragManager(workspace: Workspace):DragManager {
     const designerModel = this.getModel();
     const dragConnector = new DragConnector(designerModel, this._workspace);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
@@ -198,7 +193,7 @@ class Designer extends Events {
       topics.forEach((topic) => topic.setMouseEventsEnabled(false));
     });
 
-    dragManager.addEvent('dragging', (event, dragTopic) => {
+    dragManager.addEvent('dragging', (event:MouseEvent, dragTopic:DragTopic) => {
       dragTopic.updateFreeLayout(event);
       if (!dragTopic.isFreeLayoutOn(event)) {
         // The node is being drag. Is the connection still valid ?
@@ -210,7 +205,7 @@ class Designer extends Events {
       }
     });
 
-    dragManager.addEvent('enddragging', (event, dragTopic) => {
+    dragManager.addEvent('enddragging', (event:MouseEvent, dragTopic:DragTopic) => {
       topics.forEach((topic) => topic.setMouseEventsEnabled(true));
       dragTopic.applyChanges(workspace);
     });
@@ -218,11 +213,7 @@ class Designer extends Events {
     return dragManager;
   }
 
-  /**
-       * @param {{width:Number, height:Number}} size
-       * sets width and height of the workspace
-       */
-  setViewPort(size: { height: number, width: number }) {
+  private setViewPort(size: { height: number, width: number }):void {
     this._workspace.setViewPort(size);
     const model = this.getModel();
     this._workspace.setZoom(model.getZoom(), true);
@@ -325,10 +316,6 @@ class Designer extends Events {
     });
   }
 
-  /**
-       * Set the zoom of the map
-       * @param {Number} zoom number between 0.3 and 1.9
-       */
   setZoom(zoom: number): void {
     if (zoom > 1.9 || zoom < 0.3) {
       $notify($msg('ZOOM_IN_ERROR'));
@@ -336,6 +323,11 @@ class Designer extends Events {
     }
     this.getModel().setZoom(zoom);
     this._workspace.setZoom(zoom);
+  }
+
+  setZoomToFit(): void {
+    this.getModel().setZoom(1);
+    this._workspace.setZoom(1,true);
   }
 
   zoomOut(factor: number = 1.2) {
@@ -374,11 +366,7 @@ class Designer extends Events {
   }
 
 
-  /**
-       * @param {Number=} factor
-       * zoom in by the given factor, or 1.2, if undefined
-       */
-  zoomIn(factor: number = 1.2) {
+  zoomIn(factor: number = 1.2): void {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 
@@ -390,7 +378,6 @@ class Designer extends Events {
     }
   }
 
-  /** copy selected topics to a private clipboard */
   copyToClipboard(): void {
     let topics = this.getModel().filterSelectedTopics();
     if (topics.length <= 0) {
@@ -415,7 +402,6 @@ class Designer extends Events {
     $notify($msg('SELECTION_COPIED_TO_CLIPBOARD'));
   }
 
-  /** paste clipboard contents to the mindmap */
   pasteClipboard(): void {
     if (this._clipboard.length === 0) {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
@@ -429,8 +415,7 @@ class Designer extends Events {
     return this._model;
   }
 
-  /** collapse the subtree of the selected topic */
-  shrinkSelectedBranch() {
+  shrinkSelectedBranch(): void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0 || nodes.length !== 1) {
       // If there are more than one node selected,
@@ -445,7 +430,7 @@ class Designer extends Events {
   }
 
   /** create a NodeModel for the selected node's child and add it via the ActionDispatcher */
-  createChildForSelectedNode() {
+  createChildForSelectedNode():void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // If there are more than one node selected,
@@ -467,10 +452,7 @@ class Designer extends Events {
     this._actionDispatcher.addTopics([childModel], [parentTopicId]);
   }
 
-  /**
-       * @private
-       */
-  _copyNodeProps(sourceModel: NodeModel, targetModel: NodeModel) {
+  private _copyNodeProps(sourceModel: NodeModel, targetModel: NodeModel) {
     // I don't copy the font size if the target is the source is the central topic.
     if (sourceModel.getType() !== 'CentralTopic') {
       const fontSize = sourceModel.getFontSize();
@@ -515,13 +497,7 @@ class Designer extends Events {
     }
   }
 
-  /**
-       * @private
-       * @param {Topic} topic the parent topic of the child to create the NodeModel for
-       * @param {Point} mousePos the mouse position
-       * @return {NodeModel} the node model for the new child
-       */
-  _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
+  private _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
     // Create a new node ...
     const parentModel = topic.getModel();
     const mindmap = parentModel.getMindmap();
@@ -554,11 +530,7 @@ class Designer extends Events {
     topic.fireEvent('mousedown', event);
   }
 
-  /**
-       * creates a sibling or child node of the selected node, if the selected node is the
-       * central topic
-       */
-  createSiblingForSelectedNode() {
+  createSiblingForSelectedNode():void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // If there are no nodes selected,
@@ -591,12 +563,7 @@ class Designer extends Events {
     }
   }
 
-  /**
-       * @private
-       * @param {mindplot.Topic} topic the topic to create the sibling to
-       * @return {mindplot.NodeModel} the node model of the sibling
-       */
-  _createSiblingModel(topic: Topic) {
+  private _createSiblingModel(topic: Topic):NodeModel {
     let result = null;
     let model = null;
     const parentTopic = topic.getOutgoingConnectedTopic();
@@ -617,10 +584,7 @@ class Designer extends Events {
     return result;
   }
 
-  /**
-       * @param {Event} event
-       */
-  showRelPivot(event) {
+  showRelPivot(event):void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // This could not happen ...
@@ -761,7 +725,7 @@ class Designer extends Events {
        * deletes the relationship from the linked topics, DesignerModel, Workspace and Mindmap
        * @param {mindplot.Relationship} rel the relationship to delete
        */
-  deleteRelationship(rel) {
+  deleteRelationship(rel: Relationship) {
     const sourceTopic = rel.getSourceTopic();
     sourceTopic.deleteRelationship(rel);
 

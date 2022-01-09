@@ -78,8 +78,6 @@ class Workspace extends ElementClass {
      */
   static _createDivContainer() {
     const container = window.document.createElement('div');
-    // container.id = 'workspaceContainer';
-    //    container.style.overflow = 'hidden';
     container.style.position = 'relative';
     container.style.top = '0px';
     container.style.left = '0px';

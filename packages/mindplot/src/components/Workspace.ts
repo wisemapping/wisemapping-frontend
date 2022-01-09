@@ -59,7 +59,7 @@ class Workspace {
     return this._isReadOnly;
   }
 
-  _createWorkspace() {
+  private _createWorkspace() {
     // Initialize workspace ...
     const coordOriginX = -(this._screenWidth / 2);
     const coordOriginY = -(this._screenHeight / 2);
@@ -109,9 +109,17 @@ class Workspace {
     return this._workspace.getCoordSize();
   }
 
-  setZoom(zoom: number, center: boolean = false) {
+  setZoom(zoom: number, center: boolean = false): void {
     this._zoom = zoom;
     const workspace = this._workspace;
+
+    // Calculate the original boxview size ...
+    let origWidth = 0;
+    let origHeight = 0
+    if (this._viewPort) {
+      origWidth = this._viewPort.width;
+      origHeight = this._viewPort.height;
+    }
 
     // Update coord scale...
     const coordWidth = zoom * this._screenWidth;
@@ -125,8 +133,8 @@ class Workspace {
     }
 
     // Center topic....
-    let coordOriginX;
-    let coordOriginY;
+    let coordOriginX: number;
+    let coordOriginY: number;
 
     if (center) {
       if (this._viewPort) {
@@ -137,11 +145,18 @@ class Workspace {
         coordOriginY = -(coordHeight / 2);
       }
     } else {
-      const coordOrigin = workspace.getCoordOrigin();
-      coordOriginX = coordOrigin.x / 2;
-      coordOriginY = coordOrigin.y / 2;
-    }
+      // Zoom keeping the center in the same place ...
+      // const xPaddinng = (this._viewPort.width - origWidth) / 2;
+      // const yPaddinng = (this._viewPort.height - origHeight) / 2;
 
+      // const coordOrigin = workspace.getCoordOrigin();
+      // coordOriginX = coordOrigin.x - xPaddinng;
+      // coordOriginY = coordOrigin.y - yPaddinng;
+      const coordOrigin = workspace.getCoordOrigin();
+      coordOriginX = coordOrigin.x;
+      coordOriginY = coordOrigin.y;
+
+    }
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
 
     // Update screen.
@@ -228,7 +243,7 @@ class Workspace {
     screenManager.addEvent('mousedown', mouseDownListener);
   }
 
-  setViewPort(size:{ height: number, width: number }) {
+  setViewPort(size: { height: number, width: number }) {
     this._viewPort = size;
   }
 }

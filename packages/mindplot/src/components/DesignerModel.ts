@@ -16,7 +16,8 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { DesignerOptions } from './DesignerOptions';
+import CentralTopic from './CentralTopic';
+import { DesignerOptions } from './DesignerOptionsBuilder';
 import Events from './Events';
 import Relationship from './Relationship';
 import Topic from './Topic';
@@ -34,30 +35,25 @@ class DesignerModel extends Events {
     this._relationships = [];
   }
 
-  /** @return {Number} zoom between 0.3 (largest text) and 1.9 */
-  getZoom() {
+  getZoom():number {
     return this._zoom;
   }
 
-  /** @param {Number} zoom number between 0.3 and 1.9 to set the zoom to */
-  setZoom(zoom: number) {
+  setZoom(zoom: number):void {
     this._zoom = zoom;
   }
 
-  /** @return {@link mindplot.Topic[]} all topics */
   getTopics(): Topic[] {
     return this._topics;
   }
 
-  /** @return {mindplot.Relationship[]} all relationships */
   getRelationships(): Relationship[] {
     return this._relationships;
   }
 
-  /** @return {mindplot.CentralTopic} the central topic */
-  getCentralTopic(): Topic {
+  getCentralTopic(): CentralTopic {
     const topics = this.getTopics();
-    return topics[0];
+    return topics[0] as CentralTopic;
   }
 
   /** @return {mindplot.Topic[]} selected topics */
@@ -71,9 +67,6 @@ class DesignerModel extends Events {
     return result;
   }
 
-  /**
-     * @return {mindplot.Relationship[]} selected relationships
-     */
   filterSelectedRelationships(): Relationship[] {
     const result = [];
     for (let i = 0; i < this._relationships.length; i++) {
@@ -84,50 +77,28 @@ class DesignerModel extends Events {
     return result;
   }
 
-  /**
-     * @return {Array.<mindplot.Relationship, mindplot.Topic>} all topics and relationships
-     */
   getEntities(): (Relationship | Topic)[] {
     let result = [].concat(this._topics);
     result = result.concat(this._relationships);
     return result;
   }
 
-  /**
-     * removes occurrences of the given topic from the topic array
-     * @param {mindplot.Topic} topic the topic to remove
-     */
-  removeTopic(topic) {
+  removeTopic(topic:Topic):void {
     $assert(topic, 'topic can not be null');
     this._topics = this._topics.filter((t) => t !== topic);
   }
 
-  /**
-     * removes occurrences of the given relationship from the relationship array
-     * @param {mindplot.Relationship} rel the relationship to remove
-     */
-  removeRelationship(rel) {
+  removeRelationship(rel:Relationship):void {
     $assert(rel, 'rel can not be null');
     this._relationships = this._relationships.filter((r) => r !== rel);
   }
 
-  /**
-     * adds the given topic to the topic array
-     * @param {mindplot.Topic} topic the topic to add
-     * @throws will throw an error if topic is null or undefined
-     * @throws will throw an error if the topic's id is not a number
-     */
   addTopic(topic: Topic): void {
     $assert(topic, 'topic can not be null');
     $assert(typeof topic.getId() === 'number', `id is not a number:${topic.getId()}`);
     this._topics.push(topic);
   }
 
-  /**
-     * adds the given relationship to the relationship array
-     * @param {mindplot.Relationship} rel the relationship to add
-     * @throws will throw an error if rel is null or undefined
-     */
   addRelationship(rel: Relationship): void {
     $assert(rel, 'rel can not be null');
     this._relationships.push(rel);
@@ -159,10 +130,6 @@ class DesignerModel extends Events {
     return (topics.length > 0) ? topics[0] : null;
   }
 
-  /**
-     * @param {String} id the id of the topic to be retrieved
-     * @return {mindplot.Topic} the topic with the respective id
-     */
   findTopicById(id: Number): Topic {
     let result = null;
     for (let i = 0; i < this._topics.length; i++) {

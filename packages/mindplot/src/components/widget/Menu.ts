@@ -31,7 +31,7 @@ import AccountSettingsPanel from './AccountSettingsPanel';
 import Designer from '../Designer';
 
 class Menu extends IMenu {
-  constructor(designer: Designer, containerId: string, mapId: string, readOnly: boolean = false, baseUrl = '') {
+  constructor(designer: Designer, containerId: string, mapId: string, readOnly: boolean = false, baseUrl:string = '') {
     super(designer, containerId, mapId);
     const saveElem = $('#save');
 
@@ -258,6 +258,12 @@ class Menu extends IMenu {
       designer.zoomOut();
     });
     Menu._registerTooltip('zoom-minus', $msg('ZOOM_OUT'));
+
+    this._addButton('position', false, false, () => {
+      designer.setZoomToFit();
+    });
+    Menu._registerTooltip('position', $msg('CENTER_POSITION'));
+
 
     const undoButton = this._addButton('undoEdition', false, false, () => {
       designer.undo();

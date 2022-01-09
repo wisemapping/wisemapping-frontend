@@ -25,13 +25,15 @@ import {
 import LoadingModal from './components/widget/LoadingModal';
 import {
   buildDesigner,
-  buildOptions,
 } from './components/DesignerBuilder';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
+import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
+
 
 // This hack is required to initialize Bootstrap. In future, this should be removed.
+//@ts-ignore
 global.jQuery = jquery;
 require('@libraries/bootstrap/js/bootstrap');
 
@@ -39,7 +41,7 @@ const loadingModal = new LoadingModal();
 loadingModal.show();
 
 // Configure designer options ...
-let persistence;
+let persistence:PersistenceManager;
 if (!global.memoryPersistence && !global.readOnly) {
   persistence = new RESTPersistenceManager({
     documentUrl: '/c/restful/maps/{id}/document',
@@ -55,13 +57,15 @@ if (!global.memoryPersistence && !global.readOnly) {
 // Obtain map zoom from query param if it was specified...
 const params = new URLSearchParams(window.location.search.substring(1));
 
-const zoomParam = Number.parseFloat(params.get('zoom'), 10);
-const options = buildOptions({
-  persistenceManager: persistence,
-  readOnly: global.readOnly || false,
-  mapId: global.mapId,
-  zoom: zoomParam || global.userOptions.zoom,
-});
+const zoomParam = Number.parseFloat(params.get('zoom'));
+const options = DesignerOptionsBuilder.buildOptions(
+  {
+    persistenceManager: persistence,
+    readOnly: Boolean(global.readOnly || false),
+    mapId: global.mapId,
+    container: 'mindplot',
+    zoom: zoomParam || global.userOptions.zoom,
+  });
 
 // Build designer ...
 const designer = buildDesigner(options);
@@ -76,5 +80,5 @@ const mindmap = instance.load(global.mapId);
 designer.loadMap(mindmap);
 
 if (global.mindmapLocked) {
-  $notify(global.mindmapLockedMsg, false);
+  $notify(global.mindmapLockedMsg);
 }
