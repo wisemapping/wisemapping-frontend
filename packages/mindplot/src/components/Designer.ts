@@ -349,7 +349,7 @@ class Designer extends Events {
     }
   }
 
-  export(formatType: 'png' | 'svg' | 'jpg' | 'wxml'): String {
+  export(formatType: 'png' | 'svg' | 'jpg' | 'wxml'): Promise<String> {
     const workspace = this._workspace;
     const svgElement = workspace.getSVGElement();
     const size = workspace.getSize();

@@ -28,9 +28,10 @@ import ToolbarItem from './ToolbarItem';
 import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
 import KeyboardShortcutDialog from './KeyboardShortcutDialog';
 import AccountSettingsPanel from './AccountSettingsPanel';
+import Designer from '../Designer';
 
 class Menu extends IMenu {
-  constructor(designer, containerId, mapId, readOnly, baseUrl = '') {
+  constructor(designer: Designer, containerId: string, mapId: string, readOnly: boolean = false, baseUrl = '') {
     super(designer, containerId, mapId);
     const saveElem = $('#save');
 
@@ -80,6 +81,7 @@ class Menu extends IMenu {
       const fontSizeModel = {
         getValue() {
           const nodes = designerModel.filterSelectedTopics();
+
           let result = null;
           for (let i = 0; i < nodes.length; i++) {
             const fontSize = nodes[i].getFontSize();
@@ -218,10 +220,10 @@ class Menu extends IMenu {
       const formatExtension = 'jpg';
 
       designer.export(formatExtension)
-        .then((url) => {
+        .then((url: string) => {
           // Create hidden anchor to force download ...
-          const anchor = document.createElement('a');
-          anchor.style = 'display: none';
+          const anchor: HTMLAnchorElement = document.createElement('a');
+          anchor.style.display = 'none';
           anchor.download = `${mapId}.${formatExtension}`;
           anchor.href = url;
           document.body.appendChild(anchor);
@@ -362,7 +364,7 @@ class Menu extends IMenu {
     const shareElem = $('#shareIt');
     if (shareElem) {
       this._addButton('shareIt', false, false, () => {
-        BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/sharef`, $msg('COLLABORATE'), {
+        const dialog = new BootstrapDialogRequest(`c/maps/${mapId}/sharef`, $msg('COLLABORATE'), {
           closeButton: true,
           cancelButton: true,
         });
@@ -374,7 +376,7 @@ class Menu extends IMenu {
     const publishElem = $('#publishIt');
     if (publishElem) {
       this._addButton('publishIt', false, false, () => {
-        BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/publishf`, $msg('PUBLISH'), {
+        const dialog = new BootstrapDialogRequest(`c/maps/${mapId}/publishf`, $msg('PUBLISH'), {
           closeButton: true,
           cancelButton: true,
         });
@@ -386,7 +388,7 @@ class Menu extends IMenu {
     const historyElem = $('#history');
     if (historyElem) {
       this._addButton('history', false, false, () => {
-        BootstrapDialogRequest.active = new BootstrapDialogRequest(`c/maps/${mapId}/historyf`, $msg('HISTORY'), {
+        const dialog = new BootstrapDialogRequest(`c/maps/${mapId}/historyf`, $msg('HISTORY'), {
           closeButton: true,
           cancelButton: true,
         });
@@ -398,7 +400,7 @@ class Menu extends IMenu {
     const keyboardShortcut = $('#keyboardShortcuts');
     if (keyboardShortcut) {
       keyboardShortcut.bind('click', (event) => {
-        BootstrapDialogRequest.active = new KeyboardShortcutDialog();
+        const dialog = new KeyboardShortcutDialog();
         designer.onObjectFocusEvent();
         event.preventDefault();
       });
@@ -409,7 +411,7 @@ class Menu extends IMenu {
     if (backTolist) {
       backTolist.bind('click', (event) => {
         event.stopPropagation();
-        window.location = '/c/maps/';
+        window.location.href = '/c/maps/';
         return false;
       });
       Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
@@ -490,7 +492,7 @@ class Menu extends IMenu {
     return result;
   }
 
-  static _registerTooltip(buttonId, text, shortcut) {
+  static _registerTooltip(buttonId: string, text: string, shortcut: string = null) {
     if ($(`#${buttonId}`)) {
       let tooltip = text;
       if (shortcut) {
