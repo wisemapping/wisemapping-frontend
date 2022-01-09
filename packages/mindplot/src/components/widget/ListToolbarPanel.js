@@ -27,12 +27,15 @@ class ListToolbarPanel extends ToolbarPaneItem {
 
   _initPanel() {
     // Register on toolbar elements ...
-    this.getPanelElem().children('div').bind('click', (event) => {
-      event.stopPropagation();
-      this.hide();
-      const value = $defined($(this).attr('model')) ? $(this).attr('model') : $(this).attr('id');
-      this.getModel().setValue(value);
-    });
+    const me = this;
+    this.getPanelElem()
+      .children('div')
+      .bind('click', function click(event) {
+        event.stopPropagation();
+        me.hide();
+        const value = $defined($(this).attr('model')) ? $(this).attr('model') : $(this).attr('id');
+        me.getModel().setValue(value);
+      });
   }
 
   _updateSelectedItem() {

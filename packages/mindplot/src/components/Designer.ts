@@ -55,6 +55,7 @@ import NodeModel from './model/NodeModel';
 import Topic from './Topic';
 import Point from '@wisemapping/web2d';
 import { DesignerOptions } from './DesignerOptions';
+import MainTopic from './MainTopic';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -227,14 +228,7 @@ class Designer extends Events {
     this._workspace.setZoom(model.getZoom(), true);
   }
 
-  /**
-       * @private
-       * @param {mindplot.model.NodeModel} model
-       * @param {Boolean} readOnly
-       * @return {mindplot.CentralTopic|mindplot.MainTopic} the topic to the given model,
-       * connected, added to the drag manager, with events registered - complying type & read mode
-       */
-  _buildNodeGraph(model: NodeModel, readOnly: boolean) {
+  private _buildNodeGraph(model: NodeModel, readOnly: boolean): MainTopic {
     // Create node graph ...
     const topic = create(model, { readOnly });
     this.getModel().addTopic(topic);
@@ -344,10 +338,6 @@ class Designer extends Events {
     this._workspace.setZoom(zoom);
   }
 
-  /**
-     * @param {Number=} factor
-     * zoom out by the given factor, or 1.2, if undefined
-     */
   zoomOut(factor: number = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
@@ -912,7 +902,7 @@ class Designer extends Events {
   /** */
   changeFontStyle(): void {
     const topicsIds = this.getModel()
-    .filterTopicsIds();
+      .filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontStyleToTopic(topicsIds);
     }
@@ -923,7 +913,7 @@ class Designer extends Events {
     $assert(color, 'color can not be null');
 
     const topicsIds = this.getModel()
-    .filterTopicsIds();
+      .filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontColorToTopic(topicsIds, color);
     }
@@ -941,7 +931,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeBorderColor(color:string) {
+  changeBorderColor(color: string) {
     const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
     const validateError = 'Color can not be set to line topics.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -951,7 +941,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeFontSize(size:number) {
+  changeFontSize(size: number) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontSizeToTopic(topicsIds, size);

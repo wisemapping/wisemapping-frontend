@@ -40,7 +40,7 @@ class DesignerModel extends Events {
   }
 
   /** @param {Number} zoom number between 0.3 and 1.9 to set the zoom to */
-  setZoom(zoom) {
+  setZoom(zoom:number) {
     this._zoom = zoom;
   }
 
