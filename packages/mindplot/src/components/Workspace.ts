@@ -27,7 +27,7 @@ class Workspace {
   _containerSize: Size;
   _workspace: Workspace2D;
   _eventsEnabled: boolean;
-  private _visibleAreaSize: any;
+  private _visibleAreaSize: Size;
 
   constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
     // Create a suitable container ...
