@@ -19,10 +19,10 @@ import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 
 class ScreenManager {
-  _divContainer: JQuery;
-  _padding: { x: number; y: number; };
-  _clickEvents: ((event: UIEvent)=>void)[];
-  _scale: number;
+  private _divContainer: JQuery;
+  private _padding: { x: number; y: number; };
+  private _clickEvents: ((event: UIEvent)=>void)[];
+  private _scale: number;
 
   constructor(divElement: JQuery) {
     $assert(divElement, 'can not be null');
@@ -39,6 +39,16 @@ class ScreenManager {
       event.stopPropagation();
       event.preventDefault();
     });
+  }
+
+  /**
+   * Return the current visibile area in the browser.
+   */
+  getVisibleBrowserSize():{width:number,height:number}{
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight - 50 // Todo: Fix toolbar hardcode.
+    }
   }
 
   setScale(scale: number) {

@@ -17,11 +17,11 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import PersistenceManager from './PersistenceManager';
+import { Size } from './Size';
 
 export type DesignerOptions = {
   zoom: number,
-  viewPort?: { height: number, width: number },
-  size?: { height: number, width: number },
+  containerSize?: Size,
   readOnly?: boolean,
   mapId?: string,
   container: string,
@@ -34,27 +34,21 @@ class OptionsBuilder {
   static buildOptions(options: DesignerOptions): DesignerOptions {
     $assert(options.persistenceManager, 'persistence must be defined');
 
-    let containerSize = options.size;
-    if (options.size == null) {
+    let containerSize = options.containerSize;
+    if (options.containerSize == null) {
       // If it has not been defined, use browser size ...
       containerSize = {
-        width: window.screen.availWidth,
-        height: window.screen.availHeight,
+        width: window.screen.width,
+        height: window.screen.height,
       }
+      console.log("height:"+containerSize.height);
     }
-
-    // Is offset adjustment required 
-    const viewPort = {
-      height: window.innerHeight,
-      width: window.innerWidth,
-    };
 
     const defaultOptions: DesignerOptions = {
       readOnly: false,
       zoom: 0.85,
       saveOnLoad: true,
-      size: containerSize,
-      viewPort: viewPort,
+      containerSize: containerSize,
       container: 'mindplot',
       locale: 'en',
     };

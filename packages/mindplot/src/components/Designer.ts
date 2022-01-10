@@ -57,6 +57,7 @@ import Point from '@wisemapping/web2d';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
+import NodeGraph from './NodeGraph';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -70,10 +71,10 @@ class Designer extends Events {
   private _clipboard: any[];
   private _cleanScreen: any;
 
-  constructor(options: DesignerOptions, divElement:JQuery) {
+  constructor(options: DesignerOptions, divElement: JQuery) {
     $assert(options, 'options must be defined');
     $assert(options.zoom, 'zoom must be defined');
-    $assert(options.size, 'size must be defined');
+    $assert(options.containerSize, 'size must be defined');
     $assert(divElement, 'divElement must be defined');
     super();
 
@@ -83,7 +84,7 @@ class Designer extends Events {
     this._options = options;
 
     // Set full div elem render area ...
-    divElement.css(options.size);
+    divElement.css(options.containerSize);
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -118,14 +119,12 @@ class Designer extends Events {
 
     this._relPivot = new RelationshipPivot(this._workspace, this);
 
-    // Set editor working area ...
-    this.setViewPort(options.viewPort);
-
     TopicEventDispatcher.configure(this.isReadOnly());
     this._clipboard = [];
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     global.designer = this;
+
   }
 
   private _registerWheelEvents(): void {
@@ -167,12 +166,12 @@ class Designer extends Events {
     });
 
     // Deselect on click ...
-    screenManager.addEvent('click', (event:UIEvent) => {
+    screenManager.addEvent('click', (event: UIEvent) => {
       me.onObjectFocusEvent(null, event);
     });
 
     // Create nodes on double click...
-    screenManager.addEvent('dblclick', (event:MouseEvent) => {
+    screenManager.addEvent('dblclick', (event: MouseEvent) => {
       if (workspace.isWorkspaceEventsEnabled()) {
         const mousePos = screenManager.getWorkspaceMousePosition(event);
         const centralTopic = me.getModel().getCentralTopic();
@@ -182,7 +181,7 @@ class Designer extends Events {
     });
   }
 
-  private _buildDragManager(workspace: Workspace):DragManager {
+  private _buildDragManager(workspace: Workspace): DragManager {
     const designerModel = this.getModel();
     const dragConnector = new DragConnector(designerModel, this._workspace);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
@@ -193,7 +192,7 @@ class Designer extends Events {
       topics.forEach((topic) => topic.setMouseEventsEnabled(false));
     });
 
-    dragManager.addEvent('dragging', (event:MouseEvent, dragTopic:DragTopic) => {
+    dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
       dragTopic.updateFreeLayout(event);
       if (!dragTopic.isFreeLayoutOn(event)) {
         // The node is being drag. Is the connection still valid ?
@@ -205,18 +204,12 @@ class Designer extends Events {
       }
     });
 
-    dragManager.addEvent('enddragging', (event:MouseEvent, dragTopic:DragTopic) => {
+    dragManager.addEvent('enddragging', (event: MouseEvent, dragTopic: DragTopic) => {
       topics.forEach((topic) => topic.setMouseEventsEnabled(true));
       dragTopic.applyChanges(workspace);
     });
 
     return dragManager;
-  }
-
-  private setViewPort(size: { height: number, width: number }):void {
-    this._workspace.setViewPort(size);
-    const model = this.getModel();
-    this._workspace.setZoom(model.getZoom(), true);
   }
 
   private _buildNodeGraph(model: NodeModel, readOnly: boolean): MainTopic {
@@ -325,9 +318,9 @@ class Designer extends Events {
     this._workspace.setZoom(zoom);
   }
 
-  setZoomToFit(): void {
+  zoomToFit(): void {
     this.getModel().setZoom(1);
-    this._workspace.setZoom(1,true);
+    this._workspace.setZoom(1, true);
   }
 
   zoomOut(factor: number = 1.2) {
@@ -415,22 +408,8 @@ class Designer extends Events {
     return this._model;
   }
 
-  shrinkSelectedBranch(): void {
-    const nodes = this.getModel().filterSelectedTopics();
-    if (nodes.length <= 0 || nodes.length !== 1) {
-      // If there are more than one node selected,
-      $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE'));
-      return;
-    }
-    // Execute event ...
-    const topic = nodes[0];
-    if (topic.getType() !== 'CentralTopic') {
-      this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
-    }
-  }
-
   /** create a NodeModel for the selected node's child and add it via the ActionDispatcher */
-  createChildForSelectedNode():void {
+  private _createChildForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // If there are more than one node selected,
@@ -516,21 +495,7 @@ class Designer extends Events {
     return childModel;
   }
 
-  addDraggedNode(event, model: NodeModel) {
-    $assert(event, 'event can not be null');
-    $assert(model, 'model can not be null');
-
-    // Position far from the visual area ...
-    model.setPosition(1000, 1000);
-
-    this._actionDispatcher.addTopics([model]);
-    const topic = this.getModel().findTopicById(model.getId());
-
-    // Simulate a mouse down event to start the dragging ...
-    topic.fireEvent('mousedown', event);
-  }
-
-  createSiblingForSelectedNode():void {
+  createSiblingForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // If there are no nodes selected,
@@ -547,7 +512,7 @@ class Designer extends Events {
     if (!topic.getOutgoingConnectedTopic()) {
       // Central topic and isolated topics ....
       // Central topic doesn't have siblings ...
-      this.createChildForSelectedNode();
+      this._createChildForSelectedNode();
     } else {
       const parentTopic = topic.getOutgoingConnectedTopic();
       const siblingModel = this._createSiblingModel(topic);
@@ -563,7 +528,7 @@ class Designer extends Events {
     }
   }
 
-  private _createSiblingModel(topic: Topic):NodeModel {
+  private _createSiblingModel(topic: Topic): NodeModel {
     let result = null;
     let model = null;
     const parentTopic = topic.getOutgoingConnectedTopic();
@@ -584,7 +549,7 @@ class Designer extends Events {
     return result;
   }
 
-  showRelPivot(event):void {
+  showRelPivot(event: MouseEvent): void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // This could not happen ...
@@ -600,8 +565,7 @@ class Designer extends Events {
     this._relPivot.start(nodes[0], pos);
   }
 
-  /** @return {{zoom:Number}} the zoom */
-  getMindmapProperties() {
+  getMindmapProperties(): { zoom: number } {
     const model = this.getModel();
     return { zoom: model.getZoom() };
   }
@@ -610,7 +574,7 @@ class Designer extends Events {
        * @param {mindplot.Mindmap} mindmap
        * @throws will throw an error if mindmapModel is null or undefined
        */
-  loadMap(mindmap: Mindmap) {
+  loadMap(mindmap: Mindmap): void {
     $assert(mindmap, 'mindmapModel can not be null');
     this._mindmap = mindmap;
 
@@ -629,7 +593,7 @@ class Designer extends Events {
     // Building node graph ...
     const branches = mindmap.getBranches();
     branches.forEach((branch) => {
-      const nodeGraph = this.nodeModelToNodeGraph(branch);
+      const nodeGraph = this._nodeModelToTopic(branch);
       nodeGraph.setBranchVisibility(true);
     });
 
@@ -651,27 +615,20 @@ class Designer extends Events {
     return this._mindmap;
   }
 
-  /** */
-  undo() {
-    // @Todo: This is a hack...
+  undo(): void {
     this._actionDispatcher._actionRunner.undo();
   }
 
-  /** */
-  redo() {
+  redo(): void {
     this._actionDispatcher._actionRunner.redo();
   }
 
   /** */
-  isReadOnly() {
+  isReadOnly(): boolean {
     return this._options.readOnly;
   }
 
-  /**
-       * @param {mindplot.model.NodeModel} nodeModel
-       * @return {mindplot.Topic} the topic (extends mindplot.NodeGraph) created to the model
-       */
-  nodeModelToNodeGraph(nodeModel: NodeModel) {
+  private _nodeModelToTopic(nodeModel: NodeModel):Topic {
     $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder() - b.getOrder());
@@ -682,19 +639,19 @@ class Designer extends Events {
     this._workspace.append(result);
     children.forEach((child) => {
       if ($defined(child)) {
-        this.nodeModelToNodeGraph(child);
+        this._nodeModelToTopic(child);
       }
     });
     return result;
   }
 
   /**
-       * @private
-       * @param {mindplot.model.RelationshipModel} model
-       * @return {mindplot.Relationship} the relationship created to the model
-       * @throws will throw an error if model is null or undefined
-       */
-  private _relationshipModelToRelationship(model: RelationshipModel) {
+   * @private
+   * @param {mindplot.model.RelationshipModel} model
+   * @return {mindplot.Relationship} the relationship created to the model
+   * @throws will throw an error if model is null or undefined
+   */
+  private _relationshipModelToRelationship(model: RelationshipModel):Relationship {
     $assert(model, 'Node model can not be null');
 
     const result = this._buildRelationshipShape(model);
@@ -715,7 +672,7 @@ class Designer extends Events {
        * @param {mindplot.model.RelationshipModel} model
        * @return {mindplot.Relationship} the relationship added to the mindmap
        */
-  addRelationship(model: RelationshipModel) {
+  addRelationship(model: RelationshipModel):Relationship {
     const mindmap = this.getMindmap();
     mindmap.addRelationship(model);
     return this._relationshipModelToRelationship(model);
@@ -725,7 +682,7 @@ class Designer extends Events {
        * deletes the relationship from the linked topics, DesignerModel, Workspace and Mindmap
        * @param {mindplot.Relationship} rel the relationship to delete
        */
-  deleteRelationship(rel: Relationship) {
+  deleteRelationship(rel: Relationship):void {
     const sourceTopic = rel.getSourceTopic();
     sourceTopic.deleteRelationship(rel);
 
@@ -745,7 +702,7 @@ class Designer extends Events {
        * @return {mindplot.Relationship} the new relationship with events registered
        * @throws will throw an error if the target topic cannot be found
        */
-  _buildRelationshipShape(model: RelationshipModel) {
+  private _buildRelationshipShape(model: RelationshipModel):Relationship {
     const dmodel = this.getModel();
 
     const sourceTopicId = model.getFromNode();

@@ -260,7 +260,7 @@ class Menu extends IMenu {
     Menu._registerTooltip('zoom-minus', $msg('ZOOM_OUT'));
 
     this._addButton('position', false, false, () => {
-      designer.setZoomToFit();
+      designer.zoomToFit();
     });
     Menu._registerTooltip('position', $msg('CENTER_POSITION'));
 
