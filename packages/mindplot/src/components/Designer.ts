@@ -408,8 +408,7 @@ class Designer extends Events {
     return this._model;
   }
 
-  /** create a NodeModel for the selected node's child and add it via the ActionDispatcher */
-  private _createChildForSelectedNode(): void {
+  createChildForSelectedNode(): void {
     const nodes = this.getModel().filterSelectedTopics();
     if (nodes.length <= 0) {
       // If there are more than one node selected,
@@ -512,7 +511,7 @@ class Designer extends Events {
     if (!topic.getOutgoingConnectedTopic()) {
       // Central topic and isolated topics ....
       // Central topic doesn't have siblings ...
-      this._createChildForSelectedNode();
+      this.createChildForSelectedNode();
     } else {
       const parentTopic = topic.getOutgoingConnectedTopic();
       const siblingModel = this._createSiblingModel(topic);
@@ -593,7 +592,7 @@ class Designer extends Events {
     // Building node graph ...
     const branches = mindmap.getBranches();
     branches.forEach((branch) => {
-      const nodeGraph = this._nodeModelToTopic(branch);
+      const nodeGraph = this.nodeModelToTopic(branch);
       nodeGraph.setBranchVisibility(true);
     });
 
@@ -628,7 +627,7 @@ class Designer extends Events {
     return this._options.readOnly;
   }
 
-  private _nodeModelToTopic(nodeModel: NodeModel):Topic {
+  nodeModelToTopic(nodeModel: NodeModel):Topic {
     $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder() - b.getOrder());
@@ -639,7 +638,7 @@ class Designer extends Events {
     this._workspace.append(result);
     children.forEach((child) => {
       if ($defined(child)) {
-        this._nodeModelToTopic(child);
+        this.nodeModelToTopic(child);
       }
     });
     return result;

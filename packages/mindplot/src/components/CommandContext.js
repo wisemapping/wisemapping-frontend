@@ -53,7 +53,7 @@ class CommandContext {
   /** */
   createTopic(model) {
     $assert(model, 'model can not be null');
-    return this._designer.nodeModelToNodeGraph(model);
+    return this._designer.nodeModelToTopic(model);
   }
 
   /** */
