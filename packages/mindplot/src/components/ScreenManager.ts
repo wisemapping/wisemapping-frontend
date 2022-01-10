@@ -47,7 +47,7 @@ class ScreenManager {
   getVisibleBrowserSize():{width:number,height:number}{
     return {
       width: window.innerWidth,
-      height: window.innerHeight - 50 // Todo: Fix toolbar hardcode.
+      height: window.innerHeight - Number.parseInt(this._divContainer.css('top'), 10),
     }
   }
 

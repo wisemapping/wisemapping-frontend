@@ -17,16 +17,17 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Workspace as Workspace2D } from '@wisemapping/web2d';
+import { ElementClass as Element2D} from '@wisemapping/web2d';
 import ScreenManager from './ScreenManager';
 import { Size } from './Size';
 
 class Workspace {
-  _zoom: number;
-  _screenManager: ScreenManager;
-  _isReadOnly: boolean;
-  _containerSize: Size;
-  _workspace: Workspace2D;
-  _eventsEnabled: boolean;
+  private _zoom: number;
+  private _screenManager: ScreenManager;
+  private _isReadOnly: boolean;
+  private _containerSize: Size;
+  private _workspace: Workspace2D;
+  private _eventsEnabled: boolean;
   private _visibleAreaSize: Size;
 
   constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
@@ -70,7 +71,7 @@ class Workspace {
     return this._isReadOnly;
   }
 
-  private _createWorkspace() {
+  private _createWorkspace():Workspace2D {
     // Initialize workspace ...
     const browserVisibleSize = this._screenManager.getVisibleBrowserSize();
     const coordOriginX = -(browserVisibleSize.width / 2);
@@ -90,7 +91,7 @@ class Workspace {
     return new Workspace2D(workspaceProfile);
   }
 
-  append(shape) {
+  append(shape:Element2D):void {
     if ($defined(shape.addToWorkspace)) {
       shape.addToWorkspace(this);
     } else {
@@ -98,7 +99,7 @@ class Workspace {
     }
   }
 
-  removeChild(shape) {
+  removeChild(shape:Element2D):void {
     // Element is a node, not a web2d element?
     if ($defined(shape.removeFromWorkspace)) {
       shape.removeFromWorkspace(this);
@@ -107,17 +108,17 @@ class Workspace {
     }
   }
 
-  addEvent(type: string, listener) {
+  addEvent(type: string, listener):void {
     this._workspace.addEvent(type, listener);
   }
 
-  removeEvent(type: string, listener) {
+  removeEvent(type: string, listener):void {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);
   }
 
-  getSize() {
+  getSize():Size {
     return this._workspace.getCoordSize();
   }
 

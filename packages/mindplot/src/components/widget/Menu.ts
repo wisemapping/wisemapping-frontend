@@ -29,6 +29,7 @@ import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
 import KeyboardShortcutDialog from './KeyboardShortcutDialog';
 import AccountSettingsPanel from './AccountSettingsPanel';
 import Designer from '../Designer';
+import Topic from '../Topic';
 
 class Menu extends IMenu {
   constructor(designer: Designer, containerId: string, mapId: string, readOnly: boolean = false, baseUrl:string = '') {
@@ -360,7 +361,7 @@ class Menu extends IMenu {
     }
 
     const discardElem = $('#discard');
-    if (discardElem) {
+    if (discardElem.length!=0) {
       this._addButton('discard', false, false, () => {
         this.discardChanges(designer);
       });
@@ -368,7 +369,7 @@ class Menu extends IMenu {
     }
 
     const shareElem = $('#shareIt');
-    if (shareElem) {
+    if (shareElem.length!=0) {
       this._addButton('shareIt', false, false, () => {
         const dialog = new BootstrapDialogRequest(`c/maps/${mapId}/sharef`, $msg('COLLABORATE'), {
           closeButton: true,
@@ -380,7 +381,7 @@ class Menu extends IMenu {
     }
 
     const publishElem = $('#publishIt');
-    if (publishElem) {
+    if (publishElem.length!=0) {
       this._addButton('publishIt', false, false, () => {
         const dialog = new BootstrapDialogRequest(`c/maps/${mapId}/publishf`, $msg('PUBLISH'), {
           closeButton: true,
@@ -392,7 +393,7 @@ class Menu extends IMenu {
     }
 
     const historyElem = $('#history');
-    if (historyElem) {
+    if (historyElem.length!=0) {
       this._addButton('history', false, false, () => {
         const dialog = new BootstrapDialogRequest(`c/maps/${mapId}/historyf`, $msg('HISTORY'), {
           closeButton: true,
@@ -402,6 +403,7 @@ class Menu extends IMenu {
       });
       Menu._registerTooltip('history', $msg('HISTORY'));
     }
+
     // Keyboard Shortcuts Action ...
     const keyboardShortcut = $('#keyboardShortcuts');
     if (keyboardShortcut) {
@@ -425,7 +427,7 @@ class Menu extends IMenu {
 
     // Account dialog ...
     const accountSettings = $('#account');
-    if (accountSettings) {
+    if (accountSettings.length!=0) {
       accountSettings.bind('click', (event) => {
         event.preventDefault();
       });
@@ -436,7 +438,7 @@ class Menu extends IMenu {
     this._registerEvents(designer);
   }
 
-  _registerEvents(designer) {
+  private _registerEvents(designer:Designer) {
     // Register on close events ...
     this._toolbarElems.forEach((panel) => {
       panel.addEvent('show', () => {
@@ -483,14 +485,14 @@ class Menu extends IMenu {
     });
   }
 
-  _addButton(buttonId, topic, rel, fn) {
+  private _addButton(buttonId:string, isTopic:boolean, isRelationship:boolean, fn) {
     // Register Events ...
     let result = null;
     if ($(`#${buttonId}`)) {
       const button = new ToolbarItem(buttonId, ((event) => {
         fn(event);
         this.clear();
-      }), { topicAction: topic, relAction: rel });
+      }), { topicAction: isTopic, relAction: isRelationship });
 
       this._toolbarElems.push(button);
       result = button;
