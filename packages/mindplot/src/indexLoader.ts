@@ -65,6 +65,7 @@ const options = DesignerOptionsBuilder.buildOptions(
     mapId: global.mapId,
     container: 'mindplot',
     zoom: zoomParam || global.userOptions.zoom,
+    locale: global.locale,
   });
 
 // Build designer ...
