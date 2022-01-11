@@ -1,4 +1,4 @@
-@import "editor.less";
+@import "editor.css";
 
 /* Overwrite some styles */
 body {
@@ -27,4 +27,8 @@ div#footer-logo {
 
 #floating-panel {
     bottom: 80px;
+}
+
+div#mindplot {
+    top:0;
 }

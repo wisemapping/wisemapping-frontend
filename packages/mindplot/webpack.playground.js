@@ -21,12 +21,11 @@ const playgroundConfig = {
   module: {
     rules: [
       {
-        test: /\.less$/i,
+        test: /\.css$/i,
         use: [
           // compiles Less to CSS
           'style-loader',
           'css-loader?url=false',
-          'less-loader',
         ],
       },
     ],

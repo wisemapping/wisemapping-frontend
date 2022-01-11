@@ -1,4 +1,4 @@
-import '../css/viewmode.less';
+import '../css/viewmode.css';
 import { buildDesigner } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 import DesignerOptionsBuilder from '../../../../src/components/DesignerOptionsBuilder';

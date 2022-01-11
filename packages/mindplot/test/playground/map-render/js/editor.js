@@ -1,4 +1,4 @@
-import '../css/editor.less';
+import '../css/editor.css';
 import { buildDesigner } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 import LoadingModal from '../../../../src/components/widget/LoadingModal';

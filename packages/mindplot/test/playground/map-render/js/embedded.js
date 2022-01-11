@@ -1,4 +1,4 @@
-import '../css/embedded.less';
+import '../css/embedded.css';
 import { buildDesigner } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 import DesignerOptionsBuilder from '../../../../src/components/DesignerOptionsBuilder';
