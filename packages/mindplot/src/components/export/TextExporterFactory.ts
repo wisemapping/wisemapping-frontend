@@ -17,10 +17,12 @@
  */
 import { Mindmap } from "../..";
 import Exporter from "./Exporter";
+import MDExporter from "./MDExporter";
 import TxtExporter from "./TxtExporter";
 import WiseXMLExporter from "./WiseXMLExporter";
 
-type type = 'wxml' | 'txt' | 'mm' | 'csv';
+type type = 'wxml' | 'txt' | 'mm' | 'csv' | 'md';
+
 class TextExporterFactory {
     static create(type: type, mindmap: Mindmap): Exporter {
         let result: Exporter;
@@ -31,7 +33,10 @@ class TextExporterFactory {
             case 'txt':
                 result = new TxtExporter(mindmap);
                 break;
-        default:
+            case 'md':
+                result = new MDExporter(mindmap);
+                break;
+            default:
                 throw new Error(`Unsupported type ${type}`);
         }
         return result;

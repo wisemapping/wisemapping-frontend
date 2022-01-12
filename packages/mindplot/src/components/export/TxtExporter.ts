@@ -18,11 +18,11 @@
 import { Mindmap } from "../..";
 import INodeModel from "../model/INodeModel";
 import LinkModel from "../model/LinkModel";
-import NodeModel from "../model/NodeModel";
 import Exporter from "./Exporter";
 
 class TxtExporter implements Exporter {
-    mindmap: Mindmap;
+    private mindmap: Mindmap;
+
     constructor(mindmap: Mindmap) {
         this.mindmap = mindmap;
     }

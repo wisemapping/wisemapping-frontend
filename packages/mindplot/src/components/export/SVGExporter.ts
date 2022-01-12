@@ -17,12 +17,11 @@
  *   limitations under the License.
  */
 import { Mindmap } from "../..";
-import { parseXMLString } from "../../../test/unit/export/Helper";
 import Exporter from "./Exporter";
 
 class SVGExporter implements Exporter {
-    svgElement: Element;
-    prolog: string = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
+    private svgElement: Element;
+    private prolog: string = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
 
     constructor(mindmap: Mindmap, svgElement: Element, centerImgage: boolean = false) {
         this.svgElement = svgElement;

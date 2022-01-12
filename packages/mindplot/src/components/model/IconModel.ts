@@ -28,7 +28,7 @@ class IconModel extends FeatureModel {
     return this.getAttribute('id');
   }
 
-  setIconType(iconType: string) {
+  setIconType(iconType: string):void {
     $assert(iconType, 'iconType id can not be null');
     this.setAttribute('id', iconType);
   }
