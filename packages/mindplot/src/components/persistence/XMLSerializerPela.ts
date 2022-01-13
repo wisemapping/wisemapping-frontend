@@ -28,7 +28,8 @@ import XMLMindmapSerializer from './XMLMindmapSerializer';
 
 class XMLSerializerPela implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
-  private _idsMap: {};
+
+  private _idsMap: Record<number, Element>;
 
   toXML(mindmap: Mindmap): Document {
     $assert(mindmap, 'Can not save a null mindmap');
@@ -251,8 +252,8 @@ class XMLSerializerPela implements XMLMindmapSerializer {
 
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
-    const topicsNodes = childNodes.
-      filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'topic'))
+    const topicsNodes = childNodes
+      .filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'topic'))
       .map((c) => c as Element);
     topicsNodes.forEach((child) => {
       const topic = this._deserializeNode(child, mindmap);
@@ -260,8 +261,8 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     });
 
     // Then all relationshops, they are connected to topics ...
-    const relationshipsNodes = childNodes.
-      filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'relationship'))
+    const relationshipsNodes = childNodes
+      .filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'relationship'))
       .map((c) => c as Element);
     relationshipsNodes.forEach((child) => {
       try {
@@ -284,7 +285,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
       : 'MainTopic';
 
     // Load attributes...
-    let id = null;
+    let id: number | null = null;
     if ($defined(domElem.getAttribute('id'))) {
       id = Number.parseInt(domElem.getAttribute('id'), 10);
     }
@@ -368,7 +369,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     const position = domElem.getAttribute('position');
     if ($defined(position)) {
       const pos = position.split(',');
-      topic.setPosition(Number.parseInt(pos[0]), Number.parseInt(pos[1]));
+      topic.setPosition(Number.parseInt(pos[0], 10), Number.parseInt(pos[1], 10));
     }
 
     const metadata = domElem.getAttribute('metadata');
@@ -387,7 +388,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
         } else if (FeatureModelFactory.isSupported(elem.tagName)) {
           // Load attributes ...
           const namedNodeMap = elem.attributes;
-          const attributes = {};
+          const attributes: Record<string, string> = {};
 
           for (let j = 0; j < namedNodeMap.length; j++) {
             const attribute = namedNodeMap.item(j);
@@ -397,7 +398,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
           // Has text node ?.
           const textAttr = XMLSerializerPela._deserializeTextAttr(elem);
           if (textAttr) {
-            attributes['text'] = textAttr;
+            attributes.text = textAttr;
           }
 
           // Create a new element ....
@@ -510,6 +511,5 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     return result;
   }
 }
-
 
 export default XMLSerializerPela;

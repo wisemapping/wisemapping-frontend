@@ -24,10 +24,14 @@ import ModelCodeName from '../persistence/ModelCodeName';
 
 class Mindmap extends IMindmap {
   private _description: string;
-  private  _version: string;
+
+  private _version: string;
+
   private _id: string;
-  private  _branches: Array<NodeModel>;
-  private  _relationships: Array<RelationshipModel>;
+
+  private _branches: Array<NodeModel>;
+
+  private _relationships: Array<RelationshipModel>;
 
   constructor(id: string, version: string = ModelCodeName.TANGO) {
     super();
@@ -103,7 +107,6 @@ class Mindmap extends IMindmap {
   getRelationships(): Array<RelationshipModel> {
     return this._relationships;
   }
-
 
   hasAlreadyAdded(node: NodeModel): boolean {
     let result = false;

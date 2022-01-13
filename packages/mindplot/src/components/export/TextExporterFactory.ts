@@ -15,32 +15,31 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from "../..";
-import Exporter from "./Exporter";
-import MDExporter from "./MDExporter";
-import TxtExporter from "./TxtExporter";
-import WiseXMLExporter from "./WiseXMLExporter";
+import { Mindmap } from '../..';
+import Exporter from './Exporter';
+import MDExporter from './MDExporter';
+import TxtExporter from './TxtExporter';
+import WiseXMLExporter from './WiseXMLExporter';
 
-type type = 'wxml' | 'txt' | 'mm' | 'csv' | 'md';
+type textType = 'wxml' | 'txt' | 'mm' | 'csv' | 'md';
 
 class TextExporterFactory {
-    static create(type: type, mindmap: Mindmap): Exporter {
-        let result: Exporter;
-        switch (type) {
-            case 'wxml':
-                result = new WiseXMLExporter(mindmap);
-                break;
-            case 'txt':
-                result = new TxtExporter(mindmap);
-                break;
-            case 'md':
-                result = new MDExporter(mindmap);
-                break;
-            default:
-                throw new Error(`Unsupported type ${type}`);
-        }
-        return result;
-
+  static create(type: textType, mindmap: Mindmap): Exporter {
+    let result: Exporter;
+    switch (type) {
+      case 'wxml':
+        result = new WiseXMLExporter(mindmap);
+        break;
+      case 'txt':
+        result = new TxtExporter(mindmap);
+        break;
+      case 'md':
+        result = new MDExporter(mindmap);
+        break;
+      default:
+        throw new Error(`Unsupported type ${type}`);
     }
+    return result;
+  }
 }
 export default TextExporterFactory;

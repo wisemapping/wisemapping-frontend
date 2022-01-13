@@ -25,7 +25,9 @@ import { $notify } from './widget/ToolbarNotifier';
 
 class DesignerModel extends Events {
   _zoom: number;
+
   _topics: Topic[];
+
   _relationships: Relationship[];
 
   constructor(options: DesignerOptions) {
@@ -109,7 +111,7 @@ class DesignerModel extends Events {
     const topics = this.filterSelectedTopics();
 
     let isValid = true;
-    topics.forEach(topic => {
+    topics.forEach((topic) => {
       if ($defined(validate)) {
         isValid = validate(topic);
       }
@@ -130,7 +132,7 @@ class DesignerModel extends Events {
     return (topics.length > 0) ? topics[0] : null;
   }
 
-  findTopicById(id: Number): Topic {
+  findTopicById(id: number): Topic {
     let result = null;
     for (let i = 0; i < this._topics.length; i++) {
       const topic = this._topics[i];

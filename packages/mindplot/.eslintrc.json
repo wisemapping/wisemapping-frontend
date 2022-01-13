@@ -1,4 +1,5 @@
 {
+    "parser": "@typescript-eslint/parser",
     "env": {
         "browser": true,
         "commonjs": true,
@@ -6,7 +7,9 @@
     },
     "extends": [
         "airbnb-base",
-        "plugin:cypress/recommended"
+        "plugin:cypress/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 11
@@ -15,6 +18,9 @@
         // designer is a global currently used as a hack. Remove this when fixing the hack.
         "designer": true
     },
+    "plugins": [
+        "@typescript-eslint"
+      ],
     "rules": {
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
@@ -22,8 +28,17 @@
         "max-len": [1,300],
         "class-methods-use-this": "off",
         "no-console" : "off",
-        "no-unused-vars": ["error", { "args": "none" }]
-
+        "no-unused-vars": ["error", { "args": "none" }],
+        "import/extensions": ["error", {
+            "ts": "never"
+        }],
+        // codebase contains many this aliases, fix in the future?
+        "@typescript-eslint/no-this-alias": "off",
+        // no-unused-vars already used
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/no-empty-function": "warn",
+        "import/no-extraneous-dependencies": ["warn", {"packageDir": "./", "devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
     },
     "settings": {
 		    "import/resolver": {

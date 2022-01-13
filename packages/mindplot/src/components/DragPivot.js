@@ -20,7 +20,6 @@ import { Point, CurvedLine, Rect } from '@wisemapping/web2d';
 
 import DragTopicConfig from './DragTopicConfig';
 import Shape from './util/Shape';
-import INodeModel from './model/INodeModel';
 
 class DragPivot {
   constructor() {

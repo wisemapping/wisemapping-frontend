@@ -18,10 +18,10 @@
 // eslint-disable-next-line max-classes-per-file
 import {
   $assert,
-  $defined
+  $defined,
 } from '@wisemapping/core-js';
 import {
-  Group
+  Group,
 } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 

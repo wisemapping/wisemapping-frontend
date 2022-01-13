@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import Point from '@wisemapping/web2d';
 import Messages, { $msg } from './Messages';
 
 import Events from './Events';
@@ -50,25 +51,32 @@ import { $notify } from './widget/ToolbarNotifier';
 import ImageExpoterFactory from './export/ImageExporterFactory';
 import TextExporterFactory from './export/TextExporterFactory';
 import RelationshipModel from './model/RelationshipModel';
-import { Mindmap } from '..';
+import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
 import Topic from './Topic';
-import Point from '@wisemapping/web2d';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
-import NodeGraph from './NodeGraph';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
+
   private _options: DesignerOptions;
+
   private _actionDispatcher: StandaloneActionDispatcher;
+
   private _model: DesignerModel;
+
   private _workspace: Workspace;
+
   private _eventBussDispatcher: EventBusDispatcher;
+
   private _dragManager: DragManager;
+
   private _relPivot: RelationshipPivot;
+
   private _clipboard: any[];
+
   private _cleanScreen: any;
 
   constructor(options: DesignerOptions, divElement: JQuery) {
@@ -124,7 +132,6 @@ class Designer extends Events {
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     global.designer = this;
-
   }
 
   private _registerWheelEvents(): void {
@@ -140,6 +147,7 @@ class Designer extends Events {
   }
 
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-types
   addEvent(type: string, listener: Function): void {
     if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
       const editor = TopicEventDispatcher.getInstance();
@@ -323,7 +331,7 @@ class Designer extends Events {
     this._workspace.setZoom(1, true);
   }
 
-  zoomOut(factor: number = 1.2) {
+  zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
     if (scale <= 1.9) {
@@ -334,7 +342,7 @@ class Designer extends Events {
     }
   }
 
-  export(formatType: 'png' | 'svg' | 'jpg' | 'wxml'): Promise<String> {
+  export(formatType: 'png' | 'svg' | 'jpg' | 'wxml'): Promise<string> {
     const workspace = this._workspace;
     const svgElement = workspace.getSVGElement();
     const size = workspace.getSize();
@@ -358,8 +366,7 @@ class Designer extends Events {
     return exporter.export();
   }
 
-
-  zoomIn(factor: number = 1.2): void {
+  zoomIn(factor = 1.2): void {
     const model = this.getModel();
     const scale = model.getZoom() / factor;
 

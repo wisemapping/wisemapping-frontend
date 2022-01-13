@@ -54,7 +54,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     // Set topic attributes...
     if (topic.getType() === 'CentralTopic') {
-      parentTopic.setAttribute('central', new Boolean(true).toString());
+      parentTopic.setAttribute('central', true.toString());
     } else {
       const parent = topic.getParent();
       if (parent == null || parent.getType() === 'CentralTopic') {
@@ -77,7 +77,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     if (topic.areChildrenShrunken()) {
-      parentTopic.setAttribute('shrink', new Boolean(true).toString());
+      parentTopic.setAttribute('shrink', true.toString());
     }
 
     // Font properties ...
@@ -127,7 +127,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
 
     // LINKS
     const links = topic.findFeatureByType('links');
-    icons.forEach((link) => {
+    links.forEach((link) => {
       const linkDom = this._linkToXML(document, link);
       parentTopic.append(linkDom);
     });
@@ -315,6 +315,5 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     return FeatureModelFactory.createModel('note', { text: text == null ? ' ' : text });
   }
 }
-
 
 export default XMLSerializerBeta;

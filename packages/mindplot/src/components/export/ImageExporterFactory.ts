@@ -15,32 +15,32 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from "../..";
-import BinaryImageExporter from "./BinaryImageExporter";
-import Exporter from "./Exporter";
-import SVGExporter from "./SVGExporter";
+import { Mindmap } from '../..';
+import BinaryImageExporter from './BinaryImageExporter';
+import Exporter from './Exporter';
+import SVGExporter from './SVGExporter';
 
-type type = 'svg' | 'png' | 'jpg';
+type imageType = 'svg' | 'png' | 'jpg';
 class ImageExpoterFactory {
-    static create(type: type, mindmap: Mindmap, svgElement: Element, width: number, height: number, isCenter: boolean = false): Exporter {
-        let result;
-        switch (type) {
-            case 'svg': {
-                result = new SVGExporter(mindmap, svgElement);
-                break;
-            }
-            case 'png': {
-                result = new BinaryImageExporter(mindmap, svgElement, width, height, 'image/png');
-                break;
-            }
-            case 'jpg': {
-                result = new BinaryImageExporter(mindmap, svgElement, width, height, 'image/jpeg');
-                break;
-            }
-            default:
-                throw new Error(`Unsupported encoding ${type}`);
-        }
-        return result;
+  static create(type: imageType, mindmap: Mindmap, svgElement: Element, width: number, height: number, isCenter = false): Exporter {
+    let result;
+    switch (type) {
+      case 'svg': {
+        result = new SVGExporter(mindmap, svgElement);
+        break;
+      }
+      case 'png': {
+        result = new BinaryImageExporter(mindmap, svgElement, width, height, 'image/png');
+        break;
+      }
+      case 'jpg': {
+        result = new BinaryImageExporter(mindmap, svgElement, width, height, 'image/jpeg');
+        break;
+      }
+      default:
+        throw new Error(`Unsupported encoding ${type}`);
     }
+    return result;
+  }
 }
-export default ImageExpoterFactory
+export default ImageExpoterFactory;

@@ -34,21 +34,21 @@ class OptionsBuilder {
   static buildOptions(options: DesignerOptions): DesignerOptions {
     $assert(options.persistenceManager, 'persistence must be defined');
 
-    let containerSize = options.containerSize;
+    let { containerSize } = options;
     if (options.containerSize == null) {
       // If it has not been defined, use browser size ...
       containerSize = {
         width: window.screen.width,
         height: window.screen.height,
-      }
-      console.log("height:"+containerSize.height);
+      };
+      console.log(`height:${containerSize.height}`);
     }
 
     const defaultOptions: DesignerOptions = {
       readOnly: false,
       zoom: 0.85,
       saveOnLoad: true,
-      containerSize: containerSize,
+      containerSize,
       container: 'mindplot',
       locale: 'en',
     };

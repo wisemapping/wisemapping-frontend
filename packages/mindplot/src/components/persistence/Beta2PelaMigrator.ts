@@ -24,7 +24,9 @@ import XMLSerializerPela from './XMLSerializerPela';
 
 class Beta2PelaMigrator implements XMLMindmapSerializer {
   private _betaSerializer: XMLMindmapSerializer;
+
   private _pelaSerializer: XMLSerializerPela;
+
   constructor(betaSerializer: XMLSerializerPela) {
     this._betaSerializer = betaSerializer;
     this._pelaSerializer = new XMLSerializerPela();

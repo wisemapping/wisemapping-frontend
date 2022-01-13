@@ -27,7 +27,7 @@ class NoteModel extends FeatureModel {
 
   /** */
   getText():string {
-    return this.getAttribute('text');
+    return this.getAttribute('text') as string;
   }
 
   /** */

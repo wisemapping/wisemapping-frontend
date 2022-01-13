@@ -1,4 +1,3 @@
-
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -16,55 +15,57 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from "../..";
-import Exporter from "./Exporter";
+import { Mindmap } from '../..';
+import Exporter from './Exporter';
 
 class SVGExporter implements Exporter {
-    private svgElement: Element;
-    private prolog: string = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
+  private svgElement: Element;
 
-    constructor(mindmap: Mindmap, svgElement: Element, centerImgage: boolean = false) {
-        this.svgElement = svgElement;
-    }
-    extension(): string {
-        return 'svg';
-    }
+  private prolog = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
 
-    export(): Promise<string> {
-        // Replace all images for in-line images ...
-        let svgTxt: string = new XMLSerializer()
-            .serializeToString(this.svgElement);
-        svgTxt = this.prolog + svgTxt;
+  constructor(mindmap: Mindmap, svgElement: Element, centerImgage = false) {
+    this.svgElement = svgElement;
+  }
 
-        // Are namespace declared ?. Otherwise, force the declaration ...
-        if (svgTxt.indexOf('xmlns:xlink=') === -1) {
-            svgTxt = svgTxt.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
-        }
+  extension(): string {
+    return 'svg';
+  }
 
-        // Add white background. This is mainly for PNG export ...
-        const svgDoc = SVGExporter.parseXMLString(svgTxt, 'application/xml');
-        const svgElement = svgDoc.getElementsByTagName('svg')[0];
-        svgElement.setAttribute('style', 'background-color:white');
+  export(): Promise<string> {
+    // Replace all images for in-line images ...
+    let svgTxt: string = new XMLSerializer()
+      .serializeToString(this.svgElement);
+    svgTxt = this.prolog + svgTxt;
 
-        const svgResult = new XMLSerializer()
-            .serializeToString(svgDoc);
-        const blob = new Blob([svgResult], { type: 'image/svg+xml' });
-        const result = URL.createObjectURL(blob);
-        return Promise.resolve(result);
+    // Are namespace declared ?. Otherwise, force the declaration ...
+    if (svgTxt.indexOf('xmlns:xlink=') === -1) {
+      svgTxt = svgTxt.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
     }
 
-    private static parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlStr, mimeType);
+    // Add white background. This is mainly for PNG export ...
+    const svgDoc = SVGExporter.parseXMLString(svgTxt, 'application/xml');
+    const svgElement = svgDoc.getElementsByTagName('svg')[0];
+    svgElement.setAttribute('style', 'background-color:white');
 
-        // Is there any parsing error ?.
-        if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
-            const xmmStr = new XMLSerializer().serializeToString(xmlDoc);
-            console.log(xmmStr);
-            throw new Error(`Unexpected error parsing: ${xmlStr}. Error: ${xmmStr}`);
-        }
+    const svgResult = new XMLSerializer()
+      .serializeToString(svgDoc);
+    const blob = new Blob([svgResult], { type: 'image/svg+xml' });
+    const result = URL.createObjectURL(blob);
+    return Promise.resolve(result);
+  }
 
-        return xmlDoc;
+  private static parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlStr, mimeType);
+
+    // Is there any parsing error ?.
+    if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+      const xmmStr = new XMLSerializer().serializeToString(xmlDoc);
+      console.log(xmmStr);
+      throw new Error(`Unexpected error parsing: ${xmlStr}. Error: ${xmmStr}`);
     }
+
+    return xmlDoc;
+  };
 }
 export default SVGExporter;

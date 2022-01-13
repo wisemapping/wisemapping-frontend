@@ -24,8 +24,8 @@ class LinkModel extends FeatureModel {
     this.setUrl(attributes.url);
   }
 
-  getUrl():string {
-    return this.getAttribute('url');
+  getUrl(): string {
+    return this.getAttribute('url') as string;
   }
 
   setUrl(url: string): void {

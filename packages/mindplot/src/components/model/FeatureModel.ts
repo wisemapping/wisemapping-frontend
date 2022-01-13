@@ -21,9 +21,12 @@ export type FeatureType = 'note' | 'link' | 'icon';
 
 class FeatureModel {
   static _next_id = 0;
+
   private _id: number;
+
   private _type: FeatureType;
-  private _attributes: {};
+
+  private _attributes: Record<string, unknown>;
 
   /**
      * @constructs
@@ -58,7 +61,7 @@ class FeatureModel {
     });
   }
 
-  setAttribute(key: string, value: any) {
+  setAttribute(key: string, value: unknown) {
     $assert(key, 'key id can not be null');
     this._attributes[key] = value;
   }

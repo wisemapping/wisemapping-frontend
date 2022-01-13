@@ -24,7 +24,9 @@ import NodeModel from '../model/NodeModel';
 
 class Pela2TangoMigrator implements XMLMindmapSerializer {
   private _pelaSerializer: XMLMindmapSerializer;
+
   private _tangoSerializer: XMLSerializer;
+
   constructor(pelaSerializer: XMLMindmapSerializer) {
     this._pelaSerializer = pelaSerializer;
     this._tangoSerializer = new XMLSerializer();

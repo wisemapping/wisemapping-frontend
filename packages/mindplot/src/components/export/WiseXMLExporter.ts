@@ -15,33 +15,32 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from "../..";
-import XMLSerializerFactory from "../persistence/XMLSerializerFactory";
-import Exporter from "./Exporter";
+import { Mindmap } from '../..';
+import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import Exporter from './Exporter';
 
 class WiseXMLExporter implements Exporter {
-    mindmap: Mindmap;
-    constructor(mindmap: Mindmap) {
-        this.mindmap = mindmap;
-    }
-    
-    extension(): string {
-        return 'wxml';
-    }
+  mindmap: Mindmap;
 
-    export(): Promise<string> {
+  constructor(mindmap: Mindmap) {
+    this.mindmap = mindmap;
+  }
 
-        const mindmap = this.mindmap;
-        const serializer = XMLSerializerFactory
-            .createInstanceFromMindmap(mindmap);
-        const document: Document = serializer.toXML(mindmap);
+  extension(): string {
+    return 'wxml';
+  }
 
-        const xmlStr: string = new XMLSerializer()
-            .serializeToString(document)
-        const blob = new Blob([xmlStr], { type: 'application/xml' });
-        const result = URL.createObjectURL(blob);
-        return Promise.resolve(result);
+  export(): Promise<string> {
+    const { mindmap } = this;
+    const serializer = XMLSerializerFactory
+      .createInstanceFromMindmap(mindmap);
+    const document: Document = serializer.toXML(mindmap);
 
-    }
+    const xmlStr: string = new XMLSerializer()
+      .serializeToString(document);
+    const blob = new Blob([xmlStr], { type: 'application/xml' });
+    const result = URL.createObjectURL(blob);
+    return Promise.resolve(result);
+  }
 }
 export default WiseXMLExporter;

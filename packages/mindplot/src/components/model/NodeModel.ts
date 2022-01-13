@@ -23,9 +23,14 @@ import FeatureModel, { FeatureType } from './FeatureModel';
 import Mindmap from './Mindmap';
 
 class NodeModel extends INodeModel {
-  private _properties: {};
+  private _properties: Record<string, string | number | boolean>;
+
+  // eslint-disable-next-line no-use-before-define
   private _children: NodeModel[];
+
   private _features: FeatureModel[];
+
+  // eslint-disable-next-line no-use-before-define
   private _parent: NodeModel;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id: number) {
@@ -150,7 +155,7 @@ class NodeModel extends INodeModel {
     });
 
     const id = result.getId();
-    result._properties = Object.assign({}, this._properties);
+    result._properties = { ...this._properties };
     result.setId(id);
 
     result._features = cloneDeep(this._features);
@@ -189,7 +194,6 @@ class NodeModel extends INodeModel {
     $assert(parent !== this, 'The same node can not be parent and child if itself.');
     this._parent = parent;
   }
-
 }
 
 export default NodeModel;

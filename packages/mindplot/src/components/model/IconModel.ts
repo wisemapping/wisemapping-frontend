@@ -25,7 +25,7 @@ class IconModel extends FeatureModel {
   }
 
   getIconType(): string {
-    return this.getAttribute('id');
+    return this.getAttribute('id') as string;
   }
 
   setIconType(iconType: string):void {

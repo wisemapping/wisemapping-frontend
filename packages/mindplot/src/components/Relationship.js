@@ -21,8 +21,6 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import ConnectionLine from './ConnectionLine';
 import ControlPoint from './ControlPoint';
 
-import INodeModel from './model/INodeModel';
-
 import Shape from './util/Shape';
 
 class Relationship extends ConnectionLine {

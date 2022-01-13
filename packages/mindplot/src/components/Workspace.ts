@@ -16,18 +16,23 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Workspace as Workspace2D } from '@wisemapping/web2d';
-import { ElementClass as Element2D} from '@wisemapping/web2d';
+import { Workspace as Workspace2D, ElementClass as Element2D } from '@wisemapping/web2d';
 import ScreenManager from './ScreenManager';
 import { Size } from './Size';
 
 class Workspace {
   private _zoom: number;
+
   private _screenManager: ScreenManager;
+
   private _isReadOnly: boolean;
+
   private _containerSize: Size;
+
   private _workspace: Workspace2D;
+
   private _eventsEnabled: boolean;
+
   private _visibleAreaSize: Size;
 
   constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
@@ -42,8 +47,8 @@ class Workspace {
     const divContainer = screenManager.getContainer();
     this._containerSize = {
       width: Number.parseInt(divContainer.css('width'), 10),
-      height: Number.parseInt(divContainer.css('height'), 10)
-    }
+      height: Number.parseInt(divContainer.css('height'), 10),
+    };
     // Initialize web2d workspace.
     const workspace = this._createWorkspace();
     this._workspace = workspace;
@@ -122,13 +127,13 @@ class Workspace {
     return this._workspace.getCoordSize();
   }
 
-  setZoom(zoom: number, center: boolean = false): void {
+  setZoom(zoom: number, center = false): void {
     this._zoom = zoom;
     const workspace = this._workspace;
     const newVisibleAreaSize = this._screenManager.getVisibleBrowserSize();
 
     // Update coord scale...
-    const newCoordWidth =  zoom * this._containerSize.width;
+    const newCoordWidth = zoom * this._containerSize.width;
     const newCoordHeight = zoom * this._containerSize.height;
 
     let coordOriginX: number;
@@ -137,9 +142,7 @@ class Workspace {
       // Center and define a new center of coordinates ...
       coordOriginX = -(newVisibleAreaSize.width / 2) * zoom;
       coordOriginY = -(newVisibleAreaSize.height / 2) * zoom;
-
     } else {
-
       const oldCoordOrigin = workspace.getCoordOrigin();
 
       // Next coordSize is always centered in the middle of the visible area ...

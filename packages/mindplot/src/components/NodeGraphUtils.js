@@ -2,7 +2,6 @@ import { $assert } from '@wisemapping/core-js';
 
 import CentralTopic from './CentralTopic';
 import MainTopic from './MainTopic';
-import INodeModel from './model/INodeModel';
 
 /**
  * creates a new topic from the given node model

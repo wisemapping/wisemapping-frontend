@@ -30,9 +30,8 @@ import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 
-
 // This hack is required to initialize Bootstrap. In future, this should be removed.
-//@ts-ignore
+// @ts-ignore
 global.jQuery = jquery;
 require('@libraries/bootstrap/js/bootstrap');
 
@@ -62,7 +61,8 @@ const options = DesignerOptionsBuilder.buildOptions(
     container: 'mindplot',
     zoom: zoomParam || global.userOptions.zoom,
     locale: global.locale,
-  });
+  },
+);
 
 // Build designer ...
 const designer = buildDesigner(options);

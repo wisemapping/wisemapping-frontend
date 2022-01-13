@@ -15,84 +15,81 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from "../..";
-import IconModel from "../model/IconModel";
-import INodeModel from "../model/INodeModel";
-import LinkModel from "../model/LinkModel";
-import NoteModel from "../model/NoteModel";
-import Exporter from "./Exporter";
+import { Mindmap } from '../..';
+import INodeModel from '../model/INodeModel';
+import LinkModel from '../model/LinkModel';
+import NoteModel from '../model/NoteModel';
+import Exporter from './Exporter';
 
 class MDExporter implements Exporter {
-    private mindmap: Mindmap;
-    private footNotes = []
+  private mindmap: Mindmap;
 
-    constructor(mindmap: Mindmap) {
-        this.mindmap = mindmap;
+  private footNotes = [];
+
+  constructor(mindmap: Mindmap) {
+    this.mindmap = mindmap;
+  }
+
+  extension(): string {
+    return 'md';
+  }
+
+  private normalizeText(value: string): string {
+    return value.replace('\n', '');
+  }
+
+  export(): Promise<string> {
+    this.footNotes = [];
+
+    // Add cental node as text ...
+    const centralTopic = this.mindmap.getCentralTopic();
+    const centralText = this.normalizeText(centralTopic.getText());
+
+    // Traverse all the branches ...
+    let result = `# ${centralText}\n\n`;
+    result += this.traverseBranch('', centralTopic.getChildren());
+
+    // White footnotes:
+    if (this.footNotes.length > 0) {
+      result += '\n\n\n';
+      this.footNotes.forEach((note, index) => {
+        result += `[^${index + 1}]: ${this.normalizeText(note)}`;
+      });
     }
+    result += '\n';
 
-    extension(): string {
-        return 'md';
-    }
+    return Promise.resolve(result);
+  }
 
-    private normalizeText(value: string): string {
-        return value.replace('\n', '');
-    }
-
-    export(): Promise<string> {
-        this.footNotes = [];
-        const mindmap = this.mindmap;
-
-        // Add cental node as text ...
-        const centralTopic = this.mindmap.getCentralTopic();
-        const centralText = this.normalizeText(centralTopic.getText());
-
-        // Traverse all the branches ...
-        let result = `# ${centralText}\n\n`
-        result += this.traverseBranch('', centralTopic.getChildren());
-
-        // White footnotes:
-        if (this.footNotes.length > 0) {
-            result += '\n\n\n';            
-            this.footNotes.forEach((note, index) => {
-                result += `[^${index + 1}]: ${this.normalizeText(note)}`;
-            });
+  private traverseBranch(prefix: string, branches: Array<INodeModel>) {
+    let result = '';
+    branches.forEach((node) => {
+      result = `${result}${prefix}- ${node.getText()}`;
+      node.getFeatures().forEach((f) => {
+        const type = f.getType();
+        // Dump all features ...
+        if (type === 'link') {
+          result = `${result} ( [link](${(f as LinkModel).getUrl()}) )`;
         }
-        result += '\n';
 
-        return Promise.resolve(result);
-    }
+        if (type === 'note') {
+          const note = f as NoteModel;
+          this.footNotes.push(note.getText());
+          result = `${result}[^${this.footNotes.length}] `;
+        }
 
-    private traverseBranch(prefix: string, branches: Array<INodeModel>) {
-        let result = '';
-        branches.forEach((node) => {
-            result = result + `${prefix}- ${node.getText()}`;
-            node.getFeatures().forEach((f) => {
-                const type = f.getType();
-                // Dump all features ...
-                if (type === 'link') {
-                    result = result + ` ( [link](${(f as LinkModel).getUrl()}) )`
-                }
+        // if(type === 'icon'){
+        //     const icon = f as IconModel;
+        //     result = result + ` ![${icon.getIconType().replace('_','')}!](https://app.wisemapping.com/images/${icon.getIconType()}.svg )`
+        // }
+      });
+      result = `${result}\n`;
 
-                if (type === 'note') {
-                    const note = f as NoteModel;
-                    this.footNotes.push(note.getText());
-                    result = result + `[^${this.footNotes.length}] `
-                }
-
-                // if(type === 'icon'){
-                //     const icon = f as IconModel;
-                //     result = result + ` ![${icon.getIconType().replace('_','')}!](https://app.wisemapping.com/images/${icon.getIconType()}.svg )`
-                // }     
-            });
-            result = result + '\n';
-
-            if (node.getChildren().length > 0) {
-                result = result + this.traverseBranch(`${prefix}\t`, node.getChildren());
-            }
-        });
-        return result;
-    }
-
-
+      if (node.getChildren().length > 0) {
+        result += this.traverseBranch(`${prefix}\t`, node.getChildren());
+      }
+    });
+    return result;
+  }
 }
 export default MDExporter;

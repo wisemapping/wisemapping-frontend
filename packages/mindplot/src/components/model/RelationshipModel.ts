@@ -20,14 +20,22 @@ import Point from '@wisemapping/web2d';
 import ConnectionLine from '../ConnectionLine';
 
 class RelationshipModel {
-  static _next_uuid: number = 0;
+  static _next_uuid = 0;
+
   private _id: number;
+
   private _sourceTargetId: number;
+
   private _targetTopicId: number;
+
   private _lineType: number;
+
   private _srcCtrlPoint: Point;
+
   private _destCtrlPoint: Point;
+
   private _endArrow: boolean;
+
   private _startArrow: boolean;
 
   constructor(sourceTopicId: number, targetTopicId: number) {
@@ -129,6 +137,5 @@ class RelationshipModel {
     return RelationshipModel._next_uuid;
   }
 }
-
 
 export default RelationshipModel;

@@ -20,8 +20,11 @@ import { Point } from '@wisemapping/web2d';
 
 class ScreenManager {
   private _divContainer: JQuery;
+
   private _padding: { x: number; y: number; };
+
   private _clickEvents: ((event: UIEvent)=>void)[];
+
   private _scale: number;
 
   constructor(divElement: JQuery) {
@@ -44,11 +47,11 @@ class ScreenManager {
   /**
    * Return the current visibile area in the browser.
    */
-  getVisibleBrowserSize():{width:number,height:number}{
+  getVisibleBrowserSize():{width:number, height:number} {
     return {
       width: window.innerWidth,
       height: window.innerHeight - Number.parseInt(this._divContainer.css('top'), 10),
-    }
+    };
   }
 
   setScale(scale: number) {
@@ -140,8 +143,8 @@ class ScreenManager {
 
     // Adjust the deviation of the container positioning ...
     const containerPosition = this.getContainer().position();
-    x = x - containerPosition.left;
-    y = y - containerPosition.top; 
+    x -= containerPosition.left;
+    y -= containerPosition.top;
 
     // Scale coordinate in order to be relative to the workspace. That's coordSize/size;
     x *= this._scale;

@@ -21,12 +21,15 @@ import FeatureModel from './FeatureModel';
 import IMindmap from './IMindmap';
 import Mindmap from './Mindmap';
 
+export type NodeModelType = 'CentralTopic' | 'MainTopic';
+
 // regex taken from https://stackoverflow.com/a/34763398/58128
 const parseJsObject = (str: string) => JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
 
 abstract class INodeModel {
-  static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE: number = 220;
-  static _next_uuid: number = 0;
+  static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
+
+  static _next_uuid = 0;
 
   protected _mindmap: Mindmap;
 
@@ -38,6 +41,7 @@ abstract class INodeModel {
   getId(): number {
     return this.getProperty('id');
   }
+
   abstract getFeatures(): FeatureModel[];
 
   /** */
@@ -360,7 +364,7 @@ abstract class INodeModel {
   static _nextUUID(): number {
     INodeModel._next_uuid += 1;
     return INodeModel._next_uuid;
-  };
+  }
 }
 
 const TopicShape = {
@@ -370,8 +374,6 @@ const TopicShape = {
   LINE: 'line',
   IMAGE: 'image',
 };
-
-export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
 /**
  * @todo: This method must be implemented. (unascribed)

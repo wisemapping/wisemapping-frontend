@@ -4,7 +4,6 @@ import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
 import FeatureModel, { FeatureType } from './FeatureModel';
 
-
 interface NodeById {
   id: FeatureType,
   model: typeof FeatureModel;
@@ -30,6 +29,7 @@ class FeatureModelFactory {
       .filter((elem) => elem.id === type)[0];
     return new Model(attributes);
   }
+
   /**
      * @param id the feature metadata id
      * @return {Boolean} returns true if the given id is contained in the metadata array
@@ -37,6 +37,6 @@ class FeatureModelFactory {
   static isSupported(type: string): boolean {
     return FeatureModelFactory.modelById.some((elem) => elem.id === type);
   }
-};
+}
 
 export default FeatureModelFactory;

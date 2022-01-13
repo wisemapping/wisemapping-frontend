@@ -43,7 +43,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
     // @ts-ignore
     if (window.waitDialog) {
       // @ts-ignore
-      window.waitDialog.close();  
+      window.waitDialog.close();
       // @ts-ignore
       window.waitDialog = null;
     }
@@ -75,3 +75,4 @@ export function buildDesigner(options: DesignerOptions): Designer {
   return designer;
 }
 
+export default buildDesigner;

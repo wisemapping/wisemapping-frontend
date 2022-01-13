@@ -22,7 +22,7 @@ import Pela2TangoMigrator from './Pela2TangoMigrator';
 import XMLSerializerBeta from './XMLSerializerBeta';
 import XMLSerializerPela from './XMLSerializerPela';
 import XMLSerializerTango from './XMLSerializerTango';
-import { Mindmap } from '../..';
+import Mindmap from '../model/Mindmap';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 
 const codeToSerializer = [
