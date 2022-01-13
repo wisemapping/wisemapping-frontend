@@ -27,13 +27,7 @@ module.exports = {
         },
         {
             test: /\.(png|jpe?g|gif|svg)$/,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    esModule: false,
-                    name: '[name].[ext]',
-                }
-            }]
+            type: 'asset/inline',
         },
         ]
     },
