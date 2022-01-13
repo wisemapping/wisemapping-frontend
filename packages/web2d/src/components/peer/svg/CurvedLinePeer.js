@@ -41,7 +41,7 @@ class CurvedLinePeer extends ElementPeer {
       this._control1.y = Number.parseFloat(this._control1.y, 10);
     }
     if (change) {
-        this._updatePath();
+      this._updatePath();
     }
   }
 
@@ -155,7 +155,7 @@ class CurvedLinePeer extends ElementPeer {
       && $defined(this._y2)
     ) {
       this._calculateAutoControlPoints(avoidControlPointFix);
-      
+
       const path = `M${this._x1.toFixed(2)},${this._y1.toFixed(2)} C${(this._control1.x + this._x1).toFixed(2)},${this._control1.y + this._y1
       } ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2).toFixed(2)} ${(this._x2).toFixed(2)},${(this._y2).toFixed(2)}${this._lineStyle
         ? ` ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2 + 3).toFixed(2)} ${(this._control1.x + this._x1

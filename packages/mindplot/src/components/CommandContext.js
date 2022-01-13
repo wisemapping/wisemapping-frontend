@@ -17,7 +17,6 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import EventBus from './layout/EventBus';
-import NodeModel from './model/NodeModel';
 
 class CommandContext {
   constructor(designer) {

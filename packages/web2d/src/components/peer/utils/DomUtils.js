@@ -1,5 +1,3 @@
-import { $defined } from '@wisemapping/core-js';
-
 // quick hand-made version of $.css()
 export const getStyle = (elem, prop) => {
   const result = window.getComputedStyle(elem)[prop];

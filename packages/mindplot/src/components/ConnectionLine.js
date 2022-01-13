@@ -20,7 +20,7 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import {
   Point, CurvedLine, PolyLine, Line,
 } from '@wisemapping/web2d';
-import INodeModel, { TopicShape } from './model/INodeModel';
+import { TopicShape } from './model/INodeModel';
 import TopicConfig from './TopicConfig';
 
 class ConnectionLine {

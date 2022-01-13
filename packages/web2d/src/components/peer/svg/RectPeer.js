@@ -47,7 +47,7 @@ class RectPeer extends ElementPeer {
   setSize(width, height) {
     super.setSize(width, height);
     const min = width < height ? width : height;
-  
+
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
