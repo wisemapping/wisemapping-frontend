@@ -22,7 +22,7 @@ Please refer to each package's Readme.md for anything specific to the package.
 
 If you want to contribute, please check out [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-## Scripts
+## Useful scripts
 
 Each package might provide the following scripts.  
 You can run these for all packages by running it from the root folder. Alternatively you can run it for a specific package by passing the `--scope` option.
