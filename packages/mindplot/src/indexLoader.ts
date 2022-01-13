@@ -22,7 +22,6 @@ import jquery from 'jquery';
 import {
   $notify,
 } from './components/widget/ToolbarNotifier';
-import LoadingModal from './components/widget/LoadingModal';
 import {
   buildDesigner,
 } from './components/DesignerBuilder';
@@ -36,9 +35,6 @@ import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 //@ts-ignore
 global.jQuery = jquery;
 require('@libraries/bootstrap/js/bootstrap');
-
-const loadingModal = new LoadingModal();
-loadingModal.show();
 
 // Configure designer options ...
 let persistence:PersistenceManager;
@@ -70,10 +66,6 @@ const options = DesignerOptionsBuilder.buildOptions(
 
 // Build designer ...
 const designer = buildDesigner(options);
-
-designer.addEvent('loadSuccess', () => {
-  loadingModal.hide();
-});
 
 // Load map from XML file persisted on disk...
 const instance = PersistenceManager.getInstance();

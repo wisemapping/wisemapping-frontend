@@ -3,7 +3,6 @@ import { buildDesigner } from '../../../../src/components/DesignerBuilder';
 import { PersistenceManager, LocalStorageManager } from '../../../../src';
 import DesignerOptionsBuilder from '../../../../src/components/DesignerOptionsBuilder';
 
-
 const p = new LocalStorageManager('samples/{id}.wxml');
 const options = DesignerOptionsBuilder.buildOptions({ persistenceManager: p, readOnly: true, saveOnLoad: false });
 
