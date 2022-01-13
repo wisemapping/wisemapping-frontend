@@ -4,7 +4,7 @@ WiseMapping Frond End is part of the [MindMap Open Source Project](http://www.wi
 
 WiseMapping Front extracts all the UI related aspects in this repository. You will find three major modules:
 
-* Web2d: Lighway abstraction over SVG for chart renderding.
+* Web2D: Lighway abstraction over SVG for chart renderding.
 * Mindplot: Pure vanilla ES6 classes responsible for providing mindmap rendering and edition capabilities.
 * Webapp: REACT application that encompass the whole midnmap adminitraction experience.
 
