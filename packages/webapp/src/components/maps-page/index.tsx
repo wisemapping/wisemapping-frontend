@@ -197,6 +197,7 @@ const MapsPage = (): ReactElement => {
                             action={activeDialog}
                             onClose={() => setActiveDialog(undefined)}
                             mapsId={[]}
+                            fromEditor
                         />
 
                         <div className={classes.rightButtonGroup}>

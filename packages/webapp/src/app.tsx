@@ -32,6 +32,12 @@ const queryClient = new QueryClient({
 const App = (): ReactElement => {
     const appi18n = new AppI18n();
     const locale = appi18n.getBrowserLocale();
+
+    // global variables set server-side
+    const memoryPersistence = global.memoryPersistence;
+    const readOnlyMode = global.readOnly;
+    const mapId = parseInt(global.mapId, 10);
+
     return locale.message ? (
         <Provider store={store}>
             <QueryClientProvider client={queryClient}>
@@ -66,7 +72,8 @@ const App = (): ReactElement => {
                                     <MapsPage />
                                 </Route>
                                 <Route exact path="/c/maps/:id/edit">
-                                    <Editor />
+                                    <Editor memoryPersistence={memoryPersistence} 
+                                        readOnlyMode={readOnlyMode} mapId={mapId}  />
                                 </Route>
                             </Switch>
                         </Router>

@@ -2,14 +2,19 @@ import React from 'react';
 import Toolbar from './toolbar';
 import ActionDispatcher from '../action-dispatcher';
 import { ActionType } from '../action-chooser';
+import { useIntl } from 'react-intl';
 
 
-// this component is a hack. In order to work, we need to load externally the "loader.js" script from mindplot
+export type EditorPropsType = {
+    mapId: number;
+    memoryPersistence: boolean;
+    readOnlyMode: boolean;
+};
+
+// HACK. In order to work, we need to load externally the "loader.js" script from mindplot
 // TODO: create the Editor component in the editor package, with its own build and include it instead
-export default function Editor(): React.ReactElement {
-    const memoryPersistence = false;
-    const readOnlyMode = false;
-    const mapId = 1;
+export default function Editor({ mapId, memoryPersistence, readOnlyMode  } : EditorPropsType): React.ReactElement {
+    const intl = useIntl();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
 
     return <>
@@ -42,20 +47,25 @@ export default function Editor(): React.ReactElement {
         <div id="headerNotifier"></div>
         {
             memoryPersistence && <div id="tryInfoPanel">
-            <p>TRY_WELCOME</p>
-            <p>TRY_WELCOME_DESC</p>
-            <a href="/c/registration"><div className="actionButton">
-                SIGN_UP</div>
+            <p>
+                { intl.formatMessage({ id: 'editor.try-welcome' }) }
+            </p>
+            <p>{ intl.formatMessage({ id: 'editor.try-welcome-description' }) }</p>
+            <a href="/c/registration">
+                <div className="actionButton">
+                    { intl.formatMessage({ id: 'login.signup', defaultMessage: 'Sign Up' }) }
+                </div>
             </a>
         </div>
         }
         {
             activeDialog && 
             <ActionDispatcher
-                    action={activeDialog}
-                    onClose={() => setActiveDialog(null)}
-                    mapsId={[mapId]}
-                />
+                action={activeDialog}
+                onClose={() => setActiveDialog(null)}
+                mapsId={[mapId]}
+                fromEditor
+            />
         }
     </>
 }

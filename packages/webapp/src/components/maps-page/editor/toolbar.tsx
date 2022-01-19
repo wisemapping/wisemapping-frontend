@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { ActionType } from '../action-chooser';
 
 export type ToolbarPropsType = {
@@ -12,6 +13,7 @@ export default function Toolbar({
     readOnlyMode,
     onAction,
 }: ToolbarPropsType): React.ReactElement {
+    const intl = useIntl();
     return (
         <div id="toolbar">
             <div id="backToList">
@@ -21,6 +23,9 @@ export default function Toolbar({
                 <div id="persist" className="buttonContainer">
                     <div id="save" className="buttonOn">
                         <img src="../../images/editor/save.svg" />
+                    </div>
+                    <div id="discard" className="buttonOn">
+                        <img src="../../images/editor/discard.svg" />
                     </div>
                 </div>
             )}
@@ -103,7 +108,7 @@ export default function Toolbar({
                         <img src="../../images/editor/account.svg" />
                     </div>
                     <div id="share" className="actionButton" onClick={() => onAction('share')}>
-                        SHARE
+                        { intl.formatMessage({ id: 'action.share', defaultMessage: 'Share' }) }
                     </div>
                 </div>
             )}

@@ -57,8 +57,8 @@ class AccountSettingsPanel extends ListToolbarPanel {
     const content = $("<div class='toolbarPanel' id='accountSettingsPanel'></div>");
     content[0].innerHTML = `
         <p style='text-align:center;font-weight:bold;'>${global.accountName}</p>
-        <p>pveiga@wisemapping.com</p>
-        <div id="${global.accountMail}" model='logout' style='text-align:center'>
+        <p>${global.accountEmail}</p>
+        <div id="account-logout" model='logout' style='text-align:center'>
           Logout
         </div>
     `;

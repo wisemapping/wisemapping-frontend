@@ -58,6 +58,8 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
 
+export type ExportFormat = 'png' | 'svg' | 'jpg' | 'wxml';
+
 class Designer extends Events {
   private _mindmap: Mindmap;
 
@@ -80,11 +82,11 @@ class Designer extends Events {
   private _cleanScreen: any;
 
   constructor(options: DesignerOptions, divElement: JQuery) {
+    super();
     $assert(options, 'options must be defined');
     $assert(options.zoom, 'zoom must be defined');
     $assert(options.containerSize, 'size must be defined');
     $assert(divElement, 'divElement must be defined');
-    super();
 
     // Set up i18n location ...
     Messages.init(options.locale);
@@ -342,7 +344,9 @@ class Designer extends Events {
     }
   }
 
-  export(formatType: 'png' | 'svg' | 'jpg' | 'wxml'): Promise<string> {
+  EXPORT_SUPPORTED_FORMATS: ExportFormat[] = ['png', 'svg', 'jpg', 'wxml'];
+
+  export(formatType: ExportFormat): Promise<string> {
     const workspace = this._workspace;
     const svgElement = workspace.getSVGElement();
     const size = workspace.getSize();
