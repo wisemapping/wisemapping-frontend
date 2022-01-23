@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "0.4.9",
+    "version": "5.0.1",
     "main": "app.jsx",
     "scripts": {
         "start": "webpack serve --config webpack.dev.js ",
