@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/mindplot",
-    "version": "0.4.15",
+    "version": "5.0.1",
     "description": "WiseMapping - Mindplot Canvas Library",
     "homepage": "http://www.wisemapping.org/",
     "main": "dist/main.js",
