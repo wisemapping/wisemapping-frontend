@@ -146,9 +146,12 @@ class Designer extends Events {
     }, { passive: false });
   }
 
+  getActionDispatcher(): StandaloneActionDispatcher {
+    return this._actionDispatcher;
+  }
+
   // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  addEvent(type: string, listener: Function): void {
+  addEvent(type: string, listener: any): void {
     if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
       const editor = TopicEventDispatcher.getInstance();
       editor.addEvent(type, listener);

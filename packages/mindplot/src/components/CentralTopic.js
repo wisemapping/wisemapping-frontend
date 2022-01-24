@@ -42,7 +42,9 @@ class CentralTopic extends Topic {
   }
 
   /** */
-  updateTopicShape() { }
+  updateTopicShape() {
+    // Overwite behaviour ...
+  }
 
   _updatePositionOnChangeSize() {
     // Center main topic ...

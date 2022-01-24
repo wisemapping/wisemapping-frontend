@@ -100,7 +100,9 @@ class BootstrapDialog extends Options {
     throw new Error('Unsupported operation');
   }
 
-  onDialogShown() {}
+  onDialogShown() {
+    // Overwrite default behaviour ...
+  }
 
   onRemoveClick(event) {
     throw new Error('Unsupported operation');

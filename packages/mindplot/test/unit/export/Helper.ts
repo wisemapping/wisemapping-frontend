@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { Blob } from 'blob-polyfill';
-import Exporter from '../../../src/components/export/Exporter';
 import path from 'path';
 import fs from 'fs';
 import { diff } from 'jest-diff';
 import { expect } from '@jest/globals';
+import Exporter from '../../../src/components/export/Exporter';
 
 const saveOutputRecord = false;
 
@@ -40,31 +40,31 @@ export const parseXMLFile = (filePath: fs.PathOrFileDescriptor, mimeType: DOMPar
 
   let content = stream.toString();
   // Hack for SVG exported from the browser ...
-  if(mimeType=="image/svg+xml"){
-    content = content.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ')
+  if (mimeType == 'image/svg+xml') {
+    content = content.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
   }
 
   return parseXMLString(content, mimeType);
-}
+};
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlStr, mimeType);
 
   // Is there any parsing error ?.
-  if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
+  if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
     const xmmStr = new XMLSerializer().serializeToString(xmlDoc);
     console.log(xmmStr);
     throw new Error(`Unexpected error parsing: ${xmlStr}. Error: ${xmmStr}`);
   }
 
   return xmlDoc;
-}
+};
 
 export const exporterAssert = async (testName: string, exporter: Exporter) => {
   const actualStr = await exporter.export();
 
-  //Compared with expected ...
+  // Compared with expected ...
   const expectedPath = path.resolve(__dirname, `./expected/${testName}.${exporter.extension()}`);
   if (saveOutputRecord) {
     fs.writeFileSync(expectedPath, actualStr);
@@ -73,8 +73,8 @@ export const exporterAssert = async (testName: string, exporter: Exporter) => {
   // compare with expected ...
   const expectedStr = fs.readFileSync(expectedPath).toString();
   if (actualStr !== expectedStr) {
-      const diffResult = diff(actualStr, expectedStr);
-      console.log(diffResult);
-      expect(actualStr).toEqual(expectedStr);
+    const diffResult = diff(actualStr, expectedStr);
+    console.log(diffResult);
+    expect(actualStr).toEqual(expectedStr);
   }
-}
+};

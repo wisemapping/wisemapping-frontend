@@ -30,6 +30,7 @@ const codeToSerializer = [
     codeName: ModelCodeName.BETA,
     serializer: XMLSerializerBeta,
     migrator() {
+      // Ignore ..
     },
   },
   {

@@ -18,7 +18,6 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
-import IMindmap from './IMindmap';
 import Mindmap from './Mindmap';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
@@ -39,7 +38,7 @@ abstract class INodeModel {
   }
 
   getId(): number {
-    return this.getProperty('id');
+    return this.getProperty('id') as number;
   }
 
   abstract getFeatures(): FeatureModel[];
@@ -71,7 +70,7 @@ abstract class INodeModel {
   }
 
   getText(): string {
-    return this.getProperty('text');
+    return this.getProperty('text') as string;
   }
 
   setPosition(x: number, y: number): void {
@@ -79,7 +78,7 @@ abstract class INodeModel {
   }
 
   getPosition(): { x: number, y: number } {
-    const value = this.getProperty('position');
+    const value = this.getProperty('position') as string;
     let result = null;
     if (value != null) {
       result = parseJsObject(value);
@@ -92,7 +91,7 @@ abstract class INodeModel {
   }
 
   getImageSize(): {width: number, height: number} {
-    const value = this.getProperty('imageSize');
+    const value = this.getProperty('imageSize') as string;
     let result = null;
     if (value != null) {
       result = parseJsObject(value);
@@ -105,7 +104,7 @@ abstract class INodeModel {
   }
 
   getMetadata(): string {
-    return this.getProperty('metadata');
+    return this.getProperty('metadata') as string;
   }
 
   setMetadata(json: string): void {
@@ -113,10 +112,10 @@ abstract class INodeModel {
   }
 
   getImageUrl(): string {
-    return this.getProperty('imageUrl');
+    return this.getProperty('imageUrl') as string;
   }
 
-  getMindmap(): IMindmap {
+  getMindmap(): Mindmap {
     return this._mindmap;
   }
 
@@ -131,7 +130,7 @@ abstract class INodeModel {
 
   /** */
   getShapeType(): string {
-    return this.getProperty('shapeType');
+    return this.getProperty('shapeType') as string;
   }
 
   /** */
@@ -148,7 +147,7 @@ abstract class INodeModel {
   }
 
   getOrder(): number {
-    return this.getProperty('order');
+    return this.getProperty('order') as number;
   }
 
   setFontFamily(fontFamily: string): void {
@@ -156,7 +155,7 @@ abstract class INodeModel {
   }
 
   getFontFamily(): string {
-    return this.getProperty('fontFamily');
+    return this.getProperty('fontFamily') as string;
   }
 
   /** */
@@ -165,7 +164,7 @@ abstract class INodeModel {
   }
 
   getFontStyle(): string {
-    return this.getProperty('fontStyle');
+    return this.getProperty('fontStyle') as string;
   }
 
   setFontWeight(weight) {
@@ -181,7 +180,7 @@ abstract class INodeModel {
   }
 
   getFontColor(): string {
-    return this.getProperty('fontColor');
+    return this.getProperty('fontColor') as string;
   }
 
   setFontSize(size: number) {
@@ -189,11 +188,11 @@ abstract class INodeModel {
   }
 
   getFontSize(): number {
-    return this.getProperty('fontSize');
+    return this.getProperty('fontSize') as number;
   }
 
   getBorderColor(): string {
-    return this.getProperty('borderColor');
+    return this.getProperty('borderColor') as string;
   }
 
   setBorderColor(color: string): void {
@@ -201,7 +200,7 @@ abstract class INodeModel {
   }
 
   getBackgroundColor(): string {
-    return this.getProperty('backgroundColor');
+    return this.getProperty('backgroundColor') as string;
   }
 
   setBackgroundColor(color: string) {
@@ -209,7 +208,7 @@ abstract class INodeModel {
   }
 
   areChildrenShrunken(): boolean {
-    const result = this.getProperty('shrunken');
+    const result = this.getProperty('shrunken') as boolean;
     return $defined(result) ? result : false;
   }
 
@@ -291,9 +290,9 @@ abstract class INodeModel {
 
   abstract getPropertiesKeys(): string[];
 
-  abstract getProperty(key: string): any;
+  abstract getProperty(key: string): number | string | boolean;
 
-  abstract putProperty(key: string, value: any): void;
+  abstract putProperty(key: string, value: number | string| boolean): void;
 
   abstract setParent(parent: INodeModel): void;
 

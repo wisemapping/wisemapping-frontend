@@ -133,7 +133,7 @@ class Mindmap extends IMindmap {
    * @throws will throw an error if target node is null or undefined
    * @return the relationship model created
    */
-  createRelationship(sourceNodeId: any, targetNodeId: any) {
+  createRelationship(sourceNodeId: number, targetNodeId: number):RelationshipModel {
     $assert($defined(sourceNodeId), 'from node cannot be null');
     $assert($defined(targetNodeId), 'to node cannot be null');
 
@@ -154,7 +154,7 @@ class Mindmap extends IMindmap {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
-  findNodeById(id: any) {
+  findNodeById(id: number) {
     let result = null;
     for (let i = 0; i < this._branches.length; i++) {
       const branch = this._branches[i];

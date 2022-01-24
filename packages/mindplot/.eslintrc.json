@@ -37,7 +37,6 @@
         // no-unused-vars already used
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/ban-ts-comment": "warn",
-        "@typescript-eslint/no-empty-function": "warn",
         "import/no-extraneous-dependencies": ["warn", {"packageDir": "./", "devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
     },
     "settings": {
