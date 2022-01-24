@@ -6,6 +6,11 @@ const prodConfig = {
     usedExports: true,
     minimize: true,
   },
+  externals: {
+    react: 'react',
+    reactDOM: 'react-dom',
+    reactIntl: 'react-intl',
+  },
 };
 
 module.exports = merge(common, prodConfig);

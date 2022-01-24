@@ -9,6 +9,5 @@
     "allowJs": true, 
     "esModuleInterop": true,
   },
-  "exclude": ["node_modules"],
-  "files": ["src/custom.d.ts"]
+  "exclude": ["node_modules"]
 }

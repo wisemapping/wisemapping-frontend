@@ -11,22 +11,14 @@ declare global {
     var historyId: string;
     var isAuth: boolean;
     var mapId: number;
-    var userOptions: { zoom: string | number };
+    var userOptions: { zoom: string | number } | null;
     var locale: string;
     var mindmapLocked: boolean;
     var mindmapLockedMsg: string;
 }
 
-const {
-    PersistenceManager,
-    RESTPersistenceManager,
-    LocalStorageManager,
-    DesignerOptionsBuilder,
-    buildDesigner,
-    $notify,
-} = mindplot;
-
 export type EditorPropsType = {
+    initCallback?: (m: typeof mindplot) => () => void;
     mapId: number;
     memoryPersistence: boolean;
     readOnlyMode: boolean;
@@ -34,7 +26,14 @@ export type EditorPropsType = {
     onAction: (action: ToolbarActionType) => void;
 };
 
-const initMindplot = () => {
+const initMindplot = ({
+    PersistenceManager,
+    RESTPersistenceManager,
+    LocalStorageManager,
+    DesignerOptionsBuilder,
+    buildDesigner,
+    $notify,
+}: typeof mindplot) => () => {
     let persistence: typeof PersistenceManager;
     if (!global.memoryPersistence && !global.readOnly) {
         persistence = new RESTPersistenceManager({
@@ -61,7 +60,7 @@ const initMindplot = () => {
         readOnly: Boolean(global.readOnly || false),
         mapId: global.mapId,
         container: 'mindplot',
-        zoom: zoomParam || global.userOptions.zoom,
+        zoom: zoomParam || global.userOptions ? global.userOptions.zoom : 1,
         locale: global.locale,
     });
 
@@ -79,14 +78,15 @@ const initMindplot = () => {
 };
 
 export default function Editor({
+    initCallback = initMindplot,
     mapId,
     memoryPersistence,
     readOnlyMode,
-    locale,
+    locale = 'en',
     onAction,
 }: EditorPropsType): React.ReactElement {
     
-    React.useEffect(initMindplot, []);
+    React.useEffect(initCallback(mindplot), []);
 
     return (
         <IntlProvider locale={locale} defaultLocale="en" messages={{}}>

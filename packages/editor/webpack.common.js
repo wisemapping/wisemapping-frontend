@@ -15,15 +15,10 @@ module.exports = {
       editor: path.join(__dirname, 'src', 'index.tsx')
   },
   mode: 'development',
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   target: 'web',
   resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx']
-  },
-  externals: {
-    react: 'react',
-    reactDOM: 'react-dom',
-    reactIntl: 'react-intl',
   },
   module: {
       rules: [
@@ -36,14 +31,16 @@ module.exports = {
             test: /\.(png|jpe?g|gif|svg)$/,
             type: 'asset/inline',
           },
+          {
+            test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: ['babel-loader'],
+          },
       ],
   },
   
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html')
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })
