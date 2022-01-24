@@ -167,7 +167,7 @@ class Relationship extends ConnectionLine {
     workspace.append(this._controlPointsController);
 
     this._controlPointControllerListener = this._initializeControlPointController.bind(this);
-    if (workspace.isReadOnly) {
+    if (workspace.isReadOnly()) {
       this._line2d.setCursor('default');
     } else {
       this._line2d.addEvent('click', this._controlPointControllerListener);
