@@ -1,13 +1,14 @@
-  {
-    "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "noImplicitAny": false,
-      "module": "es6",
-      "moduleResolution": "Node",
-      "target": "es6",
-      "allowJs": true,
-      "esModuleInterop": true
-    },
-    "exclude": ["node_modules"]
-  }
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "es6",
+    "moduleResolution": "Node",
+    "target": "es6",
+    "allowJs": true,
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules"],
+  "files": ["mindplot.d.ts"]
+}

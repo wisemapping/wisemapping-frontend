@@ -1,3 +1,104 @@
-import Editor from './components/frame';
+import React from 'react';
+import Toolbar, { ToolbarActionType } from './components/toolbar';
+import Footer from './components/footer';
+import { IntlProvider } from 'react-intl';
+import * as mindplot from '@wisemapping/mindplot';
+declare global {
+    var memoryPersistence: boolean;
+    var readOnly: boolean;
+    var lockTimestamp: string;
+    var lockSession: string;
+    var historyId: string;
+    var isAuth: boolean;
+    var mapId: number;
+    var userOptions: { zoom: string | number };
+    var locale: string;
+    var mindmapLocked: boolean;
+    var mindmapLockedMsg: string;
+}
 
-export default Editor;
+const {
+    PersistenceManager,
+    RESTPersistenceManager,
+    LocalStorageManager,
+    DesignerOptionsBuilder,
+    buildDesigner,
+    $notify,
+} = mindplot;
+
+export type EditorPropsType = {
+    mapId: number;
+    memoryPersistence: boolean;
+    readOnlyMode: boolean;
+    locale?: string;
+    onAction: (action: ToolbarActionType) => void;
+};
+
+const initMindplot = () => {
+    let persistence: typeof PersistenceManager;
+    if (!global.memoryPersistence && !global.readOnly) {
+        persistence = new RESTPersistenceManager({
+            documentUrl: '/c/restful/maps/{id}/document',
+            revertUrl: '/c/restful/maps/{id}/history/latest',
+            lockUrl: '/c/restful/maps/{id}/lock',
+            timestamp: global.lockTimestamp,
+            session: global.lockSession,
+        });
+    } else {
+        persistence = new LocalStorageManager(
+            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${
+                !global.isAuth ? '-pub' : ''
+            }`,
+            true
+        );
+    }
+
+    const params = new URLSearchParams(window.location.search.substring(1));
+
+    const zoomParam = Number.parseFloat(params.get('zoom'));
+    const options = DesignerOptionsBuilder.buildOptions({
+        persistenceManager: persistence,
+        readOnly: Boolean(global.readOnly || false),
+        mapId: global.mapId,
+        container: 'mindplot',
+        zoom: zoomParam || global.userOptions.zoom,
+        locale: global.locale,
+    });
+
+    // Build designer ...
+    const designer = buildDesigner(options);
+
+    // Load map from XML file persisted on disk...
+    const instance = PersistenceManager.getInstance();
+    const mindmap = instance.load(global.mapId);
+    designer.loadMap(mindmap);
+
+    if (global.mindmapLocked) {
+        $notify(global.mindmapLockedMsg);
+    }
+};
+
+export default function Editor({
+    mapId,
+    memoryPersistence,
+    readOnlyMode,
+    locale,
+    onAction,
+}: EditorPropsType): React.ReactElement {
+    
+    React.useEffect(initMindplot, []);
+
+    return (
+        <IntlProvider locale={locale} defaultLocale="en" messages={{}}>
+            <div id="header">
+                <Toolbar
+                    memoryPersistence={memoryPersistence}
+                    readOnlyMode={readOnlyMode}
+                    onAction={onAction}
+                />
+            </div>
+            <div id="mindplot"></div>
+            <Footer showTryPanel={memoryPersistence} />
+        </IntlProvider>
+    );
+}
