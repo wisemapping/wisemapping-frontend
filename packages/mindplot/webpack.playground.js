@@ -2,8 +2,8 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const common = require('./webpack.common');
 const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
 
 const playgroundConfig = {
   mode: 'development',

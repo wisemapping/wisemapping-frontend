@@ -19,21 +19,39 @@ import { CurvedLine, Arrow, Point } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
 import Relationship from './Relationship';
 import Shape from './util/Shape';
+import Workspace from './Workspace';
+import { Designer } from '..';
+import Topic from './Topic';
 
 class RelationshipPivot {
-  constructor(workspace, designer) {
+  private _workspace: Workspace;
+
+  private _designer: Designer;
+
+  private _mouseMoveEvent: any;
+
+  private _onClickEvent: any;
+
+  private _onTopicClick: any;
+
+  private _sourceTopic: Topic;
+
+  private _pivot: any;
+
+  private _startArrow: any;
+
+  constructor(workspace: Workspace, designer: Designer) {
     $assert(workspace, 'workspace can not be null');
     $assert(designer, 'designer can not be null');
     this._workspace = workspace;
     this._designer = designer;
 
-    // FIXME: the aim of the migration is remove .bind mootools method, please remove these!
     this._mouseMoveEvent = this._mouseMove.bind(this);
     this._onClickEvent = this._cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
   }
 
-  start(sourceTopic, targetPos) {
+  start(sourceTopic: Topic, targetPos: Point) {
     $assert(sourceTopic, 'sourceTopic can not be null');
     $assert(targetPos, 'targetPos can not be null');
 
@@ -75,7 +93,7 @@ class RelationshipPivot {
     }
   }
 
-  dispose() {
+  dispose(): void {
     const workspace = this._workspace;
 
     if (this._isActive()) {
@@ -99,7 +117,7 @@ class RelationshipPivot {
     }
   }
 
-  _mouseMove(event) {
+  _mouseMove(event: MouseEvent): boolean {
     const screen = this._workspace.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
@@ -121,13 +139,13 @@ class RelationshipPivot {
     return false;
   }
 
-  _cleanOnMouseClick(event) {
+  _cleanOnMouseClick(event: MouseEvent): void {
     // The user clicks on a desktop on in other element that is not a node.
     this.dispose();
     event.stopPropagation();
   }
 
-  _calculateFromPosition(toPosition) {
+  private _calculateFromPosition(toPosition: Point): Point {
     // Calculate origin position ...
     let sourcePosition = this._sourceTopic.getPosition();
     if (this._sourceTopic.getType() === 'CentralTopic') {
@@ -141,19 +159,21 @@ class RelationshipPivot {
     return Shape.calculateRelationShipPointCoordinates(this._sourceTopic, spoint);
   }
 
-  _connectOnFocus(event, targetTopic) {
+  private _connectOnFocus(event: string, targetTopic: Topic): void {
     const sourceTopic = this._sourceTopic;
     const mindmap = this._designer.getMindmap();
 
     // Avoid circular connections ...
     if (targetTopic.getId() !== sourceTopic.getId()) {
       const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic.getId());
-      this._designer._actionDispatcher.addRelationship(relModel);
+      this._designer
+        .getActionDispatcher()
+        .addRelationship(relModel);
     }
     this.dispose();
   }
 
-  _isActive() {
+  private _isActive() {
     return this._pivot != null;
   }
 }

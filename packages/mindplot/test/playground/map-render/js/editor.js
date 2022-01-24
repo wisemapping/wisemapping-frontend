@@ -8,8 +8,8 @@ global.accountName = 'Test User';
 global.accountEmail = 'test@example.com';
 
 const p = new LocalStorageManager('samples/{id}.wxml');
-const options = DesignerOptionsBuilder.buildOptions({ 
-  persistenceManager: p
+const options = DesignerOptionsBuilder.buildOptions({
+  persistenceManager: p,
 });
 const designer = buildDesigner(options);
 
