@@ -19,7 +19,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import INodeModel, { NodeModelType as NodeType } from './INodeModel';
-import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 
 abstract class IMindmap {
@@ -76,7 +75,7 @@ abstract class IMindmap {
 
   abstract createNode(type: NodeType, id: number): INodeModel
 
-  abstract createRelationship(fromNode: NodeModel, toNode: NodeModel): void;
+  abstract createRelationship(fromNodeId: number, toNodeId: number): void;
 
   abstract addRelationship(rel: RelationshipModel): void;
 

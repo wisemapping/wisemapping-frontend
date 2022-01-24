@@ -126,13 +126,6 @@ class Mindmap extends IMindmap {
     return new NodeModel(type, this, id);
   }
 
-  /**
-   * @param sourceNodeId
-   * @param targetNodeId
-   * @throws will throw an error if source node is null or undefined
-   * @throws will throw an error if target node is null or undefined
-   * @return the relationship model created
-   */
   createRelationship(sourceNodeId: number, targetNodeId: number):RelationshipModel {
     $assert($defined(sourceNodeId), 'from node cannot be null');
     $assert($defined(targetNodeId), 'to node cannot be null');
