@@ -7,23 +7,22 @@
 image: cypress/included:8.4.1
 
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Build and test
-            caches:
-              - node
-              - npm
-              - cypress
-            script:
-              - export CYPRESS_imageSnaphots="true"
-              - yarn install
-              - yarn bootstrap
-              - yarn build
-              - yarn lint
-              - yarn test
-            artifacts:
-              - packages/**/cypress/snapshots/**/__diff_output__/*.diff.png
+    '{master,develop}':
+      - step:
+          name: Build and test
+          caches:
+            - node
+            - npm
+            - cypress
+          script:
+            - export CYPRESS_imageSnaphots="true"
+            - yarn install
+            - yarn bootstrap
+            - yarn build
+            - yarn lint
+            - yarn test
+          artifacts:
+            - packages/**/cypress/snapshots/**/__diff_output__/*.diff.png
 definitions:
   caches:
     npm: $HOME/.npm
