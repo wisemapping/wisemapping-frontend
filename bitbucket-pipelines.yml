@@ -7,6 +7,7 @@
 image: cypress/included:8.4.1
 
 pipelines:
+  branches:
     '{master,develop}':
       - step:
           name: Build and test
