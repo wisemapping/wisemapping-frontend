@@ -46,7 +46,11 @@ if (!global.memoryPersistence && !global.readOnly) {
     session: global.lockSession,
   });
 } else {
-  persistence = new LocalStorageManager(`/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''}`, true);
+  const historyId = global.historyId ? `${global.historyId}/` : '';
+  persistence = new LocalStorageManager(
+    `/c/restful/maps/{id}/${historyId}document/xml${!global.isAuth ? '-pub' : ''}`,
+    true,
+  );
 }
 
 // Obtain map zoom from query param if it was specified...

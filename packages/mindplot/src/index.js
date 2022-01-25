@@ -46,5 +46,5 @@ export {
   LocalStorageManager,
   DesignerOptionsBuilder,
   buildDesigner,
-  $notify
+  $notify,
 };
