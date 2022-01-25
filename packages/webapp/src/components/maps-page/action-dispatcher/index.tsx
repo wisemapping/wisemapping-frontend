@@ -22,9 +22,10 @@ type ActionDialogProps = {
     action?: ActionType;
     mapsId: number[];
     onClose: () => void;
+    fromEditor: boolean;
 };
 
-const ActionDispatcher = ({ mapsId, action, onClose }: ActionDialogProps): React.ReactElement => {
+const ActionDispatcher = ({ mapsId, action, onClose, fromEditor }: ActionDialogProps): React.ReactElement => {
     const handleOnClose = (): void => {
         onClose();
     };
@@ -57,12 +58,17 @@ const ActionDispatcher = ({ mapsId, action, onClose }: ActionDialogProps): React
             {action === 'info' && <InfoDialog onClose={handleOnClose} mapId={mapsId[0]} />}
             {action === 'create' && <CreateDialog onClose={handleOnClose} />}
             {action === 'export' && (
-                <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={false} />
+                <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={fromEditor} />
             )}
             {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
         </span>
     );
 };
+
+ActionDispatcher.defaultProps = {
+    fromEditor: false,
+};
+
 export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryClient): void => {
     queryClient.invalidateQueries('maps');
     onClose();

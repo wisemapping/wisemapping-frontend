@@ -74,13 +74,30 @@ const ExportDialog = ({
 
     useEffect(() => {
         if (submit) {
+            // TODO: Remove usage of global "designer"
+            const designer = global.designer;
             // Depending on the type of export. It will require differt POST.
             if (
-                exportFormat == 'pdf' ||
-                exportFormat == 'svg' ||
-                exportFormat == 'jpg' ||
-                exportFormat == 'png'
+                designer && 
+                designer.EXPORT_SUPPORTED_FORMATS.includes(exportFormat)
             ) {
+                designer.export(exportFormat)
+                    .then((url: string) => {
+                        // Create hidden anchor to force download ...
+                        const anchor: HTMLAnchorElement = document.createElement('a');
+                        anchor.style.display = 'display: none';
+                        anchor.download = `${mapId}.${exportFormat}`;
+                        anchor.href = url;
+                        document.body.appendChild(anchor);
+
+                        // Trigger click ...
+                        anchor.click();
+
+                        // Clean up ...
+                        URL.revokeObjectURL(url);
+                        document.body.removeChild(anchor);
+                    });
+            } else if (exportFormat === 'pdf') {
                 formTransformtRef?.submit();
             } else {
                 formExportRef?.submit();
@@ -99,13 +116,15 @@ const ExportDialog = ({
                 description={intl.formatMessage({ id: 'export.desc', defaultMessage: 'Export this map in the format that you want and start using it in your presentations or sharing by email' })}
                 submitButton={intl.formatMessage({ id: 'export.title', defaultMessage: 'Export' })}
             >
-                <Alert severity="info">
-                    <FormattedMessage
-                        id="export.warning"
-                        defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar."
-                    />
-                </Alert>
-
+                {
+                    !enableImgExport && 
+                    <Alert severity="info">
+                        <FormattedMessage
+                            id="export.warning"
+                            defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar."
+                        />
+                    </Alert>
+                }
                 <FormControl component="fieldset">
                     <RadioGroup name="export" value={exportGroup} onChange={handleOnGroupChange}>
                         <FormControl>
@@ -124,7 +143,7 @@ const ExportDialog = ({
                             />
                             {exportGroup == 'image' && (
                                 <Select
-                                    onSelect={handleOnExportFormatChange}
+                                    onChange={handleOnExportFormatChange}
                                     variant="outlined"
                                     value={exportFormat}
                                     className={classes.label}
@@ -132,7 +151,7 @@ const ExportDialog = ({
                                     <MenuItem value="svg" className={classes.menu}>
                                         Scalable Vector Graphics (SVG)
                                     </MenuItem>
-                                    <MenuItem value="pdf" className={classes.select}>
+                                    <MenuItem value="pdf" className={classes.menu}>
                                         Portable Document Format (PDF)
                                     </MenuItem>
                                     <MenuItem value="png" className={classes.menu}>
