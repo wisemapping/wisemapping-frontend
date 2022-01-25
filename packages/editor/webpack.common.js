@@ -1,18 +1,18 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   output: {
-    filename: 'editor.bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '',
     library: {
       type: 'umd',
     },
   },
   entry: {
-      editor: path.join(__dirname, 'src', 'index.tsx')
+    "editor.bundle": path.join(__dirname, 'src', 'index.tsx')
   },
   mode: 'development',
   devtool: 'source-map',
@@ -38,17 +38,7 @@ module.exports = {
           },
       ],
   },
-  
   plugins: [
     new CleanWebpackPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ],
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
-    hot: true,
-  }
+  ]
 }

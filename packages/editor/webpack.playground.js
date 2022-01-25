@@ -8,6 +8,7 @@ const { merge } = require('webpack-merge');
 const playgroundConfig = {
   mode: 'development',
   entry: {
+    "editor.bundle": path.join(__dirname, 'src', 'index.tsx'),
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
     embedded: path.resolve(__dirname, './test/playground/map-render/js/embedded'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
@@ -23,6 +24,7 @@ const playgroundConfig = {
     historyApiFallback: true,
     port: 8081,
     open: false,
+    writeToDisk: true,
   },
   module: {
     rules: [
