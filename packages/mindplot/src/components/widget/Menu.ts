@@ -325,6 +325,21 @@ class Menu extends IMenu {
       Menu._registerTooltip('discard', $msg('DISCARD_CHANGES'));
     }
 
+    const shareElem = $('#shareIt');
+    if (shareElem.length !== 0) {
+      Menu._registerTooltip('shareIt', $msg('COLLABORATE'));
+    }
+
+    const publishElem = $('#publishIt');
+    if (publishElem.length !== 0) {
+      Menu._registerTooltip('publishIt', $msg('PUBLISH'));
+    }
+
+    const historyElem = $('#history');
+    if (historyElem.length !== 0) {
+      Menu._registerTooltip('history', $msg('HISTORY'));
+    }
+
     // Keyboard Shortcuts Action ...
     const keyboardShortcut = $('#keyboardShortcuts');
     if (keyboardShortcut.length !== 0) {
