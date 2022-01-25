@@ -32,7 +32,7 @@ class RelationshipPivot {
 
   private _onClickEvent: (event: MouseEvent) => void;
 
-  private _onTopicClick: (event: MouseEvent) => void;;
+  private _onTopicClick: (event: MouseEvent) => void;
 
   private _sourceTopic: Topic;
 
