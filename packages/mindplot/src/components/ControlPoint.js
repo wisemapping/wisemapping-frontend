@@ -23,25 +23,25 @@ import ActionDispatcher from './ActionDispatcher';
 
 class ControlPoint {
   constructor() {
-    const control1 = new Elipse({
+    this.control1 = new Elipse({
       width: 6,
       height: 6,
       stroke: '1 solid #6589de',
       fillColor: 'gray',
       visibility: false,
     });
-    control1.setCursor('pointer');
+    this.control1.setCursor('pointer');
 
-    const control2 = new Elipse({
+    this.control2 = new Elipse({
       width: 6,
       height: 6,
       stroke: '1 solid #6589de',
       fillColor: 'gray',
       visibility: false,
     });
-    control2.setCursor('pointer');
+    this.control2.setCursor('pointer');
 
-    this._controlPointsController = [control1, control2];
+    this._controlPointsController = [this.control1, this.control2];
     this._controlLines = [
       new Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 }),
       new Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 }),
@@ -82,6 +82,11 @@ class ControlPoint {
     this._orignalCtrlPoint[1] = { ...this._controls[1] };
     this._endPoint[0] = { ...this._line.getLine().getFrom() };
     this._endPoint[1] = { ...this._line.getLine().getTo() };
+  }
+
+  setControlPointTestId(ctrlPoint1, ctrlPoint2) {
+    this.control1.setTestId(ctrlPoint1);
+    this.control2.setTestId(ctrlPoint2);
   }
 
   redraw() {

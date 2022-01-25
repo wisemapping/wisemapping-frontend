@@ -103,9 +103,9 @@ class RelationshipPivot {
       const model = this._designer.getModel();
       const topics = model.getTopics();
 
-      topics.forEach(((topic) => {
+      topics.forEach((topic) => {
         topic.removeEvent('ontfocus', this._onTopicClick);
-      }));
+      });
 
       workspace.removeChild(this._pivot);
       workspace.removeChild(this._startArrow);
@@ -166,9 +166,7 @@ class RelationshipPivot {
     // Avoid circular connections ...
     if (targetTopic.getId() !== sourceTopic.getId()) {
       const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic.getId());
-      this._designer
-        .getActionDispatcher()
-        .addRelationship(relModel);
+      this._designer.getActionDispatcher().addRelationship(relModel);
     }
     this.dispose();
   }

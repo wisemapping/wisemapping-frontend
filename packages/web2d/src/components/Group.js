@@ -144,6 +144,12 @@ class Group extends ElementClass {
   setOpacity(value) {
     this.peer.setOpacity(value);
   }
+
+  /*
+  setTestId(testId) {
+    this.peer._native.setAttribute('test-id', testId);
+  }
+  */
 }
 
 export default Group;
