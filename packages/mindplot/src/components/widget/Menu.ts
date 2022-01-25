@@ -18,7 +18,6 @@
  */
 import $ from 'jquery';
 import { $msg } from '../Messages';
-import BootstrapDialogRequest from '../libraries/bootstrap/BootstrapDialogRequest';
 import IMenu from './IMenu';
 import FontFamilyPanel from './FontFamilyPanel';
 import FontSizePanel from './FontSizePanel';
@@ -37,17 +36,6 @@ class Menu extends IMenu {
     const saveElem = $('#save');
 
     const widgetsBaseUrl = `${baseUrl}css/widget`;
-
-    // Stop event propagation ...
-    $(`#${this._containerId}`).bind('click', (event) => {
-      event.stopPropagation();
-      return false;
-    });
-
-    $(`#${this._containerId}`).bind('dblclick', (event) => {
-      event.stopPropagation();
-      return false;
-    });
 
     // Create panels ...
     const designerModel = designer.getModel();
@@ -216,37 +204,7 @@ class Menu extends IMenu {
       Menu._registerTooltip('fontColor', $msg('FONT_COLOR'));
     }
 
-    this._addButton('export', false, false, () => {
-      // @Todo: this must be configured in the dialog...
-      const formatExtension = 'jpg';
-
-      designer.export(formatExtension)
-        .then((url: string) => {
-          // Create hidden anchor to force download ...
-          const anchor: HTMLAnchorElement = document.createElement('a');
-          anchor.style.display = 'display: none';
-          anchor.download = `${mapId}.${formatExtension}`;
-          anchor.href = url;
-          document.body.appendChild(anchor);
-
-          // Trigger click ...
-          anchor.click();
-
-          // Clean up ...
-          URL.revokeObjectURL(url);
-          document.body.removeChild(anchor);
-        });
-
-      // Create anchor element ...
-    });
-
     Menu._registerTooltip('export', $msg('EXPORT'));
-
-    this._addButton('print', false, false, () => {
-      this.save(saveElem, designer, false);
-      const urlPrefix = window.location.href.substring(0, window.location.href.lastIndexOf('c/maps/'));
-      window.open(`${urlPrefix}c/maps/${mapId}/print`);
-    });
 
     Menu._registerTooltip('print', $msg('PRINT'));
 
@@ -369,37 +327,16 @@ class Menu extends IMenu {
 
     const shareElem = $('#shareIt');
     if (shareElem.length !== 0) {
-      this._addButton('shareIt', false, false, () => {
-        new BootstrapDialogRequest(`c/maps/${mapId}/sharef`, $msg('COLLABORATE'), {
-          closeButton: true,
-          cancelButton: true,
-        });
-        designer.onObjectFocusEvent();
-      });
       Menu._registerTooltip('shareIt', $msg('COLLABORATE'));
     }
 
     const publishElem = $('#publishIt');
     if (publishElem.length !== 0) {
-      this._addButton('publishIt', false, false, () => {
-        new BootstrapDialogRequest(`c/maps/${mapId}/publishf`, $msg('PUBLISH'), {
-          closeButton: true,
-          cancelButton: true,
-        });
-        designer.onObjectFocusEvent();
-      });
       Menu._registerTooltip('publishIt', $msg('PUBLISH'));
     }
 
     const historyElem = $('#history');
     if (historyElem.length !== 0) {
-      this._addButton('history', false, false, () => {
-        new BootstrapDialogRequest(`c/maps/${mapId}/historyf`, $msg('HISTORY'), {
-          closeButton: true,
-          cancelButton: true,
-        });
-        designer.onObjectFocusEvent();
-      });
       Menu._registerTooltip('history', $msg('HISTORY'));
     }
 

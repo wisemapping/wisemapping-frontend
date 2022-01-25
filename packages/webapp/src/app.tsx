@@ -15,6 +15,7 @@ import MapsPage from './components/maps-page';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import GoogleAnalytics from 'react-ga';
+import Editor from './components/maps-page/editor';
 
 // Google Analytics Initialization.
 GoogleAnalytics.initialize('UA-0000000-0');
@@ -31,6 +32,11 @@ const queryClient = new QueryClient({
 const App = (): ReactElement => {
     const appi18n = new AppI18n();
     const locale = appi18n.getBrowserLocale();
+
+    // global variables set server-side
+    const memoryPersistence = global.memoryPersistence;
+    const readOnlyMode = global.readOnly;
+    const mapId = parseInt(global.mapId, 10);
 
     return locale.message ? (
         <Provider store={store}>
@@ -62,8 +68,12 @@ const App = (): ReactElement => {
                                     path="/c/forgot-password-success"
                                     component={ForgotPasswordSuccessPage}
                                 />
-                                <Route path="/c/maps/">
+                                <Route exact path="/c/maps/">
                                     <MapsPage />
+                                </Route>
+                                <Route exact path="/c/maps/:id/edit">
+                                    <Editor memoryPersistence={memoryPersistence} 
+                                        readOnlyMode={readOnlyMode} mapId={mapId}  />
                                 </Route>
                             </Switch>
                         </Router>
