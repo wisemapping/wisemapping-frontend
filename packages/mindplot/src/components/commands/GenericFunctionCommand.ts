@@ -17,20 +17,23 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
+import Topic from '../Topic';
 
 class GenericFunctionCommand extends Command {
-  /**
-     * @classdesc This command handles do/undo of different actions, e.g. moving topics to
-     * a different position, changing text or font,... (for full reference check the
-     * StandaloneActionDispatcher i.e. the ActionDispatcher subclass in use)
-     * @constructs
-     * @param {Function} commandFunc the function the command shall execute
-     * @param {String|Array<String>} topicsIds the ids of the topics affected
-     * @param {Object} [value] value arbitrary value necessary for the execution of the function,
-     * e.g. color, font family or text
-     * @extends mindplot.Command
-     */
-  constructor(commandFunc, topicsIds, value) {
+  private _discardDuplicated: string;
+
+  private _value: string | object | boolean | number;
+
+  private _topicsId: number[];
+
+  private _commandFunc: (topic: Topic, value: string | object | boolean | number) => string | object | boolean;
+
+  private _oldValues: any[];
+
+  private _applied: boolean;
+
+  constructor(commandFunc: (topic: Topic, value: string | object | boolean) => string | object | boolean, topicsIds: number[], value: string | object | boolean | number = undefined) {
     $assert(commandFunc, 'commandFunc must be defined');
     $assert($defined(topicsIds), 'topicsIds must be defined');
 
@@ -39,57 +42,50 @@ class GenericFunctionCommand extends Command {
     this._topicsId = topicsIds;
     this._commandFunc = commandFunc;
     this._oldValues = [];
+    this.discardDuplicated = undefined;
   }
 
   /**
      * Overrides abstract parent method
      */
-  execute(commandContext) {
-    if (!this.applied) {
-      let topics = null;
-      try {
-        topics = commandContext.findTopics(this._topicsId);
-      } catch (e) {
-        if (this._commandFunc.commandType !== 'changeTextToTopic') {
-          // Workaround: For some reason, there is a combination of events that involves
-          // making some modification and firing out of focus event. This is causing
-          // that a remove node try to be removed.
-          // In some other life, I will come with the solution. Almost aways occurs with IE9.
-          // I could be related with some change of order in sets o something similar.
-          throw e;
-        }
-      }
+  execute(commandContext: CommandContext) {
+    if (!this._applied) {
+      const topics = commandContext.findTopics(this._topicsId);
 
       if (topics != null) {
         const me = this;
-        topics.forEach((topic) => {
+        topics.forEach((topic: Topic) => {
           const oldValue = me._commandFunc(topic, me._value);
           me._oldValues.push(oldValue);
         });
       }
-      this.applied = true;
+      this._applied = true;
     } else {
       throw new Error('Command can not be applied two times in a row.');
     }
   }
 
-  /**
-     * Overrides abstract parent method
-     * @see {@link mindplot.Command.undoExecute}
-     */
-  undoExecute(commandContext) {
-    if (this.applied) {
+  undoExecute(commandContext: CommandContext): void {
+    if (this._applied) {
       const topics = commandContext.findTopics(this._topicsId);
 
-      topics.forEach(((topic, index) => {
+      topics.forEach(((topic: Topic, index: number) => {
         this._commandFunc(topic, this._oldValues[index]);
       }));
 
-      this.applied = false;
+      this._applied = false;
       this._oldValues = [];
     } else {
       throw new Error('undo can not be applied.');
     }
+  }
+
+  public get disardDuplicated(): string {
+    return this._discardDuplicated;
+  }
+
+  public set discardDuplicated(value: string) {
+    this._discardDuplicated = value;
   }
 }
 

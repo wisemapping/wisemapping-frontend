@@ -28,17 +28,17 @@ class RelationshipPivot {
 
   private _designer: Designer;
 
-  private _mouseMoveEvent: any;
+  private _mouseMoveEvent: MouseEvent;
 
-  private _onClickEvent: any;
+  private _onClickEvent: (event: MouseEvent) => void;
 
-  private _onTopicClick: any;
+  private _onTopicClick: (event: MouseEvent) => void;;
 
   private _sourceTopic: Topic;
 
   private _pivot: any;
 
-  private _startArrow: any;
+  private _startArrow: Arrow;
 
   constructor(workspace: Workspace, designer: Designer) {
     $assert(workspace, 'workspace can not be null');

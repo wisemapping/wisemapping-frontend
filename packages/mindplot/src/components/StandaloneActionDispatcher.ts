@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $defined, $assert } from '@wisemapping/core-js';
+import { Point } from '@wisemapping/web2d';
 import ActionDispatcher from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
@@ -28,39 +29,52 @@ import GenericFunctionCommand from './commands/GenericFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
 import EventBus from './layout/EventBus';
+import CommandContext from './CommandContext';
+import NodeModel from './model/NodeModel';
+import RelationshipModel from './model/RelationshipModel';
+import Topic from './Topic';
+import Command from './Command';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
-  constructor(commandContext) {
+  private _actionRunner: DesignerActionRunner;
+
+  public get actionRunner(): DesignerActionRunner {
+    return this._actionRunner;
+  }
+
+  public set actionRunner(value: DesignerActionRunner) {
+    this._actionRunner = value;
+  }
+
+  constructor(commandContext: CommandContext) {
     super(commandContext);
     this._actionRunner = new DesignerActionRunner(commandContext, this);
   }
 
-  /** */
-  addTopics(models, parentTopicsId) {
+  addTopics(models: NodeModel[], parentTopicsId: number[] = undefined) {
     const command = new AddTopicCommand(models, parentTopicsId);
     this.execute(command);
   }
 
-  /** */
-  addRelationship(model) {
+  addRelationship(model: RelationshipModel) {
     const command = new AddRelationshipCommand(model);
     this.execute(command);
   }
 
   /** */
-  deleteEntities(topicsIds, relIds) {
+  deleteEntities(topicsIds: number[], relIds: number[]) {
     const command = new DeleteCommand(topicsIds, relIds);
     this.execute(command);
   }
 
   /** */
-  dragTopic(topicId, position, order, parentTopic) {
+  dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic) {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);
   }
 
   /** */
-  moveTopic(topicId, position) {
+  moveTopic(topicId: number, position: Point) {
     $assert($defined(topicId), 'topicsId can not be null');
     $assert($defined(position), 'position can not be null');
 
@@ -73,19 +87,19 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       return result;
     };
 
-    const command = new GenericFunctionCommand(commandFunc, topicId, position);
+    const command = new GenericFunctionCommand(commandFunc, [topicId], position);
     this.execute(command);
   }
 
   /** */
-  moveControlPoint(ctrlPoint, point) {
+  moveControlPoint(ctrlPoint: Point, point: Point) {
     const command = new MoveControlPointCommand(ctrlPoint, point);
     this.execute(command);
   }
 
   /** */
-  changeFontStyleToTopic(topicsIds) {
-    const commandFunc = (topic) => {
+  changeFontStyleToTopic(topicsIds: number[]) {
+    const commandFunc = (topic: Topic) => {
       const result = topic.getFontStyle();
       const style = result === 'italic' ? 'normal' : 'italic';
       topic.setFontStyle(style, true);
@@ -96,10 +110,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeTextToTopic(topicsIds, text) {
+  changeTextToTopic(topicsIds: number[], text: string) {
     $assert($defined(topicsIds), 'topicsIds can not be null');
 
-    const commandFunc = (topic, value) => {
+    const commandFunc = (topic: Topic, value: object) => {
       const result = topic.getText();
       topic.setText(value);
       return result;
@@ -111,11 +125,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeFontFamilyToTopic(topicIds, fontFamily) {
+  changeFontFamilyToTopic(topicIds: number[], fontFamily: string) {
     $assert(topicIds, 'topicIds can not be null');
     $assert(fontFamily, 'fontFamily can not be null');
 
-    const commandFunc = (topic, commandFontFamily) => {
+    const commandFunc = (topic: Topic, commandFontFamily: string) => {
       const result = topic.getFontFamily();
       topic.setFontFamily(commandFontFamily, true);
 
@@ -128,7 +142,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeFontColorToTopic(topicsIds, color) {
+  changeFontColorToTopic(topicsIds: number[], color: string) {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
@@ -144,7 +158,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeBackgroundColorToTopic(topicsIds, color) {
+  changeBackgroundColorToTopic(topicsIds: number[], color: string) {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
@@ -160,7 +174,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeBorderColorToTopic(topicsIds, color) {
+  changeBorderColorToTopic(topicsIds: number[], color: string): void {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'topicIds can not be null');
 
@@ -176,7 +190,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeFontSizeToTopic(topicsIds, size) {
+  changeFontSizeToTopic(topicsIds: number[], size: number) {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(size, 'size can not be null');
 
@@ -193,7 +207,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeShapeTypeToTopic(topicsIds, shapeType) {
+  changeShapeTypeToTopic(topicsIds: number[], shapeType: string) {
     $assert(topicsIds, 'topicsIds can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
@@ -208,7 +222,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeFontWeightToTopic(topicsIds) {
+  changeFontWeightToTopic(topicsIds: number[]) {
     $assert(topicsIds, 'topicsIds can not be null');
 
     const commandFunc = (topic) => {
@@ -225,38 +239,38 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  shrinkBranch(topicsIds, collapse) {
+  shrinkBranch(topicsIds: number[], collapse: boolean) {
     $assert(topicsIds, 'topicsIds can not be null');
 
-    const commandFunc = (topic, isShrink) => {
+    const commandFunc = (topic: Topic, isShrink: boolean) => {
       topic.setChildrenShrunken(isShrink);
       return !isShrink;
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, collapse);
-    this.execute(command, false);
+    this.execute(command);
   }
 
   /** */
-  addFeatureToTopic(topicId, featureType, attributes) {
+  addFeatureToTopic(topicId: number, featureType: string, attributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);
   }
 
   /** */
-  changeFeatureToTopic(topicId, featureId, attributes) {
+  changeFeatureToTopic(topicId: number, featureId: number, attributes) {
     const command = new ChangeFeatureToTopicCommand(topicId, featureId, attributes);
     this.execute(command);
   }
 
   /** */
-  removeFeatureFromTopic(topicId, featureId) {
+  removeFeatureFromTopic(topicId: number, featureId: number) {
     const command = new RemoveFeatureFromTopicCommand(topicId, featureId);
     this.execute(command);
   }
 
   /** */
-  execute(command) {
+  execute(command: Command) {
     this._actionRunner.execute(command);
   }
 }

@@ -16,19 +16,25 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import Point from '@wisemapping/web2d';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
+import Topic from '../Topic';
 
 class DragTopicCommand extends Command {
+  private _topicsId: number;
+
+  private _parentId: any;
+
+  private _position: Point;
+
+  private _order: number;
+
   /**
      * @classdesc This command class handles do/undo of dragging a topic to a new position.
      * @constructs
-     * @param {String} topicId id of the topic to drag
-     * @param {Object} position
-     * @param {Number} order the order property (children are displayed in order from 0 to n)
-     * @param {mindplot.Topic} parentTopic the topic to be made the dragged topic's new parent
-     * @extends mindplot.Command
      */
-  constructor(topicId, position, order, parentTopic) {
+  constructor(topicId: number, position: Point, order: number, parentTopic: Topic) {
     $assert(topicId, 'topicId must be defined');
     super();
 
@@ -44,8 +50,8 @@ class DragTopicCommand extends Command {
   /**
      * Overrides abstract parent method
      */
-  execute(commandContext) {
-    const topic = commandContext.findTopics(this._topicsId)[0];
+  execute(commandContext: CommandContext): void {
+    const topic = commandContext.findTopics([this._topicsId])[0];
     topic.setVisibility(false);
 
     // Save old position ...
@@ -89,11 +95,7 @@ class DragTopicCommand extends Command {
     this._position = origPosition;
   }
 
-  /**
-     * Overrides abstract parent method
-     * @see {@link mindplot.Command.undoExecute}
-     */
-  undoExecute(commandContext) {
+  undoExecute(commandContext: CommandContext): void {
     this.execute(commandContext);
   }
 }

@@ -17,8 +17,17 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
 
 class AddFeatureToTopicCommand extends Command {
+  private _topicId: number;
+
+  private _featureType: string;
+
+  private _attributes: object;
+
+  private _featureModel: any;
+
   /*
     * @classdesc This command class handles do/undo of adding features to topics, e.g. an
     * icon or a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}
@@ -29,7 +38,7 @@ class AddFeatureToTopicCommand extends Command {
     * @extends mindplot.Command
     * @see mindplot.model.FeatureModel and subclasses
     */
-  constructor(topicId, featureType, attributes) {
+  constructor(topicId: number, featureType: string, attributes: object) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert(featureType, 'featureType can not be null');
     $assert(attributes, 'attributes can not be null');
@@ -44,8 +53,8 @@ class AddFeatureToTopicCommand extends Command {
   /**
          * Overrides abstract parent method
          */
-  execute(commandContext) {
-    const topic = commandContext.findTopics(this._topicId)[0];
+  execute(commandContext: CommandContext) {
+    const topic = commandContext.findTopics([this._topicId])[0];
 
     // Feature must be created only one time.
     if (!this._featureModel) {
@@ -59,8 +68,8 @@ class AddFeatureToTopicCommand extends Command {
          * Overrides abstract parent method
          * @see {@link mindplot.Command.undoExecute}
          */
-  undoExecute(commandContext) {
-    const topic = commandContext.findTopics(this._topicId)[0];
+  undoExecute(commandContext: CommandContext) {
+    const topic = commandContext.findTopics([this._topicId])[0];
     topic.removeFeature(this._featureModel);
   }
 }

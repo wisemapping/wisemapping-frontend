@@ -92,8 +92,8 @@ class DragManager {
 
       event.preventDefault();
     };
+
     // allowed param reassign to avoid risks of existing code relying in this side-effect
-    // eslint-disable-next-line no-param-reassign
     dragManager._mouseMoveListener = result;
     return result;
   }
@@ -110,10 +110,8 @@ class DragManager {
 
       // Help GC
       // allowed param reassign to avoid risks of existing code relying in this side-effect
-      /* eslint-disable no-param-reassign */
       dragManager._mouseMoveListener = null;
       dragManager._mouseUpListener = null;
-      /* eslint-enable no-param-reassign */
 
       workspace.enableWorkspaceEvents(true);
       // Change the cursor to the default.
@@ -130,7 +128,6 @@ class DragManager {
         me._isDragInProcess = false;
       }
     };
-    // eslint-disable-next-line no-param-reassign
     dragManager._mouseUpListener = result;
     return result;
   }

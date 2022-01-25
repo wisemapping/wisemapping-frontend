@@ -17,45 +17,45 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
 
-class RemoveFeatureFromTopicCommand extends Command {
-  /**
-     * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
-     * a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}.
-     * @constructs
-     * @param {String} topicId id of the topic to remove the feature from
-     * @param {String} featureId id of the feature to remove
-     * @extends mindplot.Command
-     */
-  constructor(topicId, featureId) {
+class ChangeFeatureToTopicCommand extends Command {
+  private _featureId: number;
+
+  private _topicId: number;
+
+  private _attributes: any;
+
+  constructor(topicId: number, featureId: number, attributes: any) {
     $assert($defined(topicId), 'topicId can not be null');
-    $assert(featureId, 'iconModel can not be null');
+    $assert($defined(featureId), 'featureId can not be null');
+    $assert($defined(attributes), 'attributes can not be null');
 
     super();
     this._topicId = topicId;
     this._featureId = featureId;
-    this._oldFeature = null;
+    this._attributes = attributes;
   }
 
   /**
      * Overrides abstract parent method
      */
-  execute(commandContext) {
-    const topic = commandContext.findTopics(this._topicId)[0];
+  execute(commandContext: CommandContext) {
+    const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
-    topic.removeFeature(feature);
-    this._oldFeature = feature;
+
+    const oldAttributes = feature.getAttributes();
+    feature.setAttributes(this._attributes);
+    this._attributes = oldAttributes;
   }
 
   /**
      * Overrides abstract parent method
      * @see {@link mindplot.Command.undoExecute}
      */
-  undoExecute(commandContext) {
-    const topic = commandContext.findTopics(this._topicId)[0];
-    topic.addFeature(this._oldFeature);
-    this._oldFeature = null;
+  undoExecute(commandContext: any) {
+    this.execute(commandContext);
   }
 }
 
-export default RemoveFeatureFromTopicCommand;
+export default ChangeFeatureToTopicCommand;

@@ -81,8 +81,7 @@ abstract class IMindmap {
 
   abstract deleteRelationship(relationship: RelationshipModel): void;
 
-  /** */
-  inspect() {
+  inspect():string {
     let result = '';
     result = '{ ';
 
@@ -103,19 +102,15 @@ abstract class IMindmap {
     return result;
   }
 
-  /**
-     * @param target
-     */
-  copyTo(target) {
-    const source = this;
-    const version = source.getVersion();
+  copyTo(target:IMindmap) {
+    const version = this.getVersion();
     target.setVersion(version);
 
     const desc = this.getDescription();
     target.setDescription(desc);
 
     // Then the rest of the branches ...
-    const sbranchs = source.getBranches();
+    const sbranchs = this.getBranches();
     sbranchs.forEach((snode) => {
       const tnode = target.createNode(snode.getType(), snode.getId());
       snode.copyTo(tnode);

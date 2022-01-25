@@ -106,7 +106,7 @@ class DesignerModel extends Events {
     this._relationships.push(rel);
   }
 
-  filterTopicsIds(validate: (topic: Topic) => boolean = null, errorMsg = null): Topic[] {
+  filterTopicsIds(validate: (topic: Topic) => boolean = null, errorMsg = null): number[] {
     const result = [];
     const topics = this.filterSelectedTopics();
 
