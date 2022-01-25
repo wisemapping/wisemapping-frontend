@@ -34,49 +34,49 @@ abstract class ActionDispatcher extends Events {
     super();
   }
 
-  abstract addRelationship(model: RelationshipModel, mindmap: Mindmap);
+    abstract addRelationship(model: RelationshipModel, mindmap: Mindmap);
 
-  abstract addTopics(models: NodeModel[], parentTopicId: any[]);
+    abstract addTopics(models: NodeModel[], parentTopicId: any[]);
 
-  abstract deleteEntities(topicsIds: number[], relIds: number[]);
+    abstract deleteEntities(topicsIds: number[], relIds: number[]);
 
-  abstract dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic);
+    abstract dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic);
 
-  abstract moveTopic(topicId: number, position: any);
+    abstract moveTopic(topicId: number, position: any);
 
-  abstract moveControlPoint(ctrlPoint: this, point: any);
+    abstract moveControlPoint(ctrlPoint: this, point: any);
 
-  abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string);
+    abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string);
 
-  abstract changeFontStyleToTopic(topicsIds: number[]);
+    abstract changeFontStyleToTopic(topicsIds: number[]);
 
-  abstract changeFontColorToTopic(topicsIds: number[], color: string);
+    abstract changeFontColorToTopic(topicsIds: number[], color: string);
 
-  abstract changeFontSizeToTopic(topicsIds: number[], size: number);
+    abstract changeFontSizeToTopic(topicsIds: number[], size: number);
 
-  abstract changeBackgroundColorToTopic(topicsIds: number[], color: string);
+    abstract changeBackgroundColorToTopic(topicsIds: number[], color: string);
 
-  abstract changeBorderColorToTopic(topicsIds: number[], color: string);
+    abstract changeBorderColorToTopic(topicsIds: number[], color: string);
 
-  abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string);
+    abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string);
 
-  abstract changeFontWeightToTopic(topicsIds: number[]);
+    abstract changeFontWeightToTopic(topicsIds: number[]);
 
-  abstract changeTextToTopic(topicsIds: number[], text: string);
+    abstract changeTextToTopic(topicsIds: number[], text: string);
 
-  abstract shrinkBranch(topicsIds: number[], collapse: boolean);
+    abstract shrinkBranch(topicsIds: number[], collapse: boolean);
 
-  abstract addFeatureToTopic(topicId: number, type: string, attributes: object);
+    abstract addFeatureToTopic(topicId: number, type: string, attributes: object);
 
-  abstract changeFeatureToTopic(topicId: number, featureId: any, attributes: object);
+    abstract changeFeatureToTopic(topicId: number, featureId: any, attributes: object);
 
-  abstract removeFeatureFromTopic(topicId: number, featureId: number);
+    abstract removeFeatureFromTopic(topicId: number, featureId: number);
 
-  static setInstance = (dispatcher: ActionDispatcher) => {
-    this._instance = dispatcher;
-  };
+    static setInstance = (dispatcher: ActionDispatcher) => {
+      this._instance = dispatcher;
+    };
 
-  static getInstance = (): ActionDispatcher => ActionDispatcher._instance;
+    static getInstance = (): ActionDispatcher => ActionDispatcher._instance;
 }
 
 export default ActionDispatcher;
