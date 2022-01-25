@@ -17,18 +17,19 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
+import NodeModel from '../model/NodeModel';
 
 class AddTopicCommand extends Command {
+  private _models: NodeModel[];
+
+  private _parentsIds: number[];
+
   /**
    * @classdesc This command class handles do/undo of adding one or multiple topics to
    * the mindmap.
-   * @constructs
-   * @param {Array<mindplot.model.NodeModel>} models one or multiple models
-   * @param {Array<String>} parentTopicsId ids of the parent topics to add the children to, or null
-   * when attaching a dragged node or a node/branch from clipboard
-   * @extends mindplot.Command
    */
-  constructor(models, parentTopicsId) {
+  constructor(models: NodeModel[], parentTopicsId: number[]) {
     $assert(models, 'models can not be null');
     $assert(parentTopicsId == null || parentTopicsId.length === models.length, 'parents and models must have the same size');
 
@@ -40,7 +41,7 @@ class AddTopicCommand extends Command {
   /**
        * Overrides abstract parent method
        */
-  execute(commandContext) {
+  execute(commandContext: CommandContext) {
     const me = this;
     this._models.forEach((model, index) => {
       // Add a new topic ...
@@ -50,7 +51,7 @@ class AddTopicCommand extends Command {
       if (me._parentsIds) {
         const parentId = me._parentsIds[index];
         if ($defined(parentId)) {
-          const parentTopic = commandContext.findTopics(parentId)[0];
+          const parentTopic = commandContext.findTopics([parentId])[0];
           commandContext.connect(topic, parentTopic);
         }
       } else {
@@ -58,7 +59,7 @@ class AddTopicCommand extends Command {
       }
 
       // Select just created node ...
-      const designer = commandContext._designer;
+      const { designer } = commandContext;
       designer.onObjectFocusEvent(topic);
       topic.setOnFocus(true);
 
@@ -71,7 +72,7 @@ class AddTopicCommand extends Command {
        * Overrides abstract parent method
        * @see {@link mindplot.Command.undoExecute}
        */
-  undoExecute(commandContext) {
+  undoExecute(commandContext: CommandContext) {
     // Delete disconnected the nodes. Create a copy of the topics ...
     const clonedModel = [];
     this._models.forEach((model) => {
@@ -79,9 +80,9 @@ class AddTopicCommand extends Command {
     });
 
     // Finally, remove the nodes ...
-    this._models.forEach((model) => {
+    this._models.forEach((model: NodeModel) => {
       const topicId = model.getId();
-      const topic = commandContext.findTopics(topicId)[0];
+      const topic = commandContext.findTopics([topicId])[0];
       commandContext.deleteTopic(topic);
     });
 

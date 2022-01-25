@@ -16,16 +16,32 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import Point from '@wisemapping/web2d';
+import { Designer } from '..';
 import EventBus from './layout/EventBus';
+import NodeModel from './model/NodeModel';
+import RelationshipModel from './model/RelationshipModel';
+import Relationship from './Relationship';
+import Topic from './Topic';
 
 class CommandContext {
-  constructor(designer) {
+  private _designer: Designer;
+
+  constructor(designer: Designer) {
     $assert(designer, 'designer can not be null');
     this._designer = designer;
   }
 
+  public get designer(): Designer {
+    return this._designer;
+  }
+
+  public set designer(value: Designer) {
+    this._designer = value;
+  }
+
   /** */
-  findTopics(topicIds) {
+  findTopics(topicIds: number[]): Topic[] {
     $assert($defined(topicIds), 'topicsIds can not be null');
     const topicsIds = Array.isArray(topicIds) ? topicIds : [topicIds];
     const designerTopics = this._designer.getModel().getTopics();
@@ -45,51 +61,51 @@ class CommandContext {
   }
 
   /** */
-  deleteTopic(topic) {
+  deleteTopic(topic: Topic) {
     this._designer.removeTopic(topic);
   }
 
   /** */
-  createTopic(model) {
+  createTopic(model: NodeModel) {
     $assert(model, 'model can not be null');
     return this._designer.nodeModelToTopic(model);
   }
 
-  /** */
-  createModel() {
-    const mindmap = this._designer.getMindmap();
-    return mindmap.createNode('MainTopic');
-  }
+  // /** */
+  // createModel() {
+  //   const mindmap = this._designer.getMindmap();
+  //   return mindmap.createNode('MainTopic');
+  // }
 
   /** */
-  addTopic(topic) {
+  addTopic(topic: Topic) {
     const mindmap = this._designer.getMindmap();
     return mindmap.addBranch(topic.getModel());
   }
 
   /** */
-  connect(childTopic, parentTopic) {
-    childTopic.connectTo(parentTopic, this._designer._workspace);
+  connect(childTopic: Topic, parentTopic: Topic) {
+    childTopic.connectTo(parentTopic, this._designer.getWorkSpace());
   }
 
   /** */
-  disconnect(topic) {
-    topic.disconnect(this._designer._workspace);
+  disconnect(topic: Topic) {
+    topic.disconnect(this._designer.getWorkSpace());
   }
 
   /** */
-  addRelationship(model) {
+  addRelationship(model: RelationshipModel) {
     $assert(model, 'model cannot be null');
     return this._designer.addRelationship(model);
   }
 
   /** */
-  deleteRelationship(relationship) {
+  deleteRelationship(relationship: Relationship) {
     this._designer.deleteRelationship(relationship);
   }
 
   /** */
-  findRelationships(relationshipIds) {
+  findRelationships(relationshipIds: number[]) {
     $assert($defined(relationshipIds), 'relId can not be null');
     const relIds = Array.isArray(relationshipIds) ? relationshipIds : [relationshipIds];
 
@@ -98,7 +114,7 @@ class CommandContext {
   }
 
   /** */
-  moveTopic(topic, position) {
+  moveTopic(topic: Topic, position: Point) {
     $assert(topic, 'topic cannot be null');
     $assert(position, 'position cannot be null');
     EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
@@ -107,5 +123,4 @@ class CommandContext {
     });
   }
 }
-// eslint-disable-next-line import/prefer-default-export
 export default CommandContext;

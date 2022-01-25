@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-/* eslint-disable import/no-unresolved */
 import jquery from 'jquery';
 import * as DesignerBuilder from './components/DesignerBuilder';
 import Mindmap from './components/model/Mindmap';

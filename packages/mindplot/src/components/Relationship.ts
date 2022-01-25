@@ -15,16 +15,34 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Arrow, Point } from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
-
+import { Arrow, Point, ElementClass } from '@wisemapping/web2d';
 import ConnectionLine from './ConnectionLine';
 import ControlPoint from './ControlPoint';
-
+import RelationshipModel from './model/RelationshipModel';
+import NodeGraph from './NodeGraph';
 import Shape from './util/Shape';
 
 class Relationship extends ConnectionLine {
-  constructor(sourceNode, targetNode, model) {
+  private _focusShape: ElementClass;
+
+  private _onFocus: boolean;
+
+  private _isInWorkspace: boolean;
+
+  private _controlPointsController: ControlPoint;
+
+  private _startArrow: Arrow;
+
+  private _showEndArrow: Arrow;
+
+  private _endArrow: Arrow;
+
+  private _controlPointControllerListener: any;
+
+  private _showStartArrow: Arrow;
+
+  constructor(sourceNode: NodeGraph, targetNode: NodeGraph, model: RelationshipModel) {
     $assert(sourceNode, 'sourceNode can not be null');
     $assert(targetNode, 'targetNode can not be null');
 
@@ -72,12 +90,12 @@ class Relationship extends ConnectionLine {
     }
   }
 
-  setStroke(color, style, opacity) {
+  setStroke(color: string, style: string, opacity: number): void {
     super.setStroke(color, style, opacity);
     this._startArrow.setStrokeColor(color);
   }
 
-  redraw() {
+  redraw(): void {
     const line2d = this._line2d;
     const sourceTopic = this._sourceTopic;
     const sourcePosition = sourceTopic.getPosition();
@@ -131,7 +149,7 @@ class Relationship extends ConnectionLine {
     this._controlPointsController.redraw();
   }
 
-  _positionArrows() {
+  private _positionArrows(): void {
     const tpos = this._line2d.getTo();
     const spos = this._line2d.getFrom();
 
@@ -167,7 +185,7 @@ class Relationship extends ConnectionLine {
     workspace.append(this._controlPointsController);
 
     this._controlPointControllerListener = this._initializeControlPointController.bind(this);
-    if (workspace.isReadOnly) {
+    if (workspace.isReadOnly()) {
       this._line2d.setCursor('default');
     } else {
       this._line2d.addEvent('click', this._controlPointControllerListener);
@@ -182,7 +200,7 @@ class Relationship extends ConnectionLine {
     this.redraw();
   }
 
-  _initializeControlPointController() {
+  _initializeControlPointController(): void {
     this.setOnFocus(true);
   }
 
@@ -199,12 +217,11 @@ class Relationship extends ConnectionLine {
     super.removeFromWorkspace(workspace);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   getType() {
-    return Relationship.type;
+    return 'Relationship';
   }
 
-  setOnFocus(focus) {
+  setOnFocus(focus: boolean): void {
     // Change focus shape
     if (this.isOnFocus() !== focus) {
       if (focus) {
@@ -219,7 +236,7 @@ class Relationship extends ConnectionLine {
     }
   }
 
-  _refreshShape() {
+  private _refreshShape() {
     const sPos = this._line2d.getFrom();
     const tPos = this._line2d.getTo();
     const ctrlPoints = this._line2d.getControlPoints();
@@ -233,7 +250,8 @@ class Relationship extends ConnectionLine {
     this._focusShape.updateLine();
   }
 
-  addEvent(eventType, listener) {
+  // @typescript-eslint/ban-types
+  addEvent(eventType: string, listener: any) {
     let type = eventType;
     // Translate to web 2d events ...
     if (type === 'onfocus') {
@@ -244,37 +262,37 @@ class Relationship extends ConnectionLine {
     line.addEvent(type, listener);
   }
 
-  isOnFocus() {
+  isOnFocus(): boolean {
     return this._onFocus;
   }
 
-  isInWorkspace() {
+  isInWorkspace(): boolean {
     return this._isInWorkspace;
   }
 
-  setVisibility(value) {
+  setVisibility(value: boolean) {
     super.setVisibility(value);
     if (this._showEndArrow) this._endArrow.setVisibility(this._showEndArrow);
     this._startArrow.setVisibility(this._showStartArrow && value);
   }
 
-  setOpacity(opacity) {
+  setOpacity(opacity: number) {
     super.setOpacity(opacity);
     if (this._showEndArrow) this._endArrow.setOpacity(opacity);
     if (this._showStartArrow) this._startArrow.setOpacity(opacity);
   }
 
-  setShowEndArrow(visible) {
+  setShowEndArrow(visible: boolean) {
     this._showEndArrow = visible;
     if (this._isInWorkspace) this.redraw();
   }
 
-  setShowStartArrow(visible) {
+  setShowStartArrow(visible: boolean) {
     this._showStartArrow = visible;
     if (this._isInWorkspace) this.redraw();
   }
 
-  setFrom(x, y) {
+  setFrom(x: number, y: number) {
     $assert($defined(x), 'x must be defined');
     $assert($defined(y), 'y must be defined');
 
@@ -282,7 +300,7 @@ class Relationship extends ConnectionLine {
     this._startArrow.setFrom(x, y);
   }
 
-  setTo(x, y) {
+  setTo(x: number, y: number) {
     $assert($defined(x), 'x must be defined');
     $assert($defined(y), 'y must be defined');
 
@@ -312,11 +330,11 @@ class Relationship extends ConnectionLine {
     return this._line2d.isDestControlPointCustom();
   }
 
-  setIsSrcControlPointCustom(isCustom) {
+  setIsSrcControlPointCustom(isCustom: boolean) {
     this._line2d.setIsSrcControlPointCustom(isCustom);
   }
 
-  setIsDestControlPointCustom(isCustom) {
+  setIsDestControlPointCustom(isCustom: boolean) {
     this._line2d.setIsDestControlPointCustom(isCustom);
   }
 
@@ -324,16 +342,14 @@ class Relationship extends ConnectionLine {
     return this._model.getId();
   }
 
-  fireEvent(type, event) {
+  fireEvent(type: string, event: any): void {
     const elem = this._line2d;
     elem.trigger(type, event);
   }
+
+  static getStrokeColor() {
+    return '#9b74e6';
+  }
 }
-
-Relationship.getStrokeColor = function getStrokeColor() {
-  return '#9b74e6';
-};
-
-Relationship.type = 'Relationship';
 
 export default Relationship;

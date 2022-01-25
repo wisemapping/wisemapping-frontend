@@ -212,7 +212,9 @@ class Topic extends NodeGraph {
         return model.getImageSize();
       };
 
-      result.setPosition = function setPosition() {};
+      result.setPosition = function setPosition() {
+        // Ignore ...
+      };
     } else if (shapeType === TopicShape.ELLIPSE) {
       result = new Rect(0.9, attributes);
     } else if (shapeType === TopicShape.ROUNDED_RECT) {
@@ -235,13 +237,19 @@ class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = function getSize() {
-        return this.size;
+      result.getSize = () => this.size;
+
+      result.setPosition = () => {
+        // Overwrite behaviour ...
       };
 
-      result.setPosition = function setPosition() {};
-      result.setFill = function setFill() {};
-      result.setStroke = function setStroke() {};
+      result.setFill = () => {
+        // Overwrite behaviour ...
+      };
+
+      result.setStroke = () => {
+        // Overwrite behaviour ...
+      };
     } else {
       $assert(false, `Unsupported figure shapeType:${shapeType}`);
     }

@@ -112,7 +112,9 @@ class ControlPoint {
     );
   }
 
-  _removeLine() { }
+  _removeLine() {
+    // Overwrite default behaviour ...
+  }
 
   _mouseDown(event, point, me) {
     if (!this._isBinded) {

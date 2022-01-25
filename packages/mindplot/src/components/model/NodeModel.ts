@@ -37,6 +37,7 @@ class NodeModel extends INodeModel {
     $assert(type, 'Node type can not be null');
     $assert(mindmap, 'mindmap can not be null');
     super(mindmap);
+
     this._properties = {};
     this.setId(id);
     this.setType(type);

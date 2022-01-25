@@ -17,15 +17,15 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import Command from '../Command';
+import RelationshipModel from '../model/RelationshipModel';
 
 class AddRelationshipCommand extends Command {
+  private _model: RelationshipModel;
+
   /**
      * @classdesc This command class handles do/undo of adding a relationship to a topic.
-     * @constructs
-     * @param {XMLDOM} model
-     * @extends mindplot.Command
      */
-  constructor(model) {
+  constructor(model:RelationshipModel) {
     $assert(model, 'Relationship model can not be null');
 
     super();

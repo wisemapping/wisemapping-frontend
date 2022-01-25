@@ -77,9 +77,9 @@ class Designer extends Events {
 
   private _relPivot: RelationshipPivot;
 
-  private _clipboard: any[];
+  private _clipboard: NodeModel[];
 
-  private _cleanScreen: any;
+  private _cleanScreen: () => void;
 
   constructor(options: DesignerOptions, divElement: JQuery) {
     super();
@@ -148,9 +148,12 @@ class Designer extends Events {
     }, { passive: false });
   }
 
+  getActionDispatcher(): StandaloneActionDispatcher {
+    return this._actionDispatcher;
+  }
+
   // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  addEvent(type: string, listener: Function): void {
+  addEvent(type: string, listener: any): void {
     if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
       const editor = TopicEventDispatcher.getInstance();
       editor.addEvent(type, listener);
@@ -280,11 +283,11 @@ class Designer extends Events {
   }
 
   /**
-       * @param {?mindplot.Topic} currentObject
-       * @param {Event=} event
-       * sets focus to the given currentObject and removes it from any other objects if not
-       * triggered with Ctrl pressed
-       */
+         * @param {?mindplot.Topic} currentObject
+         * @param {Event=} event
+         * sets focus to the given currentObject and removes it from any other objects if not
+         * triggered with Ctrl pressed
+         */
   onObjectFocusEvent(currentObject: Topic = null, event = null): void {
     // Close node editors ..
     const topics = this.getModel().getTopics();
@@ -581,9 +584,9 @@ class Designer extends Events {
   }
 
   /**
-       * @param {mindplot.Mindmap} mindmap
-       * @throws will throw an error if mindmapModel is null or undefined
-       */
+         * @param {mindplot.Mindmap} mindmap
+         * @throws will throw an error if mindmapModel is null or undefined
+         */
   loadMap(mindmap: Mindmap): void {
     $assert(mindmap, 'mindmapModel can not be null');
     this._mindmap = mindmap;
@@ -626,11 +629,11 @@ class Designer extends Events {
   }
 
   undo(): void {
-    this._actionDispatcher._actionRunner.undo();
+    this._actionDispatcher.actionRunner.undo();
   }
 
   redo(): void {
-    this._actionDispatcher._actionRunner.redo();
+    this._actionDispatcher.actionRunner.redo();
   }
 
   /** */
@@ -638,7 +641,7 @@ class Designer extends Events {
     return this._options.readOnly;
   }
 
-  nodeModelToTopic(nodeModel: NodeModel):Topic {
+  nodeModelToTopic(nodeModel: NodeModel): Topic {
     $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder() - b.getOrder());
@@ -656,12 +659,12 @@ class Designer extends Events {
   }
 
   /**
-   * @private
-   * @param {mindplot.model.RelationshipModel} model
-   * @return {mindplot.Relationship} the relationship created to the model
-   * @throws will throw an error if model is null or undefined
-   */
-  private _relationshipModelToRelationship(model: RelationshipModel):Relationship {
+     * @private
+     * @param {mindplot.model.RelationshipModel} model
+     * @return {mindplot.Relationship} the relationship created to the model
+     * @throws will throw an error if model is null or undefined
+     */
+  private _relationshipModelToRelationship(model: RelationshipModel): Relationship {
     $assert(model, 'Node model can not be null');
 
     const result = this._buildRelationshipShape(model);
@@ -679,20 +682,20 @@ class Designer extends Events {
   }
 
   /**
-       * @param {mindplot.model.RelationshipModel} model
-       * @return {mindplot.Relationship} the relationship added to the mindmap
-       */
-  addRelationship(model: RelationshipModel):Relationship {
+         * @param {mindplot.model.RelationshipModel} model
+         * @return {mindplot.Relationship} the relationship added to the mindmap
+         */
+  addRelationship(model: RelationshipModel): Relationship {
     const mindmap = this.getMindmap();
     mindmap.addRelationship(model);
     return this._relationshipModelToRelationship(model);
   }
 
   /**
-       * deletes the relationship from the linked topics, DesignerModel, Workspace and Mindmap
-       * @param {mindplot.Relationship} rel the relationship to delete
-       */
-  deleteRelationship(rel: Relationship):void {
+         * deletes the relationship from the linked topics, DesignerModel, Workspace and Mindmap
+         * @param {mindplot.Relationship} rel the relationship to delete
+         */
+  deleteRelationship(rel: Relationship): void {
     const sourceTopic = rel.getSourceTopic();
     sourceTopic.deleteRelationship(rel);
 
@@ -707,12 +710,12 @@ class Designer extends Events {
   }
 
   /**
-       * @private
-       * @param {mindplot.model.RelationshipModel} model
-       * @return {mindplot.Relationship} the new relationship with events registered
-       * @throws will throw an error if the target topic cannot be found
-       */
-  private _buildRelationshipShape(model: RelationshipModel):Relationship {
+         * @private
+         * @param {mindplot.model.RelationshipModel} model
+         * @return {mindplot.Relationship} the new relationship with events registered
+         * @throws will throw an error if the target topic cannot be found
+         */
+  private _buildRelationshipShape(model: RelationshipModel): Relationship {
     const dmodel = this.getModel();
 
     const sourceTopicId = model.getFromNode();
@@ -756,9 +759,9 @@ class Designer extends Events {
   }
 
   /**
-       * @param {mindplot.Topic} node the topic to remove
-       * removes the given topic and its children from Workspace, DesignerModel and NodeModel
-       */
+         * @param {mindplot.Topic} node the topic to remove
+         * removes the given topic and its children from Workspace, DesignerModel and NodeModel
+         */
   removeTopic(node) {
     if (!node.isCentralTopic()) {
       const parent = node._parent;
@@ -783,8 +786,8 @@ class Designer extends Events {
   }
 
   /**
-       * @private
-       */
+         * @private
+         */
   _resetEdition() {
     const screenManager = this._workspace.getScreenManager();
     screenManager.fireEvent('update');
@@ -840,18 +843,19 @@ class Designer extends Events {
   }
 
   /** */
-  changeFontColor(color) {
+  changeFontColor(color: string) {
     $assert(color, 'color can not be null');
 
     const topicsIds = this.getModel()
       .filterTopicsIds();
+
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontColorToTopic(topicsIds, color);
     }
   }
 
   /** */
-  changeBackgroundColor(color) {
+  changeBackgroundColor(color: string) {
     const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
     const validateError = 'Color can not be set to line topics.';
 
@@ -911,9 +915,9 @@ class Designer extends Events {
   }
 
   /**
-       * lets the selected topic open the link editor where the user can define or modify an
-       * existing link
-       */
+         * lets the selected topic open the link editor where the user can define or modify an
+         * existing link
+         */
   addLink() {
     const model = this.getModel();
     const topic = model.selectedTopic();
@@ -934,9 +938,9 @@ class Designer extends Events {
   }
 
   /**
-       * @param {mindplot.Topic} node
-       * sets the focus to the given node
-       */
+         * @param {mindplot.Topic} node
+         * sets the focus to the given node
+         */
   goToNode(node) {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);

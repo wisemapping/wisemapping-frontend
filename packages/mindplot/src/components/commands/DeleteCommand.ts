@@ -17,16 +17,20 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
 
 class DeleteCommand extends Command {
-  /**
-     * @classdesc This command class handles do/undo of deleting a topic.
-     * @constructs
-     * @param {Array<String>} topicIds ids of the topics to delete
-     * @param {Array<String>} relIds ids of the relationships connected to the topics
-     * @extends mindplot.Command
-     */
-  constructor(topicIds, relIds) {
+  private _relIds: number[];
+
+  private _topicIds: number[];
+
+  private _deletedTopicModels: any[];
+
+  private _deletedRelModel: any[];
+
+  private _parentTopicIds: any[];
+
+  constructor(topicIds: number[], relIds: number[]) {
     $assert($defined(relIds), 'topicIds can not be null');
 
     super();
@@ -40,7 +44,7 @@ class DeleteCommand extends Command {
   /**
      * Overrides abstract parent method
      */
-  execute(commandContext) {
+  execute(commandContext: CommandContext) {
     // If a parent has been selected for deletion, the children must be excluded from the delete ...
     const topics = this._filterChildren(this._topicIds, commandContext);
 
@@ -89,7 +93,7 @@ class DeleteCommand extends Command {
      * Overrides abstract parent method
      * @see {@link mindplot.Command.undoExecute}
      */
-  undoExecute(commandContext) {
+  undoExecute(commandContext: CommandContext) {
     // Add all the topics ...
     this._deletedTopicModels.forEach((model) => {
       commandContext.createTopic(model);

@@ -17,20 +17,32 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
+import ControlPoint from '../ControlPoint';
 
 class MoveControlPointCommand extends Command {
+  private _ctrlPointControler: ControlPoint;
+
+  private _line: any;
+
+  private _controlPoint: any;
+
+  private _oldControlPoint: any;
+
+  private _originalEndPoint: any;
+
+  private _wasCustom: any;
+
+  private _endPoint: any;
+
+  private _point: number;
+
   /**
-         * @classdesc This command handles do/undo of changing the control points of a relationship
-         * arrow. These are the two points that appear when the relationship is on focus. They
-         * influence how the arrow is drawn (not the source or the destination topic nor the arrow
-         * direction)
-         * @constructs
-         * @param {ControlPoint} ctrlPointController
-         * @param {Number} point 0 for the destination control point, 1 for the source control point
-         * @param ctrlPointController {ControlPoint}
-         * @param point {Number} 0 for the destination control point, 1 for the source control point
-         */
-  constructor(ctrlPointController, point) {
+   * @classdesc This command handles do/undo of changing the control points of a relationship
+   * arrow. These are the two points that appear when the relationship is on focus. They
+   * influence how the arrow is drawn (not the source or the destination topic nor the arrow
+     * direction)
+     */
+  constructor(ctrlPointController: ControlPoint, point: number) {
     $assert(ctrlPointController, 'line can not be null');
     $assert($defined(point), 'point can not be null');
 

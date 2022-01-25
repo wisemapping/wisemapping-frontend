@@ -22,6 +22,7 @@ class AccountSettingsPanel extends ListToolbarPanel {
   constructor(elemId) {
     const model = {
       getValue() {
+        // Overwite default behaviour ...
       },
       setValue() {
         window.location = '/c/logout';

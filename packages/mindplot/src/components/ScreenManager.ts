@@ -17,13 +17,14 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
+import Topic from './Topic';
 
 class ScreenManager {
   private _divContainer: JQuery;
 
   private _padding: { x: number; y: number; };
 
-  private _clickEvents: ((event: UIEvent)=>void)[];
+  private _clickEvents: ((event: UIEvent) => void)[];
 
   private _scale: number;
 
@@ -47,7 +48,7 @@ class ScreenManager {
   /**
    * Return the current visibile area in the browser.
    */
-  getVisibleBrowserSize():{width:number, height:number} {
+  getVisibleBrowserSize(): { width: number, height: number } {
     return {
       width: window.innerWidth,
       height: window.innerHeight - Number.parseInt(this._divContainer.css('top'), 10),
@@ -59,7 +60,7 @@ class ScreenManager {
     this._scale = scale;
   }
 
-  addEvent(eventType: string, listener:any) {
+  addEvent(eventType: string, listener: any) {
     if (eventType === 'click') this._clickEvents.push(listener);
     else this._divContainer.bind(eventType, listener);
   }
@@ -83,7 +84,7 @@ class ScreenManager {
     }
   }
 
-  _getElementPosition(elem: { getPosition: () => any; }) {
+  private _getElementPosition(elem: Topic) {
     // Retrieve current element position.
     const elementPosition = elem.getPosition();
     let { x } = elementPosition;

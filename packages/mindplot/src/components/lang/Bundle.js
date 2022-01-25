@@ -30,7 +30,7 @@ const Bundle = {
   es: ES,
   en: EN,
   de: DE,
-  fe: FR,
+  fr: FR,
   pt_BR: PT_BR,
   zh_CN: ZH_CN,
   zh_TW: ZH_TW,

@@ -19,7 +19,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import INodeModel, { NodeModelType as NodeType } from './INodeModel';
-import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 
 abstract class IMindmap {
@@ -76,14 +75,13 @@ abstract class IMindmap {
 
   abstract createNode(type: NodeType, id: number): INodeModel
 
-  abstract createRelationship(fromNode: NodeModel, toNode: NodeModel): void;
+  abstract createRelationship(fromNodeId: number, toNodeId: number): void;
 
   abstract addRelationship(rel: RelationshipModel): void;
 
   abstract deleteRelationship(relationship: RelationshipModel): void;
 
-  /** */
-  inspect() {
+  inspect():string {
     let result = '';
     result = '{ ';
 
@@ -104,19 +102,15 @@ abstract class IMindmap {
     return result;
   }
 
-  /**
-     * @param target
-     */
-  copyTo(target) {
-    const source = this;
-    const version = source.getVersion();
+  copyTo(target:IMindmap) {
+    const version = this.getVersion();
     target.setVersion(version);
 
     const desc = this.getDescription();
     target.setDescription(desc);
 
     // Then the rest of the branches ...
-    const sbranchs = source.getBranches();
+    const sbranchs = this.getBranches();
     sbranchs.forEach((snode) => {
       const tnode = target.createNode(snode.getType(), snode.getId());
       snode.copyTo(tnode);

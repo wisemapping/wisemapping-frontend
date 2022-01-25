@@ -16,42 +16,32 @@
 *   limitations under the License.
 */
 import { $defined } from '@wisemapping/core-js';
+import CommandContext from './CommandContext';
 
-class Command {
-  /**
-     * @classdesc The command base class for handling do/undo mindmap operations
-     * @constructs
-     */
+abstract class Command {
+  private _id: number;
+
+  static _uuid: number;
+
   constructor() {
     this._id = Command._nextUUID();
   }
 
-  // eslint-disable-next-line no-unused-vars
-  execute(commandContext) {
-    throw new Error('execute must be implemented.');
-  }
+  abstract execute(commandContext:CommandContext):void;
 
-  // eslint-disable-next-line no-unused-vars
-  undoExecute(commandContext) {
-    throw new Error('undo must be implemented.');
-  }
+  abstract undoExecute(commandContext:CommandContext):void;
 
-  /**
-     * Returns the unique id of this command
-     * @returns {Number} command id
-     */
-  getId() {
+  getId():number {
     return this._id;
   }
-}
 
-Command._nextUUID = function _nextUUID() {
-  if (!$defined(Command._uuid)) {
-    Command._uuid = 1;
+  static _nextUUID() {
+    if (!$defined(this._uuid)) {
+      this._uuid = 1;
+    }
+    this._uuid += 1;
+    return this._uuid;
   }
-
-  Command._uuid += 1;
-  return Command._uuid;
-};
+}
 
 export default Command;
