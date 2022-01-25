@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -28,12 +28,14 @@ class ListToolbarPanel extends ToolbarPaneItem {
   _initPanel() {
     // Register on toolbar elements ...
     const me = this;
-    this.getPanelElem().children('div').bind('click', function click(event) {
-      event.stopPropagation();
-      me.hide();
-      const value = $defined($(this).attr('model')) ? $(this).attr('model') : $(this).attr('id');
-      me.getModel().setValue(value);
-    });
+    this.getPanelElem()
+      .children('div')
+      .bind('click', function click(event) {
+        event.stopPropagation();
+        me.hide();
+        const value = $defined($(this).attr('model')) ? $(this).attr('model') : $(this).attr('id');
+        me.getModel().setValue(value);
+      });
   }
 
   _updateSelectedItem() {

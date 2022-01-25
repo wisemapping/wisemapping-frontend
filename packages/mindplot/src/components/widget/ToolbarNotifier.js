@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -35,7 +35,6 @@ class ToolbarNotifier {
       this.container.data('transitioning', true);
       this.container.text(msg);
       this.container.css({
-        top: '5px',
         left: ($(window).width() - this.container.width()) / 2 - 9,
       });
       this.container.show().fadeOut(5000);

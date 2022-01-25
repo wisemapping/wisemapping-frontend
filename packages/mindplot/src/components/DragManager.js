@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -69,7 +69,7 @@ class DragManager {
   _buildMouseMoveListener(workspace, dragNode, dragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
-    const result = function (event) {
+    const result = (event) => {
       if (!me._isDragInProcess) {
         // Execute Listeners ..
         const startDragListener = dragManager._listeners.startdragging;
@@ -92,8 +92,8 @@ class DragManager {
 
       event.preventDefault();
     };
+
     // allowed param reassign to avoid risks of existing code relying in this side-effect
-    // eslint-disable-next-line no-param-reassign
     dragManager._mouseMoveListener = result;
     return result;
   }
@@ -101,7 +101,7 @@ class DragManager {
   _buildMouseUpListener(workspace, node, dragNode, dragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
-    const result = function (event) {
+    const result = (event) => {
       $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
       // Remove all the events.
@@ -110,10 +110,8 @@ class DragManager {
 
       // Help GC
       // allowed param reassign to avoid risks of existing code relying in this side-effect
-      /* eslint-disable no-param-reassign */
       dragManager._mouseMoveListener = null;
       dragManager._mouseUpListener = null;
-      /* eslint-enable no-param-reassign */
 
       workspace.enableWorkspaceEvents(true);
       // Change the cursor to the default.
@@ -130,7 +128,6 @@ class DragManager {
         me._isDragInProcess = false;
       }
     };
-    // eslint-disable-next-line no-param-reassign
     dragManager._mouseUpListener = result;
     return result;
   }

@@ -1,5 +1,6 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
+>>>>>>> 2b40f429b4144549bf31d587e6d834edfa75a123
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -18,6 +19,7 @@
 import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import ToolbarPaneItem from './ToolbarPaneItem';
+import { buildHtml, css } from './ColorPaletteHtml';
 
 // rgbToHex implementation from https://stackoverflow.com/a/3627747/58128
 export const rgb2hex = (rgb) => `#${
@@ -37,26 +39,12 @@ class ColorPalettePanel extends ToolbarPaneItem {
   _load() {
     if (!ColorPalettePanel._panelContent) {
       // Load all the CSS styles ...
-      $('<link>')
+      $('<style>')
+        .append(css)
         .appendTo($('head'))
-        .attr({ type: 'text/css', rel: 'stylesheet' })
-        .attr('href', `${this._baseUrl}/colorPalette.css`);
+        .attr({ type: 'text/css' });
 
-      // Load panel html fragment ...
-      let result;
-      $.ajax({
-        url: `${this._baseUrl}/colorPalette.html`,
-        method: 'GET',
-        async: false,
-        success(responseText) {
-          result = responseText;
-        },
-        error() {
-          result = '<div>Sorry, your request failed :(</div>';
-        },
-      });
-
-      ColorPalettePanel._panelContent = result;
+      ColorPalettePanel._panelContent = buildHtml();
     }
     return ColorPalettePanel._panelContent;
   }

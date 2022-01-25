@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="2050px"
+   height="2050px"
+   viewBox="0 0 2050 2050"
+   version="1.1"
+   id="svg3929"
+   sodipodi:docname="funy_devilish.svg"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3931"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.2702439"
+     inkscape:cx="1026.8502"
+     inkscape:cy="1025"
+     inkscape:window-width="1296"
+     inkscape:window-height="776"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3929" />
+  <defs
+     id="defs3899">
+    <style
+       id="style3897">.cls-1{fill:#fff;}.cls-2{fill:#ff4f4f;}.cls-3{fill:#00305f;}.cls-4{fill:#e33b3b;}</style>
+  </defs>
+  <title
+     id="title3901" />
+  <g
+     data-name="Layer 3"
+     id="Layer_3"
+     transform="matrix(1.6693211,0,0,1.6845689,-682.35378,-776.61314)">
+    <path
+       class="cls-2"
+       d="m 1594.2,497.2 c -47.6,43.4 -109.5,87.4 -175.5,111.7 a 607.9,607.9 0 0 0 -787.4,0 c -66,-24.3 -127.9,-68.3 -175.5,-111.7 -63,-57.4 -68.5,165.6 45.7,265.6 a 605.3,605.3 0 0 0 -84.6,309.5 c 0,335.8 272.3,608.1 608.1,608.1 335.8,0 608.1,-272.3 608.1,-608.1 a 605.3,605.3 0 0 0 -84.6,-309.5 c 114.2,-100 108.7,-323 45.7,-265.6 z"
+       id="path3906" />
+    <ellipse
+       class="cls-3"
+       cx="793.20001"
+       cy="1008.9"
+       rx="94.900002"
+       ry="60.200001"
+       transform="rotate(-87.5,793.50869,1008.9566)"
+       id="ellipse3908" />
+    <circle
+       class="cls-1"
+       cx="826.5"
+       cy="1010.4"
+       r="16.6"
+       id="circle3910" />
+    <path
+       class="cls-3"
+       d="m 881.2,1000.3 a 30.1,30.1 0 0 1 -10.9,-2.1 L 674.9,921.9 a 30,30 0 1 1 21.8,-55.8 l 195.4,76.3 a 30,30 0 0 1 -10.9,57.9 z"
+       id="path3912" />
+    <ellipse
+       class="cls-3"
+       cx="1256.8"
+       cy="1008.9"
+       rx="60.200001"
+       ry="94.900002"
+       transform="rotate(-2.5,1248.223,1001.5737)"
+       id="ellipse3914" />
+    <circle
+       class="cls-1"
+       cx="1223.5"
+       cy="1010.4"
+       r="16.6"
+       id="circle3916" />
+    <path
+       class="cls-3"
+       d="m 1168.8,1000.3 a 30,30 0 0 1 -10.9,-57.9 l 195.4,-76.3 a 30,30 0 1 1 21.8,55.8 l -195.4,76.3 a 30.1,30.1 0 0 1 -10.9,2.1 z"
+       id="path3918" />
+    <path
+       class="cls-3"
+       d="m 1039.1,1437.4 h -28.2 c -164.4,0 -297.6,-133.3 -297.6,-297.7 v 0 a 1299,1299 0 0 0 623.4,0 v 0 c 0,164.4 -133.2,297.7 -297.6,297.7 z"
+       id="path3920" />
+    <path
+       class="cls-4"
+       d="m 1025,1516.7 c -275.9,0 -511.8,-171.2 -607.3,-413.1 16.3,321.3 282,576.8 607.3,576.8 325.3,0 591,-255.5 607.3,-576.8 -95.5,241.9 -331.4,413.1 -607.3,413.1 z"
+       id="path3922" />
+    <path
+       class="cls-4"
+       d="m 501.5,762.8 c -7.6,12.8 -14.8,26 -21.4,39.4 35.2,9.8 76.2,14.8 76.2,14.8 z"
+       id="path3924" />
+    <path
+       class="cls-4"
+       d="m 1548.5,762.8 c 7.6,12.8 14.8,26 21.4,39.4 -35.2,9.8 -76.2,14.8 -76.2,14.8 z"
+       id="path3926" />
+  </g>
+</svg>

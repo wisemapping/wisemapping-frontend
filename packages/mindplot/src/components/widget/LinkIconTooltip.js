@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -26,23 +26,30 @@ class LinkIconTooltip extends FloatingTip {
     const nativeElement = $(linkIcon.getImage().peer._native);
     super(nativeElement, {
       // Content can also be a function of the target element!
-      content: LinkIconTooltip._buildContent(linkIcon),
+      content() {
+        return LinkIconTooltip._buildContent(linkIcon);
+      },
       html: true,
       placement: 'bottom',
       container: 'body',
       title: $msg('LINK'),
       trigger: 'manual',
-      template: '<div id="linkPopover" class="popover" onmouseover="$(this).mouseleave(function() {$(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+      template: '<div id="linkPopover" class="popover" onmouseover="jQuery(this).mouseleave(function() {jQuery(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+      destroyOnExit: true,
     });
   }
 
   static _buildContent(linkIcon) {
+    const url = linkIcon.getModel().getUrl();
+    const linkText = `URL: ${url}`;
+    const linkPreview = `http://free.pagepeeker.com/v2/thumbs.php?size=m&url=${url}`;
+
     const result = $('<div></div>').css({
       padding: '5px',
       width: '100%',
     });
 
-    const text = $('<div></div>').text(`URL: ${linkIcon.getModel().getUrl()}`)
+    const text = $('<div id="linkPopoverUrl"></div>').text(linkText)
       .css({
         'white-space': 'pre-wrap',
         'word-wrap': 'break-word',
@@ -57,15 +64,15 @@ class LinkIconTooltip extends FloatingTip {
         'padding-top': '5px',
       });
 
-    const img = $('<img>')
-      .prop('src', `http://free.pagepeeker.com/v2/thumbs.php?size=m&url=${linkIcon.getModel().getUrl()}`)
-      .prop('img', linkIcon.getModel().getUrl())
-      .prop('alt', linkIcon.getModel().getUrl());
+    const img = $('<img id="linkPopoverPreview">')
+      .prop('src', linkPreview)
+      .prop('img', url)
+      .prop('alt', url);
 
     img.css('padding', '5px');
 
-    const link = $('<a></a>').attr({
-      href: linkIcon.getModel().getUrl(),
+    const link = $('<a id="linkPopoverAnchor"></a>').attr({
+      href: url,
       alt: 'Open in new window ...',
       target: '_blank',
     });

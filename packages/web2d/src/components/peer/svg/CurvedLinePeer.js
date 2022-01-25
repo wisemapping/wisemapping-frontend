@@ -37,10 +37,12 @@ class CurvedLinePeer extends ElementPeer {
     const change = this._control1.x !== control.x || this._control1.y !== control.y;
     if ($defined(control.x)) {
       this._control1 = control;
-      this._control1.x = parseInt(this._control1.x, 10);
-      this._control1.y = parseInt(this._control1.y, 10);
+      this._control1.x = Number.parseFloat(this._control1.x, 10);
+      this._control1.y = Number.parseFloat(this._control1.y, 10);
     }
-    if (change) this._updatePath();
+    if (change) {
+      this._updatePath();
+    }
   }
 
   setDestControlPoint(control) {
@@ -48,8 +50,8 @@ class CurvedLinePeer extends ElementPeer {
     const change = this._control2.x !== control.x || this._control2.y !== control.y;
     if ($defined(control.x)) {
       this._control2 = control;
-      this._control2.x = parseInt(this._control2.x, 10);
-      this._control2.y = parseInt(this._control2.y, 10);
+      this._control2.x = Number.parseFloat(this._control2.x, 10);
+      this._control2.y = Number.parseFloat(this._control2.y, 10);
     }
     if (change) this._updatePath();
   }
@@ -75,16 +77,16 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setFrom(x1, y1) {
-    const change = this._x1 !== parseInt(x1, 10) || this._y1 !== parseInt(y1, 10);
-    this._x1 = parseInt(x1, 10);
-    this._y1 = parseInt(y1, 10);
+    const change = this._x1 !== Number.parseFloat(x1, 10) || this._y1 !== Number.parseFloat(y1, 10);
+    this._x1 = Number.parseFloat(x1, 10);
+    this._y1 = Number.parseFloat(y1, 10);
     if (change) this._updatePath();
   }
 
   setTo(x2, y2) {
-    const change = this._x2 !== parseInt(x2, 10) || this._y2 !== parseInt(y2, 10);
-    this._x2 = parseInt(x2, 10);
-    this._y2 = parseInt(y2, 10);
+    const change = this._x2 !== Number.parseFloat(x2, 10) || this._y2 !== parseFloat(y2, 10);
+    this._x2 = Number.parseFloat(x2, 10);
+    this._y2 = Number.parseFloat(y2, 10);
     if (change) this._updatePath();
   }
 
@@ -153,11 +155,11 @@ class CurvedLinePeer extends ElementPeer {
       && $defined(this._y2)
     ) {
       this._calculateAutoControlPoints(avoidControlPointFix);
-      const path = `M${this._x1},${this._y1} C${this._control1.x + this._x1},${this._control1.y + this._y1
-      } ${this._control2.x + this._x2},${this._control2.y + this._y2} ${this._x2},${this._y2
-      }${this._lineStyle
-        ? ` ${this._control2.x + this._x2},${this._control2.y + this._y2 + 3} ${this._control1.x + this._x1
-        },${this._control1.y + this._y1 + 5} ${this._x1},${this._y1 + 7} Z`
+
+      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed(2)} C${(this._control1.x + this._x1).toFixed(2)},${this._control1.y + this._y1
+      } ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2).toFixed(2)} ${(this._x2).toFixed(2)},${(this._y2).toFixed(2)}${this._lineStyle
+        ? ` ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2 + 3).toFixed(2)} ${(this._control1.x + this._x1
+        ).toFixed(2)},${(this._control1.y + this._y1 + 5).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
         : ''
       }`;
       this._native.setAttribute('d', path);
@@ -174,7 +176,6 @@ class CurvedLinePeer extends ElementPeer {
     this._native.setAttribute('style', style);
   }
 
-  // TODO: deduplicate this method, extracted from mindplot/src/components/util/Shape.js to avoid circular ref
   static _calculateDefaultControlPoints(srcPos, tarPos) {
     const y = srcPos.y - tarPos.y;
     const x = srcPos.x - tarPos.x;

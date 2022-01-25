@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -81,8 +81,8 @@ class DragTopic {
   }
 
   updateFreeLayout(event) {
-    const isFreeEnabled = (event.metaKey && Browser.Platform.mac)
-      || (event.ctrlKey && !Browser.Platform.mac);
+    const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const isFreeEnabled = (event.metaKey && isMac) || (event.ctrlKey && !isMac);
 
     if (this.isFreeLayoutOn() !== isFreeEnabled) {
       const dragPivot = this._getDragPivot();
@@ -210,7 +210,7 @@ class DragTopic {
     return this.getConnectedToTopic() != null;
   }
 
-  isFreeLayoutOn() {
+  isFreeLayoutOn(dragTopic) {
     //        return  this._isFreeLayoutEnabled;
     // Disable free layout ...
     return false;

@@ -4,112 +4,127 @@
 
 <head>
     <title>WiseMapping - Editor </title>
+    <meta name="viewport" content="initial-scale=1">
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
-<body>
-
-    <div id='load' class="modal fade">
-        <div class="modal-dialog">
-            <div style="height: 120px; text-align: center; border: 2px solid orange" class="modal-content">
-                <img style='margin-top:25px; text-align: center' src="images/ajax-loader.gif">
-            </div>
-        </div>
-    </div>
-
+<body> 
     <div id="header">
-
-        <div id="headerInfo">
-            <div id="headerActions"></div>
-            <div id="headerLogo"></div>
-            <div id="headerMapTitle">Title: <span>Welcome</span></div>
-        </div>
         <div id="toolbar">
+            <div id="backToList">
+                <img src="images/back-icon.svg" />
+            </div>
             <div id="editTab" class="tabContent">
                 <div id="persist" class="buttonContainer">
                     <div id="save" class="buttonOn">
-                        <img src="images/save.png" />
+                        <img src="images/save.svg" />
                     </div>
                     <div id="discard" class="buttonOn">
-                        <img src="images/discard.png" />
-                    </div>
-                    <div id="export" class="buttonOn">
-                        <img src="images/export.png" />
+                        <img src="images/discard.svg" />
                     </div>
                 </div>
                 <div id="edit" class="buttonContainer">
                     <div id="undoEdition" class="buttonOn">
-                        <img src="images/undo.png" />
+                        <img src="images/undo.svg"/>
                     </div>
                     <div id="redoEdition" class="buttonOn">
-                        <img src="images/redo.png" />
-                    </div>
-                </div>
-                <div id="zoom" class="buttonContainer">
-                    <div id="zoomOut" class="buttonOn">
-                        <img src="images/zoom-out.png" />
-                    </div>
-                    <div id="zoomIn" class="buttonOn">
-                        <img src="images/zoom-in.png" />
+                        <img src="images/redo.svg"/>
                     </div>
                 </div>
                 <div id="node" class="buttonContainer">
-                    <div id="topicShape" class="buttonExtOn">
-                        <img src="images/topic-shape.png" />
-                    </div>
                     <div id="addTopic" class="buttonOn">
-                        <img src="images/topic-add.png" />
+                        <img src="images/topic-add.svg"/>
                     </div>
                     <div id="deleteTopic" class="buttonOn">
-                        <img src="images/topic-delete.png" />
+                        <img src="images/topic-delete.svg"/>
                     </div>
                     <div id="topicBorder" class="buttonExtOn">
-                        <img src="images/topic-border.png" />
+                        <img src="images/topic-border.svg"/>
                     </div>
                     <div id="topicColor" class="buttonExtOn">
-                        <img src="images/topic-color.png" />
+                        <img src="images/topic-color.svg"/>
                     </div>
-                    <div id="topicIcon" class="buttonExtOn">
-                        <img src="images/topic-icon.png" />
-                    </div>
-                    <div id="topicNote" class="buttonOn">
-                        <img src="images/topic-note.png" />
-                    </div>
-                    <div id="topicLink" class="buttonOn">
-                        <img src="images/topic-link.png" />
-                    </div>
-                    <div id="topicRelation" class="buttonOn">
-                        <img src="images/topic-relation.png" />
+                    <div id="topicShape" class="buttonExtOn">
+                        <img src="images/topic-shape.svg"/>
                     </div>
                 </div>
                 <div id="font" class="buttonContainer">
                     <div id="fontFamily" class="buttonExtOn">
-                        <img src="images/font-type.png" />
+                        <img src="images/font-type.svg"/>
                     </div>
                     <div id="fontSize" class="buttonExtOn">
-                        <img src="images/font-size.png" />
+                        <img src="images/font-size.svg"/>
                     </div>
                     <div id="fontBold" class="buttonOn">
-                        <img src="images/font-bold.png" />
+                        <img src="images/font-bold.svg"/>
                     </div>
                     <div id="fontItalic" class="buttonOn">
-                        <img src="images/font-italic.png" />
+                        <img src="images/font-italic.svg"/>
                     </div>
-                    <div id="fontColor" class="buttonExtOn" style="padding-top:4px">
-                        <img src="images/font-color.png" />
+                    <div id="fontColor" class="buttonExtOn">
+                        <img src="images/font-color.svg"/>
                     </div>
                 </div>
+                <div id="node" class="buttonContainer">
+                    <div id="topicIcon" class="buttonExtOn">
+                        <img src="images/topic-icon.svg"/>
+                    </div>
+                    <div id="topicNote" class="buttonOn" >
+                        <img src="images/topic-note.svg"/>
+                    </div>
+                    <div id="topicLink" class="buttonOn">
+                        <img src="images/topic-link.svg"/>
+                    </div>
+                    <div id="topicRelation" class="buttonOn">
+                        <img src="images/topic-relation.svg"/>
+                    </div>
+                </div>
+                <div id="font" class="buttonContainer"></div>
             </div>
-        </div>
-        <div id="headerNotifier"></div>
-        <div id="footer">
-            <div id="footerLogo"></div>
+            <div id="toolbarRight">
+                <div id="share" class="actionButton">Share</div>
+                <div id="export" class="buttonOn">
+                    <img src="images/export.svg" />
+                </div>
+                <div id="print" class="buttonOn">
+                    <img src="images/print.svg" />
+                </div>
+                <div id="history" class="buttonOn">
+                    <img src="images/history.svg" />
+                </div>
+                <div id="account">
+                    <img src="images/account.svg"/>
+                </div>
+            </div>
         </div>
     </div>
 
     <div id="mindplot" onselectstart="return false;"></div>
+  
+    <!-- Side Actions -->
+    <div id="floating-panel">
+        <div id="keyboardShortcuts" class="buttonExtOn">
+            <img src="images/keyboard.svg"/>
+        </div>
+        <div id="zoom-button">
+            <button id="zoom-plus">
+                <img src="images/add.svg" />
+            </button>
+            <button id="zoom-minus">
+                <img src="images/minus.svg" />
+            </button>
+        </div>
+        <div id="position">
+            <button id="position-button">
+                <img src="images/center_focus.svg" />
+            </button>
+        </div>
+    </div>
+    <div id="bottom-logo"></div>
+    <div id="headerNotifier"></div>
+
 </body>
 
 </html>

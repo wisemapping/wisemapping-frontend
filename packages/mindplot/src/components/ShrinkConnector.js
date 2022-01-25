@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -22,6 +22,7 @@ import ActionDispatcher from './ActionDispatcher';
 
 class ShirinkConnector {
   constructor(topic) {
+    this._isShrink = false;
     const ellipse = new Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
     this._ellipse = ellipse;
     ellipse.setFill('rgb(62,118,179)');
@@ -49,12 +50,11 @@ class ShirinkConnector {
     });
 
     ellipse.addEvent('mouseover', () => {
-      ellipse.setFill('rgb(153, 0, 255)');
+      ellipse.setStroke(this._isShrink ? 1 : 2, 'solid');
     });
-    const me = this;
+
     ellipse.addEvent('mouseout', () => {
-      const color = topic.getBackgroundColor();
-      me.setFill(color);
+      ellipse.setStroke(this._isShrink ? 2 : 1, 'solid');
     });
 
     ellipse.setCursor('default');
@@ -70,6 +70,7 @@ class ShirinkConnector {
     } else {
       elipse.setStroke('1', 'solid');
     }
+    this._isShrink = isShrink;
   }
 
   setVisibility(value) {

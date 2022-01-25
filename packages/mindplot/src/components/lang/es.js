@@ -55,6 +55,26 @@ const ES = {
   LINK: 'Enlace',
   OPEN_LINK: 'Abrir Enlace',
   SESSION_EXPIRED: 'Su session ha expirado. Por favor, ingrese nuevamente.',
+  ACTION: 'Acción',
+  CREATE_SIBLING_TOPIC: 'Agregar Tópico Hermano',
+  CREATE_CHILD_TOPIC: 'Agregar Tópico Hijo',
+  DELETE_TOPIC: 'Borrar Tópico',
+  EDIT_TOPIC_TEXT: 'Editar Texto de Tópico',
+  JUST_START_TYPING: 'Comenza a escribir',
+  CANCEL_TEXT_CHANGES: 'Cancelar Edición de Texto',
+  TOPIC_NAVIGATION: 'Navegación Entre Tópicos',
+  ARROW_KEYS: 'Flechas Del Cursor',
+  SELECT_MULTIPLE_NODES: 'Selecciónar Multiples Tópicos',
+  UNDO_EDITION: 'Revertir Cambios',
+  REDO_EDITION: 'Rehacer Cambios',
+  SELECT_ALL_TOPIC: 'Seleccionar Todos los Tópicos',
+  CHANGE_TEXT_BOLD: 'Cambiar Texto a Negrita',
+  SAVE_CHANGES: 'Guardar los Cambios',
+  CHANGE_TEXT_ITALIC: 'Cambiar Texto a Italica',
+  DESELECT_ALL_TOPIC: 'Revertir Selección de Tópicos',
+  COLLAPSE_CHILDREN: 'Colapsar Hijos',
+  KEYBOARD_SHORTCUTS_MSG: 'Los accesos directos pueden ayudarte a salvar tiempo permitiéndote no sacar las manos del teclado para usar el mouse.',
+
 };
 
 export default ES;

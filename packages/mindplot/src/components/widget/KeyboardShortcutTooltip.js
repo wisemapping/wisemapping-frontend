@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -48,7 +48,6 @@ class KeyboardShortcutTooltip extends FloatingTip {
     result.css({
       padding: '3px 0px',
       width: '100%',
-      color: 'white',
     });
 
     const textContainer = $('<div></div>').text(text);

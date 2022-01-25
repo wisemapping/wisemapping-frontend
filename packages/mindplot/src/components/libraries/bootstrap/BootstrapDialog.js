@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -100,7 +100,9 @@ class BootstrapDialog extends Options {
     throw new Error('Unsupported operation');
   }
 
-  onDialogShown() {}
+  onDialogShown() {
+    // Overwrite default behaviour ...
+  }
 
   onRemoveClick(event) {
     throw new Error('Unsupported operation');

@@ -15,9 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
-import { $msg } from './Messages';
-import { TopicShape } from './model/INodeModel';
+import {
+  $assert,
+  $defined,
+} from '@wisemapping/core-js';
+import {
+  $msg,
+} from './Messages';
+import {
+  TopicShape,
+} from './model/INodeModel';
 
 class TopicStyle {
   static _getStyles(topic) {
@@ -42,7 +49,9 @@ class TopicStyle {
   }
 
   static defaultText(topic) {
-    const { msgKey } = this._getStyles(topic);
+    const {
+      msgKey,
+    } = this._getStyles(topic);
     return $msg(msgKey);
   }
 
@@ -59,7 +68,7 @@ class TopicStyle {
   }
 
   static getInnerPadding(topic) {
-    return this._getStyles(topic).innerPadding;
+    return Math.round(topic.getTextShape().getFontHeight() * 0.5);
   }
 
   static defaultShapeType(topic) {
@@ -79,7 +88,6 @@ TopicStyle.STYLES = {
       color: '#ffffff',
     },
     msgKey: 'CENTRAL_TOPIC',
-    innerPadding: 11,
     shapeType: TopicShape.ROUNDED_RECT,
   },
 
@@ -94,7 +102,6 @@ TopicStyle.STYLES = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'MAIN_TOPIC',
-    innerPadding: 3,
     shapeType: TopicShape.LINE,
   },
 
@@ -109,7 +116,6 @@ TopicStyle.STYLES = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'SUB_TOPIC',
-    innerPadding: 3,
     shapeType: TopicShape.LINE,
   },
 
@@ -124,7 +130,6 @@ TopicStyle.STYLES = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'ISOLATED_TOPIC',
-    innerPadding: 4,
     shapeType: TopicShape.LINE,
   },
 };

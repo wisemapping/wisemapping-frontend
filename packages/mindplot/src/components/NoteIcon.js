@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -20,6 +20,7 @@ import $ from 'jquery';
 import { $msg } from './Messages';
 import Icon from './Icon';
 import FloatingTip from './widget/FloatingTip';
+import NotesImage from '../../assets/icons/notes.svg';
 
 class NoteIcon extends Icon {
   constructor(topic, noteModel, readOnly) {
@@ -79,6 +80,6 @@ class NoteIcon extends Icon {
   }
 }
 
-NoteIcon.IMAGE_URL = 'images/notes.png';
+NoteIcon.IMAGE_URL = NotesImage;
 
 export default NoteIcon;

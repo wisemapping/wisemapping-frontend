@@ -15,6 +15,7 @@
 *   See the License for the specific language governing permissions and
 *   limitations under the License.
  */
+import FontPeer from './peer/svg/FontPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import ElipsePeer from './peer/svg/ElipsePeer';
@@ -25,16 +26,8 @@ import ArrowPeer from './peer/svg/ArrowPeer';
 import TextPeer from './peer/svg/TextPeer';
 import ImagePeer from './peer/svg/ImagePeer';
 import RectPeer from './peer/svg/RectPeer';
-import ArialFont from './peer/svg/ArialFont';
-import TimesFont from './peer/svg/TimesFont';
-import VerdanaFont from './peer/svg/VerdanaFont';
-import TahomaFont from './peer/svg/TahomaFont';
 
 class Toolkit {
-  static init() {
-
-  }
-
   static createWorkspace(element) {
     return new WorkspacePeer(element);
   }
@@ -63,8 +56,9 @@ class Toolkit {
     return new ArrowPeer();
   }
 
-  static createText(Font) {
-    return new TextPeer(Font);
+  static createText(fontName) {
+    const font = new FontPeer(fontName);
+    return new TextPeer(font);
   }
 
   static createImage() {
@@ -73,22 +67,6 @@ class Toolkit {
 
   static createRect(arc) {
     return new RectPeer(arc);
-  }
-
-  static createArialFont() {
-    return new ArialFont();
-  }
-
-  static createTimesFont() {
-    return new TimesFont();
-  }
-
-  static createVerdanaFont() {
-    return new VerdanaFont();
-  }
-
-  static createTahomaFont() {
-    return new TahomaFont();
   }
 }
 

@@ -10,7 +10,6 @@ const devConfig = {
     open: true,
   },
   plugins: [new HotModuleReplacementPlugin()],
-  devtool: 'eval-source-map',
 };
 
 module.exports = merge(common, devConfig);

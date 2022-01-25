@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -19,7 +19,7 @@ import { $assert } from '@wisemapping/core-js';
 import { $msg } from '../Messages';
 import PersistenceManager from '../PersistenceManager';
 import { $notify } from './ToolbarNotifier';
-import $notifyModal from './ModalDialogNotifier';
+import { $notifyModal } from './ModalDialogNotifier';
 
 class IMenu {
   constructor(designer, containerId, mapId) {
@@ -32,6 +32,7 @@ class IMenu {
     this._mapId = mapId;
     this._mindmapUpdated = false;
     const me = this;
+
     // Register update events ...
     this._designer.addEvent('modelUpdate', () => {
       me.setRequireChange(true);

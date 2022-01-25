@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -108,6 +108,9 @@ class RESTPersistenceManager extends PersistenceManager {
       async: false,
       method: 'post',
       headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
+      error(xhr, ajaxOptions, thrownError) {
+        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
+      },
     });
   }
 
@@ -119,6 +122,9 @@ class RESTPersistenceManager extends PersistenceManager {
       method: 'put',
       headers: { 'Content-Type': 'text/plain' },
       data: 'false',
+      error(xhr, ajaxOptions, thrownError) {
+        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
+      },
     });
   }
 
@@ -147,11 +153,14 @@ class RESTPersistenceManager extends PersistenceManager {
       success(responseText) {
         xml = responseText;
       },
+      error(xhr, ajaxOptions, thrownError) {
+        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
+      },
     });
 
     // If I could not load it from a file, hard code one.
     if (xml == null) {
-      throw new Error('Map could not be loaded');
+      throw new Error(`Map with id ${mapId} could not be loaded`);
     }
 
     return xml;

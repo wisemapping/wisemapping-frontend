@@ -6,8 +6,6 @@ import {
 
 global.$ = $;
 
-Toolkit.init();
-
 const basicTest = () => {
   const workspace = new Workspace();
   workspace.setSize('150px', '150px');

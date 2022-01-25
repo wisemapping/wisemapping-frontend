@@ -78,8 +78,6 @@ class Workspace extends ElementClass {
      */
   static _createDivContainer() {
     const container = window.document.createElement('div');
-    // container.id = 'workspaceContainer';
-    //    container.style.overflow = 'hidden';
     container.style.position = 'relative';
     container.style.top = '0px';
     container.style.left = '0px';
@@ -120,7 +118,7 @@ class Workspace extends ElementClass {
      * they are simple numbers, not CSS length quantities.
      */
   setCoordSize(width, height) {
-    this.peer.setCoordSize(width, height);
+    this.peer.setCoordSize(parseInt(width, 10), parseInt(height, 10));
   }
 
   /**
@@ -197,9 +195,8 @@ class Workspace extends ElementClass {
     this.peer.removeChild(element.peer);
   }
 
-  dumpNativeChart() {
-    const elem = this._htmlContainer;
-    return elem.innerHTML;
+  getSVGElement() {
+    return this._htmlContainer.firstChild;
   }
 }
 

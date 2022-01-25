@@ -2,7 +2,6 @@ import { $assert } from '@wisemapping/core-js';
 
 import CentralTopic from './CentralTopic';
 import MainTopic from './MainTopic';
-import INodeModel from './model/INodeModel';
 
 /**
  * creates a new topic from the given node model
@@ -22,9 +21,9 @@ export const create = (nodeModel, options) => {
   $assert(type, 'Node model type can not be null');
 
   let result;
-  if (type === INodeModel.CENTRAL_TOPIC_TYPE) {
+  if (type === 'CentralTopic') {
     result = new CentralTopic(nodeModel, options);
-  } else if (type === INodeModel.MAIN_TOPIC_TYPE) {
+  } else if (type === 'MainTopic') {
     result = new MainTopic(nodeModel, options);
   } else {
     $assert(false, `unsupported node type:${type}`);

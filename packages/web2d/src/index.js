@@ -17,7 +17,6 @@
  */
 
 import Workspace from './components/Workspace';
-import Toolkit from './components/Toolkit';
 import Elipse from './components/Elipse';
 import Line from './components/Line';
 import PolyLine from './components/PolyLine';
@@ -26,7 +25,6 @@ import Arrow from './components/Arrow';
 import Group from './components/Group';
 import Rect from './components/Rect';
 import Text from './components/Text';
-import Font from './components/Font';
 import Point from './components/Point';
 import Image from './components/Image';
 
@@ -34,7 +32,6 @@ export {
   Arrow,
   CurvedLine,
   Elipse,
-  Font,
   Group,
   Image,
   Line,
@@ -42,6 +39,5 @@ export {
   PolyLine,
   Rect,
   Text,
-  Toolkit,
   Workspace,
 };

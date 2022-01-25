@@ -1,11 +1,10 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Rect,
+  Workspace, Rect,
 } from '../../src';
 
 global.$ = $;
 
-Toolkit.init();
 
 const rectExampleTest = () => {
   const workspace = new Workspace();

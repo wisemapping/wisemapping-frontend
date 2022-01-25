@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Toolkit, Workspace, Rect, Group,
-} from '../../src';
+import * as src from '../../src';
 
 global.$ = $;
 
@@ -9,16 +7,14 @@ let xScale = 1000;
 let yScale = 600;
 let shapeOrigX = 0;
 
-Toolkit.init();
-
-const workspace = new Workspace();
+const workspace = new src.Workspace();
 workspace.setSize(`${xScale}px`, `${yScale}px`);
 workspace.setCoordSize(xScale, yScale);
 workspace.setCoordOrigin(0, 0);
 workspace.setFill('#f0f0f0');
 
 // Center Topic Rect ...
-const centralRect = new Rect(0.3);
+const centralRect = new src.Rect(0.3);
 centralRect.setSize(200, 60);
 centralRect.setPosition(300, 300);
 centralRect.setFill('#99ccff');
@@ -41,13 +37,13 @@ global.zoomOut = function zoomOut() {
 
 global.createShape = function createShape() {
   // Secondary Idea...
-  const nodeGroup = new Group();
+  const nodeGroup = new src.Group();
   nodeGroup.setSize(200, 60);
   nodeGroup.setCoordSize(200, 60);
   nodeGroup.setPosition(700, shapeOrigX);
   shapeOrigX += 50;
 
-  const outerRect = new Rect();
+  const outerRect = new src.Rect();
   outerRect.setSize(200, 100);
   outerRect.setVisibility(false);
   outerRect.setPosition(0, 0);
@@ -55,7 +51,7 @@ global.createShape = function createShape() {
   outerRect.setStroke(1, 'solid', '#878b8f');
   nodeGroup.append(outerRect);
 
-  const inerRect = new Rect(0.3);
+  const inerRect = new src.Rect(0.3);
   inerRect.setSize(190, 85);
   inerRect.setPosition(5, 10);
   inerRect.setFill('white');
@@ -76,14 +72,14 @@ global.createShape = function createShape() {
   });
 
   nodeGroup.addEvent('mousedown', function addEvent(e) {
-    const shadowGroup = new Group();
+    const shadowGroup = new src.Group();
     shadowGroup.setSize(200, 60);
     shadowGroup.setCoordSize(200, 60);
 
     const position = nodeGroup.getPosition();
     shadowGroup.setPosition(position.x, position.y);
 
-    const shadowRect = new Rect(0.3);
+    const shadowRect = new src.Rect(0.3);
     shadowRect.setSize(190, 85);
     shadowRect.setPosition(5, 10);
     shadowRect.setFill('white', 0.3);

@@ -5,22 +5,32 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '',
     library: {
       type: 'umd',
     },
   },
-  optimization: {
-    usedExports: true,
+  entry: {
+    mindplot: './src/index.js',
+    loader: './src/indexLoader.ts',
   },
+  mode: 'production',
+  devtool: 'source-map',
   module: {
     rules: [
       {
-        use: ['babel-loader'],
         test: /.(js$)/,
-        exclude: [
-          /node_modules/,
-        ],
+        use: ['babel-loader'],
+        exclude: [/node_modules/],
+        enforce: 'pre',
+      },
+      {
+        test: /\.(ts)$/,
+        use: 'ts-loader',
+        exclude: '/node_modules/',
+      },
+      {
+        test: /\.(png|svg)$/i,
+        type: 'asset/inline',
       },
     ],
   },
@@ -28,7 +38,7 @@ module.exports = {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),
     },
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.ts', '.json'],
   },
   plugins: [new CleanWebpackPlugin()],
 };

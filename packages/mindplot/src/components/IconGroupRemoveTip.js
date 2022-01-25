@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Group, Rect, Line } from '@wisemapping/web2d';
 
@@ -86,7 +85,7 @@ export default class RemoveTip {
       if (!$defined(delay) || delay === 0) {
         close();
       } else {
-        this._closeTimeoutId = $(close).delay(delay);
+        this._closeTimeoutId = setTimeout(close, delay);
       }
     }
   }

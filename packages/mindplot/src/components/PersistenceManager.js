@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -16,7 +16,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, innerXML } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
 class PersistenceManager {
@@ -27,9 +27,9 @@ class PersistenceManager {
     const mapId = mindmap.getId();
     $assert(mapId, 'mapId can not be null');
 
-    const serializer = XMLSerializerFactory.getSerializerFromMindmap(mindmap);
+    const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
-    const mapXml = innerXML(domMap);
+    const mapXml = new XMLSerializer().serializeToString(domMap);
 
     const pref = JSON.stringify(editorProperties);
     try {
@@ -73,7 +73,7 @@ PersistenceManager.loadFromDom = function loadFromDom(mapId, mapDom) {
   $assert(mapId, 'mapId can not be null');
   $assert(mapDom, 'mapDom can not be null');
 
-  const serializer = XMLSerializerFactory.getSerializerFromDocument(mapDom);
+  const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDom);
   return serializer.loadFromDom(mapDom, mapId);
 };
 

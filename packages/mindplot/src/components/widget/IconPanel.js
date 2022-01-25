@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -25,7 +25,8 @@ class IconPanel extends ToolbarPaneItem {
   }
 
   buildPanel() {
-    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>').css({ width: 245, height: 230 });
+    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>')
+      .css({ width: 295, height: 305 });
     content.on('click', (event) => {
       event.stopPropagation();
     });
@@ -43,7 +44,7 @@ class IconPanel extends ToolbarPaneItem {
         const iconId = familyIcons[j];
         const img = $('<img>')
           .attr('id', iconId)
-          .attr('src', ImageIcon._getImageUrl(iconId))
+          .attr('src', ImageIcon.getImageUrl(iconId))
           .attr('class', 'panelIcon');
 
         familyContent.append(img);

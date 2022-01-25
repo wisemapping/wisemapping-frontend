@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -20,7 +20,6 @@ import { Point, CurvedLine, Rect } from '@wisemapping/web2d';
 
 import DragTopicConfig from './DragTopicConfig';
 import Shape from './util/Shape';
-import INodeModel from './model/INodeModel';
 
 class DragPivot {
   constructor() {
@@ -145,7 +144,7 @@ class DragPivot {
     let result = null;
     const parentTopic = this._targetTopic;
     if (parentTopic) {
-      if (parentTopic.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+      if (parentTopic.getType() === 'CentralTopic') {
         result = this._straightLine;
       } else {
         result = this._curvedLine;

@@ -53,6 +53,28 @@ const FR = {
   REMOVE: 'Supprimer',
   WRITE_YOUR_TEXT_HERE: 'Écrivez votre texte ici ...',
   LINK: 'Lien',
+  ACTION: 'Action',
+  CREATE_SIBLING_TOPIC: 'Créer noeud même niveau',
+  CREATE_CHILD_TOPIC: 'Créer noeud enfant',
+  DELETE_TOPIC: 'Détruire noeud ',
+  EDIT_TOPIC_TEXT: 'Editer texte du noeud',
+  JUST_START_TYPING: 'Commencer saisie',
+  CANCEL_TEXT_CHANGES: 'Annuler changement texte',
+  TOPIC_NAVIGATION: 'Navigation sur les noeuds',
+  ARROW_KEYS: 'Touches flèches',
+  SELECT_MULTIPLE_NODES: 'Selection multiple de noeuds',
+  UNDO_EDITION: 'Annuler édition',
+  REDO_EDITION: 'Refaire édition',
+  SELECT_ALL_TOPIC: 'Sélection tous noeuds',
+  CHANGE_TEXT_BOLD: 'Caractères en gras',
+  SAVE_CHANGES: 'Enregistrer changements',
+  CHANGE_TEXT_ITALIC: 'Caractères en italique',
+  DESELECT_ALL_TOPIC: 'Deselection tous noeuds',
+  COLLAPSE_CHILDREN: 'Fermer enfants',
+  KEYBOARD_SHORTCUTS_MSG: 'Les raccourcis clavier vous font gagner du temps, en vous permettant de garder les mains sur le clavier sans utiliser la souris.',
+  COPY_AND_PASTE_TOPICS: 'Copier et coller les noeuds',
+  MULTIPLE_LINES: 'Ajouter plusieurs lignes de texte',
+
 };
 
 export default FR;

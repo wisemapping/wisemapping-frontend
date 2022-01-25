@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Text,
+  Workspace, Text,
 } from '../../src';
 import TransformUtils from '../../src/components/peer/utils/TransformUtils';
 
@@ -18,7 +18,7 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   const workspace = new Workspace();
 
   workspace.setSize('300px', '100px');
-  workspace.setCoordSize('coordSize', coordSize);
+  workspace.setCoordSize(coordSize, coordSize);
   workspace.setCoordOrigin(0, 0);
   workspace.addItAsChildTo($(`#${htmlElemId}`));
 
@@ -36,7 +36,7 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   span.setAttribute('id', `textoHTML${iesimo}`);
   const textsize = `${textval} - Scale: ${scale.height}`;
   const textHtml = document.createTextNode(textsize);
-  const fontSize = text.getHtmlFontSize();
+  const fontSize = text.getHtmlFontSize(textsize);
   span.append(textHtml);
   span.setAttribute('style', `font-weight:${modifier};font-style: ${style}; font-size:${fontSize}pt; font-family: ${font};width:30;height:30;`);
 
@@ -44,7 +44,6 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   workspaces[iesimo] = workspace;
 };
 
-Toolkit.init();
 textTestHelper(200, 'Test Text 1', 'Arial', 10, 'normal', 'normal', 'red', 'text0', 0);
 textTestHelper(100, 'Test Text 2', 'Arial', 10, 'normal', 'normal', 'blue', 'text1', 1);
 textTestHelper(50, 'Test Text 3', 'Arial', 10, 'normal', 'normal', 'blue', 'text2', 2);

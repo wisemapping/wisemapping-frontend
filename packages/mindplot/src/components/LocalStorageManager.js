@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -45,10 +45,13 @@ class LocalStorageManager extends PersistenceManager {
         success(response) {
           xml = response;
         },
+        error(xhr, ajaxOptions, thrownError) {
+          console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
+        },
       });
       // If I could not load it from a file, hard code one.
       if (xml == null) {
-        throw new Error('Map could not be loaded');
+        throw new Error(`Map could not be loaded with id:${mapId}`);
       }
     }
 

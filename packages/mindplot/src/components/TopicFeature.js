@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -17,58 +17,27 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import IconModel from './model/IconModel';
 import ImageIcon from './ImageIcon';
-import LinkModel from './model/LinkModel';
 import LinkIcon from './LinkIcon';
-import NoteModel from './model/NoteModel';
 import NoteIcon from './NoteIcon';
 
-const TopicFeature = {
+const TopicFeatureFactory = {
   /** the icon object */
   Icon: {
-    id: IconModel.FEATURE_TYPE,
-    model: IconModel,
+    id: 'icon',
     icon: ImageIcon,
   },
 
   /** the link object */
   Link: {
-    id: LinkModel.FEATURE_TYPE,
-    model: LinkModel,
+    id: 'link',
     icon: LinkIcon,
   },
 
   /** the note object */
   Note: {
-    id: NoteModel.FEATURE_TYPE,
-    model: NoteModel,
+    id: 'note',
     icon: NoteIcon,
-  },
-
-  /**
-     * @param id the feature metadata id
-     * @return {Boolean} returns true if the given id is contained in the metadata array
-     */
-  isSupported(id) {
-    return TopicFeature._featuresMetadataById.some((elem) => elem.id === id);
-  },
-
-  /**
-     * @param type
-     * @param attributes
-     * @throws will throw an error if type is null or undefined
-     * @throws will throw an error if attributes is null or undefined
-     * @return {mindplot.model.FeatureModel} a new instance of the feature model subclass matching
-     * the topic feature
-     */
-  createModel(type, attributes) {
-    $assert(type, 'type can not be null');
-    $assert(attributes, 'attributes can not be null');
-
-    const { model: Model } = TopicFeature._featuresMetadataById
-      .filter((elem) => elem.id === type)[0];
-    return new Model(attributes);
   },
 
   /**
@@ -83,12 +52,12 @@ const TopicFeature = {
     $assert(topic, 'topic can not be null');
     $assert(model, 'model can not be null');
 
-    const { icon: Icon } = TopicFeature._featuresMetadataById
+    const { icon: Icon } = TopicFeatureFactory._featuresMetadataById
       .filter((elem) => elem.id === model.getType())[0];
     return new Icon(topic, model, readOnly);
   },
 };
 
-TopicFeature._featuresMetadataById = [TopicFeature.Icon, TopicFeature.Link, TopicFeature.Note];
+TopicFeatureFactory._featuresMetadataById = [TopicFeatureFactory.Icon, TopicFeatureFactory.Link, TopicFeatureFactory.Note];
 
-export default TopicFeature;
+export default TopicFeatureFactory;

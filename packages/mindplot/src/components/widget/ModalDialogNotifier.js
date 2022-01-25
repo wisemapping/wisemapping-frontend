@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -16,26 +16,28 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
+import AlertImage from '../../../assets/images/alert-sign.png';
 
 class ModalDialogNotifier {
   show(message, title) {
     $assert(message, 'message can not be null');
 
     const modalDialog = $(
-      '<div class="modal fade">'
-                + '<div class="modal-dialog">'
-                + '<div class="modal-content">'
-                + '<div class="modal-body"></div>'
-                + '<div class="alert alert-block alert-warning">'
-                + '<img src="images/alert-sign.png">'
-                + '<div style="display: inline-block" class="alert-content"></div>'
-                + '</div>'
-                + '<div class="modal-footer">'
-                + '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-                + '</div>'
-                + '</div>'
-                + '</div>'
-                + '</div>',
+      `<div class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+            </div>
+            <div class="alert alert-block alert-warning">
+              <img src="${AlertImage}">
+              <div style="display: inline-block" class="alert-content"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>`,
     );
 
     const p = `<p>${message}</p>`;
@@ -49,4 +51,5 @@ class ModalDialogNotifier {
 const dialogNotifier = new ModalDialogNotifier();
 const $notifyModal = dialogNotifier.show.bind(dialogNotifier);
 
-export default { $notifyModal };
+// eslint-disable-next-line import/prefer-default-export
+export { $notifyModal };

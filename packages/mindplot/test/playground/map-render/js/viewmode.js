@@ -1,26 +1,32 @@
-import '../css/embedded.less';
-import { buildDesigner, loadDesignerOptions, loadExample } from './loader';
-import { Mindmap, PersistenceManager } from '../../../../src';
+import '../css/viewmode.css';
+import { buildDesigner } from '../../../../src/components/DesignerBuilder';
+import { PersistenceManager, LocalStorageManager } from '../../../../src';
+import DesignerOptionsBuilder from '../../../../src/components/DesignerOptionsBuilder';
 
-const example = async () => {
-  const mapId = 'welcome';
-  // Set readonly option ...
-  const options = await loadDesignerOptions();
-  options.readOnly = true;
-  const designer = buildDesigner(options);
-  designer.addEvent('loadSuccess', () => {
-    document.getElementById('mindplot').classList.add('ready');
-  });
-  // Load map from XML file persisted on disk...
-  const persistence = PersistenceManager.getInstance();
-  let mindmap;
-  try {
-    mindmap = persistence.load(mapId);
-  } catch (e) {
-    console.error('The map could not be loaded, loading an empty map instead.', e);
-    mindmap = Mindmap.buildEmpty(mapId);
-  }
-  designer.loadMap(mindmap);
-};
+const p = new LocalStorageManager('samples/{id}.wxml');
+const options = DesignerOptionsBuilder.buildOptions({ persistenceManager: p, readOnly: true, saveOnLoad: false });
 
-loadExample(example);
+// Obtain map id from query param
+const params = new URLSearchParams(window.location.search.substring(1));
+const mapId = params.get('id') || 'welcome';
+
+const designer = buildDesigner(options);
+designer.addEvent('loadSuccess', () => {
+  document.getElementById('mindplot').classList.add('ready');
+});
+
+// Load map from XML file persisted on disk...
+const persistence = PersistenceManager.getInstance();
+const mindmap = persistence.load(mapId);
+designer.loadMap(mindmap);
+
+// Code for selector of map.
+const mapSelectElem = document.getElementById('map-select');
+mapSelectElem.addEventListener('change', (e) => {
+  const selectMap = e.target.value;
+  window.location = `${window.location.pathname}?id=${selectMap}`;
+});
+
+Array.from(mapSelectElem.options).forEach((option) => {
+  option.selected = option.value === mapId;
+});

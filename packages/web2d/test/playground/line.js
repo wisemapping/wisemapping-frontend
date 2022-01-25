@@ -1,11 +1,10 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Line, Rect,
+  Workspace, Line, Rect,
 } from '../../src';
 
 global.$ = $;
 
-Toolkit.init();
 const workspaceAttributes = {
   width: '700px', height: '100px', coordSize: '350 50', fillColor: '#ffffcc',
 };

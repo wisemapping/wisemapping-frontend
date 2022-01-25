@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -30,7 +30,7 @@ const Bundle = {
   es: ES,
   en: EN,
   de: DE,
-  fe: FR,
+  fr: FR,
   pt_BR: PT_BR,
   zh_CN: ZH_CN,
   zh_TW: ZH_TW,

@@ -1,8 +1,12 @@
-# wisemapping-frontend
+# WiseMapping Frond End
 
-This is a WIP migration from [legacy wisemapping](https://bitbucket.org/wisemapping/wisemapping-open-source/) into a modern web development project with multiple improvements.
+WiseMapping Frond End is part of the [MindMap Open Source Project](http://www.wisemapping.org). The first release of WiseMapping was in 2010 and there was not mayor update on the architecture. In 2021, a major change started with the goal to provide a visual and technology refresh of the project. 
 
-This monorepo uses lerna and contains all the packages that compose the wisemapping frontend.
+WiseMapping Front extracts all the UI related aspects in this repository. You will find three major modules:
+
+* Web2D: Lighway abstraction over SVG for chart renderding.
+* Mindplot: Pure vanilla ES6 classes responsible for providing mindmap rendering and edition capabilities.
+* Webapp: REACT application that encompass the whole midnmap adminitraction experience.
 
 ## Getting started
 
@@ -18,7 +22,7 @@ Please refer to each package's Readme.md for anything specific to the package.
 
 If you want to contribute, please check out [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-## Scripts
+## Useful scripts
 
 Each package might provide the following scripts.  
 You can run these for all packages by running it from the root folder. Alternatively you can run it for a specific package by passing the `--scope` option.

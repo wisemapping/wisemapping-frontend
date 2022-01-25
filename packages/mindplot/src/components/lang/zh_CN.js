@@ -48,6 +48,28 @@ const ZH_CN = {
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: '不能删除根节点。',
   RELATIONSHIP_COULD_NOT_BE_CREATED: '不能创建关系。 应先选择创建关系的一对上级节点。',
   SELECTION_COPIED_TO_CLIPBOARD: '节点已拷贝到粘贴板。',
+  ACTION: '处理',
+  CREATE_SIBLING_TOPIC: '建立平行节点',
+  CREATE_CHILD_TOPIC: '建立子节点',
+  DELETE_TOPIC: '删除节点',
+  EDIT_TOPIC_TEXT: '编辑节点文本',
+  JUST_START_TYPING: '开始敲入文字吧',
+  CANCEL_TEXT_CHANGES: '取消文字修改',
+  TOPIC_NAVIGATION: '节点导航',
+  ARROW_KEYS: '方向键',
+  SELECT_MULTIPLE_NODES: '选择多个节点',
+  UNDO_EDITION: '撤销',
+  REDO_EDITION: '重做',
+  SELECT_ALL_TOPIC: '选择所有节点',
+  CHANGE_TEXT_BOLD: '设字体为粗体',
+  SAVE_CHANGES: '保存修改',
+  CHANGE_TEXT_ITALIC: '设字体为斜体',
+  DESELECT_ALL_TOPIC: '不选任何节点',
+  COLLAPSE_CHILDREN: '折叠子节点',
+  KEYBOARD_SHORTCUTS_MSG: '快捷键可以帮助你节约时间，使你的手不必离开键盘而去使用鼠标。',
+  COPY_AND_PASTE_TOPICS: '拷贝和粘贴节点',
+  MULTIPLE_LINES: '添加多行长文本',
+
 };
 
 export default ZH_CN;

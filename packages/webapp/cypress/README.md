@@ -1,6 +1,6 @@
 # Running tests with cypress. 
 
-For details on why we picked Cypress, check the following [PR](https://bitbucket.org/wisemapping/wisemapping-react/pull-requests/1)
+For details on why we picked Cypress, check the following [PR](https://bitbucket.org/wisemapping/wisemapping-frontend/pull-requests/1)
 
 Check the [Cypress docs](https://docs.cypress.io/guides/overview/why-cypress.html) for more information
 

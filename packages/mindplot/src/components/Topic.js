@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -16,15 +16,22 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import { $assert, $defined } from '@wisemapping/core-js';
 import {
-  Rect, Image, Line, Text, Group,
+  $assert,
+  $defined,
+} from '@wisemapping/core-js';
+import {
+  Rect,
+  Image,
+  Line,
+  Text,
+  Group,
 } from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
-import TopicFeature from './TopicFeature';
+import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine from './ConnectionLine';
 import IconGroup from './IconGroup';
 import FadeEffect from './util/FadeEffect';
@@ -34,16 +41,22 @@ import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
 import LinkEditor from './widget/LinkEditor';
 
-import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
-import INodeModel, { TopicShape } from './model/INodeModel';
+import TopicEventDispatcher, {
+  TopicEvent,
+} from './TopicEventDispatcher';
+import {
+  TopicShape,
+} from './model/INodeModel';
+
+const ICON_SCALING_FACTOR = 1.3;
 
 class Topic extends NodeGraph {
   /**
-       * @extends mindplot.NodeGraph
-       * @constructs
-       * @param model
-       * @param options
-       */
+   * @extends mindplot.NodeGraph
+   * @constructs
+   * @param model
+   * @param options
+   */
   constructor(model, options) {
     super(model, options);
     this._children = [];
@@ -79,9 +92,9 @@ class Topic extends NodeGraph {
   }
 
   /**
-       * @param {String} type the topic shape type
-       * @see {@link mindplot.model.INodeModel}
-       */
+   * @param {String} type the topic shape type
+   * @see {@link mindplot.model.INodeModel}
+   */
   setShapeType(type) {
     this._setShapeType(type, true);
   }
@@ -96,6 +109,11 @@ class Topic extends NodeGraph {
     const model = this.getModel();
     if ($defined(updateModel) && updateModel) {
       model.setShapeType(type);
+    }
+    // If shape is line, reset background color to default.
+    if (type === TopicShape.LINE) {
+      const color = TopicStyle.defaultBackgroundColor(this);
+      this.setBackgroundColor(color);
     }
 
     const oldInnerShape = this.getInnerShape();
@@ -194,15 +212,23 @@ class Topic extends NodeGraph {
         return model.getImageSize();
       };
 
-      result.setPosition = function setPosition() { };
+      result.setPosition = function setPosition() {
+        // Ignore ...
+      };
     } else if (shapeType === TopicShape.ELLIPSE) {
       result = new Rect(0.9, attributes);
     } else if (shapeType === TopicShape.ROUNDED_RECT) {
       result = new Rect(0.3, attributes);
     } else if (shapeType === TopicShape.LINE) {
-      result = new Line({ strokeColor: '#495879', strokeWidth: 1 });
+      result = new Line({
+        strokeColor: '#495879',
+        strokeWidth: 1,
+      });
       result.setSize = function setSize(width, height) {
-        this.size = { width, height };
+        this.size = {
+          width,
+          height,
+        };
         result.setFrom(0, height);
         result.setTo(width, height);
 
@@ -211,13 +237,19 @@ class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = function getSize() {
-        return this.size;
+      result.getSize = () => this.size;
+
+      result.setPosition = () => {
+        // Overwrite behaviour ...
       };
 
-      result.setPosition = function setPosition() { };
-      result.setFill = function setFill() { };
-      result.setStroke = function setStroke() { };
+      result.setFill = () => {
+        // Overwrite behaviour ...
+      };
+
+      result.setStroke = () => {
+        // Overwrite behaviour ...
+      };
     } else {
       $assert(false, `Unsupported figure shapeType:${shapeType}`);
     }
@@ -252,7 +284,6 @@ class Topic extends NodeGraph {
     return this._outerShape;
   }
 
-  /** @return text shape */
   getTextShape() {
     if (!$defined(this._text)) {
       this._text = this._buildTextShape(false);
@@ -283,30 +314,27 @@ class Topic extends NodeGraph {
 
   _buildIconGroup() {
     const textHeight = this.getTextShape().getFontHeight();
-    const result = new IconGroup(this.getId(), textHeight);
+    const iconSize = textHeight * ICON_SCALING_FACTOR;
+    const result = new IconGroup(this.getId(), iconSize);
     const padding = TopicStyle.getInnerPadding(this);
     result.setPosition(padding, padding);
 
     // Load topic features ...
     const model = this.getModel();
     const featuresModel = model.getFeatures();
-    for (let i = 0; i < featuresModel.length; i++) {
-      const featureModel = featuresModel[i];
-      const icon = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
-      result.addIcon(
-        icon,
-        featureModel.getType() === TopicFeature.Icon.id && !this.isReadOnly(),
-      );
-    }
+    featuresModel.forEach((f) => {
+      const icon = TopicFeatureFactory.createIcon(this, f, this.isReadOnly());
+      result.addIcon(icon, f.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly());
+    });
 
     return result;
   }
 
   /**
-       * assigns the new feature model to the topic's node model and adds the respective icon
-       * @param {mindplot.model.FeatureModel} featureModel
-       * @return {mindplot.Icon} the icon corresponding to the feature model
-       */
+   * assigns the new feature model to the topic's node model and adds the respective icon
+   * @param {mindplot.model.FeatureModel} featureModel
+   * @return {mindplot.Icon} the icon corresponding to the feature model
+   */
   addFeature(featureModel) {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
@@ -315,10 +343,10 @@ class Topic extends NodeGraph {
     const model = this.getModel();
     model.addFeature(featureModel);
 
-    const result = TopicFeature.createIcon(this, featureModel, this.isReadOnly());
+    const result = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
     iconGroup.addIcon(
       result,
-      featureModel.getType() === TopicFeature.Icon.id && !this.isReadOnly(),
+      featureModel.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly(),
     );
 
     this._adjustShapes();
@@ -388,7 +416,7 @@ class Topic extends NodeGraph {
   /** */
   setFontFamily(value, updateModel) {
     const textShape = this.getTextShape();
-    textShape.setFontFamily(value);
+    textShape.setFontName(value);
     if ($defined(updateModel) && updateModel) {
       const model = this.getModel();
       model.setFontFamily(value);
@@ -640,13 +668,11 @@ class Topic extends NodeGraph {
     const me = this;
     // Focus events ...
     elem.addEvent('mousedown', (event) => {
+      const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
-        if (
-          (event.metaKey && Browser.Platform.mac)
-          || (event.ctrlKey && !Browser.Platform.mac)
-        ) {
+        if ((event.metaKey && isMac) || (event.ctrlKey && !isMac)) {
           value = !me.isOnFocus();
           event.stopPropagation();
           event.preventDefault();
@@ -739,7 +765,9 @@ class Topic extends NodeGraph {
 
   /** */
   showTextEditor(text) {
-    this._getTopicEventDispatcher().show(this, { text });
+    this._getTopicEventDispatcher().show(this, {
+      text,
+    });
   }
 
   /** */
@@ -748,7 +776,7 @@ class Topic extends NodeGraph {
     const model = this.getModel();
     const editorModel = {
       getValue() {
-        const notes = model.findFeatureByType(TopicFeature.Note.id);
+        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
         let result;
         if (notes.length > 0) result = notes[0].getText();
 
@@ -757,7 +785,7 @@ class Topic extends NodeGraph {
 
       setValue(value) {
         const dispatcher = ActionDispatcher.getInstance();
-        const notes = model.findFeatureByType(TopicFeature.Note.id);
+        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
         if (!$defined(value)) {
           const featureId = notes[0].getId();
           dispatcher.removeFeatureFromTopic(topicId, featureId);
@@ -766,7 +794,7 @@ class Topic extends NodeGraph {
             text: value,
           });
         } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeature.Note.id, {
+          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
             text: value,
           });
         }
@@ -784,7 +812,7 @@ class Topic extends NodeGraph {
     const editorModel = {
       getValue() {
         // @param {mindplot.model.LinkModel[]} links
-        const links = model.findFeatureByType(TopicFeature.Link.id);
+        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
         let result;
         if (links.length > 0) result = links[0].getUrl();
 
@@ -793,7 +821,7 @@ class Topic extends NodeGraph {
 
       setValue(value) {
         const dispatcher = ActionDispatcher.getInstance();
-        const links = model.findFeatureByType(TopicFeature.Link.id);
+        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
         if (!$defined(value)) {
           const featureId = links[0].getId();
           dispatcher.removeFeatureFromTopic(topicId, featureId);
@@ -802,7 +830,7 @@ class Topic extends NodeGraph {
             url: value,
           });
         } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeature.Link.id, {
+          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
             url: value,
           });
         }
@@ -824,8 +852,8 @@ class Topic extends NodeGraph {
   }
 
   /**
-       * Point: references the center of the rect shape.!!!
-       */
+   * Point: references the center of the rect shape.!!!
+   */
   setPosition(point) {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
@@ -860,18 +888,10 @@ class Topic extends NodeGraph {
     return this._outgoingLine;
   }
 
-  /** */
   getIncomingLines() {
-    const result = [];
     const children = this.getChildren();
-    for (let i = 0; i < children.length; i++) {
-      const node = children[i];
-      const line = node.getOutgoingLine();
-      if ($defined(line)) {
-        result.push(line);
-      }
-    }
-    return result;
+    return children.filter((node) => $defined(node.getOutgoingLine()))
+      .map(((node) => node.getOutgoingLine()));
   }
 
   /** */
@@ -893,14 +913,10 @@ class Topic extends NodeGraph {
 
     // Update all the incoming lines ...
     const incomingLines = this.getIncomingLines();
-    for (let i = 0; i < incomingLines.length; i++) {
-      incomingLines[i].redraw();
-    }
+    incomingLines.forEach((line) => line.redraw());
 
     // Update relationship lines
-    for (let j = 0; j < this._relationships.length; j++) {
-      this._relationships[j].redraw();
-    }
+    this._relationships.forEach((r) => r.redraw());
   }
 
   /** */
@@ -934,9 +950,8 @@ class Topic extends NodeGraph {
   /** */
   moveToBack() {
     // Update relationship lines
-    for (let j = 0; j < this._relationships.length; j++) {
-      this._relationships[j].moveToBack();
-    }
+    this._relationships.forEach((r) => r.moveToBack());
+
     const connector = this.getShrinkConnector();
     if ($defined(connector)) {
       connector.moveToBack();
@@ -953,9 +968,7 @@ class Topic extends NodeGraph {
       connector.moveToFront();
     }
     // Update relationship lines
-    for (let j = 0; j < this._relationships.length; j++) {
-      this._relationships[j].moveToFront();
-    }
+    this._relationships.forEach((r) => r.moveToFront());
   }
 
   /** */
@@ -1036,7 +1049,10 @@ class Topic extends NodeGraph {
   setSize(size, force) {
     $assert(size, 'size can not be null');
     $assert($defined(size.width), 'size seem not to be a valid element');
-    const roundedSize = { width: Math.ceil(size.width), height: Math.ceil(size.height) };
+    const roundedSize = {
+      width: Math.ceil(size.width),
+      height: Math.ceil(size.height),
+    };
 
     const oldSize = this.getSize();
     const hasSizeChanged = oldSize.width !== roundedSize.width
@@ -1259,34 +1275,34 @@ class Topic extends NodeGraph {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
       if (this.getShapeType() !== TopicShape.IMAGE) {
+        // Calculate topic size and adjust elements ...
         const textWidth = textShape.getWidth();
+        const textHeight = textShape.getHeight();
+        const padding = TopicStyle.getInnerPadding(this);
 
-        let textHeight = textShape.getHeight();
-        textHeight = textHeight !== 0 ? textHeight : 20;
-
-        const topicPadding = TopicStyle.getInnerPadding(this);
-
-        // Adjust the icon size to the size of the text ...
+        // Adjust icons group based on the font size ...
         const iconGroup = this.getOrBuildIconGroup();
         const fontHeight = this.getTextShape().getFontHeight();
-        iconGroup.setPosition(topicPadding, topicPadding);
-        iconGroup.seIconSize(fontHeight, fontHeight);
+        const iconHeight = ICON_SCALING_FACTOR * fontHeight;
+        iconGroup.seIconSize(iconHeight, iconHeight);
 
-        // Add a extra padding between the text and the icons
-        let iconsWidth = iconGroup.getSize().width;
-        if (iconsWidth !== 0) {
-          iconsWidth += textHeight / 4;
-        }
+        // Calculate size and adjust ...
+        const topicHeight = Math.max(iconHeight, textHeight) + padding * 2;
+        const textIconSpacing = Math.round(fontHeight / 4);
+        const iconGroupWith = iconGroup.getSize().width;
+        const topicWith = iconGroupWith + textIconSpacing + textWidth + padding * 2;
 
-        const height = textHeight + topicPadding * 2;
-        const width = textWidth + iconsWidth + topicPadding * 2;
+        this.setSize({
+          width: topicWith,
+          height: topicHeight,
+        });
 
-        this.setSize({ width, height });
-
-        // Position node ...
-        textShape.setPosition(topicPadding + iconsWidth, topicPadding);
+        // Adjust all topic elements positions ...
+        const yPosition = Math.round((topicHeight - textHeight) / 2);
+        iconGroup.setPosition(padding, yPosition);
+        textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
       } else {
-        // In case of images, the size if fixed ...
+        // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
         this.setSize(size);
       }
@@ -1313,9 +1329,9 @@ class Topic extends NodeGraph {
   }
 
   /**
-       * @param childTopic
-       * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
-       */
+   * @param childTopic
+   * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
+   */
   isChildTopic(childTopic) {
     let result = this.getId() === childTopic.getId();
     if (!result) {
@@ -1333,7 +1349,7 @@ class Topic extends NodeGraph {
 
   /** @return {Boolean} true if the topic is the central topic of the map */
   isCentralTopic() {
-    return this.getModel().getType() === INodeModel.CENTRAL_TOPIC_TYPE;
+    return this.getModel().getType() === 'CentralTopic';
   }
 }
 
