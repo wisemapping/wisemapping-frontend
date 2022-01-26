@@ -8,14 +8,19 @@ const common = require('./webpack.common');
 const playgroundConfig = {
   mode: 'development',
   entry: {
-    mindplot: path.resolve(__dirname, './src/index.js'),
     layout: path.resolve(__dirname, './test/playground/layout/context-loader'),
+  },
+  output: {
+    path: path.resolve(__dirname, 'test/playground/dist'),
+    filename: '[name].js',
+    library: {
+      type: 'umd',
+    },
   },
   devServer: {
     historyApiFallback: true,
     port: 8083,
     open: false,
-    writeToDisk: true,
   },
   module: {
     rules: [

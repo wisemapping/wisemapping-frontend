@@ -4,8 +4,6 @@ context('Node manager', () => {
   });
 
   it('shortcut add sibling node', () => {
-    // TODO: why is the editor appearing twice in the snapshot?
-    // cy.matchImageSnapshot('editor');
     cy.contains('Mind Mapping').click();
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
 

@@ -20,7 +20,7 @@ module.exports = {
     image: './test/playground/image.js',
   },
   output: {
-    path: path.resolve(__dirname, 'dist', 'tests'),
+    path: path.resolve(__dirname, 'test/playground/dist'),
     filename: '[name].js',
     publicPath: '/',
   },

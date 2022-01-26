@@ -9,9 +9,7 @@ context('Change Topic shape', () => {
     cy.get('#topicShapeTip').click();
     cy.get('#rectagle').click();
 
-    cy.get('[test-id=11] > rect').each((element, index, $list) => {
-      cy.get($list[1]).invoke('attr', 'rx').should('eq', '0');
-    });
+    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '0');
 
     cy.matchImageSnapshot('changeToSquareShape');
   });
@@ -21,9 +19,7 @@ context('Change Topic shape', () => {
     // TODO: The parameter {force: true} was placed because it does not detect that the element is visible
     cy.get('#rounded_rectagle').click({ force: true });
 
-    cy.get('[test-id=11] > rect').each((element, index, $list) => {
-      cy.get($list[1]).invoke('attr', 'rx').should('eq', '4.6499999999999995');
-    });
+    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '4.05');
 
     cy.matchImageSnapshot('changeToRoundedRectagle');
   });
@@ -41,9 +37,7 @@ context('Change Topic shape', () => {
     // TODO: The parameter {force: true} was placed because it does not detect that the element is visible
     cy.get('#elipse').click({ force: true });
 
-    cy.get('[test-id=11] > rect').each((element, index, $list) => {
-      cy.get($list[1]).invoke('attr', 'rx').should('eq', '13.950000000000001');
-    });
+    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '12.15');
 
     cy.matchImageSnapshot('changeToElipseShape');
   });
