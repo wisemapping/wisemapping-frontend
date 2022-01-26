@@ -68,7 +68,7 @@ abstract class INodeModel {
     this.putProperty('text', text);
   }
 
-  getText(): string {
+  getText(): string | undefined {
     return this.getProperty('text') as string;
   }
 
@@ -89,7 +89,7 @@ abstract class INodeModel {
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
-  getImageSize(): {width: number, height: number} {
+  getImageSize(): { width: number, height: number } {
     const value = this.getProperty('imageSize') as string;
     let result;
     if (value != null) {
@@ -260,7 +260,7 @@ abstract class INodeModel {
     const tmindmap = target.getMindmap();
 
     children.forEach((snode) => {
-      const tnode:INodeModel = tmindmap.createNode(snode.getType(), snode.getId());
+      const tnode: INodeModel = tmindmap.createNode(snode.getType(), snode.getId());
       snode.copyTo(tnode);
       target.append(tnode);
     });
@@ -289,7 +289,7 @@ abstract class INodeModel {
 
   abstract getProperty(key: string): number | string | boolean;
 
-  abstract putProperty(key: string, value: number | string| boolean): void;
+  abstract putProperty(key: string, value: number | string | boolean): void;
 
   abstract setParent(parent: INodeModel): void;
 

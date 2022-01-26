@@ -26,12 +26,12 @@ class NoteModel extends FeatureModel {
   }
 
   /** */
-  getText():string {
+  getText(): string {
     return this.getAttribute('text') as string;
   }
 
   /** */
-  setText(text:string) {
+  setText(text: string) {
     $assert(text, 'text can not be null');
     this.setAttribute('text', text);
   }

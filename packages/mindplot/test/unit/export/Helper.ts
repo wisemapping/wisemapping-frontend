@@ -35,18 +35,6 @@ export const setupBlob = () => {
   }
 };
 
-export const parseXMLFile = (filePath: fs.PathOrFileDescriptor, mimeType: DOMParserSupportedType) => {
-  const stream = fs.readFileSync(filePath, { encoding: 'utf-8' });
-
-  let content = stream.toString();
-  // Hack for SVG exported from the browser ...
-  if (mimeType == 'image/svg+xml') {
-    content = content.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
-  }
-
-  return parseXMLString(content, mimeType);
-};
-
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlStr, mimeType);
@@ -59,6 +47,18 @@ export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType)
   }
 
   return xmlDoc;
+};
+
+export const parseXMLFile = (filePath: fs.PathOrFileDescriptor, mimeType: DOMParserSupportedType) => {
+  const stream = fs.readFileSync(filePath, { encoding: 'utf-8' });
+
+  let content = stream.toString();
+  // Hack for SVG exported from the browser ...
+  if (mimeType === 'image/svg+xml') {
+    content = content.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
+  }
+
+  return parseXMLString(content, mimeType);
 };
 
 export const exporterAssert = async (testName: string, exporter: Exporter) => {

@@ -39,22 +39,24 @@ class TxtExporter implements Exporter {
     return Promise.resolve(retult);
   }
 
-  private traverseBranch(prefix: string, branches: Array<INodeModel>) {
+  private traverseBranch(prefix: string, branches: INodeModel[]) {
     let result = '';
-    branches.forEach((node, index) => {
-      result = `${result}${prefix}${index + 1} ${node.getText()}`;
-      node.getFeatures().forEach((f) => {
-        const type = f.getType();
-        if (type === 'link') {
-          result = `${result} [link: ${(f as LinkModel).getUrl()}]`;
+    branches
+      .filter((n) => n.getText() !== undefined)
+      .forEach((node, index) => {
+        result = `${result}${prefix}${index + 1} ${node.getText()}`;
+        node.getFeatures().forEach((f) => {
+          const type = f.getType();
+          if (type === 'link') {
+            result = `${result} [link: ${(f as LinkModel).getUrl()}]`;
+          }
+        });
+        result = `${result}\n`;
+
+        if (node.getChildren().filter((n) => n.getText() !== undefined).length > 0) {
+          result += this.traverseBranch(`\t${prefix}${index + 1}.`, node.getChildren());
         }
       });
-      result = `${result}\n`;
-
-      if (node.getChildren().length > 0) {
-        result += this.traverseBranch(`\t${prefix}${index + 1}.`, node.getChildren());
-      }
-    });
     return result;
   }
 }

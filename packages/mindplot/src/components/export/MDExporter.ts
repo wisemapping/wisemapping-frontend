@@ -24,7 +24,7 @@ import Exporter from './Exporter';
 class MDExporter implements Exporter {
   private mindmap: Mindmap;
 
-  private footNotes = [];
+  private footNotes: string[] = [];
 
   constructor(mindmap: Mindmap) {
     this.mindmap = mindmap;
@@ -63,32 +63,34 @@ class MDExporter implements Exporter {
 
   private traverseBranch(prefix: string, branches: Array<INodeModel>) {
     let result = '';
-    branches.forEach((node) => {
-      result = `${result}${prefix}- ${node.getText()}`;
-      node.getFeatures().forEach((f) => {
-        const type = f.getType();
-        // Dump all features ...
-        if (type === 'link') {
-          result = `${result} ( [link](${(f as LinkModel).getUrl()}) )`;
-        }
+    branches
+      .filter((n) => n.getText() !== undefined)
+      .forEach((node) => {
+        result = `${result}${prefix}- ${node.getText()}`;
+        node.getFeatures().forEach((f) => {
+          const type = f.getType();
+          // Dump all features ...
+          if (type === 'link') {
+            result = `${result} ( [link](${(f as LinkModel).getUrl()}) )`;
+          }
 
-        if (type === 'note') {
-          const note = f as NoteModel;
-          this.footNotes.push(note.getText());
-          result = `${result}[^${this.footNotes.length}] `;
-        }
+          if (type === 'note') {
+            const note = f as NoteModel;
+            this.footNotes.push(note.getText());
+            result = `${result}[^${this.footNotes.length}] `;
+          }
 
-        // if(type === 'icon'){
-        //     const icon = f as IconModel;
-        //     result = result + ` ![${icon.getIconType().replace('_','')}!](https://app.wisemapping.com/images/${icon.getIconType()}.svg )`
-        // }
+          // if(type === 'icon'){
+          //     const icon = f as IconModel;
+          //     result = result + ` ![${icon.getIconType().replace('_','')}!](https://app.wisemapping.com/images/${icon.getIconType()}.svg )`
+          // }
+        });
+        result = `${result}\n`;
+
+        if (node.getChildren().filter((n) => n.getText() !== undefined).length > 0) {
+          result += this.traverseBranch(`${prefix}\t`, node.getChildren());
+        }
       });
-      result = `${result}\n`;
-
-      if (node.getChildren().length > 0) {
-        result += this.traverseBranch(`${prefix}\t`, node.getChildren());
-      }
-    });
     return result;
   }
 }
