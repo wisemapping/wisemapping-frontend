@@ -117,9 +117,9 @@ class ElementClass {
   }
 
   /**
-   * /*
-   * Returns element type name.
-   */
+     * /*
+     * Returns element type name.
+     */
   // eslint-disable-next-line class-methods-use-this
   getType() {
     throw new Error(
@@ -161,12 +161,12 @@ class ElementClass {
   setStroke(width, style, color, opacity) {
     if (
       style != null
-      && style !== undefined
-      && style !== 'dash'
-      && style !== 'dot'
-      && style !== 'solid'
-      && style !== 'longdash'
-      && style !== 'dashdot'
+            && style !== undefined
+            && style !== 'dash'
+            && style !== 'dot'
+            && style !== 'solid'
+            && style !== 'longdash'
+            && style !== 'dashdot'
     ) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
@@ -287,6 +287,10 @@ class ElementClass {
 
   getParent() {
     return this.peer.getParent();
+  }
+
+  setTestId(testId) {
+    this.peer._native.setAttribute('test-id', testId);
   }
 }
 

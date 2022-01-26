@@ -16,8 +16,6 @@
  *   limitations under the License.
  */
 
-
-
 /**
  * Cross-browser implementation of creating an XML document object.
  */
@@ -48,7 +46,7 @@ export const createDocument = function () {
  obj - object to inspect
  */
 
- export const $defined = function (obj) {
+export const $defined = function (obj) {
     return obj != undefined;
 };
 

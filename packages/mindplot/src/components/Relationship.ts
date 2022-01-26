@@ -56,6 +56,7 @@ class Relationship extends ConnectionLine {
     this._line2d.setCursor('pointer');
     this._line2d.setStroke(1, 'solid', strokeColor);
     this._line2d.setDashed(4, 2);
+    this._line2d.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
     this._focusShape = this._createLine(this.getLineType(), ConnectionLine.SIMPLE_CURVED);
     this._focusShape.setStroke(2, 'solid', '#3f96ff');
 
@@ -83,6 +84,12 @@ class Relationship extends ConnectionLine {
     if ($defined(model.getSrcCtrlPoint())) {
       const srcPoint = { ...model.getSrcCtrlPoint() };
       this.setSrcControlPoint(srcPoint);
+
+      // Set test id in control point
+      this._controlPointsController.setControlPointTestId(
+        `control-${Math.abs(srcPoint.x)}`,
+        `control-${Math.abs(srcPoint.y)}`,
+      );
     }
     if ($defined(model.getDestCtrlPoint())) {
       const destPoint = { ...model.getDestCtrlPoint() };

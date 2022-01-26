@@ -8,13 +8,12 @@ const { merge } = require('webpack-merge');
 const playgroundConfig = {
   mode: 'development',
   entry: {
-    "editor.bundle": path.join(__dirname, 'src', 'index.tsx'),
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
     embedded: path.resolve(__dirname, './test/playground/map-render/js/embedded'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'test/playground/dist'),
     filename: '[name].js',
     library: {
       type: 'umd',
@@ -24,7 +23,6 @@ const playgroundConfig = {
     historyApiFallback: true,
     port: 8081,
     open: false,
-    writeToDisk: true,
   },
   module: {
     rules: [

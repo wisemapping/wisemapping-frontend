@@ -49,7 +49,10 @@ class BootstrapDialogRequest extends BootstrapDialog {
 
     this._native.find('.modal-body').load(url, () => {
       me.acceptButton.unbind('click').click(() => {
-        if ($defined(global.submitDialogForm) && typeof (global.submitDialogForm) === 'function') {
+        if (
+          $defined(global.submitDialogForm)
+                    && typeof global.submitDialogForm === 'function'
+        ) {
           global.submitDialogForm();
         }
       });
@@ -61,7 +64,7 @@ class BootstrapDialogRequest extends BootstrapDialog {
   }
 
   onDialogShown() {
-    if ($defined(global.onDialogShown) && typeof (global.onDialogShown) === 'function') {
+    if ($defined(global.onDialogShown) && typeof global.onDialogShown === 'function') {
       global.onDialogShown();
     }
   }

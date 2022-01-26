@@ -61,7 +61,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     relationships.forEach((relationship) => {
       if (
         mindmap.findNodeById(relationship.getFromNode()) !== null
-        && mindmap.findNodeById(relationship.getToNode()) !== null
+                && mindmap.findNodeById(relationship.getToNode()) !== null
       ) {
         // Isolated relationships are not persisted ....
         const relationDom = XMLSerializerPela._relationshipToXML(document, relationship);
@@ -83,7 +83,9 @@ class XMLSerializerPela implements XMLMindmapSerializer {
       parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
 
       const order = topic.getOrder();
-      if (typeof order === 'number' && Number.isFinite(order)) { parentTopic.setAttribute('order', order.toString()); }
+      if (typeof order === 'number' && Number.isFinite(order)) {
+        parentTopic.setAttribute('order', order.toString());
+      }
     }
 
     const text = topic.getText();
@@ -99,8 +101,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
         const size = topic.getImageSize();
         parentTopic.setAttribute(
           'image',
-          `${size.width},${size.height
-          }:${topic.getImageUrl()}`,
+          `${size.width},${size.height}:${topic.getImageUrl()}`,
         );
       }
     }
@@ -132,10 +133,10 @@ class XMLSerializerPela implements XMLMindmapSerializer {
 
     if (
       $defined(fontFamily)
-      || $defined(fontSize)
-      || $defined(fontColor)
-      || $defined(fontWeight)
-      || $defined(fontStyle)
+            || $defined(fontSize)
+            || $defined(fontColor)
+            || $defined(fontWeight)
+            || $defined(fontStyle)
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -226,13 +227,13 @@ class XMLSerializerPela implements XMLMindmapSerializer {
   }
 
   /**
-   * @param dom
-   * @param mapId
-   * @throws will throw an error if dom is null or undefined
-   * @throws will throw an error if mapId is null or undefined
-   * @throws will throw an error if the document element is not consistent with a wisemap's root
-   * element
-   */
+     * @param dom
+     * @param mapId
+     * @throws will throw an error if dom is null or undefined
+     * @throws will throw an error if mapId is null or undefined
+     * @throws will throw an error if the document element is not consistent with a wisemap's root
+     * element
+     */
   loadFromDom(dom: Document, mapId: string) {
     $assert(dom, 'dom can not be null');
     $assert(mapId, 'mapId can not be null');
@@ -253,7 +254,9 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
     const topicsNodes = childNodes
-      .filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'topic'))
+      .filter(
+        (child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'topic',
+      )
       .map((c) => c as Element);
     topicsNodes.forEach((child) => {
       const topic = this._deserializeNode(child, mindmap);
@@ -262,7 +265,9 @@ class XMLSerializerPela implements XMLMindmapSerializer {
 
     // Then all relationshops, they are connected to topics ...
     const relationshipsNodes = childNodes
-      .filter((child: ChildNode) => (child.nodeType === 1 && (child as Element).tagName === 'relationship'))
+      .filter(
+        (child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'relationship',
+      )
       .map((c) => c as Element);
     relationshipsNodes.forEach((child) => {
       try {
@@ -280,9 +285,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
   }
 
   _deserializeNode(domElem: Element, mindmap: Mindmap) {
-    const type = domElem.getAttribute('central') != null
-      ? 'CentralTopic'
-      : 'MainTopic';
+    const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
 
     // Load attributes...
     let id: number | null = null;
@@ -480,16 +483,16 @@ class XMLSerializerPela implements XMLMindmapSerializer {
   }
 
   /**
-       * This method ensures that the output String has only
-       * valid XML unicode characters as specified by the
-       * XML 1.0 standard. For reference, please see
-       * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-       * standard</a>. This method will return an empty
-       * String if the input is null or empty.
-       *
-       * @param in The String whose non-valid characters we want to remove.
-       * @return The in String, stripped of non-valid characters.
-       */
+     * This method ensures that the output String has only
+     * valid XML unicode characters as specified by the
+     * XML 1.0 standard. For reference, please see
+     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
+     * standard</a>. This method will return an empty
+     * String if the input is null or empty.
+     *
+     * @param in The String whose non-valid characters we want to remove.
+     * @return The in String, stripped of non-valid characters.
+     */
   // eslint-disable-next-line class-methods-use-this
   rmXmlInv(str) {
     if (str == null || str === undefined) return null;
@@ -499,11 +502,11 @@ class XMLSerializerPela implements XMLMindmapSerializer {
       const c = str.charCodeAt(i);
       if (
         c === 0x9
-        || c === 0xa
-        || c === 0xd
-        || (c >= 0x20 && c <= 0xd7ff)
-        || (c >= 0xe000 && c <= 0xfffd)
-        || (c >= 0x10000 && c <= 0x10ffff)
+                || c === 0xa
+                || c === 0xd
+                || (c >= 0x20 && c <= 0xd7ff)
+                || (c >= 0xe000 && c <= 0xfffd)
+                || (c >= 0x10000 && c <= 0x10ffff)
       ) {
         result += str.charAt(i);
       }

@@ -34,7 +34,9 @@ class BootstrapDialog extends Options {
 
     this.setOptions(options);
     this.options.onEventData.dialog = this;
-    this._native = $('<div class="modal fade" tabindex="-1"></div>').append('<div class="modal-dialog"></div>');
+    this._native = $('<div class="modal fade" tabindex="-1"></div>').append(
+      '<div class="modal-dialog"></div>',
+    );
     const content = $('<div class="modal-content"></div>');
     const header = this._buildHeader(title);
 
@@ -65,17 +67,31 @@ class BootstrapDialog extends Options {
       footer = $('<div class="modal-footer" style="paddingTop:5;textAlign:center">');
     }
     if (this.options.acceptButton) {
-      this.acceptButton = $(`<button type="button" class="btn btn-primary" id="acceptBtn" data-dismiss="modal">${$msg('ACCEPT')}</button>`);
+      this.acceptButton = $(
+        `<button type="button" class="btn btn-primary" id="acceptBtn" data-dismiss="modal">${$msg(
+          'ACCEPT',
+        )}</button>`,
+      );
       footer.append(this.acceptButton);
-      this.acceptButton.unbind('click').on('click', this.options.onEventData, this.onAcceptClick);
+      this.acceptButton
+        .unbind('click')
+        .on('click', this.options.onEventData, this.onAcceptClick);
     }
     if (this.options.removeButton) {
-      this.removeButton = $(`<button type="button" class="btn btn-secondary" id="removeBtn" data-dismiss="modal">${$msg('REMOVE')}</button>`);
+      this.removeButton = $(
+        `<button type="button" class="btn btn-secondary" id="removeBtn" data-dismiss="modal">${$msg(
+          'REMOVE',
+        )}</button>`,
+      );
       footer.append(this.removeButton);
       this.removeButton.on('click', this.options.onEventData, this.onRemoveClick);
     }
     if (this.options.cancelButton) {
-      footer.append(`<button type="button" class="btn btn-secondary" data-dismiss="modal">${$msg('CANCEL')}</button>`);
+      footer.append(
+        `<button type="button" class="btn btn-secondary" data-dismiss="modal">${$msg(
+          'CANCEL',
+        )}</button>`,
+      );
     }
     return footer;
   }

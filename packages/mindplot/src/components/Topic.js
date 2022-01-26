@@ -16,16 +16,9 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
+import { $assert, $defined } from '@wisemapping/core-js';
 import {
-  $assert,
-  $defined,
-} from '@wisemapping/core-js';
-import {
-  Rect,
-  Image,
-  Line,
-  Text,
-  Group,
+  Rect, Image, Line, Text, Group,
 } from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
@@ -41,22 +34,18 @@ import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
 import LinkEditor from './widget/LinkEditor';
 
-import TopicEventDispatcher, {
-  TopicEvent,
-} from './TopicEventDispatcher';
-import {
-  TopicShape,
-} from './model/INodeModel';
+import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
+import { TopicShape } from './model/INodeModel';
 
 const ICON_SCALING_FACTOR = 1.3;
 
 class Topic extends NodeGraph {
   /**
-   * @extends mindplot.NodeGraph
-   * @constructs
-   * @param model
-   * @param options
-   */
+     * @extends mindplot.NodeGraph
+     * @constructs
+     * @param model
+     * @param options
+     */
   constructor(model, options) {
     super(model, options);
     this._children = [];
@@ -92,9 +81,9 @@ class Topic extends NodeGraph {
   }
 
   /**
-   * @param {String} type the topic shape type
-   * @see {@link mindplot.model.INodeModel}
-   */
+     * @param {String} type the topic shape type
+     * @see {@link mindplot.model.INodeModel}
+     */
   setShapeType(type) {
     this._setShapeType(type, true);
   }
@@ -331,10 +320,10 @@ class Topic extends NodeGraph {
   }
 
   /**
-   * assigns the new feature model to the topic's node model and adds the respective icon
-   * @param {mindplot.model.FeatureModel} featureModel
-   * @return {mindplot.Icon} the icon corresponding to the feature model
-   */
+     * assigns the new feature model to the topic's node model and adds the respective icon
+     * @param {mindplot.model.FeatureModel} featureModel
+     * @return {mindplot.Icon} the icon corresponding to the feature model
+     */
   addFeature(featureModel) {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
@@ -648,6 +637,9 @@ class Topic extends NodeGraph {
 
     // Register listeners ...
     this._registerDefaultListenersToElement(group, this);
+
+    // Set test id
+    group.setTestId(model.getId());
   }
 
   _registerDefaultListenersToElement(elem, topic) {
@@ -852,8 +844,8 @@ class Topic extends NodeGraph {
   }
 
   /**
-   * Point: references the center of the rect shape.!!!
-   */
+     * Point: references the center of the rect shape.!!!
+     */
   setPosition(point) {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
@@ -890,8 +882,9 @@ class Topic extends NodeGraph {
 
   getIncomingLines() {
     const children = this.getChildren();
-    return children.filter((node) => $defined(node.getOutgoingLine()))
-      .map(((node) => node.getOutgoingLine()));
+    return children
+      .filter((node) => $defined(node.getOutgoingLine()))
+      .map((node) => node.getOutgoingLine());
   }
 
   /** */
@@ -986,8 +979,8 @@ class Topic extends NodeGraph {
       const sourceParent = sourceTopic.getModel().getParent();
       relationship.setVisibility(
         value
-        && (targetParent == null || !targetParent.areChildrenShrunken())
-        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+                    && (targetParent == null || !targetParent.areChildrenShrunken())
+                    && (sourceParent == null || !sourceParent.areChildrenShrunken()),
       );
     });
   }
@@ -1055,8 +1048,7 @@ class Topic extends NodeGraph {
     };
 
     const oldSize = this.getSize();
-    const hasSizeChanged = oldSize.width !== roundedSize.width
-      || oldSize.height !== roundedSize.height;
+    const hasSizeChanged = oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
       NodeGraph.prototype.setSize.call(this, roundedSize);
 
@@ -1329,9 +1321,9 @@ class Topic extends NodeGraph {
   }
 
   /**
-   * @param childTopic
-   * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
-   */
+     * @param childTopic
+     * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
+     */
   isChildTopic(childTopic) {
     let result = this.getId() === childTopic.getId();
     if (!result) {
