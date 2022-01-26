@@ -24,7 +24,7 @@ import { $notifyModal } from './widget/ModalDialogNotifier';
 import { $msg } from './Messages';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 
-let designer = null;
+let designer: Designer;
 
 export function buildDesigner(options: DesignerOptions): Designer {
   const divContainer = $(`#${options.container}`);
@@ -38,7 +38,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
     console.log('Map loadded successfully');
   });
 
-  const onerrorFn = (message:string, url, lineNo) => {
+  const onerrorFn = (message: string, url, lineNo) => {
     // Close loading dialog ...
     // @ts-ignore
     if (window.waitDialog) {
@@ -64,10 +64,10 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Register toolbar event ...
   if ($('#toolbar').length) {
-    const menu = new Menu(designer, 'toolbar', options.mapId);
+    const menu = new Menu(designer, 'toolbar', options.mapId ? options.mapId : 'unknown');
 
     //  If a node has focus, focus can be move to another node using the keys.
-    designer._cleanScreen = function _cleanScreen() {
+    designer.cleanScreen = () => {
       menu.clear();
     };
   }

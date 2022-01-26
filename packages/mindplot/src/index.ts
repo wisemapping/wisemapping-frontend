@@ -24,6 +24,10 @@ import LocalStorageManager from './components/LocalStorageManager';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import Menu from './components/widget/Menu';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
+import ImageExporterFactory from './components/export/ImageExporterFactory';
+import TextExporterFactory from './components/export/TextExporterFactory';
+import Exporter from './components/export/Exporter';
+
 import {
   buildDesigner,
 } from './components/DesignerBuilder';
@@ -32,6 +36,7 @@ import {
 } from './components/widget/ToolbarNotifier';
 
 // This hack is required to initialize Bootstrap. In future, this should be removed.
+// @ts-ignore
 global.jQuery = jquery;
 require('@libraries/bootstrap/js/bootstrap');
 
@@ -45,5 +50,8 @@ export {
   LocalStorageManager,
   DesignerOptionsBuilder,
   buildDesigner,
+  TextExporterFactory,
+  ImageExporterFactory,
+  Exporter,
   $notify,
 };

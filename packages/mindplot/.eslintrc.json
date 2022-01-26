@@ -43,7 +43,10 @@
 		    "import/resolver": {
 			    "webpack": {
 				    "config": "./webpack.common.js"
-			    }
+			    },
+                "node": {
+                    "extensions": [".js",".ts"]
+                  }
 		    }
 	  }
 }

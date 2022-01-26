@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import CentralTopic from './CentralTopic';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import Events from './Events';
@@ -24,11 +24,11 @@ import Topic from './Topic';
 import { $notify } from './widget/ToolbarNotifier';
 
 class DesignerModel extends Events {
-  _zoom: number;
+  private _zoom: number;
 
-  _topics: Topic[];
+  private _topics: Topic[];
 
-  _relationships: Relationship[];
+  private _relationships: Relationship[];
 
   constructor(options: DesignerOptions) {
     super();
@@ -37,11 +37,11 @@ class DesignerModel extends Events {
     this._relationships = [];
   }
 
-  getZoom():number {
+  getZoom(): number {
     return this._zoom;
   }
 
-  setZoom(zoom: number):void {
+  setZoom(zoom: number): void {
     this._zoom = zoom;
   }
 
@@ -55,12 +55,11 @@ class DesignerModel extends Events {
 
   getCentralTopic(): CentralTopic {
     const topics = this.getTopics();
-    return topics[0] as CentralTopic;
+    return topics[0] as unknown as CentralTopic;
   }
 
-  /** @return {mindplot.Topic[]} selected topics */
   filterSelectedTopics(): Topic[] {
-    const result = [];
+    const result: Topic[] = [];
     for (let i = 0; i < this._topics.length; i++) {
       if (this._topics[i].isOnFocus()) {
         result.push(this._topics[i]);
@@ -70,7 +69,7 @@ class DesignerModel extends Events {
   }
 
   filterSelectedRelationships(): Relationship[] {
-    const result = [];
+    const result:Relationship[] = [];
     for (let i = 0; i < this._relationships.length; i++) {
       if (this._relationships[i].isOnFocus()) {
         result.push(this._relationships[i]);
@@ -80,17 +79,18 @@ class DesignerModel extends Events {
   }
 
   getEntities(): (Relationship | Topic)[] {
-    let result = [].concat(this._topics);
+    let result:(Relationship|Topic)[] = [];
+    result = result.concat(this._topics);
     result = result.concat(this._relationships);
     return result;
   }
 
-  removeTopic(topic:Topic):void {
+  removeTopic(topic: Topic): void {
     $assert(topic, 'topic can not be null');
     this._topics = this._topics.filter((t) => t !== topic);
   }
 
-  removeRelationship(rel:Relationship):void {
+  removeRelationship(rel: Relationship): void {
     $assert(rel, 'rel can not be null');
     this._relationships = this._relationships.filter((r) => r !== rel);
   }
@@ -106,13 +106,13 @@ class DesignerModel extends Events {
     this._relationships.push(rel);
   }
 
-  filterTopicsIds(validate: (topic: Topic) => boolean = null, errorMsg = null): number[] {
-    const result = [];
+  filterTopicsIds(validate?: (topic: Topic) => boolean, errorMsg?: string): number[] {
+    const result: number[] = [];
     const topics = this.filterSelectedTopics();
 
     let isValid = true;
     topics.forEach((topic) => {
-      if ($defined(validate)) {
+      if (validate) {
         isValid = validate(topic);
       }
 
@@ -127,13 +127,13 @@ class DesignerModel extends Events {
     return result;
   }
 
-  selectedTopic(): Topic {
+  selectedTopic(): Topic | undefined {
     const topics = this.filterSelectedTopics();
-    return (topics.length > 0) ? topics[0] : null;
+    return (topics.length > 0) ? topics[0] : undefined;
   }
 
-  findTopicById(id: number): Topic {
-    let result = null;
+  findTopicById(id: number): Topic | undefined {
+    let result: Topic | undefined;
     for (let i = 0; i < this._topics.length; i++) {
       const topic = this._topics[i];
       if (topic.getId() === id) {

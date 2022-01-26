@@ -31,9 +31,9 @@ class NodeModel extends INodeModel {
   private _features: FeatureModel[];
 
   // eslint-disable-next-line no-use-before-define
-  private _parent: NodeModel;
+  private _parent: NodeModel | null;
 
-  constructor(type: NodeModelType, mindmap: Mindmap, id: number) {
+  constructor(type: NodeModelType, mindmap: Mindmap, id?: number) {
     $assert(type, 'Node type can not be null');
     $assert(mindmap, 'mindmap can not be null');
     super(mindmap);
@@ -121,10 +121,9 @@ class NodeModel extends INodeModel {
     return this._properties;
   }
 
-  getProperty(key: string) {
+  getProperty(key: string): number | string | boolean {
     $defined(key, 'key can not be null');
-    const result = this._properties[key];
-    return !$defined(result) ? null : result;
+    return this._properties[key];
   }
 
   /**
@@ -187,7 +186,7 @@ class NodeModel extends INodeModel {
     return this._children;
   }
 
-  getParent(): NodeModel {
+  getParent(): NodeModel | null {
     return this._parent;
   }
 
