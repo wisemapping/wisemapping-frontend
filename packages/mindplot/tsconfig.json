@@ -7,7 +7,10 @@
     "moduleResolution": "Node",
     "target": "es6",
     "allowJs": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "rootDirs": [
+      "src",
+    ]
   },
   "exclude": ["node_modules"],
   "files": ["mindplot.d.ts"]

@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   entry: {
-    mindplot: './src/index.js',
+    mindplot: './src/index.ts',
     loader: './src/indexLoader.ts',
   },
   mode: 'production',

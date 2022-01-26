@@ -10,8 +10,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Designer, TextExporterFactory, ImageExpoterFactory, Exporter, MindMap } from '@wisemapping/mindplot';
 
-type ExportFormat = 'pdf' | 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
+type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -24,15 +25,11 @@ type ExportDialogProps = {
 const ExportDialog = ({
     mapId,
     onClose,
-    enableImgExport,
-    svgXml,
+    enableImgExport
 }: ExportDialogProps): React.ReactElement => {
     const intl = useIntl();
     const [submit, setSubmit] = React.useState<boolean>(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [formExportRef, setExportFormRef] = React.useState<any>();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [formTransformtRef, setTransformFormRef] = React.useState<any>();
+
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
         enableImgExport ? 'image' : 'document'
     );
@@ -52,7 +49,7 @@ const ExportDialog = ({
         let defaultFormat: ExportFormat;
         switch (value) {
             case 'document':
-                defaultFormat = 'pdf';
+                defaultFormat = 'txt';
                 break;
             case 'image':
                 defaultFormat = 'svg';
@@ -72,41 +69,64 @@ const ExportDialog = ({
         setSubmit(true);
     };
 
+    const exporter = (formatType: ExportFormat) => {
+        let svgElement: Element | null = null;
+        let size;
+        let mindmpap: MindMap;
+
+        const designer: Designer = global.designer;
+        if (designer != null) {
+            // Depending on the type of export. It will require differt POST.
+            const workspace = designer.getWorkspace();
+            svgElement = workspace.getSVGElement();
+            size = workspace.getSize();
+            mindmpap = designer.getMindmap();
+        }
+
+        let exporter: Exporter;
+        switch (formatType) {
+            case 'png':
+            case 'jpg':
+            case 'svg': {
+                exporter = ImageExpoterFactory.create(formatType, mindmpap, svgElement, size.width, size.height);
+                break;
+            }
+            case 'wxml':
+            case 'md':
+            case 'txt': {
+                exporter = TextExporterFactory.create(formatType, mindmpap);
+                break;
+            }
+            default:
+                throw new Error('Unsupported encoding');
+        }
+
+        return exporter.export();
+    };
+
     useEffect(() => {
         if (submit) {
-            // TODO: Remove usage of global "designer"
-            const designer = global.designer;
-            // Depending on the type of export. It will require differt POST.
-            if (
-                designer && 
-                designer.EXPORT_SUPPORTED_FORMATS.includes(exportFormat)
-            ) {
-                designer.export(exportFormat)
-                    .then((url: string) => {
-                        // Create hidden anchor to force download ...
-                        const anchor: HTMLAnchorElement = document.createElement('a');
-                        anchor.style.display = 'display: none';
-                        anchor.download = `${mapId}.${exportFormat}`;
-                        anchor.href = url;
-                        document.body.appendChild(anchor);
+            const { map } = fetchMapById(mapId);
+            exporter(exportFormat)
+                .then((url: string) => {
+                    // Create hidden anchor to force download ...
+                    const anchor: HTMLAnchorElement = document.createElement('a');
+                    anchor.style.display = 'display: none';
+                    anchor.download = `${map?.title}.${exportFormat}`;
+                    anchor.href = url;
+                    document.body.appendChild(anchor);
 
-                        // Trigger click ...
-                        anchor.click();
+                    // Trigger click ...
+                    anchor.click();
 
-                        // Clean up ...
-                        URL.revokeObjectURL(url);
-                        document.body.removeChild(anchor);
-                    });
-            } else if (exportFormat === 'pdf') {
-                formTransformtRef?.submit();
-            } else {
-                formExportRef?.submit();
-            }
+                    // Clean up ...
+                    URL.revokeObjectURL(url);
+                    document.body.removeChild(anchor);
+                });
             onClose();
         }
     }, [submit]);
 
-    const { map } = fetchMapById(mapId);
     return (
         <div>
             <BaseDialog
@@ -117,7 +137,7 @@ const ExportDialog = ({
                 submitButton={intl.formatMessage({ id: 'export.title', defaultMessage: 'Export' })}
             >
                 {
-                    !enableImgExport && 
+                    !enableImgExport &&
                     <Alert severity="info">
                         <FormattedMessage
                             id="export.warning"
@@ -150,9 +170,6 @@ const ExportDialog = ({
                                 >
                                     <MenuItem value="svg" className={classes.menu}>
                                         Scalable Vector Graphics (SVG)
-                                    </MenuItem>
-                                    <MenuItem value="pdf" className={classes.menu}>
-                                        Portable Document Format (PDF)
                                     </MenuItem>
                                     <MenuItem value="png" className={classes.menu}>
                                         Portable Network Graphics (PNG)
@@ -188,6 +205,9 @@ const ExportDialog = ({
                                     </MenuItem>
                                     <MenuItem className={classes.select} value="txt">
                                         Plain Text File (TXT)
+                                    </MenuItem>
+                                    <MenuItem className={classes.select} value="md">
+                                        Markdown (MD)
                                     </MenuItem>
                                 </Select>
                             )}
@@ -227,26 +247,6 @@ const ExportDialog = ({
                     </RadioGroup>
                 </FormControl>
             </BaseDialog>
-
-            {/* Hidden form for the purpose of summit */}
-            <form
-                action={`/c/restful/maps/${mapId}.${exportFormat}`}
-                ref={setExportFormRef}
-                method="GET"
-            >
-                <input name="download" type="hidden" value={exportFormat} />
-                <input name="filename" type="hidden" value={map?.title} />
-            </form>
-
-            <form
-                action={`/c/restful/transform.${exportFormat}`}
-                ref={setTransformFormRef}
-                method="POST"
-            >
-                <input name="download" type="hidden" value={exportFormat} />
-                <input name="filename" type="hidden" value={map?.title} />
-                <input name="svgXml" id="svgXml" value={svgXml} type="hidden" />
-            </form>
         </div>
     );
 };

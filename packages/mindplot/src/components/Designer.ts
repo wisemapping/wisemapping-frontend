@@ -48,8 +48,6 @@ import LayoutManager from './layout/LayoutManager';
 
 import { TopicShape } from './model/INodeModel';
 import { $notify } from './widget/ToolbarNotifier';
-import ImageExpoterFactory from './export/ImageExporterFactory';
-import TextExporterFactory from './export/TextExporterFactory';
 import RelationshipModel from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
@@ -57,8 +55,7 @@ import Topic from './Topic';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
-
-export type ExportFormat = 'png' | 'svg' | 'jpg' | 'wxml';
+import CentralTopic from './CentralTopic';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -94,7 +91,9 @@ class Designer extends Events {
     this._options = options;
 
     // Set full div elem render area ...
-    divElement.css(options.containerSize);
+    if (options.containerSize) {
+      divElement.css(options.containerSize);
+    }
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -180,14 +179,16 @@ class Designer extends Events {
 
     // Deselect on click ...
     screenManager.addEvent('click', (event: UIEvent) => {
-      me.onObjectFocusEvent(null, event);
+      me.onObjectFocusEvent(undefined, event);
     });
 
     // Create nodes on double click...
     screenManager.addEvent('dblclick', (event: MouseEvent) => {
       if (workspace.isWorkspaceEventsEnabled()) {
         const mousePos = screenManager.getWorkspaceMousePosition(event);
-        const centralTopic = me.getModel().getCentralTopic();
+        const centralTopic:CentralTopic = me.getModel()
+          .getCentralTopic();
+
         const model = me._createChildModel(centralTopic, mousePos);
         this._actionDispatcher.addTopics([model], [centralTopic.getId()]);
       }
@@ -282,13 +283,7 @@ class Designer extends Events {
     return topic;
   }
 
-  /**
-         * @param {?mindplot.Topic} currentObject
-         * @param {Event=} event
-         * sets focus to the given currentObject and removes it from any other objects if not
-         * triggered with Ctrl pressed
-         */
-  onObjectFocusEvent(currentObject: Topic = null, event = null): void {
+  onObjectFocusEvent(currentObject?: Topic, event?): void {
     // Close node editors ..
     const topics = this.getModel().getTopics();
     topics.forEach((topic) => topic.closeEditors());
@@ -345,32 +340,6 @@ class Designer extends Events {
     } else {
       $notify($msg('ZOOM_ERROR'));
     }
-  }
-
-  EXPORT_SUPPORTED_FORMATS: ExportFormat[] = ['png', 'svg', 'jpg', 'wxml'];
-
-  export(formatType: ExportFormat): Promise<string> {
-    const workspace = this._workspace;
-    const svgElement = workspace.getSVGElement();
-    const size = workspace.getSize();
-
-    let exporter;
-    switch (formatType) {
-      case 'png':
-      case 'jpg':
-      case 'svg': {
-        exporter = ImageExpoterFactory.create(formatType, this._mindmap, svgElement, size.width, size.height);
-        break;
-      }
-      case 'wxml': {
-        exporter = TextExporterFactory.create(formatType, this._mindmap);
-        break;
-      }
-      default:
-        throw new Error('Unsupported encoding');
-    }
-
-    return exporter.export();
   }
 
   zoomIn(factor = 1.2): void {
@@ -530,21 +499,24 @@ class Designer extends Events {
       const parentTopic = topic.getOutgoingConnectedTopic();
       const siblingModel = this._createSiblingModel(topic);
 
-      // Hack: if parent is central topic, add node below not on opposite side.
-      // This should be done in the layout
-      if (parentTopic.getType() === 'CentralTopic') {
-        siblingModel.setOrder(topic.getOrder() + 2);
-      }
+      if (siblingModel) {
+        // Hack: if parent is central topic, add node below not on opposite side.
+        // This should be done in the layout
+        if (parentTopic.getType() === 'CentralTopic') {
+          siblingModel.setOrder(topic.getOrder() + 2);
+        }
 
-      const parentTopicId = parentTopic.getId();
-      this._actionDispatcher.addTopics([siblingModel], [parentTopicId]);
+        const parentTopicId = parentTopic.getId();
+        this._actionDispatcher.addTopics([siblingModel], [parentTopicId]);
+      }
     }
   }
 
-  private _createSiblingModel(topic: Topic): NodeModel {
-    let result = null;
-    let model = null;
+  private _createSiblingModel(topic: Topic): NodeModel | undefined {
+    let result: NodeModel | undefined;
+    let model: NodeModel;
     const parentTopic = topic.getOutgoingConnectedTopic();
+
     if (parentTopic != null) {
       // Create a new node ...
       model = topic.getModel();
@@ -555,9 +527,9 @@ class Designer extends Events {
       const order = topic.getOrder() + 1;
       result.setOrder(order);
       result.setPosition(10, 10); // Set a dummy position ...
-    }
 
-    this._copyNodeProps(model, result);
+      this._copyNodeProps(model, result);
+    }
 
     return result;
   }
@@ -598,8 +570,10 @@ class Designer extends Events {
     layoutManager.addEvent('change', (event) => {
       const id = event.getId();
       const topic = me.getModel().findTopicById(id);
-      topic.setPosition(event.getPosition());
-      topic.setOrder(event.getOrder());
+      if (topic) {
+        topic.setPosition(event.getPosition());
+        topic.setOrder(event.getOrder());
+      }
     });
     this._eventBussDispatcher.setLayoutManager(layoutManager);
 
@@ -636,9 +610,8 @@ class Designer extends Events {
     this._actionDispatcher.actionRunner.redo();
   }
 
-  /** */
   isReadOnly(): boolean {
-    return this._options.readOnly;
+    return Boolean(this._options?.readOnly);
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
@@ -825,15 +798,14 @@ class Designer extends Events {
     }
   }
 
-  /** */
   changeFontFamily(font: string) {
-    const topicsIds = this.getModel().filterTopicsIds();
+    const topicsIds = this.getModel()
+      .filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontFamilyToTopic(topicsIds, font);
     }
   }
 
-  /** */
   changeFontStyle(): void {
     const topicsIds = this.getModel()
       .filterTopicsIds();
@@ -842,7 +814,6 @@ class Designer extends Events {
     }
   }
 
-  /** */
   changeFontColor(color: string) {
     $assert(color, 'color can not be null');
 
@@ -883,9 +854,8 @@ class Designer extends Events {
     }
   }
 
-  /** */
-  changeTopicShape(shape) {
-    const validateFunc = (topic) => !(
+  changeTopicShape(shape: string) {
+    const validateFunc = (topic: Topic) => !(
       topic.getType() === 'CentralTopic' && shape === TopicShape.LINE
     );
 
@@ -896,16 +866,14 @@ class Designer extends Events {
     }
   }
 
-  /** */
-  changeFontWeight() {
+  changeFontWeight(): void {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontWeightToTopic(topicsIds);
     }
   }
 
-  /** */
-  addIconType(iconType) {
+  addIconType(iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id, {
@@ -915,9 +883,9 @@ class Designer extends Events {
   }
 
   /**
-         * lets the selected topic open the link editor where the user can define or modify an
-         * existing link
-         */
+   * lets the selected topic open the link editor where the user can define or modify an
+   * existing link
+   */
   addLink() {
     const model = this.getModel();
     const topic = model.selectedTopic();
@@ -937,18 +905,21 @@ class Designer extends Events {
     }
   }
 
-  /**
-         * @param {mindplot.Topic} node
-         * sets the focus to the given node
-         */
-  goToNode(node) {
+  goToNode(node: Topic): void {
     node.setOnFocus(true);
     this.onObjectFocusEvent(node);
   }
 
-  /** @return {mindplot.Workspace} */
-  getWorkSpace() {
+  getWorkSpace(): Workspace {
     return this._workspace;
+  }
+
+  public get cleanScreen(): () => void {
+    return this._cleanScreen;
+  }
+
+  public set cleanScreen(value: () => void) {
+    this._cleanScreen = value;
   }
 }
 

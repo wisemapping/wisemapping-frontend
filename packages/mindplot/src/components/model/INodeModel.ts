@@ -28,7 +28,7 @@ const parseJsObject = (str: string) => JSON.parse(str.replace(/(['"])?([a-z0-9A-
 abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
 
-  static _next_uuid = 0;
+  private static _next_uuid = 0;
 
   protected _mindmap: Mindmap;
 
@@ -43,8 +43,7 @@ abstract class INodeModel {
 
   abstract getFeatures(): FeatureModel[];
 
-  /** */
-  setId(id: number): void {
+  setId(id?: number): void {
     if (!$defined(id)) {
       const newId = INodeModel._nextUUID();
       this.putProperty('id', newId);
@@ -79,7 +78,7 @@ abstract class INodeModel {
 
   getPosition(): { x: number, y: number } {
     const value = this.getProperty('position') as string;
-    let result = null;
+    let result;
     if (value != null) {
       result = parseJsObject(value);
     }
@@ -92,7 +91,7 @@ abstract class INodeModel {
 
   getImageSize(): {width: number, height: number} {
     const value = this.getProperty('imageSize') as string;
-    let result = null;
+    let result;
     if (value != null) {
       result = parseJsObject(value);
     }
@@ -261,7 +260,7 @@ abstract class INodeModel {
     const tmindmap = target.getMindmap();
 
     children.forEach((snode) => {
-      const tnode = tmindmap.createNode(snode.getType(), snode.getId());
+      const tnode:INodeModel = tmindmap.createNode(snode.getType(), snode.getId());
       snode.copyTo(tnode);
       target.append(tnode);
     });
@@ -276,16 +275,14 @@ abstract class INodeModel {
   deleteNode(): void {
     const mindmap = this.getMindmap();
 
-    //        console.log("Before:" + mindmap.inspect());
     const parent = this.getParent();
-    if ($defined(parent)) {
+    if (parent) {
       parent.removeChild(this);
     } else {
       // If it has not parent, it must be an isolate topic ...
+      // @ts-ignore
       mindmap.removeBranch(this);
     }
-    // It's an isolated node. It must be a hole branch ...
-    //        console.log("After:" + mindmap.inspect());
   }
 
   abstract getPropertiesKeys(): string[];
@@ -298,7 +295,7 @@ abstract class INodeModel {
 
   abstract getChildren(): INodeModel[];
 
-  abstract getParent(): INodeModel;
+  abstract getParent(): INodeModel | null;
 
   abstract clone(): INodeModel;
 
@@ -321,7 +318,7 @@ abstract class INodeModel {
 
   findNodeById(id: number): INodeModel {
     $assert(Number.isFinite(id));
-    let result = null;
+    let result;
     if (this.getId() === id) {
       result = this;
     } else {

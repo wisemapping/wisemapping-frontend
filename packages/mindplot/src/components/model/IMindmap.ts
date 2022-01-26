@@ -38,13 +38,13 @@ abstract class IMindmap {
 
   abstract setVersion(version: string): void;
 
-  abstract addBranch(nodeModel: INodeModel): void;
+  abstract addBranch(nodeModel): void;
 
-  abstract getBranches(): Array<INodeModel>;
+  abstract getBranches();
 
-  abstract removeBranch(node: INodeModel): void;
+  abstract removeBranch(node): void;
 
-  abstract getRelationships(): Array<RelationshipModel>;
+  abstract getRelationships(): RelationshipModel[];
 
   connect(parent: INodeModel, child: INodeModel): void {
     // Child already has a parent ?
@@ -71,9 +71,9 @@ abstract class IMindmap {
     this.addBranch(child);
   }
 
-  abstract hasAlreadyAdded(node: INodeModel): boolean;
+  abstract hasAlreadyAdded(node): boolean;
 
-  abstract createNode(type: NodeType, id: number): INodeModel
+  abstract createNode(type: NodeType, id: number)
 
   abstract createRelationship(fromNodeId: number, toNodeId: number): void;
 

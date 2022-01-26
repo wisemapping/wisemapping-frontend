@@ -38,7 +38,7 @@ class Mindmap extends IMindmap {
     $assert(id, 'Id can not be null');
 
     this._branches = [];
-    this._description = null;
+    this._description = '';
     this._relationships = [];
     this._version = version;
     this._id = id;
@@ -79,7 +79,7 @@ class Mindmap extends IMindmap {
          * @throws will throw an error if nodeModel is null, undefined or not a node model object
          * @throws will throw an error if
          */
-  addBranch(nodeModel: NodeModel): void {
+  addBranch(nodeModel: INodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Add node must be invoked with model objects');
     const branches = this.getBranches();
     if (branches.length === 0) {
@@ -89,18 +89,18 @@ class Mindmap extends IMindmap {
       $assert(nodeModel.getType() !== 'CentralTopic', 'Mindmaps only have one cental topic');
     }
 
-    this._branches.push(nodeModel);
+    this._branches.push(nodeModel as NodeModel);
   }
 
   /**
          * @param nodeModel
          */
-  removeBranch(nodeModel: INodeModel): void {
+  removeBranch(nodeModel: NodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     this._branches = this._branches.filter((b) => b !== nodeModel);
   }
 
-  getBranches() {
+  getBranches():NodeModel[] {
     return this._branches;
   }
 
@@ -122,11 +122,11 @@ class Mindmap extends IMindmap {
     return result;
   }
 
-  createNode(type: NodeModelType = 'MainTopic', id: number) {
+  createNode(type: NodeModelType = 'MainTopic', id?: number):NodeModel {
     return new NodeModel(type, this, id);
   }
 
-  createRelationship(sourceNodeId: number, targetNodeId: number):RelationshipModel {
+  createRelationship(sourceNodeId: number, targetNodeId: number): RelationshipModel {
     $assert($defined(sourceNodeId), 'from node cannot be null');
     $assert($defined(targetNodeId), 'to node cannot be null');
 
@@ -148,7 +148,7 @@ class Mindmap extends IMindmap {
   }
 
   findNodeById(id: number) {
-    let result = null;
+    let result;
     for (let i = 0; i < this._branches.length; i++) {
       const branch = this._branches[i];
       result = branch.findNodeById(id);
