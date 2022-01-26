@@ -72,7 +72,7 @@ const ExportDialog = ({
     const exporter = (formatType: ExportFormat) => {
         let svgElement: Element | null = null;
         let size;
-        let mindmpap: MindMap;
+        let mindmap: MindMap;
 
         const designer: Designer = global.designer;
         if (designer != null) {
@@ -80,7 +80,7 @@ const ExportDialog = ({
             const workspace = designer.getWorkspace();
             svgElement = workspace.getSVGElement();
             size = workspace.getSize();
-            mindmpap = designer.getMindmap();
+            mindmap = designer.getMindmap();
         } else {
             // Load mindmap ...
             const persistence = new RESTPersistenceManager({
@@ -99,13 +99,13 @@ const ExportDialog = ({
             case 'png':
             case 'jpg':
             case 'svg': {
-                exporter = ImageExpoterFactory.create(formatType, mindmpap, svgElement, size.width, size.height);
+                exporter = ImageExpoterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
                 break;
             }
             case 'wxml':
             case 'md':
             case 'txt': {
-                exporter = TextExporterFactory.create(formatType, mindmpap);
+                exporter = TextExporterFactory.create(formatType, mindmap);
                 break;
             }
             default:
