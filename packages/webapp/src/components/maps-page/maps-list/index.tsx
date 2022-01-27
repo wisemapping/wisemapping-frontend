@@ -236,7 +236,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
     const classes = useStyles();
-    const [order, setOrder] = React.useState<Order>('asc');
+    const [order, setOrder] = React.useState<Order>('desc');
     const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
 
     const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
