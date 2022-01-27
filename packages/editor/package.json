@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "dist/editor.bundle.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.4",
-    "@wisemapping/mindplot": "^0.4.15",
+    "@wisemapping/mindplot": "^5.0.1",
     "styled-components": "^5.2.1"
   },
   "peerDependencies": {

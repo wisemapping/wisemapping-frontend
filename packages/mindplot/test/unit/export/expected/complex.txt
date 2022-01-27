@@ -13,7 +13,6 @@
 		1.11.1 Goals
 		1.11.2 Formulize
 	1.12 Probono
-		1.12.1 null
 2 Strategy 2: Talent Development
 	2.1 Strategic Priority 2a: Personal Plans
 	2.2 Strategic Priority 2b: External learning matches organ. goals
@@ -23,8 +22,7 @@
 	3.1 Strategic Priority 4a:Feedback
 	3.2 Strategic Priority 4b: Anti Harassment
 	3.3 Strategic Priority 4c: Diversity
-	3.4 null
-	3.5 So That...
+	3.4 So That...
 4 Strategy 1: Recruit & Retain
 	4.1 So that...
 	4.2 Strategic Priority 1a: Recruitment
@@ -44,22 +42,14 @@
 	5.1 Goals
 		5.1.1 Increase new clients
 			5.1.1.1 Academic Research
-			5.1.1.2 null
 		5.1.2 Support New Products
 			5.1.2.1 Formulize
-			5.1.2.2 null
-			5.1.2.3 null
 		5.1.3 Support CiviCRM
 		5.1.4 Identify Opportunites
-			5.1.4.1 null
-			5.1.4.2 null
-			5.1.4.3 null
-			5.1.4.4 null
 6 Hosting NG Plan
 7 Freeform IT Plan
 	7.1 Fragile
 	7.2 Tools
-	7.3 null
 8 Project Teams
 	8.1 Projects 1-3
 	8.2 Projects 4-6
@@ -78,7 +68,6 @@
 	10.5 Business Plan
 11 Strategy 3: Safety and Wellness
 	11.1 Strategic Priority 3a: H&S Policies & Practices
-		11.1.1 null
 	11.2 Strategic Priority 3b: Health Promotion
 		11.2.1 Health and Wellness Committee
 		11.2.2 Work-life Balance Initiative [link: http://hrcouncil.ca/hr-toolkit/workplaces-health-safety.cfm]
@@ -101,54 +90,45 @@
 14 Backlog Plan [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
 	14.1 Go To Backlog Plan  [link: https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit]
 15 Strategy Prospecting
-	15.1 null
-	15.2 null
-	15.3 null
 16 Stategies:  Forecasting
-	16.1 null
-	16.2 null
-	16.3 null
 17 Strategies Marketing
-18 null
-19 Exit Interviews
-	19.1 As Freeform
-	19.2 Responsiblity: HZ, KS
-	19.3 Release
-	19.4 Have Heather write procedures for exit interview process
-	19.5 So that
-20 3 Month Onboarding Process
-21 Human Resources Plan
-	21.1 Related Org Objectives
-		21.1.1 1
-		21.1.2 2
-		21.1.3 3
-		21.1.4 4
-	21.2 Related Documents
-	21.3 Goals
-		21.3.1 Goal:Staff=Optimal Bus. Growth
-			21.3.1.1 So that...
-			21.3.1.2 Related Strategic Priorities: 
-			21.3.1.3 KPI: HR Level equals Planned Growth
-			21.3.1.4 Methodology
-				21.3.1.4.1 Target
-		21.3.2 Goal: Increase Job Satisfaction
-			21.3.2.1 So That
-			21.3.2.2 Related Strategic Priorities
-				21.3.2.2.1 null
-			21.3.2.3 KPI: Employee Satisfaction
-				21.3.2.3.1 null
-			21.3.2.4 Methodology
-				21.3.2.4.1 Target
-		21.3.3 Goal: Improve Performance
-			21.3.3.1 So That
-			21.3.3.2 Related Strategic Priorities
-			21.3.3.3 KPI: Employee Performance
-			21.3.3.4 Methodology
-				21.3.3.4.1 Target
-		21.3.4 Goal: Reduce Turnover
-			21.3.4.1 So That
-			21.3.4.2 Related Strategic Priorities
-			21.3.4.3 KPI: Retention Rate
-			21.3.4.4 Methodology
-				21.3.4.4.1 Target
-		21.3.5 Risk & Compliance
+18 Exit Interviews
+	18.1 As Freeform
+	18.2 Responsiblity: HZ, KS
+	18.3 Release
+	18.4 Have Heather write procedures for exit interview process
+	18.5 So that
+19 3 Month Onboarding Process
+20 Human Resources Plan
+	20.1 Related Org Objectives
+		20.1.1 1
+		20.1.2 2
+		20.1.3 3
+		20.1.4 4
+	20.2 Related Documents
+	20.3 Goals
+		20.3.1 Goal:Staff=Optimal Bus. Growth
+			20.3.1.1 So that...
+			20.3.1.2 Related Strategic Priorities: 
+			20.3.1.3 KPI: HR Level equals Planned Growth
+			20.3.1.4 Methodology
+				20.3.1.4.1 Target
+		20.3.2 Goal: Increase Job Satisfaction
+			20.3.2.1 So That
+			20.3.2.2 Related Strategic Priorities
+			20.3.2.3 KPI: Employee Satisfaction
+			20.3.2.4 Methodology
+				20.3.2.4.1 Target
+		20.3.3 Goal: Improve Performance
+			20.3.3.1 So That
+			20.3.3.2 Related Strategic Priorities
+			20.3.3.3 KPI: Employee Performance
+			20.3.3.4 Methodology
+				20.3.3.4.1 Target
+		20.3.4 Goal: Reduce Turnover
+			20.3.4.1 So That
+			20.3.4.2 Related Strategic Priorities
+			20.3.4.3 KPI: Retention Rate
+			20.3.4.4 Methodology
+				20.3.4.4.1 Target
+		20.3.5 Risk & Compliance
