@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 
 import BackIconSvg from '../../../images/back-icon.svg';
 import SaveSvg from '../../../images/save.svg';
-import DiscardSvg from '../../../images/discard.svg';
 import UndoSvg from '../../../images/undo.svg';
 import RedoSvg from '../../../images/redo.svg';
 import TopicAddSvg from '../../../images/topic-add.svg';
@@ -49,9 +48,6 @@ export default function Toolbar({
                 <div id="persist" className="buttonContainer">
                     <div id="save" className="buttonOn">
                         <img src={SaveSvg} />
-                    </div>
-                    <div id="discard" className="buttonOn">
-                        <img src={DiscardSvg}/>
                     </div>
                 </div>
             )}
