@@ -252,7 +252,7 @@ export default class RestClient implements Client {
     revertHistory(id: number, hid: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .post(`${this.baseUrl}/maps/${id}/history/${hid}`, null, {
+                .post(`${this.baseUrl}/c/restful/maps/${id}/history/${hid}`, null, {
                     headers: { 'Content-Type': 'text/pain' },
                 })
                 .then(() => {
@@ -267,7 +267,31 @@ export default class RestClient implements Client {
     }
 
     fetchHistory(id: number): Promise<ChangeHistory[]> {
-        throw new Error(`Method not implemented. ${id}`);
+        const handler = (
+            success: (historyList: ChangeHistory[]) => void,
+            reject: (error: ErrorInfo) => void
+        ) => {
+            axios
+                .get(`${this.baseUrl}/c/restful/maps/${id}/history/`, {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then((response) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const historyList: ChangeHistory[] = (response.data.changes as any[]).map((h) => {
+                        return {
+                            id: h.id,
+                            lastModificationBy: h.creator,
+                            lastModificationTime: h.creationTime,
+                        };
+                    });
+                    success(historyList);
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {

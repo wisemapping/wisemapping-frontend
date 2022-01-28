@@ -99,7 +99,7 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                         </TableCell>
                                         <TableCell align="left">
                                             <Link
-                                                href={`c/maps/${mapId}/${row.id}/view`}
+                                                href={`/c/maps/${mapId}/${row.id}/view`}
                                                 target="history"
                                             >
                                                 <FormattedMessage
