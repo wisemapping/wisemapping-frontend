@@ -2,13 +2,10 @@ import '../css/viewmode.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Editor from '../../../../src/index';
+import { buildDesigner, LocalStorageManager, PersistenceManager, DesignerOptionsBuilder } from '@wisemapping/mindplot';
 
-const initialization = ({ 
-    LocalStorageManager, 
-    DesignerOptionsBuilder,
-    buildDesigner,
-    PersistenceManager 
-  }) => () => {
+
+const initialization = () => {
       const p = new LocalStorageManager('samples/{id}.wxml');
       const options = DesignerOptionsBuilder.buildOptions({ persistenceManager: p, readOnly: true, saveOnLoad: false });
       

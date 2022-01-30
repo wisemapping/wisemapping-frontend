@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Designer, TextExporterFactory, ImageExpoterFactory, Exporter, MindMap, RESTPersistenceManager } from '@wisemapping/mindplot';
+import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap, RESTPersistenceManager } from '@wisemapping/mindplot';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -72,12 +72,12 @@ const ExportDialog = ({
     const exporter = (formatType: ExportFormat) => {
         let svgElement: Element | null = null;
         let size;
-        let mindmap: MindMap;
+        let mindmap: Mindmap;
 
         const designer: Designer = global.designer;
         if (designer != null) {
             // Depending on the type of export. It will require differt POST.
-            const workspace = designer.getWorkspace();
+            const workspace = designer.getWorkSpace();
             svgElement = workspace.getSVGElement();
             size = workspace.getSize();
             mindmap = designer.getMindmap();
@@ -99,7 +99,7 @@ const ExportDialog = ({
             case 'png':
             case 'jpg':
             case 'svg': {
-                exporter = ImageExpoterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
+                exporter = ImageExporterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
                 break;
             }
             case 'wxml':

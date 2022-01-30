@@ -2,7 +2,8 @@ import React from 'react';
 import Toolbar, { ToolbarActionType } from './components/toolbar';
 import Footer from './components/footer';
 import { IntlProvider } from 'react-intl';
-import * as mindplot from '@wisemapping/mindplot';
+import { $notify, buildDesigner, LocalStorageManager, PersistenceManager, RESTPersistenceManager, DesignerOptionsBuilder } from '@wisemapping/mindplot';
+
 declare global {
     var memoryPersistence: boolean;
     var readOnly: boolean;
@@ -18,7 +19,7 @@ declare global {
 }
 
 export type EditorPropsType = {
-    initCallback?: (m: typeof mindplot) => () => void;
+    initCallback?: () => void;
     mapId: number;
     memoryPersistence: boolean;
     readOnlyMode: boolean;
@@ -26,15 +27,13 @@ export type EditorPropsType = {
     onAction: (action: ToolbarActionType) => void;
 };
 
-const initMindplot = ({
-    PersistenceManager,
-    RESTPersistenceManager,
-    LocalStorageManager,
-    DesignerOptionsBuilder,
-    buildDesigner,
-    $notify,
-}: typeof mindplot) => () => {
-    let persistence: typeof PersistenceManager;
+const initMindplot = () => {
+
+    // Change page title ...
+    document.title = `${global.mapTitle} | WiseMapping `
+
+    // Configure persistence manager ...
+    let persistence;
     if (!global.memoryPersistence && !global.readOnly) {
         persistence = new RESTPersistenceManager({
             documentUrl: '/c/restful/maps/{id}/document',
@@ -45,8 +44,7 @@ const initMindplot = ({
         });
     } else {
         persistence = new LocalStorageManager(
-            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${
-                !global.isAuth ? '-pub' : ''
+            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
             }`,
             true
         );
@@ -58,9 +56,9 @@ const initMindplot = ({
     const options = DesignerOptionsBuilder.buildOptions({
         persistenceManager: persistence,
         readOnly: Boolean(global.readOnly || false),
-        mapId: global.mapId,
+        mapId: String(global.mapId),
         container: 'mindplot',
-        zoom: zoomParam || global.userOptions ? global.userOptions.zoom : 1,
+        zoom: zoomParam | (global.userOptions != undefined ? Number.parseFloat(global.userOptions.zoom as string) : 1),
         locale: global.locale,
     });
 
@@ -85,8 +83,8 @@ export default function Editor({
     locale = 'en',
     onAction,
 }: EditorPropsType): React.ReactElement {
-    
-    React.useEffect(initCallback(mindplot), []);
+
+    React.useEffect(initCallback, []);
 
     return (
         <IntlProvider locale={locale} defaultLocale="en" messages={{}}>

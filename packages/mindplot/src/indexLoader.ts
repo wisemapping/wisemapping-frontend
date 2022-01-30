@@ -33,7 +33,7 @@ import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 // This hack is required to initialize Bootstrap. In future, this should be removed.
 // @ts-ignore
 global.jQuery = jquery;
-require('@libraries/bootstrap/js/bootstrap');
+require('../../../libraries/bootstrap/js/bootstrap.min');
 
 // Configure designer options ...
 let persistence:PersistenceManager;

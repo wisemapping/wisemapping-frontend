@@ -17,9 +17,8 @@
  */
 import { $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
-// TODO: use jquery.hotkeys from npm or setup eslint-import-resolver-alias plugin
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
-import initHotKeyPluggin from '@libraries/jquery.hotkeys';
+
+import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
 

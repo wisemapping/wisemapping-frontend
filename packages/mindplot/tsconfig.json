@@ -3,15 +3,20 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": false,
-    "module": "es6",
-    "moduleResolution": "Node",
+    "module": "amd",
+    "moduleResolution": "node",
     "target": "es6",
     "allowJs": true,
     "esModuleInterop": true,
+    "declaration": true,
     "rootDirs": [
       "src",
     ]
   },
-  "exclude": ["node_modules"],
-  "files": ["mindplot.d.ts"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

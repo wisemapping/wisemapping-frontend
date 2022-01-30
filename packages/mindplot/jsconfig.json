@@ -2,8 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "ES6",
-    "paths": {
-      "@libraries/*": ["../../libraries/*"]    }
   },
   "exclude": ["node_modules"]
 }

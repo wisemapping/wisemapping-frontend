@@ -3,11 +3,11 @@
     "version": "5.0.2",
     "description": "WiseMapping - Mindplot Canvas Library",
     "homepage": "http://www.wisemapping.org/",
-    "main": "dist/mindplot.js",
     "directories": {
         "lib": "src",
         "test": "__tests__"
     },
+    "main": "src/index.ts",
     "files": [
         "src",
         "assets",
