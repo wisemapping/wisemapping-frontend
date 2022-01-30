@@ -19,7 +19,7 @@ pipelines:
             - export CYPRESS_imageSnaphots="true"
             - yarn bootstrap
             - yarn build
-            - yarn lint
+            # - yarn lint
             - yarn test
           artifacts:
             - packages/**/cypress/snapshots/**/__diff_output__/*.diff.png
