@@ -58,7 +58,7 @@ const initMindplot = () => {
         readOnly: Boolean(global.readOnly || false),
         mapId: String(global.mapId),
         container: 'mindplot',
-        zoom: zoomParam | (global.userOptions != undefined ? Number.parseFloat(global.userOptions.zoom as string) : 1),
+        zoom: zoomParam || (global.userOptions?.zoom != undefined ? Number.parseFloat(global.userOptions.zoom as string) : 0.8),
         locale: global.locale,
     });
 
