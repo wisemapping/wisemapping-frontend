@@ -17,10 +17,19 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
+import { Mindmap } from '..';
 import { $msg } from './Messages';
 import PersistenceManager from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager {
+  private documentUrl: string;
+  private revertUrl: string;
+  private lockUrl: string;
+  private timestamp: string;
+  private session: string;
+  private onSave: boolean;
+  private clearTimeout;
+
   constructor(options) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
@@ -36,29 +45,29 @@ class RESTPersistenceManager extends PersistenceManager {
     this.session = options.session;
   }
 
-  saveMapXml(mapId, mapXml, pref, saveHistory, events, sync) {
+  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events, sync: boolean): void {
     const data = {
       id: mapId,
       xml: mapXml,
       properties: pref,
     };
 
-    const persistence = this;
     let query = `minor=${!saveHistory}`;
     query = `${query}&timestamp=${this.timestamp}`;
     query = `${query}&session=${this.session}`;
 
-    if (!persistence.onSave) {
+    if (!this.onSave) {
       // Mark save in process and fire a event unlocking the save ...
-      persistence.onSave = true;
-      persistence.clearTimeout = setTimeout(() => {
-        persistence.clearTimeout = null;
-        persistence.onSave = false;
+      this.onSave = true;
+      this.clearTimeout = setTimeout(() => {
+        this.clearTimeout = null;
+        this.onSave = false;
       }, 10000);
 
+      const persistence = this;
       $.ajax({
-        url: `${this.documentUrl.replace('{id}', mapId)}?${query}`,
         type: 'put',
+        url: `${this.documentUrl.replace('{id}', mapId)}?${query}`,
         dataType: 'json',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
@@ -68,9 +77,6 @@ class RESTPersistenceManager extends PersistenceManager {
           persistence.timestamp = successData;
           events.onSuccess();
         },
-        error() {
-          events.onError(persistence._buildError());
-        },
         complete() {
           // Clear event timeout ...
           if (persistence.clearTimeout) {
@@ -78,7 +84,7 @@ class RESTPersistenceManager extends PersistenceManager {
           }
           persistence.onSave = false;
         },
-        fail(xhr) {
+        error(xhr) {
           const { responseText } = xhr;
           let userMsg = { severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED') };
 
@@ -102,7 +108,7 @@ class RESTPersistenceManager extends PersistenceManager {
     }
   }
 
-  discardChanges(mapId) {
+  discardChanges(mapId: string) {
     $.ajax({
       url: this.revertUrl.replace('{id}', mapId),
       async: false,
@@ -114,7 +120,7 @@ class RESTPersistenceManager extends PersistenceManager {
     });
   }
 
-  unlockMap(mindmap) {
+  unlockMap(mindmap: Mindmap) {
     const mapId = mindmap.getId();
     $.ajax({
       url: this.lockUrl.replace('{id}', mapId),
@@ -128,7 +134,7 @@ class RESTPersistenceManager extends PersistenceManager {
     });
   }
 
-  _buildError(jsonSeverResponse) {
+  private _buildError(jsonSeverResponse) {
     let message = jsonSeverResponse ? jsonSeverResponse.globalErrors[0] : null;
     let severity = jsonSeverResponse ? jsonSeverResponse.globalSeverity : null;
 
@@ -142,9 +148,9 @@ class RESTPersistenceManager extends PersistenceManager {
     return { severity, message };
   }
 
-  loadMapDom(mapId) {
+  loadMapDom(mapId: string): Document {
     // Let's try to open one from the local directory ...
-    let xml;
+    let xml: Document;
     $.ajax({
       url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
       method: 'get',
