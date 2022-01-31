@@ -20,16 +20,22 @@ import { $msg } from '../Messages';
 import PersistenceManager from '../PersistenceManager';
 import { $notify } from './ToolbarNotifier';
 import { $notifyModal } from './ModalDialogNotifier';
+import Designer from '../Designer';
+import ToolbarItem from './ToolbarItem';
 
 class IMenu {
-  constructor(designer, containerId, mapId) {
+  private _designer: Designer;
+
+  protected _toolbarElems: ToolbarItem[];
+
+  private _mindmapUpdated: boolean;
+
+  constructor(designer: Designer, containerId: string) {
     $assert(designer, 'designer can not be null');
     $assert(containerId, 'containerId can not be null');
 
     this._designer = designer;
     this._toolbarElems = [];
-    this._containerId = containerId;
-    this._mapId = mapId;
     this._mindmapUpdated = false;
     const me = this;
 
@@ -45,7 +51,7 @@ class IMenu {
     });
   }
 
-  discardChanges(designer) {
+  discardChanges(designer: Designer) {
     // Avoid autosave before leaving the page ....
     this.setRequireChange(false);
 
@@ -61,13 +67,13 @@ class IMenu {
     window.location.reload();
   }
 
-  unlockMap(designer) {
+  unlockMap(designer: Designer) {
     const mindmap = designer.getMindmap();
     const persistenceManager = PersistenceManager.getInstance();
     persistenceManager.unlockMap(mindmap);
   }
 
-  save(saveElem, designer, saveHistory, sync) {
+  save(saveElem: JQuery, designer: Designer, saveHistory: boolean, sync?: boolean) {
     // Load map content ...
     const mindmap = designer.getMindmap();
     const mindmapProp = designer.getMindmapProperties();
@@ -103,11 +109,11 @@ class IMenu {
     }, sync);
   }
 
-  isSaveRequired() {
+  isSaveRequired(): boolean {
     return this._mindmapUpdated;
   }
 
-  setRequireChange(value) {
+  setRequireChange(value: boolean) {
     this._mindmapUpdated = value;
   }
 }

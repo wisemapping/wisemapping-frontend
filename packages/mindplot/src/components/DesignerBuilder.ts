@@ -53,7 +53,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Register toolbar event ...
   if ($('#toolbar').length) {
-    const menu = new Menu(designer, 'toolbar', options.mapId ? options.mapId : 'unknown');
+    const menu = new Menu(designer, 'toolbar');
 
     //  If a node has focus, focus can be move to another node using the keys.
     designer.cleanScreen = () => {

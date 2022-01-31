@@ -31,8 +31,8 @@ import AccountSettingsPanel from './AccountSettingsPanel';
 import Designer from '../Designer';
 
 class Menu extends IMenu {
-  constructor(designer: Designer, containerId: string, mapId: string, readOnly = false, baseUrl = '') {
-    super(designer, containerId, mapId);
+  constructor(designer: Designer, containerId: string, readOnly = false, baseUrl = '') {
+    super(designer, containerId);
     const saveElem = $('#save');
 
     const widgetsBaseUrl = `${baseUrl}css/widget`;
@@ -106,7 +106,7 @@ class Menu extends IMenu {
           }
           return result;
         },
-        setValue(value:string) {
+        setValue(value: string) {
           designer.changeTopicShape(value);
         },
       };
@@ -146,7 +146,7 @@ class Menu extends IMenu {
           }
           return result;
         },
-        setValue(hex:string) {
+        setValue(hex: string) {
           designer.changeBackgroundColor(hex);
         },
       };
@@ -171,7 +171,7 @@ class Menu extends IMenu {
           }
           return result;
         },
-        setValue(hex) {
+        setValue(hex: string) {
           designer.changeBorderColor(hex);
         },
       };
@@ -297,9 +297,7 @@ class Menu extends IMenu {
       Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
 
       if (!readOnly) {
-        // To prevent the user from leaving the page with changes ...
-        //                Element.NativeEvents.unload = 1;
-        $(window).bind('unload', () => {
+        $(window).bind('beforeunload', () => {
           if (this.isSaveRequired()) {
             this.save(saveElem, designer, false, true);
           }
@@ -374,7 +372,7 @@ class Menu extends IMenu {
     this._registerEvents(designer);
   }
 
-  private _registerEvents(designer:Designer) {
+  private _registerEvents(designer: Designer) {
     // Register on close events ...
     this._toolbarElems.forEach((panel) => {
       panel.addEvent('show', () => {
@@ -421,7 +419,7 @@ class Menu extends IMenu {
     });
   }
 
-  private _addButton(buttonId:string, isTopic:boolean, isRelationship:boolean, fn) {
+  private _addButton(buttonId: string, isTopic: boolean, isRelationship: boolean, fn) {
     // Register Events ...
     let result = null;
     if ($(`#${buttonId}`)) {
@@ -436,7 +434,7 @@ class Menu extends IMenu {
     return result;
   }
 
-  static _registerTooltip(buttonId: string, text: string, shortcut: string = null) {
+  private static _registerTooltip(buttonId: string, text: string, shortcut: string = null) {
     if ($(`#${buttonId}`)) {
       let tooltip = text;
       if (shortcut) {
