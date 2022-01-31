@@ -17,10 +17,14 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { Mindmap } from '..';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
-class PersistenceManager {
-  save(mindmap, editorProperties, saveHistory, events, sync) {
+abstract class PersistenceManager {
+  // eslint-disable-next-line no-use-before-define
+  static _instance: PersistenceManager;
+
+  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events, sync: boolean) {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
@@ -36,45 +40,39 @@ class PersistenceManager {
       this.saveMapXml(mapId, mapXml, pref, saveHistory, events, sync);
     } catch (e) {
       console.error(e);
-      events.onError(this._buildError());
+      events.onError(e);
     }
   }
 
-  load(mapId) {
+  load(mapId: string) {
     $assert(mapId, 'mapId can not be null');
     const domDocument = this.loadMapDom(mapId);
     return PersistenceManager.loadFromDom(mapId, domDocument);
   }
 
-  discardChanges(mapId) {
-    throw new Error('Method must be implemented');
+  abstract discardChanges(mapId: string): void;
+
+  abstract loadMapDom(mapId: string): Document;
+
+  abstract saveMapXml(mapId: string, mapXml, pref, saveHistory, events, sync);
+
+  abstract unlockMap(mindmap: Mindmap): void;
+
+  static init = (instance: PersistenceManager) => {
+    this._instance = instance;
+  };
+
+  static getInstance(): PersistenceManager {
+    return this._instance;
   }
 
-  loadMapDom(mapId) {
-    throw new Error('Method must be implemented');
-  }
+  static loadFromDom(mapId: string, mapDom: Document) {
+    $assert(mapId, 'mapId can not be null');
+    $assert(mapDom, 'mapDom can not be null');
 
-  saveMapXml(mapId, mapXml, pref, saveHistory, events, sync) {
-    throw new Error('Method must be implemented');
-  }
-
-  unlockMap(mindmap) {
-    throw new Error('Method must be implemented');
+    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDom);
+    return serializer.loadFromDom(mapDom, mapId);
   }
 }
-
-PersistenceManager.init = (instance) => {
-  PersistenceManager._instance = instance;
-};
-
-PersistenceManager.getInstance = () => PersistenceManager._instance;
-
-PersistenceManager.loadFromDom = function loadFromDom(mapId, mapDom) {
-  $assert(mapId, 'mapId can not be null');
-  $assert(mapDom, 'mapDom can not be null');
-
-  const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDom);
-  return serializer.loadFromDom(mapDom, mapId);
-};
 
 export default PersistenceManager;

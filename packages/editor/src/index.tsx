@@ -67,7 +67,7 @@ const initMindplot = () => {
 
     // Load map from XML file persisted on disk...
     const instance = PersistenceManager.getInstance();
-    const mindmap = instance.load(global.mapId);
+    const mindmap = instance.load(String(global.mapId));
     designer.loadMap(mindmap);
 
     if (global.mindmapLocked) {

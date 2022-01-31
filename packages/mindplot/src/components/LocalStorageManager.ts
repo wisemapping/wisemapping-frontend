@@ -16,24 +16,29 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
+import { Mindmap } from '..';
 import PersistenceManager from './PersistenceManager';
 
 class LocalStorageManager extends PersistenceManager {
+  private documentUrl: string;
+
+  private forceLoad: boolean;
+
   constructor(documentUrl, forceLoad) {
     super();
     this.documentUrl = documentUrl;
     this.forceLoad = forceLoad;
   }
 
-  saveMapXml(mapId, mapXml, pref, saveHistory, events) {
+  saveMapXml(mapId: string, mapXml: string) {
     localStorage.setItem(`${mapId}-xml`, mapXml);
   }
 
-  discardChanges(mapId) {
+  discardChanges(mapId: string) {
     localStorage.removeItem(`${mapId}-xml`);
   }
 
-  loadMapDom(mapId) {
+  loadMapDom(mapId: string) {
     let xml = localStorage.getItem(`${mapId}-xml`);
     if (xml == null || this.forceLoad) {
       $.ajax({
@@ -58,7 +63,7 @@ class LocalStorageManager extends PersistenceManager {
     return $.parseXML(xml);
   }
 
-  unlockMap(mindmap) {
+  unlockMap(mindmap: Mindmap) {
     // Ignore, no implementation required ...
   }
 }

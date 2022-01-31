@@ -24,7 +24,7 @@ class ScreenManager {
 
   private _padding: { x: number; y: number; };
 
-  private _clickEvents: ((event: UIEvent) => void)[];
+  private _clickEvents;
 
   private _scale: number;
 
@@ -60,14 +60,13 @@ class ScreenManager {
     this._scale = scale;
   }
 
-  addEvent(eventType: string, listener: any) {
+  addEvent(eventType: string, listener) {
     if (eventType === 'click') this._clickEvents.push(listener);
     else this._divContainer.bind(eventType, listener);
   }
 
-  removeEvent(event: string, listener: any) {
+  removeEvent(event: string, listener) {
     if (event === 'click') {
-      // @ts-ignore @Todo: needs review ...
       this._clickEvents.remove(listener);
     } else {
       this._divContainer.unbind(event, listener);

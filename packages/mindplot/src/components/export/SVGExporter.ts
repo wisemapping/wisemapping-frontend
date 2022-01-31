@@ -23,6 +23,7 @@ class SVGExporter implements Exporter {
 
   private prolog = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(mindmap: Mindmap, svgElement: Element, centerImgage = false) {
     this.svgElement = svgElement;
   }

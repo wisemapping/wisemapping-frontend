@@ -33,25 +33,14 @@ export function buildDesigner(options: DesignerOptions): Designer {
   // Register load events ...
   designer = new Designer(options, divContainer);
   designer.addEvent('loadSuccess', () => {
-    // @ts-ignore
-    window.mindmapLoadReady = true;
+    globalThis.mindmapLoadReady = true;
     console.log('Map loadded successfully');
   });
 
-  const onerrorFn = (message: string, url, lineNo) => {
-    // Close loading dialog ...
-    // @ts-ignore
-    if (window.waitDialog) {
-      // @ts-ignore
-      window.waitDialog.close();
-      // @ts-ignore
-      window.waitDialog = null;
-    }
-
+  const onerrorFn = () => {
     // Open error dialog only in case of mindmap loading errors. The rest of the error are reported but not display the dialog.
     // Remove this in the near future.
-    // @ts-ignore
-    if (!window.mindmapLoadReady) {
+    if (!globalThis.mindmapLoadReady) {
       $notifyModal($msg('UNEXPECTED_ERROR_LOADING'));
     }
   };

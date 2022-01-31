@@ -28,16 +28,12 @@
         "max-len": [1,300],
         "class-methods-use-this": "off",
         "no-console" : "off",
-        "no-unused-vars": ["error", { "args": "none" }],
-        "import/extensions": ["error", {
-            "ts": "never"
-        }],
         // codebase contains many this aliases, fix in the future?
         "@typescript-eslint/no-this-alias": "off",
-        // no-unused-vars already used
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/ban-ts-comment": "warn",
-        "import/no-extraneous-dependencies": ["warn", {"packageDir": "./", "devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
+        // Remove once migration is completed ...
+        "@typescript-eslint/no-explicit-any": "warn",
+        "import/extensions": "warn"
+
     },
     "settings": {
 		    "import/resolver": {

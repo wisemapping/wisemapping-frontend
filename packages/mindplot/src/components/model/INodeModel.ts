@@ -280,7 +280,6 @@ abstract class INodeModel {
       parent.removeChild(this);
     } else {
       // If it has not parent, it must be an isolate topic ...
-      // @ts-ignore
       mindmap.removeBranch(this);
     }
   }

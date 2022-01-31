@@ -95,7 +95,7 @@ class Mindmap extends IMindmap {
   /**
          * @param nodeModel
          */
-  removeBranch(nodeModel: NodeModel): void {
+  removeBranch(nodeModel: INodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     this._branches = this._branches.filter((b) => b !== nodeModel);
   }

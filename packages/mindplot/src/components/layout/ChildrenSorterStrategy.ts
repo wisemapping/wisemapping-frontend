@@ -17,45 +17,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-class ChildrenSorterStrategy {
-  computeChildrenIdByHeights(treeSet, node) {
-    throw new Error('Method must be implemented');
-  }
+abstract class ChildrenSorterStrategy {
+  abstract computeChildrenIdByHeights(treeSet, node);
 
-  /** @abstract */
-  computeOffsets(treeSet, node) {
-    throw new Error('Method must be implemented');
-  }
+  abstract computeOffsets(treeSet, node);
 
-  /** @abstract */
-  insert(treeSet, parent, child, order) {
-    throw new Error('Method must be implemented');
-  }
+  abstract insert(treeSet, parent, child, order);
 
-  /** @abstract */
-  detach(treeSet, node) {
-    throw new Error('Method must be implemented');
-  }
+  abstract detach(treeSet, node);
 
-  /** @abstract */
-  predict(treeSet, parent, node, position, free) {
-    throw new Error('Method must be implemented');
-  }
+  abstract predict(treeSet, parent, node, position, free);
 
-  /** @abstract */
-  verify(treeSet, node) {
-    throw new Error('Method must be implemented');
-  }
+  abstract verify(treeSet, node);
 
-  /** @abstract */
-  getChildDirection(treeSet, node) {
-    throw new Error('Method must be implemented');
-  }
+  abstract getChildDirection(treeSet, node);
 
-  /** @abstract */
-  toString() {
-    throw new Error('Method must be implemented: print name');
-  }
+  abstract toString();
 }
 
 export default ChildrenSorterStrategy;

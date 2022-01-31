@@ -151,14 +151,14 @@ class Designer extends Events {
     return this._actionDispatcher;
   }
 
-  // @ts-ignore
-  addEvent(type: string, listener: any): void {
+  addEvent(type: string, listener): Events {
     if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
       const editor = TopicEventDispatcher.getInstance();
       editor.addEvent(type, listener);
     } else {
       super.addEvent(type, listener);
     }
+    return this;
   }
 
   private _registerMouseEvents() {
@@ -186,7 +186,7 @@ class Designer extends Events {
     screenManager.addEvent('dblclick', (event: MouseEvent) => {
       if (workspace.isWorkspaceEventsEnabled()) {
         const mousePos = screenManager.getWorkspaceMousePosition(event);
-        const centralTopic:CentralTopic = me.getModel()
+        const centralTopic: CentralTopic = me.getModel()
           .getCentralTopic();
 
         const model = me._createChildModel(centralTopic, mousePos);
@@ -208,7 +208,7 @@ class Designer extends Events {
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
       dragTopic.updateFreeLayout(event);
-      if (!dragTopic.isFreeLayoutOn(event)) {
+      if (!dragTopic.isFreeLayoutOn()) {
         // The node is being drag. Is the connection still valid ?
         dragConnector.checkConnection(dragTopic);
 

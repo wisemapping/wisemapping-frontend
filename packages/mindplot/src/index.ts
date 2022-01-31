@@ -36,8 +36,8 @@ import {
 } from './components/widget/ToolbarNotifier';
 
 // This hack is required to initialize Bootstrap. In future, this should be removed.
-// @ts-ignore
-global.jQuery = jquery;
+const globalAny: any = global;
+globalAny.jQuery = jquery;
 require('../../../libraries/bootstrap/js/bootstrap.min');
 
 export {

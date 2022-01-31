@@ -17,15 +17,17 @@
  */
 
 class Events {
+  private $events;
+
   constructor() {
     this.$events = {};
   }
 
-  static _removeOn(string) {
+  static _removeOn(string: string) {
     return string.replace(/^on([A-Z])/, (full, first) => first.toLowerCase());
   }
 
-  addEvent(typeName, fn, internal) {
+  addEvent(typeName: string, fn?, internal?: boolean): Events {
     const type = Events._removeOn(typeName);
 
     // Add function had not been added yet
@@ -36,12 +38,11 @@ class Events {
     }
 
     // Mark reference ...
-    // eslint-disable-next-line no-param-reassign
     fn.internal = Boolean(internal);
     return this;
   }
 
-  fireEvent(typeName, eventArgs, delay) {
+  fireEvent(typeName: string, eventArgs?, delay?: boolean): Events {
     const type = Events._removeOn(typeName);
     const events = this.$events[type];
     if (!events) return this;
@@ -57,7 +58,7 @@ class Events {
     return this;
   }
 
-  removeEvent(typeName, fn) {
+  removeEvent(typeName: string, fn?): Events {
     const type = Events._removeOn(typeName);
     const events = this.$events[type];
     if (events && !fn.internal) {

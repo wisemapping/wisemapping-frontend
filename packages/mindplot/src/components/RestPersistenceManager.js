@@ -64,11 +64,11 @@ class RESTPersistenceManager extends PersistenceManager {
         contentType: 'application/json; charset=utf-8',
         async: !sync,
 
-        success(successData, textStatus, jqXHRresponseText) {
+        success(successData) {
           persistence.timestamp = successData;
           events.onSuccess();
         },
-        error(jqXHR, textStatus, errorThrown) {
+        error() {
           events.onError(persistence._buildError());
         },
         complete() {
@@ -78,7 +78,7 @@ class RESTPersistenceManager extends PersistenceManager {
           }
           persistence.onSave = false;
         },
-        fail(xhr, textStatus) {
+        fail(xhr) {
           const { responseText } = xhr;
           let userMsg = { severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED') };
 

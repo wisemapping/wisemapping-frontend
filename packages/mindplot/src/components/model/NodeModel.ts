@@ -52,7 +52,7 @@ class NodeModel extends INodeModel {
      * @param attributes
      * @return {mindplot.model.FeatureModel} the created feature model
      */
-  createFeature(type: FeatureType, attributes: any): FeatureModel {
+  createFeature(type: FeatureType, attributes): FeatureModel {
     return FeatureModelFactory.createModel(type, attributes);
   }
 
