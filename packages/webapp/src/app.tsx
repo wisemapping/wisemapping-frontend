@@ -75,6 +75,10 @@ const App = (): ReactElement => {
                                     <Editor memoryPersistence={memoryPersistence} 
                                         readOnlyMode={readOnlyMode} mapId={mapId}  />
                                 </Route>
+                                <Route exact path="/c/maps/:id/try">
+                                    <Editor memoryPersistence={memoryPersistence} 
+                                        readOnlyMode={readOnlyMode} mapId={mapId}  />
+                                </Route>
                             </Switch>
                         </Router>
                     </ThemeProvider>
