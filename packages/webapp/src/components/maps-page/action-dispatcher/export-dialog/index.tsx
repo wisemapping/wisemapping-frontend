@@ -70,7 +70,7 @@ const ExportDialog = ({
         setSubmit(true);
     };
 
-    const exporter = (formatType: ExportFormat) => {
+    const exporter = (formatType: ExportFormat): Promise<string> => {
         let svgElement: Element | null = null;
         let size;
         let mindmap: Mindmap;
@@ -129,7 +129,10 @@ const ExportDialog = ({
                     // Clean up ...
                     URL.revokeObjectURL(url);
                     document.body.removeChild(anchor);
+                }).catch((fail) => {
+                    console.log("Unexpected error during export:" + fail);
                 });
+
             onClose();
         }
     }, [submit]);
