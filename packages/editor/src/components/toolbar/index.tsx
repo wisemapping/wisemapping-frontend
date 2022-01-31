@@ -25,6 +25,9 @@ import HistorySvg from '../../../images/history.svg';
 import PrintSvg from '../../../images/print.svg';
 import AccountSvg from '../../../images/account.svg';
 
+import { HeaderContainer, ToolbarButton, ToolbarButtonExt, ToolbarRightContainer } from './styled';
+import ActionButton from '../action-button';
+
 export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share';
 
 export type ToolbarPropsType = {
@@ -40,100 +43,118 @@ export default function Toolbar({
 }: ToolbarPropsType): React.ReactElement {
     const intl = useIntl();
     return (
-        <div id="toolbar">
-            <div id="backToList">
-                <img src={BackIconSvg} />
+        <HeaderContainer>
+            <div id="toolbar">
+                <div id="backToList">
+                    <img src={BackIconSvg} />
+                </div>
+                {!memoryPersistence && (
+                    <div id="persist" className="buttonContainer">
+                        <ToolbarButton id="save" className="buttonOn">
+                            <img src={SaveSvg} />
+                        </ToolbarButton>
+                    </div>
+                )}
+                {!readOnlyMode && (
+                    <>
+                        <div id="edit" className="buttonContainer">
+                            <ToolbarButton id="undoEdition" className="buttonOn">
+                                <img src={UndoSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="redoEdition" className="buttonOn">
+                                <img src={RedoSvg} />
+                            </ToolbarButton>
+                        </div>
+                        <div id="nodeStyle" className="buttonContainer">
+                            <ToolbarButton id="addTopic" className="buttonOn">
+                                <img src={TopicAddSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="deleteTopic" className="buttonOn">
+                                <img src={TopicDeleteSvg} />
+                            </ToolbarButton>
+                            <ToolbarButtonExt id="topicBorder" className="buttonExtOn">
+                                <img src={TopicBorderSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButtonExt id="topicColor" className="buttonExtOn">
+                                <img src={TopicColorSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButtonExt id="topicShape" className="buttonExtOn">
+                                <img src={TopicShapeSvg} />
+                            </ToolbarButtonExt>
+                        </div>
+                        <div id="font" className="buttonContainer">
+                            <ToolbarButton id="fontFamily" className="buttonOn">
+                                <img src={FontTypeSvg} />
+                            </ToolbarButton>
+                            <ToolbarButtonExt id="fontSize" className="buttonExtOn">
+                                <img src={FontSizeSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButton id="fontBold" className="buttonOn">
+                                <img src={FontBoldSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="fontItalic" className="buttonOn">
+                                <img src={FontItalicSvg} />
+                            </ToolbarButton>
+                            <ToolbarButtonExt id="fontColor" className="buttonExtOn">
+                                <img src={FontColorSvg} />
+                            </ToolbarButtonExt>
+                        </div>
+                        <div id="nodeContent" className="buttonContainer">
+                            <ToolbarButtonExt id="topicIcon" className="buttonExtOn">
+                                <img src={TopicIconSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButton id="topicNote" className="buttonOn">
+                                <img src={TopicNoteSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="topicLink" className="buttonOn">
+                                <img src={TopicLinkSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="topicRelation" className="buttonOn">
+                                <img src={TopicRelationSvg} />
+                            </ToolbarButton>
+                        </div>
+                        <div id="separator" className="buttonContainer"></div>
+                    </>
+                )}
+                {!memoryPersistence && (
+                    <ToolbarRightContainer>
+                        <ToolbarButton
+                            id="export"
+                            className="buttonOn"
+                            onClick={() => onAction('export')}
+                        >
+                            <img src={ExportSvg} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            id="publishIt"
+                            className="buttonOn"
+                            onClick={() => onAction('publish')}
+                        >
+                            <img src={PublicSvg} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            id="history"
+                            className="buttonOn"
+                            onClick={() => onAction('history')}
+                        >
+                            <img src={HistorySvg} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            id="print"
+                            className="buttonOn"
+                            onClick={() => onAction('print')}
+                        >
+                            <img src={PrintSvg} />
+                        </ToolbarButton>
+                        <ToolbarButton id="account">
+                            <img src={AccountSvg} />
+                        </ToolbarButton>
+                        <ActionButton onClick={() => onAction('share')}>
+                            {intl.formatMessage({ id: 'action.share', defaultMessage: 'Share' })}
+                        </ActionButton>
+                    </ToolbarRightContainer>
+                )}
             </div>
-            {!memoryPersistence && (
-                <div id="persist" className="buttonContainer">
-                    <div id="save" className="buttonOn">
-                        <img src={SaveSvg} />
-                    </div>
-                </div>
-            )}
-            {!readOnlyMode && (
-                <>
-                    <div id="edit" className="buttonContainer">
-                        <div id="undoEdition" className="buttonOn">
-                            <img src={UndoSvg} />
-                        </div>
-                        <div id="redoEdition" className="buttonOn">
-                            <img src={RedoSvg} />
-                        </div>
-                    </div>
-                    <div id="nodeStyle" className="buttonContainer">
-                        <div id="addTopic" className="buttonOn">
-                            <img src={TopicAddSvg} />
-                        </div>
-                        <div id="deleteTopic" className="buttonOn">
-                            <img src={TopicDeleteSvg} />
-                        </div>
-                        <div id="topicBorder" className="buttonExtOn">
-                            <img src={TopicBorderSvg} />
-                        </div>
-                        <div id="topicColor" className="buttonExtOn">
-                            <img src={TopicColorSvg} />
-                        </div>
-                        <div id="topicShape" className="buttonExtOn">
-                            <img src={TopicShapeSvg} />
-                        </div>
-                    </div>
-                    <div id="font" className="buttonContainer">
-                        <div id="fontFamily" className="buttonOn">
-                            <img src={FontTypeSvg} />
-                        </div>
-                        <div id="fontSize" className="buttonExtOn">
-                            <img src={FontSizeSvg} />
-                        </div>
-                        <div id="fontBold" className="buttonOn">
-                            <img src={FontBoldSvg} />
-                        </div>
-                        <div id="fontItalic" className="buttonOn">
-                            <img src={FontItalicSvg} />
-                        </div>
-                        <div id="fontColor" className="buttonExtOn">
-                            <img src={FontColorSvg} />
-                        </div>
-                    </div>
-                    <div id="nodeContent" className="buttonContainer">
-                        <div id="topicIcon" className="buttonExtOn">
-                            <img src={TopicIconSvg} />
-                        </div>
-                        <div id="topicNote" className="buttonOn">
-                            <img src={TopicNoteSvg} />
-                        </div>
-                        <div id="topicLink" className="buttonOn">
-                            <img src={TopicLinkSvg} />
-                        </div>
-                        <div id="topicRelation" className="buttonOn">
-                            <img src={TopicRelationSvg} />
-                        </div>
-                    </div>
-                    <div id="separator" className="buttonContainer"></div>
-                </>
-            )}
-            {!memoryPersistence && (
-                <div id="toolbarRight">
-                    <div id="export" className="buttonOn" onClick={() => onAction('export')}>
-                        <img src={ExportSvg} />
-                    </div>
-                    <div id="publishIt" className="buttonOn" onClick={() => onAction('publish')}>
-                        <img src={PublicSvg} />
-                    </div>
-                    <div id="history" className="buttonOn" onClick={() => onAction('history')}>
-                        <img src={HistorySvg} />
-                    </div>
-                    <div id="print" className="buttonOn" onClick={() => onAction('print')}>
-                        <img src={PrintSvg} />
-                    </div>
-                    <div id="account">
-                        <img src={AccountSvg} />
-                    </div>
-                    <div id="share" className="actionButton" onClick={() => onAction('share')}>
-                        { intl.formatMessage({ id: 'action.share', defaultMessage: 'Share' }) }
-                    </div>
-                </div>
-            )}
-        </div>
+        </HeaderContainer>
     );
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyledLogo } from './styled';
+import { StyledLogo, Notifier } from './styled';
 import { useIntl } from 'react-intl';
 
 import KeyboardSvg from '../../../images/keyboard.svg';
 import AddSvg from '../../../images/add.svg';
 import MinusSvg from '../../../images/minus.svg';
 import CenterFocusSvg from '../../../images/center_focus.svg';
+import ActionButton from '../action-button';
 
 export type FooterPropsType = {
     showTryPanel?: boolean;
@@ -35,15 +36,15 @@ const Footer = ({ showTryPanel }: FooterPropsType): React.ReactElement => {
                 </div>
             </div>
             <StyledLogo id="bottom-logo"></StyledLogo>
-            <div id="headerNotifier"></div>
+            <Notifier id="headerNotifier"></Notifier>
             {showTryPanel && (
                 <div id="tryInfoPanel">
                     <p>{intl.formatMessage({ id: 'editor.try-welcome' })}</p>
                     <p>{intl.formatMessage({ id: 'editor.try-welcome-description' })}</p>
                     <a href="/c/registration">
-                        <div className="actionButton">
+                        <ActionButton>
                             {intl.formatMessage({ id: 'login.signup', defaultMessage: 'Sign Up' })}
-                        </div>
+                        </ActionButton>
                     </a>
                 </div>
             )}

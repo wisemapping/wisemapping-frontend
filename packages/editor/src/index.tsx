@@ -2,7 +2,14 @@ import React from 'react';
 import Toolbar, { ToolbarActionType } from './components/toolbar';
 import Footer from './components/footer';
 import { IntlProvider } from 'react-intl';
-import { $notify, buildDesigner, LocalStorageManager, PersistenceManager, RESTPersistenceManager, DesignerOptionsBuilder } from '@wisemapping/mindplot';
+import {
+    $notify,
+    buildDesigner,
+    LocalStorageManager,
+    PersistenceManager,
+    RESTPersistenceManager,
+    DesignerOptionsBuilder,
+} from '@wisemapping/mindplot';
 
 declare global {
     var memoryPersistence: boolean;
@@ -28,9 +35,8 @@ export type EditorPropsType = {
 };
 
 const initMindplot = () => {
-
     // Change page title ...
-    document.title = `${global.mapTitle} | WiseMapping `
+    document.title = `${global.mapTitle} | WiseMapping `;
 
     // Configure persistence manager ...
     let persistence;
@@ -44,7 +50,8 @@ const initMindplot = () => {
         });
     } else {
         persistence = new LocalStorageManager(
-            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
+            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${
+                !global.isAuth ? '-pub' : ''
             }`,
             true
         );
@@ -58,7 +65,11 @@ const initMindplot = () => {
         readOnly: Boolean(global.readOnly || false),
         mapId: String(global.mapId),
         container: 'mindplot',
-        zoom: zoomParam || (global.userOptions?.zoom != undefined ? Number.parseFloat(global.userOptions.zoom as string) : 0.8),
+        zoom:
+            zoomParam ||
+            (global.userOptions?.zoom != undefined
+                ? Number.parseFloat(global.userOptions.zoom as string)
+                : 0.8),
         locale: global.locale,
     });
 
@@ -83,18 +94,15 @@ export default function Editor({
     locale = 'en',
     onAction,
 }: EditorPropsType): React.ReactElement {
-
     React.useEffect(initCallback, []);
 
     return (
         <IntlProvider locale={locale} defaultLocale="en" messages={{}}>
-            <div id="header">
-                <Toolbar
-                    memoryPersistence={memoryPersistence}
-                    readOnlyMode={readOnlyMode}
-                    onAction={onAction}
-                />
-            </div>
+            <Toolbar
+                memoryPersistence={memoryPersistence}
+                readOnlyMode={readOnlyMode}
+                onAction={onAction}
+            />
             <div id="mindplot"></div>
             <Footer showTryPanel={memoryPersistence} />
         </IntlProvider>

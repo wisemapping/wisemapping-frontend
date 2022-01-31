@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap, RESTPersistenceManager } from '@wisemapping/mindplot';
+import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap, LocalStorageManager } from '@wisemapping/mindplot';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -29,6 +29,7 @@ const ExportDialog = ({
 }: ExportDialogProps): React.ReactElement => {
     const intl = useIntl();
     const [submit, setSubmit] = React.useState<boolean>(false);
+    const { map } = fetchMapById(mapId);
 
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
         enableImgExport ? 'image' : 'document'
@@ -83,15 +84,11 @@ const ExportDialog = ({
             mindmap = designer.getMindmap();
         } else {
             // Load mindmap ...
-            const persistence = new RESTPersistenceManager({
-                documentUrl: '/c/restful/maps/{id}/document',
-                revertUrl: '/c/restful/maps/{id}/history/latest',
-                lockUrl: '/c/restful/maps/{id}/lock',
-                timestamp: global.lockTimestamp,
-                session: global.lockSession,
-            });
-            mindmap = persistence.load(global.mapId)
-    
+            const persistence = new LocalStorageManager(
+                `/c/restful/maps/{id}/document/xml`,
+                true
+            );
+            mindmap = persistence.load(mapId.toString());
         }
 
         let exporter: Exporter;
@@ -116,7 +113,6 @@ const ExportDialog = ({
     };
 
     useEffect(() => {
-        const { map } = fetchMapById(mapId);
         if (submit) {
             exporter(exportFormat)
                 .then((url: string) => {

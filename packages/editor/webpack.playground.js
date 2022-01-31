@@ -36,7 +36,10 @@ const playgroundConfig = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      dangerouslyAllowCleanPatternsOutsideProject: true,
+      dry: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'test/playground/map-render/images/favicon.ico', to: 'favicon.ico' },
