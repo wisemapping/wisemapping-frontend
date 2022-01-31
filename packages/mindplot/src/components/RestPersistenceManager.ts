@@ -23,11 +23,17 @@ import PersistenceManager from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
+
   private revertUrl: string;
+
   private lockUrl: string;
+
   private timestamp: string;
+
   private session: string;
+
   private onSave: boolean;
+
   private clearTimeout;
 
   constructor(options) {

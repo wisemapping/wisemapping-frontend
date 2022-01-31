@@ -20,29 +20,43 @@
     },
     "plugins": [
         "@typescript-eslint"
-      ],
+    ],
     "rules": {
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
-        "max-len": [1,300],
+        "max-len": [
+            1,
+            300
+        ],
         "class-methods-use-this": "off",
-        "no-console" : "off",
+        "no-console": "off",
         // codebase contains many this aliases, fix in the future?
         "@typescript-eslint/no-this-alias": "off",
         // Remove once migration is completed ...
         "@typescript-eslint/no-explicit-any": "warn",
-        "import/extensions": "warn"
-
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
     },
     "settings": {
-		    "import/resolver": {
-			    "webpack": {
-				    "config": "./webpack.common.js"
-			    },
-                "node": {
-                    "extensions": [".js",".ts"]
-                  }
-		    }
-	  }
+        "import/resolver": {
+            "webpack": {
+                "config": "./webpack.common.js"
+            },
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts"
+                ]
+            }
+        }
+    }
 }
