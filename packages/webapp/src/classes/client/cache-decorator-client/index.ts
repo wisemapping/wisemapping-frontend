@@ -1,3 +1,4 @@
+import { Mindmap } from '@wisemapping/mindplot';
 import Client, {
     AccountInfo,
     BasicMapInfo,
@@ -15,6 +16,9 @@ class CacheDecoratorClient implements Client {
 
     constructor(client: Client) {
         this.client = client;
+    }
+    fetchMindmap(id: number): Mindmap {
+        return this.client.fetchMindmap(id);
     }
 
     deleteAccount(): Promise<void> {
@@ -106,7 +110,7 @@ class CacheDecoratorClient implements Client {
     }
 
     revertHistory(id: number, cid: number): Promise<void> {
-        return this.client.revertHistory(id,cid);
+        return this.client.revertHistory(id, cid);
     }
 }
 

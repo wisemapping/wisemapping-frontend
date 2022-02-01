@@ -26,7 +26,7 @@ class FeatureModel {
 
   private _type: FeatureType;
 
-  private _attributes: Record<string, unknown>;
+  private _attributes;
 
   /**
      * @constructs

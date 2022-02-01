@@ -1,3 +1,4 @@
+import { LocalStorageManager, Mindmap } from '@wisemapping/mindplot';
 import axios from 'axios';
 import Client, {
     ErrorInfo,
@@ -19,6 +20,16 @@ export default class RestClient implements Client {
     constructor(baseUrl: string, sessionExpired: () => void) {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
+    }
+
+    fetchMindmap(id: number): Mindmap {
+        // Load mindmap ...
+        const persistence = new LocalStorageManager(
+            `/c/restful/maps/{id}/document/xml`,
+            true
+        );
+        const mindmap = persistence.load(String(id));
+        return mindmap;
     }
 
     deleteMapPermission(id: number, email: string): Promise<void> {

@@ -24,7 +24,7 @@ class LocalStorageManager extends PersistenceManager {
 
   private forceLoad: boolean;
 
-  constructor(documentUrl, forceLoad) {
+  constructor(documentUrl: string, forceLoad: boolean) {
     super();
     this.documentUrl = documentUrl;
     this.forceLoad = forceLoad;

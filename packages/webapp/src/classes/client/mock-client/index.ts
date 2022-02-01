@@ -1,3 +1,5 @@
+import { Mindmap } from '@wisemapping/mindplot';
+import XMLSerializerTango from '@wisemapping/mindplot/src/components/persistence/XMLSerializerTango';
 import Client, {
     AccountInfo,
     BasicMapInfo,
@@ -11,21 +13,21 @@ import Client, {
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 
 const label1: Label = {
-  id: 1,
-  title: 'label 1',
-  color: 'black',
+    id: 1,
+    title: 'label 1',
+    color: 'black',
 }
 
 const label2: Label = {
-  id: 2,
-  title: 'label 2',
-  color: 'green',
+    id: 2,
+    title: 'label 2',
+    color: 'green',
 }
 
 const label3: Label = {
-  id: 3,
-  title: 'label 3',
-  color: 'red',
+    id: 3,
+    title: 'label 3',
+    color: 'red',
 }
 
 class MockClient implements Client {
@@ -81,7 +83,7 @@ class MockClient implements Client {
                 11,
                 false,
                 'El Mapa3',
-              [label1, label2],
+                [label1, label2],
                 'Paulo3',
                 '2008-06-02T00:00:00Z',
                 'Berna',
@@ -106,6 +108,17 @@ class MockClient implements Client {
         ];
 
         this.labels = [label1, label2, label3];
+    }
+    fetchMindmap(id: number): Mindmap {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(`
+        <map name="${id}" version="tango">
+            <topic central="true" text="This is the map ${id}" id="1" fontStyle=";;#ffffff;;;"></topic>
+        </map>
+        `, 'text/xml');
+
+        const serializer = new XMLSerializerTango();
+        return serializer.loadFromDom(xmlDoc, String(id));
     }
     deleteMapPermission(id: number, email: string): Promise<void> {
         let perm = this.permissionsByMap.get(id) || [];
@@ -325,8 +338,8 @@ class MockClient implements Client {
 
     registerNewUser(user: NewUser): Promise<void> {
         console.log('user:' + user);
-        if(user.email=="error@example.com"){
-            return Promise.reject({msg:"Unexpected error"});
+        if (user.email == "error@example.com") {
+            return Promise.reject({ msg: "Unexpected error" });
         }
         return Promise.resolve();
     }

@@ -10,7 +10,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap, LocalStorageManager } from '@wisemapping/mindplot';
+import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap } from '@wisemapping/mindplot';
+import Client from '../../../../classes/client';
+import { activeInstance } from '../../../../redux/clientSlice';
+
+import { useSelector } from 'react-redux';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -30,6 +34,7 @@ const ExportDialog = ({
     const intl = useIntl();
     const [submit, setSubmit] = React.useState<boolean>(false);
     const { map } = fetchMapById(mapId);
+    const client: Client = useSelector(activeInstance);
 
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
         enableImgExport ? 'image' : 'document'
@@ -83,12 +88,7 @@ const ExportDialog = ({
             size = workspace.getSize();
             mindmap = designer.getMindmap();
         } else {
-            // Load mindmap ...
-            const persistence = new LocalStorageManager(
-                `/c/restful/maps/{id}/document/xml`,
-                true
-            );
-            mindmap = persistence.load(mapId.toString());
+            mindmap = client.fetchMindmap(mapId);
         }
 
         let exporter: Exporter;

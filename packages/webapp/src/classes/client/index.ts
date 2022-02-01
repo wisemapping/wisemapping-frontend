@@ -1,3 +1,4 @@
+import { Mindmap } from '@wisemapping/mindplot';
 import { Locale, LocaleCode } from '../app-i18n';
 
 export type NewUser = {
@@ -102,6 +103,9 @@ interface Client {
 
     fetchHistory(id: number): Promise<ChangeHistory[]>;
     revertHistory(id: number, cid: number): Promise<void>;
+
+    fetchMindmap(id:number): Mindmap;
+
 }
 
 export default Client;
