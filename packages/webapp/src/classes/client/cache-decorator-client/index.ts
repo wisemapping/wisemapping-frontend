@@ -17,6 +17,7 @@ class CacheDecoratorClient implements Client {
     constructor(client: Client) {
         this.client = client;
     }
+    
     fetchMindmap(id: number): Mindmap {
         return this.client.fetchMindmap(id);
     }
