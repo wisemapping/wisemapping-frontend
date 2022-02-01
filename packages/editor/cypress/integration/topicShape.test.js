@@ -7,7 +7,7 @@ context('Change Topic shape', () => {
 
   it('change to square shape', () => {
     cy.get('#topicShapeTip').click();
-    cy.get('#rectagle').click();
+    cy.get('#rectagle').click({ force: true });
 
     cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '0');
 

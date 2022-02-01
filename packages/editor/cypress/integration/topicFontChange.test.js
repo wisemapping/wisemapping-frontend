@@ -15,7 +15,7 @@ context('Edit Topic', () => {
 
   it('Change Font Size', () => {
     cy.get('#fontSizeTip').click();
-    cy.get('.popover #small').click();
+    cy.get('.popover #small').click({ force: true });
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-size').should('eq', '8.0625');
     cy.matchImageSnapshot('changeFontSizeSmall');
