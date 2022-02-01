@@ -58,7 +58,10 @@ class MDExporter implements Exporter {
     }
     result += '\n';
 
-    return Promise.resolve(result);
+    // Encode as url response ...
+    const blob = new Blob([result], { type: 'text/markdown' });
+    const urlStr = URL.createObjectURL(blob);
+    return Promise.resolve(urlStr);
   }
 
   private traverseBranch(prefix: string, branches: Array<INodeModel>) {

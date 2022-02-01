@@ -35,8 +35,12 @@ class TxtExporter implements Exporter {
     const { mindmap } = this;
 
     const branches = mindmap.getBranches();
-    const retult = this.traverseBranch('', branches);
-    return Promise.resolve(retult);
+    const txtStr = this.traverseBranch('', branches);
+
+    // Encode as url response ...
+    const blob = new Blob([txtStr], { type: 'text/pain' });
+    const result = URL.createObjectURL(blob);
+    return Promise.resolve(result);
   }
 
   private traverseBranch(prefix: string, branches: INodeModel[]) {
