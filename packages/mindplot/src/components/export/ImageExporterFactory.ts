@@ -26,7 +26,7 @@ class ImageExpoterFactory {
     let result;
     switch (type) {
       case 'svg': {
-        result = new SVGExporter(mindmap, svgElement);
+        result = new SVGExporter(svgElement);
         break;
       }
       case 'png': {

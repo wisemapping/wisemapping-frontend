@@ -21,7 +21,7 @@ import MDExporter from './MDExporter';
 import TxtExporter from './TxtExporter';
 import WiseXMLExporter from './WiseXMLExporter';
 
-type textType = 'wxml' | 'txt' | 'mm' | 'csv' | 'md';
+type textType = 'wxml' | 'txt' | 'mm' | 'csv' | 'md' | 'mmap';
 
 class TextExporterFactory {
   static create(type: textType, mindmap: Mindmap): Exporter {

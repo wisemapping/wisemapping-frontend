@@ -21,7 +21,7 @@ import SVGExporter from './SVGExporter';
 /**
  * Based on https://mybyways.com/blog/convert-svg-to-png-using-your-browser
  */
-class BinaryImageExporter implements Exporter {
+class BinaryImageExporter extends Exporter {
   svgElement: Element;
 
   mindmap: Mindmap;
@@ -30,24 +30,22 @@ class BinaryImageExporter implements Exporter {
 
   height: number;
 
-  imgFormat: string;
-
   constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg') {
+    super(imgFormat.split['/'][0], imgFormat);
     this.svgElement = svgElement;
     this.mindmap = mindmap;
-    this.imgFormat = imgFormat;
 
     this.width = width;
     this.height = height;
   }
 
-  extension(): string {
-    return this.imgFormat.split['/'][0];
+  export(): Promise<string> {
+    throw new Error('Images can not be exporeted');
   }
 
-  async export(): Promise<string> {
-    const svgExporter = new SVGExporter(this.mindmap, this.svgElement);
-    const svgUrl = await svgExporter.export();
+  async exportAndEndcode(): Promise<string> {
+    const svgExporter = new SVGExporter(this.svgElement);
+    const svgUrl = await svgExporter.exportAndEncode();
 
     // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
     const dpr = (window.devicePixelRatio || 1) * 2;
@@ -67,7 +65,7 @@ class BinaryImageExporter implements Exporter {
         ctx.drawImage(img, 0, 0);
 
         const imgDataUri = canvas
-          .toDataURL(this.imgFormat)
+          .toDataURL(this.getContentType())
           .replace('image/png', 'octet/stream');
 
         URL.revokeObjectURL(svgUrl);

@@ -109,7 +109,7 @@ const ExportDialog = ({
                 throw new Error('Unsupported encoding');
         }
 
-        return exporter.export();
+        return exporter.exportAndEncode();
     };
 
     useEffect(() => {

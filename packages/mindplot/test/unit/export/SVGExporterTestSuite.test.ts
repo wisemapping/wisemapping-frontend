@@ -26,7 +26,7 @@ describe('SVG export test execution', () => {
     const svgDocument = parseXMLFile(svgPath, 'image/svg+xml');
 
     // Generate output ...
-    const exporter = new SVGExporter(mindmap, svgDocument.documentElement);
+    const exporter = new SVGExporter(svgDocument.documentElement);
     await exporterAssert(testName, exporter);
   });
 });

@@ -20,15 +20,12 @@ import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
 import Exporter from './Exporter';
 
-class TxtExporter implements Exporter {
+class TxtExporter extends Exporter {
   private mindmap: Mindmap;
 
   constructor(mindmap: Mindmap) {
+    super('txt', 'text/pain');
     this.mindmap = mindmap;
-  }
-
-  extension(): string {
-    return 'txt';
   }
 
   export(): Promise<string> {
@@ -36,11 +33,7 @@ class TxtExporter implements Exporter {
 
     const branches = mindmap.getBranches();
     const txtStr = this.traverseBranch('', branches);
-
-    // Encode as url response ...
-    const blob = new Blob([txtStr], { type: 'text/pain' });
-    const result = URL.createObjectURL(blob);
-    return Promise.resolve(result);
+    return Promise.resolve(txtStr);
   }
 
   private traverseBranch(prefix: string, branches: INodeModel[]) {

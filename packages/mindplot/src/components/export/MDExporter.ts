@@ -21,17 +21,14 @@ import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 
-class MDExporter implements Exporter {
+class MDExporter extends Exporter {
   private mindmap: Mindmap;
 
   private footNotes: string[] = [];
 
   constructor(mindmap: Mindmap) {
+    super('md', 'text/markdown');
     this.mindmap = mindmap;
-  }
-
-  extension(): string {
-    return 'md';
   }
 
   private normalizeText(value: string): string {
