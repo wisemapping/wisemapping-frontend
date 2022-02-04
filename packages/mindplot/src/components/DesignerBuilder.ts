@@ -37,7 +37,28 @@ export function buildDesigner(options: DesignerOptions): Designer {
     console.log('Map loadded successfully');
   });
 
-  const onerrorFn = () => {
+  const onerrorFn = (msg: string, url: string, lineNo: number, columnNo: number, error: Error) => {
+    const message = [
+      `Message: ${msg}`,
+      `URL: ${url}`,
+      `Line: ${lineNo}`,
+      `Column: ${columnNo}`,
+    ].join(' - ');
+    console.log(message);
+
+    // Send error to server ...
+    $.ajax({
+      method: 'post',
+      url: '/c/restful/logger/editor',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      data: JSON.stringify({
+        jsErrorMsg: message,
+        jsStack: JSON.stringify(error),
+        userAgent: navigator.userAgent,
+        mapId: options.mapId,
+      }),
+    });
+
     // Open error dialog only in case of mindmap loading errors. The rest of the error are reported but not display the dialog.
     // Remove this in the near future.
     if (!globalThis.mindmapLoadReady) {
