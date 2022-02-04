@@ -354,6 +354,20 @@ class Designer extends Events {
     }
   }
 
+  shrinkSelectedBranch() {
+    const nodes = this.getModel().filterSelectedTopics();
+    if (nodes.length <= 0 || nodes.length !== 1) {
+      // If there are more than one node selected,
+      $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE'));
+      return;
+    }
+    // Execute event ...
+    const topic = nodes[0];
+    if (topic.getType() !== 'CentralTopic') {
+      this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
+    }
+  }
+
   copyToClipboard(): void {
     let topics = this.getModel().filterSelectedTopics();
     if (topics.length <= 0) {

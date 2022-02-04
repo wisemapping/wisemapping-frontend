@@ -18,15 +18,19 @@
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
 import Keyboard from './Keyboard';
+import { Designer } from '..';
+import Topic from './Topic';
 
 class DesignerKeyboard extends Keyboard {
-  constructor(designer) {
-    super(designer);
+  static _instance: any;
+
+  constructor(designer: Designer) {
+    super();
     $assert(designer, 'designer can not be null');
     this._registerEvents(designer);
   }
 
-  _registerEvents(designer) {
+  private _registerEvents(designer: Designer) {
     // Try with the keyboard ..
     const model = designer.getModel();
     this.addShortcut(
@@ -250,8 +254,9 @@ class DesignerKeyboard extends Keyboard {
         keyCode = event.keyCode;
       }
 
-      const specialKey = $.hotkeys.specialKeys[keyCode];
-      if (['enter', 'capslock'].indexOf(specialKey) === -1 && !$.hotkeys.shiftNums[keyCode]) {
+      const jq: any = $;
+      const specialKey = jq.hotkeys.specialKeys[keyCode];
+      if (['enter', 'capslock'].indexOf(specialKey) === -1 && !jq.hotkeys.shiftNums[keyCode]) {
         const nodes = designer.getModel().filterSelectedTopics();
         if (nodes.length > 0) {
           // If a modifier is press, the key selected must be ignored.
@@ -266,7 +271,7 @@ class DesignerKeyboard extends Keyboard {
     });
   }
 
-  _goToBrother(designer, node, direction) {
+  private _goToBrother(designer: Designer, node: Topic, direction) {
     const parent = node.getParent();
     if (parent) {
       const brothers = parent.getChildren();
@@ -305,7 +310,7 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  _goToSideChild(designer, node, side) {
+  private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT') {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
@@ -331,14 +336,14 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  _goToParent(designer, node) {
+  private _goToParent(designer: Designer, node: Topic) {
     const parent = node.getParent();
     if (parent) {
       this._goToNode(designer, parent);
     }
   }
 
-  _goToChild(designer, node) {
+  private _goToChild(designer, node) {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
@@ -354,79 +359,79 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  _goToNode(designer, node) {
+  private _goToNode(designer: Designer, node: Topic) {
     // First deselect all the nodes ...
     designer.deselectAll();
 
     // Give focus to the selected node....
     node.setOnFocus(true);
   }
+
+  static register = function register(designer: Designer) {
+    this._instance = new DesignerKeyboard(designer);
+  };
+
+  static specialKeys = {
+    8: 'backspace',
+    9: 'tab',
+    10: 'return',
+    13: 'enter',
+    16: 'shift',
+    17: 'ctrl',
+    18: 'alt',
+    19: 'pause',
+    20: 'capslock',
+    27: 'esc',
+    32: 'space',
+    33: 'pageup',
+    34: 'pagedown',
+    35: 'end',
+    36: 'home',
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down',
+    45: 'insert',
+    46: 'del',
+    96: '0',
+    97: '1',
+    98: '2',
+    99: '3',
+    100: '4',
+    101: '5',
+    102: '6',
+    103: '7',
+    104: '8',
+    105: '9',
+    106: '*',
+    107: '+',
+    109: '-',
+    110: '.',
+    111: '/',
+    112: 'f1',
+    113: 'f2',
+    114: 'f3',
+    115: 'f4',
+    116: 'f5',
+    117: 'f6',
+    118: 'f7',
+    119: 'f8',
+    120: 'f9',
+    121: 'f10',
+    122: 'f11',
+    123: 'f12',
+    144: 'numlock',
+    145: 'scroll',
+    186: ';',
+    191: '/',
+    220: '\\',
+    222: "'",
+    224: 'meta',
+  };
+
+  static getInstance() {
+    return this._instance;
+  }
 }
-
-DesignerKeyboard.specialKeys = {
-  8: 'backspace',
-  9: 'tab',
-  10: 'return',
-  13: 'enter',
-  16: 'shift',
-  17: 'ctrl',
-  18: 'alt',
-  19: 'pause',
-  20: 'capslock',
-  27: 'esc',
-  32: 'space',
-  33: 'pageup',
-  34: 'pagedown',
-  35: 'end',
-  36: 'home',
-  37: 'left',
-  38: 'up',
-  39: 'right',
-  40: 'down',
-  45: 'insert',
-  46: 'del',
-  96: '0',
-  97: '1',
-  98: '2',
-  99: '3',
-  100: '4',
-  101: '5',
-  102: '6',
-  103: '7',
-  104: '8',
-  105: '9',
-  106: '*',
-  107: '+',
-  109: '-',
-  110: '.',
-  111: '/',
-  112: 'f1',
-  113: 'f2',
-  114: 'f3',
-  115: 'f4',
-  116: 'f5',
-  117: 'f6',
-  118: 'f7',
-  119: 'f8',
-  120: 'f9',
-  121: 'f10',
-  122: 'f11',
-  123: 'f12',
-  144: 'numlock',
-  145: 'scroll',
-  186: ';',
-  191: '/',
-  220: '\\',
-  222: "'",
-  224: 'meta',
-};
-
-DesignerKeyboard.register = function register(designer) {
-  this._instance = new DesignerKeyboard(designer);
-};
-
-DesignerKeyboard.getInstance = function getInstance() {
-  return this._instance;
-};
 
 export default DesignerKeyboard;
