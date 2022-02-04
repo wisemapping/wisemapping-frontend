@@ -56,6 +56,7 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
+import FeatureType from './model/FeatureType';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -890,7 +891,7 @@ class Designer extends Events {
   addIconType(iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id, {
+      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id as FeatureType, {
         id: iconType,
       });
     }

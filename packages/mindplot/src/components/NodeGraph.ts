@@ -16,17 +16,29 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { ElementClass } from '@wisemapping/web2d';
 import TopicConfig from './TopicConfig';
+import NodeModel from './model/NodeModel';
+import Workspace from './Workspace';
 import DragTopic from './DragTopic';
+import LayoutManager from './layout/LayoutManager';
+import SizeType from './SizeType';
+import PositionType from './PositionType';
 
-class NodeGraph {
-  /**
-     * @constructs
-     * @param {mindplot.model.NodeModel} nodeModel
-     * @param {Object<Number, String, Boolean>} options
-     * @throws will throw an error if nodeModel is null or undefined
-     */
-  constructor(nodeModel, options) {
+abstract class NodeGraph {
+  private _mouseEvents: boolean;
+
+  private _options;
+
+  private _onFocus: boolean;
+
+  private _size: SizeType;
+
+  private _model: NodeModel;
+
+  private _elem2d: ElementClass;
+
+  constructor(nodeModel: NodeModel, options) {
     $assert(nodeModel, 'model can not be null');
 
     this._options = options;
@@ -36,46 +48,33 @@ class NodeGraph {
     this._size = { width: 50, height: 20 };
   }
 
-  /** @return true if option is set to read-only */
-  isReadOnly() {
+  isReadOnly(): boolean {
     return this._options.readOnly;
   }
 
-  /** @return model type */
-  getType() {
+  getType(): string {
     const model = this.getModel();
     return model.getType();
   }
 
-  /**
-         * @param {String} id
-         * @throws will throw an error if the topic id is not a number
-         */
-  setId(id) {
+  setId(id: number) {
     $assert(typeof id === 'number', `id is not a number:${id}`);
     this.getModel().setId(id);
   }
 
-  _set2DElement(elem2d) {
+  protected _set2DElement(elem2d: ElementClass) {
     this._elem2d = elem2d;
   }
 
-  /**
-         * @return 2D element
-         * @throws will throw an error if the element is null or undefined within node graph
-         */
-  get2DElement() {
+  get2DElement(): ElementClass {
     $assert(this._elem2d, 'NodeGraph has not been initialized properly');
     return this._elem2d;
   }
 
-  /** @abstract */
-  setPosition(point, fireEvent) {
-    throw new Error('Unsupported operation');
-  }
+  abstract setPosition(point, fireEvent): void;
 
   /** */
-  addEvent(type, listener) {
+  addEvent(type: string, listener) {
     const elem = this.get2DElement();
     elem.addEvent(type, listener);
   }
@@ -102,41 +101,30 @@ class NodeGraph {
     return this._mouseEvents;
   }
 
-  /** @return {Object<Number>} size */
-  getSize() {
+  getSize(): SizeType {
     return this._size;
   }
 
-  /** @param {Object<Number>} size */
   setSize(size) {
     this._size.width = parseInt(size.width, 10);
     this._size.height = parseInt(size.height, 10);
   }
 
-  /**
-         * @return {mindplot.model.NodeModel} the node model
-         */
-  getModel() {
+  getModel(): NodeModel {
     $assert(this._model, 'Model has not been initialized yet');
     return this._model;
   }
 
-  /**
-         * @param {mindplot.NodeModel} model the node model
-         * @throws will throw an error if model is null or undefined
-         */
-  setModel(model) {
+  setModel(model: NodeModel) {
     $assert(model, 'Model can not be null');
     this._model = model;
   }
 
-  /** */
-  getId() {
+  getId(): number {
     return this._model.getId();
   }
 
-  /** */
-  setOnFocus(focus) {
+  setOnFocus(focus: boolean) {
     if (this._onFocus !== focus) {
       this._onFocus = focus;
       const outerShape = this.getOuterShape();
@@ -157,29 +145,30 @@ class NodeGraph {
     }
   }
 
-  /** @return {Boolean} true if the node graph is on focus */
-  isOnFocus() {
+  abstract closeEditors(): void;
+
+  abstract setCursor(type: string): void;
+
+  abstract getOuterShape(): ElementClass;
+
+  isOnFocus(): boolean {
     return this._onFocus;
   }
 
-  /** */
-  dispose(workspace) {
+  dispose(workspace: Workspace) {
     this.setOnFocus(false);
     workspace.removeChild(this);
   }
 
   /** */
-  createDragNode(layoutManager) {
+  createDragNode(layoutManager: LayoutManager) {
     const dragShape = this._buildDragShape();
     return new DragTopic(dragShape, this, layoutManager);
   }
 
-  _buildDragShape() {
-    $assert(false, '_buildDragShape must be implemented by all nodes.');
-  }
+  abstract _buildDragShape();
 
-  /** */
-  getPosition() {
+  getPosition(): PositionType {
     const model = this.getModel();
     return model.getPosition();
   }

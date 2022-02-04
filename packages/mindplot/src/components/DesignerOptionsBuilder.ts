@@ -17,11 +17,11 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import PersistenceManager from './PersistenceManager';
-import { Size } from './Size';
+import SizeType from './SizeType';
 
 export type DesignerOptions = {
   zoom: number,
-  containerSize?: Size,
+  containerSize?: SizeType,
   readOnly?: boolean,
   mapId?: string,
   container: string,

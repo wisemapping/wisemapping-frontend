@@ -16,8 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-
-export type FeatureType = 'note' | 'link' | 'icon';
+import FeatureType from './FeatureType';
 
 class FeatureModel {
   static _next_id = 0;

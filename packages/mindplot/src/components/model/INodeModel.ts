@@ -17,6 +17,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import PositionType from '../PositionType';
 import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
 
@@ -76,7 +77,7 @@ abstract class INodeModel {
     this.putProperty('position', `{x:${x},y:${y}}`);
   }
 
-  getPosition(): { x: number, y: number } {
+  getPosition(): PositionType {
     const value = this.getProperty('position') as string;
     let result;
     if (value != null) {

@@ -19,8 +19,9 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import cloneDeep from 'lodash/cloneDeep';
 import INodeModel, { NodeModelType } from './INodeModel';
 import FeatureModelFactory from './FeatureModelFactory';
-import FeatureModel, { FeatureType } from './FeatureModel';
+import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
+import FeatureType from './FeatureType';
 
 class NodeModel extends INodeModel {
   private _properties: Record<string, string | number | boolean>;

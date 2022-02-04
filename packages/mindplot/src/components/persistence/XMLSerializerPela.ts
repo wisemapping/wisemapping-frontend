@@ -22,9 +22,9 @@ import { TopicShape } from '../model/INodeModel';
 import ConnectionLine from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
-import { FeatureType } from '../model/FeatureModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
+import FeatureType from '../model/FeatureType';
 
 class XMLSerializerPela implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';

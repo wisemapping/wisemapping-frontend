@@ -154,8 +154,8 @@ class RelationshipPivot {
     const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);
 
     const spoint = new Point();
-    spoint.x = parseInt(controlPoint[0].x, 10) + parseInt(sourcePosition.x, 10);
-    spoint.y = parseInt(controlPoint[0].y, 10) + parseInt(sourcePosition.y, 10);
+    spoint.x = parseInt(controlPoint[0].x, 10) + sourcePosition.x;
+    spoint.y = parseInt(controlPoint[0].y, 10) + sourcePosition.y;
     return Shape.calculateRelationShipPointCoordinates(this._sourceTopic, spoint);
   }
 

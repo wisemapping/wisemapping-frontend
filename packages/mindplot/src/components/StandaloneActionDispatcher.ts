@@ -34,6 +34,7 @@ import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import Command from './Command';
+import FeatureType from './model/FeatureType';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -252,7 +253,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  addFeatureToTopic(topicId: number, featureType: string, attributes) {
+  addFeatureToTopic(topicId: number, featureType: FeatureType, attributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);
   }
