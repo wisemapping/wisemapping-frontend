@@ -16,7 +16,8 @@
     "declaration": true,
     "rootDirs": [
       "src",
-    ]
+    ],
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules"

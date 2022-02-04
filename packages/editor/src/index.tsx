@@ -9,6 +9,7 @@ import {
     PersistenceManager,
     RESTPersistenceManager,
     DesignerOptionsBuilder,
+    Designer
 } from '@wisemapping/mindplot';
 
 declare global {
@@ -23,6 +24,11 @@ declare global {
     var locale: string;
     var mindmapLocked: boolean;
     var mindmapLockedMsg: string;
+    var mapTitle: string;
+
+    // used in mindplot
+    var designer: Designer;
+    var accountEmail: string;
 }
 
 export type EditorPropsType = {
@@ -33,6 +39,21 @@ export type EditorPropsType = {
     locale?: string;
     onAction: (action: ToolbarActionType) => void;
 };
+
+function loadLocaleData(locale: string) {
+    switch (locale) {
+      case 'fr':
+        return import('./compiled-lang/fr.json');
+      case 'en':
+        return import('./compiled-lang/en.json');
+      case 'es':
+        return import('./compiled-lang/es.json');
+      case 'de':
+        return import('./compiled-lang/de.json');
+      default:
+        return import('./compiled-lang/en.json')
+    }
+  }
 
 const initMindplot = () => {
     // Change page title ...
@@ -94,10 +115,23 @@ export default function Editor({
     locale = 'en',
     onAction,
 }: EditorPropsType): React.ReactElement {
-    React.useEffect(initCallback, []);
-
+    const [localeTranslation, setLocaleTranslation] = React.useState(null);
+    React.useEffect(() => {
+        if(localeTranslation && !global.designer) {
+            initCallback();
+        }
+        }, [localeTranslation]);
+    React.useEffect(() => {
+        const loadAndSetLocale = async () => {
+            setLocaleTranslation(await loadLocaleData(locale));
+        };
+        loadAndSetLocale();
+    }, [locale])
+    if (!localeTranslation) {
+        return null;
+    }
     return (
-        <IntlProvider locale={locale} defaultLocale="en" messages={{}}>
+        <IntlProvider locale={locale} defaultLocale="en" messages={localeTranslation}>
             <Toolbar
                 memoryPersistence={memoryPersistence}
                 readOnlyMode={readOnlyMode}

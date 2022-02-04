@@ -1,0 +1,26 @@
+{
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Share"
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "This edition space showcases some of the mindmap editor capabilities !"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "Sign Up"
+    }
+  ]
+}
