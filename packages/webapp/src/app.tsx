@@ -53,31 +53,35 @@ const App = (): ReactElement => {
                                 <Route exact path="/">
                                     <Redirect to="/c/login" />
                                 </Route>
-                                <Route path="/c/login" component={LoginPage} />
-                                <Route path="/c/registration">
-                                    <RegistationPage />
+                                <Route path="/c/login"
+                                    component={LoginPage}
+                                />
+                                <Route
+                                    path="/c/registration">
+                                    component={RegistationPage}
                                 </Route>
                                 <Route
                                     path="/c/registration-success"
                                     component={RegistrationSuccessPage}
                                 />
-                                <Route path="/c/forgot-password">
-                                    <ForgotPasswordPage />
-                                </Route>
+                                <Route
+                                    path="/c/forgot-password"
+                                    component={ForgotPasswordPage} />
                                 <Route
                                     path="/c/forgot-password-success"
                                     component={ForgotPasswordSuccessPage}
                                 />
-                                <Route exact path="/c/maps/">
-                                    <MapsPage />
-                                </Route>
+                                <Route
+                                    exact path="/c/maps/"
+                                    component={MapsPage}
+                                />
                                 <Route exact path="/c/maps/:id/edit">
-                                    <Editor memoryPersistence={memoryPersistence} 
-                                        readOnlyMode={readOnlyMode} mapId={mapId}  />
+                                    <Editor memoryPersistence={memoryPersistence}
+                                        readOnlyMode={readOnlyMode} mapId={mapId} />
                                 </Route>
                                 <Route exact path="/c/maps/:id/try">
-                                    <Editor memoryPersistence={memoryPersistence} 
-                                        readOnlyMode={readOnlyMode} mapId={mapId}  />
+                                    <Editor memoryPersistence={memoryPersistence}
+                                        readOnlyMode={readOnlyMode} mapId={mapId} />
                                 </Route>
                             </Switch>
                         </Router>

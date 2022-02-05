@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { FormattedMessage, IntlProvider, useIntl } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider, IntlShape, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
@@ -64,9 +64,20 @@ const MapsPage = (): ReactElement => {
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
-    const intl = useIntl();
+
+    // Reload based on user preference ...
+    const appi18n = new AppI18n();
+    const userLocale = appi18n.getUserLocale();
+
+    const cache = createIntlCache();
+    const intl = createIntl({
+        defaultLocale: userLocale.code,
+        locale: Locales.EN.code,
+        messages: userLocale.message
+    }, cache)
 
     useEffect(() => {
+
         document.title = intl.formatMessage({
             id: 'maps.page-title',
             defaultMessage: 'My Maps | WiseMapping',
@@ -129,10 +140,6 @@ const MapsPage = (): ReactElement => {
             icon: <LabelTwoTone style={{ color: l.color ? l.color : 'inherit' }} />,
         })
     );
-
-    // Configure using user settings ...
-    const appi18n = new AppI18n();
-    const userLocale = appi18n.getUserLocale();
 
     return (
         <IntlProvider

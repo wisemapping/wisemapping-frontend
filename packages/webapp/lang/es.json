@@ -21,7 +21,7 @@
         "defaultMessage": "Cancelar"
     },
     "action.close-button": {
-        "defaultMessage": "Cerca"
+        "defaultMessage": "Cerrar"
     },
     "action.delete": {
         "defaultMessage": "Borrar"
@@ -60,16 +60,16 @@
         "defaultMessage": "Nuevo mapa"
     },
     "action.open": {
-        "defaultMessage": "Abierto"
+        "defaultMessage": "Abrir"
     },
     "action.print": {
-        "defaultMessage": "Impresión"
+        "defaultMessage": "Imprimir"
     },
     "action.publish": {
         "defaultMessage": "Publicar"
     },
     "action.rename": {
-        "defaultMessage": "Rebautizar"
+        "defaultMessage": "Renombar"
     },
     "action.rename-description-placeholder": {
         "defaultMessage": "Descripción"
@@ -78,10 +78,10 @@
         "defaultMessage": "Nombre"
     },
     "action.share": {
-        "defaultMessage": "Cuota"
+        "defaultMessage": "Compartir"
     },
     "changepwd.button": {
-        "defaultMessage": "Cambio"
+        "defaultMessage": "Cambiar"
     },
     "changepwd.confirm-password": {
         "defaultMessage": "Confirmar contraseña"
@@ -195,7 +195,7 @@
         "defaultMessage": "¿Ya tienes una cuenta?"
     },
     "help.support": {
-        "defaultMessage": "Apoyo"
+        "defaultMessage": "Ayuda"
     },
     "history.no-changes": {
         "defaultMessage": "No hay cambios disponibles"
@@ -231,7 +231,7 @@
         "defaultMessage": "Última fecha de modificación"
     },
     "info.modified-tny": {
-        "defaultMessage": "ultima modificacion por"
+        "defaultMessage": "Ultima modificacion por"
     },
     "info.name": {
         "defaultMessage": "Nombre"
@@ -240,10 +240,10 @@
         "defaultMessage": "Visible públicamente"
     },
     "info.sharing": {
-        "defaultMessage": "Intercambio"
+        "defaultMessage": "Compartido"
     },
     "info.starred": {
-        "defaultMessage": "Sembrado de estrellas"
+        "defaultMessage": "Destacados"
     },
     "info.title": {
         "defaultMessage": "Información"
@@ -286,7 +286,7 @@
         "defaultMessage": "Inscribirse"
     },
     "login.title": {
-        "defaultMessage": "Bienvenidos"
+        "defaultMessage": "Bienvenido"
     },
     "login.userinactive": {
         "defaultMessage": "Lo sentimos, tu cuenta aún no ha sido activada. Recibirás un correo electrónico de notificación cuando se active. ¡Manténganse al tanto!."
@@ -331,34 +331,34 @@
         "defaultMessage": "Modificado por {by} el {on}"
     },
     "maps.nav-all": {
-        "defaultMessage": "Todo"
+        "defaultMessage": "Todos"
     },
     "maps.nav-onwned": {
-        "defaultMessage": "propiedad"
+        "defaultMessage": "Mis Mapas"
     },
     "maps.nav-public": {
-        "defaultMessage": "Público"
+        "defaultMessage": "Públicos"
     },
     "maps.nav-shared": {
-        "defaultMessage": "Comparte conmigo"
+        "defaultMessage": "Compartidos"
     },
     "maps.nav-starred": {
-        "defaultMessage": "Sembrado de estrellas"
+        "defaultMessage": "Destacados"
     },
     "maps.page-title": {
-        "defaultMessage": "Mis mapas | WiseMapping"
+        "defaultMessage": "Mis Mapas | WiseMapping"
     },
     "maps.revert": {
         "defaultMessage": "Revertir"
     },
     "maps.search-action": {
-        "defaultMessage": "Búsqueda ..."
+        "defaultMessage": "Búscar ..."
     },
     "maps.tooltip-open": {
-        "defaultMessage": "Abierto para edición"
+        "defaultMessage": "Abrir para edición"
     },
     "maps.tooltip-starred": {
-        "defaultMessage": "Sembrado de estrellas"
+        "defaultMessage": "Destacados"
     },
     "maps.view": {
         "defaultMessage": "Vista"
@@ -439,7 +439,7 @@
         "defaultMessage": "Editor"
     },
     "role.owner": {
-        "defaultMessage": "onwer"
+        "defaultMessage": "Dueño"
     },
     "role.viewer": {
         "defaultMessage": "Espectador"

@@ -44,7 +44,7 @@
   "action.close-button": [
     {
       "type": 0,
-      "value": "Cerca"
+      "value": "Cerrar"
     }
   ],
   "action.delete": [
@@ -122,13 +122,13 @@
   "action.open": [
     {
       "type": 0,
-      "value": "Abierto"
+      "value": "Abrir"
     }
   ],
   "action.print": [
     {
       "type": 0,
-      "value": "Impresión"
+      "value": "Imprimir"
     }
   ],
   "action.publish": [
@@ -140,7 +140,7 @@
   "action.rename": [
     {
       "type": 0,
-      "value": "Rebautizar"
+      "value": "Renombar"
     }
   ],
   "action.rename-description-placeholder": [
@@ -158,13 +158,13 @@
   "action.share": [
     {
       "type": 0,
-      "value": "Cuota"
+      "value": "Compartir"
     }
   ],
   "changepwd.button": [
     {
       "type": 0,
-      "value": "Cambio"
+      "value": "Cambiar"
     }
   ],
   "changepwd.confirm-password": [
@@ -404,7 +404,7 @@
   "help.support": [
     {
       "type": 0,
-      "value": "Apoyo"
+      "value": "Ayuda"
     }
   ],
   "history.no-changes": [
@@ -476,7 +476,7 @@
   "info.modified-tny": [
     {
       "type": 0,
-      "value": "ultima modificacion por"
+      "value": "Ultima modificacion por"
     }
   ],
   "info.name": [
@@ -494,13 +494,13 @@
   "info.sharing": [
     {
       "type": 0,
-      "value": "Intercambio"
+      "value": "Compartido"
     }
   ],
   "info.starred": [
     {
       "type": 0,
-      "value": "Sembrado de estrellas"
+      "value": "Destacados"
     }
   ],
   "info.title": [
@@ -584,7 +584,7 @@
   "login.title": [
     {
       "type": 0,
-      "value": "Bienvenidos"
+      "value": "Bienvenido"
     }
   ],
   "login.userinactive": [
@@ -686,37 +686,37 @@
   "maps.nav-all": [
     {
       "type": 0,
-      "value": "Todo"
+      "value": "Todos"
     }
   ],
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "propiedad"
+      "value": "Mis Mapas"
     }
   ],
   "maps.nav-public": [
     {
       "type": 0,
-      "value": "Público"
+      "value": "Públicos"
     }
   ],
   "maps.nav-shared": [
     {
       "type": 0,
-      "value": "Comparte conmigo"
+      "value": "Compartidos"
     }
   ],
   "maps.nav-starred": [
     {
       "type": 0,
-      "value": "Sembrado de estrellas"
+      "value": "Destacados"
     }
   ],
   "maps.page-title": [
     {
       "type": 0,
-      "value": "Mis mapas | WiseMapping"
+      "value": "Mis Mapas | WiseMapping"
     }
   ],
   "maps.revert": [
@@ -728,19 +728,19 @@
   "maps.search-action": [
     {
       "type": 0,
-      "value": "Búsqueda ..."
+      "value": "Búscar ..."
     }
   ],
   "maps.tooltip-open": [
     {
       "type": 0,
-      "value": "Abierto para edición"
+      "value": "Abrir para edición"
     }
   ],
   "maps.tooltip-starred": [
     {
       "type": 0,
-      "value": "Sembrado de estrellas"
+      "value": "Destacados"
     }
   ],
   "maps.view": [
@@ -902,7 +902,7 @@
   "role.owner": [
     {
       "type": 0,
-      "value": "onwer"
+      "value": "Dueño"
     }
   ],
   "role.viewer": [
