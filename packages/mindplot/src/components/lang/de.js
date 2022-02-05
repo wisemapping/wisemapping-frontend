@@ -54,6 +54,8 @@ const DE = {
   CANCEL: 'Abbrechen',
   LINK: 'Verbindung',
   OPEN_LINK: 'Öffne URL',
+  SESSION_EXPIRED: 'Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.',
+  URL_ERROR: 'URL nicht gültig',
   ACTION: 'Aktion',
   CREATE_SIBLING_TOPIC: 'Erzeuge ein Schwester Thema',
   CREATE_CHILD_TOPIC: 'Eryeuge ein Unterthema',
@@ -75,6 +77,8 @@ const DE = {
   KEYBOARD_SHORTCUTS_MSG: 'Tastenkürzel helfen Zeit zu sparen und erlauben die Arbeit nur mit der Tatstatur, s.d. Sie niemals die Hand von der Tastatur nehmen müßen, um die Maus zu bedienen.',
   COPY_AND_PASTE_TOPICS: 'Kopieren und Einsetzen von Themen',
   MULTIPLE_LINES: 'Füge mehrer Textzeilen hinzu',
+  BACK_TO_MAP_LIST: 'Zurück zur Kartenliste',
+  KEYBOARD_SHOTCUTS: 'Tastaturkürzel',
 
 };
 

@@ -36,7 +36,7 @@ const FR = {
   ONE_TOPIC_MUST_BE_SELECTED: 'Impossible de créer un noeud. Un noeud parent doit être sélectionné au préalable.',
   ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE: 'Un noeud enfant ne peut pas être réduit. Un noeud doit être sélectionné.',
   SAVE_COULD_NOT_BE_COMPLETED: 'Enregistrement impossible. Essayer ultérieurement.',
-  UNEXPECTED_ERROR_LOADING: "Nous sommes désolés, une erreur vient de survenir.\nEssayez de recharger l'éditeur. Si le problème persiste, contactez-nous : support@wisemapping.com.",
+  UNEXPECTED_ERROR_LOADING: 'Nous sommes désolés, une erreur vient de survenir.\nEssayez de recharger l\'éditeur. Si le problème persiste, contactez-nous support@wisemapping.com.',
   MAIN_TOPIC: 'Noeud titre principal',
   SUB_TOPIC: 'Noeud sous-titre',
   ISOLATED_TOPIC: 'Noeud isolé',
@@ -48,11 +48,14 @@ const FR = {
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: 'Le noeud racine ne peut pas être effacé.',
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'Impossible de créer relation. Un noeud parent doit être sélectionné au préalable.',
   SELECTION_COPIED_TO_CLIPBOARD: 'Noeuds sélectionnés copiés dans le presse-papiers.',
+  WRITE_YOUR_TEXT_HERE: 'Écrivez votre texte ici ...',
+  REMOVE: 'Supprimer',
   ACCEPT: 'Accepter',
   CANCEL: 'Annuler',
-  REMOVE: 'Supprimer',
-  WRITE_YOUR_TEXT_HERE: 'Écrivez votre texte ici ...',
   LINK: 'Lien',
+  OPEN_LINK: 'Ouvrir le lien',
+  SESSION_EXPIRED: 'Votre session a expiré, veuillez vous reconnecter.',
+  URL_ERROR: 'URL non valide',
   ACTION: 'Action',
   CREATE_SIBLING_TOPIC: 'Créer noeud même niveau',
   CREATE_CHILD_TOPIC: 'Créer noeud enfant',
@@ -74,7 +77,8 @@ const FR = {
   KEYBOARD_SHORTCUTS_MSG: 'Les raccourcis clavier vous font gagner du temps, en vous permettant de garder les mains sur le clavier sans utiliser la souris.',
   COPY_AND_PASTE_TOPICS: 'Copier et coller les noeuds',
   MULTIPLE_LINES: 'Ajouter plusieurs lignes de texte',
-
+  BACK_TO_MAP_LIST: 'Retour à la liste des cartes',
+  KEYBOARD_SHOTCUTS: 'Raccourcis clavier',
 };
 
 export default FR;
