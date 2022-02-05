@@ -57,16 +57,17 @@ const App = (): ReactElement => {
                                     component={LoginPage}
                                 />
                                 <Route
-                                    path="/c/registration">
+                                    path="/c/registration"
                                     component={RegistationPage}
-                                </Route>
+                                />
                                 <Route
                                     path="/c/registration-success"
                                     component={RegistrationSuccessPage}
                                 />
                                 <Route
                                     path="/c/forgot-password"
-                                    component={ForgotPasswordPage} />
+                                    component={ForgotPasswordPage}
+                                />
                                 <Route
                                     path="/c/forgot-password-success"
                                     component={ForgotPasswordSuccessPage}

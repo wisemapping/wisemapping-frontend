@@ -11,6 +11,11 @@ import {
     DesignerOptionsBuilder,
     Designer
 } from '@wisemapping/mindplot';
+import FR from './compiled-lang/fr.json';
+import ES from './compiled-lang/es.json';
+import EN from './compiled-lang/en.json';
+import DE from './compiled-lang/de.json';
+
 
 declare global {
     var memoryPersistence: boolean;
@@ -42,18 +47,18 @@ export type EditorPropsType = {
 
 function loadLocaleData(locale: string) {
     switch (locale) {
-      case 'fr':
-        return import('./compiled-lang/fr.json');
-      case 'en':
-        return import('./compiled-lang/en.json');
-      case 'es':
-        return import('./compiled-lang/es.json');
-      case 'de':
-        return import('./compiled-lang/de.json');
-      default:
-        return import('./compiled-lang/en.json')
+        case 'fr':
+            return FR;
+        case 'en':
+            return EN;
+        case 'es':
+            return ES;
+        case 'de':
+            return DE;
+        default:
+            return EN;
     }
-  }
+}
 
 const initMindplot = () => {
     // Change page title ...
@@ -71,8 +76,7 @@ const initMindplot = () => {
         });
     } else {
         persistence = new LocalStorageManager(
-            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${
-                !global.isAuth ? '-pub' : ''
+            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
             }`,
             true
         );
@@ -117,10 +121,10 @@ export default function Editor({
 }: EditorPropsType): React.ReactElement {
     const [localeTranslation, setLocaleTranslation] = React.useState(null);
     React.useEffect(() => {
-        if(localeTranslation && !global.designer) {
+        if (localeTranslation && !global.designer) {
             initCallback();
         }
-        }, [localeTranslation]);
+    }, [localeTranslation]);
     React.useEffect(() => {
         const loadAndSetLocale = async () => {
             setLocaleTranslation(await loadLocaleData(locale));

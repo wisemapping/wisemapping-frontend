@@ -283,7 +283,7 @@
         "defaultMessage": "Iniciar sesión"
     },
     "login.signup": {
-        "defaultMessage": "Inscribirse"
+        "defaultMessage": "Crear cuenta"
     },
     "login.title": {
         "defaultMessage": "Bienvenido"
@@ -370,7 +370,7 @@
         "defaultMessage": "Cambia la contraseña"
     },
     "menu.signout": {
-        "defaultMessage": "Desconectar"
+        "defaultMessage": "Cerrar sesión"
     },
     "publish.button": {
         "defaultMessage": "Aceptar"
