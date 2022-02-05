@@ -168,7 +168,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                                 color="primary"
                             />
                         }
-                        label="Delete Account"
+                        label={intl.formatMessage({ id: 'accountinfo.deleteaccount', defaultMessage: 'Delete Account' })}
                     />
                 </FormGroup>
             </FormControl>

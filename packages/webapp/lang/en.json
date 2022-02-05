@@ -460,7 +460,7 @@
         "defaultMessage": "Delete collaborator"
     },
     "share.delete-description": {
-        "defaultMessage": "Invite people to collaborate with you in the creation of your midnmap. They will be notified by email."
+        "defaultMessage": "Invite people to collaborate with you in the creation of your mindmap. They will be notified by email."
     },
     "share.delete-title": {
         "defaultMessage": "Share with people"

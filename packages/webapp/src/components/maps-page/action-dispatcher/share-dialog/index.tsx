@@ -122,7 +122,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                 description={intl.formatMessage({
                     id: 'share.delete-description',
                     defaultMessage:
-                        'Invite people to collaborate with you in the creation of your midnmap. They will be notified by email. ',
+                        'Invite people to collaborate with you in the creation of your mindmap. They will be notified by email. ',
                 })}
                 PaperProps={{ classes: { root: classes.paper } }}
                 error={error}

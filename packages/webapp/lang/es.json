@@ -364,7 +364,7 @@
         "defaultMessage": "Vista"
     },
     "menu.account": {
-        "defaultMessage": "Cuenta"
+        "defaultMessage": "Información de cuenta"
     },
     "menu.change-password": {
         "defaultMessage": "Cambia la contraseña"
@@ -451,16 +451,16 @@
         "defaultMessage": "Agregar mensaje"
     },
     "share.can-edit": {
-        "defaultMessage": "Poder editar"
+        "defaultMessage": "Puede editar"
     },
     "share.can-view": {
-        "defaultMessage": "Puedo ver"
+        "defaultMessage": "Puede ver"
     },
     "share.delete": {
         "defaultMessage": "Eliminar colaborador"
     },
     "share.delete-description": {
-        "defaultMessage": "Invita a personas a colaborar contigo en la creación de tu midnmap. Serán notificados por correo electrónico."
+        "defaultMessage": "Invita a personas a colaborar contigo en la creación de tu mapa mental. Serán notificados por correo electrónico."
     },
     "share.delete-title": {
         "defaultMessage": "Compartir con la otros"
