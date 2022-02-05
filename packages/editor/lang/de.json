@@ -1,14 +1,14 @@
 {
     "editor.try-welcome": {
-        "defaultMessage": "This edition space showcases some of the mindmap editor capabilities !"
+        "defaultMessage": "Dieser Ausgabebereich zeigt einige der Mindmap-Editor-Funktionen!"
     },
     "editor.try-welcome-description": {
-        "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+        "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
     },
     "login.signup": {
-        "defaultMessage": "Sign Up"
+        "defaultMessage": "Anmeldung"
     },
     "action.share": {
-        "defaultMessage": "Share"
+        "defaultMessage": "Teilen"
     }
 }
