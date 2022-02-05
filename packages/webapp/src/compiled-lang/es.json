@@ -326,7 +326,7 @@
   "footer.opensource": [
     {
       "type": 0,
-      "value": "Fuente abierta"
+      "value": "Código Abierto"
     }
   ],
   "footer.others": [
@@ -392,7 +392,7 @@
   "header.donthaveaccount": [
     {
       "type": 0,
-      "value": "¿No tienes una cuenta?"
+      "value": "¿No tenes una cuenta?"
     }
   ],
   "header.haveaccount": [
@@ -752,7 +752,7 @@
   "menu.account": [
     {
       "type": 0,
-      "value": "Cuenta"
+      "value": "Información de cuenta"
     }
   ],
   "menu.change-password": [
@@ -764,7 +764,7 @@
   "menu.signout": [
     {
       "type": 0,
-      "value": "Desconectar"
+      "value": "Cerrar sesión"
     }
   ],
   "publish.button": [
@@ -926,13 +926,13 @@
   "share.can-edit": [
     {
       "type": 0,
-      "value": "Poder editar"
+      "value": "Puede editar"
     }
   ],
   "share.can-view": [
     {
       "type": 0,
-      "value": "Puedo ver"
+      "value": "Puede ver"
     }
   ],
   "share.delete": [
@@ -944,7 +944,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invita a personas a colaborar contigo en la creación de tu midnmap. Serán notificados por correo electrónico."
+      "value": "Invita a personas a colaborar contigo en la creación de tu mapa mental. Serán notificados por correo electrónico."
     }
   ],
   "share.delete-title": [

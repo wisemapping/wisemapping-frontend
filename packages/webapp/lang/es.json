@@ -156,7 +156,7 @@
         "defaultMessage": "Feedback"
     },
     "footer.opensource": {
-        "defaultMessage": "Fuente abierta"
+        "defaultMessage": "Código Abierto"
     },
     "footer.others": {
         "defaultMessage": "Otros"
@@ -189,7 +189,7 @@
         "defaultMessage": "Contraseña recuperada | WiseMapping"
     },
     "header.donthaveaccount": {
-        "defaultMessage": "¿No tienes una cuenta?"
+        "defaultMessage": "¿No tenes una cuenta?"
     },
     "header.haveaccount": {
         "defaultMessage": "¿Ya tienes una cuenta?"
