@@ -1,8 +1,8 @@
 import React from 'react';
-import ActionDispatcher from '../action-dispatcher';
-import { ActionType } from '../action-chooser';
+import ActionDispatcher from '../maps-page/action-dispatcher';
+import { ActionType } from '../maps-page/action-chooser';
 import WiseEditor from '@wisemapping/editor';
-import AppI18n from '../../../classes/app-i18n';
+import AppI18n from '../../classes/app-i18n';
 
 export type EditorPropsType = {
     mapId: number;
@@ -10,7 +10,7 @@ export type EditorPropsType = {
     readOnlyMode: boolean;
 };
 
-export default function Editor({ mapId, ...props }: EditorPropsType): React.ReactElement {
+const EditorPage = ({ mapId, ...props }: EditorPropsType): React.ReactElement => {
     const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
 
     // Load user locale ...
@@ -30,4 +30,6 @@ export default function Editor({ mapId, ...props }: EditorPropsType): React.Reac
         }
     </>
 }
+
+export default EditorPage;
 

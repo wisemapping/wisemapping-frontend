@@ -15,7 +15,7 @@ import MapsPage from './components/maps-page';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import GoogleAnalytics from 'react-ga';
-import Editor from './components/maps-page/editor';
+import EditorPage from './components/editor-page';
 
 // Google Analytics Initialization.
 GoogleAnalytics.initialize('UA-0000000-0');
@@ -77,11 +77,11 @@ const App = (): ReactElement => {
                                     component={MapsPage}
                                 />
                                 <Route exact path="/c/maps/:id/edit">
-                                    <Editor memoryPersistence={memoryPersistence}
+                                    <EditorPage memoryPersistence={memoryPersistence}
                                         readOnlyMode={readOnlyMode} mapId={mapId} />
                                 </Route>
                                 <Route exact path="/c/maps/:id/try">
-                                    <Editor memoryPersistence={memoryPersistence}
+                                    <EditorPage memoryPersistence={memoryPersistence}
                                         readOnlyMode={readOnlyMode} mapId={mapId} />
                                 </Route>
                             </Switch>
