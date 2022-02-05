@@ -2,25 +2,25 @@
   "action.share": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "Partager"
     }
   ],
   "editor.try-welcome": [
     {
       "type": 0,
-      "value": "This edition space showcases some of the mindmap editor capabilities !"
+      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
     }
   ],
   "editor.try-welcome-description": [
     {
       "type": 0,
-      "value": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+      "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
     }
   ],
   "login.signup": [
     {
       "type": 0,
-      "value": "Sign Up"
+      "value": "S'inscrire"
     }
   ]
 }
