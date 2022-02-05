@@ -2,7 +2,7 @@
   "account.delete-warning": [
     {
       "type": 0,
-      "value": "Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
+      "value": "Keep in mind that you will not be able retrieve any mindmap you have created. All your information will be deleted and it can not be restored."
     }
   ],
   "accountinfo.button": [
@@ -116,7 +116,7 @@
   "action.new": [
     {
       "type": 0,
-      "value": "New Map"
+      "value": "New map"
     }
   ],
   "action.open": [
@@ -218,7 +218,7 @@
   "create.title": [
     {
       "type": 0,
-      "value": "Create a new mindmap"
+      "value": "Create a new mindmap."
     }
   ],
   "deletem.title": [
@@ -233,6 +233,18 @@
       "value": "Duplicate"
     }
   ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "This edition space showcases some of the mindmap editor capabilities !"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+    }
+  ],
   "expired.description": [
     {
       "type": 0,
@@ -243,6 +255,12 @@
     {
       "type": 0,
       "value": "Your session has expired"
+    }
+  ],
+  "export.desc": [
+    {
+      "type": 0,
+      "value": "Export this map in the format that you want and start using it in your presentations or sharing by email"
     }
   ],
   "export.document": [
@@ -326,13 +344,19 @@
   "forgot.desc": [
     {
       "type": 0,
-      "value": "We will send you an email to reset your password"
+      "value": "We will send you an email to reset your password."
     }
   ],
   "forgot.email": [
     {
       "type": 0,
       "value": "Email"
+    }
+  ],
+  "forgot.page-title": [
+    {
+      "type": 0,
+      "value": "Forgot Password | WiseMapping"
     }
   ],
   "forgot.register": [
@@ -344,19 +368,25 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "We've sent you an email that will allow you to reset your password. Please check your email now."
+      "value": "We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Your temporal password has been sent"
+      "value": "Your temporal password has been sent."
     }
   ],
   "forgot.title": [
     {
       "type": 0,
       "value": "Reset your password"
+    }
+  ],
+  "forgotsuccess.page-title": [
+    {
+      "type": 0,
+      "value": "Password Recovered | WiseMapping"
     }
   ],
   "header.donthaveaccount": [
@@ -521,6 +551,12 @@
       "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
     }
   ],
+  "login.page-title": [
+    {
+      "type": 0,
+      "value": "Login | WiseMapping"
+    }
+  ],
   "login.password": [
     {
       "type": 0,
@@ -563,6 +599,12 @@
       "value": "Creator"
     }
   ],
+  "map.delete-selected": [
+    {
+      "type": 0,
+      "value": "Delete selected"
+    }
+  ],
   "map.last-update": [
     {
       "type": 0,
@@ -581,6 +623,12 @@
       "value": "Name"
     }
   ],
+  "map.tooltip-add": [
+    {
+      "type": 0,
+      "value": "Add label to selected"
+    }
+  ],
   "maps.choose-file": [
     {
       "type": 0,
@@ -590,7 +638,7 @@
   "maps.create-tooltip": [
     {
       "type": 0,
-      "value": "Create a New Map"
+      "value": "Create a new mindmap"
     }
   ],
   "maps.empty-result": [
@@ -617,10 +665,82 @@
       "value": "Modified By"
     }
   ],
+  "maps.modified-by-desc": [
+    {
+      "type": 0,
+      "value": "Modified by "
+    },
+    {
+      "type": 1,
+      "value": "by"
+    },
+    {
+      "type": 0,
+      "value": " on "
+    },
+    {
+      "type": 1,
+      "value": "on"
+    }
+  ],
+  "maps.nav-all": [
+    {
+      "type": 0,
+      "value": "All"
+    }
+  ],
+  "maps.nav-onwned": [
+    {
+      "type": 0,
+      "value": "Owned"
+    }
+  ],
+  "maps.nav-public": [
+    {
+      "type": 0,
+      "value": "Public"
+    }
+  ],
+  "maps.nav-shared": [
+    {
+      "type": 0,
+      "value": "Shared with me"
+    }
+  ],
+  "maps.nav-starred": [
+    {
+      "type": 0,
+      "value": "Starred"
+    }
+  ],
+  "maps.page-title": [
+    {
+      "type": 0,
+      "value": "My Maps | WiseMapping"
+    }
+  ],
   "maps.revert": [
     {
       "type": 0,
       "value": "Revert"
+    }
+  ],
+  "maps.search-action": [
+    {
+      "type": 0,
+      "value": "Search ..."
+    }
+  ],
+  "maps.tooltip-open": [
+    {
+      "type": 0,
+      "value": "Open for edition"
+    }
+  ],
+  "maps.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Starred"
     }
   ],
   "maps.view": [
@@ -693,6 +813,12 @@
     {
       "type": 0,
       "value": "Publish"
+    }
+  ],
+  "registation.success-title": [
+    {
+      "type": 0,
+      "value": "Registation Success | WiseMapping"
     }
   ],
   "registration.desc": [
