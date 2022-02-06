@@ -34,19 +34,21 @@ class DesignerKeyboard extends Keyboard {
     // Try with the keyboard ..
     const model = designer.getModel();
     this.addShortcut(
-      ['backspace'], (event) => {
+      ['backspace'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
         designer.deleteSelectedEntities();
       },
     );
     this.addShortcut(
-      ['space'], () => {
+      ['space'], (event: Event) => {
         designer.shrinkSelectedBranch();
+        event.preventDefault();
+        event.stopPropagation();
       },
     );
     this.addShortcut(
-      ['f2'], (event) => {
+      ['f2'], (event: Event) => {
         event.stopPropagation();
         event.preventDefault();
         const node = model.selectedTopic();
@@ -56,7 +58,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['del'], (event) => {
+      ['del'], (event: Event) => {
         designer.deleteSelectedEntities();
         event.preventDefault();
         event.stopPropagation();
@@ -68,63 +70,63 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['insert'], (event) => {
+      ['insert'], (event: Event) => {
         designer.createChildForSelectedNode();
         event.preventDefault();
         event.stopPropagation();
       },
     );
     this.addShortcut(
-      ['tab'], (event) => {
+      ['tab'], (eventevent: Event) => {
         designer.createChildForSelectedNode();
         event.preventDefault();
         event.stopPropagation();
       },
     );
     this.addShortcut(
-      ['meta+enter'], (event) => {
+      ['meta+enter'], (eventevent: Event) => {
         event.preventDefault();
         event.stopPropagation();
         designer.createChildForSelectedNode();
       },
     );
     this.addShortcut(
-      ['ctrl+z', 'meta+z'], (event) => {
-        event.preventDefault(event);
+      ['ctrl+z', 'meta+z'], (event: Event) => {
+        event.preventDefault();
         event.stopPropagation();
         designer.undo();
       },
     );
     this.addShortcut(
-      ['ctrl+c', 'meta+c'], (event) => {
-        event.preventDefault(event);
+      ['ctrl+c', 'meta+c'], (event: Event) => {
+        event.preventDefault();
         event.stopPropagation();
         designer.copyToClipboard();
       },
     );
     this.addShortcut(
-      ['ctrl+v', 'meta+v'], (event) => {
-        event.preventDefault(event);
+      ['ctrl+v', 'meta+v'], (event: Event) => {
+        event.preventDefault();
         event.stopPropagation();
         designer.pasteClipboard();
       },
     );
     this.addShortcut(
-      ['ctrl+shift+z', 'meta+shift+z', 'ctrl+y', 'meta+y'], (event) => {
+      ['ctrl+shift+z', 'meta+shift+z', 'ctrl+y', 'meta+y'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
         designer.redo();
       },
     );
     this.addShortcut(
-      ['ctrl+a', 'meta+a'], (event) => {
+      ['ctrl+a', 'meta+a'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
         designer.selectAll();
       },
     );
     this.addShortcut(
-      ['ctrl+b', 'meta+b'], (event) => {
+      ['ctrl+b', 'meta+b'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -132,14 +134,14 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['ctrl+s', 'meta+s'], (event) => {
+      ['ctrl+s', 'meta+s'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
         $(document).find('#save').trigger('click');
       },
     );
     this.addShortcut(
-      ['ctrl+i', 'meta+i'], (event) => {
+      ['ctrl+i', 'meta+i'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -147,7 +149,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['ctrl+shift+a', 'meta+shift+a'], (event) => {
+      ['ctrl+shift+a', 'meta+shift+a'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -155,7 +157,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['meta+=', 'ctrl+='], (event) => {
+      ['meta+=', 'ctrl+='], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -163,7 +165,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['meta+-', 'ctrl+-'], (event) => {
+      ['meta+-', 'ctrl+-'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
 
@@ -172,7 +174,7 @@ class DesignerKeyboard extends Keyboard {
     );
     const me = this;
     this.addShortcut(
-      'right', (event) => {
+      'right', (event: Event) => {
         const node = model.selectedTopic();
         if (node) {
           if (node.isCentralTopic()) {
@@ -191,7 +193,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      'left', (event) => {
+      'left', (event: Event) => {
         const node = model.selectedTopic();
         if (node) {
           if (node.isCentralTopic()) {
@@ -210,7 +212,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      'up', (event) => {
+      'up', (event: Event) => {
         const node = model.selectedTopic();
         if (node) {
           if (!node.isCentralTopic()) {
@@ -225,7 +227,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      'down', (event) => {
+      'down', (event: Event) => {
         const node = model.selectedTopic();
         if (node) {
           if (!node.isCentralTopic()) {

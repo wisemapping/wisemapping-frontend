@@ -475,7 +475,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                     <TableCell colSpan={6} style={{ textAlign: 'center' }}>
                                         <FormattedMessage
                                             id="maps.empty-result"
-                                            defaultMessage="No matching record found with the current filter criteria."
+                                            defaultMessage="No matching mindmap found with the current filter criteria."
                                         />
                                     </TableCell>
                                 </TableRow>

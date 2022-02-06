@@ -316,7 +316,7 @@
         "defaultMessage": "Create a new mindmap"
     },
     "maps.empty-result": {
-        "defaultMessage": "No matching record found with the current filter criteria."
+        "defaultMessage": "No matching mindmap found with the current filter criteria."
     },
     "maps.import-desc": {
         "defaultMessage": "Import from other tools"

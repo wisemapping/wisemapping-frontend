@@ -316,7 +316,7 @@
         "defaultMessage": "Crear un nuevo mapa mental"
     },
     "maps.empty-result": {
-        "defaultMessage": "No se encontró ningún registro coincidente con los criterios de filtro actuales."
+        "defaultMessage": "No se encontró ningún mapa mental coincidente con los criterios de filtro actuales."
     },
     "maps.import-desc": {
         "defaultMessage": "Importar desde otras herramientas"
