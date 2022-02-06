@@ -19,8 +19,8 @@ import EditorPage from './components/editor-page';
 
 
 declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme { }
 }
 
 
@@ -41,8 +41,7 @@ const App = (): ReactElement => {
     const locale = appi18n.getBrowserLocale();
 
     // global variables set server-side
-    const memoryPersistence = global.memoryPersistence;
-    const readOnlyMode = global.readOnly;
+    const istTryMode = global.memoryPersistence;
     const mapId = parseInt(global.mapId, 10);
 
     return locale.message ? (
@@ -85,12 +84,10 @@ const App = (): ReactElement => {
                                         component={MapsPage}
                                     />
                                     <Route exact path="/c/maps/:id/edit">
-                                        <EditorPage memoryPersistence={memoryPersistence}
-                                            readOnlyMode={readOnlyMode} mapId={mapId} />
+                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
                                     </Route>
                                     <Route exact path="/c/maps/:id/try">
-                                        <EditorPage memoryPersistence={memoryPersistence}
-                                            readOnlyMode={readOnlyMode} mapId={mapId} />
+                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
                                     </Route>
                                 </Switch>
                             </Router>

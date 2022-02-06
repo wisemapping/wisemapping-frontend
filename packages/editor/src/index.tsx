@@ -38,14 +38,14 @@ declare global {
 
 export type EditorPropsType = {
     initCallback?: () => void;
-    mapId: number;
-    memoryPersistence: boolean;
+    mapId?: number;
+    isTryMode: boolean;
     readOnlyMode: boolean;
     locale?: string;
     onAction: (action: ToolbarActionType) => void;
 };
 
-function loadLocaleData(locale: string) {
+const loadLocaleData = (locale: string) => {
     switch (locale) {
         case 'fr':
             return FR;
@@ -65,7 +65,7 @@ const initMindplot = () => {
     document.title = `${global.mapTitle} | WiseMapping `;
 
     // Configure persistence manager ...
-    let persistence;
+    let persistence: PersistenceManager;
     if (!global.memoryPersistence && !global.readOnly) {
         persistence = new RESTPersistenceManager({
             documentUrl: '/c/restful/maps/{id}/document',
@@ -111,38 +111,26 @@ const initMindplot = () => {
     }
 };
 
-export default function Editor({
+const Editor = ({
     initCallback = initMindplot,
     mapId,
-    memoryPersistence,
-    readOnlyMode,
+    isTryMode: isTryMode,
     locale = 'en',
     onAction,
-}: EditorPropsType): React.ReactElement {
-    const [localeTranslation, setLocaleTranslation] = React.useState(null);
+}: EditorPropsType): React.ReactElement => {
     React.useEffect(() => {
-        if (localeTranslation && !global.designer) {
-            initCallback();
-        }
-    }, [localeTranslation]);
-    React.useEffect(() => {
-        const loadAndSetLocale = async () => {
-            setLocaleTranslation(await loadLocaleData(locale));
-        };
-        loadAndSetLocale();
-    }, [locale])
-    if (!localeTranslation) {
-        return null;
-    }
+        initCallback();
+    }, []);
+
     return (
-        <IntlProvider locale={locale} defaultLocale="en" messages={localeTranslation}>
+        <IntlProvider locale={locale} defaultLocale="en" messages={loadLocaleData(locale)}>
             <Toolbar
-                memoryPersistence={memoryPersistence}
-                readOnlyMode={readOnlyMode}
+                isTryMode={isTryMode}
                 onAction={onAction}
             />
             <div id="mindplot"></div>
-            <Footer showTryPanel={memoryPersistence} />
+            <Footer showTryPanel={isTryMode} />
         </IntlProvider>
     );
 }
+export default Editor;
