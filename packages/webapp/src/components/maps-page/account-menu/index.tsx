@@ -1,18 +1,18 @@
-import IconButton from '@material-ui/core/IconButton';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
-import SettingsApplicationsOutlined from '@material-ui/icons/SettingsApplicationsOutlined';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+import SettingsApplicationsOutlined from '@mui/icons-material/SettingsApplicationsOutlined';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { fetchAccount } from '../../../redux/clientSlice';
 import AccountInfoDialog from './account-info-dialog';
 import ChangePasswordDialog from './change-password-dialog';
-import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
-import Link from '@material-ui/core/Link';
-import ExitToAppOutlined from '@material-ui/icons/ExitToAppOutlined';
+import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
+import Link from '@mui/material/Link';
+import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
 
 type ActionType = 'change-password' | 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
@@ -35,7 +35,7 @@ const AccountMenu = (): React.ReactElement => {
                 arrow={true}
                 title={`${account?.firstname} ${account?.lastname} <${account?.email}>`}
             >
-                <IconButton onClick={handleMenu}>
+                <IconButton onClick={handleMenu} size="large">
                     <AccountCircle fontSize="large" style={{ color: 'black' }} />
                 </IconButton>
             </Tooltip>
@@ -44,7 +44,6 @@ const AccountMenu = (): React.ReactElement => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={open}
-                getContentAnchorEl={null}
                 onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',

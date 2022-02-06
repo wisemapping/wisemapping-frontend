@@ -1,10 +1,10 @@
 import React from 'react';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Divider from '@material-ui/core/Divider';
-import AddIcon from '@material-ui/icons/Add';
-import Checkbox from '@material-ui/core/Checkbox';
-import Container from '@material-ui/core/Container';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Divider from '@mui/material/Divider';
+import AddIcon from '@mui/icons-material/Add';
+import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
 import { Label as LabelComponent } from '../label';
 import Client, { Label, ErrorInfo } from '../../../../classes/client';
 import { useQuery } from 'react-query';

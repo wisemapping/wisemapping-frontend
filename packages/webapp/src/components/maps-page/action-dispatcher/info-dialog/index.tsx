@@ -7,11 +7,11 @@ import { SimpleDialogProps } from '..';
 import { useStyles } from './style';
 import dayjs from 'dayjs';
 import { fetchMapById } from '../../../../redux/clientSlice';
-import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);

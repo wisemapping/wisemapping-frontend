@@ -4,8 +4,8 @@ import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 import { Link as RouterLink } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const RegistrationSuccessPage = (): React.ReactElement => {
     const intl = useIntl();

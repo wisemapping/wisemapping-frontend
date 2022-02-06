@@ -1,8 +1,8 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
+import Chip from '@mui/material/Chip';
 
 import { Label } from '../../../../classes/client';
-import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 type Props = {
   labels: Label[],
 };

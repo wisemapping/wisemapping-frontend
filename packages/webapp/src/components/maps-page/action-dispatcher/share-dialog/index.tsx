@@ -6,24 +6,24 @@ import Client, { ErrorInfo, Permission } from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
 
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Paper from '@mui/material/Paper';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Typography from '@mui/material/Typography';
 import { useStyles } from './style';
 import RoleIcon from '../../role-icon';
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 
 type ShareModel = {
     emails: string;
@@ -189,7 +189,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                         <TextField
                             multiline
                             rows={3}
-                            rowsMax={3}
+                            maxRows={3}
                             className={classes.textArea}
                             variant="filled"
                             name="message"
@@ -236,7 +236,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                                                         onClick={(e) =>
                                                             handleOnDeleteClick(e, permission.email)
                                                         }
-                                                    >
+                                                        size="large">
                                                         <DeleteIcon />
                                                     </IconButton>
                                                 </Tooltip>

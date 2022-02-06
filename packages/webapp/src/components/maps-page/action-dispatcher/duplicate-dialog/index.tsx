@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from '@mui/material/FormControl';
 import { useSelector } from 'react-redux';
 
 import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';

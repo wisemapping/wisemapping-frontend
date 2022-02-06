@@ -1,21 +1,21 @@
 import React from 'react';
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
-import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import LabelOutlined from '@material-ui/icons/LabelOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import LabelOutlined from '@mui/icons-material/LabelOutlined';
 
 import { FormattedMessage } from 'react-intl';
 import { fetchMapById } from '../../../redux/clientSlice';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Divider from '@material-ui/core/Divider';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
 export type ActionType =
     | 'open'
     | 'share'

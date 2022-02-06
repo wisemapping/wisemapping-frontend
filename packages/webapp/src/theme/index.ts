@@ -1,6 +1,6 @@
-import createMuiTheme from '@material-ui/core/styles/createTheme';
+import { adaptV4Theme, createTheme } from '@mui/material/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme(adaptV4Theme({
     overrides: {
         MuiCssBaseline: {
             '@global': {
@@ -74,6 +74,6 @@ const theme = createMuiTheme({
             contrastText: '#FFFFFF',
         },
     },
-});
+}));
 
 export { theme };

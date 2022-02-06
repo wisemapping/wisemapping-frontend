@@ -6,8 +6,8 @@ import Client from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
 import { handleOnMutationSuccess } from '..';
 import BaseDialog from '../base-dialog';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 export type DeleteMultiselectDialogProps = {
     mapsId: number[];
