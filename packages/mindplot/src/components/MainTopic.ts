@@ -16,25 +16,29 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Point, Group } from '@wisemapping/web2d';
+import { Point, Group, ElementClass } from '@wisemapping/web2d';
 
 import Topic from './Topic';
 import { TopicShape } from './model/INodeModel';
 import Shape from './util/Shape';
+import NodeModel from './model/NodeModel';
+import Workspace from './Workspace';
+import SizeType from './SizeType';
 
 class MainTopic extends Topic {
+  private INNER_RECT_ATTRIBUTES: { stroke: string; };
   /**
          * @extends mindplot.Topic
          * @constructs
          * @param model
          * @param options
          */
-  constructor(model, options) {
+  constructor(model: NodeModel, options) {
     super(model, options);
     this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
   }
 
-  _buildDragShape() {
+  _buildDragShape(): ElementClass {
     const innerShape = this._buildShape(this.INNER_RECT_ATTRIBUTES, this.getShapeType());
     const size = this.getSize();
     innerShape.setSize(size.width, size.height);
@@ -70,9 +74,8 @@ class MainTopic extends Topic {
     return group;
   }
 
-  /** */
-  // eslint-disable-next-line no-unused-vars
-  updateTopicShape(targetTopic, workspace) {
+
+  updateTopicShape(targetTopic: Topic) {
     // Change figure based on the connected topic ...
     const model = this.getModel();
     let shapeType = model.getShapeType();
@@ -86,7 +89,7 @@ class MainTopic extends Topic {
   }
 
   /** */
-  disconnect(workspace) {
+  disconnect(workspace: Workspace) {
     super.disconnect(workspace);
     const model = this.getModel();
     let shapeType = model.getShapeType();
@@ -99,7 +102,7 @@ class MainTopic extends Topic {
     innerShape.setVisibility(true);
   }
 
-  _updatePositionOnChangeSize(oldSize, newSize) {
+  _updatePositionOnChangeSize(oldSize: SizeType, newSize: SizeType) {
     const xOffset = Math.round((newSize.width - oldSize.width) / 2);
     const pos = this.getPosition();
     if ($defined(pos)) {
@@ -112,22 +115,20 @@ class MainTopic extends Topic {
     }
   }
 
-  /** */
-  workoutIncomingConnectionPoint(sourcePosition) {
+  workoutIncomingConnectionPoint(sourcePosition: Point) {
     return Shape.workoutIncomingConnectionPoint(this, sourcePosition);
   }
 
-  /** */
-  workoutOutgoingConnectionPoint(targetPosition) {
+  workoutOutgoingConnectionPoint(targetPosition: Point) {
     $assert(targetPosition, 'targetPoint can not be null');
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
 
-    let result;
+    let result: Point;
     if (this.getShapeType() === TopicShape.LINE) {
       result = new Point();
-      const groupPosition = this._elem2d.getPosition();
+      const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();
 
       if (innerShareSize) {
@@ -149,7 +150,7 @@ class MainTopic extends Topic {
         result.y = pos.y + size.height / 2;
       }
     } else {
-      result = Shape.calculateRectConnectionPoint(pos, size, isAtRight, true);
+      result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
     }
     return result;
   }

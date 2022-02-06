@@ -19,12 +19,17 @@ import { Elipse } from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
+import Topic from './Topic';
+import IconGroup from './IconGroup';
 
 class ShirinkConnector {
-  constructor(topic) {
+  private _isShrink: boolean;
+  private _ellipse: any;
+  constructor(topic: Topic) {
     this._isShrink = false;
     const ellipse = new Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
     this._ellipse = ellipse;
+
     ellipse.setFill('rgb(62,118,179)');
 
     ellipse.setSize(TopicConfig.CONNECTOR_WIDTH, TopicConfig.CONNECTOR_WIDTH);
@@ -39,12 +44,12 @@ class ShirinkConnector {
       event.stopPropagation();
     });
 
-    ellipse.addEvent('mousedown', (event) => {
+    ellipse.addEvent('mousedown', (event: Event) => {
       // Avoid node creation ...
       event.stopPropagation();
     });
 
-    ellipse.addEvent('dblclick', (event) => {
+    ellipse.addEvent('dblclick', (event: Event) => {
       // Avoid node creation ...
       event.stopPropagation();
     });
@@ -58,12 +63,11 @@ class ShirinkConnector {
     });
 
     ellipse.setCursor('default');
-    this._fillColor = '#f7f7f7';
     const model = topic.getModel();
     this.changeRender(model.areChildrenShrunken());
   }
 
-  changeRender(isShrink) {
+  changeRender(isShrink: boolean) {
     const elipse = this._ellipse;
     if (isShrink) {
       elipse.setStroke('2', 'solid');
@@ -73,36 +77,35 @@ class ShirinkConnector {
     this._isShrink = isShrink;
   }
 
-  setVisibility(value) {
+  setVisibility(value: boolean): void {
     this._ellipse.setVisibility(value);
   }
 
-  setOpacity(opacity) {
+  setOpacity(opacity: number): void {
     this._ellipse.setOpacity(opacity);
   }
 
-  setFill(color) {
-    this._fillColor = color;
+  setFill(color: string): void {
     this._ellipse.setFill(color);
   }
 
-  setAttribute(name, value) {
+  setAttribute(name: string, value) {
     this._ellipse.setAttribute(name, value);
   }
 
-  addToWorkspace(group) {
+  addToWorkspace(group): void {
     group.append(this._ellipse);
   }
 
-  setPosition(x, y) {
+  setPosition(x: number, y: number): void {
     this._ellipse.setPosition(x, y);
   }
 
-  moveToBack() {
+  moveToBack(): void {
     this._ellipse.moveToBack();
   }
 
-  moveToFront() {
+  moveToFront(): void {
     this._ellipse.moveToFront();
   }
 }

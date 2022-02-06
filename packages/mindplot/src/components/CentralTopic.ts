@@ -21,7 +21,11 @@ import Topic from './Topic';
 import Shape from './util/Shape';
 
 class CentralTopic extends Topic {
-  _registerEvents() {
+  _buildDragShape() {
+    // Ignore ..
+  }
+
+  _registerEvents(): void {
     super._registerEvents();
 
     // This disable the drag of the central topic.
@@ -31,17 +35,15 @@ class CentralTopic extends Topic {
     });
   }
 
-  /** */
-  workoutIncomingConnectionPoint() {
+
+  workoutIncomingConnectionPoint(): Point {
     return this.getPosition();
   }
 
-  /** */
-  setCursor(type) {
+  setCursor(type: string) {
     super.setCursor(type === 'move' ? 'default' : type);
   }
 
-  /** */
   updateTopicShape() {
     // Overwite behaviour ...
   }
@@ -58,7 +60,7 @@ class CentralTopic extends Topic {
   }
 
   /** */
-  workoutOutgoingConnectionPoint(targetPosition) {
+  workoutOutgoingConnectionPoint(targetPosition: Point) {
     $assert(targetPosition, 'targetPoint can not be null');
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);

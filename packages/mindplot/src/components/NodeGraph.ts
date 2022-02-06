@@ -105,9 +105,9 @@ abstract class NodeGraph {
     return this._size;
   }
 
-  setSize(size) {
-    this._size.width = parseInt(size.width, 10);
-    this._size.height = parseInt(size.height, 10);
+  setSize(size: SizeType, force?: boolean) {
+    this._size.width = size.width;
+    this._size.height = size.height;
   }
 
   getModel(): NodeModel {

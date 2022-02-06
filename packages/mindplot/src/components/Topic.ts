@@ -17,8 +17,9 @@
  */
 import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
+
 import {
-  Rect, Image, Line, Text, Group,
+  Rect, Image, Line, Text, Group, ElementClass, Point
 } from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
@@ -34,19 +35,32 @@ import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
 import LinkEditor from './widget/LinkEditor';
 
+
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import { TopicShape } from './model/INodeModel';
+import NodeModel from './model/NodeModel';
+import Relationship from './Relationship';
+import Workspace from './Workspace';
+import LayoutManager from './layout/LayoutManager';
+import NoteModel from './model/NoteModel';
+import LinkModel from './model/LinkModel';
+import SizeType from './SizeType';
 
 const ICON_SCALING_FACTOR = 1.3;
 
-class Topic extends NodeGraph {
-  /**
-     * @extends mindplot.NodeGraph
-     * @constructs
-     * @param model
-     * @param options
-     */
-  constructor(model, options) {
+abstract class Topic extends NodeGraph {
+  private _innerShape: ElementClass;
+  private _relationships: Relationship[];
+  private _isInWorkspace: boolean;
+  private _children: Topic[];
+  private _parent: Topic | null;
+  private _outerShape: ElementClass;
+  private _text: Text | null;
+  private _iconsGroup: IconGroup;
+  private _connector: any;
+  private _outgoingLine: Line;
+
+  constructor(model: NodeModel, options) {
     super(model, options);
     this._children = [];
     this._parent = null;
@@ -66,15 +80,15 @@ class Topic extends NodeGraph {
     }
   }
 
-  _registerEvents() {
+  protected _registerEvents(): void {
     this.setMouseEventsEnabled(true);
 
     // Prevent click on the topics being propagated ...
-    this.addEvent('click', (event) => {
+    this.addEvent('click', (event: Event) => {
       event.stopPropagation();
     });
     const me = this;
-    this.addEvent('dblclick', (event) => {
+    this.addEvent('dblclick', (event: Event) => {
       me._getTopicEventDispatcher().show(me);
       event.stopPropagation();
     });
@@ -89,11 +103,11 @@ class Topic extends NodeGraph {
   }
 
   /** @return {mindplot.Topic} parent topic */
-  getParent() {
+  getParent(): Topic | null {
     return this._parent;
   }
 
-  _setShapeType(type, updateModel) {
+  protected _setShapeType(type: string, updateModel: boolean) {
     // Remove inner shape figure ...
     const model = this.getModel();
     if ($defined(updateModel) && updateModel) {
@@ -147,7 +161,7 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  _removeInnerShape() {
+  private _removeInnerShape() {
     const group = this.get2DElement();
     const innerShape = this.getInnerShape();
     group.removeChild(innerShape);
@@ -155,7 +169,7 @@ class Topic extends NodeGraph {
     return innerShape;
   }
 
-  getInnerShape() {
+  getInnerShape(): ElementClass {
     if (!$defined(this._innerShape)) {
       // Create inner box.
       this._innerShape = this._buildShape(
@@ -181,7 +195,7 @@ class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  _buildShape(attributes, shapeType) {
+  _buildShape(attributes, shapeType: string) {
     $assert(attributes, 'attributes can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
@@ -213,7 +227,8 @@ class Topic extends NodeGraph {
         strokeColor: '#495879',
         strokeWidth: 1,
       });
-      result.setSize = function setSize(width, height) {
+
+      result.setSize = function setSize(width: number, height: number) {
         this.size = {
           width,
           height,
@@ -226,7 +241,7 @@ class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = () => this.size;
+      result.getSize = function getSize() { this.size };
 
       result.setPosition = () => {
         // Overwrite behaviour ...
@@ -246,8 +261,7 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  /** @param {String} type the cursor type, either 'pointer', 'default' or 'move' */
-  setCursor(type) {
+  setCursor(type: string) {
     const innerShape = this.getInnerShape();
     innerShape.setCursor(type);
 
@@ -258,8 +272,7 @@ class Topic extends NodeGraph {
     textShape.setCursor(type);
   }
 
-  /** @return outer shape */
-  getOuterShape() {
+  getOuterShape(): ElementClass {
     if (!$defined(this._outerShape)) {
       const rect = this._buildShape(
         TopicConfig.OUTER_SHAPE_ATTRIBUTES,
@@ -273,7 +286,7 @@ class Topic extends NodeGraph {
     return this._outerShape;
   }
 
-  getTextShape() {
+  getTextShape(): Text {
     if (!$defined(this._text)) {
       this._text = this._buildTextShape(false);
 
@@ -285,7 +298,6 @@ class Topic extends NodeGraph {
     return this._text;
   }
 
-  /** @return icon group */
   getOrBuildIconGroup() {
     if (!$defined(this._iconsGroup)) {
       this._iconsGroup = this._buildIconGroup();
@@ -297,11 +309,11 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  getIconGroup() {
+  getIconGroup(): IconGroup {
     return this._iconsGroup;
   }
 
-  _buildIconGroup() {
+  private _buildIconGroup(): Group {
     const textHeight = this.getTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
     const result = new IconGroup(this.getId(), iconSize);
@@ -338,7 +350,7 @@ class Topic extends NodeGraph {
       featureModel.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly(),
     );
 
-    this._adjustShapes();
+    this.adjustShapes();
     return result;
   }
 
@@ -361,7 +373,7 @@ class Topic extends NodeGraph {
     if ($defined(iconGroup)) {
       iconGroup.removeIconByModel(featureModel);
     }
-    this._adjustShapes();
+    this.adjustShapes();
   }
 
   /** */
@@ -379,7 +391,7 @@ class Topic extends NodeGraph {
     return this._relationships;
   }
 
-  _buildTextShape(readOnly) {
+  _buildTextShape(readOnly): Text {
     const result = new Text();
     const family = this.getFontFamily();
     const size = this.getFontSize();
@@ -410,7 +422,7 @@ class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontFamily(value);
     }
-    this._adjustShapes(updateModel);
+    this.adjustShapes();
   }
 
   /** */
@@ -422,7 +434,7 @@ class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontSize(value);
     }
-    this._adjustShapes(updateModel);
+    this.adjustShapes();
   }
 
   /** */
@@ -433,7 +445,7 @@ class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontStyle(value);
     }
-    this._adjustShapes(updateModel);
+    this.adjustShapes();
   }
 
   /** */
@@ -444,7 +456,7 @@ class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontWeight(value);
     }
-    this._adjustShapes();
+    this.adjustShapes();
   }
 
   /** */
@@ -531,7 +543,7 @@ class Topic extends NodeGraph {
       this._setText(text, true);
     }
 
-    this._adjustShapes();
+    this.adjustShapes();
   }
 
   /** */
@@ -731,7 +743,7 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  getShrinkConnector() {
+  getShrinkConnector(): ShirinkConnector {
     let result = this._connector;
     if (this._connector == null) {
       this._connector = new ShirinkConnector(this);
@@ -741,41 +753,39 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  handleMouseOver() {
+  handleMouseOver(): void {
     const outerShape = this.getOuterShape();
     outerShape.setOpacity(1);
   }
 
-  /** */
-  handleMouseOut() {
+  handleMouseOut(): void {
     const outerShape = this.getOuterShape();
     if (!this.isOnFocus()) {
       outerShape.setOpacity(0);
     }
   }
 
-  /** */
-  showTextEditor(text) {
+  showTextEditor(text: string) {
     this._getTopicEventDispatcher().show(this, {
       text,
     });
   }
 
-  /** */
-  showNoteEditor() {
+  showNoteEditor(): void {
     const topicId = this.getId();
     const model = this.getModel();
     const editorModel = {
-      getValue() {
+      getValue(): string {
         const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
         let result;
-        if (notes.length > 0) result = notes[0].getText();
+        if (notes.length > 0) {
+          result = (notes[0] as NoteModel).getText();
+        }
 
         return result;
       },
 
-      setValue(value) {
+      setValue(value: string) {
         const dispatcher = ActionDispatcher.getInstance();
         const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
         if (!$defined(value)) {
@@ -802,16 +812,18 @@ class Topic extends NodeGraph {
     const topicId = this.getId();
     const model = this.getModel();
     const editorModel = {
-      getValue() {
+      getValue(): string {
         // @param {mindplot.model.LinkModel[]} links
         const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
         let result;
-        if (links.length > 0) result = links[0].getUrl();
+        if (links.length > 0) {
+          result = (links[0] as LinkModel).getUrl();
+        }
 
         return result;
       },
 
-      setValue(value) {
+      setValue(value: string) {
         const dispatcher = ActionDispatcher.getInstance();
         const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
         if (!$defined(value)) {
@@ -834,19 +846,18 @@ class Topic extends NodeGraph {
     editor.show();
   }
 
-  /** */
   closeEditors() {
     this._getTopicEventDispatcher().close(true);
   }
 
-  _getTopicEventDispatcher() {
+  private _getTopicEventDispatcher() {
     return TopicEventDispatcher.getInstance();
   }
 
   /**
      * Point: references the center of the rect shape.!!!
      */
-  setPosition(point) {
+  setPosition(point: Point) {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     // eslint-disable-next-line no-param-reassign
@@ -866,7 +877,7 @@ class Topic extends NodeGraph {
     const cy = point.y - size.height / 2;
 
     // Update visual position.
-    this._elem2d.setPosition(cx, cy);
+    this.get2DElement().setPosition(cx, cy);
 
     // Update connection lines ...
     this._updateConnectionLines();
@@ -876,7 +887,7 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  getOutgoingLine() {
+  getOutgoingLine(): Line {
     return this._outgoingLine;
   }
 
@@ -887,8 +898,7 @@ class Topic extends NodeGraph {
       .map((node) => node.getOutgoingLine());
   }
 
-  /** */
-  getOutgoingConnectedTopic() {
+  getOutgoingConnectedTopic(): Topic {
     let result = null;
     const line = this.getOutgoingLine();
     if ($defined(line)) {
@@ -897,7 +907,7 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  _updateConnectionLines() {
+  private _updateConnectionLines(): void {
     // Update this to parent line ...
     const outgoingLine = this.getOutgoingLine();
     if ($defined(outgoingLine)) {
@@ -913,9 +923,9 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  setBranchVisibility(value) {
-    let current = this;
-    let parent = this;
+  setBranchVisibility(value: boolean): void {
+    let current: Topic = this;
+    let parent: Topic = this;
     while (parent != null && !parent.isCentralTopic()) {
       current = parent;
       parent = current.getParent();
@@ -924,7 +934,7 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  setVisibility(value) {
+  setVisibility(value: boolean): void {
     this._setTopicVisibility(value);
 
     // Hide all children...
@@ -941,7 +951,7 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  moveToBack() {
+  moveToBack(): void {
     // Update relationship lines
     this._relationships.forEach((r) => r.moveToBack());
 
@@ -954,7 +964,7 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  moveToFront() {
+  moveToFront(): void {
     this.get2DElement().moveToFront();
     const connector = this.getShrinkConnector();
     if ($defined(connector)) {
@@ -965,12 +975,12 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  isVisible() {
+  isVisible(): boolean {
     const elem = this.get2DElement();
     return elem.isVisible();
   }
 
-  _setRelationshipLinesVisibility(value) {
+  private _setRelationshipLinesVisibility(value: boolean): void {
     this._relationships.forEach((relationship) => {
       const sourceTopic = relationship.getSourceTopic();
       const targetTopic = relationship.getTargetTopic();
@@ -979,13 +989,13 @@ class Topic extends NodeGraph {
       const sourceParent = sourceTopic.getModel().getParent();
       relationship.setVisibility(
         value
-                    && (targetParent == null || !targetParent.areChildrenShrunken())
-                    && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+        && (targetParent == null || !targetParent.areChildrenShrunken())
+        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
       );
     });
   }
 
-  _setTopicVisibility(value) {
+  private _setTopicVisibility(value: boolean) {
     const elem = this.get2DElement();
     elem.setVisibility(value);
 
@@ -1001,7 +1011,7 @@ class Topic extends NodeGraph {
   }
 
   /** */
-  setOpacity(opacity) {
+  setOpacity(opacity: number): void {
     const elem = this.get2DElement();
     elem.setOpacity(opacity);
 
@@ -1013,7 +1023,7 @@ class Topic extends NodeGraph {
     textShape.setOpacity(opacity);
   }
 
-  _setChildrenVisibility(isVisible) {
+  private _setChildrenVisibility(isVisible: boolean) {
     // Hide all children.
     const children = this.getChildren();
     const model = this.getModel();
@@ -1038,8 +1048,7 @@ class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  setSize(size, force) {
+  setSize(size: SizeType, force: boolean): void {
     $assert(size, 'size can not be null');
     $assert($defined(size.width), 'size seem not to be a valid element');
     const roundedSize = {
@@ -1070,12 +1079,9 @@ class Topic extends NodeGraph {
     }
   }
 
-  _updatePositionOnChangeSize() {
-    $assert(false, 'this method must be overwrited.');
-  }
+  protected abstract _updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
 
-  /** */
-  disconnect(workspace) {
+  disconnect(workspace: Workspace): void {
     const outgoingLine = this.getOutgoingLine();
     if ($defined(outgoingLine)) {
       $assert(workspace, 'workspace can not be null');
@@ -1119,20 +1125,19 @@ class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  getOrder() {
+  getOrder(): number {
     const model = this.getModel();
     return model.getOrder();
   }
 
   /** */
-  setOrder(value) {
+  setOrder(value: number) {
     const model = this.getModel();
     model.setOrder(value);
   }
 
   /** */
-  connectTo(targetTopic, workspace) {
+  connectTo(targetTopic: Topic, workspace: Workspace) {
     $assert(!this._outgoingLine, 'Could not connect an already connected node');
     $assert(targetTopic !== this, 'Circular connection are not allowed');
     $assert(targetTopic, 'Parent Graph can not be null');
@@ -1187,20 +1192,21 @@ class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  append(child) {
+  abstract updateTopicShape(targetTopic: Topic);
+
+  append(child: Topic) {
     const children = this.getChildren();
     children.push(child);
   }
 
   /** */
-  removeChild(child) {
+  removeChild(child: Topic) {
     const children = this.getChildren();
     this._children = children.filter((c) => c !== child);
   }
 
   /** */
-  getChildren() {
+  getChildren(): Topic[] {
     let result = this._children;
     if (!$defined(result)) {
       this._children = [];
@@ -1209,8 +1215,7 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  removeFromWorkspace(workspace) {
+  removeFromWorkspace(workspace: Workspace) {
     const elem2d = this.get2DElement();
     workspace.removeChild(elem2d);
     const line = this.getOutgoingLine();
@@ -1221,8 +1226,7 @@ class Topic extends NodeGraph {
     EventBus.instance.fireEvent(EventBus.events.NodeRemoved, this.getModel());
   }
 
-  /** */
-  addToWorkspace(workspace) {
+  addToWorkspace(workspace: Workspace) {
     const elem = this.get2DElement();
     workspace.append(elem);
     if (!this.isInWorkspace()) {
@@ -1238,16 +1242,16 @@ class Topic extends NodeGraph {
       }
     }
     this._isInWorkspace = true;
-    this._adjustShapes();
+    this.adjustShapes();
   }
 
   /** */
-  isInWorkspace() {
+  isInWorkspace(): boolean {
     return this._isInWorkspace;
   }
 
   /** */
-  createDragNode(layoutManager) {
+  createDragNode(layoutManager: LayoutManager) {
     const result = super.createDragNode(layoutManager);
 
     // Is the node already connected ?
@@ -1263,7 +1267,7 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  _adjustShapes() {
+  adjustShapes(): void {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
       if (this.getShapeType() !== TopicShape.IMAGE) {
@@ -1287,7 +1291,7 @@ class Topic extends NodeGraph {
         this.setSize({
           width: topicWith,
           height: topicHeight,
-        });
+        }, false);
 
         // Adjust all topic elements positions ...
         const yPosition = Math.round((topicHeight - textHeight) / 2);
@@ -1296,12 +1300,12 @@ class Topic extends NodeGraph {
       } else {
         // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
-        this.setSize(size);
+        this.setSize(size, false);
       }
     }
   }
 
-  _flatten2DElements(topic) {
+  private _flatten2DElements(topic: Topic) {
     let result = [];
 
     const children = topic.getChildren();
@@ -1320,11 +1324,8 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  /**
-     * @param childTopic
-     * @return {Boolean} true if childtopic is a child topic of this topic or the topic itself
-     */
-  isChildTopic(childTopic) {
+
+  isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();
     if (!result) {
       const children = this.getChildren();
@@ -1339,7 +1340,6 @@ class Topic extends NodeGraph {
     return result;
   }
 
-  /** @return {Boolean} true if the topic is the central topic of the map */
   isCentralTopic() {
     return this.getModel().getType() === 'CentralTopic';
   }

@@ -53,7 +53,7 @@ class DesignerKeyboard extends Keyboard {
         event.preventDefault();
         const node = model.selectedTopic();
         if (node) {
-          node.showTextEditor();
+          node.showTextEditor(node.getText());
         }
       },
     );

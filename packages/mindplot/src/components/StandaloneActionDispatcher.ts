@@ -134,7 +134,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontFamily();
       topic.setFontFamily(commandFontFamily, true);
 
-      topic._adjustShapes();
+      topic.adjustShapes();
       return result;
     };
 
@@ -147,7 +147,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
-    const commandFunc = (topic, commandColor) => {
+    const commandFunc = (topic: Topic, commandColor: string) => {
       const result = topic.getFontColor();
       topic.setFontColor(commandColor, true);
       return result;
