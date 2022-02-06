@@ -52,6 +52,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         toolbarActions: {
             flexGrow: 1,
+            paddingLeft: '20px;'
         },
         toolbarListActions: {
             flexGrow: 1,

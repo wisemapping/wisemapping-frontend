@@ -39,8 +39,7 @@ const theme = createMuiTheme({
                 whiteSpace: 'nowrap',
                 textTransform: 'none',
                 borderRadius: '9px',
-                padding: '6px 54px 6px 54px',
-                width: '136px',
+                padding: '6px 20px 6px 20px'
             },
             containedPrimary: {
                 color: 'white',
