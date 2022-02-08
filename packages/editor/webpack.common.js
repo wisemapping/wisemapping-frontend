@@ -28,7 +28,7 @@ module.exports = {
               exclude: '/node_modules/'
           },
           {
-            test: /\.(png|jpe?g|gif|svg|json)$/,
+            test: /\.(png|jpe?g|gif|svg)$/,
             type: 'asset/inline',
           },
           {
