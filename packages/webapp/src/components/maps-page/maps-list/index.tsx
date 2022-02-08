@@ -36,8 +36,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { AddLabelButton } from './add-label-button';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
-// Load fromNow pluggin
+dayjs.extend(LocalizedFormat)
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {

@@ -96,7 +96,7 @@ class MockClient implements Client {
                 12,
                 false,
                 'El Mapa3',
-                [label2, label3],
+                [label2, label3], 
                 'Paulo3',
                 '2008-06-02T00:00:00Z',
                 'Berna',
@@ -109,6 +109,7 @@ class MockClient implements Client {
 
         this.labels = [label1, label2, label3];
     }
+    
     fetchMindmap(id: number): Mindmap {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(`
@@ -254,6 +255,7 @@ class MockClient implements Client {
             });
         }
     }
+
     fetchHistory(id: number): Promise<ChangeHistory[]> {
         console.log(`Fetching history for ${id}`);
         const result = [

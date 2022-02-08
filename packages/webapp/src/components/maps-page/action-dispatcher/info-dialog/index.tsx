@@ -12,6 +12,12 @@ import Card from '@mui/material/Card';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+
+
+// Load fromNow pluggin
+dayjs.extend(LocalizedFormat)
+
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);
@@ -99,7 +105,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
                                 :
                             </Typography>
                             <Typography variant="body2">
-                                {dayjs(map?.creationTime).format('lll')}
+                                {dayjs(map?.creationTime).format('LLL')}
                             </Typography>
                         </ListItem>
 
@@ -131,7 +137,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
                                 :
                             </Typography>
                             <Typography variant="body2">
-                                {dayjs(map?.lastModificationTime).format('lll')}
+                                {dayjs(map?.lastModificationTime).format('LLL')}
                             </Typography>
                         </ListItem>
 
