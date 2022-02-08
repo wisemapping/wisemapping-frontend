@@ -27,6 +27,7 @@ div#footer-logo {
 
 #floating-panel {
     bottom: 80px;
+    align-items: stretch;
 }
 
 div#mindplot {
