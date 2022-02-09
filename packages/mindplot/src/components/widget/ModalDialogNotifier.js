@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -51,4 +51,5 @@ class ModalDialogNotifier {
 const dialogNotifier = new ModalDialogNotifier();
 const $notifyModal = dialogNotifier.show.bind(dialogNotifier);
 
-export default { $notifyModal };
+// eslint-disable-next-line import/prefer-default-export
+export { $notifyModal };

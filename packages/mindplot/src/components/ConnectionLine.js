@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -20,7 +20,7 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import {
   Point, CurvedLine, PolyLine, Line,
 } from '@wisemapping/web2d';
-import INodeModel, { TopicShape } from './model/INodeModel';
+import { TopicShape } from './model/INodeModel';
 import TopicConfig from './TopicConfig';
 
 class ConnectionLine {
@@ -34,7 +34,7 @@ class ConnectionLine {
 
     let line;
     const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
-    if (targetNode.getType() === INodeModel.CENTRAL_TOPIC_TYPE) {
+    if (targetNode.getType() === 'CentralTopic') {
       line = this._createLine(lineType, ConnectionLine.CURVED);
       line.setSrcControlPoint(ctrlPoints[0]);
       line.setDestControlPoint(ctrlPoints[1]);

@@ -1,0 +1,14 @@
+{
+    "editor.try-welcome": {
+        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
+    },
+    "editor.try-welcome-description": {
+        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
+    },
+    "login.signup": {
+        "defaultMessage": "S'inscrire"
+    },
+    "action.share": {
+        "defaultMessage": "Partager"
+    }
+}

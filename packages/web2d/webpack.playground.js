@@ -17,9 +17,10 @@ module.exports = {
     group: './test/playground/group.js',
     prototype: './test/playground/prototype.js',
     text: './test/playground/text.js',
+    image: './test/playground/image.js',
   },
   output: {
-    path: path.resolve(__dirname, 'dist', 'tests'),
+    path: path.resolve(__dirname, 'test/playground/dist'),
     filename: '[name].js',
     publicPath: '/',
   },
@@ -35,9 +36,11 @@ module.exports = {
       {
         use: 'babel-loader',
         test: /.js$/,
-        exclude: [
-          /node_modules/,
-        ],
+        exclude: [/node_modules/],
+      },
+      {
+        test: /\.(png|svg)$/i,
+        type: 'asset/inline',
       },
     ],
   },
@@ -50,100 +53,77 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({
-      patterns: [
-        { from: 'test/playground/styles.css', to: 'styles.css' },
-      ],
+      patterns: [{ from: 'test/playground/styles.css', to: 'styles.css' }],
     }),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['index'],
-        filename: 'index.html',
-        template: 'test/playground/index.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['arrow'],
-        filename: 'arrow.html',
-        template: 'test/playground/arrow.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['curvedLine'],
-        filename: 'curvedLine.html',
-        template: 'test/playground/curvedLine.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['events'],
-        filename: 'events.html',
-        template: 'test/playground/events.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['font'],
-        filename: 'font.html',
-        template: 'test/playground/font.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['rect'],
-        filename: 'rect.html',
-        template: 'test/playground/rect.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['line'],
-        filename: 'line.html',
-        template: 'test/playground/line.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['workspace'],
-        filename: 'workspace.html',
-        template: 'test/playground/workspace.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['polyLine'],
-        filename: 'polyLine.html',
-        template: 'test/playground/polyLine.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['shapes'],
-        filename: 'shapes.html',
-        template: 'test/playground/shapes.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['group'],
-        filename: 'group.html',
-        template: 'test/playground/group.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['prototype'],
-        filename: 'prototype.html',
-        template: 'test/playground/prototype.html',
-      },
-    ),
-    new HtmlWebpackPlugin(
-      {
-        chunks: ['text'],
-        filename: 'text.html',
-        template: 'test/playground/text.html',
-      },
-    ),
+    new HtmlWebpackPlugin({
+      chunks: ['index'],
+      filename: 'index.html',
+      template: 'test/playground/index.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['arrow'],
+      filename: 'arrow.html',
+      template: 'test/playground/arrow.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['curvedLine'],
+      filename: 'curvedLine.html',
+      template: 'test/playground/curvedLine.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['events'],
+      filename: 'events.html',
+      template: 'test/playground/events.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['font'],
+      filename: 'font.html',
+      template: 'test/playground/font.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['rect'],
+      filename: 'rect.html',
+      template: 'test/playground/rect.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['line'],
+      filename: 'line.html',
+      template: 'test/playground/line.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['workspace'],
+      filename: 'workspace.html',
+      template: 'test/playground/workspace.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['polyLine'],
+      filename: 'polyLine.html',
+      template: 'test/playground/polyLine.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['shapes'],
+      filename: 'shapes.html',
+      template: 'test/playground/shapes.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['group'],
+      filename: 'group.html',
+      template: 'test/playground/group.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['prototype'],
+      filename: 'prototype.html',
+      template: 'test/playground/prototype.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['text'],
+      filename: 'text.html',
+      template: 'test/playground/text.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['image'],
+      filename: 'image.html',
+      template: 'test/playground/image.html',
+    }),
   ],
 };

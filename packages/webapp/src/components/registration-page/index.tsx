@@ -14,8 +14,8 @@ import { activeInstance } from '../../redux/clientSlice';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
-import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
 import AppConfig from '../../classes/app-config';
 
 export type Model = {
@@ -125,7 +125,7 @@ const RegistrationForm = () => {
                         error={error}
                     />
 
-                    { AppConfig.isRecaptcha2Enabled() && 
+                    {AppConfig.isRecaptcha2Enabled() &&
                         <div style={{ width: '330px', padding: '5px 0px 5px 20px' }}>
                             <ReCAPTCHA
                                 ref={el => setCaptcha(el)}
@@ -157,8 +157,13 @@ const RegistrationForm = () => {
 };
 
 const RegistationPage = (): React.ReactElement => {
+    const intl = useIntl();
+
     useEffect(() => {
-        document.title = 'Registration | WiseMapping';
+        document.title = intl.formatMessage({
+            id: 'registration.title',
+            defaultMessage: 'Registration | WiseMapping',
+        });
     });
 
     return (

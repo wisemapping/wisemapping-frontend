@@ -1,0 +1,1 @@
+../packages/mindplot/dist/loader.js

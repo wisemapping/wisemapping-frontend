@@ -1,12 +1,25 @@
-  {
-    "compilerOptions": {
-      "outDir": "./dist/",
-     "sourceMap": true,
-      "noImplicitAny": true,
-      "module": "commonjs",
-      "target": "es5",
-      "jsx": "react",
-      "allowJs": true, 
-"esModuleInterop": true
-    }
-  }
+{
+  "include": [
+    "src/**/*"
+  ],
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "amd",
+    "moduleResolution": "node",
+    "strict": false,
+    "target": "es6",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "rootDirs": [
+      "src",
+    ],
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

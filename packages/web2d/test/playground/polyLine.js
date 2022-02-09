@@ -1,10 +1,9 @@
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, PolyLine,
+  Workspace, PolyLine,
 } from '../../src';
 
 global.$ = $;
-Toolkit.init();
 
 let overflowWorkspace = new Workspace({ fillColor: 'green' });
 overflowWorkspace.setSize('100px', '100px');

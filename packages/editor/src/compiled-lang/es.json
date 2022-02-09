@@ -1,0 +1,26 @@
+{
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Compartir"
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "¡Este espacio de edición muestra algunas de las capacidades del editor de mapas mentales!"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "Crear cuenta"
+    }
+  ]
+}

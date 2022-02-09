@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -21,11 +21,11 @@ import ToolbarPaneItem from './ToolbarPaneItem';
 import { buildHtml, css } from './ColorPaletteHtml';
 
 // rgbToHex implementation from https://stackoverflow.com/a/3627747/58128
-export const rgb2hex = (rgb) => `#${
-  rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
-    .slice(1)
-    .map((n) => parseInt(n, 10)
-      .toString(16).padStart(2, '0')).join('')}`;
+export const rgb2hex = (rgb) => `#${rgb
+  .match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+  .slice(1)
+  .map((n) => parseInt(n, 10).toString(16).padStart(2, '0'))
+  .join('')}`;
 
 class ColorPalettePanel extends ToolbarPaneItem {
   constructor(buttonId, model, baseUrl) {
@@ -38,10 +38,7 @@ class ColorPalettePanel extends ToolbarPaneItem {
   _load() {
     if (!ColorPalettePanel._panelContent) {
       // Load all the CSS styles ...
-      $('<style>')
-        .append(css)
-        .appendTo($('head'))
-        .attr({ type: 'text/css' });
+      $('<style>').append(css).appendTo($('head')).attr({ type: 'text/css' });
 
       ColorPalettePanel._panelContent = buildHtml();
     }

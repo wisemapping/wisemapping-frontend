@@ -1,8 +1,8 @@
 import React from 'react';
-import Popover from '@material-ui/core/Popover';
-import Button from '@material-ui/core/Button';
-import Tooltip from '@material-ui/core/Tooltip';
-import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
+import Popover from '@mui/material/Popover';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Label } from '../../../../classes/client';
 import { LabelSelector } from '../label-selector';

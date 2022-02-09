@@ -8,16 +8,16 @@ import BaseDialog from '../base-dialog';
 import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
 
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import TabContext from '@material-ui/lab/TabContext';
-import AppBar from '@material-ui/core/AppBar';
-import TabList from '@material-ui/lab/TabList';
-import Tab from '@material-ui/core/Tab';
-import TabPanel from '@material-ui/lab/TabPanel';
-import Typography from '@material-ui/core/Typography';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import TabContext from '@mui/lab/TabContext';
+import AppBar from '@mui/material/AppBar';
+import TabList from '@mui/lab/TabList';
+import Tab from '@mui/material/Tab';
+import TabPanel from '@mui/lab/TabPanel';
+import Typography from '@mui/material/Typography';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);
@@ -129,7 +129,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                 className={classes.textarea}
                                 readOnly={true}
                                 spellCheck={false}
-                                rowsMax={6}
+                                maxRows={6}
                                 defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
                             />
                         </TabPanel>
@@ -144,7 +144,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                 className={classes.textarea}
                                 readOnly={true}
                                 spellCheck={false}
-                                rowsMax={1}
+                                maxRows={1}
                                 defaultValue={`https://app.wisemapping.com/c/maps/${mapId}/public`}
                             />
                         </TabPanel>

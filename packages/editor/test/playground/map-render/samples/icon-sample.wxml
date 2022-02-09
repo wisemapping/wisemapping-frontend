@@ -1,0 +1,58 @@
+<map name="Icons Sample" version="tango">
+    <topic central="true" text="Icons Positioning" id="1" fontStyle=";10;#ffffff;;;">
+        <icon id="sign_info"/>
+        <icon id="face_wink"/>
+        <icon id="funy_monkey"/>
+        <icon id="hard_keyboard"/>
+        <topic position="227,0" order="0" text="Icons Ordered" id="30">
+            <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
+            <icon id="hard_printer"/>
+            <note><![CDATA[Icons must be rendered first.]]></note>
+            <icon id="funy_glasses"/>
+            <icon id="onoff_status_online"/>
+        </topic>
+        <topic position="-193,0" order="1" text="Icon Position" shape="line" id="11" fontStyle=";;#525c61;;;" bgColor="#250be3" brColor="#080559">
+            <icon id="face_smile"/>
+            <topic position="-318,-99" order="0" text="Different Fonts Size" id="12" fontStyle=";;#525c61;;italic;">
+                <topic position="-419,-172" order="0" text="Small" id="61" fontStyle=";;#525c61;;italic;">
+                    <icon id="funy_glasses"/>
+                </topic>
+                <topic position="-429,-138" order="1" text="Normal" id="62" fontStyle=";8;#525c61;;italic;">
+                    <icon id="funy_glasses"/>
+                </topic>
+                <topic position="-435,-96" order="2" text="Large" id="63" fontStyle=";10;#525c61;;italic;">
+                    <icon id="funy_glasses"/>
+                </topic>
+                <topic position="-450,-42" order="3" text="Huge" id="64" fontStyle=";15;#525c61;;italic;">
+                    <icon id="funy_glasses"/>
+                </topic>
+            </topic>
+            <topic position="-297,27" order="1" text="Font Text" id="13">
+                <topic position="-385,5" order="0" id="69">
+                    <icon id="funy_devilish"/>
+                </topic>
+                <topic position="-383,42" order="1" id="70">
+                    <text><![CDATA[Multi-line
+Line 1
+Line 2]]></text>
+                    <icon id="funy_devilish"/>
+                </topic>
+            </topic>
+            <topic position="-312,126" order="2" text="Different Shapes" id="14" fontStyle=";;#525c61;;italic;">
+                <topic position="-407,80" order="0" text="Circle" shape="elipse" id="71" fontStyle=";;#525c61;;italic;">
+                    <icon id="face_smile"/>
+                </topic>
+                <topic position="-404,111" order="1" text="Line" id="72" fontStyle=";;#525c61;;italic;">
+                    <icon id="face_smile"/>
+                </topic>
+                <topic position="-404,142" order="2" text="Box" shape="rectagle" id="73" fontStyle=";;#525c61;;italic;">
+                    <icon id="funy_angel"/>
+                </topic>
+                <topic position="-418,173" order="3" text="Round Box" shape="rounded rectagle" id="74" fontStyle=";;#525c61;;italic;">
+                    <icon id="face_wink"/>
+                </topic>
+            </topic>
+        </topic>
+    </topic>
+    <relationship srcTopicId="30" destTopicId="11" lineType="3" srcCtrlPoint="-80,-56" destCtrlPoint="110,-116" endArrow="false" startArrow="true"/>
+</map>

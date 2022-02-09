@@ -7,9 +7,9 @@ import SubmitButton from '../form/submit-button';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import FormContainer from '../layout/form-container';
-import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import Link from '@material-ui/core/Link';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import Link from '@mui/material/Link';
 
 type ConfigStatusProps = {
     enabled?: boolean;

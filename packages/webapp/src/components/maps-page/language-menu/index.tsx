@@ -1,4 +1,4 @@
-import TranslateTwoTone from '@material-ui/icons/TranslateTwoTone';
+import TranslateTwoTone from '@mui/icons-material/TranslateTwoTone';
 import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import Client from '../../../classes/client';
@@ -6,16 +6,16 @@ import { useSelector } from 'react-redux';
 import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { LocaleCode, Locales } from '../../../classes/app-i18n';
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import Divider from '@material-ui/core/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import Divider from '@mui/material/Divider';
 
 const LanguageMenu = (): React.ReactElement => {
     const queryClient = useQueryClient();
@@ -76,7 +76,6 @@ const LanguageMenu = (): React.ReactElement => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={open}
-                getContentAnchorEl={null}
                 onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',

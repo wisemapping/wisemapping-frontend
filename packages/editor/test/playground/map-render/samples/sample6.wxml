@@ -1,0 +1,69 @@
+<map name="73199" version="tango">
+    <topic central="true" text="Causas" id="1">
+        <icon id="weather_showers-scattered"/>
+        <topic position="151,-103" order="0" text="Problemas para Comitear" id="29"/>
+        <topic position="-143,-60" order="1" text="Error de estimación" id="3">
+            <icon id="time_hourglass"/>
+            <topic position="-261,-77" order="0" text="Causa" id="8">
+                <icon id="face_smile"/>
+                <topic position="-354,-94" order="0" id="9">
+                    <text><![CDATA[Falta de analisis 
+antes del kick off]]></text>
+                </topic>
+                <topic position="-368,-60" order="1" id="14">
+                    <text><![CDATA[Story points relativos y 
+no en dias]]></text>
+                </topic>
+            </topic>
+            <topic position="-264,-22" order="1" text="Aciones" id="10">
+                <icon id="funy_grin"/>
+                <topic position="-368,-26" order="0" id="11">
+                    <text><![CDATA[Hacer analisis previo 
+con los Srs ]]></text>
+                </topic>
+            </topic>
+        </topic>
+        <topic position="128,-10" order="2" id="2">
+            <text><![CDATA[Problemas 
+de Infrastructura ]]></text>
+            <topic position="232,-23" order="0" text="Causas" id="21">
+                <icon id="face_smile"/>
+                <topic position="323,-62" order="0" text="Errores de ADE" id="22">
+                    <topic position="438,-75" order="0" text="Falla por bugs de ADE" id="23"/>
+                    <topic position="443,-49" order="1" text="Fallas por bug de Bridge" id="24"/>
+                </topic>
+                <topic position="317,-10" order="1" text="Compilacion" id="25">
+                    <topic position="389,-23" order="0" text="GIT" id="27"/>
+                    <topic position="390,3" order="1" text="ADE" id="28"/>
+                </topic>
+                <topic position="315,29" order="2" text="Instalacion" id="26"/>
+            </topic>
+            <topic position="224,55" order="1" text="Action" id="33">
+                <topic position="322,55" order="0" text="Soportar multiples WC" id="35"/>
+            </topic>
+        </topic>
+        <topic position="-121,51" order="3" text="Interrupciones" id="15">
+            <topic position="-219,34" order="0" text="Causas" id="17">
+                <icon id="face_crying"/>
+                <topic position="-318,8" order="0" id="18">
+                    <text><![CDATA[Consultas de otros 
+equipos]]></text>
+                </topic>
+                <topic position="-297,38" order="1" text="Meetings" id="19"/>
+                <topic position="-330,64" order="2" text="Cambio de foco por bugs" id="20"/>
+            </topic>
+            <topic position="-220,98" order="1" text="Aciones" id="30">
+                <icon id="funy_grin"/>
+                <topic position="-336,94" order="0" id="31">
+                    <text><![CDATA[Documentar por un par de 
+iteraciones al detalle]]></text>
+                </topic>
+            </topic>
+        </topic>
+        <topic position="140,93" order="4" id="12">
+            <text><![CDATA[Falta de trabajo en 
+equipo para features 
+compartidos]]></text>
+        </topic>
+    </topic>
+</map>

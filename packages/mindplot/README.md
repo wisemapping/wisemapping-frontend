@@ -1,6 +1,6 @@
-# `Mindplot`
+# WiseMapping Mindplot
 
-> Mindplot is the mindmap designer core
+WiseMapping Mindplot module is the core mind map rerendering of WiseMapping. This lighway library allows eithe edition and visualization of saves mindmaps. 
 
 ## Usage
 

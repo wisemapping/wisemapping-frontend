@@ -2,16 +2,21 @@ import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
 import { useStyles } from './style';
-import Alert from '@material-ui/lab/Alert';
+import Alert from '@mui/material/Alert';
 import { fetchMapById } from '../../../../redux/clientSlice';
-import FormControl from '@material-ui/core/FormControl';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap } from '@wisemapping/mindplot';
+import Client from '../../../../classes/client';
+import { activeInstance } from '../../../../redux/clientSlice';
 
-type ExportFormat = 'pdf' | 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'txt';
+import { useSelector } from 'react-redux';
+
+type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -24,15 +29,13 @@ type ExportDialogProps = {
 const ExportDialog = ({
     mapId,
     onClose,
-    enableImgExport,
-    svgXml,
+    enableImgExport
 }: ExportDialogProps): React.ReactElement => {
     const intl = useIntl();
     const [submit, setSubmit] = React.useState<boolean>(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [formExportRef, setExportFormRef] = React.useState<any>();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [formTransformtRef, setTransformFormRef] = React.useState<any>();
+    const { map } = fetchMapById(mapId);
+    const client: Client = useSelector(activeInstance);
+
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
         enableImgExport ? 'image' : 'document'
     );
@@ -52,7 +55,7 @@ const ExportDialog = ({
         let defaultFormat: ExportFormat;
         switch (value) {
             case 'document':
-                defaultFormat = 'pdf';
+                defaultFormat = 'txt';
                 break;
             case 'image':
                 defaultFormat = 'svg';
@@ -72,24 +75,68 @@ const ExportDialog = ({
         setSubmit(true);
     };
 
+    const exporter = (formatType: ExportFormat): Promise<string> => {
+        let svgElement: Element | null = null;
+        let size;
+        let mindmap: Mindmap;
+
+        const designer: Designer = global.designer;
+        if (designer != null) {
+            // Depending on the type of export. It will require differt POST.
+            const workspace = designer.getWorkSpace();
+            svgElement = workspace.getSVGElement();
+            size = workspace.getSize();
+            mindmap = designer.getMindmap();
+        } else {
+            mindmap = client.fetchMindmap(mapId);
+        }
+
+        let exporter: Exporter;
+        switch (formatType) {
+            case 'png':
+            case 'jpg':
+            case 'svg': {
+                exporter = ImageExporterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
+                break;
+            }
+            case 'wxml':
+            case 'md':
+            case 'txt': {
+                exporter = TextExporterFactory.create(formatType, mindmap);
+                break;
+            }
+            default:
+                throw new Error('Unsupported encoding');
+        }
+
+        return exporter.exportAndEncode();
+    };
+
     useEffect(() => {
         if (submit) {
-            // Depending on the type of export. It will require differt POST.
-            if (
-                exportFormat == 'pdf' ||
-                exportFormat == 'svg' ||
-                exportFormat == 'jpg' ||
-                exportFormat == 'png'
-            ) {
-                formTransformtRef?.submit();
-            } else {
-                formExportRef?.submit();
-            }
+            exporter(exportFormat)
+                .then((url: string) => {
+                    // Create hidden anchor to force download ...
+                    const anchor: HTMLAnchorElement = document.createElement('a');
+                    anchor.style.display = 'display: none';
+                    anchor.download = `${map?.title}.${exportFormat}`;
+                    anchor.href = url;
+                    document.body.appendChild(anchor);
+
+                    // Trigger click ...
+                    anchor.click();
+
+                    // Clean up ...
+                    URL.revokeObjectURL(url);
+                    document.body.removeChild(anchor);
+                }).catch((fail) => {
+                    console.log("Unexpected error during export:" + fail);
+                });
+
             onClose();
         }
     }, [submit]);
 
-    const { map } = fetchMapById(mapId);
     return (
         <div>
             <BaseDialog
@@ -99,13 +146,15 @@ const ExportDialog = ({
                 description={intl.formatMessage({ id: 'export.desc', defaultMessage: 'Export this map in the format that you want and start using it in your presentations or sharing by email' })}
                 submitButton={intl.formatMessage({ id: 'export.title', defaultMessage: 'Export' })}
             >
-                <Alert severity="info">
-                    <FormattedMessage
-                        id="export.warning"
-                        defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar."
-                    />
-                </Alert>
-
+                {
+                    !enableImgExport &&
+                    <Alert severity="info">
+                        <FormattedMessage
+                            id="export.warning"
+                            defaultMessage="Exporting to Image (SVG,PNG,JPEG,PDF) is only available  in the editor toolbar."
+                        />
+                    </Alert>
+                }
                 <FormControl component="fieldset">
                     <RadioGroup name="export" value={exportGroup} onChange={handleOnGroupChange}>
                         <FormControl>
@@ -124,16 +173,13 @@ const ExportDialog = ({
                             />
                             {exportGroup == 'image' && (
                                 <Select
-                                    onSelect={handleOnExportFormatChange}
+                                    onChange={handleOnExportFormatChange}
                                     variant="outlined"
                                     value={exportFormat}
                                     className={classes.label}
                                 >
                                     <MenuItem value="svg" className={classes.menu}>
                                         Scalable Vector Graphics (SVG)
-                                    </MenuItem>
-                                    <MenuItem value="pdf" className={classes.select}>
-                                        Portable Document Format (PDF)
                                     </MenuItem>
                                     <MenuItem value="png" className={classes.menu}>
                                         Portable Network Graphics (PNG)
@@ -169,6 +215,9 @@ const ExportDialog = ({
                                     </MenuItem>
                                     <MenuItem className={classes.select} value="txt">
                                         Plain Text File (TXT)
+                                    </MenuItem>
+                                    <MenuItem className={classes.select} value="md">
+                                        Markdown (MD)
                                     </MenuItem>
                                 </Select>
                             )}
@@ -208,26 +257,6 @@ const ExportDialog = ({
                     </RadioGroup>
                 </FormControl>
             </BaseDialog>
-
-            {/* Hidden form for the purpose of summit */}
-            <form
-                action={`/c/restful/maps/${mapId}.${exportFormat}`}
-                ref={setExportFormRef}
-                method="GET"
-            >
-                <input name="download" type="hidden" value={exportFormat} />
-                <input name="filename" type="hidden" value={map?.title} />
-            </form>
-
-            <form
-                action={`/c/restful/transform.${exportFormat}`}
-                ref={setTransformFormRef}
-                method="POST"
-            >
-                <input name="download" type="hidden" value={exportFormat} />
-                <input name="filename" type="hidden" value={map?.title} />
-                <input name="svgXml" id="svgXml" value={svgXml} type="hidden" />
-            </form>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 {
+    "parser": "@typescript-eslint/parser",
     "env": {
         "browser": true,
         "commonjs": true,
@@ -6,7 +7,9 @@
     },
     "extends": [
         "airbnb-base",
-        "plugin:cypress/recommended"
+        "plugin:cypress/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 11
@@ -15,21 +18,45 @@
         // designer is a global currently used as a hack. Remove this when fixing the hack.
         "designer": true
     },
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "rules": {
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
-        "max-len": [1,300],
+        "max-len": [
+            1,
+            300
+        ],
         "class-methods-use-this": "off",
-        "no-console" : "off",
-        "no-unused-vars": ["error", { "args": "none" }]
-
+        "no-console": "off",
+        // codebase contains many this aliases, fix in the future?
+        "@typescript-eslint/no-this-alias": "off",
+        // Remove once migration is completed ...
+        "@typescript-eslint/no-explicit-any": "warn",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
     },
     "settings": {
-		    "import/resolver": {
-			    "webpack": {
-				    "config": "./webpack.common.js"
-			    }
-		    }
-	  }
+        "import/resolver": {
+            "webpack": {
+                "config": "./webpack.common.js"
+            },
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts"
+                ]
+            }
+        }
+    }
 }

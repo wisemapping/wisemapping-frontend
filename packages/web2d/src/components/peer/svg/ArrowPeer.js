@@ -104,7 +104,7 @@ class ArrowPeer extends ElementPeer {
       yp = x3 === 0 ? l * Math.sign(y3) : mp * xp;
 
       const path = `M${this._fromPoint.x},${this._fromPoint.y} `
-        + `L${x + this._fromPoint.x},${y + this._fromPoint.y}M${this._fromPoint.x},${this._fromPoint.y
+        + `L${x + this._fromPoint.x},${y + this._fromPoint.y} M${this._fromPoint.x},${this._fromPoint.y
         } `
         + `L${xp + this._fromPoint.x},${yp + this._fromPoint.y}`;
       this._native.setAttribute('d', path);

@@ -1,6 +1,6 @@
-import createMuiTheme from '@material-ui/core/styles/createTheme';
+import { adaptV4Theme, createTheme } from '@mui/material/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme(adaptV4Theme({
     overrides: {
         MuiCssBaseline: {
             '@global': {
@@ -39,8 +39,7 @@ const theme = createMuiTheme({
                 whiteSpace: 'nowrap',
                 textTransform: 'none',
                 borderRadius: '9px',
-                padding: '6px 54px 6px 54px',
-                width: '136px',
+                padding: '6px 20px 6px 20px'
             },
             containedPrimary: {
                 color: 'white',
@@ -75,6 +74,6 @@ const theme = createMuiTheme({
             contrastText: '#FFFFFF',
         },
     },
-});
+}));
 
 export { theme };

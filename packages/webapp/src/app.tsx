@@ -12,9 +12,17 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { theme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
 import MapsPage from './components/maps-page';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
 import GoogleAnalytics from 'react-ga';
+import EditorPage from './components/editor-page';
+
+
+declare module '@mui/styles/defaultTheme' {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme { }
+}
+
 
 // Google Analytics Initialization.
 GoogleAnalytics.initialize('UA-0000000-0');
@@ -32,6 +40,10 @@ const App = (): ReactElement => {
     const appi18n = new AppI18n();
     const locale = appi18n.getBrowserLocale();
 
+    // global variables set server-side
+    const istTryMode = global.memoryPersistence;
+    const mapId = parseInt(global.mapId, 10);
+
     return locale.message ? (
         <Provider store={store}>
             <QueryClientProvider client={queryClient}>
@@ -40,34 +52,47 @@ const App = (): ReactElement => {
                     defaultLocale={Locales.EN.code}
                     messages={locale.message as Record<string, string>}
                 >
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline />
-                        <Router>
-                            <Switch>
-                                <Route exact path="/">
-                                    <Redirect to="/c/login" />
-                                </Route>
-                                <Route path="/c/login" component={LoginPage} />
-                                <Route path="/c/registration">
-                                    <RegistationPage />
-                                </Route>
-                                <Route
-                                    path="/c/registration-success"
-                                    component={RegistrationSuccessPage}
-                                />
-                                <Route path="/c/forgot-password">
-                                    <ForgotPasswordPage />
-                                </Route>
-                                <Route
-                                    path="/c/forgot-password-success"
-                                    component={ForgotPasswordSuccessPage}
-                                />
-                                <Route path="/c/maps/">
-                                    <MapsPage />
-                                </Route>
-                            </Switch>
-                        </Router>
-                    </ThemeProvider>
+                    <StyledEngineProvider injectFirst>
+                        <ThemeProvider theme={theme}>
+                            <CssBaseline />
+                            <Router>
+                                <Switch>
+                                    <Route exact path="/">
+                                        <Redirect to="/c/login" />
+                                    </Route>
+                                    <Route path="/c/login"
+                                        component={LoginPage}
+                                    />
+                                    <Route
+                                        path="/c/registration"
+                                        component={RegistationPage}
+                                    />
+                                    <Route
+                                        path="/c/registration-success"
+                                        component={RegistrationSuccessPage}
+                                    />
+                                    <Route
+                                        path="/c/forgot-password"
+                                        component={ForgotPasswordPage}
+                                    />
+                                    <Route
+                                        path="/c/forgot-password-success"
+                                        component={ForgotPasswordSuccessPage}
+                                    />
+                                    <Route
+                                        exact path="/c/maps/"
+                                        component={MapsPage}
+                                    />
+                                    <Route exact path="/c/maps/:id/edit">
+                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
+                                    </Route>
+                                    <Route exact path="/c/maps/:id/try">
+                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
+                                    </Route>
+                                </Switch>
+                            </Router>
+                        </ThemeProvider>
+                    </StyledEngineProvider>
                 </IntlProvider>
             </QueryClientProvider>
         </Provider>

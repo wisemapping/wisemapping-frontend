@@ -11,33 +11,34 @@ import dayjs from 'dayjs';
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Link from '@material-ui/core/Link';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+import InputBase from '@mui/material/InputBase';
+import Link from '@mui/material/Link';
 
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
-import SearchIcon from '@material-ui/icons/Search';
+import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { AddLabelButton } from './add-label-button';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
-// Load fromNow pluggin
+dayjs.extend(LocalizedFormat)
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -236,7 +237,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
     const classes = useStyles();
-    const [order, setOrder] = React.useState<Order>('asc');
+    const [order, setOrder] = React.useState<Order>('desc');
     const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
 
     const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
@@ -475,7 +476,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                     <TableCell colSpan={6} style={{ textAlign: 'center' }}>
                                         <FormattedMessage
                                             id="maps.empty-result"
-                                            defaultMessage="No matching record found with the current filter criteria."
+                                            defaultMessage="No matching mindmap found with the current filter criteria."
                                         />
                                     </TableCell>
                                 </TableRow>

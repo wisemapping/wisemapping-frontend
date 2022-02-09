@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 // quick hand-made version of $.css()
 export const getStyle = (elem, prop) => {
   const result = window.getComputedStyle(elem)[prop];

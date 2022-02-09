@@ -16,21 +16,6 @@
  *   limitations under the License.
  */
 
-export const innerXML = function (node) {
-    //	summary:
-    //		Implementation of MS's innerXML function.
-    if ($defined(node.innerXML)) {
-        return node.innerXML;
-        //	string
-    } else if ($defined(node.xml)) {
-        return node.xml;
-        //	string
-    } else if ($defined(XMLSerializer)) {
-        return new XMLSerializer().serializeToString(node);
-        //	string
-    }
-};
-
 /**
  * Cross-browser implementation of creating an XML document object.
  */
@@ -61,7 +46,7 @@ export const createDocument = function () {
  obj - object to inspect
  */
 
- export const $defined = function (obj) {
+export const $defined = function (obj) {
     return obj != undefined;
 };
 

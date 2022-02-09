@@ -31,22 +31,23 @@ class RectPeer extends ElementPeer {
 
   setPosition(x, y) {
     if ($defined(x)) {
-      this._native.setAttribute('x', parseInt(x, 10));
+      this._native.setAttribute('x', Number.parseFloat(x, 10));
     }
     if ($defined(y)) {
-      this._native.setAttribute('y', parseInt(y, 10));
+      this._native.setAttribute('y', Number.parseFloat(y, 10));
     }
   }
 
   getPosition() {
     const x = this._native.getAttribute('x');
     const y = this._native.getAttribute('y');
-    return { x: parseInt(x, 10), y: parseInt(y, 10) };
+    return { x: Number.parseFloat(x, 10), y: Number.parseFloat(y, 10) };
   }
 
   setSize(width, height) {
     super.setSize(width, height);
     const min = width < height ? width : height;
+
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;

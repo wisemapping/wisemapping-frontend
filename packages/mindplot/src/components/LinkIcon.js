@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -19,7 +19,7 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import Icon from './Icon';
 import LinkIconTooltip from './widget/LinkIconTooltip';
-import LinksImage from '../../assets/images/links.png';
+import LinksImage from '../../assets/icons/links.svg';
 
 class LinkIcon extends Icon {
   constructor(topic, linkModel, readOnly) {

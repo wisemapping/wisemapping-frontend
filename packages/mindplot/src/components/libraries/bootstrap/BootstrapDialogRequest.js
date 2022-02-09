@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -49,7 +49,10 @@ class BootstrapDialogRequest extends BootstrapDialog {
 
     this._native.find('.modal-body').load(url, () => {
       me.acceptButton.unbind('click').click(() => {
-        if ($defined(global.submitDialogForm) && typeof (global.submitDialogForm) === 'function') {
+        if (
+          $defined(global.submitDialogForm)
+                    && typeof global.submitDialogForm === 'function'
+        ) {
           global.submitDialogForm();
         }
       });
@@ -61,7 +64,7 @@ class BootstrapDialogRequest extends BootstrapDialog {
   }
 
   onDialogShown() {
-    if ($defined(global.onDialogShown) && typeof (global.onDialogShown) === 'function') {
+    if ($defined(global.onDialogShown) && typeof global.onDialogShown === 'function') {
       global.onDialogShown();
     }
   }

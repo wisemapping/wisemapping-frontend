@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import $ from 'jquery';
 import {
-  Toolkit, Workspace, Elipse,
+  Workspace, Elipse,
 } from '../../src';
 
 global.$ = $;
@@ -55,7 +55,6 @@ MultipleEventHandler.prototype.unRegisterOneListener = function unRegisterOneLis
   }
 };
 
-Toolkit.init();
 
 // Workspace with CoordOrigin(100,100);
 const workspace = new Workspace();

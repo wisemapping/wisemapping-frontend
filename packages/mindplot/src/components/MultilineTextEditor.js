@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -17,9 +17,8 @@
  */
 import { $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
-// TODO: use jquery.hotkeys from npm or setup eslint-import-resolver-alias plugin
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
-import initHotKeyPluggin from '@libraries/jquery.hotkeys';
+
+import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
 
@@ -196,10 +195,10 @@ class MultilineTextEditor extends Events {
 
     // Set Editor Style
     const nodeText = topic.getTextShape();
-    const font = nodeText.getFont();
-    font.size = nodeText.getHtmlFontSize();
-    font.color = nodeText.getColor();
-    this._setStyle(font);
+    const fontStyle = nodeText.getFontStyle();
+    fontStyle.size = nodeText.getHtmlFontSize();
+    fontStyle.color = nodeText.getColor();
+    this._setStyle(fontStyle);
     const me = this;
 
     // Set editor's initial size
@@ -229,8 +228,8 @@ class MultilineTextEditor extends Events {
     const inputField = this._getTextareaElem();
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     /* eslint-disable no-param-reassign */
-    if (!$defined(fontStyle.font)) {
-      fontStyle.font = 'Arial';
+    if (!$defined(fontStyle.fontFamily)) {
+      fontStyle.fontFamily = 'Arial';
     }
     if (!$defined(fontStyle.style)) {
       fontStyle.style = 'normal';
@@ -244,7 +243,7 @@ class MultilineTextEditor extends Events {
     /* eslint-enable no-param-reassign */
     const style = {
       fontSize: `${fontStyle.size}px`,
-      fontFamily: fontStyle.font,
+      fontFamily: fontStyle.fontFamily,
       fontStyle: fontStyle.style,
       fontWeight: fontStyle.weight,
       color: fontStyle.color,

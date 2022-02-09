@@ -7,7 +7,7 @@ import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from '@mui/material/FormControl';
 
 export type RenameModel = {
     id: number;

@@ -1,5 +1,5 @@
 /*
- *    Copyright [2015] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -20,8 +20,8 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 
 class ToolbarNotifier {
-  constructor() {
-    this.container = $('#headerNotifier');
+  get container() {
+    return $('#headerNotifier');
   }
 
   hide() {
@@ -31,11 +31,10 @@ class ToolbarNotifier {
   logMessage(msg) {
     $assert(msg, 'msg can not be null');
     // In case of print,embedded no message is displayed ....
-    if (this.container && !this.container.data('transitioning')) {
+    if (this.container && this.container.length && !this.container.data('transitioning')) {
       this.container.data('transitioning', true);
       this.container.text(msg);
       this.container.css({
-        top: '5px',
         left: ($(window).width() - this.container.width()) / 2 - 9,
       });
       this.container.show().fadeOut(5000);
