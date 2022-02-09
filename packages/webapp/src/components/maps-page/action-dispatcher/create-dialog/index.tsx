@@ -86,6 +86,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         onChange={handleOnChange}
                         error={error}
                         fullWidth={true}
+                        maxLength={60}
                     />
 
                     <Input
@@ -99,6 +100,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         onChange={handleOnChange}
                         required={false}
                         fullWidth={true}
+                        rows={3}
                     />
                 </FormControl>
             </BaseDialog>
