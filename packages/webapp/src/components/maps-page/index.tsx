@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider, IntlShape, useIntl } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
@@ -77,7 +77,6 @@ const MapsPage = (): ReactElement => {
     }, cache)
 
     useEffect(() => {
-
         document.title = intl.formatMessage({
             id: 'maps.page-title',
             defaultMessage: 'My Maps | WiseMapping',
@@ -85,7 +84,10 @@ const MapsPage = (): ReactElement => {
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
-        onSuccess: () => queryClient.invalidateQueries('labels'),
+        onSuccess: () => {
+            queryClient.invalidateQueries('labels');
+            queryClient.invalidateQueries('maps');
+        },
         onError: (error) => {
             console.error(`Unexpected error ${error}`);
         },

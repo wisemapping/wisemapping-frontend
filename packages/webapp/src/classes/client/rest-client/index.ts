@@ -510,10 +510,62 @@ export default class RestClient implements Client {
         return new Promise(handler);
     }
 
+    createLabel(title: string, color: string): Promise<number> {
+        const handler = (success: (labelId: number) => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .post(`${this.baseUrl}/c/restful/labels`, JSON.stringify({ title, color, iconName: 'smile' }), {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then((response) => {
+                    success(response.headers.resourceid);
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
+    }
+
     deleteLabel(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(`${this.baseUrl}/c/restful/label/${id}`)
+                .delete(`${this.baseUrl}/c/restful/labels/${id}`)
+                .then(() => {
+                    success();
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
+    }
+
+    addLabelToMap(labelId: number, mapId: number): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .post(`${this.baseUrl}/c/restful/maps/${mapId}/labels`, JSON.stringify(labelId), {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(() => {
+                    success();
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
+    }
+
+    // TODO: not working (error 500: missing lid param)
+    deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .delete(`${this.baseUrl}/c/restful/maps/${mapId}/labels/${labelId}`, {
+                    data: JSON.stringify(labelId)
+                })
                 .then(() => {
                     success();
                 })

@@ -90,8 +90,20 @@ class CacheDecoratorClient implements Client {
         return this.client.fetchLabels();
     }
 
+    createLabel(title: string, color: string): Promise<number> {
+        return this.client.createLabel(title, color);
+    }
+
     deleteLabel(id: number): Promise<void> {
         return this.client.deleteLabel(id);
+    }
+
+    addLabelToMap(labelId: number, mapId: number): Promise<void> {
+        return this.client.addLabelToMap(labelId, mapId);
+    }
+
+    deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
+        return this.client.deleteLabelFromMap(labelId, mapId);
     }
 
     fetchAccountInfo(): Promise<AccountInfo> {

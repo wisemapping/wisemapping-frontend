@@ -4,15 +4,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Label } from '../../../../classes/client';
+import { Label, MapInfo } from '../../../../classes/client';
 import { LabelSelector } from '../label-selector';
 
 type AddLabelButtonTypes = {
-    onChange?: (label: Label) => void;
+  maps: MapInfo[];
+  onChange: (label: Label, checked: boolean) => void;
 };
 
-export function AddLabelButton({ onChange }: AddLabelButtonTypes): React.ReactElement {
-    console.log(onChange);
+export function AddLabelButton({ onChange, maps }: AddLabelButtonTypes): React.ReactElement {
     const intl = useIntl();
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -29,14 +29,14 @@ export function AddLabelButton({ onChange }: AddLabelButtonTypes): React.ReactEl
     const id = open ? 'add-label-popover' : undefined;
 
     return (
-        <Tooltip
-            arrow={true}
-            title={intl.formatMessage({
-                id: 'map.tooltip-add',
-                defaultMessage: 'Add label to selected',
-            })}
-        >
-            <>
+        <>
+            <Tooltip
+                arrow={true}
+                title={intl.formatMessage({
+                    id: 'map.tooltip-add',
+                    defaultMessage: 'Add label to selected',
+                })}
+            >
                 <Button
                     color="primary"
                     size="medium"
@@ -49,23 +49,24 @@ export function AddLabelButton({ onChange }: AddLabelButtonTypes): React.ReactEl
                 >
                     <FormattedMessage id="action.label" defaultMessage="Add Label" />
                 </Button>
-                <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
-                    }}
-                >
-                    <LabelSelector />
-                </Popover>
-            </>
-        </Tooltip>
+            </Tooltip>
+
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                <LabelSelector onChange={onChange} maps={maps} />
+            </Popover>
+        </>
     );
 }

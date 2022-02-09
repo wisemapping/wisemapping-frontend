@@ -331,7 +331,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             event.stopPropagation();
         };
     };
-    9;
+
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
             const map = mapsInfo.find((m) => m.id == id);
@@ -385,6 +385,58 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         });
     };
 
+    const removeLabelMultation = useMutation<void, ErrorInfo, { mapId: number, labelId: number}, number>(
+        ({ mapId, labelId }) => {
+            return client.deleteLabelFromMap(labelId, mapId);
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('maps');
+            },
+            onError: (error) => {
+                console.error(error);
+            },
+        }
+    );
+
+    const handleRemoveLabel = (mapId: number, labelId: number) => {
+        removeLabelMultation.mutate({ mapId, labelId });
+    };
+
+    const changeLabelMutation = useMutation<void, ErrorInfo, { mapIds: number[], label: Label, checked: boolean }, number>(
+        async ({ mapIds, label, checked }) => {
+            const selectedMaps: MapInfo[] = mapsInfo.filter((m) => mapIds.includes(m.id));
+            if (!label.id) {
+                label.id = await client.createLabel(label.title, label.color);
+            }
+            if (checked){
+                const toAdd = selectedMaps.filter((m) => !m.labels.find((l) => l.id === label.id));
+                await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
+            } else {
+                const toRemove = selectedMaps.filter((m) => m.labels.find((l) => l.id === label.id));
+                await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
+            }
+            return Promise.resolve();
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('maps');
+                queryClient.invalidateQueries('labels');
+            },
+            onError: (error) => {
+                console.error(error);
+            }
+        }
+    );
+
+    const handleChangesInLabels = (label: Label, checked: boolean) => {
+        changeLabelMutation.mutate({
+            mapIds: selected,
+            label,
+            checked
+        });
+    };
+
     const isSelected = (id: number) => selected.indexOf(id) !== -1;
     return (
         <div className={classes.root}>
@@ -419,7 +471,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                        {selected.length > 0 && <AddLabelButton />}
+                        {selected.length > 0 && <AddLabelButton 
+                            onChange={handleChangesInLabels}
+                            maps={mapsInfo.filter(m => isSelected(m.id))} 
+                        />}
                     </div>
 
                     <div className={classes.toolbarListActions}>
@@ -561,7 +616,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                 </TableCell>
 
                                                 <TableCell className={classes.bodyCell}>
-                                                    <LabelsCell labels={row.labels} />
+                                                    <LabelsCell labels={row.labels} onDelete={(lbl) => {
+                                                        handleRemoveLabel(row.id, lbl.id);
+                                                    }} />
                                                 </TableCell>
 
                                                 <TableCell className={classes.bodyCell}>
