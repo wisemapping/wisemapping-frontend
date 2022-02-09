@@ -559,13 +559,10 @@ export default class RestClient implements Client {
         return new Promise(handler);
     }
 
-    // TODO: not working (error 500: missing lid param)
     deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(`${this.baseUrl}/c/restful/maps/${mapId}/labels/${labelId}`, {
-                    data: JSON.stringify(labelId)
-                })
+                .delete(`${this.baseUrl}/c/restful/maps/${mapId}/labels/${labelId}`)
                 .then(() => {
                     success();
                 })
