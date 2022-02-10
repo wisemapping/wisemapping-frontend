@@ -2,7 +2,7 @@ import React, { useEffect, CSSProperties } from 'react';
 
 import { useStyles } from './styled';
 import { useSelector } from 'react-redux';
-import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
@@ -37,6 +37,7 @@ import { AddLabelButton } from './add-label-button';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import AppI18n from '../../../classes/app-i18n';
 
 dayjs.extend(LocalizedFormat)
 dayjs.extend(relativeTime);
@@ -58,9 +59,9 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key
 ): (
-    a: { [key in Key]: number | string | boolean | Label[] | undefined },
-    b: { [key in Key]: number | string | Label[] | boolean }
-) => number {
+        a: { [key in Key]: number | string | boolean | Label[] | undefined },
+        b: { [key in Key]: number | string | Label[] | boolean }
+    ) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -251,10 +252,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     const queryClient = useQueryClient();
 
     // Configure locale ...
-    const account = fetchAccount();
-    if (account) {
-        dayjs.locale(account.locale.code);
-    }
+    const userLocale = AppI18n.getUserLocale();
+    dayjs.locale(userLocale.code);
 
     useEffect(() => {
         setSelected([]);
@@ -385,7 +384,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         });
     };
 
-    const removeLabelMultation = useMutation<void, ErrorInfo, { mapId: number, labelId: number}, number>(
+    const removeLabelMultation = useMutation<void, ErrorInfo, { mapId: number, labelId: number }, number>(
         ({ mapId, labelId }) => {
             return client.deleteLabelFromMap(labelId, mapId);
         },
@@ -409,7 +408,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             if (!label.id) {
                 label.id = await client.createLabel(label.title, label.color);
             }
-            if (checked){
+            if (checked) {
                 const toAdd = selectedMaps.filter((m) => !m.labels.find((l) => l.id === label.id));
                 await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
             } else {
@@ -471,9 +470,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                        {selected.length > 0 && <AddLabelButton 
+                        {selected.length > 0 && <AddLabelButton
                             onChange={handleChangesInLabels}
-                            maps={mapsInfo.filter(m => isSelected(m.id))} 
+                            maps={mapsInfo.filter(m => isSelected(m.id))}
                         />}
                     </div>
 
