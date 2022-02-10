@@ -66,8 +66,7 @@ const MapsPage = (): ReactElement => {
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
 
     // Reload based on user preference ...
-    const appi18n = new AppI18n();
-    const userLocale = appi18n.getUserLocale();
+    const userLocale = AppI18n.getUserLocale();
 
     const cache = createIntlCache();
     const intl = createIntl({

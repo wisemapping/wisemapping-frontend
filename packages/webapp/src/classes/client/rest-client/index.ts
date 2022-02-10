@@ -184,7 +184,7 @@ export default class RestClient implements Client {
                     `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''
                     }`,
                     model.content,
-                    { headers: { 'Content-Type': model.contentType } }
+                    { headers: { 'Content-Type': 'application/xml' } }
                 )
                 .then((response) => {
                     const mapId = response.headers.resourceid;
@@ -214,7 +214,7 @@ export default class RestClient implements Client {
                         lastname: account.lastname ? account.lastname : '',
                         firstname: account.firstname ? account.firstname : '',
                         email: account.email,
-                        locale: locale ? localeFromStr(locale) : Locales.EN,
+                        locale: locale ? localeFromStr(locale) : undefined,
                     });
                 })
                 .catch((error) => {

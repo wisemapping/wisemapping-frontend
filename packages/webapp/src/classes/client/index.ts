@@ -63,7 +63,7 @@ export type AccountInfo = {
     firstname: string;
     lastname: string;
     email: string;
-    locale: Locale;
+    locale?: Locale;
 };
 
 export type Permission = {

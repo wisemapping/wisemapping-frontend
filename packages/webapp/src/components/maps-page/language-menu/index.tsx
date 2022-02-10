@@ -5,7 +5,7 @@ import Client from '../../../classes/client';
 import { useSelector } from 'react-redux';
 import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { LocaleCode, Locales } from '../../../classes/app-i18n';
+import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -49,7 +49,7 @@ const LanguageMenu = (): React.ReactElement => {
         mutation.mutate(localeCode);
     };
 
-    const accountInfo = fetchAccount();
+    const userLocale = AppI18n.getUserLocale();
     return (
         <span>
             <Tooltip
@@ -68,7 +68,7 @@ const LanguageMenu = (): React.ReactElement => {
                     onClick={handleMenu}
                     startIcon={<TranslateTwoTone style={{ color: 'inherit' }} />}
                 >
-                    {accountInfo?.locale?.label}
+                    {userLocale.label}
                 </Button>
             </Tooltip>
             <Menu
