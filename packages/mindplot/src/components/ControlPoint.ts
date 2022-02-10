@@ -20,8 +20,33 @@ import { $defined } from '@wisemapping/core-js';
 
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
+import Workspace from './Workspace';
 
 class ControlPoint {
+  private control1: Elipse;
+
+  private control2: Elipse;
+
+  private _controlPointsController: Elipse[];
+
+  private _controlLines: Line[];
+
+  private _isBinded: boolean;
+
+  _line: Line;
+
+  private _workspace: Workspace;
+
+  private _endPoint: any[];
+
+  private _orignalCtrlPoint: any;
+
+  private _controls: any;
+
+  private _mouseMoveFunction: (e: Event) => void;
+
+  private _mouseUpFunction: (e: Event) => void;
+
   constructor() {
     this.control1 = new Elipse({
       width: 6,
@@ -70,7 +95,7 @@ class ControlPoint {
     });
   }
 
-  setLine(line) {
+  setLine(line: Line) {
     if ($defined(this._line)) {
       this._removeLine();
     }
@@ -93,7 +118,7 @@ class ControlPoint {
     if ($defined(this._line)) this._createControlPoint();
   }
 
-  _createControlPoint() {
+  private _createControlPoint() {
     this._controls = this._line.getLine().getControlPoints();
     let pos = this._line.getLine().getFrom();
     this._controlPointsController[0].setPosition(
@@ -117,11 +142,11 @@ class ControlPoint {
     );
   }
 
-  _removeLine() {
+  private _removeLine() {
     // Overwrite default behaviour ...
   }
 
-  _mouseDown(event, point, me) {
+  private _mouseDown(event: Event, point, me) {
     if (!this._isBinded) {
       this._isBinded = true;
       this._mouseMoveFunction = (e) => {
@@ -129,7 +154,7 @@ class ControlPoint {
       };
 
       this._workspace.getScreenManager().addEvent('mousemove', this._mouseMoveFunction);
-      this._mouseUpFunction = (e) => {
+      this._mouseUpFunction = (e: Event) => {
         me._mouseUp(e, point, me);
       };
       this._workspace.getScreenManager().addEvent('mouseup', this._mouseUpFunction);
@@ -139,7 +164,7 @@ class ControlPoint {
     return false;
   }
 
-  _mouseMoveEvent(event, point) {
+  private _mouseMoveEvent(event: MouseEvent, point: Point) {
     const screen = this._workspace.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
@@ -162,7 +187,7 @@ class ControlPoint {
     this._line.getLine().updateLine(point);
   }
 
-  _mouseUp(event, point) {
+  private _mouseUp(event, point) {
     this._workspace.getScreenManager().removeEvent('mousemove', this._mouseMoveFunction);
     this._workspace.getScreenManager().removeEvent('mouseup', this._mouseUpFunction);
 
@@ -177,7 +202,7 @@ class ControlPoint {
     return false;
   }
 
-  setVisibility(visible) {
+  setVisibility(visible: boolean) {
     if (visible) {
       this._controlLines[0].moveToFront();
       this._controlLines[1].moveToFront();
@@ -190,7 +215,7 @@ class ControlPoint {
     this._controlLines[1].setVisibility(visible);
   }
 
-  addToWorkspace(workspace) {
+  addToWorkspace(workspace: Workspace): void {
     this._workspace = workspace;
     workspace.append(this._controlPointsController[0]);
     workspace.append(this._controlPointsController[1]);
@@ -198,7 +223,7 @@ class ControlPoint {
     workspace.append(this._controlLines[1]);
   }
 
-  removeFromWorkspace(workspace) {
+  removeFromWorkspace(workspace: Workspace) {
     this._workspace = null;
     workspace.removeChild(this._controlPointsController[0]);
     workspace.removeChild(this._controlPointsController[1]);
@@ -206,20 +231,21 @@ class ControlPoint {
     workspace.removeChild(this._controlLines[1]);
   }
 
-  getControlPoint(index) {
+  getControlPoint(index: number): ControlPoint {
     return this._controls[index];
   }
 
-  getOriginalEndPoint(index) {
+  getOriginalEndPoint(index: number) {
     return this._endPoint[index];
   }
 
-  getOriginalCtrlPoint(index) {
+  getOriginalCtrlPoint(index: number): ControlPoint {
     return this._orignalCtrlPoint[index];
   }
-}
 
-ControlPoint.FROM = 0;
-ControlPoint.TO = 1;
+  static FROM = 0;
+
+  static TO = 1;
+}
 
 export default ControlPoint;
