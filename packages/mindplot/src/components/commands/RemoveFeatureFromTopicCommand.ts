@@ -18,13 +18,14 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import FeatureModel from '../model/FeatureModel';
 
 class RemoveFeatureFromTopicCommand extends Command {
   private _topicId: number;
 
   private _featureId: number;
 
-  private _oldFeature: any;
+  private _oldFeature: FeatureModel;
 
   /**
      * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
@@ -43,7 +44,7 @@ class RemoveFeatureFromTopicCommand extends Command {
   /**
      * Overrides abstract parent method
      */
-  execute(commandContext:CommandContext):void {
+  execute(commandContext: CommandContext): void {
     const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
     topic.removeFeature(feature);
@@ -54,7 +55,7 @@ class RemoveFeatureFromTopicCommand extends Command {
      * Overrides abstract parent method
      * @see {@link mindplot.Command.undoExecute}
      */
-  undoExecute(commandContext:CommandContext) {
+  undoExecute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
     topic.addFeature(this._oldFeature);
     this._oldFeature = null;

@@ -24,7 +24,7 @@ import Topic from '../Topic';
 class DragTopicCommand extends Command {
   private _topicsId: number;
 
-  private _parentId: any;
+  private _parentId: number;
 
   private _position: Point;
 
@@ -62,7 +62,7 @@ class DragTopicCommand extends Command {
     const origPosition = topic.getPosition();
 
     // Disconnect topic ..
-    if ($defined(origParentTopic) && origParentTopic !== this._parentId) {
+    if ($defined(origParentTopic) && origParentTopic.getId() !== this._parentId) {
       commandContext.disconnect(topic);
     }
 
@@ -76,9 +76,9 @@ class DragTopicCommand extends Command {
     }
 
     // Finally, connect topic ...
-    if (origParentTopic !== this._parentId) {
+    if (origParentTopic.getId() !== this._parentId) {
       if ($defined(this._parentId)) {
-        const parentTopic = commandContext.findTopics(this._parentId)[0];
+        const parentTopic = commandContext.findTopics([this._parentId])[0];
         commandContext.connect(topic, parentTopic);
       }
 

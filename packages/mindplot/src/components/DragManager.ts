@@ -17,9 +17,25 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import DragTopic from './DragTopic';
+import EventBusDispatcher from './layout/EventBusDispatcher';
+import Workspace from './Workspace';
 
 class DragManager {
-  constructor(workspace, eventDispatcher) {
+  private _workspace: Workspace;
+
+  private _designerModel: Workspace;
+
+  private _isDragInProcess: boolean;
+
+  private _eventDispatcher: EventBusDispatcher;
+
+  private _listeners;
+
+  private _mouseMoveListener;
+
+  private _mouseUpListener;
+
+  constructor(workspace: Workspace, eventDispatcher: EventBusDispatcher) {
     this._workspace = workspace;
     this._designerModel = workspace;
     this._listeners = {};
@@ -34,7 +50,7 @@ class DragManager {
     const screen = workspace.getScreenManager();
     const dragManager = this;
     const me = this;
-    const mouseDownListener = function mouseDownListener(event) {
+    const mouseDownListener = function mouseDownListener() {
       if (workspace.isWorkspaceEventsEnabled()) {
         // Disable double drag...
         workspace.enableWorkspaceEvents(false);
@@ -62,11 +78,11 @@ class DragManager {
     node.addEvent('mousedown', mouseDownListener);
   }
 
-  remove(node) {
+  remove() {
     throw new Error('Not implemented: DragManager.prototype.remove');
   }
 
-  _buildMouseMoveListener(workspace, dragNode, dragManager) {
+  protected _buildMouseMoveListener(workspace: Workspace, dragNode, dragManager: DragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
     const result = (event) => {
@@ -98,7 +114,7 @@ class DragManager {
     return result;
   }
 
-  _buildMouseUpListener(workspace, node, dragNode, dragManager) {
+  protected _buildMouseUpListener(workspace: Workspace, node, dragNode, dragManager: DragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
     const result = (event) => {
