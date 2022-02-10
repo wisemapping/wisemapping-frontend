@@ -210,15 +210,15 @@ const ExportDialog = ({
                                     value={exportFormat}
                                     className={classes.select}
                                 >
-                                    <MenuItem className={classes.select} value="xls">
-                                        Microsoft Excel (XLS)
-                                    </MenuItem>
                                     <MenuItem className={classes.select} value="txt">
                                         Plain Text File (TXT)
                                     </MenuItem>
                                     <MenuItem className={classes.select} value="md">
                                         Markdown (MD)
                                     </MenuItem>
+                                    {/* <MenuItem className={classes.select} value="xls">
+                                        Microsoft Excel (XLS)
+                                    </MenuItem> */}
                                 </Select>
                             )}
                         </FormControl>
@@ -248,9 +248,9 @@ const ExportDialog = ({
                                     <MenuItem className={classes.select} value="mm">
                                         Freemind 1.0.1 (MM)
                                     </MenuItem>
-                                    <MenuItem className={classes.select} value="mmap">
+                                    {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)
-                                    </MenuItem>
+                                    </MenuItem> */}
                                 </Select>
                             )}
                         </FormControl>
