@@ -24,9 +24,9 @@ class ChangeFeatureToTopicCommand extends Command {
 
   private _topicId: number;
 
-  private _attributes: any;
+  private _attributes;
 
-  constructor(topicId: number, featureId: number, attributes: any) {
+  constructor(topicId: number, featureId: number, attributes) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert($defined(featureId), 'featureId can not be null');
     $assert($defined(attributes), 'attributes can not be null');
@@ -53,7 +53,7 @@ class ChangeFeatureToTopicCommand extends Command {
      * Overrides abstract parent method
      * @see {@link mindplot.Command.undoExecute}
      */
-  undoExecute(commandContext: any) {
+  undoExecute(commandContext: CommandContext) {
     this.execute(commandContext);
   }
 }

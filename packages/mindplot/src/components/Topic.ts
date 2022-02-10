@@ -19,7 +19,7 @@ import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 
 import {
-  Rect, Image, Line, Text, Group, ElementClass, Point
+  Rect, Image, Line, Text, Group, ElementClass, Point,
 } from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
@@ -35,7 +35,6 @@ import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
 import LinkEditor from './widget/LinkEditor';
 
-
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import { TopicShape } from './model/INodeModel';
 import NodeModel from './model/NodeModel';
@@ -50,14 +49,25 @@ const ICON_SCALING_FACTOR = 1.3;
 
 abstract class Topic extends NodeGraph {
   private _innerShape: ElementClass;
+
   private _relationships: Relationship[];
+
   private _isInWorkspace: boolean;
+
+  // eslint-disable-next-line no-use-before-define
   private _children: Topic[];
+
+  // eslint-disable-next-line no-use-before-define
   private _parent: Topic | null;
+
   private _outerShape: ElementClass;
+
   private _text: Text | null;
+
   private _iconsGroup: IconGroup;
-  private _connector: any;
+
+  private _connector: ShirinkConnector;
+
   private _outgoingLine: Line;
 
   constructor(model: NodeModel, options) {
@@ -241,7 +251,7 @@ abstract class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = function getSize() { this.size };
+      result.getSize = function getSize() { return this.size; };
 
       result.setPosition = () => {
         // Overwrite behaviour ...
@@ -1323,7 +1333,6 @@ abstract class Topic extends NodeGraph {
     });
     return result;
   }
-
 
   isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();

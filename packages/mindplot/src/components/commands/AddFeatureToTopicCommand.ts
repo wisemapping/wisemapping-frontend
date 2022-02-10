@@ -18,6 +18,7 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import FeatureModel from '../model/FeatureModel';
 import FeatureType from '../model/FeatureType';
 
 class AddFeatureToTopicCommand extends Command {
@@ -27,7 +28,7 @@ class AddFeatureToTopicCommand extends Command {
 
   private _attributes: object;
 
-  private _featureModel: any;
+  private _featureModel: FeatureModel;
 
   /*
     * @classdesc This command class handles do/undo of adding features to topics, e.g. an

@@ -3,7 +3,7 @@ import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import Client from '../../../classes/client';
 import { useSelector } from 'react-redux';
-import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { activeInstance } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
 import Tooltip from '@mui/material/Tooltip';

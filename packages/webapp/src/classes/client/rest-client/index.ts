@@ -11,7 +11,7 @@ import Client, {
     ImportMapInfo,
     Permission,
 } from '..';
-import { LocaleCode, localeFromStr, Locales } from '../../app-i18n';
+import { LocaleCode, localeFromStr } from '../../app-i18n';
 
 export default class RestClient implements Client {
     private baseUrl: string;

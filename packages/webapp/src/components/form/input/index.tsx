@@ -1,5 +1,4 @@
 import TextField from '@mui/material/TextField';
-import { row } from '@wisemapping/mindplot/src/components/widget/ColorPaletteHtml';
 import React, { ChangeEvent } from 'react';
 import { ErrorInfo } from '../../../classes/client';
 

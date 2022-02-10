@@ -20,11 +20,12 @@ import { Elipse } from '@wisemapping/web2d';
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
-import IconGroup from './IconGroup';
 
 class ShirinkConnector {
   private _isShrink: boolean;
-  private _ellipse: any;
+
+  private _ellipse: Elipse;
+
   constructor(topic: Topic) {
     this._isShrink = false;
     const ellipse = new Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
@@ -33,7 +34,7 @@ class ShirinkConnector {
     ellipse.setFill('rgb(62,118,179)');
 
     ellipse.setSize(TopicConfig.CONNECTOR_WIDTH, TopicConfig.CONNECTOR_WIDTH);
-    ellipse.addEvent('click', (event) => {
+    ellipse.addEvent('click', (event: Event) => {
       const model = topic.getModel();
       const collapse = !model.areChildrenShrunken();
 

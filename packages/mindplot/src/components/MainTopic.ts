@@ -27,6 +27,7 @@ import SizeType from './SizeType';
 
 class MainTopic extends Topic {
   private INNER_RECT_ATTRIBUTES: { stroke: string; };
+
   /**
          * @extends mindplot.Topic
          * @constructs
@@ -73,7 +74,6 @@ class MainTopic extends Topic {
     }
     return group;
   }
-
 
   updateTopicShape(targetTopic: Topic) {
     // Change figure based on the connected topic ...
