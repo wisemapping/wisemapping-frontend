@@ -16,15 +16,23 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import Command from './Command';
+import CommandContext from './CommandContext';
 
 class DesignerUndoManager {
+  private _undoQueue: Command[];
+
+  private _redoQueue: Command[];
+
+  private _baseId: number;
+
   constructor() {
     this._undoQueue = [];
     this._redoQueue = [];
     this._baseId = 0;
   }
 
-  enqueue(command) {
+  enqueue(command: Command) {
     $assert(command, 'Command can  not be null');
     const { length } = this._undoQueue;
     if (command.discardDuplicated && length > 0) {
@@ -39,7 +47,7 @@ class DesignerUndoManager {
     this._redoQueue = [];
   }
 
-  execUndo(commandContext) {
+  execUndo(commandContext: CommandContext) {
     if (this._undoQueue.length > 0) {
       const command = this._undoQueue.pop();
       this._redoQueue.push(command);

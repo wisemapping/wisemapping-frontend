@@ -21,8 +21,6 @@ import CommandContext from '../CommandContext';
 import Topic from '../Topic';
 
 class GenericFunctionCommand extends Command {
-  private _discardDuplicated: string;
-
   private _value: string | object | boolean | number;
 
   private _topicsId: number[];
@@ -42,7 +40,6 @@ class GenericFunctionCommand extends Command {
     this._topicsId = topicsIds;
     this._commandFunc = commandFunc;
     this._oldValues = [];
-    this.discardDuplicated = undefined;
   }
 
   /**
@@ -78,14 +75,6 @@ class GenericFunctionCommand extends Command {
     } else {
       throw new Error('undo can not be applied.');
     }
-  }
-
-  public get disardDuplicated(): string {
-    return this._discardDuplicated;
-  }
-
-  public set discardDuplicated(value: string) {
-    this._discardDuplicated = value;
   }
 }
 

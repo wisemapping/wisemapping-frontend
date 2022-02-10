@@ -187,7 +187,7 @@ class ControlPoint {
     this._line.getLine().updateLine(point);
   }
 
-  private _mouseUp(event, point) {
+  private _mouseUp(event: MouseEvent, point: Point) {
     this._workspace.getScreenManager().removeEvent('mousemove', this._mouseMoveFunction);
     this._workspace.getScreenManager().removeEvent('mouseup', this._mouseUpFunction);
 
@@ -196,7 +196,7 @@ class ControlPoint {
     this._isBinded = false;
   }
 
-  _mouseClick(event) {
+  _mouseClick(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
     return false;

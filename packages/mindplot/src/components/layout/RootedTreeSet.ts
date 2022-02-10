@@ -16,8 +16,15 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import PositionType from '../PositionType';
+import Node from './Node';
 
 class RootedTreeSet {
+  private _rootNodes: Node[];
+
+  protected _children: Node[];
+
+
   constructor() {
     this._rootNodes = [];
   }
@@ -26,7 +33,7 @@ class RootedTreeSet {
          * @param root
          * @throws will throw an error if root is null or undefined
          */
-  setRoot(root) {
+  setRoot(root: Node) {
     $assert(root, 'root can not be null');
     this._rootNodes.push(this._decodate(root));
   }
@@ -36,8 +43,7 @@ class RootedTreeSet {
     return this._rootNodes;
   }
 
-  _decodate(node) {
-    // eslint-disable-next-line no-param-reassign
+  _decodate(node: Node) {
     node._children = [];
     return node;
   }
@@ -48,7 +54,7 @@ class RootedTreeSet {
          * @throws will throw an error if node with id already exists
          * @throws will throw an error if node has been added already
          */
-  add(node) {
+  add(node: Node) {
     $assert(node, 'node can not be null');
     $assert(
       !this.find(node.getId(), false),
@@ -62,7 +68,7 @@ class RootedTreeSet {
    * @param nodeId
    * @throws will throw an error if nodeId is null or undefined
    */
-  remove(nodeId) {
+  remove(nodeId: number) {
     $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
     this._rootNodes = this._rootNodes.filter((n) => n !== node);
@@ -75,7 +81,7 @@ class RootedTreeSet {
          * @throws will throw an error if childId is null or undefined
          * @throws will throw an error if node with id childId is already a child of parent
          */
-  connect(parentId, childId) {
+  connect(parentId: number, childId: number) {
     $assert($defined(parentId), 'parent can not be null');
     $assert($defined(childId), 'child can not be null');
 
@@ -96,7 +102,7 @@ class RootedTreeSet {
          * @throws will throw an error if nodeId is null or undefined
          * @throws will throw an error if node is not connected
          */
-  disconnect(nodeId) {
+  disconnect(nodeId: number) {
     $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
@@ -113,7 +119,7 @@ class RootedTreeSet {
          * @throws will throw an error if node cannot be found
          * @return node
          */
-  find(id, validate = true) {
+  find(id: number, validate = true): Node {
     $assert($defined(id), 'id can not be null');
 
     const graphs = this._rootNodes;
@@ -132,7 +138,7 @@ class RootedTreeSet {
     return result;
   }
 
-  _find(id, parent) {
+  private _find(id: number, parent: Node): Node {
     if (parent.getId() === id) {
       return parent;
     }
@@ -153,7 +159,7 @@ class RootedTreeSet {
          * @throws will throw an error if nodeId is null or undefined
          * @return children
          */
-  getChildren(node) {
+  getChildren(node: Node): Node[] {
     $assert(node, 'node cannot be null');
     return node._children;
   }
@@ -163,7 +169,7 @@ class RootedTreeSet {
          * @throws will throw an error if node is null or undefined
          * @return root node or the provided node, if it has no parent
          */
-  getRootNode(node) {
+  getRootNode(node: Node) {
     $assert(node, 'node cannot be null');
     const parent = this.getParent(node);
     if ($defined(parent)) {
@@ -177,12 +183,12 @@ class RootedTreeSet {
          * @param node
          * @throws will throw an error if node is null or undefined
          * @return {Array} ancestors */
-  getAncestors(node) {
+  getAncestors(node: Node): Node[] {
     $assert(node, 'node cannot be null');
     return this._getAncestors(this.getParent(node), []);
   }
 
-  _getAncestors(node, ancestors) {
+  _getAncestors(node: Node, ancestors: Node[]) {
     const result = ancestors;
     if (node) {
       result.push(node);
@@ -196,7 +202,7 @@ class RootedTreeSet {
          * @throws will throw an error if node is null or undefined
          * @return {Array} siblings
          */
-  getSiblings(node) {
+  getSiblings(node: Node): Node[] {
     $assert(node, 'node cannot be null');
     if (!$defined(node._parent)) {
       return [];
@@ -210,12 +216,12 @@ class RootedTreeSet {
          * @throws will throw an error if node is null or undefined
          * @return {Boolean} whether the node has a single path to a single leaf (no branching)
          */
-  hasSinglePathToSingleLeaf(node) {
+  hasSinglePathToSingleLeaf(node: Node): boolean {
     $assert(node, 'node cannot be null');
     return this._hasSinglePathToSingleLeaf(node);
   }
 
-  _hasSinglePathToSingleLeaf(node) {
+  private _hasSinglePathToSingleLeaf(node: Node): boolean {
     const children = this.getChildren(node);
 
     if (children.length === 1) {
@@ -228,7 +234,7 @@ class RootedTreeSet {
   /**
          * @param node
          * @return {Boolean} whether the node is the start of a subbranch */
-  isStartOfSubBranch(node) {
+  isStartOfSubBranch(node: Node): boolean {
     return this.getSiblings(node).length > 0 && this.getChildren(node).length === 1;
   }
 
@@ -237,7 +243,7 @@ class RootedTreeSet {
          * @throws will throw an error if node is null or undefined
          * @return {Boolean} whether the node is a leaf
          */
-  isLeaf(node) {
+  isLeaf(node: Node): boolean {
     $assert(node, 'node cannot be null');
     return this.getChildren(node).length === 0;
   }
@@ -247,7 +253,7 @@ class RootedTreeSet {
          * @throws will throw an error if node is null or undefined
          * @return parent
          */
-  getParent(node) {
+  getParent(node: Node): Node {
     $assert(node, 'node cannot be null');
     return node._parent;
   }
@@ -265,7 +271,7 @@ class RootedTreeSet {
     return result;
   }
 
-  _dump(node, indent) {
+  _dump(node: Node, indent: string) {
     let result = `${indent + node}\n`;
     const children = this.getChildren(node);
     for (let i = 0; i < children.length; i++) {
@@ -287,7 +293,7 @@ class RootedTreeSet {
     }
   }
 
-  _plot(canvas, node, root) {
+  _plot(canvas, node: Node, root?) {
     const children = this.getChildren(node);
     const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;
     const cy = node.getPosition().y + canvas.height / 2 - node.getSize().height / 2;
@@ -316,43 +322,27 @@ class RootedTreeSet {
     const rectSize = { width: rect.attr('width'), height: rect.attr('height') };
     rect.click(() => {
       console.log(
-        `[id:${
-          node.getId()
-        }, order:${
-          node.getOrder()
-        }, position:(${
-          rectPosition.x
-        }, ${
-          rectPosition.y
-        }), size:${
-          rectSize.width
-        },${
-          rectSize.height
-        }, freeDisplacement:(${
-          node.getFreeDisplacement().x
-        },${
-          node.getFreeDisplacement().y
+        `[id:${node.getId()
+        }, order:${node.getOrder()
+        }, position:(${rectPosition.x
+        }, ${rectPosition.y
+        }), size:${rectSize.width
+        },${rectSize.height
+        }, freeDisplacement:(${node.getFreeDisplacement().x
+        },${node.getFreeDisplacement().y
         })]`,
       );
     });
     text.click(() => {
       console.log(
-        `[id:${
-          node.getId()
-        }, order:${
-          node.getOrder()
-        }, position:(${
-          rectPosition.x
-        },${
-          rectPosition.y
-        }), size:${
-          rectSize.width
-        }x${
-          rectSize.height
-        }, freeDisplacement:(${
-          node.getFreeDisplacement().x
-        },${
-          node.getFreeDisplacement().y
+        `[id:${node.getId()
+        }, order:${node.getOrder()
+        }, position:(${rectPosition.x
+        },${rectPosition.y
+        }), size:${rectSize.width
+        }x${rectSize.height
+        }, freeDisplacement:(${node.getFreeDisplacement().x
+        },${node.getFreeDisplacement().y
         })]`,
       );
     });
@@ -367,7 +357,7 @@ class RootedTreeSet {
          * @param node
          * @param position
          */
-  updateBranchPosition(node, position) {
+  updateBranchPosition(node: Node, position: PositionType): void {
     const oldPos = node.getPosition();
     node.setPosition(position);
 
@@ -386,7 +376,7 @@ class RootedTreeSet {
          * @param xOffset
          * @param yOffset
          */
-  shiftBranchPosition(node, xOffset, yOffset) {
+  shiftBranchPosition(node: Node, xOffset: number, yOffset: number): void {
     const position = node.getPosition();
     node.setPosition({ x: position.x + xOffset, y: position.y + yOffset });
 
@@ -402,7 +392,7 @@ class RootedTreeSet {
      * @param yOffset
      * @return siblings in the offset (vertical) direction, i.e. with lower or higher order
      */
-  getSiblingsInVerticalDirection(node, yOffset) {
+  getSiblingsInVerticalDirection(node: Node, yOffset: number): Node[] {
     // siblings with lower or higher order
     // (depending on the direction of the offset and on the same side as their parent)
     const parent = this.getParent(node);
@@ -429,7 +419,7 @@ class RootedTreeSet {
          * @return branches of the root node on the same side as the given node's, in the given
          * vertical direction
          */
-  getBranchesInVerticalDirection(node, yOffset) {
+  getBranchesInVerticalDirection(node: Node, yOffset: number): Node[] {
     // direct descendants of the root that do not contain the node and are on the same side
     // and on the direction of the offset
     const rootNode = this.getRootNode(node);
@@ -437,7 +427,7 @@ class RootedTreeSet {
       .filter(((child) => this._find(node.getId(), child)));
 
     const branch = branches[0];
-    const rootDescendants = this.getSiblings(branch).filter((sibling) => {
+    const result = this.getSiblings(branch).filter((sibling) => {
       const sameSide = node.getPosition().x > rootNode.getPosition().x
         ? sibling.getPosition().x > rootNode.getPosition().x
         : sibling.getPosition().x < rootNode.getPosition().x;
@@ -447,7 +437,7 @@ class RootedTreeSet {
       return sameSide && sameDirection;
     }, this);
 
-    return rootDescendants;
+    return result;
   }
 }
 
