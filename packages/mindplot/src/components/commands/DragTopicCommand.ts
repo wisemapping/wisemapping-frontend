@@ -76,7 +76,7 @@ class DragTopicCommand extends Command {
     }
 
     // Finally, connect topic ...
-    if (origParentTopic.getId() !== this._parentId) {
+    if (!$defined(origParentTopic) || origParentTopic.getId() !== this._parentId) {
       if ($defined(this._parentId)) {
         const parentTopic = commandContext.findTopics([this._parentId])[0];
         commandContext.connect(topic, parentTopic);
