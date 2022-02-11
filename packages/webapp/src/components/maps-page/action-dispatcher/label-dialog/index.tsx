@@ -1,16 +1,19 @@
 import React from 'react';
-import BaseDialog from '../base-dialog';
-import { SimpleDialogProps } from '..';
-import { useIntl } from 'react-intl';
-import Client, { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
-import { useStyles } from './style';
-import { LabelSelector } from '../../maps-list/label-selector';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import Typography from '@mui/material/Typography';
+
+import { useStyles } from './style';
+import { MultiDialogProps } from '..';
+import BaseDialog from '../base-dialog';
+import Client, { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
+import { LabelSelector } from '../../maps-list/label-selector';
 import { activeInstance } from '../../../../redux/clientSlice';
+import { ChangeLabelMutationFunctionParam, getChangeLabelMutationFunction } from '../../maps-list';
 
 
-const LabelDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
+const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement => {
     const intl = useIntl();
     const classes = useStyles();
     const client: Client = useSelector(activeInstance);
@@ -21,19 +24,10 @@ const LabelDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         return client.fetchAllMaps();
     });
 
-    const map = data.find(m => m.id === mapId);
+    const maps = data.filter(m => mapsId.includes(m.id));
 
-    const changeLabelMutation = useMutation<void, ErrorInfo, { label: Label, checked: boolean }, number>(
-        async ({ label, checked }) => {
-            if (!label.id) {
-                label.id = await client.createLabel(label.title, label.color);
-            }
-            if (checked){
-                return client.addLabelToMap(label.id, mapId);
-            } else {
-                return client.deleteLabelFromMap(label.id, mapId);
-            }
-        },
+    const changeLabelMutation = useMutation<void, ErrorInfo, ChangeLabelMutationFunctionParam, number>(
+        getChangeLabelMutationFunction(client),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('maps');
@@ -47,6 +41,7 @@ const LabelDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
 
     const handleChangesInLabels = (label: Label, checked: boolean) => {
         changeLabelMutation.mutate({
+            maps,
             label,
             checked
         });
@@ -63,11 +58,17 @@ const LabelDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                 description={intl.formatMessage({
                     id: 'label.description',
                     defaultMessage:
-                        'Use labels to organize your maps',
+                        'Use labels to organize your maps.',
                 })}
                 PaperProps={{ classes: { root: classes.paper } }}
             >
-                <LabelSelector onChange={handleChangesInLabels} maps={[map]} />
+                <>
+                    <Typography variant="body2" marginTop="10px">
+                        <FormattedMessage id="label.add-for" defaultMessage="Editing labels for maps: " />
+                        { maps.map(m => m.title).join(', ') }
+                    </Typography>
+                    <LabelSelector onChange={handleChangesInLabels} maps={maps} />
+                </>
             </BaseDialog>
         </div>);
 };

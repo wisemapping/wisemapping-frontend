@@ -40,6 +40,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
 import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
+import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -64,7 +65,7 @@ const MapsPage = (): ReactElement => {
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
-
+    const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
     // Reload based on user preference ...
     const userLocale = AppI18n.getUserLocale();
 
@@ -239,7 +240,7 @@ const MapsPage = (): ReactElement => {
                                     filter={buttonInfo.filter}
                                     active={filter}
                                     onClick={handleMenuClick}
-                                    onDelete={handleLabelDelete}
+                                    onDelete={setLabelToDelete}
                                     key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
                                 />
                             );
@@ -260,6 +261,14 @@ const MapsPage = (): ReactElement => {
                     <MapsList filter={filter} />
                 </main>
             </div>
+            { labelToDelete && <LabelDeleteConfirm
+                onClose={() => setLabelToDelete(null)}
+                onConfirm={() => {
+                    handleLabelDelete(labelToDelete);
+                    setLabelToDelete(null);
+                }}
+                label={labels.find(l => l.id === labelToDelete)}
+            /> }
         </IntlProvider>
     );
 };

@@ -33,13 +33,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { AddLabelButton } from './add-label-button';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import AppI18n from '../../../classes/app-i18n';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 
-dayjs.extend(LocalizedFormat)
+dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -59,9 +59,9 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key
 ): (
-        a: { [key in Key]: number | string | boolean | Label[] | undefined },
-        b: { [key in Key]: number | string | Label[] | boolean }
-    ) => number {
+    a: { [key in Key]: number | string | boolean | Label[] | undefined },
+    b: { [key in Key]: number | string | Label[] | boolean }
+) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -236,6 +236,24 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
     };
 };
 
+export type ChangeLabelMutationFunctionParam = { maps: MapInfo[]; label: Label; checked: boolean };
+
+export const getChangeLabelMutationFunction =
+    (client: Client) =>
+    async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
+        if (!label.id) {
+            label.id = await client.createLabel(label.title, label.color);
+        }
+        if (checked) {
+            const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
+            await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
+        } else {
+            const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
+            await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
+        }
+        return Promise.resolve();
+    };
+
 export const MapsList = (props: MapsListProps): React.ReactElement => {
     const classes = useStyles();
     const [order, setOrder] = React.useState<Order>('desc');
@@ -384,7 +402,19 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         });
     };
 
-    const removeLabelMultation = useMutation<void, ErrorInfo, { mapId: number, labelId: number }, number>(
+    const handleAddLabelClick = () => {
+        setActiveDialog({
+            actionType: 'label',
+            mapsId: selected,
+        });
+    };
+
+    const removeLabelMultation = useMutation<
+        void,
+        ErrorInfo,
+        { mapId: number; labelId: number },
+        number
+    >(
         ({ mapId, labelId }) => {
             return client.deleteLabelFromMap(labelId, mapId);
         },
@@ -400,40 +430,6 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
     const handleRemoveLabel = (mapId: number, labelId: number) => {
         removeLabelMultation.mutate({ mapId, labelId });
-    };
-
-    const changeLabelMutation = useMutation<void, ErrorInfo, { mapIds: number[], label: Label, checked: boolean }, number>(
-        async ({ mapIds, label, checked }) => {
-            const selectedMaps: MapInfo[] = mapsInfo.filter((m) => mapIds.includes(m.id));
-            if (!label.id) {
-                label.id = await client.createLabel(label.title, label.color);
-            }
-            if (checked) {
-                const toAdd = selectedMaps.filter((m) => !m.labels.find((l) => l.id === label.id));
-                await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
-            } else {
-                const toRemove = selectedMaps.filter((m) => m.labels.find((l) => l.id === label.id));
-                await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
-            }
-            return Promise.resolve();
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('maps');
-                queryClient.invalidateQueries('labels');
-            },
-            onError: (error) => {
-                console.error(error);
-            }
-        }
-    );
-
-    const handleChangesInLabels = (label: Label, checked: boolean) => {
-        changeLabelMutation.mutate({
-            mapIds: selected,
-            label,
-            checked
-        });
     };
 
     const isSelected = (id: number) => selected.indexOf(id) !== -1;
@@ -470,10 +466,31 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                        {selected.length > 0 && <AddLabelButton
-                            onChange={handleChangesInLabels}
-                            maps={mapsInfo.filter(m => isSelected(m.id))}
-                        />}
+                        {selected.length > 0 && (
+                            <Tooltip
+                                arrow={true}
+                                title={intl.formatMessage({
+                                    id: 'map.tooltip-add',
+                                    defaultMessage: 'Add label to selected',
+                                })}
+                            >
+                                <Button
+                                    color="primary"
+                                    size="medium"
+                                    variant="outlined"
+                                    type="button"
+                                    style={{ marginLeft: '10px' }}
+                                    disableElevation={true}
+                                    startIcon={<LabelTwoTone />}
+                                    onClick={handleAddLabelClick}
+                                >
+                                    <FormattedMessage
+                                        id="action.label"
+                                        defaultMessage="Add Label"
+                                    />
+                                </Button>
+                            </Tooltip>
+                        )}
                     </div>
 
                     <div className={classes.toolbarListActions}>
@@ -614,10 +631,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                     </Tooltip>
                                                 </TableCell>
 
-                                                <TableCell className={classes.bodyCell}>
-                                                    <LabelsCell labels={row.labels} onDelete={(lbl) => {
-                                                        handleRemoveLabel(row.id, lbl.id);
-                                                    }} />
+                                                <TableCell className={[classes.bodyCell, classes.labelsCell].join(' ')}>
+                                                    <LabelsCell
+                                                        labels={row.labels}
+                                                        onDelete={(lbl) => {
+                                                            handleRemoveLabel(row.id, lbl.id);
+                                                        }}
+                                                    />
                                                 </TableCell>
 
                                                 <TableCell className={classes.bodyCell}>
