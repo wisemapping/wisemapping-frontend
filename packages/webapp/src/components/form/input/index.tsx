@@ -1,4 +1,4 @@
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import React, { ChangeEvent } from 'react';
 import { ErrorInfo } from '../../../classes/client';
 
@@ -13,6 +13,8 @@ type InputProps = {
     autoComplete?: string;
     fullWidth?: boolean;
     disabled?: boolean;
+    maxLength?: number,
+    rows?: number
 };
 
 const Input = ({
@@ -26,6 +28,7 @@ const Input = ({
     autoComplete,
     fullWidth = true,
     disabled = false,
+    maxLength = 254,
 }: InputProps): React.ReactElement => {
     const fieldError = error?.fields?.[name];
     return (
@@ -43,6 +46,7 @@ const Input = ({
             margin="dense"
             disabled={disabled}
             autoComplete={autoComplete}
+            inputProps={{ maxLength: maxLength }}
         />
     );
 };

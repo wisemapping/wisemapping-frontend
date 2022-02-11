@@ -6,8 +6,8 @@ import Client, { ErrorInfo } from '../../../../classes/client';
 import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import BaseDialog from '../base-dialog';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const intl = useIntl();

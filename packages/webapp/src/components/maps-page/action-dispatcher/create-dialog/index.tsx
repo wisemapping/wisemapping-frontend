@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from '@mui/material/FormControl';
 
 import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
@@ -86,6 +86,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         onChange={handleOnChange}
                         error={error}
                         fullWidth={true}
+                        maxLength={60}
                     />
 
                     <Input
@@ -99,6 +100,7 @@ const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         onChange={handleOnChange}
                         required={false}
                         fullWidth={true}
+                        rows={3}
                     />
                 </FormControl>
             </BaseDialog>

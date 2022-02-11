@@ -1,7 +1,7 @@
-import { fade } from '@material-ui/core/styles';
-import { Theme } from '@material-ui/core/styles/createTheme';
-import createStyles from '@material-ui/core/styles/createStyles';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { alpha, Theme } from '@mui/material/styles';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,6 +33,13 @@ export const useStyles = makeStyles((theme: Theme) =>
         bodyCell: {
             border: '0px',
         },
+        labelsCell: {
+            maxWidth: '300px',
+            overflow: 'hidden',
+            textAlign: 'right',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+        },
         visuallyHidden: {
             border: 0,
             clip: 'rect(0 0 0 0)',
@@ -52,15 +59,16 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         toolbarActions: {
             flexGrow: 1,
+            paddingLeft: '23px;'
         },
         toolbarListActions: {
             flexGrow: 1,
         },
         search: {
             borderRadius: 9,
-            backgroundColor: fade(theme.palette.common.white, 0.15),
+            backgroundColor: alpha(theme.palette.common.white, 0.15),
             '&:hover': {
-                backgroundColor: fade(theme.palette.common.white, 0.25),
+                backgroundColor: alpha(theme.palette.common.white, 0.25),
             },
             margin: '10px 0px',
             width: '100%',
@@ -89,7 +97,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             // vertical padding + font size from searchIcon
             border: '1px solid #ffa800',
             borderRadius: 4,
-            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             width: '100%',
             [theme.breakpoints.up('sm')]: {

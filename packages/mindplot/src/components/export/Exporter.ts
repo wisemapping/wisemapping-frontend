@@ -15,9 +15,33 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-interface Exporter {
-    export(): Promise<string>;
-    extension(): string;
+abstract class Exporter {
+  private _extension: string;
+
+  private _contentType: string;
+
+  constructor(extension: string, contentType: string) {
+    this._extension = extension;
+    this._contentType = contentType;
+  }
+
+  exportAndEncode(): Promise<string> {
+    const exportValue = this.export();
+    return exportValue.then((value: string) => {
+      const blob = new Blob([value], { type: this._contentType });
+      return URL.createObjectURL(blob);
+    });
+  }
+
+  abstract export(): Promise<string>;
+
+  extension(): string {
+    return this._extension;
+  }
+
+  getContentType(): string {
+    return this._contentType;
+  }
 }
 
 export default Exporter;

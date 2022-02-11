@@ -21,62 +21,63 @@ import { $assert } from '@wisemapping/core-js';
 import Point from '@wisemapping/web2d';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
+import ControlPoint from './ControlPoint';
 import Events from './Events';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 
 abstract class ActionDispatcher extends Events {
-  static _instance: ActionDispatcher;
+  private static _instance: ActionDispatcher;
 
   constructor(commandContext: CommandContext) {
     $assert(commandContext, 'commandContext can not be null');
     super();
   }
 
-    abstract addRelationship(model: RelationshipModel, mindmap: Mindmap);
+  abstract addRelationship(model: RelationshipModel, mindmap: Mindmap): void;
 
-    abstract addTopics(models: NodeModel[], parentTopicId: any[]);
+  abstract addTopics(models: NodeModel[], parentTopicId: number[]): void;
 
-    abstract deleteEntities(topicsIds: number[], relIds: number[]);
+  abstract deleteEntities(topicsIds: number[], relIds: number[]): void;
 
-    abstract dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic);
+  abstract dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic): void;
 
-    abstract moveTopic(topicId: number, position: any);
+  abstract moveTopic(topicId: number, position: Point): void;
 
-    abstract moveControlPoint(ctrlPoint: this, point: any);
+  abstract moveControlPoint(ctrlPoint: ControlPoint, point: Point): void;
 
-    abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string);
+  abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string): void;
 
-    abstract changeFontStyleToTopic(topicsIds: number[]);
+  abstract changeFontStyleToTopic(topicsIds: number[]): void;
 
-    abstract changeFontColorToTopic(topicsIds: number[], color: string);
+  abstract changeFontColorToTopic(topicsIds: number[], color: string): void;
 
-    abstract changeFontSizeToTopic(topicsIds: number[], size: number);
+  abstract changeFontSizeToTopic(topicsIds: number[], size: number): void;
 
-    abstract changeBackgroundColorToTopic(topicsIds: number[], color: string);
+  abstract changeBackgroundColorToTopic(topicsIds: number[], color: string): void;
 
-    abstract changeBorderColorToTopic(topicsIds: number[], color: string);
+  abstract changeBorderColorToTopic(topicsIds: number[], color: string): void;
 
-    abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string);
+  abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string): void;
 
-    abstract changeFontWeightToTopic(topicsIds: number[]);
+  abstract changeFontWeightToTopic(topicsIds: number[]): void;
 
-    abstract changeTextToTopic(topicsIds: number[], text: string);
+  abstract changeTextToTopic(topicsIds: number[], text: string): void;
 
-    abstract shrinkBranch(topicsIds: number[], collapse: boolean);
+  abstract shrinkBranch(topicsIds: number[], collapse: boolean): void;
 
-    abstract addFeatureToTopic(topicId: number, type: string, attributes: object);
+  abstract addFeatureToTopic(topicId: number, type: string, attributes: object): void;
 
-    abstract changeFeatureToTopic(topicId: number, featureId: any, attributes: object);
+  abstract changeFeatureToTopic(topicId: number, featureId: number, attributes: object): void;
 
-    abstract removeFeatureFromTopic(topicId: number, featureId: number);
+  abstract removeFeatureFromTopic(topicId: number, featureId: number): void;
 
-    static setInstance = (dispatcher: ActionDispatcher) => {
-      this._instance = dispatcher;
-    };
+  static setInstance = (dispatcher: ActionDispatcher) => {
+    this._instance = dispatcher;
+  };
 
-    static getInstance = (): ActionDispatcher => ActionDispatcher._instance;
+  static getInstance = (): ActionDispatcher => ActionDispatcher._instance;
 }
 
 export default ActionDispatcher;

@@ -2,7 +2,8 @@ import { $assert } from '@wisemapping/core-js';
 import IconModel from './IconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
-import FeatureModel, { FeatureType } from './FeatureModel';
+import FeatureModel from './FeatureModel';
+import FeatureType from './FeatureType';
 
 interface NodeById {
   id: FeatureType,

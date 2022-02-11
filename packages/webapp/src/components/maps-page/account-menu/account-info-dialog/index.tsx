@@ -7,11 +7,11 @@ import BaseDialog from '../../action-dispatcher/base-dialog';
 import { useSelector } from 'react-redux';
 import { activeInstance, fetchAccount } from '../../../../redux/clientSlice';
 
-import Alert from '@material-ui/lab/Alert';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
+import Alert from '@mui/material/Alert';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
 
 type AccountInfoDialogProps = {
     onClose: () => void;
@@ -168,7 +168,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
                                 color="primary"
                             />
                         }
-                        label="Delete Account"
+                        label={intl.formatMessage({ id: 'accountinfo.deleteaccount', defaultMessage: 'Delete Account' })}
                     />
                 </FormGroup>
             </FormControl>

@@ -13,6 +13,9 @@ module.exports = {
     mindplot: './src/index.ts',
     loader: './src/indexLoader.ts',
   },
+  stats: {
+    errorDetails: true,
+  },
   mode: 'production',
   devtool: 'source-map',
   module: {

@@ -1,13 +1,13 @@
 import React, { ErrorInfo, ReactElement, useEffect } from 'react';
 import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@mui/material/Drawer';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { FormattedMessage, IntlProvider, useIntl } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
@@ -20,26 +20,27 @@ import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItem from '@mui/material/ListItem';
 
-import AddCircleTwoTone from '@material-ui/icons/AddCircleTwoTone';
-import CloudUploadTwoTone from '@material-ui/icons/CloudUploadTwoTone';
-import DeleteOutlineTwoTone from '@material-ui/icons/DeleteOutlineTwoTone';
-import LabelTwoTone from '@material-ui/icons/LabelTwoTone';
-import PersonOutlineTwoTone from '@material-ui/icons/PersonOutlineTwoTone';
-import PublicTwoTone from '@material-ui/icons/PublicTwoTone';
-import ScatterPlotTwoTone from '@material-ui/icons/ScatterPlotTwoTone';
-import ShareTwoTone from '@material-ui/icons/ShareTwoTone';
-import StarTwoTone from '@material-ui/icons/StarTwoTone';
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
+import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
+import DeleteOutlineTwoTone from '@mui/icons-material/DeleteOutlineTwoTone';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
+import PersonOutlineTwoTone from '@mui/icons-material/PersonOutlineTwoTone';
+import PublicTwoTone from '@mui/icons-material/PublicTwoTone';
+import ScatterPlotTwoTone from '@mui/icons-material/ScatterPlotTwoTone';
+import ShareTwoTone from '@mui/icons-material/ShareTwoTone';
+import StarTwoTone from '@mui/icons-material/StarTwoTone';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
 import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
+import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -64,7 +65,16 @@ const MapsPage = (): ReactElement => {
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
-    const intl = useIntl();
+    const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
+    // Reload based on user preference ...
+    const userLocale = AppI18n.getUserLocale();
+
+    const cache = createIntlCache();
+    const intl = createIntl({
+        defaultLocale: userLocale.code,
+        locale: Locales.EN.code,
+        messages: userLocale.message
+    }, cache)
 
     useEffect(() => {
         document.title = intl.formatMessage({
@@ -74,7 +84,10 @@ const MapsPage = (): ReactElement => {
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
-        onSuccess: () => queryClient.invalidateQueries('labels'),
+        onSuccess: () => {
+            queryClient.invalidateQueries('labels');
+            queryClient.invalidateQueries('maps');
+        },
         onError: (error) => {
             console.error(`Unexpected error ${error}`);
         },
@@ -129,10 +142,6 @@ const MapsPage = (): ReactElement => {
             icon: <LabelTwoTone style={{ color: l.color ? l.color : 'inherit' }} />,
         })
     );
-
-    // Configure using user settings ...
-    const appi18n = new AppI18n();
-    const userLocale = appi18n.getUserLocale();
 
     return (
         <IntlProvider
@@ -231,7 +240,7 @@ const MapsPage = (): ReactElement => {
                                     filter={buttonInfo.filter}
                                     active={filter}
                                     onClick={handleMenuClick}
-                                    onDelete={handleLabelDelete}
+                                    onDelete={setLabelToDelete}
                                     key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
                                 />
                             );
@@ -252,6 +261,14 @@ const MapsPage = (): ReactElement => {
                     <MapsList filter={filter} />
                 </main>
             </div>
+            { labelToDelete && <LabelDeleteConfirm
+                onClose={() => setLabelToDelete(null)}
+                onConfirm={() => {
+                    handleLabelDelete(labelToDelete);
+                    setLabelToDelete(null);
+                }}
+                label={labels.find(l => l.id === labelToDelete)}
+            /> }
         </IntlProvider>
     );
 };
@@ -304,7 +321,7 @@ const StyleListItem = (props: ListItemProps) => {
                         edge="end"
                         aria-label="delete"
                         onClick={(e) => handleOnDelete(e, filter)}
-                    >
+                        size="large">
                         <DeleteOutlineTwoTone color="secondary" />
                     </IconButton>
                 </ListItemSecondaryAction>

@@ -3,9 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
 import GlobalError from '../../../form/global-error';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Button from '@material-ui/core/Button';
-import { PaperProps } from '@material-ui/core/Paper';
+import DialogContentText from '@mui/material/DialogContentText';
+import Button from '@mui/material/Button';
+import { PaperProps } from '@mui/material/Paper';
 
 export type DialogProps = {
     onClose: () => void;

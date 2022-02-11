@@ -21,17 +21,14 @@ import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 
-class MDExporter implements Exporter {
+class MDExporter extends Exporter {
   private mindmap: Mindmap;
 
   private footNotes: string[] = [];
 
   constructor(mindmap: Mindmap) {
+    super('md', 'text/markdown');
     this.mindmap = mindmap;
-  }
-
-  extension(): string {
-    return 'md';
   }
 
   private normalizeText(value: string): string {
@@ -58,7 +55,10 @@ class MDExporter implements Exporter {
     }
     result += '\n';
 
-    return Promise.resolve(result);
+    // Encode as url response ...
+    const blob = new Blob([result], { type: 'text/markdown' });
+    const urlStr = URL.createObjectURL(blob);
+    return Promise.resolve(urlStr);
   }
 
   private traverseBranch(prefix: string, branches: Array<INodeModel>) {

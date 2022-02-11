@@ -56,6 +56,7 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
+import FeatureType from './model/FeatureType';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -136,8 +137,8 @@ class Designer extends Events {
   }
 
   private _registerWheelEvents(): void {
-    const zoomFactor = 1.006;
-    document.addEventListener('wheel', (event) => {
+    const zoomFactor = 1.02;
+    document.addEventListener('wheel', (event: WheelEvent) => {
       if (event.deltaX > 0 || event.deltaY > 0) {
         this.zoomOut(zoomFactor);
       } else {
@@ -151,14 +152,14 @@ class Designer extends Events {
     return this._actionDispatcher;
   }
 
-  // @ts-ignore
-  addEvent(type: string, listener: any): void {
+  addEvent(type: string, listener): Events {
     if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
       const editor = TopicEventDispatcher.getInstance();
       editor.addEvent(type, listener);
     } else {
       super.addEvent(type, listener);
     }
+    return this;
   }
 
   private _registerMouseEvents() {
@@ -186,7 +187,7 @@ class Designer extends Events {
     screenManager.addEvent('dblclick', (event: MouseEvent) => {
       if (workspace.isWorkspaceEventsEnabled()) {
         const mousePos = screenManager.getWorkspaceMousePosition(event);
-        const centralTopic:CentralTopic = me.getModel()
+        const centralTopic: CentralTopic = me.getModel()
           .getCentralTopic();
 
         const model = me._createChildModel(centralTopic, mousePos);
@@ -208,7 +209,7 @@ class Designer extends Events {
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
       dragTopic.updateFreeLayout(event);
-      if (!dragTopic.isFreeLayoutOn(event)) {
+      if (!dragTopic.isFreeLayoutOn()) {
         // The node is being drag. Is the connection still valid ?
         dragConnector.checkConnection(dragTopic);
 
@@ -351,6 +352,20 @@ class Designer extends Events {
       this._workspace.setZoom(scale);
     } else {
       $notify($msg('ZOOM_ERROR'));
+    }
+  }
+
+  shrinkSelectedBranch() {
+    const nodes = this.getModel().filterSelectedTopics();
+    if (nodes.length <= 0 || nodes.length !== 1) {
+      // If there are more than one node selected,
+      $notify($msg('ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE'));
+      return;
+    }
+    // Execute event ...
+    const topic = nodes[0];
+    if (topic.getType() !== 'CentralTopic') {
+      this._actionDispatcher.shrinkBranch([topic.getId()], !topic.areChildrenShrunken());
     }
   }
 
@@ -876,7 +891,7 @@ class Designer extends Events {
   addIconType(iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id, {
+      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id as FeatureType, {
         id: iconType,
       });
     }

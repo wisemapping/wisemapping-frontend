@@ -1,3 +1,4 @@
+import { Mindmap } from '@wisemapping/mindplot';
 import Client, {
     AccountInfo,
     BasicMapInfo,
@@ -15,6 +16,10 @@ class CacheDecoratorClient implements Client {
 
     constructor(client: Client) {
         this.client = client;
+    }
+    
+    fetchMindmap(id: number): Mindmap {
+        return this.client.fetchMindmap(id);
     }
 
     deleteAccount(): Promise<void> {
@@ -85,8 +90,20 @@ class CacheDecoratorClient implements Client {
         return this.client.fetchLabels();
     }
 
+    createLabel(title: string, color: string): Promise<number> {
+        return this.client.createLabel(title, color);
+    }
+
     deleteLabel(id: number): Promise<void> {
         return this.client.deleteLabel(id);
+    }
+
+    addLabelToMap(labelId: number, mapId: number): Promise<void> {
+        return this.client.addLabelToMap(labelId, mapId);
+    }
+
+    deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
+        return this.client.deleteLabelFromMap(labelId, mapId);
     }
 
     fetchAccountInfo(): Promise<AccountInfo> {
@@ -106,7 +123,7 @@ class CacheDecoratorClient implements Client {
     }
 
     revertHistory(id: number, cid: number): Promise<void> {
-        return this.client.revertHistory(id,cid);
+        return this.client.revertHistory(id, cid);
     }
 }
 

@@ -2,15 +2,19 @@ import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
 import { useStyles } from './style';
-import Alert from '@material-ui/lab/Alert';
+import Alert from '@mui/material/Alert';
 import { fetchMapById } from '../../../../redux/clientSlice';
-import FormControl from '@material-ui/core/FormControl';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { Designer, TextExporterFactory, ImageExpoterFactory, Exporter, MindMap, RESTPersistenceManager } from '@wisemapping/mindplot';
+import FormControl from '@mui/material/FormControl';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Designer, TextExporterFactory, ImageExporterFactory, Exporter, Mindmap } from '@wisemapping/mindplot';
+import Client from '../../../../classes/client';
+import { activeInstance } from '../../../../redux/clientSlice';
+
+import { useSelector } from 'react-redux';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -29,6 +33,8 @@ const ExportDialog = ({
 }: ExportDialogProps): React.ReactElement => {
     const intl = useIntl();
     const [submit, setSubmit] = React.useState<boolean>(false);
+    const { map } = fetchMapById(mapId);
+    const client: Client = useSelector(activeInstance);
 
     const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
         enableImgExport ? 'image' : 'document'
@@ -69,29 +75,20 @@ const ExportDialog = ({
         setSubmit(true);
     };
 
-    const exporter = (formatType: ExportFormat) => {
+    const exporter = (formatType: ExportFormat): Promise<string> => {
         let svgElement: Element | null = null;
         let size;
-        let mindmap: MindMap;
+        let mindmap: Mindmap;
 
         const designer: Designer = global.designer;
         if (designer != null) {
             // Depending on the type of export. It will require differt POST.
-            const workspace = designer.getWorkspace();
+            const workspace = designer.getWorkSpace();
             svgElement = workspace.getSVGElement();
             size = workspace.getSize();
             mindmap = designer.getMindmap();
         } else {
-            // Load mindmap ...
-            const persistence = new RESTPersistenceManager({
-                documentUrl: '/c/restful/maps/{id}/document',
-                revertUrl: '/c/restful/maps/{id}/history/latest',
-                lockUrl: '/c/restful/maps/{id}/lock',
-                timestamp: global.lockTimestamp,
-                session: global.lockSession,
-            });
-            mindmap = persistence.load(global.mapId)
-    
+            mindmap = client.fetchMindmap(mapId);
         }
 
         let exporter: Exporter;
@@ -99,7 +96,7 @@ const ExportDialog = ({
             case 'png':
             case 'jpg':
             case 'svg': {
-                exporter = ImageExpoterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
+                exporter = ImageExporterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
                 break;
             }
             case 'wxml':
@@ -112,11 +109,10 @@ const ExportDialog = ({
                 throw new Error('Unsupported encoding');
         }
 
-        return exporter.export();
+        return exporter.exportAndEncode();
     };
 
     useEffect(() => {
-        const { map } = fetchMapById(mapId);
         if (submit) {
             exporter(exportFormat)
                 .then((url: string) => {
@@ -133,7 +129,10 @@ const ExportDialog = ({
                     // Clean up ...
                     URL.revokeObjectURL(url);
                     document.body.removeChild(anchor);
+                }).catch((fail) => {
+                    console.log("Unexpected error during export:" + fail);
                 });
+
             onClose();
         }
     }, [submit]);
@@ -211,15 +210,15 @@ const ExportDialog = ({
                                     value={exportFormat}
                                     className={classes.select}
                                 >
-                                    <MenuItem className={classes.select} value="xls">
-                                        Microsoft Excel (XLS)
-                                    </MenuItem>
                                     <MenuItem className={classes.select} value="txt">
                                         Plain Text File (TXT)
                                     </MenuItem>
                                     <MenuItem className={classes.select} value="md">
                                         Markdown (MD)
                                     </MenuItem>
+                                    {/* <MenuItem className={classes.select} value="xls">
+                                        Microsoft Excel (XLS)
+                                    </MenuItem> */}
                                 </Select>
                             )}
                         </FormControl>
@@ -249,9 +248,9 @@ const ExportDialog = ({
                                     <MenuItem className={classes.select} value="mm">
                                         Freemind 1.0.1 (MM)
                                     </MenuItem>
-                                    <MenuItem className={classes.select} value="mmap">
+                                    {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)
-                                    </MenuItem>
+                                    </MenuItem> */}
                                 </Select>
                             )}
                         </FormControl>

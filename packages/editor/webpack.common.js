@@ -1,15 +1,15 @@
 const path = require('path');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '',
+    publicPath: '',  
     library: {
       type: 'umd',
-    },
+    },  },
+  stats:{
+    errorDetails: true
   },
   entry: {
     "editor.bundle": path.join(__dirname, 'src', 'index.tsx')
@@ -38,7 +38,4 @@ module.exports = {
           },
       ],
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-  ]
 }

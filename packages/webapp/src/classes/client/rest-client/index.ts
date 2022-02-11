@@ -1,3 +1,4 @@
+import { LocalStorageManager, Mindmap } from '@wisemapping/mindplot';
 import axios from 'axios';
 import Client, {
     ErrorInfo,
@@ -10,7 +11,7 @@ import Client, {
     ImportMapInfo,
     Permission,
 } from '..';
-import { LocaleCode, localeFromStr, Locales } from '../../app-i18n';
+import { LocaleCode, localeFromStr } from '../../app-i18n';
 
 export default class RestClient implements Client {
     private baseUrl: string;
@@ -19,6 +20,16 @@ export default class RestClient implements Client {
     constructor(baseUrl: string, sessionExpired: () => void) {
         this.baseUrl = baseUrl;
         this.sessionExpired = sessionExpired;
+    }
+
+    fetchMindmap(id: number): Mindmap {
+        // Load mindmap ...
+        const persistence = new LocalStorageManager(
+            `/c/restful/maps/{id}/document/xml`,
+            true
+        );
+        const mindmap = persistence.load(String(id));
+        return mindmap;
     }
 
     deleteMapPermission(id: number, email: string): Promise<void> {
@@ -173,7 +184,7 @@ export default class RestClient implements Client {
                     `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''
                     }`,
                     model.content,
-                    { headers: { 'Content-Type': model.contentType } }
+                    { headers: { 'Content-Type': 'application/xml' } }
                 )
                 .then((response) => {
                     const mapId = response.headers.resourceid;
@@ -203,7 +214,7 @@ export default class RestClient implements Client {
                         lastname: account.lastname ? account.lastname : '',
                         firstname: account.firstname ? account.firstname : '',
                         email: account.email,
-                        locale: locale ? localeFromStr(locale) : Locales.EN,
+                        locale: locale ? localeFromStr(locale) : undefined,
                     });
                 })
                 .catch((error) => {
@@ -252,7 +263,7 @@ export default class RestClient implements Client {
     revertHistory(id: number, hid: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .post(`${this.baseUrl}/maps/${id}/history/${hid}`, null, {
+                .post(`${this.baseUrl}/c/restful/maps/${id}/history/${hid}`, null, {
                     headers: { 'Content-Type': 'text/pain' },
                 })
                 .then(() => {
@@ -267,7 +278,31 @@ export default class RestClient implements Client {
     }
 
     fetchHistory(id: number): Promise<ChangeHistory[]> {
-        throw new Error(`Method not implemented. ${id}`);
+        const handler = (
+            success: (historyList: ChangeHistory[]) => void,
+            reject: (error: ErrorInfo) => void
+        ) => {
+            axios
+                .get(`${this.baseUrl}/c/restful/maps/${id}/history/`, {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then((response) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const historyList: ChangeHistory[] = (response.data.changes as any[]).map((h) => {
+                        return {
+                            id: h.id,
+                            lastModificationBy: h.creator,
+                            lastModificationTime: h.creationTime,
+                        };
+                    });
+                    success(historyList);
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
     }
 
     renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
@@ -475,10 +510,59 @@ export default class RestClient implements Client {
         return new Promise(handler);
     }
 
+    createLabel(title: string, color: string): Promise<number> {
+        const handler = (success: (labelId: number) => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .post(`${this.baseUrl}/c/restful/labels`, JSON.stringify({ title, color, iconName: 'smile' }), {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then((response) => {
+                    success(response.headers.resourceid);
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
+    }
+
     deleteLabel(id: number): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(`${this.baseUrl}/c/restful/label/${id}`)
+                .delete(`${this.baseUrl}/c/restful/labels/${id}`)
+                .then(() => {
+                    success();
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
+    }
+
+    addLabelToMap(labelId: number, mapId: number): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .post(`${this.baseUrl}/c/restful/maps/${mapId}/labels`, JSON.stringify(labelId), {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(() => {
+                    success();
+                })
+                .catch((error) => {
+                    const errorInfo = this.parseResponseOnError(error.response);
+                    reject(errorInfo);
+                });
+        };
+        return new Promise(handler);
+    }
+
+    deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
+        const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+            axios
+                .delete(`${this.baseUrl}/c/restful/maps/${mapId}/labels/${labelId}`)
                 .then(() => {
                     success();
                 })

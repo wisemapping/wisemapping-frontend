@@ -2,7 +2,7 @@ import React, { useEffect, CSSProperties } from 'react';
 
 import { useStyles } from './styled';
 import { useSelector } from 'react-redux';
-import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
@@ -11,33 +11,35 @@ import dayjs from 'dayjs';
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Link from '@material-ui/core/Link';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+import InputBase from '@mui/material/InputBase';
+import Link from '@mui/material/Link';
 
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import StarRateRoundedIcon from '@material-ui/icons/StarRateRounded';
-import SearchIcon from '@material-ui/icons/Search';
+import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
+import SearchIcon from '@mui/icons-material/Search';
 
-import { AddLabelButton } from './add-label-button';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import AppI18n from '../../../classes/app-i18n';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 
-// Load fromNow pluggin
+dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -234,6 +236,24 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
     };
 };
 
+export type ChangeLabelMutationFunctionParam = { maps: MapInfo[]; label: Label; checked: boolean };
+
+export const getChangeLabelMutationFunction =
+    (client: Client) =>
+    async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
+        if (!label.id) {
+            label.id = await client.createLabel(label.title, label.color);
+        }
+        if (checked) {
+            const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
+            await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
+        } else {
+            const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
+            await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
+        }
+        return Promise.resolve();
+    };
+
 export const MapsList = (props: MapsListProps): React.ReactElement => {
     const classes = useStyles();
     const [order, setOrder] = React.useState<Order>('desc');
@@ -250,10 +270,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     const queryClient = useQueryClient();
 
     // Configure locale ...
-    const account = fetchAccount();
-    if (account) {
-        dayjs.locale(account.locale.code);
-    }
+    const userLocale = AppI18n.getUserLocale();
+    dayjs.locale(userLocale.code);
 
     useEffect(() => {
         setSelected([]);
@@ -330,7 +348,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             event.stopPropagation();
         };
     };
-    9;
+
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
             const map = mapsInfo.find((m) => m.id == id);
@@ -384,6 +402,36 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         });
     };
 
+    const handleAddLabelClick = () => {
+        setActiveDialog({
+            actionType: 'label',
+            mapsId: selected,
+        });
+    };
+
+    const removeLabelMultation = useMutation<
+        void,
+        ErrorInfo,
+        { mapId: number; labelId: number },
+        number
+    >(
+        ({ mapId, labelId }) => {
+            return client.deleteLabelFromMap(labelId, mapId);
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('maps');
+            },
+            onError: (error) => {
+                console.error(error);
+            },
+        }
+    );
+
+    const handleRemoveLabel = (mapId: number, labelId: number) => {
+        removeLabelMultation.mutate({ mapId, labelId });
+    };
+
     const isSelected = (id: number) => selected.indexOf(id) !== -1;
     return (
         <div className={classes.root}>
@@ -418,7 +466,31 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                        {selected.length > 0 && <AddLabelButton />}
+                        {selected.length > 0 && (
+                            <Tooltip
+                                arrow={true}
+                                title={intl.formatMessage({
+                                    id: 'map.tooltip-add',
+                                    defaultMessage: 'Add label to selected',
+                                })}
+                            >
+                                <Button
+                                    color="primary"
+                                    size="medium"
+                                    variant="outlined"
+                                    type="button"
+                                    style={{ marginLeft: '10px' }}
+                                    disableElevation={true}
+                                    startIcon={<LabelTwoTone />}
+                                    onClick={handleAddLabelClick}
+                                >
+                                    <FormattedMessage
+                                        id="action.label"
+                                        defaultMessage="Add Label"
+                                    />
+                                </Button>
+                            </Tooltip>
+                        )}
                     </div>
 
                     <div className={classes.toolbarListActions}>
@@ -475,7 +547,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                     <TableCell colSpan={6} style={{ textAlign: 'center' }}>
                                         <FormattedMessage
                                             id="maps.empty-result"
-                                            defaultMessage="No matching record found with the current filter criteria."
+                                            defaultMessage="No matching mindmap found with the current filter criteria."
                                         />
                                     </TableCell>
                                 </TableRow>
@@ -559,8 +631,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                     </Tooltip>
                                                 </TableCell>
 
-                                                <TableCell className={classes.bodyCell}>
-                                                    <LabelsCell labels={row.labels} />
+                                                <TableCell className={[classes.bodyCell, classes.labelsCell].join(' ')}>
+                                                    <LabelsCell
+                                                        labels={row.labels}
+                                                        onDelete={(lbl) => {
+                                                            handleRemoveLabel(row.id, lbl.id);
+                                                        }}
+                                                    />
                                                 </TableCell>
 
                                                 <TableCell className={classes.bodyCell}>

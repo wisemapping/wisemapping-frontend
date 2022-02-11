@@ -15,13 +15,13 @@ export class Locale {
     }
 }
 
-export default class AppI18n {
-    public getUserLocale(): Locale {
+export default abstract class AppI18n {
+    public static getUserLocale(): Locale {
         const account = fetchAccount();
-        return account ? account.locale : this.getBrowserLocale();
+        return account?.locale ? account.locale : this.getBrowserLocale();
     }
 
-    public getBrowserLocale(): Locale {
+    public static getBrowserLocale(): Locale {
         let localeCode = (navigator.languages && navigator.languages[0]) || navigator.language;
 
         // Just remove the variant ...

@@ -45,7 +45,10 @@ module.exports = {
         },
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            dangerouslyAllowCleanPatternsOutsideProject: true,
+            dry: false,
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 {

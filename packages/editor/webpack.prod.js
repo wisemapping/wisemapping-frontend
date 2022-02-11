@@ -1,5 +1,6 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const prodConfig = {
   optimization: {
@@ -8,9 +9,12 @@ const prodConfig = {
   },
   externals: {
     react: 'react',
-    reactDOM: 'react-dom',
-    reactIntl: 'react-intl',
+    "react-dom": 'react-dom',
+    "react-intl": 'react-intl',
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+  ]
 };
 
 module.exports = merge(common, prodConfig);

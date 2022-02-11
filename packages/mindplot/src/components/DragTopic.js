@@ -210,9 +210,7 @@ class DragTopic {
     return this.getConnectedToTopic() != null;
   }
 
-  isFreeLayoutOn(dragTopic) {
-    //        return  this._isFreeLayoutEnabled;
-    // Disable free layout ...
+  isFreeLayoutOn() {
     return false;
   }
 }

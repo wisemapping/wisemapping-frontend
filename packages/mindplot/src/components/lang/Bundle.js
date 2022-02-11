@@ -16,24 +16,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import CA from './ca';
 import ES from './es';
 import EN from './en';
 import DE from './de';
 import FR from './fr';
-import PT_BR from './pt_BR';
-import ZH_CN from './zh_CN';
-import ZH_TW from './zh_TW';
 
 const Bundle = {
-  ca: CA,
   es: ES,
   en: EN,
   de: DE,
   fr: FR,
-  pt_BR: PT_BR,
-  zh_CN: ZH_CN,
-  zh_TW: ZH_TW,
 };
 
 export default Bundle;

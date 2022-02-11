@@ -1,5 +1,5 @@
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
 import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -105,7 +105,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 description={intl.formatMessage({
                     id: 'import.description',
                     defaultMessage:
-                        'You can import FreeMind 1.0.1 and WiseMapping maps to your list of maps. Select the file you want to import.',
+                        'You can import WiseMapping maps to your list of maps. Select the file you want to import.',
                 })}
                 submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}
             >

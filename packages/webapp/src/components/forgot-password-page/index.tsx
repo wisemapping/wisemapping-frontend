@@ -13,7 +13,7 @@ import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>('');

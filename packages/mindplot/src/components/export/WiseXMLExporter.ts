@@ -19,15 +19,12 @@ import { Mindmap } from '../..';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import Exporter from './Exporter';
 
-class WiseXMLExporter implements Exporter {
+class WiseXMLExporter extends Exporter {
   mindmap: Mindmap;
 
   constructor(mindmap: Mindmap) {
+    super('wxml', 'application/xml');
     this.mindmap = mindmap;
-  }
-
-  extension(): string {
-    return 'wxml';
   }
 
   export(): Promise<string> {
@@ -38,9 +35,7 @@ class WiseXMLExporter implements Exporter {
 
     const xmlStr: string = new XMLSerializer()
       .serializeToString(document);
-    const blob = new Blob([xmlStr], { type: 'application/xml' });
-    const result = URL.createObjectURL(blob);
-    return Promise.resolve(result);
+    return Promise.resolve(xmlStr);
   }
 }
 export default WiseXMLExporter;

@@ -1,6 +1,8 @@
+import FormGroup from '@mui/material/FormGroup';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 
-export const StyledButton = styled(Button)`
-  margin: 4px;
+export const LabelListContainer = styled(FormGroup)`
+    max-height: 400px;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
 `;

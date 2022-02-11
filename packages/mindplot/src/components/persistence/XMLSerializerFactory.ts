@@ -25,7 +25,7 @@ import XMLSerializerTango from './XMLSerializerTango';
 import Mindmap from '../model/Mindmap';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 
-const codeToSerializer = [
+const codeToSerializer: { codeName: string, serializer, migrator }[] = [
   {
     codeName: ModelCodeName.BETA,
     serializer: XMLSerializerBeta,
@@ -86,9 +86,9 @@ class XMLSerializerFactory {
         // eslint-disable-next-line new-cap
         if (found) result = new (codeToSerializer[i].serializer)();
       } else {
-        const { migrator: Migrator } = codeToSerializer[i];
-        // @ts-ignore
-        result = new Migrator(result);
+        const { migrator } = codeToSerializer[i];
+        // eslint-disable-next-line new-cap
+        result = new migrator(result);
       }
     }
     $assert(result, `Cound not find serialized for ${version}`);

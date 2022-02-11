@@ -15,4 +15,17 @@ export const StyledLogo = styled.div`
     background: url(${LogoTextBlackSvg}) no-repeat;
     width: 90px;
     height: 40px;
-`
+`;
+
+export const Notifier = styled.div`
+    border: 1px solid rgb(241, 163, 39);
+    background-color: rgb(252, 235, 192);
+    border-radius: 3px;
+    position: fixed;
+    padding: 5px 9px;
+    color: back;
+    white-space: nowrap;
+    margin-top: 5px;
+    display: none;
+    bottom: 10px;
+`;

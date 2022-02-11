@@ -15,20 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from '../..';
 import Exporter from './Exporter';
 
-class SVGExporter implements Exporter {
+class SVGExporter extends Exporter {
   private svgElement: Element;
 
   private prolog = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
 
-  constructor(mindmap: Mindmap, svgElement: Element, centerImgage = false) {
+  constructor(svgElement: Element) {
+    super('svg', 'image/svg+xml');
     this.svgElement = svgElement;
-  }
-
-  extension(): string {
-    return 'svg';
   }
 
   export(): Promise<string> {
@@ -47,10 +43,8 @@ class SVGExporter implements Exporter {
     const svgElement = svgDoc.getElementsByTagName('svg')[0];
     svgElement.setAttribute('style', 'background-color:white');
 
-    const svgResult = new XMLSerializer()
+    const result = new XMLSerializer()
       .serializeToString(svgDoc);
-    const blob = new Blob([svgResult], { type: 'image/svg+xml' });
-    const result = URL.createObjectURL(blob);
     return Promise.resolve(result);
   }
 

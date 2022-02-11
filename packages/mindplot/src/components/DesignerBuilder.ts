@@ -33,25 +33,35 @@ export function buildDesigner(options: DesignerOptions): Designer {
   // Register load events ...
   designer = new Designer(options, divContainer);
   designer.addEvent('loadSuccess', () => {
-    // @ts-ignore
-    window.mindmapLoadReady = true;
+    globalThis.mindmapLoadReady = true;
     console.log('Map loadded successfully');
   });
 
-  const onerrorFn = (message: string, url, lineNo) => {
-    // Close loading dialog ...
-    // @ts-ignore
-    if (window.waitDialog) {
-      // @ts-ignore
-      window.waitDialog.close();
-      // @ts-ignore
-      window.waitDialog = null;
-    }
+  const onerrorFn = (msg: string, url: string, lineNo: number, columnNo: number, error: Error) => {
+    const message = [
+      `Message: ${msg}`,
+      `URL: ${url}`,
+      `Line: ${lineNo}`,
+      `Column: ${columnNo}`,
+    ].join(' - ');
+    console.log(message);
+
+    // Send error to server ...
+    $.ajax({
+      method: 'post',
+      url: '/c/restful/logger/editor',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      data: JSON.stringify({
+        jsErrorMsg: message,
+        jsStack: JSON.stringify(error),
+        userAgent: navigator.userAgent,
+        mapId: options.mapId,
+      }),
+    });
 
     // Open error dialog only in case of mindmap loading errors. The rest of the error are reported but not display the dialog.
     // Remove this in the near future.
-    // @ts-ignore
-    if (!window.mindmapLoadReady) {
+    if (!globalThis.mindmapLoadReady) {
       $notifyModal($msg('UNEXPECTED_ERROR_LOADING'));
     }
   };
@@ -64,7 +74,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Register toolbar event ...
   if ($('#toolbar').length) {
-    const menu = new Menu(designer, 'toolbar', options.mapId ? options.mapId : 'unknown');
+    const menu = new Menu(designer, 'toolbar');
 
     //  If a node has focus, focus can be move to another node using the keys.
     designer.cleanScreen = () => {

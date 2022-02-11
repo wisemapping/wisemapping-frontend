@@ -8,15 +8,15 @@ import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import dayjs from 'dayjs';
 
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import Tooltip from '@material-ui/core/Tooltip';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import Tooltip from '@mui/material/Tooltip';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
 
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const intl = useIntl();
@@ -99,7 +99,7 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                         </TableCell>
                                         <TableCell align="left">
                                             <Link
-                                                href={`c/maps/${mapId}/${row.id}/view`}
+                                                href={`/c/maps/${mapId}/${row.id}/view`}
                                                 target="history"
                                             >
                                                 <FormattedMessage

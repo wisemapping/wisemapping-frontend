@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "5.0.2",
+    "version": "5.0.3",
     "main": "app.jsx",
     "scripts": {
         "start": "webpack serve --config webpack.dev.js ",
@@ -56,14 +56,18 @@
         "webpack-merge": "^5.7.3"
     },
     "dependencies": {
-        "@material-ui/core": "^4.11.1",
-        "@material-ui/icons": "^4.11.2",
-        "@material-ui/lab": "^4.0.0-alpha.57",
+        "@emotion/react": "^11.7.1",
+        "@emotion/styled": "^11.6.0",
+        "@mui/icons-material": "^5.3.0",
+        "@mui/lab": "^5.0.0-alpha.67",
+        "@mui/material": "^5.3.0",
+        "@mui/styles": "^5.3.0",
         "@reduxjs/toolkit": "^1.5.0",
         "@wisemapping/editor": "^0.4.0",
+        "@wisemapping/mindplot": "^5.0.2",
         "axios": "^0.21.0",
-        "dayjs": "^1.10.4",
-        "react": "^17.0.0",
+        "dayjs": "^1.10.7",
+        "react": "^17.0.2",
         "react-dom": "^17.0.0",
         "react-ga": "^3.3.0",
         "react-google-recaptcha": "^2.1.0",

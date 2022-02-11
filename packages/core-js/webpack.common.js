@@ -28,5 +28,8 @@ module.exports = {
     resolve: {
         extensions: ['.js'],
     },
-    plugins: [new CleanWebpackPlugin()],
+    plugins: [new CleanWebpackPlugin({
+        dangerouslyAllowCleanPatternsOutsideProject: true,
+        dry: false,
+    })],
 };

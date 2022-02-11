@@ -1,6 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable no-undef */
-/* eslint-disable vars-on-top */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -31,12 +28,12 @@ import LocalStorageManager from './components/LocalStorageManager';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 
 // This hack is required to initialize Bootstrap. In future, this should be removed.
-// @ts-ignore
-global.jQuery = jquery;
-require('@libraries/bootstrap/js/bootstrap');
+const globalAny: any = global;
+globalAny.jQuery = jquery;
+require('../../../libraries/bootstrap/js/bootstrap.min');
 
 // Configure designer options ...
-let persistence:PersistenceManager;
+let persistence: PersistenceManager;
 if (!global.memoryPersistence && !global.readOnly) {
   persistence = new RESTPersistenceManager({
     documentUrl: '/c/restful/maps/{id}/document',

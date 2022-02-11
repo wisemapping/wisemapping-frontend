@@ -18,15 +18,17 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import FeatureModel from '../model/FeatureModel';
+import FeatureType from '../model/FeatureType';
 
 class AddFeatureToTopicCommand extends Command {
   private _topicId: number;
 
-  private _featureType: string;
+  private _featureType: FeatureType;
 
   private _attributes: object;
 
-  private _featureModel: any;
+  private _featureModel: FeatureModel;
 
   /*
     * @classdesc This command class handles do/undo of adding features to topics, e.g. an
@@ -38,7 +40,7 @@ class AddFeatureToTopicCommand extends Command {
     * @extends mindplot.Command
     * @see mindplot.model.FeatureModel and subclasses
     */
-  constructor(topicId: number, featureType: string, attributes: object) {
+  constructor(topicId: number, featureType: FeatureType, attributes: object) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert(featureType, 'featureType can not be null');
     $assert(attributes, 'attributes can not be null');

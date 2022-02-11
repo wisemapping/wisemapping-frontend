@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Tooltip from '@material-ui/core/Tooltip';
-import PersonSharpIcon from '@material-ui/icons/PersonSharp';
-import EditSharpIcon from '@material-ui/icons/EditSharp';
-import VisibilitySharpIcon from '@material-ui/icons/VisibilitySharp';
+import Tooltip from '@mui/material/Tooltip';
+import PersonSharpIcon from '@mui/icons-material/PersonSharp';
+import EditSharpIcon from '@mui/icons-material/EditSharp';
+import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 
 import { FormattedMessage } from 'react-intl';
 import { Role } from '../../../classes/client';

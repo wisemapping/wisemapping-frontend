@@ -22,9 +22,9 @@ import { TopicShape } from '../model/INodeModel';
 import ConnectionLine from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
-import { FeatureType } from '../model/FeatureModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
+import FeatureType from '../model/FeatureType';
 
 class XMLSerializerPela implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -40,7 +40,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     const mapElem = document.createElement('map');
     const name = mindmap.getId();
     if ($defined(name)) {
-      mapElem.setAttribute('name', this.rmXmlInv(name));
+      mapElem.setAttribute('name', this._rmXmlInv(name));
     }
     const version = mindmap.getVersion();
     if ($defined(version)) {
@@ -61,7 +61,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     relationships.forEach((relationship) => {
       if (
         mindmap.findNodeById(relationship.getFromNode()) !== null
-                && mindmap.findNodeById(relationship.getToNode()) !== null
+        && mindmap.findNodeById(relationship.getToNode()) !== null
       ) {
         // Isolated relationships are not persisted ....
         const relationDom = XMLSerializerPela._relationshipToXML(document, relationship);
@@ -72,7 +72,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     return document;
   }
 
-  _topicToXML(document: Document, topic: NodeModel) {
+  protected _topicToXML(document: Document, topic: NodeModel) {
     const parentTopic = document.createElement('topic');
 
     // Set topic attributes...
@@ -133,10 +133,10 @@ class XMLSerializerPela implements XMLMindmapSerializer {
 
     if (
       $defined(fontFamily)
-            || $defined(fontSize)
-            || $defined(fontColor)
-            || $defined(fontWeight)
-            || $defined(fontStyle)
+      || $defined(fontSize)
+      || $defined(fontColor)
+      || $defined(fontWeight)
+      || $defined(fontStyle)
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -168,10 +168,10 @@ class XMLSerializerPela implements XMLMindmapSerializer {
         const key = attributesKeys[attrIndex];
         const value = attributes[key];
         if (key === 'text') {
-          const cdata = document.createCDATASection(this.rmXmlInv(value));
+          const cdata = document.createCDATASection(this._rmXmlInv(value));
           featureDom.appendChild(cdata);
         } else {
-          featureDom.setAttribute(key, this.rmXmlInv(value));
+          featureDom.setAttribute(key, this._rmXmlInv(value));
         }
       }
       parentTopic.appendChild(featureDom);
@@ -187,12 +187,12 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     return parentTopic;
   }
 
-  _noteTextToXML(document: Document, elem: Element, text: string) {
+  protected _noteTextToXML(document: Document, elem: Element, text: string) {
     if (text.indexOf('\n') === -1) {
-      elem.setAttribute('text', this.rmXmlInv(text));
+      elem.setAttribute('text', this._rmXmlInv(text));
     } else {
       const textDom = document.createElement('text');
-      const cdata = document.createCDATASection(this.rmXmlInv(text));
+      const cdata = document.createCDATASection(this._rmXmlInv(text));
       textDom.appendChild(cdata);
       elem.appendChild(textDom);
     }
@@ -284,7 +284,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     return mindmap;
   }
 
-  _deserializeNode(domElem: Element, mindmap: Mindmap) {
+  protected _deserializeNode(domElem: Element, mindmap: Mindmap) {
     const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
 
     // Load attributes...
@@ -493,8 +493,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
      * @param in The String whose non-valid characters we want to remove.
      * @return The in String, stripped of non-valid characters.
      */
-  // eslint-disable-next-line class-methods-use-this
-  rmXmlInv(str) {
+  protected _rmXmlInv(str: string) {
     if (str == null || str === undefined) return null;
 
     let result = '';
@@ -502,11 +501,11 @@ class XMLSerializerPela implements XMLMindmapSerializer {
       const c = str.charCodeAt(i);
       if (
         c === 0x9
-                || c === 0xa
-                || c === 0xd
-                || (c >= 0x20 && c <= 0xd7ff)
-                || (c >= 0xe000 && c <= 0xfffd)
-                || (c >= 0x10000 && c <= 0x10ffff)
+        || c === 0xa
+        || c === 0xd
+        || (c >= 0x20 && c <= 0xd7ff)
+        || (c >= 0xe000 && c <= 0xfffd)
+        || (c >= 0x10000 && c <= 0x10ffff)
       ) {
         result += str.charAt(i);
       }
