@@ -28,7 +28,8 @@
         "cy:run": "cypress run",
         "test:unit": "jest ./test/unit/export/*.ts ./test/unit/layout/*.js",
         "test:integration": "start-server-and-test playground http-get://localhost:8083 cy:run",
-        "test": "yarn test:unit && yarn test:integration"
+        "test": "yarn test:unit && yarn test:integration",
+        "generate": "ts-node ./src/components/export/freemind/generatedClasses.ts"
     },
     "private": false,
     "dependencies": {
@@ -69,6 +70,7 @@
         "start-server-and-test": "^1.14.0",
         "ts-jest": "^27.1.2",
         "ts-loader": "^9.2.6",
+        "ts-node": "^10.4.0",
         "webpack": "^5.44.0",
         "webpack-bundle-analyzer": "^4.5.0",
         "webpack-cli": "^4.7.2",

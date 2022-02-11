@@ -20,6 +20,7 @@ import Exporter from './Exporter';
 import MDExporter from './MDExporter';
 import TxtExporter from './TxtExporter';
 import WiseXMLExporter from './WiseXMLExporter';
+import FreemindExporter from './FreemindExporter';
 
 type textType = 'wxml' | 'txt' | 'mm' | 'csv' | 'md';
 
@@ -35,6 +36,9 @@ class TextExporterFactory {
         break;
       case 'md':
         result = new MDExporter(mindmap);
+        break;
+      case 'mm':
+        result = new FreemindExporter(mindmap);
         break;
       default:
         throw new Error(`Unsupported type ${type}`);
