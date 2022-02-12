@@ -349,7 +349,7 @@ class Relationship extends ConnectionLine {
     return this._model.getId();
   }
 
-  fireEvent(type: string, event: any): void {
+  fireEvent(type: string, event): void {
     const elem = this._line2d;
     elem.trigger(type, event);
   }

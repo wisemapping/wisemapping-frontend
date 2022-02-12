@@ -57,7 +57,7 @@ class BinaryImageExporter extends Exporter {
 
     // Render the image and wait for the response ...
     const img = new Image();
-    const result = new Promise<string>((resolve, reject) => {
+    const result = new Promise<string>((resolve) => {
       img.onload = () => {
         const ctx = canvas.getContext('2d');
         // Scale for retina ...

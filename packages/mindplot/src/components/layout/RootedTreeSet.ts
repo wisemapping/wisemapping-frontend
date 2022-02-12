@@ -24,7 +24,6 @@ class RootedTreeSet {
 
   protected _children: Node[];
 
-
   constructor() {
     this._rootNodes = [];
   }
@@ -293,7 +292,7 @@ class RootedTreeSet {
     }
   }
 
-  _plot(canvas, node: Node, root?) {
+  _plot(canvas, node: Node) {
     const children = this.getChildren(node);
     const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;
     const cy = node.getPosition().y + canvas.height / 2 - node.getSize().height / 2;

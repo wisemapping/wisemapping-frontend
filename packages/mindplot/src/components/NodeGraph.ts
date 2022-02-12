@@ -105,7 +105,7 @@ abstract class NodeGraph {
     return this._size;
   }
 
-  setSize(size: SizeType, force?: boolean) {
+  setSize(size: SizeType) {
     this._size.width = size.width;
     this._size.height = size.height;
   }
