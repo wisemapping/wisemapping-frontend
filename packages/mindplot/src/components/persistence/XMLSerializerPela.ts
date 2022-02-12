@@ -226,14 +226,6 @@ class XMLSerializerPela implements XMLMindmapSerializer {
     return result;
   }
 
-  /**
-     * @param dom
-     * @param mapId
-     * @throws will throw an error if dom is null or undefined
-     * @throws will throw an error if mapId is null or undefined
-     * @throws will throw an error if the document element is not consistent with a wisemap's root
-     * element
-     */
   loadFromDom(dom: Document, mapId: string) {
     $assert(dom, 'dom can not be null');
     $assert(mapId, 'mapId can not be null');
@@ -414,6 +406,16 @@ class XMLSerializerPela implements XMLMindmapSerializer {
         }
       }
     });
+
+    // Workaround: for some reason, some saved maps have holes in the order.
+    topic
+      .getChildren()
+      .forEach((child, index) => {
+        if (child.getOrder() !== index) {
+          child.setOrder(index);
+          console.log('Toppic with order sequence hole. Introducing fix.');
+        }
+      });
 
     return topic;
   }
