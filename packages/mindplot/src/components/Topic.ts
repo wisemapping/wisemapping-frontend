@@ -104,15 +104,10 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  /**
-     * @param {String} type the topic shape type
-     * @see {@link mindplot.model.INodeModel}
-     */
-  setShapeType(type) {
+  setShapeType(type: string): void {
     this._setShapeType(type, true);
   }
 
-  /** @return {mindplot.Topic} parent topic */
   getParent(): Topic | null {
     return this._parent;
   }
@@ -162,7 +157,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** @return {String} topic shape type */
-  getShapeType() {
+  getShapeType(): string {
     const model = this.getModel();
     let result = model.getShapeType();
     if (!$defined(result)) {
