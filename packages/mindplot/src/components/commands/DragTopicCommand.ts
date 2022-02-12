@@ -62,7 +62,7 @@ class DragTopicCommand extends Command {
     const origPosition = topic.getPosition();
 
     // Disconnect topic ..
-    if ($defined(origParentTopic) && origParentTopic.getId() !== this._parentId) {
+    if ($defined(origParentTopic)) {
       commandContext.disconnect(topic);
     }
 
@@ -76,17 +76,15 @@ class DragTopicCommand extends Command {
     }
 
     // Finally, connect topic ...
-    if (!$defined(origParentTopic) || origParentTopic.getId() !== this._parentId) {
-      if ($defined(this._parentId)) {
-        const parentTopic = commandContext.findTopics([this._parentId])[0];
-        commandContext.connect(topic, parentTopic);
-      }
+    if ($defined(this._parentId)) {
+      const parentTopic = commandContext.findTopics([this._parentId])[0];
+      commandContext.connect(topic, parentTopic);
+    }
 
-      // Backup old parent id ...
-      this._parentId = null;
-      if ($defined(origParentTopic)) {
-        this._parentId = origParentTopic.getId();
-      }
+    // Backup old parent id ...
+    this._parentId = null;
+    if ($defined(origParentTopic)) {
+      this._parentId = origParentTopic.getId();
     }
     topic.setVisibility(true);
 
