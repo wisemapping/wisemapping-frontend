@@ -14,7 +14,6 @@ const EditorPage = ({ mapId, ...props }: EditorPropsType): React.ReactElement =>
 
     // Load user locale ...
     const userLocale = AppI18n.getUserLocale();
-    console.log("Locale:" + userLocale.code);
 
     return <>
         <Editor {...props} onAction={setActiveDialog} locale={userLocale.code} />
