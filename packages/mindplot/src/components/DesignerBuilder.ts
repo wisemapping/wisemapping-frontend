@@ -46,7 +46,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
     ].join(' - ');
     console.error(message);
 
-    alert(error.stack);
     // Send error to server ...
     $.ajax({
       method: 'post',
@@ -66,7 +65,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
       $notifyModal($msg('UNEXPECTED_ERROR_LOADING'));
     }
   };
-  window.onerror = onerrorFn;
+  // window.onerror = onerrorFn;
 
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;
