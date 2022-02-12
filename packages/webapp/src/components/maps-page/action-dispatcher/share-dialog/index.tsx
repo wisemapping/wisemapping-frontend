@@ -85,11 +85,13 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         const name = event.target.name;
         const value = event.target.value;
         setModel({ ...model, [name as keyof ShareModel]: value });
+        event.stopPropagation();
     };
 
     const handleOnAddClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.stopPropagation();
         addMutation.mutate(model);
+        event.stopPropagation();
     };
 
     const handleOnDeleteClick = (
