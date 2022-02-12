@@ -1,0 +1,305 @@
+<map name="844354" version="tango">
+    <topic central="true" text="Школа Интернет Профессий" id="1" fontStyle=";15;;;;">
+        <topic position="281,-3696" order="0" text="Идеология" id="7" fontStyle=";15;;;;">
+            <topic position="441,-3828" order="0" text="Видение" id="14" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="660,-4554" order="0" text="Условия &quot;выживания&quot;" id="172" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="892,-4620" order="0" text="Автономия" id="174" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="915,-4554" order="1" text="Использование" id="176" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="872,-4488" order="2" text="Польза" id="175" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="588,-4356" order="1" text="Ресурсы" id="171" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="732,-4422" order="0" text="Личные" id="177" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="758,-4356" order="1" text="Добываемые" id="178" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="761,-4290" order="2" text="Создаваемые" id="179" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="579,-4158" order="2" text="Обмен" id="173" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="766,-4224" order="0" text="Война за ресурсы" id="180" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="764,-4158" order="1" text="Обмен ресурсами" id="181" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="794,-4092" order="2" text="Объединение ресурсов" id="182" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="594,-3960" order="3" text="Ценность" id="183" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="752,-4026" order="0" text="Создание" id="184" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="773,-3960" order="1" text="Предложение" id="185" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="736,-3894" order="2" text="Обмен" id="186" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="569,-3432" order="4" text="Роль" id="187" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="720,-3762" order="0" text="Собственник" id="188" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="942,-3828" order="0" text="Постановка целей" id="211" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="966,-3762" order="1" text="Инвестиции в системы" id="210" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1030,-3696" order="2" text="Контроль распределения ресурсов" id="217" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="747,-3366" order="2" text="Предприниматель" id="189" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="1105,-3432" order="0" text="Создание систем повышения ценности" id="208" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1060,-3366" order="1" text="Поиск выгодных форм обмена" id="209" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="997,-3300" order="2" text="Масштабирование" id="216" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="716,-3234" order="3" text="Управленец" shrink="true" id="190" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="964,-3300" order="0" text="Организация процессов" id="206" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="954,-3234" order="1" text="Контроль результатов" id="207" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1080,-3168" order="2" text="Карьера от наемного сотрудника до партнера" id="215" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="704,-3168" order="4" text="Продавец" shrink="true" id="191" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="891,-3234" order="0" text="Коммуникации" id="204" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="848,-3168" order="1" text="Обмен" id="205" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1119,-3102" order="2" text="Карьера от ставки с премиями к распределению прибыли" id="214" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="715,-3102" order="5" text="Специалист" shrink="true" id="192" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="937,-3168" order="0" text="Создание ценности" id="200" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="954,-3102" order="1" text="Переработка ресурсов" id="203" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1008,-3036" order="2" text="Карьера от зарплаты к гонорару" id="213" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="730,-3036" order="6" text="Обслуживание" shrink="true" id="193" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="982,-3102" order="0" text="Обеспечение условий" id="201" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1002,-3036" order="1" text="Обслуживание процессов" id="202" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1089,-2970" order="2" text="Карьера от внутреннего найма к аутсорсу" id="212" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="702,-3564" order="1" text="Инвестор" id="257" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="977,-3630" order="1" text="Инвестиции в людей и проекты" id="258" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1004,-3498" order="2" text="Управление финансами и ресурсами" id="259" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1173,-3564" order="1" text="Создание множественных источников ресурсов, плодов и ценностей" id="260" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                </topic>
+            </topic>
+            <topic position="446,-2970" order="1" text="Ценности" shrink="true" id="12" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="706,-3267" order="0" text="Социальная ответственность" id="223" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="671,-3201" order="1" text="Предпринимательство" id="226" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="638,-3135" order="2" text="Компетентность" id="227" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="750,-3069" order="3" text="Равные возможности на рынке труда" id="219" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="699,-3003" order="4" text="Финансовая независимость" id="220" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="694,-2937" order="5" text="Право на самореализацию" id="218" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="695,-2871" order="6" text="Свобода самоопределения" id="221" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="674,-2805" order="7" text="Социальное равенство" id="222" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="709,-2739" order="8" text="Уважение к любому возрасту" id="225" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="678,-2673" order="9" text="Обеспеченная старость" id="224" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="451,-2904" order="2" text="Принципы" shrink="true" id="13" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="678,-3003" order="0" text="Честность отношений" id="228" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="722,-2937" order="1" text="Ответственность за результат" id="230" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="698,-2871" order="2" text="Эффективность действий" id="231" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="685,-2805" order="3" text="Личная вовлеченность" id="229" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="453,-2838" order="3" text="Стандарты" shrink="true" id="15" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="664,-2970" order="0" text="Профессионализм" id="236" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="663,-2904" order="1" text="Высокое качество" id="232" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="639,-2838" order="2" text="Четкие сроки" id="234" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="695,-2772" order="3" text="Стабильные результаты" id="233" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="714,-2706" order="4" text="Достойное вознаграждение" id="235" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="436,-2772" order="4" text="Методы" shrink="true" id="16" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="644,-3003" order="0" text="Доступное обучение" id="237" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="788,-2937" order="1" text="Помощь в трудоустройстве/поиске сотрудников" id="238" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="725,-2871" order="2" text="Профессиональная инфраструктура" id="240" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="692,-2805" order="3" text="Консалтинг и Сопровождение" id="241" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="689,-2739" order="4" text="Аутсорсинг задач и проектов" id="242" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="742,-2673" order="5" text="Аутстаффинг сотрудников и процессов" id="239" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="597,-2607" order="6" text="Нетворкинг" id="243" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="627,-2541" order="7" text="Арбитраж споров" id="244" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+        </topic>
+        <topic position="264,-2706" order="2" text="Миссия" shrink="true" id="8" fontStyle=";15;;;;">
+            <topic position="500,-2772" order="0" text="На что мы хотим повлиять" shrink="true" id="17" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="939,-2805" order="0" text="Положение людей предпенсионного возраста" id="245" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="981,-2739" order="1" text="Уровень диджитализации в малом и среднем бизнесе" id="246" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="484,-2706" order="1" text="Что мы хотим изменить" shrink="true" id="18" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="869,-2772" order="0" text="Подход к поиску и найму сотрудников" id="247" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="897,-2706" order="1" text="Ситуацию на рынке интернет специалистов" id="248" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="909,-2640" order="2" text="Степень доверия и взаимной ответственности" id="249" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="476,-2640" order="2" text="Что мы хотим создать" shrink="true" id="19" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="870,-2838" order="0" text="Центр подготовки интернет специалистов" id="250" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="837,-2772" order="1" text="Центр обучения предпринимателей" id="251" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="934,-2706" order="2" text="Систему профессиональных стандартов и требований" id="256" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="993,-2640" order="3" text="Площадку для коммуникации специалистов и предпринимателей" id="252" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="880,-2574" order="4" text="Агентство трудоустройства и аутстаффинга" id="253" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="959,-2508" order="5" text="Диджитал агентство по аутсорсу и управлению проектами" id="254" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1093,-2442" order="6" text="Профессиональное комьюнити интернет специалистов и онлайн предпринимателей" id="255" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+        </topic>
+        <topic position="283,-2640" order="4" text="Концепция" shrink="true" id="6" fontStyle=";15;;;;">
+            <topic position="524,-2871" order="0" text="Формулировка проблем" id="20" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="511,-2805" order="1" text="Определение причин" id="21" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="495,-2739" order="2" text="Постановка целей" id="22" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="491,-2673" order="3" text="План достижения" id="23" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="601,-2607" order="4" text="Список необходимых преобразований" id="24" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="546,-2541" order="5" text="Список необходимых шагов" id="25" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="562,-2475" order="6" text="Список необходимых ресурсов" id="26" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="586,-2409" order="7" text="Список необходимых инструментов" id="27" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+        </topic>
+        <topic position="354,-1617" order="6" text="Путь Героя (клиента)" id="9" fontStyle=";15;;;;">
+            <note><![CDATA[Описывается для каждой целевой группы (соискатели/работодатели)]]></note>
+            <topic position="584,-2244" order="0" text="Точка А" id="28" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="845,-2541" order="0" text="Главная неудовлетворенность" id="80" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1200,-2574" order="0" text="Существующие проблемы" id="85" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="1240,-2508" order="1" text="Неудовлетворенные потребности" id="86" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="824,-2442" order="1" text="Причины глазами клиента " id="81" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="740,-2343" order="2" text="Состояния" id="82" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="937,-2376" order="0" text="Эмоциональное" id="98" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="916,-2310" order="1" text="Физическое" id="99" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="722,-2211" order="3" text="Страхи" id="83" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1010,-2244" order="0" text="Связанные с неудовлетворенностью" id="100" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="1371,-2244" order="0" text="Как продукт избавит" id="101" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                    <topic position="941,-2178" order="1" text="Связанные с решением" id="102" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="1301,-2178" order="0" text="Какие свойства продукта избавят" id="103" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                </topic>
+                <topic position="733,-2013" order="4" text="Желания" id="84" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="981,-2112" order="0" text="Главное внешнее желание" id="107" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="988,-2046" order="1" text="Скрытые мотивы и желания" id="108" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="894,-1947" order="2" text="Ожидания" id="109" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="1074,-1980" order="0" text="Если решить" id="110" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1089,-1914" order="1" text="Если не решать" id="111" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                </topic>
+            </topic>
+            <topic position="584,-1518" order="1" text="Точка Б" id="29" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="759,-1782" order="0" text="Приобретения" id="90" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1097,-1782" order="0" text="Чем станет обладать из того что хотел" id="91" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                        <topic position="1418,-1848" order="0" text="Первичные" id="92" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1417,-1782" order="1" text="Вторичные" id="93" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                        <topic position="1406,-1716" order="2" text="Скрытые" id="94" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    </topic>
+                </topic>
+                <topic position="725,-1584" order="1" text="Выгоды" id="87" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="877,-1650" order="0" text="В усилиях" id="95" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="885,-1584" order="1" text="Во времени" id="96" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="876,-1518" order="2" text="В деньгах" id="97" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="739,-1419" order="2" text="Состояния" id="88" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="936,-1452" order="0" text="Эмоциональное" id="104" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="915,-1386" order="1" text="Физическое" id="105" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="724,-1254" order="3" text="Оценки" id="89" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="886,-1320" order="0" text="Самооценка" id="106" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="879,-1254" order="1" text="Признание" id="112" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="922,-1188" order="2" text="Изменение статуса" id="113" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+            </topic>
+            <topic position="575,-891" order="2" text="Этапы" id="30" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="785,-1122" order="0" text="Необходимые условия" id="31" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="786,-1056" order="1" text="Необходимые ресурсы" id="32" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="779,-990" order="2" text="Необходимые знания" id="34" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="782,-924" order="3" text="Необходимые навыки" id="35" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="705,-858" order="4" text="Задачи" id="36" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="790,-792" order="5" text="Необходимые действия" id="33" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="815,-726" order="6" text="Промежуточные результаты" id="37" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="875,-660" order="7" text="Условия перехода к следующему этапу" id="38" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+        </topic>
+        <topic position="328,1056" order="8" text="Матрица продуктов" id="10" fontStyle=";15;;;;">
+            <topic position="660,-561" order="0" text="Комплексное решение под ключ" id="39" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="963,-594" order="0" text="Для учеников" id="114" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1299,-594" order="0" text="Обучение+карьера в нашей структуре" id="116" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="1014,-528" order="1" text="Для предпринимателей" id="115" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1338,-528" order="0" text="Интернет проект под ключ" id="117" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+            </topic>
+            <topic position="695,-429" order="1" text="Комплексное решение руками клиента" id="40" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="1275,-462" order="0" text="Обучение+инструменты трудоустройства и продуктивности" shrink="true" id="118" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1375,-396" order="1" text="Обучение управлению интернет проектами+инструменты найма и управления" id="119" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="689,231" order="2" text="Решение конкретного этапа под ключ" id="41" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="1044,-330" order="0" text="Постановка целей" id="141" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1023,-231" order="1" text="Анализ рынка" id="120" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1265,-264" order="0" text="На уровне компании" id="133" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="1280,-198" order="1" text="На уровне специалиста" id="134" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="1019,-132" order="2" text="SWOT анализ" id="132" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1072,0" order="3" text="Упаковка предложения" id="121" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                    <topic position="1376,-66" order="0" text="Ценностная концепция" id="137" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="1390,0" order="1" text="Ценностное предложение" id="138" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                    <topic position="1376,66" order="2" text="Торговое предложение" id="139" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                </topic>
+                <topic position="1110,132" order="4" text="Разработка структуры проекта" id="122" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1163,198" order="5" text="Разработка стратегии достижения целей" id="123" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1115,264" order="6" text="Разработка тактического плана" id="140" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1081,330" order="7" text="Техническая реализация" id="126" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1072,396" order="8" text="Производство контента" id="124" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1067,462" order="9" text="Настройка интеграций " id="125" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1051,528" order="10" text="Настройка трафика" id="127" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1067,594" order="11" text="Обработка обращений" id="130" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1101,660" order="12" text="Техническое сопровождение" id="128" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1089,726" order="13" text="Сопровождение процессов" id="131" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1070,792" order="14" text="Клиентская поддержка" id="129" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="723,858" order="3" text="Решение конкретного этапа руками клиента" id="42" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="692,924" order="4" text="Решение конкретной задачи под ключ" id="43" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="726,990" order="5" text="Решение конкретной задачи руками клиента" id="44" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="663,1155" order="6" text="Источник необходимых ресурсов" id="45" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="996,1056" order="0" text="База специалистов" id="142" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="998,1122" order="1" text="Штат специалистов" id="143" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1002,1188" order="2" text="База работодателей" id="144" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1042,1254" order="3" text="База партнерских проектов" id="167" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="671,1452" order="7" text="Набор необходимых инструментов" id="46" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="954,1320" order="0" text="Хостинг" id="145" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="958,1386" order="1" text="Сервисы" id="146" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="962,1452" order="2" text="Шаблоны" id="147" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="982,1518" order="3" text="Инструменты" id="148" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="939,1584" order="4" text="Софт" id="149" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="634,2079" order="9" text="Способ получения навыков" id="48" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="917,1914" order="0" text="Мастер-классы" id="150" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="893,1980" order="1" text="Воркшопы" id="151" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="896,2046" order="2" text="Интенсивы" id="158" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="888,2112" order="3" text="Тренинги" id="152" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="937,2178" order="4" text="Программы курсов" id="159" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="902,2244" order="5" text="Стажировки" id="153" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="724,2508" order="10" text="Создание среды с необходимыми условиями" id="49" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="1081,2310" order="0" text="Сообщество" id="160" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1149,2376" order="1" text="Платформа для общения" id="161" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1074,2442" order="2" text="Коворкинг" id="162" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1080,2508" order="3" text="Нетворкинг" id="163" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1267,2574" order="4" text="Платформа для поиска партнеров/соискателей" id="164" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1152,2640" order="5" text="Платформа для обучения" id="165" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="1141,2706" order="6" text="Платформа для работы" id="166" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+            <topic position="628,1749" order="8" text="База необходимых знаний" id="47" fontStyle=";15;;;;" bgColor="rgb(224,229,239)">
+                <topic position="890,1650" order="0" text="Публикации" id="154" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="920,1716" order="1" text="Открытые лекции" id="155" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="962,1782" order="2" text="Образовательные каналы" id="156" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+                <topic position="923,1848" order="3" text="Платное обучение" id="157" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            </topic>
+        </topic>
+        <topic position="303,3036" order="10" text="Бизнес модель" id="2" fontStyle=";15;;;;">
+            <topic position="553,2772" order="0" text="Клиентские сегменты" id="71" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="575,2838" order="1" text="Ценностное предложение" id="72" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="565,2904" order="2" text="Способы коммуникации" id="73" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="573,2970" order="3" text="Способы предоставления" id="74" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="598,3036" order="4" text="Ключевые виды деятельности" id="75" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="540,3102" order="5" text="Ключевые ресурсы" id="76" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="547,3168" order="6" text="Ключевые партнеры" id="77" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="545,3234" order="7" text="Структура расходов" id="78" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="541,3300" order="8" text="Источники доходов" id="79" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+        </topic>
+        <topic position="333,3630" order="12" text="Ключевые процессы" id="5" fontStyle=";15;;;;">
+            <topic position="560,3366" order="0" text="Консалтинг" id="57" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="676,3432" order="1" text="Разработка обучающих программ" id="50" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="551,3498" order="2" text="Обучение" id="53" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="625,3564" order="3" text="Создание инструментов" id="51" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="654,3630" order="4" text="Систематизация информации" id="52" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="595,3696" order="5" text="Создание условий" id="54" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="621,3762" order="6" text="Управление проектами" id="55" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="582,3828" order="7" text="Оказание услуг" id="170" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="616,3894" order="8" text="Поддержка процессов" id="56" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+        </topic>
+        <topic position="374,3960" order="14" text="Организационная структура" id="3" fontStyle=";15;;;;"/>
+        <topic position="258,4323" order="16" text="Этапы" id="60" fontStyle=";15;;;;">
+            <topic position="495,4026" order="0" text="Определение потребностей" id="61" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="425,4092" order="1" text="Анализ рынка" id="62" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="552,4158" order="2" text="Разработка ценностного предложения" id="63" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="425,4224" order="3" text="Создание MVP" id="64" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="439,4290" order="4" text="Тестовый запуск" id="68" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="388,4356" order="5" text="Анализ" id="65" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="518,4422" order="6" text="Разработка основного продукта" id="66" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="381,4488" order="7" text="Релиз" id="69" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="544,4554" order="8" text="Систематизация ключевых процесов" id="70" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+            <topic position="446,4620" order="9" text="Масштабирование" id="67" fontStyle=";15;;;;" bgColor="rgb(224,229,239)"/>
+        </topic>
+    </topic>
+</map>

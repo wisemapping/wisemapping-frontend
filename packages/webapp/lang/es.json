@@ -21,7 +21,7 @@
         "defaultMessage": "Cancelar"
     },
     "action.close-button": {
-        "defaultMessage": "Cerca"
+        "defaultMessage": "Cerrar"
     },
     "action.delete": {
         "defaultMessage": "Borrar"
@@ -60,16 +60,16 @@
         "defaultMessage": "Nuevo mapa"
     },
     "action.open": {
-        "defaultMessage": "Abierto"
+        "defaultMessage": "Abrir"
     },
     "action.print": {
-        "defaultMessage": "Impresión"
+        "defaultMessage": "Imprimir"
     },
     "action.publish": {
         "defaultMessage": "Publicar"
     },
     "action.rename": {
-        "defaultMessage": "Rebautizar"
+        "defaultMessage": "Renombar"
     },
     "action.rename-description-placeholder": {
         "defaultMessage": "Descripción"
@@ -78,10 +78,10 @@
         "defaultMessage": "Nombre"
     },
     "action.share": {
-        "defaultMessage": "Cuota"
+        "defaultMessage": "Compartir"
     },
     "changepwd.button": {
-        "defaultMessage": "Cambio"
+        "defaultMessage": "Cambiar"
     },
     "changepwd.confirm-password": {
         "defaultMessage": "Confirmar contraseña"
@@ -153,10 +153,10 @@
         "defaultMessage": "Ayuda y preguntas frecuentes"
     },
     "footer.feedback": {
-        "defaultMessage": "Reacción"
+        "defaultMessage": "Feedback"
     },
     "footer.opensource": {
-        "defaultMessage": "Fuente abierta"
+        "defaultMessage": "Código Abierto"
     },
     "footer.others": {
         "defaultMessage": "Otros"
@@ -189,13 +189,13 @@
         "defaultMessage": "Contraseña recuperada | WiseMapping"
     },
     "header.donthaveaccount": {
-        "defaultMessage": "¿No tienes una cuenta?"
+        "defaultMessage": "¿No tenes una cuenta?"
     },
     "header.haveaccount": {
         "defaultMessage": "¿Ya tienes una cuenta?"
     },
     "help.support": {
-        "defaultMessage": "Apoyo"
+        "defaultMessage": "Ayuda"
     },
     "history.no-changes": {
         "defaultMessage": "No hay cambios disponibles"
@@ -231,7 +231,7 @@
         "defaultMessage": "Última fecha de modificación"
     },
     "info.modified-tny": {
-        "defaultMessage": "ultima modificacion por"
+        "defaultMessage": "Ultima modificacion por"
     },
     "info.name": {
         "defaultMessage": "Nombre"
@@ -240,10 +240,10 @@
         "defaultMessage": "Visible públicamente"
     },
     "info.sharing": {
-        "defaultMessage": "Intercambio"
+        "defaultMessage": "Compartido"
     },
     "info.starred": {
-        "defaultMessage": "Sembrado de estrellas"
+        "defaultMessage": "Destacados"
     },
     "info.title": {
         "defaultMessage": "Información"
@@ -283,10 +283,10 @@
         "defaultMessage": "Iniciar sesión"
     },
     "login.signup": {
-        "defaultMessage": "Inscribirse"
+        "defaultMessage": "Crear cuenta"
     },
     "login.title": {
-        "defaultMessage": "Bienvenidos"
+        "defaultMessage": "Bienvenido"
     },
     "login.userinactive": {
         "defaultMessage": "Lo sentimos, tu cuenta aún no ha sido activada. Recibirás un correo electrónico de notificación cuando se active. ¡Manténganse al tanto!."
@@ -316,7 +316,7 @@
         "defaultMessage": "Crear un nuevo mapa mental"
     },
     "maps.empty-result": {
-        "defaultMessage": "No se encontró ningún registro coincidente con los criterios de filtro actuales."
+        "defaultMessage": "No se encontró ningún mapa mental coincidente con los criterios de filtro actuales."
     },
     "maps.import-desc": {
         "defaultMessage": "Importar desde otras herramientas"
@@ -331,46 +331,46 @@
         "defaultMessage": "Modificado por {by} el {on}"
     },
     "maps.nav-all": {
-        "defaultMessage": "Todo"
+        "defaultMessage": "Todos"
     },
     "maps.nav-onwned": {
-        "defaultMessage": "propiedad"
+        "defaultMessage": "Mis Mapas"
     },
     "maps.nav-public": {
-        "defaultMessage": "Público"
+        "defaultMessage": "Públicos"
     },
     "maps.nav-shared": {
-        "defaultMessage": "Comparte conmigo"
+        "defaultMessage": "Compartidos"
     },
     "maps.nav-starred": {
-        "defaultMessage": "Sembrado de estrellas"
+        "defaultMessage": "Destacados"
     },
     "maps.page-title": {
-        "defaultMessage": "Mis mapas | WiseMapping"
+        "defaultMessage": "Mis Mapas | WiseMapping"
     },
     "maps.revert": {
         "defaultMessage": "Revertir"
     },
     "maps.search-action": {
-        "defaultMessage": "Búsqueda ..."
+        "defaultMessage": "Búscar ..."
     },
     "maps.tooltip-open": {
-        "defaultMessage": "Abierto para edición"
+        "defaultMessage": "Abrir para edición"
     },
     "maps.tooltip-starred": {
-        "defaultMessage": "Sembrado de estrellas"
+        "defaultMessage": "Destacados"
     },
     "maps.view": {
         "defaultMessage": "Vista"
     },
     "menu.account": {
-        "defaultMessage": "Cuenta"
+        "defaultMessage": "Información de cuenta"
     },
     "menu.change-password": {
         "defaultMessage": "Cambia la contraseña"
     },
     "menu.signout": {
-        "defaultMessage": "Desconectar"
+        "defaultMessage": "Cerrar sesión"
     },
     "publish.button": {
         "defaultMessage": "Aceptar"
@@ -439,7 +439,7 @@
         "defaultMessage": "Editor"
     },
     "role.owner": {
-        "defaultMessage": "onwer"
+        "defaultMessage": "Dueño"
     },
     "role.viewer": {
         "defaultMessage": "Espectador"
@@ -451,16 +451,16 @@
         "defaultMessage": "Agregar mensaje"
     },
     "share.can-edit": {
-        "defaultMessage": "Poder editar"
+        "defaultMessage": "Puede editar"
     },
     "share.can-view": {
-        "defaultMessage": "Puedo ver"
+        "defaultMessage": "Puede ver"
     },
     "share.delete": {
         "defaultMessage": "Eliminar colaborador"
     },
     "share.delete-description": {
-        "defaultMessage": "Invita a personas a colaborar contigo en la creación de tu midnmap. Serán notificados por correo electrónico."
+        "defaultMessage": "Invita a personas a colaborar contigo en la creación de tu mapa mental. Serán notificados por correo electrónico."
     },
     "share.delete-title": {
         "defaultMessage": "Compartir con la otros"
@@ -473,32 +473,5 @@
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Regístrese para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
-    },
-    "accountinfo.deleteaccount": {
-        "defaultMessage": "Borrar cuenta"
-    },
-    "label.add-button": {
-        "defaultMessage": "Agregar etiqueta"
-    },
-    "label.add-for": {
-        "defaultMessage": "Edición de etiquetas para mapas:"
-    },
-    "label.add-placeholder": {
-        "defaultMessage": "Título de la etiqueta"
-    },
-    "label.change-color": {
-        "defaultMessage": "Cambiar el color de la etiqueta"
-    },
-    "label.delete-description": {
-        "defaultMessage": "se eliminará, incluidas sus asociaciones a todos los mapas existentes. ¿Quieres continuar?"
-    },
-    "label.delete-title": {
-        "defaultMessage": "Confirmar eliminación de etiqueta"
-    },
-    "label.description": {
-        "defaultMessage": "Usa etiquetas para organizar tus mapas."
-    },
-    "label.title": {
-        "defaultMessage": "Agregar una etiqueta"
     }
 }

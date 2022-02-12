@@ -58,6 +58,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
         mapId: options.mapId,
       }),
     });
+
     // Open error dialog only in case of mindmap loading errors. The rest of the error are reported but not display the dialog.
     // Remove this in the near future.
     if (!globalThis.mindmapLoadReady) {
