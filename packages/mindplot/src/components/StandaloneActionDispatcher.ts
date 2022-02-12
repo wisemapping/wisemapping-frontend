@@ -79,11 +79,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert($defined(topicId), 'topicsId can not be null');
     $assert($defined(position), 'position can not be null');
 
-    const commandFunc = (topic, value) => {
+    const commandFunc = (topic: Topic, pos: Point) => {
       const result = topic.getPosition();
       EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
         node: topic.getModel(),
-        position: value,
+        position: pos,
       });
       return result;
     };
@@ -163,7 +163,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
-    const commandFunc = (topic, commandColor) => {
+    const commandFunc = (topic: Topic, commandColor: string) => {
       const result = topic.getBackgroundColor();
       topic.setBackgroundColor(commandColor);
       return result;
@@ -195,11 +195,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(size, 'size can not be null');
 
-    const commandFunc = (topic, commandSize) => {
+    const commandFunc = (topic: Topic, commandSize: number) => {
       const result = topic.getFontSize();
       topic.setFontSize(commandSize, true);
 
-      topic._adjustShapes();
+      topic.adjustShapes();
       return result;
     };
 
