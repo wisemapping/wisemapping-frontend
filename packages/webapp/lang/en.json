@@ -1,477 +1,498 @@
 {
-    "account.delete-warning": {
-        "defaultMessage": "Keep in mind that you will not be able retrieve any mindmap you have created. All your information will be deleted and it can not be restored."
-    },
-    "accountinfo.button": {
-        "defaultMessage": "Accept"
-    },
-    "accountinfo.email": {
-        "defaultMessage": "Email"
-    },
-    "accountinfo.firstname": {
-        "defaultMessage": "First Name"
-    },
-    "accountinfo.lastname": {
-        "defaultMessage": "Last Name"
-    },
-    "accountinfo.title": {
-        "defaultMessage": "Account info"
-    },
-    "action.cancel-button": {
-        "defaultMessage": "Cancel"
-    },
-    "action.close-button": {
-        "defaultMessage": "Close"
-    },
-    "action.delete": {
-        "defaultMessage": "Delete"
-    },
-    "action.delete-description": {
-        "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
-    },
-    "action.delete-title": {
-        "defaultMessage": "Delete"
-    },
-    "action.duplicate": {
-        "defaultMessage": "Duplicate"
-    },
-    "action.export": {
-        "defaultMessage": "Export"
-    },
-    "action.history": {
-        "defaultMessage": "History"
-    },
-    "action.history-description": {
-        "defaultMessage": "List of changes introduced in the last 90 days."
-    },
-    "action.history-title": {
-        "defaultMessage": "Version history"
-    },
-    "action.import": {
-        "defaultMessage": "Import"
-    },
-    "action.info": {
-        "defaultMessage": "Info"
-    },
-    "action.label": {
-        "defaultMessage": "Add Label"
-    },
-    "action.new": {
-        "defaultMessage": "New map"
-    },
-    "action.open": {
-        "defaultMessage": "Open"
-    },
-    "action.print": {
-        "defaultMessage": "Print"
-    },
-    "action.publish": {
-        "defaultMessage": "Publish"
-    },
-    "action.rename": {
-        "defaultMessage": "Rename"
-    },
-    "action.rename-description-placeholder": {
-        "defaultMessage": "Description"
-    },
-    "action.rename-name-placeholder": {
-        "defaultMessage": "Name"
-    },
-    "action.share": {
-        "defaultMessage": "Share"
-    },
-    "changepwd.button": {
-        "defaultMessage": "Change"
-    },
-    "changepwd.confirm-password": {
-        "defaultMessage": "Confirm Password"
-    },
-    "changepwd.description": {
-        "defaultMessage": "Please, provide the new password for your account."
-    },
-    "changepwd.password": {
-        "defaultMessage": "Password"
-    },
-    "changepwd.password-match": {
-        "defaultMessage": "Password do not match. Please, try again."
-    },
-    "changepwd.title": {
-        "defaultMessage": "Change Password"
-    },
-    "common.wait": {
-        "defaultMessage": "Please wait ..."
-    },
-    "create.button": {
-        "defaultMessage": "Create"
-    },
-    "create.description": {
-        "defaultMessage": "Please, fill the new map name and description."
-    },
-    "create.title": {
-        "defaultMessage": "Create a new mindmap."
-    },
-    "deletem.title": {
-        "defaultMessage": "All selected maps will be deleted"
-    },
-    "duplicate.title": {
-        "defaultMessage": "Duplicate"
-    },
-    "expired.description": {
-        "defaultMessage": "Your current session has expired. Please, sign in and try again."
-    },
-    "expired.title": {
-        "defaultMessage": "Your session has expired"
-    },
-    "export.desc": {
-        "defaultMessage": "Export this map in the format that you want and start using it in your presentations or sharing by email"
-    },
-    "export.document": {
-        "defaultMessage": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
-    },
-    "export.document-label": {
-        "defaultMessage": "Document: Export your mindmap in a self-contained document ready to share"
-    },
-    "export.image": {
-        "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes."
-    },
-    "export.title": {
-        "defaultMessage": "Export"
-    },
-    "export.warning": {
-        "defaultMessage": "Exporting to Image (SVG,PNG,JPEG,PDF) is only available in the editor toolbar."
-    },
-    "footer.aboutus": {
-        "defaultMessage": "About Us"
-    },
-    "footer.contactus": {
-        "defaultMessage": "Contact Us"
-    },
-    "footer.faq": {
-        "defaultMessage": "F.A.Q."
-    },
-    "footer.faqandhelp": {
-        "defaultMessage": "Help & FAQ"
-    },
-    "footer.feedback": {
-        "defaultMessage": "Feedback"
-    },
-    "footer.opensource": {
-        "defaultMessage": "Open Source"
-    },
-    "footer.others": {
-        "defaultMessage": "Others"
-    },
-    "footer.termsandconditions": {
-        "defaultMessage": "Term And Conditions"
-    },
-    "forgot.desc": {
-        "defaultMessage": "We will send you an email to reset your password."
-    },
-    "forgot.email": {
-        "defaultMessage": "Email"
-    },
-    "forgot.page-title": {
-        "defaultMessage": "Forgot Password | WiseMapping"
-    },
-    "forgot.register": {
-        "defaultMessage": "Send recovery link"
-    },
-    "forgot.success.desc": {
-        "defaultMessage": "We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
-    },
-    "forgot.success.title": {
-        "defaultMessage": "Your temporal password has been sent."
-    },
-    "forgot.title": {
-        "defaultMessage": "Reset your password"
-    },
-    "forgotsuccess.page-title": {
-        "defaultMessage": "Password Recovered | WiseMapping"
-    },
-    "header.donthaveaccount": {
-        "defaultMessage": "Don't have an account ?"
-    },
-    "header.haveaccount": {
-        "defaultMessage": "Already have an account?"
-    },
-    "help.support": {
-        "defaultMessage": "Support"
-    },
-    "history.no-changes": {
-        "defaultMessage": "There is no changes available"
-    },
-    "import.button": {
-        "defaultMessage": "Create"
-    },
-    "import.description": {
-        "defaultMessage": "You can import FreeMind 1.0.1 and WiseMapping maps to your list of maps. Select the file you want to import."
-    },
-    "import.title": {
-        "defaultMessage": "Import existing mindmap"
-    },
-    "info.basic-info": {
-        "defaultMessage": "Basic Info"
-    },
-    "info.button": {
-        "defaultMessage": "Accept"
-    },
-    "info.creation-time": {
-        "defaultMessage": "Creation Date"
-    },
-    "info.creator": {
-        "defaultMessage": "Creator"
-    },
-    "info.description": {
-        "defaultMessage": "Description"
-    },
-    "info.description-msg": {
-        "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
-    },
-    "info.modified-time": {
-        "defaultMessage": "Last Modified Date"
-    },
-    "info.modified-tny": {
-        "defaultMessage": "Last Modified By"
-    },
-    "info.name": {
-        "defaultMessage": "Name"
-    },
-    "info.public-visibility": {
-        "defaultMessage": "Publicly Visible"
-    },
-    "info.sharing": {
-        "defaultMessage": "Sharing"
-    },
-    "info.starred": {
-        "defaultMessage": "Starred"
-    },
-    "info.title": {
-        "defaultMessage": "Info"
-    },
-    "language.change": {
-        "defaultMessage": "Change Language"
-    },
-    "language.help": {
-        "defaultMessage": "Help to Translate"
-    },
-    "login.desc": {
-        "defaultMessage": "Log into your account"
-    },
-    "login.email": {
-        "defaultMessage": "Email"
-    },
-    "login.error": {
-        "defaultMessage": "The email address or password you entered is not valid."
-    },
-    "login.forgotpwd": {
-        "defaultMessage": "Forgot Password ?"
-    },
-    "login.hsqldbcofig": {
-        "defaultMessage": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
-        "description": "Missing production database configured"
-    },
-    "login.page-title": {
-        "defaultMessage": "Login | WiseMapping"
-    },
-    "login.password": {
-        "defaultMessage": "Password"
-    },
-    "login.remberme": {
-        "defaultMessage": "Remember me"
-    },
-    "login.signin": {
-        "defaultMessage": "Sign In"
-    },
-    "login.signup": {
-        "defaultMessage": "Sign Up"
-    },
-    "login.title": {
-        "defaultMessage": "Welcome"
-    },
-    "login.userinactive": {
-        "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
-    },
-    "map.creator": {
-        "defaultMessage": "Creator"
-    },
-    "map.delete-selected": {
-        "defaultMessage": "Delete selected"
-    },
-    "map.last-update": {
-        "defaultMessage": "Last Update"
-    },
-    "map.more-actions": {
-        "defaultMessage": "More Actions"
-    },
-    "map.name": {
-        "defaultMessage": "Name"
-    },
-    "map.tooltip-add": {
-        "defaultMessage": "Add label to selected"
-    },
-    "maps.choose-file": {
-        "defaultMessage": "Choose a file"
-    },
-    "maps.create-tooltip": {
-        "defaultMessage": "Create a new mindmap"
-    },
-    "maps.empty-result": {
-        "defaultMessage": "No matching mindmap found with the current filter criteria."
-    },
-    "maps.import-desc": {
-        "defaultMessage": "Import from other tools"
-    },
-    "maps.modified": {
-        "defaultMessage": "Modified"
-    },
-    "maps.modified-by": {
-        "defaultMessage": "Modified By"
-    },
-    "maps.modified-by-desc": {
-        "defaultMessage": "Modified by {by} on {on}"
-    },
-    "maps.nav-all": {
-        "defaultMessage": "All"
-    },
-    "maps.nav-onwned": {
-        "defaultMessage": "Owned"
-    },
-    "maps.nav-public": {
-        "defaultMessage": "Public"
-    },
-    "maps.nav-shared": {
-        "defaultMessage": "Shared with me"
-    },
-    "maps.nav-starred": {
-        "defaultMessage": "Starred"
-    },
-    "maps.page-title": {
-        "defaultMessage": "My Maps | WiseMapping"
-    },
-    "maps.revert": {
-        "defaultMessage": "Revert"
-    },
-    "maps.search-action": {
-        "defaultMessage": "Search ..."
-    },
-    "maps.tooltip-open": {
-        "defaultMessage": "Open for edition"
-    },
-    "maps.tooltip-starred": {
-        "defaultMessage": "Starred"
-    },
-    "maps.view": {
-        "defaultMessage": "View"
-    },
-    "menu.account": {
-        "defaultMessage": "Account"
-    },
-    "menu.change-password": {
-        "defaultMessage": "Change password"
-    },
-    "menu.signout": {
-        "defaultMessage": "Sign Out"
-    },
-    "publish.button": {
-        "defaultMessage": "Accept"
-    },
-    "publish.checkbox": {
-        "defaultMessage": "Enable public sharing"
-    },
-    "publish.description": {
-        "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
-    },
-    "publish.embedded": {
-        "defaultMessage": "Embedded"
-    },
-    "publish.embedded-msg": {
-        "defaultMessage": "Copy this snippet of code to embed in your blog or page:"
-    },
-    "publish.public-url": {
-        "defaultMessage": "Public URL"
-    },
-    "publish.public-url-msg": {
-        "defaultMessage": "Copy and paste the link below to share your map with colleagues:"
-    },
-    "publish.title": {
-        "defaultMessage": "Publish"
-    },
-    "registation.success-title": {
-        "defaultMessage": "Registation Success | WiseMapping"
-    },
-    "registration.desc": {
-        "defaultMessage": "Signing up is free and just take a moment"
-    },
-    "registration.email": {
-        "defaultMessage": "Email"
-    },
-    "registration.firstname": {
-        "defaultMessage": "First Name"
-    },
-    "registration.lastname": {
-        "defaultMessage": "Last Name"
-    },
-    "registration.password": {
-        "defaultMessage": "Password"
-    },
-    "registration.register": {
-        "defaultMessage": "Register"
-    },
-    "registration.success.desc": {
-        "defaultMessage": "Click 'Sign In' button below and start creating mind maps."
-    },
-    "registration.termandconditions": {
-        "defaultMessage": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
-    },
-    "registration.title": {
-        "defaultMessage": "Become a member"
-    },
-    "rename.description": {
-        "defaultMessage": "Please, fill the new map name and description."
-    },
-    "rename.title": {
-        "defaultMessage": "Rename"
-    },
-    "resetpassword.success.title": {
-        "defaultMessage": "Your account has been created successfully"
-    },
-    "role.editor": {
-        "defaultMessage": "Editor"
-    },
-    "role.owner": {
-        "defaultMessage": "Onwer"
-    },
-    "role.viewer": {
-        "defaultMessage": "Viewer"
-    },
-    "share.add-button": {
-        "defaultMessage": "Add"
-    },
-    "share.add-message": {
-        "defaultMessage": "Add message"
-    },
-    "share.can-edit": {
-        "defaultMessage": "Can edit"
-    },
-    "share.can-view": {
-        "defaultMessage": "Can view"
-    },
-    "share.delete": {
-        "defaultMessage": "Delete collaborator"
-    },
-    "share.delete-description": {
-        "defaultMessage": "Invite people to collaborate with you in the creation of your mindmap. They will be notified by email."
-    },
-    "share.delete-title": {
-        "defaultMessage": "Share with people"
-    },
-    "share.message": {
-        "defaultMessage": "Message"
-    },
-    "editor.try-welcome": {
-        "defaultMessage": "This edition space showcases some of the mindmap editor capabilities !"
-    },
-    "editor.try-welcome-description": {
-        "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
-    }
+  "account.delete-warning": {
+    "defaultMessage": "Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
+  },
+  "accountinfo.button": {
+    "defaultMessage": "Accept"
+  },
+  "accountinfo.deleteaccount": {
+    "defaultMessage": "Delete Account"
+  },
+  "accountinfo.email": {
+    "defaultMessage": "Email"
+  },
+  "accountinfo.firstname": {
+    "defaultMessage": "First Name"
+  },
+  "accountinfo.lastname": {
+    "defaultMessage": "Last Name"
+  },
+  "accountinfo.title": {
+    "defaultMessage": "Account info"
+  },
+  "action.cancel-button": {
+    "defaultMessage": "Cancel"
+  },
+  "action.close-button": {
+    "defaultMessage": "Close"
+  },
+  "action.delete": {
+    "defaultMessage": "Delete"
+  },
+  "action.delete-description": {
+    "defaultMessage": "Deleted mindmap can not be recovered. Do you want to continue ?."
+  },
+  "action.delete-title": {
+    "defaultMessage": "Delete"
+  },
+  "action.duplicate": {
+    "defaultMessage": "Duplicate"
+  },
+  "action.export": {
+    "defaultMessage": "Export"
+  },
+  "action.history": {
+    "defaultMessage": "History"
+  },
+  "action.history-description": {
+    "defaultMessage": "List of changes introduced in the last 90 days."
+  },
+  "action.history-title": {
+    "defaultMessage": "Version history"
+  },
+  "action.import": {
+    "defaultMessage": "Import"
+  },
+  "action.info": {
+    "defaultMessage": "Info"
+  },
+  "action.label": {
+    "defaultMessage": "Add Label"
+  },
+  "action.new": {
+    "defaultMessage": "New map"
+  },
+  "action.open": {
+    "defaultMessage": "Open"
+  },
+  "action.print": {
+    "defaultMessage": "Print"
+  },
+  "action.publish": {
+    "defaultMessage": "Publish"
+  },
+  "action.rename": {
+    "defaultMessage": "Rename"
+  },
+  "action.rename-description-placeholder": {
+    "defaultMessage": "Description"
+  },
+  "action.rename-name-placeholder": {
+    "defaultMessage": "Name"
+  },
+  "action.share": {
+    "defaultMessage": "Share"
+  },
+  "changepwd.button": {
+    "defaultMessage": "Change"
+  },
+  "changepwd.confirm-password": {
+    "defaultMessage": "Confirm Password"
+  },
+  "changepwd.description": {
+    "defaultMessage": "Please, provide the new password for your account."
+  },
+  "changepwd.password": {
+    "defaultMessage": "Password"
+  },
+  "changepwd.password-match": {
+    "defaultMessage": "Password do not match. Please, try again."
+  },
+  "changepwd.title": {
+    "defaultMessage": "Change Password"
+  },
+  "common.wait": {
+    "defaultMessage": "Please wait ..."
+  },
+  "create.button": {
+    "defaultMessage": "Create"
+  },
+  "create.description": {
+    "defaultMessage": "Please, fill the new map name and description."
+  },
+  "create.title": {
+    "defaultMessage": "Create a new mindmap"
+  },
+  "deletem.title": {
+    "defaultMessage": "All selected maps will be deleted"
+  },
+  "duplicate.title": {
+    "defaultMessage": "Duplicate"
+  },
+  "expired.description": {
+    "defaultMessage": "Your current session has expired. Please, sign in and try again."
+  },
+  "expired.title": {
+    "defaultMessage": "Your session has expired"
+  },
+  "export.desc": {
+    "defaultMessage": "Export this map in the format that you want and start using it in your presentations or sharing by email"
+  },
+  "export.document": {
+    "defaultMessage": "Mindmap Tools: Export your mindmap in thirdparty mindmap tool formats"
+  },
+  "export.document-label": {
+    "defaultMessage": "Document: Export your mindmap in a self-contained document ready to share"
+  },
+  "export.image": {
+    "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes."
+  },
+  "export.title": {
+    "defaultMessage": "Export"
+  },
+  "export.warning": {
+    "defaultMessage": "Exporting to Image (SVG,PNG,JPEG,PDF) is only available in the editor toolbar."
+  },
+  "footer.aboutus": {
+    "defaultMessage": "About Us"
+  },
+  "footer.contactus": {
+    "defaultMessage": "Contact Us"
+  },
+  "footer.faq": {
+    "defaultMessage": "F.A.Q."
+  },
+  "footer.faqandhelp": {
+    "defaultMessage": "Help & FAQ"
+  },
+  "footer.feedback": {
+    "defaultMessage": "Feedback"
+  },
+  "footer.opensource": {
+    "defaultMessage": "Open Source"
+  },
+  "footer.others": {
+    "defaultMessage": "Others"
+  },
+  "footer.termsandconditions": {
+    "defaultMessage": "Term And Conditions"
+  },
+  "forgot.desc": {
+    "defaultMessage": "We will send you an email to reset your password."
+  },
+  "forgot.email": {
+    "defaultMessage": "Email"
+  },
+  "forgot.page-title": {
+    "defaultMessage": "Forgot Password | WiseMapping"
+  },
+  "forgot.register": {
+    "defaultMessage": "Send recovery link"
+  },
+  "forgot.success.desc": {
+    "defaultMessage": "We've sent you an email that will allow you to reset your password. You should receive it in the next minutes."
+  },
+  "forgot.success.title": {
+    "defaultMessage": "Your temporal password has been sent."
+  },
+  "forgot.title": {
+    "defaultMessage": "Reset your password"
+  },
+  "forgotsuccess.page-title": {
+    "defaultMessage": "Password Recovered | WiseMapping"
+  },
+  "header.donthaveaccount": {
+    "defaultMessage": "Don't have an account ?"
+  },
+  "header.haveaccount": {
+    "defaultMessage": "Already have an account?"
+  },
+  "help.support": {
+    "defaultMessage": "Support"
+  },
+  "history.no-changes": {
+    "defaultMessage": "There is no changes available"
+  },
+  "import.button": {
+    "defaultMessage": "Create"
+  },
+  "import.description": {
+    "defaultMessage": "You can import WiseMapping maps to your list of maps. Select the file you want to import."
+  },
+  "import.title": {
+    "defaultMessage": "Import existing mindmap"
+  },
+  "info.basic-info": {
+    "defaultMessage": "Basic Info"
+  },
+  "info.button": {
+    "defaultMessage": "Accept"
+  },
+  "info.creation-time": {
+    "defaultMessage": "Creation Date"
+  },
+  "info.creator": {
+    "defaultMessage": "Creator"
+  },
+  "info.description": {
+    "defaultMessage": "Description"
+  },
+  "info.description-msg": {
+    "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
+  },
+  "info.modified-time": {
+    "defaultMessage": "Last Modified Date"
+  },
+  "info.modified-tny": {
+    "defaultMessage": "Last Modified By"
+  },
+  "info.name": {
+    "defaultMessage": "Name"
+  },
+  "info.public-visibility": {
+    "defaultMessage": "Publicly Visible"
+  },
+  "info.sharing": {
+    "defaultMessage": "Sharing"
+  },
+  "info.starred": {
+    "defaultMessage": "Starred"
+  },
+  "info.title": {
+    "defaultMessage": "Info"
+  },
+  "label.add-button": {
+    "defaultMessage": "Add label"
+  },
+  "label.add-for": {
+    "defaultMessage": "Editing labels for maps:"
+  },
+  "label.add-placeholder": {
+    "defaultMessage": "Label title"
+  },
+  "label.change-color": {
+    "defaultMessage": "Change label color"
+  },
+  "label.delete-description": {
+    "defaultMessage": "will be deleted, including its associations to all existing maps. Do you want to continue?"
+  },
+  "label.delete-title": {
+    "defaultMessage": "Confirm label deletion"
+  },
+  "label.description": {
+    "defaultMessage": "Use labels to organize your maps."
+  },
+  "label.title": {
+    "defaultMessage": "Add a label"
+  },
+  "language.change": {
+    "defaultMessage": "Change Language"
+  },
+  "language.help": {
+    "defaultMessage": "Help to Translate"
+  },
+  "login.desc": {
+    "defaultMessage": "Log into your account"
+  },
+  "login.email": {
+    "defaultMessage": "Email"
+  },
+  "login.error": {
+    "defaultMessage": "The email address or password you entered is not valid."
+  },
+  "login.forgotpwd": {
+    "defaultMessage": "Forgot Password ?"
+  },
+  "login.hsqldbcofig": {
+    "defaultMessage": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
+    "description": "Missing production database configured"
+  },
+  "login.page-title": {
+    "defaultMessage": "Login | WiseMapping"
+  },
+  "login.password": {
+    "defaultMessage": "Password"
+  },
+  "login.remberme": {
+    "defaultMessage": "Remember me"
+  },
+  "login.signin": {
+    "defaultMessage": "Sign In"
+  },
+  "login.signup": {
+    "defaultMessage": "Sign Up"
+  },
+  "login.title": {
+    "defaultMessage": "Welcome"
+  },
+  "login.userinactive": {
+    "defaultMessage": "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!."
+  },
+  "map.creator": {
+    "defaultMessage": "Creator"
+  },
+  "map.delete-selected": {
+    "defaultMessage": "Delete selected"
+  },
+  "map.last-update": {
+    "defaultMessage": "Last Update"
+  },
+  "map.more-actions": {
+    "defaultMessage": "More Actions"
+  },
+  "map.name": {
+    "defaultMessage": "Name"
+  },
+  "map.tooltip-add": {
+    "defaultMessage": "Add label to selected"
+  },
+  "maps.choose-file": {
+    "defaultMessage": "Choose a file"
+  },
+  "maps.create-tooltip": {
+    "defaultMessage": "Create a new mindmap"
+  },
+  "maps.empty-result": {
+    "defaultMessage": "No matching mindmap found with the current filter criteria."
+  },
+  "maps.import-desc": {
+    "defaultMessage": "Import from other tools"
+  },
+  "maps.modified": {
+    "defaultMessage": "Modified"
+  },
+  "maps.modified-by": {
+    "defaultMessage": "Modified By"
+  },
+  "maps.modified-by-desc": {
+    "defaultMessage": "Modified by {by} on {on}"
+  },
+  "maps.nav-all": {
+    "defaultMessage": "All"
+  },
+  "maps.nav-onwned": {
+    "defaultMessage": "Owned"
+  },
+  "maps.nav-public": {
+    "defaultMessage": "Public"
+  },
+  "maps.nav-shared": {
+    "defaultMessage": "Shared with me"
+  },
+  "maps.nav-starred": {
+    "defaultMessage": "Starred"
+  },
+  "maps.page-title": {
+    "defaultMessage": "My Maps | WiseMapping"
+  },
+  "maps.revert": {
+    "defaultMessage": "Revert"
+  },
+  "maps.search-action": {
+    "defaultMessage": "Search ..."
+  },
+  "maps.tooltip-open": {
+    "defaultMessage": "Open for edition"
+  },
+  "maps.tooltip-starred": {
+    "defaultMessage": "Starred"
+  },
+  "maps.view": {
+    "defaultMessage": "View"
+  },
+  "menu.account": {
+    "defaultMessage": "Account"
+  },
+  "menu.change-password": {
+    "defaultMessage": "Change password"
+  },
+  "menu.signout": {
+    "defaultMessage": "Sign Out"
+  },
+  "publish.button": {
+    "defaultMessage": "Accept"
+  },
+  "publish.checkbox": {
+    "defaultMessage": "Enable public sharing"
+  },
+  "publish.description": {
+    "defaultMessage": "By publishing the map you make it visible to everyone on the Internet."
+  },
+  "publish.embedded": {
+    "defaultMessage": "Embedded"
+  },
+  "publish.embedded-msg": {
+    "defaultMessage": "Copy this snippet of code to embed in your blog or page:"
+  },
+  "publish.public-url": {
+    "defaultMessage": "Public URL"
+  },
+  "publish.public-url-msg": {
+    "defaultMessage": "Copy and paste the link below to share your map with colleagues:"
+  },
+  "publish.title": {
+    "defaultMessage": "Publish"
+  },
+  "registation.success-title": {
+    "defaultMessage": "Registation Success | WiseMapping"
+  },
+  "registration.desc": {
+    "defaultMessage": "Signing up is free and just take a moment"
+  },
+  "registration.email": {
+    "defaultMessage": "Email"
+  },
+  "registration.firstname": {
+    "defaultMessage": "First Name"
+  },
+  "registration.lastname": {
+    "defaultMessage": "Last Name"
+  },
+  "registration.password": {
+    "defaultMessage": "Password"
+  },
+  "registration.register": {
+    "defaultMessage": "Register"
+  },
+  "registration.success.desc": {
+    "defaultMessage": "Click 'Sign In' button below and start creating mind maps."
+  },
+  "registration.termandconditions": {
+    "defaultMessage": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
+  },
+  "registration.title": {
+    "defaultMessage": "Registration | WiseMapping"
+  },
+  "rename.description": {
+    "defaultMessage": "Please, fill the new map name and description."
+  },
+  "rename.title": {
+    "defaultMessage": "Rename"
+  },
+  "resetpassword.success.title": {
+    "defaultMessage": "Your account has been created successfully"
+  },
+  "role.editor": {
+    "defaultMessage": "Editor"
+  },
+  "role.owner": {
+    "defaultMessage": "Onwer"
+  },
+  "role.viewer": {
+    "defaultMessage": "Viewer"
+  },
+  "share.add-button": {
+    "defaultMessage": "Add"
+  },
+  "share.add-message": {
+    "defaultMessage": "Add message"
+  },
+  "share.can-edit": {
+    "defaultMessage": "Can edit"
+  },
+  "share.can-view": {
+    "defaultMessage": "Can view"
+  },
+  "share.delete": {
+    "defaultMessage": "Delete collaborator"
+  },
+  "share.delete-description": {
+    "defaultMessage": "Invite people to collaborate with you in the creation of your mindmap. They will be notified by email."
+  },
+  "share.delete-title": {
+    "defaultMessage": "Share with people"
+  },
+  "share.message": {
+    "defaultMessage": "Message"
+  }
 }
