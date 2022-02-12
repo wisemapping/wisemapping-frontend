@@ -20,6 +20,7 @@ import Command from '../Command';
 import CommandContext from '../CommandContext';
 import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
+import Relationship from '../Relationship';
 import Topic from '../Topic';
 
 class DeleteCommand extends Command {
@@ -159,13 +160,16 @@ class DeleteCommand extends Command {
     return result;
   }
 
-  _collectInDepthRelationships(topic: Topic) {
+  private _collectInDepthRelationships(topic: Topic): Relationship[] {
     let result = [];
     result = result.concat(topic.getRelationships());
 
     const children = topic.getChildren();
-    const rels = children.map(((t) => this._collectInDepthRelationships(t)));
-    result = result.concat(rels.flat());
+    const rels: (Relationship[])[] = children
+      .map(((t: Topic) => this._collectInDepthRelationships(t)));
+
+    // flatten and concact
+    result = result.concat(([].concat(...rels)));
 
     if (result.length > 0) {
       // Filter for unique ...

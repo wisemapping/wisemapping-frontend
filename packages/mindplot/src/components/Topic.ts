@@ -1058,7 +1058,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  setSize(size: SizeType, force: boolean): void {
+  setSize(size: SizeType, force?: boolean): void {
     $assert(size, 'size can not be null');
     $assert($defined(size.width), 'size seem not to be a valid element');
     const roundedSize = {

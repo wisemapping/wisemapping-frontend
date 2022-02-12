@@ -38,7 +38,7 @@ class Relationship extends ConnectionLine {
 
   private _endArrow: Arrow;
 
-  private _controlPointControllerListener: any;
+  private _controlPointControllerListener;
 
   private _showStartArrow: Arrow;
 
