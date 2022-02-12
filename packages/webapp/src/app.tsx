@@ -26,6 +26,8 @@ declare module '@mui/styles/defaultTheme' {
 
 // Google Analytics Initialization.
 GoogleAnalytics.initialize('UA-2347723-1');
+GoogleAnalytics.pageview(window.location.pathname + window.location.search);
+
 
 const queryClient = new QueryClient({
     defaultOptions: {
