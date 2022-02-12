@@ -11,6 +11,12 @@
       "value": "Aceptar"
     }
   ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "Borrar cuenta"
+    }
+  ],
   "accountinfo.email": [
     {
       "type": 0,
@@ -44,7 +50,7 @@
   "action.close-button": [
     {
       "type": 0,
-      "value": "Cerrar"
+      "value": "Cerca"
     }
   ],
   "action.delete": [
@@ -122,13 +128,13 @@
   "action.open": [
     {
       "type": 0,
-      "value": "Abrir"
+      "value": "Abierto"
     }
   ],
   "action.print": [
     {
       "type": 0,
-      "value": "Imprimir"
+      "value": "Impresión"
     }
   ],
   "action.publish": [
@@ -140,7 +146,7 @@
   "action.rename": [
     {
       "type": 0,
-      "value": "Renombar"
+      "value": "Rebautizar"
     }
   ],
   "action.rename-description-placeholder": [
@@ -158,13 +164,13 @@
   "action.share": [
     {
       "type": 0,
-      "value": "Compartir"
+      "value": "Cuota"
     }
   ],
   "changepwd.button": [
     {
       "type": 0,
-      "value": "Cambiar"
+      "value": "Cambio"
     }
   ],
   "changepwd.confirm-password": [
@@ -320,13 +326,13 @@
   "footer.feedback": [
     {
       "type": 0,
-      "value": "Feedback"
+      "value": "Reacción"
     }
   ],
   "footer.opensource": [
     {
       "type": 0,
-      "value": "Código Abierto"
+      "value": "Fuente abierta"
     }
   ],
   "footer.others": [
@@ -392,7 +398,7 @@
   "header.donthaveaccount": [
     {
       "type": 0,
-      "value": "¿No tenes una cuenta?"
+      "value": "¿No tienes una cuenta?"
     }
   ],
   "header.haveaccount": [
@@ -404,7 +410,7 @@
   "help.support": [
     {
       "type": 0,
-      "value": "Ayuda"
+      "value": "Apoyo"
     }
   ],
   "history.no-changes": [
@@ -476,7 +482,7 @@
   "info.modified-tny": [
     {
       "type": 0,
-      "value": "Ultima modificacion por"
+      "value": "ultima modificacion por"
     }
   ],
   "info.name": [
@@ -494,19 +500,67 @@
   "info.sharing": [
     {
       "type": 0,
-      "value": "Compartido"
+      "value": "Intercambio"
     }
   ],
   "info.starred": [
     {
       "type": 0,
-      "value": "Destacados"
+      "value": "Sembrado de estrellas"
     }
   ],
   "info.title": [
     {
       "type": 0,
       "value": "Información"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Agregar etiqueta"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Edición de etiquetas para mapas:"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Título de la etiqueta"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Cambiar el color de la etiqueta"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "se eliminará, incluidas sus asociaciones a todos los mapas existentes. ¿Quieres continuar?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Confirmar eliminación de etiqueta"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Usa etiquetas para organizar tus mapas."
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Agregar una etiqueta"
     }
   ],
   "language.change": [
@@ -578,13 +632,13 @@
   "login.signup": [
     {
       "type": 0,
-      "value": "Crear cuenta"
+      "value": "Inscribirse"
     }
   ],
   "login.title": [
     {
       "type": 0,
-      "value": "Bienvenido"
+      "value": "Bienvenidos"
     }
   ],
   "login.userinactive": [
@@ -686,37 +740,37 @@
   "maps.nav-all": [
     {
       "type": 0,
-      "value": "Todos"
+      "value": "Todo"
     }
   ],
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Mis Mapas"
+      "value": "propiedad"
     }
   ],
   "maps.nav-public": [
     {
       "type": 0,
-      "value": "Públicos"
+      "value": "Público"
     }
   ],
   "maps.nav-shared": [
     {
       "type": 0,
-      "value": "Compartidos"
+      "value": "Comparte conmigo"
     }
   ],
   "maps.nav-starred": [
     {
       "type": 0,
-      "value": "Destacados"
+      "value": "Sembrado de estrellas"
     }
   ],
   "maps.page-title": [
     {
       "type": 0,
-      "value": "Mis Mapas | WiseMapping"
+      "value": "Mis mapas | WiseMapping"
     }
   ],
   "maps.revert": [
@@ -728,19 +782,19 @@
   "maps.search-action": [
     {
       "type": 0,
-      "value": "Búscar ..."
+      "value": "Búsqueda ..."
     }
   ],
   "maps.tooltip-open": [
     {
       "type": 0,
-      "value": "Abrir para edición"
+      "value": "Abierto para edición"
     }
   ],
   "maps.tooltip-starred": [
     {
       "type": 0,
-      "value": "Destacados"
+      "value": "Sembrado de estrellas"
     }
   ],
   "maps.view": [
@@ -752,7 +806,7 @@
   "menu.account": [
     {
       "type": 0,
-      "value": "Información de cuenta"
+      "value": "Cuenta"
     }
   ],
   "menu.change-password": [
@@ -764,7 +818,7 @@
   "menu.signout": [
     {
       "type": 0,
-      "value": "Cerrar sesión"
+      "value": "Desconectar"
     }
   ],
   "publish.button": [
@@ -902,7 +956,7 @@
   "role.owner": [
     {
       "type": 0,
-      "value": "Dueño"
+      "value": "onwer"
     }
   ],
   "role.viewer": [
@@ -926,13 +980,13 @@
   "share.can-edit": [
     {
       "type": 0,
-      "value": "Puede editar"
+      "value": "Poder editar"
     }
   ],
   "share.can-view": [
     {
       "type": 0,
-      "value": "Puede ver"
+      "value": "Puedo ver"
     }
   ],
   "share.delete": [
@@ -944,7 +998,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invita a personas a colaborar contigo en la creación de tu mapa mental. Serán notificados por correo electrónico."
+      "value": "Invita a personas a colaborar contigo en la creación de tu midnmap. Serán notificados por correo electrónico."
     }
   ],
   "share.delete-title": [

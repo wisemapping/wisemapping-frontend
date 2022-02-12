@@ -245,9 +245,9 @@ const ExportDialog = ({
                                     <MenuItem className={classes.select} value="wxml">
                                         WiseMapping (WXML)
                                     </MenuItem>
-                                    <MenuItem className={classes.select} value="mm">
+                                    {/* <MenuItem className={classes.select} value="mm">
                                         Freemind 1.0.1 (MM)
-                                    </MenuItem>
+                                    </MenuItem> */}
                                     {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)
                                     </MenuItem> */}

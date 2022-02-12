@@ -25,7 +25,7 @@ declare module '@mui/styles/defaultTheme' {
 
 
 // Google Analytics Initialization.
-GoogleAnalytics.initialize('UA-0000000-0');
+GoogleAnalytics.initialize('UA-2347723-1');
 
 const queryClient = new QueryClient({
     defaultOptions: {

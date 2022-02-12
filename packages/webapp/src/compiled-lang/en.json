@@ -2,13 +2,19 @@
   "account.delete-warning": [
     {
       "type": 0,
-      "value": "Keep in mind that you will not be able retrieve any mindmap you have created. All your information will be deleted and it can not be restored."
+      "value": "Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
     }
   ],
   "accountinfo.button": [
     {
       "type": 0,
       "value": "Accept"
+    }
+  ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "Delete Account"
     }
   ],
   "accountinfo.email": [
@@ -218,7 +224,7 @@
   "create.title": [
     {
       "type": 0,
-      "value": "Create a new mindmap."
+      "value": "Create a new mindmap"
     }
   ],
   "deletem.title": [
@@ -231,18 +237,6 @@
     {
       "type": 0,
       "value": "Duplicate"
-    }
-  ],
-  "editor.try-welcome": [
-    {
-      "type": 0,
-      "value": "This edition space showcases some of the mindmap editor capabilities !"
-    }
-  ],
-  "editor.try-welcome-description": [
-    {
-      "type": 0,
-      "value": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
     }
   ],
   "expired.description": [
@@ -422,7 +416,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "You can import FreeMind 1.0.1 and WiseMapping maps to your list of maps. Select the file you want to import."
+      "value": "You can import WiseMapping maps to your list of maps. Select the file you want to import."
     }
   ],
   "import.title": [
@@ -507,6 +501,54 @@
     {
       "type": 0,
       "value": "Info"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Add label"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Editing labels for maps:"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Label title"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Change label color"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "will be deleted, including its associations to all existing maps. Do you want to continue?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Confirm label deletion"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Use labels to organize your maps."
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Add a label"
     }
   ],
   "language.change": [
@@ -644,7 +686,7 @@
   "maps.empty-result": [
     {
       "type": 0,
-      "value": "No matching record found with the current filter criteria."
+      "value": "No matching mindmap found with the current filter criteria."
     }
   ],
   "maps.import-desc": [
@@ -872,7 +914,7 @@
   "registration.title": [
     {
       "type": 0,
-      "value": "Become a member"
+      "value": "Registration | WiseMapping"
     }
   ],
   "rename.description": [
@@ -944,7 +986,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invite people to collaborate with you in the creation of your midnmap. They will be notified by email."
+      "value": "Invite people to collaborate with you in the creation of your mindmap. They will be notified by email."
     }
   ],
   "share.delete-title": [
