@@ -460,7 +460,7 @@
         "defaultMessage": "Supprimer un collaborateur"
     },
     "share.delete-description": {
-        "defaultMessage": "Invitez des personnes à collaborer avec vous dans la création de votre mindmap. Ils seront prévenus par email."
+        "defaultMessage": "Invitez des personnes à collaborer avec vous dans la création de votre midnmap. Ils seront prévenus par email."
     },
     "share.delete-title": {
         "defaultMessage": "Partager avec les gens"
@@ -469,9 +469,36 @@
         "defaultMessage": "Message"
     },
     "editor.try-welcome": {
-        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
+        "defaultMessage": ""
     },
     "editor.try-welcome-description": {
-        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
+        "defaultMessage": ""
+    },
+    "accountinfo.deleteaccount": {
+        "defaultMessage": "Supprimer le compte"
+    },
+    "label.add-button": {
+        "defaultMessage": "Ajouter une étiquette"
+    },
+    "label.add-for": {
+        "defaultMessage": "Modification des étiquettes pour les cartes :"
+    },
+    "label.add-placeholder": {
+        "defaultMessage": "Titre de l'étiquette"
+    },
+    "label.change-color": {
+        "defaultMessage": "Changer la couleur de l'étiquette"
+    },
+    "label.delete-description": {
+        "defaultMessage": "sera supprimé, y compris ses associations à toutes les cartes existantes. Voulez-vous continuer?"
+    },
+    "label.delete-title": {
+        "defaultMessage": "Confirmer la suppression de l'étiquette"
+    },
+    "label.description": {
+        "defaultMessage": "Utilisez des étiquettes pour organiser vos cartes."
+    },
+    "label.title": {
+        "defaultMessage": "Ajouter une étiquette"
     }
 }
