@@ -35,7 +35,6 @@ class CentralTopic extends Topic {
     });
   }
 
-
   workoutIncomingConnectionPoint(): Point {
     return this.getPosition();
   }

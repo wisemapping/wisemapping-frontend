@@ -327,9 +327,46 @@ class MockClient implements Client {
         }
     }
 
+    createLabel(title: string, color: string): Promise<number> {
+        const newId = Math.max.apply(Number, this.labels.map(l => l.id)) + 1;
+        this.labels.push({ 
+            id: newId,
+            title,
+            color,
+        });
+        return newId;
+    }
+
     deleteLabel(id: number): Promise<void> {
         this.labels = this.labels.filter((l) => l.id != id);
-        console.log('Label delete:' + this.labels);
+        this.maps = this.maps.map(m => {
+            return { 
+                ...m, 
+                labels: m.labels.filter((l) => l.id != id)
+            };
+        });
+        return Promise.resolve();
+    }
+
+    addLabelToMap(labelId: number, mapId: number): Promise<void> {
+        const labelToAdd = this.labels.find((l) => l.id === labelId);
+        if (!labelToAdd) {
+            return Promise.reject({ msg: `unable to find label with id ${labelId}`});
+        }
+        const map = this.maps.find((m) => m.id === mapId);
+        if (!map) {
+            return Promise.reject({ msg: `unable to find map with id ${mapId}` });
+        }
+        map.labels.push(labelToAdd);
+        return Promise.resolve();
+    }
+
+    deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
+        const map = this.maps.find((m) => m.id === mapId);
+        if (!map) {
+            return Promise.reject({ msg: `unable to find map with id ${mapId}` });
+        }
+        map.labels = map.labels.filter((l) => l.id !== labelId);
         return Promise.resolve();
     }
 

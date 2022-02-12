@@ -12,6 +12,7 @@ import InfoDialog from './info-dialog';
 import DeleteMultiselectDialog from './delete-multiselect-dialog';
 import ExportDialog from './export-dialog';
 import ShareDialog from './share-dialog';
+import LabelDialog from './label-dialog';
 
 export type BasicMapInfo = {
     name: string;
@@ -61,6 +62,7 @@ const ActionDispatcher = ({ mapsId, action, onClose, fromEditor }: ActionDialogP
                 <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={fromEditor} />
             )}
             {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
+            {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}
         </span>
     );
 };
@@ -76,6 +78,11 @@ export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryC
 
 export type SimpleDialogProps = {
     mapId: number;
+    onClose: () => void;
+};
+
+export type MultiDialogProps = {
+    mapsId: number[];
     onClose: () => void;
 };
 

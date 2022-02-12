@@ -137,8 +137,8 @@ class Designer extends Events {
   }
 
   private _registerWheelEvents(): void {
-    const zoomFactor = 1.006;
-    document.addEventListener('wheel', (event) => {
+    const zoomFactor = 1.02;
+    document.addEventListener('wheel', (event: WheelEvent) => {
       if (event.deltaX > 0 || event.deltaY > 0) {
         this.zoomOut(zoomFactor);
       } else {

@@ -22,7 +22,8 @@ import { Designer } from '..';
 import Topic from './Topic';
 
 class DesignerKeyboard extends Keyboard {
-  static _instance: any;
+  // eslint-disable-next-line no-use-before-define
+  static _instance: DesignerKeyboard;
 
   constructor(designer: Designer) {
     super();
@@ -79,14 +80,14 @@ class DesignerKeyboard extends Keyboard {
     this.addShortcut(
       ['tab'], (eventevent: Event) => {
         designer.createChildForSelectedNode();
-        event.preventDefault();
-        event.stopPropagation();
+        eventevent.preventDefault();
+        eventevent.stopPropagation();
       },
     );
     this.addShortcut(
       ['meta+enter'], (eventevent: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
+        eventevent.preventDefault();
+        eventevent.stopPropagation();
         designer.createChildForSelectedNode();
       },
     );
@@ -244,7 +245,7 @@ class DesignerKeyboard extends Keyboard {
     const excludes = ['esc', 'escape', 'f1', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'];
 
     $(document).on('keypress', (event) => {
-      let keyCode;
+      let keyCode: number;
       // Firefox doesn't skip special keys for keypress event...
       if (event.key && excludes.includes(event.key.toLowerCase())) {
         return;
@@ -256,6 +257,7 @@ class DesignerKeyboard extends Keyboard {
         keyCode = event.keyCode;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const jq: any = $;
       const specialKey = jq.hotkeys.specialKeys[keyCode];
       if (['enter', 'capslock'].indexOf(specialKey) === -1 && !jq.hotkeys.shiftNums[keyCode]) {

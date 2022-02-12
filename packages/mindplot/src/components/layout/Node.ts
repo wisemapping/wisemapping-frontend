@@ -16,9 +16,23 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import PositionType from '../PositionType';
+import SizeType from '../SizeType';
 
 class Node {
-  constructor(id, size, position, sorter) {
+  private _id: number;
+
+  // eslint-disable-next-line no-use-before-define
+  _parent: Node;
+
+  private _sorter: any;
+
+  private _properties;
+
+  // eslint-disable-next-line no-use-before-define
+  _children: Node[];
+
+  constructor(id: number, size: SizeType, position, sorter) {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     $assert(size, 'size can not be null');
     $assert(position, 'position can not be null');
@@ -69,7 +83,7 @@ class Node {
   }
 
   /** */
-  setOrder(order) {
+  setOrder(order: number) {
     $assert(
       typeof order === 'number' && Number.isFinite(order),
       `Order can not be null. Value:${order}`,
@@ -148,7 +162,7 @@ class Node {
       y: oldDisplacement.y + displacement.y,
     };
 
-    this._setProperty('freeDisplacement', Object.clone(newDisplacement));
+    this._setProperty('freeDisplacement', { ...newDisplacement });
   }
 
   /** */
@@ -163,7 +177,7 @@ class Node {
   }
 
   /** */
-  setPosition(position) {
+  setPosition(position: PositionType) {
     $assert($defined(position), 'Position can not be null');
     $assert($defined(position.x), 'x can not be null');
     $assert($defined(position.y), 'y can not be null');
@@ -172,12 +186,12 @@ class Node {
     const currentPos = this.getPosition();
     if (
       currentPos == null
-                || Math.abs(currentPos.x - position.x) > 2
-                || Math.abs(currentPos.y - position.y) > 2
+      || Math.abs(currentPos.x - position.x) > 2
+      || Math.abs(currentPos.y - position.y) > 2
     ) this._setProperty('position', position);
   }
 
-  _setProperty(key, value) {
+  _setProperty(key: string, value) {
     let prop = this._properties[key];
     if (!prop) {
       prop = {
@@ -214,20 +228,13 @@ class Node {
   /** @return {String} returns id, order, position, size and shrink information */
   toString() {
     return (
-      `[id:${
-        this.getId()
-      }, order:${
-        this.getOrder()
-      }, position: {${
-        this.getPosition().x
-      },${
-        this.getPosition().y
-      }}, size: {${
-        this.getSize().width
-      },${
-        this.getSize().height
-      }}, shrink:${
-        this.areChildrenShrunken()
+      `[id:${this.getId()
+      }, order:${this.getOrder()
+      }, position: {${this.getPosition().x
+      },${this.getPosition().y
+      }}, size: {${this.getSize().width
+      },${this.getSize().height
+      }}, shrink:${this.areChildrenShrunken()
       }]`
     );
   }

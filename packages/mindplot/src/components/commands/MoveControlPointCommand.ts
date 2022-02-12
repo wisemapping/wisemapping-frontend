@@ -16,13 +16,14 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { Line } from '@wisemapping/web2d';
 import Command from '../Command';
 import ControlPoint from '../ControlPoint';
 
 class MoveControlPointCommand extends Command {
   private _ctrlPointControler: ControlPoint;
 
-  private _line: any;
+  private _line: Line;
 
   private _controlPoint: any;
 

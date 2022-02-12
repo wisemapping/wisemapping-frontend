@@ -2,7 +2,7 @@ import React, { useEffect, CSSProperties } from 'react';
 
 import { useStyles } from './styled';
 import { useSelector } from 'react-redux';
-import { activeInstance, fetchAccount } from '../../../redux/clientSlice';
+import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
@@ -33,12 +33,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { AddLabelButton } from './add-label-button';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LabelsCell } from './labels-cell';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import AppI18n from '../../../classes/app-i18n';
+import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 
-dayjs.extend(LocalizedFormat)
+dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -235,6 +236,24 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
     };
 };
 
+export type ChangeLabelMutationFunctionParam = { maps: MapInfo[]; label: Label; checked: boolean };
+
+export const getChangeLabelMutationFunction =
+    (client: Client) =>
+    async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
+        if (!label.id) {
+            label.id = await client.createLabel(label.title, label.color);
+        }
+        if (checked) {
+            const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
+            await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
+        } else {
+            const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
+            await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
+        }
+        return Promise.resolve();
+    };
+
 export const MapsList = (props: MapsListProps): React.ReactElement => {
     const classes = useStyles();
     const [order, setOrder] = React.useState<Order>('desc');
@@ -251,10 +270,8 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
     const queryClient = useQueryClient();
 
     // Configure locale ...
-    const account = fetchAccount();
-    if (account) {
-        dayjs.locale(account.locale.code);
-    }
+    const userLocale = AppI18n.getUserLocale();
+    dayjs.locale(userLocale.code);
 
     useEffect(() => {
         setSelected([]);
@@ -331,7 +348,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             event.stopPropagation();
         };
     };
-    9;
+
     const starredMultation = useMutation<void, ErrorInfo, number>(
         (id: number) => {
             const map = mapsInfo.find((m) => m.id == id);
@@ -385,6 +402,36 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         });
     };
 
+    const handleAddLabelClick = () => {
+        setActiveDialog({
+            actionType: 'label',
+            mapsId: selected,
+        });
+    };
+
+    const removeLabelMultation = useMutation<
+        void,
+        ErrorInfo,
+        { mapId: number; labelId: number },
+        number
+    >(
+        ({ mapId, labelId }) => {
+            return client.deleteLabelFromMap(labelId, mapId);
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('maps');
+            },
+            onError: (error) => {
+                console.error(error);
+            },
+        }
+    );
+
+    const handleRemoveLabel = (mapId: number, labelId: number) => {
+        removeLabelMultation.mutate({ mapId, labelId });
+    };
+
     const isSelected = (id: number) => selected.indexOf(id) !== -1;
     return (
         <div className={classes.root}>
@@ -419,7 +466,31 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                         )}
 
-                        {selected.length > 0 && <AddLabelButton />}
+                        {selected.length > 0 && (
+                            <Tooltip
+                                arrow={true}
+                                title={intl.formatMessage({
+                                    id: 'map.tooltip-add',
+                                    defaultMessage: 'Add label to selected',
+                                })}
+                            >
+                                <Button
+                                    color="primary"
+                                    size="medium"
+                                    variant="outlined"
+                                    type="button"
+                                    style={{ marginLeft: '10px' }}
+                                    disableElevation={true}
+                                    startIcon={<LabelTwoTone />}
+                                    onClick={handleAddLabelClick}
+                                >
+                                    <FormattedMessage
+                                        id="action.label"
+                                        defaultMessage="Add Label"
+                                    />
+                                </Button>
+                            </Tooltip>
+                        )}
                     </div>
 
                     <div className={classes.toolbarListActions}>
@@ -560,8 +631,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                                     </Tooltip>
                                                 </TableCell>
 
-                                                <TableCell className={classes.bodyCell}>
-                                                    <LabelsCell labels={row.labels} />
+                                                <TableCell className={[classes.bodyCell, classes.labelsCell].join(' ')}>
+                                                    <LabelsCell
+                                                        labels={row.labels}
+                                                        onDelete={(lbl) => {
+                                                            handleRemoveLabel(row.id, lbl.id);
+                                                        }}
+                                                    />
                                                 </TableCell>
 
                                                 <TableCell className={classes.bodyCell}>

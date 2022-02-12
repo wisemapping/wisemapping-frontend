@@ -23,15 +23,18 @@ abstract class Command {
 
   static _uuid: number;
 
+  private _discardDuplicated: string;
+
   constructor() {
     this._id = Command._nextUUID();
+    this._discardDuplicated = undefined;
   }
 
-  abstract execute(commandContext:CommandContext):void;
+  abstract execute(commandContext: CommandContext): void;
 
-  abstract undoExecute(commandContext:CommandContext):void;
+  abstract undoExecute(commandContext: CommandContext): void;
 
-  getId():number {
+  getId(): number {
     return this._id;
   }
 
@@ -41,6 +44,14 @@ abstract class Command {
     }
     this._uuid += 1;
     return this._uuid;
+  }
+
+  get discardDuplicated(): string {
+    return this._discardDuplicated;
+  }
+
+  set discardDuplicated(value: string) {
+    this._discardDuplicated = value;
   }
 }
 

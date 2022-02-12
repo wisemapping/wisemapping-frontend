@@ -33,6 +33,13 @@ export const useStyles = makeStyles((theme: Theme) =>
         bodyCell: {
             border: '0px',
         },
+        labelsCell: {
+            maxWidth: '300px',
+            overflow: 'hidden',
+            textAlign: 'right',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+        },
         visuallyHidden: {
             border: 0,
             clip: 'rect(0 0 0 0)',

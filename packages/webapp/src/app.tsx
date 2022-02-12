@@ -37,8 +37,7 @@ const queryClient = new QueryClient({
 });
 
 const App = (): ReactElement => {
-    const appi18n = new AppI18n();
-    const locale = appi18n.getBrowserLocale();
+    const locale = AppI18n.getBrowserLocale();
 
     // global variables set server-side
     const istTryMode = global.memoryPersistence;

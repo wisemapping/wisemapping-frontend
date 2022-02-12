@@ -63,7 +63,7 @@ export type AccountInfo = {
     firstname: string;
     lastname: string;
     email: string;
-    locale: Locale;
+    locale?: Locale;
 };
 
 export type Permission = {
@@ -94,8 +94,11 @@ interface Client {
     updateStarred(id: number, starred: boolean): Promise<void>;
     updateMapToPublic(id: number, isPublic: boolean): Promise<void>;
 
+    createLabel(title: string, color: string): Promise<number>;
     fetchLabels(): Promise<Label[]>;
     deleteLabel(id: number): Promise<void>;
+    addLabelToMap(labelId: number, mapId: number): Promise<void>;
+    deleteLabelFromMap(labelId: number, mapId: number): Promise<void>;
     fetchAccountInfo(): Promise<AccountInfo>;
 
     registerNewUser(user: NewUser): Promise<void>;

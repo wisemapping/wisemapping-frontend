@@ -113,11 +113,11 @@ class Workspace {
     }
   }
 
-  addEvent(type: string, listener): void {
+  addEvent(type: string, listener: (event: Event) => void): void {
     this._workspace.addEvent(type, listener);
   }
 
-  removeEvent(type: string, listener): void {
+  removeEvent(type: string, listener: (event: Event) => void): void {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);
@@ -193,7 +193,7 @@ class Workspace {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
     const mWorkspace = this;
-    const mouseDownListener = function mouseDownListener(event) {
+    const mouseDownListener = function mouseDownListener(event: MouseEvent) {
       if (!$defined(workspace._mouseMoveListener)) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
@@ -202,7 +202,7 @@ class Workspace {
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
-          workspace._mouseMoveListener = (mouseMoveEvent) => {
+          workspace._mouseMoveListener = (mouseMoveEvent: MouseEvent) => {
             const currentMousePosition = screenManager.getWorkspaceMousePosition(mouseMoveEvent);
 
             const offsetX = currentMousePosition.x - mouseDownPosition.x;

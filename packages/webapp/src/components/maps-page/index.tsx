@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider, IntlShape, useIntl } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { activeInstance } from '../../redux/clientSlice';
 import { useSelector } from 'react-redux';
@@ -40,6 +40,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
 import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
+import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -64,10 +65,9 @@ const MapsPage = (): ReactElement => {
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
-
+    const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
     // Reload based on user preference ...
-    const appi18n = new AppI18n();
-    const userLocale = appi18n.getUserLocale();
+    const userLocale = AppI18n.getUserLocale();
 
     const cache = createIntlCache();
     const intl = createIntl({
@@ -77,7 +77,6 @@ const MapsPage = (): ReactElement => {
     }, cache)
 
     useEffect(() => {
-
         document.title = intl.formatMessage({
             id: 'maps.page-title',
             defaultMessage: 'My Maps | WiseMapping',
@@ -85,7 +84,10 @@ const MapsPage = (): ReactElement => {
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
-        onSuccess: () => queryClient.invalidateQueries('labels'),
+        onSuccess: () => {
+            queryClient.invalidateQueries('labels');
+            queryClient.invalidateQueries('maps');
+        },
         onError: (error) => {
             console.error(`Unexpected error ${error}`);
         },
@@ -238,7 +240,7 @@ const MapsPage = (): ReactElement => {
                                     filter={buttonInfo.filter}
                                     active={filter}
                                     onClick={handleMenuClick}
-                                    onDelete={handleLabelDelete}
+                                    onDelete={setLabelToDelete}
                                     key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
                                 />
                             );
@@ -259,6 +261,14 @@ const MapsPage = (): ReactElement => {
                     <MapsList filter={filter} />
                 </main>
             </div>
+            { labelToDelete && <LabelDeleteConfirm
+                onClose={() => setLabelToDelete(null)}
+                onConfirm={() => {
+                    handleLabelDelete(labelToDelete);
+                    setLabelToDelete(null);
+                }}
+                label={labels.find(l => l.id === labelToDelete)}
+            /> }
         </IntlProvider>
     );
 };

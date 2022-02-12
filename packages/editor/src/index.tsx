@@ -37,7 +37,7 @@ declare global {
 }
 
 export type EditorPropsType = {
-    initCallback?: () => void;
+    initCallback?: (locale: string) => void;
     mapId?: number;
     isTryMode: boolean;
     readOnlyMode: boolean;
@@ -60,7 +60,7 @@ const loadLocaleData = (locale: string) => {
     }
 }
 
-const initMindplot = () => {
+const initMindplot = (locale: string) => {
     // Change page title ...
     document.title = `${global.mapTitle} | WiseMapping `;
 
@@ -95,7 +95,7 @@ const initMindplot = () => {
             (global.userOptions?.zoom != undefined
                 ? Number.parseFloat(global.userOptions.zoom as string)
                 : 0.8),
-        locale: global.locale,
+        locale: locale,
     });
 
     // Build designer ...
@@ -119,11 +119,11 @@ const Editor = ({
     onAction,
 }: EditorPropsType): React.ReactElement => {
     React.useEffect(() => {
-        initCallback();
+        initCallback(locale);
     }, []);
 
     return (
-        <IntlProvider locale={locale} defaultLocale="en" messages={loadLocaleData(locale)}>
+        <IntlProvider locale={locale} messages={loadLocaleData(locale)}>
             <Toolbar
                 isTryMode={isTryMode}
                 onAction={onAction}

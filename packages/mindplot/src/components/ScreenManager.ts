@@ -17,6 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
+import Icon from './Icon';
 import Topic from './Topic';
 
 class ScreenManager {
@@ -75,7 +76,7 @@ class ScreenManager {
 
   fireEvent(type: string, event: UIEvent = null) {
     if (type === 'click') {
-      this._clickEvents.forEach((listener: (arg0: any, arg1: any) => void) => {
+      this._clickEvents.forEach((listener) => {
         listener(type, event);
       });
     } else {
@@ -101,7 +102,7 @@ class ScreenManager {
     return { x, y };
   }
 
-  getWorkspaceIconPosition(e: { getImage: () => any; getSize: () => any; getGroup: () => any; }) {
+  getWorkspaceIconPosition(e: Icon) {
     // Retrieve current icon position.
     const image = e.getImage();
     const elementPosition = image.getPosition();
