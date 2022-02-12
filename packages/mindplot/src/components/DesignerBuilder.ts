@@ -46,14 +46,15 @@ export function buildDesigner(options: DesignerOptions): Designer {
     ].join(' - ');
     console.error(message);
 
+    alert(error.stack);
     // Send error to server ...
     $.ajax({
       method: 'post',
       url: '/c/restful/logger/editor',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       data: JSON.stringify({
-        jsErrorMsg: message,
-        jsStack: JSON.stringify(error),
+        jsErrorMsg: `${error.name} - ${error.message}`,
+        jsStack: error.stack,
         userAgent: navigator.userAgent,
         mapId: options.mapId,
       }),

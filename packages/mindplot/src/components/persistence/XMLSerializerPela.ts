@@ -413,7 +413,7 @@ class XMLSerializerPela implements XMLMindmapSerializer {
       .forEach((child, index) => {
         if (child.getOrder() !== index) {
           child.setOrder(index);
-          console.log('Toppic with order sequence hole. Introducing fix.');
+          console.log('Toppic with order sequence hole. Introducing auto recovery sequence fix.');
         }
       });
 
