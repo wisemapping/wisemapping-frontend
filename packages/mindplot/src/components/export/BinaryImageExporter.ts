@@ -31,7 +31,7 @@ class BinaryImageExporter extends Exporter {
   height: number;
 
   constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg') {
-    super(imgFormat.split['/'][0], imgFormat);
+    super(imgFormat.split('/')[0], imgFormat);
     this.svgElement = svgElement;
     this.mindmap = mindmap;
 
