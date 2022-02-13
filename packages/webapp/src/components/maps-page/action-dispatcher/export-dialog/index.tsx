@@ -15,6 +15,7 @@ import Client from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
 
 import { useSelector } from 'react-redux';
+import SizeType from '@wisemapping/mindplot/src/components/SizeType';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -77,7 +78,7 @@ const ExportDialog = ({
 
     const exporter = (formatType: ExportFormat): Promise<string> => {
         let svgElement: Element | null = null;
-        let size;
+        let size: SizeType;
         let mindmap: Mindmap;
 
         const designer: Designer = global.designer;

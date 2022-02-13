@@ -43,37 +43,38 @@ class BinaryImageExporter extends Exporter {
     throw new Error('Images can not be exporeted');
   }
 
-  async exportAndEndcode(): Promise<string> {
+  exportAndEncode(): Promise<string> {
     const svgExporter = new SVGExporter(this.svgElement);
-    const svgUrl = await svgExporter.exportAndEncode();
+    const svgUrl = svgExporter.exportAndEncode();
+    return svgUrl.then((value: string) => {
+      // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
+      const dpr = (window.devicePixelRatio || 1) * 2;
 
-    // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
-    const dpr = (window.devicePixelRatio || 1) * 2;
+      // Create canvas ...
+      const canvas = document.createElement('canvas');
+      canvas.setAttribute('width', (this.width * dpr).toString());
+      canvas.setAttribute('height', (this.height * dpr).toString());
 
-    // Create canvas ...
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('width', (this.width * dpr).toString());
-    canvas.setAttribute('height', (this.height * dpr).toString());
+      // Render the image and wait for the response ...
+      const img = new Image();
+      const result = new Promise<string>((resolve) => {
+        img.onload = () => {
+          const ctx = canvas.getContext('2d');
+          // Scale for retina ...
+          ctx.scale(dpr, dpr);
+          ctx.drawImage(img, 0, 0);
 
-    // Render the image and wait for the response ...
-    const img = new Image();
-    const result = new Promise<string>((resolve) => {
-      img.onload = () => {
-        const ctx = canvas.getContext('2d');
-        // Scale for retina ...
-        ctx.scale(dpr, dpr);
-        ctx.drawImage(img, 0, 0);
+          const imgDataUri = canvas
+            .toDataURL(this.getContentType())
+            .replace('image/png', 'octet/stream');
 
-        const imgDataUri = canvas
-          .toDataURL(this.getContentType())
-          .replace('image/png', 'octet/stream');
-
-        URL.revokeObjectURL(svgUrl);
-        resolve(imgDataUri);
-      };
+          URL.revokeObjectURL(value);
+          resolve(imgDataUri);
+        };
+      });
+      img.src = value;
+      return result;
     });
-    img.src = svgUrl;
-    return result;
   }
 }
 export default BinaryImageExporter;
