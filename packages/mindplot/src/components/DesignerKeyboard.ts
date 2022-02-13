@@ -21,14 +21,26 @@ import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
 
+export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   // eslint-disable-next-line no-use-before-define
   static _instance: DesignerKeyboard;
+
+  static _disabled: boolean;
 
   constructor(designer: Designer) {
     super();
     $assert(designer, 'designer can not be null');
     this._registerEvents(designer);
+  }
+
+  addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
+    super.addShortcut(shortcuts, (e: Event) => {
+      if (DesignerKeyboard.isDisabled()) {
+        return;
+      }
+      callback(e);
+    });
   }
 
   private _registerEvents(designer: Designer) {
@@ -246,6 +258,10 @@ class DesignerKeyboard extends Keyboard {
 
     $(document).on('keypress', (event) => {
       let keyCode: number;
+
+      if (DesignerKeyboard.isDisabled()) {
+        return;
+      }
       // Firefox doesn't skip special keys for keypress event...
       if (event.key && excludes.includes(event.key.toLowerCase())) {
         return;
@@ -373,6 +389,19 @@ class DesignerKeyboard extends Keyboard {
 
   static register = function register(designer: Designer) {
     this._instance = new DesignerKeyboard(designer);
+    this._disabled = false;
+  };
+
+  static pause = function pause() {
+    this._disabled = true;
+  };
+
+  static resume = function resume() {
+    this._disabled = false;
+  };
+
+  static isDisabled = function isDisabled() {
+    return this._disabled;
   };
 
   static specialKeys = {

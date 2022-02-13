@@ -9,7 +9,8 @@ import {
     PersistenceManager,
     RESTPersistenceManager,
     DesignerOptionsBuilder,
-    Designer
+    Designer,
+    DesignerKeyboard,
 } from '@wisemapping/mindplot';
 import FR from './compiled-lang/fr.json';
 import ES from './compiled-lang/es.json';
@@ -43,6 +44,7 @@ export type EditorPropsType = {
     readOnlyMode: boolean;
     locale?: string;
     onAction: (action: ToolbarActionType) => void;
+    hotkeys?: boolean;
 };
 
 const loadLocaleData = (locale: string) => {
@@ -117,10 +119,19 @@ const Editor = ({
     isTryMode: isTryMode,
     locale = 'en',
     onAction,
+    hotkeys = true,
 }: EditorPropsType): React.ReactElement => {
     React.useEffect(() => {
         initCallback(locale);
     }, []);
+
+    React.useEffect(() => {
+        if (hotkeys) {
+            DesignerKeyboard.resume();
+        } else {
+            DesignerKeyboard.pause();
+        }
+    }, [hotkeys]);
 
     return (
         <IntlProvider locale={locale} messages={loadLocaleData(locale)}>

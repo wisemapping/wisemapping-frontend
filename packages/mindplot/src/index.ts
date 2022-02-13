@@ -27,6 +27,7 @@ import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 import ImageExporterFactory from './components/export/ImageExporterFactory';
 import TextExporterFactory from './components/export/TextExporterFactory';
 import Exporter from './components/export/Exporter';
+import DesignerKeyboard from './components/DesignerKeyboard';
 
 import {
   buildDesigner,
@@ -54,4 +55,5 @@ export {
   ImageExporterFactory,
   Exporter,
   $notify,
+  DesignerKeyboard,
 };
