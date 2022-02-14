@@ -131,7 +131,7 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
      */
   clone(): NodeModel {
-    const result = new NodeModel(this.getType(), this._mindmap, -1);
+    const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {
       const cnode = node.clone() as NodeModel;
       cnode._parent = result;
@@ -148,7 +148,7 @@ class NodeModel extends INodeModel {
      * @return {mindplot.model.NodeModel}
      */
   deepCopy(): NodeModel {
-    const result = new NodeModel(this.getType(), this._mindmap, -1);
+    const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {
       const cnode = (node as NodeModel).deepCopy();
       cnode._parent = result;

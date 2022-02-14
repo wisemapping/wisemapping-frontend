@@ -68,7 +68,7 @@ class Menu extends IMenu {
     const fontSizeBtn = $('#fontSize');
     if (fontSizeBtn) {
       const fontSizeModel = {
-        getValue() {
+        getValue(): number {
           const nodes = designerModel.filterSelectedTopics();
 
           let result = null;
@@ -82,7 +82,7 @@ class Menu extends IMenu {
           }
           return result;
         },
-        setValue(value) {
+        setValue(value: number) {
           designer.changeFontSize(value);
         },
       };
