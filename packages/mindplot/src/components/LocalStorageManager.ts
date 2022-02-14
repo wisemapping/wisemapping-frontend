@@ -30,7 +30,8 @@ class LocalStorageManager extends PersistenceManager {
     this.forceLoad = forceLoad;
   }
 
-  saveMapXml(mapId: string, mapXml: string) {
+  saveMapXml(mapId: string, mapDoc: Document, pref = null, events = null): void {
+    const mapXml = new XMLSerializer().serializeToString(mapDoc);
     localStorage.setItem(`${mapId}-xml`, mapXml);
   }
 

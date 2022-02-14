@@ -73,7 +73,7 @@ class IMenu {
     persistenceManager.unlockMap(mindmap);
   }
 
-  save(saveElem: JQuery, designer: Designer, saveHistory: boolean, sync?: boolean) {
+  save(saveElem: JQuery, designer: Designer, saveHistory: boolean) {
     // Load map content ...
     const mindmap = designer.getMindmap();
     const mindmapProp = designer.getMindmapProperties();
@@ -106,7 +106,7 @@ class IMenu {
           }
         }
       },
-    }, sync);
+    });
   }
 
   isSaveRequired(): boolean {

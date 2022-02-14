@@ -24,7 +24,7 @@ abstract class PersistenceManager {
   // eslint-disable-next-line no-use-before-define
   static _instance: PersistenceManager;
 
-  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events, sync: boolean) {
+  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events?) {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
@@ -33,11 +33,9 @@ abstract class PersistenceManager {
 
     const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
-    const mapXml = new XMLSerializer().serializeToString(domMap);
-
     const pref = JSON.stringify(editorProperties);
     try {
-      this.saveMapXml(mapId, mapXml, pref, saveHistory, events, sync);
+      this.saveMapXml(mapId, domMap, pref, saveHistory, events);
     } catch (e) {
       console.error(e);
       events.onError(e);
@@ -54,7 +52,7 @@ abstract class PersistenceManager {
 
   abstract loadMapDom(mapId: string): Document;
 
-  abstract saveMapXml(mapId: string, mapXml, pref, saveHistory, events, sync);
+  abstract saveMapXml(mapId: string, mapXml: Document, pref?, saveHistory?: boolean, events?);
 
   abstract unlockMap(mindmap: Mindmap): void;
 
