@@ -161,7 +161,7 @@ const RegistationPage = (): React.ReactElement => {
 
     useEffect(() => {
         document.title = intl.formatMessage({
-            id: 'registration.title',
+            id: 'registration.page-title',
             defaultMessage: 'Registration | WiseMapping',
         });
     });

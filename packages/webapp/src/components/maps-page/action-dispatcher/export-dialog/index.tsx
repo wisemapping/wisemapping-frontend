@@ -16,6 +16,8 @@ import { activeInstance } from '../../../../redux/clientSlice';
 
 import { useSelector } from 'react-redux';
 import SizeType from '@wisemapping/mindplot/src/components/SizeType';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -41,8 +43,11 @@ const ExportDialog = ({
         enableImgExport ? 'image' : 'document'
     );
     const [exportFormat, setExportFormat] = React.useState<ExportFormat>(
-        enableImgExport ? 'svg' : 'xls'
+        enableImgExport ? 'svg' : 'txt'
     );
+
+    const [zoomToFit, setZoomToFit] = React.useState<boolean>(true)
+
     const classes = useStyles();
 
     const handleOnExportFormatChange = (event) => {
@@ -76,6 +81,10 @@ const ExportDialog = ({
         setSubmit(true);
     };
 
+    const handleOnZoomToFit = (): void => {
+        setZoomToFit(!zoomToFit);
+    };
+
     const exporter = (formatType: ExportFormat): Promise<string> => {
         let svgElement: Element | null = null;
         let size: SizeType;
@@ -97,7 +106,7 @@ const ExportDialog = ({
             case 'png':
             case 'jpg':
             case 'svg': {
-                exporter = ImageExporterFactory.create(formatType, mindmap, svgElement, size.width, size.height);
+                exporter = ImageExporterFactory.create(formatType, mindmap, svgElement, size.width, size.height, zoomToFit);
                 break;
             }
             case 'wxml':
@@ -131,7 +140,7 @@ const ExportDialog = ({
                     URL.revokeObjectURL(url);
                     document.body.removeChild(anchor);
                 }).catch((fail) => {
-                    console.log("Unexpected error during export:" + fail);
+                    console.error("Unexpected error during export:" + fail);
                 });
 
             onClose();
@@ -173,22 +182,32 @@ const ExportDialog = ({
                                 style={{ fontSize: '9px' }}
                             />
                             {exportGroup == 'image' && (
-                                <Select
-                                    onChange={handleOnExportFormatChange}
-                                    variant="outlined"
-                                    value={exportFormat}
-                                    className={classes.label}
-                                >
-                                    <MenuItem value="svg" className={classes.menu}>
-                                        Scalable Vector Graphics (SVG)
-                                    </MenuItem>
-                                    <MenuItem value="png" className={classes.menu}>
-                                        Portable Network Graphics (PNG)
-                                    </MenuItem>
-                                    <MenuItem value="jpg" className={classes.menu}>
-                                        JPEG Image (JPEG)
-                                    </MenuItem>
-                                </Select>
+                                <>
+                                    <Select
+                                        onChange={handleOnExportFormatChange}
+                                        variant="outlined"
+                                        value={exportFormat}
+                                        className={classes.select}
+                                    >
+                                        <MenuItem value="svg" className={classes.menu}>
+                                            Scalable Vector Graphics (SVG)
+                                        </MenuItem>
+                                        <MenuItem value="png" className={classes.menu}>
+                                            Portable Network Graphics (PNG)
+                                        </MenuItem>
+                                        <MenuItem value="jpg" className={classes.menu}>
+                                            JPEG Image (JPEG)
+                                        </MenuItem>
+                                    </Select>
+                                    <FormControlLabel
+                                        className={classes.select}
+                                        control={<Checkbox checked={zoomToFit} onChange={handleOnZoomToFit} />}
+                                        label={intl.formatMessage({
+                                            id: 'export.img-center',
+                                            defaultMessage:
+                                                'Center and zoom to fit',
+                                        })} />
+                                </>
                             )}
                         </FormControl>
 

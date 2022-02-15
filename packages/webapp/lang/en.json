@@ -137,6 +137,9 @@
   "export.image": {
     "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes."
   },
+  "export.img-center": {
+    "defaultMessage": "Center and zoom to fit"
+  },
   "export.title": {
     "defaultMessage": "Export"
   },
@@ -438,6 +441,9 @@
   "registration.lastname": {
     "defaultMessage": "Last Name"
   },
+  "registration.page-title": {
+    "defaultMessage": "Registration | WiseMapping"
+  },
   "registration.password": {
     "defaultMessage": "Password"
   },
@@ -451,7 +457,7 @@
     "defaultMessage": "Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
   },
   "registration.title": {
-    "defaultMessage": "Registration | WiseMapping"
+    "defaultMessage": "Become a member"
   },
   "rename.description": {
     "defaultMessage": "Please, fill the new map name and description."
