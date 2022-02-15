@@ -17,7 +17,6 @@ import { activeInstance } from '../../../../redux/clientSlice';
 import { useSelector } from 'react-redux';
 import SizeType from '@wisemapping/mindplot/src/components/SizeType';
 import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -95,7 +94,7 @@ const ExportDialog = ({
             // Depending on the type of export. It will require differt POST.
             const workspace = designer.getWorkSpace();
             svgElement = workspace.getSVGElement();
-            size = workspace.getSize();
+            size = { width: window.innerWidth, height: window.innerHeight };
             mindmap = designer.getMindmap();
         } else {
             mindmap = client.fetchMindmap(mapId);
