@@ -65,13 +65,14 @@ class BinaryImageExporter extends Exporter {
         height = (this.height * dpr);
       }
 
-      // Prevents an image too big. Failures seen during export in couple of browsers
-      if (Math.max(width, height) > BinaryImageExporter.maxAllowedSize) {
-        const scale = Math.max(width, height) / BinaryImageExporter.maxAllowedSize;
-        width /= scale;
-        height /= scale;
-      }
+      // // Prevents an image too big. Failures seen during export in couple of browsers
+      // if (Math.max(width, height) > BinaryImageExporter.maxAllowedSize) {
+      //   const scale = Math.max(width, height) / BinaryImageExporter.maxAllowedSize;
+      //   width /= scale;
+      //   height /= scale;
+      // }
 
+      console.log(`Export size: ${width}: ${height}`);
       canvas.setAttribute('width', width.toFixed(0));
       canvas.setAttribute('height', height.toFixed(0));
 
