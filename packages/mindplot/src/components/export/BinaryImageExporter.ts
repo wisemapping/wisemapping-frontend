@@ -15,16 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from '../..';
 import Exporter from './Exporter';
 import SVGExporter from './SVGExporter';
 /**
  * Based on https://mybyways.com/blog/convert-svg-to-png-using-your-browser
  */
 class BinaryImageExporter extends Exporter {
-  private svgElement: Element;
+  private static maxAllowedSize = 10000;
 
-  private mindmap: Mindmap;
+  private svgElement: Element;
 
   private width: number;
 
@@ -32,10 +31,9 @@ class BinaryImageExporter extends Exporter {
 
   private adjustToFit: boolean;
 
-  constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg', adjustToFit = true) {
+  constructor(svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg', adjustToFit = true) {
     super(imgFormat.split('/')[0], imgFormat);
     this.svgElement = svgElement;
-    this.mindmap = mindmap;
     this.adjustToFit = adjustToFit;
     this.width = width;
     this.height = height;
@@ -66,6 +64,14 @@ class BinaryImageExporter extends Exporter {
         width = (this.width * dpr);
         height = (this.height * dpr);
       }
+
+      // Prevents an image too big. Failures seen during export in couple of browsers
+      if (Math.max(width, height) > BinaryImageExporter.maxAllowedSize) {
+        const scale = Math.max(width, height) / BinaryImageExporter.maxAllowedSize;
+        width /= scale;
+        height /= scale;
+      }
+
       canvas.setAttribute('width', width.toFixed(0));
       canvas.setAttribute('height', height.toFixed(0));
 

@@ -105,7 +105,7 @@ const ExportDialog = ({
             case 'png':
             case 'jpg':
             case 'svg': {
-                exporter = ImageExporterFactory.create(formatType, mindmap, svgElement, size.width, size.height, zoomToFit);
+                exporter = ImageExporterFactory.create(formatType, svgElement, size.width, size.height, zoomToFit);
                 break;
             }
             case 'wxml':
