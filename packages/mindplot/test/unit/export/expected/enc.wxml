@@ -1,4 +1,4 @@
-<map name="enc" version="tango"><topic central="true" text="Artigos GF comentários interessantes" id="1"><topic position="-466,16" order="0" text="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities" shape="rectagle" id="5" bgColor="#cccccc" brColor="#cccccc"><topic position="-1042,-163" order="0" id="6"><text><![CDATA[Therecent growth of large functional trait data
+<map name="enc" version="tango"><topic central="true" text="Artigos GF comentários interessantes" id="1"><topic position="-466,16" order="3" text="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities" shape="rectagle" id="5" bgColor="#cccccc" brColor="#cccccc"><topic position="-1042,-163" order="0" id="6"><text><![CDATA[Therecent growth of large functional trait data
 bases has been fuelled by standardized protocols forthe
 measurement of individual functional traits and intensive
 efforts to compile trait data(Cornelissen etal. 2003; Chave etal. 2009). Nonetheless, there remains no consensusfor
@@ -28,7 +28,7 @@ failed to accurately estimate the variance of trait values. This
 indicates that in situations where accurate estimation of plotlevel
 variance is desired, complete censuses are essential.]]></text><note><![CDATA[Isso significa que estudos de característica de história de vida compensam? Ver nos m&m.]]></note></topic><topic position="-915,219" order="7" id="15"><text><![CDATA[We suggest that, in these studies,
 the investment in complete sampling may be worthwhile
-for at least some traits.]]></text><note><![CDATA[Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.]]></note></topic></topic><topic position="297,0" order="1" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectagle" id="17" fontStyle=";;#000000;;;" bgColor="#cccccc" brColor="#cccccc"><topic position="586,-383" order="0" id="22"><text><![CDATA[Here, we develop a new approach that links functional attributes
+for at least some traits.]]></text><note><![CDATA[Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.]]></note></topic></topic><topic position="297,0" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectagle" id="17" fontStyle=";;#000000;;;" bgColor="#cccccc" brColor="#cccccc"><topic position="586,-383" order="0" id="22"><text><![CDATA[Here, we develop a new approach that links functional attributes
 of tree species with studies of forest recovery and regional
 land-use transitions (Chazdon et al. 2007). Grouping species according
 to their functional attributes or demographic rates provides
@@ -109,4 +109,4 @@ ZHANG, Z. D., R. G. ZANG, AND Y. D. QI. 2008. Spatiotemporal patterns and
 dynamics of species richness and abundance of woody plant functional
 groups in a tropical forest landscape of Hainan Island, South China.
 J. Integr. Plant Biol. 50: 547–558.
-]]></text></topic></topic><topic position="-313,-224" order="2" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectagle" id="2" fontStyle=";;#000000;;;" bgColor="#cccccc" brColor="#cccccc"><topic position="-619,-221" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" id="3"><topic position="-980,-221" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" id="4"/></topic></topic></topic></map>
+]]></text></topic></topic><topic position="-313,-224" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectagle" id="2" fontStyle=";;#000000;;;" bgColor="#cccccc" brColor="#cccccc"><topic position="-619,-221" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" id="3"><topic position="-980,-221" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" id="4"/></topic></topic></topic></map>

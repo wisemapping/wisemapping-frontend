@@ -72,7 +72,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     }
   }
 
-  private _fixPosition(mindmap: Mindmap) {
+  private _fixPosition(mindmap: Mindmap): void {
     // Position was not required in previous versions. Try to synthesize one .
     const centralNode = mindmap.getBranches()[0];
     const children = centralNode.getChildren();
@@ -83,7 +83,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     }
   }
 
-  _fixNodePosition(node: NodeModel, parentPosition: {x:number, y:number}) {
+  private _fixNodePosition(node: NodeModel, parentPosition: { x: number, y: number }): void {
     // Position was not required in previous versions. Try to synthesize one .
     let position = node.getPosition();
     if (!position) {
