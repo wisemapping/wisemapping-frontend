@@ -22,19 +22,21 @@ import SVGExporter from './SVGExporter';
  * Based on https://mybyways.com/blog/convert-svg-to-png-using-your-browser
  */
 class BinaryImageExporter extends Exporter {
-  svgElement: Element;
+  private svgElement: Element;
 
-  mindmap: Mindmap;
+  private mindmap: Mindmap;
 
-  width: number;
+  private width: number;
 
-  height: number;
+  private height: number;
 
-  constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg') {
+  private adjustToFit: boolean;
+
+  constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg', adjustToFit = true) {
     super(imgFormat.split('/')[0], imgFormat);
     this.svgElement = svgElement;
     this.mindmap = mindmap;
-
+    this.adjustToFit = adjustToFit;
     this.width = width;
     this.height = height;
   }
@@ -44,7 +46,7 @@ class BinaryImageExporter extends Exporter {
   }
 
   exportAndEncode(): Promise<string> {
-    const svgExporter = new SVGExporter(this.svgElement);
+    const svgExporter = new SVGExporter(this.svgElement, this.adjustToFit);
     const svgUrl = svgExporter.exportAndEncode();
     return svgUrl.then((value: string) => {
       // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
