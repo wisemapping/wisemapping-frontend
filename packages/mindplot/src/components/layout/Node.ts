@@ -18,6 +18,7 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
+import ChildrenSorterStrategy from './ChildrenSorterStrategy';
 
 class Node {
   private _id: number;
@@ -25,14 +26,14 @@ class Node {
   // eslint-disable-next-line no-use-before-define
   _parent: Node;
 
-  private _sorter: any;
+  private _sorter: ChildrenSorterStrategy;
 
   private _properties;
 
   // eslint-disable-next-line no-use-before-define
   _children: Node[];
 
-  constructor(id: number, size: SizeType, position, sorter) {
+  constructor(id: number, size: SizeType, position: PositionType, sorter: ChildrenSorterStrategy) {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     $assert(size, 'size can not be null');
     $assert(position, 'position can not be null');

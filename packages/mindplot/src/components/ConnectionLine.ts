@@ -21,10 +21,23 @@ import {
   Point, CurvedLine, PolyLine, Line,
 } from '@wisemapping/web2d';
 import { TopicShape } from './model/INodeModel';
+import RelationshipModel from './model/RelationshipModel';
+import Topic from './Topic';
 import TopicConfig from './TopicConfig';
+import Workspace from './Workspace';
 
 class ConnectionLine {
-  constructor(sourceNode, targetNode, lineType) {
+  protected _targetTopic: Topic;
+
+  protected _sourceTopic: Topic;
+
+  protected _lineType: number;
+
+  protected _line2d: Line;
+
+  protected _model: RelationshipModel;
+
+  constructor(sourceNode: Topic, targetNode: Topic, lineType?: number) {
     $assert(targetNode, 'parentNode node can not be null');
     $assert(sourceNode, 'childNode node can not be null');
     $assert(sourceNode !== targetNode, 'Circular connection');
@@ -32,7 +45,7 @@ class ConnectionLine {
     this._targetTopic = targetNode;
     this._sourceTopic = sourceNode;
 
-    let line;
+    let line: Line;
     const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
     if (targetNode.getType() === 'CentralTopic') {
       line = this._createLine(lineType, ConnectionLine.CURVED);
@@ -51,15 +64,15 @@ class ConnectionLine {
     this._line2d = line;
   }
 
-  _getCtrlPoints(sourceNode, targetNode) {
+  private _getCtrlPoints(sourceNode: Topic, targetNode: Topic) {
     const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
     const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
     const deltaX = (srcPos.x - destPos.x) / 3;
     return [new Point(deltaX, 0), new Point(-deltaX, 0)];
   }
 
-  _createLine(lineTypeParam, defaultStyle) {
-    const lineType = $defined(lineTypeParam) ? parseInt(lineTypeParam, 10) : defaultStyle;
+  protected _createLine(lineTypeParam: number, defaultStyle: number): Line {
+    const lineType = $defined(lineTypeParam) ? lineTypeParam : defaultStyle;
     this._lineType = lineType;
     let line = null;
     switch (lineType) {
@@ -80,7 +93,7 @@ class ConnectionLine {
     return line;
   }
 
-  setVisibility(value) {
+  setVisibility(value: boolean): void {
     this._line2d.setVisibility(value);
   }
 
@@ -88,11 +101,11 @@ class ConnectionLine {
     return this._line2d.isVisible();
   }
 
-  setOpacity(opacity) {
+  setOpacity(opacity: number): void {
     this._line2d.setOpacity(opacity);
   }
 
-  redraw() {
+  redraw(): void {
     const line2d = this._line2d;
     const sourceTopic = this._sourceTopic;
     const sourcePosition = sourceTopic.getPosition();
@@ -116,7 +129,7 @@ class ConnectionLine {
     this._positionateConnector(targetTopic);
   }
 
-  _positionateConnector(targetTopic) {
+  protected _positionateConnector(targetTopic: Topic): void {
     const targetPosition = targetTopic.getPosition();
     const offset = TopicConfig.CONNECTOR_WIDTH / 2;
     const targetTopicSize = targetTopic.getSize();
@@ -141,65 +154,68 @@ class ConnectionLine {
     }
   }
 
-  setStroke(color, style, opacity) {
+  setStroke(color: string, style, opacity: number) {
     this._line2d.setStroke(null, null, color, opacity);
   }
 
-  addToWorkspace(workspace) {
+  addToWorkspace(workspace: Workspace) {
     workspace.append(this._line2d);
     this._line2d.moveToBack();
   }
 
-  removeFromWorkspace(workspace) {
+  removeFromWorkspace(workspace: Workspace) {
     workspace.removeChild(this._line2d);
   }
 
-  getTargetTopic() {
+  getTargetTopic(): Topic {
     return this._targetTopic;
   }
 
-  getSourceTopic() {
+  getSourceTopic(): Topic {
     return this._sourceTopic;
   }
 
-  getLineType() {
+  getLineType(): number {
     return this._lineType;
   }
 
-  getLine() {
+  getLine(): Line {
     return this._line2d;
   }
 
-  getModel() {
+  getModel(): RelationshipModel {
     return this._model;
   }
 
-  setModel(model) {
+  setModel(model: RelationshipModel): void {
     this._model = model;
   }
 
-  getType() {
+  getType(): string {
     return 'ConnectionLine';
   }
 
-  getId() {
+  getId(): number {
     return this._model.getId();
   }
 
-  moveToBack() {
+  moveToBack(): void {
     this._line2d.moveToBack();
   }
 
   moveToFront() {
     this._line2d.moveToFront();
   }
+
+  static SIMPLE = 0;
+
+  static POLYLINE = 1;
+
+  static CURVED = 2;
+
+  static SIMPLE_CURVED = 3;
+
+  static getStrokeColor = () => '#495879';
 }
-
-ConnectionLine.getStrokeColor = () => '#495879';
-
-ConnectionLine.SIMPLE = 0;
-ConnectionLine.POLYLINE = 1;
-ConnectionLine.CURVED = 2;
-ConnectionLine.SIMPLE_CURVED = 3;
 
 export default ConnectionLine;

@@ -1329,6 +1329,10 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
+  abstract workoutOutgoingConnectionPoint(position: Point): Point;
+
+  abstract workoutIncomingConnectionPoint(position: Point): Point;
+
   isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();
     if (!result) {

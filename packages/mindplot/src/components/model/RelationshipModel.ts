@@ -67,7 +67,7 @@ class RelationshipModel {
     return this._id;
   }
 
-  getLineType() {
+  getLineType(): number {
     return this._lineType;
   }
 
