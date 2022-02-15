@@ -52,10 +52,22 @@ class BinaryImageExporter extends Exporter {
       // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
       const dpr = (window.devicePixelRatio || 1) * 2;
 
-      // Create canvas ...
+      // Create canvas size ...
       const canvas = document.createElement('canvas');
-      canvas.setAttribute('width', (this.width * dpr).toString());
-      canvas.setAttribute('height', (this.height * dpr).toString());
+      let width: number;
+      let height: number;
+      if (this.adjustToFit) {
+        // Size must match with SVG image size ...
+        const size = svgExporter.getImgSize();
+        width = (size.width * dpr);
+        height = (size.height * dpr);
+      } else {
+        // Use screensize as size ..
+        width = (this.width * dpr);
+        height = (this.height * dpr);
+      }
+      canvas.setAttribute('width', width.toFixed(0));
+      canvas.setAttribute('height', height.toFixed(0));
 
       // Render the image and wait for the response ...
       const img = new Image();

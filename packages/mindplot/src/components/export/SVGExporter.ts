@@ -25,7 +25,7 @@ class SVGExporter extends Exporter {
 
   private static regexpTranslate = /translate\((-?[0-9]+.[0-9]+),(-?[0-9]+.[0-9]+)\)/;
 
-  private static padding = 100;
+  private static padding = 30;
 
   private adjustToFit: boolean;
 
@@ -54,7 +54,7 @@ class SVGExporter extends Exporter {
 
     // Does need to be adjust ?.
     if (this.adjustToFit) {
-      svgDoc = this.normalizeToFit(svgDoc);
+      svgDoc = this._normalizeToFit(svgDoc);
     }
 
     const result = new XMLSerializer()
@@ -63,10 +63,9 @@ class SVGExporter extends Exporter {
     return Promise.resolve(result);
   }
 
-  private normalizeToFit(document: Document): Document {
+  private _calcualteDimensions(): { minX: number, maxX: number, minY: number, maxY: number } {
     // Collect all group elements ...
     const rectElems = Array.from(document.querySelectorAll('g>rect'));
-
     const translates: SizeType[] = rectElems
       .map((rect: Element) => {
         const g = rect.parentElement;
@@ -96,15 +95,40 @@ class SVGExporter extends Exporter {
     const widths = translates.map((t) => t.width).sort((a, b) => a - b);
     const heights = translates.map((t) => t.height).sort((a, b) => a - b);
 
-    const svgElem = document.firstChild as Element;
     const minX = widths[0] - SVGExporter.padding;
     const minY = heights[0] - SVGExporter.padding;
 
     const maxX = widths[widths.length - 1] + SVGExporter.padding;
     const maxY = heights[heights.length - 1] + SVGExporter.padding;
 
-    svgElem.setAttribute('viewBox', `${minX} ${minY} ${maxX + Math.abs(minX)}  ${maxY + Math.abs(minY)}`);
-    svgElem.setAttribute('preserveAspectRatio', 'xMidYMid');
+    return {
+      minX, maxX, minY, maxY,
+    };
+  }
+
+  getImgSize(): SizeType {
+    const {
+      minX, maxX, minY, maxY,
+    } = this._calcualteDimensions();
+
+    const width = maxX + Math.abs(minX);
+    const height = maxY + Math.abs(minY);
+    return { width, height };
+  }
+
+  private _normalizeToFit(document: Document): Document {
+    const {
+      minX, maxX, minY, maxY,
+    } = this._calcualteDimensions();
+    const svgElem = document.firstChild as Element;
+
+    const width = maxX + Math.abs(minX);
+    const height = maxY + Math.abs(minY);
+
+    svgElem.setAttribute('viewBox', `${minX} ${minY} ${width}  ${height}`);
+    svgElem.setAttribute('preserveAspectRatio', 'xMinYMin');
+    svgElem.setAttribute('width', width.toFixed(0));
+    svgElem.setAttribute('height', height.toFixed(0));
 
     return document;
   }
