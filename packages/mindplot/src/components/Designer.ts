@@ -335,7 +335,7 @@ class Designer extends Events {
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
-    if (scale <= 1.9) {
+    if (scale <= 3.0) {
       model.setZoom(scale);
       this._workspace.setZoom(scale);
     } else {
