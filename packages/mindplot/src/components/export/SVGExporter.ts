@@ -29,6 +29,8 @@ class SVGExporter extends Exporter {
 
   private adjustToFit: boolean;
 
+  private static MAX_SUPPORTED_SIZE = 2500;
+
   constructor(svgElement: Element, adjustToFit = true) {
     super('svg', 'image/svg+xml');
     this.svgElement = svgElement;
@@ -111,8 +113,16 @@ class SVGExporter extends Exporter {
       minX, maxX, minY, maxY,
     } = this._calcualteDimensions();
 
-    const width = maxX + Math.abs(minX);
-    const height = maxY + Math.abs(minY);
+    let width: number = maxX + Math.abs(minX);
+    let height: number = maxY + Math.abs(minY);
+
+    // Prevents an image too big. Failures seen during export in couple of browsers
+    if (Math.max(width, height) > SVGExporter.MAX_SUPPORTED_SIZE) {
+      const scale = Math.max(width, height) / SVGExporter.MAX_SUPPORTED_SIZE;
+      width /= scale;
+      height /= scale;
+    }
+
     return { width, height };
   }
 
@@ -127,8 +137,11 @@ class SVGExporter extends Exporter {
 
     svgElem.setAttribute('viewBox', `${minX} ${minY} ${width}  ${height}`);
     svgElem.setAttribute('preserveAspectRatio', 'xMinYMin');
-    svgElem.setAttribute('width', width.toFixed(0));
-    svgElem.setAttribute('height', height.toFixed(0));
+
+    // Get image size ...
+    const imgSize = this.getImgSize();
+    svgElem.setAttribute('width', imgSize.width.toFixed(0));
+    svgElem.setAttribute('height', imgSize.height.toFixed(0));
 
     return document;
   }
