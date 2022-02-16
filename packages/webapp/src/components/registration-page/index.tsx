@@ -17,6 +17,7 @@ import SubmitButton from '../form/submit-button';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import AppConfig from '../../classes/app-config';
+import ReactGA from 'react-ga';
 
 export type Model = {
     email: string;
@@ -164,7 +165,8 @@ const RegistationPage = (): React.ReactElement => {
             id: 'registration.page-title',
             defaultMessage: 'Registration | WiseMapping',
         });
-    });
+        ReactGA.pageview(window.location.pathname + window.location.search);
+    },[]);
 
     return (
         <div>

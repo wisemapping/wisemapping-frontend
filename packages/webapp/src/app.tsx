@@ -14,8 +14,9 @@ import AppI18n, { Locales } from './classes/app-i18n';
 import MapsPage from './components/maps-page';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
-import GoogleAnalytics from 'react-ga';
+import ReactGA from 'react-ga';
 import EditorPage from './components/editor-page';
+import AppConfig from './classes/app-config';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -23,11 +24,8 @@ declare module '@mui/styles/defaultTheme' {
     interface DefaultTheme extends Theme { }
 }
 
-
 // Google Analytics Initialization.
-GoogleAnalytics.initialize('UA-2347723-1');
-GoogleAnalytics.pageview(window.location.pathname + window.location.search);
-
+ReactGA.initialize(AppConfig.getGoogleAnalyticsAccount());
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -62,7 +60,7 @@ const App = (): ReactElement => {
                                         <Redirect to="/c/login" />
                                     </Route>
                                     <Route path="/c/login"
-                                        component={LoginPage}
+                                        component={LoginPage} 
                                     />
                                     <Route
                                         path="/c/registration"

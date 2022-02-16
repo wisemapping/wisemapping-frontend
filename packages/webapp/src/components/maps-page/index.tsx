@@ -41,6 +41,8 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
+import ReactGA from 'react-ga';
+
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -81,6 +83,7 @@ const MapsPage = (): ReactElement => {
             id: 'maps.page-title',
             defaultMessage: 'My Maps | WiseMapping',
         });
+        ReactGA.pageview(window.location.pathname + window.location.search);
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
@@ -261,14 +264,14 @@ const MapsPage = (): ReactElement => {
                     <MapsList filter={filter} />
                 </main>
             </div>
-            { labelToDelete && <LabelDeleteConfirm
+            {labelToDelete && <LabelDeleteConfirm
                 onClose={() => setLabelToDelete(null)}
                 onConfirm={() => {
                     handleLabelDelete(labelToDelete);
                     setLabelToDelete(null);
                 }}
                 label={labels.find(l => l.id === labelToDelete)}
-            /> }
+            />}
         </IntlProvider>
     );
 };
