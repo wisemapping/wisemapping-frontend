@@ -58,9 +58,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
 
     const addMutation = useMutation(
         (model: ShareModel) => {
-            const emails = model.emails.split("'");
-            const permissions = emails.map((email) => {
-                return { email: email, role: model.role };
+            const emails = model.emails.split(',');
+            const permissions = emails.map((email: string) => {
+                return { email: email.replace(/\s/g, ''), role: model.role };
             });
             return client.addMapPermissions(mapId, model.message, permissions);
         },

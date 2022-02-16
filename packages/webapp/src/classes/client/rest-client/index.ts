@@ -55,7 +55,7 @@ export default class RestClient implements Client {
                 .put(
                     `${this.baseUrl}/c/restful/maps/${id}/collabs/`,
                     {
-                        messasge: message,
+                        message: message,
                         collaborations: permissions,
                     },
                     { headers: { 'Content-Type': 'application/json' } }

@@ -44,6 +44,8 @@ import LayoutManager from './layout/LayoutManager';
 import NoteModel from './model/NoteModel';
 import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
+import FeatureModel from './model/FeatureModel';
+import Icon from './Icon';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -156,7 +158,6 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** @return {String} topic shape type */
   getShapeType(): string {
     const model = this.getModel();
     let result = model.getShapeType();
@@ -166,7 +167,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  private _removeInnerShape() {
+  private _removeInnerShape(): ElementClass {
     const group = this.get2DElement();
     const innerShape = this.getInnerShape();
     group.removeChild(innerShape);
@@ -303,7 +304,7 @@ abstract class Topic extends NodeGraph {
     return this._text;
   }
 
-  getOrBuildIconGroup() {
+  getOrBuildIconGroup(): Group {
     if (!$defined(this._iconsGroup)) {
       this._iconsGroup = this._buildIconGroup();
       const group = this.get2DElement();
@@ -341,7 +342,7 @@ abstract class Topic extends NodeGraph {
      * @param {mindplot.model.FeatureModel} featureModel
      * @return {mindplot.Icon} the icon corresponding to the feature model
      */
-  addFeature(featureModel) {
+  addFeature(featureModel: FeatureModel): Icon {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
 
@@ -360,13 +361,13 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  findFeatureById(id) {
+  findFeatureById(id: number) {
     const model = this.getModel();
     return model.findFeatureById(id);
   }
 
   /** */
-  removeFeature(featureModel) {
+  removeFeature(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel could not be null');
 
     // Removing the icon from MODEL
@@ -382,21 +383,21 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  addRelationship(relationship) {
+  addRelationship(relationship: Relationship) {
     this._relationships.push(relationship);
   }
 
   /** */
-  deleteRelationship(relationship) {
+  deleteRelationship(relationship: Rect) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
   /** */
-  getRelationships() {
+  getRelationships(): Relationship[] {
     return this._relationships;
   }
 
-  _buildTextShape(readOnly): Text {
+  protected _buildTextShape(readOnly: boolean): Text {
     const result = new Text();
     const family = this.getFontFamily();
     const size = this.getFontSize();
@@ -420,7 +421,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setFontFamily(value, updateModel) {
+  setFontFamily(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setFontName(value);
     if ($defined(updateModel) && updateModel) {
@@ -431,7 +432,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setFontSize(value, updateModel) {
+  setFontSize(value: number, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setSize(value);
 
