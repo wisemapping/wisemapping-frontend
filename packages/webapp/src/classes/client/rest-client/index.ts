@@ -35,7 +35,7 @@ export default class RestClient implements Client {
     deleteMapPermission(id: number, email: string): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .delete(`${this.baseUrl}/c/restful/maps/${id}/collabs?email=${email}`, {
+                .delete(`${this.baseUrl}/c/restful/maps/${id}/collabs?email=${encodeURIComponent(email)}`, {
                     headers: { 'Content-Type': 'text/plain' },
                 })
                 .then(() => {
@@ -181,7 +181,7 @@ export default class RestClient implements Client {
         const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
             axios
                 .post(
-                    `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${model.description ? model.description : ''
+                    `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(model.title)}&description=${model.description ? model.description : ''
                     }`,
                     model.content,
                     { headers: { 'Content-Type': 'application/xml' } }
@@ -426,7 +426,7 @@ export default class RestClient implements Client {
     resetPassword(email: string): Promise<void> {
         const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
             axios
-                .put(`${this.baseUrl}/service/users/resetPassword?email=${email}`, null, {
+                .put(`${this.baseUrl}/service/users/resetPassword?email=${encodeURIComponent(email)}`, null, {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then(() => {
