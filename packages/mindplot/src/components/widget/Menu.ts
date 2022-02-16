@@ -57,7 +57,7 @@ class Menu extends IMenu {
           return result;
         },
 
-        setValue(value) {
+        setValue(value: string) {
           designer.changeFontFamily(value);
         },
       };

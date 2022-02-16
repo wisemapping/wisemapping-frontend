@@ -17,7 +17,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
-import { Mindmap } from '..';
 import { $msg } from './Messages';
 import PersistenceManager from './PersistenceManager';
 
@@ -132,8 +131,7 @@ class RESTPersistenceManager extends PersistenceManager {
       });
   }
 
-  unlockMap(mindmap: Mindmap) {
-    const mapId = mindmap.getId();
+  unlockMap(mapId: string):void {
     fetch(
       this.lockUrl.replace('{id}', mapId),
       {

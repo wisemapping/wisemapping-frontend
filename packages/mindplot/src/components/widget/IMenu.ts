@@ -70,7 +70,11 @@ class IMenu {
   unlockMap(designer: Designer) {
     const mindmap = designer.getMindmap();
     const persistenceManager = PersistenceManager.getInstance();
-    persistenceManager.unlockMap(mindmap);
+
+    // If the map could not be loaded, partial map load could happen.
+    if (mindmap) {
+      persistenceManager.unlockMap(mindmap.getId());
+    }
   }
 
   save(saveElem: JQuery, designer: Designer, saveHistory: boolean) {

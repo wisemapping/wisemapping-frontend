@@ -54,7 +54,7 @@ abstract class PersistenceManager {
 
   abstract saveMapXml(mapId: string, mapXml: Document, pref?, saveHistory?: boolean, events?);
 
-  abstract unlockMap(mindmap: Mindmap): void;
+  abstract unlockMap(mapId: string): void;
 
   static init = (instance: PersistenceManager) => {
     this._instance = instance;

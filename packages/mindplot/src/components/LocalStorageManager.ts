@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import { Mindmap } from '..';
 import PersistenceManager from './PersistenceManager';
 
 class LocalStorageManager extends PersistenceManager {
@@ -64,7 +63,7 @@ class LocalStorageManager extends PersistenceManager {
     return $.parseXML(xml);
   }
 
-  unlockMap(mindmap: Mindmap) {
+  unlockMap(): void {
     // Ignore, no implementation required ...
   }
 }
