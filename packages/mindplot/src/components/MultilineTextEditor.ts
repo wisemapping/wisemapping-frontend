@@ -227,7 +227,7 @@ class MultilineTextEditor extends Events {
     this._containerElem.css(style);
   }
 
-  private _setText(text: string) {
+  private _setText(text: string): void {
     const textareaElem = this._getTextareaElem();
     textareaElem.val(text);
     this._adjustEditorSize();

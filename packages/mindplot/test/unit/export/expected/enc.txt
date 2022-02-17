@@ -35,9 +35,11 @@ the other hand, strategies alternative to BRIDGE clearly
 failed to accurately estimate the variance of trait values. This
 indicates that in situations where accurate estimation of plotlevel
 variance is desired, complete censuses are essential.
+		  [Note: Isso significa que estudos de característica de história de vida compensam? Ver nos m&m.]
 		1.1.8 We suggest that, in these studies,
 the investment in complete sampling may be worthwhile
 for at least some traits.
+		  [Note: Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.]
 	1.2 Chazdon 2010. Biotropica. 42(1): 31–40
 		1.2.1 Here, we develop a new approach that links functional attributes
 of tree species with studies of forest recovery and regional
