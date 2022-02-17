@@ -1268,7 +1268,7 @@ abstract class Topic extends NodeGraph {
     }
 
     // If a drag node is create for it, let's hide the editor.
-    this._getTopicEventDispatcher().close();
+    this._getTopicEventDispatcher().close(false);
 
     return result;
   }

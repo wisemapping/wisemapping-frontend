@@ -21,17 +21,21 @@ import $ from 'jquery';
 import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
+import Topic from './Topic';
 
 initHotKeyPluggin($);
 
 class MultilineTextEditor extends Events {
+  private _topic: Topic;
+
+  private _containerElem: JQuery;
+
   constructor() {
     super();
     this._topic = null;
-    this._timeoutId = -1;
   }
 
-  static _buildEditor() {
+  private static _buildEditor() {
     const result = $('<div></div>')
       .attr('id', 'textContainer')
       .css({
@@ -54,25 +58,19 @@ class MultilineTextEditor extends Events {
     return result;
   }
 
-  _registerEvents(containerElem) {
+  private _registerEvents(containerElem: JQuery) {
     const textareaElem = this._getTextareaElem();
-    const me = this;
-    let start;
-    let end;
-    textareaElem.on('keydown', function keydown(event) {
-      switch ($.hotkeys.specialKeys[event.keyCode]) {
+    textareaElem.on('keydown', (event) => {
+      const j: any = $;
+      switch (j.hotkeys.specialKeys[event.keyCode]) {
         case 'esc':
-          me.close(false);
+          this.close(false);
           break;
-        case 'enter':
+        case 'enter': {
           if (event.metaKey || event.ctrlKey) {
             // Add return ...
-            const text = textareaElem.val();
-            let cursorPosition = text.length;
-            if (textareaElem.selectionStart) {
-              cursorPosition = textareaElem.selectionStart;
-            }
-
+            const text = this._getTextAreaText();
+            const cursorPosition = text.length;
             const head = text.substring(0, cursorPosition);
             let tail = '';
             if (cursorPosition < text.length) {
@@ -80,30 +78,11 @@ class MultilineTextEditor extends Events {
             }
             textareaElem.val(`${head}\n${tail}`);
 
-            // Position cursor ...
-            if (textareaElem[0].setSelectionRange) {
-              textareaElem.focus();
-              textareaElem[0].setSelectionRange(cursorPosition + 1, cursorPosition + 1);
-            } else if (textareaElem.createTextRange) {
-              const range = textareaElem.createTextRange();
-              range.moveStart('character', cursorPosition + 1);
-              range.select();
-            }
+            textareaElem.focus();
+            textareaElem[0].setSelectionRange(cursorPosition + 1, cursorPosition + 1);
           } else {
-            me.close(true);
+            this.close(true);
           }
-          break;
-        case 'tab': {
-          event.preventDefault();
-          start = $(this).get(0).selectionStart;
-          end = $(this).get(0).selectionEnd;
-
-          // set textarea value to: text before caret + tab + text after caret
-          $(this).val(`${$(this).val().substring(0, start)}\t${$(this).val().substring(end)}`);
-
-          // put caret at right position again
-          $(this).get(0).selectionEnd = start + 1;
-          $(this).get(0).selectionStart = $(this).get(0).selectionEnd;
           break;
         }
         default:
@@ -118,9 +97,9 @@ class MultilineTextEditor extends Events {
     });
 
     textareaElem.on('keyup', (event) => {
-      const text = me._getTextareaElem().val();
-      me.fireEvent('input', [event, text]);
-      me._adjustEditorSize();
+      const text = this._getTextareaElem().val();
+      this.fireEvent('input', [event, text]);
+      this._adjustEditorSize();
     });
 
     // If the user clicks on the input, all event must be ignored ...
@@ -135,14 +114,16 @@ class MultilineTextEditor extends Events {
     });
   }
 
-  _adjustEditorSize() {
+  private _adjustEditorSize() {
     if (this.isVisible()) {
       const textElem = this._getTextareaElem();
 
-      const lines = textElem.val().split('\n');
+      const lines = this._getTextAreaText().split('\n');
       let maxLineLength = 1;
       lines.forEach((line) => {
-        if (maxLineLength < line.length) maxLineLength = line.length;
+        if (maxLineLength < line.length) {
+          maxLineLength = line.length;
+        }
       });
 
       textElem.attr('cols', maxLineLength);
@@ -155,13 +136,13 @@ class MultilineTextEditor extends Events {
     }
   }
 
-  isVisible() {
+  isVisible(): boolean {
     return $defined(this._containerElem) && this._containerElem.css('display') === 'block';
   }
 
-  _updateModel() {
-    if (this._topic.getText() !== this._getText()) {
-      const text = this._getText();
+  private _updateModel() {
+    if (this._topic.getText() !== this._getTextAreaText()) {
+      const text = this._getTextAreaText();
       const topicId = this._topic.getId();
 
       const actionDispatcher = ActionDispatcher.getInstance();
@@ -169,7 +150,7 @@ class MultilineTextEditor extends Events {
     }
   }
 
-  show(topic, text) {
+  show(topic: Topic, text: string): void {
     // Close a previous node editor if it's opened ...
     if (this._topic) {
       this.close(false);
@@ -187,7 +168,7 @@ class MultilineTextEditor extends Events {
     }
   }
 
-  _showEditor(defaultText) {
+  private _showEditor(defaultText: string) {
     const topic = this._topic;
 
     // Hide topic text ...
@@ -199,32 +180,26 @@ class MultilineTextEditor extends Events {
     fontStyle.size = nodeText.getHtmlFontSize();
     fontStyle.color = nodeText.getColor();
     this._setStyle(fontStyle);
-    const me = this;
 
     // Set editor's initial size
-    const displayFunc = function displayFunc() {
-      // Position the editor and set the size...
-      const textShape = topic.getTextShape();
+    // Position the editor and set the size...
+    const textShape = topic.getTextShape();
 
-      me._containerElem.css('display', 'block');
+    this._containerElem.css('display', 'block');
 
-      // FIXME: Im not sure if this is best way...
-      const shapePosition = textShape.getNativePosition();
-      me._containerElem.offset(shapePosition);
+    const shapePosition = textShape.getNativePosition();
+    this._containerElem.offset(shapePosition);
 
-      // Set editor's initial text ...
-      const text = $defined(defaultText) ? defaultText : topic.getText();
-      me._setText(text);
+    // Set editor's initial text ...
+    const text = $defined(defaultText) ? defaultText : topic.getText();
+    this._setText(text);
 
-      // Set the element focus and select the current text ...
-      const inputElem = me._getTextareaElem();
-      me._positionCursor(inputElem, !$defined(defaultText));
-    };
-
-    this._timeoutId = setTimeout(() => displayFunc(), 10);
+    // Set the element focus and select the current text ...
+    const inputElem = this._getTextareaElem();
+    this._positionCursor(inputElem, !$defined(defaultText));
   }
 
-  _setStyle(fontStyle) {
+  private _setStyle(fontStyle) {
     const inputField = this._getTextareaElem();
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     /* eslint-disable no-param-reassign */
@@ -252,51 +227,33 @@ class MultilineTextEditor extends Events {
     this._containerElem.css(style);
   }
 
-  _setText(text) {
+  private _setText(text: string) {
     const textareaElem = this._getTextareaElem();
     textareaElem.val(text);
     this._adjustEditorSize();
   }
 
-  _getText() {
-    return this._getTextareaElem().val();
+  private _getTextAreaText(): string {
+    return this._getTextareaElem().val() as string;
   }
 
-  _getTextareaElem() {
+  private _getTextareaElem(): JQuery<HTMLTextAreaElement> {
     return this._containerElem.find('textarea');
   }
 
-  _positionCursor(textareaElem, selectText) {
+  private _positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
     textareaElem.focus();
-    const lengh = textareaElem.val().length;
+    const lengh = this._getTextAreaText().length;
     if (selectText) {
       // Mark text as selected ...
-      if (textareaElem.createTextRange) {
-        const rang = textareaElem.createTextRange();
-        rang.select();
-        rang.move('character', lengh);
-      } else {
-        textareaElem[0].setSelectionRange(0, lengh);
-      }
-    } else if (textareaElem.createTextRange) {
-      const range = textareaElem.createTextRange();
-      range.move('character', lengh);
+      textareaElem[0].setSelectionRange(0, lengh);
     } else {
-      // allowed param reassign to avoid risks of existing code relying in this side-effect
-      /* eslint-disable no-param-reassign */
-      textareaElem.selectionStart = lengh;
-      textareaElem.selectionEnd = lengh;
-      /* eslint-enable no-param-reassign */
-
       textareaElem.focus();
     }
   }
 
-  close(update) {
+  close(update: boolean): void {
     if (this.isVisible() && this._topic) {
-      // Update changes ...
-      clearTimeout(this._timeoutId);
-
       if (!$defined(update) || update) {
         this._updateModel();
       }
@@ -307,7 +264,6 @@ class MultilineTextEditor extends Events {
       // Remove it form the screen ...
       this._containerElem.remove();
       this._containerElem = null;
-      this._timeoutId = -1;
     }
     this._topic = null;
   }
