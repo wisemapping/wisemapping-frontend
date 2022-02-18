@@ -472,7 +472,7 @@
     "defaultMessage": "Editor"
   },
   "role.owner": {
-    "defaultMessage": "Onwer"
+    "defaultMessage": "Owner"
   },
   "role.viewer": {
     "defaultMessage": "Viewer"

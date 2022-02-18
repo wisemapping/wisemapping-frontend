@@ -17,7 +17,7 @@ const RoleIcon = ({ role }: RoleIconProps): React.ReactElement => {
         <span>
             {role == 'owner' && (
                 <Tooltip
-                    title={<FormattedMessage id="role.owner" defaultMessage="Onwer" />}
+                    title={<FormattedMessage id="role.owner" defaultMessage="Owner" />}
                     arrow={true}
                 >
                     <PersonSharpIcon />
