@@ -110,7 +110,8 @@ class RESTPersistenceManager extends PersistenceManager {
           clearTimeout(persistence.clearTimeout);
         }
         persistence.onSave = false;
-      }).catch(() => {
+      }).catch((error) => {
+        console.log(`Unexpected save error => ${error}`);
         const userMsg = { severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED') };
         events.onError(userMsg);
 
