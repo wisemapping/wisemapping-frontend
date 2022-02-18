@@ -55,10 +55,9 @@ class RootedTreeSet {
          */
   add(node: Node) {
     $assert(node, 'node can not be null');
-    $assert(
-      !this.find(node.getId(), false),
-      `node already exits with this id. Id:${node.getId()}: ${this.dump()}`,
-    );
+    if (this.find(node.getId(), false)) {
+      throw new Error(`node already exits with this id. Id:${node.getId()}: ${this.dump()}`);
+    }
     $assert(!node._children, 'node already added');
     this._rootNodes.push(this._decodate(node));
   }
@@ -130,10 +129,11 @@ class RootedTreeSet {
         break;
       }
     }
-    $assert(
-      validate ? result : true,
-      `node could not be found id:${id}\n,RootedTreeSet${this.dump()}`,
-    );
+
+    if (validate && !result) {
+      throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
+    }
+
     return result;
   }
 
@@ -258,8 +258,8 @@ class RootedTreeSet {
   }
 
   /**
-         * @return result
-         */
+   * @return result
+   */
   dump() {
     const branches = this._rootNodes;
     let result = '';
