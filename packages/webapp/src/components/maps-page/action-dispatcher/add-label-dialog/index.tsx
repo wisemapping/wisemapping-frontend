@@ -22,7 +22,7 @@ type AddLabelFormProps = {
     onAdd: (newLabel: Label) => void;
 };
 
-export default function AddLabelForm({ onAdd }: AddLabelFormProps): React.ReactElement {
+const AddLabelDialog = ({ onAdd }: AddLabelFormProps): React.ReactElement => {
     const intl = useIntl();
     const [createLabelColorIndex, setCreateLabelColorIndex] = React.useState(
         Math.floor(Math.random() * labelColors.length)
@@ -92,3 +92,5 @@ export default function AddLabelForm({ onAdd }: AddLabelFormProps): React.ReactE
         </CreateLabel>
     );
 }
+
+export default AddLabelDialog;
