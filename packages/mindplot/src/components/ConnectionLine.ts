@@ -154,7 +154,7 @@ class ConnectionLine {
     }
   }
 
-  setStroke(color: string, style, opacity: number) {
+  setStroke(color: string, style: string, opacity: number) {
     this._line2d.setStroke(null, null, color, opacity);
   }
 

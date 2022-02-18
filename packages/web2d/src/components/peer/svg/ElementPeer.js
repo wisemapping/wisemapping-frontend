@@ -174,23 +174,6 @@ class ElementPeer {
       this._native.setAttribute('stroke', color);
     }
     if ($defined(style)) {
-      // Scale the dash array in order to be equal to VML. In VML, stroke style doesn't scale.
-      const dashArrayPoints = ElementPeer.stokeStyleToStrokDasharray()[style];
-      const scale = 1 / TransformUtil.workoutScale(this).width;
-
-      let strokeWidth = this._native.getAttribute('stroke-width');
-      strokeWidth = parseFloat(strokeWidth);
-
-      const scaledPoints = [];
-      for (let i = 0; i < dashArrayPoints.length; i++) {
-        // VML scale the stroke based on the stroke width.
-        scaledPoints[i] = dashArrayPoints[i] * strokeWidth;
-
-        // Scale the points based on the scale.
-        scaledPoints[i] = `${scaledPoints[i] * scale}px`;
-      }
-
-      //        this._native.setAttribute('stroke-dasharray', scaledPoints);
       this._stokeStyle = style;
     }
 
