@@ -22,7 +22,6 @@ import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
-import { Designer } from '..';
 
 initHotKeyPluggin($);
 

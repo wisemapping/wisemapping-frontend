@@ -284,7 +284,7 @@ class DesignerKeyboard extends Keyboard {
           if (event.ctrlKey || event.altKey || event.metaKey) {
             return;
           }
-          nodes[0].showTextEditor(pressKey);
+          nodes[0].showTextEditor('');
           event.stopPropagation();
         }
       }
