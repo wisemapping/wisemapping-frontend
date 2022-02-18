@@ -40,7 +40,6 @@ class CommandContext {
     this._designer = value;
   }
 
-  /** */
   findTopics(topicIds: number[]): Topic[] {
     $assert($defined(topicIds), 'topicsIds can not be null');
     const topicsIds = Array.isArray(topicIds) ? topicIds : [topicIds];

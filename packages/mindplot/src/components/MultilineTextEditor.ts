@@ -22,6 +22,7 @@ import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
+import { Designer } from '..';
 
 initHotKeyPluggin($);
 
@@ -255,18 +256,25 @@ class MultilineTextEditor extends Events {
   close(update: boolean): void {
     if (this.isVisible() && this._topic) {
       if (!$defined(update) || update) {
-        this._updateModel();
+        const actionDispatcher = ActionDispatcher.getInstance();
+        // Workaround. For some reason, close is triggered but the topic has been removed. Temporally, try to validate if exits.
+        try {
+          actionDispatcher
+            .getCommandContext()
+            .findTopics([this._topic.getId()]);
+          this._updateModel();
+
+          // Let make the visible text in the node ...
+          this._topic.getTextShape().setVisibility(true);
+        } catch (e) {
+          console.log(e);
+        }
+        // Remove it form the screen ...
+        this._containerElem.remove();
+        this._containerElem = null;
       }
-
-      // Let make the visible text in the node visible again ...
-      this._topic.getTextShape().setVisibility(true);
-
-      // Remove it form the screen ...
-      this._containerElem.remove();
-      this._containerElem = null;
+      this._topic = null;
     }
-    this._topic = null;
   }
 }
-
 export default MultilineTextEditor;
