@@ -74,7 +74,8 @@ class RESTPersistenceManager extends PersistenceManager {
         `${this.documentUrl.replace('{id}', mapId)}?${query}`,
         {
           method: 'PUT',
-          body: JSON.stringify(data),
+          // Blob helps to resuce the memory on large payload.
+          body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
           headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
           keepalive: true,
         },
@@ -131,11 +132,11 @@ class RESTPersistenceManager extends PersistenceManager {
       });
   }
 
-  unlockMap(mapId: string):void {
+  unlockMap(mapId: string): void {
     fetch(
       this.lockUrl.replace('{id}', mapId),
       {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'text/plain' },
         body: 'false',
       },
