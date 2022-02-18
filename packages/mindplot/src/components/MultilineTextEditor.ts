@@ -253,18 +253,20 @@ class MultilineTextEditor extends Events {
   }
 
   close(update: boolean): void {
-    if (this.isVisible() && this._topic) {
-      const actionDispatcher = ActionDispatcher.getInstance();
-      this._updateModel();
-    }
-    // Let make the visible text in the node ...
-    this._topic.getTextShape().setVisibility(true);
+    if (this.isVisible()) {
+      if (update) {
+        this._updateModel();
+      }
 
-    // Remove it form the screen ...
-    this._containerElem.remove();
-    this._containerElem = null;
-    this._topic = null;
+      // Remove it form the screen ...
+      this._containerElem.remove();
+      this._containerElem = null;
+    }
+
+    if (this._topic) {
+      this._topic.getTextShape().setVisibility(true);
+      this._topic = null;
+    }
   }
-}
 }
 export default MultilineTextEditor;
