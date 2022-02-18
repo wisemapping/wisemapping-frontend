@@ -280,7 +280,6 @@ class DesignerKeyboard extends Keyboard {
         const nodes = designer.getModel().filterSelectedTopics();
         if (nodes.length > 0) {
           // If a modifier is press, the key selected must be ignored.
-          const pressKey = String.fromCharCode(keyCode);
           if (event.ctrlKey || event.altKey || event.metaKey) {
             return;
           }
@@ -363,7 +362,7 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToChild(designer, node) {
+  private _goToChild(designer: Designer, node: Topic) {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];

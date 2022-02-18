@@ -530,7 +530,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  _setText(text, updateModel) {
+  _setText(text: string, updateModel: boolean) {
     const textShape = this.getTextShape();
     textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
 
@@ -541,7 +541,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setText(text) {
+  setText(text: string) {
     // Avoid empty nodes ...
     if (!text || $.trim(text).length === 0) {
       this._setText(null, true);
@@ -553,7 +553,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  getText() {
+  getText(): string {
     const model = this.getModel();
     let result = model.getText();
     if (!$defined(result)) {
@@ -563,11 +563,11 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setBackgroundColor(color) {
+  setBackgroundColor(color: string) {
     this._setBackgroundColor(color, true);
   }
 
-  _setBackgroundColor(color, updateModel) {
+  _setBackgroundColor(color: string, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setFill(color);
 
@@ -583,7 +583,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  getBackgroundColor() {
+  getBackgroundColor(): string {
     const model = this.getModel();
     let result = model.getBackgroundColor();
     if (!$defined(result)) {
@@ -593,11 +593,11 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setBorderColor(color) {
+  setBorderColor(color: string) {
     this._setBorderColor(color, true);
   }
 
-  _setBorderColor(color, updateModel) {
+  _setBorderColor(color: string, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setAttribute('strokeColor', color);
 
@@ -1349,7 +1349,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  isCentralTopic() {
+  isCentralTopic(): boolean {
     return this.getModel().getType() === 'CentralTopic';
   }
 }
