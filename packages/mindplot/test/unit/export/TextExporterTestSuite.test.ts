@@ -60,7 +60,7 @@ describe('MD export test execution', () => {
 
 describe('MM export test execution', () => {
   test.each(testNames)('Exporting %p suite', async (testName: string) => {
-    // Load mindmap DOM...
+    // Load mindmap DOM..
     const mindmapPath = path.resolve(__dirname, `./input/${testName}.wxml`);
     const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
 

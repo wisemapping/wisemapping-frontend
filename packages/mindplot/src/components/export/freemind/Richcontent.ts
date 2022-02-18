@@ -25,6 +25,11 @@ export default class Richcontent {
 
     richcontentElem.setAttribute('TYPE', this.type);
 
+    if (this.html) {
+      const htmlElement: HTMLElement = document.createElement(this.html);
+      richcontentElem.appendChild(htmlElement);
+    }
+
     return richcontentElem;
   }
 }

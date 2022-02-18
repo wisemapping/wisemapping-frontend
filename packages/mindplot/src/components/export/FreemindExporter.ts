@@ -10,7 +10,7 @@ import FreemindConstant from './freemind/FreemindConstant';
 import VersionNumber from './freemind/importer/VersionNumber';
 import ObjectFactory from './freemind/ObjectFactory';
 import FreemindMap from './freemind/Map';
-import FreeminNode, { Choise } from './freemind/Node';
+import FreeminNode from './freemind/Node';
 import Arrowlink from './freemind/Arrowlink';
 import Richcontent from './freemind/Richcontent';
 import Icon from './freemind/Icon';
@@ -19,7 +19,7 @@ import Font from './freemind/Font';
 
 type PositionNodeType = {x: number, y: number}
 
-class FreemindExporter implements Exporter {
+class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
 
   private nodeMap: Map<number, FreeminNode> = null;
@@ -31,7 +31,16 @@ class FreemindExporter implements Exporter {
   private static wisweToFreeFontSize: Map<number, number> = new Map<number, number>();
 
   constructor(mindmap: Mindmap) {
+    super(FreemindConstant.SUPPORTED_FREEMIND_VERSION.getVersion(), 'application/xml');
     this.mindmap = mindmap;
+  }
+
+  exportAndEncode(): Promise<string> {
+    throw new Error('Method not implemented.');
+  }
+
+  getContentType(): string {
+    throw new Error('Method not implemented.');
   }
 
   static {
@@ -73,7 +82,7 @@ class FreemindExporter implements Exporter {
 
     if (centralTopic) {
       this.nodeMap.set(centralTopic.getId(), main);
-      this.setTopicPropertiesToNode(main, centralTopic, true);
+      this.setTopicPropertiesToNode({ freemindNode: main, mindmapTopic: centralTopic, isRoot: true });
       this.addNodeFromTopic(centralTopic, main);
     }
 
@@ -91,9 +100,7 @@ class FreemindExporter implements Exporter {
 
         if (relationship.getStartArrow() && relationship.getStartArrow()) arrowlink.setStartarrow('Default');
 
-        const cloudEdge: Array<Choise> = srcNode.getArrowlinkOrCloudOrEdge();
-
-        cloudEdge.push(arrowlink);
+        srcNode.setArrowlinkOrCloudOrEdge(arrowlink);
       }
     });
 
@@ -103,37 +110,18 @@ class FreemindExporter implements Exporter {
     return Promise.resolve(xmlToString);
   }
 
-  private addNodeFromTopic(mainTopic: INodeModel, destNode: FreeminNode): void {
-    const curretnTopics: Array<INodeModel> = mainTopic.getChildren();
-
-    curretnTopics.forEach((currentTopic: INodeModel) => {
-      const newNode: FreeminNode = this.objectFactory.createNode();
-      this.nodeMap.set(currentTopic.getId(), newNode);
-
-      this.setTopicPropertiesToNode(newNode, currentTopic, false);
-
-      destNode.getArrowlinkOrCloudOrEdge().push(newNode);
-
-      this.addNodeFromTopic(currentTopic, newNode);
-
-      const position: PositionNodeType = currentTopic.getPosition();
-      if (position) {
-        const xPos: number = position.x;
-        newNode.setPosition((xPos < 0 ? 'left' : 'right'));
-      } else newNode.setPosition('left');
-    });
-  }
-
-  private setTopicPropertiesToNode(freemindNode: FreeminNode, mindmapTopic: INodeModel, isRoot: boolean): void {
+  private setTopicPropertiesToNode({ freemindNode, mindmapTopic, isRoot }: { freemindNode: FreeminNode; mindmapTopic: INodeModel; isRoot: boolean; }): void {
     freemindNode.setId(`ID_${mindmapTopic.getId()}`);
 
     const text = mindmapTopic.getText();
 
-    if (!text.includes('\n')) {
-      freemindNode.setText(text);
-    } else {
-      const richcontent: Richcontent = this.buildRichcontent(text, 'NODE');
-      freemindNode.getArrowlinkOrCloudOrEdge().push(richcontent);
+    if (text) {
+      if (!text.includes('\n')) {
+        freemindNode.setText(text);
+      } else {
+        const richcontent: Richcontent = this.buildRichcontent(text, 'NODE');
+        freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
+      }
     }
 
     const wiseShape: string = mindmapTopic.getShapeType();
@@ -141,7 +129,7 @@ class FreemindExporter implements Exporter {
       freemindNode.setBackgorundColor(this.rgbToHex(mindmapTopic.getBackgroundColor()));
     }
 
-    if (wiseShape && !wiseShape) {
+    if (wiseShape) {
       const isRootRoundedRectangle = isRoot && TopicShape.ROUNDED_RECT !== wiseShape;
       const notIsRootLine = !isRoot && TopicShape.LINE !== wiseShape;
 
@@ -159,13 +147,37 @@ class FreemindExporter implements Exporter {
     this.addEdgeNode(freemindNode, mindmapTopic);
   }
 
+  private addNodeFromTopic(mainTopic: INodeModel, destNode: FreeminNode): void {
+    const curretnTopics: Array<INodeModel> = mainTopic.getChildren();
+
+    curretnTopics.forEach((currentTopic: INodeModel) => {
+      const newNode: FreeminNode = this.objectFactory.createNode();
+      this.nodeMap.set(currentTopic.getId(), newNode);
+
+      this.setTopicPropertiesToNode({ freemindNode: newNode, mindmapTopic: currentTopic, isRoot: false });
+
+      destNode.setArrowlinkOrCloudOrEdge(newNode);
+
+      this.addNodeFromTopic(currentTopic, newNode);
+
+      const position: PositionNodeType = currentTopic.getPosition();
+      if (position) {
+        const xPos: number = position.x;
+        newNode.setPosition((xPos < 0 ? 'left' : 'right'));
+      } else newNode.setPosition('left');
+    });
+  }
+
   private buildRichcontent(text: string, type: string): Richcontent {
     const richconent: Richcontent = this.objectFactory.createRichcontent();
 
     richconent.setType(type);
+
+    const textSplit = text.split('\n');
+
     let html = '<html><body>';
 
-    text.split('\n').forEach((line: string) => {
+    textSplit.forEach((line: string) => {
       html += `<p>${line.trim()}</p>`;
     });
 
@@ -183,7 +195,7 @@ class FreemindExporter implements Exporter {
     const freemindIcon: Icon = new Icon();
 
     branches
-      .filter((node: INodeModel) => node.getText !== undefined)
+      .filter((node: INodeModel) => node.getText())
       .forEach((node: INodeModel) => {
         node.getFeatures().forEach((feature: FeatureModel) => {
           const type = feature.getType();
@@ -196,13 +208,13 @@ class FreemindExporter implements Exporter {
           if (type === 'note') {
             const note = feature as NoteModel;
             const richcontent: Richcontent = this.buildRichcontent(note.getText(), 'NOTE');
-            freemindNode.getArrowlinkOrCloudOrEdge().push(richcontent);
+            freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
           }
 
           if (type === 'icon') {
             const icon = feature as IconModel;
             freemindIcon.setBuiltin(icon.getIconType());
-            freemindNode.getArrowlinkOrCloudOrEdge().push(freemindIcon);
+            freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
           }
         });
       });
@@ -212,7 +224,7 @@ class FreemindExporter implements Exporter {
     if (mindmapTopic.getBorderColor()) {
       const edgeNode: Edge = this.objectFactory.createEdge();
       edgeNode.setColor(this.rgbToHex(mindmapTopic.getBorderColor()));
-      freemainMap.getArrowlinkOrCloudOrEdge().push(edgeNode);
+      freemainMap.setArrowlinkOrCloudOrEdge(edgeNode);
     }
   }
 
@@ -267,7 +279,7 @@ class FreemindExporter implements Exporter {
           if (font.getSize() === null) {
             font.setSize(FreemindExporter.wisweToFreeFontSize.get(8).toString());
           }
-          freemindNode.getArrowlinkOrCloudOrEdge().push(font);
+          freemindNode.setArrowlinkOrCloudOrEdge(font);
         }
       }
     }

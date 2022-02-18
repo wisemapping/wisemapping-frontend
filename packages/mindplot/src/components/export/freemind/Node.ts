@@ -41,8 +41,6 @@ class Node {
 
   protected ENCRYPTED_CONTENT: string;
 
-  protected centralNode: boolean;
-
   getArrowlinkOrCloudOrEdge(): Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node> {
     if (!this.arrowlinkOrCloudOrEdge) {
       this.arrowlinkOrCloudOrEdge = new Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>();
@@ -114,12 +112,8 @@ class Node {
     return this.ENCRYPTED_CONTENT;
   }
 
-  getCentralNode(): boolean {
-    return this.centralNode;
-  }
-
-  setArrowlinkOrCloudOrEdge(value: Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>): void {
-    this.arrowlinkOrCloudOrEdge = value;
+  setArrowlinkOrCloudOrEdge(value: Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this): void {
+    this.getArrowlinkOrCloudOrEdge().push(value);
   }
 
   setBackgorundColor(value: string): void {
@@ -186,25 +180,16 @@ class Node {
     this.ENCRYPTED_CONTENT = value;
   }
 
-  setCentralNode(value: boolean): void {
-    this.centralNode = value;
-  }
-
   toXml(document: Document): HTMLElement {
     // Set node attributes
     const nodeElem = document.createElement('node');
 
-    if (this.centralNode) {
-      nodeElem.setAttribute('ID', this.ID);
-      nodeElem.setAttribute('TEXT', this.TEXT);
-
-      return nodeElem;
-    }
-
-    nodeElem.setAttribute('ID', this.ID);
-    nodeElem.setAttribute('POSITION', this.POSITION);
-    nodeElem.setAttribute('STYLE', this.STYLE);
-    nodeElem.setAttribute('TEXT', this.TEXT);
+    if (this.ID) nodeElem.setAttribute('ID', this.ID);
+    if (this.POSITION) nodeElem.setAttribute('POSITION', this.POSITION);
+    if (this.STYLE) nodeElem.setAttribute('STYLE', this.STYLE);
+    if (this.BACKGROUND_COLOR) nodeElem.setAttribute('BACKGROUND_COLOR', this.BACKGROUND_COLOR);
+    if (this.COLOR) nodeElem.setAttribute('COLOR', this.COLOR);
+    if (this.TEXT) nodeElem.setAttribute('TEXT', this.TEXT);
 
     return nodeElem;
   }

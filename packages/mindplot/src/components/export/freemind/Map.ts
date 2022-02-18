@@ -5,6 +5,7 @@ import Edge from './Edge';
 import Font from './Font';
 import Icon from './Icon';
 import Node, { Choise } from './Node';
+import Richcontent from './Richcontent';
 
 export default class Map {
   protected node: Node;
@@ -38,7 +39,6 @@ export default class Map {
 
     // Create main node
     const mainNode: Node = this.node;
-    mainNode.setCentralNode(true);
     const mainNodeElem = mainNode.toXml(document);
     mapElem.appendChild(mainNodeElem);
 
@@ -53,14 +53,16 @@ export default class Map {
 
   private nodeToXml(childNode: Choise, parentNode: HTMLElement, document: Document): HTMLElement {
     if (childNode instanceof Node) {
-      childNode.setCentralNode(false);
       const childNodeXml = childNode.toXml(document);
       parentNode.appendChild(childNodeXml);
 
-      childNode.getArrowlinkOrCloudOrEdge().forEach((node: Choise) => {
-        const nodeXml = this.nodeToXml(node, childNodeXml, document);
-        childNodeXml.appendChild(nodeXml);
-      });
+      const childrens = childNode.getArrowlinkOrCloudOrEdge();
+      if (childrens.length > 0) {
+        childrens.forEach((node: Choise) => {
+          const nodeXml = this.nodeToXml(node, childNodeXml, document);
+          childNodeXml.appendChild(nodeXml);
+        });
+      }
 
       return childNodeXml;
     }
@@ -94,6 +96,13 @@ export default class Map {
     }
 
     if (childNode instanceof Icon) {
+      const childNodeXml = childNode.toXml(document);
+      parentNode.appendChild(childNodeXml);
+
+      return childNodeXml;
+    }
+
+    if (childNode instanceof Richcontent) {
       const childNodeXml = childNode.toXml(document);
       parentNode.appendChild(childNodeXml);
 
