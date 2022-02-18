@@ -77,7 +77,6 @@ class RESTPersistenceManager extends PersistenceManager {
           // Blob helps to resuce the memory on large payload.
           body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
           headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
-          keepalive: true,
         },
       ).then(async (response: Response) => {
         if (response.ok) {
@@ -129,7 +128,6 @@ class RESTPersistenceManager extends PersistenceManager {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
-        keepalive: true,
       });
   }
 
