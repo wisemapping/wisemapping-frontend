@@ -52,6 +52,10 @@ abstract class PersistenceManager {
     }
   }
 
+  protected getCSRFToken(): string {
+    return document.head.querySelector('meta[name="_csrf"]').getAttribute('content');
+  }
+
   load(mapId: string) {
     $assert(mapId, 'mapId can not be null');
     const domDocument = this.loadMapDom(mapId);

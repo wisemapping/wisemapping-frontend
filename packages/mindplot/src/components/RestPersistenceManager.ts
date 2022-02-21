@@ -159,10 +159,6 @@ class RESTPersistenceManager extends PersistenceManager {
     return { severity, message };
   }
 
-  private getCSRFToken(): string {
-    return document.head.querySelector('meta[name="_csrf"]').getAttribute('content');
-  }
-
   loadMapDom(mapId: string): Document {
     let xml: Document;
     $.ajax({
