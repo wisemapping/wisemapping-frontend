@@ -1,4 +1,3 @@
-import '../css/editor.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Editor from '../../../../src/index';
