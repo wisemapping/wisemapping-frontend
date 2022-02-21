@@ -40,9 +40,8 @@ class TxtExporter extends Exporter {
   private traverseBranch(indent: string, prefix: string, branches: INodeModel[]) {
     let result = '';
     branches
-      .filter((n) => n.getText() !== undefined)
       .forEach((node, index) => {
-        result = `${result}${indent}${prefix}${index + 1} ${node.getText()}`;
+        result = `${result}${indent}${prefix}${index + 1} ${node.getText() !== undefined ? node.getText() : ''}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();
           if (type === 'link') {
@@ -54,9 +53,7 @@ class TxtExporter extends Exporter {
         });
         result = `${result}\n`;
 
-        if (node.getChildren().filter((n) => n.getText() !== undefined).length > 0) {
-          result += this.traverseBranch(`\t${indent}`, `${prefix}${index + 1}.`, node.getChildren());
-        }
+        result += this.traverseBranch(`\t${indent}`, `${prefix}${index + 1}.`, node.getChildren());
       });
     return result;
   }
