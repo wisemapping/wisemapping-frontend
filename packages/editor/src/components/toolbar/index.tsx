@@ -24,6 +24,7 @@ import PublicSvg from '../../../images/public.svg';
 import HistorySvg from '../../../images/history.svg';
 import PrintSvg from '../../../images/print.svg';
 import AccountSvg from '../../../images/account.svg';
+import './global-styled.css';
 
 import { HeaderContainer, ToolbarButton, ToolbarButtonExt, ToolbarRightContainer } from './styled';
 import ActionButton from '../action-button';
