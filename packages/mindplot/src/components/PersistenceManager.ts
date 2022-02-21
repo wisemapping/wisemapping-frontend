@@ -52,8 +52,13 @@ abstract class PersistenceManager {
     }
   }
 
-  protected getCSRFToken(): string {
-    return document.head.querySelector('meta[name="_csrf"]').getAttribute('content');
+  protected getCSRFToken(): string | null {
+    const meta = document.head.querySelector('meta[name="_csrf"]');
+    let result = null;
+    if (meta) {
+      result = meta.getAttribute('content');
+    }
+    return result;
   }
 
   load(mapId: string) {
