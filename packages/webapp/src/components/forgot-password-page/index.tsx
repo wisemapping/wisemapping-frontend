@@ -15,6 +15,7 @@ import SubmitButton from '../form/submit-button';
 import ReactGA from 'react-ga';
 
 import Typography from '@mui/material/Typography';
+import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>('');
@@ -54,6 +55,7 @@ const ForgotPassword = () => {
             <GlobalError error={error} />
 
             <form onSubmit={handleOnSubmit}>
+                <input type='hidden' value={getCsrfToken()} name={getCsrfTokenParameter()} />
                 <Input
                     type="email"
                     name="email"

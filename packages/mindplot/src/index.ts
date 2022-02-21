@@ -22,6 +22,7 @@ import PersistenceManager from './components/PersistenceManager';
 import Designer from './components/Designer';
 import LocalStorageManager from './components/LocalStorageManager';
 import RESTPersistenceManager from './components/RestPersistenceManager';
+import MockPersistenceManager from './components/MockPersistenceManager';
 import Menu from './components/widget/Menu';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 import ImageExporterFactory from './components/export/ImageExporterFactory';
@@ -48,6 +49,7 @@ export {
   DesignerBuilder,
   PersistenceManager,
   RESTPersistenceManager,
+  MockPersistenceManager,
   LocalStorageManager,
   DesignerOptionsBuilder,
   buildDesigner,

@@ -38,13 +38,14 @@ declare global {
 }
 
 export type EditorPropsType = {
-    initCallback?: (locale: string) => void;
+    initCallback?: (locale: string, persistenceManager: PersistenceManager) => void;
     mapId?: number;
     isTryMode: boolean;
     readOnlyMode: boolean;
     locale?: string;
     onAction: (action: ToolbarActionType) => void;
     hotkeys?: boolean;
+    persistenceManager: PersistenceManager;
 };
 
 const loadLocaleData = (locale: string) => {
@@ -62,33 +63,15 @@ const loadLocaleData = (locale: string) => {
     }
 }
 
-const initMindplot = (locale: string) => {
+const initMindplot = (locale: string, persistenceManager: PersistenceManager) => {
     // Change page title ...
     document.title = `${global.mapTitle} | WiseMapping `;
-
-    // Configure persistence manager ...
-    let persistence: PersistenceManager;
-    if (!global.memoryPersistence && !global.readOnly) {
-        persistence = new RESTPersistenceManager({
-            documentUrl: '/c/restful/maps/{id}/document',
-            revertUrl: '/c/restful/maps/{id}/history/latest',
-            lockUrl: '/c/restful/maps/{id}/lock',
-            timestamp: global.lockTimestamp,
-            session: global.lockSession,
-        });
-    } else {
-        persistence = new LocalStorageManager(
-            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
-            }`,
-            true
-        );
-    }
 
     const params = new URLSearchParams(window.location.search.substring(1));
 
     const zoomParam = Number.parseFloat(params.get('zoom'));
     const options = DesignerOptionsBuilder.buildOptions({
-        persistenceManager: persistence,
+        persistenceManager,
         readOnly: Boolean(global.readOnly || false),
         mapId: String(global.mapId),
         container: 'mindplot',
@@ -120,9 +103,10 @@ const Editor = ({
     locale = 'en',
     onAction,
     hotkeys = true,
+    persistenceManager,
 }: EditorPropsType): React.ReactElement => {
     React.useEffect(() => {
-        initCallback(locale);
+        initCallback(locale, persistenceManager);
     }, []);
 
     React.useEffect(() => {

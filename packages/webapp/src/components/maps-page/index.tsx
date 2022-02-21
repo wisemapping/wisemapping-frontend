@@ -15,7 +15,6 @@ import Client, { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
-import ClientHealthSentinel from '../../classes/client/client-health-sentinel';
 import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
 import AppI18n, { Locales } from '../../classes/app-i18n';
@@ -153,7 +152,6 @@ const MapsPage = (): ReactElement => {
             messages={userLocale.message}
         >
             <div className={classes.root}>
-                <ClientHealthSentinel />
                 <AppBar
                     position="fixed"
                     className={clsx(classes.appBar, {

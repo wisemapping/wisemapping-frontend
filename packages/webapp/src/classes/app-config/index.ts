@@ -1,4 +1,3 @@
-import { sessionExpired } from "../../redux/clientSlice";
 import Client from "../client";
 import CacheDecoratorClient from "../client/cache-decorator-client";
 import MockClient from "../client/mock-client";
@@ -53,9 +52,7 @@ class _AppConfig {
         const config = this.getInstance();
         let result: Client;
         if (config.clientType == 'rest') {
-            result = new RestClient(config.apiBaseUrl, () => {
-                sessionExpired();
-            });
+            result = new RestClient(config.apiBaseUrl);
             console.log('Service using rest client. ' + JSON.stringify(config));
         } else {
             console.log('Warning:Service using mockservice client');

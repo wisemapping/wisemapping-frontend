@@ -18,7 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import { $msg } from './Messages';
-import PersistenceManager from './PersistenceManager';
+import PersistenceManager, { PersistenceError } from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -76,7 +76,7 @@ class RESTPersistenceManager extends PersistenceManager {
           method: 'PUT',
           // Blob helps to resuce the memory on large payload.
           body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-          headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
+          headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json', 'X-CSRF-Token': this.getCSRFToken() },
         },
       ).then(async (response: Response) => {
         if (response.ok) {
@@ -86,7 +86,7 @@ class RESTPersistenceManager extends PersistenceManager {
           console.log(`Saving error: ${response.status}`);
           let userMsg;
           if (response.status === 405) {
-            userMsg = { severity: 'SEVERE', message: $msg('SESSION_EXPIRED') };
+            userMsg = { severity: 'SEVERE', message: $msg('SESSION_EXPIRED'), errorType: 'session-expired' };
           } else {
             const responseText = await response.text();
             const contentType = response.headers['Content-Type'];
@@ -101,6 +101,7 @@ class RESTPersistenceManager extends PersistenceManager {
               userMsg = persistence._buildError(serverMsg);
             }
           }
+          this.triggerError(userMsg);
           events.onError(userMsg);
         }
 
@@ -109,9 +110,11 @@ class RESTPersistenceManager extends PersistenceManager {
           clearTimeout(persistence.clearTimeout);
         }
         persistence.onSave = false;
-      }).catch((error) => {
-        console.log(`Unexpected save error => ${error}`);
-        const userMsg = { severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED') };
+      }).catch(() => {
+        const userMsg: PersistenceError = {
+          severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED'), errorType: 'generic',
+        };
+        this.triggerError(userMsg);
         events.onError(userMsg);
 
         // Clear event timeout ...
@@ -127,7 +130,7 @@ class RESTPersistenceManager extends PersistenceManager {
     fetch(this.revertUrl.replace('{id}', mapId),
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json', 'X-CSRF-Token': this.getCSRFToken() },
       });
   }
 
@@ -136,7 +139,7 @@ class RESTPersistenceManager extends PersistenceManager {
       this.lockUrl.replace('{id}', mapId),
       {
         method: 'PUT',
-        headers: { 'Content-Type': 'text/plain' },
+        headers: { 'Content-Type': 'text/plain', 'X-CSRF-Token': this.getCSRFToken() },
         body: 'false',
       },
     );
@@ -156,14 +159,17 @@ class RESTPersistenceManager extends PersistenceManager {
     return { severity, message };
   }
 
+  private getCSRFToken(): string {
+    return document.head.querySelector('meta[name="_csrf"]').getAttribute('content');
+  }
+
   loadMapDom(mapId: string): Document {
-    // Let's try to open one from the local directory ...
     let xml: Document;
     $.ajax({
       url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
       method: 'get',
       async: false,
-      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml' },
+      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml', 'X-CSRF-Token': this.getCSRFToken() },
       success(responseText) {
         xml = responseText;
       },

@@ -25,7 +25,8 @@ class AccountSettingsPanel extends ListToolbarPanel {
         // Overwite default behaviour ...
       },
       setValue() {
-        window.location = '/c/logout';
+        const elem = document.getElementById('logoutFrom');
+        elem.submit();
       },
     };
     super(elemId, model);
@@ -59,6 +60,7 @@ class AccountSettingsPanel extends ListToolbarPanel {
     content[0].innerHTML = `
         <p style='text-align:center;font-weight:bold;'>${global.accountName}</p>
         <p>${global.accountEmail}</p>
+        <form action="/c/logout" method='POST' id="logoutFrom"></form>
         <div id="account-logout" model='logout' style='text-align:center'>
           Logout
         </div>

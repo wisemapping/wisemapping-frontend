@@ -45,7 +45,7 @@ const ClientHealthSentinel = (): React.ReactElement => {
 
                 <DialogActions>
                     <Button type="button" color="primary" size="medium" onClick={handleOnClose}>
-                        <FormattedMessage id="action.close-button" defaultMessage="Close" />
+                        <FormattedMessage id="login.signin" defaultMessage="Sign In" />
                     </Button>
                 </DialogActions>
             </Dialog>

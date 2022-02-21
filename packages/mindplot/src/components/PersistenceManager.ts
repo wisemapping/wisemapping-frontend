@@ -20,9 +20,19 @@ import { $assert } from '@wisemapping/core-js';
 import { Mindmap } from '..';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
+export type PersistenceError = {
+  severity: string;
+  message: string;
+  errorType?: 'session-expired' | 'bad-request' | 'generic';
+};
+
+export type PersistenceErrorCallback = (error: PersistenceError) => void;
+
 abstract class PersistenceManager {
   // eslint-disable-next-line no-use-before-define
   static _instance: PersistenceManager;
+
+  private _errorHandlers: PersistenceErrorCallback[] = [];
 
   save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events?) {
     $assert(mindmap, 'mindmap can not be null');
@@ -46,6 +56,24 @@ abstract class PersistenceManager {
     $assert(mapId, 'mapId can not be null');
     const domDocument = this.loadMapDom(mapId);
     return PersistenceManager.loadFromDom(mapId, domDocument);
+  }
+
+  triggerError(error: PersistenceError) {
+    this._errorHandlers.forEach((handler) => handler(error));
+  }
+
+  addErrorHandler(callback: PersistenceErrorCallback) {
+    this._errorHandlers.push(callback);
+  }
+
+  removeErrorHandler(callback?: PersistenceErrorCallback) {
+    if (!callback) {
+      this._errorHandlers.length = 0;
+    }
+    const index = this._errorHandlers.findIndex((handler) => handler === callback);
+    if (index !== -1) {
+      this._errorHandlers.splice(index, 1);
+    }
   }
 
   abstract discardChanges(mapId: string): void;

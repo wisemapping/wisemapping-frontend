@@ -17,6 +17,7 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles
 import ReactGA from 'react-ga';
 import EditorPage from './components/editor-page';
 import AppConfig from './classes/app-config';
+import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -42,6 +43,8 @@ const App = (): ReactElement => {
     // global variables set server-side
     const istTryMode = global.memoryPersistence;
     const mapId = parseInt(global.mapId, 10);
+
+    const EditorPageComponent = withSessionExpirationHandling(EditorPage);
 
     return locale.message ? (
         <Provider store={store}>
@@ -80,13 +83,13 @@ const App = (): ReactElement => {
                                     />
                                     <Route
                                         exact path="/c/maps/"
-                                        component={MapsPage}
+                                        component={withSessionExpirationHandling(MapsPage)}
                                     />
                                     <Route exact path="/c/maps/:id/edit">
-                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
+                                        <EditorPageComponent isTryMode={istTryMode} mapId={mapId} />
                                     </Route>
                                     <Route exact path="/c/maps/:id/try">
-                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
+                                        <EditorPageComponent isTryMode={istTryMode} mapId={mapId} />
                                     </Route>
                                 </Switch>
                             </Router>

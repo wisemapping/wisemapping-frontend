@@ -1,4 +1,4 @@
-import { Mindmap } from '@wisemapping/mindplot';
+import { Mindmap, PersistenceManager } from '@wisemapping/mindplot';
 import { Locale, LocaleCode } from '../app-i18n';
 
 export type NewUser = {
@@ -109,6 +109,10 @@ interface Client {
 
     fetchMindmap(id:number): Mindmap;
 
+    buildPersistenceManager(): PersistenceManager;
+    removePersistenceManager(): void;
+
+    onSessionExpired(callback?: () => void): () => void;
 }
 
 export default Client;
