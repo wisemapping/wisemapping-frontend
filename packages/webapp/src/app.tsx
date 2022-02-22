@@ -17,7 +17,7 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles
 import ReactGA from 'react-ga';
 import EditorPage from './components/editor-page';
 import AppConfig from './classes/app-config';
-import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';
+import withSessionExpirationHandling from './components/hocs/withSessionExpirationHandling';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -39,12 +39,7 @@ const queryClient = new QueryClient({
 
 const App = (): ReactElement => {
     const locale = AppI18n.getBrowserLocale();
-
-    // global variables set server-side
-    const istTryMode = global.memoryPersistence;
-    const mapId = parseInt(global.mapId, 10);
-
-    const EditorPageComponent = withSessionExpirationHandling(EditorPage);
+    const EnhacedEditorPage = withSessionExpirationHandling(EditorPage);
 
     return locale.message ? (
         <Provider store={store}>
@@ -63,7 +58,7 @@ const App = (): ReactElement => {
                                         <Redirect to="/c/login" />
                                     </Route>
                                     <Route path="/c/login"
-                                        component={LoginPage} 
+                                        component={LoginPage}
                                     />
                                     <Route
                                         path="/c/registration"
@@ -86,10 +81,10 @@ const App = (): ReactElement => {
                                         component={withSessionExpirationHandling(MapsPage)}
                                     />
                                     <Route exact path="/c/maps/:id/edit">
-                                        <EditorPageComponent isTryMode={istTryMode} mapId={mapId} />
+                                        <EnhacedEditorPage isTryMode={false} />
                                     </Route>
                                     <Route exact path="/c/maps/:id/try">
-                                        <EditorPageComponent isTryMode={istTryMode} mapId={mapId} />
+                                        <EnhacedEditorPage isTryMode={true} />
                                     </Route>
                                 </Switch>
                             </Router>

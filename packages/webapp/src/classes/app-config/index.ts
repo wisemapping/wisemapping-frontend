@@ -21,6 +21,11 @@ class _AppConfig {
         recaptcha2SiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
     }
 
+    isDevelopEnv(): boolean {
+        const config = this.getInstance();
+        return config.clientType === 'mock';
+    }
+
     private getInstance(): Config {
         // Config can be inserted in the html page to define the global properties ...
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

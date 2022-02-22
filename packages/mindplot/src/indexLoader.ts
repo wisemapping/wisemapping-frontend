@@ -57,7 +57,7 @@ const zoomParam = Number.parseFloat(params.get('zoom'));
 const options = DesignerOptionsBuilder.buildOptions(
   {
     persistenceManager: persistence,
-    readOnly: Boolean(global.readOnly || false),
+    mode: 'viewonly',
     mapId: global.mapId,
     container: 'mindplot',
     zoom: zoomParam || global.userOptions.zoom,

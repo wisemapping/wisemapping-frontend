@@ -4,20 +4,20 @@ import { ActionType } from '../maps-page/action-chooser';
 import Editor from '@wisemapping/editor';
 import AppI18n from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
-import { hotkeysEnabled } from '../../redux/editorSlice';
+import { hotkeys } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
 import Client from '../../classes/client';
 import { activeInstance } from '../../redux/clientSlice';
 import { PersistenceManager } from '@wisemapping/mindplot';
+import EditorOptionsBulder from './EditorOptiosBuider';
 
 export type EditorPropsType = {
-    mapId: number;
     isTryMode: boolean;
 };
 
-const EditorPage = ({ mapId, ...props }: EditorPropsType): React.ReactElement => {
+const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
-    const hotkeys = useSelector(hotkeysEnabled);
+    const hotkeysEnabled = useSelector(hotkeys);
     const userLocale = AppI18n.getUserLocale();
     const client: Client = useSelector(activeInstance);
     const [persistenceManager, setPersistenceManager] = React.useState<PersistenceManager>();
@@ -28,26 +28,27 @@ const EditorPage = ({ mapId, ...props }: EditorPropsType): React.ReactElement =>
         setPersistenceManager(persistence);
         return () => client.removePersistenceManager();
     }, []);
-    
-    if (!persistenceManager) {
-        // persistenceManager must be ready for the editor to work
-        return null;
-    }
-    return <>
-        <Editor {...props} onAction={setActiveDialog}
-            locale={userLocale.code} hotkeys={hotkeys}
-            persistenceManager={persistenceManager} />
-        {
-            activeDialog &&
-            <ActionDispatcher
-                action={activeDialog}
-                onClose={() => setActiveDialog(null)}
-                mapsId={[mapId]}
-                fromEditor
-            />
-        }
-    </>
+
+    // As temporal hack, editor properties are propagated from global variables...
+    const { mapId, options } = EditorOptionsBulder.build(userLocale.code, hotkeysEnabled, isTryMode);
+    return persistenceManager ? (
+        <>
+            <Editor onAction={setActiveDialog}
+                options={options}
+                persistenceManager={persistenceManager}
+                mapId={mapId} />
+            {
+                activeDialog &&
+                <ActionDispatcher
+                    action={activeDialog}
+                    onClose={() => setActiveDialog(null)}
+                    mapsId={[mapId]}
+                    fromEditor
+                />
+            }
+        </>) : <></>
 }
+
 
 export default EditorPage;
 

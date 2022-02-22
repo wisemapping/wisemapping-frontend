@@ -19,10 +19,12 @@ import { $assert } from '@wisemapping/core-js';
 import PersistenceManager from './PersistenceManager';
 import SizeType from './SizeType';
 
+export type EditorModeType = 'viewonly' | 'edition' | 'showcase';
+
 export type DesignerOptions = {
   zoom: number,
   containerSize?: SizeType,
-  readOnly?: boolean,
+  mode: EditorModeType,
   mapId?: string,
   container: string,
   persistenceManager?: PersistenceManager,
@@ -45,7 +47,7 @@ class OptionsBuilder {
     }
 
     const defaultOptions: DesignerOptions = {
-      readOnly: false,
+      mode: 'edition',
       zoom: 0.85,
       saveOnLoad: true,
       containerSize,
