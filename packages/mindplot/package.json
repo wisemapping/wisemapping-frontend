@@ -38,7 +38,8 @@
         "@wisemapping/web2d": "^0.4.0",
         "jest": "^27.4.5",
         "jquery": "3.6.0",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "xml-formatter": "^2.6.1"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",

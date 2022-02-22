@@ -4,7 +4,7 @@
         <edge COLOR="#808080"/>
         <richcontent TYPE="NOTE">
             <html>
-                <head/>
+                <head><head/>
                 <body>
                     <p/>
                     <p/>

@@ -1,3 +1,4 @@
+import xmlFormatter from 'xml-formatter';
 import { Mindmap } from '../..';
 import INodeModel, { TopicShape } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
@@ -106,8 +107,13 @@ class FreemindExporter extends Exporter {
 
     const freeToXml = freemainMap.toXml();
     const xmlToString = new XMLSerializer().serializeToString(freeToXml);
+    const formatXml = xmlFormatter(xmlToString, {
+      indentation: '    ',
+      collapseContent: true,
+      lineSeparator: '\n',
+    });
 
-    return Promise.resolve(xmlToString);
+    return Promise.resolve(formatXml);
   }
 
   private setTopicPropertiesToNode({ freemindNode, mindmapTopic, isRoot }: { freemindNode: FreeminNode; mindmapTopic: INodeModel; isRoot: boolean; }): void {
@@ -175,7 +181,7 @@ class FreemindExporter extends Exporter {
 
     const textSplit = text.split('\n');
 
-    let html = '<html><body>';
+    let html = '<html><head/><body>';
 
     textSplit.forEach((line: string) => {
       html += `<p>${line.trim()}</p>`;
@@ -191,32 +197,29 @@ class FreemindExporter extends Exporter {
   }
 
   private addFeautreNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
-    const branches: Array<INodeModel> = mindmapTopic.getChildren();
-    const freemindIcon: Icon = new Icon();
+    const branches: Array<FeatureModel> = mindmapTopic.getFeatures();
 
     branches
-      .filter((node: INodeModel) => node.getText())
-      .forEach((node: INodeModel) => {
-        node.getFeatures().forEach((feature: FeatureModel) => {
-          const type = feature.getType();
+      .forEach((feature: FeatureModel) => {
+        const type = feature.getType();
 
-          if (type === 'link') {
-            const link = feature as LinkModel;
-            freemindNode.setLink(link);
-          }
+        if (type === 'link') {
+          const link = feature as LinkModel;
+          freemindNode.setLink(link.getUrl());
+        }
 
-          if (type === 'note') {
-            const note = feature as NoteModel;
-            const richcontent: Richcontent = this.buildRichcontent(note.getText(), 'NOTE');
-            freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
-          }
+        if (type === 'note') {
+          const note = feature as NoteModel;
+          const richcontent: Richcontent = this.buildRichcontent(note.getText(), 'NOTE');
+          freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
+        }
 
-          if (type === 'icon') {
-            const icon = feature as IconModel;
-            freemindIcon.setBuiltin(icon.getIconType());
-            freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
-          }
-        });
+        if (type === 'icon') {
+          const icon = feature as IconModel;
+          const freemindIcon: Icon = new Icon();
+          freemindIcon.setBuiltin(icon.getIconType());
+          freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
+        }
       });
   }
 
@@ -229,58 +232,51 @@ class FreemindExporter extends Exporter {
   }
 
   private addFontNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
+    const fontFamily: string = mindmapTopic.getFontFamily();
+    const fontSize: number = mindmapTopic.getFontSize();
+    const fontColor: string = mindmapTopic.getFontColor();
+    const fontWeigth: string | number | boolean = mindmapTopic.getFontWeight();
     const fontStyle: string = mindmapTopic.getFontStyle();
-    if (fontStyle) {
+
+    if (fontFamily || fontSize || fontColor || fontWeigth || fontStyle) {
       const font: Font = this.objectFactory.createFont();
-      const part: Array<string> = fontStyle.split(';', 6);
-      const countParts: number = part.length;
       let fontNodeNeeded = false;
 
-      if (!fontStyle.endsWith(FreemindConstant.EMPTY_FONT_STYLE)) {
-        let idx = 0;
+      if (fontFamily) {
+        font.setName(fontFamily);
+      }
 
-        if (idx < countParts && part[idx].length !== 0) {
-          font.setName(part[idx]);
+      if (fontSize) {
+        const freeSize = FreemindExporter.wisweToFreeFontSize.get(fontSize);
+
+        if (freeSize) {
+          font.setSize(freeSize.toString());
           fontNodeNeeded = true;
         }
-        idx++;
+      }
 
-        if (idx < countParts && part[idx].length !== 0) {
-          const size: string = part[idx];
-          if (size) {
-            const wiseSize: number = parseInt(size, 10);
-            const freeSize: number = FreemindExporter.wisweToFreeFontSize.get(wiseSize);
+      if (fontColor) {
+        freemindNode.setColor(fontColor);
+      }
 
-            if (freeSize) {
-              font.setSize(freeSize.toString());
-              fontNodeNeeded = true;
-            }
-          }
-        }
-        idx++;
-
-        if (idx < countParts && part[idx].length !== 0) {
-          freemindNode.setColor(this.rgbToHex(part[idx]));
-        }
-        idx++;
-
-        if (idx < countParts && part[idx].length !== 0) {
+      if (fontWeigth) {
+        if (typeof fontWeigth === 'boolean') {
+          font.setBold(String(fontWeigth));
+        } else {
           font.setBold(String(true));
-          fontNodeNeeded = true;
         }
-        idx++;
+        fontNodeNeeded = true;
+      }
 
-        if (idx < countParts && part[idx].length !== 0) {
-          font.setItalic(String(true));
-          fontNodeNeeded = true;
-        }
+      if (fontStyle === 'italic') {
+        font.setItalic(String(true));
+      }
 
-        if (fontNodeNeeded) {
-          if (font.getSize() === null) {
-            font.setSize(FreemindExporter.wisweToFreeFontSize.get(8).toString());
-          }
-          freemindNode.setArrowlinkOrCloudOrEdge(font);
+      if (fontNodeNeeded) {
+        if (font.getSize()) {
+          font.setSize(FreemindExporter.wisweToFreeFontSize.get(8).toString());
         }
+        freemindNode.setArrowlinkOrCloudOrEdge(font);
       }
     }
   }

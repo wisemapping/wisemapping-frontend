@@ -41,6 +41,8 @@ class Node {
 
   protected ENCRYPTED_CONTENT: string;
 
+  private centralTopic: boolean;
+
   getArrowlinkOrCloudOrEdge(): Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node> {
     if (!this.arrowlinkOrCloudOrEdge) {
       this.arrowlinkOrCloudOrEdge = new Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>();
@@ -112,6 +114,10 @@ class Node {
     return this.ENCRYPTED_CONTENT;
   }
 
+  getCentralTopic(): boolean {
+    return this.centralTopic;
+  }
+
   setArrowlinkOrCloudOrEdge(value: Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this): void {
     this.getArrowlinkOrCloudOrEdge().push(value);
   }
@@ -132,7 +138,7 @@ class Node {
     this.ID = value;
   }
 
-  setLink(value): void {
+  setLink(value: string): void {
     this.LINK = value;
   }
 
@@ -180,9 +186,26 @@ class Node {
     this.ENCRYPTED_CONTENT = value;
   }
 
+  setCentralTopic(value: boolean): void {
+    this.centralTopic = value;
+  }
+
   toXml(document: Document): HTMLElement {
     // Set node attributes
     const nodeElem = document.createElement('node');
+
+    if (this.centralTopic) {
+      if (this.ID) nodeElem.setAttribute('ID', this.ID);
+      if (this.TEXT) nodeElem.setAttribute('TEXT', this.TEXT);
+      if (this.BACKGROUND_COLOR) nodeElem.setAttribute('BACKGROUND_COLOR', this.BACKGROUND_COLOR);
+      if (this.COLOR) nodeElem.setAttribute('COLOR', this.COLOR);
+      if (this.TEXT) {
+        nodeElem.setAttribute('TEXT', this.TEXT);
+      } else {
+        nodeElem.setAttribute('TEXT', '');
+      }
+      return nodeElem;
+    }
 
     if (this.ID) nodeElem.setAttribute('ID', this.ID);
     if (this.POSITION) nodeElem.setAttribute('POSITION', this.POSITION);
@@ -190,6 +213,16 @@ class Node {
     if (this.BACKGROUND_COLOR) nodeElem.setAttribute('BACKGROUND_COLOR', this.BACKGROUND_COLOR);
     if (this.COLOR) nodeElem.setAttribute('COLOR', this.COLOR);
     if (this.TEXT) nodeElem.setAttribute('TEXT', this.TEXT);
+    if (this.LINK) nodeElem.setAttribute('LINK', this.LINK);
+    if (this.FOLDED) nodeElem.setAttribute('FOLDED', this.FOLDED);
+    if (this.CREATED) nodeElem.setAttribute('CREATED', this.CREATED);
+    if (this.MODIFIED) nodeElem.setAttribute('MODIFIED', this.MODIFIED);
+    if (this.HGAP) nodeElem.setAttribute('HGAP', this.HGAP);
+    if (this.VGAP) nodeElem.setAttribute('VGAP', this.VGAP);
+    if (this.WCOORDS) nodeElem.setAttribute('WCOORDS', this.WCOORDS);
+    if (this.WORDER) nodeElem.setAttribute('WORDER', this.WORDER);
+    if (this.VSHIFT) nodeElem.setAttribute('VSHIFT', this.VSHIFT);
+    if (this.ENCRYPTED_CONTENT) nodeElem.setAttribute('ENCRYPTED_CONTENT', this.ENCRYPTED_CONTENT);
 
     return nodeElem;
   }

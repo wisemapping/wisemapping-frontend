@@ -4,8 +4,8 @@
         <edge COLOR="#660000"/>
         <node BACKGROUND_COLOR="#bf9000" COLOR="#000000" ID="ID_59" POSITION="left" STYLE="rectagle">
             <richcontent TYPE="NODE">
-                <html>
-                    <head/>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head><head/>
                     <body>
                         <p>Software</p>
                         <p>(Programas y datos con los que funciona la computadora)</p>
@@ -16,8 +16,8 @@
             <edge COLOR="#7f6000"/>
             <node BACKGROUND_COLOR="#f1c232" COLOR="#000000" ID="ID_92" POSITION="left" STYLE="rectagle">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Software de Sistema:Permite el entendimiento</p>
                             <p>entre el usuario y la maquina.</p>
@@ -41,8 +41,8 @@
             </node>
             <node BACKGROUND_COLOR="#f1c232" COLOR="#000000" ID="ID_93" POSITION="left" STYLE="rectagle">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Software de Aplicaci&#243;n: Permite hacer hojas de</p>
                             <p>calculo navegar en internet, base de datos, etc.</p>
@@ -70,8 +70,8 @@
             </node>
             <node BACKGROUND_COLOR="#f1c232" COLOR="#000000" ID="ID_94" POSITION="left" STYLE="rectagle">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Software de Desarrollo</p>
                         </body>
@@ -83,8 +83,8 @@
         </node>
         <node BACKGROUND_COLOR="#a64d79" COLOR="#feffff" ID="ID_21" POSITION="right" STYLE="bubble">
             <richcontent TYPE="NODE">
-                <html>
-                    <head/>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head><head/>
                     <body>
                         <p>Hardware</p>
                         <p>(componentes f&#237;sicos)</p>
@@ -95,8 +95,8 @@
             <edge COLOR="#4c1130"/>
             <node BACKGROUND_COLOR="#c27ba0" COLOR="#feffff" ID="ID_25" POSITION="right" STYLE="bubble">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Entrada de datos</p>
                         </body>
@@ -106,8 +106,8 @@
                 <edge COLOR="#4c1130"/>
                 <node BACKGROUND_COLOR="#ead1dc" COLOR="#000000" ID="ID_28" POSITION="right" STYLE="bubble">
                     <richcontent TYPE="NODE">
-                        <html>
-                            <head/>
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <head><head/>
                             <body>
                                 <p>Rat&#243;n, Teclado, Joystick,</p>
                                 <p>C&#225;mara digital, Micr&#243;fono, Esc&#225;ner.</p>
@@ -123,8 +123,8 @@
                 <edge COLOR="#4c1130"/>
                 <node BACKGROUND_COLOR="#ead1dc" COLOR="#000000" ID="ID_30" POSITION="right" STYLE="bubble">
                     <richcontent TYPE="NODE">
-                        <html>
-                            <head/>
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <head><head/>
                             <body>
                                 <p>Monitor, Impresora, Bocinas, Pl&#243;ter.</p>
                             </body>
@@ -139,8 +139,8 @@
                 <edge COLOR="#4c1130"/>
                 <node BACKGROUND_COLOR="#ead1dc" COLOR="#000000" ID="ID_32" POSITION="right" STYLE="bubble">
                     <richcontent TYPE="NODE">
-                        <html>
-                            <head/>
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <head><head/>
                             <body>
                                 <p>Disquete, Disco compacto, DVD,</p>
                                 <p>BD, Disco duro, Memoria flash.</p>
@@ -159,8 +159,8 @@
             </node>
             <node ID="ID_10" POSITION="left" STYLE="bubble">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>PDA</p>
                         </body>

@@ -29,7 +29,7 @@ export default {
 
   ITALIC: 'italic',
 
-  EMPTY_FONT_STYLE: ',,,,,',
+  EMPTY_FONT_STYLE: ';;;;;',
 
   EMPTY_NOTE: '',
 

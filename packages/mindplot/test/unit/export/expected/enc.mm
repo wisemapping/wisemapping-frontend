@@ -11,8 +11,8 @@
             <node ID="ID_24" POSITION="right" STYLE="fork" TEXT="Falar no artigo que esse trabalho fala que &#233; inadequada a divis&#227;o entre pioneira e n&#227;o pioneira devido a grande varia&#231;&#227;o que h&#225; entre elas. Al&#233;m de terem descoberto que durante a ontogenia a resposta a luminosidade muda dentro de uma mesma esp&#233;cie. Por&#233;m recomendar que essa classifica&#231;&#227;o continue sendo usada em curto prazo enquanto n&#227;o h&#225; informa&#231;&#245;es confi&#225;veis suficiente para esta simples classifica&#231;&#227;o. Outras classifica&#231;&#245;es como esta do artigo s&#227;o bem vinda, contanto que tenham dados confi&#225;veis. Por&#233;m dados est&#225;ticos j&#225; s&#227;o dif&#237;ceis de se obter, dados temporais, como taxa de crescimento em di&#226;metro ou altura, s&#227;o mais dif&#237;ceis ainda. Falar que v&#225;rios tipos de classifica&#231;&#245;es podem ser utilizadas e quanto mais detalhe melhor, por&#233;m os dados &#233; que s&#227;o mais limitantes. Se focarmos em dados de germina&#231;&#227;o e crescimento limitantes, como sugerem sainete e whitmore, da uma id&#233;ia maismr&#225;pida e a curto prazo da classifica&#231;&#227;o destas esp&#233;cies. Depois com o tempo conseguiremos construir classifica&#231;&#245;es mais detalhadas e com mais dados confi&#225;veis. "/>
             <node ID="ID_22" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Here, we develop a new approach that links functional attributes</p>
                             <p>of tree species with studies of forest recovery and regional</p>
@@ -28,8 +28,8 @@
             </node>
             <node ID="ID_23" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Since we have data on leaf</p>
                             <p>and wood functional traits for only a subset of the species in our</p>
@@ -42,8 +42,8 @@
             </node>
             <node ID="ID_25" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Our approach avoided preconceived notions of successional</p>
                             <p>behavior or shade tolerance of tree species by developing an objective</p>
@@ -60,8 +60,8 @@
             </node>
             <node ID="ID_26" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Our results demonstrate strong linkages between functional</p>
                             <p>types defined by adult height and growth rates of large trees and</p>
@@ -73,8 +73,8 @@
             </node>
             <node ID="ID_27" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>These results allow us to move beyond earlier conceptual</p>
                             <p>frameworks of tropical forest secondary succession developed</p>
@@ -87,8 +87,8 @@
             </node>
             <node ID="ID_28" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Reproductive traits, such as dispersal mode, pollination mode,</p>
                             <p>and sexual system, were ultimately not useful in delimiting tree</p>
@@ -106,8 +106,8 @@
             </node>
             <node ID="ID_29" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Our classification of colonization groups defies the traditional</p>
                             <p>dichotomy between &#8216;late successional&#8217; shade-tolerant and &#8216;early successional&#8217;</p>
@@ -141,8 +141,8 @@
             </node>
             <node ID="ID_30" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Classifying functional types</p>
                             <p>based on functional traits with low plasticity, such as wood density</p>
@@ -154,8 +154,8 @@
             </node>
             <node ID="ID_31" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>CONDIT, R., S. P. HUBBELL, AND R. B. FOSTER. 1996. Assessing the response of</p>
                             <p>plant functional types in tropical forests to climatic change. J. Veg. Sci.</p>
@@ -184,8 +184,8 @@
             <edge COLOR="#cccccc"/>
             <node ID="ID_6" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>Therecent growth of large functional trait data</p>
                             <p>bases has been fuelled by standardized protocols forthe</p>
@@ -202,8 +202,8 @@
             </node>
             <node ID="ID_7" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>However, the fast pace of</p>
                             <p>development of plant trait meta-analyses also suggests that</p>
@@ -215,8 +215,8 @@
             </node>
             <node ID="ID_8" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>We measured</p>
                             <p>traits for every individual tree in nine 1-ha plots in tropical</p>
@@ -240,8 +240,8 @@
             <node ID="ID_13" POSITION="left" STYLE="fork" TEXT="Intensas amostragens de experimentos simples  tem maior retorno em acur&#225;cia de estimativa e de custo tb."/>
             <node ID="ID_14" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>With regard to estimating mean trait values, strategies</p>
                             <p>alternative to BRIDGE were consistently cost-effective. On</p>
@@ -253,8 +253,8 @@
                     </html>
                 </richcontent>
                 <richcontent TYPE="NOTE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p/>
                             <p>Isso significa que estudos de caracter&#237;stica de hist&#243;ria de vida compensam? Ver nos m&amp;m.</p>
@@ -264,8 +264,8 @@
             </node>
             <node ID="ID_15" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p>We suggest that, in these studies,</p>
                             <p>the investment in complete sampling may be worthwhile</p>
@@ -274,8 +274,8 @@
                     </html>
                 </richcontent>
                 <richcontent TYPE="NOTE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p/>
                             <p>Falar que isso corrobora nossa sugest&#227;o de utilizar poucas medidas, mas que elas sejam confi&#225;veis.</p>

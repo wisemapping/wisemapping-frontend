@@ -39,6 +39,7 @@ export default class Map {
 
     // Create main node
     const mainNode: Node = this.node;
+    mainNode.setCentralTopic(true);
     const mainNodeElem = mainNode.toXml(document);
     mapElem.appendChild(mainNodeElem);
 
@@ -53,6 +54,7 @@ export default class Map {
 
   private nodeToXml(childNode: Choise, parentNode: HTMLElement, document: Document): HTMLElement {
     if (childNode instanceof Node) {
+      childNode.setCentralTopic(false);
       const childNodeXml = childNode.toXml(document);
       parentNode.appendChild(childNodeXml);
 

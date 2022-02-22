@@ -27,8 +27,8 @@
         <node ID="ID_154" POSITION="right" STYLE="fork" TEXT="Human Resources">
             <font BOLD="true" SIZE="12"/>
             <richcontent TYPE="NOTE">
-                <html>
-                    <head/>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head></head>
                     <body>
                         <p/>
                     </body>

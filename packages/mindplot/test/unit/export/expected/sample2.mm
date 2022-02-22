@@ -2,8 +2,8 @@
     <node ID="ID_null" LINK="prospace.com" TEXT="Prospace">
         <edge COLOR="#cc5627"/>
         <richcontent TYPE="NOTE">
-            <html>
-                <head/>
+            <html xmlns="http://www.w3.org/1999/xhtml">
+                <head><head/>
                 <body>
                     <p/>
                 </body>

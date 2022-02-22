@@ -42,8 +42,11 @@ export default class Font {
   toXml(document: Document): HTMLElement {
     const fontElem = document.createElement('font');
 
-    fontElem.setAttribute('SIZE', this.SIZE);
-
+    if (this.SIZE) {
+      fontElem.setAttribute('SIZE', this.SIZE);
+    } else {
+      fontElem.setAttribute('SIZE', '12');
+    }
     if (this.BOLD) fontElem.setAttribute('BOLD', this.BOLD);
     if (this.ITALIC) fontElem.setAttribute('ITALIC', this.ITALIC);
     if (this.NAME) fontElem.setAttribute('NAME', this.NAME);
