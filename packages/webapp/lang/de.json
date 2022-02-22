@@ -204,7 +204,7 @@
         "defaultMessage": "Erstellen"
     },
     "import.description": {
-        "defaultMessage": "Sie können FreeMind 1.0.1- und WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+        "defaultMessage": "Sie können WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
     },
     "import.title": {
         "defaultMessage": "Importieren Sie vorhandene Mindmaps"

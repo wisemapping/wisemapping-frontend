@@ -420,7 +420,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Vous pouvez importer des cartes FreeMind 1.0.1 et WiseMapping dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
+      "value": "Vous pouvez importer des cartes WiseMapping dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
     }
   ],
   "import.title": [
