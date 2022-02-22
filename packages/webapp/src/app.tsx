@@ -17,7 +17,7 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles
 import ReactGA from 'react-ga';
 import EditorPage from './components/editor-page';
 import AppConfig from './classes/app-config';
-import withSessionExpirationHandling from './components/hocs/withSessionExpirationHandling';
+import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';
 
 
 declare module '@mui/styles/defaultTheme' {

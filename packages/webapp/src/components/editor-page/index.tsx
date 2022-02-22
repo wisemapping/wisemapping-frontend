@@ -9,7 +9,7 @@ import ReactGA from 'react-ga';
 import Client from '../../classes/client';
 import { activeInstance } from '../../redux/clientSlice';
 import { PersistenceManager } from '@wisemapping/mindplot';
-import EditorOptionsBulder from './EditorOptiosBuider';
+import EditorOptionsBulder from './EditorOptionsBuider';
 
 export type EditorPropsType = {
     isTryMode: boolean;

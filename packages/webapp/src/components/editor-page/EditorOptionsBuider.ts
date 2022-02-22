@@ -1,11 +1,11 @@
-import EditorOptions from '@wisemapping/editor';
+import { EditorOptions } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
 
 export default class EditorOptionsBulder {
     static build(locale: string, hotkeys: boolean, isTryMode: boolean): { options: EditorOptions, mapId: number } {
 
         let options: EditorOptions = {
-            editorKeyboardEnabled: hotkeys,
+            enableKeyboardEvents: hotkeys,
             locale: locale,
             mode: isTryMode ? 'showcase' : 'editor',
         };
