@@ -24,7 +24,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
 
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
-        const persistence = client.buildPersistenceManager();
+        const persistence = client.buildPersistenceManager(isTryMode);
         setPersistenceManager(persistence);
         return () => client.removePersistenceManager();
     }, []);

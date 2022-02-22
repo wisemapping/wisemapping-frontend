@@ -36,7 +36,7 @@ class MockClient implements Client {
     private labels: Label[] = [];
     private permissionsByMap: Map<number, Permission[]> = new Map();
     private persistenceManager: PersistenceManager;
-    
+
     constructor() {
         // Remove, just for develop ....
         function createMapInfo(
@@ -98,7 +98,7 @@ class MockClient implements Client {
                 12,
                 false,
                 'El Mapa3',
-                [label2, label3], 
+                [label2, label3],
                 'Paulo3',
                 '2008-06-02T00:00:00Z',
                 'Berna',
@@ -115,7 +115,7 @@ class MockClient implements Client {
     onSessionExpired(callback?: () => void): () => void {
         return callback;
     }
-    
+
     fetchMindmap(id: number): Mindmap {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(`
@@ -335,7 +335,7 @@ class MockClient implements Client {
 
     createLabel(title: string, color: string): Promise<number> {
         const newId = Math.max.apply(Number, this.labels.map(l => l.id)) + 1;
-        this.labels.push({ 
+        this.labels.push({
             id: newId,
             title,
             color,
@@ -346,8 +346,8 @@ class MockClient implements Client {
     deleteLabel(id: number): Promise<void> {
         this.labels = this.labels.filter((l) => l.id != id);
         this.maps = this.maps.map(m => {
-            return { 
-                ...m, 
+            return {
+                ...m,
                 labels: m.labels.filter((l) => l.id != id)
             };
         });
@@ -357,7 +357,7 @@ class MockClient implements Client {
     addLabelToMap(labelId: number, mapId: number): Promise<void> {
         const labelToAdd = this.labels.find((l) => l.id === labelId);
         if (!labelToAdd) {
-            return Promise.reject({ msg: `unable to find label with id ${labelId}`});
+            return Promise.reject({ msg: `unable to find label with id ${labelId}` });
         }
         const map = this.maps.find((m) => m.id === mapId);
         if (!map) {
@@ -400,14 +400,14 @@ class MockClient implements Client {
     }
 
     buildPersistenceManager(): PersistenceManager {
-        if (this.persistenceManager){
+        if (this.persistenceManager) {
             return this.persistenceManager;
         }
         const persistence: PersistenceManager = new MockPersistenceManager(exampleMap);
         this.persistenceManager = persistence;
         return persistence;
     }
-    
+
     removePersistenceManager(): void {
         if (this.persistenceManager) {
             delete this.persistenceManager;

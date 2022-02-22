@@ -107,9 +107,9 @@ interface Client {
     fetchHistory(id: number): Promise<ChangeHistory[]>;
     revertHistory(id: number, cid: number): Promise<void>;
 
-    fetchMindmap(id:number): Mindmap;
+    fetchMindmap(id: number): Mindmap;
 
-    buildPersistenceManager(): PersistenceManager;
+    buildPersistenceManager(isTryMode: boolean): PersistenceManager;
     removePersistenceManager(): void;
 
     onSessionExpired(callback?: () => void): () => void;

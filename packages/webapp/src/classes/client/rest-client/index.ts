@@ -39,12 +39,12 @@ export default class RestClient implements Client {
         }
         this.axios.interceptors.response.use((r) => r, (r) => this.checkResponseForSessionExpired(r));
     }
-    
-    private _onSessionExpired : () => void;
+
+    private _onSessionExpired: () => void;
     onSessionExpired(callback?: () => void): () => void {
         if (callback) {
             this._onSessionExpired = callback;
-        } 
+        }
         return this._onSessionExpired;
     }
 
@@ -611,13 +611,13 @@ export default class RestClient implements Client {
         }
     }
 
-    buildPersistenceManager(): PersistenceManager {
-        if (this.persistenceManager){
+    buildPersistenceManager(isTryMode: boolean): PersistenceManager {
+        if (this.persistenceManager) {
             return this.persistenceManager;
         }
         // TODO: Move globals out, make urls configurable
         let persistence: PersistenceManager;
-        if (!global.memoryPersistence && !global.readOnly) {
+        if (!isTryMode) {
             persistence = new RESTPersistenceManager({
                 documentUrl: '/c/restful/maps/{id}/document',
                 revertUrl: '/c/restful/maps/{id}/history/latest',

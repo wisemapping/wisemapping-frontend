@@ -129,9 +129,9 @@ class CacheDecoratorClient implements Client {
     revertHistory(id: number, cid: number): Promise<void> {
         return this.client.revertHistory(id, cid);
     }
-    
-    buildPersistenceManager(): PersistenceManager {
-        return this.client.buildPersistenceManager();
+
+    buildPersistenceManager(isTryMode: boolean): PersistenceManager {
+        return this.client.buildPersistenceManager(isTryMode);
     }
 
     removePersistenceManager(): void {
