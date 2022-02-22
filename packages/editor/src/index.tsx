@@ -96,7 +96,6 @@ const Editor = ({
 
     useEffect(() => {
         if (options.enableKeyboardEvents) {
-            console.log("options.enableKeyboardEvents"+options.enableKeyboardEvents)
             DesignerKeyboard.resume();
         } else {
             DesignerKeyboard.pause();

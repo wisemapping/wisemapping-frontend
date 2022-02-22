@@ -4,7 +4,7 @@ import { ActionType } from '../maps-page/action-chooser';
 import Editor from '@wisemapping/editor';
 import AppI18n from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
-import { hotkeys } from '../../redux/editorSlice';
+import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
 import Client from '../../classes/client';
 import { activeInstance } from '../../redux/clientSlice';
@@ -17,7 +17,7 @@ export type EditorPropsType = {
 
 const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
-    const hotkeysEnabled = useSelector(hotkeys);
+    const hotkey = useSelector(hotkeysEnabled);
     const userLocale = AppI18n.getUserLocale();
     const client: Client = useSelector(activeInstance);
     const [persistenceManager, setPersistenceManager] = React.useState<PersistenceManager>();
@@ -30,7 +30,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     }, []);
 
     // As temporal hack, editor properties are propagated from global variables...
-    const { mapId, options } = EditorOptionsBulder.build(userLocale.code, hotkeysEnabled, isTryMode);
+    const { mapId, options } = EditorOptionsBulder.build(userLocale.code, hotkey, isTryMode);
     return persistenceManager ? (
         <>
             <Editor onAction={setActiveDialog}

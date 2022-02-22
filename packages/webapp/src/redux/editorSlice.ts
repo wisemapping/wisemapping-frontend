@@ -22,7 +22,7 @@ export const editorSlice = createSlice({
     },
 });
 
-export const hotkeys = (state: RootState): boolean => {
+export const hotkeysEnabled = (state: RootState): boolean => {
     return state.editor.hotkeysEnabled;
 };
 
