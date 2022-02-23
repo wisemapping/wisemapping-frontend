@@ -1292,7 +1292,7 @@ abstract class Topic extends NodeGraph {
         const topicHeight = Math.max(iconHeight, textHeight) + padding * 2;
         const textIconSpacing = Math.round(fontHeight / 4);
         const iconGroupWith = iconGroup.getSize().width;
-        const topicWith = iconGroupWith + textIconSpacing + textWidth + padding * 2;
+        const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
         this.setSize({
           width: topicWith,
