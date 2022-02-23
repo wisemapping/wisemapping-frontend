@@ -20,9 +20,17 @@ import $ from 'jquery';
 import Icon from './Icon';
 import LinkIconTooltip from './widget/LinkIconTooltip';
 import LinksImage from '../../assets/icons/links.svg';
+import LinkModel from './model/LinkModel';
+import Topic from './Topic';
+import FeatureModel from './model/FeatureModel';
 
 class LinkIcon extends Icon {
-  constructor(topic, linkModel, readOnly) {
+  private _linksModel: FeatureModel;
+  private _topic: Topic;
+  private _readOnly: boolean;
+  private _tip: LinkIconTooltip;
+
+  constructor(topic: Topic, linkModel: LinkModel, readOnly: boolean) {
     $assert(topic, 'topic can not be null');
     $assert(linkModel, 'linkModel can not be null');
 
@@ -34,7 +42,7 @@ class LinkIcon extends Icon {
     this._registerEvents();
   }
 
-  _registerEvents() {
+  private _registerEvents() {
     this._image.setCursor('pointer');
     this._tip = new LinkIconTooltip(this);
 
@@ -62,10 +70,11 @@ class LinkIcon extends Icon {
     });
   }
 
-  getModel() {
+  getModel(): FeatureModel {
     return this._linksModel;
   }
+  static IMAGE_URL = LinksImage;
+
 }
-LinkIcon.IMAGE_URL = LinksImage;
 
 export default LinkIcon;

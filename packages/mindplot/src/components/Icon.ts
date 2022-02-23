@@ -17,36 +17,43 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { Image } from '@wisemapping/web2d';
+import IconGroup from './IconGroup';
+import { Point } from '@wisemapping/web2d';
+import SizeType from './SizeType';
+import FeatureModel from './model/FeatureModel';
 
-class Icon {
-  constructor(url) {
+abstract class Icon {
+  protected _image: Image;
+  protected _group: IconGroup;
+
+  constructor(url: string) {
     $assert(url, 'topic can not be null');
     this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(Icon.SIZE, Icon.SIZE);
   }
 
-  getImage() {
+  getImage(): Image {
     return this._image;
   }
 
-  setGroup(group) {
+  setGroup(group: IconGroup) {
     this._group = group;
   }
 
-  getGroup() {
+  getGroup(): IconGroup {
     return this._group;
   }
 
-  getSize() {
+  getSize(): SizeType {
     return this._image.getSize();
   }
 
-  getPosition() {
+  getPosition(): Point {
     return this._image.getPosition();
   }
 
-  addEvent(type, fnc) {
+  addEvent(type: string, fnc): void {
     this._image.addEvent(type, fnc);
   }
 
@@ -54,8 +61,10 @@ class Icon {
   remove() {
     throw new Error('Unsupported operation');
   }
-}
 
-Icon.SIZE = 90;
+  abstract getModel(): FeatureModel;
+
+  static SIZE = 90;
+}
 
 export default Icon;

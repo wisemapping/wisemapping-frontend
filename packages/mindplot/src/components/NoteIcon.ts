@@ -21,9 +21,17 @@ import { $msg } from './Messages';
 import Icon from './Icon';
 import FloatingTip from './widget/FloatingTip';
 import NotesImage from '../../assets/icons/notes.svg';
+import Topic from './Topic';
+import NoteModel from './model/NoteModel';
+import FeatureModel from './model/FeatureModel';
 
 class NoteIcon extends Icon {
-  constructor(topic, noteModel, readOnly) {
+  private _linksModel: NoteModel;
+  private _topic: Topic;
+  private _readOnly: boolean;
+  private _tip: FloatingTip;
+
+  constructor(topic: Topic, noteModel: NoteModel, readOnly: boolean) {
     $assert(topic, 'topic can not be null');
 
     super(NoteIcon.IMAGE_URL);
@@ -34,7 +42,7 @@ class NoteIcon extends Icon {
     this._registerEvents();
   }
 
-  _registerEvents() {
+  private _registerEvents(): void {
     this._image.setCursor('pointer');
     const me = this;
 
@@ -58,7 +66,7 @@ class NoteIcon extends Icon {
     });
   }
 
-  _buildTooltipContent() {
+  private _buildTooltipContent(): JQuery {
     if ($('body').find('#textPopoverNote').length === 1) {
       const text = $('body').find('#textPopoverNote');
       text.text(this._linksModel.getText());
@@ -75,11 +83,12 @@ class NoteIcon extends Icon {
     return result;
   }
 
-  getModel() {
+  getModel(): FeatureModel {
     return this._linksModel;
   }
-}
 
-NoteIcon.IMAGE_URL = NotesImage;
+  static IMAGE_URL = NotesImage;
+
+}
 
 export default NoteIcon;
