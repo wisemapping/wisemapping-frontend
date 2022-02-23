@@ -58,9 +58,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
 
     const addMutation = useMutation(
         (model: ShareModel) => {
-            const emails = model.emails.split("'");
-            const permissions = emails.map((email) => {
-                return { email: email, role: model.role };
+            const emails = model.emails.split(',');
+            const permissions = emails.map((email: string) => {
+                return { email: email.replace(/\s/g, ''), role: model.role };
             });
             return client.addMapPermissions(mapId, model.message, permissions);
         },
@@ -85,11 +85,13 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         const name = event.target.name;
         const value = event.target.value;
         setModel({ ...model, [name as keyof ShareModel]: value });
+        event.stopPropagation();
     };
 
     const handleOnAddClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.stopPropagation();
         addMutation.mutate(model);
+        event.stopPropagation();
     };
 
     const handleOnDeleteClick = (
@@ -110,6 +112,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     const formatName = (perm: Permission): string => {
         return perm.name ? `${perm.name}<${perm.email}>` : perm.email;
     };
+
+    // very basic email validation, just make sure the basic syntax is fine
+    const isValid = model.emails.split(',').every(str => /\S+@\S+\.\S+/.test((str || '').trim()));
 
     return (
         <div>
@@ -181,6 +186,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                         variant="contained"
                         disableElevation={true}
                         onClick={handleOnAddClick}
+                        disabled={!isValid}
                     >
                         <FormattedMessage id="share.add-button" defaultMessage="Add" />
                     </Button>

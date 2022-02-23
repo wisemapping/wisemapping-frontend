@@ -20,7 +20,6 @@ import ModelCodeName from './ModelCodeName';
 import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
 import XMLSerializerBeta from './XMLSerializerBeta';
-import XMLSerializerPela from './XMLSerializerPela';
 import XMLSerializerTango from './XMLSerializerTango';
 import Mindmap from '../model/Mindmap';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
@@ -35,7 +34,7 @@ const codeToSerializer: { codeName: string, serializer, migrator }[] = [
   },
   {
     codeName: ModelCodeName.PELA,
-    serializer: XMLSerializerPela,
+    serializer: XMLSerializerTango,
     migrator: Beta2PelaMigrator,
   },
   {

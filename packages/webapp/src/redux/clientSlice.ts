@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import Client, { AccountInfo, ErrorInfo, MapInfo } from '../classes/client';
 import { useSelector } from 'react-redux';
 import AppConfig from '../classes/app-config';
+import { RootState } from './rootReducer';
 
 
 export interface ClientStatus {
@@ -59,13 +60,11 @@ export const fetchAccount = (): AccountInfo | undefined => {
     return data;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const activeInstance = (state: any): Client => {
+export const activeInstance = (state: RootState): Client => {
     return state.client.instance;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const activeInstanceStatus = (state: any): ClientStatus => {
+export const activeInstanceStatus = (state: RootState): ClientStatus => {
     return state.client.status;
 };
 

@@ -20,11 +20,21 @@ import { $assert } from '@wisemapping/core-js';
 import { Mindmap } from '..';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
+export type PersistenceError = {
+  severity: string;
+  message: string;
+  errorType?: 'session-expired' | 'bad-request' | 'generic';
+};
+
+export type PersistenceErrorCallback = (error: PersistenceError) => void;
+
 abstract class PersistenceManager {
   // eslint-disable-next-line no-use-before-define
   static _instance: PersistenceManager;
 
-  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events, sync: boolean) {
+  private _errorHandlers: PersistenceErrorCallback[] = [];
+
+  save(mindmap: Mindmap, editorProperties, saveHistory: boolean, events?) {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
@@ -33,15 +43,22 @@ abstract class PersistenceManager {
 
     const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
-    const mapXml = new XMLSerializer().serializeToString(domMap);
-
     const pref = JSON.stringify(editorProperties);
     try {
-      this.saveMapXml(mapId, mapXml, pref, saveHistory, events, sync);
+      this.saveMapXml(mapId, domMap, pref, saveHistory, events);
     } catch (e) {
       console.error(e);
       events.onError(e);
     }
+  }
+
+  protected getCSRFToken(): string | null {
+    const meta = document.head.querySelector('meta[name="_csrf"]');
+    let result = null;
+    if (meta) {
+      result = meta.getAttribute('content');
+    }
+    return result;
   }
 
   load(mapId: string) {
@@ -50,13 +67,31 @@ abstract class PersistenceManager {
     return PersistenceManager.loadFromDom(mapId, domDocument);
   }
 
+  triggerError(error: PersistenceError) {
+    this._errorHandlers.forEach((handler) => handler(error));
+  }
+
+  addErrorHandler(callback: PersistenceErrorCallback) {
+    this._errorHandlers.push(callback);
+  }
+
+  removeErrorHandler(callback?: PersistenceErrorCallback) {
+    if (!callback) {
+      this._errorHandlers.length = 0;
+    }
+    const index = this._errorHandlers.findIndex((handler) => handler === callback);
+    if (index !== -1) {
+      this._errorHandlers.splice(index, 1);
+    }
+  }
+
   abstract discardChanges(mapId: string): void;
 
   abstract loadMapDom(mapId: string): Document;
 
-  abstract saveMapXml(mapId: string, mapXml, pref, saveHistory, events, sync);
+  abstract saveMapXml(mapId: string, mapXml: Document, pref?, saveHistory?: boolean, events?);
 
-  abstract unlockMap(mindmap: Mindmap): void;
+  abstract unlockMap(mapId: string): void;
 
   static init = (instance: PersistenceManager) => {
     this._instance = instance;

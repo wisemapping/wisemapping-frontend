@@ -19,6 +19,7 @@ import { $assert } from '@wisemapping/core-js';
 import Events from './Events';
 import MultilineTextEditor from './MultilineTextEditor';
 import { TopicShape } from './model/INodeModel';
+import Topic from './Topic';
 
 const TopicEvent = {
   EDIT: 'editnode',
@@ -26,30 +27,39 @@ const TopicEvent = {
 };
 
 class TopicEventDispatcher extends Events {
-  constructor(readOnly) {
+  private _readOnly: boolean;
+
+  private _activeEditor: MultilineTextEditor;
+
+  private _multilineEditor: MultilineTextEditor;
+
+  // eslint-disable-next-line no-use-before-define
+  static _instance: TopicEventDispatcher;
+
+  constructor(readOnly: boolean) {
     super();
     this._readOnly = readOnly;
     this._activeEditor = null;
     this._multilineEditor = new MultilineTextEditor();
   }
 
-  close(update) {
+  close(update: boolean): void {
     if (this.isVisible()) {
       this._activeEditor.close(update);
       this._activeEditor = null;
     }
   }
 
-  show(topic, options) {
+  show(topic: Topic, options?): void {
     this.process(TopicEvent.EDIT, topic, options);
   }
 
-  process(eventType, topic, options) {
+  process(eventType: string, topic: Topic, options?): void {
     $assert(eventType, 'eventType can not be null');
 
     // Close all previous open editor ....
     if (this.isVisible()) {
-      this.close();
+      this.close(false);
     }
 
     // Open the new editor ...
@@ -66,20 +76,18 @@ class TopicEventDispatcher extends Events {
     }
   }
 
-  isVisible() {
+  isVisible(): boolean {
     return this._activeEditor != null && this._activeEditor.isVisible();
   }
+
+  static configure(readOnly: boolean): void {
+    this._instance = new TopicEventDispatcher(readOnly);
+  }
+
+  static getInstance(): TopicEventDispatcher {
+    return this._instance;
+  }
 }
-
-TopicEventDispatcher._instance = null;
-
-TopicEventDispatcher.configure = function configure(readOnly) {
-  this._instance = new TopicEventDispatcher(readOnly);
-};
-
-TopicEventDispatcher.getInstance = function getInstance() {
-  return this._instance;
-};
 
 export { TopicEvent };
 export default TopicEventDispatcher;

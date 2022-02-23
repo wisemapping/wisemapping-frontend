@@ -17,9 +17,8 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
-import { Mindmap } from '..';
 import { $msg } from './Messages';
-import PersistenceManager from './PersistenceManager';
+import PersistenceManager, { PersistenceError } from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -51,10 +50,10 @@ class RESTPersistenceManager extends PersistenceManager {
     this.session = options.session;
   }
 
-  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events, sync: boolean): void {
+  saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
     const data = {
       id: mapId,
-      xml: mapXml,
+      xml: new XMLSerializer().serializeToString(mapXml),
       properties: pref,
     };
 
@@ -71,73 +70,79 @@ class RESTPersistenceManager extends PersistenceManager {
       }, 10000);
 
       const persistence = this;
-      $.ajax({
-        type: 'put',
-        url: `${this.documentUrl.replace('{id}', mapId)}?${query}`,
-        dataType: 'json',
-        data: JSON.stringify(data),
-        contentType: 'application/json; charset=utf-8',
-        async: !sync,
-
-        success(successData) {
-          persistence.timestamp = successData;
+      fetch(
+        `${this.documentUrl.replace('{id}', mapId)}?${query}`,
+        {
+          method: 'PUT',
+          // Blob helps to resuce the memory on large payload.
+          body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
+          headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json', 'X-CSRF-Token': this.getCSRFToken() },
+        },
+      ).then(async (response: Response) => {
+        if (response.ok) {
+          persistence.timestamp = await response.text();
           events.onSuccess();
-        },
-        complete() {
-          // Clear event timeout ...
-          if (persistence.clearTimeout) {
-            clearTimeout(persistence.clearTimeout);
-          }
-          persistence.onSave = false;
-        },
-        error(xhr) {
-          const { responseText } = xhr;
-          let userMsg = { severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED') };
-
-          const contentType = xhr.getResponseHeader('Content-Type');
-          if (contentType != null && contentType.indexOf('application/json') !== -1) {
-            let serverMsg = null;
-            try {
-              serverMsg = $.parseJSON(responseText);
-              serverMsg = serverMsg.globalSeverity ? serverMsg : null;
-            } catch (e) {
-              // Message could not be decoded ...
+        } else {
+          console.log(`Saving error: ${response.status}`);
+          let userMsg;
+          if (response.status === 405) {
+            userMsg = { severity: 'SEVERE', message: $msg('SESSION_EXPIRED'), errorType: 'session-expired' };
+          } else {
+            const responseText = await response.text();
+            const contentType = response.headers['Content-Type'];
+            if (contentType != null && contentType.indexOf('application/json') !== -1) {
+              let serverMsg = null;
+              try {
+                serverMsg = JSON.parse(responseText);
+                serverMsg = serverMsg.globalSeverity ? serverMsg : null;
+              } catch (e) {
+                // Message could not be decoded ...
+              }
+              userMsg = persistence._buildError(serverMsg);
             }
-            userMsg = persistence._buildError(serverMsg);
-          } else if (this.status === 405) {
-            userMsg = { severity: 'SEVERE', message: $msg('SESSION_EXPIRED') };
           }
+          this.triggerError(userMsg);
           events.onError(userMsg);
-          persistence.onSave = false;
-        },
+        }
+
+        // Clear event timeout ...
+        if (persistence.clearTimeout) {
+          clearTimeout(persistence.clearTimeout);
+        }
+        persistence.onSave = false;
+      }).catch(() => {
+        const userMsg: PersistenceError = {
+          severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED'), errorType: 'generic',
+        };
+        this.triggerError(userMsg);
+        events.onError(userMsg);
+
+        // Clear event timeout ...
+        if (persistence.clearTimeout) {
+          clearTimeout(persistence.clearTimeout);
+        }
+        persistence.onSave = false;
       });
     }
   }
 
   discardChanges(mapId: string) {
-    $.ajax({
-      url: this.revertUrl.replace('{id}', mapId),
-      async: false,
-      method: 'post',
-      headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' },
-      error(xhr, ajaxOptions, thrownError) {
-        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
-      },
-    });
+    fetch(this.revertUrl.replace('{id}', mapId),
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json', 'X-CSRF-Token': this.getCSRFToken() },
+      });
   }
 
-  unlockMap(mindmap: Mindmap) {
-    const mapId = mindmap.getId();
-    $.ajax({
-      url: this.lockUrl.replace('{id}', mapId),
-      async: false,
-      method: 'put',
-      headers: { 'Content-Type': 'text/plain' },
-      data: 'false',
-      error(xhr, ajaxOptions, thrownError) {
-        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
+  unlockMap(mapId: string): void {
+    fetch(
+      this.lockUrl.replace('{id}', mapId),
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'text/plain', 'X-CSRF-Token': this.getCSRFToken() },
+        body: 'false',
       },
-    });
+    );
   }
 
   private _buildError(jsonSeverResponse) {
@@ -155,13 +160,12 @@ class RESTPersistenceManager extends PersistenceManager {
   }
 
   loadMapDom(mapId: string): Document {
-    // Let's try to open one from the local directory ...
     let xml: Document;
     $.ajax({
       url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
       method: 'get',
       async: false,
-      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml' },
+      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml', 'X-CSRF-Token': this.getCSRFToken() },
       success(responseText) {
         xml = responseText;
       },

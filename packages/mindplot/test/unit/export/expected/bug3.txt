@@ -1,13 +1,16 @@
 1 Indicator needs
 	1.1 Which new measures
+	  [Note: Identifying new measures or investments that should be implemented.]
 		1.1.1 Landscape of measures
 			1.1.1.1 Diversity index of innovation support instruments in the region
+			  [Note: Number of different innovations policy instruments existing  in the region as a share of a total number representing a full typology of instruments]
 			1.1.1.2 Existing investments in measures
 		1.1.2 What other regions do differently
 			1.1.2.1 Balance of measure index
 			1.1.2.2 Profile comparison with other regions
 			1.1.2.3 Number of specific types of measures per capita
 	1.2 How to design & implement measures
+	  [Note: Understanding how to design the details of a particular measure and how to implement them.]
 		1.2.1 Good practices
 		1.2.2 Diagnostics
 			1.2.2.1 Internal business innovation factors
@@ -34,7 +37,9 @@ highly cited scientific article in the whole Federation)
 				1.2.2.2.13 Number of innovative companies to the number of researchers  
 				1.2.2.2.14 Volume of license agreements to the volume of R&D support from the regional budget 
 	1.3 How much effort: where & how
+	  [Note: Understanding the level of effort the region needs to take to compete on innovation and where to put this effort]
 		1.3.1 The bottom-line
+		  [Note: This is what policy makers care about in the end]
 			1.3.1.1 Wages
 				1.3.1.1.1 Dynamics of real wages
 				1.3.1.1.2 Average wage (compare to the Fed)
@@ -54,13 +59,17 @@ highly cited scientific article in the whole Federation)
 				1.3.2.1.3 Manufacturing value added per capita (non-natural resource-based)
 			1.3.2.2 The enabling environment
 				1.3.2.2.1 Ease of doing business
+				  [Note: WB]
 					1.3.2.2.1.1 Level of administrative barriers (number and cost of administrative procedures) 
 				1.3.2.2.2 Competition index
+				  [Note: GCR]
 				1.3.2.2.3 Workforce
 					1.3.2.2.3.1 Quality of education
+					  [Note: GCR]
 						1.3.2.2.3.1.1 Inrease in the number of International students
 					1.3.2.2.3.2 Quantity of education
 						1.3.2.2.3.2.1 Participation in life-long learning
+						  [Note: per 100 population aged 25-64]
 						1.3.2.2.3.2.2 Increase in literarecy 
 						1.3.2.2.3.2.3 Amount of university and colleague
 students per 10 thousands population
@@ -71,6 +80,7 @@ the total amount of population at the working age
 						1.3.2.2.3.2.7 Access to training, information, and consulting support 
 					1.3.2.2.3.3 Science & engineering workforce
 						1.3.2.2.3.3.1 Availability of scientists and engineers
+						  [Note: GCR]
 						1.3.2.2.3.3.2 Amount of researches per 10 thousands population
 						1.3.2.2.3.3.3 Average wage of researches per average wage in the region
 						1.3.2.2.3.3.4 Share of researchers in the total number of employees in the region
@@ -89,6 +99,7 @@ the total amount of population at the working age
 						1.3.2.2.5.2.2 Number of Business Angels
 				1.3.2.2.6 ICT
 					1.3.2.2.6.1 ICT use
+					  [Note: GCR]
 					1.3.2.2.6.2 Broadband penetration 
 					1.3.2.2.6.3 Internet penetration
 					1.3.2.2.6.4 Computer literacy 
@@ -98,11 +109,13 @@ the total amount of population at the working age
 						1.3.2.3.1.1.1 foreign JVs
 						1.3.2.3.1.1.2 Inflow of foreign direct investments in high-technology industries
 						1.3.2.3.1.1.3 Foreign direct investment jobs
+						  [Note: : the percentage of the workforce employed by foreign companies [%]. ]
 						1.3.2.3.1.1.4 FDI as a share of regional non natural resource-based GRP 
 						1.3.2.3.1.1.5 Number of foreign subsidiaries operating in the region
 						1.3.2.3.1.1.6 Share of foreign controlled enterprises
 					1.3.2.3.1.2 Exports
 						1.3.2.3.1.2.1 Export intensity in manufacturing and services
+						  [Note: : exports as a share of total output in manufacturing and services [%].]
 						1.3.2.3.1.2.2  Share of high-technology export in the total volume
  of production of goods, works and services
 						1.3.2.3.1.2.3 Share of innovation production/serivces that goes for export,
@@ -110,12 +123,17 @@ by zones (EU, US, CIS, other countries
 					1.3.2.3.1.3 Share of high-technology products in government procurements
 				1.3.2.3.2 Entrepreneurship culture
 					1.3.2.3.2.1 Fear of failure rate
+					  [Note: GEM]
 					1.3.2.3.2.2 Entrepreneurship as desirable career choice
+					  [Note: GEM]
 					1.3.2.3.2.3 High Status Successful Entrepreneurship
+					  [Note: GEM]
 				1.3.2.3.3 Collaboration & partnerships
 					1.3.2.3.3.1 Number of business contracts with foreign partners for R&D collaboration
 					1.3.2.3.3.2 Share of R&D financed from foreign sources
+					  [Note: UNESCO]
 					1.3.2.3.3.3 Firms collaborating on innovation with organizations in other countries
+					  [Note: CIS]
 					1.3.2.3.3.4 Share of Innovative companies collaborating
 with research institutions on innovation
 					1.3.2.3.3.5 Number of joint projects conducted by the local comapnies
@@ -123,6 +141,7 @@ with research institutions on innovation
 					1.3.2.3.3.6 science and industry links
 				1.3.2.3.4 Technology absorption
 					1.3.2.3.4.1 Local supplier quality
+					  [Note: GCR]
 					1.3.2.3.4.2 Share of expenditures on technological innovations
 in the amount of sales
 					1.3.2.3.4.3 Number of purchased new technologies
@@ -137,6 +156,7 @@ in the amount of sales
 					1.3.2.3.5.1 Share of innovative companies
 					1.3.2.3.5.2 Business R&D expenditures per GRP
 					1.3.2.3.5.3 Factors hampering innovation
+					  [Note: CIS, BEEPS]
 					1.3.2.3.5.4 Expenditure on innovation by firm size
 					1.3.2.3.5.5 R&D and other intellectl property products
 					1.3.2.3.5.6 Growth of the number of innovative companies 
@@ -147,7 +167,9 @@ in the amount of sales
 						1.3.2.3.5.7.4 Volume of innovation production per capita 
 				1.3.2.3.6 Entrepreneurial activities
 					1.3.2.3.6.1 New business density
+					  [Note: Number of new organizations per thousand working age population (WBI)]
 					1.3.2.3.6.2 Volume of newly registered corporations 
+					  [Note: (as a percentage of all registered corporations)]
 					1.3.2.3.6.3 Share of gazelle companies in the total number of businesses
 				1.3.2.3.7 R&D production
 					1.3.2.3.7.1 Outputs
@@ -185,6 +207,7 @@ and large companies  by university size
 						1.3.2.4.1.3.2 Number of foreign patents granted per staff
 					1.3.2.4.1.4 Supportive measures
 						1.3.2.4.1.4.1 Diversity index of university entrepreneurship support measures
+						  [Note: Number of measures offered by the unversity within a preset range (NCET2 survey)]
 					1.3.2.4.1.5 Commercialization
 						1.3.2.4.1.5.1 Licensing
 							1.3.2.4.1.5.1.1 Academic licenses: Number of licenses
@@ -203,7 +226,9 @@ of total institutional budget (up to a cap)
 							1.3.2.4.1.5.3.5 Difficulties faced by research organization in collaborating with SMEs
 				1.3.2.4.2 Private market
 					1.3.2.4.2.1 Number of innovation & IP services organizations
+					  [Note:  (design firms, IP consultants, etc.)]
 					1.3.2.4.2.2 Number of private innovation infrastructure organizations 
+					  [Note: (e.g. accelerators, incubators)]
 					1.3.2.4.2.3 Access to certification and licensing for specific activities 
 					1.3.2.4.2.4 Access to suppliers of equipment, production and engineering services 
 				1.3.2.4.3 Innovation infrastructure
@@ -215,11 +240,14 @@ of total institutional budget (up to a cap)
 						1.3.2.4.3.1.5 Volume of venture financing from the regional budget 
 					1.3.2.4.3.2 Volume of state support per one company 
 	1.4 What to do about existing measures
+	  [Note: Understanding which measures should be strengthened, dropped or improved, and how.]
 		1.4.1 Demand for measure
 			1.4.1.1 Quality of beneficiaries
 				1.4.1.1.1 Growth rates of employment in supported innovative firms
 				1.4.1.1.2 Growth rates of employment in supported innovative firms
 				1.4.1.1.3 Role of IP for tenants/clients
+				  [Note: WIPO SURVEY OF INTELLECTUAL PROPERTY SERVICES OF
+EUROPEAN TECHNOLOGY INCUBATORS]
 				1.4.1.1.4 Share of tenants with innovation activities
 				1.4.1.1.5 Gazelle tenant: Share of tenants with
 annual revenue growth of more than 20%
@@ -247,6 +275,7 @@ select and apply for regional and federal support schemes
 				1.4.1.4.4 Increase in the number of start-ups applying for a place in the incubators
 		1.4.2 Inputs of measures
 			1.4.2.1 Qualified staff
+			  [Note: JL: not sure how this would be measured]
 			1.4.2.2 Budget per beneficiary
 		1.4.3 Performance of measure
 			1.4.3.1 Implementation of measure
@@ -275,6 +304,7 @@ several programs with different leverage)
 			1.4.4.5 Volume of attracted money per one ruble
 of regional budget expenditures on innovation projects
 	1.5 What investments in innovative projects
+	  [Note: Understanding what investments should be made in innovative projects.]
 		1.5.1 Competitive niches
 			1.5.1.1 Clusters behavior
 				1.5.1.1.1 Cluster EU star rating

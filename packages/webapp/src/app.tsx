@@ -14,8 +14,10 @@ import AppI18n, { Locales } from './classes/app-i18n';
 import MapsPage from './components/maps-page';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
-import GoogleAnalytics from 'react-ga';
+import ReactGA from 'react-ga';
 import EditorPage from './components/editor-page';
+import AppConfig from './classes/app-config';
+import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -23,9 +25,8 @@ declare module '@mui/styles/defaultTheme' {
     interface DefaultTheme extends Theme { }
 }
 
-
 // Google Analytics Initialization.
-GoogleAnalytics.initialize('UA-0000000-0');
+ReactGA.initialize(AppConfig.getGoogleAnalyticsAccount());
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -38,10 +39,7 @@ const queryClient = new QueryClient({
 
 const App = (): ReactElement => {
     const locale = AppI18n.getBrowserLocale();
-
-    // global variables set server-side
-    const istTryMode = global.memoryPersistence;
-    const mapId = parseInt(global.mapId, 10);
+    const EnhacedEditorPage = withSessionExpirationHandling(EditorPage);
 
     return locale.message ? (
         <Provider store={store}>
@@ -80,13 +78,13 @@ const App = (): ReactElement => {
                                     />
                                     <Route
                                         exact path="/c/maps/"
-                                        component={MapsPage}
+                                        component={withSessionExpirationHandling(MapsPage)}
                                     />
                                     <Route exact path="/c/maps/:id/edit">
-                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
+                                        <EnhacedEditorPage isTryMode={false} />
                                     </Route>
                                     <Route exact path="/c/maps/:id/try">
-                                        <EditorPage isTryMode={istTryMode} mapId={mapId} />
+                                        <EnhacedEditorPage isTryMode={true} />
                                     </Route>
                                 </Switch>
                             </Router>

@@ -1,11 +1,22 @@
 1 Observation
+  [Note: Always ask ]
 2 Data Analysis
+  [Note: You always check your data to see if it is correct and then you check it and organize the data that you have to make sure that it is right ]
 3 Organizing Data
+  [Note: Organize your data when you are doing an experiment ]
 4 Questions
+  [Note: Always ask your self a question when analysis the data it is a good idea to do.]
 5 Hypothesis
+  [Note: You make your hypothesis when you are making your observation.]
 6 Experiment
+  [Note: Always analysis your data and keep it in order when you are doing an experiment.]
 7 Variable
+  [Note: A major factor that can change the outcome in an experiment.]
 8 Independent Variable
+  [Note: When you change it you the see affect or the aftermath of what happened ]
 9 Control Group
+  [Note: A test That can be compared ]
 10 Dependent Variable
+  [Note: Changes the outcome of the other variables]
 11 Constant 
+  [Note: Doesnt Change at all maybe once and a while but never that often]

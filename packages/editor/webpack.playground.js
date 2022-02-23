@@ -9,7 +9,6 @@ const playgroundConfig = {
   mode: 'development',
   entry: {
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
-    embedded: path.resolve(__dirname, './test/playground/map-render/js/embedded'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
   },
   output: {
@@ -24,17 +23,6 @@ const playgroundConfig = {
     port: 8081,
     open: false,
   },
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: [
-          'style-loader',
-          'css-loader?url=false',
-        ],
-      },
-    ],
-  },
   plugins: [
     new CleanWebpackPlugin({
       dangerouslyAllowCleanPatternsOutsideProject: true,
@@ -46,21 +34,13 @@ const playgroundConfig = {
         { from: 'test/playground/map-render/images', to: 'images' },
         { from: 'test/playground/map-render/js', to: 'js' },
         { from: 'test/playground/map-render/samples', to: 'samples' },
-        { from: '../../libraries/bootstrap', to: 'bootstrap' },
         { from: 'test/playground/index.html', to: 'index.html' },
-        { from: 'test/playground/map-render/html/container.json', to: 'html/container.json' },
-        { from: 'test/playground/map-render/html/container.html', to: 'container.html' },
       ],
     }),
     new HtmlWebpackPlugin({
       chunks: ['viewmode'],
       filename: 'viewmode.html',
       template: 'test/playground/map-render/html/viewmode.html',
-    }),
-    new HtmlWebpackPlugin({
-      chunks: ['embedded'],
-      filename: 'embedded.html',
-      template: 'test/playground/map-render/html/embedded.html',
     }),
     new HtmlWebpackPlugin({
       chunks: ['editor'],

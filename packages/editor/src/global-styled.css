@@ -1,10 +1,12 @@
-@import "compatibility.css";
-
 /********************************************************************************/
 /* Header & Toolbar Styles */
 /********************************************************************************/
-@import "header.css";
-@import "../bootstrap/css/bootstrap.min.css";
+@import "bootstrap.min.css";
+
+html {
+    /* avoid bootstrap overriding font-size and breaking Mui */
+    font-size: initial;
+}
 
 body {
     -webkit-touch-callout: none;
@@ -126,6 +128,7 @@ div.shareModalDialog {
 }
 
 .popover {
+    font-size: 13px;
     max-width: none;
 }
 
@@ -140,7 +143,7 @@ div.shareModalDialog {
 }
 
 div#position {
-    margin-top: 5px;    
+    margin-top: 5px;
 }
 
 #position-button {
@@ -205,4 +208,24 @@ div#shotcuts > img{
 #keyboardTable th {
     background-color: #000000;
     color: #ffffff;
+}
+
+div#tryInfoPanel {
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    top: 80px;
+    right: 20px;
+    width: 200px;
+    height: 300px;
+    padding: 20px;
+    font-size: 15px;
+    border-radius: 9px;
+    background-color: white;
+    border: solid 2px #ffa800;
+}
+
+#tryInfoPanel > p {
+    justify-content: center;
+    padding-bottom: 20px;
 }

@@ -28,6 +28,12 @@ const AccountMenu = (): React.ReactElement => {
         setAnchorEl(null);
     };
 
+    const handleLogout = (event: MouseEvent) => {
+        event.preventDefault();
+        const elem = document.getElementById('logoutFrom') as HTMLFormElement;
+        elem.submit();
+    };
+
     const account = fetchAccount();
     return (
         <span>
@@ -77,7 +83,8 @@ const AccountMenu = (): React.ReactElement => {
                 </MenuItem>
 
                 <MenuItem onClick={handleClose}>
-                    <Link color="textSecondary" href="/c/logout">
+                    <form action="/c/logout" method='POST' id="logoutFrom"></form>
+                    <Link color="textSecondary" href="/c/logout" onClick={(e) => handleLogout(e)}>
                         <ListItemIcon>
                             <ExitToAppOutlined fontSize="small" />
                         </ListItemIcon>
@@ -85,11 +92,13 @@ const AccountMenu = (): React.ReactElement => {
                     </Link>
                 </MenuItem>
             </Menu>
-            {action == 'change-password' && (
-                <ChangePasswordDialog onClose={() => setAction(undefined)} />
-            )}
+            {
+                action == 'change-password' && (
+                    <ChangePasswordDialog onClose={() => setAction(undefined)} />
+                )
+            }
             {action == 'account-info' && <AccountInfoDialog onClose={() => setAction(undefined)} />}
-        </span>
+        </span >
     );
 };
 

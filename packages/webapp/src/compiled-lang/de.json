@@ -11,6 +11,12 @@
       "value": "Akzeptieren"
     }
   ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "Konto löschen"
+    }
+  ],
   "accountinfo.email": [
     {
       "type": 0,
@@ -422,7 +428,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Sie können FreeMind 1.0.1- und WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+      "value": "Sie können WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
     }
   ],
   "import.title": [
@@ -507,6 +513,54 @@
     {
       "type": 0,
       "value": "Die Info"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Etikett hinzufügen"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Beschriftungen für Karten bearbeiten:"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Titel des Labels"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Etikettenfarbe ändern"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "gelöscht, einschließlich der Zuordnungen zu allen vorhandenen Karten. Möchtest du fortfahren?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Bestätigen Sie das Löschen des Labels"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Verwenden Sie Labels, um Ihre Karten zu organisieren."
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Etikett hinzufügen"
     }
   ],
   "language.change": [

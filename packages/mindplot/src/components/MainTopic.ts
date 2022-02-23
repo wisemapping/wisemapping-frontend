@@ -28,12 +28,6 @@ import SizeType from './SizeType';
 class MainTopic extends Topic {
   private INNER_RECT_ATTRIBUTES: { stroke: string; };
 
-  /**
-         * @extends mindplot.Topic
-         * @constructs
-         * @param model
-         * @param options
-         */
   constructor(model: NodeModel, options) {
     super(model, options);
     this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
@@ -88,7 +82,6 @@ class MainTopic extends Topic {
     }
   }
 
-  /** */
   disconnect(workspace: Workspace) {
     super.disconnect(workspace);
     const model = this.getModel();

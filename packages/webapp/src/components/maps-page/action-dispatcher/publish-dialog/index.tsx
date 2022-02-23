@@ -12,12 +12,12 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TabContext from '@mui/lab/TabContext';
-import AppBar from '@mui/material/AppBar';
 import TabList from '@mui/lab/TabList';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import Box from '@mui/system/Box';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);
@@ -100,25 +100,25 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
 
                 <div style={!model ? { visibility: 'hidden' } : {}}>
                     <TabContext value={activeTab}>
-                        <AppBar position="static">
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList onChange={handleTabChange}>
-                                <Tab
-                                    label={intl.formatMessage({
-                                        id: 'publish.embedded',
-                                        defaultMessage: 'Embedded',
-                                    })}
-                                    value="1"
-                                />
                                 <Tab
                                     label={intl.formatMessage({
                                         id: 'publish.public-url',
                                         defaultMessage: 'Public URL',
                                     })}
+                                    value="1"
+                                />
+                                <Tab
+                                    label={intl.formatMessage({
+                                        id: 'publish.embedded',
+                                        defaultMessage: 'Embedded',
+                                    })}
                                     value="2"
                                 />
                             </TabList>
-                        </AppBar>
-                        <TabPanel value="1">
+                        </Box>
+                        <TabPanel value="2">
                             <Typography variant="subtitle2">
                                 <FormattedMessage
                                     id="publish.embedded-msg"
@@ -133,7 +133,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                 defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
                             />
                         </TabPanel>
-                        <TabPanel value="2">
+                        <TabPanel value="1">
                             <Typography variant="subtitle2">
                                 <FormattedMessage
                                     id="publish.public-url-msg"

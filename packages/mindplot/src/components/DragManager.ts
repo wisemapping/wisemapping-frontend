@@ -18,6 +18,7 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import DragTopic from './DragTopic';
 import EventBusDispatcher from './layout/EventBusDispatcher';
+import Topic from './Topic';
 import Workspace from './Workspace';
 
 class DragManager {
@@ -44,7 +45,7 @@ class DragManager {
     DragTopic.init(this._workspace);
   }
 
-  add(node) {
+  add(topic: Topic) {
     // Add behaviour ...
     const workspace = this._workspace;
     const screen = workspace.getScreenManager();
@@ -57,7 +58,7 @@ class DragManager {
 
         // Set initial position.
         const layoutManager = me._eventDispatcher.getLayoutManager();
-        const dragNode = node.createDragNode(layoutManager);
+        const dragNode = topic.createDragNode(layoutManager);
 
         // Register mouse move listener ...
         const mouseMoveListener = dragManager._buildMouseMoveListener(
@@ -67,7 +68,7 @@ class DragManager {
 
         // Register mouse up listeners ...
         const mouseUpListener = dragManager._buildMouseUpListener(
-          workspace, node, dragNode, dragManager,
+          workspace, topic, dragNode, dragManager,
         );
         screen.addEvent('mouseup', mouseUpListener);
 
@@ -75,7 +76,7 @@ class DragManager {
         window.document.body.style.cursor = 'move';
       }
     };
-    node.addEvent('mousedown', mouseDownListener);
+    topic.addEvent('mousedown', mouseDownListener);
   }
 
   remove() {
@@ -114,10 +115,10 @@ class DragManager {
     return result;
   }
 
-  protected _buildMouseUpListener(workspace: Workspace, node, dragNode, dragManager: DragManager) {
+  protected _buildMouseUpListener(workspace: Workspace, topic: Topic, dragNode, dragManager: DragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
-    const result = (event) => {
+    const result = (event: Event) => {
       $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
       // Remove all the events.
@@ -154,7 +155,7 @@ class DragManager {
      *  - dragging
      *  - enddragging
      */
-  addEvent(type, listener) {
+  addEvent(type: string, listener) {
     this._listeners[type] = listener;
   }
 }

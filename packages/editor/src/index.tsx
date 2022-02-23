@@ -1,48 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Toolbar, { ToolbarActionType } from './components/toolbar';
 import Footer from './components/footer';
 import { IntlProvider } from 'react-intl';
 import {
     $notify,
     buildDesigner,
-    LocalStorageManager,
     PersistenceManager,
-    RESTPersistenceManager,
     DesignerOptionsBuilder,
-    Designer
+    Designer,
+    DesignerKeyboard,
 } from '@wisemapping/mindplot';
 import FR from './compiled-lang/fr.json';
 import ES from './compiled-lang/es.json';
 import EN from './compiled-lang/en.json';
 import DE from './compiled-lang/de.json';
+import './global-styled.css';
+import { EditorModeType } from '@wisemapping/mindplot/src/components/DesignerOptionsBuilder';
 
 
 declare global {
-    var memoryPersistence: boolean;
-    var readOnly: boolean;
-    var lockTimestamp: string;
-    var lockSession: string;
-    var historyId: string;
-    var isAuth: boolean;
-    var mapId: number;
-    var userOptions: { zoom: string | number } | null;
-    var locale: string;
-    var mindmapLocked: boolean;
-    var mindmapLockedMsg: string;
-    var mapTitle: string;
-
     // used in mindplot
     var designer: Designer;
     var accountEmail: string;
 }
 
-export type EditorPropsType = {
-    initCallback?: (locale: string) => void;
-    mapId?: number;
-    isTryMode: boolean;
-    readOnlyMode: boolean;
-    locale?: string;
+export type EditorOptions = {
+    mode: EditorModeType,
+    locale: string,
+    zoom?: number,
+    locked?: boolean,
+    lockedMsg?: string;
+    mapTitle: string;
+    enableKeyboardEvents: boolean;
+}
+
+export type EditorProps = {
+    mapId: string;
+    options: EditorOptions;
     onAction: (action: ToolbarActionType) => void;
+    persistenceManager: PersistenceManager;
+    initCallback?: (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager) => void;
 };
 
 const loadLocaleData = (locale: string) => {
@@ -60,76 +57,59 @@ const loadLocaleData = (locale: string) => {
     }
 }
 
-const initMindplot = (locale: string) => {
+const defaultCallback = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager) => {
     // Change page title ...
-    document.title = `${global.mapTitle} | WiseMapping `;
+    document.title = `${options.mapTitle} | WiseMapping `;
 
-    // Configure persistence manager ...
-    let persistence: PersistenceManager;
-    if (!global.memoryPersistence && !global.readOnly) {
-        persistence = new RESTPersistenceManager({
-            documentUrl: '/c/restful/maps/{id}/document',
-            revertUrl: '/c/restful/maps/{id}/history/latest',
-            lockUrl: '/c/restful/maps/{id}/lock',
-            timestamp: global.lockTimestamp,
-            session: global.lockSession,
-        });
-    } else {
-        persistence = new LocalStorageManager(
-            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
-            }`,
-            true
-        );
-    }
-
-    const params = new URLSearchParams(window.location.search.substring(1));
-
-    const zoomParam = Number.parseFloat(params.get('zoom'));
-    const options = DesignerOptionsBuilder.buildOptions({
-        persistenceManager: persistence,
-        readOnly: Boolean(global.readOnly || false),
-        mapId: String(global.mapId),
+    const buildOptions = DesignerOptionsBuilder.buildOptions({
+        persistenceManager,
+        mode: options.mode,
+        mapId: mapId,
         container: 'mindplot',
-        zoom:
-            zoomParam ||
-            (global.userOptions?.zoom != undefined
-                ? Number.parseFloat(global.userOptions.zoom as string)
-                : 0.8),
-        locale: locale,
+        zoom: options.zoom,
+        locale: options.locale,
     });
 
     // Build designer ...
-    const designer = buildDesigner(options);
+    const designer = buildDesigner(buildOptions);
 
     // Load map from XML file persisted on disk...
     const instance = PersistenceManager.getInstance();
-    const mindmap = instance.load(String(global.mapId));
+    const mindmap = instance.load(mapId);
     designer.loadMap(mindmap);
 
-    if (global.mindmapLocked) {
-        $notify(global.mindmapLockedMsg);
+    if (options.locked) {
+        $notify(options.lockedMsg);
     }
 };
 
 const Editor = ({
-    initCallback = initMindplot,
     mapId,
-    isTryMode: isTryMode,
-    locale = 'en',
+    options,
+    persistenceManager,
+    initCallback = defaultCallback,
     onAction,
-}: EditorPropsType): React.ReactElement => {
-    React.useEffect(() => {
-        initCallback(locale);
+}: EditorProps) => {
+    useEffect(() => {
+        initCallback(mapId, options, persistenceManager);
     }, []);
 
+    useEffect(() => {
+        if (options.enableKeyboardEvents) {
+            DesignerKeyboard.resume();
+        } else {
+            DesignerKeyboard.pause();
+        }
+    }, [options.enableKeyboardEvents]);
+
     return (
-        <IntlProvider locale={locale} messages={loadLocaleData(locale)}>
+        <IntlProvider locale={options.locale} messages={loadLocaleData(options.locale)}>
             <Toolbar
-                isTryMode={isTryMode}
+                isTryMode={options.mode === 'showcase'}
                 onAction={onAction}
             />
             <div id="mindplot"></div>
-            <Footer showTryPanel={isTryMode} />
+            <Footer showTryPanel={options.mode === 'showcase'} />
         </IntlProvider>
     );
 }

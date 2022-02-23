@@ -30,6 +30,10 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)$/,
                 type: 'asset/inline',
             },
+            {
+                test: /\.wxml$/i,
+                type: 'asset/source',
+            },
         ],
     },
     optimization: {

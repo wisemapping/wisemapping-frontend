@@ -20,7 +20,7 @@ import { Arrow, Point, ElementClass } from '@wisemapping/web2d';
 import ConnectionLine from './ConnectionLine';
 import ControlPoint from './ControlPoint';
 import RelationshipModel from './model/RelationshipModel';
-import NodeGraph from './NodeGraph';
+import Topic from './Topic';
 import Shape from './util/Shape';
 
 class Relationship extends ConnectionLine {
@@ -38,11 +38,11 @@ class Relationship extends ConnectionLine {
 
   private _endArrow: Arrow;
 
-  private _controlPointControllerListener: any;
+  private _controlPointControllerListener;
 
   private _showStartArrow: Arrow;
 
-  constructor(sourceNode: NodeGraph, targetNode: NodeGraph, model: RelationshipModel) {
+  constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
     $assert(sourceNode, 'sourceNode can not be null');
     $assert(targetNode, 'targetNode can not be null');
 
@@ -349,7 +349,7 @@ class Relationship extends ConnectionLine {
     return this._model.getId();
   }
 
-  fireEvent(type: string, event: any): void {
+  fireEvent(type: string, event): void {
     const elem = this._line2d;
     elem.trigger(type, event);
   }

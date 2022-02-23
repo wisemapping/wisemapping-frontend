@@ -18,17 +18,21 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import NodeModel from '../model/NodeModel';
+import RelationshipModel from '../model/RelationshipModel';
+import Relationship from '../Relationship';
+import Topic from '../Topic';
 
 class DeleteCommand extends Command {
   private _relIds: number[];
 
   private _topicIds: number[];
 
-  private _deletedTopicModels: any[];
+  private _deletedTopicModels: NodeModel[];
 
-  private _deletedRelModel: any[];
+  private _deletedRelModel: RelationshipModel[];
 
-  private _parentTopicIds: any[];
+  private _parentTopicIds: number[];
 
   constructor(topicIds: number[], relIds: number[]) {
     $assert($defined(relIds), 'topicIds can not be null');
@@ -101,11 +105,11 @@ class DeleteCommand extends Command {
 
     // Do they need to be connected ?
     this._deletedTopicModels.forEach(((topicModel, index) => {
-      const topics = commandContext.findTopics(topicModel.getId());
+      const topics = commandContext.findTopics([topicModel.getId()]);
 
       const parentId = this._parentTopicIds[index];
       if (parentId) {
-        const parentTopics = commandContext.findTopics(parentId);
+        const parentTopics = commandContext.findTopics([parentId]);
         commandContext.connect(topics[0], parentTopics[0]);
       }
     }));
@@ -117,14 +121,14 @@ class DeleteCommand extends Command {
 
     // Finally display the topics ...
     this._deletedTopicModels.forEach((topicModel) => {
-      const topics = commandContext.findTopics(topicModel.getId());
+      const topics = commandContext.findTopics([topicModel.getId()]);
       topics[0].setBranchVisibility(true);
     });
 
     // Focus on last recovered topic ..
     if (this._deletedTopicModels.length > 0) {
       const firstTopic = this._deletedTopicModels[0];
-      const topic = commandContext.findTopics(firstTopic.getId())[0];
+      const topic = commandContext.findTopics([firstTopic.getId()])[0];
       topic.setOnFocus(true);
     }
 
@@ -133,11 +137,11 @@ class DeleteCommand extends Command {
     this._deletedRelModel = [];
   }
 
-  _filterChildren(topicIds, commandContext) {
+  private _filterChildren(topicIds: number[], commandContext: CommandContext) {
     const topics = commandContext.findTopics(topicIds);
 
     const result = [];
-    topics.forEach((topic) => {
+    topics.forEach((topic: Topic) => {
       let parent = topic.getParent();
       let found = false;
       while (parent != null && !found) {
@@ -156,13 +160,16 @@ class DeleteCommand extends Command {
     return result;
   }
 
-  _collectInDepthRelationships(topic) {
+  private _collectInDepthRelationships(topic: Topic): Relationship[] {
     let result = [];
     result = result.concat(topic.getRelationships());
 
     const children = topic.getChildren();
-    const rels = children.map(((t) => this._collectInDepthRelationships(t)));
-    result = result.concat(rels.flat());
+    const rels: (Relationship[])[] = children
+      .map(((t: Topic) => this._collectInDepthRelationships(t)));
+
+    // flatten and concact
+    result = result.concat(([].concat(...rels)));
 
     if (result.length > 0) {
       // Filter for unique ...

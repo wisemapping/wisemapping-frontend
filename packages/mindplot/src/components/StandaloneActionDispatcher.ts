@@ -79,11 +79,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert($defined(topicId), 'topicsId can not be null');
     $assert($defined(position), 'position can not be null');
 
-    const commandFunc = (topic, value) => {
+    const commandFunc = (topic: Topic, pos: Point) => {
       const result = topic.getPosition();
       EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
         node: topic.getModel(),
-        position: value,
+        position: pos,
       });
       return result;
     };
@@ -114,7 +114,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   changeTextToTopic(topicsIds: number[], text: string) {
     $assert($defined(topicsIds), 'topicsIds can not be null');
 
-    const commandFunc = (topic: Topic, value: object) => {
+    const commandFunc = (topic: Topic, value: string) => {
       const result = topic.getText();
       topic.setText(value);
       return result;
@@ -163,7 +163,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'color can not be null');
 
-    const commandFunc = (topic, commandColor) => {
+    const commandFunc = (topic: Topic, commandColor: string) => {
       const result = topic.getBackgroundColor();
       topic.setBackgroundColor(commandColor);
       return result;
@@ -179,7 +179,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(color, 'topicIds can not be null');
 
-    const commandFunc = (topic, commandColor) => {
+    const commandFunc = (topic: Topic, commandColor: string) => {
       const result = topic.getBorderColor();
       topic.setBorderColor(commandColor);
       return result;
@@ -195,11 +195,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicIds can not be null');
     $assert(size, 'size can not be null');
 
-    const commandFunc = (topic, commandSize) => {
+    const commandFunc = (topic: Topic, commandSize: number) => {
       const result = topic.getFontSize();
       topic.setFontSize(commandSize, true);
 
-      topic._adjustShapes();
+      topic.adjustShapes();
       return result;
     };
 
@@ -212,9 +212,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     $assert(topicsIds, 'topicsIds can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
-    const commandFunc = (topic, commandShapeType) => {
+    const commandFunc = (topic: Topic, commandShapeType: string) => {
       const result = topic.getShapeType();
-      topic.setShapeType(commandShapeType, true);
+      topic.setShapeType(commandShapeType);
       return result;
     };
 
@@ -226,12 +226,12 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   changeFontWeightToTopic(topicsIds: number[]) {
     $assert(topicsIds, 'topicsIds can not be null');
 
-    const commandFunc = (topic) => {
+    const commandFunc = (topic: Topic) => {
       const result = topic.getFontWeight();
       const weight = result === 'bold' ? 'normal' : 'bold';
       topic.setFontWeight(weight, true);
 
-      topic._adjustShapes();
+      topic.adjustShapes();
       return result;
     };
 

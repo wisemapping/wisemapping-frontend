@@ -22,11 +22,13 @@ import PersistenceManager from './components/PersistenceManager';
 import Designer from './components/Designer';
 import LocalStorageManager from './components/LocalStorageManager';
 import RESTPersistenceManager from './components/RestPersistenceManager';
+import MockPersistenceManager from './components/MockPersistenceManager';
 import Menu from './components/widget/Menu';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 import ImageExporterFactory from './components/export/ImageExporterFactory';
 import TextExporterFactory from './components/export/TextExporterFactory';
 import Exporter from './components/export/Exporter';
+import DesignerKeyboard from './components/DesignerKeyboard';
 
 import {
   buildDesigner,
@@ -47,6 +49,7 @@ export {
   DesignerBuilder,
   PersistenceManager,
   RESTPersistenceManager,
+  MockPersistenceManager,
   LocalStorageManager,
   DesignerOptionsBuilder,
   buildDesigner,
@@ -54,4 +57,5 @@ export {
   ImageExporterFactory,
   Exporter,
   $notify,
+  DesignerKeyboard,
 };

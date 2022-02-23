@@ -18,7 +18,7 @@
 import $ from 'jquery';
 
 class Keyboard {
-  addShortcut(shortcuts, callback) {
+  addShortcut(shortcuts: string[] | string, callback) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
     shortcutsArray.forEach((shortcut) => {
       $(document).bind('keydown', shortcut, callback);

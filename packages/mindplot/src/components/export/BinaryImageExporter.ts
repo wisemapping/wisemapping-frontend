@@ -15,26 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from '../..';
 import Exporter from './Exporter';
 import SVGExporter from './SVGExporter';
 /**
  * Based on https://mybyways.com/blog/convert-svg-to-png-using-your-browser
  */
 class BinaryImageExporter extends Exporter {
-  svgElement: Element;
+  private svgElement: Element;
 
-  mindmap: Mindmap;
+  private width: number;
 
-  width: number;
+  private height: number;
 
-  height: number;
+  private adjustToFit: boolean;
 
-  constructor(mindmap: Mindmap, svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg') {
-    super(imgFormat.split['/'][0], imgFormat);
+  constructor(svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg', adjustToFit = true) {
+    super(imgFormat.split('/')[0], imgFormat);
     this.svgElement = svgElement;
-    this.mindmap = mindmap;
-
+    this.adjustToFit = adjustToFit;
     this.width = width;
     this.height = height;
   }
@@ -43,37 +41,52 @@ class BinaryImageExporter extends Exporter {
     throw new Error('Images can not be exporeted');
   }
 
-  async exportAndEndcode(): Promise<string> {
-    const svgExporter = new SVGExporter(this.svgElement);
-    const svgUrl = await svgExporter.exportAndEncode();
+  exportAndEncode(): Promise<string> {
+    const svgExporter = new SVGExporter(this.svgElement, this.adjustToFit);
+    const svgUrl = svgExporter.exportAndEncode();
+    return svgUrl.then((value: string) => {
+      // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
+      const dpr = (window.devicePixelRatio || 1) * 2;
 
-    // Get the device pixel ratio, falling back to 1. But, I will double the resolution to look nicer.
-    const dpr = (window.devicePixelRatio || 1) * 2;
+      // Create canvas size ...
+      const canvas = document.createElement('canvas');
+      let width: number;
+      let height: number;
+      if (this.adjustToFit) {
+        // Size must match with SVG image size ...
+        const size = svgExporter.getImgSize();
+        width = (size.width * dpr);
+        height = (size.height * dpr);
+      } else {
+        // Use screensize as size ..
+        width = (this.width * dpr);
+        height = (this.height * dpr);
+      }
 
-    // Create canvas ...
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('width', (this.width * dpr).toString());
-    canvas.setAttribute('height', (this.height * dpr).toString());
+      console.log(`Export size: ${width}:${height}`);
+      canvas.setAttribute('width', width.toFixed(0));
+      canvas.setAttribute('height', height.toFixed(0));
 
-    // Render the image and wait for the response ...
-    const img = new Image();
-    const result = new Promise<string>((resolve, reject) => {
-      img.onload = () => {
-        const ctx = canvas.getContext('2d');
-        // Scale for retina ...
-        ctx.scale(dpr, dpr);
-        ctx.drawImage(img, 0, 0);
+      // Render the image and wait for the response ...
+      const img = new Image();
+      const result = new Promise<string>((resolve) => {
+        img.onload = () => {
+          const ctx = canvas.getContext('2d');
+          // Scale for retina ...
+          ctx.scale(dpr, dpr);
+          ctx.drawImage(img, 0, 0);
 
-        const imgDataUri = canvas
-          .toDataURL(this.getContentType())
-          .replace('image/png', 'octet/stream');
+          const imgDataUri = canvas
+            .toDataURL(this.getContentType())
+            .replace('image/png', 'octet/stream');
 
-        URL.revokeObjectURL(svgUrl);
-        resolve(imgDataUri);
-      };
+          URL.revokeObjectURL(value);
+          resolve(imgDataUri);
+        };
+      });
+      img.src = value;
+      return result;
     });
-    img.src = svgUrl;
-    return result;
   }
 }
 export default BinaryImageExporter;

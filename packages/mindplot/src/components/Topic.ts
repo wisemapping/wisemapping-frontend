@@ -44,6 +44,8 @@ import LayoutManager from './layout/LayoutManager';
 import NoteModel from './model/NoteModel';
 import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
+import FeatureModel from './model/FeatureModel';
+import Icon from './Icon';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -104,15 +106,10 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  /**
-     * @param {String} type the topic shape type
-     * @see {@link mindplot.model.INodeModel}
-     */
-  setShapeType(type) {
+  setShapeType(type: string): void {
     this._setShapeType(type, true);
   }
 
-  /** @return {mindplot.Topic} parent topic */
   getParent(): Topic | null {
     return this._parent;
   }
@@ -161,8 +158,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** @return {String} topic shape type */
-  getShapeType() {
+  getShapeType(): string {
     const model = this.getModel();
     let result = model.getShapeType();
     if (!$defined(result)) {
@@ -171,7 +167,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  private _removeInnerShape() {
+  private _removeInnerShape(): ElementClass {
     const group = this.get2DElement();
     const innerShape = this.getInnerShape();
     group.removeChild(innerShape);
@@ -308,7 +304,7 @@ abstract class Topic extends NodeGraph {
     return this._text;
   }
 
-  getOrBuildIconGroup() {
+  getOrBuildIconGroup(): Group {
     if (!$defined(this._iconsGroup)) {
       this._iconsGroup = this._buildIconGroup();
       const group = this.get2DElement();
@@ -346,7 +342,7 @@ abstract class Topic extends NodeGraph {
      * @param {mindplot.model.FeatureModel} featureModel
      * @return {mindplot.Icon} the icon corresponding to the feature model
      */
-  addFeature(featureModel) {
+  addFeature(featureModel: FeatureModel): Icon {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
 
@@ -365,13 +361,13 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  findFeatureById(id) {
+  findFeatureById(id: number) {
     const model = this.getModel();
     return model.findFeatureById(id);
   }
 
   /** */
-  removeFeature(featureModel) {
+  removeFeature(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel could not be null');
 
     // Removing the icon from MODEL
@@ -387,21 +383,21 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  addRelationship(relationship) {
+  addRelationship(relationship: Relationship) {
     this._relationships.push(relationship);
   }
 
   /** */
-  deleteRelationship(relationship) {
+  deleteRelationship(relationship: Rect) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
   /** */
-  getRelationships() {
+  getRelationships(): Relationship[] {
     return this._relationships;
   }
 
-  _buildTextShape(readOnly): Text {
+  protected _buildTextShape(readOnly: boolean): Text {
     const result = new Text();
     const family = this.getFontFamily();
     const size = this.getFontSize();
@@ -425,7 +421,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setFontFamily(value, updateModel) {
+  setFontFamily(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setFontName(value);
     if ($defined(updateModel) && updateModel) {
@@ -436,7 +432,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setFontSize(value, updateModel) {
+  setFontSize(value: number, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setSize(value);
 
@@ -534,7 +530,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  _setText(text, updateModel) {
+  _setText(text: string, updateModel: boolean) {
     const textShape = this.getTextShape();
     textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
 
@@ -545,7 +541,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setText(text) {
+  setText(text: string) {
     // Avoid empty nodes ...
     if (!text || $.trim(text).length === 0) {
       this._setText(null, true);
@@ -557,7 +553,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  getText() {
+  getText(): string {
     const model = this.getModel();
     let result = model.getText();
     if (!$defined(result)) {
@@ -567,11 +563,11 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setBackgroundColor(color) {
+  setBackgroundColor(color: string) {
     this._setBackgroundColor(color, true);
   }
 
-  _setBackgroundColor(color, updateModel) {
+  _setBackgroundColor(color: string, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setFill(color);
 
@@ -587,7 +583,7 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  getBackgroundColor() {
+  getBackgroundColor(): string {
     const model = this.getModel();
     let result = model.getBackgroundColor();
     if (!$defined(result)) {
@@ -597,11 +593,11 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setBorderColor(color) {
+  setBorderColor(color: string) {
     this._setBorderColor(color, true);
   }
 
-  _setBorderColor(color, updateModel) {
+  _setBorderColor(color: string, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setAttribute('strokeColor', color);
 
@@ -1016,6 +1012,10 @@ abstract class Topic extends NodeGraph {
       }
     }
 
+    // Hide inner shape ...
+    this.getInnerShape().setVisibility(value);
+
+    // Hide text shape ...
     const textShape = this.getTextShape();
     textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false);
   }
@@ -1058,7 +1058,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  setSize(size: SizeType, force: boolean): void {
+  setSize(size: SizeType, force?: boolean): void {
     $assert(size, 'size can not be null');
     $assert($defined(size.width), 'size seem not to be a valid element');
     const roundedSize = {
@@ -1272,7 +1272,7 @@ abstract class Topic extends NodeGraph {
     }
 
     // If a drag node is create for it, let's hide the editor.
-    this._getTopicEventDispatcher().close();
+    this._getTopicEventDispatcher().close(false);
 
     return result;
   }
@@ -1296,7 +1296,7 @@ abstract class Topic extends NodeGraph {
         const topicHeight = Math.max(iconHeight, textHeight) + padding * 2;
         const textIconSpacing = Math.round(fontHeight / 4);
         const iconGroupWith = iconGroup.getSize().width;
-        const topicWith = iconGroupWith + textIconSpacing + textWidth + padding * 2;
+        const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
         this.setSize({
           width: topicWith,
@@ -1334,6 +1334,10 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
+  abstract workoutOutgoingConnectionPoint(position: Point): Point;
+
+  abstract workoutIncomingConnectionPoint(position: Point): Point;
+
   isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();
     if (!result) {
@@ -1349,7 +1353,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  isCentralTopic() {
+  isCentralTopic(): boolean {
     return this.getModel().getType() === 'CentralTopic';
   }
 }
