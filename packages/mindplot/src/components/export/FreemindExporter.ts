@@ -36,14 +36,6 @@ class FreemindExporter extends Exporter {
     this.mindmap = mindmap;
   }
 
-  exportAndEncode(): Promise<string> {
-    throw new Error('Method not implemented.');
-  }
-
-  getContentType(): string {
-    throw new Error('Method not implemented.');
-  }
-
   static {
     this.wisweToFreeFontSize.set(6, 10);
     this.wisweToFreeFontSize.set(8, 12);
@@ -55,7 +47,7 @@ class FreemindExporter extends Exporter {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlStr, mimeType);
 
-    // FIXME: Fix error "unclosed tag: p" when exporting bug2 and enc
+    // FIXME: Fix error "unclosed tag: p" when exporting bug3 and enc
     // Is there any parsing error ?.
     /*
     if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
