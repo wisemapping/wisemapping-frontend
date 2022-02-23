@@ -20,7 +20,6 @@ import LanguageMenu from './language-menu';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItem from '@mui/material/ListItem';
 
 import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
 import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
@@ -34,6 +33,7 @@ import StarTwoTone from '@mui/icons-material/StarTwoTone';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 
@@ -41,6 +41,7 @@ import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 import ReactGA from 'react-ga';
+import { withStyles } from '@mui/styles';
 
 
 export type Filter = GenericFilter | LabelFilter;
@@ -283,6 +284,27 @@ interface ListItemProps {
     onDelete?: (id: number) => void;
 }
 
+// https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
+const CustomListItem = withStyles({
+    root: {
+      "&$selected": {
+        backgroundColor: "rgb(210, 140, 5)",
+        color: "white",
+        "& .MuiListItemIcon-root": {
+          color: "white"
+        }
+      },
+      "&$selected:hover": {
+        backgroundColor: "rgb(210, 140, 5)",
+        color: "white",
+        "& .MuiListItemIcon-root": {
+          color: "white"
+        }
+      },
+    },
+    selected: {}
+})(ListItemButton);
+
 const StyleListItem = (props: ListItemProps) => {
     const icon = props.icon;
     const label = props.label;
@@ -295,7 +317,6 @@ const StyleListItem = (props: ListItemProps) => {
         activeFilter.type == filter.type &&
         (activeFilter.type != 'label' ||
             (activeFilter as LabelFilter).label == (filter as LabelFilter).label);
-
     const handleOnClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, filter: Filter) => {
         event.stopPropagation();
         onClick(filter);
@@ -313,7 +334,7 @@ const StyleListItem = (props: ListItemProps) => {
     };
 
     return (
-        <ListItem button selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
+        <CustomListItem selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
             <ListItemIcon>{icon}</ListItemIcon>
             <ListItemText style={{ color: 'white' }} primary={label} />
             {filter.type == 'label' && (
@@ -327,7 +348,7 @@ const StyleListItem = (props: ListItemProps) => {
                     </IconButton>
                 </ListItemSecondaryAction>
             )}
-        </ListItem>
+        </CustomListItem>
     );
 };
 

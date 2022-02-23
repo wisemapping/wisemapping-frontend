@@ -113,6 +113,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         return perm.name ? `${perm.name}<${perm.email}>` : perm.email;
     };
 
+    // very basic email validation, just make sure the basic syntax is fine
+    const isValid = model.emails.split(',').every(str => /\S+@\S+\.\S+/.test((str || '').trim()));
+
     return (
         <div>
             <BaseDialog
@@ -183,6 +186,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
                         variant="contained"
                         disableElevation={true}
                         onClick={handleOnAddClick}
+                        disabled={!isValid}
                     >
                         <FormattedMessage id="share.add-button" defaultMessage="Add" />
                     </Button>
