@@ -41,17 +41,17 @@ class MultilineTextEditor extends Events {
       .css({
         display: 'none',
         zIndex: '8',
-        overflow: 'hidden',
         border: '0 none',
       });
 
     const textareaElem = $('<textarea tabindex="-1" value="" wrap="off" ></textarea>')
       .css({
         border: '1px gray dashed',
-        background: 'rgba(98, 135, 167, .3)',
+        background: 'rgba(98, 135, 167, .4)',
         outline: '0 none',
         resize: 'none',
         overflow: 'hidden',
+        padding: '2px 0px 2px 4px',
       });
 
     result.append(textareaElem);
@@ -120,17 +120,15 @@ class MultilineTextEditor extends Events {
 
       const lines = this._getTextAreaText().split('\n');
       let maxLineLength = 1;
-      lines.forEach((line) => {
-        if (maxLineLength < line.length) {
-          maxLineLength = line.length;
-        }
+      lines.forEach((line: string) => {
+        maxLineLength = Math.max(line.length, maxLineLength);
       });
 
       textElem.attr('cols', maxLineLength);
       textElem.attr('rows', lines.length);
 
       this._containerElem.css({
-        width: `${maxLineLength + 3}em`,
+        width: `${maxLineLength + 2}em`,
         height: textElem.height(),
       });
     }
@@ -187,8 +185,11 @@ class MultilineTextEditor extends Events {
 
     this._containerElem.css('display', 'block');
 
-    const shapePosition = textShape.getNativePosition();
-    this._containerElem.offset(shapePosition);
+    let { top, left } = textShape.getNativePosition();
+    // Adjust padding top position ...
+    top -= 4;
+    left -= 4;
+    this._containerElem.offset({ top, left });
 
     // Set editor's initial text ...
     const text = $defined(defaultText) ? defaultText : topic.getText();
