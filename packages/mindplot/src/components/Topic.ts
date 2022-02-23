@@ -1012,6 +1012,10 @@ abstract class Topic extends NodeGraph {
       }
     }
 
+    // Hide inner shape ...
+    this.getInnerShape().setVisibility(value);
+
+    // Hide text shape ...
     const textShape = this.getTextShape();
     textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false);
   }
