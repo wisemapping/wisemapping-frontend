@@ -1,0 +1,16 @@
+/* 
+    These are patches or hacks to avoid boostrap interfering with Mui styles
+    This file is meant to be removed when removing bootstrap
+*/ 
+/* 
+/* bootstrap modal */
+
+.modal-backdrop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}

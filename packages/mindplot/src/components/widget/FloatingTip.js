@@ -27,7 +27,7 @@ const defaultOptions = {
   title: '',
   content: '',
   delay: 0,
-  container: false,
+  container: '#mindplot',
   destroyOnExit: false,
 };
 

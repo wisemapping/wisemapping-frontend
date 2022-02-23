@@ -108,7 +108,7 @@ const Editor = ({
                 isTryMode={options.mode === 'showcase'}
                 onAction={onAction}
             />
-            <div id="mindplot"></div>
+            <div id="mindplot" className="wise-editor"></div>
             <Footer showTryPanel={options.mode === 'showcase'} />
         </IntlProvider>
     );
