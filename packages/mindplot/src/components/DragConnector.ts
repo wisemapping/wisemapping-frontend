@@ -16,18 +16,28 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { Point } from '@wisemapping/web2d';
+import DesignerModel from './DesignerModel';
+import DragTopic from './DragTopic';
+import NodeGraph from './NodeGraph';
+import SizeType from './SizeType';
+import Topic from './Topic';
+import Workspace from './Workspace';
 
 class DragConnector {
-  constructor(designerModel, workspace) {
+  private _designerModel: DesignerModel;
+
+  private _workspace: Workspace;
+
+  constructor(designerModel: DesignerModel, workspace: Workspace) {
     $assert(designerModel, 'designerModel can not be null');
     $assert(workspace, 'workspace can not be null');
 
-    // this._layoutManager = layoutManager;
     this._designerModel = designerModel;
     this._workspace = workspace;
   }
 
-  checkConnection(dragTopic) {
+  checkConnection(dragTopic: DragTopic): void {
     // Must be disconnected from their current connection ?.
     const candidates = this._searchConnectionCandidates(dragTopic);
     const currentConnection = dragTopic.getConnectedToTopic();
@@ -42,12 +52,13 @@ class DragConnector {
     }
   }
 
-  _searchConnectionCandidates(dragTopic) {
+  private _searchConnectionCandidates(dragTopic: DragTopic): Topic[] {
     let topics = this._designerModel.getTopics();
     const draggedNode = dragTopic.getDraggedTopic();
 
     // Drag node connects to the border ...
-    const dragTopicWidth = dragTopic.getSize ? dragTopic.getSize().width : 0; // Hack...
+    // const dragTopicWidth = dragTopic.getSize ? dragTopic.getSize().width : 0; // Hack...
+    const dragTopicWidth = 0;
     const xMouseGap = dragTopic.getPosition().x > 0 ? 0 : dragTopicWidth;
     const sPos = { x: dragTopic.getPosition().x - xMouseGap, y: dragTopic.getPosition().y };
 
@@ -56,7 +67,7 @@ class DragConnector {
     //  - Exclude dragTopic pivot
     //  - Nodes that are collapsed
     //  - It's not part of the branch dragged itself
-    topics = topics.filter((topic) => {
+    topics = topics.filter((topic: Topic) => {
       let result = draggedNode !== topic;
       result = result && topic !== draggedNode;
       result = result && !topic.areChildrenShrunken() && !topic.isCollapsed();
@@ -67,7 +78,7 @@ class DragConnector {
     // Filter all the nodes that are outside the vertical boundary:
     //  * The node is to out of the x scope
     //  * The x distance greater the vertical tolerated distance
-    topics = topics.filter((topic) => {
+    topics = topics.filter((topic: Topic) => {
       const tpos = topic.getPosition();
       // Center topic has different alignment than the rest of the nodes.
       // That's why i need to divide it by two...
@@ -95,17 +106,17 @@ class DragConnector {
     return topics;
   }
 
-  _proximityWeight(isAligned, target, sPos, currentConnection) {
+  private _proximityWeight(isAligned: boolean, target: Topic, sPos: Point, currentConnection: Topic): number {
     const tPos = target.getPosition();
     return (isAligned ? 0 : 200) + Math.abs(tPos.x - sPos.x)
       + Math.abs(tPos.y - sPos.y) + (currentConnection === target ? 0 : 100);
   }
 
-  _isVerticallyAligned(targetSize, targetPosition, sourcePosition) {
+  private _isVerticallyAligned(targetSize: SizeType, targetPosition: Point, sourcePosition: Point): boolean {
     return Math.abs(sourcePosition.y - targetPosition.y) < targetSize.height / 2;
   }
-}
 
-DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE = 80;
+  static MAX_VERTICAL_CONNECTION_TOLERANCE = 80;
+}
 
 export default DragConnector;
