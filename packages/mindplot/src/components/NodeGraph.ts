@@ -159,7 +159,6 @@ abstract class NodeGraph {
     workspace.removeChild(this);
   }
 
-  /** */
   createDragNode(layoutManager: LayoutManager) {
     const dragShape = this._buildDragShape();
     return new DragTopic(dragShape, this, layoutManager);

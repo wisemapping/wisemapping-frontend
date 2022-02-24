@@ -69,7 +69,7 @@ class Designer extends Events {
 
   private _workspace: Workspace;
 
-  private _eventBussDispatcher: EventBusDispatcher;
+  _eventBussDispatcher: EventBusDispatcher;
 
   private _dragManager: DragManager;
 
@@ -208,14 +208,11 @@ class Designer extends Events {
     });
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
-      dragTopic.updateFreeLayout(event);
-      if (!dragTopic.isFreeLayoutOn()) {
-        // The node is being drag. Is the connection still valid ?
-        dragConnector.checkConnection(dragTopic);
+      // The node is being drag. Is the connection still valid ?
+      dragConnector.checkConnection(dragTopic);
 
-        if (!dragTopic.isVisible() && dragTopic.isConnected()) {
-          dragTopic.setVisibility(true);
-        }
+      if (!dragTopic.isVisible() && dragTopic.isConnected()) {
+        dragTopic.setVisibility(true);
       }
     });
 

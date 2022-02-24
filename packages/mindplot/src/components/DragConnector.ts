@@ -19,7 +19,6 @@ import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import DesignerModel from './DesignerModel';
 import DragTopic from './DragTopic';
-import NodeGraph from './NodeGraph';
 import SizeType from './SizeType';
 import Topic from './Topic';
 import Workspace from './Workspace';

@@ -31,7 +31,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
   // Register load events ...
   designer = new Designer(options, divContainer);
   designer.addEvent('loadSuccess', () => {
-    globalThis.mindmapLoadReady = true;
     console.log('Map loadded successfully');
   });
 
