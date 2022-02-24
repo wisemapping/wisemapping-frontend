@@ -16,13 +16,24 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Point } from '@wisemapping/web2d';
+import { Point, ElementClass } from '@wisemapping/web2d';
 
 import ActionDispatcher from './ActionDispatcher';
 import DragPivot from './DragPivot';
+import LayoutManager from './layout/LayoutManager';
+import NodeGraph from './NodeGraph';
+import Topic from './Topic';
+import Workspace from './Workspace';
 
 class DragTopic {
-  constructor(dragShape, draggedNode, layoutManger) {
+  private _elem2d: ElementClass;
+  private _order: number | null;
+  private _draggedNode: NodeGraph;
+  private _layoutManager: LayoutManager;
+  private _position: any;
+  private _isInWorkspace: boolean;
+  static _dragPivot: any;
+  constructor(dragShape: ElementClass, draggedNode: NodeGraph, layoutManger: LayoutManager) {
     $assert(dragShape, 'Rect can not be null.');
     $assert(draggedNode, 'draggedNode can not be null.');
     $assert(layoutManger, 'layoutManger can not be null.');
@@ -33,26 +44,15 @@ class DragTopic {
     this._layoutManager = layoutManger;
     this._position = new Point();
     this._isInWorkspace = false;
-    this._isFreeLayoutEnabled = false;
   }
 
-  setOrder(order) {
+  setOrder(order: number) {
     this._order = order;
   }
 
-  setPosition(x, y) {
+  setPosition(x: number, y: number) {
     // Update drag shadow position ....
     let position = { x, y };
-    if (this.isFreeLayoutOn() && this.isConnected()) {
-      const { _layoutManager } = this;
-      const par = this.getConnectedToTopic();
-      position = _layoutManager.predict(
-        par.getId(),
-        this._draggedNode.getId(),
-        position,
-        true,
-      ).position;
-    }
     this._position.setValue(position.x, position.y);
 
     // Elements are positioned in the center.
@@ -80,45 +80,35 @@ class DragTopic {
     }
   }
 
-  updateFreeLayout(event) {
-    const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-    const isFreeEnabled = (event.metaKey && isMac) || (event.ctrlKey && !isMac);
-
-    if (this.isFreeLayoutOn() !== isFreeEnabled) {
-      const dragPivot = this._getDragPivot();
-      dragPivot.setVisibility(!isFreeEnabled);
-      this._isFreeLayoutEnabled = isFreeEnabled;
-    }
-  }
-
-  setVisibility(value) {
+  setVisibility(value: boolean) {
     const dragPivot = this._getDragPivot();
     dragPivot.setVisibility(value);
   }
 
-  isVisible() {
+  isVisible(): boolean {
     const dragPivot = this._getDragPivot();
     return dragPivot.isVisible();
   }
 
-  getInnerShape() {
+  getInnerShape(): ElementClass {
     return this._elem2d;
   }
 
-  disconnect(workspace) {
+  disconnect(workspace: Workspace) {
     // Clear connection line ...
     const dragPivot = this._getDragPivot();
     dragPivot.disconnect(workspace);
   }
 
-  connectTo(parent) {
+  connectTo(parent: Topic) {
     $assert(parent, 'Parent connection node can not be null.');
 
     // Where it should be connected ?
 
     // @todo: This is a hack for the access of the editor.
     // It's required to review why this is needed forcing the declaration of a global variable.
-    const predict = designer._eventBussDispatcher._layoutManager.predict(
+
+    const predict = global.designer._eventBussDispatcher._layoutManager.predict(
       parent.getId(),
       this._draggedNode.getId(),
       this.getPosition(),
@@ -133,11 +123,11 @@ class DragTopic {
     this.setOrder(predict.order);
   }
 
-  getDraggedTopic() {
-    return this._draggedNode;
+  getDraggedTopic(): Topic {
+    return this._draggedNode as Topic;
   }
 
-  removeFromWorkspace(workspace) {
+  removeFromWorkspace(workspace: Workspace) {
     if (this._isInWorkspace) {
       // Remove drag shadow.
       workspace.removeChild(this._elem2d);
@@ -151,11 +141,11 @@ class DragTopic {
     }
   }
 
-  isInWorkspace() {
+  isInWorkspace(): boolean {
     return this._isInWorkspace;
   }
 
-  addToWorkspace(workspace) {
+  addToWorkspace(workspace: Workspace) {
     if (!this._isInWorkspace) {
       workspace.append(this._elem2d);
       const dragPivot = this._getDragPivot();
@@ -164,19 +154,19 @@ class DragTopic {
     }
   }
 
-  _getDragPivot() {
+  _getDragPivot(): DragPivot {
     return DragTopic.__getDragPivot();
   }
 
-  getPosition() {
+  getPosition(): Point {
     return this._position;
   }
 
-  isDragTopic() {
+  isDragTopic(): boolean {
     return true;
   }
 
-  applyChanges(workspace) {
+  applyChanges(workspace: Workspace) {
     $assert(workspace, 'workspace can not be null');
 
     const actionDispatcher = ActionDispatcher.getInstance();
@@ -201,33 +191,33 @@ class DragTopic {
     }
   }
 
-  getConnectedToTopic() {
+  getConnectedToTopic(): Topic {
     const dragPivot = this._getDragPivot();
     return dragPivot.getTargetTopic();
   }
 
-  isConnected() {
+  isConnected(): boolean {
     return this.getConnectedToTopic() != null;
   }
 
-  isFreeLayoutOn() {
+  isFreeLayoutOn(): false {
     return false;
   }
+
+  static init(workspace: Workspace) {
+    $assert(workspace, 'workspace can not be null');
+    const pivot = DragTopic.__getDragPivot();
+    workspace.append(pivot);
+  };
+
+  static __getDragPivot() {
+    let result = DragTopic._dragPivot;
+    if (!$defined(result)) {
+      result = new DragPivot();
+      DragTopic._dragPivot = result;
+    }
+    return result;
+  };
 }
-
-DragTopic.init = function init(workspace) {
-  $assert(workspace, 'workspace can not be null');
-  const pivot = DragTopic.__getDragPivot();
-  workspace.append(pivot);
-};
-
-DragTopic.__getDragPivot = function __getDragPivot() {
-  let result = DragTopic._dragPivot;
-  if (!$defined(result)) {
-    result = new DragPivot();
-    DragTopic._dragPivot = result;
-  }
-  return result;
-};
 
 export default DragTopic;

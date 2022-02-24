@@ -17,8 +17,16 @@ export class Locale {
 
 export default abstract class AppI18n {
     public static getUserLocale(): Locale {
-        const account = fetchAccount();
-        return account?.locale ? account.locale : this.getBrowserLocale();
+        // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
+        const isTryPage = window.location.href.endsWith('/try');
+        let result: Locale;
+        if (!isTryPage) {
+            const account = fetchAccount();
+            result = account?.locale ? account.locale : this.getBrowserLocale();
+        } else {
+            result = this.getBrowserLocale();
+        }
+        return result;
     }
 
     public static getBrowserLocale(): Locale {

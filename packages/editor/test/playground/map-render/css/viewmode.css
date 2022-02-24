@@ -1,8 +1,4 @@
 /* Overwrite some styles */
-body {
-    position: inherit;
-}
-
 div#footer {
     width: 100%;
     padding: 20px 30px;

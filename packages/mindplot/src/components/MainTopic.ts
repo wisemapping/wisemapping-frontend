@@ -64,6 +64,11 @@ class MainTopic extends Topic {
       const text = this.getText();
       textShape.setText(text);
       textShape.setOpacity(0.5);
+
+      // Copy text position of the topic element ...
+      const textPosition = this.getTextShape().getPosition();
+      textShape.setPosition(textPosition.x, textPosition.y);
+
       group.append(textShape);
     }
     return group;
