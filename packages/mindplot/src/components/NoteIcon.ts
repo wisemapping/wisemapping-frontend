@@ -55,6 +55,7 @@ class NoteIcon extends Icon {
     }
     this._tip = new FloatingTip($(me.getImage().peer._native), {
       title: $msg('NOTE'),
+      container: 'body',
       // Content can also be a function of the target element!
       content() {
         return me._buildTooltipContent();

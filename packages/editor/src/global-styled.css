@@ -1,8 +1,7 @@
 /********************************************************************************/
 /* Header & Toolbar Styles */
 /********************************************************************************/
-@import "bootstrap-prefix.min.css";
-@import "bootstrap-fixes.css";
+@import "bootstrap.min.css";
 
 html {
     /* avoid bootstrap overriding font-size and breaking Mui */
@@ -130,7 +129,7 @@ div.shareModalDialog {
     background-color: #efefef;
 }
 
-.wise-editor .popover {
+.popover {
     font-size: 13px;
     max-width: none;
 }
