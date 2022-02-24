@@ -161,6 +161,7 @@ abstract class NodeGraph {
 
   createDragNode(layoutManager: LayoutManager) {
     const dragShape = this._buildDragShape();
+    
     return new DragTopic(dragShape, this, layoutManager);
   }
 
