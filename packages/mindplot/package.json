@@ -28,8 +28,7 @@
         "cy:run": "cypress run",
         "test:unit": "jest ./test/unit/export/*.ts ./test/unit/layout/*.js",
         "test:integration": "start-server-and-test playground http-get://localhost:8083 cy:run",
-        "test": "yarn test:unit && yarn test:integration",
-        "generate": "ts-node ./src/components/export/freemind/generatedClasses.ts"
+        "test": "yarn test:unit && yarn test:integration"
     },
     "private": false,
     "dependencies": {
