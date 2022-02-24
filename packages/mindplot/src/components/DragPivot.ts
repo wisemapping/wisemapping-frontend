@@ -19,9 +19,28 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import { Point, CurvedLine, Rect } from '@wisemapping/web2d';
 
 import DragTopicConfig from './DragTopicConfig';
+import SizeType from './SizeType';
+import Topic from './Topic';
 import Shape from './util/Shape';
+import Workspace from './Workspace';
 
 class DragPivot {
+  private _position: Point;
+
+  private _isVisible: boolean;
+
+  private _targetTopic: Topic;
+
+  private _connectRect: Rect;
+
+  private _dragPivot: Rect;
+
+  private _curvedLine: CurvedLine;
+
+  private _straightLine: CurvedLine;
+
+  private _size: SizeType;
+
   constructor() {
     this._position = new Point();
     this._size = DragTopicConfig.PIVOT_SIZE;
@@ -34,15 +53,15 @@ class DragPivot {
     this._isVisible = false;
   }
 
-  isVisible() {
+  isVisible(): boolean {
     return this._isVisible;
   }
 
-  getTargetTopic() {
+  getTargetTopic(): Topic {
     return this._targetTopic;
   }
 
-  _buildStraightLine() {
+  private _buildStraightLine(): CurvedLine {
     const line = new CurvedLine();
     line.setStyle(CurvedLine.SIMPLE_LINE);
     line.setStroke(1, 'solid', '#CC0033');
@@ -51,7 +70,7 @@ class DragPivot {
     return line;
   }
 
-  _buildCurvedLine() {
+  private _buildCurvedLine(): CurvedLine {
     const line = new CurvedLine();
     line.setStyle(CurvedLine.SIMPLE_LINE);
     line.setStroke(1, 'solid', '#CC0033');
@@ -60,7 +79,7 @@ class DragPivot {
     return line;
   }
 
-  _redrawLine() {
+  private _redrawLine(): void {
     // Update line position.
     $assert(this.getTargetTopic(), 'Illegal invocation. Target node can not be null');
 
@@ -81,8 +100,8 @@ class DragPivot {
     line.setFrom(pivotPoint.x, pivotPoint.y);
 
     // Update rect position
-    const cx = position.x - parseInt(size.width, 10) / 2;
-    const cy = position.y - parseInt(size.height, 10) / 2;
+    const cx = position.x - size.width / 2;
+    const cy = position.y - size.height / 2;
     pivotRect.setPosition(cx, cy);
 
     // Make line visible only when the position has been already changed.
@@ -91,16 +110,16 @@ class DragPivot {
     line.setTo(targetPoint.x, targetPoint.y);
   }
 
-  setPosition(point) {
+  setPosition(point: Point): void {
     this._position = point;
     this._redrawLine();
   }
 
-  getPosition() {
+  getPosition(): Point {
     return this._position;
   }
 
-  _buildRect() {
+  private _buildRect(): Rect {
     const size = this._size;
     const rectAttributes = {
       fillColor: '#CC0033',
@@ -114,16 +133,16 @@ class DragPivot {
     return rect;
   }
 
-  _getPivotRect() {
+  private _getPivotRect(): Rect {
     return this._dragPivot;
   }
 
-  getSize() {
+  getSize(): SizeType {
     const elem2d = this._getPivotRect();
     return elem2d.getSize();
   }
 
-  setVisibility(value) {
+  setVisibility(value: boolean) {
     if (this.isVisible() !== value) {
       const pivotRect = this._getPivotRect();
       pivotRect.setVisibility(value);
@@ -140,7 +159,7 @@ class DragPivot {
   }
 
   // If the node is connected, validate that there is a line connecting both...
-  _getConnectionLine() {
+  _getConnectionLine(): CurvedLine {
     let result = null;
     const parentTopic = this._targetTopic;
     if (parentTopic) {
@@ -153,7 +172,7 @@ class DragPivot {
     return result;
   }
 
-  addToWorkspace(workspace) {
+  addToWorkspace(workspace: Workspace) {
     const pivotRect = this._getPivotRect();
     workspace.append(pivotRect);
 
@@ -179,7 +198,7 @@ class DragPivot {
     connectRect.moveToBack();
   }
 
-  removeFromWorkspace(workspace) {
+  removeFromWorkspace(workspace: Workspace) {
     const shape = this._getPivotRect();
     workspace.removeChild(shape);
 
@@ -195,9 +214,7 @@ class DragPivot {
     }
   }
 
-  connectTo(targetTopic, position) {
-    $assert(!this._outgoingLine, 'Could not connect an already connected node');
-    $assert(targetTopic !== this, 'Circular connection are not allowed');
+  connectTo(targetTopic: Topic, position: Point) {
     $assert(position, 'position can not be null');
     $assert(targetTopic, 'parent can not be null');
 
@@ -227,7 +244,7 @@ class DragPivot {
     this._redrawLine();
   }
 
-  disconnect(workspace) {
+  disconnect(workspace: Workspace): void {
     $assert(workspace, 'workspace can not be null.');
     $assert(this._targetTopic, 'There are not connected topic.');
 
