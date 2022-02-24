@@ -6,6 +6,7 @@ import IconModel from '../model/IconModel';
 import FeatureModel from '../model/FeatureModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
+import PositionNodeType from '../PositionType';
 import Exporter from './Exporter';
 import FreemindConstant from './freemind/FreemindConstant';
 import VersionNumber from './freemind/importer/VersionNumber';
@@ -17,8 +18,6 @@ import Richcontent from './freemind/Richcontent';
 import Icon from './freemind/Icon';
 import Edge from './freemind/Edge';
 import Font from './freemind/Font';
-
-type PositionNodeType = {x: number, y: number}
 
 class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
@@ -64,7 +63,7 @@ class FreemindExporter extends Exporter {
     return 'mm';
   }
 
-  async export(): Promise<string> {
+  export(): Promise<string> {
     this.objectFactory = new ObjectFactory();
     this.nodeMap = new Map();
 
