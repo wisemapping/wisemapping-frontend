@@ -1,0 +1,962 @@
+{
+  "account.delete-warning": [
+    {
+      "type": 0,
+      "value": "Помните, что вы не сможете восстановить созданные вами майнд-карты. Вся информация будет удалена безвозвратно."
+    }
+  ],
+  "accountinfo.button": [
+    {
+      "type": 0,
+      "value": "Сохранить"
+    }
+  ],
+  "accountinfo.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "accountinfo.firstname": [
+    {
+      "type": 0,
+      "value": "Имя"
+    }
+  ],
+  "accountinfo.lastname": [
+    {
+      "type": 0,
+      "value": "Фамилия"
+    }
+  ],
+  "accountinfo.title": [
+    {
+      "type": 0,
+      "value": "Информация"
+    }
+  ],
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "Отмена"
+    }
+  ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "Закрыть"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Удалить"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "Удаление майндкарты - необратимый процесс без возможности восстановления. Точно удалить майндкарту?."
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "Удалить"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "Клонировать"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "Экспорт"
+    }
+  ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "История"
+    }
+  ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "Список изменений за последние 90 дней."
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "История версий"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "Импорт"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "Инфо"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "Добавить метку"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "Новая майнд-карта"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "Открыть"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "Печать"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "Опубликовать"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "Переименовать"
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "Описание"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Имя"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Открыть доступ"
+    }
+  ],
+  "changepwd.button": [
+    {
+      "type": 0,
+      "value": "Изменить"
+    }
+  ],
+  "changepwd.confirm-password": [
+    {
+      "type": 0,
+      "value": "Подтвердить пароль"
+    }
+  ],
+  "changepwd.description": [
+    {
+      "type": 0,
+      "value": "Укажите новый пароль вашей учетной записи."
+    }
+  ],
+  "changepwd.password": [
+    {
+      "type": 0,
+      "value": "Пароль"
+    }
+  ],
+  "changepwd.password-match": [
+    {
+      "type": 0,
+      "value": "Пароли не совпадают. Пожалуйста, попробуйте еще раз."
+    }
+  ],
+  "changepwd.title": [
+    {
+      "type": 0,
+      "value": "Изменить пароль"
+    }
+  ],
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "Подождите..."
+    }
+  ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "Создать"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "Пожалуйста, укажите имя и описание."
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "Создание новой майнд-карты."
+    }
+  ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "Все выбранные карты будут удалены"
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "Клонировать"
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "Здесь можно ознакомиться с возможностями нашего редактора майнд-карт на примерах и практике!"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "Зарегистрируйтесь, чтобы создавать, делиться и публиковать майнд-карты бесплатно и без ограничений!"
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "Время вашей сессии истекло. Пожалуйста, авторизуйтесь и попробуйте снова."
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "Время вашей сессии истекло"
+    }
+  ],
+  "export.desc": [
+    {
+      "type": 0,
+      "value": "Выгрузите эту карту в формате, который нужен - вставка в презентацию, отправка по почте, оффлайн работа."
+    }
+  ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "Майнд-карта: Экспорт в различных форматах редакторов майнд-карт"
+    }
+  ],
+  "export.document-label": [
+    {
+      "type": 0,
+      "value": "Документ: Экспорт в формате документа"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "Рисунок: Экспорт рисунка вашей карты с учетом всех цветов и форм."
+    }
+  ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "Экспорт"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "Экспорт рисунком (SVG,PNG,JPEG,PDF) доступен только из панели редактирования."
+    }
+  ],
+  "footer.aboutus": [
+    {
+      "type": 0,
+      "value": "О Нас"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "Контакты"
+    }
+  ],
+  "footer.faq": [
+    {
+      "type": 0,
+      "value": "F.A.Q."
+    }
+  ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "Помощь & FAQ"
+    }
+  ],
+  "footer.feedback": [
+    {
+      "type": 0,
+      "value": "Обратная связь"
+    }
+  ],
+  "footer.opensource": [
+    {
+      "type": 0,
+      "value": "Open Source"
+    }
+  ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "Прочее"
+    }
+  ],
+  "footer.termsandconditions": [
+    {
+      "type": 0,
+      "value": "Общие Правила"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "Мы отправим Вам e-mail для восстановления пароля."
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "forgot.page-title": [
+    {
+      "type": 0,
+      "value": "Забыл пароль | WiseMapping"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "Отправить"
+    }
+  ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "Мы отправили e-mail с инструкциями по восстановлению пароля. Вы должны получить его в течение пары минут."
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "Ваш временный пароль отправлен."
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "Установить новый пароль"
+    }
+  ],
+  "forgotsuccess.page-title": [
+    {
+      "type": 0,
+      "value": "Пароль восстановлен | WiseMapping"
+    }
+  ],
+  "header.donthaveaccount": [
+    {
+      "type": 0,
+      "value": "Нет аккаунта?"
+    }
+  ],
+  "header.haveaccount": [
+    {
+      "type": 0,
+      "value": "Уже есть аккаунт?"
+    }
+  ],
+  "help.support": [
+    {
+      "type": 0,
+      "value": "Поддержка"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "Нет доступных изменений"
+    }
+  ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "Создать"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "Можно импортировать FreeMind 1.0.1 и WiseMapping файлы. Выберите файл, который хотите импортировать."
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "Загрузить майнд-карту с компьютера"
+    }
+  ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "Основная информация"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "Принять"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "Дата создания"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "Автор"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "Описание"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "После публикация карта станет видима для любого, у кого есть ссылка."
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "Последние изменения"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "Последний редактировал"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "Имя"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "Доступ по ссылке"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "Видимость"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "Важная"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "Инфо"
+    }
+  ],
+  "language.change": [
+    {
+      "type": 0,
+      "value": "Сменить язык"
+    }
+  ],
+  "language.help": [
+    {
+      "type": 0,
+      "value": "Помочь переводить"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "Войдите в свой аккаунт"
+    }
+  ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "login.error": [
+    {
+      "type": 0,
+      "value": "Некорректный email или пароль."
+    }
+  ],
+  "login.forgotpwd": [
+    {
+      "type": 0,
+      "value": "Забыли пароль?"
+    }
+  ],
+  "login.hsqldbcofig": [
+    {
+      "type": 0,
+      "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
+    }
+  ],
+  "login.page-title": [
+    {
+      "type": 0,
+      "value": "Вход | WiseMapping"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "Пароль"
+    }
+  ],
+  "login.remberme": [
+    {
+      "type": 0,
+      "value": "Запомнить меня"
+    }
+  ],
+  "login.signin": [
+    {
+      "type": 0,
+      "value": "Вход"
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "Регистрация"
+    }
+  ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "Добро пожаловать!"
+    }
+  ],
+  "login.userinactive": [
+    {
+      "type": 0,
+      "value": "Ваш аккаунт еще не активирован. Вам на почту придет сообщение о его активации. На связи!."
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "Создатель"
+    }
+  ],
+  "map.delete-selected": [
+    {
+      "type": 0,
+      "value": "Удалить выбранные"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "Последнее изменение"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "Больше... "
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "Имя"
+    }
+  ],
+  "map.tooltip-add": [
+    {
+      "type": 0,
+      "value": "Добавить метку выбранным"
+    }
+  ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "Выберите файл"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "Создать новую майнд-карту"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "Нет карт, подходящих под условия фильтра."
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "Загрузить из других редакторов"
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "Изменена"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "Редактор"
+    }
+  ],
+  "maps.modified-by-desc": [
+    {
+      "type": 0,
+      "value": "Изменена "
+    },
+    {
+      "type": 1,
+      "value": "by"
+    },
+    {
+      "type": 0,
+      "value": " в "
+    },
+    {
+      "type": 1,
+      "value": "on"
+    }
+  ],
+  "maps.nav-all": [
+    {
+      "type": 0,
+      "value": "Все"
+    }
+  ],
+  "maps.nav-onwned": [
+    {
+      "type": 0,
+      "value": "Созданные мной"
+    }
+  ],
+  "maps.nav-public": [
+    {
+      "type": 0,
+      "value": "Публичные"
+    }
+  ],
+  "maps.nav-shared": [
+    {
+      "type": 0,
+      "value": "В общем доступе"
+    }
+  ],
+  "maps.nav-starred": [
+    {
+      "type": 0,
+      "value": "Отмеченные"
+    }
+  ],
+  "maps.page-title": [
+    {
+      "type": 0,
+      "value": "Мои карты | WiseMapping"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "Отменить"
+    }
+  ],
+  "maps.search-action": [
+    {
+      "type": 0,
+      "value": "Поиск ..."
+    }
+  ],
+  "maps.tooltip-open": [
+    {
+      "type": 0,
+      "value": "Открыть для редактирования"
+    }
+  ],
+  "maps.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Отмеченные"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "Просмотр"
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "Профиль"
+    }
+  ],
+  "menu.change-password": [
+    {
+      "type": 0,
+      "value": "Сменить пароль"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "Выход"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "Применить"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "Включить общий доступ"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "После публикация карта станет видима для любого, у кого есть ссылка."
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "Встроить"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "Скопируйте этот код, чтобы встроить майнд-карту в ваш сайт:"
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "Публичный URL"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "Скопируйте ссылку, чтобы поделиться с коллегами доступом к карте:"
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "Опубликовать"
+    }
+  ],
+  "registation.success-title": [
+    {
+      "type": 0,
+      "value": "Успешная регистрация | WiseMapping"
+    }
+  ],
+  "registration.desc": [
+    {
+      "type": 0,
+      "value": "Регистрация бесплатна и займет всего минуту"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "Имя"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "Фамилия"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "Пароль"
+    }
+  ],
+  "registration.register": [
+    {
+      "type": 0,
+      "value": "Регистрация"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "Нажмите на кнопку 'Войти' и приступите к созданию майнд-карт."
+    }
+  ],
+  "registration.termandconditions": [
+    {
+      "type": 0,
+      "value": "Правила: Пожалуйста, проверьте информацию учетной записи WiseMapping, которую вы указали, и ознакомьтесь с Правилами. По нажатию на кнопку 'Регистрация' вы соглашаетесь с Правилами и Политикой Конфиденциальности"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "Become a member"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "Пожалуйста, укажите новое имя и описание."
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "Rename"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "Аккаунт был успешно создан!"
+    }
+  ],
+  "role.editor": [
+    {
+      "type": 0,
+      "value": "Редактор"
+    }
+  ],
+  "role.owner": [
+    {
+      "type": 0,
+      "value": "Владелец"
+    }
+  ],
+  "role.viewer": [
+    {
+      "type": 0,
+      "value": "Читатель"
+    }
+  ],
+  "share.add-button": [
+    {
+      "type": 0,
+      "value": "Добавить"
+    }
+  ],
+  "share.add-message": [
+    {
+      "type": 0,
+      "value": "Добавить сообщение"
+    }
+  ],
+  "share.can-edit": [
+    {
+      "type": 0,
+      "value": "Редактирование"
+    }
+  ],
+  "share.can-view": [
+    {
+      "type": 0,
+      "value": "Просмотр"
+    }
+  ],
+  "share.delete": [
+    {
+      "type": 0,
+      "value": "Отозвать доступ"
+    }
+  ],
+  "share.delete-description": [
+    {
+      "type": 0,
+      "value": "Пригласите людей для совместной работы над картой. Они получат письмо с приглашением."
+    }
+  ],
+  "share.delete-title": [
+    {
+      "type": 0,
+      "value": "Общий доступ"
+    }
+  ],
+  "share.message": [
+    {
+      "type": 0,
+      "value": "Сообщение"
+    }
+  ]
+}

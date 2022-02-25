@@ -1,0 +1,14 @@
+{
+    "editor.try-welcome": {
+        "defaultMessage": "Здесь можно ознакомиться с возможностями нашего редактора майнд-карт на примерах и практике!"
+    },
+    "editor.try-welcome-description": {
+        "defaultMessage": "Зарегистрируйтесь чтобы начать создавать, публиковать и делиться майнд-картами бесплатно и без ограничений."
+    },
+    "login.signup": {
+        "defaultMessage": "Регистрация"
+    },
+    "action.share": {
+        "defaultMessage": "Поделиться"
+    }
+}

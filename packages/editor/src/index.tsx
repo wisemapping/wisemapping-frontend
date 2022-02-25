@@ -14,6 +14,7 @@ import FR from './compiled-lang/fr.json';
 import ES from './compiled-lang/es.json';
 import EN from './compiled-lang/en.json';
 import DE from './compiled-lang/de.json';
+import RU from './compiled-lang/ru.json';
 import './global-styled.css';
 import { EditorModeType } from '@wisemapping/mindplot/src/components/DesignerOptionsBuilder';
 
@@ -52,6 +53,8 @@ const loadLocaleData = (locale: string) => {
             return ES;
         case 'de':
             return DE;
+        case 'ru':
+            return RU;
         default:
             return EN;
     }
