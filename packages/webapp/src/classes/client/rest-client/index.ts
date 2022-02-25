@@ -615,7 +615,6 @@ export default class RestClient implements Client {
         if (this.persistenceManager) {
             return this.persistenceManager;
         }
-        // TODO: Move globals out, make urls configurable
         let persistence: PersistenceManager;
         if (editorMode === 'edition') {
             persistence = new RESTPersistenceManager({
@@ -627,7 +626,7 @@ export default class RestClient implements Client {
             });
         } else {
             persistence = new LocalStorageManager(
-                `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
+                `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${editorMode !== 'showcase' ? '-pub' : ''
                 }`,
                 true
             );
