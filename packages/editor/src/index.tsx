@@ -65,7 +65,6 @@ const Editor = ({
         if (options.locked) {
             $notify(options.lockedMsg);
         }
-
     }, []);
 
     useEffect(() => {

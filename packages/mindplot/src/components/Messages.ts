@@ -19,22 +19,24 @@ import { $defined } from '@wisemapping/core-js';
 import Bundle from './lang/Bundle';
 
 class Messages {
-  static init(locale) {
+  public static __bundle;
+
+  static init(locale: string) {
     let userLocale = $defined(locale) ? locale : 'en';
-    let bundle = Bundle[locale];
+    let bundle = Bundle[userLocale];
 
     if (bundle == null && locale.indexOf('_') !== -1) {
       // Try to locate without the specialization ...
       userLocale = locale.substring(0, locale.indexOf('_'));
-      bundle = Bundle[locale];
+      bundle = Bundle[userLocale];
     }
-    global.locale = userLocale;
-    Messages.__bundle = bundle || {};
+    this.__bundle = bundle;
   }
 }
 
-const $msg = function $msg(key) {
+const $msg = function $msg(key: string) {
   if (!Messages.__bundle) {
+    console.log('Trigger initialization');
     Messages.init('en');
   }
   const msg = Messages.__bundle[key];

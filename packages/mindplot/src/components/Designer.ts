@@ -87,6 +87,7 @@ class Designer extends Events {
     $assert(divElement, 'divElement must be defined');
 
     // Set up i18n location ...
+    console.log(`Editor location: ${options.locale}`);
     Messages.init(options.locale);
 
     this._options = options;

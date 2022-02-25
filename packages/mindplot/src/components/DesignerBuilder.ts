@@ -30,9 +30,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Register load events ...
   designer = new Designer(options, divContainer);
-  designer.addEvent('loadSuccess', () => {
-    console.log('Map loadded successfully');
-  });
 
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;
@@ -40,7 +37,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
   PersistenceManager.init(persistence);
 
   // Register toolbar event ...
-  if ($('#toolbar').length) {
+  if (options.mode === 'edition' || options.mode === 'showcase') {
     const menu = new Menu(designer, 'toolbar');
 
     //  If a node has focus, focus can be move to another node using the keys.
