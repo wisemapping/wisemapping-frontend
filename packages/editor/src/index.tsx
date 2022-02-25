@@ -13,6 +13,7 @@ import {
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
+import Messages from '@wisemapping/mindplot/src/components/Messages';
 
 declare global {
     // used in mindplot
@@ -75,6 +76,9 @@ const Editor = ({
         }
     }, [options.enableKeyboardEvents]);
 
+    useEffect(() => {
+        Messages.init(options.locale);
+    }, [options.locale]);
 
     const onLoadDesigner = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager): Designer => {
         const buildOptions = DesignerOptionsBuilder.buildOptions({
@@ -94,12 +98,14 @@ const Editor = ({
     const msg = I18nMsg.loadLocaleData(locale);
     return (
         <IntlProvider locale={locale} messages={msg}>
-            <Toolbar
-                isTryMode={options.mode === 'showcase'}
-                onAction={onAction}
-            />
+            {(options.mode !== 'viewonly') &&
+                <Toolbar
+                    editorMode={options.mode}
+                    onAction={onAction}
+                />
+            }
             <div id="mindplot"></div>
-            <Footer showTryPanel={options.mode === 'showcase'} />
+            <Footer editorMode={options.mode} />
         </IntlProvider>
     );
 }
