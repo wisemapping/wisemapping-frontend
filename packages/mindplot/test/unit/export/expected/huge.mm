@@ -3,8 +3,8 @@
         <edge COLOR="#121110"/>
         <node ID="ID_null" POSITION="left" STYLE="bubble" TEXT="De markt">
             <richcontent TYPE="NOTE">
-                <html>
-                    <head/>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head><head/>
                     <body>
                         <p/>
                     </body>
@@ -61,8 +61,8 @@
                 </node>
                 <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="monitoring">
                     <richcontent TYPE="NOTE">
-                        <html>
-                            <head/>
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <head><head/>
                             <body>
                                 <p/>
                             </body>
@@ -81,8 +81,8 @@
         <node ID="ID_null" POSITION="right" STYLE="fork" TEXT="veiligheid">
             <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="criminaliteit">
                 <richcontent TYPE="NOTE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p/>
                         </body>
@@ -108,8 +108,8 @@
             </node>
             <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="verkeer">
                 <richcontent TYPE="NOTE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p/>
                         </body>
@@ -142,8 +142,8 @@
                     <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="Omleiding zoeken"/>
                     <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="preventie">
                         <richcontent TYPE="NOTE">
-                            <html>
-                                <head/>
+                            <html xmlns="http://www.w3.org/1999/xhtml">
+                                <head><head/>
                                 <body>
                                     <p/>
                                 </body>
@@ -163,8 +163,8 @@
                     </node>
                     <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="recepten generator">
                         <richcontent TYPE="NOTE">
-                            <html>
-                                <head/>
+                            <html xmlns="http://www.w3.org/1999/xhtml">
+                                <head><head/>
                                 <body>
                                     <p/>
                                 </body>
@@ -203,8 +203,8 @@
                 <font BOLD="true" SIZE="12"/>
                 <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="geboortetimer">
                     <richcontent TYPE="NOTE">
-                        <html>
-                            <head/>
+                        <html xmlns="http://www.w3.org/1999/xhtml">
+                            <head><head/>
                             <body>
                                 <p/>
                             </body>
@@ -214,8 +214,8 @@
                 <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="info over voeding">
                     <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="via cloud info over voeding">
                         <richcontent TYPE="NOTE">
-                            <html>
-                                <head/>
+                            <html xmlns="http://www.w3.org/1999/xhtml">
+                                <head><head/>
                                 <body>
                                     <p/>
                                 </body>
@@ -241,8 +241,8 @@
         </node>
         <node ID="ID_null" POSITION="right" STYLE="fork" TEXT="bouw">
             <richcontent TYPE="NOTE">
-                <html>
-                    <head/>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head><head/>
                     <body>
                         <p/>
                     </body>
@@ -276,8 +276,8 @@
             </node>
             <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="verschillende ziektes">
                 <richcontent TYPE="NOTE">
-                    <html>
-                        <head/>
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                        <head><head/>
                         <body>
                             <p/>
                         </body>
