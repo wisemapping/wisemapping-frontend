@@ -10,14 +10,9 @@ import {
     Designer,
     DesignerKeyboard,
 } from '@wisemapping/mindplot';
-import FR from './compiled-lang/fr.json';
-import ES from './compiled-lang/es.json';
-import EN from './compiled-lang/en.json';
-import DE from './compiled-lang/de.json';
-import RU from './compiled-lang/ru.json';
 import './global-styled.css';
 import { EditorModeType } from '@wisemapping/mindplot/src/components/DesignerOptionsBuilder';
-
+import I18nMsg from './classes/i18n-msg';
 
 declare global {
     // used in mindplot
@@ -38,63 +33,39 @@ export type EditorOptions = {
 export type EditorProps = {
     mapId: string;
     options: EditorOptions;
-    onAction: (action: ToolbarActionType) => void;
     persistenceManager: PersistenceManager;
-    initCallback?: (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager) => void;
-};
-
-const loadLocaleData = (locale: string) => {
-    switch (locale) {
-        case 'fr':
-            return FR;
-        case 'en':
-            return EN;
-        case 'es':
-            return ES;
-        case 'de':
-            return DE;
-        case 'ru':
-            return RU;
-        default:
-            return EN;
-    }
-}
-
-const defaultCallback = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager) => {
-    // Change page title ...
-    document.title = `${options.mapTitle} | WiseMapping `;
-
-    const buildOptions = DesignerOptionsBuilder.buildOptions({
-        persistenceManager,
-        mode: options.mode,
-        mapId: mapId,
-        container: 'mindplot',
-        zoom: options.zoom,
-        locale: options.locale,
-    });
-
-    // Build designer ...
-    const designer = buildDesigner(buildOptions);
-
-    // Load map from XML file persisted on disk...
-    const instance = PersistenceManager.getInstance();
-    const mindmap = instance.load(mapId);
-    designer.loadMap(mindmap);
-
-    if (options.locked) {
-        $notify(options.lockedMsg);
-    }
+    onAction: (action: ToolbarActionType) => void;
+    onLoad?: (designer: Designer) => void;
 };
 
 const Editor = ({
     mapId,
     options,
     persistenceManager,
-    initCallback = defaultCallback,
     onAction,
+    onLoad,
 }: EditorProps) => {
+
     useEffect(() => {
-        initCallback(mapId, options, persistenceManager);
+        // Change page title ...
+        document.title = `${options.mapTitle} | WiseMapping `;
+
+        // Load mindmap ...
+        const designer = onLoadDesigner(mapId, options, persistenceManager);
+        // Has extended actions been customized ...
+        if (onLoad) {
+            onLoad(designer);
+        }
+
+        // Load mindmap ...
+        const instance = PersistenceManager.getInstance();
+        const mindmap = instance.load(mapId);
+        designer.loadMap(mindmap);
+
+        if (options.locked) {
+            $notify(options.lockedMsg);
+        }
+
     }, []);
 
     useEffect(() => {
@@ -105,8 +76,25 @@ const Editor = ({
         }
     }, [options.enableKeyboardEvents]);
 
+
+    const onLoadDesigner = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager): Designer => {
+        const buildOptions = DesignerOptionsBuilder.buildOptions({
+            persistenceManager,
+            mode: options.mode,
+            mapId: mapId,
+            container: 'mindplot',
+            zoom: options.zoom,
+            locale: options.locale,
+        });
+
+        // Build designer ...
+        return buildDesigner(buildOptions);
+    };
+
+    const locale = options.locale;
+    const msg = I18nMsg.loadLocaleData(locale);
     return (
-        <IntlProvider locale={options.locale} messages={loadLocaleData(options.locale)}>
+        <IntlProvider locale={locale} messages={msg}>
             <Toolbar
                 isTryMode={options.mode === 'showcase'}
                 onAction={onAction}

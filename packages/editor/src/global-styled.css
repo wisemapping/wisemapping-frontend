@@ -217,9 +217,8 @@ div#tryInfoPanel {
     margin: auto;
     text-align: center;
     top: 80px;
-    right: 20px;
+    left: 20px;
     width: 200px;
-    height: 300px;
     padding: 20px;
     font-size: 15px;
     border-radius: 9px;
