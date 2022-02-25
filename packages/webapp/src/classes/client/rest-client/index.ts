@@ -626,7 +626,7 @@ export default class RestClient implements Client {
             });
         } else {
             persistence = new LocalStorageManager(
-                `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${editorMode !== 'showcase' ? '-pub' : ''
+                `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${editorMode === 'showcase' ? '-pub' : ''
                 }`,
                 true
             );
