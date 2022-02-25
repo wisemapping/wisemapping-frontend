@@ -7,8 +7,17 @@ export default class EditorOptionsBulder {
         let options: EditorOptions = {
             enableKeyboardEvents: hotkeys,
             locale: locale,
-            mode: isTryMode ? 'showcase' : 'editor',
         };
+
+        if (isTryMode) {
+            // Sent to try mode ...
+            options.mode = 'showcase';
+        } else if (!global.lockSession) {
+            // Map locked, open for view mode ...
+            options.mode = 'viewonly';
+        } else {
+            options.mode = 'edition';
+        }
 
         let mapId: number;
         if (!AppConfig.isDevelopEnv()) {
