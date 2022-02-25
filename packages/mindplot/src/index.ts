@@ -29,6 +29,7 @@ import ImageExporterFactory from './components/export/ImageExporterFactory';
 import TextExporterFactory from './components/export/TextExporterFactory';
 import Exporter from './components/export/Exporter';
 import DesignerKeyboard from './components/DesignerKeyboard';
+import EditorRenderMode from './components/EditorRenderMode';
 
 import {
   buildDesigner,
@@ -53,6 +54,7 @@ export {
   LocalStorageManager,
   DesignerOptionsBuilder,
   buildDesigner,
+  EditorRenderMode,
   TextExporterFactory,
   ImageExporterFactory,
   Exporter,

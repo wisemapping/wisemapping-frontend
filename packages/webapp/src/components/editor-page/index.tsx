@@ -21,16 +21,16 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const userLocale = AppI18n.getUserLocale();
     const client: Client = useSelector(activeInstance);
     const [persistenceManager, setPersistenceManager] = React.useState<PersistenceManager>();
+    const { mapId, options } = EditorOptionsBulder.build(userLocale.code, hotkey, isTryMode);
 
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
-        const persistence = client.buildPersistenceManager(isTryMode);
+        const persistence = client.buildPersistenceManager(options.mode);
         setPersistenceManager(persistence);
         return () => client.removePersistenceManager();
     }, []);
 
     // As temporal hack, editor properties are propagated from global variables...
-    const { mapId, options } = EditorOptionsBulder.build(userLocale.code, hotkey, isTryMode);
     return persistenceManager ? (
         <>
             <Editor onAction={setActiveDialog}

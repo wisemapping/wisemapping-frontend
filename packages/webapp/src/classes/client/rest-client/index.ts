@@ -1,4 +1,4 @@
-import { LocalStorageManager, Mindmap, PersistenceManager, RESTPersistenceManager } from '@wisemapping/mindplot';
+import { EditorRenderMode, LocalStorageManager, Mindmap, PersistenceManager, RESTPersistenceManager } from '@wisemapping/mindplot';
 import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Client, {
@@ -611,13 +611,13 @@ export default class RestClient implements Client {
         }
     }
 
-    buildPersistenceManager(isTryMode: boolean): PersistenceManager {
+    buildPersistenceManager(editorMode: EditorRenderMode): PersistenceManager {
         if (this.persistenceManager) {
             return this.persistenceManager;
         }
         // TODO: Move globals out, make urls configurable
         let persistence: PersistenceManager;
-        if (!isTryMode) {
+        if (editorMode === 'edition') {
             persistence = new RESTPersistenceManager({
                 documentUrl: '/c/restful/maps/{id}/document',
                 revertUrl: '/c/restful/maps/{id}/history/latest',

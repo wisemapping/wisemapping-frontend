@@ -9,9 +9,9 @@ import {
     DesignerOptionsBuilder,
     Designer,
     DesignerKeyboard,
+    EditorRenderMode,
 } from '@wisemapping/mindplot';
 import './global-styled.css';
-import { EditorModeType } from '@wisemapping/mindplot/src/components/DesignerOptionsBuilder';
 import I18nMsg from './classes/i18n-msg';
 
 declare global {
@@ -21,7 +21,7 @@ declare global {
 }
 
 export type EditorOptions = {
-    mode: EditorModeType,
+    mode: EditorRenderMode,
     locale: string,
     zoom?: number,
     locked?: boolean,

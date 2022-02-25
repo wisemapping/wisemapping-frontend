@@ -16,15 +16,14 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import EditorRenderMode from './EditorRenderMode';
 import PersistenceManager from './PersistenceManager';
 import SizeType from './SizeType';
-
-export type EditorModeType = 'viewonly' | 'edition' | 'showcase';
 
 export type DesignerOptions = {
   zoom: number,
   containerSize?: SizeType,
-  mode: EditorModeType,
+  mode: EditorRenderMode,
   mapId?: string,
   container: string,
   persistenceManager?: PersistenceManager,
