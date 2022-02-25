@@ -12,7 +12,7 @@ export default class EditorOptionsBulder {
         if (isTryMode) {
             // Sent to try mode ...
             options.mode = 'showcase';
-        } else if (!global.lockSession) {
+        } else if (global.mindmapLocked) {
             // Map locked, open for view mode ...
             options.mode = 'viewonly';
         } else {
