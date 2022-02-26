@@ -54,7 +54,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
         },
         {
             onSuccess: () => {
-                window.location.href = '/c/logout';
+                window.location.href = '/c/login';
                 onClose();
             },
             onError: (error) => {

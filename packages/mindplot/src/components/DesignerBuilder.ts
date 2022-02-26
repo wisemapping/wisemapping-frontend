@@ -20,8 +20,6 @@ import $ from 'jquery';
 import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import Menu from './widget/Menu';
-import { $notifyModal } from './widget/ModalDialogNotifier';
-import { $msg } from './Messages';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 
 let designer: Designer;
@@ -32,40 +30,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Register load events ...
   designer = new Designer(options, divContainer);
-  designer.addEvent('loadSuccess', () => {
-    globalThis.mindmapLoadReady = true;
-    console.log('Map loadded successfully');
-  });
-
-  const onerrorFn = (msg: string, url: string, lineNo: number, columnNo: number, error: Error) => {
-    const message = [
-      `Message: ${msg}`,
-      `URL: ${url}`,
-      `Line: ${lineNo}`,
-      `Column: ${columnNo}`,
-    ].join(' - ');
-    console.log(message);
-
-    // Send error to server ...
-    $.ajax({
-      method: 'post',
-      url: '/c/restful/logger/editor',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      data: JSON.stringify({
-        jsErrorMsg: message,
-        jsStack: JSON.stringify(error),
-        userAgent: navigator.userAgent,
-        mapId: options.mapId,
-      }),
-    });
-
-    // Open error dialog only in case of mindmap loading errors. The rest of the error are reported but not display the dialog.
-    // Remove this in the near future.
-    if (!globalThis.mindmapLoadReady) {
-      $notifyModal($msg('UNEXPECTED_ERROR_LOADING'));
-    }
-  };
-  window.onerror = onerrorFn;
 
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;
@@ -73,7 +37,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
   PersistenceManager.init(persistence);
 
   // Register toolbar event ...
-  if ($('#toolbar').length) {
+  if (options.mode === 'edition' || options.mode === 'showcase') {
     const menu = new Menu(designer, 'toolbar');
 
     //  If a node has focus, focus can be move to another node using the keys.

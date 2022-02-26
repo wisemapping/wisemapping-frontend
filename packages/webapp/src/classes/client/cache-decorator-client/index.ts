@@ -1,4 +1,4 @@
-import { Mindmap } from '@wisemapping/mindplot';
+import { EditorRenderMode, Mindmap, PersistenceManager } from '@wisemapping/mindplot';
 import Client, {
     AccountInfo,
     BasicMapInfo,
@@ -17,7 +17,11 @@ class CacheDecoratorClient implements Client {
     constructor(client: Client) {
         this.client = client;
     }
-    
+
+    onSessionExpired(callback?: () => void): () => void {
+        return this.client.onSessionExpired(callback);
+    }
+
     fetchMindmap(id: number): Mindmap {
         return this.client.fetchMindmap(id);
     }
@@ -125,6 +129,15 @@ class CacheDecoratorClient implements Client {
     revertHistory(id: number, cid: number): Promise<void> {
         return this.client.revertHistory(id, cid);
     }
+
+    buildPersistenceManager(mode: EditorRenderMode): PersistenceManager {
+        return this.client.buildPersistenceManager(mode);
+    }
+
+    removePersistenceManager(): void {
+        return this.client.removePersistenceManager();
+    }
+
 }
 
 export default CacheDecoratorClient;

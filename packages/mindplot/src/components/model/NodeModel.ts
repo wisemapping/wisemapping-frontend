@@ -70,11 +70,6 @@ class NodeModel extends INodeModel {
     return this._features;
   }
 
-  /**
-     * @param feature
-     * @throws will throw an error if feature is null or undefined
-     * @throws will throw an error if the feature could not be removed
-     */
   removeFeature(feature: FeatureModel): void {
     $assert(feature, 'feature can not be null');
     const size = this._features.length;
@@ -127,11 +122,8 @@ class NodeModel extends INodeModel {
     return this._properties[key];
   }
 
-  /**
-     * @return {mindplot.model.NodeModel} an identical clone of the NodeModel
-     */
   clone(): NodeModel {
-    const result = new NodeModel(this.getType(), this._mindmap, -1);
+    const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {
       const cnode = node.clone() as NodeModel;
       cnode._parent = result;
@@ -143,12 +135,8 @@ class NodeModel extends INodeModel {
     return result;
   }
 
-  /**
-     * Similar to clone, assign new id to the elements ...
-     * @return {mindplot.model.NodeModel}
-     */
   deepCopy(): NodeModel {
-    const result = new NodeModel(this.getType(), this._mindmap, -1);
+    const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {
       const cnode = (node as NodeModel).deepCopy();
       cnode._parent = result;
@@ -163,20 +151,12 @@ class NodeModel extends INodeModel {
     return result;
   }
 
-  /**
-     * @param {mindplot.model.NodeModel} child
-     * @throws will throw an error if child is null, undefined or not a NodeModel object
-     */
   append(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object');
     this._children.push(child);
     child._parent = this;
   }
 
-  /**
-     * @param {mindplot.model.NodeModel} child
-     * @throws will throw an error if child is null, undefined or not a NodeModel object
-     */
   removeChild(child: NodeModel): void {
     $assert(child && child.isNodeModel(), 'Only NodeModel can be appended to Mindmap object.');
     this._children = this._children.filter((c) => c !== child);

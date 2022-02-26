@@ -28,12 +28,6 @@ import SizeType from './SizeType';
 class MainTopic extends Topic {
   private INNER_RECT_ATTRIBUTES: { stroke: string; };
 
-  /**
-         * @extends mindplot.Topic
-         * @constructs
-         * @param model
-         * @param options
-         */
   constructor(model: NodeModel, options) {
     super(model, options);
     this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
@@ -70,6 +64,11 @@ class MainTopic extends Topic {
       const text = this.getText();
       textShape.setText(text);
       textShape.setOpacity(0.5);
+
+      // Copy text position of the topic element ...
+      const textPosition = this.getTextShape().getPosition();
+      textShape.setPosition(textPosition.x, textPosition.y);
+
       group.append(textShape);
     }
     return group;
@@ -88,7 +87,6 @@ class MainTopic extends Topic {
     }
   }
 
-  /** */
   disconnect(workspace: Workspace) {
     super.disconnect(workspace);
     const model = this.getModel();

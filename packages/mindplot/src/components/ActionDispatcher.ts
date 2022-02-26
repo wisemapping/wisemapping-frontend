@@ -30,9 +30,16 @@ import Topic from './Topic';
 abstract class ActionDispatcher extends Events {
   private static _instance: ActionDispatcher;
 
+  private _commandContext: CommandContext;
+
   constructor(commandContext: CommandContext) {
     $assert(commandContext, 'commandContext can not be null');
     super();
+    this._commandContext = commandContext;
+  }
+
+  getCommandContext(): CommandContext {
+    return this._commandContext;
   }
 
   abstract addRelationship(model: RelationshipModel, mindmap: Mindmap): void;

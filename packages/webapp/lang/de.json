@@ -204,7 +204,7 @@
         "defaultMessage": "Erstellen"
     },
     "import.description": {
-        "defaultMessage": "Sie können FreeMind 1.0.1- und WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+        "defaultMessage": "Sie können WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
     },
     "import.title": {
         "defaultMessage": "Importieren Sie vorhandene Mindmaps"
@@ -473,5 +473,32 @@
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+    },
+    "accountinfo.deleteaccount": {
+        "defaultMessage": "Konto löschen"
+    },
+    "label.add-button": {
+        "defaultMessage": "Etikett hinzufügen"
+    },
+    "label.add-for": {
+        "defaultMessage": "Beschriftungen für Karten bearbeiten:"
+    },
+    "label.add-placeholder": {
+        "defaultMessage": "Titel des Labels"
+    },
+    "label.change-color": {
+        "defaultMessage": "Etikettenfarbe ändern"
+    },
+    "label.delete-description": {
+        "defaultMessage": "gelöscht, einschließlich der Zuordnungen zu allen vorhandenen Karten. Möchtest du fortfahren?"
+    },
+    "label.delete-title": {
+        "defaultMessage": "Bestätigen Sie das Löschen des Labels"
+    },
+    "label.description": {
+        "defaultMessage": "Verwenden Sie Labels, um Ihre Karten zu organisieren."
+    },
+    "label.title": {
+        "defaultMessage": "Etikett hinzufügen"
     }
 }

@@ -20,18 +20,20 @@ import Command from '../Command';
 import CommandContext from '../CommandContext';
 import Topic from '../Topic';
 
+type CommandTypes = string | object | boolean | number;
+
 class GenericFunctionCommand extends Command {
-  private _value: string | object | boolean | number;
+  private _value: CommandTypes;
 
   private _topicsId: number[];
 
-  private _commandFunc: (topic: Topic, value: string | object | boolean | number) => string | object | boolean;
+  private _commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes;
 
-  private _oldValues: any[];
+  private _oldValues: (CommandTypes)[];
 
   private _applied: boolean;
 
-  constructor(commandFunc: (topic: Topic, value: string | object | boolean) => string | object | boolean, topicsIds: number[], value: string | object | boolean | number = undefined) {
+  constructor(commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes, topicsIds: number[], value: CommandTypes = undefined) {
     $assert(commandFunc, 'commandFunc must be defined');
     $assert($defined(topicsIds), 'topicsIds must be defined');
 

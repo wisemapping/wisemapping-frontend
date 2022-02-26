@@ -20,7 +20,7 @@ import { Mindmap } from '../..';
 import NodeModel from '../model/NodeModel';
 import ModelCodeName from './ModelCodeName';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
-import XMLSerializerPela from './XMLSerializerPela';
+import XMLSerializerPela from './XMLSerializerTango';
 
 class Beta2PelaMigrator implements XMLMindmapSerializer {
   private _betaSerializer: XMLMindmapSerializer;

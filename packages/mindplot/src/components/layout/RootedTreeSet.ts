@@ -24,7 +24,6 @@ class RootedTreeSet {
 
   protected _children: Node[];
 
-
   constructor() {
     this._rootNodes = [];
   }
@@ -56,10 +55,9 @@ class RootedTreeSet {
          */
   add(node: Node) {
     $assert(node, 'node can not be null');
-    $assert(
-      !this.find(node.getId(), false),
-      `node already exits with this id. Id:${node.getId()}: ${this.dump()}`,
-    );
+    if (this.find(node.getId(), false)) {
+      throw new Error(`node already exits with this id. Id:${node.getId()}: ${this.dump()}`);
+    }
     $assert(!node._children, 'node already added');
     this._rootNodes.push(this._decodate(node));
   }
@@ -131,10 +129,11 @@ class RootedTreeSet {
         break;
       }
     }
-    $assert(
-      validate ? result : true,
-      `node could not be found id:${id}\n,RootedTreeSet${this.dump()}`,
-    );
+
+    if (validate && !result) {
+      throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
+    }
+
     return result;
   }
 
@@ -259,8 +258,8 @@ class RootedTreeSet {
   }
 
   /**
-         * @return result
-         */
+   * @return result
+   */
   dump() {
     const branches = this._rootNodes;
     let result = '';
@@ -293,7 +292,7 @@ class RootedTreeSet {
     }
   }
 
-  _plot(canvas, node: Node, root?) {
+  _plot(canvas, node: Node) {
     const children = this.getChildren(node);
     const cx = node.getPosition().x + canvas.width / 2 - node.getSize().width / 2;
     const cy = node.getPosition().y + canvas.height / 2 - node.getSize().height / 2;

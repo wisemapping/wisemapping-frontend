@@ -36,7 +36,7 @@ class RelationshipPivot {
 
   private _sourceTopic: Topic;
 
-  private _pivot: any;
+  private _pivot: CurvedLine;
 
   private _startArrow: Arrow;
 

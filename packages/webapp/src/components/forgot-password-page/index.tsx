@@ -12,8 +12,10 @@ import { activeInstance } from '../../redux/clientSlice';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
+import ReactGA from 'react-ga';
 
 import Typography from '@mui/material/Typography';
+import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>('');
@@ -53,6 +55,7 @@ const ForgotPassword = () => {
             <GlobalError error={error} />
 
             <form onSubmit={handleOnSubmit}>
+                <input type='hidden' value={getCsrfToken()} name={getCsrfTokenParameter()} />
                 <Input
                     type="email"
                     name="email"
@@ -77,7 +80,8 @@ const ForgotPasswordPage = (): React.ReactElement => {
     const intl = useIntl();
     useEffect(() => {
         document.title = intl.formatMessage({ id: 'forgot.page-title', defaultMessage: 'Forgot Password | WiseMapping' });
-    });
+        ReactGA.pageview(window.location.pathname + window.location.search);
+    },[]);
 
     return (
         <div>

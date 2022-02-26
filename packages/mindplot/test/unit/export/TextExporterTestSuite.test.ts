@@ -8,7 +8,8 @@ import { parseXMLFile, setupBlob, exporterAssert } from './Helper';
 
 setupBlob();
 
-const testNames = fs.readdirSync(path.resolve(__dirname, './input/'))
+const testNames = fs
+  .readdirSync(path.resolve(__dirname, './input/'))
   .filter((f) => f.endsWith('.wxml'))
   .map((filename: string) => filename.split('.')[0]);
 
@@ -53,6 +54,21 @@ describe('MD export test execution', () => {
     const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
 
     const exporter = TextExporterFactory.create('md', mindmap);
+    await exporterAssert(testName, exporter);
+  });
+});
+
+describe('MM export test execution', () => {
+  test.each(testNames)('Exporting %p suite', async (testName: string) => {
+    // Load mindmap DOM..
+    const mindmapPath = path.resolve(__dirname, `./input/${testName}.wxml`);
+    const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
+
+    // Convert to mindmap...
+    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDocument);
+    const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
+
+    const exporter = TextExporterFactory.create('mm', mindmap);
     await exporterAssert(testName, exporter);
   });
 });

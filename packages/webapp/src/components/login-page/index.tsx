@@ -10,6 +10,8 @@ import FormContainer from '../layout/form-container';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
+import ReactGA from 'react-ga';
+import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 
 type ConfigStatusProps = {
     enabled?: boolean;
@@ -68,7 +70,8 @@ const LoginPage = (): React.ReactElement => {
 
     useEffect(() => {
         document.title = intl.formatMessage({id:'login.page-title',defaultMessage:'Login | WiseMapping'});
-    });
+        ReactGA.pageview(window.location.pathname + window.location.search);
+    },[]);
 
     return (
         <div>
@@ -87,6 +90,7 @@ const LoginPage = (): React.ReactElement => {
 
                 <FormControl>
                     <form action="/c/perform-login" method="POST">
+                    <input type='hidden' value={getCsrfToken()} name={getCsrfTokenParameter()}/>
                         <Input
                             name="username"
                             type="email"

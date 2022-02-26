@@ -15,26 +15,25 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Mindmap } from '../..';
 import BinaryImageExporter from './BinaryImageExporter';
 import Exporter from './Exporter';
 import SVGExporter from './SVGExporter';
 
 type imageType = 'svg' | 'png' | 'jpg';
 class ImageExpoterFactory {
-  static create(type: imageType, mindmap: Mindmap, svgElement: Element, width: number, height: number, isCenter = false): Exporter {
-    let result;
+  static create(type: imageType, svgElement: Element, width: number, height: number, adjustToFit = true): Exporter {
+    let result: Exporter;
     switch (type) {
       case 'svg': {
-        result = new SVGExporter(svgElement);
+        result = new SVGExporter(svgElement, adjustToFit);
         break;
       }
       case 'png': {
-        result = new BinaryImageExporter(mindmap, svgElement, width, height, 'image/png');
+        result = new BinaryImageExporter(svgElement, width, height, 'image/png', adjustToFit);
         break;
       }
       case 'jpg': {
-        result = new BinaryImageExporter(mindmap, svgElement, width, height, 'image/jpeg');
+        result = new BinaryImageExporter(svgElement, width, height, 'image/jpeg', adjustToFit);
         break;
       }
       default:

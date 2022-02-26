@@ -11,6 +11,12 @@
       "value": "J'accepte"
     }
   ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "Supprimer le compte"
+    }
+  ],
   "accountinfo.email": [
     {
       "type": 0,
@@ -234,16 +240,8 @@
     }
   ],
   "editor.try-welcome": [
-    {
-      "type": 0,
-      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
-    }
   ],
   "editor.try-welcome-description": [
-    {
-      "type": 0,
-      "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
-    }
   ],
   "expired.description": [
     {
@@ -422,7 +420,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Vous pouvez importer des cartes FreeMind 1.0.1 et WiseMapping dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
+      "value": "Vous pouvez importer des cartes WiseMapping dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
     }
   ],
   "import.title": [
@@ -507,6 +505,54 @@
     {
       "type": 0,
       "value": "Info"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Ajouter une étiquette"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Modification des étiquettes pour les cartes :"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Titre de l'étiquette"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Changer la couleur de l'étiquette"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "sera supprimé, y compris ses associations à toutes les cartes existantes. Voulez-vous continuer?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Confirmer la suppression de l'étiquette"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Utilisez des étiquettes pour organiser vos cartes."
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Ajouter une étiquette"
     }
   ],
   "language.change": [
@@ -944,7 +990,7 @@
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Invitez des personnes à collaborer avec vous dans la création de votre mindmap. Ils seront prévenus par email."
+      "value": "Invitez des personnes à collaborer avec vous dans la création de votre midnmap. Ils seront prévenus par email."
     }
   ],
   "share.delete-title": [

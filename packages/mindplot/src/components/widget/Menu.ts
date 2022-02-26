@@ -57,7 +57,7 @@ class Menu extends IMenu {
           return result;
         },
 
-        setValue(value) {
+        setValue(value: string) {
           designer.changeFontFamily(value);
         },
       };
@@ -68,7 +68,7 @@ class Menu extends IMenu {
     const fontSizeBtn = $('#fontSize');
     if (fontSizeBtn) {
       const fontSizeModel = {
-        getValue() {
+        getValue(): number {
           const nodes = designerModel.filterSelectedTopics();
 
           let result = null;
@@ -82,7 +82,7 @@ class Menu extends IMenu {
           }
           return result;
         },
-        setValue(value) {
+        setValue(value: number) {
           designer.changeFontSize(value);
         },
       };
@@ -297,9 +297,9 @@ class Menu extends IMenu {
       Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
 
       if (!readOnly) {
-        $(window).bind('beforeunload', () => {
+        window.addEventListener('beforeunload', () => {
           if (this.isSaveRequired()) {
-            this.save(saveElem, designer, false, true);
+            this.save(saveElem, designer, false);
           }
           this.unlockMap(designer);
         });
@@ -310,7 +310,7 @@ class Menu extends IMenu {
             if (this.isSaveRequired()) {
               this.save(saveElem, designer, false);
             }
-          }, 30000,
+          }, 10000,
         );
       }
     }

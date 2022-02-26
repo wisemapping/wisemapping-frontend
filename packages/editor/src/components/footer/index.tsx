@@ -7,12 +7,13 @@ import AddSvg from '../../../images/add.svg';
 import MinusSvg from '../../../images/minus.svg';
 import CenterFocusSvg from '../../../images/center_focus.svg';
 import ActionButton from '../action-button';
+import { EditorRenderMode } from '@wisemapping/mindplot';
 
 export type FooterPropsType = {
-    showTryPanel?: boolean;
+    editorMode: EditorRenderMode;
 };
 
-const Footer = ({ showTryPanel }: FooterPropsType): React.ReactElement => {
+const Footer = ({ editorMode }: FooterPropsType): React.ReactElement => {
     const intl = useIntl();
 
     return (
@@ -37,7 +38,7 @@ const Footer = ({ showTryPanel }: FooterPropsType): React.ReactElement => {
             </div>
             <StyledLogo id="bottom-logo"></StyledLogo>
             <Notifier id="headerNotifier"></Notifier>
-            {showTryPanel && (
+            {editorMode === 'showcase' && (
                 <div id="tryInfoPanel">
                     <p>{intl.formatMessage({ id: 'editor.try-welcome' })}</p>
                     <p>{intl.formatMessage({ id: 'editor.try-welcome-description' })}</p>

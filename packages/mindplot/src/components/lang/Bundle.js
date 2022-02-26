@@ -20,12 +20,14 @@ import ES from './es';
 import EN from './en';
 import DE from './de';
 import FR from './fr';
+import RU from './ru';
 
 const Bundle = {
   es: ES,
   en: EN,
   de: DE,
   fr: FR,
+  ru: RU,
 };
 
 export default Bundle;

@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import clientReducer from './clientSlice';
+import rootReducer from './rootReducer';
 
 // Create Service object...
 const store = configureStore({
-    reducer: {
-        client: clientReducer,
-    },
+    reducer: rootReducer,
 });
 
 export default store;

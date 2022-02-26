@@ -17,8 +17,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
-import Icon from './Icon';
-import Topic from './Topic';
 
 class ScreenManager {
   private _divContainer: JQuery;
@@ -82,59 +80,6 @@ class ScreenManager {
     } else {
       this._divContainer.trigger(type, event);
     }
-  }
-
-  private _getElementPosition(elem: Topic) {
-    // Retrieve current element position.
-    const elementPosition = elem.getPosition();
-    let { x } = elementPosition;
-    let { y } = elementPosition;
-
-    // Add workspace offset.
-    x -= this._padding.x;
-    y -= this._padding.y;
-
-    // Scale coordinate in order to be relative to the workspace. That's coord/size;
-    x /= this._scale;
-    y /= this._scale;
-
-    // Remove decimal part..
-    return { x, y };
-  }
-
-  getWorkspaceIconPosition(e: Icon) {
-    // Retrieve current icon position.
-    const image = e.getImage();
-    const elementPosition = image.getPosition();
-    const imageSize = e.getSize();
-
-    // Add group offset
-    const iconGroup = e.getGroup();
-    const group = iconGroup.getNativeElement();
-    const coordOrigin = group.getCoordOrigin();
-    const groupSize = group.getSize();
-    const coordSize = group.getCoordSize();
-
-    const scale = {
-      x: coordSize.width / parseInt(groupSize.width, 10),
-      y: coordSize.height / parseInt(groupSize.height, 10),
-    };
-
-    let x = (elementPosition.x - coordOrigin.x - parseInt(imageSize.width, 10) / 2) / scale.x;
-    let y = (elementPosition.y - coordOrigin.y - parseInt(imageSize.height, 10) / 2) / scale.y;
-
-    // Retrieve iconGroup Position
-    const groupPosition = iconGroup.getPosition();
-    x += groupPosition.x;
-    y += groupPosition.y;
-
-    // Retrieve topic Position
-    const topic = iconGroup.getTopic();
-    const topicPosition = this._getElementPosition(topic);
-    topicPosition.x -= parseInt(topic.getSize().width, 10) / 2;
-
-    // Remove decimal part..
-    return { x: x + topicPosition.x, y: y + topicPosition.y };
   }
 
   getWorkspaceMousePosition(event: MouseEvent) {

@@ -1,10 +1,4 @@
-@import "editor.css";
-
 /* Overwrite some styles */
-body {
-    position: inherit;
-}
-
 div#footer {
     width: 100%;
     padding: 20px 30px;
@@ -32,4 +26,8 @@ div#footer-logo {
 
 div#mindplot {
     top:0;
+}
+
+#toolbar {
+    display: none;
 }

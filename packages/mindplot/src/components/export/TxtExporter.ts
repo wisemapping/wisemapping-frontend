@@ -18,6 +18,7 @@
 import { Mindmap } from '../..';
 import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
+import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
 
 class TxtExporter extends Exporter {
@@ -32,27 +33,27 @@ class TxtExporter extends Exporter {
     const { mindmap } = this;
 
     const branches = mindmap.getBranches();
-    const txtStr = this.traverseBranch('', branches);
+    const txtStr = this.traverseBranch('', '', branches);
     return Promise.resolve(txtStr);
   }
 
-  private traverseBranch(prefix: string, branches: INodeModel[]) {
+  private traverseBranch(indent: string, prefix: string, branches: INodeModel[]) {
     let result = '';
     branches
-      .filter((n) => n.getText() !== undefined)
       .forEach((node, index) => {
-        result = `${result}${prefix}${index + 1} ${node.getText()}`;
+        result = `${result}${indent}${prefix}${index + 1} ${node.getText() !== undefined ? node.getText() : ''}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();
           if (type === 'link') {
-            result = `${result} [link: ${(f as LinkModel).getUrl()}]`;
+            result = `${result}\n ${indent}  [Link: ${(f as LinkModel).getUrl()}]`;
+          }
+          if (type === 'note') {
+            result = `${result}\n${indent}  [Note: ${(f as NoteModel).getText()}]`;
           }
         });
         result = `${result}\n`;
 
-        if (node.getChildren().filter((n) => n.getText() !== undefined).length > 0) {
-          result += this.traverseBranch(`\t${prefix}${index + 1}.`, node.getChildren());
-        }
+        result += this.traverseBranch(`\t${indent}`, `${prefix}${index + 1}.`, node.getChildren());
       });
     return result;
   }

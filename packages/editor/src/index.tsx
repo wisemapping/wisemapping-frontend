@@ -1,136 +1,108 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Toolbar, { ToolbarActionType } from './components/toolbar';
 import Footer from './components/footer';
 import { IntlProvider } from 'react-intl';
 import {
     $notify,
     buildDesigner,
-    LocalStorageManager,
     PersistenceManager,
-    RESTPersistenceManager,
     DesignerOptionsBuilder,
-    Designer
+    Designer,
+    DesignerKeyboard,
+    EditorRenderMode,
 } from '@wisemapping/mindplot';
-import FR from './compiled-lang/fr.json';
-import ES from './compiled-lang/es.json';
-import EN from './compiled-lang/en.json';
-import DE from './compiled-lang/de.json';
-
+import './global-styled.css';
+import I18nMsg from './classes/i18n-msg';
+import Messages from '@wisemapping/mindplot/src/components/Messages';
 
 declare global {
-    var memoryPersistence: boolean;
-    var readOnly: boolean;
-    var lockTimestamp: string;
-    var lockSession: string;
-    var historyId: string;
-    var isAuth: boolean;
-    var mapId: number;
-    var userOptions: { zoom: string | number } | null;
-    var locale: string;
-    var mindmapLocked: boolean;
-    var mindmapLockedMsg: string;
-    var mapTitle: string;
-
     // used in mindplot
     var designer: Designer;
     var accountEmail: string;
 }
 
-export type EditorPropsType = {
-    initCallback?: (locale: string) => void;
-    mapId?: number;
-    isTryMode: boolean;
-    readOnlyMode: boolean;
-    locale?: string;
-    onAction: (action: ToolbarActionType) => void;
-};
-
-const loadLocaleData = (locale: string) => {
-    switch (locale) {
-        case 'fr':
-            return FR;
-        case 'en':
-            return EN;
-        case 'es':
-            return ES;
-        case 'de':
-            return DE;
-        default:
-            return EN;
-    }
+export type EditorOptions = {
+    mode: EditorRenderMode,
+    locale: string,
+    zoom?: number,
+    locked?: boolean,
+    lockedMsg?: string;
+    mapTitle: string;
+    enableKeyboardEvents: boolean;
 }
 
-const initMindplot = (locale: string) => {
-    // Change page title ...
-    document.title = `${global.mapTitle} | WiseMapping `;
-
-    // Configure persistence manager ...
-    let persistence: PersistenceManager;
-    if (!global.memoryPersistence && !global.readOnly) {
-        persistence = new RESTPersistenceManager({
-            documentUrl: '/c/restful/maps/{id}/document',
-            revertUrl: '/c/restful/maps/{id}/history/latest',
-            lockUrl: '/c/restful/maps/{id}/lock',
-            timestamp: global.lockTimestamp,
-            session: global.lockSession,
-        });
-    } else {
-        persistence = new LocalStorageManager(
-            `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
-            }`,
-            true
-        );
-    }
-
-    const params = new URLSearchParams(window.location.search.substring(1));
-
-    const zoomParam = Number.parseFloat(params.get('zoom'));
-    const options = DesignerOptionsBuilder.buildOptions({
-        persistenceManager: persistence,
-        readOnly: Boolean(global.readOnly || false),
-        mapId: String(global.mapId),
-        container: 'mindplot',
-        zoom:
-            zoomParam ||
-            (global.userOptions?.zoom != undefined
-                ? Number.parseFloat(global.userOptions.zoom as string)
-                : 0.8),
-        locale: locale,
-    });
-
-    // Build designer ...
-    const designer = buildDesigner(options);
-
-    // Load map from XML file persisted on disk...
-    const instance = PersistenceManager.getInstance();
-    const mindmap = instance.load(String(global.mapId));
-    designer.loadMap(mindmap);
-
-    if (global.mindmapLocked) {
-        $notify(global.mindmapLockedMsg);
-    }
+export type EditorProps = {
+    mapId: string;
+    options: EditorOptions;
+    persistenceManager: PersistenceManager;
+    onAction: (action: ToolbarActionType) => void;
+    onLoad?: (designer: Designer) => void;
 };
 
 const Editor = ({
-    initCallback = initMindplot,
     mapId,
-    isTryMode: isTryMode,
-    locale = 'en',
+    options,
+    persistenceManager,
     onAction,
-}: EditorPropsType): React.ReactElement => {
-    React.useEffect(() => {
-        initCallback(locale);
+    onLoad,
+}: EditorProps) => {
+
+    useEffect(() => {
+        // Change page title ...
+        document.title = `${options.mapTitle} | WiseMapping `;
+
+        // Load mindmap ...
+        const designer = onLoadDesigner(mapId, options, persistenceManager);
+        // Has extended actions been customized ...
+        if (onLoad) {
+            onLoad(designer);
+        }
+
+        // Load mindmap ...
+        const instance = PersistenceManager.getInstance();
+        const mindmap = instance.load(mapId);
+        designer.loadMap(mindmap);
+
+        if (options.locked) {
+            $notify(options.lockedMsg, false);
+        }
     }, []);
 
+    useEffect(() => {
+        if (options.enableKeyboardEvents) {
+            DesignerKeyboard.resume();
+        } else {
+            DesignerKeyboard.pause();
+        }
+    }, [options.enableKeyboardEvents]);
+    const onLoadDesigner = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager): Designer => {
+        const buildOptions = DesignerOptionsBuilder.buildOptions({
+            persistenceManager,
+            mode: options.mode,
+            mapId: mapId,
+            container: 'mindplot',
+            zoom: options.zoom,
+            locale: options.locale,
+        });
+
+        // Build designer ...
+        return buildDesigner(buildOptions);
+    };
+
+    const locale = options.locale;
+    const msg = I18nMsg.loadLocaleData(locale);
+    const mindplotStyle = (options.mode === 'viewonly') ? { top: 0 } : { top: 'inherit' };
     return (
-        <IntlProvider locale={locale} messages={loadLocaleData(locale)}>
-            <Toolbar
-                isTryMode={isTryMode}
-                onAction={onAction}
-            />
-            <div id="mindplot"></div>
-            <Footer showTryPanel={isTryMode} />
-        </IntlProvider>
+        <IntlProvider locale={locale} messages={msg}>
+            {(options.mode !== 'viewonly') &&
+                <Toolbar
+                    editorMode={options.mode}
+                    onAction={onAction}
+                />
+            }
+            <div id="mindplot" style={mindplotStyle}></div>
+            <Footer editorMode={options.mode} />
+        </IntlProvider >
     );
 }
 export default Editor;

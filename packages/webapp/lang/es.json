@@ -204,7 +204,7 @@
         "defaultMessage": "Crear"
     },
     "import.description": {
-        "defaultMessage": "Puede importar mapas de FreeMind 1.0.1 y WiseMapping a su lista de mapas. Seleccione el archivo que desea importar."
+        "defaultMessage": "Puede importar mapas de WiseMapping a su lista de mapas. Seleccione el archivo que desea importar."
     },
     "import.title": {
         "defaultMessage": "Importar mapa mental existente"

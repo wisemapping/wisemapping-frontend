@@ -93,7 +93,7 @@ class ImageIcon extends Icon {
 
   static _getFamilyIcons(iconId) {
     $assert(iconId != null, 'id must not be null');
-    $assert(iconId.indexOf('_') !== -1, "Invalid icon id (it must contain '_')");
+    $assert(iconId.indexOf('_') !== -1, `Invalid icon id (it must contain '_'). Id: ${iconId}`);
 
     let result = null;
     for (let i = 0; i < ImageIcon.prototype.ICON_FAMILIES.length; i++) {

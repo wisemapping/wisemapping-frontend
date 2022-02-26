@@ -8,7 +8,7 @@ import Client, { Label, ErrorInfo, MapInfo } from '../../../../classes/client';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../../redux/clientSlice';
-import AddLabelForm from '../add-label-form';
+import AddLabelDialog from '../../action-dispatcher/add-label-dialog';
 import { LabelListContainer } from './styled';
 
 export type LabelSelectorProps = {
@@ -29,7 +29,7 @@ export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.Rea
     return (
         <Container>
             <FormGroup>
-                <AddLabelForm onAdd={(label) => onChange(label, true)} />
+                <AddLabelDialog onAdd={(label) => onChange(label, true)} />
             </FormGroup>
             <LabelListContainer>
                 {labels.map(({ id, title, color }) => (

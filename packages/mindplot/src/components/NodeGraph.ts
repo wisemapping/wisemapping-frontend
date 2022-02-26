@@ -16,14 +16,13 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { ElementClass } from '@wisemapping/web2d';
+import { ElementClass, Point } from '@wisemapping/web2d';
 import TopicConfig from './TopicConfig';
 import NodeModel from './model/NodeModel';
 import Workspace from './Workspace';
 import DragTopic from './DragTopic';
 import LayoutManager from './layout/LayoutManager';
 import SizeType from './SizeType';
-import PositionType from './PositionType';
 
 abstract class NodeGraph {
   private _mouseEvents: boolean;
@@ -105,7 +104,7 @@ abstract class NodeGraph {
     return this._size;
   }
 
-  setSize(size: SizeType, force?: boolean) {
+  setSize(size: SizeType) {
     this._size.width = size.width;
     this._size.height = size.height;
   }
@@ -160,15 +159,15 @@ abstract class NodeGraph {
     workspace.removeChild(this);
   }
 
-  /** */
   createDragNode(layoutManager: LayoutManager) {
     const dragShape = this._buildDragShape();
+    
     return new DragTopic(dragShape, this, layoutManager);
   }
 
   abstract _buildDragShape();
 
-  getPosition(): PositionType {
+  getPosition(): Point {
     const model = this.getModel();
     return model.getPosition();
   }

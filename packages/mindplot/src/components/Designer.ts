@@ -69,7 +69,7 @@ class Designer extends Events {
 
   private _workspace: Workspace;
 
-  private _eventBussDispatcher: EventBusDispatcher;
+  _eventBussDispatcher: EventBusDispatcher;
 
   private _dragManager: DragManager;
 
@@ -87,6 +87,7 @@ class Designer extends Events {
     $assert(divElement, 'divElement must be defined');
 
     // Set up i18n location ...
+    console.log(`Editor location: ${options.locale}`);
     Messages.init(options.locale);
 
     this._options = options;
@@ -110,7 +111,7 @@ class Designer extends Events {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElement);
-    this._workspace = new Workspace(screenManager, this._model.getZoom(), !!options.readOnly);
+    this._workspace = new Workspace(screenManager, this._model.getZoom(), options.mode === 'viewonly');
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -208,14 +209,11 @@ class Designer extends Events {
     });
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
-      dragTopic.updateFreeLayout(event);
-      if (!dragTopic.isFreeLayoutOn()) {
-        // The node is being drag. Is the connection still valid ?
-        dragConnector.checkConnection(dragTopic);
+      // The node is being drag. Is the connection still valid ?
+      dragConnector.checkConnection(dragTopic);
 
-        if (!dragTopic.isVisible() && dragTopic.isConnected()) {
-          dragTopic.setVisibility(true);
-        }
+      if (!dragTopic.isVisible() && dragTopic.isConnected()) {
+        dragTopic.setVisibility(true);
       }
     });
 
@@ -335,7 +333,7 @@ class Designer extends Events {
   zoomOut(factor = 1.2) {
     const model = this.getModel();
     const scale = model.getZoom() * factor;
-    if (scale <= 1.9) {
+    if (scale <= 7.0) {
       model.setZoom(scale);
       this._workspace.setZoom(scale);
     } else {
@@ -626,7 +624,7 @@ class Designer extends Events {
   }
 
   isReadOnly(): boolean {
-    return Boolean(this._options?.readOnly);
+    return Boolean(this._options?.mode === 'viewonly');
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
