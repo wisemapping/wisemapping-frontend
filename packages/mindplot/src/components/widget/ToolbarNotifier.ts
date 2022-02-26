@@ -20,16 +20,17 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 
 class ToolbarNotifier {
-  get container() {
+  static get container() {
     return $('#headerNotifier');
   }
 
-  hide() {
+  static hide() {
     this.container.hide();
   }
 
-  logMessage(msg) {
+  static show(msg: string, fade: boolean) {
     $assert(msg, 'msg can not be null');
+
     // In case of print,embedded no message is displayed ....
     if (this.container && this.container.length && !this.container.data('transitioning')) {
       this.container.data('transitioning', true);
@@ -37,15 +38,19 @@ class ToolbarNotifier {
       this.container.css({
         left: ($(window).width() - this.container.width()) / 2 - 9,
       });
-      this.container.show().fadeOut(5000);
+
+      if (fade) {
+        this.container.show().fadeOut(5000);
+      } else {
+        this.container.show();
+      }
     }
     this.container.data('transitioning', false);
   }
 }
 
-const toolbarNotifier = new ToolbarNotifier();
-const $notify = (msg) => {
-  toolbarNotifier.logMessage(msg);
+const $notify = (msg: string, fade = true) => {
+  ToolbarNotifier.show(msg, fade);
 };
 
 export { $notify };

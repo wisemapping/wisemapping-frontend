@@ -64,7 +64,7 @@ const Editor = ({
         designer.loadMap(mindmap);
 
         if (options.locked) {
-            $notify(options.lockedMsg);
+            $notify(options.lockedMsg, false);
         }
     }, []);
 
@@ -96,6 +96,7 @@ const Editor = ({
 
     const locale = options.locale;
     const msg = I18nMsg.loadLocaleData(locale);
+    const mindplotStyle = (options.mode === 'viewonly') ? { top: 0 } : { top: 'inherit' };
     return (
         <IntlProvider locale={locale} messages={msg}>
             {(options.mode !== 'viewonly') &&
@@ -104,9 +105,9 @@ const Editor = ({
                     onAction={onAction}
                 />
             }
-            <div id="mindplot"></div>
+            <div id="mindplot" style={mindplotStyle}></div>
             <Footer editorMode={options.mode} />
-        </IntlProvider>
+        </IntlProvider >
     );
 }
 export default Editor;
