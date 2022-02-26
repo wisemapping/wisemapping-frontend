@@ -75,11 +75,6 @@ const Editor = ({
             DesignerKeyboard.pause();
         }
     }, [options.enableKeyboardEvents]);
-
-    useEffect(() => {
-        Messages.init(options.locale);
-    }, [options.locale]);
-
     const onLoadDesigner = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager): Designer => {
         const buildOptions = DesignerOptionsBuilder.buildOptions({
             persistenceManager,

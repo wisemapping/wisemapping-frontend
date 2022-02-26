@@ -611,7 +611,7 @@ export default class RestClient implements Client {
         }
     }
 
-    buildPersistenceManager(editorMode: EditorRenderMode): PersistenceManager {
+    buildPersistenceManager(editorMode: EditorRenderMode ): PersistenceManager {
         if (this.persistenceManager) {
             return this.persistenceManager;
         }

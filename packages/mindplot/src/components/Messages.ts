@@ -22,6 +22,7 @@ class Messages {
   public static __bundle;
 
   static init(locale: string) {
+    console.log(`Init designer message: ${locale}`);
     let userLocale = $defined(locale) ? locale : 'en';
     let bundle = Bundle[userLocale];
 
@@ -36,7 +37,6 @@ class Messages {
 
 const $msg = function $msg(key: string) {
   if (!Messages.__bundle) {
-    console.log('Trigger initialization');
     Messages.init('en');
   }
   const msg = Messages.__bundle[key];

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
 import Client from '../../classes/client';
-import { activeInstance } from '../../redux/clientSlice';
+import { activeInstance, fetchAccount } from '../../redux/clientSlice';
 import { PersistenceManager } from '@wisemapping/mindplot';
 import EditorOptionsBulder from './EditorOptionsBuider';
 
@@ -20,22 +20,22 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const hotkey = useSelector(hotkeysEnabled);
     const userLocale = AppI18n.getUserLocale();
     const client: Client = useSelector(activeInstance);
-    const [persistenceManager, setPersistenceManager] = React.useState<PersistenceManager>();
     const { mapId, options } = EditorOptionsBulder.build(userLocale.code, hotkey, isTryMode);
 
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
-        const persistence = client.buildPersistenceManager(options.mode);
-        setPersistenceManager(persistence);
-        return () => client.removePersistenceManager();
     }, []);
 
-    // As temporal hack, editor properties are propagated from global variables...
-    return persistenceManager ? (
+    // Account settings can be null and editor cannot be initilized multiple times. This creates problems
+    // at the i18n resource loading.
+    const persistence = client.buildPersistenceManager(options.mode);
+    const loadCompleted = persistence && (options.mode === 'showcase' || fetchAccount());
+
+    return loadCompleted ? (
         <>
             <Editor onAction={setActiveDialog}
                 options={options}
-                persistenceManager={persistenceManager}
+                persistenceManager={persistence}
                 mapId={mapId} />
             {
                 activeDialog &&
