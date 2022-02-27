@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { Image } from '@wisemapping/web2d';
+import { Image, Point } from '@wisemapping/web2d';
 import IconGroup from './IconGroup';
-import { Point } from '@wisemapping/web2d';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 
 abstract class Icon {
   protected _image: Image;
+
   protected _group: IconGroup;
 
   constructor(url: string) {

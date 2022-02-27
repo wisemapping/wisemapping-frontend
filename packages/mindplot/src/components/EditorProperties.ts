@@ -17,20 +17,21 @@
  */
 
 class EditorProperties {
+  private _zoom: number;
+
   constructor() {
     this._zoom = 0;
-    this._position = 0;
   }
 
-  setZoom(zoom) {
+  setZoom(zoom: number) {
     this._zoom = zoom;
   }
 
-  getZoom() {
+  getZoom(): number {
     return this._zoom;
   }
 
-  asProperties() {
+  asProperties(): string {
     return `zoom=${this._zoom}\n`;
   }
 }

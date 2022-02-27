@@ -431,7 +431,6 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   setFontSize(value: number, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setSize(value);
@@ -443,8 +442,7 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
-  setFontStyle(value, updateModel) {
+  setFontStyle(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setStyle(value);
     if ($defined(updateModel) && updateModel) {
@@ -454,8 +452,7 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
-  setFontWeight(value, updateModel) {
+  setFontWeight(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setWeight(value);
     if ($defined(updateModel) && updateModel) {
@@ -465,7 +462,6 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   getFontWeight() {
     const model = this.getModel();
     let result = model.getFontWeight();
@@ -476,8 +472,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontFamily() {
+  getFontFamily(): string {
     const model = this.getModel();
     let result = model.getFontFamily();
     if (!$defined(result)) {
@@ -487,8 +482,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontColor() {
+  getFontColor(): string {
     const model = this.getModel();
     let result = model.getFontColor();
     if (!$defined(result)) {
@@ -498,8 +492,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontStyle() {
+  getFontStyle(): string {
     const model = this.getModel();
     let result = model.getFontStyle();
     if (!$defined(result)) {
@@ -509,8 +502,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontSize() {
+  getFontSize(): number {
     const model = this.getModel();
     let result = model.getFontSize();
     if (!$defined(result)) {
@@ -520,8 +512,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  setFontColor(value, updateModel) {
+  setFontColor(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setColor(value);
     if ($defined(updateModel) && updateModel) {
@@ -530,7 +521,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  _setText(text: string, updateModel: boolean) {
+  private _setText(text: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
 
@@ -540,7 +531,6 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
   setText(text: string) {
     // Avoid empty nodes ...
     if (!text || $.trim(text).length === 0) {
@@ -552,7 +542,6 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   getText(): string {
     const model = this.getModel();
     let result = model.getText();
@@ -562,12 +551,11 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
   setBackgroundColor(color: string) {
     this._setBackgroundColor(color, true);
   }
 
-  _setBackgroundColor(color: string, updateModel: boolean) {
+  private _setBackgroundColor(color: string, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setFill(color);
 
@@ -593,11 +581,11 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setBorderColor(color: string) {
+  setBorderColor(color: string): void {
     this._setBorderColor(color, true);
   }
 
-  _setBorderColor(color: string, updateModel: boolean) {
+  private _setBorderColor(color: string, updateModel: boolean): void {
     const innerShape = this.getInnerShape();
     innerShape.setAttribute('strokeColor', color);
 
@@ -612,8 +600,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  getBorderColor() {
+  getBorderColor(): string {
     const model = this.getModel();
     let result = model.getBorderColor();
     if (!$defined(result)) {
@@ -622,7 +609,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  _buildTopicShape() {
+  _buildTopicShape(): ElementClass {
     const groupAttributes = {
       width: 100,
       height: 100,
@@ -660,17 +647,17 @@ abstract class Topic extends NodeGraph {
     group.setTestId(model.getId());
   }
 
-  _registerDefaultListenersToElement(elem, topic) {
-    const mouseOver = function mouseOver(event) {
+  _registerDefaultListenersToElement(elem: ElementClass, topic: Topic) {
+    const mouseOver = function mouseOver() {
       if (topic.isMouseEventsEnabled()) {
-        topic.handleMouseOver(event);
+        topic.handleMouseOver();
       }
     };
     elem.addEvent('mouseover', mouseOver);
 
-    const outout = function outout(event) {
+    const outout = function outout() {
       if (topic.isMouseEventsEnabled()) {
-        topic.handleMouseOut(event);
+        topic.handleMouseOut();
       }
     };
     elem.addEvent('mouseout', outout);
@@ -697,13 +684,12 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  areChildrenShrunken() {
+  areChildrenShrunken(): boolean {
     const model = this.getModel();
     return model.areChildrenShrunken() && !this.isCentralTopic();
   }
 
-  /** */
-  isCollapsed() {
+  isCollapsed(): boolean {
     let result = false;
 
     let current = this.getParent();
@@ -714,8 +700,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  setChildrenShrunken(value) {
+  setChildrenShrunken(value: boolean) {
     // Update Model ...
     const model = this.getModel();
     model.setChildrenShrunken(value);

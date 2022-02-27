@@ -39,7 +39,7 @@ import Relationship from './Relationship';
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
 
-import { create } from './NodeGraphUtils';
+import TopicFactory from './TopicFactory';
 
 import EventBus from './layout/EventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
@@ -225,9 +225,9 @@ class Designer extends Events {
     return dragManager;
   }
 
-  private _buildNodeGraph(model: NodeModel, readOnly: boolean): MainTopic {
+  private _buildNodeGraph(model: NodeModel, readOnly: boolean): Topic {
     // Create node graph ...
-    const topic = create(model, { readOnly });
+    const topic = TopicFactory.create(model, { readOnly });
     this.getModel().addTopic(topic);
     const me = this;
     // Add Topic events ...
