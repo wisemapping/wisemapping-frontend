@@ -225,15 +225,14 @@ const visibilityTest = () => {
   rect.setPosition(120, 20);
   workspace.append(rect);
   rect.addEvent('mouseover', () => {
-    alert('Mouse Over');
+    rect.setVisibility(false, 500);
   });
 
-  let isVisible = true;
-  const executer = function () {
-    isVisible = !isVisible;
-    rect.setVisibility(isVisible);
-  };
-    // executer.periodical(100);
+  rect.addEvent('mouseout', () => {
+    rect.setVisibility(true, 500);
+  });
+
+  // executer.periodical(100);
   workspace.addItAsChildTo($('#visibility'));
 };
 visibilityTest();

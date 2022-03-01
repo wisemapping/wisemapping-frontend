@@ -17,24 +17,24 @@
  */
 
 class Events {
-  private $events;
+  private _handlerByType;
 
   constructor() {
-    this.$events = {};
+    this._handlerByType = {};
   }
 
-  static _removeOn(string: string) {
-    return string.replace(/^on([A-Z])/, (full, first) => first.toLowerCase());
+  static _normalizeEventName(string: string) {
+    return string.replace(/^on([A-Z])/, (_full, first) => first.toLowerCase());
   }
 
   addEvent(typeName: string, fn?, internal?: boolean): Events {
-    const type = Events._removeOn(typeName);
+    const type = Events._normalizeEventName(typeName);
 
     // Add function had not been added yet
-    const funByType = this.$events[type] ? this.$events[type] : [];
+    const funByType = this._handlerByType[type] ? this._handlerByType[type] : [];
     if (!funByType.includes(fn)) {
       funByType.push(fn);
-      this.$events[type] = funByType;
+      this._handlerByType[type] = funByType;
     }
 
     // Mark reference ...
@@ -42,25 +42,21 @@ class Events {
     return this;
   }
 
-  fireEvent(typeName: string, eventArgs?, delay?: boolean): Events {
-    const type = Events._removeOn(typeName);
-    const events = this.$events[type];
+  fireEvent(typeName: string, eventArgs?): Events {
+    const type = Events._normalizeEventName(typeName);
+    const events = this._handlerByType[type];
     if (!events) return this;
 
     const args = Array.isArray(eventArgs) ? eventArgs : [eventArgs];
     events.forEach(((fn) => {
-      if (delay) {
-        fn.delay(delay, this, args);
-      } else {
-        fn.apply(this, args);
-      }
+      fn.apply(this, args);
     }));
     return this;
   }
 
   removeEvent(typeName: string, fn?): Events {
-    const type = Events._removeOn(typeName);
-    const events = this.$events[type];
+    const type = Events._normalizeEventName(typeName);
+    const events = this._handlerByType[type];
     if (events && !fn.internal) {
       const index = events.indexOf(fn);
       if (index !== -1) events.splice(index, 1);

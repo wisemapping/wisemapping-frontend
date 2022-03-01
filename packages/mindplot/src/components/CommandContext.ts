@@ -116,7 +116,7 @@ class CommandContext {
   moveTopic(topic: Topic, position: Point) {
     $assert(topic, 'topic cannot be null');
     $assert(position, 'position cannot be null');
-    EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
+    EventBus.instance.fireEvent('topicMoved', {
       node: topic.getModel(),
       position,
     });

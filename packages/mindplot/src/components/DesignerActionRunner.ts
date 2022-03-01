@@ -42,19 +42,19 @@ class DesignerActionRunner {
     command.execute(this._context);
     this._undoManager.enqueue(command);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
   }
 
   undo(): void {
     this._undoManager.execUndo(this._context);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
   }
 
   redo(): void {
     this._undoManager.execRedo(this._context);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
   }
 
   fireChangeEvent(): void {

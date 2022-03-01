@@ -24,8 +24,6 @@ import Workspace from './Workspace';
 class DragManager {
   private _workspace: Workspace;
 
-  private _designerModel: Workspace;
-
   private _isDragInProcess: boolean;
 
   private _eventDispatcher: EventBusDispatcher;
@@ -38,7 +36,6 @@ class DragManager {
 
   constructor(workspace: Workspace, eventDispatcher: EventBusDispatcher) {
     this._workspace = workspace;
-    this._designerModel = workspace;
     this._listeners = {};
     this._isDragInProcess = false;
     this._eventDispatcher = eventDispatcher;
@@ -68,7 +65,7 @@ class DragManager {
 
         // Register mouse up listeners ...
         const mouseUpListener = dragManager._buildMouseUpListener(
-          workspace, topic, dragNode, dragManager,
+          workspace, dragNode, dragManager,
         );
         screen.addEvent('mouseup', mouseUpListener);
 
@@ -115,7 +112,7 @@ class DragManager {
     return result;
   }
 
-  protected _buildMouseUpListener(workspace: Workspace, topic: Topic, dragNode, dragManager: DragManager) {
+  protected _buildMouseUpListener(workspace: Workspace, dragNode, dragManager: DragManager) {
     const screen = workspace.getScreenManager();
     const me = this;
     const result = (event: Event) => {
@@ -149,13 +146,7 @@ class DragManager {
     return result;
   }
 
-  /**
-     * type:
-     *  - startdragging.
-     *  - dragging
-     *  - enddragging
-     */
-  addEvent(type: string, listener) {
+  addEvent(type: 'startdragging' | 'dragging' | 'enddragging', listener) {
     this._listeners[type] = listener;
   }
 }

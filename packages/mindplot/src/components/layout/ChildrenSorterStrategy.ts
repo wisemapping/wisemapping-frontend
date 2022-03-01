@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
-/*
+/**
  *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
@@ -17,22 +15,26 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import RootedTreeSet from "./RootedTreeSet";
+import Node from './Node';
+import PositionType from "../PositionType";
+
 abstract class ChildrenSorterStrategy {
-  abstract computeChildrenIdByHeights(treeSet, node);
+  abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node);
 
-  abstract computeOffsets(treeSet, node);
+  abstract computeOffsets(treeSet: RootedTreeSet, node: Node);
 
-  abstract insert(treeSet, parent, child, order);
+  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number);
 
-  abstract detach(treeSet, node);
+  abstract detach(treeSet: RootedTreeSet, node: Node);
 
-  abstract predict(treeSet, parent, node, position, free);
+  abstract predict(treeSet: RootedTreeSet, parent, node: Node, position: PositionType);
 
-  abstract verify(treeSet, node);
+  abstract verify(treeSet: RootedTreeSet, node: Node);
 
-  abstract getChildDirection(treeSet, node);
+  abstract getChildDirection(treeSet: RootedTreeSet, node: Node);
 
-  abstract toString();
+  abstract toString(): string;
 }
 
 export default ChildrenSorterStrategy;

@@ -52,9 +52,6 @@ class AddFeatureToTopicCommand extends Command {
     this._featureModel = null;
   }
 
-  /**
-         * Overrides abstract parent method
-         */
   execute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
 
@@ -66,10 +63,6 @@ class AddFeatureToTopicCommand extends Command {
     topic.addFeature(this._featureModel);
   }
 
-  /**
-         * Overrides abstract parent method
-         * @see {@link mindplot.Command.undoExecute}
-         */
   undoExecute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
     topic.removeFeature(this._featureModel);

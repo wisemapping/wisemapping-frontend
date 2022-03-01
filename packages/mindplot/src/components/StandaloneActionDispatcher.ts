@@ -81,7 +81,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, pos: Point) => {
       const result = topic.getPosition();
-      EventBus.instance.fireEvent(EventBus.events.NodeMoveEvent, {
+      EventBus.instance.fireEvent('topicMoved', {
         node: topic.getModel(),
         position: pos,
       });
@@ -252,7 +252,6 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
   addFeatureToTopic(topicId: number, featureType: FeatureType, attributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);

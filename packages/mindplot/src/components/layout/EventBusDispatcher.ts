@@ -15,59 +15,57 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import PositionType from '../PositionType';
+import SizeType from '../SizeType';
+import Topic from '../Topic';
 import EventBus from './EventBus';
+import LayoutManager from './LayoutManager';
 
 class EventBusDispatcher {
+  private _layoutManager: LayoutManager;
+
   constructor() {
     this.registerBusEvents();
   }
 
-  /**
-     * @param {mindplot.layout.LayoutManager} layoutManager
-     */
-  setLayoutManager(layoutManager) {
+  setLayoutManager(layoutManager: LayoutManager) {
     this._layoutManager = layoutManager;
   }
 
-  /**
-     * register bus events
-     */
   registerBusEvents() {
-    EventBus.instance.addEvent(EventBus.events.NodeAdded, this._nodeAdded.bind(this));
-    EventBus.instance.addEvent(EventBus.events.NodeRemoved, this._nodeRemoved.bind(this));
-    EventBus.instance.addEvent(EventBus.events.NodeResizeEvent, this._nodeResizeEvent.bind(this));
-    EventBus.instance.addEvent(EventBus.events.NodeMoveEvent, this._nodeMoveEvent.bind(this));
-    EventBus.instance.addEvent(
-      EventBus.events.NodeDisconnectEvent, this._nodeDisconnectEvent.bind(this),
-    );
-    EventBus.instance.addEvent(EventBus.events.NodeConnectEvent, this._nodeConnectEvent.bind(this));
-    EventBus.instance.addEvent(EventBus.events.NodeShrinkEvent, this._nodeShrinkEvent.bind(this));
-    EventBus.instance.addEvent(EventBus.events.DoLayout, this._doLayout.bind(this));
+    EventBus.instance.addEvent('topicAdded', this._topicAdded.bind(this));
+    EventBus.instance.addEvent('topicRemoved', this._topicRemoved.bind(this));
+    EventBus.instance.addEvent('topicResize', this._topicResizeEvent.bind(this));
+    EventBus.instance.addEvent('topicMoved', this._topicMoved.bind(this));
+    EventBus.instance.addEvent('topicDisconect', this._topicDisconect.bind(this));
+    EventBus.instance.addEvent('topicConnected', this._topicConnected.bind(this));
+    EventBus.instance.addEvent('childShrinked', this._childShrinked.bind(this));
+    EventBus.instance.addEvent('forceLayout', this._forceLayout.bind(this));
   }
 
-  _nodeResizeEvent(args) {
+  private _topicResizeEvent(args: { node: Topic, size: SizeType }) {
     this._layoutManager.updateNodeSize(args.node.getId(), args.size);
   }
 
-  _nodeMoveEvent(args) {
+  private _topicMoved(args: { node: Topic, position: PositionType }) {
     this._layoutManager.moveNode(args.node.getId(), args.position);
   }
 
-  _nodeDisconnectEvent(node) {
+  private _topicDisconect(node: Topic) {
     this._layoutManager.disconnectNode(node.getId());
   }
 
-  _nodeConnectEvent(args) {
+  private _topicConnected(args: { parentNode: Topic, childNode: Topic }) {
     this._layoutManager.connectNode(
       args.parentNode.getId(), args.childNode.getId(), args.childNode.getOrder(),
     );
   }
 
-  _nodeShrinkEvent(node) {
+  private _childShrinked(node: Topic) {
     this._layoutManager.updateShrinkState(node.getId(), node.areChildrenShrunken());
   }
 
-  _nodeAdded(node) {
+  private _topicAdded(node: Topic) {
     // Central topic must not be added twice ...
     if (node.getId() !== 0) {
       this._layoutManager.addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
@@ -75,21 +73,14 @@ class EventBusDispatcher {
     }
   }
 
-  _nodeRemoved(node) {
+  private _topicRemoved(node: Topic) {
     this._layoutManager.removeNode(node.getId());
   }
 
-  _doLayout() {
-    //        (function() {
+  private _forceLayout() {
     this._layoutManager.layout(true);
-    //        console.log("---------");
-    //        this._layoutManager.dump();
-    //        console.log("---------");
-    //        console.log("---------");
-    //        }).delay(0, this);
   }
 
-  /** @return layout manager */
   getLayoutManager() {
     return this._layoutManager;
   }

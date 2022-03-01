@@ -40,14 +40,6 @@ const TopicFeatureFactory = {
     icon: NoteIcon,
   },
 
-  /**
-     * @param {mindplot.Topic} topic
-     * @param {mindplot.model.FeatureModel} model
-     * @param {Boolean} readOnly true if the editor is running in read-only mode
-     * @throws will throw an error if topic is null or undefined
-     * @throws will throw     v  an error if model is null or undefined
-     * @return {mindplot.n,nmn mn4     r   be5qnwwddwsz5on} a new instance of the icon subclass matching the topic feature
-     */
   createIcon(topic, model, readOnly) {
     $assert(topic, 'topic can not be null');
     $assert(model, 'model can not be null');
