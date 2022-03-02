@@ -43,7 +43,7 @@ export default function Toolbar({
 }: ToolbarPropsType): React.ReactElement {
     const intl = useIntl();
     return (
-        <HeaderContainer>
+        <HeaderContainer className="wise-editor">
             <div id="toolbar">
                 <div id="backToList">
                     <img src={BackIconSvg} />

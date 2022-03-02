@@ -100,7 +100,8 @@ const Editor = ({
                     onAction={onAction}
                 />
             }
-            <div id="mindplot" style={mindplotStyle}></div>
+            <div id="mindplot" style={mindplotStyle} className="wise-editor"></div>
+            <div id="mindplot-tooltips" className="wise-editor"></div>
             <Footer editorMode={options.mode} />
         </IntlProvider >
     );
