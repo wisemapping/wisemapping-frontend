@@ -19,7 +19,6 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
-import Menu from './widget/Menu';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 
 let designer: Designer;
@@ -35,16 +34,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
   const persistence = options.persistenceManager;
   $assert(persistence, 'persistence must be defined');
   PersistenceManager.init(persistence);
-
-  // Register toolbar event ...
-  if (options.mode === 'edition-owner' || options.mode === 'edition-editor' || options.mode === 'showcase') {
-    const menu = new Menu(designer, 'toolbar');
-
-    //  If a node has focus, focus can be move to another node using the keys.
-    designer.cleanScreen = () => {
-      menu.clear();
-    };
-  }
 
   return designer;
 }

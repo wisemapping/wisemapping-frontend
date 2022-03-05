@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { $msg } from '../Messages';
-import PersistenceManager from '../PersistenceManager';
-import { $notify } from './ToolbarNotifier';
-import { $notifyModal } from './ModalDialogNotifier';
-import Designer from '../Designer';
-import ToolbarItem from './ToolbarItem';
+import { $msg } from '@wisemapping/mindplot/src/components/Messages';
+import PersistenceManager from '@wisemapping/mindplot/src/components/PersistenceManager';
+import { $notify } from '@wisemapping/mindplot/src/components/widget/ToolbarNotifier';
+import { $notifyModal } from '../menu/ModalDialogNotifier';
+import Designer from '@wisemapping/mindplot/src/components/Designer';
+import ToolbarItem from '../menu/ToolbarItem';
 
 class IMenu {
   private _designer: Designer;

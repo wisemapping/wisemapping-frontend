@@ -35,6 +35,6 @@ export default class EditorOptionsBulder {
     }
 
     static loadMapId(): number {
-        return !AppConfig.isDevelopEnv() ? global.mapId : 555;
+        return !AppConfig.isDevelopEnv() ? global.mapId : 11;
     }
 }

@@ -17,7 +17,7 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-import FloatingTip from './FloatingTip';
+import FloatingTip from '@wisemapping/mindplot/src/components/widget/FloatingTip';
 
 class KeyboardShortcutTooltip extends FloatingTip {
   constructor(buttonElem, text) {

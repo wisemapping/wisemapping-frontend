@@ -32,9 +32,13 @@ const defaultOptions = {
 };
 
 class FloatingTip extends Events {
+  private options;
+
+  private element;
+
   constructor(element, options) {
+    super();
     const opts = { ...defaultOptions, ...options };
-    super(element, opts);
     this.setOptions(opts);
     this.element = element;
     this._createPopover();

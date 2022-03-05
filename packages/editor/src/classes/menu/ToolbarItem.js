@@ -17,7 +17,7 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-import Events from '../Events';
+import Events from './Events';
 
 class ToolbarItem extends Events {
   constructor(buttonId, fn, options) {
