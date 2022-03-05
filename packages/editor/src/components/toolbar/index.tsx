@@ -120,13 +120,15 @@ export default function Toolbar({
                     >
                         <img src={ExportSvg} />
                     </ToolbarButton>
-                    <ToolbarButton
-                        id="print"
-                        className="buttonOn"
-                        onClick={() => onAction('print')}
-                    >
-                        <img src={PrintSvg} />
-                    </ToolbarButton>
+                    {(editorMode === 'edition-owner' || editorMode === 'edition-editor' || editorMode === 'edition-viewer') && (
+                        <ToolbarButton
+                            id="print"
+                            className="buttonOn"
+                            onClick={() => onAction('print')}
+                        >
+                            <img src={PrintSvg} />
+                        </ToolbarButton>
+                    )}
                     {editorMode === 'edition-owner' && (
                         <>
                             <ToolbarButton
@@ -146,9 +148,9 @@ export default function Toolbar({
                         </>
                     )}
                     {(editorMode === 'edition-owner' || editorMode === 'edition-editor') && (
-                    <ToolbarButton id="account">
-                        <img src={AccountSvg} />
-                    </ToolbarButton>
+                        <ToolbarButton id="account">
+                            <img src={AccountSvg} />
+                        </ToolbarButton>
                     )}
                     {editorMode === 'edition-owner' && (
                         <ActionButton onClick={() => onAction('share')}>
