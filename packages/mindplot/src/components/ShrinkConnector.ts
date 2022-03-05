@@ -78,8 +78,8 @@ class ShirinkConnector {
     this._isShrink = isShrink;
   }
 
-  setVisibility(value: boolean): void {
-    this._ellipse.setVisibility(value);
+  setVisibility(value: boolean, fade = 0): void {
+    this._ellipse.setVisibility(value, fade);
   }
 
   setOpacity(opacity: number): void {

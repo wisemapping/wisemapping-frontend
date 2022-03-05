@@ -46,7 +46,7 @@ class OptionsBuilder {
     }
 
     const defaultOptions: DesignerOptions = {
-      mode: 'edition',
+      mode: 'edition-owner',
       zoom: 0.85,
       saveOnLoad: true,
       containerSize,

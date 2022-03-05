@@ -1,25 +1,16 @@
 import { EditorOptions } from '@wisemapping/editor';
+import { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
 
 export default class EditorOptionsBulder {
-    static build(locale: string, hotkeys: boolean, isTryMode: boolean): { options: EditorOptions, mapId: number } {
+    static build(locale: string, mode: EditorRenderMode, hotkeys: boolean): EditorOptions {
 
         let options: EditorOptions = {
             enableKeyboardEvents: hotkeys,
             locale: locale,
+            mode: mode,
         };
 
-        if (isTryMode) {
-            // Sent to try mode ...
-            options.mode = 'showcase';
-        } else if (global.mindmapLocked) {
-            // Map locked, open for view mode ...
-            options.mode = 'viewonly';
-        } else {
-            options.mode = 'edition';
-        }
-
-        let mapId: number;
         if (!AppConfig.isDevelopEnv()) {
             options = {
                 zoom: (global.userOptions?.zoom != undefined
@@ -30,7 +21,6 @@ export default class EditorOptionsBulder {
                 mapTitle: global.mapTitle,
                 ...options
             }
-            mapId = global.mapId;
         } else {
             // Running in a development mode.
             console.log('Running editor in development mode');
@@ -40,8 +30,11 @@ export default class EditorOptionsBulder {
                 mapTitle: "Develop Mindnap",
                 ...options
             }
-            mapId = 666;
         }
-        return { options, mapId };
+        return options;
+    }
+
+    static loadMapId(): number {
+        return !AppConfig.isDevelopEnv() ? global.mapId : 555;
     }
 }

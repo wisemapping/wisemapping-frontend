@@ -36,7 +36,7 @@ const options: EditorOptions = {
   zoom: 0.8,
   locked: false,
   mapTitle: "Develop Mindnap",
-  mode: 'edition',
+  mode: 'edition-owner',
   locale: 'en',
   enableKeyboardEvents: true
 };

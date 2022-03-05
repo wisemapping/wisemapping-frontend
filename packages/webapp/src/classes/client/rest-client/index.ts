@@ -611,12 +611,12 @@ export default class RestClient implements Client {
         }
     }
 
-    buildPersistenceManager(editorMode: EditorRenderMode ): PersistenceManager {
+    buildPersistenceManager(editorMode: EditorRenderMode): PersistenceManager {
         if (this.persistenceManager) {
             return this.persistenceManager;
         }
         let persistence: PersistenceManager;
-        if (editorMode === 'edition') {
+        if (editorMode === 'edition-owner' || editorMode === 'edition-editor') {
             persistence = new RESTPersistenceManager({
                 documentUrl: '/c/restful/maps/{id}/document',
                 revertUrl: '/c/restful/maps/{id}/history/latest',
@@ -645,13 +645,15 @@ export default class RestClient implements Client {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private parseResponseOnError = (response: any): ErrorInfo => {
-        console.error("Backend error=>");
-        console.error(response.data);
+        console.error(`Performing backend action error: ${JSON.stringify(response)}`);
 
         let result: ErrorInfo | undefined;
         if (response) {
             const status: number = response.status;
             const data = response.data;
+            console.error(`Status Code: ${status}`);
+            console.error(`Status Data: ${response.data}`);
+            console.error(`Status Message: ${response.message}`);
 
             switch (status) {
                 case 401:

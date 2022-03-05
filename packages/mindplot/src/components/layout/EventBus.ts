@@ -17,25 +17,22 @@
  */
 import Events from '../Events';
 
+export type EventType = 'topicResize' | 'topicMoved' | 'childShrinked' | 'topicConnected' | 'topicAdded' | 'topicRemoved' | 'forceLayout' | 'topicDisconect';
 class EventBus extends Events {
+  // eslint-disable-next-line no-use-before-define
+  static _instance: EventBus = new EventBus();
+
+  static get instance(): EventBus {
+    return this._instance;
+  }
+
+  fireEvent(type: EventType, eventArgs?: unknown[] | unknown): Events {
+    return super.fireEvent(type, eventArgs);
+  }
+
+  addEvent(type: EventType, fn?, internal?: boolean): Events {
+    return super.addEvent(type, fn, internal);
+  }
 }
-
-/**
- * Enum for events
- * @enum {String}
- */
-EventBus.events = {
-  NodeResizeEvent: 'NodeResizeEvent',
-  NodeMoveEvent: 'NodeMoveEvent',
-  NodeShrinkEvent: 'NodeShrinkEvent',
-  NodeConnectEvent: 'NodeConnectEvent',
-  NodeDisconnectEvent: 'NodeDisconnectEvent',
-  NodeAdded: 'NodeAdded',
-  NodeRemoved: 'NodeRemoved',
-  DoLayout: 'DoLayout',
-};
-
-/** instance */
-EventBus.instance = new EventBus();
 
 export default EventBus;

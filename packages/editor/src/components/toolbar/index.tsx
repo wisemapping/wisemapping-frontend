@@ -43,12 +43,12 @@ export default function Toolbar({
 }: ToolbarPropsType): React.ReactElement {
     const intl = useIntl();
     return (
-        <HeaderContainer>
+        <HeaderContainer className="wise-editor">
             <div id="toolbar">
                 <div id="backToList">
                     <img src={BackIconSvg} />
                 </div>
-                {editorMode === 'edition' && (
+                {(editorMode === 'edition-editor' || editorMode === 'edition-owner') && (
                     <div id="persist" className="buttonContainer">
                         <ToolbarButton id="save" className="buttonOn">
                             <img src={SaveSvg} />
@@ -112,29 +112,15 @@ export default function Toolbar({
                     </ToolbarButton>
                 </div>
                 <div id="separator" className="buttonContainer"></div>
-                {editorMode === 'edition' && (
-                    <ToolbarRightContainer>
-                        <ToolbarButton
-                            id="export"
-                            className="buttonOn"
-                            onClick={() => onAction('export')}
-                        >
-                            <img src={ExportSvg} />
-                        </ToolbarButton>
-                        <ToolbarButton
-                            id="publishIt"
-                            className="buttonOn"
-                            onClick={() => onAction('publish')}
-                        >
-                            <img src={PublicSvg} />
-                        </ToolbarButton>
-                        <ToolbarButton
-                            id="history"
-                            className="buttonOn"
-                            onClick={() => onAction('history')}
-                        >
-                            <img src={HistorySvg} />
-                        </ToolbarButton>
+                <ToolbarRightContainer>
+                    <ToolbarButton
+                        id="export"
+                        className="buttonOn"
+                        onClick={() => onAction('export')}
+                    >
+                        <img src={ExportSvg} />
+                    </ToolbarButton>
+                    {(editorMode === 'edition-owner' || editorMode === 'edition-editor' || editorMode === 'edition-viewer') && (
                         <ToolbarButton
                             id="print"
                             className="buttonOn"
@@ -142,14 +128,37 @@ export default function Toolbar({
                         >
                             <img src={PrintSvg} />
                         </ToolbarButton>
+                    )}
+                    {editorMode === 'edition-owner' && (
+                        <>
+                            <ToolbarButton
+                                id="history"
+                                className="buttonOn"
+                                onClick={() => onAction('history')}
+                            >
+                                <img src={HistorySvg} />
+                            </ToolbarButton>
+                            <ToolbarButton
+                                id="publishIt"
+                                className="buttonOn"
+                                onClick={() => onAction('publish')}
+                            >
+                                <img src={PublicSvg} />
+                            </ToolbarButton>
+                        </>
+                    )}
+                    {(editorMode === 'edition-owner' || editorMode === 'edition-editor') && (
                         <ToolbarButton id="account">
                             <img src={AccountSvg} />
                         </ToolbarButton>
+                    )}
+                    {editorMode === 'edition-owner' && (
                         <ActionButton onClick={() => onAction('share')}>
                             {intl.formatMessage({ id: 'action.share', defaultMessage: 'Share' })}
                         </ActionButton>
-                    </ToolbarRightContainer>
-                )}
+
+                    )}
+                </ToolbarRightContainer>
             </div>
         </HeaderContainer>
     );

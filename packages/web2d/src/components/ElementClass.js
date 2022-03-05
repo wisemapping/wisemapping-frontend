@@ -161,12 +161,12 @@ class ElementClass {
   setStroke(width, style, color, opacity) {
     if (
       style != null
-            && style !== undefined
-            && style !== 'dash'
-            && style !== 'dot'
-            && style !== 'solid'
-            && style !== 'longdash'
-            && style !== 'dashdot'
+      && style !== undefined
+      && style !== 'dash'
+      && style !== 'dot'
+      && style !== 'solid'
+      && style !== 'longdash'
+      && style !== 'dashdot'
     ) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
@@ -255,8 +255,8 @@ class ElementClass {
     this.peer.setFill(null, opacity);
   }
 
-  setVisibility(isVisible) {
-    this.peer.setVisibility(isVisible);
+  setVisibility(value, fade) {
+    this.peer.setVisibility(value, fade);
   }
 
   isVisible() {

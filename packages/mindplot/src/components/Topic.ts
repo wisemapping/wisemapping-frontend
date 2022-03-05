@@ -28,7 +28,6 @@ import TopicStyle from './TopicStyle';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine from './ConnectionLine';
 import IconGroup from './IconGroup';
-import FadeEffect from './util/FadeEffect';
 import EventBus from './layout/EventBus';
 import ShirinkConnector from './ShrinkConnector';
 import NoteEditor from './widget/NoteEditor';
@@ -337,11 +336,6 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /**
-     * assigns the new feature model to the topic's node model and adds the respective icon
-     * @param {mindplot.model.FeatureModel} featureModel
-     * @return {mindplot.Icon} the icon corresponding to the feature model
-     */
   addFeature(featureModel: FeatureModel): Icon {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
@@ -350,7 +344,7 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.addFeature(featureModel);
 
-    const result = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
+    const result: Icon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
     iconGroup.addIcon(
       result,
       featureModel.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly(),
@@ -360,7 +354,6 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
   findFeatureById(id: number) {
     const model = this.getModel();
     return model.findFeatureById(id);
@@ -431,7 +424,6 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   setFontSize(value: number, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setSize(value);
@@ -443,8 +435,7 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
-  setFontStyle(value, updateModel) {
+  setFontStyle(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setStyle(value);
     if ($defined(updateModel) && updateModel) {
@@ -454,8 +445,7 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
-  setFontWeight(value, updateModel) {
+  setFontWeight(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setWeight(value);
     if ($defined(updateModel) && updateModel) {
@@ -465,7 +455,6 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   getFontWeight() {
     const model = this.getModel();
     let result = model.getFontWeight();
@@ -476,8 +465,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontFamily() {
+  getFontFamily(): string {
     const model = this.getModel();
     let result = model.getFontFamily();
     if (!$defined(result)) {
@@ -487,8 +475,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontColor() {
+  getFontColor(): string {
     const model = this.getModel();
     let result = model.getFontColor();
     if (!$defined(result)) {
@@ -498,8 +485,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontStyle() {
+  getFontStyle(): string {
     const model = this.getModel();
     let result = model.getFontStyle();
     if (!$defined(result)) {
@@ -509,8 +495,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  getFontSize() {
+  getFontSize(): number {
     const model = this.getModel();
     let result = model.getFontSize();
     if (!$defined(result)) {
@@ -520,8 +505,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  setFontColor(value, updateModel) {
+  setFontColor(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setColor(value);
     if ($defined(updateModel) && updateModel) {
@@ -530,7 +514,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  _setText(text: string, updateModel: boolean) {
+  private _setText(text: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
 
@@ -540,7 +524,6 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
   setText(text: string) {
     // Avoid empty nodes ...
     if (!text || $.trim(text).length === 0) {
@@ -552,7 +535,6 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   getText(): string {
     const model = this.getModel();
     let result = model.getText();
@@ -562,12 +544,11 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
   setBackgroundColor(color: string) {
     this._setBackgroundColor(color, true);
   }
 
-  _setBackgroundColor(color: string, updateModel: boolean) {
+  private _setBackgroundColor(color: string, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setFill(color);
 
@@ -593,11 +574,11 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setBorderColor(color: string) {
+  setBorderColor(color: string): void {
     this._setBorderColor(color, true);
   }
 
-  _setBorderColor(color: string, updateModel: boolean) {
+  private _setBorderColor(color: string, updateModel: boolean): void {
     const innerShape = this.getInnerShape();
     innerShape.setAttribute('strokeColor', color);
 
@@ -612,8 +593,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  getBorderColor() {
+  getBorderColor(): string {
     const model = this.getModel();
     let result = model.getBorderColor();
     if (!$defined(result)) {
@@ -622,7 +602,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  _buildTopicShape() {
+  _buildTopicShape(): ElementClass {
     const groupAttributes = {
       width: 100,
       height: 100,
@@ -660,17 +640,17 @@ abstract class Topic extends NodeGraph {
     group.setTestId(model.getId());
   }
 
-  _registerDefaultListenersToElement(elem, topic) {
-    const mouseOver = function mouseOver(event) {
+  _registerDefaultListenersToElement(elem: ElementClass, topic: Topic) {
+    const mouseOver = function mouseOver() {
       if (topic.isMouseEventsEnabled()) {
-        topic.handleMouseOver(event);
+        topic.handleMouseOver();
       }
     };
     elem.addEvent('mouseover', mouseOver);
 
-    const outout = function outout(event) {
+    const outout = function outout() {
       if (topic.isMouseEventsEnabled()) {
-        topic.handleMouseOut(event);
+        topic.handleMouseOut();
       }
     };
     elem.addEvent('mouseout', outout);
@@ -697,13 +677,12 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  areChildrenShrunken() {
+  areChildrenShrunken(): boolean {
     const model = this.getModel();
     return model.areChildrenShrunken() && !this.isCentralTopic();
   }
 
-  /** */
-  isCollapsed() {
+  isCollapsed(): boolean {
     let result = false;
 
     let current = this.getParent();
@@ -714,42 +693,27 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  setChildrenShrunken(value) {
+  setChildrenShrunken(value: boolean) {
     // Update Model ...
     const model = this.getModel();
     model.setChildrenShrunken(value);
 
     // Change render base on the state.
     const shrinkConnector = this.getShrinkConnector();
-    if ($defined(shrinkConnector)) {
+    if (shrinkConnector) {
       shrinkConnector.changeRender(value);
     }
 
     // Do some fancy animation ....
     const elements = this._flatten2DElements(this);
-    const fade = new FadeEffect(elements, !value);
-    const me = this;
-    fade.addEvent('complete', () => {
-      // Set focus on the parent node ...
-      if (value) {
-        me.setOnFocus(true);
-      }
-
-      // Set focus in false for all the children ...
-      elements.forEach((elem) => {
-        if (elem.setOnFocus) {
-          elem.setOnFocus(false);
-        }
-      });
+    elements.forEach((elem) => {
+      elem.setVisibility(!value, 250);
     });
-    fade.start();
 
-    EventBus.instance.fireEvent(EventBus.events.NodeShrinkEvent, model);
+    EventBus.instance.fireEvent('childShrinked', model);
   }
 
-  /** */
-  getShrinkConnector(): ShirinkConnector {
+  getShrinkConnector(): ShirinkConnector | undefined {
     let result = this._connector;
     if (this._connector == null) {
       this._connector = new ShirinkConnector(this);
@@ -928,7 +892,6 @@ abstract class Topic extends NodeGraph {
     this._relationships.forEach((r) => r.redraw());
   }
 
-  /** */
   setBranchVisibility(value: boolean): void {
     let current: Topic = this;
     let parent: Topic = this;
@@ -939,20 +902,19 @@ abstract class Topic extends NodeGraph {
     current.setVisibility(value);
   }
 
-  /** */
-  setVisibility(value: boolean): void {
-    this._setTopicVisibility(value);
+  setVisibility(value: boolean, fade = 0): void {
+    this._setTopicVisibility(value, fade);
 
     // Hide all children...
-    this._setChildrenVisibility(value);
+    this._setChildrenVisibility(value, fade);
 
     // If there there are connection to the node, topic must be hidden.
-    this._setRelationshipLinesVisibility(value);
+    this._setRelationshipLinesVisibility(value, fade);
 
     // If it's connected, the connection must be rendered.
     const outgoingLine = this.getOutgoingLine();
     if (outgoingLine) {
-      outgoingLine.setVisibility(value);
+      outgoingLine.setVisibility(value, fade);
     }
   }
 
@@ -986,7 +948,7 @@ abstract class Topic extends NodeGraph {
     return elem.isVisible();
   }
 
-  private _setRelationshipLinesVisibility(value: boolean): void {
+  private _setRelationshipLinesVisibility(value: boolean, fade = 0): void {
     this._relationships.forEach((relationship) => {
       const sourceTopic = relationship.getSourceTopic();
       const targetTopic = relationship.getTargetTopic();
@@ -997,27 +959,28 @@ abstract class Topic extends NodeGraph {
         value
         && (targetParent == null || !targetParent.areChildrenShrunken())
         && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+        fade,
       );
     });
   }
 
-  private _setTopicVisibility(value: boolean) {
+  private _setTopicVisibility(value: boolean, fade = 0) {
     const elem = this.get2DElement();
-    elem.setVisibility(value);
+    elem.setVisibility(value, fade);
 
     if (this.getIncomingLines().length > 0) {
       const connector = this.getShrinkConnector();
       if ($defined(connector)) {
-        connector.setVisibility(value);
+        connector.setVisibility(value, fade);
       }
     }
 
     // Hide inner shape ...
-    this.getInnerShape().setVisibility(value);
+    this.getInnerShape().setVisibility(value, fade);
 
     // Hide text shape ...
     const textShape = this.getTextShape();
-    textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false);
+    textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false, fade);
   }
 
   /** */
@@ -1033,14 +996,14 @@ abstract class Topic extends NodeGraph {
     textShape.setOpacity(opacity);
   }
 
-  private _setChildrenVisibility(isVisible: boolean) {
+  private _setChildrenVisibility(value: boolean, fade = 0) {
     // Hide all children.
     const children = this.getChildren();
     const model = this.getModel();
 
-    const visibility = isVisible ? !model.areChildrenShrunken() : isVisible;
+    const visibility = value ? !model.areChildrenShrunken() : value;
     children.forEach((child) => {
-      child.setVisibility(visibility);
+      child.setVisibility(visibility, fade);
       const outgoingLine = child.getOutgoingLine();
       outgoingLine.setVisibility(visibility);
     });
@@ -1081,7 +1044,7 @@ abstract class Topic extends NodeGraph {
       this._updatePositionOnChangeSize(oldSize, roundedSize);
 
       if (hasSizeChanged) {
-        EventBus.instance.fireEvent(EventBus.events.NodeResizeEvent, {
+        EventBus.instance.fireEvent('topicResize', {
           node: this.getModel(),
           size: roundedSize,
         });
@@ -1112,7 +1075,7 @@ abstract class Topic extends NodeGraph {
       outgoingLine.removeFromWorkspace(workspace);
 
       // Remove from workspace.
-      EventBus.instance.fireEvent(EventBus.events.NodeDisconnectEvent, this.getModel());
+      EventBus.instance.fireEvent('topicDisconect', this.getModel());
 
       // Change text based on the current connection ...
       const model = this.getModel();
@@ -1195,7 +1158,7 @@ abstract class Topic extends NodeGraph {
 
     // Fire connection event ...
     if (this.isInWorkspace()) {
-      EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
+      EventBus.instance.fireEvent('topicConnected', {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
       });
@@ -1233,7 +1196,7 @@ abstract class Topic extends NodeGraph {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
-    EventBus.instance.fireEvent(EventBus.events.NodeRemoved, this.getModel());
+    EventBus.instance.fireEvent('topicRemoved', this.getModel());
   }
 
   addToWorkspace(workspace: Workspace) {
@@ -1241,11 +1204,11 @@ abstract class Topic extends NodeGraph {
     workspace.append(elem);
     if (!this.isInWorkspace()) {
       if (!this.isCentralTopic()) {
-        EventBus.instance.fireEvent(EventBus.events.NodeAdded, this.getModel());
+        EventBus.instance.fireEvent('topicAdded', this.getModel());
       }
 
       if (this.getModel().isConnected()) {
-        EventBus.instance.fireEvent(EventBus.events.NodeConnectEvent, {
+        EventBus.instance.fireEvent('topicConnected', {
           parentNode: this.getOutgoingConnectedTopic().getModel(),
           childNode: this.getModel(),
         });
@@ -1315,7 +1278,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  private _flatten2DElements(topic: Topic) {
+  private _flatten2DElements(topic: Topic): (Topic | Relationship)[] {
     let result = [];
 
     const children = topic.getChildren();

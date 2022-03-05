@@ -59,6 +59,8 @@ class BootstrapDialog extends Options {
       $(this).remove();
     });
     this._native.on('shown.bs.modal', this.onDialogShown);
+
+    this._native.appendTo('#mindplot-tooltips');
   }
 
   _buildFooter() {

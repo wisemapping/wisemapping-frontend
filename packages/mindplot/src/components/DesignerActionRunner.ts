@@ -16,41 +16,50 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import ActionDispatcher from './ActionDispatcher';
+import Command from './Command';
+import CommandContext from './CommandContext';
 import DesignerUndoManager from './DesignerUndoManager';
 import EventBus from './layout/EventBus';
 
 class DesignerActionRunner {
-  constructor(commandContext, notifier) {
+  private _undoManager: DesignerUndoManager;
+
+  private _context: CommandContext;
+
+  private _actionDisplatcher: ActionDispatcher;
+
+  constructor(commandContext: CommandContext, notifier: ActionDispatcher) {
     $assert(commandContext, 'commandContext can not be null');
 
     this._undoManager = new DesignerUndoManager();
     this._context = commandContext;
-    this._notifier = notifier;
+    this._actionDisplatcher = notifier;
   }
 
-  execute(command) {
+  execute(command: Command): void {
     $assert(command, 'command can not be null');
     command.execute(this._context);
     this._undoManager.enqueue(command);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
   }
 
-  undo() {
+  undo(): void {
     this._undoManager.execUndo(this._context);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
   }
 
-  redo() {
+  redo(): void {
     this._undoManager.execRedo(this._context);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
   }
 
-  fireChangeEvent() {
+  fireChangeEvent(): void {
     const event = this._undoManager.buildEvent();
-    this._notifier.fireEvent('modelUpdate', event);
+    this._actionDisplatcher.fireEvent('modelUpdate', event);
   }
 }
 

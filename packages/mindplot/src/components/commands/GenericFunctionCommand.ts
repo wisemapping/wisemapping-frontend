@@ -25,7 +25,7 @@ type CommandTypes = string | object | boolean | number;
 class GenericFunctionCommand extends Command {
   private _value: CommandTypes;
 
-  private _topicsId: number[];
+  private _topicsIds: number[];
 
   private _commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes;
 
@@ -39,7 +39,7 @@ class GenericFunctionCommand extends Command {
 
     super();
     this._value = value;
-    this._topicsId = topicsIds;
+    this._topicsIds = topicsIds;
     this._commandFunc = commandFunc;
     this._oldValues = [];
   }
@@ -49,7 +49,7 @@ class GenericFunctionCommand extends Command {
      */
   execute(commandContext: CommandContext) {
     if (!this._applied) {
-      const topics = commandContext.findTopics(this._topicsId);
+      const topics = commandContext.findTopics(this._topicsIds);
 
       if (topics != null) {
         const me = this;
@@ -66,7 +66,7 @@ class GenericFunctionCommand extends Command {
 
   undoExecute(commandContext: CommandContext): void {
     if (this._applied) {
-      const topics = commandContext.findTopics(this._topicsId);
+      const topics = commandContext.findTopics(this._topicsIds);
 
       topics.forEach(((topic: Topic, index: number) => {
         this._commandFunc(topic, this._oldValues[index]);

@@ -28,31 +28,20 @@ class RootedTreeSet {
     this._rootNodes = [];
   }
 
-  /**
-         * @param root
-         * @throws will throw an error if root is null or undefined
-         */
   setRoot(root: Node) {
     $assert(root, 'root can not be null');
     this._rootNodes.push(this._decodate(root));
   }
 
-  /** getter */
-  getTreeRoots() {
+  getTreeRoots(): Node[] {
     return this._rootNodes;
   }
 
-  _decodate(node: Node) {
+  _decodate(node: Node): Node {
     node._children = [];
     return node;
   }
 
-  /**
-         * @param {mindplot.model.NodeModel} node
-         * @throws will throw an error if node is null or undefined
-         * @throws will throw an error if node with id already exists
-         * @throws will throw an error if node has been added already
-         */
   add(node: Node) {
     $assert(node, 'node can not be null');
     if (this.find(node.getId(), false)) {

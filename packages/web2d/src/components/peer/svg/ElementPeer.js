@@ -181,11 +181,14 @@ class ElementPeer {
     }
   }
 
-  /*
-     * style='visibility: visible'
-     */
-  setVisibility(isVisible) {
-    this._native.setAttribute('visibility', isVisible ? 'visible' : 'hidden');
+  setVisibility(value, fade) {
+    this._native.setAttribute('visibility', value ? 'visible' : 'hidden');
+    this._native.style.opacity = value ? 1 : 0;
+    if (fade) {
+      this._native.style.transition = `visibility ${fade}ms, opacity ${fade}ms`;
+    } else {
+      this._native.style.transition = null;
+    }
   }
 
   isVisible() {

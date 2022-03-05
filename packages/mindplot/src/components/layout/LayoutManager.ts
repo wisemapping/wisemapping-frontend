@@ -15,15 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import Events from '../Events';
 import RootedTreeSet from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import ChangeEvent from './ChangeEvent';
+import SizeType from '../SizeType';
+import Node from './Node';
+import PositionType from '../PositionType';
 
 class LayoutManager extends Events {
-  constructor(rootNodeId, rootSize) {
+  private _treeSet: RootedTreeSet;
+
+  private _layout: OriginalLayout;
+
+  private _events: ChangeEvent[];
+
+  constructor(rootNodeId: number, rootSize: SizeType) {
     super();
     $assert($defined(rootNodeId), 'rootNodeId can not be null');
     $assert(rootSize, 'rootSize can not be null');
@@ -36,40 +44,22 @@ class LayoutManager extends Events {
     this._events = [];
   }
 
-  /**
-       * @param id
-       * @param size
-       * @throws will throw an error if id is null or undefined
-       */
-  updateNodeSize(id, size) {
+  updateNodeSize(id: number, size: SizeType): void {
     $assert($defined(id), 'id can not be null');
 
     const node = this._treeSet.find(id);
     node.setSize(size);
   }
 
-  /**
-       * @param id
-       * @param value
-       * @throws will throw an error if id is null or undefined
-       * @throws will throw an error if value is null or undefined
-       * @return this
-       */
-  updateShrinkState(id, value) {
+  updateShrinkState(id: number, value: boolean): void {
     $assert($defined(id), 'id can not be null');
     $assert($defined(value), 'value can not be null');
 
     const node = this._treeSet.find(id);
     node.setShrunken(value);
-
-    return this;
   }
 
-  /**
-       * @param id
-       * @return {@link RootedTreeSet}.find(id)
-       */
-  find(id) {
+  find(id: number): Node {
     return this._treeSet.find(id);
   }
 
@@ -81,31 +71,17 @@ class LayoutManager extends Events {
        * @throws will throw an error if the position's x property is null or undefined
        * @throws will throw an error if the position's y property is null or undefined
        */
-  moveNode(id, position) {
+  moveNode(id: number, position: PositionType) {
     $assert($defined(id), 'id cannot be null');
     $assert($defined(position), 'position cannot be null');
     $assert($defined(position.x), 'x can not be null');
     $assert($defined(position.y), 'y can not be null');
 
     const node = this._treeSet.find(id);
-    // @Todo: this should not be here. This is broking the isolated node support...
-    //        node.setFree(true);
-    //        node.setFreeDisplacement(
-    //          {x:position.x - node.getPosition().x, y:position.y - node.getPosition().y}
-    //        );
     node.setPosition(position);
   }
 
-  /**
-       * @param parentId
-       * @param childId
-       * @param order
-       * @throws will throw an error if parentId is null or undefined
-       * @throws will throw an error if childId is null or undefined
-       * @throws will throw an error if order is null or undefined
-       * @return this
-       */
-  connectNode(parentId, childId, order) {
+  connectNode(parentId: number, childId: number, order: number) {
     $assert($defined(parentId), 'parentId cannot be null');
     $assert($defined(childId), 'childId cannot be null');
     $assert($defined(order), 'order cannot be null');
@@ -115,16 +91,9 @@ class LayoutManager extends Events {
     return this;
   }
 
-  /**
-       * @param id
-       * @throws will throw an error if id is null or undefined
-       * @return this
-       */
-  disconnectNode(id) {
+  disconnectNode(id: number): void {
     $assert($defined(id), 'id can not be null');
     this._layout.disconnectNode(id);
-
-    return this;
   }
 
   /**
@@ -134,7 +103,7 @@ class LayoutManager extends Events {
        * @throws will throw an error if id is null or undefined
        * @return this
        */
-  addNode(id, size, position) {
+  addNode(id: number, size: SizeType, position: PositionType) {
     $assert($defined(id), 'id can not be null');
     const result = this._layout.createNode(id, size, position, 'topic');
     this._treeSet.add(result);
@@ -142,13 +111,7 @@ class LayoutManager extends Events {
     return this;
   }
 
-  /**
-       * removes a node and its connection to parent if existing
-       * @param id
-       * @throws will throw an error if id is null or undefined
-       * @return this
-       */
-  removeNode(id) {
+  removeNode(id: number) {
     $assert($defined(id), 'id can not be null');
     const node = this._treeSet.find(id);
 
@@ -163,47 +126,31 @@ class LayoutManager extends Events {
     return this;
   }
 
-  /**
-       * @param {Number} parentId
-       * @param {Number=} nodeId
-       * @param {String=} position the position to use as mindplot.layout.Node.properties position
-       * property as '(x,y)'
-       * @param {Boolean=} free true specifies free node positioning
-       * @throws will throw an error if parentId is null or undefined
-       */
-  predict(parentId, nodeId, position, free) {
+  predict(parentId: number, nodeId: number, position: PositionType): { order: number, position: PositionType } {
     $assert($defined(parentId), 'parentId can not be null');
 
     const parent = this._treeSet.find(parentId);
     const node = nodeId ? this._treeSet.find(nodeId) : null;
     const sorter = parent.getSorter();
 
-    const result = sorter.predict(this._treeSet, parent, node, position, free);
+    const result = sorter.predict(this._treeSet, parent, node, position);
     return { order: result[0], position: result[1] };
   }
 
-  /**
-       * logs dump to console
-       */
   dump() {
     console.log(this._treeSet.dump());
   }
 
-  /**
-       * @param containerId
-       * @param {width:Number, height:Number} size
-       * @throws will throw an error if containerId is null or undefined
-       * @return canvas
-       */
-  plot(containerId, size = { width: 200, height: 200 }) {
+  plot(containerId: string, size = { width: 200, height: 200 }) {
     // this method is only used from tests that include Raphael
-    if (!global.Raphael) {
+
+    if (!globalThis.Raphael) {
       console.warn('Raphael.js not found, exiting plot()');
       return null;
     }
     $assert(containerId, 'containerId cannot be null');
     const squaresize = 10;
-    const canvas = global.Raphael(containerId, size.width, size.height);
+    const canvas = globalThis.Raphael(containerId, size.width, size.height);
     canvas.drawGrid(
       0,
       0,
@@ -217,40 +164,33 @@ class LayoutManager extends Events {
     return canvas;
   }
 
-  /**
-       * initializes the layout to be updated
-       * @param fireEvents
-       * @return this
-       */
-  layout(fireEvents) {
+  layout(flush: boolean): LayoutManager {
     // File repositioning ...
     this._layout.layout();
 
     // Collect changes ...
-    this._collectChanges();
+    this._collectChanges(this._treeSet.getTreeRoots());
 
-    if ($(fireEvents).length > 0 || fireEvents) {
+    if (flush) {
       this._flushEvents();
     }
 
     return this;
   }
 
-  _flushEvents() {
+  private _flushEvents() {
     this._events.forEach(((event) => {
       this.fireEvent('change', event);
     }));
     this._events = [];
   }
 
-  _collectChanges(nodes) {
-    const nodesToCollect = nodes || this._treeSet.getTreeRoots();
-
-    nodesToCollect.forEach(((node) => {
+  private _collectChanges(nodes: Node[]) {
+    nodes.forEach(((node) => {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
-        let event = this._events.some((e) => e.id === id);
+        let event: ChangeEvent = this._events.find((e) => e.getId() === id);
         if (!event) {
           event = new ChangeEvent(id);
         }

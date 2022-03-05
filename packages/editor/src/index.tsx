@@ -13,7 +13,6 @@ import {
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
-import Messages from '@wisemapping/mindplot/src/components/Messages';
 
 declare global {
     // used in mindplot
@@ -100,7 +99,8 @@ const Editor = ({
                     onAction={onAction}
                 />
             }
-            <div id="mindplot" style={mindplotStyle}></div>
+            <div id="mindplot" style={mindplotStyle} className="wise-editor"></div>
+            <div id="mindplot-tooltips" className="wise-editor"></div>
             <Footer editorMode={options.mode} />
         </IntlProvider >
     );

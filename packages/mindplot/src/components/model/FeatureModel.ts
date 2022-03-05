@@ -19,7 +19,7 @@ import { $assert } from '@wisemapping/core-js';
 import FeatureType from './FeatureType';
 
 class FeatureModel {
-  static _next_id = 0;
+  static _nextId = 0;
 
   private _id: number;
 
@@ -85,8 +85,8 @@ class FeatureModel {
   }
 
   static _nextUUID(): number {
-    const result = FeatureModel._next_id + 1;
-    FeatureModel._next_id = result;
+    const result = FeatureModel._nextId + 1;
+    FeatureModel._nextId = result;
     return result;
   }
 }

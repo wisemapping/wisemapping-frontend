@@ -27,8 +27,11 @@ import FeatureModel from './model/FeatureModel';
 
 class NoteIcon extends Icon {
   private _linksModel: NoteModel;
+
   private _topic: Topic;
+
   private _readOnly: boolean;
+
   private _tip: FloatingTip;
 
   constructor(topic: Topic, noteModel: NoteModel, readOnly: boolean) {
@@ -55,7 +58,6 @@ class NoteIcon extends Icon {
     }
     this._tip = new FloatingTip($(me.getImage().peer._native), {
       title: $msg('NOTE'),
-      container: 'body',
       // Content can also be a function of the target element!
       content() {
         return me._buildTooltipContent();
@@ -88,7 +90,6 @@ class NoteIcon extends Icon {
   }
 
   static IMAGE_URL = NotesImage;
-
 }
 
 export default NoteIcon;
