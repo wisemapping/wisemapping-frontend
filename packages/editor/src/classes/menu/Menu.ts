@@ -17,8 +17,7 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import { $msg } from '../Messages';
-import IMenu from './IMenu';
+import { Designer } from '@wisemapping/mindplot';
 import FontFamilyPanel from './FontFamilyPanel';
 import FontSizePanel from './FontSizePanel';
 import TopicShapePanel from './TopicShapePanel';
@@ -28,7 +27,8 @@ import ToolbarItem from './ToolbarItem';
 import KeyboardShortcutTooltip from './KeyboardShortcutTooltip';
 import KeyboardShortcutDialog from './KeyboardShortcutDialog';
 import AccountSettingsPanel from './AccountSettingsPanel';
-import Designer from '../Designer';
+import IMenu from './IMenu';
+import { $msg } from '@wisemapping/mindplot';
 
 class Menu extends IMenu {
   constructor(designer: Designer, containerId: string, readOnly = false, baseUrl = '') {

@@ -17,7 +17,8 @@
  */
 import $ from 'jquery';
 import ToolbarPaneItem from './ToolbarPaneItem';
-import ImageIcon from '../ImageIcon';
+import { ImageIcon } from '@wisemapping/mindplot';
+
 
 class IconPanel extends ToolbarPaneItem {
   _updateSelectedItem() {

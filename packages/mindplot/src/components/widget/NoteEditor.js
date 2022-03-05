@@ -17,7 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
-import BootstrapDialog from '../libraries/bootstrap/BootstrapDialog';
+import BootstrapDialog from '../../../../editor/src/classes/bootstrap/BootstrapDialog';
 import { $msg } from '../Messages';
 
 class NoteEditor extends BootstrapDialog {

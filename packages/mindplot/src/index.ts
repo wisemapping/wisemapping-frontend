@@ -23,20 +23,25 @@ import Designer from './components/Designer';
 import LocalStorageManager from './components/LocalStorageManager';
 import RESTPersistenceManager from './components/RestPersistenceManager';
 import MockPersistenceManager from './components/MockPersistenceManager';
-import Menu from './components/widget/Menu';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 import ImageExporterFactory from './components/export/ImageExporterFactory';
 import TextExporterFactory from './components/export/TextExporterFactory';
 import Exporter from './components/export/Exporter';
 import DesignerKeyboard from './components/DesignerKeyboard';
 import EditorRenderMode from './components/EditorRenderMode';
+import ImageIcon from './components/ImageIcon';
 
 import {
   buildDesigner,
 } from './components/DesignerBuilder';
+
 import {
   $notify,
 } from './components/widget/ToolbarNotifier';
+
+import {
+  $msg,
+} from './components/Messages';
 
 // This hack is required to initialize Bootstrap. In future, this should be removed.
 const globalAny: any = global;
@@ -46,7 +51,6 @@ require('../../../libraries/bootstrap/js/bootstrap.min');
 export {
   Mindmap,
   Designer,
-  Menu,
   DesignerBuilder,
   PersistenceManager,
   RESTPersistenceManager,
@@ -58,6 +62,8 @@ export {
   TextExporterFactory,
   ImageExporterFactory,
   Exporter,
+  ImageIcon,
   $notify,
+  $msg,
   DesignerKeyboard,
 };

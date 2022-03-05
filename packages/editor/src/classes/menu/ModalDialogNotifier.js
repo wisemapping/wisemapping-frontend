@@ -16,7 +16,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
-import AlertImage from '../../../assets/images/alert-sign.png';
 
 class ModalDialogNotifier {
   show(message, title) {
@@ -29,7 +28,6 @@ class ModalDialogNotifier {
             <div class="modal-body">
             </div>
             <div class="alert alert-block alert-warning">
-              <img src="${AlertImage}">
               <div style="display: inline-block" class="alert-content"></div>
             </div>
             <div class="modal-footer">

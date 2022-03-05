@@ -19,11 +19,11 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import { $msg } from './Messages';
 import Icon from './Icon';
-import FloatingTip from './widget/FloatingTip';
 import NotesImage from '../../assets/icons/notes.svg';
 import Topic from './Topic';
 import NoteModel from './model/NoteModel';
 import FeatureModel from './model/FeatureModel';
+import FloatingTip from './widget/FloatingTip';
 
 class NoteIcon extends Icon {
   private _linksModel: NoteModel;
@@ -56,6 +56,7 @@ class NoteIcon extends Icon {
         event.stopPropagation();
       });
     }
+
     this._tip = new FloatingTip($(me.getImage().peer._native), {
       title: $msg('NOTE'),
       // Content can also be a function of the target element!

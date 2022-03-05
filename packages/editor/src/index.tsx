@@ -13,6 +13,7 @@ import {
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
+import Menu from './classes/menu/Menu';
 
 declare global {
     // used in mindplot
@@ -74,6 +75,7 @@ const Editor = ({
             DesignerKeyboard.pause();
         }
     }, [options.enableKeyboardEvents]);
+
     const onLoadDesigner = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager): Designer => {
         const buildOptions = DesignerOptionsBuilder.buildOptions({
             persistenceManager,
@@ -85,7 +87,19 @@ const Editor = ({
         });
 
         // Build designer ...
-        return buildDesigner(buildOptions);
+        const result = buildDesigner(buildOptions);
+
+        // Register toolbar event ...
+        if (options.mode === 'edition-owner' || options.mode === 'edition-editor' || options.mode === 'showcase') {
+            const menu = new Menu(designer, 'toolbar');
+
+            //  If a node has focus, focus can be move to another node using the keys.
+            designer.cleanScreen = () => {
+                menu.clear();
+            };
+        }
+        return result;
+
     };
 
     const locale = options.locale;
