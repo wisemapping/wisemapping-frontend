@@ -1,2 +1,2 @@
-type EditorRenderMode = 'viewonly' | 'edition' | 'showcase';
+type EditorRenderMode = 'viewonly' | 'edition-owner' | 'edition-editor' | 'showcase';
 export default EditorRenderMode;

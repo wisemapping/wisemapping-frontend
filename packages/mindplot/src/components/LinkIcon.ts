@@ -26,8 +26,11 @@ import FeatureModel from './model/FeatureModel';
 
 class LinkIcon extends Icon {
   private _linksModel: FeatureModel;
+
   private _topic: Topic;
+
   private _readOnly: boolean;
+
   private _tip: LinkIconTooltip;
 
   constructor(topic: Topic, linkModel: LinkModel, readOnly: boolean) {
@@ -73,8 +76,8 @@ class LinkIcon extends Icon {
   getModel(): FeatureModel {
     return this._linksModel;
   }
-  static IMAGE_URL = LinksImage;
 
+  static IMAGE_URL = LinksImage;
 }
 
 export default LinkIcon;

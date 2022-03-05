@@ -81,7 +81,7 @@ const App = (): ReactElement => {
                                         component={withSessionExpirationHandling(MapsPage)}
                                     />
                                     <Route exact path="/c/maps/:id/edit">
-                                        <EnhacedEditorPage isTryMode={false} />
+                                        <EnhacedEditorPage isTryMode={false}/>
                                     </Route>
                                     <Route exact path="/c/maps/:id/try">
                                         <EnhacedEditorPage isTryMode={true} />

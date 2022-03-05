@@ -110,8 +110,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
-  changeTextToTopic(topicsIds: number[], text: string) {
+  changeTextToTopic(topicsIds: number[], text: string): void {
     $assert($defined(topicsIds), 'topicsIds can not be null');
 
     const commandFunc = (topic: Topic, value: string) => {

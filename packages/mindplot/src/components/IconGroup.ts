@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-// eslint-disable-next-line max-classes-per-file
+
 import {
   $assert,
   $defined,
@@ -23,12 +23,11 @@ import {
 import {
   Group,
   ElementClass,
+  Point,
 } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
-import { Point } from '@wisemapping/web2d';
 import Icon from './Icon';
 import SizeType from './SizeType';
-import IconModel from './model/IconModel';
 import FeatureModel from './model/FeatureModel';
 
 const ORDER_BY_TYPE = new Map<string, number>();
@@ -38,10 +37,15 @@ ORDER_BY_TYPE.set('link', 2);
 
 class IconGroup {
   private _icons: Icon[];
+
   private _group: any;
+
   private _removeTip: IconGroupRemoveTip;
+
   private _iconSize: SizeType;
+
   private _topicId: number;
+
   constructor(topicId: number, iconSize: number) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert($defined(iconSize), 'iconSize can not be null');
@@ -59,7 +63,6 @@ class IconGroup {
     this._removeTip = new IconGroupRemoveTip(this._group);
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
-
   }
 
   setPosition(x: number, y: number): void {
@@ -189,7 +192,6 @@ class IconGroup {
   }
 
   static ICON_PADDING = 5;
-
 }
 
 export default IconGroup;

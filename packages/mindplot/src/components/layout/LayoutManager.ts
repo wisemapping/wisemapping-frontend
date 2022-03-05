@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import Events from '../Events';
 import RootedTreeSet from './RootedTreeSet';

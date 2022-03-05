@@ -41,20 +41,15 @@ class CommandContext {
   }
 
   findTopics(topicIds: number[]): Topic[] {
-    $assert($defined(topicIds), 'topicsIds can not be null');
     const topicsIds = Array.isArray(topicIds) ? topicIds : [topicIds];
     const designerTopics = this._designer.getModel().getTopics();
     const result = designerTopics.filter((topic) => topicsIds.includes(topic.getId()));
 
     if (result.length !== topicsIds.length) {
       const ids = designerTopics.map((topic) => topic.getId());
-      $assert(
-        result.length === topicsIds.length,
-        `Could not find topic. Result:${result
-        } Filter Criteria:${topicsIds
-        } Current Topics: [${ids
-        }]`,
-      );
+      throw new Error(`Could not find topic. Result:${result
+      } Filter Criteria:${topicsIds
+      } Current Topics: [${ids}])`);
     }
     return result;
   }

@@ -13,7 +13,6 @@ import {
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
-import Messages from '@wisemapping/mindplot/src/components/Messages';
 
 declare global {
     // used in mindplot

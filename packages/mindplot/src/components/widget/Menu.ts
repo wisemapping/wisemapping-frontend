@@ -39,170 +39,145 @@ class Menu extends IMenu {
 
     // Create panels ...
     const designerModel = designer.getModel();
-
-    const fontFamilyBtn = $('#fontFamily');
-    if (fontFamilyBtn) {
-      const fontFamilyModel = {
-        getValue() {
-          const nodes = designerModel.filterSelectedTopics();
-          let result = null;
-          for (let i = 0; i < nodes.length; i++) {
-            const fontFamily = nodes[i].getFontFamily();
-            if (result != null && result !== fontFamily) {
-              result = null;
-              break;
-            }
-            result = fontFamily;
+    const fontFamilyModel = {
+      getValue() {
+        const nodes = designerModel.filterSelectedTopics();
+        let result = null;
+        for (let i = 0; i < nodes.length; i++) {
+          const fontFamily = nodes[i].getFontFamily();
+          if (result != null && result !== fontFamily) {
+            result = null;
+            break;
           }
-          return result;
-        },
+          result = fontFamily;
+        }
+        return result;
+      },
 
-        setValue(value: string) {
-          designer.changeFontFamily(value);
-        },
-      };
-      this._toolbarElems.push(new FontFamilyPanel('fontFamily', fontFamilyModel));
-      Menu._registerTooltip('fontFamily', $msg('FONT_FAMILY'));
-    }
+      setValue(value: string) {
+        designer.changeFontFamily(value);
+      },
+    };
+    this._toolbarElems.push(new FontFamilyPanel('fontFamily', fontFamilyModel));
+    Menu._registerTooltip('fontFamily', $msg('FONT_FAMILY'));
 
-    const fontSizeBtn = $('#fontSize');
-    if (fontSizeBtn) {
-      const fontSizeModel = {
-        getValue(): number {
-          const nodes = designerModel.filterSelectedTopics();
+    const fontSizeModel = {
+      getValue(): number {
+        const nodes = designerModel.filterSelectedTopics();
 
-          let result = null;
-          for (let i = 0; i < nodes.length; i++) {
-            const fontSize = nodes[i].getFontSize();
-            if (result != null && result !== fontSize) {
-              result = null;
-              break;
-            }
-            result = fontSize;
+        let result = null;
+        for (let i = 0; i < nodes.length; i++) {
+          const fontSize = nodes[i].getFontSize();
+          if (result != null && result !== fontSize) {
+            result = null;
+            break;
           }
-          return result;
-        },
-        setValue(value: number) {
-          designer.changeFontSize(value);
-        },
-      };
-      this._toolbarElems.push(new FontSizePanel('fontSize', fontSizeModel));
-      Menu._registerTooltip('fontSize', $msg('FONT_SIZE'));
-    }
+          result = fontSize;
+        }
+        return result;
+      },
+      setValue(value: number) {
+        designer.changeFontSize(value);
+      },
+    };
+    this._toolbarElems.push(new FontSizePanel('fontSize', fontSizeModel));
+    Menu._registerTooltip('fontSize', $msg('FONT_SIZE'));
 
-    const topicShapeBtn = $('#topicShape');
-    if (topicShapeBtn) {
-      const topicShapeModel = {
-        getValue() {
-          const nodes = designerModel.filterSelectedTopics();
-          let result = null;
-          for (let i = 0; i < nodes.length; i++) {
-            const shapeType = nodes[i].getShapeType();
-            if (result != null && result !== shapeType) {
-              result = null;
-              break;
-            }
-            result = shapeType;
+    const topicShapeModel = {
+      getValue() {
+        const nodes = designerModel.filterSelectedTopics();
+        let result = null;
+        for (let i = 0; i < nodes.length; i++) {
+          const shapeType = nodes[i].getShapeType();
+          if (result != null && result !== shapeType) {
+            result = null;
+            break;
           }
-          return result;
-        },
-        setValue(value: string) {
-          designer.changeTopicShape(value);
-        },
-      };
-      this._toolbarElems.push(new TopicShapePanel('topicShape', topicShapeModel));
-      Menu._registerTooltip('topicShape', $msg('TOPIC_SHAPE'));
-    }
+          result = shapeType;
+        }
+        return result;
+      },
+      setValue(value: string) {
+        designer.changeTopicShape(value);
+      },
+    };
+    this._toolbarElems.push(new TopicShapePanel('topicShape', topicShapeModel));
+    Menu._registerTooltip('topicShape', $msg('TOPIC_SHAPE'));
 
-    const topicIconBtn = $('#topicIcon');
-    if (topicIconBtn) {
-      // Create icon panel dialog ...
-      const topicIconModel = {
-        getValue() {
-          return null;
-        },
-        setValue(value: string) {
-          designer.addIconType(value);
-        },
-      };
-      this._toolbarElems.push(new IconPanel('topicIcon', topicIconModel));
-      Menu._registerTooltip('topicIcon', $msg('TOPIC_ICON'));
-    }
+    // Create icon panel dialog ...
+    const topicIconModel = {
+      getValue() {
+        return null;
+      },
+      setValue(value: string) {
+        designer.addIconType(value);
+      },
+    };
+    this._toolbarElems.push(new IconPanel('topicIcon', topicIconModel));
+    Menu._registerTooltip('topicIcon', $msg('TOPIC_ICON'));
 
-    // Topic color item ...
-    const topicColorBtn = $('#topicColor');
-    if (topicColorBtn) {
-      const topicColorModel = {
-        getValue() {
-          const nodes = designerModel.filterSelectedTopics();
-          let result = null;
-          for (let i = 0; i < nodes.length; i++) {
-            const color = nodes[i].getBackgroundColor();
-            if (result != null && result !== color) {
-              result = null;
-              break;
-            }
-            result = color;
+    const topicColorModel = {
+      getValue() {
+        const nodes = designerModel.filterSelectedTopics();
+        let result = null;
+        for (let i = 0; i < nodes.length; i++) {
+          const color = nodes[i].getBackgroundColor();
+          if (result != null && result !== color) {
+            result = null;
+            break;
           }
-          return result;
-        },
-        setValue(hex: string) {
-          designer.changeBackgroundColor(hex);
-        },
-      };
-      this._toolbarElems.push(new ColorPalettePanel('topicColor', topicColorModel, widgetsBaseUrl));
-      Menu._registerTooltip('topicColor', $msg('TOPIC_COLOR'));
-    }
+          result = color;
+        }
+        return result;
+      },
+      setValue(hex: string) {
+        designer.changeBackgroundColor(hex);
+      },
+    };
+    this._toolbarElems.push(new ColorPalettePanel('topicColor', topicColorModel, widgetsBaseUrl));
+    Menu._registerTooltip('topicColor', $msg('TOPIC_COLOR'));
 
-    // Border color item ...
-    const topicBorderBtn = $('#topicBorder');
-    if (topicBorderBtn) {
-      const borderColorModel = {
-        getValue() {
-          const nodes = designerModel.filterSelectedTopics();
-          let result = null;
-          for (let i = 0; i < nodes.length; i++) {
-            const color = nodes[i].getBorderColor();
-            if (result != null && result !== color) {
-              result = null;
-              break;
-            }
-            result = color;
+    const borderColorModel = {
+      getValue() {
+        const nodes = designerModel.filterSelectedTopics();
+        let result = null;
+        for (let i = 0; i < nodes.length; i++) {
+          const color = nodes[i].getBorderColor();
+          if (result != null && result !== color) {
+            result = null;
+            break;
           }
-          return result;
-        },
-        setValue(hex: string) {
-          designer.changeBorderColor(hex);
-        },
-      };
-      this._toolbarElems.push(new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl));
-      Menu._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
-    }
+          result = color;
+        }
+        return result;
+      },
+      setValue(hex: string) {
+        designer.changeBorderColor(hex);
+      },
+    };
+    this._toolbarElems.push(new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl));
+    Menu._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
 
-    // Font color item ...
-    const fontColorBtn = $('#fontColor');
-    if (fontColorBtn) {
-      const fontColorModel = {
-        getValue() {
-          let result = null;
-          const nodes = designerModel.filterSelectedTopics();
-          for (let i = 0; i < nodes.length; i++) {
-            const color = nodes[i].getFontColor();
-            if (result != null && result !== color) {
-              result = null;
-              break;
-            }
-            result = color;
+    const fontColorModel = {
+      getValue() {
+        let result = null;
+        const nodes = designerModel.filterSelectedTopics();
+        for (let i = 0; i < nodes.length; i++) {
+          const color = nodes[i].getFontColor();
+          if (result != null && result !== color) {
+            result = null;
+            break;
           }
-          return result;
-        },
-        setValue(hex) {
-          designer.changeFontColor(hex);
-        },
-      };
-      this._toolbarElems.push(new ColorPalettePanel('fontColor', fontColorModel, baseUrl));
-      Menu._registerTooltip('fontColor', $msg('FONT_COLOR'));
-    }
+          result = color;
+        }
+        return result;
+      },
+      setValue(hex) {
+        designer.changeFontColor(hex);
+      },
+    };
+    this._toolbarElems.push(new ColorPalettePanel('fontColor', fontColorModel, baseUrl));
+    Menu._registerTooltip('fontColor', $msg('FONT_COLOR'));
 
     Menu._registerTooltip('export', $msg('EXPORT'));
 
@@ -315,14 +290,6 @@ class Menu extends IMenu {
       }
     }
 
-    const discardElem = $('#discard');
-    if (discardElem.length !== 0) {
-      this._addButton('discard', false, false, () => {
-        this.discardChanges(designer);
-      });
-      Menu._registerTooltip('discard', $msg('DISCARD_CHANGES'));
-    }
-
     const shareElem = $('#shareIt');
     if (shareElem.length !== 0) {
       Menu._registerTooltip('shareIt', $msg('COLLABORATE'));
@@ -350,14 +317,12 @@ class Menu extends IMenu {
     }
 
     const backTolist = $('#backToList');
-    if (backTolist.length !== 0) {
-      backTolist.bind('click', (event) => {
-        event.stopPropagation();
-        window.location.href = '/c/maps/';
-        return false;
-      });
-      Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
-    }
+    backTolist.bind('click', (event) => {
+      event.stopPropagation();
+      window.location.href = '/c/maps/';
+      return false;
+    });
+    Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
 
     // Account dialog ...
     const accountSettings = $('#account');
@@ -367,9 +332,9 @@ class Menu extends IMenu {
       });
       this._toolbarElems.push(new AccountSettingsPanel('account'));
       Menu._registerTooltip('account', `${global.accountEmail}`);
-    }
 
-    this._registerEvents(designer);
+      this._registerEvents(designer);
+    }
   }
 
   private _registerEvents(designer: Designer) {
