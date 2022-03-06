@@ -144,7 +144,13 @@ class MultilineTextEditor extends Events {
       const topicId = this._topic.getId();
 
       const actionDispatcher = ActionDispatcher.getInstance();
-      actionDispatcher.changeTextToTopic([topicId], text);
+      try {
+        actionDispatcher.changeTextToTopic([topicId], text);
+      } catch (e) {
+        // Hack: For some reasom, editor seems to end up connexted to a deleted node.
+        // More research required.
+        console.error(`Text could not be update -> ${JSON.stringify(e)}`);
+      }
     }
   }
 
