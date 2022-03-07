@@ -1093,6 +1093,7 @@ abstract class Topic extends NodeGraph {
         const connector = targetTopic.getShrinkConnector();
         if ($defined(connector)) {
           connector.setVisibility(false);
+          targetTopic.isCollapsed(false);
         }
       }
     }
