@@ -1,7 +1,8 @@
 /********************************************************************************/
 /* Header & Toolbar Styles */
 /********************************************************************************/
-@import "bootstrap.min.css";
+@import "bootstrap-prefix.min.css";
+@import "bootstrap-fixes.css";
 
 html {
     /* avoid bootstrap overriding font-size and breaking Mui */
@@ -129,7 +130,7 @@ div.shareModalDialog {
     background-color: #efefef;
 }
 
-.popover {
+.wise-editor .popover {
     font-size: 13px;
     max-width: none;
 }
@@ -217,9 +218,8 @@ div#tryInfoPanel {
     margin: auto;
     text-align: center;
     top: 80px;
-    right: 20px;
+    left: 20px;
     width: 200px;
-    height: 300px;
     padding: 20px;
     font-size: 15px;
     border-radius: 9px;

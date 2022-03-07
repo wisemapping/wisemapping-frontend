@@ -2,6 +2,7 @@ import { fetchAccount } from './../../redux/clientSlice';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/en';
 import 'dayjs/locale/es';
+import 'dayjs/locale/ru';
 
 export class Locale {
     code: LocaleCode;
@@ -46,14 +47,16 @@ export default abstract class AppI18n {
     }
 }
 
-export type LocaleCode = 'en' | 'es' | 'fr' | 'de';
+export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru';
 
 export const Locales = {
     EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
     ES: new Locale('es', 'Español', require('./../../compiled-lang/es.json')), // eslint-disable-line
     DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
     FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
+    RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
 };
+
 
 
 export const localeFromStr = (code: string): Locale => {

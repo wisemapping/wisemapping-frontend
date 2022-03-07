@@ -1,7 +1,7 @@
 {
   "include": [
     "src/**/*"
-  ],
+, "../mindplot/src/components/widget/FloatingTip.ts"  ],
   "compilerOptions": {
     "jsx": "react",
     "outDir": "./dist/",

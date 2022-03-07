@@ -1,0 +1,14 @@
+{
+    "editor.try-welcome": {
+        "defaultMessage": "Это демо-версия редактора, можно попробовать его в деле!"
+    },
+    "editor.try-welcome-description": {
+        "defaultMessage": "Чтобы получить бесплатный неограниченный доступ —  нужна только регистрация."
+    },
+    "login.signup": {
+        "defaultMessage": "Регистрация"
+    },
+    "action.share": {
+        "defaultMessage": "Поделиться"
+    }
+}

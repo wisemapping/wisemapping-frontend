@@ -1,4 +1,4 @@
-import { LocalStorageManager, Mindmap, PersistenceManager, RESTPersistenceManager } from '@wisemapping/mindplot';
+import { EditorRenderMode, LocalStorageManager, Mindmap, PersistenceManager, RESTPersistenceManager } from '@wisemapping/mindplot';
 import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Client, {
@@ -611,13 +611,12 @@ export default class RestClient implements Client {
         }
     }
 
-    buildPersistenceManager(isTryMode: boolean): PersistenceManager {
+    buildPersistenceManager(editorMode: EditorRenderMode): PersistenceManager {
         if (this.persistenceManager) {
             return this.persistenceManager;
         }
-        // TODO: Move globals out, make urls configurable
         let persistence: PersistenceManager;
-        if (!isTryMode) {
+        if (editorMode === 'edition-owner' || editorMode === 'edition-editor') {
             persistence = new RESTPersistenceManager({
                 documentUrl: '/c/restful/maps/{id}/document',
                 revertUrl: '/c/restful/maps/{id}/history/latest',
@@ -627,7 +626,7 @@ export default class RestClient implements Client {
             });
         } else {
             persistence = new LocalStorageManager(
-                `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${!global.isAuth ? '-pub' : ''
+                `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${editorMode === 'showcase' ? '-pub' : ''
                 }`,
                 true
             );
@@ -646,13 +645,15 @@ export default class RestClient implements Client {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private parseResponseOnError = (response: any): ErrorInfo => {
-        console.error("Backend error=>");
-        console.error(response.data);
+        console.error(`Performing backend action error: ${JSON.stringify(response)}`);
 
         let result: ErrorInfo | undefined;
         if (response) {
             const status: number = response.status;
             const data = response.data;
+            console.error(`Status Code: ${status}`);
+            console.error(`Status Data: ${response.data}`);
+            console.error(`Status Message: ${response.message}`);
 
             switch (status) {
                 case 401:

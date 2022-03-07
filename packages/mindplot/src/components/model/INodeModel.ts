@@ -29,7 +29,7 @@ const parseJsObject = (str: string) => JSON.parse(str.replace(/(['"])?([a-z0-9A-
 abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
 
-  private static _next_uuid = 0;
+  private static _nextUuid = 0;
 
   protected _mindmap: Mindmap;
 
@@ -49,9 +49,9 @@ abstract class INodeModel {
       const newId = INodeModel._nextUUID();
       this.putProperty('id', newId);
     } else {
-      if (id > INodeModel._next_uuid) {
+      if (id > INodeModel._nextUuid) {
         $assert(Number.isFinite(id));
-        INodeModel._next_uuid = id;
+        INodeModel._nextUuid = id;
       }
       this.putProperty('id', id);
     }
@@ -287,7 +287,7 @@ abstract class INodeModel {
 
   abstract getPropertiesKeys(): string[];
 
-  abstract getProperty(key: string): number | string | boolean;
+  abstract getProperty(key: string): number | string | boolean | undefined;
 
   abstract putProperty(key: string, value: number | string | boolean): void;
 
@@ -358,8 +358,8 @@ abstract class INodeModel {
   abstract removeChild(child: INodeModel);
 
   static _nextUUID(): number {
-    INodeModel._next_uuid += 1;
-    return INodeModel._next_uuid;
+    INodeModel._nextUuid += 1;
+    return INodeModel._nextUuid;
   }
 }
 

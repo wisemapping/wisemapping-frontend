@@ -19,16 +19,19 @@ import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import { $msg } from './Messages';
 import Icon from './Icon';
-import FloatingTip from './widget/FloatingTip';
 import NotesImage from '../../assets/icons/notes.svg';
 import Topic from './Topic';
 import NoteModel from './model/NoteModel';
 import FeatureModel from './model/FeatureModel';
+import FloatingTip from './widget/FloatingTip';
 
 class NoteIcon extends Icon {
   private _linksModel: NoteModel;
+
   private _topic: Topic;
+
   private _readOnly: boolean;
+
   private _tip: FloatingTip;
 
   constructor(topic: Topic, noteModel: NoteModel, readOnly: boolean) {
@@ -53,9 +56,9 @@ class NoteIcon extends Icon {
         event.stopPropagation();
       });
     }
+
     this._tip = new FloatingTip($(me.getImage().peer._native), {
       title: $msg('NOTE'),
-      container: 'body',
       // Content can also be a function of the target element!
       content() {
         return me._buildTooltipContent();
@@ -88,7 +91,6 @@ class NoteIcon extends Icon {
   }
 
   static IMAGE_URL = NotesImage;
-
 }
 
 export default NoteIcon;

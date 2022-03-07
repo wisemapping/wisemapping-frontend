@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import { Point, ElementClass } from '@wisemapping/web2d';
 
 import ActionDispatcher from './ActionDispatcher';
@@ -27,12 +27,19 @@ import Workspace from './Workspace';
 
 class DragTopic {
   private _elem2d: ElementClass;
+
   private _order: number | null;
+
   private _draggedNode: NodeGraph;
+
   private _layoutManager: LayoutManager;
-  private _position: any;
+
+  private _position: Point;
+
   private _isInWorkspace: boolean;
-  static _dragPivot: any;
+
+  static _dragPivot: DragPivot = new DragPivot();
+
   constructor(dragShape: ElementClass, draggedNode: NodeGraph, layoutManger: LayoutManager) {
     $assert(dragShape, 'Rect can not be null.');
     $assert(draggedNode, 'draggedNode can not be null.');
@@ -46,13 +53,13 @@ class DragTopic {
     this._isInWorkspace = false;
   }
 
-  setOrder(order: number) {
+  setOrder(order: number): void {
     this._order = order;
   }
 
-  setPosition(x: number, y: number) {
+  setPosition(x: number, y: number): void {
     // Update drag shadow position ....
-    let position = { x, y };
+    const position = { x, y };
     this._position.setValue(position.x, position.y);
 
     // Elements are positioned in the center.
@@ -104,11 +111,7 @@ class DragTopic {
     $assert(parent, 'Parent connection node can not be null.');
 
     // Where it should be connected ?
-
-    // @todo: This is a hack for the access of the editor.
-    // It's required to review why this is needed forcing the declaration of a global variable.
-
-    const predict = global.designer._eventBussDispatcher._layoutManager.predict(
+    const predict = this._layoutManager.predict(
       parent.getId(),
       this._draggedNode.getId(),
       this.getPosition(),
@@ -154,8 +157,8 @@ class DragTopic {
     }
   }
 
-  _getDragPivot(): DragPivot {
-    return DragTopic.__getDragPivot();
+  private _getDragPivot(): DragPivot {
+    return DragTopic._dragPivot;
   }
 
   getPosition(): Point {
@@ -206,18 +209,9 @@ class DragTopic {
 
   static init(workspace: Workspace) {
     $assert(workspace, 'workspace can not be null');
-    const pivot = DragTopic.__getDragPivot();
+    const pivot = DragTopic._dragPivot;
     workspace.append(pivot);
-  };
-
-  static __getDragPivot() {
-    let result = DragTopic._dragPivot;
-    if (!$defined(result)) {
-      result = new DragPivot();
-      DragTopic._dragPivot = result;
-    }
-    return result;
-  };
+  }
 }
 
 export default DragTopic;

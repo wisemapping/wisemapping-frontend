@@ -2,18 +2,10 @@ import '../css/viewmode.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Editor, { EditorOptions } from '../../../../src/index';
-import { buildDesigner, LocalStorageManager, PersistenceManager, DesignerOptionsBuilder } from '@wisemapping/mindplot';
+import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 
-const initialization = (mapId: string, options: EditorOptions, persistenceManager: PersistenceManager) => {
+const initialization = (designer: Designer) => {
 
-  const designerOptions = DesignerOptionsBuilder.buildOptions({
-    persistenceManager: persistenceManager,
-    zoom: options.zoom ? options.zoom : 0.8,
-    mode: options.mode,
-    container: 'mindplot'
-  });
-
-  const designer = buildDesigner(designerOptions);
   designer.addEvent('loadSuccess', () => {
     const elem = document.getElementById('mindplot');
     if (elem) {
@@ -35,11 +27,6 @@ const initialization = (mapId: string, options: EditorOptions, persistenceManage
     }
 
   });
-
-  // Load map from XML file persisted on disk...
-  const persistence = PersistenceManager.getInstance();
-  const mindmap = persistence.load(mapId);
-  designer.loadMap(mindmap);
 };
 
 // Obtain map id from query param
@@ -61,7 +48,7 @@ ReactDOM.render(
     options={options}
     persistenceManager={persistence}
     onAction={(action) => console.log('action called:', action)}
-    initCallback={initialization}
+    onLoad={initialization}
   />,
   document.getElementById('root'),
 );

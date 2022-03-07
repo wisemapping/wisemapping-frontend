@@ -277,10 +277,10 @@ class Relationship extends ConnectionLine {
     return this._isInWorkspace;
   }
 
-  setVisibility(value: boolean) {
-    super.setVisibility(value);
+  setVisibility(value: boolean, fade = 0) {
+    super.setVisibility(value, fade);
     if (this._showEndArrow) this._endArrow.setVisibility(this._showEndArrow);
-    this._startArrow.setVisibility(this._showStartArrow && value);
+    this._startArrow.setVisibility(this._showStartArrow && value, fade);
   }
 
   setOpacity(opacity: number) {

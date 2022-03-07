@@ -39,7 +39,7 @@ import Relationship from './Relationship';
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import TopicFeatureFactory from './TopicFeature';
 
-import { create } from './NodeGraphUtils';
+import TopicFactory from './TopicFactory';
 
 import EventBus from './layout/EventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
@@ -53,7 +53,6 @@ import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
 import Topic from './Topic';
 import { DesignerOptions } from './DesignerOptionsBuilder';
-import MainTopic from './MainTopic';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
 import FeatureType from './model/FeatureType';
@@ -87,6 +86,7 @@ class Designer extends Events {
     $assert(divElement, 'divElement must be defined');
 
     // Set up i18n location ...
+    console.log(`Editor location: ${options.locale}`);
     Messages.init(options.locale);
 
     this._options = options;
@@ -224,9 +224,9 @@ class Designer extends Events {
     return dragManager;
   }
 
-  private _buildNodeGraph(model: NodeModel, readOnly: boolean): MainTopic {
+  private _buildNodeGraph(model: NodeModel, readOnly: boolean): Topic {
     // Create node graph ...
-    const topic = create(model, { readOnly });
+    const topic = TopicFactory.create(model, { readOnly });
     this.getModel().addTopic(topic);
     const me = this;
     // Add Topic events ...
@@ -605,7 +605,7 @@ class Designer extends Events {
     this.goToNode(centralTopic);
 
     // Finally, sort the map ...
-    EventBus.instance.fireEvent(EventBus.events.DoLayout);
+    EventBus.instance.fireEvent('forceLayout');
 
     this.fireEvent('loadSuccess');
   }
@@ -694,12 +694,6 @@ class Designer extends Events {
     mindmap.deleteRelationship(rel.getModel());
   }
 
-  /**
-         * @private
-         * @param {mindplot.model.RelationshipModel} model
-         * @return {mindplot.Relationship} the new relationship with events registered
-         * @throws will throw an error if the target topic cannot be found
-         */
   private _buildRelationshipShape(model: RelationshipModel): Relationship {
     const dmodel = this.getModel();
 
@@ -743,13 +737,9 @@ class Designer extends Events {
     return result;
   }
 
-  /**
-         * @param {mindplot.Topic} node the topic to remove
-         * removes the given topic and its children from Workspace, DesignerModel and NodeModel
-         */
-  removeTopic(node) {
+  removeTopic(node: Topic): void {
     if (!node.isCentralTopic()) {
-      const parent = node._parent;
+      const parent = node.getParent();
       node.disconnect(this._workspace);
 
       // remove children
@@ -770,17 +760,13 @@ class Designer extends Events {
     }
   }
 
-  /**
-         * @private
-         */
-  _resetEdition() {
+  private _resetEdition() {
     const screenManager = this._workspace.getScreenManager();
     screenManager.fireEvent('update');
     screenManager.fireEvent('mouseup');
     this._relPivot.dispose();
   }
 
-  /** */
   deleteSelectedEntities() {
     // Is there some action in progress ?.
     this._resetEdition();
@@ -839,7 +825,7 @@ class Designer extends Events {
 
   /** */
   changeBackgroundColor(color: string) {
-    const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== TopicShape.LINE;
     const validateError = 'Color can not be set to line topics.';
 
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -848,9 +834,8 @@ class Designer extends Events {
     }
   }
 
-  /** */
   changeBorderColor(color: string) {
-    const validateFunc = (topic) => topic.getShapeType() !== TopicShape.LINE;
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== TopicShape.LINE;
     const validateError = 'Color can not be set to line topics.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
@@ -858,7 +843,6 @@ class Designer extends Events {
     }
   }
 
-  /** */
   changeFontSize(size: number) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
@@ -894,11 +878,7 @@ class Designer extends Events {
     }
   }
 
-  /**
-   * lets the selected topic open the link editor where the user can define or modify an
-   * existing link
-   */
-  addLink() {
+  addLink(): void {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
@@ -907,8 +887,7 @@ class Designer extends Events {
     }
   }
 
-  /** */
-  addNote() {
+  addNote(): void {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {

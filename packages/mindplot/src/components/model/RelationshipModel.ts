@@ -20,7 +20,7 @@ import Point from '@wisemapping/web2d';
 import ConnectionLine from '../ConnectionLine';
 
 class RelationshipModel {
-  static _next_uuid = 0;
+  static _nextUuid = 0;
 
   private _id: number;
 
@@ -133,8 +133,8 @@ class RelationshipModel {
   }
 
   static _nextUUID() {
-    RelationshipModel._next_uuid += 1;
-    return RelationshipModel._next_uuid;
+    RelationshipModel._nextUuid += 1;
+    return RelationshipModel._nextUuid;
   }
 }
 
