@@ -38,7 +38,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
                 if (fetchResult.error) {
                     throw new Error(`User coild not be loaded: ${JSON.stringify(fetchResult.error)}`);
                 }
-                result = fetchResult.map.role === 'owner' ? 'edition-owner' : 'edition-editor';
+                result = fetchResult?.map?.role === 'owner' ? 'edition-owner' : 'edition-editor';
             }
         }
         return result;
