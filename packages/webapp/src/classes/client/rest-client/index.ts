@@ -615,8 +615,14 @@ export default class RestClient implements Client {
         if (this.persistenceManager) {
             return this.persistenceManager;
         }
+
         let persistence: PersistenceManager;
         if (editorMode === 'edition-owner' || editorMode === 'edition-editor') {
+
+            if (!global.lockSession) {
+                throw new Error(`Session could not be found: global.lockSession ${global.lockSession} - global.lockTimestamp: ${global.lockTimestamp} - ${global.mindmapLocked} - ${global.mindmapLockedMsg}`)
+            }
+
             persistence = new RESTPersistenceManager({
                 documentUrl: '/c/restful/maps/{id}/document',
                 revertUrl: '/c/restful/maps/{id}/history/latest',
