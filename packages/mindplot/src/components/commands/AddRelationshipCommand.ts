@@ -17,6 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import Command from '../Command';
+import CommandContext from '../CommandContext';
 import RelationshipModel from '../model/RelationshipModel';
 
 class AddRelationshipCommand extends Command {
@@ -25,27 +26,20 @@ class AddRelationshipCommand extends Command {
   /**
      * @classdesc This command class handles do/undo of adding a relationship to a topic.
      */
-  constructor(model:RelationshipModel) {
+  constructor(model: RelationshipModel) {
     $assert(model, 'Relationship model can not be null');
 
     super();
     this._model = model;
   }
 
-  /**
-     * Overrides abstract parent method
-     */
-  execute(commandContext) {
+  execute(commandContext: CommandContext) {
     const relationship = commandContext.addRelationship(this._model);
     relationship.setOnFocus(true);
   }
 
-  /**
-     * Overrides abstract parent method
-     * @see {@link mindplot.Command.undoExecute}
-     */
-  undoExecute(commandContext) {
-    const rel = commandContext.findRelationships(this._model.getId());
+  undoExecute(commandContext: CommandContext) {
+    const rel = commandContext.findRelationships([this._model.getId()]);
     commandContext.deleteRelationship(rel[0]);
   }
 }

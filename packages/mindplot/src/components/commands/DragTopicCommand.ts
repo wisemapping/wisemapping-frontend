@@ -47,9 +47,6 @@ class DragTopicCommand extends Command {
     this._order = order;
   }
 
-  /**
-     * Overrides abstract parent method
-     */
   execute(commandContext: CommandContext): void {
     const topic = commandContext.findTopics([this._topicsId])[0];
     topic.setVisibility(false);

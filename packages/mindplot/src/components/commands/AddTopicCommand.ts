@@ -38,9 +38,6 @@ class AddTopicCommand extends Command {
     this._parentsIds = parentTopicsId;
   }
 
-  /**
-       * Overrides abstract parent method
-       */
   execute(commandContext: CommandContext) {
     const me = this;
     this._models.forEach((model, index) => {
@@ -68,10 +65,6 @@ class AddTopicCommand extends Command {
     });
   }
 
-  /**
-       * Overrides abstract parent method
-       * @see {@link mindplot.Command.undoExecute}
-       */
   undoExecute(commandContext: CommandContext) {
     // Delete disconnected the nodes. Create a copy of the topics ...
     const clonedModel = [];
