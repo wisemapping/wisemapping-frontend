@@ -375,17 +375,14 @@ abstract class Topic extends NodeGraph {
     this.adjustShapes();
   }
 
-  /** */
   addRelationship(relationship: Relationship) {
     this._relationships.push(relationship);
   }
 
-  /** */
   deleteRelationship(relationship: Rect) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
-  /** */
   getRelationships(): Relationship[] {
     return this._relationships;
   }
