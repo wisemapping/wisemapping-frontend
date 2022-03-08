@@ -226,6 +226,46 @@ class Node {
 
     return nodeElem;
   }
+
+  loadFromElement(element: Element): Node {
+    const node = new Node();
+
+    const nodeId = element.getAttribute('ID');
+    const nodePosition = element.getAttribute('POSITION');
+    const nodeStyle = element.getAttribute('STYLE');
+    const nodeBGColor = element.getAttribute('BACKGROUND_COLOR');
+    const nodeColor = element.getAttribute('COLOR');
+    const nodeText = element.getAttribute('TEXT');
+    const nodeLink = element.getAttribute('LINK');
+    const nodeFolded = element.getAttribute('FOLDED');
+    const nodeCreated = element.getAttribute('CREATED');
+    const nodeModified = element.getAttribute('MODIFIED');
+    const nodeHgap = element.getAttribute('HGAP');
+    const nodeVgap = element.getAttribute('VGAP');
+    const nodeWcoords = element.getAttribute('WCOORDS');
+    const nodeWorder = element.getAttribute('WORDER');
+    const nodeVshift = element.getAttribute('VSHIFT');
+    const nodeEncryptedContent = element.getAttribute('ENCRYPTED_CONTENT');
+
+    if (nodeId) node.setId(nodeId);
+    if (nodePosition) node.setPosition(nodePosition);
+    if (nodeStyle) node.setStyle(nodeStyle);
+    if (nodeBGColor) node.setBackgorundColor(nodeBGColor);
+    if (nodeColor) node.setColor(nodeColor);
+    if (nodeText) node.setText(nodeText);
+    if (nodeLink) node.setLink(nodeLink);
+    if (nodeFolded) node.setFolded(nodeFolded);
+    if (nodeCreated) node.setCreated(nodeCreated);
+    if (nodeModified) node.setModified(nodeModified);
+    if (nodeHgap) node.setHgap(nodeHgap);
+    if (nodeVgap) node.setVgap(nodeVgap);
+    if (nodeWcoords) node.setWcoords(nodeWcoords);
+    if (nodeWorder) node.setWorder(nodeWorder);
+    if (nodeVshift) node.setVshift(nodeVshift);
+    if (nodeEncryptedContent) node.setEncryptedContent(nodeEncryptedContent);
+
+    return node;
+  }
 }
 
 export type Choise = Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node
