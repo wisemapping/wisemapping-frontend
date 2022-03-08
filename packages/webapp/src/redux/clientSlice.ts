@@ -47,9 +47,18 @@ export const fetchMapById = (id: number): MapLoadResult => {
         return client.fetchAllMaps();
     });
 
-    const result = data?.find((m) => m.id == id);
-    const map = result || null;
-    return { isLoading: isLoading, error: error, map: map };
+    let errorMsg: ErrorInfo = Object.keys(error).length !== 0 ? error : null;
+    let map: MapInfo;
+    if (!isLoading) {
+        // Sanitize error structure ...
+
+        // If the map can not be loaded, create an error object.
+        map = data?.find((m) => m.id == id);
+        if (map === null && !errorMsg) {
+            errorMsg = { msg: `Map with id ${id} could not be found. Please, reflesh the page` }
+        }
+    }
+    return { isLoading: isLoading, error: errorMsg, map: map };
 };
 
 export const fetchAccount = (): AccountInfo | undefined => {
