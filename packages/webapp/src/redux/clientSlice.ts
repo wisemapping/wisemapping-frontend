@@ -49,10 +49,10 @@ export const fetchMapById = (id: number): MapLoadResult => {
 
     // If the map can not be loaded, create an error object.
     let map: MapInfo;
-    let errorMsg: ErrorInfo;
+    let errorMsg: ErrorInfo = error;
     if (!isLoading) {
         // Sanitize error structure ...
-        if (error) {
+        if (errorMsg) {
             errorMsg = Object.keys(error).length !== 0 ? error : null;
         }
         //  Seach for object...
