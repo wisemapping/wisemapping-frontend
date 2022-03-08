@@ -97,7 +97,7 @@ class ConnectionLine {
     this._line2d.setVisibility(value, fade);
   }
 
-  isVisible() {
+  isVisible(): boolean {
     return this._line2d.isVisible();
   }
 
