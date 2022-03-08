@@ -47,12 +47,12 @@ export const fetchMapById = (id: number): MapLoadResult => {
         return client.fetchAllMaps();
     });
 
+    // Sanitize error structure ...
     let errorMsg: ErrorInfo = Object.keys(error).length !== 0 ? error : null;
+    
+    // If the map can not be loaded, create an error object.
     let map: MapInfo;
     if (!isLoading) {
-        // Sanitize error structure ...
-
-        // If the map can not be loaded, create an error object.
         map = data?.find((m) => m.id == id);
         if (map === null && !errorMsg) {
             errorMsg = { msg: `Map with id ${id} could not be found. Please, reflesh the page` }
