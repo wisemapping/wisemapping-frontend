@@ -620,7 +620,7 @@ export default class RestClient implements Client {
         if (editorMode === 'edition-owner' || editorMode === 'edition-editor') {
 
             if (!global.lockSession) {
-                throw new Error(`Session could not be found: global.lockSession ${global.lockSession} - global.lockTimestamp: ${global.lockTimestamp} - ${global.mindmapLocked} - ${global.mindmapLockedMsg}`)
+                throw new Error(`Session could not be found: global.lockSession: '${global.lockSession}' - global.lockTimestamp: '${global.lockTimestamp}' - ${global.mindmapLocked} - ${global.mindmapLockedMsg}`)
             }
 
             persistence = new RESTPersistenceManager({
