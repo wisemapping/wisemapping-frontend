@@ -55,63 +55,67 @@ export default function Toolbar({
                         </ToolbarButton>
                     </div>
                 )}
-                <div id="edit" className="buttonContainer">
-                    <ToolbarButton id="undoEdition" className="buttonOn">
-                        <img src={UndoSvg} />
-                    </ToolbarButton>
-                    <ToolbarButton id="redoEdition" className="buttonOn">
-                        <img src={RedoSvg} />
-                    </ToolbarButton>
-                </div>
-                <div id="nodeStyle" className="buttonContainer">
-                    <ToolbarButton id="addTopic" className="buttonOn">
-                        <img src={TopicAddSvg} />
-                    </ToolbarButton>
-                    <ToolbarButton id="deleteTopic" className="buttonOn">
-                        <img src={TopicDeleteSvg} />
-                    </ToolbarButton>
-                    <ToolbarButtonExt id="topicBorder" className="buttonExtOn">
-                        <img src={TopicBorderSvg} />
-                    </ToolbarButtonExt>
-                    <ToolbarButtonExt id="topicColor" className="buttonExtOn">
-                        <img src={TopicColorSvg} />
-                    </ToolbarButtonExt>
-                    <ToolbarButtonExt id="topicShape" className="buttonExtOn">
-                        <img src={TopicShapeSvg} />
-                    </ToolbarButtonExt>
-                </div>
-                <div id="font" className="buttonContainer">
-                    <ToolbarButton id="fontFamily" className="buttonOn">
-                        <img src={FontTypeSvg} />
-                    </ToolbarButton>
-                    <ToolbarButtonExt id="fontSize" className="buttonExtOn">
-                        <img src={FontSizeSvg} />
-                    </ToolbarButtonExt>
-                    <ToolbarButton id="fontBold" className="buttonOn">
-                        <img src={FontBoldSvg} />
-                    </ToolbarButton>
-                    <ToolbarButton id="fontItalic" className="buttonOn">
-                        <img src={FontItalicSvg} />
-                    </ToolbarButton>
-                    <ToolbarButtonExt id="fontColor" className="buttonExtOn">
-                        <img src={FontColorSvg} />
-                    </ToolbarButtonExt>
-                </div>
-                <div id="nodeContent" className="buttonContainer">
-                    <ToolbarButtonExt id="topicIcon" className="buttonExtOn">
-                        <img src={TopicIconSvg} />
-                    </ToolbarButtonExt>
-                    <ToolbarButton id="topicNote" className="buttonOn">
-                        <img src={TopicNoteSvg} />
-                    </ToolbarButton>
-                    <ToolbarButton id="topicLink" className="buttonOn">
-                        <img src={TopicLinkSvg} />
-                    </ToolbarButton>
-                    <ToolbarButton id="topicRelation" className="buttonOn">
-                        <img src={TopicRelationSvg} />
-                    </ToolbarButton>
-                </div>
-                <div id="separator" className="buttonContainer"></div>
+                {(editorMode === 'edition-editor' || editorMode === 'edition-owner' || editorMode === 'showcase') && (
+                    <>
+                        <div id="edit" className="buttonContainer">
+                            <ToolbarButton id="undoEdition" className="buttonOn">
+                                <img src={UndoSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="redoEdition" className="buttonOn">
+                                <img src={RedoSvg} />
+                            </ToolbarButton>
+                        </div>
+                        <div id="nodeStyle" className="buttonContainer">
+                            <ToolbarButton id="addTopic" className="buttonOn">
+                                <img src={TopicAddSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="deleteTopic" className="buttonOn">
+                                <img src={TopicDeleteSvg} />
+                            </ToolbarButton>
+                            <ToolbarButtonExt id="topicBorder" className="buttonExtOn">
+                                <img src={TopicBorderSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButtonExt id="topicColor" className="buttonExtOn">
+                                <img src={TopicColorSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButtonExt id="topicShape" className="buttonExtOn">
+                                <img src={TopicShapeSvg} />
+                            </ToolbarButtonExt>
+                        </div>
+                        <div id="font" className="buttonContainer">
+                            <ToolbarButton id="fontFamily" className="buttonOn">
+                                <img src={FontTypeSvg} />
+                            </ToolbarButton>
+                            <ToolbarButtonExt id="fontSize" className="buttonExtOn">
+                                <img src={FontSizeSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButton id="fontBold" className="buttonOn">
+                                <img src={FontBoldSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="fontItalic" className="buttonOn">
+                                <img src={FontItalicSvg} />
+                            </ToolbarButton>
+                            <ToolbarButtonExt id="fontColor" className="buttonExtOn">
+                                <img src={FontColorSvg} />
+                            </ToolbarButtonExt>
+                        </div>
+                        <div id="nodeContent" className="buttonContainer">
+                            <ToolbarButtonExt id="topicIcon" className="buttonExtOn">
+                                <img src={TopicIconSvg} />
+                            </ToolbarButtonExt>
+                            <ToolbarButton id="topicNote" className="buttonOn">
+                                <img src={TopicNoteSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="topicLink" className="buttonOn">
+                                <img src={TopicLinkSvg} />
+                            </ToolbarButton>
+                            <ToolbarButton id="topicRelation" className="buttonOn">
+                                <img src={TopicRelationSvg} />
+                            </ToolbarButton>
+                        </div>
+                        <div id="separator" className="buttonContainer"></div>
+                    </>
+                )}
                 <ToolbarRightContainer>
                     <ToolbarButton
                         id="export"
