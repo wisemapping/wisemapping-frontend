@@ -42,7 +42,6 @@ class OptionsBuilder {
         width: window.screen.width,
         height: window.screen.height,
       };
-      console.log(`height:${containerSize.height}`);
     }
 
     const defaultOptions: DesignerOptions = {

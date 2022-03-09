@@ -110,7 +110,7 @@ class Designer extends Events {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElement);
-    this._workspace = new Workspace(screenManager, this._model.getZoom(), options.mode === 'viewonly');
+    this._workspace = new Workspace(screenManager, this._model.getZoom(), this.isReadOnly());
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -623,7 +623,7 @@ class Designer extends Events {
   }
 
   isReadOnly(): boolean {
-    return Boolean(this._options?.mode === 'viewonly');
+    return this._options.mode === 'viewonly' || this._options.mode === 'edition-viewer';
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
