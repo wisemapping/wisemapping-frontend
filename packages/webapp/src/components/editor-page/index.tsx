@@ -38,7 +38,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
                 if (fetchResult.error) {
                     throw new Error(`Map information could not be loaded: ${JSON.stringify(fetchResult)}`);
                 }
-                result = fetchResult?.map?.role === 'owner' ? 'edition-owner' : 'edition-editor';
+                result = `edition-${fetchResult?.map?.role}`;
             }
         }
         return result;
