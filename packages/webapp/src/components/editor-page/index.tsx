@@ -10,7 +10,7 @@ import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
 import Client from '../../classes/client';
 import { activeInstance, fetchAccount, fetchMapById } from '../../redux/clientSlice';
-import EditorOptionsBulder from './EditorOptionsBuider';
+import EditorOptionsBuilder from './EditorOptionsBuilder';
 
 export type EditorPropsType = {
     isTryMode: boolean;
@@ -45,7 +45,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     }
 
     // What is the role ?
-    const mapId = EditorOptionsBulder.loadMapId();
+    const mapId = EditorOptionsBuilder.loadMapId();
     const mode = findEditorMode(isTryMode, mapId);
 
     // Account settings can be null and editor cannot be initilized multiple times. This creates problems
@@ -55,7 +55,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
 
     let options, persistence: PersistenceManager;
     if (loadCompleted) {
-        options = EditorOptionsBulder.build(userLocale.code, mode, hotkey);
+        options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
         persistence = client.buildPersistenceManager(mode);
     }
 
