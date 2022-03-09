@@ -40,6 +40,8 @@ class Menu extends IMenu {
     // Create panels ...
 
     const designerModel = designer.getModel();
+
+    // Common actions ....
     const backTolist = $('#backToList');
     backTolist.bind('click', (event) => {
       event.stopPropagation();
@@ -48,7 +50,22 @@ class Menu extends IMenu {
     });
     Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
 
+    this._addButton('zoom-plus', false, false, () => {
+      designer.zoomIn();
+    });
+    Menu._registerTooltip('zoom-plus', $msg('ZOOM_IN'));
 
+    this._addButton('zoom-minus', false, false, () => {
+      designer.zoomOut();
+    });
+    Menu._registerTooltip('zoom-minus', $msg('ZOOM_OUT'));
+
+    this._addButton('position', false, false, () => {
+      designer.zoomToFit();
+    });
+    Menu._registerTooltip('position', $msg('CENTER_POSITION'));
+
+    // Edition actions ...
     if (!readOnly) {
       const fontFamilyModel = {
         getValue() {
