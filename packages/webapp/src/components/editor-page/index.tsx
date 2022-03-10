@@ -23,6 +23,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
 
     useEffect(() => {
+        document.title = `${global.mapTitle ? global.mapTitle : 'unknown'} | WiseMapping `;
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, []);
 
