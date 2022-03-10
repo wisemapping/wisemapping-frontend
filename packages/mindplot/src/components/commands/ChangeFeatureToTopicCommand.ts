@@ -37,9 +37,6 @@ class ChangeFeatureToTopicCommand extends Command {
     this._attributes = attributes;
   }
 
-  /**
-     * Overrides abstract parent method
-     */
   execute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
@@ -49,10 +46,6 @@ class ChangeFeatureToTopicCommand extends Command {
     this._attributes = oldAttributes;
   }
 
-  /**
-     * Overrides abstract parent method
-     * @see {@link mindplot.Command.undoExecute}
-     */
   undoExecute(commandContext: CommandContext) {
     this.execute(commandContext);
   }

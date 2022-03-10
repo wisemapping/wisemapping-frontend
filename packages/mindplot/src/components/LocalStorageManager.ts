@@ -23,23 +23,34 @@ class LocalStorageManager extends PersistenceManager {
 
   private forceLoad: boolean;
 
-  constructor(documentUrl: string, forceLoad: boolean) {
+  private readOnly: boolean;
+
+  constructor(documentUrl: string, forceLoad: boolean, readOnly = true) {
     super();
     this.documentUrl = documentUrl;
     this.forceLoad = forceLoad;
+    this.readOnly = readOnly;
   }
 
   saveMapXml(mapId: string, mapDoc: Document): void {
     const mapXml = new XMLSerializer().serializeToString(mapDoc);
-    localStorage.setItem(`${mapId}-xml`, mapXml);
+    if (!this.readOnly) {
+      localStorage.setItem(`${mapId}-xml`, mapXml);
+    }
+    console.log(`Map XML to save => ${this.saveMapXml}`);
   }
 
   discardChanges(mapId: string) {
-    localStorage.removeItem(`${mapId}-xml`);
+    if (!this.readOnly) {
+      localStorage.removeItem(`${mapId}-xml`);
+    }
   }
 
   loadMapDom(mapId: string) {
-    let xml = localStorage.getItem(`${mapId}-xml`);
+    let xml;
+    if (!this.readOnly) {
+      xml = localStorage.getItem(`${mapId}-xml`);
+    }
     if (xml == null || this.forceLoad) {
       $.ajax({
         url: this.documentUrl.replace('{id}', mapId),

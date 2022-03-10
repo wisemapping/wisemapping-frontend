@@ -10,7 +10,7 @@ import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
 import Client from '../../classes/client';
 import { activeInstance, fetchAccount, fetchMapById } from '../../redux/clientSlice';
-import EditorOptionsBulder from './EditorOptionsBuider';
+import EditorOptionsBuilder from './EditorOptionsBuilder';
 
 export type EditorPropsType = {
     isTryMode: boolean;
@@ -23,6 +23,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
 
     useEffect(() => {
+        document.title = `${global.mapTitle ? global.mapTitle : 'unknown'} | WiseMapping `;
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, []);
 
@@ -36,16 +37,16 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
             const fetchResult = fetchMapById(mapId);
             if (!fetchResult.isLoading) {
                 if (fetchResult.error) {
-                    throw new Error(`User coild not be loaded: ${JSON.stringify(fetchResult.error)}`);
+                    throw new Error(`Map information could not be loaded: ${JSON.stringify(fetchResult)}`);
                 }
-                result = fetchResult.map.role === 'owner' ? 'edition-owner' : 'edition-editor';
+                result = `edition-${fetchResult?.map?.role}`;
             }
         }
         return result;
     }
 
     // What is the role ?
-    const mapId = EditorOptionsBulder.loadMapId();
+    const mapId = EditorOptionsBuilder.loadMapId();
     const mode = findEditorMode(isTryMode, mapId);
 
     // Account settings can be null and editor cannot be initilized multiple times. This creates problems
@@ -55,7 +56,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
 
     let options, persistence: PersistenceManager;
     if (loadCompleted) {
-        options = EditorOptionsBulder.build(userLocale.code, mode, hotkey);
+        options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
         persistence = client.buildPersistenceManager(mode);
     }
 

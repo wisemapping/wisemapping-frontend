@@ -106,7 +106,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
     }
 
-    if (topic.areChildrenShrunken() && topic.getType() !== 'CentralTopic') {
+    if ((topic.areChildrenShrunken() && topic.getChildren().length > 0) && topic.getType() !== 'CentralTopic') {
       parentTopic.setAttribute('shrink', 'true');
     }
 

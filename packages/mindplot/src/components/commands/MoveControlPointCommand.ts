@@ -19,19 +19,20 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import { Line } from '@wisemapping/web2d';
 import Command from '../Command';
 import ControlPoint from '../ControlPoint';
+import PositionType from '../PositionType';
 
 class MoveControlPointCommand extends Command {
   private _ctrlPointControler: ControlPoint;
 
   private _line: Line;
 
-  private _controlPoint: any;
+  private _controlPoint: Line;
 
-  private _oldControlPoint: any;
+  private _oldControlPoint: Line;
 
-  private _originalEndPoint: any;
+  private _originalEndPoint: PositionType;
 
-  private _wasCustom: any;
+  private _wasCustom: boolean;
 
   private _endPoint: any;
 
@@ -68,9 +69,6 @@ class MoveControlPointCommand extends Command {
     this._point = point;
   }
 
-  /**
-         * Overrides abstract parent method
-         */
   execute() {
     const model = this._line.getModel();
     switch (this._point) {
@@ -97,10 +95,6 @@ class MoveControlPointCommand extends Command {
     this._line.getLine().updateLine(this._point);
   }
 
-  /**
-         * Overrides abstract parent method
-         * @see {@link mindplot.Command.undoExecute}
-         */
   undoExecute() {
     const line = this._line;
     const model = line.getModel();

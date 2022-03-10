@@ -20,8 +20,10 @@ import { Arrow, Point, ElementClass } from '@wisemapping/web2d';
 import ConnectionLine from './ConnectionLine';
 import ControlPoint from './ControlPoint';
 import RelationshipModel from './model/RelationshipModel';
+import PositionType from './PositionType';
 import Topic from './Topic';
 import Shape from './util/Shape';
+import Workspace from './Workspace';
 
 class Relationship extends ConnectionLine {
   private _focusShape: ElementClass;
@@ -187,7 +189,7 @@ class Relationship extends ConnectionLine {
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
   }
 
-  addToWorkspace(workspace) {
+  addToWorkspace(workspace: Workspace): void {
     workspace.append(this._focusShape);
     workspace.append(this._controlPointsController);
 
@@ -207,11 +209,11 @@ class Relationship extends ConnectionLine {
     this.redraw();
   }
 
-  _initializeControlPointController(): void {
+  private _initializeControlPointController(): void {
     this.setOnFocus(true);
   }
 
-  removeFromWorkspace(workspace) {
+  removeFromWorkspace(workspace: Workspace): void {
     workspace.removeChild(this._focusShape);
     workspace.removeChild(this._controlPointsController);
     if (!workspace.isReadOnly) {
@@ -243,7 +245,7 @@ class Relationship extends ConnectionLine {
     }
   }
 
-  private _refreshShape() {
+  private _refreshShape(): void {
     const sPos = this._line2d.getFrom();
     const tPos = this._line2d.getTo();
     const ctrlPoints = this._line2d.getControlPoints();
@@ -279,19 +281,31 @@ class Relationship extends ConnectionLine {
 
   setVisibility(value: boolean, fade = 0) {
     super.setVisibility(value, fade);
-    if (this._showEndArrow) this._endArrow.setVisibility(this._showEndArrow);
+
+    // If visibility change, remove the on focus.
+    this.setOnFocus(false);
+
+    if (this._showEndArrow) {
+      this._endArrow.setVisibility(this._showEndArrow);
+    }
     this._startArrow.setVisibility(this._showStartArrow && value, fade);
   }
 
-  setOpacity(opacity: number) {
+  setOpacity(opacity: number): void {
     super.setOpacity(opacity);
-    if (this._showEndArrow) this._endArrow.setOpacity(opacity);
-    if (this._showStartArrow) this._startArrow.setOpacity(opacity);
+    if (this._showEndArrow) {
+      this._endArrow.setOpacity(opacity);
+    }
+    if (this._showStartArrow) {
+      this._startArrow.setOpacity(opacity);
+    }
   }
 
   setShowEndArrow(visible: boolean) {
     this._showEndArrow = visible;
-    if (this._isInWorkspace) this.redraw();
+    if (this._isInWorkspace) {
+      this.redraw();
+    }
   }
 
   setShowStartArrow(visible: boolean) {
@@ -315,25 +329,25 @@ class Relationship extends ConnectionLine {
     if (this._endArrow) this._endArrow.setFrom(x, y);
   }
 
-  setSrcControlPoint(control) {
+  setSrcControlPoint(control: PositionType): void {
     this._line2d.setSrcControlPoint(control);
     this._startArrow.setControlPoint(control);
   }
 
-  setDestControlPoint(control) {
+  setDestControlPoint(control: PositionType) {
     this._line2d.setDestControlPoint(control);
     if (this._showEndArrow) this._endArrow.setControlPoint(control);
   }
 
-  getControlPoints() {
+  getControlPoints(): PositionType {
     return this._line2d.getControlPoints();
   }
 
-  isSrcControlPointCustom() {
+  isSrcControlPointCustom(): boolean {
     return this._line2d.isSrcControlPointCustom();
   }
 
-  isDestControlPointCustom() {
+  isDestControlPointCustom(): boolean {
     return this._line2d.isDestControlPointCustom();
   }
 
@@ -345,7 +359,7 @@ class Relationship extends ConnectionLine {
     this._line2d.setIsDestControlPointCustom(isCustom);
   }
 
-  getId() {
+  getId(): number {
     return this._model.getId();
   }
 

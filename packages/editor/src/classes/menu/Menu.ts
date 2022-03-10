@@ -38,150 +38,17 @@ class Menu extends IMenu {
     const widgetsBaseUrl = `${baseUrl}css/widget`;
 
     // Create panels ...
+
     const designerModel = designer.getModel();
-    const fontFamilyModel = {
-      getValue() {
-        const nodes = designerModel.filterSelectedTopics();
-        let result = null;
-        for (let i = 0; i < nodes.length; i++) {
-          const fontFamily = nodes[i].getFontFamily();
-          if (result != null && result !== fontFamily) {
-            result = null;
-            break;
-          }
-          result = fontFamily;
-        }
-        return result;
-      },
 
-      setValue(value: string) {
-        designer.changeFontFamily(value);
-      },
-    };
-    this._toolbarElems.push(new FontFamilyPanel('fontFamily', fontFamilyModel));
-    Menu._registerTooltip('fontFamily', $msg('FONT_FAMILY'));
-
-    const fontSizeModel = {
-      getValue(): number {
-        const nodes = designerModel.filterSelectedTopics();
-
-        let result = null;
-        for (let i = 0; i < nodes.length; i++) {
-          const fontSize = nodes[i].getFontSize();
-          if (result != null && result !== fontSize) {
-            result = null;
-            break;
-          }
-          result = fontSize;
-        }
-        return result;
-      },
-      setValue(value: number) {
-        designer.changeFontSize(value);
-      },
-    };
-    this._toolbarElems.push(new FontSizePanel('fontSize', fontSizeModel));
-    Menu._registerTooltip('fontSize', $msg('FONT_SIZE'));
-
-    const topicShapeModel = {
-      getValue() {
-        const nodes = designerModel.filterSelectedTopics();
-        let result = null;
-        for (let i = 0; i < nodes.length; i++) {
-          const shapeType = nodes[i].getShapeType();
-          if (result != null && result !== shapeType) {
-            result = null;
-            break;
-          }
-          result = shapeType;
-        }
-        return result;
-      },
-      setValue(value: string) {
-        designer.changeTopicShape(value);
-      },
-    };
-    this._toolbarElems.push(new TopicShapePanel('topicShape', topicShapeModel));
-    Menu._registerTooltip('topicShape', $msg('TOPIC_SHAPE'));
-
-    // Create icon panel dialog ...
-    const topicIconModel = {
-      getValue() {
-        return null;
-      },
-      setValue(value: string) {
-        designer.addIconType(value);
-      },
-    };
-    this._toolbarElems.push(new IconPanel('topicIcon', topicIconModel));
-    Menu._registerTooltip('topicIcon', $msg('TOPIC_ICON'));
-
-    const topicColorModel = {
-      getValue() {
-        const nodes = designerModel.filterSelectedTopics();
-        let result = null;
-        for (let i = 0; i < nodes.length; i++) {
-          const color = nodes[i].getBackgroundColor();
-          if (result != null && result !== color) {
-            result = null;
-            break;
-          }
-          result = color;
-        }
-        return result;
-      },
-      setValue(hex: string) {
-        designer.changeBackgroundColor(hex);
-      },
-    };
-    this._toolbarElems.push(new ColorPalettePanel('topicColor', topicColorModel, widgetsBaseUrl));
-    Menu._registerTooltip('topicColor', $msg('TOPIC_COLOR'));
-
-    const borderColorModel = {
-      getValue() {
-        const nodes = designerModel.filterSelectedTopics();
-        let result = null;
-        for (let i = 0; i < nodes.length; i++) {
-          const color = nodes[i].getBorderColor();
-          if (result != null && result !== color) {
-            result = null;
-            break;
-          }
-          result = color;
-        }
-        return result;
-      },
-      setValue(hex: string) {
-        designer.changeBorderColor(hex);
-      },
-    };
-    this._toolbarElems.push(new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl));
-    Menu._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
-
-    const fontColorModel = {
-      getValue() {
-        let result = null;
-        const nodes = designerModel.filterSelectedTopics();
-        for (let i = 0; i < nodes.length; i++) {
-          const color = nodes[i].getFontColor();
-          if (result != null && result !== color) {
-            result = null;
-            break;
-          }
-          result = color;
-        }
-        return result;
-      },
-      setValue(hex) {
-        designer.changeFontColor(hex);
-      },
-    };
-    this._toolbarElems.push(new ColorPalettePanel('fontColor', fontColorModel, baseUrl));
-    Menu._registerTooltip('fontColor', $msg('FONT_COLOR'));
-
-    Menu._registerTooltip('export', $msg('EXPORT'));
-
-    Menu._registerTooltip('print', $msg('PRINT'));
+    // Common actions ....
+    const backTolist = $('#backToList');
+    backTolist.bind('click', (event) => {
+      event.stopPropagation();
+      window.location.href = '/c/maps/';
+      return false;
+    });
+    Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
 
     this._addButton('zoom-plus', false, false, () => {
       designer.zoomIn();
@@ -198,97 +65,245 @@ class Menu extends IMenu {
     });
     Menu._registerTooltip('position', $msg('CENTER_POSITION'));
 
-    const undoButton = this._addButton('undoEdition', false, false, () => {
-      designer.undo();
-    });
-    if (undoButton) {
-      undoButton.disable();
-    }
-    Menu._registerTooltip('undoEdition', $msg('UNDO'), 'meta+Z');
-
-    const redoButton = this._addButton('redoEdition', false, false, () => {
-      designer.redo();
-    });
-    if (redoButton) {
-      redoButton.disable();
-    }
-    Menu._registerTooltip('redoEdition', $msg('REDO'), 'meta+shift+Z');
-
-    if (redoButton && undoButton) {
-      designer.addEvent('modelUpdate', (event) => {
-        if (event.undoSteps > 0) {
-          undoButton.enable();
-        } else {
-          undoButton.disable();
-        }
-        if (event.redoSteps > 0) {
-          redoButton.enable();
-        } else {
-          redoButton.disable();
-        }
-      });
-    }
-
-    this._addButton('addTopic', true, false, () => {
-      designer.createSiblingForSelectedNode();
-    });
-    Menu._registerTooltip('addTopic', $msg('ADD_TOPIC'), 'Enter');
-
-    this._addButton('deleteTopic', true, true, () => {
-      designer.deleteSelectedEntities();
-    });
-    Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), 'Delete');
-
-    this._addButton('topicLink', true, false, () => {
-      designer.addLink();
-    });
-    Menu._registerTooltip('topicLink', $msg('TOPIC_LINK'));
-
-    this._addButton('topicRelation', true, false, (event) => {
-      designer.showRelPivot(event);
-    });
-    Menu._registerTooltip('topicRelation', $msg('TOPIC_RELATIONSHIP'));
-
-    this._addButton('topicNote', true, false, () => {
-      designer.addNote();
-    });
-    Menu._registerTooltip('topicNote', $msg('TOPIC_NOTE'));
-
-    this._addButton('fontBold', true, false, () => {
-      designer.changeFontWeight();
-    });
-    Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), 'meta+B');
-
-    this._addButton('fontItalic', true, false, () => {
-      designer.changeFontStyle();
-    });
-    Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
-
-    if (saveElem) {
-      this._addButton('save', false, false,
-        () => {
-          this.save(saveElem, designer, true);
-        });
-      Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
-
-      if (!readOnly) {
-        window.addEventListener('beforeunload', () => {
-          if (this.isSaveRequired()) {
-            this.save(saveElem, designer, false);
+    // Edition actions ...
+    if (!readOnly) {
+      const fontFamilyModel = {
+        getValue() {
+          const nodes = designerModel.filterSelectedTopics();
+          let result = null;
+          for (let i = 0; i < nodes.length; i++) {
+            const fontFamily = nodes[i].getFontFamily();
+            if (result != null && result !== fontFamily) {
+              result = null;
+              break;
+            }
+            result = fontFamily;
           }
-          this.unlockMap(designer);
-        });
+          return result;
+        },
 
-        // Autosave on a fixed period of time ...
-        setInterval(
+        setValue(value: string) {
+          designer.changeFontFamily(value);
+        },
+      };
+      this._toolbarElems.push(new FontFamilyPanel('fontFamily', fontFamilyModel));
+      Menu._registerTooltip('fontFamily', $msg('FONT_FAMILY'));
+
+      const fontSizeModel = {
+        getValue(): number {
+          const nodes = designerModel.filterSelectedTopics();
+
+          let result = null;
+          for (let i = 0; i < nodes.length; i++) {
+            const fontSize = nodes[i].getFontSize();
+            if (result != null && result !== fontSize) {
+              result = null;
+              break;
+            }
+            result = fontSize;
+          }
+          return result;
+        },
+        setValue(value: number) {
+          designer.changeFontSize(value);
+        },
+      };
+      this._toolbarElems.push(new FontSizePanel('fontSize', fontSizeModel));
+      Menu._registerTooltip('fontSize', $msg('FONT_SIZE'));
+
+      const topicShapeModel = {
+        getValue() {
+          const nodes = designerModel.filterSelectedTopics();
+          let result = null;
+          for (let i = 0; i < nodes.length; i++) {
+            const shapeType = nodes[i].getShapeType();
+            if (result != null && result !== shapeType) {
+              result = null;
+              break;
+            }
+            result = shapeType;
+          }
+          return result;
+        },
+        setValue(value: string) {
+          designer.changeTopicShape(value);
+        },
+      };
+      this._toolbarElems.push(new TopicShapePanel('topicShape', topicShapeModel));
+      Menu._registerTooltip('topicShape', $msg('TOPIC_SHAPE'));
+
+      // Create icon panel dialog ...
+      const topicIconModel = {
+        getValue() {
+          return null;
+        },
+        setValue(value: string) {
+          designer.addIconType(value);
+        },
+      };
+      this._toolbarElems.push(new IconPanel('topicIcon', topicIconModel));
+      Menu._registerTooltip('topicIcon', $msg('TOPIC_ICON'));
+
+      const topicColorModel = {
+        getValue() {
+          const nodes = designerModel.filterSelectedTopics();
+          let result = null;
+          for (let i = 0; i < nodes.length; i++) {
+            const color = nodes[i].getBackgroundColor();
+            if (result != null && result !== color) {
+              result = null;
+              break;
+            }
+            result = color;
+          }
+          return result;
+        },
+        setValue(hex: string) {
+          designer.changeBackgroundColor(hex);
+        },
+      };
+      this._toolbarElems.push(new ColorPalettePanel('topicColor', topicColorModel, widgetsBaseUrl));
+      Menu._registerTooltip('topicColor', $msg('TOPIC_COLOR'));
+
+      const borderColorModel = {
+        getValue() {
+          const nodes = designerModel.filterSelectedTopics();
+          let result = null;
+          for (let i = 0; i < nodes.length; i++) {
+            const color = nodes[i].getBorderColor();
+            if (result != null && result !== color) {
+              result = null;
+              break;
+            }
+            result = color;
+          }
+          return result;
+        },
+        setValue(hex: string) {
+          designer.changeBorderColor(hex);
+        },
+      };
+      this._toolbarElems.push(new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl));
+      Menu._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
+
+      const fontColorModel = {
+        getValue() {
+          let result = null;
+          const nodes = designerModel.filterSelectedTopics();
+          for (let i = 0; i < nodes.length; i++) {
+            const color = nodes[i].getFontColor();
+            if (result != null && result !== color) {
+              result = null;
+              break;
+            }
+            result = color;
+          }
+          return result;
+        },
+        setValue(hex) {
+          designer.changeFontColor(hex);
+        },
+      };
+      this._toolbarElems.push(new ColorPalettePanel('fontColor', fontColorModel, baseUrl));
+      Menu._registerTooltip('fontColor', $msg('FONT_COLOR'));
+
+      const undoButton = this._addButton('undoEdition', false, false, () => {
+        designer.undo();
+      });
+      if (undoButton) {
+        undoButton.disable();
+      }
+      Menu._registerTooltip('undoEdition', $msg('UNDO'), 'meta+Z');
+
+      const redoButton = this._addButton('redoEdition', false, false, () => {
+        designer.redo();
+      });
+      if (redoButton) {
+        redoButton.disable();
+      }
+      Menu._registerTooltip('redoEdition', $msg('REDO'), 'meta+shift+Z');
+
+      if (redoButton && undoButton) {
+        designer.addEvent('modelUpdate', (event) => {
+          if (event.undoSteps > 0) {
+            undoButton.enable();
+          } else {
+            undoButton.disable();
+          }
+          if (event.redoSteps > 0) {
+            redoButton.enable();
+          } else {
+            redoButton.disable();
+          }
+        });
+      }
+
+      this._addButton('addTopic', true, false, () => {
+        designer.createSiblingForSelectedNode();
+      });
+      Menu._registerTooltip('addTopic', $msg('ADD_TOPIC'), 'Enter');
+
+      this._addButton('deleteTopic', true, true, () => {
+        designer.deleteSelectedEntities();
+      });
+      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), 'Delete');
+
+      this._addButton('topicLink', true, false, () => {
+        designer.addLink();
+      });
+      Menu._registerTooltip('topicLink', $msg('TOPIC_LINK'));
+
+      this._addButton('topicRelation', true, false, (event) => {
+        designer.showRelPivot(event);
+      });
+      Menu._registerTooltip('topicRelation', $msg('TOPIC_RELATIONSHIP'));
+
+      this._addButton('topicNote', true, false, () => {
+        designer.addNote();
+      });
+      Menu._registerTooltip('topicNote', $msg('TOPIC_NOTE'));
+
+      this._addButton('fontBold', true, false, () => {
+        designer.changeFontWeight();
+      });
+      Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), 'meta+B');
+
+      this._addButton('fontItalic', true, false, () => {
+        designer.changeFontStyle();
+      });
+      Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
+
+
+      if (saveElem) {
+        this._addButton('save', false, false,
           () => {
+            this.save(saveElem, designer, true);
+          });
+        Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
+
+        if (!readOnly) {
+          window.addEventListener('beforeunload', () => {
             if (this.isSaveRequired()) {
               this.save(saveElem, designer, false);
             }
-          }, 10000,
-        );
+            this.unlockMap(designer);
+          });
+
+          // Autosave on a fixed period of time ...
+          setInterval(
+            () => {
+              if (this.isSaveRequired()) {
+                this.save(saveElem, designer, false);
+              }
+            }, 10000,
+          );
+        }
       }
     }
+
+    Menu._registerTooltip('export', $msg('EXPORT'));
+
+    Menu._registerTooltip('print', $msg('PRINT'));
 
     const shareElem = $('#shareIt');
     if (shareElem.length !== 0) {
@@ -315,14 +330,6 @@ class Menu extends IMenu {
       });
       Menu._registerTooltip('keyboardShortcuts', $msg('KEYBOARD_SHOTCUTS'));
     }
-
-    const backTolist = $('#backToList');
-    backTolist.bind('click', (event) => {
-      event.stopPropagation();
-      window.location.href = '/c/maps/';
-      return false;
-    });
-    Menu._registerTooltip('backToList', $msg('BACK_TO_MAP_LIST'));
 
     // Account dialog ...
     const accountSettings = $('#account');

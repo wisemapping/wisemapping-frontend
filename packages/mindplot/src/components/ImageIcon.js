@@ -206,7 +206,7 @@ ImageIcon.prototype.ICON_FAMILIES = [{
 },
 {
   id: 'appsgoogle',
-  icons: ['appsgoogle_youtube', 'appsgoogle_gmail', 'appsgoogle-maps'],
+  icons: ['appsgoogle_youtube', 'appsgoogle_gmail', 'appsgoogle_maps'],
 },
 {
   id: 'tag',
