@@ -411,6 +411,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (topic.getType() !== 'CentralTopic') {
       topic
         .getChildren()
+        .sort((a, b) => a.getOrder() - b.getOrder())
         .forEach((child, index) => {
           if (child.getOrder() !== index) {
             child.setOrder(index);

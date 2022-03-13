@@ -30,7 +30,7 @@ const initialization = (designer: Designer) => {
   });
 };
 
-const persistence = new LocalStorageManager('samples/{id}.wxml', false);
+const persistence = new LocalStorageManager('samples/{id}.wxml', false, false);
 const mapId = 'welcome';
 const options: EditorOptions = {
   zoom: 0.8,
