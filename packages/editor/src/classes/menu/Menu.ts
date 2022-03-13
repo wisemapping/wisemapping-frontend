@@ -33,8 +33,6 @@ import { $msg } from '@wisemapping/mindplot';
 class Menu extends IMenu {
   constructor(designer: Designer, containerId: string, readOnly = false, baseUrl = '') {
     super(designer, containerId);
-    const saveElem = $('#save');
-
     const widgetsBaseUrl = `${baseUrl}css/widget`;
 
     // Create panels ...
@@ -274,30 +272,31 @@ class Menu extends IMenu {
       Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
 
 
-      if (saveElem) {
+      if (!readOnly) {
+        // Register action on save  ...
+        const saveElem = $('#save');
         this._addButton('save', false, false,
           () => {
             this.save(saveElem, designer, true);
           });
         Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
 
-        if (!readOnly) {
-          window.addEventListener('beforeunload', () => {
+        // Register unload save ...
+        window.addEventListener('beforeunload', () => {
+          if (this.isSaveRequired()) {
+            this.save(saveElem, designer, false);
+          }
+          this.unlockMap(designer);
+        });
+
+        // Autosave on a fixed period of time ...
+        setInterval(
+          () => {
             if (this.isSaveRequired()) {
               this.save(saveElem, designer, false);
             }
-            this.unlockMap(designer);
-          });
-
-          // Autosave on a fixed period of time ...
-          setInterval(
-            () => {
-              if (this.isSaveRequired()) {
-                this.save(saveElem, designer, false);
-              }
-            }, 10000,
-          );
-        }
+          }, 10000,
+        );
       }
     }
 
