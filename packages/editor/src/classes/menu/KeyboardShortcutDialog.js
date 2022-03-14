@@ -126,6 +126,16 @@ class KeyboardShortcutDialog extends BootstrapDialog {
             <td>Ctrl + b</td>
             <td>⌘ + b</td>
         </tr>
+        <tr>
+            <td>${$msg('TOPIC_NOTE')}</td>
+            <td>Ctrl + n</td>
+            <td>⌘ + n</td>
+        </tr>
+        <tr>
+            <td>${$msg('TOPIC_LINK')}</td>
+            <td>Ctrl + l</td>
+            <td>⌘ + l</td>
+        </tr>
         </tbody>
     </table>
 </div>`);

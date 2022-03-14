@@ -36,7 +36,7 @@ const ZH = {
   ONE_TOPIC_MUST_BE_SELECTED: '无法创建主题。必须选择一个主题。',
   ONLY_ONE_TOPIC_MUST_BE_SELECTED_COLLAPSE: '无法折叠子节点，必须只选择一个主题。',
   SAVE_COULD_NOT_BE_COMPLETED: '无法完成保存，请稍后再试。',
-  UNEXPECTED_ERROR_LOADING: "我们很抱歉，发生了意外错误。\n再次尝试重新加载编辑器。如果问题仍然存在，请联系我们support@wisemapping.com。",
+  UNEXPECTED_ERROR_LOADING: '我们很抱歉，发生了意外错误。\n再次尝试重新加载编辑器。如果问题仍然存在，请联系我们support@wisemapping.com。',
   MAIN_TOPIC: '重点主题',
   SUB_TOPIC: '子主题',
   ISOLATED_TOPIC: '独立主题',
