@@ -3,6 +3,8 @@ import ES from './../../compiled-lang/es.json';
 import EN from './../../compiled-lang/en.json';
 import DE from './../../compiled-lang/de.json';
 import RU from './../../compiled-lang/ru.json';
+import ZH from './../../compiled-lang/zh.json';
+
 
 class I18nMsg {
     static loadLocaleData(locale: string) {
@@ -17,6 +19,8 @@ class I18nMsg {
                 return DE;
             case 'ru':
                 return RU;
+            case 'zh':
+                return ZH;
             default:
                 return EN;
         }
