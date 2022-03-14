@@ -8,8 +8,8 @@
     "cy:run": "cypress run",
     "test:integration": "start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
     "test": "yarn test:integration",
-    "extract": "for lang in {'es','en','fr','de'};do formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/${lang}.json;done",
-    "compile": "formatjs compile"
+    "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/es.json",
+    "i18n:compile": "for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done"
   },
   "repository": "http://www.wisemapping.com",
   "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",

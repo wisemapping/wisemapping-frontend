@@ -258,7 +258,7 @@
     "defaultMessage": "Add label"
   },
   "label.add-for": {
-    "defaultMessage": "Editing labels for maps:"
+    "defaultMessage": "Editing labels for"
   },
   "label.add-placeholder": {
     "defaultMessage": "Label title"
@@ -274,6 +274,9 @@
   },
   "label.description": {
     "defaultMessage": "Use labels to organize your maps."
+  },
+  "label.maps-count": {
+    "defaultMessage": "{count} maps"
   },
   "label.title": {
     "defaultMessage": "Add a label"

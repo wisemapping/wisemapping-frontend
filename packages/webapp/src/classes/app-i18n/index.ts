@@ -57,7 +57,7 @@ export const Locales = {
     DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
     FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
     RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
-    ZH: new Locale('zh', '中文', require('./../../compiled-lang/zh.json')), // eslint-disable-line
+    ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
 
 };
 

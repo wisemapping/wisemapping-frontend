@@ -275,6 +275,12 @@
       "value": "Image: Get a graphic representation of your map including all colors and shapes."
     }
   ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "Center and zoom to fit"
+    }
+  ],
   "export.title": [
     {
       "type": 0,
@@ -512,7 +518,7 @@
   "label.add-for": [
     {
       "type": 0,
-      "value": "Editing labels for maps:"
+      "value": "Editing labels for"
     }
   ],
   "label.add-placeholder": [
@@ -543,6 +549,16 @@
     {
       "type": 0,
       "value": "Use labels to organize your maps."
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " maps"
     }
   ],
   "label.title": [
@@ -887,6 +903,12 @@
       "value": "Last Name"
     }
   ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "Registration | WiseMapping"
+    }
+  ],
   "registration.password": [
     {
       "type": 0,
@@ -914,7 +936,7 @@
   "registration.title": [
     {
       "type": 0,
-      "value": "Registration | WiseMapping"
+      "value": "Become a member"
     }
   ],
   "rename.description": [

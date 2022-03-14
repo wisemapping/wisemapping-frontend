@@ -1,5 +1,5 @@
 {
-  "account.delete-warning": [
+  "account.delete-warning警告": [
     {
       "type": 0,
       "value": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
@@ -500,7 +500,7 @@
   "info.starred": [
     {
       "type": 0,
-      "value": "星标"
+      "value": "收藏"
     }
   ],
   "info.title": [
@@ -740,13 +740,13 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "拥有"
+      "value": "我的"
     }
   ],
   "maps.nav-public": [
     {
       "type": 0,
-      "value": "公共"
+      "value": "公开"
     }
   ],
   "maps.nav-shared": [
@@ -758,7 +758,7 @@
   "maps.nav-starred": [
     {
       "type": 0,
-      "value": "星标"
+      "value": "收藏"
     }
   ],
   "maps.page-title": [
@@ -788,7 +788,7 @@
   "maps.tooltip-starred": [
     {
       "type": 0,
-      "value": "星标"
+      "value": "收藏"
     }
   ],
   "maps.view": [

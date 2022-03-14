@@ -1,5 +1,5 @@
 {
-  "account.delete-warning": {
+  "account.delete-warning警告": {
     "defaultMessage": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
   },
   "accountinfo.button": {
@@ -249,7 +249,7 @@
     "defaultMessage": "分享"
   },
   "info.starred": {
-    "defaultMessage": "星标"
+    "defaultMessage": "收藏"
   },
   "info.title": {
     "defaultMessage": "信息"
@@ -364,16 +364,16 @@
     "defaultMessage": "所有"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "拥有"
+    "defaultMessage": "我的"
   },
   "maps.nav-public": {
-    "defaultMessage": "公共"
+    "defaultMessage": "公开"
   },
   "maps.nav-shared": {
     "defaultMessage": "与我分享"
   },
   "maps.nav-starred": {
-    "defaultMessage": "星标"
+    "defaultMessage": "收藏"
   },
   "maps.page-title": {
     "defaultMessage": "我的脑图|WiseMapping"
@@ -388,7 +388,7 @@
     "defaultMessage": "打开编辑"
   },
   "maps.tooltip-starred": {
-    "defaultMessage": "星标"
+    "defaultMessage": "收藏"
   },
   "maps.view": {
     "defaultMessage": "查看"
