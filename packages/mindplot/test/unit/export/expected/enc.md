@@ -40,6 +40,7 @@ variance is desired, complete censuses are essential.[^1]
 the investment in complete sampling may be worthwhile
 for at least some traits.[^2] 
 - Chazdon 2010. Biotropica. 42(1): 31–40
+	- Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação continue sendo usada em curto prazo enquanto não há informações confiáveis suficiente para esta simples classificação. Outras classificações como esta do artigo são bem vinda, contanto que tenham dados confiáveis. Porém dados estáticos já são difíceis de se obter, dados temporais, como taxa de crescimento em diâmetro ou altura, são mais difíceis ainda. Falar que vários tipos de classificações podem ser utilizadas e quanto mais detalhe melhor, porém os dados é que são mais limitantes. Se focarmos em dados de germinação e crescimento limitantes, como sugerem sainete e whitmore, da uma idéia maismrápida e a curto prazo da classificação destas espécies. Depois com o tempo conseguiremos construir classificações mais detalhadas e com mais dados confiáveis. 
 	- Here, we develop a new approach that links functional attributes
 of tree species with studies of forest recovery and regional
 land-use transitions (Chazdon et al. 2007). Grouping species according
@@ -53,7 +54,6 @@ and wood functional traits for only a subset of the species in our
 study sites, we based our functional type classification on information
 for a large number of tree species obtained through vegetation
 monitoring studies.
-	- Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação continue sendo usada em curto prazo enquanto não há informações confiáveis suficiente para esta simples classificação. Outras classificações como esta do artigo são bem vinda, contanto que tenham dados confiáveis. Porém dados estáticos já são difíceis de se obter, dados temporais, como taxa de crescimento em diâmetro ou altura, são mais difíceis ainda. Falar que vários tipos de classificações podem ser utilizadas e quanto mais detalhe melhor, porém os dados é que são mais limitantes. Se focarmos em dados de germinação e crescimento limitantes, como sugerem sainete e whitmore, da uma idéia maismrápida e a curto prazo da classificação destas espécies. Depois com o tempo conseguiremos construir classificações mais detalhadas e com mais dados confiáveis. 
 	- Our approach avoided preconceived notions of successional
 behavior or shade tolerance of tree species by developing an objective
 and independent classification of functional types based on vegetation

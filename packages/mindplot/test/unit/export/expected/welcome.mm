@@ -12,7 +12,7 @@
                 </html>
             </richcontent>
             <icon BUILTIN="hard_computer"/>
-            <arrowlink DESTINATION="ID_11" STARTARROW="Default" ENDARROW="Default"/>
+            <arrowlink DESTINATION="ID_11" STARTARROW="Default"/>
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
             <icon BUILTIN="face_surprise"/>

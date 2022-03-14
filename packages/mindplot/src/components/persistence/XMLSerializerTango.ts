@@ -25,7 +25,6 @@ import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
-import Relationship from '../Relationship';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -446,7 +445,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value;
   }
 
-  static _deserializeNodeText(domElem) {
+  static _deserializeNodeText(domElem: ChildNode) {
     const children = domElem.childNodes;
     let value = null;
     for (let i = 0; i < children.length; i++) {
@@ -483,7 +482,6 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if ($defined(destCtrlPoint) && destCtrlPoint !== '') {
       model.setDestCtrlPoint(Point.fromString(destCtrlPoint));
     }
-  
     model.setEndArrow(false);
     model.setStartArrow(true);
     return model;
