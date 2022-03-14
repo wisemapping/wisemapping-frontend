@@ -21,6 +21,7 @@ import EN from './en';
 import DE from './de';
 import FR from './fr';
 import RU from './ru';
+import ZH from './zh';
 
 const Bundle = {
   es: ES,
@@ -28,6 +29,7 @@ const Bundle = {
   de: DE,
   fr: FR,
   ru: RU,
+  zh: ZH,
 };
 
 export default Bundle;

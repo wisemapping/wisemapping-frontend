@@ -47,7 +47,7 @@ export default abstract class AppI18n {
     }
 }
 
-export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru';
+export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh';
 
 export const Locales = {
     EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
@@ -55,9 +55,9 @@ export const Locales = {
     DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
     FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
     RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
+    ZH: new Locale('zh', '中文', require('./../../compiled-lang/zh.json')), // eslint-disable-line
+
 };
-
-
 
 export const localeFromStr = (code: string): Locale => {
     const locales: Locale[] = Object.values(Locales);

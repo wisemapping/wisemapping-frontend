@@ -1,0 +1,14 @@
+{
+  "editor.try-welcome": {
+      "defaultMessage": "这个编辑区域展示了一些思维导图编辑器的功能！"
+  },
+  "editor.try-welcome-description": {
+      "defaultMessage": "注册后可以免费创建、分享和发布无限数量的思维导图。"
+  },
+  "login.signup": {
+      "defaultMessage": "注册"
+  },
+  "action.share": {
+      "defaultMessage": "分享"
+  }
+}
