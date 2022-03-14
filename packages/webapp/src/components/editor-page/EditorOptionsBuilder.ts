@@ -2,7 +2,7 @@ import { EditorOptions } from '@wisemapping/editor';
 import { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
 
-export default class EditorOptionsBuilder {
+class EditorOptionsBuilder {
     static build(locale: string, mode: EditorRenderMode, hotkeys: boolean): EditorOptions {
 
         let options: EditorOptions = {
@@ -38,3 +38,4 @@ export default class EditorOptionsBuilder {
         return !AppConfig.isDevelopEnv() ? global.mapId : 11;
     }
 }
+export default EditorOptionsBuilder;
