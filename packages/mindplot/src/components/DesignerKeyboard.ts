@@ -118,6 +118,20 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
+      ['ctrl+l', 'meta+l'], (event: Event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        designer.addLink();
+      },
+    );
+    this.addShortcut(
+      ['ctrl+n', 'meta+n'], (event: Event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        designer.addNote();
+      },
+    );
+    this.addShortcut(
       ['ctrl+v', 'meta+v'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
