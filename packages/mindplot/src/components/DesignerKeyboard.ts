@@ -125,7 +125,7 @@ class DesignerKeyboard extends Keyboard {
       },
     );
     this.addShortcut(
-      ['ctrl+n', 'meta+n'], (event: Event) => {
+      ['ctrl+k', 'meta+k'], (event: Event) => {
         event.preventDefault();
         event.stopPropagation();
         designer.addNote();

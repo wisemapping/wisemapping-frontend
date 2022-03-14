@@ -128,8 +128,8 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         </tr>
         <tr>
             <td>${$msg('TOPIC_NOTE')}</td>
-            <td>Ctrl + n</td>
-            <td>⌘ + n</td>
+            <td>Ctrl + k</td>
+            <td>⌘ + k</td>
         </tr>
         <tr>
             <td>${$msg('TOPIC_LINK')}</td>
