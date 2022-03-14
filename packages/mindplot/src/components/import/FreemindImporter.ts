@@ -27,8 +27,6 @@ export default class FreemindImporter extends Importer {
 
   private relationship: Array<RelationshipModel>;
 
-  private currentId: number;
-
   constructor(map: FreemindMap) {
     super();
     this.freemindMap = map;
@@ -38,6 +36,7 @@ export default class FreemindImporter extends Importer {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
     this.relationship = new Array<RelationshipModel>();
+    let wiseTopicId = 0;
 
     const version: string = this.freemindMap.getVersion();
 
@@ -52,20 +51,21 @@ export default class FreemindImporter extends Importer {
 
     const freeNode: FreemindNode = this.freemindMap.getNode();
     this.mindmap.setVersion(FreemindConstant.CODE_VERSION);
-    const wiseTopic = this.mindmap.createNode('CentralTopic', 0);
-    wiseTopic.setId(this.currentId++);
+
+    wiseTopicId++;
+    const wiseTopic = this.mindmap.createNode('CentralTopic');
     wiseTopic.setPosition(0, 0);
+    wiseTopic.setId(wiseTopicId);
 
-    this.convertNodeProperties(freeNode, wiseTopic);
-
-    wiseTopic.setShapeType(TopicShape.ROUNDED_RECT);
+    this.convertNodeProperties(freeNode, wiseTopic, true);
 
     this.nodesmap.set(freeNode.getId(), wiseTopic);
 
-    this.convertChildNodes(freeNode, wiseTopic, this.mindmap, 1);
+    this.convertChildNodes(freeNode, wiseTopic, this.mindmap, 1, wiseTopicId);
     this.addRelationship(this.mindmap);
 
     this.mindmap.setDescription(description);
+    this.mindmap.addBranch(wiseTopic);
 
     return Promise.resolve(this.mindmap);
   }
@@ -126,21 +126,21 @@ export default class FreemindImporter extends Importer {
     }
   }
 
-  private convertNodeProperties(freeNode: FreemindNode, wiseTopic: NodeModel): void {
+  private convertNodeProperties(freeNode: FreemindNode, wiseTopic: NodeModel, centralTopic: boolean): void {
     const text: string = freeNode.getText();
-    wiseTopic.setText(text);
+    if (text) wiseTopic.setText(text);
 
     const bgColor: string = freeNode.getBackgorundColor();
-    wiseTopic.setBackgroundColor(bgColor);
+    if (bgColor) wiseTopic.setBackgroundColor(bgColor);
 
-    const shape = this.getShapeFromFreeNode(freeNode);
-    wiseTopic.setShapeType(shape);
+    if (centralTopic === false) {
+      const shape = this.getShapeFromFreeNode(freeNode);
+      if (shape && shape !== 'fork') wiseTopic.setShapeType(shape);
+    }
 
     // Check for style...
     const fontStyle = this.generateFontStyle(freeNode, null);
-    if (fontStyle) {
-      wiseTopic.setFontStyle(fontStyle);
-    }
+    if (fontStyle && fontStyle !== ';;;;') wiseTopic.setFontStyle(fontStyle);
 
     // Is there any link...
     const url: string = freeNode.getLink();
@@ -150,10 +150,10 @@ export default class FreemindImporter extends Importer {
     }
 
     const folded = Boolean(freeNode.getFolded());
-    wiseTopic.setChildrenShrunken(folded);
+    if (folded) wiseTopic.setChildrenShrunken(folded);
   }
 
-  private convertChildNodes(freeParent: FreemindNode, wiseParent: NodeModel, mindmap: Mindmap, depth: number): void {
+  private convertChildNodes(freeParent: FreemindNode, wiseParent: NodeModel, mindmap: Mindmap, depth: number, nodeId: number): void {
     const freeChilden = freeParent.getArrowlinkOrCloudOrEdge();
     let currentWiseTopic: NodeModel = wiseParent;
     let order = 0;
@@ -162,15 +162,15 @@ export default class FreemindImporter extends Importer {
 
     freeChilden.forEach((child) => {
       if (child instanceof FreemindNode) {
-        const freeChild: FreemindNode = child as FreemindNode;
-        const wiseChild = mindmap.createNode('MainTopic', this.currentId++);
+        const wiseId = parseInt(child.getId().split('_')[1], 10);
+        const wiseChild = mindmap.createNode('MainTopic', wiseId);
 
-        this.nodesmap.set(freeChild.getId(), wiseChild);
+        this.nodesmap.set(child.getId(), wiseChild);
 
         let norder: number;
         if (depth !== 1) {
           norder = order++;
-        } else if (freeChild.getPosition() && freeChild.getPosition() === FreemindConstant.POSITION_LEFT) {
+        } else if (child.getPosition() && child.getPosition() === FreemindConstant.POSITION_LEFT) {
           norder = firstLevelLeftOrder;
           firstLevelLeftOrder += 2;
         } else {
@@ -181,14 +181,16 @@ export default class FreemindImporter extends Importer {
         wiseChild.setOrder(norder);
 
         // Convert node position...
-        const childrenCountSameSide = this.getChildrenCountSameSide(freeChilden, freeChild);
-        const position: {x: number, y: number} = this.convertPosition(wiseParent, freeChild, depth, norder, childrenCountSameSide);
+        const childrenCountSameSide = this.getChildrenCountSameSide(freeChilden, child);
+        const position: {x: number, y: number} = this.convertPosition(wiseParent, child, depth, norder, childrenCountSameSide);
         wiseChild.setPosition(position.x, position.y);
 
         // Convert the rest of the node properties...
-        this.convertNodeProperties(freeChild, wiseChild);
+        this.convertNodeProperties(child, wiseChild, false);
 
-        this.convertChildNodes(freeChild, wiseChild, mindmap, depth + 1);
+        if (child.getArrowlinkOrCloudOrEdge().length > 0) {
+          this.convertChildNodes(child, wiseChild, mindmap, depth++, nodeId);
+        }
 
         if (wiseChild !== wiseParent) {
           wiseParent.append(wiseChild);
@@ -233,18 +235,12 @@ export default class FreemindImporter extends Importer {
       }
 
       if (child instanceof FreemindRichcontent) {
-        const content: FreemindRichcontent = child as FreemindRichcontent;
-        const type: string = content.getType();
-
-        if (type === FreemindConstant.NODE_TYPE) {
-          const text = this.html2text(content);
-          currentWiseTopic.setText(text);
-        } else {
-          let text = this.html2text(content);
-          const mindmapNote: NoteModel = new NoteModel({ text: '' });
-          text = text || FreemindConstant.EMPTY_NOTE;
-          mindmapNote.setText(text);
-          currentWiseTopic.addFeature(mindmapNote);
+        const type = child.getType();
+        if (type === 'NOTE') {
+          // Formating text
+          const text = this.html2Text(child.getHtml());
+          const noteModel: NoteModel = new NoteModel({ text: text || FreemindConstant.EMPTY_NOTE });
+          currentWiseTopic.addFeature(noteModel);
         }
       }
 
@@ -293,9 +289,7 @@ export default class FreemindImporter extends Importer {
 
     freeChilden.forEach((child) => {
       if (child instanceof FreemindNode) {
-        const node: FreemindNode = child as FreemindNode;
-
-        let side = node.getPosition();
+        let side = child.getPosition();
         if (!side) {
           side = FreemindConstant.POSITION_RIGHT;
         }
@@ -315,8 +309,6 @@ export default class FreemindImporter extends Importer {
       result = TopicShape.ROUNDED_RECT;
     } else if (node.getBackgorundColor()) {
       result = TopicShape.RECTANGLE;
-    } else {
-      result = TopicShape.LINE;
     }
     return result;
   }
@@ -395,12 +387,9 @@ export default class FreemindImporter extends Importer {
     };
   }
 
-  private html2text(content: FreemindRichcontent): string {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content.getHtml(), 'text/html');
-    doc.querySelector('br').append('\\n');
-    doc.querySelector('p').append('\\n');
-    doc.querySelector('div').append('\\n');
-    return doc.textContent.replace('\\\\n', '\\n').trim();
+  private html2Text(content: string): string {
+    const contentConvert = content.replace(/(<([^>]+)>)/gi, '');
+    contentConvert.replace('\t', '');
+    return contentConvert.trim();
   }
 }

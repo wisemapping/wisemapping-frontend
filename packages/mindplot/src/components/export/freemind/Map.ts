@@ -69,96 +69,104 @@ export default class Freemap {
     freemap.setVesion(version);
 
     const mainTopicElement = rootElem.firstElementChild;
-    const mainTopic: Node = this.domToNode(mainTopicElement) as Node;
+    const mainTopic: Node = new Node().loadFromElement(mainTopicElement);
     freemap.setNode(mainTopic);
 
-    // Add all the topics nodes...
     const childNodes = Array.from(mainTopicElement.childNodes);
-    const topicsNodes = childNodes
+    const childsNodes = childNodes
       .filter(
         (child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'node',
       )
       .map((c) => c as Element);
 
-    topicsNodes.forEach((child) => {
-      const childNode = this.domToNode(child);
-      mainTopic.setArrowlinkOrCloudOrEdge(childNode);
+    childsNodes.forEach((child: Element) => {
+      const node = this.domToNode(child);
+      mainTopic.setArrowlinkOrCloudOrEdge(node);
     });
 
     return freemap;
   }
 
+  private filterNodes(child: ChildNode): Element {
+    let element: Element;
+    if (child.nodeType === 1) {
+      if (
+        (child as Element).tagName === 'node'
+        || (child as Element).tagName === 'richcontent'
+        || (child as Element).tagName === 'font'
+        || (child as Element).tagName === 'edge'
+        || (child as Element).tagName === 'arrowlink'
+        || (child as Element).tagName === 'clud'
+        || (child as Element).tagName === 'icon'
+      ) element = child as Element;
+    }
+
+    return element;
+  }
+
   private domToNode(nodeElem: Element): Choise {
+    let node: Choise;
+
     if (nodeElem.tagName === 'node') {
-      const node: Node = new Node().loadFromElement(nodeElem);
+      node = new Node().loadFromElement(nodeElem);
 
       if (nodeElem.childNodes.length > 0) {
-        const childElement = Array.from(nodeElem.childNodes)
-          .filter(
-            (child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'node',
-          )
+        const childNodes = Array.from(nodeElem.childNodes);
+        const childsNodes = childNodes
+          .filter((child: ChildNode) => this.filterNodes(child))
           .map((c) => c as Element);
 
-        childElement.forEach((child) => {
-          const childNode = new Node().loadFromElement(child);
-          node.setArrowlinkOrCloudOrEdge(childNode);
+        childsNodes.forEach((child) => {
+          const childNode = this.domToNode(child);
+          if (node instanceof Node) node.setArrowlinkOrCloudOrEdge(childNode);
         });
       }
-
-      return node;
     }
 
     if (nodeElem.tagName === 'font') {
-      const font: Font = new Font();
-      if (nodeElem.getAttribute('NAME')) font.setName(nodeElem.getAttribute('NAME'));
-      if (nodeElem.getAttribute('BOLD')) font.setBold(nodeElem.getAttribute('BOLD'));
-      if (nodeElem.getAttribute('ITALIC')) font.setItalic(nodeElem.getAttribute('ITALIC'));
-      if (nodeElem.getAttribute('SIZE')) font.setSize(nodeElem.getAttribute('SIZE'));
-
-      return font;
+      node = new Font();
+      if (nodeElem.getAttribute('NAME')) node.setName(nodeElem.getAttribute('NAME'));
+      if (nodeElem.getAttribute('BOLD')) node.setBold(nodeElem.getAttribute('BOLD'));
+      if (nodeElem.getAttribute('ITALIC')) node.setItalic(nodeElem.getAttribute('ITALIC'));
+      if (nodeElem.getAttribute('SIZE')) node.setSize(nodeElem.getAttribute('SIZE'));
     }
 
     if (nodeElem.tagName === 'edge') {
-      const edge = new Edge();
-      if (nodeElem.getAttribute('COLOR')) edge.setColor(nodeElem.getAttribute('COLOR'));
-      if (nodeElem.getAttribute('STYLE')) edge.setStyle(nodeElem.getAttribute('STYLE'));
-      if (nodeElem.getAttribute('WIDTH')) edge.setWidth(nodeElem.getAttribute('WIDTH'));
-
-      return edge;
+      node = new Edge();
+      if (nodeElem.getAttribute('COLOR')) node.setColor(nodeElem.getAttribute('COLOR'));
+      if (nodeElem.getAttribute('STYLE')) node.setStyle(nodeElem.getAttribute('STYLE'));
+      if (nodeElem.getAttribute('WIDTH')) node.setWidth(nodeElem.getAttribute('WIDTH'));
     }
 
     if (nodeElem.tagName === 'arrowlink') {
-      const arrowlink = new Arrowlink();
-      if (nodeElem.getAttribute('COLOR')) arrowlink.setColor(nodeElem.getAttribute('COLOR'));
-      if (nodeElem.getAttribute('DESTINATION')) arrowlink.setDestination(nodeElem.getAttribute('DESTINATION'));
-      if (nodeElem.getAttribute('ENDARROW')) arrowlink.setEndarrow(nodeElem.getAttribute('ENDARROW'));
-      if (nodeElem.getAttribute('ENDINCLINATION')) arrowlink.setEndinclination(nodeElem.getAttribute('ENDINCLINATION'));
-      if (nodeElem.getAttribute('ID')) arrowlink.setId(nodeElem.getAttribute('ID'));
-      if (nodeElem.getAttribute('STARTARROW')) arrowlink.setStartarrow(nodeElem.getAttribute('STARTARROW'));
-      if (nodeElem.getAttribute('STARTINCLINATION')) arrowlink.setStartinclination(nodeElem.getAttribute('STARTINCLINATION'));
-
-      return arrowlink;
+      node = new Arrowlink();
+      if (nodeElem.getAttribute('COLOR')) node.setColor(nodeElem.getAttribute('COLOR'));
+      if (nodeElem.getAttribute('DESTINATION')) node.setDestination(nodeElem.getAttribute('DESTINATION'));
+      if (nodeElem.getAttribute('ENDARROW')) node.setEndarrow(nodeElem.getAttribute('ENDARROW'));
+      if (nodeElem.getAttribute('ENDINCLINATION')) node.setEndinclination(nodeElem.getAttribute('ENDINCLINATION'));
+      if (nodeElem.getAttribute('ID')) node.setId(nodeElem.getAttribute('ID'));
+      if (nodeElem.getAttribute('STARTARROW')) node.setStartarrow(nodeElem.getAttribute('STARTARROW'));
+      if (nodeElem.getAttribute('STARTINCLINATION')) node.setStartinclination(nodeElem.getAttribute('STARTINCLINATION'));
     }
 
     if (nodeElem.tagName === 'cloud') {
-      const cloud = new Cloud();
-      if (nodeElem.getAttribute('COLOR')) cloud.setColor(nodeElem.getAttribute('COLOR'));
+      node = new Cloud();
+      if (nodeElem.getAttribute('COLOR')) node.setColor(nodeElem.getAttribute('COLOR'));
     }
 
     if (nodeElem.tagName === 'icon') {
-      const icon = new Icon();
-      if (nodeElem.getAttribute('BUILTIN')) icon.setBuiltin(nodeElem.getAttribute('BUILTIN'));
+      node = new Icon();
+      if (nodeElem.getAttribute('BUILTIN')) node.setBuiltin(nodeElem.getAttribute('BUILTIN'));
     }
 
     if (nodeElem.tagName === 'richcontent') {
-      const richcontent = new Richcontent();
+      node = new Richcontent();
 
-      if (nodeElem.getAttribute('TYPE')) richcontent.setType(nodeElem.getAttribute('TYPE'));
-      if (nodeElem.lastElementChild) richcontent.setHtml(String(nodeElem.lastElementChild));
+      if (nodeElem.getAttribute('TYPE')) node.setType(nodeElem.getAttribute('TYPE'));
+      if (nodeElem.lastElementChild) node.setHtml(String(nodeElem.getElementsByTagName('html')[0].outerHTML.trim()));
     }
 
-    const nodeDefault = new Node();
-    return nodeDefault;
+    return node;
   }
 
   private nodeToXml(childNode: Choise, parentNode: HTMLElement, document: Document): HTMLElement {
