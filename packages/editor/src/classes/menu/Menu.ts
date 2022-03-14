@@ -239,7 +239,7 @@ class Menu extends IMenu {
       this._addButton('addTopic', true, false, () => {
         designer.createSiblingForSelectedNode();
       });
-      Menu._registerTooltip('addTopic', $msg('ADD_TOPIC');
+      Menu._registerTooltip('addTopic', $msg('ADD_TOPIC'));
 
       this._addButton('deleteTopic', true, true, () => {
         designer.deleteSelectedEntities();
