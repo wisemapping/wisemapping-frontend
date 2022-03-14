@@ -15,9 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import RootedTreeSet from './RootedTreeSet';
+import RootedTreeSet from "./RootedTreeSet";
 import Node from './Node';
-import PositionType from '../PositionType';
+import PositionType from "../PositionType";
 
 abstract class ChildrenSorterStrategy {
   abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node);

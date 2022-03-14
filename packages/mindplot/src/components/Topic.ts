@@ -707,10 +707,11 @@ abstract class Topic extends NodeGraph {
     // Do some fancy animation ....
     const elements = this._flatten2DElements(this);
     elements.forEach((elem) => {
-      elem.setVisibility(!value, 250);
+      elem.setVisibility(!value, 250)
     });
 
     EventBus.instance.fireEvent('childShrinked', model);
+
   }
 
   getShrinkConnector(): ShirinkConnector | undefined {
@@ -902,6 +903,7 @@ abstract class Topic extends NodeGraph {
     current.setVisibility(value);
   }
 
+  /** */
   setVisibility(value: boolean, fade = 0): void {
     this._setTopicVisibility(value, fade);
 
@@ -958,9 +960,8 @@ abstract class Topic extends NodeGraph {
       relationship.setVisibility(
         value
         && (targetParent == null || !targetParent.areChildrenShrunken())
-        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
-        fade,
-      );
+        && (sourceParent == null || !sourceParent.areChildrenShrunken())
+        , fade);
     });
   }
 
