@@ -3,14 +3,15 @@ import ActionDispatcher from '../maps-page/action-dispatcher';
 import { ActionType } from '../maps-page/action-chooser';
 import Editor from '@wisemapping/editor';
 import { EditorRenderMode, PersistenceManager } from '@wisemapping/mindplot';
-
-import AppI18n from '../../classes/app-i18n';
+import { IntlProvider } from 'react-intl';
+import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
 import Client from '../../classes/client';
 import { activeInstance, fetchAccount, fetchMapById } from '../../redux/clientSlice';
-import EditorOptionsBuilder from './EditorOptionsBuilder';
+import EditorOptionsBulder from './EditorOptionsBuider';
+
 
 export type EditorPropsType = {
     isTryMode: boolean;
@@ -23,7 +24,6 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
 
     useEffect(() => {
-        document.title = `${global.mapTitle ? global.mapTitle : 'unknown'} | WiseMapping `;
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, []);
 
@@ -37,16 +37,16 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
             const fetchResult = fetchMapById(mapId);
             if (!fetchResult.isLoading) {
                 if (fetchResult.error) {
-                    throw new Error(`Map information could not be loaded: ${JSON.stringify(fetchResult)}`);
+                    throw new Error(`User coild not be loaded: ${JSON.stringify(fetchResult.error)}`);
                 }
-                result = `edition-${fetchResult?.map?.role}`;
+                result = fetchResult.map.role === 'owner' ? 'edition-owner' : 'edition-editor';
             }
         }
         return result;
     }
 
     // What is the role ?
-    const mapId = EditorOptionsBuilder.loadMapId();
+    const mapId = EditorOptionsBulder.loadMapId();
     const mode = findEditorMode(isTryMode, mapId);
 
     // Account settings can be null and editor cannot be initilized multiple times. This creates problems
@@ -56,12 +56,16 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
 
     let options, persistence: PersistenceManager;
     if (loadCompleted) {
-        options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
+        options = EditorOptionsBulder.build(userLocale.code, mode, hotkey);
         persistence = client.buildPersistenceManager(mode);
     }
 
     return loadCompleted ? (
-        <>
+        <IntlProvider
+            locale={userLocale.code}
+            defaultLocale={Locales.EN.code}
+            messages={userLocale.message as Record<string, string>}
+        >
             <Editor onAction={setActiveDialog}
                 options={options}
                 persistenceManager={persistence}
@@ -75,7 +79,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
                     fromEditor
                 />
             }
-        </>) : <></>
+        </IntlProvider>) : <></>
 }
 
 
