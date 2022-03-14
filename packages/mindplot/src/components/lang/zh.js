@@ -79,6 +79,8 @@ const ZH = {
   MULTIPLE_LINES: '添加多行文本',
   BACK_TO_MAP_LIST: '回到脑图列表',
   KEYBOARD_SHOTCUTS: '键盘快捷键',
+  PASTE_URL_HERE: '在此处粘贴所需的 URL 地址:',
+
 };
 
 export default ZH;
