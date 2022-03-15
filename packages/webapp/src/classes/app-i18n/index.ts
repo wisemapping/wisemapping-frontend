@@ -19,13 +19,21 @@ export class Locale {
 }
 
 export default abstract class AppI18n {
+    private static LOCAL_STORAGE_KEY = 'user.locale';
+
     public static getUserLocale(): Locale {
         // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
         const isTryPage = window.location.href.endsWith('/try');
         let result: Locale;
         if (!isTryPage) {
             const account = fetchAccount();
-            result = account?.locale ? account.locale : this.getBrowserLocale();
+            result = account?.locale ? account.locale : this.getDefaultLocale();
+
+            // If the local storage value is different, update ...
+            if (account?.locale && result.code !== localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY)) {
+                localStorage.setItem(AppI18n.LOCAL_STORAGE_KEY, result.code);
+            }
+
         } else {
             result = this.getBrowserLocale();
         }
@@ -45,6 +53,21 @@ export default abstract class AppI18n {
             console.warn(`Unsupported languange code ${localeCode}`);
         }
 
+        return result;
+    }
+
+    public static getDefaultLocale(): Locale {
+        // Fetch local from local storage ...
+        let result: Locale;
+        const userLocaleCode: string = localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY);
+        if (userLocaleCode) {
+            result = localeFromStr(userLocaleCode);
+        }
+
+        // Ok, use browser default ...
+        if (!result) {
+            result = this.getBrowserLocale();
+        }
         return result;
     }
 }
