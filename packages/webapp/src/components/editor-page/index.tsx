@@ -36,7 +36,11 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
             const fetchResult = fetchMapById(mapId);
             if (!fetchResult.isLoading) {
                 if (fetchResult.error) {
-                    throw new Error(`User coild not be loaded: ${JSON.stringify(fetchResult.error)}`);
+                    throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
+                }
+
+                if (!fetchResult.map) {
+                    throw new Error(`Map info could not be loaded. Info not present: ${JSON.stringify(fetchResult)}`);
                 }
                 result = fetchResult.map.role === 'owner' ? 'edition-owner' : 'edition-editor';
             }
