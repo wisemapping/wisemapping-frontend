@@ -272,7 +272,7 @@
   "export.image": [
     {
       "type": 0,
-      "value": "Image: Get a graphic representation of your map including all colors and shapes.图像：以图片形式获取包含所有颜色和形状的脑图"
+      "value": "图像：以图片形式获取包含所有颜色和形状的脑图"
     }
   ],
   "export.img-center": [
@@ -872,7 +872,7 @@
   "registration.desc": [
     {
       "type": 0,
-      "value": "Signing up is free and just take a moment注册免费，分分钟就好"
+      "value": "注册免费，分分钟就好"
     }
   ],
   "registration.email": [

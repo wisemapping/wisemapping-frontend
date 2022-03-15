@@ -135,7 +135,7 @@
     "defaultMessage": "文档：将你的思维导图导出到一个独立的文档中来分享"
   },
   "export.image": {
-    "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes.图像：以图片形式获取包含所有颜色和形状的脑图"
+    "defaultMessage": "图像：以图片形式获取包含所有颜色和形状的脑图"
   },
   "export.img-center": {
     "defaultMessage": "居中并缩放合适大小"
@@ -430,7 +430,7 @@
     "defaultMessage": "注册成功|WiseMapping"
   },
   "registration.desc": {
-    "defaultMessage": "Signing up is free and just take a moment注册免费，分分钟就好"
+    "defaultMessage": "注册免费，分分钟就好"
   },
   "registration.email": {
     "defaultMessage": "电子邮件"
