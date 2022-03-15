@@ -35,7 +35,7 @@ export default abstract class AppI18n {
             }
 
         } else {
-            result = this.getBrowserLocale();
+            result = this.getDefaultLocale();
         }
         return result;
     }
