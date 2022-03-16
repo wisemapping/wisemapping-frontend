@@ -4,10 +4,10 @@ import styled from 'styled-components';
 export const StyledFooter = styled.footer`
     height: 250px;
     margin-top: 80px;
-    padding: 60px 40px 10px 50px;
+    padding: 30px 40px 10px 50px;
     background-color: #f9a826;
     display: grid;
-    grid-template-columns: 200px 1fr 1fr 3fr;
+    grid-template-columns: 200px 1fr 1fr  1fr 3fr;
 
     & a {
         font-size: 14px;
@@ -34,9 +34,12 @@ export const StyledFooter = styled.footer`
     & div:nth-child(3) {
         grid-column: 3;
     }
-
     & div:nth-child(4) {
         grid-column: 4;
+    }
+
+    & div:nth-child(5) {
+        grid-column: 5;
         text-align: right;
         display: inline-block;
         visibility: visible;

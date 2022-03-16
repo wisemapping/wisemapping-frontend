@@ -305,6 +305,12 @@
       "value": "Contact Us"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Donations"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -333,6 +339,18 @@
     {
       "type": 0,
       "value": "Others"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Support"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Our Team"
     }
   ],
   "footer.termsandconditions": [

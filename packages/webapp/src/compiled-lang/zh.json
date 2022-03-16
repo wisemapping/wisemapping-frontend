@@ -305,6 +305,12 @@
       "value": "联系我们"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "捐款"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -333,6 +339,18 @@
     {
       "type": 0,
       "value": "其它"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "支持"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "学期"
     }
   ],
   "footer.termsandconditions": [

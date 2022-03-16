@@ -311,6 +311,12 @@
       "value": "Kontaktiere uns"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Spenden"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -339,6 +345,18 @@
     {
       "type": 0,
       "value": "Andere"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Unterstützt"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Ausrüstung"
     }
   ],
   "footer.termsandconditions": [

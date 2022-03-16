@@ -305,6 +305,12 @@
       "value": "Контакты"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Пожертвования"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -333,6 +339,18 @@
     {
       "type": 0,
       "value": "Прочее"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Услуги"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "команда"
     }
   ],
   "footer.termsandconditions": [

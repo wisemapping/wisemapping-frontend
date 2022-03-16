@@ -500,5 +500,14 @@
   },
   "share.message": {
     "defaultMessage": "消息"
+  },
+  "footer.support": {
+    "defaultMessage": "支持"
+  },
+  "footer.team": {
+    "defaultMessage": "学期"
+  },
+  "footer.donations": {
+    "defaultMessage": "捐款"
   }
 }

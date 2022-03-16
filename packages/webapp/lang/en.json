@@ -167,6 +167,15 @@
   "footer.others": {
     "defaultMessage": "Others"
   },
+  "footer.support": {
+    "defaultMessage": "Support"
+  },
+  "footer.team": {
+    "defaultMessage": "Our Team"
+  },
+  "footer.donations": {
+    "defaultMessage": "Donations"
+  },
   "footer.termsandconditions": {
     "defaultMessage": "Term And Conditions"
   },

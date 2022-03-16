@@ -500,5 +500,14 @@
     },
     "label.title": {
         "defaultMessage": "Etikett hinzufügen"
+    },
+    "footer.donations": {
+        "defaultMessage": "Spenden"
+    },
+    "footer.support": {
+        "defaultMessage": "Unterstützt"
+    },
+    "footer.team": {
+        "defaultMessage": "Ausrüstung"
     }
 }
