@@ -163,7 +163,10 @@ export default class Freemap {
       node = new Richcontent();
 
       if (nodeElem.getAttribute('TYPE')) node.setType(nodeElem.getAttribute('TYPE'));
-      if (nodeElem.lastElementChild) node.setHtml(String(nodeElem.getElementsByTagName('html')[0].outerHTML.trim()));
+      if (nodeElem.firstChild && nodeElem.getElementsByTagName('html')) {
+        const content = String(nodeElem.getElementsByTagName('html'))[0];
+        node.setHtml(content);
+      }
     }
 
     return node;

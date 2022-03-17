@@ -240,6 +240,7 @@ export default class FreemindImporter extends Importer {
           // Formating text
           const text = this.html2Text(child.getHtml());
           const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
+          noteModel.setId(2);
           currentWiseTopic.addFeature(noteModel);
         }
       }

@@ -1,0 +1,70 @@
+<map name="3" version="tango">
+    <topic central="true" text="Welcome To WiseMapping" id="1" fontStyle=";;#ffffff;;;">
+        <icon id="sign_info"/>
+        <topic position="199,-112" order="0" id="30">
+            <text><![CDATA[5 min tutorial video ?
+Follow the link !]]></text>
+            <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
+            <icon id="hard_computer"/>
+        </topic>
+        <topic position="-167,-112" order="1" text="Try it Now!" id="11" fontStyle=";;#525c61;;;" bgColor="#250be3" brColor="#080559">
+            <icon id="face_surprise"/>
+            <topic position="-260,-141" order="0" text="Double Click" id="12" fontStyle=";;#525c61;;italic;"/>
+            <topic position="-278,-112" order="1" id="13">
+                <text><![CDATA[Press "enter" to add a 
+Sibling]]></text>
+            </topic>
+            <topic position="-271,-83" order="2" text="Drag map to move" id="14" fontStyle=";;#525c61;;italic;"/>
+        </topic>
+        <topic position="155,-18" order="2" text="Features" id="15" fontStyle=";;#525c61;;;">
+            <topic position="244,-80" order="0" text="Links to Sites" id="16" fontStyle=";6;#525c61;;;">
+                <link url="http://www.digg.com" urlType="url"/>
+            </topic>
+            <topic position="224,-30" order="1" text="Styles" id="31">
+                <topic position="285,-55" order="0" text="Fonts" id="17" fontStyle=";;#525c61;;;"/>
+                <topic position="299,-30" order="1" text="Topic Shapes" shape="line" id="19" fontStyle=";;#525c61;;;"/>
+                <topic position="295,-5" order="2" text="Topic Color" id="18" fontStyle=";;#525c61;;;"/>
+            </topic>
+            <topic position="229,20" order="2" text="Icons" id="20" fontStyle=";;#525c61;;;">
+                <icon id="object_rainbow"/>
+            </topic>
+            <topic position="249,45" order="3" text="History Changes" id="21" fontStyle=";;#525c61;;;">
+                <icon id="arrowc_turn_left"/>
+            </topic>
+        </topic>
+        <topic position="-176,-21" order="3" text="Mind Mapping" id="6" fontStyle=";;#525c61;;;" bgColor="#edabff">
+            <icon id="thumb_thumb_up"/>
+            <topic position="-293,-58" order="0" text="Share with Collegues" id="7" fontStyle=";;#525c61;;;"/>
+            <topic position="-266,-33" order="1" text="Online" id="8" fontStyle=";;#525c61;;;"/>
+            <topic position="-288,-8" order="2" text="Anyplace, Anytime" id="9" fontStyle=";;#525c61;;;"/>
+            <topic position="-266,17" order="3" text="Free!!!" id="10" fontStyle=";;#525c61;;;"/>
+        </topic>
+        <topic position="171,95" order="4" text="Productivity" id="2" fontStyle=";;#525c61;;;" bgColor="#d9b518">
+            <icon id="chart_bar"/>
+            <topic position="281,70" order="0" text="Share your ideas" id="3" fontStyle=";;#525c61;;;">
+                <icon id="bulb_light_on"/>
+            </topic>
+            <topic position="270,95" order="1" text="Brainstorming" id="4" fontStyle=";;#525c61;;;"/>
+            <topic position="256,120" order="2" text="Visual " id="5" fontStyle=";;#525c61;;;"/>
+        </topic>
+        <topic position="-191,54" order="5" text="Install In Your Server" id="27" fontStyle=";;#525c61;;;">
+            <icon id="hard_computer"/>
+            <topic position="-319,42" order="0" text="Open Source" id="29" fontStyle=";;#525c61;;;">
+                <icon id="soft_penguin"/>
+                <link url="http://www.wisemapping.org/" urlType="url"/>
+            </topic>
+            <topic position="-310,67" order="1" text="Download" id="28" fontStyle=";;#525c61;;;">
+                <link url="http://www.wisemapping.com/inyourserver.html" urlType="url"/>
+            </topic>
+        </topic>
+        <topic position="-169,117" order="7" text="Collaborate" id="32">
+            <icon id="people_group"/>
+            <topic position="-253,92" order="0" text="Embed" id="33"/>
+            <topic position="-254,117" order="1" text="Publish" id="34"/>
+            <topic position="-277,142" order="2" text="Share for Edition" id="35">
+                <icon id="mail_envelop"/>
+            </topic>
+        </topic>
+    </topic>
+    <relationship srcTopicId="30" destTopicId="11" lineType="3" srcCtrlPoint="-80,-56" destCtrlPoint="110,-116" endArrow="false" startArrow="true"/>
+</map>

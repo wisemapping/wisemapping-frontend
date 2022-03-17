@@ -2,8 +2,7 @@
 import path from 'path';
 import fs from 'fs';
 import { test } from '@jest/globals';
-import { exporterAssert } from './Helper';
-import { parseXMLFile } from '../export/Helper';
+import { exporterAssert, parseXMLFile } from './Helper';
 import FreemindMap from '../../../src/components/export/freemind/Map';
 import TextImporterFactory from '../../../src/components/import/TextImporterFactory';
 
