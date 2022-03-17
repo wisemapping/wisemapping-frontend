@@ -17,6 +17,8 @@ import FreemindArrowLink from '../export/freemind/Arrowlink';
 import VersionNumber from '../export/freemind/importer/VersionNumber';
 import FreemindIconConverter from './FreemindIconConverter';
 import NoteModel from '../model/NoteModel';
+import FeatureModelFactory from '../model/FeatureModelFactory';
+import FeatureModel from '../model/FeatureModel';
 
 export default class FreemindImporter extends Importer {
   private mindmap: Mindmap;
@@ -61,7 +63,7 @@ export default class FreemindImporter extends Importer {
 
     this.nodesmap.set(freeNode.getId(), wiseTopic);
 
-    this.convertChildNodes(freeNode, wiseTopic, this.mindmap, 1, wiseTopicId);
+    this.convertChildNodes(freeNode, wiseTopic, this.mindmap, 1);
     this.addRelationship(this.mindmap);
 
     this.mindmap.setDescription(description);
@@ -153,7 +155,7 @@ export default class FreemindImporter extends Importer {
     if (folded) wiseTopic.setChildrenShrunken(folded);
   }
 
-  private convertChildNodes(freeParent: FreemindNode, wiseParent: NodeModel, mindmap: Mindmap, depth: number, nodeId: number): void {
+  private convertChildNodes(freeParent: FreemindNode, wiseParent: NodeModel, mindmap: Mindmap, depth: number): void {
     const freeChilden = freeParent.getArrowlinkOrCloudOrEdge();
     let currentWiseTopic: NodeModel = wiseParent;
     let order = 0;
@@ -188,9 +190,7 @@ export default class FreemindImporter extends Importer {
         // Convert the rest of the node properties...
         this.convertNodeProperties(child, wiseChild, false);
 
-        if (child.getArrowlinkOrCloudOrEdge().length > 0) {
-          this.convertChildNodes(child, wiseChild, mindmap, depth++, nodeId);
-        }
+        this.convertChildNodes(child, wiseChild, mindmap, depth++);
 
         if (wiseChild !== wiseParent) {
           wiseParent.append(wiseChild);
@@ -239,7 +239,7 @@ export default class FreemindImporter extends Importer {
         if (type === 'NOTE') {
           // Formating text
           const text = this.html2Text(child.getHtml());
-          const noteModel: NoteModel = new NoteModel({ text: text || FreemindConstant.EMPTY_NOTE });
+          const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
           currentWiseTopic.addFeature(noteModel);
         }
       }
@@ -309,6 +309,8 @@ export default class FreemindImporter extends Importer {
       result = TopicShape.ROUNDED_RECT;
     } else if (node.getBackgorundColor()) {
       result = TopicShape.RECTANGLE;
+    } else {
+      result = TopicShape.LINE;
     }
     return result;
   }
@@ -378,7 +380,7 @@ export default class FreemindImporter extends Importer {
       }
     } else {
       const position = wiseParent.getPosition();
-      y = position.y - ((childrenCount / 2) * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT - (order * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT));
+      y = Math.round(position.y - ((childrenCount / 2) * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT - (order * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT)));
     }
 
     return {
@@ -389,7 +391,6 @@ export default class FreemindImporter extends Importer {
 
   private html2Text(content: string): string {
     const contentConvert = content.replace(/(<([^>]+)>)/gi, '');
-    contentConvert.replace('\t', '');
     return contentConvert.trim();
   }
 }
