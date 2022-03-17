@@ -57,8 +57,8 @@ export const fetchMapById = (id: number): MapLoadResult => {
         }
         //  Seach for object...
         map = data?.find((m) => m.id == id);
-        if (map === null && !errorMsg) {
-            errorMsg = { msg: `Map with id ${id} could not be found. Please, reflesh the page` }
+        if (!map && !errorMsg) {
+            errorMsg = { msg: `Map with id ${id} could not be found. Please, reflesh the page. Map: ${JSON.stringify(data)}` }
         }
     }
     return { isLoading: isLoading, error: errorMsg, map: map };
