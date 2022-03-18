@@ -5,7 +5,8 @@ import path from 'path';
 import { expect } from '@jest/globals';
 import { diff } from 'jest-diff';
 import Importer from '../../../src/components/import/Importer';
-import XMLSerializerFactory from '../../../src/components/persistence/XMLSerializerFactory';
+
+const saveOutputRecord = false;
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();
@@ -38,17 +39,18 @@ export const parseXMLFile = (filePath: fs.PathOrFileDescriptor, mimeType: DOMPar
 export const exporterAssert = async (testName: string, importer: Importer) => {
   const actualMindmap = await importer.import(testName, '');
 
-  // Load mindmap DOM..
+  // Load mindmap file..
   const mindmapPath = path.resolve(__dirname, `./expected/${testName}.wxml`);
-  const mindmapDocument = parseXMLFile(mindmapPath, 'text/xml');
-  const serializer = XMLSerializerFactory.createInstanceFromDocument(mindmapDocument);
-  const mindmapExpect = serializer.loadFromDom(mindmapDocument, testName);
+  if (saveOutputRecord) {
+    fs.writeFileSync(mindmapPath, actualMindmap);
+  }
+
+  const mindmapExpect = fs.readFileSync(mindmapPath).toString();
 
   // Compare with expected...
   if (actualMindmap !== mindmapExpect) {
     const diffResult = diff(actualMindmap, mindmapExpect);
     console.log(diffResult);
-
-    expect(actualMindmap.toString()).toEqual(mindmapExpect.toString());
+    expect(actualMindmap).toEqual(mindmapExpect);
   }
 };

@@ -1,225 +1,100 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map name="basic" version="tango">
-    <topic central="true" id="0" position="0,0" shape="rounded rectagle">
-        <text><![CDATA[California]]></text>
-        <topic id="1" order="7" position="-200,-200" shape="line">
-            <text><![CDATA[Northern California]]></text>
-            <topic id="2" order="0" position="-290,-275" shape="line">
-                <text><![CDATA[Oakland/Berkeley]]></text>
+<map name="process" version="tango">
+    <topic central="true" text="California" id="1">
+        <topic position="-200,-200" order="1" text="Northern California" shape="line" id="1">
+            <topic position="-200,-250" order="1" text="Oakland/Berkeley" shape="line" id="2"/>
+            <topic position="290,-275" order="0" text="San Mateo" shape="line" id="3"/>
+            <topic position="380,-250" order="1" text="Other North" shape="line" id="4"/>
+            <topic position="470,-225" order="2" text="San Francisco" shape="line" id="5"/>
+            <topic position="560,-200" order="3" text="Santa Clara" shape="line" id="6"/>
+            <topic position="650,-175" order="4" text="Marin/Napa/Solano" shape="line" id="7"/>
+        </topic>
+        <topic position="-290,-62" order="0" text="Hawaii" shape="line" id="8"/>
+        <topic position="-380,-37" order="1" text="Southern California" shape="line" id="9">
+            <topic position="380,-87" order="0" text="Los Angeles" shape="line" id="10"/>
+            <topic position="470,-62" order="1" text="Anaheim/Santa Ana" shape="line" id="11"/>
+            <topic position="560,-37" order="2" text="Ventura" shape="line" id="12"/>
+            <topic position="650,-12" order="3" text="Other South" shape="line" id="13"/>
+        </topic>
+        <topic position="-470,-12" order="2" text="Policy Bodies" shape="line" id="14">
+            <topic position="470,-87" order="0" text="Advocacy" shape="line" id="15">
+                <topic position="-470,-124" order="0" text="AAO" shape="line" id="16"/>
+                <topic position="-560,-99" order="1" text="ASCRS" shape="line" id="17"/>
+                <topic position="-650,-74" order="2" text="EBAA" shape="line" id="18"/>
             </topic>
-            <topic id="3" order="1" position="-290,-250" shape="line">
-                <text><![CDATA[San Mateo]]></text>
-            </topic>
-            <topic id="4" order="2" position="-290,-225" shape="line">
-                <text><![CDATA[Other North]]></text>
-            </topic>
-            <topic id="5" order="3" position="-290,-200" shape="line">
-                <text><![CDATA[San Francisco]]></text>
-            </topic>
-            <topic id="6" order="4" position="-290,-175" shape="line">
-                <text><![CDATA[Santa Clara]]></text>
-            </topic>
-            <topic id="7" order="5" position="-290,-150" shape="line">
-                <text><![CDATA[Marin/Napa/Solano]]></text>
+            <topic position="560,-62" order="1" text="Military" shape="line" id="19"/>
+            <topic position="650,-37" order="2" text="United Network for Organ Sharing" shape="line" id="20"/>
+            <topic position="740,-12" order="3" text="Kaiser Hospital System" shape="line" id="21"/>
+            <topic position="830,13" order="4" text="University of California System" shape="line" id="22"/>
+            <topic position="920,38" order="5" text="CMS" shape="line" id="23">
+                <topic position="-920,13" order="0" text="Medicare Part A" shape="line" id="24"/>
+                <topic position="-1010,38" order="1" text="Medicare Part B" shape="line" id="25"/>
             </topic>
         </topic>
-        <topic id="8" order="3" position="-200,-100" shape="line">
-            <text><![CDATA[Hawaii]]></text>
+        <topic position="-560,25" order="3" text="Corneal Tissue OPS" shape="line" id="26">
+            <topic position="560,-75" order="0" text="Transplant Bank International" shape="line" id="27">
+                <topic position="-560,-112" order="0" text="Orange County Eye and Transplant Bank" shape="line" id="28"/>
+                <topic position="-650,-87" order="1" text="Northern California Transplant Bank" shape="rounded rectagle" id="29" bgColor="#00ffd5">
+                    <topic position="650,-99" order="0" text="In 2010, 2,500 referrals forwarded to OneLegacy" shape="line" id="30"/>
+                </topic>
+                <topic position="-740,-62" order="2" text="Doheny Eye and Tissue Transplant Bank" shape="rounded rectagle" id="31" bgColor="#00ffd5">
+                    <link url="http://www.dohenyeyebank.org/" urlType="url"/>
+                </topic>
+            </topic>
+            <topic position="650,-50" order="1" text="OneLegacy" shape="rounded rectagle" id="32" bgColor="#00ffd5">
+                <topic position="-650,-62" order="0" text="In 2010, 11,828 referrals" shape="line" id="33"/>
+            </topic>
+            <topic position="740,-25" order="2" text="San Diego Eye Bank" shape="rounded rectagle" id="34" bgColor="#00ffd5">
+                <topic position="-740,-37" order="0" text="In 2010, 2,555 referrals" shape="line" id="35"/>
+            </topic>
+            <topic position="830,0" order="3" text="California Transplant Donor Network" shape="line" id="36"/>
+            <topic position="920,25" order="4" text="California Transplant Services" shape="line" id="37">
+                <topic position="-920,13" order="0" text="In 2010, 0 referrals" shape="line" id="38"/>
+            </topic>
+            <topic position="1010,50" order="5" text="Lifesharing" shape="line" id="39"/>
+            <topic position="1100,75" order="6" text="DCI Donor Services" shape="line" id="40">
+                <topic position="-1100,63" order="0" text="Sierra Eye and Tissue Donor Services" shape="rounded rectagle" id="41" bgColor="#00ffd5">
+                    <topic position="1100,51" order="0" text="In 2010, 2.023 referrals" shape="line" id="42"/>
+                </topic>
+            </topic>
+            <topic position="1190,100" order="7" text="SightLife" shape="rounded rectagle" id="43" bgColor="#00ffd5"/>
         </topic>
-        <topic id="9" order="0" position="-200,0" shape="line">
-            <text><![CDATA[Southern California]]></text>
-            <topic id="10" order="0" position="-290,-50" shape="line">
-                <text><![CDATA[Los Angeles]]></text>
-            </topic>
-            <topic id="11" order="1" position="-290,-25" shape="line">
-                <text><![CDATA[Anaheim/Santa Ana]]></text>
-            </topic>
-            <topic id="12" order="2" position="-290,0" shape="line">
-                <text><![CDATA[Ventura]]></text>
-            </topic>
-            <topic id="13" order="3" position="-290,25" shape="line">
-                <text><![CDATA[Other South]]></text>
-            </topic>
+        <topic position="-650,38" order="4" text="Tools" shape="line" id="44">
+            <topic position="650,13" order="0" text="Darthmouth Atlas of Health" shape="line" id="45"/>
+            <topic position="740,38" order="1" text="HealthLandscape" shape="line" id="46"/>
         </topic>
-        <topic id="14" order="4" position="-200,100" shape="line">
-            <text><![CDATA[Policy Bodies]]></text>
-            <topic id="15" order="0" position="-290,25" shape="line">
-                <text><![CDATA[Advocacy]]></text>
-                <topic id="16" order="0" position="-380,0" shape="line">
-                    <text><![CDATA[AAO]]></text>
+        <topic position="-740,75" order="5" text="QE Medicare" shape="line" id="47"/>
+        <topic position="-830,100" order="6" text="CMS Data" shape="line" id="48"/>
+        <topic position="-920,125" order="7" text="Ambulatory Payment Classification" shape="line" id="49">
+            <topic position="920,63" order="0" text="CPT's which don't allow V2785" shape="line" id="50">
+                <topic position="-920,26" order="0" text="Ocular Reconstruction Transplant" shape="line" id="51">
+                    <topic position="920,-11" order="0" text="65780 (amniotic membrane tranplant" shape="line" id="52"/>
+                    <topic position="1010,14" order="1" text="65781 (limbal stem cell allograft)" shape="line" id="53"/>
+                    <topic position="1100,39" order="2" text="65782 (limbal conjunctiva autograft)" shape="line" id="54"/>
                 </topic>
-                <topic id="17" order="1" position="-380,25" shape="line">
-                    <text><![CDATA[ASCRS]]></text>
+                <topic position="-1010,51" order="1" text="Endothelial keratoplasty" shape="line" id="55">
+                    <topic position="1010,39" order="0" text="65756" shape="line" id="56"/>
                 </topic>
-                <topic id="18" order="2" position="-380,50" shape="line">
-                    <text><![CDATA[EBAA]]></text>
-                </topic>
-            </topic>
-            <topic id="19" order="1" position="-290,50" shape="line">
-                <text><![CDATA[Military]]></text>
-            </topic>
-            <topic id="20" order="2" position="-290,75" shape="line">
-                <text><![CDATA[United Network for Organ Sharing]]></text>
-            </topic>
-            <topic id="21" order="3" position="-290,100" shape="line">
-                <text><![CDATA[Kaiser Hospital System]]></text>
-            </topic>
-            <topic id="22" order="4" position="-290,125" shape="line">
-                <text><![CDATA[University of California System]]></text>
-            </topic>
-            <topic id="23" order="5" position="-290,150" shape="line">
-                <text><![CDATA[CMS]]></text>
-                <topic id="24" order="0" position="-380,125" shape="line">
-                    <text><![CDATA[Medicare Part A]]></text>
-                </topic>
-                <topic id="25" order="1" position="-380,150" shape="line">
-                    <text><![CDATA[Medicare Part B]]></text>
+                <topic position="-1100,76" order="2" text="Epikeratoplasty" shape="line" id="57">
+                    <topic position="1100,64" order="0" text="65767" shape="line" id="58"/>
                 </topic>
             </topic>
-        </topic>
-        <topic id="26" order="3" position="200,-100" shape="line">
-            <text><![CDATA[Corneal Tissue OPS]]></text>
-            <topic id="27" order="0" position="290,-200" shape="line">
-                <text><![CDATA[Transplant Bank International]]></text>
-                <topic id="28" order="0" position="380,-250" shape="line">
-                    <text><![CDATA[Orange County Eye and Transplant Bank]]></text>
-                </topic>
-                <topic bgColor="#00ffd5" id="29" order="1"
-                    position="380,-225" shape="rounded rectagle">
-                    <text><![CDATA[Northern California Transplant Bank]]></text>
-                    <topic id="30" order="0" position="470,-225" shape="line">
-                        <text><![CDATA[In 2010, 2,500 referrals forwarded to OneLegacy]]></text>
-                    </topic>
-                </topic>
-                <topic bgColor="#00ffd5" id="31" order="2"
-                    position="380,-200" shape="rounded rectagle">
-                    <text><![CDATA[Doheny Eye and Tissue Transplant Bank]]></text>
-                    <link url="http://www.dohenyeyebank.org/"/>
+            <topic position="1010,88" order="1" text="Anterior lamellar keratoplasty" shape="line" id="59">
+                <topic position="-1010,76" order="0" text="65710" shape="line" id="60"/>
+            </topic>
+            <topic position="1100,113" order="2" text="Processing, preserving, and transporting corneal tissue" shape="line" id="61">
+                <topic position="-1100,88" order="0" text="V2785" shape="line" id="62"/>
+                <topic position="-1190,113" order="1" text="Laser incision in recepient" shape="line" id="63">
+                    <topic position="1190,101" order="0" text="0290T" shape="line" id="64"/>
                 </topic>
             </topic>
-            <topic bgColor="#00ffd5" id="32" order="1"
-                position="290,-175" shape="rounded rectagle">
-                <text><![CDATA[OneLegacy]]></text>
-                <topic id="33" order="0" position="380,-200" shape="line">
-                    <text><![CDATA[In 2010, 11,828 referrals]]></text>
-                </topic>
+            <topic position="1190,138" order="3" text="Laser incision in donor" shape="line" id="65">
+                <topic position="-1190,126" order="0" text="0289T" shape="line" id="66"/>
             </topic>
-            <topic bgColor="#00ffd5" id="34" order="2"
-                position="290,-150" shape="rounded rectagle">
-                <text><![CDATA[San Diego Eye Bank]]></text>
-                <topic id="35" order="0" position="380,-150" shape="line">
-                    <text><![CDATA[In 2010, 2,555 referrals]]></text>
-                </topic>
-            </topic>
-            <topic id="36" order="3" position="290,-125" shape="line">
-                <text><![CDATA[California Transplant Donor Network]]></text>
-            </topic>
-            <topic id="37" order="4" position="290,-100" shape="line">
-                <text><![CDATA[California Transplant Services]]></text>
-                <topic id="38" order="0" position="380,-100" shape="line">
-                    <text><![CDATA[In 2010, 0 referrals]]></text>
-                </topic>
-            </topic>
-            <topic id="39" order="5" position="290,-75" shape="line">
-                <text><![CDATA[Lifesharing]]></text>
-            </topic>
-            <topic id="40" order="6" position="290,-50" shape="line">
-                <text><![CDATA[DCI Donor Services]]></text>
-                <topic bgColor="#00ffd5" id="41" order="0"
-                    position="380,-50" shape="rounded rectagle">
-                    <text><![CDATA[Sierra Eye and Tissue Donor Services]]></text>
-                    <topic id="42" order="0" position="470,-75" shape="line">
-                        <text><![CDATA[In 2010, 2.023 referrals]]></text>
-                    </topic>
-                </topic>
-            </topic>
-            <topic bgColor="#00ffd5" id="43" order="7"
-                position="290,-25" shape="rounded rectagle">
-                <text><![CDATA[SightLife]]></text>
-            </topic>
-        </topic>
-        <topic id="44" order="8" position="-200,200" shape="line">
-            <text><![CDATA[Tools]]></text>
-            <topic id="45" order="0" position="-290,175" shape="line">
-                <text><![CDATA[Darthmouth Atlas of Health]]></text>
-            </topic>
-            <topic id="46" order="1" position="-290,200" shape="line">
-                <text><![CDATA[HealthLandscape]]></text>
-            </topic>
-        </topic>
-        <topic id="47" order="0" position="200,0" shape="line">
-            <text><![CDATA[QE Medicare]]></text>
-        </topic>
-        <topic id="48" order="4" position="200,100" shape="line">
-            <text><![CDATA[CMS Data]]></text>
-        </topic>
-        <topic id="49" order="8" position="200,200" shape="line">
-            <text><![CDATA[Ambulatory Payment Classification]]></text>
-            <topic id="50" order="0" position="290,150" shape="line">
-                <text><![CDATA[CPT's which don't allow V2785]]></text>
-                <topic id="51" order="0" position="380,125" shape="line">
-                    <text><![CDATA[Ocular Reconstruction Transplant]]></text>
-                    <topic id="52" order="0" position="470,100" shape="line">
-                        <text><![CDATA[65780 (amniotic membrane tranplant]]></text>
-                    </topic>
-                    <topic id="53" order="1" position="470,125" shape="line">
-                        <text><![CDATA[65781 (limbal stem cell allograft)]]></text>
-                    </topic>
-                    <topic id="54" order="2" position="470,150" shape="line">
-                        <text><![CDATA[65782 (limbal conjunctiva autograft)]]></text>
-                    </topic>
-                </topic>
-                <topic id="55" order="1" position="380,150" shape="line">
-                    <text><![CDATA[Endothelial keratoplasty]]></text>
-                    <topic id="56" order="0" position="470,150" shape="line">
-                        <text><![CDATA[65756]]></text>
-                    </topic>
-                </topic>
-                <topic id="57" order="2" position="380,175" shape="line">
-                    <text><![CDATA[Epikeratoplasty]]></text>
-                    <topic id="58" order="0" position="470,175" shape="line">
-                        <text><![CDATA[65767]]></text>
-                    </topic>
-                </topic>
-            </topic>
-            <topic id="59" order="1" position="290,175" shape="line">
-                <text><![CDATA[Anterior lamellar keratoplasty]]></text>
-                <topic id="60" order="0" position="380,175" shape="line">
-                    <text><![CDATA[65710]]></text>
-                </topic>
-            </topic>
-            <topic id="61" order="2" position="290,200" shape="line">
-                <text><![CDATA[Processing, preserving, and transporting corneal tissue]]></text>
-                <topic id="62" order="0" position="380,175" shape="line">
-                    <text><![CDATA[V2785]]></text>
-                </topic>
-                <topic id="63" order="1" position="380,200" shape="line">
-                    <text><![CDATA[Laser incision in recepient]]></text>
-                    <topic id="64" order="0" position="470,200" shape="line">
-                        <text><![CDATA[0290T]]></text>
-                    </topic>
-                </topic>
-            </topic>
-            <topic id="65" order="3" position="290,225" shape="line">
-                <text><![CDATA[Laser incision in donor]]></text>
-                <topic id="66" order="0" position="380,225" shape="line">
-                    <text><![CDATA[0289T]]></text>
-                </topic>
-            </topic>
-            <topic id="67" order="4" position="290,250" shape="line">
-                <text><![CDATA[Penetrating keratoplasty]]></text>
-                <topic id="68" order="0" position="380,225" shape="line">
-                    <text><![CDATA[65730 (in other)]]></text>
-                </topic>
-                <topic id="69" order="1" position="380,250" shape="line">
-                    <text><![CDATA[65755 (in pseudoaphakia)]]></text>
-                </topic>
-                <topic id="70" order="2" position="380,275" shape="line">
-                    <text><![CDATA[65750 (in aphakia)]]></text>
-                </topic>
+            <topic position="1280,163" order="4" text="Penetrating keratoplasty" shape="line" id="67">
+                <topic position="-1280,126" order="0" text="65730 (in other)" shape="line" id="68"/>
+                <topic position="-1370,151" order="1" text="65755 (in pseudoaphakia)" shape="line" id="69"/>
+                <topic position="-1460,176" order="2" text="65750 (in aphakia)" shape="line" id="70"/>
             </topic>
         </topic>
     </topic>
-    <relationship destTopicId="32" endArrow="true" id="71" lineType="3" srcTopicId="27"/>
-    <relationship destTopicId="36" endArrow="true" id="72" lineType="3" srcTopicId="27"/>
 </map>

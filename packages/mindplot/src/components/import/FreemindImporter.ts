@@ -1,3 +1,4 @@
+import xmlFormatter from 'xml-formatter';
 import Importer from './Importer';
 import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';
@@ -19,6 +20,7 @@ import FreemindIconConverter from './FreemindIconConverter';
 import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import FeatureModel from '../model/FeatureModel';
+import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 
 export default class FreemindImporter extends Importer {
   private mindmap: Mindmap;
@@ -34,7 +36,7 @@ export default class FreemindImporter extends Importer {
     this.freemindMap = map;
   }
 
-  import(nameMap: string, description: string): Promise<Mindmap> {
+  import(nameMap: string, description: string): Promise<string> {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
     this.relationship = new Array<RelationshipModel>();
@@ -69,7 +71,16 @@ export default class FreemindImporter extends Importer {
     this.mindmap.setDescription(description);
     this.mindmap.addBranch(wiseTopic);
 
-    return Promise.resolve(this.mindmap);
+    const serialize = XMLSerializerFactory.createInstanceFromMindmap(this.mindmap);
+    const domMindmap = serialize.toXML(this.mindmap);
+    const xmlToString = new XMLSerializer().serializeToString(domMindmap);
+    const formatXml = xmlFormatter(xmlToString, {
+      indentation: '    ',
+      collapseContent: true,
+      lineSeparator: '\n',
+    });
+
+    return Promise.resolve(formatXml);
   }
 
   private addRelationship(mindmap: Mindmap): void {

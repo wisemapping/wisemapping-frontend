@@ -1,21 +1,21 @@
-<map name="58984" version="tango">
+<map name="bug2" version="tango">
     <topic central="true" text="SaberMás" id="1">
         <topic position="200,-350" order="0" text="Utilización de medios de expresión artística, digitales y analógicos" shape="line" id="5"/>
         <topic position="-290,-75" order="0" text="Precio también limitado: 100-120?" shape="line" id="9"/>
         <topic position="-380,-75" order="1" text="Talleres temáticos" shape="line" id="2">
-            <topic position="380,-187" order="1" text="Naturaleza" shape="line" id="13">
-                <topic position="-380,-199" order="1" text="Animales, Plantas, Piedras" shape="line" id="17"/>
+            <topic position="380,-187" order="0" text="Naturaleza" shape="line" id="13">
+                <topic position="-380,-199" order="0" text="Animales, Plantas, Piedras" shape="line" id="17"/>
             </topic>
-            <topic position="470,-162" order="2" text="Arqueología" shape="line" id="21"/>
-            <topic position="560,-137" order="3" text="Energía" shape="line" id="18"/>
-            <topic position="650,-112" order="4" text="Astronomía" shape="line" id="16"/>
-            <topic position="740,-87" order="5" text="Arquitectura" shape="line" id="20"/>
-            <topic position="830,-62" order="6" text="Cocina" shape="line" id="11"/>
-            <topic position="920,-37" order="7" text="Poesía" shape="line" id="24"/>
-            <topic position="1010,-12" order="8" text="Culturas Antiguas" shape="line" id="25">
-                <topic position="-1010,-24" order="1" text="Egipto, Grecia, China..." shape="line" id="26"/>
+            <topic position="470,-162" order="1" text="Arqueología" shape="line" id="21"/>
+            <topic position="560,-137" order="2" text="Energía" shape="line" id="18"/>
+            <topic position="650,-112" order="3" text="Astronomía" shape="line" id="16"/>
+            <topic position="740,-87" order="4" text="Arquitectura" shape="line" id="20"/>
+            <topic position="830,-62" order="5" text="Cocina" shape="line" id="11"/>
+            <topic position="920,-37" order="6" text="Poesía" shape="line" id="24"/>
+            <topic position="1010,-12" order="7" text="Culturas Antiguas" shape="line" id="25">
+                <topic position="-1010,-24" order="0" text="Egipto, Grecia, China..." shape="line" id="26"/>
             </topic>
-            <topic position="1100,13" order="9" text="Paleontología" shape="line" id="38"/>
+            <topic position="1100,13" order="8" text="Paleontología" shape="line" id="38"/>
         </topic>
         <topic position="-470,-25" order="2" text="Duración limitada: 5-6 semanas" shape="line" id="6"/>
         <topic position="-560,0" order="3" text="Niños y niñas que quieren saber más" shape="line" id="7"/>
@@ -28,17 +28,12 @@
         <topic position="-1190,150" order="10" text="Actividades centradas en el contexto cercano" shape="line" id="37"/>
         <topic position="-1280,175" order="11" text="Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)" shape="line" id="22"/>
         <topic position="-1370,200" order="12" text="Complementamos el trabajo de la escuela" shape="rounded rectagle" id="27">
-            <note><![CDATA[Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.
-                        A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña,
-                        ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea.
-                        
-                        Por ese motivo, SaberMás proyecta estar al lado de los niños que necesitan una motivación extra para entender la escuela y fluir en ella,
-                        y también al lado de aquellos a quienes la curiosidad y las ganas de saber les lleva más allá.]]></note>
-            <topic position="1370,138" order="1" text="Cada uno va a su ritmo, y cada cual pone sus límites" shape="line" id="30"/>
-            <topic position="1460,163" order="2" text="Aprendemos todos de todos" shape="line" id="31"/>
-            <topic position="1550,188" order="3" text="Valoramos lo que hemos aprendido" shape="line" id="33"/>
-            <topic position="1640,213" order="4" text="SaberMás trabaja con, desde y para la motivación" shape="line" id="28"/>
-            <topic position="1730,238" order="5" text="Trabajamos en equipo en nuestros proyectos " shape="line" id="32"/>
+            <note><![CDATA[[]]></note>
+            <topic position="1370,138" order="0" text="Cada uno va a su ritmo, y cada cual pone sus límites" shape="line" id="30"/>
+            <topic position="1460,163" order="1" text="Aprendemos todos de todos" shape="line" id="31"/>
+            <topic position="1550,188" order="2" text="Valoramos lo que hemos aprendido" shape="line" id="33"/>
+            <topic position="1640,213" order="3" text="SaberMás trabaja con, desde y para la motivación" shape="line" id="28"/>
+            <topic position="1730,238" order="4" text="Trabajamos en equipo en nuestros proyectos " shape="line" id="32"/>
         </topic>
     </topic>
 </map>
