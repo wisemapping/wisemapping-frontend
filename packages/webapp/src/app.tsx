@@ -38,7 +38,7 @@ const queryClient = new QueryClient({
 });
 
 const App = (): ReactElement => {
-    const locale = AppI18n.getBrowserLocale();
+    const locale = AppI18n.getDefaultLocale();
     const EnhacedEditorPage = withSessionExpirationHandling(EditorPage);
 
     return locale.message ? (
@@ -81,7 +81,7 @@ const App = (): ReactElement => {
                                         component={withSessionExpirationHandling(MapsPage)}
                                     />
                                     <Route exact path="/c/maps/:id/edit">
-                                        <EnhacedEditorPage isTryMode={false}/>
+                                        <EnhacedEditorPage isTryMode={false} />
                                     </Route>
                                     <Route exact path="/c/maps/:id/try">
                                         <EnhacedEditorPage isTryMode={true} />

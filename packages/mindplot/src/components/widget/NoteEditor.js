@@ -23,7 +23,7 @@ import { $msg } from '../Messages';
 class NoteEditor extends BootstrapDialog {
   constructor(model) {
     $assert(model, 'model can not be null');
-    super($msg('Note'), {
+    super($msg('NOTE'), {
       cancelButton: true,
       closeButton: true,
       acceptButton: true,

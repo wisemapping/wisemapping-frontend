@@ -32,12 +32,13 @@ class LocalStorageManager extends PersistenceManager {
     this.readOnly = readOnly;
   }
 
-  saveMapXml(mapId: string, mapDoc: Document): void {
+  saveMapXml(mapId: string, mapDoc: Document, _pref: string, _saveHistory: boolean, events): void {
     const mapXml = new XMLSerializer().serializeToString(mapDoc);
     if (!this.readOnly) {
       localStorage.setItem(`${mapId}-xml`, mapXml);
+      events.onSuccess();
     }
-    console.log(`Map XML to save => ${this.saveMapXml}`);
+    console.log(`Map XML to save => ${mapXml}`);
   }
 
   discardChanges(mapId: string) {

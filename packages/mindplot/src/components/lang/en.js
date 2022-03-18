@@ -79,6 +79,7 @@ const EN = {
   MULTIPLE_LINES: 'Add multiple text lines',
   BACK_TO_MAP_LIST: 'Back to Maps List',
   KEYBOARD_SHOTCUTS: 'Keyboard Shorcuts',
+  PASTE_URL_HERE: 'Paste your url address here:',
 };
 
 export default EN;

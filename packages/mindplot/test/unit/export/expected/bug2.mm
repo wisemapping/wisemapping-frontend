@@ -7,15 +7,15 @@
                 <node ID="ID_17" POSITION="right" STYLE="fork" TEXT="Animales, Plantas, Piedras"/>
             </node>
             <node ID="ID_21" POSITION="right" STYLE="fork" TEXT="Arqueología"/>
+            <node ID="ID_25" POSITION="right" STYLE="fork" TEXT="Culturas Antiguas">
+                <node ID="ID_26" POSITION="right" STYLE="fork" TEXT="Egipto, Grecia, China..."/>
+            </node>
             <node ID="ID_18" POSITION="right" STYLE="fork" TEXT="Energía"/>
+            <node ID="ID_38" POSITION="right" STYLE="fork" TEXT="Paleontología"/>
             <node ID="ID_16" POSITION="right" STYLE="fork" TEXT="Astronomía"/>
             <node ID="ID_20" POSITION="right" STYLE="fork" TEXT="Arquitectura"/>
             <node ID="ID_11" POSITION="right" STYLE="fork" TEXT="Cocina"/>
             <node ID="ID_24" POSITION="right" STYLE="fork" TEXT="Poesía"/>
-            <node ID="ID_25" POSITION="right" STYLE="fork" TEXT="Culturas Antiguas">
-                <node ID="ID_26" POSITION="right" STYLE="fork" TEXT="Egipto, Grecia, China..."/>
-            </node>
-            <node ID="ID_38" POSITION="right" STYLE="fork" TEXT="Paleontología"/>
         </node>
         <node ID="ID_6" POSITION="left" STYLE="fork" TEXT="Duración limitada: 5-6 semanas"/>
         <node ID="ID_7" POSITION="left" STYLE="fork" TEXT="Niños y niñas que quieren saber más"/>
@@ -41,11 +41,11 @@
                     </body>
                 </html>
             </richcontent>
+            <node ID="ID_28" POSITION="right" TEXT="SaberMás trabaja con, desde y para la motivación"/>
+            <node ID="ID_32" POSITION="right" STYLE="fork" TEXT="Trabajamos en equipo en nuestros proyectos "/>
             <node ID="ID_30" POSITION="right" STYLE="fork" TEXT="Cada uno va a su ritmo, y cada cual pone sus límites"/>
             <node ID="ID_31" POSITION="right" STYLE="fork" TEXT="Aprendemos todos de todos"/>
             <node ID="ID_33" POSITION="right" STYLE="fork" TEXT="Valoramos lo que hemos aprendido"/>
-            <node ID="ID_28" POSITION="right" TEXT="SaberMás trabaja con, desde y para la motivación"/>
-            <node ID="ID_32" POSITION="right" STYLE="fork" TEXT="Trabajamos en equipo en nuestros proyectos "/>
         </node>
     </node>
 </map>

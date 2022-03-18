@@ -3,8 +3,8 @@ import ActionDispatcher from '../maps-page/action-dispatcher';
 import { ActionType } from '../maps-page/action-chooser';
 import Editor from '@wisemapping/editor';
 import { EditorRenderMode, PersistenceManager } from '@wisemapping/mindplot';
-
-import AppI18n from '../../classes/app-i18n';
+import { IntlProvider } from 'react-intl';
+import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga';
@@ -23,7 +23,6 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
 
     useEffect(() => {
-        document.title = `${global.mapTitle ? global.mapTitle : 'unknown'} | WiseMapping `;
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, []);
 
@@ -37,9 +36,13 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
             const fetchResult = fetchMapById(mapId);
             if (!fetchResult.isLoading) {
                 if (fetchResult.error) {
-                    throw new Error(`Map information could not be loaded: ${JSON.stringify(fetchResult)}`);
+                    throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
                 }
-                result = `edition-${fetchResult?.map?.role}`;
+
+                if (!fetchResult.map) {
+                    throw new Error(`Map info could not be loaded. Info not present: ${JSON.stringify(fetchResult)}`);
+                }
+                result = `edition-${fetchResult.map.role}`;
             }
         }
         return result;
@@ -61,7 +64,11 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     }
 
     return loadCompleted ? (
-        <>
+        <IntlProvider
+            locale={userLocale.code}
+            defaultLocale={Locales.EN.code}
+            messages={userLocale.message as Record<string, string>}
+        >
             <Editor onAction={setActiveDialog}
                 options={options}
                 persistenceManager={persistence}
@@ -75,7 +82,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
                     fromEditor
                 />
             }
-        </>) : <></>
+        </IntlProvider>) : <></>
 }
 
 

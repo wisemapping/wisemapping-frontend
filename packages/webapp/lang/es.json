@@ -141,7 +141,16 @@
         "defaultMessage": "El export a formatos de imagen (SVG, PNG, JPEG, PDF) solo está disponible en la barra de herramientas del editor."
     },
     "footer.aboutus": {
-        "defaultMessage": "Sobre nosotros"
+        "defaultMessage": "Sobre Nosotros"
+    },
+    "footer.donations": {
+        "defaultMessage": "Donaciones"
+    },
+    "footer.support": {
+        "defaultMessage": "Soporte"
+    },
+    "footer.team": {
+        "defaultMessage": "Equipo"
     },
     "footer.contactus": {
         "defaultMessage": "Contáctenos"

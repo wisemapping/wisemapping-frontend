@@ -411,6 +411,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (topic.getType() !== 'CentralTopic') {
       topic
         .getChildren()
+        .sort((a, b) => a.getOrder() - b.getOrder())
         .forEach((child, index) => {
           if (child.getOrder() !== index) {
             child.setOrder(index);
@@ -444,7 +445,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value;
   }
 
-  static _deserializeNodeText(domElem) {
+  static _deserializeNodeText(domElem: ChildNode) {
     const children = domElem.childNodes;
     let value = null;
     for (let i = 0; i < children.length; i++) {
@@ -456,7 +457,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value;
   }
 
-  static _deserializeRelationship(domElement, mindmap) {
+  static _deserializeRelationship(domElement: Element, mindmap: Mindmap): RelationshipModel {
     const srcId = Number.parseInt(domElement.getAttribute('srcTopicId'), 10);
     const destId = Number.parseInt(domElement.getAttribute('destTopicId'), 10);
     const lineType = Number.parseInt(domElement.getAttribute('lineType'), 10);
@@ -467,6 +468,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (srcId === destId) {
       throw new Error('Invalid relationship, dest and source are equals');
     }
+
     // Is the connections points valid ?. If it's not, do not load the relationship ...
     if (mindmap.findNodeById(srcId) == null || mindmap.findNodeById(destId) == null) {
       throw new Error('Transition could not created, missing node for relationship');
@@ -480,8 +482,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if ($defined(destCtrlPoint) && destCtrlPoint !== '') {
       model.setDestCtrlPoint(Point.fromString(destCtrlPoint));
     }
-    model.setEndArrow('false');
-    model.setStartArrow('true');
+    model.setEndArrow(false);
+    model.setStartArrow(true);
     return model;
   }
 

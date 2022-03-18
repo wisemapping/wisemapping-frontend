@@ -303,6 +303,12 @@
       "value": "Nous contacter"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Des dons"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -331,6 +337,18 @@
     {
       "type": 0,
       "value": "Autres"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Service"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Equipe"
     }
   ],
   "footer.termsandconditions": [

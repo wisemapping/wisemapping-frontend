@@ -500,5 +500,14 @@
     },
     "label.title": {
         "defaultMessage": "Ajouter une étiquette"
+    },
+    "footer.donations": {
+        "defaultMessage": "Des dons"
+    },
+    "footer.support": {
+        "defaultMessage": "Service"
+    },
+    "footer.team": {
+        "defaultMessage": "Equipe"
     }
 }

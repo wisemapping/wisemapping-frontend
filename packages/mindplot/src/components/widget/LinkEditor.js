@@ -49,7 +49,7 @@ class LinkEditor extends BootstrapDialog {
       action: 'none',
       id: 'linkFormId',
     });
-    const text = $('<p></p>').text('Paste your url here:');
+    const text = $('<p></p>').text($msg('PASTE_URL_HERE'));
     text.css('margin', '0px 0px 20px');
 
     this.form.append(text);
