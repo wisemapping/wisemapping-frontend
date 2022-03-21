@@ -226,7 +226,7 @@ export default class RestClient implements Client {
                     const errorInfo = this.parseResponseOnError(error.response);
                     reject(errorInfo);
                 });
-        };
+        }; 
         return new Promise(handler);
     }
 

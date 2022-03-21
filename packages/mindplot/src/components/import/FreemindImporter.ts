@@ -25,15 +25,17 @@ import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 export default class FreemindImporter extends Importer {
   private mindmap: Mindmap;
 
+  private freemindInput: string;
+
   private freemindMap: FreemindMap;
 
   private nodesmap: Map<string, NodeModel>;
 
   private relationship: Array<RelationshipModel>;
 
-  constructor(map: FreemindMap) {
+  constructor(map: string) {
     super();
-    this.freemindMap = map;
+    this.freemindInput = map;
   }
 
   import(nameMap: string, description: string): Promise<string> {
@@ -41,6 +43,10 @@ export default class FreemindImporter extends Importer {
     this.nodesmap = new Map<string, NodeModel>();
     this.relationship = new Array<RelationshipModel>();
     let wiseTopicId = 0;
+
+    const parser = new DOMParser();
+    const freemindDoc = parser.parseFromString(this.freemindInput, 'application/xml');
+    this.freemindMap = new FreemindMap().loadFromDom(freemindDoc);
 
     const version: string = this.freemindMap.getVersion();
 

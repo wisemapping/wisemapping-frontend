@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
+import { Importer, TextImporterFactory } from '@wisemapping/mindplot';
 import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -14,7 +15,7 @@ export type ImportModel = {
     title: string;
     description?: string;
     contentType?: string;
-    content?: ArrayBuffer | null | string;
+    content?: null | string;
 };
 
 export type CreateProps = {
@@ -29,7 +30,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, ImportModel>(
-        (model: ImportModel) => {
+        (model: ImportModel) => { 
             return client.importMap(model);
         },
         {
@@ -69,9 +70,6 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
             const file = files[0];
             // Closure to capture the file information.
             reader.onload = (event) => {
-                const fileContent = event?.target?.result;
-                model.content = fileContent;
-
                 // Suggest file name ...
                 const fileName = file.name;
                 if (fileName) {
@@ -80,13 +78,40 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         model.title = title;
                     }
                 }
-                model.contentType =
-                    file.name.lastIndexOf('.wxml') != -1
-                        ? 'application/xml'
-                        : 'application/freemind';
-                setModel({ ...model });
-            };
 
+                const extensionFile = file.name.split('.')[1]
+                const extensionAccept = ['wxml', 'mm'];
+
+                if ( extensionAccept.find(ext => ext === extensionFile) ) {
+                    new Error('The file extension is invalid');
+                }
+
+                model.contentType = 'application/xml'
+
+                const fileContent = event?.target?.result;
+                const mapConent: string = typeof fileContent === 'string' ? fileContent : fileContent.toString();
+
+                let importer: Importer
+                switch(extensionFile) {
+                    case 'wxml':  {
+                        importer = TextImporterFactory.create('wxml', mapConent);
+                        break;
+                    }
+
+                    case 'mm': { 
+                        importer = TextImporterFactory.create('mm', mapConent);
+                        break;
+                    } 
+                }
+
+                importer.import(model.title, model.description)
+                    .then(res => {
+                        model.content = res;
+                        setModel({ ...model });
+                    })
+                    .catch(e => console.log(e));
+            };
+ 
             // Read in the image file as a data URL.
             reader.readAsText(file);
         }
