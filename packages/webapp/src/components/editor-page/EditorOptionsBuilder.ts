@@ -35,7 +35,11 @@ class EditorOptionsBuilder {
     }
 
     static loadMapId(): number {
-        return !AppConfig.isDevelopEnv() ? global.mapId : 11;
+        const result = !AppConfig.isDevelopEnv() ? global.mapId : 11;
+        if (result === undefined) {
+            throw Error(`Could not resolve mapId. Map Id: global.mapId: ${result} , global.mapTitle: ${global.mapTitle}, global.lockSession: ${global.lockSession}`);
+        }
+        return result;
     }
 }
 export default EditorOptionsBuilder;
