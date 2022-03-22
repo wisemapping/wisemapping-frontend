@@ -44,17 +44,11 @@ export default class VersionNumber {
   }
 
   public equals<T>(o: T): boolean {
-    if (o instanceof VersionNumber) {
-      return true;
-    }
-
     if (!(o instanceof VersionNumber)) {
       return false;
     }
-
     const versionNumber: VersionNumber = o as VersionNumber;
-
-    return !(this.version ? this.version !== versionNumber.version : versionNumber.version);
+    return this.version === versionNumber.version;
   }
 
   private getTokinizer(): Array<string> {
