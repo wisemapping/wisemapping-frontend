@@ -1,5 +1,5 @@
 <map name="process" version="tango">
-    <topic central="true" text="California" id="1">
+    <topic central="true" text="California" id="0">
         <topic position="-200,-200" order="1" text="Northern California" shape="line" id="1">
             <topic position="-200,-250" order="1" text="Oakland/Berkeley" shape="line" id="2"/>
             <topic position="290,-275" order="0" text="San Mateo" shape="line" id="3"/>

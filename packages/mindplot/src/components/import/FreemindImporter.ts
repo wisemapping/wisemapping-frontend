@@ -42,7 +42,6 @@ export default class FreemindImporter extends Importer {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
     this.relationship = new Array<RelationshipModel>();
-    let wiseTopicId = 0;
 
     const parser = new DOMParser();
     const freemindDoc = parser.parseFromString(this.freemindInput, 'application/xml');
@@ -62,7 +61,7 @@ export default class FreemindImporter extends Importer {
     const freeNode: FreemindNode = this.freemindMap.getNode();
     this.mindmap.setVersion(FreemindConstant.CODE_VERSION);
 
-    wiseTopicId++;
+    const wiseTopicId = parseInt(this.freemindMap.getNode().getId().split('_')[1], 10);
     const wiseTopic = this.mindmap.createNode('CentralTopic');
     wiseTopic.setPosition(0, 0);
     wiseTopic.setId(wiseTopicId);

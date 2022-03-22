@@ -17,8 +17,10 @@ describe('MM import test execution', () => {
     const mapDocument = parseXMLFile(freemapPath, 'text/xml');
 
     const freemap: FreemindMap = new FreemindMap().loadFromDom(mapDocument);
+    const freemapXml = freemap.toXml();
+    const freemapStr = new XMLSerializer().serializeToString(freemapXml);
 
-    const importer = TextImporterFactory.create('mm', freemap);
+    const importer = TextImporterFactory.create('mm', freemapStr);
 
     await exporterAssert(testName, importer);
   });

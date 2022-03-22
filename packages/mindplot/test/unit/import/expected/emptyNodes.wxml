@@ -1,5 +1,5 @@
 <map name="emptyNodes" version="tango">
-    <topic central="true" id="1" fontStyle=";;;;;;#0000cc;;;" bgColor="#ffcc33">
+    <topic central="true" id="0" fontStyle=";;;;;;#0000cc;;;" bgColor="#ffcc33">
         <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectagle" id="1" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
             <topic position="200,-100" order="0" text="&quot;business plan&quot; associatif ?" shape="rounded rectagle" id="2" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
             <topic position="-290,-87" order="0" text="modèle / activités responsabilités" shape="rounded rectagle" id="3" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>

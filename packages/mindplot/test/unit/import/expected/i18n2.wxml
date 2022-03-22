@@ -1,5 +1,5 @@
 <map name="i18n2" version="tango">
-    <topic central="true" text="أَبْجَدِيَّة عَرَبِيَّة" id="1">
+    <topic central="true" text="أَبْجَدِيَّة عَرَبِيَّة" id="0">
         <topic position="200,0" order="0" text="أَبْجَدِيَّة عَرَبِ" shape="line" id="1">
             <note><![CDATA[[]]></note>
         </topic>

@@ -27,11 +27,7 @@ export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType)
 export const parseXMLFile = (filePath: fs.PathOrFileDescriptor, mimeType: DOMParserSupportedType) => {
   const stream = fs.readFileSync(filePath, { encoding: 'utf-8' });
 
-  let content = stream.toString();
-  // Hack for SVG exported from the browser ...
-  if (mimeType === 'image/svg+xml') {
-    content = content.replace('<svg ', '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ');
-  }
+  const content = stream.toString();
 
   return parseXMLString(content, mimeType);
 };
