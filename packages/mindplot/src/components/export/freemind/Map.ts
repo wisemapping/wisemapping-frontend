@@ -164,8 +164,9 @@ export default class Freemap {
 
       if (nodeElem.getAttribute('TYPE')) node.setType(nodeElem.getAttribute('TYPE'));
       if (nodeElem.firstChild && nodeElem.getElementsByTagName('html')) {
-        const content = String(nodeElem.getElementsByTagName('html'))[0];
-        node.setHtml(content);
+        const content = nodeElem.getElementsByTagName('html');
+        const html = content[0] ? content[0].outerHTML : '';
+        node.setHtml(html);
       }
     }
 

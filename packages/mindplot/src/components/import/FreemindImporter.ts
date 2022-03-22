@@ -4,8 +4,6 @@ import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';
 import NodeModel from '../model/NodeModel';
 import { TopicShape } from '../model/INodeModel';
-import LinkModel from '../model/LinkModel';
-import IconModel from '../model/IconModel';
 import FreemindConstant from '../export/freemind/FreemindConstant';
 import FreemindMap from '../export/freemind/Map';
 import FreemindNode, { Choise } from '../export/freemind/Node';
@@ -163,7 +161,7 @@ export default class FreemindImporter extends Importer {
     // Is there any link...
     const url: string = freeNode.getLink();
     if (url) {
-      const link: LinkModel = new LinkModel({ url });
+      const link: FeatureModel = FeatureModelFactory.createModel('link', { url });
       wiseTopic.addFeature(link);
     }
 
@@ -233,7 +231,7 @@ export default class FreemindImporter extends Importer {
         const iconId: string = freeIcon.getBuiltin();
         const wiseIconId = FreemindIconConverter.toWiseId(iconId);
         if (wiseIconId) {
-          const mindmapIcon: IconModel = new IconModel({ id: wiseIconId });
+          const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', { id: wiseIconId });
           currentWiseTopic.addFeature(mindmapIcon);
         }
       }
@@ -252,12 +250,25 @@ export default class FreemindImporter extends Importer {
 
       if (child instanceof FreemindRichcontent) {
         const type = child.getType();
-        if (type === 'NOTE') {
-          // Formating text
-          const text = this.html2Text(child.getHtml());
-          const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
-          noteModel.setId(2);
-          currentWiseTopic.addFeature(noteModel);
+        const html = child.getHtml();
+        const text = this.html2Text(html);
+
+        switch (type) {
+          case 'NOTE': {
+            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
+            currentWiseTopic.addFeature(noteModel);
+            break;
+          }
+
+          case 'NODE': {
+            currentWiseTopic.setText(text);
+            break;
+          }
+
+          default: {
+            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
+            currentWiseTopic.addFeature(noteModel);
+          }
         }
       }
 
@@ -407,7 +418,8 @@ export default class FreemindImporter extends Importer {
   }
 
   private html2Text(content: string): string {
-    const contentConvert = content.replace(/(<([^>]+)>)/gi, '');
-    return contentConvert.trim();
+    const temporalDivElement = document.createElement('div');
+    temporalDivElement.innerHTML = content;
+    return temporalDivElement.textContent.trim() || temporalDivElement.innerText.trim() || '';
   }
 }

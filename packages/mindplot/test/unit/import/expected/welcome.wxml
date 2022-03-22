@@ -1,11 +1,16 @@
 <map name="welcome" version="tango">
     <topic central="true" text="Welcome To WiseMapping" id="1" fontStyle=";;;;;;#ffffff;;;">
         <topic position="200,-100" order="0" shape="line" id="30">
+            <text><![CDATA[5 min tutorial video ?
+                        Follow the link !]]></text>
             <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
         </topic>
         <topic position="-290,-50" order="0" text="Try it Now!" shape="line" id="11" fontStyle=";;;;;;#525c61;;;" bgColor="#080559">
             <topic position="290,-87" order="0" text="Double Click" shape="line" id="12" fontStyle=";;;;;;#525c61;;;"/>
-            <topic position="380,-62" order="1" shape="line" id="13"/>
+            <topic position="380,-62" order="1" shape="line" id="13">
+                <text><![CDATA[Press "enter" to add a
+                            Sibling]]></text>
+            </topic>
             <topic position="470,-37" order="2" text="Drag map to move" shape="line" id="14" fontStyle=";;;;;;#525c61;;;"/>
         </topic>
         <topic position="-380,-12" order="1" text="Features" shape="line" id="15" fontStyle=";;;;;;#525c61;;;">

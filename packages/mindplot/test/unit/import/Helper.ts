@@ -12,15 +12,6 @@ export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType)
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xmlStr, mimeType);
 
-  // Is there any parsing error ?.
-  /*
-  if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
-    const xmmStr = new XMLSerializer().serializeToString(xmlDoc);
-    console.log(xmmStr);
-    throw new Error(`Unexpected error parsing: ${xmlStr}. Error: ${xmmStr}`);
-  }
-  */
-
   return xmlDoc;
 };
 
