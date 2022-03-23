@@ -31,6 +31,8 @@ export default class FreemindImporter extends Importer {
 
   private relationship: Array<RelationshipModel>;
 
+  private idDefault = 0;
+
   constructor(map: string) {
     super();
     this.freemindInput = map;
@@ -59,7 +61,7 @@ export default class FreemindImporter extends Importer {
     const freeNode: FreemindNode = this.freemindMap.getNode();
     this.mindmap.setVersion(FreemindConstant.CODE_VERSION);
 
-    const wiseTopicId = parseInt(this.freemindMap.getNode().getId().split('_')[1], 10);
+    const wiseTopicId = this.getIdNode(this.freemindMap.getNode());
     const wiseTopic = this.mindmap.createNode('CentralTopic');
     wiseTopic.setPosition(0, 0);
     wiseTopic.setId(wiseTopicId);
@@ -178,7 +180,7 @@ export default class FreemindImporter extends Importer {
 
     freeChilden.forEach((child) => {
       if (child instanceof FreemindNode) {
-        const wiseId = parseInt(child.getId().split('_')[1], 10);
+        const wiseId = this.getIdNode(child);
         const wiseChild = mindmap.createNode('MainTopic', wiseId);
 
         this.nodesmap.set(child.getId(), wiseChild);
@@ -305,6 +307,25 @@ export default class FreemindImporter extends Importer {
         this.relationship.push(relationship);
       }
     });
+  }
+
+  private getIdNode(node: FreemindNode): number {
+    const id = node.getId();
+    let idFreeToIdWise: number;
+
+    if (id) {
+      if (id === '_') {
+        this.idDefault++;
+        idFreeToIdWise = this.idDefault;
+      } else {
+        idFreeToIdWise = parseInt(id.split('_').pop(), 10);
+      }
+    } else {
+      this.idDefault++;
+      idFreeToIdWise = this.idDefault;
+    }
+
+    return idFreeToIdWise;
   }
 
   private getChildrenCountSameSide(freeChilden: Array<Choise>, freeChild: FreemindNode): number {
