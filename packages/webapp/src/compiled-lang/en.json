@@ -440,7 +440,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "You can import WiseMapping maps to your list of maps. Select the file you want to import."
+      "value": "You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import."
     }
   ],
   "import.title": [
