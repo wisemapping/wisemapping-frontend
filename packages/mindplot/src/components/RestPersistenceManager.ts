@@ -27,27 +27,19 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private lockUrl: string;
 
-  private timestamp: string;
-
-  private session: string;
-
   private onSave: boolean;
 
   private clearTimeout;
 
-  constructor(options) {
+  constructor(options: { documentUrl: string, revertUrl: string, lockUrl: string }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
-    $assert(options.session, 'session can not be null');
-    $assert(options.timestamp, 'timestamp can not be null');
     super();
 
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;
     this.lockUrl = options.lockUrl;
-    this.timestamp = options.timestamp;
-    this.session = options.session;
   }
 
   saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
@@ -57,9 +49,7 @@ class RESTPersistenceManager extends PersistenceManager {
       properties: pref,
     };
 
-    let query = `minor=${!saveHistory}`;
-    query = `${query}&timestamp=${this.timestamp}`;
-    query = `${query}&session=${this.session}`;
+    const query = `minor=${!saveHistory}`;
 
     if (!this.onSave) {
       // Mark save in process and fire a event unlocking the save ...
@@ -80,7 +70,6 @@ class RESTPersistenceManager extends PersistenceManager {
         },
       ).then(async (response: Response) => {
         if (response.ok) {
-          persistence.timestamp = await response.text();
           events.onSuccess();
         } else {
           console.log(`Saving error: ${response.status}`);
