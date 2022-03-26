@@ -40,8 +40,8 @@ class LinkIconTooltip extends FloatingTip {
 
   static _buildContent(linkIcon) {
     const url = linkIcon.getModel().getUrl();
-    const linkText = `URL: ${url}`;
-    const linkPreview = `http://free.pagepeeker.com/v2/thumbs.php?size=m&url=${url}`;
+    const linkText = `${url}`;
+    const linkPreview = `https://free.pagepeeker.com/v2/thumbs.php?size=m&url=${url}`;
 
     const result = $('<div></div>').css({
       padding: '5px',
