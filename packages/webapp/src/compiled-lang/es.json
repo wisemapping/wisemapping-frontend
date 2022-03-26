@@ -443,6 +443,12 @@
       "value": "Puede importar mapas de WiseMapping y Freemind a su lista de mapas. Seleccione el archivo que desea importar."
     }
   ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "La extension del archivo es invalida"
+    }
+  ],
   "import.title": [
     {
       "type": 0,

@@ -438,7 +438,13 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Vous pouvez importer des cartes WiseMapping dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
+      "value": "Sie können WiseMapping- oder Freemind-Karten in Ihre Kartenliste importieren. Selectionnez le fichier que vous souhaitez Importeur."
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "L'extension de fichier n'est pas valide"
     }
   ],
   "import.title": [

@@ -1,3 +1,4 @@
+import { Alert } from '@mui/material';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import { Importer, TextImporterFactory } from '@wisemapping/mindplot';
@@ -27,6 +28,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ImportModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
+    const [errorFile, setErrorFile] = React.useState<boolean>(false);
     const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, ImportModel>(
@@ -82,8 +84,8 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 const extensionFile = file.name.split('.').pop();
                 const extensionAccept = ['wxml', 'mm'];
 
-                if ( extensionAccept.find(ext => ext === extensionFile) ) {
-                    new Error('The file extension is invalid');
+                if (!extensionAccept.includes(extensionFile)) {
+                    setErrorFile(true);
                 }
 
                 model.contentType = 'application/xml'
@@ -91,18 +93,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 const fileContent = event?.target?.result;
                 const mapConent: string = typeof fileContent === 'string' ? fileContent : fileContent.toString();
 
-                let importer: Importer
-                switch(extensionFile) {
-                    case 'wxml':  {
-                        importer = TextImporterFactory.create('wxml', mapConent);
-                        break;
-                    }
-
-                    case 'mm': { 
-                        importer = TextImporterFactory.create('mm', mapConent);
-                        break;
-                    } 
-                }
+                const importer: Importer = TextImporterFactory.create(extensionFile, mapConent)
 
                 importer.import(model.title, model.description)
                     .then(res => {
@@ -134,6 +125,14 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 })}
                 submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}
             >
+                {errorFile &&
+                    <Alert severity='error'>
+                        <FormattedMessage
+                            id="import.error-file"
+                            defaultMessage="The file extension is invalid"
+                        />
+                    </Alert>
+                }
                 <FormControl fullWidth={true}>
                     <input
                         accept=".wxml,.mm"
