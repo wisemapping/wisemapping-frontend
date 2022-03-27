@@ -79,6 +79,7 @@ const ES = {
   MULTIPLE_LINES: 'Ajouter plusieurs lignes de texte',
   BACK_TO_MAP_LIST: 'Volver a la lista de mapas',
   KEYBOARD_SHOTCUTS: 'Métodos abreviados de teclado',
+  PASTE_URL_HERE: 'Copie la URL que desea aca:',
 };
 
 export default ES;

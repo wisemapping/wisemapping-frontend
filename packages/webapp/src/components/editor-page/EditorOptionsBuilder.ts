@@ -2,7 +2,7 @@ import { EditorOptions } from '@wisemapping/editor';
 import { EditorRenderMode } from '@wisemapping/mindplot';
 import AppConfig from '../../classes/app-config';
 
-export default class EditorOptionsBuilder {
+class EditorOptionsBuilder {
     static build(locale: string, mode: EditorRenderMode, hotkeys: boolean): EditorOptions {
 
         let options: EditorOptions = {
@@ -35,6 +35,11 @@ export default class EditorOptionsBuilder {
     }
 
     static loadMapId(): number {
-        return !AppConfig.isDevelopEnv() ? global.mapId : 11;
+        const result = !AppConfig.isDevelopEnv() ? global.mapId : 11;
+        if (result === undefined) {
+            throw Error(`Could not resolve mapId. Map Id: global.mapId: ${result} , global.mapTitle: ${global.mapTitle}, global.lockSession: ${global.lockSession}`);
+        }
+        return result;
     }
 }
+export default EditorOptionsBuilder;

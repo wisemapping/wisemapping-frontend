@@ -106,6 +106,10 @@ const LanguageMenu = (): React.ReactElement => {
                     {Locales.RU.label}
                 </MenuItem>
 
+                <MenuItem onClick={handleOnClick} id={Locales.ZH.code}>
+                    {Locales.ZH.label}
+                </MenuItem>
+
                 <Divider />
 
                 <MenuItem

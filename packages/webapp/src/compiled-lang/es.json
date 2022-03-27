@@ -296,13 +296,19 @@
   "footer.aboutus": [
     {
       "type": 0,
-      "value": "Sobre nosotros"
+      "value": "Sobre Nosotros"
     }
   ],
   "footer.contactus": [
     {
       "type": 0,
       "value": "Contáctenos"
+    }
+  ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Donaciones"
     }
   ],
   "footer.faq": [
@@ -333,6 +339,18 @@
     {
       "type": 0,
       "value": "Otros"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Soporte"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Equipo"
     }
   ],
   "footer.termsandconditions": [
@@ -422,7 +440,13 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Puede importar mapas de WiseMapping a su lista de mapas. Seleccione el archivo que desea importar."
+      "value": "Puede importar mapas de WiseMapping y Freemind a su lista de mapas. Seleccione el archivo que desea importar."
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "La extension del archivo es invalida"
     }
   ],
   "import.title": [

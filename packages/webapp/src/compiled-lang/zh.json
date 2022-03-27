@@ -1,5 +1,5 @@
 {
-  "account.delete-warning": [
+  "account.delete-warning警告": [
     {
       "type": 0,
       "value": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
@@ -272,7 +272,7 @@
   "export.image": [
     {
       "type": 0,
-      "value": "Image: Get a graphic representation of your map including all colors and shapes.图像：以图片形式获取包含所有颜色和形状的脑图"
+      "value": "图像：以图片形式获取包含所有颜色和形状的脑图"
     }
   ],
   "export.img-center": [
@@ -305,6 +305,12 @@
       "value": "联系我们"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "捐款"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -333,6 +339,18 @@
     {
       "type": 0,
       "value": "其它"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "支持"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "学期"
     }
   ],
   "footer.termsandconditions": [
@@ -422,7 +440,13 @@
   "import.description": [
     {
       "type": 0,
-      "value": "您可以将WiseMapping脑图导入到您的脑图列表中。选择要导入的文件。"
+      "value": "您可以将脑图从 WiseMapping 和 Freemind 导入到您的脑图列表中。选择要导入的文件。"
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "文件扩展名无效"
     }
   ],
   "import.title": [
@@ -500,7 +524,7 @@
   "info.starred": [
     {
       "type": 0,
-      "value": "星标"
+      "value": "收藏"
     }
   ],
   "info.title": [
@@ -740,13 +764,13 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "拥有"
+      "value": "我的"
     }
   ],
   "maps.nav-public": [
     {
       "type": 0,
-      "value": "公共"
+      "value": "公开"
     }
   ],
   "maps.nav-shared": [
@@ -758,7 +782,7 @@
   "maps.nav-starred": [
     {
       "type": 0,
-      "value": "星标"
+      "value": "收藏"
     }
   ],
   "maps.page-title": [
@@ -788,7 +812,7 @@
   "maps.tooltip-starred": [
     {
       "type": 0,
-      "value": "星标"
+      "value": "收藏"
     }
   ],
   "maps.view": [
@@ -872,7 +896,7 @@
   "registration.desc": [
     {
       "type": 0,
-      "value": "Signing up is free and just take a moment注册免费，分分钟就好"
+      "value": "注册免费，分分钟就好"
     }
   ],
   "registration.email": [

@@ -311,6 +311,12 @@
       "value": "Kontaktiere uns"
     }
   ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Spenden"
+    }
+  ],
   "footer.faq": [
     {
       "type": 0,
@@ -339,6 +345,18 @@
     {
       "type": 0,
       "value": "Andere"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Unterstützt"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Ausrüstung"
     }
   ],
   "footer.termsandconditions": [
@@ -428,7 +446,13 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Sie können WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+      "value": "Sie können Karten von WiseMapping oder Freemind in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "Die Dateierweiterung ist ungültig"
     }
   ],
   "import.title": [

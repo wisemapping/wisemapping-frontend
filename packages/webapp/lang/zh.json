@@ -1,5 +1,5 @@
 {
-  "account.delete-warning": {
+  "account.delete-warning警告": {
     "defaultMessage": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
   },
   "accountinfo.button": {
@@ -135,7 +135,7 @@
     "defaultMessage": "文档：将你的思维导图导出到一个独立的文档中来分享"
   },
   "export.image": {
-    "defaultMessage": "Image: Get a graphic representation of your map including all colors and shapes.图像：以图片形式获取包含所有颜色和形状的脑图"
+    "defaultMessage": "图像：以图片形式获取包含所有颜色和形状的脑图"
   },
   "export.img-center": {
     "defaultMessage": "居中并缩放合适大小"
@@ -210,10 +210,13 @@
     "defaultMessage": "创建"
   },
   "import.description": {
-    "defaultMessage": "您可以将WiseMapping脑图导入到您的脑图列表中。选择要导入的文件。"
+    "defaultMessage": "您可以将脑图从 WiseMapping 和 Freemind 导入到您的脑图列表中。选择要导入的文件。"
   },
   "import.title": {
     "defaultMessage": "导入现有的思维导图"
+  },
+  "import.error-file": {
+    "defaultMessage": "文件扩展名无效"
   },
   "info.basic-info": {
     "defaultMessage": "基本信息"
@@ -249,7 +252,7 @@
     "defaultMessage": "分享"
   },
   "info.starred": {
-    "defaultMessage": "星标"
+    "defaultMessage": "收藏"
   },
   "info.title": {
     "defaultMessage": "信息"
@@ -364,16 +367,16 @@
     "defaultMessage": "所有"
   },
   "maps.nav-onwned": {
-    "defaultMessage": "拥有"
+    "defaultMessage": "我的"
   },
   "maps.nav-public": {
-    "defaultMessage": "公共"
+    "defaultMessage": "公开"
   },
   "maps.nav-shared": {
     "defaultMessage": "与我分享"
   },
   "maps.nav-starred": {
-    "defaultMessage": "星标"
+    "defaultMessage": "收藏"
   },
   "maps.page-title": {
     "defaultMessage": "我的脑图|WiseMapping"
@@ -388,7 +391,7 @@
     "defaultMessage": "打开编辑"
   },
   "maps.tooltip-starred": {
-    "defaultMessage": "星标"
+    "defaultMessage": "收藏"
   },
   "maps.view": {
     "defaultMessage": "查看"
@@ -430,7 +433,7 @@
     "defaultMessage": "注册成功|WiseMapping"
   },
   "registration.desc": {
-    "defaultMessage": "Signing up is free and just take a moment注册免费，分分钟就好"
+    "defaultMessage": "注册免费，分分钟就好"
   },
   "registration.email": {
     "defaultMessage": "电子邮件"
@@ -500,5 +503,14 @@
   },
   "share.message": {
     "defaultMessage": "消息"
+  },
+  "footer.support": {
+    "defaultMessage": "支持"
+  },
+  "footer.team": {
+    "defaultMessage": "学期"
+  },
+  "footer.donations": {
+    "defaultMessage": "捐款"
   }
 }

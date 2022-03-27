@@ -11,7 +11,6 @@ This is a work in progress and for now mindplot needs to be instantiated using t
     ReactDOM.render(
         <Editor 
             mapId={1}
-            memoryPersistence={false}
             readOnlyMode={false}
             locale="en"
             onAction={(action) => console.log('action called:', action)}

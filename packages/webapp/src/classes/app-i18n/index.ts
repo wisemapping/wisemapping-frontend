@@ -2,7 +2,9 @@ import { fetchAccount } from './../../redux/clientSlice';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/en';
 import 'dayjs/locale/es';
+import 'dayjs/locale/de';
 import 'dayjs/locale/ru';
+import 'dayjs/locale/zh';
 
 export class Locale {
     code: LocaleCode;
@@ -17,15 +19,23 @@ export class Locale {
 }
 
 export default abstract class AppI18n {
+    private static LOCAL_STORAGE_KEY = 'user.locale';
+
     public static getUserLocale(): Locale {
         // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
         const isTryPage = window.location.href.endsWith('/try');
         let result: Locale;
         if (!isTryPage) {
             const account = fetchAccount();
-            result = account?.locale ? account.locale : this.getBrowserLocale();
+            result = account?.locale ? account.locale : this.getDefaultLocale();
+
+            // If the local storage value is different, update ...
+            if (account?.locale && result.code !== localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY)) {
+                localStorage.setItem(AppI18n.LOCAL_STORAGE_KEY, result.code);
+            }
+
         } else {
-            result = this.getBrowserLocale();
+            result = this.getDefaultLocale();
         }
         return result;
     }
@@ -45,6 +55,21 @@ export default abstract class AppI18n {
 
         return result;
     }
+
+    public static getDefaultLocale(): Locale {
+        // Fetch local from local storage ...
+        let result: Locale;
+        const userLocaleCode: string = localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY);
+        if (userLocaleCode) {
+            result = localeFromStr(userLocaleCode);
+        }
+
+        // Ok, use browser default ...
+        if (!result) {
+            result = this.getBrowserLocale();
+        }
+        return result;
+    }
 }
 
 export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh';
@@ -55,7 +80,7 @@ export const Locales = {
     DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
     FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
     RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
-    ZH: new Locale('zh', '中文', require('./../../compiled-lang/zh.json')), // eslint-disable-line
+    ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
 
 };
 

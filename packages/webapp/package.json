@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "5.0.8",
+    "version": "5.0.9",
     "main": "app.jsx",
     "scripts": {
         "start": "webpack serve --config webpack.dev.js ",
@@ -9,8 +9,8 @@
         "lint": "eslint src",
         "cy:run": "cypress run",
         "test:integration": "start-server-and-test start http-get://localhost:3000 cy:run",
-        "extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
-        "compile": "formatjs compile",
+        "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
+        "i18n:compile": "for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done",
         "test": "yarn test:integration"
     },
     "files": [

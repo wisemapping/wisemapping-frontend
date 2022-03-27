@@ -204,10 +204,13 @@
         "defaultMessage": "Erstellen"
     },
     "import.description": {
-        "defaultMessage": "Sie können WiseMapping-Karten in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+        "defaultMessage": "Sie können Karten von WiseMapping oder Freemind in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
     },
     "import.title": {
         "defaultMessage": "Importieren Sie vorhandene Mindmaps"
+    },
+    "import.error-file": {
+        "defaultMessage": "Die Dateierweiterung ist ungültig"
     },
     "info.basic-info": {
         "defaultMessage": "Basisinformation"
@@ -500,5 +503,14 @@
     },
     "label.title": {
         "defaultMessage": "Etikett hinzufügen"
+    },
+    "footer.donations": {
+        "defaultMessage": "Spenden"
+    },
+    "footer.support": {
+        "defaultMessage": "Unterstützt"
+    },
+    "footer.team": {
+        "defaultMessage": "Ausrüstung"
     }
 }

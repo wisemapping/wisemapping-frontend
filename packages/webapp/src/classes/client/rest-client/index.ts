@@ -226,7 +226,7 @@ export default class RestClient implements Client {
                     const errorInfo = this.parseResponseOnError(error.response);
                     reject(errorInfo);
                 });
-        };
+        }; 
         return new Promise(handler);
     }
 
@@ -618,17 +618,10 @@ export default class RestClient implements Client {
 
         let persistence: PersistenceManager;
         if (editorMode === 'edition-owner' || editorMode === 'edition-editor') {
-
-            if (!global.lockSession) {
-                throw new Error(`Session could not be found: global.lockSession: '${global.lockSession}' - global.lockTimestamp: '${global.lockTimestamp}' - ${global.mindmapLocked} - ${global.mindmapLockedMsg}`)
-            }
-
             persistence = new RESTPersistenceManager({
                 documentUrl: '/c/restful/maps/{id}/document',
                 revertUrl: '/c/restful/maps/{id}/history/latest',
                 lockUrl: '/c/restful/maps/{id}/lock',
-                timestamp: global.lockTimestamp,
-                session: global.lockSession,
             });
         } else {
             persistence = new LocalStorageManager(

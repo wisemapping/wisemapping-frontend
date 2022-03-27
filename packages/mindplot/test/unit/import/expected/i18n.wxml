@@ -1,0 +1,7 @@
+<map name="i18n" version="tango">
+    <topic central="true" text="i18n" id="0">
+        <topic position="200,-50" order="0" text="Este es un é con acento" shape="line" id="1"/>
+        <topic position="-290,-12" order="0" text="Este es una ñ" shape="line" id="2"/>
+        <topic position="-380,0" order="1" text="這是一個樣本 Japanise。" shape="line" id="3"/>
+    </topic>
+</map>

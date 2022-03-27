@@ -209,6 +209,9 @@
     "import.title": {
         "defaultMessage": "Загрузить майнд-карту с компьютера"
     },
+    "import.error-file": {
+        "defaultMessage": "Недопустимое расширение файла"
+    },
     "info.basic-info": {
         "defaultMessage": "Основная информация"
     },
@@ -473,5 +476,14 @@
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Зарегистрируйтесь, чтобы создавать, делиться и публиковать майнд-карты бесплатно и без ограничений!"
+    },
+    "footer.donations": {
+        "defaultMessage": "Пожертвования"
+    },
+    "footer.support": {
+        "defaultMessage": "Услуги"
+    },
+    "footer.team": {
+        "defaultMessage": "команда"
     }
 }

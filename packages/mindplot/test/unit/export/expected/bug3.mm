@@ -332,7 +332,7 @@
                         <node ID="ID_334" POSITION="right" STYLE="fork" TEXT="Internet penetration"/>
                         <node ID="ID_335" POSITION="right" STYLE="fork" TEXT="Computer literacy "/>
                     </node>
-                    <arrowlink DESTINATION="ID_76" STARTARROW="Default" ENDARROW="Default"/>
+                    <arrowlink DESTINATION="ID_76" STARTARROW="Default"/>
                 </node>
                 <node ID="ID_10" POSITION="right" STYLE="fork" TEXT="Behavior of innovation actors">
                     <node ID="ID_167" POSITION="right" STYLE="fork" TEXT="Access to markets">
@@ -944,7 +944,7 @@
                     <icon BUILTIN="sign_warning"/>
                 </node>
             </node>
-            <arrowlink DESTINATION="ID_114" STARTARROW="Default" ENDARROW="Default"/>
+            <arrowlink DESTINATION="ID_114" STARTARROW="Default"/>
         </node>
         <node ID="ID_7" POSITION="right" STYLE="bubble" TEXT="What investments in innovative projects">
             <richcontent TYPE="NOTE">

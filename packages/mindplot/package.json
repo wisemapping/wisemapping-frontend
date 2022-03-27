@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/mindplot",
-    "version": "5.0.8",
+    "version": "5.0.9",
     "description": "WiseMapping - Mindplot Canvas Library",
     "homepage": "http://www.wisemapping.org/",
     "directories": {
@@ -26,7 +26,7 @@
         "lint": "eslint src --ext js,ts",
         "playground": "webpack serve --config webpack.playground.js",
         "cy:run": "cypress run",
-        "test:unit": "jest ./test/unit/export/*.ts ./test/unit/layout/*.js",
+        "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts ./test/unit/layout/*.js --verbose --silent --detectOpenHandles",
         "test:integration": "start-server-and-test playground http-get://localhost:8083 cy:run",
         "test": "yarn test:unit && yarn test:integration"
     },

@@ -204,10 +204,13 @@
         "defaultMessage": "Créer"
     },
     "import.description": {
-        "defaultMessage": "Vous pouvez importer des cartes WiseMapping dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
+        "defaultMessage": "Sie können WiseMapping- oder Freemind-Karten in Ihre Kartenliste importieren. Selectionnez le fichier que vous souhaitez Importeur."
     },
     "import.title": {
         "defaultMessage": "Importer une carte mentale existante"
+    },
+    "import.error-file": {
+        "defaultMessage": "L'extension de fichier n'est pas valide"
     },
     "info.basic-info": {
         "defaultMessage": "Informations de base"
@@ -500,5 +503,14 @@
     },
     "label.title": {
         "defaultMessage": "Ajouter une étiquette"
+    },
+    "footer.donations": {
+        "defaultMessage": "Des dons"
+    },
+    "footer.support": {
+        "defaultMessage": "Service"
+    },
+    "footer.team": {
+        "defaultMessage": "Equipe"
     }
 }

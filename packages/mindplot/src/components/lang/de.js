@@ -79,7 +79,7 @@ const DE = {
   MULTIPLE_LINES: 'Füge mehrer Textzeilen hinzu',
   BACK_TO_MAP_LIST: 'Zurück zur Kartenliste',
   KEYBOARD_SHOTCUTS: 'Tastaturkürzel',
-
+  PASTE_URL_HERE: 'Fügen Sie hier die gewünschte URL-Adresse ein:',
 };
 
 export default DE;

@@ -211,7 +211,7 @@ class Menu extends IMenu {
       if (undoButton) {
         undoButton.disable();
       }
-      Menu._registerTooltip('undoEdition', $msg('UNDO'), 'meta+Z');
+      Menu._registerTooltip('undoEdition', $msg('UNDO'));
 
       const redoButton = this._addButton('redoEdition', false, false, () => {
         designer.redo();
@@ -219,7 +219,7 @@ class Menu extends IMenu {
       if (redoButton) {
         redoButton.disable();
       }
-      Menu._registerTooltip('redoEdition', $msg('REDO'), 'meta+shift+Z');
+      Menu._registerTooltip('redoEdition', $msg('REDO'));
 
       if (redoButton && undoButton) {
         designer.addEvent('modelUpdate', (event) => {
@@ -239,12 +239,12 @@ class Menu extends IMenu {
       this._addButton('addTopic', true, false, () => {
         designer.createSiblingForSelectedNode();
       });
-      Menu._registerTooltip('addTopic', $msg('ADD_TOPIC'), 'Enter');
+      Menu._registerTooltip('addTopic', $msg('ADD_TOPIC'));
 
       this._addButton('deleteTopic', true, true, () => {
         designer.deleteSelectedEntities();
       });
-      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), 'Delete');
+      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'));
 
       this._addButton('topicLink', true, false, () => {
         designer.addLink();
@@ -279,7 +279,7 @@ class Menu extends IMenu {
           () => {
             this.save(saveElem, designer, true);
           });
-        Menu._registerTooltip('save', $msg('SAVE'), 'meta+S');
+        Menu._registerTooltip('save', $msg('SAVE'));
 
         // Register unload save ...
         window.addEventListener('beforeunload', () => {

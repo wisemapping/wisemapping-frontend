@@ -49,7 +49,7 @@ class LinkEditor extends BootstrapDialog {
       action: 'none',
       id: 'linkFormId',
     });
-    const text = $('<p></p>').text('Paste your url here:');
+    const text = $('<p></p>').text($msg('PASTE_URL_HERE'));
     text.css('margin', '0px 0px 20px');
 
     this.form.append(text);
@@ -60,7 +60,7 @@ class LinkEditor extends BootstrapDialog {
 
     // Add Input
     const input = $('<input id="inputUrl"/>').attr({
-      placeholder: 'http://www.example.com/',
+      placeholder: 'https://www.example.com/',
       required: 'true',
       autofocus: 'autofocus',
       class: 'form-control',
@@ -92,9 +92,10 @@ class LinkEditor extends BootstrapDialog {
     const me = this;
     this.form.unbind('submit').submit((event) => {
       event.preventDefault();
-      if (me.checkURL(input.val())) {
+      let inputValue = input.val();
+      inputValue = this.hasProtocol(inputValue) ? inputValue : `https://${inputValue}`;
+      if (me.checkURL(inputValue)) {
         me.cleanError();
-        const inputValue = input.val();
         if (inputValue != null && $.trim(inputValue) !== '') {
           model.setValue(inputValue);
         }
@@ -115,7 +116,16 @@ class LinkEditor extends BootstrapDialog {
    * @return {Boolean} true if the url is valid
    */
   checkURL(url) {
-    const regex = /^(http|https|ftp):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
+    const regex = /^(http|https):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
+    return (regex.test(url));
+  }
+
+  /**
+   * checks whether the input is a valid url
+   * @return {Boolean} true if the url is valid
+   */
+  hasProtocol(url) {
+    const regex = /^(http|https):\/\//i;
     return (regex.test(url));
   }
 

@@ -22,7 +22,6 @@ import {
 import {
   buildDesigner,
 } from './components/DesignerBuilder';
-import RESTPersistenceManager from './components/RestPersistenceManager';
 import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
@@ -34,15 +33,7 @@ require('../../../libraries/bootstrap/js/bootstrap.min');
 
 // Configure designer options ...
 let persistence: PersistenceManager;
-if (!global.memoryPersistence && !global.readOnly) {
-  persistence = new RESTPersistenceManager({
-    documentUrl: '/c/restful/maps/{id}/document',
-    revertUrl: '/c/restful/maps/{id}/history/latest',
-    lockUrl: '/c/restful/maps/{id}/lock',
-    timestamp: global.lockTimestamp,
-    session: global.lockSession,
-  });
-} else {
+if (global.readOnly) {
   const historyId = global.historyId ? `${global.historyId}/` : '';
   persistence = new LocalStorageManager(
     `/c/restful/maps/{id}/${historyId}document/xml${!global.isAuth ? '-pub' : ''}`,

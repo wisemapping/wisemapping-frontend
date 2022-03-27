@@ -79,6 +79,7 @@ const FR = {
   MULTIPLE_LINES: 'Ajouter plusieurs lignes de texte',
   BACK_TO_MAP_LIST: 'Retour à la liste des cartes',
   KEYBOARD_SHOTCUTS: 'Raccourcis clavier',
+  PASTE_URL_HERE: 'Collez l\'adresse URL souhaitée ici :',
 };
 
 export default FR;

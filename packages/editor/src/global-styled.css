@@ -9,18 +9,6 @@ html {
     font-size: initial;
 }
 
-body {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    overflow: hidden;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;    
-}
-
 div#mindplot {
     position: relative;
     top: 50px;

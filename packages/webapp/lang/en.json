@@ -167,6 +167,15 @@
   "footer.others": {
     "defaultMessage": "Others"
   },
+  "footer.support": {
+    "defaultMessage": "Support"
+  },
+  "footer.team": {
+    "defaultMessage": "Our Team"
+  },
+  "footer.donations": {
+    "defaultMessage": "Donations"
+  },
   "footer.termsandconditions": {
     "defaultMessage": "Term And Conditions"
   },
@@ -210,10 +219,13 @@
     "defaultMessage": "Create"
   },
   "import.description": {
-    "defaultMessage": "You can import WiseMapping maps to your list of maps. Select the file you want to import."
+    "defaultMessage": "You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import."
   },
   "import.title": {
     "defaultMessage": "Import existing mindmap"
+  },
+  "import.error-file": {
+    "defaultMessage": "The file extension is invalid"
   },
   "info.basic-info": {
     "defaultMessage": "Basic Info"
@@ -258,7 +270,7 @@
     "defaultMessage": "Add label"
   },
   "label.add-for": {
-    "defaultMessage": "Editing labels for maps:"
+    "defaultMessage": "Editing labels for"
   },
   "label.add-placeholder": {
     "defaultMessage": "Label title"
@@ -274,6 +286,9 @@
   },
   "label.description": {
     "defaultMessage": "Use labels to organize your maps."
+  },
+  "label.maps-count": {
+    "defaultMessage": "{count} maps"
   },
   "label.title": {
     "defaultMessage": "Add a label"

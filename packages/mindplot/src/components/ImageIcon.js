@@ -73,7 +73,7 @@ class ImageIcon extends Icon {
 
   static _getNextFamilyIconId(iconId) {
     const familyIcons = ImageIcon._getFamilyIcons(iconId);
-    $assert(familyIcons != null, 'Family Icon not found!');
+    $assert(familyIcons !== null, `Family Icon not found: ${iconId}`);
 
     let result = null;
     for (let i = 0; i < familyIcons.length && result == null; i++) {

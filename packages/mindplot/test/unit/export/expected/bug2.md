@@ -6,14 +6,14 @@
 	- Naturaleza
 		- Animales, Plantas, Piedras
 	- Arqueología
+	- Culturas Antiguas
+		- Egipto, Grecia, China...
 	- Energía
+	- Paleontología
 	- Astronomía
 	- Arquitectura
 	- Cocina
 	- Poesía
-	- Culturas Antiguas
-		- Egipto, Grecia, China...
-	- Paleontología
 - Duración limitada: 5-6 semanas
 - Niños y niñas que quieren saber más
 - Alternativa a otras actividades de ocio
@@ -25,11 +25,11 @@
 - Actividades centradas en el contexto cercano
 - Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)
 - Complementamos el trabajo de la escuela[^1] 
+	- SaberMás trabaja con, desde y para la motivación
+	- Trabajamos en equipo en nuestros proyectos 
 	- Cada uno va a su ritmo, y cada cual pone sus límites
 	- Aprendemos todos de todos
 	- Valoramos lo que hemos aprendido
-	- SaberMás trabaja con, desde y para la motivación
-	- Trabajamos en equipo en nuestros proyectos 
 
 
 
