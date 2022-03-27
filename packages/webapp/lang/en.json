@@ -219,10 +219,13 @@
     "defaultMessage": "Create"
   },
   "import.description": {
-    "defaultMessage": "You can import WiseMapping maps to your list of maps. Select the file you want to import."
+    "defaultMessage": "You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import."
   },
   "import.title": {
     "defaultMessage": "Import existing mindmap"
+  },
+  "import.error-file": {
+    "defaultMessage": "The file extension is invalid"
   },
   "info.basic-info": {
     "defaultMessage": "Basic Info"

@@ -1,0 +1,26 @@
+<map name="complex" version="tango">
+    <topic central="true" text="PPM Plan" id="1">
+        <topic position="200,-300" order="0" text="Business Development " shape="line" id="4" fontStyle=";;;;;8;;;;"/>
+        <topic position="-290,-87" order="0" text="Backlog Management" shape="line" id="18" fontStyle=";;;;;8;;;;">
+            <link url="https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit" urlType="url"/>
+        </topic>
+        <topic position="-380,-37" order="1" text="Freeform IT" shape="line" id="10" fontStyle=";;;;;8;;;;"/>
+        <topic position="-470,-12" order="2" text="Client Project Management" shape="line" id="204" fontStyle=";;;;;8;;;;"/>
+        <topic position="-560,13" order="3" text="Governance &amp; Executive" shape="line" id="206" fontStyle=";;;;;8;;;;"/>
+        <topic position="-650,13" order="4" text="Finance" shape="line" id="5" fontStyle=";;;;;8;;;;"/>
+        <topic position="-740,38" order="5" text="Administration" shape="line" id="3" fontStyle=";;;;;8;;;;"/>
+        <topic position="-830,63" order="6" text="Human Resources" shape="line" id="154" fontStyle=";;;;;8;;;;">
+            <note><![CDATA[HR Vision: Freeform Solutions is successful at its mission, sustainable as an organization AND is a great place to work.
+                        HR Mission: To provide a positive HR service experience for applicants and employees, and  collaborate with departments to recruit, develop, support, and retain diverse and talented employees who are the key to Freeform’s  reputation and success.]]></note>
+        </topic>
+        <topic position="-920,113" order="7" text="Freeform Hosting" shape="line" id="16" fontStyle=";;;;;8;;;;"/>
+        <topic position="-1010,113" order="8" text="Community Outreach" shape="line" id="247" fontStyle=";;;;;8;;;;"/>
+        <topic position="-1100,138" order="9" text="R&amp;D" shape="line" id="261" fontStyle=";;;;;8;;;;">
+            <topic position="1100,113" order="0" text="Goals" shape="line" id="263"/>
+            <topic position="1190,138" order="1" text="Formulize" shape="line" id="264"/>
+        </topic>
+        <topic position="-1190,188" order="10" text="Probono" shape="line" id="268">
+            <topic position="1190,176" order="0" shape="line" id="269"/>
+        </topic>
+    </topic>
+</map>

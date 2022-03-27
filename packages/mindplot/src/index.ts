@@ -26,7 +26,9 @@ import MockPersistenceManager from './components/MockPersistenceManager';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 import ImageExporterFactory from './components/export/ImageExporterFactory';
 import TextExporterFactory from './components/export/TextExporterFactory';
+import TextImporterFactory from './components/import/TextImporterFactory';
 import Exporter from './components/export/Exporter';
+import Importer from './components/import/Importer';
 import DesignerKeyboard from './components/DesignerKeyboard';
 import EditorRenderMode from './components/EditorRenderMode';
 import ImageIcon from './components/ImageIcon';
@@ -61,7 +63,9 @@ export {
   EditorRenderMode,
   TextExporterFactory,
   ImageExporterFactory,
+  TextImporterFactory,
   Exporter,
+  Importer,
   ImageIcon,
   $notify,
   $msg,

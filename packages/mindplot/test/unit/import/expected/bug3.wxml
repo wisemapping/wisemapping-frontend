@@ -1,0 +1,514 @@
+<map name="bug3" version="tango">
+    <topic central="true" text="Indicator needs" id="1">
+        <topic position="200,-100" order="0" text="Which new measures" shape="rounded rectagle" id="5" fontStyle=";;;;;8;;;;">
+            <note><![CDATA[Identifying new measures or investments that should be implemented.]]></note>
+            <topic position="200,-50" order="0" text="Landscape of measures" shape="rounded rectagle" id="56" bgColor="#feffff">
+                <topic position="200,-50" order="0" text="Diversity index of innovation support instruments in the region" shape="line" id="45">
+                    <note><![CDATA[Number of different innovations policy instruments existing  in the region as a share of a total number representing a full typology of instruments]]></note>
+                </topic>
+                <topic position="-290,-75" order="0" text="Existing investments in measures" shape="line" id="57"/>
+            </topic>
+            <topic position="-290,-125" order="0" text="What other regions do differently" shape="rounded rectagle" id="38" bgColor="#feffff">
+                <topic position="290,-162" order="0" text="Balance of measure index" shape="line" id="46"/>
+                <topic position="380,-137" order="1" text="Profile comparison with other regions" shape="line" id="77"/>
+                <topic position="470,-112" order="2" text="Number of specific types of measures per capita" shape="line" id="112"/>
+            </topic>
+        </topic>
+        <topic position="-290,-37" order="0" text="How to design &amp; implement measures" shape="rounded rectagle" id="6" fontStyle=";;;;;8;;;;">
+            <note><![CDATA[Understanding how to design the details of a particular measure and how to implement them.]]></note>
+            <topic position="290,-62" order="0" text="Good practices" shape="rounded rectagle" id="41" bgColor="#feffff"/>
+            <topic position="380,-37" order="1" text="Diagnostics" shape="rounded rectagle" id="80" bgColor="#feffff">
+                <topic position="-380,-62" order="0" text="Internal business innovation factors" shape="line" id="81"/>
+                <topic position="-470,-37" order="1" text="Return on investment to innovation" shape="line" id="359">
+                    <topic position="470,-212" order="0" shape="line" id="360">
+                        <text><![CDATA[Firms turnover from (new to firm)
+                                    product innovation (as a pecentage of total turnover)]]></text>
+                    </topic>
+                    <topic position="560,-187" order="1" shape="line" id="361">
+                        <text><![CDATA[Increase in the probability to innovate linked to ICT use
+                                    (in product innovation, process innovation, organisational innovaton, marketing innovation)]]></text>
+                    </topic>
+                    <topic position="650,-162" order="2" shape="line" id="362">
+                        <text><![CDATA[Scientific articles by type of collaboration (per capita)
+                                    (international co-authoriship, domestic co-authoriship, single author)]]></text>
+                    </topic>
+                    <topic position="740,-137" order="3" shape="line" id="363">
+                        <text><![CDATA[Increase in a share of expenditures on technological
+                                    innovations in the total amount of regional firms’ expenditures, %]]></text>
+                    </topic>
+                    <topic position="830,-112" order="4" text="Increase in the number of innovative companies with in-house R&amp;D" shape="line" id="364"/>
+                    <topic position="920,-87" order="5" text="Increase in th number of innovative companies without in-house R&amp;D" shape="line" id="365"/>
+                    <topic position="1010,-62" order="6" shape="line" id="366">
+                        <text><![CDATA[Increase in th number of firms with
+                                    international/national collaboration on innovation]]></text>
+                    </topic>
+                    <topic position="1100,-37" order="7" shape="line" id="367">
+                        <text><![CDATA[Highly cited scientific articles (as a percentage of
+                                    highly cited scientific article in the whole Federation)]]></text>
+                    </topic>
+                    <topic position="1190,-12" order="8" shape="line" id="368">
+                        <text><![CDATA[Patents filed by public research organisations
+                                    (as a percentafe of patent application filed under PCT)]]></text>
+                    </topic>
+                    <topic position="1280,13" order="9" text="Number of international patents" shape="line" id="369"/>
+                    <topic position="1370,38" order="10" text="Start-up activity (as a percentage of start-up activity in the whole Federation)" shape="line" id="370"/>
+                    <topic position="1460,63" order="11" text="Number of innovative companies to the number of students " shape="line" id="393"/>
+                    <topic position="1550,88" order="12" text="Number of innovative companies to the number of researchers  " shape="line" id="394"/>
+                    <topic position="1640,113" order="13" text="Volume of license agreements to the volume of R&amp;D support from the regional budget " shape="line" id="400"/>
+                </topic>
+            </topic>
+        </topic>
+        <topic position="-380,-12" order="1" text="How much effort: where &amp; how" shape="rounded rectagle" id="2" fontStyle=";;;;;8;;;;">
+            <note><![CDATA[Understanding the level of effort the region needs to take to compete on innovation and where to put this effort]]></note>
+            <topic position="380,-37" order="0" text="The bottom-line" shape="rounded rectagle" id="3" bgColor="#feffff">
+                <note><![CDATA[This is what policy makers care about in the end]]></note>
+                <topic position="-380,-87" order="0" text="Wages" shape="line" id="15">
+                    <topic position="380,-112" order="0" text="Dynamics of real wages" shape="line" id="12"/>
+                    <topic position="470,-87" order="1" text="Average wage (compare to the Fed)" shape="line" id="14"/>
+                </topic>
+                <topic position="-470,-62" order="1" text="Productivity" shape="line" id="86">
+                    <topic position="470,-87" order="0" text="Labor productivity" shape="line" id="190"/>
+                    <topic position="560,-62" order="1" text="Labor productivity growth rate" shape="line" id="191"/>
+                </topic>
+                <topic position="-560,-37" order="2" text="Jobs" shape="line" id="87">
+                    <topic position="560,-74" order="0" text="Share of high-productive jobs" shape="line" id="13"/>
+                    <topic position="650,-49" order="1" text="Share of creative industries jobs" shape="line" id="88"/>
+                    <topic position="740,-24" order="2" text="Uneployment rate of university graduates" shape="line" id="336"/>
+                </topic>
+                <topic position="-650,-12" order="3" text="Income" shape="line" id="89">
+                    <topic position="650,-24" order="0" text="GRP per capita and its growth rate" shape="line" id="11"/>
+                </topic>
+            </topic>
+            <topic position="470,-12" order="1" text="Influencing  factors" shape="rounded rectagle" id="8" bgColor="#feffff">
+                <topic position="-470,-62" order="0" text="Economy" shape="line" id="55">
+                    <topic position="470,-99" order="0" text="Economic structure" shape="line" id="166"/>
+                    <topic position="560,-74" order="1" text="Volume of manufacturing production per capita " shape="line" id="395"/>
+                    <topic position="650,-49" order="2" text="Manufacturing value added per capita (non-natural resource-based)" shape="line" id="396"/>
+                </topic>
+                <topic position="-560,-37" order="1" text="The enabling environment" shape="line" id="9">
+                    <topic position="560,-112" order="0" text="Ease of doing business" shape="line" id="16">
+                        <note><![CDATA[WB]]></note>
+                        <topic position="-560,-124" order="0" text="Level of administrative barriers (number and cost of administrative procedures) " shape="line" id="412"/>
+                    </topic>
+                    <topic position="650,-87" order="1" text="Competition index" shape="line" id="18">
+                        <note><![CDATA[GCR]]></note>
+                    </topic>
+                    <topic position="740,-62" order="2" text="Workforce" shape="line" id="120">
+                        <topic position="-740,-99" order="0" text="Quality of education" shape="line" id="19">
+                            <note><![CDATA[GCR]]></note>
+                            <topic position="740,-111" order="0" text="Inrease in the number of International students" shape="line" id="337"/>
+                        </topic>
+                        <topic position="-830,-74" order="1" text="Quantity of education" shape="line" id="121">
+                            <topic position="830,-161" order="0" text="Participation in life-long learning" shape="line" id="122">
+                                <note><![CDATA[per 100 population aged 25-64]]></note>
+                            </topic>
+                            <topic position="920,-136" order="1" text="Increase in literarecy " shape="line" id="333"/>
+                            <topic position="1010,-111" order="2" shape="line" id="188">
+                                <text><![CDATA[Amount of university and colleague
+                                            students per 10 thousands population]]></text>
+                            </topic>
+                            <topic position="1100,-86" order="3" shape="line" id="276">
+                                <text><![CDATA[Share of employees with higher education in
+                                            the total amount of population at the working age]]></text>
+                            </topic>
+                            <topic position="1190,-61" order="4" text="Increase in University students" shape="line" id="332"/>
+                            <topic position="1280,-36" order="5" text="Government expenditure on General University Funding" shape="line" id="351"/>
+                            <topic position="1370,-11" order="6" text="Access to training, information, and consulting support " shape="line" id="409"/>
+                        </topic>
+                        <topic position="-920,-49" order="2" text="Science &amp; engineering workforce" shape="line" id="285">
+                            <topic position="920,-99" order="0" text="Availability of scientists and engineers" shape="line" id="147">
+                                <note><![CDATA[GCR]]></note>
+                            </topic>
+                            <topic position="1010,-74" order="1" text="Amount of researches per 10 thousands population" shape="line" id="189"/>
+                            <topic position="1100,-49" order="2" text="Average wage of researches per average wage in the region" shape="line" id="284"/>
+                            <topic position="1190,-24" order="3" text="Share of researchers in the total number of employees in the region" shape="line" id="286"/>
+                        </topic>
+                    </topic>
+                    <topic position="830,-37" order="3" text="Government" shape="line" id="132">
+                        <topic position="-830,-62" order="0" text="Total expenditure of general government as a percentage of GDP" shape="line" id="134"/>
+                        <topic position="-920,-37" order="1" text="Government expenditure on Economic Development" shape="line" id="352"/>
+                    </topic>
+                    <topic position="920,-12" order="4" text="Access to finance" shape="line" id="342">
+                        <topic position="-920,-37" order="0" text="Deals" shape="line" id="387">
+                            <topic position="920,-99" order="0" text="Venture capital investments for start-ups as a percentage of GDP" shape="line" id="345"/>
+                            <topic position="1010,-74" order="1" text="Amounts of business angel, pre-seed, seed and venture financing" shape="line" id="344"/>
+                            <topic position="1100,-49" order="2" text="Amount of public co-funding of business R&amp;D" shape="line" id="348"/>
+                            <topic position="1190,-24" order="3" text="Number of startups received venture financing " shape="line" id="385"/>
+                            <topic position="1280,1" order="4" text="Number of companies received equity investments " shape="line" id="386"/>
+                        </topic>
+                        <topic position="-1010,-12" order="1" text="Available" shape="line" id="388">
+                            <topic position="1010,-37" order="0" text="Amount of matching grants available in the region for business R&amp;D" shape="line" id="347"/>
+                            <topic position="1100,-12" order="1" text="Number of Business Angels" shape="line" id="346"/>
+                        </topic>
+                    </topic>
+                    <topic position="1010,13" order="5" text="ICT" shape="line" id="135">
+                        <topic position="-1010,-37" order="0" text="ICT use" shape="line" id="17">
+                            <note><![CDATA[GCR]]></note>
+                        </topic>
+                        <topic position="-1100,-12" order="1" text="Broadband penetration " shape="line" id="136"/>
+                        <topic position="-1190,13" order="2" text="Internet penetration" shape="line" id="334"/>
+                        <topic position="-1280,38" order="3" text="Computer literacy " shape="line" id="335"/>
+                    </topic>
+                </topic>
+                <topic position="-650,-12" order="2" text="Behavior of innovation actors" shape="line" id="10">
+                    <topic position="650,-112" order="0" text="Access to markets" shape="line" id="167">
+                        <topic position="-650,-149" order="0" text="FDI" shape="line" id="97">
+                            <topic position="650,-224" order="0" text="foreign JVs" shape="line" id="96"/>
+                            <topic position="740,-199" order="1" text="Inflow of foreign direct investments in high-technology industries" shape="line" id="157"/>
+                            <topic position="830,-174" order="2" text="Foreign direct investment jobs" shape="line" id="158">
+                                <note><![CDATA[: the percentage of the workforce employed by foreign companies [%].]]></note>
+                            </topic>
+                            <topic position="920,-149" order="3" text="FDI as a share of regional non natural resource-based GRP " shape="line" id="159"/>
+                            <topic position="1010,-124" order="4" text="Number of foreign subsidiaries operating in the region" shape="line" id="160"/>
+                            <topic position="1100,-99" order="5" text="Share of foreign controlled enterprises" shape="line" id="161"/>
+                        </topic>
+                        <topic position="-740,-124" order="1" text="Exports" shape="line" id="168">
+                            <topic position="740,-161" order="0" text="Export intensity in manufacturing and services" shape="line" id="169">
+                                <note><![CDATA[: exports as a share of total output in manufacturing and services [%].]]></note>
+                            </topic>
+                            <topic position="830,-136" order="1" shape="line" id="375">
+                                <text><![CDATA[Share of high-technology export in the total volume
+                                            of production of goods, works and services]]></text>
+                            </topic>
+                            <topic position="920,-111" order="2" shape="line" id="377">
+                                <text><![CDATA[Share of innovation production/serivces that goes for export,
+                                            by zones (EU, US, CIS, other countries]]></text>
+                            </topic>
+                        </topic>
+                        <topic position="-830,-99" order="2" text="Share of high-technology products in government procurements" shape="line" id="338"/>
+                    </topic>
+                    <topic position="740,-87" order="1" text="Entrepreneurship culture" shape="line" id="34">
+                        <topic position="-740,-124" order="0" text="Fear of failure rate" shape="line" id="150">
+                            <note><![CDATA[GEM]]></note>
+                        </topic>
+                        <topic position="-830,-99" order="1" text="Entrepreneurship as desirable career choice" shape="line" id="151">
+                            <note><![CDATA[GEM]]></note>
+                        </topic>
+                        <topic position="-920,-74" order="2" text="High Status Successful Entrepreneurship" shape="line" id="152">
+                            <note><![CDATA[GEM]]></note>
+                        </topic>
+                    </topic>
+                    <topic position="830,-62" order="2" text="Collaboration &amp; partnerships" shape="line" id="54">
+                        <topic position="-830,-137" order="0" text="Number of business contracts with foreign partners for R&amp;D collaboration" shape="line" id="163"/>
+                        <topic position="-920,-112" order="1" text="Share of R&amp;D financed from foreign sources" shape="line" id="164">
+                            <note><![CDATA[UNESCO]]></note>
+                        </topic>
+                        <topic position="-1010,-87" order="2" text="Firms collaborating on innovation with organizations in other countries" shape="line" id="165">
+                            <note><![CDATA[CIS]]></note>
+                        </topic>
+                        <topic position="-1100,-62" order="3" shape="line" id="173">
+                            <text><![CDATA[Share of Innovative companies collaborating
+                                        with research institutions on innovation]]></text>
+                        </topic>
+                        <topic position="-1190,-37" order="4" shape="line" id="174">
+                            <text><![CDATA[Number of joint projects conducted by the local comapnies
+                                        and local consulting/intermediary agencies]]></text>
+                        </topic>
+                        <topic position="-1280,-12" order="5" text="science and industry links" shape="line" id="358"/>
+                    </topic>
+                    <topic position="920,-37" order="3" text="Technology absorption" shape="line" id="115">
+                        <topic position="-920,-137" order="0" text="Local supplier quality" shape="line" id="116">
+                            <note><![CDATA[GCR]]></note>
+                        </topic>
+                        <topic position="-1010,-112" order="1" shape="line" id="127">
+                            <text><![CDATA[Share of expenditures on technological innovations
+                                        in the amount of sales]]></text>
+                        </topic>
+                        <topic position="-1100,-87" order="2" text="Number of purchased new technologies" shape="line" id="129"/>
+                        <topic position="-1190,-62" order="3" shape="line" id="354">
+                            <text><![CDATA[Investments in ICT by asset (IT equipment,
+                                        communication equipment, software)]]></text>
+                        </topic>
+                        <topic position="-1280,-37" order="4" text="Machinery and equipment" shape="line" id="355"/>
+                        <topic position="-1370,-12" order="5" text="Software and databases" shape="line" id="356"/>
+                        <topic position="-1460,13" order="6" shape="line" id="373">
+                            <text><![CDATA[Level of energy efficiency of the regional economy
+                                        (can be measured by sectors and for the whole region)]]></text>
+                        </topic>
+                        <topic position="-1550,38" order="7" text="Share of wastes in the total volume of production (by sector)" shape="line" id="374"/>
+                    </topic>
+                    <topic position="1010,-12" order="4" text="Innovation activities in firms" shape="line" id="123">
+                        <topic position="-1010,-99" order="0" text="Share of innovative companies" shape="line" id="35"/>
+                        <topic position="-1100,-74" order="1" text="Business R&amp;D expenditures per GRP" shape="line" id="128"/>
+                        <topic position="-1190,-49" order="2" text="Factors hampering innovation" shape="line" id="145">
+                            <note><![CDATA[CIS, BEEPS]]></note>
+                        </topic>
+                        <topic position="-1280,-24" order="3" text="Expenditure on innovation by firm size" shape="line" id="350"/>
+                        <topic position="-1370,1" order="4" text="R&amp;D and other intellectl property products" shape="line" id="357"/>
+                        <topic position="-1460,26" order="5" text="Growth of the number of innovative companies " shape="line" id="390"/>
+                        <topic position="-1550,51" order="6" text="Outpus" shape="line" id="398">
+                            <topic position="1550,1" order="0" text="Volume of new to Russian market production per GRP" shape="line" id="124"/>
+                            <topic position="1640,26" order="1" text="Volume of new to world market production per total production" shape="line" id="376"/>
+                            <topic position="1730,51" order="2" text="Growth of the volume of production of innovative companies " shape="line" id="389"/>
+                            <topic position="1820,76" order="3" text="Volume of innovation production per capita " shape="line" id="397"/>
+                        </topic>
+                    </topic>
+                    <topic position="1100,13" order="5" text="Entrepreneurial activities" shape="line" id="148">
+                        <topic position="-1100,-24" order="0" text="New business density" shape="line" id="117">
+                            <note><![CDATA[Number of new organizations per thousand working age population (WBI)]]></note>
+                        </topic>
+                        <topic position="-1190,1" order="1" text="Volume of newly registered corporations " shape="line" id="119">
+                            <note><![CDATA[(as a percentage of all registered corporations)]]></note>
+                        </topic>
+                        <topic position="-1280,26" order="2" text="Share of gazelle companies in the total number of businesses" shape="line" id="170"/>
+                    </topic>
+                    <topic position="1190,38" order="6" text="R&amp;D production" shape="line" id="277">
+                        <topic position="-1190,13" order="0" text="Outputs" shape="line" id="280">
+                            <topic position="1190,-49" order="0" shape="line" id="279">
+                                <text><![CDATA[Amount of domestically protected intellectual
+                                            property per 1 mln. population]]></text>
+                            </topic>
+                            <topic position="1280,-24" order="1" text="Amount of PCT-applications per 1 mln. population" shape="line" id="278"/>
+                            <topic position="1370,1" order="2" text="Number of domestic patent applications per R&amp;D expenditures" shape="line" id="281"/>
+                            <topic position="1460,26" order="3" shape="line" id="282">
+                                <text><![CDATA[Number of intellectual property exploited by regional
+                                            enterprises per 1 mln. population]]></text>
+                            </topic>
+                            <topic position="1550,51" order="4" text="Publication activity of regional scientists and researches" shape="line" id="283"/>
+                        </topic>
+                        <topic position="-1280,38" order="1" text="Inputs" shape="line" id="340">
+                            <topic position="1280,13" order="0" text="Regional and local budget expenditures on R&amp;D" shape="line" id="341"/>
+                            <topic position="1370,38" order="1" text="Government R&amp;D expenditure " shape="line" id="349"/>
+                        </topic>
+                    </topic>
+                    <topic position="1280,63" order="7" text="Public sector innovation" shape="line" id="415">
+                        <topic position="-1280,26" order="0" shape="line" id="416">
+                            <text><![CDATA[Number of advanced ICT introduced in the budgetary organizations
+                                        (regional power, municipal bodies, social and educational organizations)]]></text>
+                        </topic>
+                        <topic position="-1370,51" order="1" text="E-government index" shape="line" id="418"/>
+                        <topic position="-1460,76" order="2" shape="line" id="419">
+                            <text><![CDATA[Number of management innovations introduced in the budgetary organizations
+                                        (regional power, municipal bodies, social and educational organizations)]]></text>
+                        </topic>
+                    </topic>
+                </topic>
+                <topic position="-740,13" order="3" text="Supporting organizations" shape="line" id="113">
+                    <topic position="740,-24" order="0" text="Research institutions" shape="line" id="51">
+                        <topic position="-740,-86" order="0" text="Collaboration" shape="line" id="171">
+                            <topic position="740,-98" order="0" shape="line" id="172">
+                                <text><![CDATA[Number of interactions between universities
+                                            and large companies  by university size]]></text>
+                            </topic>
+                        </topic>
+                        <topic position="-830,-61" order="1" text="Resources" shape="line" id="184">
+                            <topic position="830,-98" order="0" text="R&amp;D expenditures per 1 researcher" shape="line" id="137"/>
+                            <topic position="920,-73" order="1" text="Average wage of researches per average wage in the region" shape="line" id="146"/>
+                            <topic position="1010,-48" order="2" text="High education expenditure on R&amp;D" shape="line" id="353"/>
+                        </topic>
+                        <topic position="-920,-36" order="2" text="Scientific outputs" shape="line" id="185">
+                            <topic position="920,-61" order="0" text="Publications" shape="line" id="306">
+                                <topic position="-920,-98" order="0" text="Impact of publications in the ISI database (h-index)" shape="line" id="304"/>
+                                <topic position="-1010,-73" order="1" text="Number of publications in international journals per worker per year" shape="line" id="186"/>
+                                <topic position="-1100,-48" order="2" shape="line" id="303">
+                                    <text><![CDATA[Publications: Academic articles in international peer-reviewed
+                                                journals per 1,000 researchers [articles/1,000 researchers].]]></text>
+                                </topic>
+                            </topic>
+                            <topic position="1010,-36" order="1" text="Number of foreign patents granted per staff" shape="line" id="187"/>
+                        </topic>
+                        <topic position="-1010,-11" order="3" text="Supportive measures" shape="line" id="312">
+                            <topic position="1010,-23" order="0" text="Diversity index of university entrepreneurship support measures" shape="line" id="313">
+                                <note><![CDATA[Number of measures offered by the unversity within a preset range (NCET2 survey)]]></note>
+                            </topic>
+                        </topic>
+                        <topic position="-1100,14" order="4" text="Commercialization" shape="line" id="299">
+                            <topic position="1100,-23" order="0" text="Licensing" shape="line" id="308">
+                                <topic position="-1100,-35" order="0" shape="line" id="298">
+                                    <text><![CDATA[Academic licenses: Number of licenses
+                                                per 1,000 researchers.[licenses/researcher]]]></text>
+                                </topic>
+                            </topic>
+                            <topic position="1190,2" order="1" text="Spin-offs" shape="line" id="309">
+                                <topic position="-1190,-10" order="0" text="undefined" shape="line" id="300"/>
+                            </topic>
+                            <topic position="1280,27" order="2" text="Industry contracts" shape="line" id="310">
+                                <topic position="-1280,-35" order="0" text="Industry revenue per staff " shape="line" id="297"/>
+                                <topic position="-1370,-10" order="1" shape="line" id="305">
+                                    <text><![CDATA[Foreign contracts: Number of contracts with foreign industria
+                                                l companies at scientific and educational organizations
+                                                per 1,000 researchers [contracts/researchers]]]></text>
+                                </topic>
+                                <topic position="-1460,15" order="2" text="Share of industry income from foreign companies" shape="line" id="307"/>
+                                <topic position="-1550,40" order="3" text="undefined" shape="line" id="90"/>
+                                <topic position="-1640,65" order="4" text="Difficulties faced by research organization in collaborating with SMEs" shape="line" id="311"/>
+                            </topic>
+                        </topic>
+                    </topic>
+                    <topic position="830,1" order="1" text="Private market" shape="line" id="153">
+                        <topic position="-830,-49" order="0" text="Number of innovation &amp; IP services organizations" shape="line" id="154">
+                            <note><![CDATA[(design firms, IP consultants, etc.)]]></note>
+                        </topic>
+                        <topic position="-920,-24" order="1" text="Number of private innovation infrastructure organizations " shape="line" id="155">
+                            <note><![CDATA[(e.g. accelerators, incubators)]]></note>
+                        </topic>
+                        <topic position="-1010,1" order="2" text="Access to certification and licensing for specific activities " shape="line" id="410"/>
+                        <topic position="-1100,26" order="3" text="Access to suppliers of equipment, production and engineering services " shape="line" id="411"/>
+                    </topic>
+                    <topic position="920,26" order="2" text="Innovation infrastructure" shape="line" id="114">
+                        <topic position="-920,1" order="0" text="Investments" shape="line" id="327">
+                            <topic position="920,-61" order="0" text="Public investment in innovation infrastructure" shape="line" id="315"/>
+                            <topic position="1010,-36" order="1" text="Increase of government investment in innovation infrastructure" shape="line" id="328"/>
+                            <topic position="1100,-11" order="2" text=" Number of Development institution projects performed in the region" shape="line" id="339"/>
+                            <topic position="1190,14" order="3" text="Volume of seed investments by the regional budget " shape="line" id="391"/>
+                            <topic position="1280,39" order="4" text="Volume of venture financing from the regional budget " shape="line" id="392"/>
+                        </topic>
+                        <topic position="-1010,26" order="1" text="Volume of state support per one company " shape="line" id="413"/>
+                    </topic>
+                </topic>
+            </topic>
+        </topic>
+        <topic position="-470,13" order="2" text="What to do about existing measures" shape="rounded rectagle" id="4" fontStyle=";;;;;8;;;;">
+            <note><![CDATA[Understanding which measures should be strengthened, dropped or improved, and how.]]></note>
+            <topic position="470,-37" order="0" text="Demand for measure" shape="rounded rectagle" id="42" bgColor="#feffff">
+                <topic position="-470,-87" order="0" text="Quality of beneficiaries" shape="line" id="50">
+                    <topic position="470,-162" order="0" text="Growth rates of employment in supported innovative firms" shape="line" id="292"/>
+                    <topic position="560,-137" order="1" text="Growth rates of employment in supported innovative firms" shape="line" id="293"/>
+                    <topic position="650,-112" order="2" text="Role of IP for tenants/clients" shape="line" id="323">
+                        <note><![CDATA[WIPO SURVEY OF INTELLECTUAL PROPERTY SERVICES OF
+                                    EUROPEAN TECHNOLOGY INCUBATORS]]></note>
+                    </topic>
+                    <topic position="740,-87" order="3" text="Share of tenants with innovation activities" shape="line" id="326"/>
+                    <topic position="830,-62" order="4" shape="line" id="329">
+                        <text><![CDATA[Gazelle tenant: Share of tenants with
+                                    annual revenue growth of more than 20%
+                                    for each of the past four years or since formation [%]]]></text>
+                    </topic>
+                    <topic position="920,-37" order="5" shape="line" id="330">
+                        <text><![CDATA[Globalization of tenants: Median share of tenant
+                                    revenues obtained from exports [%]]]></text>
+                    </topic>
+                </topic>
+                <topic position="-560,-62" order="1" text="Number of beneficiaries" shape="line" id="78">
+                    <topic position="560,-112" order="0" text="Number of projects conducted by companies in cooperation with innovation infrastructure" shape="line" id="383"/>
+                    <topic position="650,-87" order="1" text="Scope and intensity of use of services offered to firms" shape="line" id="325"/>
+                    <topic position="740,-62" order="2" text="Number of companies supported by the infrastructure (training, information, consultations, etc.)" shape="line" id="384"/>
+                    <topic position="830,-37" order="3" text="Increase in the number of business applying for public support programmes (regional, federal, international) " shape="line" id="401"/>
+                </topic>
+                <topic position="-650,-37" order="2" text="Degree of access" shape="line" id="182">
+                    <topic position="650,-74" order="0" text="Level of awareness" shape="line" id="52">
+                        <topic position="-650,-86" order="0" shape="line" id="181">
+                            <text><![CDATA[Perception (opinion poll) of business managers
+                                        regarding public support programmes]]></text>
+                        </topic>
+                    </topic>
+                    <topic position="740,-49" order="1" text="Transparency" shape="line" id="53">
+                        <topic position="-740,-61" order="0" shape="line" id="175">
+                            <text><![CDATA[Perception of business managers in terms
+                                        of level of transparency of support measures in the region]]></text>
+                        </topic>
+                    </topic>
+                    <topic position="830,-24" order="2" shape="line" id="183">
+                        <text><![CDATA[Description by regional business managers of the way the
+                                    select and apply for regional and federal support schemes]]></text>
+                    </topic>
+                </topic>
+                <topic position="-740,-12" order="3" text="Number of applicants" shape="line" id="176">
+                    <topic position="740,-62" order="0" text="Increase in the number of business applying for public support programmes" shape="line" id="177"/>
+                    <topic position="830,-37" order="1" text="Number of companies that know about a particular program" shape="line" id="178"/>
+                    <topic position="920,-12" order="2" text="Increase in the number of start-ups applying to receive VC investments" shape="line" id="179"/>
+                    <topic position="1010,13" order="3" text="Increase in the number of start-ups applying for a place in the incubators" shape="line" id="180"/>
+                </topic>
+            </topic>
+            <topic position="560,-12" order="1" text="Inputs of measures" shape="rounded rectagle" id="109" bgColor="#feffff">
+                <topic position="-560,-37" order="0" text="Qualified staff" shape="line" id="110">
+                    <note><![CDATA[JL: not sure how this would be measured]]></note>
+                </topic>
+                <topic position="-650,-12" order="1" text="Budget per beneficiary" shape="line" id="111"/>
+            </topic>
+            <topic position="650,13" order="2" text="Performance of measure" shape="rounded rectagle" id="48" bgColor="#feffff">
+                <topic position="-650,-12" order="0" text="Implementation of measure" shape="line" id="47">
+                    <topic position="650,-49" order="0" text="Target vs. actual KPIs" shape="line" id="106"/>
+                    <topic position="740,-24" order="1" text="Intermediate outputs per budget" shape="line" id="287"/>
+                    <topic position="830,1" order="2" text="Qualification of staff" shape="line" id="372"/>
+                </topic>
+                <topic position="-740,13" order="1" text="Output of measure" shape="line" id="58">
+                    <topic position="740,-12" order="0" text="Opinion surveys" shape="line" id="101">
+                        <topic position="-740,-24" order="0" text="Opinions of beneficiaries" shape="line" id="102"/>
+                    </topic>
+                    <topic position="830,13" order="1" text="Hard metrics" shape="line" id="103">
+                        <topic position="-830,-12" order="0" text="Output per headcount (e.g. staff, researchers)" shape="line" id="289"/>
+                        <topic position="-920,13" order="1" text="Productivity analysis" shape="line" id="288"/>
+                    </topic>
+                </topic>
+            </topic>
+            <topic position="740,38" order="3" text="Impact of measure" shape="rounded rectagle" id="49" bgColor="#feffff">
+                <topic position="-740,-24" order="0" text="Opinion surveys" shape="line" id="79">
+                    <topic position="740,-49" order="0" text="Perception of support impact (opinion polls)" shape="line" id="294"/>
+                    <topic position="830,-24" order="1" text="Perception of the activity of regional government by the regional companies " shape="line" id="404"/>
+                </topic>
+                <topic position="-830,1" order="1" text="Hard metrics" shape="line" id="104">
+                    <topic position="830,-61" order="0" text="Increase in number of small innovation enterprises " shape="line" id="331"/>
+                    <topic position="920,-36" order="1" text="Growth of the total volume of salary in the supported companies (excluding inflation) " shape="line" id="402"/>
+                    <topic position="1010,-11" order="2" text="Growth of the volume of regional taxes paid by the supported companies " shape="line" id="403"/>
+                    <topic position="1100,14" order="3" text="Growth of the volume of export at the supported companies " shape="line" id="405"/>
+                    <topic position="1190,39" order="4" text="Number of new products/projects at the companies that received support " shape="line" id="406"/>
+                </topic>
+                <topic position="-920,26" order="2" text="Impact assessment " shape="line" id="290"/>
+                <topic position="-1010,51" order="3" shape="line" id="291">
+                    <text><![CDATA[Average leverage of 1rub (there would be
+                                several programs with different leverage)]]></text>
+                </topic>
+                <topic position="-1100,76" order="4" shape="line" id="296">
+                    <text><![CDATA[Volume of attracted money per one ruble
+                                of regional budget expenditures on innovation projects]]></text>
+                </topic>
+            </topic>
+        </topic>
+        <topic position="-560,38" order="3" text="What investments in innovative projects" shape="rounded rectagle" id="7" fontStyle=";;;;;8;;;;">
+            <note><![CDATA[Understanding what investments should be made in innovative projects.]]></note>
+            <topic position="560,13" order="0" text="Competitive niches" shape="rounded rectagle" id="61" bgColor="#feffff">
+                <topic position="-560,-37" order="0" text="Clusters behavior" shape="line" id="59">
+                    <topic position="560,-149" order="0" text="Cluster EU star rating" shape="line" id="60"/>
+                    <topic position="650,-124" order="1" text="Share of value added of cluster enterprises in GRP" shape="line" id="318"/>
+                    <topic position="740,-99" order="2" text="Share of cluster products in the relevant world market segment " shape="line" id="320"/>
+                    <topic position="830,-74" order="3" text="Share of export in cluster total volume of sales" shape="line" id="321"/>
+                    <topic position="920,-49" order="4" text="Growth of the volume of production in the cluster companies" shape="line" id="379"/>
+                    <topic position="1010,-24" order="5" shape="line" id="380">
+                        <text><![CDATA[Growth of the volume of production in the cluster companies
+                                    to the volume of state support for the cluster]]></text>
+                    </topic>
+                    <topic position="1100,1" order="6" text="Growth of the volume of innovation production in the cluster" shape="line" id="381"/>
+                    <topic position="1190,26" order="7" text="Share of export in cluster total volume of sales (by zones: US, EU, CIS, other countries) " shape="line" id="407"/>
+                    <topic position="1280,51" order="8" text="Internal behavior" shape="line" id="408">
+                        <topic position="-1280,14" order="0" text="Median wage in the cluster" shape="line" id="319"/>
+                        <topic position="-1370,39" order="1" text="Growth of the volume of R&amp;D in the cluster" shape="line" id="382"/>
+                        <topic position="-1460,64" order="2" text="Cluster collaboration" shape="line" id="108"/>
+                    </topic>
+                </topic>
+                <topic position="-650,-12" order="1" text="R&amp;D" shape="line" id="66">
+                    <topic position="650,-37" order="0" text="Patent map" shape="line" id="65"/>
+                    <topic position="740,-12" order="1" text="Publications map" shape="line" id="371"/>
+                </topic>
+                <topic position="-740,13" order="2" text="Industry" shape="line" id="67">
+                    <topic position="740,-49" order="0" text="FDI map" shape="line" id="63"/>
+                    <topic position="830,-24" order="1" text="Gazelle map" shape="line" id="62"/>
+                    <topic position="920,1" order="2" text="Business R&amp;D expenditures as a share of revenues by sector" shape="line" id="131"/>
+                    <topic position="1010,26" order="3" text="Share of regional products in the world market" shape="line" id="378"/>
+                    <topic position="1100,51" order="4" text="Expenditure on innovation by firm size, by sector " shape="line" id="414"/>
+                </topic>
+                <topic position="-830,38" order="3" text="Entrepreneurship" shape="line" id="72">
+                    <topic position="830,1" order="0" text="Startup map" shape="line" id="73"/>
+                    <topic position="920,26" order="1" text="Venture investment map" shape="line" id="74"/>
+                    <topic position="1010,51" order="2" text="Attractiveness to public competitive funding" shape="line" id="317">
+                        <topic position="-1010,26" order="0" text="Fed and regional seed fund investments" shape="line" id="316"/>
+                        <topic position="-1100,51" order="1" shape="line" id="314">
+                            <text><![CDATA[FASIE projects: Number of projects supported
+                                        by the FASIE per 1,000 workers [awards/worker]]]></text>
+                        </topic>
+                    </topic>
+                </topic>
+            </topic>
+            <topic position="650,38" order="1" text="Competitiveness support factors" shape="rounded rectagle" id="64" bgColor="#ffffff">
+                <topic position="-650,26" order="0" text="Private investment in innovation" shape="line" id="68"/>
+            </topic>
+        </topic>
+        <topic position="-650,63" order="4" text="How to improve image" shape="rounded rectagle" id="69" fontStyle=";;;;;8;;;;" bgColor="#e0e5ef">
+            <topic position="650,38" order="0" text="Rankings" shape="rounded rectagle" id="75" bgColor="#feffff">
+                <topic position="-650,13" order="0" text="macro indicators" shape="line" id="70"/>
+                <topic position="-740,38" order="1" text="meso-indicators" shape="line" id="71"/>
+            </topic>
+            <topic position="740,63" order="1" text="Innovation investment climate" shape="rounded rectagle" id="76" bgColor="#feffff"/>
+        </topic>
+    </topic>
+</map>
