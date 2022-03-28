@@ -9,6 +9,7 @@ import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
 import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import LabelOutlined from '@mui/icons-material/LabelOutlined';
+import HistoryOutlined from '@mui/icons-material/HistoryOutlined';
 
 import { FormattedMessage } from 'react-intl';
 import { fetchMapById } from '../../../redux/clientSlice';
@@ -143,7 +144,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
             {role != 'viewer' && (
                 <MenuItem onClick={handleOnClose('history')}>
                     <ListItemIcon>
-                        <DeleteOutlinedIcon />
+                        <HistoryOutlined/>
                     </ListItemIcon>
                     <FormattedMessage id="action.history" defaultMessage="History" />
                 </MenuItem>
