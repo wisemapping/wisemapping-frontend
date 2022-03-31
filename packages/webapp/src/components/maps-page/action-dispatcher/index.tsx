@@ -22,7 +22,7 @@ export type BasicMapInfo = {
 type ActionDialogProps = {
     action?: ActionType;
     mapsId: number[];
-    onClose: () => void;
+    onClose: (success?: boolean) => void;
     fromEditor: boolean;
 };
 
@@ -78,12 +78,12 @@ export const handleOnMutationSuccess = (onClose: () => void, queryClient: QueryC
 
 export type SimpleDialogProps = {
     mapId: number;
-    onClose: () => void;
+    onClose: (success?: boolean) => void;
 };
 
 export type MultiDialogProps = {
     mapsId: number[];
-    onClose: () => void;
+    onClose: (success?: boolean) => void;
 };
 
 export default ActionDispatcher;

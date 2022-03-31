@@ -16,7 +16,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     const [error, setError] = React.useState<ErrorInfo>();
 
     const mutation = useMutation((id: number) => client.deleteMap(id), {
-        onSuccess: () => handleOnMutationSuccess(onClose, queryClient),
+        onSuccess: () => handleOnMutationSuccess(() => onClose(true), queryClient),
         onError: (error: ErrorInfo) => {
             setError(error);
         },
@@ -31,7 +31,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     };
 
     const { map } = fetchMapById(mapId)
-    const alertTitle=`${intl.formatMessage({ id: 'action.delete-title', defaultMessage: 'Delete' })} ${map?.title}`;
+    const alertTitle = `${intl.formatMessage({ id: 'action.delete-title', defaultMessage: 'Delete' })} ${map?.title}`;
     return (
         <div>
             <BaseDialog

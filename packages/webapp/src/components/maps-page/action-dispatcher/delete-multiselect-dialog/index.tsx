@@ -18,7 +18,7 @@ const DeleteMultiselectDialog = ({
     const queryClient = useQueryClient();
 
     const mutation = useMutation((ids: number[]) => client.deleteMaps(ids), {
-        onSuccess: () => handleOnMutationSuccess(onClose, queryClient),
+        onSuccess: () => handleOnMutationSuccess(() => onClose(true), queryClient),
         onError: (error) => {
             console.error(`Unexpected error ${error}`);
         },
