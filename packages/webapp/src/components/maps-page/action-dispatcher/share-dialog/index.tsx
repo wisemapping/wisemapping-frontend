@@ -114,7 +114,11 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     };
 
     // very basic email validation, just make sure the basic syntax is fine
-    const isValid = model.emails.split(',').every(str => /\S+@\S+\.\S+/.test((str || '').trim()));
+    const isValid = model.emails
+        .split(/,|;/)
+        .filter(e => e.trim().length > 0)
+        .every(str => /\S+@\S+\.\S+/.test((str || '')
+            .trim()));
 
     return (
         <div>
