@@ -400,6 +400,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             actionType: 'delete',
             mapsId: selected,
         });
+        setSelected([]);
     };
 
     const handleAddLabelClick = () => {
