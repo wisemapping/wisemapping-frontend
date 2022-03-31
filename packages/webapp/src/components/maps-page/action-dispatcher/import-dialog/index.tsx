@@ -92,15 +92,24 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
 
                 const fileContent = event?.target?.result;
                 const mapConent: string = typeof fileContent === 'string' ? fileContent : fileContent.toString();
+ 
+                try {
+                    const importer: Importer = TextImporterFactory.create(extensionFile, mapConent)
 
-                const importer: Importer = TextImporterFactory.create(extensionFile, mapConent)
-
-                importer.import(model.title, model.description)
+                    importer.import(model.title, model.description)
                     .then(res => {
                         model.content = res;
                         setModel({ ...model });
                     })
-                    .catch(e => console.log(e));
+                    .catch(e => {
+                        console.log(e);
+                        setErrorFile(true)
+                    });
+                } catch (e) {
+                    if (e instanceof Error) {
+                        setErrorFile(true);
+                    }
+                }
             };
  
             // Read in the image file as a data URL.
@@ -128,7 +137,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 {errorFile &&
                     <Alert severity='error'>
                         <FormattedMessage
-                            id="import.error-file"
+                            id='import.error-file'
                             defaultMessage="The file extension is invalid"
                         />
                     </Alert>

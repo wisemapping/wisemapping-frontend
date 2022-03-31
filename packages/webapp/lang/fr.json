@@ -210,7 +210,7 @@
         "defaultMessage": "Importer une carte mentale existante"
     },
     "import.error-file": {
-        "defaultMessage": "L'extension de fichier n'est pas valide"
+        "defaultMessage": "Vous essayez d'importer un fichier avec une extension invalide, les extensions valides sont .mm et .wxml"
     },
     "info.basic-info": {
         "defaultMessage": "Informations de base"

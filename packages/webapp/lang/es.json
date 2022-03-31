@@ -219,7 +219,7 @@
         "defaultMessage": "Importar mapa mental existente"
     },
     "import.error-file": {
-        "defaultMessage": "La extension del archivo es invalida"
+        "defaultMessage": "Está intentando importar un archivo con una extensión no valida, las extenciones validas son .mm y .wxml"
     },
     "info.basic-info": {
         "defaultMessage": "Información básica"

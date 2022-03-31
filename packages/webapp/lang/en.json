@@ -225,7 +225,7 @@
     "defaultMessage": "Import existing mindmap"
   },
   "import.error-file": {
-    "defaultMessage": "The file extension is invalid"
+    "defaultMessage": "You are trying to import a file with an invalid extension, valid extensions are .mm and .wxml"
   },
   "info.basic-info": {
     "defaultMessage": "Basic Info"

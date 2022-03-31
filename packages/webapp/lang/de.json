@@ -210,7 +210,7 @@
         "defaultMessage": "Importieren Sie vorhandene Mindmaps"
     },
     "import.error-file": {
-        "defaultMessage": "Die Dateierweiterung ist ungültig"
+        "defaultMessage": "Sie versuchen, eine Datei mit einer ungültigen Erweiterung zu importieren. Gültige Erweiterungen sind .mm und .wxml"
     },
     "info.basic-info": {
         "defaultMessage": "Basisinformation"

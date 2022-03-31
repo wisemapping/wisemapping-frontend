@@ -452,7 +452,7 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "Die Dateierweiterung ist ungültig"
+      "value": "Sie versuchen, eine Datei mit einer ungültigen Erweiterung zu importieren. Gültige Erweiterungen sind .mm und .wxml"
     }
   ],
   "import.title": [
