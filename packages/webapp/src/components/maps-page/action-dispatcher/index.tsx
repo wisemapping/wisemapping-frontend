@@ -27,8 +27,8 @@ type ActionDialogProps = {
 };
 
 const ActionDispatcher = ({ mapsId, action, onClose, fromEditor }: ActionDialogProps): React.ReactElement => {
-    const handleOnClose = (): void => {
-        onClose();
+    const handleOnClose = (success?: boolean): void => {
+        onClose(success);
     };
 
     switch (action) {
