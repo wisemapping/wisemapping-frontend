@@ -18,9 +18,12 @@
 import { $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
 
+import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
+
+initHotKeyPluggin($);
 
 class MultilineTextEditor extends Events {
   private _topic: Topic;
@@ -58,11 +61,12 @@ class MultilineTextEditor extends Events {
   private _registerEvents(containerElem: JQuery) {
     const textareaElem = this._getTextareaElem();
     textareaElem.on('keydown', (event) => {
-      switch (event.code) {
-        case 'Escape':
+      const j: any = $;
+      switch (j.hotkeys.specialKeys[event.keyCode]) {
+        case 'esc':
           this.close(false);
           break;
-        case 'Enter': {
+        case 'enter': {
           if (event.metaKey || event.ctrlKey) {
             // Add return ...
             const text = this._getTextAreaText();
