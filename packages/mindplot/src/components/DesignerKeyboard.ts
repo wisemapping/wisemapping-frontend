@@ -21,12 +21,19 @@ import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
 
+import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
+
+// Provides dispatcher of keyevents by key...
+initHotKeyPluggin($);
+
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   // eslint-disable-next-line no-use-before-define
   private static _instance: DesignerKeyboard;
 
   private static _disabled: boolean;
+
+  private static excludeFromEditor = ['Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
 
   constructor(designer: Designer) {
     super();
@@ -150,18 +157,15 @@ class DesignerKeyboard extends Keyboard {
         }
       },
     );
-    const excludes = ['Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
 
     $(document).on('keypress', (event) => {
-      if (DesignerKeyboard.isDisabled()) {
+      // Needs to be ignored ?
+      if (DesignerKeyboard.isDisabled() || DesignerKeyboard.excludeFromEditor.includes(event.code)) {
         return;
       }
-      // Firefox doesn't skip special keys for keypress event...
-      if (excludes.includes(event.code)) {
-        return;
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (['Enter', 'CapsLock'].includes(event.code)) {
+
+      // Should I open the editor ?
+      if (!['Enter', 'CapsLock'].includes(event.code)) {
         const nodes = designer.getModel().filterSelectedTopics();
         if (nodes.length > 0) {
           // If a modifier is press, the key selected must be ignored.

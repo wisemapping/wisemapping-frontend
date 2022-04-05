@@ -22,15 +22,13 @@ import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
 initHotKeyPluggin($);
 
 class Keyboard {
-  addShortcut(shortcuts: string[] | string, callback: () => void, stopPropagation?: true) {
+  addShortcut(shortcuts: string[] | string, callback: () => void) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
     shortcutsArray.forEach((shortcut) => {
       $(document).bind('keydown', shortcut,
         (e) => {
-          if (stopPropagation) {
-            e.stopPropagation();
-            e.preventDefault();
-          }
+          e.stopPropagation();
+          e.preventDefault();
           callback();
         });
     });
