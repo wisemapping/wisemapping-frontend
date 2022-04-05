@@ -446,7 +446,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "您正在尝试导入具有无效扩展名的文件，有效扩展名是 .mm 和 .wxml"
+      "value": "导入失败："
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [

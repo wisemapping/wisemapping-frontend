@@ -94,7 +94,10 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         error: true,
                         message: intl.formatMessage({
                             id: 'import.error-file',
-                            defaultMessage: 'You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import.'
+                            defaultMessage: 'Import error {error}',
+                        },
+                        {
+                            error: 'You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import.'
                         })
                     });
                 }
@@ -116,7 +119,13 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                     if (e instanceof Error) {
                         setErrorFile({
                             error: true,
-                            message: e.message
+                            message: intl.formatMessage({
+                                id: 'import.error-file',
+                                defaultMessage: 'Import error {error}',
+                            },
+                            {
+                                error: e.message
+                            })
                         });
                     }
                 }

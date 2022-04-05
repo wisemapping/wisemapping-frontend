@@ -216,7 +216,7 @@
     "defaultMessage": "导入现有的思维导图"
   },
   "import.error-file": {
-    "defaultMessage": "您正在尝试导入具有无效扩展名的文件，有效扩展名是 .mm 和 .wxml"
+    "defaultMessage": "导入失败：{error}"
   },
   "info.basic-info": {
     "defaultMessage": "基本信息"

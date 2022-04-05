@@ -446,7 +446,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "You are trying to import a file with an invalid extension, valid extensions are .mm and .wxml"
+      "value": "Import failed: "
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [

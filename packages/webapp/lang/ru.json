@@ -210,7 +210,7 @@
         "defaultMessage": "Загрузить майнд-карту с компьютера"
     },
     "import.error-file": {
-        "defaultMessage": "Вы пытаетесь импортировать файл с недопустимым расширением, допустимыми расширениями являются .mm и .wxml."
+        "defaultMessage": "Ошибка импорта: {error}"
     },
     "info.basic-info": {
         "defaultMessage": "Основная информация"
