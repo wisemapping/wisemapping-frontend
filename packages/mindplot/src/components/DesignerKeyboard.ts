@@ -268,29 +268,18 @@ class DesignerKeyboard extends Keyboard {
         event.stopPropagation();
       },
     );
-    const excludes = ['esc', 'escape', 'f1', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'];
+    const excludes = ['Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
 
     $(document).on('keypress', (event) => {
-      let keyCode: number;
-
       if (DesignerKeyboard.isDisabled()) {
         return;
       }
       // Firefox doesn't skip special keys for keypress event...
-      if (event.key && excludes.includes(event.key.toLowerCase())) {
+      if (excludes.includes(event.code)) {
         return;
       }
-      // Sometimes Firefox doesn't contain keyCode value
-      if (event.key && event.keyCode === 0) {
-        keyCode = event.charCode;
-      } else {
-        keyCode = event.keyCode;
-      }
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const jq: any = $;
-      const specialKey = jq.hotkeys.specialKeys[keyCode];
-      if (['enter', 'capslock'].indexOf(specialKey) === -1 && !jq.hotkeys.shiftNums[keyCode]) {
+      if (['Enter', 'Capslock'].indexOf(event.code) === -1) {
         const nodes = designer.getModel().filterSelectedTopics();
         if (nodes.length > 0) {
           // If a modifier is press, the key selected must be ignored.
