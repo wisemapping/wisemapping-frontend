@@ -16,9 +16,13 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
+import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
+
+// Provides dispatcher of keyevents by key...
+initHotKeyPluggin($);
 
 class Keyboard {
-  addShortcut(shortcuts: string[] | string, callback, stopPropagation?: true) {
+  addShortcut(shortcuts: string[] | string, callback: () => void, stopPropagation?: true) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
     shortcutsArray.forEach((shortcut) => {
       $(document).bind('keydown', shortcut,
@@ -27,7 +31,7 @@ class Keyboard {
             e.stopPropagation();
             e.preventDefault();
           }
-          callback(e);
+          callback();
         });
     });
   }
