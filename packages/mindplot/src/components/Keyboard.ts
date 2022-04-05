@@ -18,10 +18,17 @@
 import $ from 'jquery';
 
 class Keyboard {
-  addShortcut(shortcuts: string[] | string, callback) {
+  addShortcut(shortcuts: string[] | string, callback, stopPropagation?: true) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
     shortcutsArray.forEach((shortcut) => {
-      $(document).bind('keydown', shortcut, callback);
+      $(document).bind('keydown', shortcut,
+        (e) => {
+          if (stopPropagation) {
+            e.stopPropagation();
+            e.preventDefault();
+          }
+          callback(e);
+        });
     });
   }
 }
