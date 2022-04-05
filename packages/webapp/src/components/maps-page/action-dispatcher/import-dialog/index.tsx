@@ -23,12 +23,17 @@ export type CreateProps = {
     onClose: () => void;
 };
 
+type ErrorFile = {
+    error: boolean;
+    message: string;
+}
+
 const defaultModel: ImportModel = { title: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ImportModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
-    const [errorFile, setErrorFile] = React.useState<boolean>(false);
+    const [errorFile, setErrorFile] = React.useState<ErrorFile>({error: false, message: ''});
     const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, ImportModel>(
@@ -85,7 +90,13 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 const extensionAccept = ['wxml', 'mm'];
 
                 if (!extensionAccept.includes(extensionFile)) {
-                    setErrorFile(true);
+                    setErrorFile({
+                        error: true,
+                        message: intl.formatMessage({
+                            id: 'import.error-file',
+                            defaultMessage: 'You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import.'
+                        })
+                    });
                 }
 
                 model.contentType = 'application/xml'
@@ -101,13 +112,12 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                         model.content = res;
                         setModel({ ...model });
                     })
-                    .catch(e => {
-                        console.log(e);
-                        setErrorFile(true)
-                    });
                 } catch (e) {
                     if (e instanceof Error) {
-                        setErrorFile(true);
+                        setErrorFile({
+                            error: true,
+                            message: e.message
+                        });
                     }
                 }
             };
@@ -134,12 +144,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 })}
                 submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}
             >
-                {errorFile &&
+                {errorFile.error &&
                     <Alert severity='error'>
-                        <FormattedMessage
-                            id='import.error-file'
-                            defaultMessage="The file extension is invalid"
-                        />
+                        <p>{errorFile.message}</p>
                     </Alert>
                 }
                 <FormControl fullWidth={true}>
