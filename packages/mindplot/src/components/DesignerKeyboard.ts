@@ -24,9 +24,9 @@ import Topic from './Topic';
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   // eslint-disable-next-line no-use-before-define
-  static _instance: DesignerKeyboard;
+  private static _instance: DesignerKeyboard;
 
-  static _disabled: boolean;
+  private static _disabled: boolean;
 
   constructor(designer: Designer) {
     super();
@@ -35,24 +35,20 @@ class DesignerKeyboard extends Keyboard {
   }
 
   addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
-    super.addShortcut(shortcuts, (e: Event) => {
+    super.addShortcut(shortcuts, () => {
       if (DesignerKeyboard.isDisabled()) {
         return;
       }
-      callback(e);
+      callback();
     });
   }
 
   private _registerEvents(designer: Designer) {
     // Try with the keyboard ..
     const model = designer.getModel();
-    this.addShortcut('backspace', () => { designer.deleteSelectedEntities(); });
+    this.addShortcut(['backspace', 'del'], () => { designer.deleteSelectedEntities(); });
 
     this.addShortcut('space', () => { designer.shrinkSelectedBranch(); });
-
-    this.addShortcut('del', () => { designer.deleteSelectedEntities(); });
-
-    this.addShortcut('enter', () => { designer.createSiblingForSelectedNode(); });
 
     this.addShortcut('f2', () => {
       const node = model.selectedTopic();
@@ -61,13 +57,13 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
-    this.addShortcut('insert', () => { designer.createChildForSelectedNode(); });
+    this.addShortcut(['insert', 'tab', 'meta+enter'], () => { designer.createChildForSelectedNode(); });
 
-    this.addShortcut('tab', () => { designer.createChildForSelectedNode(); });
-
-    this.addShortcut('meta+enter', () => { designer.createChildForSelectedNode(); });
+    this.addShortcut('enter', () => { designer.createSiblingForSelectedNode(); });
 
     this.addShortcut(['ctrl+z', 'meta+z'], () => { designer.undo(); });
+
+    this.addShortcut(['ctrl+shift+z', 'meta+shift+z'], () => { designer.redo(); });
 
     this.addShortcut(['ctrl+c', 'meta+c'], () => { designer.copyToClipboard(); });
 
@@ -76,8 +72,6 @@ class DesignerKeyboard extends Keyboard {
     this.addShortcut(['ctrl+k', 'meta+k'], () => { designer.addNote(); });
 
     this.addShortcut(['ctrl+v', 'meta+v'], () => { designer.pasteClipboard(); });
-
-    this.addShortcut(['ctrl+shift+z', 'meta+shift+z'], () => { designer.redo(); });
 
     this.addShortcut(['ctrl+a', 'meta+a'], () => { designer.selectAll(); });
 
@@ -281,75 +275,17 @@ class DesignerKeyboard extends Keyboard {
     this._disabled = false;
   };
 
-  static pause = function pause() {
+  static pause() {
     this._disabled = true;
-  };
+  }
 
-  static resume = function resume() {
+  static resume() {
     this._disabled = false;
-  };
+  }
 
-  static isDisabled = function isDisabled() {
+  static isDisabled() {
     return this._disabled;
-  };
-
-  static specialKeys = {
-    8: 'backspace',
-    9: 'tab',
-    10: 'return',
-    13: 'enter',
-    16: 'shift',
-    17: 'ctrl',
-    18: 'alt',
-    19: 'pause',
-    20: 'capslock',
-    27: 'esc',
-    32: 'space',
-    33: 'pageup',
-    34: 'pagedown',
-    35: 'end',
-    36: 'home',
-    37: 'left',
-    38: 'up',
-    39: 'right',
-    40: 'down',
-    45: 'insert',
-    46: 'del',
-    96: '0',
-    97: '1',
-    98: '2',
-    99: '3',
-    100: '4',
-    101: '5',
-    102: '6',
-    103: '7',
-    104: '8',
-    105: '9',
-    106: '*',
-    107: '+',
-    109: '-',
-    110: '.',
-    111: '/',
-    112: 'f1',
-    113: 'f2',
-    114: 'f3',
-    115: 'f4',
-    116: 'f5',
-    117: 'f6',
-    118: 'f7',
-    119: 'f8',
-    120: 'f9',
-    121: 'f10',
-    122: 'f11',
-    123: 'f12',
-    144: 'numlock',
-    145: 'scroll',
-    186: ';',
-    191: '/',
-    220: '\\',
-    222: "'",
-    224: 'meta',
-  };
+  }
 
   static getInstance() {
     return this._instance;
