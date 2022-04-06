@@ -84,6 +84,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
 
     const handleOnClose = (): void => {
         onClose();
+
+        // Invalidate cache ...
+        const queryClient = useQueryClient();
+        queryClient.invalidateQueries(`perm-${mapId}`);        
     };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -109,8 +113,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         deleteMutation.mutate(email);
     };
 
-    const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(
-        `perm-${mapId}`,
+    const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(`perm-${mapId}`,
         () => {
             return client.fetchMapPermissions(mapId);
         }

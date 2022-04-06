@@ -1,6 +1,6 @@
 import React, { ErrorInfo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import Client, { ChangeHistory } from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
@@ -22,16 +22,20 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     const intl = useIntl();
 
     const client: Client = useSelector(activeInstance);
-    const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>('history', () => {
+    const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(`history-${mapId}`, () => {
         return client.fetchHistory(mapId);
     });
     const changeHistory: ChangeHistory[] = data ? data : [];
 
     const handleOnClose = (): void => {
         onClose();
+
+        // Invalidate cache ...
+        const queryClient = useQueryClient();
+        queryClient.invalidateQueries(`history-${mapId}`);
     };
 
-    const handleOnClick = (event, vid): void => {
+    const handleOnClick = (event, vid: number): void => {
         event.preventDefault();
         client.revertHistory(mapId, vid).then(() => {
             handleOnClose();
