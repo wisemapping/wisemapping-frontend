@@ -33,7 +33,7 @@ class DesignerKeyboard extends Keyboard {
 
   private static _disabled: boolean;
 
-  private static excludeFromEditor = ['Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
+  private static excludeFromEditor = ['Enter', 'CapsLock', 'Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
 
   constructor(designer: Designer) {
     super();
@@ -164,16 +164,17 @@ class DesignerKeyboard extends Keyboard {
         return;
       }
 
-      // Should I open the editor ?
-      if (!['Enter', 'CapsLock'].includes(event.code)) {
-        const nodes = designer.getModel().filterSelectedTopics();
-        if (nodes.length > 0) {
-          // If a modifier is press, the key selected must be ignored.
-          if (event.ctrlKey || event.altKey || event.metaKey) {
-            return;
-          }
-          nodes[0].showTextEditor('');
-        }
+      // Is a modifier ?
+      if (event.ctrlKey || event.altKey || event.metaKey) {
+        return;
+      }
+
+      // If a node is selected, open the editor ...
+      const topic = designer.getModel().selectedTopic();
+      if (topic) {
+        event.stopPropagation();
+        event.preventDefault();
+        topic.showTextEditor(event.key);
       }
     });
   }
