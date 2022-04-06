@@ -29,7 +29,7 @@ You can run these for all packages by running it from the root folder. Alternati
 
 ### build
 
-> Production build
+> Production builds
 
 `yarn build`
 
