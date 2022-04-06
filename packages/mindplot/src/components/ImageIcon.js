@@ -202,7 +202,7 @@ ImageIcon.prototype.ICON_FAMILIES = [{
 },
 {
   id: 'meetapps',
-  icons: ['meetapps_slack', 'meetapps_google-meet', 'meetapps_whatapp', 'meetapps_ms-teams', 'meetapps_zoom', 'meeetapps_facebook-messenger'],
+  icons: ['meetapps_slack', 'meetapps_google-meet', 'meetapps_whatapp', 'meetapps_ms-teams', 'meetapps_zoom', 'meetapps_facebook-messenger'],
 },
 {
   id: 'appsgoogle',

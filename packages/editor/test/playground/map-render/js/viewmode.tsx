@@ -36,7 +36,7 @@ const persistence = new LocalStorageManager('samples/{id}.wxml', false);
 const options: EditorOptions = {
   zoom: 0.8,
   locked: false,
-  mapTitle: "Develop Mindnap",
+  mapTitle: "Develop WiseMapping",
   mode: 'viewonly',
   locale: 'en',
   enableKeyboardEvents: true

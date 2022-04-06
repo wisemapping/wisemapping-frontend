@@ -21,12 +21,19 @@ import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
 
+import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
+
+// Provides dispatcher of keyevents by key...
+initHotKeyPluggin($);
+
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
   // eslint-disable-next-line no-use-before-define
-  static _instance: DesignerKeyboard;
+  private static _instance: DesignerKeyboard;
 
-  static _disabled: boolean;
+  private static _disabled: boolean;
+
+  private static excludeFromEditor = ['Enter', 'CapsLock', 'Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
 
   constructor(designer: Designer) {
     super();
@@ -35,173 +42,61 @@ class DesignerKeyboard extends Keyboard {
   }
 
   addShortcut(shortcuts: string[] | string, callback: EventCallback): void {
-    super.addShortcut(shortcuts, (e: Event) => {
+    super.addShortcut(shortcuts, () => {
       if (DesignerKeyboard.isDisabled()) {
         return;
       }
-      callback(e);
+      callback();
     });
   }
 
   private _registerEvents(designer: Designer) {
     // Try with the keyboard ..
     const model = designer.getModel();
-    this.addShortcut(
-      ['backspace'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.deleteSelectedEntities();
-      },
-    );
-    this.addShortcut(
-      ['space'], (event: Event) => {
-        designer.shrinkSelectedBranch();
-        event.preventDefault();
-        event.stopPropagation();
-      },
-    );
-    this.addShortcut(
-      ['f2'], (event: Event) => {
-        event.stopPropagation();
-        event.preventDefault();
-        const node = model.selectedTopic();
-        if (node) {
-          node.showTextEditor(node.getText());
-        }
-      },
-    );
-    this.addShortcut(
-      ['del'], (event: Event) => {
-        designer.deleteSelectedEntities();
-        event.preventDefault();
-        event.stopPropagation();
-      },
-    );
-    this.addShortcut(
-      ['enter'], () => {
-        designer.createSiblingForSelectedNode();
-      },
-    );
-    this.addShortcut(
-      ['insert'], (event: Event) => {
-        designer.createChildForSelectedNode();
-        event.preventDefault();
-        event.stopPropagation();
-      },
-    );
-    this.addShortcut(
-      ['tab'], (eventevent: Event) => {
-        designer.createChildForSelectedNode();
-        eventevent.preventDefault();
-        eventevent.stopPropagation();
-      },
-    );
-    this.addShortcut(
-      ['meta+enter'], (eventevent: Event) => {
-        eventevent.preventDefault();
-        eventevent.stopPropagation();
-        designer.createChildForSelectedNode();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+z', 'meta+z'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.undo();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+c', 'meta+c'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.copyToClipboard();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+l', 'meta+l'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.addLink();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+k', 'meta+k'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.addNote();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+v', 'meta+v'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.pasteClipboard();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+shift+z', 'meta+shift+z', 'ctrl+y', 'meta+y'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.redo();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+a', 'meta+a'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        designer.selectAll();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+b', 'meta+b'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    this.addShortcut(['backspace', 'del'], () => { designer.deleteSelectedEntities(); });
 
-        designer.changeFontWeight();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+s', 'meta+s'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        $(document).find('#save').trigger('click');
-      },
-    );
-    this.addShortcut(
-      ['ctrl+i', 'meta+i'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    this.addShortcut('space', () => { designer.shrinkSelectedBranch(); });
 
-        designer.changeFontStyle();
-      },
-    );
-    this.addShortcut(
-      ['ctrl+shift+a', 'meta+shift+a'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    this.addShortcut('f2', () => {
+      const node = model.selectedTopic();
+      if (node) {
+        node.showTextEditor(node.getText());
+      }
+    });
 
-        designer.deselectAll();
-      },
-    );
-    this.addShortcut(
-      ['meta+=', 'ctrl+='], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    this.addShortcut(['insert', 'tab', 'meta+enter'], () => { designer.createChildForSelectedNode(); });
 
-        designer.zoomIn();
-      },
-    );
-    this.addShortcut(
-      ['meta+-', 'ctrl+-'], (event: Event) => {
-        event.preventDefault();
-        event.stopPropagation();
+    this.addShortcut('enter', () => { designer.createSiblingForSelectedNode(); });
 
-        designer.zoomOut();
-      },
-    );
+    this.addShortcut(['ctrl+z', 'meta+z'], () => { designer.undo(); });
+
+    this.addShortcut(['ctrl+shift+z', 'meta+shift+z'], () => { designer.redo(); });
+
+    this.addShortcut(['ctrl+c', 'meta+c'], () => { designer.copyToClipboard(); });
+
+    this.addShortcut(['ctrl+l', 'meta+l'], () => { designer.addLink(); });
+
+    this.addShortcut(['ctrl+k', 'meta+k'], () => { designer.addNote(); });
+
+    this.addShortcut(['ctrl+v', 'meta+v'], () => { designer.pasteClipboard(); });
+
+    this.addShortcut(['ctrl+a', 'meta+a'], () => { designer.selectAll(); });
+
+    this.addShortcut(['ctrl+b', 'meta+b'], () => { designer.changeFontWeight(); });
+
+    this.addShortcut(['ctrl+s', 'meta+s'], () => { $(document).find('#save').trigger('click'); });
+
+    this.addShortcut(['ctrl+i', 'meta+i'], () => { designer.changeFontStyle(); });
+
+    this.addShortcut(['ctrl+shift+a', 'meta+shift+a'], () => { designer.deselectAll(); });
+
+    this.addShortcut(['meta+=', 'ctrl+='], () => { designer.zoomIn(); });
+
+    this.addShortcut(['meta+-', 'ctrl+-'], () => { designer.zoomOut(); });
+
     const me = this;
     this.addShortcut(
-      'right', (event: Event) => {
+      'right', () => {
         const node = model.selectedTopic();
         if (node) {
           if (node.isCentralTopic()) {
@@ -215,12 +110,11 @@ class DesignerKeyboard extends Keyboard {
           const centralTopic = model.getCentralTopic();
           me._goToNode(designer, centralTopic);
         }
-        event.preventDefault();
-        event.stopPropagation();
       },
     );
+
     this.addShortcut(
-      'left', (event: Event) => {
+      'left', () => {
         const node = model.selectedTopic();
         if (node) {
           if (node.isCentralTopic()) {
@@ -234,12 +128,11 @@ class DesignerKeyboard extends Keyboard {
           const centralTopic = model.getCentralTopic();
           me._goToNode(designer, centralTopic);
         }
-        event.preventDefault();
-        event.stopPropagation();
       },
     );
+
     this.addShortcut(
-      'up', (event: Event) => {
+      'up', () => {
         const node = model.selectedTopic();
         if (node) {
           if (!node.isCentralTopic()) {
@@ -249,12 +142,10 @@ class DesignerKeyboard extends Keyboard {
           const centralTopic = model.getCentralTopic();
           me._goToNode(designer, centralTopic);
         }
-        event.preventDefault();
-        event.stopPropagation();
       },
     );
     this.addShortcut(
-      'down', (event: Event) => {
+      'down', () => {
         const node = model.selectedTopic();
         if (node) {
           if (!node.isCentralTopic()) {
@@ -264,42 +155,26 @@ class DesignerKeyboard extends Keyboard {
           const centralTopic = model.getCentralTopic();
           me._goToNode(designer, centralTopic);
         }
-        event.preventDefault();
-        event.stopPropagation();
       },
     );
-    const excludes = ['esc', 'escape', 'f1', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'];
 
     $(document).on('keypress', (event) => {
-      let keyCode: number;
-
-      if (DesignerKeyboard.isDisabled()) {
+      // Needs to be ignored ?
+      if (DesignerKeyboard.isDisabled() || DesignerKeyboard.excludeFromEditor.includes(event.code)) {
         return;
       }
-      // Firefox doesn't skip special keys for keypress event...
-      if (event.key && excludes.includes(event.key.toLowerCase())) {
+
+      // Is a modifier ?
+      if (event.ctrlKey || event.altKey || event.metaKey) {
         return;
       }
-      // Sometimes Firefox doesn't contain keyCode value
-      if (event.key && event.keyCode === 0) {
-        keyCode = event.charCode;
-      } else {
-        keyCode = event.keyCode;
-      }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const jq: any = $;
-      const specialKey = jq.hotkeys.specialKeys[keyCode];
-      if (['enter', 'capslock'].indexOf(specialKey) === -1 && !jq.hotkeys.shiftNums[keyCode]) {
-        const nodes = designer.getModel().filterSelectedTopics();
-        if (nodes.length > 0) {
-          // If a modifier is press, the key selected must be ignored.
-          if (event.ctrlKey || event.altKey || event.metaKey) {
-            return;
-          }
-          nodes[0].showTextEditor('');
-          event.stopPropagation();
-        }
+      // If a node is selected, open the editor ...
+      const topic = designer.getModel().selectedTopic();
+      if (topic) {
+        event.stopPropagation();
+        event.preventDefault();
+        topic.showTextEditor(event.key);
       }
     });
   }
@@ -405,75 +280,17 @@ class DesignerKeyboard extends Keyboard {
     this._disabled = false;
   };
 
-  static pause = function pause() {
+  static pause() {
     this._disabled = true;
-  };
+  }
 
-  static resume = function resume() {
+  static resume() {
     this._disabled = false;
-  };
+  }
 
-  static isDisabled = function isDisabled() {
+  static isDisabled() {
     return this._disabled;
-  };
-
-  static specialKeys = {
-    8: 'backspace',
-    9: 'tab',
-    10: 'return',
-    13: 'enter',
-    16: 'shift',
-    17: 'ctrl',
-    18: 'alt',
-    19: 'pause',
-    20: 'capslock',
-    27: 'esc',
-    32: 'space',
-    33: 'pageup',
-    34: 'pagedown',
-    35: 'end',
-    36: 'home',
-    37: 'left',
-    38: 'up',
-    39: 'right',
-    40: 'down',
-    45: 'insert',
-    46: 'del',
-    96: '0',
-    97: '1',
-    98: '2',
-    99: '3',
-    100: '4',
-    101: '5',
-    102: '6',
-    103: '7',
-    104: '8',
-    105: '9',
-    106: '*',
-    107: '+',
-    109: '-',
-    110: '.',
-    111: '/',
-    112: 'f1',
-    113: 'f2',
-    114: 'f3',
-    115: 'f4',
-    116: 'f5',
-    117: 'f6',
-    118: 'f7',
-    119: 'f8',
-    120: 'f9',
-    121: 'f10',
-    122: 'f11',
-    123: 'f12',
-    144: 'numlock',
-    145: 'scroll',
-    186: ';',
-    191: '/',
-    220: '\\',
-    222: "'",
-    224: 'meta',
-  };
+  }
 
   static getInstance() {
     return this._instance;

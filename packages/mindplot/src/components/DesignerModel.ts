@@ -59,27 +59,15 @@ class DesignerModel extends Events {
   }
 
   filterSelectedTopics(): Topic[] {
-    const result: Topic[] = [];
-    for (let i = 0; i < this._topics.length; i++) {
-      if (this._topics[i].isOnFocus()) {
-        result.push(this._topics[i]);
-      }
-    }
-    return result;
+    return this._topics.filter((t) => t.isOnFocus());
   }
 
   filterSelectedRelationships(): Relationship[] {
-    const result:Relationship[] = [];
-    for (let i = 0; i < this._relationships.length; i++) {
-      if (this._relationships[i].isOnFocus()) {
-        result.push(this._relationships[i]);
-      }
-    }
-    return result;
+    return this._relationships.filter((r) => r.isOnFocus());
   }
 
   getEntities(): (Relationship | Topic)[] {
-    let result:(Relationship|Topic)[] = [];
+    let result: (Relationship | Topic)[] = [];
     result = result.concat(this._topics);
     result = result.concat(this._relationships);
     return result;
@@ -133,15 +121,7 @@ class DesignerModel extends Events {
   }
 
   findTopicById(id: number): Topic | undefined {
-    let result: Topic | undefined;
-    for (let i = 0; i < this._topics.length; i++) {
-      const topic = this._topics[i];
-      if (topic.getId() === id) {
-        result = topic;
-        break;
-      }
-    }
-    return result;
+    return this._topics.find((t) => t.getId() === id);
   }
 }
 
