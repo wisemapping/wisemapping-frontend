@@ -20,7 +20,7 @@ import Paper from '@mui/material/Paper';
 
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const intl = useIntl();
-
+    const queryClient = useQueryClient();
     const client: Client = useSelector(activeInstance);
     const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(`history-${mapId}`, () => {
         return client.fetchHistory(mapId);
@@ -28,11 +28,8 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     const changeHistory: ChangeHistory[] = data ? data : [];
 
     const handleOnClose = (): void => {
-        onClose();
-
-        // Invalidate cache ...
-        const queryClient = useQueryClient();
         queryClient.invalidateQueries(`history-${mapId}`);
+        onClose();
     };
 
     const handleOnClick = (event, vid: number): void => {
