@@ -34,6 +34,7 @@ type ShareModel = {
 const defaultModel: ShareModel = { emails: '', role: 'editor', message: '' };
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const intl = useIntl();
+    const queryClient = useQueryClient();
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const classes = useStyles();
@@ -83,11 +84,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     );
 
     const handleOnClose = (): void => {
+        // Invalidate cache ...
+        queryClient.invalidateQueries(`perm-${mapId}`);
         onClose();
 
-        // Invalidate cache ...
-        const queryClient = useQueryClient();
-        queryClient.invalidateQueries(`perm-${mapId}`);        
     };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
