@@ -34,7 +34,6 @@ type ShareModel = {
 const defaultModel: ShareModel = { emails: '', role: 'editor', message: '' };
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const intl = useIntl();
-    const queryClient = useQueryClient();
     const client: Client = useSelector(activeInstance);
     const queryClient = useQueryClient();
     const classes = useStyles();
