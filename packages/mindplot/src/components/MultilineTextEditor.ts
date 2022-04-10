@@ -246,12 +246,12 @@ class MultilineTextEditor extends Events {
 
   private _positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
     textareaElem.focus();
-    const lengh = this._getTextAreaText().length;
+    const { length } = this._getTextAreaText();
     if (selectText) {
       // Mark text as selected ...
-      textareaElem[0].setSelectionRange(0, lengh);
+      textareaElem[0].setSelectionRange(0, length);
     } else {
-      textareaElem.focus();
+      textareaElem[0].setSelectionRange(length, length);
     }
   }
 
