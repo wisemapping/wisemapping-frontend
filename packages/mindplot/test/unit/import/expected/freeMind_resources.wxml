@@ -15,9 +15,20 @@
                             <link url="http://freemind.sourceforge.net/wiki/index.php/Main_Page#Download_and_install" urlType="url"/>
                         </topic>
                     </topic>
-                    <topic position="-380,-187" order="1" text="To install FreeMind on Microsoft Windows, install Java from Sun and install FreeMind using FreeMind installer." shape="line" id="139664576" fontStyle=";;;;;;#111111;;;"/>
-                    <topic position="-470,-162" order="2" text="To install FreeMind on Linux, download Java Runtime Environment and FreeMind application itself. First install Java, then unpack FreeMind. To run FreeMind, execute freemind.sh." shape="line" id="1380352758" fontStyle=";;;;;;#111111;;;"/>
-                    <topic position="-560,-137" order="3" text="On Microsoft Windows and Mac OS X, you can also simply double click the file freemind.jar located at the folder lib to run FreeMind." shape="line" id="1808511462" fontStyle=";;;;;;#111111;;;"/>
+                    <topic position="-380,-187" order="1" shape="line" id="139664576" fontStyle=";;;;;;#111111;;;">
+                        <text><![CDATA[To install FreeMind on Microsoft Windows, install Java from Sun and install FreeMind using FreeMind
+installer.]]></text>
+                    </topic>
+                    <topic position="-470,-162" order="2" shape="line" id="1380352758" fontStyle=";;;;;;#111111;;;">
+                        <text><![CDATA[To install FreeMind on Linux, download Java Runtime Environment and FreeMind application itself.
+First install Java, then unpack FreeMind. To run FreeMind, execute
+freemind.sh.]]></text>
+                    </topic>
+                    <topic position="-560,-137" order="3" shape="line" id="1808511462" fontStyle=";;;;;;#111111;;;">
+                        <text><![CDATA[On Microsoft Windows and Mac OS X, you can also simply double click the file freemind.jar located at
+the folder lib to run
+FreeMind.]]></text>
+                    </topic>
                 </topic>
                 <topic position="380,-137" order="1" text="Use it - tutorials" shape="line" id="1" fontStyle=";;;;SansSerif;8;#990000;italic;;">
                     <topic position="-380,-174" order="0" text="Main Page for FreeMind" shape="line" id="135530020" fontStyle=";;;;;;#111111;;;">
@@ -75,8 +86,17 @@ Ctrl + F in your browser?]]></note>
                         <topic position="-560,-74" order="1" text="Download the applet, that is freemind-browser." shape="line" id="372008388" fontStyle=";;;;;;#111111;;;">
                             <link url="http://sourceforge.net/project/showfiles.php?group_id=7118" urlType="url"/>
                         </topic>
-                        <topic position="-650,-49" order="2" text="The downloaded archive contains freemindbrowser.jar and freemindbrowser.html. Create a link from your page to freemindbrowser.html. In freemindbrowser.html change the path inside so that it points to your mind map." shape="line" id="1459732301" fontStyle=";;;;;;#111111;;;"/>
-                        <topic position="-740,-24" order="3" text="Applet's jar file must be located at the same server as the map itself, for java security reasons. You have to upload the FreeMind applet jar file and your mind map file to your web site." shape="line" id="240467473" fontStyle=";;;;;;#111111;;;"/>
+                        <topic position="-650,-49" order="2" shape="line" id="1459732301" fontStyle=";;;;;;#111111;;;">
+                            <text><![CDATA[The downloaded archive contains freemindbrowser.jar and freemindbrowser.html. Create a link from
+your page to freemindbrowser.html. In freemindbrowser.html change the path inside so that it points
+to your mind
+map.]]></text>
+                        </topic>
+                        <topic position="-740,-24" order="3" shape="line" id="240467473" fontStyle=";;;;;;#111111;;;">
+                            <text><![CDATA[Applet's jar file must be located at the same server as the map itself, for java security reasons.
+You have to upload the FreeMind applet jar file and your mind map file to your web
+site.]]></text>
+                        </topic>
                     </topic>
                 </topic>
             </topic>
@@ -110,7 +130,9 @@ and "How to do?" structure.]]></note>
                         </topic>
                         <topic position="-740,-24" order="2" shape="line" id="119084350" fontStyle=";;;;;;#111111;;;">
                             <text><![CDATA[The downloaded archive contains visorFreemind.swf, flashobject.js and mindmaps.html.
-Edit mindmap.html to point to your mm file and create a link from your page to this file. Flash enabled browsers will then open the file for browsing.]]></text>
+Edit mindmap.html to point to your mm file and create a link from your page to this file. Flash
+enabled browsers will then open the file for
+browsing.]]></text>
                         </topic>
                     </topic>
                     <topic position="650,-12" order="1" text="Include map in Powerpoint as Flash image" shape="line" id="753859789" fontStyle=";;;;;;#111111;;;">

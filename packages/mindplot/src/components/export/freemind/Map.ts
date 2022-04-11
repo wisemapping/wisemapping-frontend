@@ -60,7 +60,14 @@ export default class Freemap {
     // Is a freemap?
     $assert(
       rootElem.tagName === 'map',
-      `This seem not to be a map document. Found tag: ${rootElem.tagName}`,
+      `This seem not to be a map document. Found first tag: ${rootElem.tagName}`,
+    );
+
+    // Verify that the version attribute exists
+    console.log(rootElem.getAttribute('version'));
+    $assert(
+      rootElem.getAttribute('version') !== null,
+      'Freemind version not found',
     );
 
     // Start the loading process...

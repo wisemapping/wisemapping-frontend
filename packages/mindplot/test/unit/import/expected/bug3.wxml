@@ -383,7 +383,11 @@
                     <topic position="560,-112" order="0" text="Number of projects conducted by companies in cooperation with innovation infrastructure" shape="line" id="383"/>
                     <topic position="650,-87" order="1" text="Scope and intensity of use of services offered to firms" shape="line" id="325"/>
                     <topic position="740,-62" order="2" text="Number of companies supported by the infrastructure (training, information, consultations, etc.)" shape="line" id="384"/>
-                    <topic position="830,-37" order="3" text="Increase in the number of business applying for public support programmes (regional, federal, international) " shape="line" id="401"/>
+                    <topic position="830,-37" order="3" shape="line" id="401">
+                        <text><![CDATA[Increase in the number of business applying for public support programmes (regional, federal,
+international)
+]]></text>
+                    </topic>
                 </topic>
                 <topic position="-650,-37" order="2" text="Degree of access" shape="line" id="182">
                     <topic position="650,-74" order="0" text="Level of awareness" shape="line" id="52">

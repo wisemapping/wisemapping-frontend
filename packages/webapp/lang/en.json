@@ -225,7 +225,7 @@
     "defaultMessage": "Import existing mindmap"
   },
   "import.error-file": {
-    "defaultMessage": "The file extension is invalid"
+    "defaultMessage": "Import failed: {error}"
   },
   "info.basic-info": {
     "defaultMessage": "Basic Info"

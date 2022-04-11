@@ -59,9 +59,9 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key
 ): (
-    a: { [key in Key]: number | string | boolean | Label[] | undefined },
-    b: { [key in Key]: number | string | Label[] | boolean }
-) => number {
+        a: { [key in Key]: number | string | boolean | Label[] | undefined },
+        b: { [key in Key]: number | string | Label[] | boolean }
+    ) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -240,19 +240,19 @@ export type ChangeLabelMutationFunctionParam = { maps: MapInfo[]; label: Label; 
 
 export const getChangeLabelMutationFunction =
     (client: Client) =>
-    async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
-        if (!label.id) {
-            label.id = await client.createLabel(label.title, label.color);
-        }
-        if (checked) {
-            const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
-            await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
-        } else {
-            const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
-            await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
-        }
-        return Promise.resolve();
-    };
+        async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
+            if (!label.id) {
+                label.id = await client.createLabel(label.title, label.color);
+            }
+            if (checked) {
+                const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
+                await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
+            } else {
+                const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
+                await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
+            }
+            return Promise.resolve();
+        };
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
     const classes = useStyles();
@@ -698,7 +698,14 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
             <ActionDispatcher
                 action={activeDialog?.actionType}
-                onClose={() => setActiveDialog(undefined)}
+                onClose={(success) => {
+                    setActiveDialog(undefined);
+
+                    // If it was a success action, reset the selection list ...
+                    if (success) {
+                        setSelected([]);
+                    }
+                }}
                 mapsId={activeDialog ? activeDialog.mapsId : []}
             />
         </div>

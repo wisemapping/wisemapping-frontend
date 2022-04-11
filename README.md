@@ -6,7 +6,7 @@ WiseMapping Front extracts all the UI related aspects in this repository. You wi
 
 * Web2D: Lighway abstraction over SVG for chart renderding.
 * Mindplot: Pure vanilla ES6 classes responsible for providing mindmap rendering and edition capabilities.
-* Webapp: REACT application that encompass the whole midnmap adminitraction experience.
+* Webapp: REACT application that encompass the whole midnmap edition experience.
 
 ## Getting started
 
@@ -29,7 +29,7 @@ You can run these for all packages by running it from the root folder. Alternati
 
 ### build
 
-> Production build
+> Production builds
 
 `yarn build`
 
@@ -72,4 +72,4 @@ A workaround for this is to run the tests using docker. Make sure you have docke
 
 Run snapshot tests: `docker-compose -f docker-compose.snapshots.yml up`  
 If anything changed, and the change was intentional, update the snapshots and then commit the new images to source control.  
-Update snapshots: `docker-compose -f docker-compose.snapshots.update.yml up`
+Update snapshots: `docker-compose -f docker-compose.snapshots.update.yml up` 

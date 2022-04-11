@@ -56,11 +56,18 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         }
     );
 
+    const splitEmail = (emails: string): string[] => {
+        return emails.split(/,|;/)
+            .map(e => e.trim().replace(/\s/g, ''))
+            .filter(e => e.trim().length > 0);
+    }
+
+
     const addMutation = useMutation(
         (model: ShareModel) => {
-            const emails = model.emails.split(',');
+            const emails = splitEmail(model.emails);
             const permissions = emails.map((email: string) => {
-                return { email: email.replace(/\s/g, ''), role: model.role };
+                return { email: email, role: model.role };
             });
             return client.addMapPermissions(mapId, model.message, permissions);
         },
@@ -76,7 +83,10 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     );
 
     const handleOnClose = (): void => {
+        // Invalidate cache ...
+        queryClient.invalidateQueries(`perm-${mapId}`);
         onClose();
+
     };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -102,8 +112,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         deleteMutation.mutate(email);
     };
 
-    const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(
-        `perm-${mapId}`,
+    const { isLoading, data: permissions = [] } = useQuery<unknown, ErrorInfo, Permission[]>(`perm-${mapId}`,
         () => {
             return client.fetchMapPermissions(mapId);
         }
@@ -114,7 +123,9 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
     };
 
     // very basic email validation, just make sure the basic syntax is fine
-    const isValid = model.emails.split(',').every(str => /\S+@\S+\.\S+/.test((str || '').trim()));
+    const isValid = splitEmail(model.emails)
+        .every(str => /\S+@\S+\.\S+/.test((str || '')
+            .trim()));
 
     return (
         <div>

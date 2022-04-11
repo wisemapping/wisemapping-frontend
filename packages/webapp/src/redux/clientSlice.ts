@@ -43,7 +43,7 @@ type MapLoadResult = {
 
 export const fetchMapById = (id: number): MapLoadResult => {
     const client: Client = useSelector(activeInstance);
-    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
+    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>(`maps-${id}`, () => {
         return client.fetchAllMaps();
     });
 

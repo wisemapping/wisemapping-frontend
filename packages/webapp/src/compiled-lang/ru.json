@@ -446,7 +446,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "Недопустимое расширение файла"
+      "value": "Ошибка импорта: "
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [

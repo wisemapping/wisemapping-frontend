@@ -452,7 +452,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "Die Dateierweiterung ist ungültig"
+      "value": "Import fehlgeschlagen: "
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [

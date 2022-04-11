@@ -446,7 +446,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "文件扩展名无效"
+      "value": "导入失败："
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [

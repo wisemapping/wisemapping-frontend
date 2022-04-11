@@ -37,7 +37,13 @@ class ImageIcon extends Icon {
     $assert(topic, 'topic can not be null');
 
     // Build graph image representation ...
-    const iconType = iconModel.getIconType();
+    let iconType = iconModel.getIconType();
+
+    // Hack for overwrite wrong icon. Remove in couple of months ...
+    if (iconType === 'meeetapps_facebook-messenger') {
+      iconType = 'meetapps_facebook-messenger';
+    }
+
     const imgUrl = ImageIcon.getImageUrl(iconType);
     super(imgUrl);
 
@@ -202,7 +208,7 @@ ImageIcon.prototype.ICON_FAMILIES = [{
 },
 {
   id: 'meetapps',
-  icons: ['meetapps_slack', 'meetapps_google-meet', 'meetapps_whatapp', 'meetapps_ms-teams', 'meetapps_zoom', 'meeetapps_facebook-messenger'],
+  icons: ['meetapps_slack', 'meetapps_google-meet', 'meetapps_whatapp', 'meetapps_ms-teams', 'meetapps_zoom', 'meetapps_facebook-messenger'],
 },
 {
   id: 'appsgoogle',

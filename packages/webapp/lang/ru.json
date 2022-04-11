@@ -210,7 +210,7 @@
         "defaultMessage": "Загрузить майнд-карту с компьютера"
     },
     "import.error-file": {
-        "defaultMessage": "Недопустимое расширение файла"
+        "defaultMessage": "Ошибка импорта: {error}"
     },
     "info.basic-info": {
         "defaultMessage": "Основная информация"

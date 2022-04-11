@@ -210,7 +210,7 @@
         "defaultMessage": "Importieren Sie vorhandene Mindmaps"
     },
     "import.error-file": {
-        "defaultMessage": "Die Dateierweiterung ist ungültig"
+        "defaultMessage": "Import fehlgeschlagen: {error}"
     },
     "info.basic-info": {
         "defaultMessage": "Basisinformation"

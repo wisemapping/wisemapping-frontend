@@ -146,7 +146,13 @@ export default class FreemindImporter extends Importer {
 
   private convertNodeProperties(freeNode: FreemindNode, wiseTopic: NodeModel, centralTopic: boolean): void {
     const text: string = freeNode.getText();
-    if (text) wiseTopic.setText(text);
+    if (text) {
+      if (!centralTopic && text.length > 100) {
+        wiseTopic.setText(text.replace(/([^\n]{1,100})\s/g, '$1\n'));
+      } else {
+        wiseTopic.setText(text);
+      }
+    }
 
     const bgColor: string = freeNode.getBackgorundColor();
     if (bgColor) wiseTopic.setBackgroundColor(bgColor);

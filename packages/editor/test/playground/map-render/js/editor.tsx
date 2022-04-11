@@ -35,7 +35,7 @@ const mapId = 'welcome';
 const options: EditorOptions = {
   zoom: 0.8,
   locked: false,
-  mapTitle: "Develop Mindnap",
+  mapTitle: "Develop WiseMapping",
   mode: 'edition-owner',
   locale: 'en',
   enableKeyboardEvents: true

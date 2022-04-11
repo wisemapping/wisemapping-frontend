@@ -1,6 +1,8 @@
 <map name="enc" version="tango">
     <topic central="true" text="Artigos GF comentários interessantes" id="1">
-        <topic position="-200,-50" order="1" text="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities" shape="rectagle" id="5" bgColor="#cccccc">
+        <topic position="-200,-50" order="1" shape="rectagle" id="5" bgColor="#cccccc">
+            <text><![CDATA[Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant
+communities]]></text>
             <topic position="-200,-350" order="1" text="undefined" shape="line" id="6"/>
             <topic position="290,-150" order="0" shape="line" id="7">
                 <text><![CDATA[However, the fast pace of
@@ -23,9 +25,20 @@
                             of different sampling designs and intensities for
                             different questions and systems.]]></text>
             </topic>
-            <topic position="470,-100" order="2" text="Falar que a escolha das categorias de sucessão e dos parâmetros ou característica dos indivíduos que serão utilizadas dependera da facilidade de coleta dos dados e do custo monetário e temporal." shape="line" id="9"/>
-            <topic position="560,-75" order="3" text="Ver se classifica sucessão por densidade de tronco para citar no artigo como exemplo de outros atributos além de germinação e ver se e custoso no tempo e em dinheiro" shape="line" id="12"/>
-            <topic position="650,-50" order="4" text="Intensas amostragens de experimentos simples  tem maior retorno em acurácia de estimativa e de custo tb." shape="line" id="13"/>
+            <topic position="470,-100" order="2" shape="line" id="9">
+                <text><![CDATA[Falar que a escolha das categorias de sucessão e dos parâmetros ou característica dos indivíduos que
+serão utilizadas dependera da facilidade de coleta dos dados e do custo monetário e
+temporal.]]></text>
+            </topic>
+            <topic position="560,-75" order="3" shape="line" id="12">
+                <text><![CDATA[Ver se classifica sucessão por densidade de tronco para citar no artigo como exemplo de outros
+atributos além de germinação e ver se e custoso no tempo e em
+dinheiro]]></text>
+            </topic>
+            <topic position="650,-50" order="4" shape="line" id="13">
+                <text><![CDATA[Intensas amostragens de experimentos simples  tem maior retorno em acurácia de estimativa e de custo
+tb.]]></text>
+            </topic>
             <topic position="740,-25" order="5" shape="line" id="14">
                 <text><![CDATA[With regard to estimating mean trait values, strategies
                             alternative to BRIDGE were consistently cost-effective. On
@@ -60,7 +73,20 @@
                             for a large number of tree species obtained through vegetation
                             monitoring studies.]]></text>
             </topic>
-            <topic position="470,-87" order="2" text="Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação continue sendo usada em curto prazo enquanto não há informações confiáveis suficiente para esta simples classificação. Outras classificações como esta do artigo são bem vinda, contanto que tenham dados confiáveis. Porém dados estáticos já são difíceis de se obter, dados temporais, como taxa de crescimento em diâmetro ou altura, são mais difíceis ainda. Falar que vários tipos de classificações podem ser utilizadas e quanto mais detalhe melhor, porém os dados é que são mais limitantes. Se focarmos em dados de germinação e crescimento limitantes, como sugerem sainete e whitmore, da uma idéia maismrápida e a curto prazo da classificação destas espécies. Depois com o tempo conseguiremos construir classificações mais detalhadas e com mais dados confiáveis. " shape="line" id="24"/>
+            <topic position="470,-87" order="2" shape="line" id="24">
+                <text><![CDATA[Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira
+devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a
+resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação
+continue sendo usada em curto prazo enquanto não há informações confiáveis suficiente para esta
+simples classificação. Outras classificações como esta do artigo são bem vinda, contanto que tenham
+dados confiáveis. Porém dados estáticos já são difíceis de se obter, dados temporais, como taxa de
+crescimento em diâmetro ou altura, são mais difíceis ainda. Falar que vários tipos de classificações
+podem ser utilizadas e quanto mais detalhe melhor, porém os dados é que são mais limitantes. Se
+focarmos em dados de germinação e crescimento limitantes, como sugerem sainete e whitmore, da uma
+idéia maismrápida e a curto prazo da classificação destas espécies. Depois com o tempo conseguiremos
+construir classificações mais detalhadas e com mais dados confiáveis.
+]]></text>
+            </topic>
             <topic position="560,-62" order="3" shape="line" id="25">
                 <text><![CDATA[Our approach avoided preconceived notions of successional
                             behavior or shade tolerance of tree species by developing an objective

@@ -446,7 +446,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "La extension del archivo es invalida"
+      "value": "Error al importar: "
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [

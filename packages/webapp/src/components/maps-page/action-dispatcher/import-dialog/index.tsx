@@ -23,12 +23,17 @@ export type CreateProps = {
     onClose: () => void;
 };
 
+type ErrorFile = {
+    error: boolean;
+    message: string;
+}
+
 const defaultModel: ImportModel = { title: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
     const [model, setModel] = React.useState<ImportModel>(defaultModel);
     const [error, setError] = React.useState<ErrorInfo>();
-    const [errorFile, setErrorFile] = React.useState<boolean>(false);
+    const [errorFile, setErrorFile] = React.useState<ErrorFile>({error: false, message: ''});
     const intl = useIntl();
 
     const mutation = useMutation<number, ErrorInfo, ImportModel>(
@@ -85,22 +90,45 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 const extensionAccept = ['wxml', 'mm'];
 
                 if (!extensionAccept.includes(extensionFile)) {
-                    setErrorFile(true);
+                    setErrorFile({
+                        error: true,
+                        message: intl.formatMessage({
+                            id: 'import.error-file',
+                            defaultMessage: 'Import error {error}',
+                        },
+                        {
+                            error: 'You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import.'
+                        })
+                    });
                 }
 
                 model.contentType = 'application/xml'
 
                 const fileContent = event?.target?.result;
                 const mapConent: string = typeof fileContent === 'string' ? fileContent : fileContent.toString();
+ 
+                try {
+                    const importer: Importer = TextImporterFactory.create(extensionFile, mapConent)
 
-                const importer: Importer = TextImporterFactory.create(extensionFile, mapConent)
-
-                importer.import(model.title, model.description)
+                    importer.import(model.title, model.description)
                     .then(res => {
                         model.content = res;
                         setModel({ ...model });
                     })
-                    .catch(e => console.log(e));
+                } catch (e) {
+                    if (e instanceof Error) {
+                        setErrorFile({
+                            error: true,
+                            message: intl.formatMessage({
+                                id: 'import.error-file',
+                                defaultMessage: 'Import error {error}',
+                            },
+                            {
+                                error: e.message
+                            })
+                        });
+                    }
+                }
             };
  
             // Read in the image file as a data URL.
@@ -125,12 +153,9 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
                 })}
                 submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}
             >
-                {errorFile &&
+                {errorFile.error &&
                     <Alert severity='error'>
-                        <FormattedMessage
-                            id="import.error-file"
-                            defaultMessage="The file extension is invalid"
-                        />
+                        <p>{errorFile.message}</p>
                     </Alert>
                 }
                 <FormControl fullWidth={true}>

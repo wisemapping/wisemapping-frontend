@@ -20,6 +20,7 @@ import TopicNoteSvg from '../../../images/topic-note.svg';
 import TopicLinkSvg from '../../../images/topic-link.svg';
 import TopicRelationSvg from '../../../images/topic-relation.svg';
 import ExportSvg from '../../../images/export.svg';
+import InfoSvg from '../../../images/info.svg';
 import PublicSvg from '../../../images/public.svg';
 import HistorySvg from '../../../images/history.svg';
 import PrintSvg from '../../../images/print.svg';
@@ -30,7 +31,7 @@ import { HeaderContainer, ToolbarButton, ToolbarButtonExt, ToolbarRightContainer
 import ActionButton from '../action-button';
 import { EditorRenderMode } from '@wisemapping/mindplot';
 
-export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share';
+export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
 
 export type ToolbarPropsType = {
     editorMode: EditorRenderMode;
@@ -133,6 +134,13 @@ export default function Toolbar({
                             <img src={PrintSvg} />
                         </ToolbarButton>
                     )}
+                    <ToolbarButton
+                        id="info"
+                        className="buttonOn"
+                        onClick={() => onAction('info')}
+                    >
+                        <img src={InfoSvg} />
+                    </ToolbarButton>
                     {editorMode === 'edition-owner' && (
                         <>
                             <ToolbarButton

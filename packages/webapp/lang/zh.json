@@ -216,7 +216,7 @@
     "defaultMessage": "导入现有的思维导图"
   },
   "import.error-file": {
-    "defaultMessage": "文件扩展名无效"
+    "defaultMessage": "导入失败：{error}"
   },
   "info.basic-info": {
     "defaultMessage": "基本信息"
