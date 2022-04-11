@@ -17,7 +17,6 @@
  */
 import jquery from 'jquery';
 import {
-  $notify,
 } from './components/widget/ToolbarNotifier';
 import {
   buildDesigner,
@@ -26,20 +25,19 @@ import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
 
+console.log('loading static mindmap in read-only');
+
 // This hack is required to initialize Bootstrap. In future, this should be removed.
 const globalAny: any = global;
 globalAny.jQuery = jquery;
 require('../../../libraries/bootstrap/js/bootstrap.min');
 
 // Configure designer options ...
-let persistence: PersistenceManager;
-if (global.readOnly) {
-  const historyId = global.historyId ? `${global.historyId}/` : '';
-  persistence = new LocalStorageManager(
-    `/c/restful/maps/{id}/${historyId}document/xml${!global.isAuth ? '-pub' : ''}`,
-    true,
-  );
-}
+const historyId = global.historyId ? `${global.historyId}/` : '';
+const persistence: PersistenceManager = new LocalStorageManager(
+  `/c/restful/maps/{id}/${historyId}document/xml${!global.isAuth ? '-pub' : ''}`,
+  true,
+);
 
 // Obtain map zoom from query param if it was specified...
 const params = new URLSearchParams(window.location.search.substring(1));
@@ -63,7 +61,3 @@ const designer = buildDesigner(options);
 const instance = PersistenceManager.getInstance();
 const mindmap = instance.load(global.mapId);
 designer.loadMap(mindmap);
-
-if (global.mindmapLocked) {
-  $notify(global.mindmapLockedMsg);
-}
