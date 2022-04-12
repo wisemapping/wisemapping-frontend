@@ -17,7 +17,7 @@
  */
 
 class Events {
-  private _handlerByType;
+  protected _handlerByType;
 
   constructor() {
     this._handlerByType = {};
