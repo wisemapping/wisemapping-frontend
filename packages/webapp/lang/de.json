@@ -1,12 +1,12 @@
 {
     "account.delete-warning": {
-        "defaultMessage": "Denken Sie daran, dass Sie keine von Ihnen erstellte Mindmap abrufen können. Alle Ihre Informationen werden gelöscht und können nicht wiederhergestellt werden."
+        "defaultMessage": "Denke daran, dass du keine von dir erstellten Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
     },
     "accountinfo.button": {
         "defaultMessage": "Akzeptieren"
     },
     "accountinfo.email": {
-        "defaultMessage": "Email"
+        "defaultMessage": "E-Mail"
     },
     "accountinfo.firstname": {
         "defaultMessage": "Vorname"
@@ -21,13 +21,13 @@
         "defaultMessage": "Abbrechen"
     },
     "action.close-button": {
-        "defaultMessage": "Nah dran"
+        "defaultMessage": "Schließen"
     },
     "action.delete": {
         "defaultMessage": "Löschen"
     },
     "action.delete-description": {
-        "defaultMessage": "Gelöschte Mindmaps können nicht wiederhergestellt werden. Möchtest du fortfahren ?."
+        "defaultMessage": "Gelöschte Mindmaps können nicht wiederhergestellt werden. Möchtest du fortfahren?"
     },
     "action.delete-title": {
         "defaultMessage": "Löschen"
@@ -39,7 +39,7 @@
         "defaultMessage": "Export"
     },
     "action.history": {
-        "defaultMessage": "Geschichte"
+        "defaultMessage": "Historie"
     },
     "action.history-description": {
         "defaultMessage": "Liste der in den letzten 90 Tagen eingeführten Änderungen."
@@ -54,10 +54,10 @@
         "defaultMessage": "Die Info"
     },
     "action.label": {
-        "defaultMessage": "Etikett hinzufügen"
+        "defaultMessage": "Label hinzufügen"
     },
     "action.new": {
-        "defaultMessage": "Neue Karte"
+        "defaultMessage": "Neue Mindmap"
     },
     "action.open": {
         "defaultMessage": "Offen"
@@ -87,7 +87,7 @@
         "defaultMessage": "Kennwort bestätigen"
     },
     "changepwd.description": {
-        "defaultMessage": "Bitte geben Sie das neue Passwort für Ihr Konto ein."
+        "defaultMessage": "Bitte gebe das neue Passwort für dein Konto ein."
     },
     "changepwd.password": {
         "defaultMessage": "Passwort"
@@ -99,40 +99,40 @@
         "defaultMessage": "Kennwort ändern"
     },
     "common.wait": {
-        "defaultMessage": "Warten Sie mal ..."
+        "defaultMessage": "Bitte warten ..."
     },
     "create.button": {
         "defaultMessage": "Erstellen"
     },
     "create.description": {
-        "defaultMessage": "Bitte geben Sie den neuen Kartennamen und die Beschreibung ein."
+        "defaultMessage": "Bitte gebe den Namen und die Beschreibung der neuen Mindmap ein."
     },
     "create.title": {
-        "defaultMessage": "Erstellen Sie eine neue Mindmap."
+        "defaultMessage": "Erstelle eine neue Mindmap."
     },
     "deletem.title": {
-        "defaultMessage": "Alle ausgewählten Karten werden gelöscht"
+        "defaultMessage": "Alle ausgewählten Mindmaps werden gelöscht"
     },
     "duplicate.title": {
-        "defaultMessage": "Duplikat"
+        "defaultMessage": "Kopie"
     },
     "expired.description": {
-        "defaultMessage": "Ihre aktuelle Sitzung ist abgelaufen. Bitte melden Sie sich an und versuchen Sie es erneut."
+        "defaultMessage": "Deine aktuelle Sitzung ist abgelaufen. Bitte melde dich an und versuche es erneut."
     },
     "expired.title": {
         "defaultMessage": "Deine Sitzung ist abgelaufen"
     },
     "export.desc": {
-        "defaultMessage": "Exportieren Sie diese Karte im gewünschten Format und verwenden Sie sie in Ihren Präsentationen oder teilen Sie sie per E-Mail"
+        "defaultMessage": "Exportiere diese Mindmap im gewünschten Format und verwende sie in deinen Präsentationen oder teile sie per E-Mail"
     },
     "export.document": {
-        "defaultMessage": "Mindmap-Tools: Exportieren Sie Ihre Mindmap in Mindmap-Tool-Formate von Drittanbietern"
+        "defaultMessage": "Mindmap-Tools: Exportiere deine Mindmap in Mindmap-Tool-Formate von Drittanbietern"
     },
     "export.document-label": {
-        "defaultMessage": "Dokument: Exportieren Sie Ihre Mindmap in ein eigenständiges Dokument, das Sie teilen können"
+        "defaultMessage": "Dokument: Exportiere deine Mindmap in ein eigenständiges Dokument, das du teilen kannst"
     },
     "export.image": {
-        "defaultMessage": "Bild: Erhalten Sie eine grafische Darstellung Ihrer Karte mit allen Farben und Formen."
+        "defaultMessage": "Bild: Erhalte eine grafische Darstellung deiner Mindmap mit allen Farben und Formen."
     },
     "export.title": {
         "defaultMessage": "Export"
@@ -147,7 +147,7 @@
         "defaultMessage": "Kontaktiere uns"
     },
     "footer.faq": {
-        "defaultMessage": "FAQ."
+        "defaultMessage": "FAQ"
     },
     "footer.faqandhelp": {
         "defaultMessage": "Hilfe & FAQ"
@@ -165,10 +165,10 @@
         "defaultMessage": "Allgemeine Geschäftsbedingungen"
     },
     "forgot.desc": {
-        "defaultMessage": "Wir senden Ihnen eine E-Mail, um Ihr Passwort zurückzusetzen."
+        "defaultMessage": "Wir senden dir eine E-Mail, um dein Passwort zurückzusetzen."
     },
     "forgot.email": {
-        "defaultMessage": "Email"
+        "defaultMessage": "E-Mail"
     },
     "forgot.page-title": {
         "defaultMessage": "Passwort vergessen | WiseMapping"
@@ -177,10 +177,10 @@
         "defaultMessage": "Wiederherstellungslink senden"
     },
     "forgot.success.desc": {
-        "defaultMessage": "Wir haben Ihnen eine E-Mail gesendet, mit der Sie Ihr Passwort zurücksetzen können. Sie sollten es in den nächsten Minuten erhalten."
+        "defaultMessage": "Wir haben dir eine E-Mail gesendet, mit der du dein Passwort zurücksetzen kannst. Du solltest sie in den nächsten Minuten erhalten."
     },
     "forgot.success.title": {
-        "defaultMessage": "Ihr temporäres Passwort wurde gesendet."
+        "defaultMessage": "Dein temporäres Passwort wurde gesendet."
     },
     "forgot.title": {
         "defaultMessage": "Setze dein Passwort zurück"
@@ -189,10 +189,10 @@
         "defaultMessage": "Passwort wiederhergestellt | WiseMapping"
     },
     "header.donthaveaccount": {
-        "defaultMessage": "Sie haben kein Konto?"
+        "defaultMessage": "Du hast noch kein Konto?"
     },
     "header.haveaccount": {
-        "defaultMessage": "Sie haben bereits ein Konto?"
+        "defaultMessage": "Du hast bereits ein Konto?"
     },
     "help.support": {
         "defaultMessage": "Unterstützung"
@@ -204,16 +204,16 @@
         "defaultMessage": "Erstellen"
     },
     "import.description": {
-        "defaultMessage": "Sie können Karten von WiseMapping oder Freemind in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+        "defaultMessage": "Du kannst Mindmaps von WiseMapping oder Freemind importieren. Wähle die Datei aus, die du importieren möchtest."
     },
     "import.title": {
-        "defaultMessage": "Importieren Sie vorhandene Mindmaps"
+        "defaultMessage": "Importiere vorhandene Mindmaps"
     },
     "import.error-file": {
         "defaultMessage": "Import fehlgeschlagen: {error}"
     },
     "info.basic-info": {
-        "defaultMessage": "Basisinformation"
+        "defaultMessage": "Allgemeine Informationen"
     },
     "info.button": {
         "defaultMessage": "Akzeptieren"
@@ -222,13 +222,13 @@
         "defaultMessage": "Erstellungsdatum"
     },
     "info.creator": {
-        "defaultMessage": "Schöpfer"
+        "defaultMessage": "Besitzer"
     },
     "info.description": {
         "defaultMessage": "Beschreibung"
     },
     "info.description-msg": {
-        "defaultMessage": "Indem Sie die Karte veröffentlichen, machen Sie sie für jeden im Internet sichtbar."
+        "defaultMessage": "Indem du die Mindmap veröffentlichen, machst du sie für jeden im Internet sichtbar."
     },
     "info.modified-time": {
         "defaultMessage": "Zuletzt geändertes Datum"
@@ -246,10 +246,10 @@
         "defaultMessage": "Teilen"
     },
     "info.starred": {
-        "defaultMessage": "Markiert"
+        "defaultMessage": "Favoriten"
     },
     "info.title": {
-        "defaultMessage": "Die Info"
+        "defaultMessage": "Informationen"
     },
     "language.change": {
         "defaultMessage": "Sprache ändern"
@@ -258,19 +258,19 @@
         "defaultMessage": "Hilfe beim Übersetzen"
     },
     "login.desc": {
-        "defaultMessage": "Melde dich in deinem Konto an"
+        "defaultMessage": "Melde dich mit deinem Konto an"
     },
     "login.email": {
-        "defaultMessage": "Email"
+        "defaultMessage": "E-Mail"
     },
     "login.error": {
         "defaultMessage": "Die eingegebene E-Mail-Adresse oder das eingegebene Passwort ist ungültig."
     },
     "login.forgotpwd": {
-        "defaultMessage": "Passwort vergessen ?"
+        "defaultMessage": "Passwort vergessen?"
     },
     "login.hsqldbcofig": {
-        "defaultMessage": "Obwohl HSQLDB während der Installation standardmäßig mit WiseMapping gebündelt wird, empfehlen wir diese Datenbank nicht für den Produktionseinsatz. Bitte erwägen Sie stattdessen die Verwendung von MySQL 5.7. Weitere Informationen zur Konfiguration von MySQL finden Sie hier",
+        "defaultMessage": "Obwohl HSQLDB während der Installation standardmäßig mit WiseMapping installiert wird, empfehlen wir diese Datenbank nicht für den Produktionseinsatz. Bitte erwäge stattdessen die Verwendung von MySQL 5.7. Weitere Informationen zur Konfiguration von MySQL findest du hier",
         "description": "Fehlende Produktionsdatenbank konfiguriert"
     },
     "login.page-title": {
@@ -280,7 +280,7 @@
         "defaultMessage": "Passwort"
     },
     "login.remberme": {
-        "defaultMessage": "Behalte mich in Erinnerung"
+        "defaultMessage": "Angemeldet bleiben?"
     },
     "login.signin": {
         "defaultMessage": "Anmelden"
@@ -292,13 +292,13 @@
         "defaultMessage": "Herzlich willkommen"
     },
     "login.userinactive": {
-        "defaultMessage": "Entschuldigung, Ihr Konto wurde noch nicht aktiviert. Sie erhalten eine Benachrichtigungs-E-Mail, wenn es aktiv wird. Bleiben Sie dran!."
+        "defaultMessage": "Entschuldigung, dein Konto wurde noch nicht aktiviert. Du erhältst eine Benachrichtigungs-E-Mail, wenn es aktiv wird."
     },
     "map.creator": {
-        "defaultMessage": "Schöpfer"
+        "defaultMessage": "Besitzer"
     },
     "map.delete-selected": {
-        "defaultMessage": "Ausgewählte löschen"
+        "defaultMessage": "Auswahl löschen"
     },
     "map.last-update": {
         "defaultMessage": "Letztes Update"
@@ -310,13 +310,13 @@
         "defaultMessage": "Name"
     },
     "map.tooltip-add": {
-        "defaultMessage": "Label zu Ausgewähltem hinzufügen"
+        "defaultMessage": "Label zur Auswahl hinzufügen"
     },
     "maps.choose-file": {
-        "defaultMessage": "Wählen Sie eine Datei"
+        "defaultMessage": "Wähle eine Datei"
     },
     "maps.create-tooltip": {
-        "defaultMessage": "Erstellen Sie eine neue Mindmap"
+        "defaultMessage": "Erstelle eine neue Mindmap"
     },
     "maps.empty-result": {
         "defaultMessage": "Kein passender Datensatz mit den aktuellen Filterkriterien gefunden."
@@ -337,19 +337,19 @@
         "defaultMessage": "Alle"
     },
     "maps.nav-onwned": {
-        "defaultMessage": "Besitz"
+        "defaultMessage": "Eigene"
     },
     "maps.nav-public": {
-        "defaultMessage": "Allgemein"
+        "defaultMessage": "Freigegeben"
     },
     "maps.nav-shared": {
-        "defaultMessage": "Mit mir geteilt"
+        "defaultMessage": "Geteilt"
     },
     "maps.nav-starred": {
-        "defaultMessage": "Markiert"
+        "defaultMessage": "Favoriten"
     },
     "maps.page-title": {
-        "defaultMessage": "Meine Karten | WiseMapping"
+        "defaultMessage": "Meine Mindmaps | WiseMapping"
     },
     "maps.revert": {
         "defaultMessage": "Zurückkehren"
@@ -361,10 +361,10 @@
         "defaultMessage": "Zur Ausgabe geöffnet"
     },
     "maps.tooltip-starred": {
-        "defaultMessage": "Markiert"
+        "defaultMessage": "Favoriten"
     },
     "maps.view": {
-        "defaultMessage": "Aussicht"
+        "defaultMessage": "Ansicht"
     },
     "menu.account": {
         "defaultMessage": "Konto"
@@ -373,28 +373,28 @@
         "defaultMessage": "Kennwort ändern"
     },
     "menu.signout": {
-        "defaultMessage": "Austragen"
+        "defaultMessage": "Abmelden"
     },
     "publish.button": {
         "defaultMessage": "Akzeptieren"
     },
     "publish.checkbox": {
-        "defaultMessage": "Aktivieren Sie die öffentliche Freigabe"
+        "defaultMessage": "Aktiviere die öffentliche Freigabe"
     },
     "publish.description": {
-        "defaultMessage": "Indem Sie die Karte veröffentlichen, machen Sie sie für jeden im Internet sichtbar."
+        "defaultMessage": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
     },
     "publish.embedded": {
         "defaultMessage": "Eingebettet"
     },
     "publish.embedded-msg": {
-        "defaultMessage": "Kopieren Sie dieses Code-Snippet, um es in Ihren Blog oder Ihre Seite einzubetten:"
+        "defaultMessage": "Kopiere dieses Code-Snippet, um es in deinem Blog oder deiner Webseite einzubetten:"
     },
     "publish.public-url": {
         "defaultMessage": "Öffentliche URL"
     },
     "publish.public-url-msg": {
-        "defaultMessage": "Kopieren Sie den folgenden Link und fügen Sie ihn ein, um Ihre Karte mit Kollegen zu teilen:"
+        "defaultMessage": "Kopiere den folgenden Link und gebe ihn weiter, um deine Mindmap mit Kollegen zu teilen:"
     },
     "publish.title": {
         "defaultMessage": "Veröffentlichen"
@@ -403,10 +403,10 @@
         "defaultMessage": "Registrierung erfolgreich | WiseMapping"
     },
     "registration.desc": {
-        "defaultMessage": "Die Anmeldung ist kostenlos und nehmen Sie sich einen Moment Zeit"
+        "defaultMessage": "Nimm dir einen Moment Zeit. Die Anmeldung ist kostenlos."
     },
     "registration.email": {
-        "defaultMessage": "Email"
+        "defaultMessage": "E-Mail"
     },
     "registration.firstname": {
         "defaultMessage": "Vorname"
@@ -421,31 +421,31 @@
         "defaultMessage": "Registrieren"
     },
     "registration.success.desc": {
-        "defaultMessage": "Klicken Sie unten auf die Schaltfläche „Anmelden“ und beginnen Sie mit der Erstellung von Mindmaps."
+        "defaultMessage": "Klicke unten auf die Schaltfläche „Anmelden“ und beginne mit der Erstellung von Mindmaps."
     },
     "registration.termandconditions": {
-        "defaultMessage": "Kundenbedingungen: Bitte überprüfen Sie die WiseMapping-Kontoinformationen, die Sie oben eingegeben haben, und sehen Sie sich die Kundenbedingungen hier an. Indem Sie unten auf „Registrieren“ klicken, stimmen Sie den obigen Kundenbedingungen und der Datenschutzrichtlinie zu"
+        "defaultMessage": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf „Registrieren“ klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
     },
     "registration.title": {
         "defaultMessage": "Mitglied werden"
     },
     "rename.description": {
-        "defaultMessage": "Bitte geben Sie den neuen Kartennamen und die Beschreibung ein."
+        "defaultMessage": "Bitte gebe den Namen und die Beschreibung der Mindmap ein."
     },
     "rename.title": {
         "defaultMessage": "Umbenennen"
     },
     "resetpassword.success.title": {
-        "defaultMessage": "Ihr Konto wurde erfolgreich erstellt"
+        "defaultMessage": "Dein Konto wurde erfolgreich erstellt"
     },
     "role.editor": {
-        "defaultMessage": "Editor"
+        "defaultMessage": "Bearbeiter"
     },
     "role.owner": {
         "defaultMessage": "Besitzer"
     },
     "role.viewer": {
-        "defaultMessage": "Zuschauer"
+        "defaultMessage": "Betrachter"
     },
     "share.add-button": {
         "defaultMessage": "Hinzufügen"
@@ -460,13 +460,13 @@
         "defaultMessage": "Kann ansehen"
     },
     "share.delete": {
-        "defaultMessage": "Mitbearbeiter löschen"
+        "defaultMessage": "Bearbeiter entfernen"
     },
     "share.delete-description": {
-        "defaultMessage": "Laden Sie Personen ein, mit Ihnen bei der Erstellung Ihrer Midnmap zusammenzuarbeiten. Sie werden per E-Mail benachrichtigt."
+        "defaultMessage": "Lade Personen ein, die bei der Erstellung deiner Midnmap mitarbeiten. Sie werden per E-Mail benachrichtigt."
     },
     "share.delete-title": {
-        "defaultMessage": "Teilen Sie mit Menschen"
+        "defaultMessage": "Teile deine Mindmap"
     },
     "share.message": {
         "defaultMessage": "Nachricht"
@@ -475,42 +475,42 @@
         "defaultMessage": "Dieser Ausgabebereich zeigt einige der Mindmap-Editor-Funktionen!"
     },
     "editor.try-welcome-description": {
-        "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+        "defaultMessage": "Melde dich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
     },
     "accountinfo.deleteaccount": {
         "defaultMessage": "Konto löschen"
     },
     "label.add-button": {
-        "defaultMessage": "Etikett hinzufügen"
+        "defaultMessage": "Label hinzufügen"
     },
     "label.add-for": {
-        "defaultMessage": "Beschriftungen für Karten bearbeiten:"
+        "defaultMessage": "Labels für Mindmap bearbeiten:"
     },
     "label.add-placeholder": {
         "defaultMessage": "Titel des Labels"
     },
     "label.change-color": {
-        "defaultMessage": "Etikettenfarbe ändern"
+        "defaultMessage": "Labelfarbe ändern"
     },
     "label.delete-description": {
-        "defaultMessage": "gelöscht, einschließlich der Zuordnungen zu allen vorhandenen Karten. Möchtest du fortfahren?"
+        "defaultMessage": "Löschen des Labels, einschließlich der Zuordnungen zu allen vorhandenen Mindmaps. Möchtest du fortfahren?"
     },
     "label.delete-title": {
-        "defaultMessage": "Bestätigen Sie das Löschen des Labels"
+        "defaultMessage": "Bestätige das Löschen des Labels"
     },
     "label.description": {
-        "defaultMessage": "Verwenden Sie Labels, um Ihre Karten zu organisieren."
+        "defaultMessage": "Verwende Labels, um deine Mindmaps zu organisieren."
     },
     "label.title": {
-        "defaultMessage": "Etikett hinzufügen"
+        "defaultMessage": "Label hinzufügen"
     },
     "footer.donations": {
         "defaultMessage": "Spenden"
     },
     "footer.support": {
-        "defaultMessage": "Unterstützt"
+        "defaultMessage": "Support"
     },
     "footer.team": {
-        "defaultMessage": "Ausrüstung"
+        "defaultMessage": "Team"
     }
 }
