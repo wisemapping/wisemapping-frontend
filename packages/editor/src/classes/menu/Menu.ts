@@ -211,7 +211,7 @@ class Menu extends IMenu {
       if (undoButton) {
         undoButton.disable();
       }
-      Menu._registerTooltip('undoEdition', $msg('UNDO'));
+      Menu._registerTooltip('undoEdition', $msg('UNDO'), $msg('CTRL') + ' + Z');
 
       const redoButton = this._addButton('redoEdition', false, false, () => {
         designer.redo();
@@ -219,7 +219,7 @@ class Menu extends IMenu {
       if (redoButton) {
         redoButton.disable();
       }
-      Menu._registerTooltip('redoEdition', $msg('REDO'));
+      Menu._registerTooltip('redoEdition', $msg('REDO'), $msg('CTRL') + ' + Shift + Z');
 
       if (redoButton && undoButton) {
         designer.addEvent('modelUpdate', (event) => {
@@ -244,7 +244,7 @@ class Menu extends IMenu {
       this._addButton('deleteTopic', true, true, () => {
         designer.deleteSelectedEntities();
       });
-      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'));
+      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), $msg('K_DELETE'));
 
       this._addButton('topicLink', true, false, () => {
         designer.addLink();
@@ -264,12 +264,12 @@ class Menu extends IMenu {
       this._addButton('fontBold', true, false, () => {
         designer.changeFontWeight();
       });
-      Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), 'meta+B');
+      Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), $msg('CTRL') + ' + B');
 
       this._addButton('fontItalic', true, false, () => {
         designer.changeFontStyle();
       });
-      Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
+      Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), $msg('CTRL') + ' + I');
 
 
       if (!readOnly) {
@@ -279,7 +279,7 @@ class Menu extends IMenu {
           () => {
             this.save(saveElem, designer, true);
           });
-        Menu._registerTooltip('save', $msg('SAVE'));
+        Menu._registerTooltip('save', $msg('SAVE'), $msg('CTRL') + ' + S');
 
         // Register unload save ...
         window.addEventListener('beforeunload', () => {
