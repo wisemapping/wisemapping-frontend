@@ -83,7 +83,7 @@ const FR = {
   CTRL: 'Ctrl',
   SPACE_BAR: 'Space Bar',
   K_INSERT: 'Insert',
-  MOUSE_CLICK: 'Mouse Click',
+  MOUSE_CLICK: 'Clic de Souris',
   K_DELETE: 'Delete',
   BACKSPACE: 'Backspace',
 };

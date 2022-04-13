@@ -18,6 +18,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Box from '@mui/system/Box';
+import AppConfig from '../../../../classes/app-config';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
     const { map } = fetchMapById(mapId);
@@ -28,7 +29,6 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     const [activeTab, setActiveTab] = React.useState('1');
     const queryClient = useQueryClient();
     const intl = useIntl();
-
     const classes = useStyles();
     const mutation = useMutation<void, ErrorInfo, boolean>(
         (model: boolean) => {
@@ -60,10 +60,11 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
         setModel(checked);
     };
 
-    const handleTabChange = (event, newValue) => {
+    const handleTabChange = (event: React.ChangeEvent<HTMLInputElement>, newValue: string) => {
         setActiveTab(newValue);
     };
 
+    const baseUrl = AppConfig.getBaseUrl();
     return (
         <div>
             <BaseDialog
@@ -130,7 +131,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                 readOnly={true}
                                 spellCheck={false}
                                 maxRows={6}
-                                defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="https://app.wisemapping.com/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
+                                defaultValue={`<iframe style="width:600px;height:400px;border:1px solid black" src="${baseUrl}/c/maps/${mapId}/embed?zoom=1.0"></iframe>`}
                             />
                         </TabPanel>
                         <TabPanel value="1">
@@ -145,7 +146,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                                 readOnly={true}
                                 spellCheck={false}
                                 maxRows={1}
-                                defaultValue={`https://app.wisemapping.com/c/maps/${mapId}/public`}
+                                defaultValue={`${baseUrl}/c/maps/${mapId}/public`}
                             />
                         </TabPanel>
                     </TabContext>

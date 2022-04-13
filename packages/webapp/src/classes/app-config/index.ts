@@ -15,7 +15,7 @@ interface Config {
 class _AppConfig {
 
     private defaultInstance: Config = {
-        apiBaseUrl: '/',
+        apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:${window.location.port}`,
         clientType: 'mock',
         recaptcha2Enabled: true,
         recaptcha2SiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
@@ -57,7 +57,7 @@ class _AppConfig {
         const config = this.getInstance();
         let result: Client;
         if (config.clientType == 'rest') {
-            result = new RestClient(config.apiBaseUrl);
+            result = new RestClient(this.getBaseUrl());
             console.log('Service using rest client. ' + JSON.stringify(config));
         } else {
             console.log('Warning:Service using mockservice client');
@@ -66,6 +66,11 @@ class _AppConfig {
 
         // Wrap with a cache decorator ...
         return new CacheDecoratorClient(result);
+    }
+
+    getBaseUrl(): string {
+        const config = this.getInstance();
+        return config.apiBaseUrl;
     }
 }
 const AppConfig = new _AppConfig();
