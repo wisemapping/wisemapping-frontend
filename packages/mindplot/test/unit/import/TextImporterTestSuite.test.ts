@@ -10,7 +10,7 @@ const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
   .map((filename: string) => filename.split('.')[0]);
 
-describe('MM import test execution', () => {
+describe('package/', () => {
   test.each(testNames)('Importing %p suite', async (testName: string) => {
     // load freemap...
     const freemapPath = path.resolve(__dirname, `./input/${testName}.mm`);
