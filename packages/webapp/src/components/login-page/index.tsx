@@ -70,7 +70,7 @@ const LoginPage = (): React.ReactElement => {
 
     useEffect(() => {
         document.title = intl.formatMessage({id:'login.page-title',defaultMessage:'Login | WiseMapping'});
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname});
     },[]);
 
     return (

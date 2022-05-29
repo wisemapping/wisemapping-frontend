@@ -23,7 +23,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     const client: Client = useSelector(activeInstance);
 
     useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname});
     }, []);
 
     const findEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {

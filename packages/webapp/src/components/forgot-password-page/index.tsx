@@ -80,7 +80,7 @@ const ForgotPasswordPage = (): React.ReactElement => {
     const intl = useIntl();
     useEffect(() => {
         document.title = intl.formatMessage({ id: 'forgot.page-title', defaultMessage: 'Forgot Password | WiseMapping' });
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname});
     },[]);
 
     return (

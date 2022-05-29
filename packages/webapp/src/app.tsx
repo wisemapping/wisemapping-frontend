@@ -26,7 +26,11 @@ declare module '@mui/styles/defaultTheme' {
 }
 
 // Google Analytics Initialization.
-ReactGA.initialize(AppConfig.getGoogleAnalyticsAccount());
+ReactGA.initialize([
+    {
+        trackingId: AppConfig.getGoogleAnalyticsAccount(),
+    }
+]);
 
 const queryClient = new QueryClient({
     defaultOptions: {
