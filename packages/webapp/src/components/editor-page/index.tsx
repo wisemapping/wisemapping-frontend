@@ -7,7 +7,7 @@ import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import Client from '../../classes/client';
 import { activeInstance, fetchAccount, fetchMapById } from '../../redux/clientSlice';
 import EditorOptionsBuilder from './EditorOptionsBuilder';

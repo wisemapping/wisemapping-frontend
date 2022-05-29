@@ -10,7 +10,7 @@ import FormContainer from '../layout/form-container';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 
 type ConfigStatusProps = {

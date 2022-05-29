@@ -40,7 +40,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { withStyles } from '@mui/styles';
 
 

@@ -14,7 +14,7 @@ import AppI18n, { Locales } from './classes/app-i18n';
 import MapsPage from './components/maps-page';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import EditorPage from './components/editor-page';
 import AppConfig from './classes/app-config';
 import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';

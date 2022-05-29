@@ -17,7 +17,7 @@ import SubmitButton from '../form/submit-button';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import AppConfig from '../../classes/app-config';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 export type Model = {
     email: string;

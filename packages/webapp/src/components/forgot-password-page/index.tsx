@@ -12,7 +12,7 @@ import { activeInstance } from '../../redux/clientSlice';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 import Typography from '@mui/material/Typography';
 import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
