@@ -165,8 +165,8 @@ const RegistationPage = (): React.ReactElement => {
             id: 'registration.page-title',
             defaultMessage: 'Registration | WiseMapping',
         });
-        ReactGA.send({ hitType: "pageview", page: window.location.pathname});
-    },[]);
+        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Register' });
+    }, []);
 
     return (
         <div>

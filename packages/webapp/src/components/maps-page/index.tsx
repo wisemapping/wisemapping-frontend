@@ -83,7 +83,7 @@ const MapsPage = (): ReactElement => {
             id: 'maps.page-title',
             defaultMessage: 'My Maps | WiseMapping',
         });
-        ReactGA.send({ hitType: "pageview", page: window.location.pathname});
+        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Maps list' });
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
@@ -287,20 +287,20 @@ interface ListItemProps {
 // https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
 const CustomListItem = withStyles({
     root: {
-      "&$selected": {
-        backgroundColor: "rgb(210, 140, 5)",
-        color: "white",
-        "& .MuiListItemIcon-root": {
-          color: "white"
-        }
-      },
-      "&$selected:hover": {
-        backgroundColor: "rgb(210, 140, 5)",
-        color: "white",
-        "& .MuiListItemIcon-root": {
-          color: "white"
-        }
-      },
+        "&$selected": {
+            backgroundColor: "rgb(210, 140, 5)",
+            color: "white",
+            "& .MuiListItemIcon-root": {
+                color: "white"
+            }
+        },
+        "&$selected:hover": {
+            backgroundColor: "rgb(210, 140, 5)",
+            color: "white",
+            "& .MuiListItemIcon-root": {
+                color: "white"
+            }
+        },
     },
     selected: {}
 })(ListItemButton);

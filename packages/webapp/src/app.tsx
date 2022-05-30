@@ -32,6 +32,7 @@ ReactGA.initialize([
     }
 ]);
 
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {

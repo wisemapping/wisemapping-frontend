@@ -69,9 +69,9 @@ const LoginPage = (): React.ReactElement => {
     const intl = useIntl();
 
     useEffect(() => {
-        document.title = intl.formatMessage({id:'login.page-title',defaultMessage:'Login | WiseMapping'});
-        ReactGA.send({ hitType: "pageview", page: window.location.pathname});
-    },[]);
+        document.title = intl.formatMessage({ id: 'login.page-title', defaultMessage: 'Login | WiseMapping' });
+        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Login' });
+    }, []);
 
     return (
         <div>
@@ -90,7 +90,7 @@ const LoginPage = (): React.ReactElement => {
 
                 <FormControl>
                     <form action="/c/perform-login" method="POST">
-                    <input type='hidden' value={getCsrfToken()} name={getCsrfTokenParameter()}/>
+                        <input type='hidden' value={getCsrfToken()} name={getCsrfTokenParameter()} />
                         <Input
                             name="username"
                             type="email"
