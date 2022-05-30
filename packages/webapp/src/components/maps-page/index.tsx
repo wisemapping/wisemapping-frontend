@@ -83,7 +83,7 @@ const MapsPage = (): ReactElement => {
             id: 'maps.page-title',
             defaultMessage: 'My Maps | WiseMapping',
         });
-        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Maps list' });
+        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'MapsList' });
     }, []);
 
     const mutation = useMutation((id: number) => client.deleteLabel(id), {
