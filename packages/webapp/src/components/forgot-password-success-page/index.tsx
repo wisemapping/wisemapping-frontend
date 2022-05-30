@@ -6,12 +6,14 @@ import Footer from '../layout/footer';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import ReactGA from 'react-ga4';
 
 const ForgotPasswordSuccessPage = (): React.ReactElement => {
     const intl = useIntl();
 
     useEffect(() => {
         document.title = intl.formatMessage({ id: 'forgotsuccess.page-title', defaultMessage: 'Password Recovered | WiseMapping' });
+        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'ForgotPassword:Success' });
     });
 
     return (
