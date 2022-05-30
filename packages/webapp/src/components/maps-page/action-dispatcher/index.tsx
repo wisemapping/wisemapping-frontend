@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import RenameDialog from './rename-dialog';
 import DeleteDialog from './delete-dialog';
 import { ActionType } from '../action-chooser';
@@ -13,6 +13,8 @@ import DeleteMultiselectDialog from './delete-multiselect-dialog';
 import ExportDialog from './export-dialog';
 import ShareDialog from './share-dialog';
 import LabelDialog from './label-dialog';
+import ReactGA from 'react-ga4';
+
 
 export type BasicMapInfo = {
     name: string;
@@ -27,6 +29,16 @@ type ActionDialogProps = {
 };
 
 const ActionDispatcher = ({ mapsId, action, onClose, fromEditor }: ActionDialogProps): React.ReactElement => {
+
+    useEffect(() => {
+        ReactGA.event({
+            category: 'map metadata',
+            action: action, 
+            nonInteraction: true
+
+        });
+    }, [action]);
+
     const handleOnClose = (success?: boolean): void => {
         onClose(success);
     };
