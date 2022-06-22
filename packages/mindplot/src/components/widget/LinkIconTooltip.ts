@@ -17,11 +17,13 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
+import LinkIcon from '../LinkIcon';
+import LinkModel from '../model/LinkModel';
 import { $msg } from '../Messages';
 import FloatingTip from './FloatingTip';
 
 class LinkIconTooltip extends FloatingTip {
-  constructor(linkIcon) {
+  constructor(linkIcon: LinkIcon) {
     $assert(linkIcon, 'linkIcon can not be null');
     const nativeElement = $(linkIcon.getImage().peer._native);
     super(nativeElement, {
@@ -38,8 +40,9 @@ class LinkIconTooltip extends FloatingTip {
     });
   }
 
-  static _buildContent(linkIcon) {
-    const url = linkIcon.getModel().getUrl();
+  private static _buildContent(linkIcon: LinkIcon): JQuery<HTMLElement> {
+    const model = linkIcon.getModel() as LinkModel;
+    const url = model.getUrl();
     const linkText = `${url}`;
 
     const result = $('<div></div>').css({
@@ -54,7 +57,6 @@ class LinkIconTooltip extends FloatingTip {
 
     link.append(linkText);
     result.append(link);
-    
     return result;
   }
 }
