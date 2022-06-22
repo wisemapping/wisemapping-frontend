@@ -41,44 +41,20 @@ class LinkIconTooltip extends FloatingTip {
   static _buildContent(linkIcon) {
     const url = linkIcon.getModel().getUrl();
     const linkText = `${url}`;
-    const linkPreview = `https://free.pagepeeker.com/v2/thumbs.php?size=m&url=${url}`;
 
     const result = $('<div></div>').css({
       padding: '5px',
       width: '100%',
     });
-
-    const text = $('<div id="linkPopoverUrl"></div>').text(linkText)
-      .css({
-        'white-space': 'pre-wrap',
-        'word-wrap': 'break-word',
-      });
-    result.append(text);
-
-    const imgContainer = $('<div></div>')
-      .css({
-        width: '100%',
-        textAlign: 'right',
-        'padding-bottom': '5px',
-        'padding-top': '5px',
-      });
-
-    const img = $('<img id="linkPopoverPreview">')
-      .prop('src', linkPreview)
-      .prop('img', url)
-      .prop('alt', url);
-
-    img.css('padding', '5px');
-
     const link = $('<a id="linkPopoverAnchor"></a>').attr({
       href: url,
       alt: 'Open in new window ...',
       target: '_blank',
     });
 
-    link.append(img);
-    imgContainer.append(link);
-    result.append(imgContainer);
+    link.append(linkText);
+    result.append(link);
+    
     return result;
   }
 }
