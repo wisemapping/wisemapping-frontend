@@ -24,13 +24,11 @@ import Node from './Node';
 import RootedTreeSet from './RootedTreeSet';
 
 class BalancedSorter extends AbstractBasicSorter {
-
   private static INTERNODE_VERTICAL_PADDING = 5;
 
   private static INTERNODE_HORIZONTAL_PADDING = 30;
 
   predict(graph, parent, node: Node, position: PositionType) {
-
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
@@ -243,7 +241,7 @@ class BalancedSorter extends AbstractBasicSorter {
     return 'Balanced Sorter';
   }
 
-  protected  _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number) {
+  protected _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number) {
     return this._getSortedChildren(graph, parent)
       .filter((child) => child.getOrder() % 2 === order % 2);
   }
