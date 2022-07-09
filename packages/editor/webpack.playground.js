@@ -10,6 +10,7 @@ const playgroundConfig = {
   entry: {
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
+    showcase: path.resolve(__dirname, './test/playground/map-render/js/showcase'),
   },
   output: {
     path: path.resolve(__dirname, 'test/playground/dist'),
@@ -43,11 +44,16 @@ const playgroundConfig = {
       template: 'test/playground/map-render/html/viewmode.html',
     }),
     new HtmlWebpackPlugin({
-      chunks: ['editor'],
-      filename: 'editor.html',
-      template: 'test/playground/map-render/html/editor.html',
-    }),
-  ],
+		chunks: ['editor'],
+		filename: 'editor.html',
+		template: 'test/playground/map-render/html/editor.html',
+	}),
+	new HtmlWebpackPlugin({
+		chunks: ['showcase'],
+		filename: 'showcase.html',
+		template: 'test/playground/map-render/html/showcase.html',
+	}),
+	],
 };
 
 module.exports = merge(common, playgroundConfig);

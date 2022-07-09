@@ -42,8 +42,8 @@ class MoveControlPointCommand extends Command {
    * @classdesc This command handles do/undo of changing the control points of a relationship
    * arrow. These are the two points that appear when the relationship is on focus. They
    * influence how the arrow is drawn (not the source or the destination topic nor the arrow
-     * direction)
-     */
+   * direction)
+   */
   constructor(ctrlPointController: ControlPoint, point: number) {
     $assert(ctrlPointController, 'line can not be null');
     $assert($defined(point), 'point can not be null');

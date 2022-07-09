@@ -9,6 +9,19 @@ html {
     font-size: initial;
 }
 
+body {
+	width: 100vw; 
+	height: 100vh; 
+	min-width: 100vw;
+	min-height: 100vh; 
+	margin: 0px;
+}
+
+.mindplot-root {
+	width: 100%; 
+	height: 100%;
+}
+
 div#mindplot {
     position: relative;
     top: 50px;
@@ -201,21 +214,69 @@ div#shotcuts > img{
     color: #ffffff;
 }
 
-div#tryInfoPanel {
-    position: absolute;
-    margin: auto;
-    text-align: center;
-    top: 80px;
-    left: 20px;
-    width: 200px;
-    padding: 20px;
-    font-size: 15px;
-    border-radius: 9px;
-    background-color: white;
-    border: solid 2px #ffa800;
+.tryInfoPanel {
+	position: absolute;
+	text-align: center;
+	left: 0;
+	right: 0;
+	background-color: white;
+	border: solid 2px #ffa800;
+	margin: auto;
+	width: 99%;
+	border-radius: 9px;
+	width: 96%;
 }
 
-#tryInfoPanel > p {
+@media (min-width: 600px) {
+	.tryInfoPanel {
+		font-size: 15px;
+	}
+}
+
+@media (max-width: 600px) {
+	.tryInfoPanel {
+		font-size: 13px;
+	}
+}
+
+.tryInfoPanel .tryInfoPanelInner {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.tryInfoPanel .tryInfoPanelInner .closeButton  {
+	position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.tryInfoPanel .tryInfoPanelInner .closeButton button {
+	cursor: pointer;
+	border-style: hidden;
+	background-color: transparent;
+	padding: 0px;
+}
+
+.tryInfoPanel .tryInfoPanelInner .closeButton button img {
+	width: 18px;
+	height: 18px;
+	filter: invert(73%) sepia(21%) saturate(4699%) hue-rotate(357deg) brightness(98%) contrast(108%);
+}
+
+.tryInfoPanelWithToolbar {
+	top: 55px;
+}
+
+.tryInfoPanelWithoutToolbar {
+	top: 5px;
+}
+
+.tryInfoPanelClosed {
+	display: none;
+}
+
+.tryInfoPanel > p {
     justify-content: center;
-    padding-bottom: 20px;
 }

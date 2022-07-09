@@ -16,11 +16,8 @@
  *   limitations under the License.
  */
 import jquery from 'jquery';
-import {
-} from './components/widget/ToolbarNotifier';
-import {
-  buildDesigner,
-} from './components/DesignerBuilder';
+import {} from './components/widget/ToolbarNotifier';
+import { buildDesigner } from './components/DesignerBuilder';
 import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
 import DesignerOptionsBuilder from './components/DesignerOptionsBuilder';
@@ -43,16 +40,14 @@ const persistence: PersistenceManager = new LocalStorageManager(
 const params = new URLSearchParams(window.location.search.substring(1));
 
 const zoomParam = Number.parseFloat(params.get('zoom'));
-const options = DesignerOptionsBuilder.buildOptions(
-  {
-    persistenceManager: persistence,
-    mode: 'viewonly',
-    mapId: global.mapId,
-    container: 'mindplot',
-    zoom: zoomParam || global.userOptions.zoom,
-    locale: global.locale,
-  },
-);
+const options = DesignerOptionsBuilder.buildOptions({
+  persistenceManager: persistence,
+  mode: 'viewonly',
+  mapId: global.mapId,
+  container: 'mindplot',
+  zoom: zoomParam || global.userOptions.zoom,
+  locale: global.locale,
+});
 
 // Build designer ...
 const designer = buildDesigner(options);

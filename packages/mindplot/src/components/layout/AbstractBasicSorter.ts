@@ -45,9 +45,9 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
     } else {
       let childrenHeight = 0;
 
-      children.forEach(((child) => {
+      children.forEach((child) => {
         childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-      }));
+      });
 
       result = Math.max(height, childrenHeight);
     }

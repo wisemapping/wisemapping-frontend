@@ -6,27 +6,27 @@ import ClientHealthSentinel from '../../classes/client/client-health-sentinel';
 import { activeInstance, sessionExpired } from '../../redux/clientSlice';
 
 function withSessionExpirationHandling<T>(Component: ComponentType<T>) {
-    return (hocProps: T): React.ReactElement => {
-        const client: Client = useSelector(activeInstance);
-        const dispatch = useDispatch();
+  return (hocProps: T): React.ReactElement => {
+    const client: Client = useSelector(activeInstance);
+    const dispatch = useDispatch();
 
-        useEffect(() => {
-            if (client) {
-                client.onSessionExpired(() => {
-                    dispatch(sessionExpired());
-                });
-            } else {
-                console.warn('Session expiration wont be handled because could not find client');
-            }
-        }, []);
+    useEffect(() => {
+      if (client) {
+        client.onSessionExpired(() => {
+          dispatch(sessionExpired());
+        });
+      } else {
+        console.warn('Session expiration wont be handled because could not find client');
+      }
+    }, []);
 
-        return (
-            <>
-                <ClientHealthSentinel />
-                <Component {...hocProps} />;
-            </>
-        );
-    };
+    return (
+      <>
+        <ClientHealthSentinel />
+        <Component {...hocProps} />
+      </>
+    );
+  };
 }
 
 export default withSessionExpirationHandling;

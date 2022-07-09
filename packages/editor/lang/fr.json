@@ -1,9 +1,21 @@
 {
     "editor.try-welcome": {
-        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
+        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales!"
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
+    },
+	"editor.try-welcome-mobile": {
+		"defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
+	},
+    "editor.try-welcome-description-mobile": {
+        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+    },
+    "editor.edit-mobile": {
+        "defaultMessage": "Remarque pour les appareils mobiles."
+    },
+    "editor.edit-description-mobile": {
+        "defaultMessage": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
     "login.signup": {
         "defaultMessage": "S'inscrire"

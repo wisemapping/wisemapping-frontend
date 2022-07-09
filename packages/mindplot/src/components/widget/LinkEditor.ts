@@ -119,8 +119,9 @@ class LinkEditor extends BootstrapDialog {
    * @return {Boolean} true if the url is valid
    */
   private checkURL(url: string): boolean {
-    const regex = /^(http|https):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
-    return (regex.test(url));
+    const regex =
+      /^(http|https):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
+    return regex.test(url);
   }
 
   /**
@@ -129,7 +130,7 @@ class LinkEditor extends BootstrapDialog {
    */
   private hasProtocol(url: string): boolean {
     const regex = /^(http|https):\/\//i;
-    return (regex.test(url));
+    return regex.test(url);
   }
 
   /**

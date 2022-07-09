@@ -33,17 +33,11 @@ import DesignerKeyboard from './components/DesignerKeyboard';
 import EditorRenderMode from './components/EditorRenderMode';
 import ImageIcon from './components/ImageIcon';
 
-import {
-  buildDesigner,
-} from './components/DesignerBuilder';
+import { buildDesigner } from './components/DesignerBuilder';
 
-import {
-  $notify,
-} from './components/widget/ToolbarNotifier';
+import { $notify } from './components/widget/ToolbarNotifier';
 
-import {
-  $msg,
-} from './components/Messages';
+import { $msg } from './components/Messages';
 
 // This hack is required to initialize Bootstrap. In future, this should be removed.
 const globalAny: any = global;

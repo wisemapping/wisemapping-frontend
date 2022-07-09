@@ -18,37 +18,25 @@
 import { $assert } from '@wisemapping/core-js';
 import EditorRenderMode from './EditorRenderMode';
 import PersistenceManager from './PersistenceManager';
-import SizeType from './SizeType';
 
 export type DesignerOptions = {
-  zoom: number,
-  containerSize?: SizeType,
-  mode: EditorRenderMode,
-  mapId?: string,
-  container: string,
-  persistenceManager?: PersistenceManager,
-  saveOnLoad?: boolean,
-  locale?: string,
+  zoom: number;
+  mode: EditorRenderMode;
+  mapId?: string;
+  container: string;
+  persistenceManager?: PersistenceManager;
+  saveOnLoad?: boolean;
+  locale?: string;
 };
 
 class OptionsBuilder {
   static buildOptions(options: DesignerOptions): DesignerOptions {
     $assert(options.persistenceManager, 'persistence must be defined');
 
-    let { containerSize } = options;
-    if (options.containerSize == null) {
-      // If it has not been defined, use browser size ...
-      containerSize = {
-        width: window.screen.width,
-        height: window.screen.height,
-      };
-    }
-
     const defaultOptions: DesignerOptions = {
       mode: 'edition-owner',
       zoom: 0.85,
       saveOnLoad: true,
-      containerSize,
       container: 'mindplot',
       locale: 'en',
     };

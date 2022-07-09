@@ -5,16 +5,40 @@
       "value": "Partager"
     }
   ],
+  "editor.edit-description-mobile": [
+    {
+      "type": 0,
+      "value": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+    }
+  ],
+  "editor.edit-mobile": [
+    {
+      "type": 0,
+      "value": "Remarque pour les appareils mobiles."
+    }
+  ],
   "editor.try-welcome": [
     {
       "type": 0,
-      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
+      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales!"
     }
   ],
   "editor.try-welcome-description": [
     {
       "type": 0,
       "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
+    }
+  ],
+  "editor.try-welcome-description-mobile": [
+    {
+      "type": 0,
+      "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+    }
+  ],
+  "editor.try-welcome-mobile": [
+    {
+      "type": 0,
+      "value": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
     }
   ],
   "login.signup": [

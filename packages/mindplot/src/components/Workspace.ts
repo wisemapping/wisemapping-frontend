@@ -130,11 +130,19 @@ class Workspace {
   setZoom(zoom: number, center = false): void {
     this._zoom = zoom;
     const workspace = this._workspace;
-    const newVisibleAreaSize = this._screenManager.getVisibleBrowserSize();
 
-    // Update coord scale...
-    const newCoordWidth = zoom * this._containerSize.width;
-    const newCoordHeight = zoom * this._containerSize.height;
+    const divContainer = this._screenManager.getContainer();
+    const containerWidth = divContainer.width();
+    const containerHeight = divContainer.height();
+    const newVisibleAreaSize = { width: containerWidth, height: containerHeight };
+
+    // - svg must fit container size
+    const svgElement = divContainer.find('svg');
+    svgElement.attr('width', containerWidth);
+    svgElement.attr('height', containerHeight);
+    // - svg viewPort must fit container size with zoom adjustment
+    const newCoordWidth = containerWidth * this._zoom;
+    const newCoordHeight = containerHeight * this._zoom;
 
     let coordOriginX: number;
     let coordOriginY: number;
@@ -222,11 +230,14 @@ class Workspace {
             wasDragged = true;
           };
           screenManager.addEvent('mousemove', workspace._mouseMoveListener);
+          screenManager.addEvent('touchmove', workspace._mouseMoveListener);
 
           // Register mouse up listeners ...
           workspace._mouseUpListener = () => {
             screenManager.removeEvent('mousemove', workspace._mouseMoveListener);
             screenManager.removeEvent('mouseup', workspace._mouseUpListener);
+            screenManager.removeEvent('touchmove', workspace._mouseUpListener);
+            screenManager.removeEvent('touchend', workspace._mouseMoveListener);
             workspace._mouseUpListener = null;
             workspace._mouseMoveListener = null;
             window.document.body.style.cursor = 'default';
@@ -241,12 +252,14 @@ class Workspace {
             }
           };
           screenManager.addEvent('mouseup', workspace._mouseUpListener);
+          screenManager.addEvent('touchend', workspace._mouseUpListener);
         }
       } else {
         workspace._mouseUpListener();
       }
     };
     screenManager.addEvent('mousedown', mouseDownListener);
+    screenManager.addEvent('touchstart', mouseDownListener);
   }
 }
 

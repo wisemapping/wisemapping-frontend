@@ -21,7 +21,7 @@ import { Point } from '@wisemapping/web2d';
 class ScreenManager {
   private _divContainer: JQuery;
 
-  private _padding: { x: number; y: number; };
+  private _padding: { x: number; y: number };
 
   private _clickEvents;
 
@@ -34,20 +34,23 @@ class ScreenManager {
 
     // Ignore default click event propagation. Prevent 'click' event on drag.
     this._clickEvents = [];
-    this._divContainer.bind('click', (event: { stopPropagation: () => void; }) => {
+    this._divContainer.bind('click', (event: { stopPropagation: () => void }) => {
       event.stopPropagation();
     });
 
-    this._divContainer.bind('dblclick', (event: { stopPropagation: () => void; preventDefault: () => void; }) => {
-      event.stopPropagation();
-      event.preventDefault();
-    });
+    this._divContainer.bind(
+      'dblclick',
+      (event: { stopPropagation: () => void; preventDefault: () => void }) => {
+        event.stopPropagation();
+        event.preventDefault();
+      },
+    );
   }
 
   /**
    * Return the current visibile area in the browser.
    */
-  getVisibleBrowserSize(): { width: number, height: number } {
+  getVisibleBrowserSize(): { width: number; height: number } {
     return {
       width: window.innerWidth,
       height: window.innerHeight - Number.parseInt(this._divContainer.css('top'), 10),
@@ -82,10 +85,31 @@ class ScreenManager {
     }
   }
 
-  getWorkspaceMousePosition(event: MouseEvent) {
-    // Retrieve current mouse position.
-    let x = event.clientX;
-    let y = event.clientY;
+  private mouseEvents = ['mousedown', 'mouseup', 'mousemove', 'dblclick', 'click'];
+
+  private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
+
+  // the received type was changed from MouseEvent to "any", because we must support touch events
+  getWorkspaceMousePosition(event: any) {
+    let x;
+    let y;
+
+    if (this.mouseEvents.includes(event.type)) {
+      // Retrieve current mouse position.
+      x = event.clientX;
+      y = event.clientY;
+    } else if (this.tocuchEvents.includes(event.type)) {
+      x = event.touches[0].clientX;
+      y = event.touches[0].clientY;
+    }
+
+    // if value is zero assert throws error
+    if (x !== 0) {
+      $assert(x, `clientX can not be null, eventType= ${event.type}`);
+    }
+    if (y !== 0) {
+      $assert(y, `clientY can not be null, eventType= ${event.type}`);
+    }
 
     // Adjust the deviation of the container positioning ...
     const containerPosition = this.getContainer().position();

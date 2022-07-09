@@ -5,6 +5,18 @@
       "value": "Teilen"
     }
   ],
+  "editor.edit-description-mobile": [
+    {
+      "type": 0,
+      "value": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
+    }
+  ],
+  "editor.edit-mobile": [
+    {
+      "type": 0,
+      "value": "Hinweis für Mobilgeräte."
+    }
+  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -15,6 +27,18 @@
     {
       "type": 0,
       "value": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+    }
+  ],
+  "editor.try-welcome-description-mobile": [
+    {
+      "type": 0,
+      "value": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
+    }
+  ],
+  "editor.try-welcome-mobile": [
+    {
+      "type": 0,
+      "value": "Diese Edition zeigt einige der Mindmap-Funktionen!"
     }
   ],
   "login.signup": [

@@ -35,7 +35,8 @@ class LinkIconTooltip extends FloatingTip {
       placement: 'bottom',
       title: $msg('LINK'),
       trigger: 'manual',
-      template: '<div id="linkPopover" class="popover" onmouseover="jQuery(this).mouseleave(function() {jQuery(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+      template:
+        '<div id="linkPopover" class="popover" onmouseover="jQuery(this).mouseleave(function() {jQuery(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
       destroyOnExit: true,
     });
   }
