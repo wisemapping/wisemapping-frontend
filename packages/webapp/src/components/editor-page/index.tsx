@@ -13,78 +13,82 @@ import { activeInstance, fetchAccount, fetchMapById } from '../../redux/clientSl
 import EditorOptionsBuilder from './EditorOptionsBuilder';
 
 export type EditorPropsType = {
-    isTryMode: boolean;
+  isTryMode: boolean;
 };
 
 const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
-    const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
-    const hotkey = useSelector(hotkeysEnabled);
-    const userLocale = AppI18n.getUserLocale();
-    const client: Client = useSelector(activeInstance);
+  const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
+  const hotkey = useSelector(hotkeysEnabled);
+  const userLocale = AppI18n.getUserLocale();
+  const client: Client = useSelector(activeInstance);
 
-    useEffect(() => {
-        ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
-    }, []);
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
+  }, []);
 
-    const findEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {
-        let result: EditorRenderMode = null;
-        if (isTryMode) {
-            result = 'showcase';
-        } else if (global.mindmapLocked) {
-            result = 'viewonly';
-        } else {
-            const fetchResult = fetchMapById(mapId);
-            if (!fetchResult.isLoading) {
-                if (fetchResult.error) {
-                    throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
-                }
-
-                if (!fetchResult.map) {
-                    throw new Error(`Map info could not be loaded. Info not present: ${JSON.stringify(fetchResult)}`);
-                }
-                result = `edition-${fetchResult.map.role}`;
-            }
+  const findEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {
+    let result: EditorRenderMode = null;
+    if (isTryMode) {
+      result = 'showcase';
+    } else if (global.mindmapLocked) {
+      result = 'viewonly';
+    } else {
+      const fetchResult = fetchMapById(mapId);
+      if (!fetchResult.isLoading) {
+        if (fetchResult.error) {
+          throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
         }
-        return result;
+
+        if (!fetchResult.map) {
+          throw new Error(
+            `Map info could not be loaded. Info not present: ${JSON.stringify(fetchResult)}`,
+          );
+        }
+        result = `edition-${fetchResult.map.role}`;
+      }
     }
+    return result;
+  };
 
-    // What is the role ?
-    const mapId = EditorOptionsBuilder.loadMapId();
-    const mode = findEditorMode(isTryMode, mapId);
+  // What is the role ?
+  const mapId = EditorOptionsBuilder.loadMapId();
+  const mode = findEditorMode(isTryMode, mapId);
 
-    // Account settings can be null and editor cannot be initilized multiple times. This creates problems
-    // at the i18n resource loading.
-    const isAccountLoaded = mode === 'showcase' || fetchAccount;
-    const loadCompleted = mode && isAccountLoaded;
+  // Account settings can be null and editor cannot be initilized multiple times. This creates problems
+  // at the i18n resource loading.
+  const isAccountLoaded = mode === 'showcase' || fetchAccount;
+  const loadCompleted = mode && isAccountLoaded;
 
-    let options, persistence: PersistenceManager;
-    if (loadCompleted) {
-        options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
-        persistence = client.buildPersistenceManager(mode);
-    }
+  let options, persistence: PersistenceManager;
+  if (loadCompleted) {
+    options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
+    persistence = client.buildPersistenceManager(mode);
+  }
 
-    return loadCompleted ? (
-        <IntlProvider
-            locale={userLocale.code}
-            defaultLocale={Locales.EN.code}
-            messages={userLocale.message as Record<string, string>}
-        >
-            <Editor onAction={setActiveDialog}
-                options={options}
-                persistenceManager={persistence}
-                mapId={mapId} />
-            {
-                activeDialog &&
-                <ActionDispatcher
-                    action={activeDialog}
-                    onClose={() => setActiveDialog(null)}
-                    mapsId={[mapId]}
-                    fromEditor
-                />
-            }
-        </IntlProvider>) : <></>
-}
-
+  return loadCompleted ? (
+    <IntlProvider
+      locale={userLocale.code}
+      defaultLocale={Locales.EN.code}
+      messages={userLocale.message as Record<string, string>}
+    >
+      <Editor
+        onAction={setActiveDialog}
+        options={options}
+        persistenceManager={persistence}
+        mapId={mapId}
+      />
+      {activeDialog && (
+        <ActionDispatcher
+          action={activeDialog}
+          onClose={() => setActiveDialog(null)}
+          mapsId={[mapId]}
+          fromEditor
+        />
+      )}
+    </IntlProvider>
+  ) : (
+    <></>
+  );
+};
 
 export default EditorPage;
-

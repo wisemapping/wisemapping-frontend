@@ -43,671 +43,635 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
 }
 
 type Order = 'asc' | 'desc';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getComparator<Key extends keyof any>(
-    order: Order,
-    orderBy: Key
+  order: Order,
+  orderBy: Key,
 ): (
-        a: { [key in Key]: number | string | boolean | Label[] | undefined },
-        b: { [key in Key]: number | string | Label[] | boolean }
-    ) => number {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
+  a: { [key in Key]: number | string | boolean | Label[] | undefined },
+  b: { [key in Key]: number | string | Label[] | boolean },
+) => number {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
 }
 
 interface HeadCell {
-    id: keyof MapInfo;
-    label?: string;
-    numeric: boolean;
-    style?: CSSProperties;
+  id: keyof MapInfo;
+  label?: string;
+  numeric: boolean;
+  style?: CSSProperties;
 }
 
 interface EnhancedTableProps {
-    classes: ReturnType<typeof useStyles>;
-    numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof MapInfo) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    order: Order;
-    orderBy: string;
-    rowCount: number;
+  classes: ReturnType<typeof useStyles>;
+  numSelected: number;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof MapInfo) => void;
+  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  order: Order;
+  orderBy: string;
+  rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const intl = useIntl();
+  const intl = useIntl();
 
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-        props;
+  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
 
-    const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
-        onRequestSort(event, property);
-    };
+  const createSortHandler = (property: keyof MapInfo) => (event: React.MouseEvent<unknown>) => {
+    onRequestSort(event, property);
+  };
 
-    const headCells: HeadCell[] = [
-        {
-            id: 'title',
-            numeric: false,
-            label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }),
-        },
-        {
-            id: 'labels',
-            numeric: false,
-        },
-        {
-            id: 'createdBy',
-            numeric: false,
-            label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }),
-            style: { width: '150px', whiteSpace: 'nowrap' },
-        },
-        {
-            id: 'lastModificationTime',
-            numeric: true,
-            label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }),
-            style: { width: '70px', whiteSpace: 'nowrap' },
-        },
-    ];
+  const headCells: HeadCell[] = [
+    {
+      id: 'title',
+      numeric: false,
+      label: intl.formatMessage({ id: 'map.name', defaultMessage: 'Name' }),
+    },
+    {
+      id: 'labels',
+      numeric: false,
+    },
+    {
+      id: 'createdBy',
+      numeric: false,
+      label: intl.formatMessage({ id: 'map.creator', defaultMessage: 'Creator' }),
+      style: { width: '150px', whiteSpace: 'nowrap' },
+    },
+    {
+      id: 'lastModificationTime',
+      numeric: true,
+      label: intl.formatMessage({ id: 'map.last-update', defaultMessage: 'Last Update' }),
+      style: { width: '70px', whiteSpace: 'nowrap' },
+    },
+  ];
 
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell
-                    padding="checkbox"
-                    key="select"
-                    style={{ width: '20px' }}
-                    className={classes.headerCell}
-                >
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        size="small"
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
-                </TableCell>
+  return (
+    <TableHead>
+      <TableRow>
+        <TableCell
+          padding="checkbox"
+          key="select"
+          style={{ width: '20px' }}
+          className={classes.headerCell}
+        >
+          <Checkbox
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            size="small"
+            inputProps={{ 'aria-label': 'select all desserts' }}
+          />
+        </TableCell>
 
-                <TableCell
-                    padding="checkbox"
-                    key="starred"
-                    className={classes.headerCell}
-                ></TableCell>
+        <TableCell padding="checkbox" key="starred" className={classes.headerCell}></TableCell>
 
-                {headCells.map((headCell) => {
-                    return (
-                        <TableCell
-                            key={headCell.id}
-                            sortDirection={orderBy === headCell.id ? order : false}
-                            style={headCell.style}
-                            className={classes.headerCell}
-                        >
-                            <TableSortLabel
-                                active={orderBy === headCell.id}
-                                direction={orderBy === headCell.id ? order : 'asc'}
-                                onClick={createSortHandler(headCell.id)}
-                            >
-                                {headCell.label}
+        {headCells.map((headCell) => {
+          return (
+            <TableCell
+              key={headCell.id}
+              sortDirection={orderBy === headCell.id ? order : false}
+              style={headCell.style}
+              className={classes.headerCell}
+            >
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
 
-                                {orderBy === headCell.id && (
-                                    <span className={classes.visuallyHidden}>
-                                        {order === 'desc'
-                                            ? 'sorted descending'
-                                            : 'sorted ascending'}
-                                    </span>
-                                )}
-                            </TableSortLabel>
-                        </TableCell>
-                    );
-                })}
+                {orderBy === headCell.id && (
+                  <span className={classes.visuallyHidden}>
+                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  </span>
+                )}
+              </TableSortLabel>
+            </TableCell>
+          );
+        })}
 
-                <TableCell
-                    padding="checkbox"
-                    key="action"
-                    className={classes.headerCell}
-                ></TableCell>
-            </TableRow>
-        </TableHead>
-    );
+        <TableCell padding="checkbox" key="action" className={classes.headerCell}></TableCell>
+      </TableRow>
+    </TableHead>
+  );
 }
 
 type ActionPanelState = {
-    el: HTMLElement | undefined;
-    mapId: number;
+  el: HTMLElement | undefined;
+  mapId: number;
 };
 
 interface MapsListProps {
-    filter: Filter;
+  filter: Filter;
 }
 
 const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => boolean) => {
-    return (mapInfo: MapInfo) => {
-        // Check for filter condition
-        let result = false;
-        switch (filter.type) {
-            case 'all':
-                result = true;
-                break;
-            case 'starred':
-                result = mapInfo.starred;
-                break;
-            case 'owned':
-                result = mapInfo.role == 'owner';
-                break;
-            case 'shared':
-                result = mapInfo.role != 'owner';
-                break;
-            case 'label':
-                result =
-                    !mapInfo.labels ||
-                    mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id);
-                break;
-            case 'public':
-                result = mapInfo.isPublic;
-                break;
-            default:
-                result = false;
-        }
+  return (mapInfo: MapInfo) => {
+    // Check for filter condition
+    let result = false;
+    switch (filter.type) {
+      case 'all':
+        result = true;
+        break;
+      case 'starred':
+        result = mapInfo.starred;
+        break;
+      case 'owned':
+        result = mapInfo.role == 'owner';
+        break;
+      case 'shared':
+        result = mapInfo.role != 'owner';
+        break;
+      case 'label':
+        result =
+          !mapInfo.labels ||
+          mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id);
+        break;
+      case 'public':
+        result = mapInfo.isPublic;
+        break;
+      default:
+        result = false;
+    }
 
-        // Does it match search filter criteria...
-        if (search && result) {
-            result = mapInfo.title.toLowerCase().indexOf(search.toLowerCase()) != -1;
-        }
+    // Does it match search filter criteria...
+    if (search && result) {
+      result = mapInfo.title.toLowerCase().indexOf(search.toLowerCase()) != -1;
+    }
 
-        return result;
-    };
+    return result;
+  };
 };
 
 export type ChangeLabelMutationFunctionParam = { maps: MapInfo[]; label: Label; checked: boolean };
 
 export const getChangeLabelMutationFunction =
-    (client: Client) =>
-        async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
-            if (!label.id) {
-                label.id = await client.createLabel(label.title, label.color);
-            }
-            if (checked) {
-                const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
-                await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
-            } else {
-                const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
-                await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
-            }
-            return Promise.resolve();
-        };
+  (client: Client) =>
+  async ({ maps, label, checked }: ChangeLabelMutationFunctionParam): Promise<void> => {
+    if (!label.id) {
+      label.id = await client.createLabel(label.title, label.color);
+    }
+    if (checked) {
+      const toAdd = maps.filter((m) => !m.labels.find((l) => l.id === label.id));
+      await Promise.all(toAdd.map((m) => client.addLabelToMap(label.id, m.id)));
+    } else {
+      const toRemove = maps.filter((m) => m.labels.find((l) => l.id === label.id));
+      await Promise.all(toRemove.map((m) => client.deleteLabelFromMap(label.id, m.id)));
+    }
+    return Promise.resolve();
+  };
 
 export const MapsList = (props: MapsListProps): React.ReactElement => {
-    const classes = useStyles();
-    const [order, setOrder] = React.useState<Order>('desc');
-    const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
+  const classes = useStyles();
+  const [order, setOrder] = React.useState<Order>('desc');
+  const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
 
-    const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
-    const [selected, setSelected] = React.useState<number[]>([]);
-    const [searchCondition, setSearchCondition] = React.useState<string>('');
+  const [orderBy, setOrderBy] = React.useState<keyof MapInfo>('lastModificationTime');
+  const [selected, setSelected] = React.useState<number[]>([]);
+  const [searchCondition, setSearchCondition] = React.useState<string>('');
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const client: Client = useSelector(activeInstance);
-    const intl = useIntl();
-    const queryClient = useQueryClient();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const client: Client = useSelector(activeInstance);
+  const intl = useIntl();
+  const queryClient = useQueryClient();
 
-    // Configure locale ...
-    const userLocale = AppI18n.getUserLocale();
-    dayjs.locale(userLocale.code);
+  // Configure locale ...
+  const userLocale = AppI18n.getUserLocale();
+  dayjs.locale(userLocale.code);
 
-    useEffect(() => {
-        setSelected([]);
-        setPage(0);
-        setFilter(props.filter);
-    }, [props.filter.type, (props.filter as LabelFilter).label]);
+  useEffect(() => {
+    setSelected([]);
+    setPage(0);
+    setFilter(props.filter);
+  }, [props.filter.type, (props.filter as LabelFilter).label]);
 
-    const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
-        return client.fetchAllMaps();
+  const { isLoading, data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
+    return client.fetchAllMaps();
+  });
+
+  const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
+
+  const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
+    undefined,
+  );
+
+  type ActiveDialog = {
+    actionType: ActionType;
+    mapsId: number[];
+  };
+
+  const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.checked) {
+      const newSelecteds = mapsInfo.map((n) => n.id);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected: number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleActionClick = (mapId: number): ((event) => void) => {
+    return (event): void => {
+      setActiveRowAction({
+        mapId: mapId,
+        el: event.currentTarget,
+      });
+      event.stopPropagation();
+    };
+  };
+
+  const starredMultation = useMutation<void, ErrorInfo, number>(
+    (id: number) => {
+      const map = mapsInfo.find((m) => m.id == id);
+      const starred = !map?.starred;
+
+      // Follow a optimistic update approach ...
+      queryClient.setQueryData<MapInfo[]>('maps', (mapsInfo) => {
+        if (map) {
+          map.starred = starred;
+        }
+        return mapsInfo || [];
+      });
+      return client.updateStarred(id, starred);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('maps');
+      },
+      onError: (error) => {
+        queryClient.invalidateQueries('maps');
+        console.error(error);
+      },
+    },
+  );
+
+  const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
+    event.stopPropagation();
+    starredMultation.mutate(id);
+  };
+
+  const handleActionMenuClose = (action: ActionType): void => {
+    if (action) {
+      const mapId = activeRowAction?.mapId;
+
+      setActiveDialog({
+        actionType: action as ActionType,
+        mapsId: [mapId] as number[],
+      });
+    }
+    setActiveRowAction(undefined);
+  };
+
+  const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchCondition(e.target.value);
+  };
+
+  const handleDeleteClick = () => {
+    setActiveDialog({
+      actionType: 'delete',
+      mapsId: selected,
     });
+  };
 
-    const mapsInfo: MapInfo[] = data ? data.filter(mapsFilter(filter, searchCondition)) : [];
+  const handleAddLabelClick = () => {
+    setActiveDialog({
+      actionType: 'label',
+      mapsId: selected,
+    });
+  };
 
-    const [activeRowAction, setActiveRowAction] = React.useState<ActionPanelState | undefined>(
-        undefined
-    );
+  const removeLabelMultation = useMutation<
+    void,
+    ErrorInfo,
+    { mapId: number; labelId: number },
+    number
+  >(
+    ({ mapId, labelId }) => {
+      return client.deleteLabelFromMap(labelId, mapId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('maps');
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    },
+  );
 
-    type ActiveDialog = {
-        actionType: ActionType;
-        mapsId: number[];
-    };
+  const handleRemoveLabel = (mapId: number, labelId: number) => {
+    removeLabelMultation.mutate({ mapId, labelId });
+  };
 
-    const [activeDialog, setActiveDialog] = React.useState<ActiveDialog | undefined>(undefined);
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MapInfo) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
+  const isSelected = (id: number) => selected.indexOf(id) !== -1;
+  return (
+    <div className={classes.root}>
+      <ActionChooser
+        anchor={activeRowAction?.el}
+        onClose={handleActionMenuClose}
+        mapId={activeRowAction?.mapId}
+      />
 
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        if (event.target.checked) {
-            const newSelecteds = mapsInfo.map((n) => n.id);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
+      <Paper className={classes.paper} elevation={0}>
+        <Toolbar className={classes.toolbar} variant="dense">
+          <div className={classes.toolbarActions}>
+            {selected.length > 0 && (
+              <Tooltip
+                arrow={true}
+                title={intl.formatMessage({
+                  id: 'map.delete-selected',
+                  defaultMessage: 'Delete selected',
+                })}
+              >
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="outlined"
+                  type="button"
+                  disableElevation={true}
+                  onClick={handleDeleteClick}
+                  startIcon={<DeleteOutlined />}
+                >
+                  <FormattedMessage id="action.delete" defaultMessage="Delete" />
+                </Button>
+              </Tooltip>
+            )}
 
-    const handleRowClick = (event: React.MouseEvent<unknown>, id: number): void => {
-        const selectedIndex = selected.indexOf(id);
-        let newSelected: number[] = [];
+            {selected.length > 0 && (
+              <Tooltip
+                arrow={true}
+                title={intl.formatMessage({
+                  id: 'map.tooltip-add',
+                  defaultMessage: 'Add label to selected',
+                })}
+              >
+                <Button
+                  color="primary"
+                  size="medium"
+                  variant="outlined"
+                  type="button"
+                  style={{ marginLeft: '10px' }}
+                  disableElevation={true}
+                  startIcon={<LabelTwoTone />}
+                  onClick={handleAddLabelClick}
+                >
+                  <FormattedMessage id="action.label" defaultMessage="Add Label" />
+                </Button>
+              </Tooltip>
+            )}
+          </div>
 
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const handleActionClick = (mapId: number): ((event) => void) => {
-        return (event): void => {
-            setActiveRowAction({
-                mapId: mapId,
-                el: event.currentTarget,
-            });
-            event.stopPropagation();
-        };
-    };
-
-    const starredMultation = useMutation<void, ErrorInfo, number>(
-        (id: number) => {
-            const map = mapsInfo.find((m) => m.id == id);
-            const starred = !map?.starred;
-
-            // Follow a optimistic update approach ...
-            queryClient.setQueryData<MapInfo[]>('maps', (mapsInfo) => {
-                if (map) {
-                    map.starred = starred;
-                }
-                return mapsInfo || [];
-            });
-            return client.updateStarred(id, starred);
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('maps');
-            },
-            onError: (error) => {
-                queryClient.invalidateQueries('maps');
-                console.error(error);
-            },
-        }
-    );
-
-    const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
-        event.stopPropagation();
-        starredMultation.mutate(id);
-    };
-
-    const handleActionMenuClose = (action: ActionType): void => {
-        if (action) {
-            const mapId = activeRowAction?.mapId;
-
-            setActiveDialog({
-                actionType: action as ActionType,
-                mapsId: [mapId] as number[],
-            });
-        }
-        setActiveRowAction(undefined);
-    };
-
-    const handleOnSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchCondition(e.target.value);
-    };
-
-    const handleDeleteClick = () => {
-        setActiveDialog({
-            actionType: 'delete',
-            mapsId: selected,
-        });
-    };
-
-    const handleAddLabelClick = () => {
-        setActiveDialog({
-            actionType: 'label',
-            mapsId: selected,
-        });
-    };
-
-    const removeLabelMultation = useMutation<
-        void,
-        ErrorInfo,
-        { mapId: number; labelId: number },
-        number
-    >(
-        ({ mapId, labelId }) => {
-            return client.deleteLabelFromMap(labelId, mapId);
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('maps');
-            },
-            onError: (error) => {
-                console.error(error);
-            },
-        }
-    );
-
-    const handleRemoveLabel = (mapId: number, labelId: number) => {
-        removeLabelMultation.mutate({ mapId, labelId });
-    };
-
-    const isSelected = (id: number) => selected.indexOf(id) !== -1;
-    return (
-        <div className={classes.root}>
-            <ActionChooser
-                anchor={activeRowAction?.el}
-                onClose={handleActionMenuClose}
-                mapId={activeRowAction?.mapId}
+          <div className={classes.toolbarListActions}>
+            <TablePagination
+              style={{ float: 'right', border: '0', paddingBottom: '5px' }}
+              count={mapsInfo.length}
+              rowsPerPageOptions={[]}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              component="div"
             />
 
-            <Paper className={classes.paper} elevation={0}>
-                <Toolbar className={classes.toolbar} variant="dense">
-                    <div className={classes.toolbarActions}>
-                        {selected.length > 0 && (
-                            <Tooltip
-                                arrow={true}
-                                title={intl.formatMessage({
-                                    id: 'map.delete-selected',
-                                    defaultMessage: 'Delete selected',
-                                })}
-                            >
-                                <Button
-                                    color="primary"
-                                    size="medium"
-                                    variant="outlined"
-                                    type="button"
-                                    disableElevation={true}
-                                    onClick={handleDeleteClick}
-                                    startIcon={<DeleteOutlined />}
-                                >
-                                    <FormattedMessage id="action.delete" defaultMessage="Delete" />
-                                </Button>
-                            </Tooltip>
-                        )}
-
-                        {selected.length > 0 && (
-                            <Tooltip
-                                arrow={true}
-                                title={intl.formatMessage({
-                                    id: 'map.tooltip-add',
-                                    defaultMessage: 'Add label to selected',
-                                })}
-                            >
-                                <Button
-                                    color="primary"
-                                    size="medium"
-                                    variant="outlined"
-                                    type="button"
-                                    style={{ marginLeft: '10px' }}
-                                    disableElevation={true}
-                                    startIcon={<LabelTwoTone />}
-                                    onClick={handleAddLabelClick}
-                                >
-                                    <FormattedMessage
-                                        id="action.label"
-                                        defaultMessage="Add Label"
-                                    />
-                                </Button>
-                            </Tooltip>
-                        )}
-                    </div>
-
-                    <div className={classes.toolbarListActions}>
-                        <TablePagination
-                            style={{ float: 'right', border: '0', paddingBottom: '5px' }}
-                            count={mapsInfo.length}
-                            rowsPerPageOptions={[]}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            component="div"
-                        />
-
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder={intl.formatMessage({
-                                    id: 'maps.search-action',
-                                    defaultMessage: 'Search ...',
-                                })}
-                                classes={{
-                                    root: classes.searchInputRoot,
-                                    input: classes.searchInputInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                                onChange={handleOnSearchChange}
-                            />
-                        </div>
-                    </div>
-                </Toolbar>
-
-                <TableContainer>
-                    <Table className={classes.table} size="small" stickyHeader>
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={mapsInfo.length}
-                        />
-
-                        <TableBody>
-                            {isLoading ? (
-                                <TableRow>
-                                    <TableCell colSpan={6}>Loading ...</TableCell>
-                                </TableRow>
-                            ) : mapsInfo.length == 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} style={{ textAlign: 'center' }}>
-                                        <FormattedMessage
-                                            id="maps.empty-result"
-                                            defaultMessage="No matching mindmap found with the current filter criteria."
-                                        />
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                stableSort(mapsInfo, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row: MapInfo) => {
-                                        const isItemSelected = isSelected(row.id);
-                                        const labelId = row.id;
-
-                                        return (
-                                            <TableRow
-                                                hover
-                                                onClick={(event) => handleRowClick(event, row.id)}
-                                                role="checkbox"
-                                                aria-checked={isItemSelected}
-                                                tabIndex={-1}
-                                                key={row.id}
-                                                selected={isItemSelected}
-                                                style={{ border: '0' }}
-                                            >
-                                                <TableCell
-                                                    padding="checkbox"
-                                                    className={classes.bodyCell}
-                                                >
-                                                    <Checkbox
-                                                        checked={isItemSelected}
-                                                        inputProps={{
-                                                            'aria-labelledby': String(labelId),
-                                                        }}
-                                                        size="small"
-                                                    />
-                                                </TableCell>
-
-                                                <TableCell
-                                                    padding="checkbox"
-                                                    className={classes.bodyCell}
-                                                >
-                                                    <Tooltip
-                                                        arrow={true}
-                                                        title={intl.formatMessage({
-                                                            id: 'maps.tooltip-starred',
-                                                            defaultMessage: 'Starred',
-                                                        })}
-                                                    >
-                                                        <IconButton
-                                                            size="small"
-                                                            onClick={(e) =>
-                                                                handleStarred(e, row.id)
-                                                            }
-                                                        >
-                                                            <StarRateRoundedIcon
-                                                                color="action"
-                                                                style={{
-                                                                    color: row.starred
-                                                                        ? 'yellow'
-                                                                        : 'gray',
-                                                                }}
-                                                            />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </TableCell>
-
-                                                <TableCell className={classes.bodyCell}>
-                                                    <Tooltip
-                                                        arrow={true}
-                                                        title={intl.formatMessage({
-                                                            id: 'maps.tooltip-open',
-                                                            defaultMessage: 'Open for edition',
-                                                        })}
-                                                        placement="bottom-start"
-                                                    >
-                                                        <Link
-                                                            href={`/c/maps/${row.id}/edit`}
-                                                            color="textPrimary"
-                                                            underline="always"
-                                                            onClick={(e) => e.stopPropagation()}
-                                                        >
-                                                            {row.title}
-                                                        </Link>
-                                                    </Tooltip>
-                                                </TableCell>
-
-                                                <TableCell className={[classes.bodyCell, classes.labelsCell].join(' ')}>
-                                                    <LabelsCell
-                                                        labels={row.labels}
-                                                        onDelete={(lbl) => {
-                                                            handleRemoveLabel(row.id, lbl.id);
-                                                        }}
-                                                    />
-                                                </TableCell>
-
-                                                <TableCell className={classes.bodyCell}>
-                                                    {row.createdBy}
-                                                </TableCell>
-
-                                                <TableCell className={classes.bodyCell}>
-                                                    <Tooltip
-                                                        arrow={true}
-                                                        title={intl.formatMessage(
-                                                            {
-                                                                id: 'maps.modified-by-desc',
-                                                                defaultMessage:
-                                                                    'Modified by {by} on {on}',
-                                                            },
-                                                            {
-                                                                by: row.lastModificationBy,
-                                                                on: dayjs(
-                                                                    row.lastModificationTime
-                                                                ).format('lll'),
-                                                            }
-                                                        )}
-                                                        placement="bottom-start"
-                                                    >
-                                                        <span>
-                                                            {dayjs(
-                                                                row.lastModificationTime
-                                                            ).fromNow()}
-                                                        </span>
-                                                    </Tooltip>
-                                                </TableCell>
-
-                                                <TableCell className={classes.bodyCell}>
-                                                    <Tooltip
-                                                        arrow={true}
-                                                        title={intl.formatMessage({
-                                                            id: 'map.more-actions',
-                                                            defaultMessage: 'More Actions',
-                                                        })}
-                                                    >
-                                                        <IconButton
-                                                            aria-label="Others"
-                                                            size="small"
-                                                            onClick={handleActionClick(row.id)}
-                                                        >
-                                                            <MoreHorizIcon color="action" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
-
-            <ActionDispatcher
-                action={activeDialog?.actionType}
-                onClose={(success) => {
-                    setActiveDialog(undefined);
-
-                    // If it was a success action, reset the selection list ...
-                    if (success) {
-                        setSelected([]);
-                    }
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder={intl.formatMessage({
+                  id: 'maps.search-action',
+                  defaultMessage: 'Search ...',
+                })}
+                classes={{
+                  root: classes.searchInputRoot,
+                  input: classes.searchInputInput,
                 }}
-                mapsId={activeDialog ? activeDialog.mapsId : []}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={handleOnSearchChange}
+              />
+            </div>
+          </div>
+        </Toolbar>
+
+        <TableContainer>
+          <Table className={classes.table} size="small" stickyHeader>
+            <EnhancedTableHead
+              classes={classes}
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={mapsInfo.length}
             />
-        </div>
-    );
+
+            <TableBody>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={6}>Loading ...</TableCell>
+                </TableRow>
+              ) : mapsInfo.length == 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} style={{ textAlign: 'center' }}>
+                    <FormattedMessage
+                      id="maps.empty-result"
+                      defaultMessage="No matching mindmap found with the current filter criteria."
+                    />
+                  </TableCell>
+                </TableRow>
+              ) : (
+                stableSort(mapsInfo, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: MapInfo) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = row.id;
+
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleRowClick(event, row.id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.id}
+                        selected={isItemSelected}
+                        style={{ border: '0' }}
+                      >
+                        <TableCell padding="checkbox" className={classes.bodyCell}>
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{
+                              'aria-labelledby': String(labelId),
+                            }}
+                            size="small"
+                          />
+                        </TableCell>
+
+                        <TableCell padding="checkbox" className={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'maps.tooltip-starred',
+                              defaultMessage: 'Starred',
+                            })}
+                          >
+                            <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                              <StarRateRoundedIcon
+                                color="action"
+                                style={{
+                                  color: row.starred ? 'yellow' : 'gray',
+                                }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+
+                        <TableCell className={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'maps.tooltip-open',
+                              defaultMessage: 'Open for edition',
+                            })}
+                            placement="bottom-start"
+                          >
+                            <Link
+                              href={`/c/maps/${row.id}/edit`}
+                              color="textPrimary"
+                              underline="always"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {row.title}
+                            </Link>
+                          </Tooltip>
+                        </TableCell>
+
+                        <TableCell className={[classes.bodyCell, classes.labelsCell].join(' ')}>
+                          <LabelsCell
+                            labels={row.labels}
+                            onDelete={(lbl) => {
+                              handleRemoveLabel(row.id, lbl.id);
+                            }}
+                          />
+                        </TableCell>
+
+                        <TableCell className={classes.bodyCell}>{row.createdBy}</TableCell>
+
+                        <TableCell className={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage(
+                              {
+                                id: 'maps.modified-by-desc',
+                                defaultMessage: 'Modified by {by} on {on}',
+                              },
+                              {
+                                by: row.lastModificationBy,
+                                on: dayjs(row.lastModificationTime).format('lll'),
+                              },
+                            )}
+                            placement="bottom-start"
+                          >
+                            <span>{dayjs(row.lastModificationTime).fromNow()}</span>
+                          </Tooltip>
+                        </TableCell>
+
+                        <TableCell className={classes.bodyCell}>
+                          <Tooltip
+                            arrow={true}
+                            title={intl.formatMessage({
+                              id: 'map.more-actions',
+                              defaultMessage: 'More Actions',
+                            })}
+                          >
+                            <IconButton
+                              aria-label="Others"
+                              size="small"
+                              onClick={handleActionClick(row.id)}
+                            >
+                              <MoreHorizIcon color="action" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <ActionDispatcher
+        action={activeDialog?.actionType}
+        onClose={(success) => {
+          setActiveDialog(undefined);
+
+          // If it was a success action, reset the selection list ...
+          if (success) {
+            setSelected([]);
+          }
+        }}
+        mapsId={activeDialog ? activeDialog.mapsId : []}
+      />
+    </div>
+  );
 };

@@ -1,282 +1,283 @@
 /********************************************************************************/
 /* Header & Toolbar Styles */
 /********************************************************************************/
-@import "bootstrap-prefix.min.css";
-@import "bootstrap-fixes.css";
+@import 'bootstrap-prefix.min.css';
+@import 'bootstrap-fixes.css';
 
 html {
-    /* avoid bootstrap overriding font-size and breaking Mui */
-    font-size: initial;
+  /* avoid bootstrap overriding font-size and breaking Mui */
+  font-size: initial;
 }
 
 body {
-	width: 100vw; 
-	height: 100vh; 
-	min-width: 100vw;
-	min-height: 100vh; 
-	margin: 0px;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0px;
 }
 
 .mindplot-root {
-	width: 100%; 
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 div#mindplot {
-    position: relative;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    overflow: hidden;
-    opacity: 1;
-    background-color: #f2f2f2;
-    background-image:  linear-gradient(#ebe9e7 1px, transparent 1px), linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
-    background-size: 50px 50px;
+  position: relative;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  overflow: hidden;
+  opacity: 1;
+  background-color: #f2f2f2;
+  background-image: linear-gradient(#ebe9e7 1px, transparent 1px),
+    linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
+  background-size: 50px 50px;
 }
 
 .notesTip {
-    background-color: #dfcf3c;
-    padding: 5px 15px;
-    color: #666666;
-    /*font-weight: bold;*/
-    /*width: 100px;*/
-    font-size: 13px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: #dfcf3c;
+  padding: 5px 15px;
+  color: #666666;
+  /*font-weight: bold;*/
+  /*width: 100px;*/
+  font-size: 13px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .linkTip {
-    background-color: #dfcf3c;
-    padding: 5px 15px;
-    color: #666666;
-    /*font-weight: bold;*/
-    /*width: 100px;*/
-    font-size: 13px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: #dfcf3c;
+  padding: 5px 15px;
+  color: #666666;
+  /*font-weight: bold;*/
+  /*width: 100px;*/
+  font-size: 13px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .keyboardShortcutTip {
-    background-color: black;
-    padding: 5px 15px;
-    color: white;
-    font-weight: bold;
-    font-size: 11px;
+  background-color: black;
+  padding: 5px 15px;
+  color: white;
+  font-weight: bold;
+  font-size: 11px;
 }
 
 /** */
 /* Modal dialogs definitions */
 
 div.modalDialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 11000;
-    width: 500px;
-    margin: -250px 0 0 -250px;
-    background-color: #ffffff;
-    border: 1px solid #999;
-    padding: 10px;
-    overflow: auto;
-    -webkit-background-clip: padding-box;
-    -moz-background-clip: padding-box;
-    background-clip: padding-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 11000;
+  width: 500px;
+  margin: -250px 0 0 -250px;
+  background-color: #ffffff;
+  border: 1px solid #999;
+  padding: 10px;
+  overflow: auto;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
 }
 
 div.modalDialog .content {
-    padding: 5px 5px;
+  padding: 5px 5px;
 }
 
 div.modalDialog .title {
-    font-weight: bold;
-    text-shadow: 1px 1px 0 #fff;
-    border-bottom: 1px solid #eee;
-    padding: 5px 15px;
-    font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff;
+  border-bottom: 1px solid #eee;
+  padding: 5px 15px;
+  font-size: 18px;
 }
 
 /*---   End Modal Dialog Form  ---*/
 
 .publishModalDialog .content {
-    height: 420px;
+  height: 420px;
 }
 
 .exportModalDialog .content {
-    height: 400px;
+  height: 400px;
 }
 
 .shareModalDialog .content {
-    height: 440px;
+  height: 440px;
 }
 
 div.shareModalDialog {
-    width: 550px;
+  width: 550px;
 }
 
 .panelIcon {
-    width: 20px;
-    height: 20px;
-    margin-left: 4px;
-    margin-top: 3px;
-    cursor: pointer
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+  margin-top: 3px;
+  cursor: pointer;
 }
 
 .panelIcon:hover {
-    background-color: #efefef;
+  background-color: #efefef;
 }
 
 .wise-editor .popover {
-    font-size: 13px;
-    max-width: none;
+  font-size: 13px;
+  max-width: none;
 }
 
 #floating-panel {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    bottom: 20px;
-    right: 20px;
-    align-items: stretch;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  bottom: 20px;
+  right: 20px;
+  align-items: stretch;
 }
 
 div#position {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 #position-button {
-    cursor: pointer;
-    border: solid black 1px;
-    width: 40px;
-    height: 40px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 40px 40px;
-    background-color: #FFF;
-    border-radius: 8px;
+  cursor: pointer;
+  border: solid black 1px;
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  background-color: #fff;
+  border-radius: 8px;
 }
 
 #zoom-button {
-    width: 40px;
-    border: 0;
+  width: 40px;
+  border: 0;
 }
 
 #zoom-plus,
 #zoom-minus {
-    border: solid black 1px;
-    height: 40px;
-    width: 40px;
-    background-repeat: no-repeat;
-    background-size: 40px 40px;
-    background-position: center;
-    cursor: pointer;
-    background-color: #FFF;
+  border: solid black 1px;
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  background-position: center;
+  cursor: pointer;
+  background-color: #fff;
 }
 
 #zoom-plus {
-    border-radius: 8px 8px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
 #zoom-minus {
-    border-radius: 0 0 8px 8px;
+  border-radius: 0 0 8px 8px;
 }
 
-div#shotcuts > img{
-    margin: 20px 0;
-    width: 40px;
-    height: 40px;
+div#shotcuts > img {
+  margin: 20px 0;
+  width: 40px;
+  height: 40px;
 }
 
 #keyboardTable {
-    font-family: Arial, verdana, serif;
-    font-size: 13px;
-    width: 100%;
+  font-family: Arial, verdana, serif;
+  font-size: 13px;
+  width: 100%;
 }
 
 #keyboardTable td {
-    padding: 3px;
-    white-space: nowrap;
+  padding: 3px;
+  white-space: nowrap;
 }
 
 #keyboardTable th {
-    padding: 5px;
-    white-space: nowrap;
+  padding: 5px;
+  white-space: nowrap;
 }
 
 #keyboardTable th {
-    background-color: #000000;
-    color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .tryInfoPanel {
-	position: absolute;
-	text-align: center;
-	left: 0;
-	right: 0;
-	background-color: white;
-	border: solid 2px #ffa800;
-	margin: auto;
-	width: 99%;
-	border-radius: 9px;
-	width: 96%;
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: solid 2px #ffa800;
+  margin: auto;
+  width: 99%;
+  border-radius: 9px;
+  width: 96%;
 }
 
 @media (min-width: 600px) {
-	.tryInfoPanel {
-		font-size: 15px;
-	}
+  .tryInfoPanel {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 600px) {
-	.tryInfoPanel {
-		font-size: 13px;
-	}
+  .tryInfoPanel {
+    font-size: 13px;
+  }
 }
 
 .tryInfoPanel .tryInfoPanelInner {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 5px;
-	padding-right: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
-.tryInfoPanel .tryInfoPanelInner .closeButton  {
-	position: absolute;
-    top: 5px;
-    right: 5px;
+.tryInfoPanel .tryInfoPanelInner .closeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .tryInfoPanel .tryInfoPanelInner .closeButton button {
-	cursor: pointer;
-	border-style: hidden;
-	background-color: transparent;
-	padding: 0px;
+  cursor: pointer;
+  border-style: hidden;
+  background-color: transparent;
+  padding: 0px;
 }
 
 .tryInfoPanel .tryInfoPanelInner .closeButton button img {
-	width: 18px;
-	height: 18px;
-	filter: invert(73%) sepia(21%) saturate(4699%) hue-rotate(357deg) brightness(98%) contrast(108%);
+  width: 18px;
+  height: 18px;
+  filter: invert(73%) sepia(21%) saturate(4699%) hue-rotate(357deg) brightness(98%) contrast(108%);
 }
 
 .tryInfoPanelWithToolbar {
-	top: 55px;
+  top: 55px;
 }
 
 .tryInfoPanelWithoutToolbar {
-	top: 5px;
+  top: 5px;
 }
 
 .tryInfoPanelClosed {
-	display: none;
+  display: none;
 }
 
 .tryInfoPanel > p {
-    justify-content: center;
+  justify-content: center;
 }

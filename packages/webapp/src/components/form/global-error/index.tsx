@@ -3,19 +3,19 @@ import { ErrorInfo } from '../../../classes/client';
 import StyledAlert from './styled';
 
 type GlobalErrorProps = {
-    error?: ErrorInfo;
+  error?: ErrorInfo;
 };
 
 const GlobalError = (props: GlobalErrorProps): React.ReactElement | null => {
-    const error = props.error;
-    const hasError = Boolean(error?.msg);
-    const errorMsg = error?.msg;
+  const error = props.error;
+  const hasError = Boolean(error?.msg);
+  const errorMsg = error?.msg;
 
-    return hasError ? (
-        <StyledAlert severity="error" variant="filled" hidden={!hasError}>
-            {errorMsg}
-        </StyledAlert>
-    ) : null;
+  return hasError ? (
+    <StyledAlert severity="error" variant="filled" hidden={!hasError}>
+      {errorMsg}
+    </StyledAlert>
+  ) : null;
 };
 
 export default GlobalError;

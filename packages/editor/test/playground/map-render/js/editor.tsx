@@ -21,7 +21,6 @@ import Editor, { EditorOptions } from '../../../../src/index';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 
 const initialization = (designer: Designer) => {
-
   designer.addEvent('loadSuccess', () => {
     const elem = document.getElementById('mindplot');
     if (elem) {
@@ -35,10 +34,10 @@ const mapId = 'welcome';
 const options: EditorOptions = {
   zoom: 0.8,
   locked: false,
-  mapTitle: "Develop WiseMapping",
+  mapTitle: 'Develop WiseMapping',
   mode: 'edition-owner',
   locale: 'en',
-  enableKeyboardEvents: true
+  enableKeyboardEvents: true,
 };
 
 ReactDOM.render(
