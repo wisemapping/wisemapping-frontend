@@ -49,7 +49,10 @@ export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType)
   return xmlDoc;
 };
 
-export const parseXMLFile = (filePath: fs.PathOrFileDescriptor, mimeType: DOMParserSupportedType) => {
+export const parseXMLFile = (
+  filePath: fs.PathOrFileDescriptor,
+  mimeType: DOMParserSupportedType,
+) => {
   const stream = fs.readFileSync(filePath, { encoding: 'utf-8' });
 
   let content = stream.toString();

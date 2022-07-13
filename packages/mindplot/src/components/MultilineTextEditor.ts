@@ -33,23 +33,20 @@ class MultilineTextEditor extends Events {
   }
 
   private static _buildEditor() {
-    const result = $('<div></div>')
-      .attr('id', 'textContainer')
-      .css({
-        display: 'none',
-        zIndex: '8',
-        border: '0 none',
-      });
+    const result = $('<div></div>').attr('id', 'textContainer').css({
+      display: 'none',
+      zIndex: '8',
+      border: '0 none',
+    });
 
-    const textareaElem = $('<textarea tabindex="-1" value="" wrap="off" ></textarea>')
-      .css({
-        border: '1px gray dashed',
-        background: 'rgba(98, 135, 167, .4)',
-        outline: '0 none',
-        resize: 'none',
-        overflow: 'hidden',
-        padding: '2px 0px 2px 4px',
-      });
+    const textareaElem = $('<textarea tabindex="-1" value="" wrap="off" ></textarea>').css({
+      border: '1px gray dashed',
+      background: 'rgba(98, 135, 167, .4)',
+      outline: '0 none',
+      resize: 'none',
+      overflow: 'hidden',
+      padding: '2px 0px 2px 4px',
+    });
 
     result.append(textareaElem);
     return result;

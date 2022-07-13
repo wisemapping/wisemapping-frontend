@@ -85,7 +85,7 @@ class DesignerUndoManager {
       result = false;
     } else if (undoLength > 0) {
       const command = this._undoQueue[undoLength - 1];
-      result = (this._baseId !== command.getId());
+      result = this._baseId !== command.getId();
     }
     return result;
   }

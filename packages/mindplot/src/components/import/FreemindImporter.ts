@@ -50,7 +50,9 @@ export default class FreemindImporter extends Importer {
     const version: string = this.freemindMap.getVersion();
 
     if (!version || version.startsWith('freeplane')) {
-      throw new Error('You seems to be be trying to import a Freeplane map. FreePlane is not supported format.');
+      throw new Error(
+        'You seems to be be trying to import a Freeplane map. FreePlane is not supported format.',
+      );
     } else {
       const mapVersion: VersionNumber = new VersionNumber(version);
       if (mapVersion.isGreaterThan(FreemindConstant.SUPPORTED_FREEMIND_VERSION)) {
@@ -144,7 +146,11 @@ export default class FreemindImporter extends Importer {
     }
   }
 
-  private convertNodeProperties(freeNode: FreemindNode, wiseTopic: NodeModel, centralTopic: boolean): void {
+  private convertNodeProperties(
+    freeNode: FreemindNode,
+    wiseTopic: NodeModel,
+    centralTopic: boolean,
+  ): void {
     const text: string = freeNode.getText();
     if (text) {
       if (!centralTopic && text.length > 100) {
@@ -177,7 +183,12 @@ export default class FreemindImporter extends Importer {
     if (folded) wiseTopic.setChildrenShrunken(folded);
   }
 
-  private convertChildNodes(freeParent: FreemindNode, wiseParent: NodeModel, mindmap: Mindmap, depth: number): void {
+  private convertChildNodes(
+    freeParent: FreemindNode,
+    wiseParent: NodeModel,
+    mindmap: Mindmap,
+    depth: number,
+  ): void {
     const freeChilden = freeParent.getArrowlinkOrCloudOrEdge();
     let currentWiseTopic: NodeModel = wiseParent;
     let order = 0;
@@ -206,7 +217,13 @@ export default class FreemindImporter extends Importer {
 
         // Convert node position...
         const childrenCountSameSide = this.getChildrenCountSameSide(freeChilden, child);
-        const position: {x: number, y: number} = this.convertPosition(wiseParent, child, depth, norder, childrenCountSameSide);
+        const position: { x: number; y: number } = this.convertPosition(
+          wiseParent,
+          child,
+          depth,
+          norder,
+          childrenCountSameSide,
+        );
         wiseChild.setPosition(position.x, position.y);
 
         // Convert the rest of the node properties...
@@ -239,7 +256,9 @@ export default class FreemindImporter extends Importer {
         const iconId: string = freeIcon.getBuiltin();
         const wiseIconId = FreemindIconConverter.toWiseId(iconId);
         if (wiseIconId) {
-          const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', { id: wiseIconId });
+          const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', {
+            id: wiseIconId,
+          });
           currentWiseTopic.addFeature(mindmapIcon);
         }
       }
@@ -263,7 +282,9 @@ export default class FreemindImporter extends Importer {
 
         switch (type) {
           case 'NOTE': {
-            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
+            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+              text: text || FreemindConstant.EMPTY_NOTE,
+            });
             currentWiseTopic.addFeature(noteModel);
             break;
           }
@@ -274,7 +295,9 @@ export default class FreemindImporter extends Importer {
           }
 
           default: {
-            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', { text: text || FreemindConstant.EMPTY_NOTE });
+            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+              text: text || FreemindConstant.EMPTY_NOTE,
+            });
             currentWiseTopic.addFeature(noteModel);
           }
         }
@@ -381,7 +404,10 @@ export default class FreemindImporter extends Importer {
 
     // Font Size
     if (font) {
-      const fontSize: number = ((!font.getSize() || parseInt(font.getSize(), 10) < 8) ? FreemindConstant.FONT_SIZE_NORMAL : parseInt(font.getSize(), 10));
+      const fontSize: number =
+        !font.getSize() || parseInt(font.getSize(), 10) < 8
+          ? FreemindConstant.FONT_SIZE_NORMAL
+          : parseInt(font.getSize(), 10);
       let wiseFontSize: number = FreemindConstant.FONT_SIZE_SMALL;
       if (fontSize >= 24) {
         wiseFontSize = FreemindConstant.FONT_SIZE_HUGE;
@@ -414,11 +440,19 @@ export default class FreemindImporter extends Importer {
     return result;
   }
 
-  private convertPosition(wiseParent: NodeModel, freeChild: FreemindNode, depth: number, order: number, childrenCount: number): {x: number, y: number} {
-    let x: number = FreemindConstant.CENTRAL_TO_TOPIC_DISTANCE + ((depth - 1) * FreemindConstant.TOPIC_TO_TOPIC_DISTANCE);
+  private convertPosition(
+    wiseParent: NodeModel,
+    freeChild: FreemindNode,
+    depth: number,
+    order: number,
+    childrenCount: number,
+  ): { x: number; y: number } {
+    let x: number =
+      FreemindConstant.CENTRAL_TO_TOPIC_DISTANCE +
+      (depth - 1) * FreemindConstant.TOPIC_TO_TOPIC_DISTANCE;
     if (depth === 1) {
       const side: string = freeChild.getPosition();
-      x *= (side && FreemindConstant.POSITION_LEFT === side ? -1 : 1);
+      x *= side && FreemindConstant.POSITION_LEFT === side ? -1 : 1;
     } else {
       const position = wiseParent.getPosition();
       x *= position.x < 0 ? 1 : -1;
@@ -427,7 +461,7 @@ export default class FreemindImporter extends Importer {
     let y: number;
     if (depth === 1) {
       if (order % 2 === 0) {
-        const multiplier = ((order + 1) - childrenCount) * 2;
+        const multiplier = (order + 1 - childrenCount) * 2;
         y = multiplier * FreemindConstant.ROOT_LEVEL_TOPIC_HEIGHT;
       } else {
         const multiplier = (order - childrenCount) * 2;
@@ -435,7 +469,11 @@ export default class FreemindImporter extends Importer {
       }
     } else {
       const position = wiseParent.getPosition();
-      y = Math.round(position.y - ((childrenCount / 2) * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT - (order * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT)));
+      y = Math.round(
+        position.y -
+          ((childrenCount / 2) * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT -
+            order * FreemindConstant.SECOND_LEVEL_TOPIC_HEIGHT),
+      );
     }
 
     return {

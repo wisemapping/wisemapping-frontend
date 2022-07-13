@@ -117,7 +117,7 @@ class DesignerModel extends Events {
 
   selectedTopic(): Topic | undefined {
     const topics = this.filterSelectedTopics();
-    return (topics.length > 0) ? topics[0] : undefined;
+    return topics.length > 0 ? topics[0] : undefined;
   }
 
   findTopicById(id: number): Topic | undefined {

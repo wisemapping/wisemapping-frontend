@@ -24,7 +24,8 @@ import Mindmap from './Mindmap';
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
-const parseJsObject = (str: string) => JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
+const parseJsObject = (str: string) =>
+  JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
 
 abstract class INodeModel {
   static MAIN_TOPIC_TO_MAIN_TOPIC_DISTANCE = 220;
@@ -90,7 +91,7 @@ abstract class INodeModel {
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
-  getImageSize(): { width: number, height: number } {
+  getImageSize(): { width: number; height: number } {
     const value = this.getProperty('imageSize') as string;
     let result;
     if (value != null) {
@@ -120,9 +121,9 @@ abstract class INodeModel {
   }
 
   /**
-       * lets the mindmap handle the disconnect node operation
-       * @see mindplot.model.IMindmap.disconnect
-       */
+   * lets the mindmap handle the disconnect node operation
+   * @see mindplot.model.IMindmap.disconnect
+   */
   disconnect(): void {
     const mindmap = this.getMindmap();
     mindmap.disconnect(this);
@@ -233,10 +234,10 @@ abstract class INodeModel {
   abstract append(node): void;
 
   /**
-       * lets the mindmap handle the connect node operation
-       * @throws will throw an error if parent is null or undefined
-       * @see mindplot.model.IMindmap.connect
-       */
+   * lets the mindmap handle the connect node operation
+   * @throws will throw an error if parent is null or undefined
+   * @see mindplot.model.IMindmap.connect
+   */
   connectTo(parent: INodeModel) {
     $assert(parent, 'parent can not be null');
     const mindmap = this.getMindmap();
@@ -244,9 +245,9 @@ abstract class INodeModel {
   }
 
   /**
-       * @param target
-       * @return target
-       */
+   * @param target
+   * @return target
+   */
   copyTo(target: INodeModel): INodeModel {
     const source = this;
     // Copy properties ...
@@ -270,9 +271,9 @@ abstract class INodeModel {
   }
 
   /**
-       * lets parent handle the delete node operation, or, if none defined, calls the mindmap to
-       * remove the respective branch
-       */
+   * lets parent handle the delete node operation, or, if none defined, calls the mindmap to
+   * remove the respective branch
+   */
   deleteNode(): void {
     const mindmap = this.getMindmap();
 

@@ -24,7 +24,7 @@ import XMLSerializerTango from './XMLSerializerTango';
 import Mindmap from '../model/Mindmap';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 
-const codeToSerializer: { codeName: string, serializer, migrator }[] = [
+const codeToSerializer: { codeName: string; serializer; migrator }[] = [
   {
     codeName: ModelCodeName.BETA,
     serializer: XMLSerializerBeta,
@@ -51,8 +51,7 @@ class XMLSerializerFactory {
    * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
    */
   static createInstanceFromMindmap(mindmap: Mindmap) {
-    return XMLSerializerFactory
-      .getSerializer(mindmap.getVersion());
+    return XMLSerializerFactory.getSerializer(mindmap.getVersion());
   }
 
   /**
@@ -83,7 +82,7 @@ class XMLSerializerFactory {
       if (!found) {
         found = codeToSerializer[i].codeName === version;
         // eslint-disable-next-line new-cap
-        if (found) result = new (codeToSerializer[i].serializer)();
+        if (found) result = new codeToSerializer[i].serializer();
       } else {
         const { migrator } = codeToSerializer[i];
         // eslint-disable-next-line new-cap

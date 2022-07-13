@@ -21,7 +21,13 @@ import SVGExporter from './SVGExporter';
 
 type imageType = 'svg' | 'png' | 'jpg';
 class ImageExpoterFactory {
-  static create(type: imageType, svgElement: Element, width: number, height: number, adjustToFit = true): Exporter {
+  static create(
+    type: imageType,
+    svgElement: Element,
+    width: number,
+    height: number,
+    adjustToFit = true,
+  ): Exporter {
     let result: Exporter;
     switch (type) {
       case 'svg': {

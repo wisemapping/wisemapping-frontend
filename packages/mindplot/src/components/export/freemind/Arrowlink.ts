@@ -75,11 +75,21 @@ export default class Arrowlink {
     arrowlinkElem.setAttribute('DESTINATION', this.DESTINATION);
     arrowlinkElem.setAttribute('STARTARROW', this.STARTARROW);
 
-    if (this.COLOR) arrowlinkElem.setAttribute('COLOR', this.COLOR);
-    if (this.ENDINCLINATION) arrowlinkElem.setAttribute('ENDINCLINATION', this.ENDINCLINATION);
-    if (this.ENDARROW) arrowlinkElem.setAttribute('ENDARROW', this.ENDARROW);
-    if (this.ID) arrowlinkElem.setAttribute('ID', this.ID);
-    if (this.STARTINCLINATION) arrowlinkElem.setAttribute('STARTINCLINATION', this.STARTINCLINATION);
+    if (this.COLOR) {
+      arrowlinkElem.setAttribute('COLOR', this.COLOR);
+    }
+    if (this.ENDINCLINATION) {
+      arrowlinkElem.setAttribute('ENDINCLINATION', this.ENDINCLINATION);
+    }
+    if (this.ENDARROW) {
+      arrowlinkElem.setAttribute('ENDARROW', this.ENDARROW);
+    }
+    if (this.ID) {
+      arrowlinkElem.setAttribute('ID', this.ID);
+    }
+    if (this.STARTINCLINATION) {
+      arrowlinkElem.setAttribute('STARTINCLINATION', this.STARTINCLINATION);
+    }
 
     return arrowlinkElem;
   }

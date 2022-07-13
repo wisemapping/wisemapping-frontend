@@ -26,7 +26,9 @@ export default class Richcontent {
     richcontentElem.setAttribute('TYPE', this.type);
 
     if (this.html) {
-      const htmlElement: DocumentFragment = document.createRange().createContextualFragment(this.html);
+      const htmlElement: DocumentFragment = document
+        .createRange()
+        .createContextualFragment(this.html);
       richcontentElem.appendChild(htmlElement);
     }
 

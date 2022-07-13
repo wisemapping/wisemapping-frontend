@@ -17,7 +17,15 @@
  */
 import Events from '../Events';
 
-export type EventType = 'topicResize' | 'topicMoved' | 'childShrinked' | 'topicConnected' | 'topicAdded' | 'topicRemoved' | 'forceLayout' | 'topicDisconect';
+export type EventType =
+  | 'topicResize'
+  | 'topicMoved'
+  | 'childShrinked'
+  | 'topicConnected'
+  | 'topicAdded'
+  | 'topicRemoved'
+  | 'forceLayout'
+  | 'topicDisconect';
 class EventBus extends Events {
   // eslint-disable-next-line no-use-before-define
   static _instance: EventBus = new EventBus();

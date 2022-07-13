@@ -39,8 +39,7 @@ class SVGExporter extends Exporter {
 
   export(): Promise<string> {
     // Replace all images for in-line images ...
-    let svgTxt: string = new XMLSerializer()
-      .serializeToString(this.svgElement);
+    let svgTxt: string = new XMLSerializer().serializeToString(this.svgElement);
     svgTxt = SVGExporter.prolog + svgTxt;
 
     // Are namespace declared ?. Otherwise, force the declaration ...
@@ -59,39 +58,37 @@ class SVGExporter extends Exporter {
       svgDoc = this._normalizeToFit(svgDoc);
     }
 
-    const result = new XMLSerializer()
-      .serializeToString(svgDoc);
+    const result = new XMLSerializer().serializeToString(svgDoc);
 
     return Promise.resolve(result);
   }
 
-  private _calcualteDimensions(): { minX: number, maxX: number, minY: number, maxY: number } {
+  private _calcualteDimensions(): { minX: number; maxX: number; minY: number; maxY: number } {
     // Collect all group elements ...
     const rectElems = Array.from(document.querySelectorAll('g>rect'));
-    const translates: SizeType[] = rectElems
-      .map((rect: Element) => {
-        const g = rect.parentElement;
-        const transformStr = g.getAttribute('transform');
+    const translates: SizeType[] = rectElems.map((rect: Element) => {
+      const g = rect.parentElement;
+      const transformStr = g.getAttribute('transform');
 
-        // Looking to parse translate(220.00000,279.00000) scale(1.00000,1.00000)
-        const match = transformStr.match(SVGExporter.regexpTranslate);
-        let result: SizeType = { width: 0, height: 0 };
-        if (match !== null) {
-          result = { width: Number.parseFloat(match[1]), height: Number.parseFloat(match[2]) };
+      // Looking to parse translate(220.00000,279.00000) scale(1.00000,1.00000)
+      const match = transformStr.match(SVGExporter.regexpTranslate);
+      let result: SizeType = { width: 0, height: 0 };
+      if (match !== null) {
+        result = { width: Number.parseFloat(match[1]), height: Number.parseFloat(match[2]) };
 
-          // Add rect size ...
-          if (result.width > 0) {
-            const rectWidth = Number.parseFloat(rect.getAttribute('width'));
-            result.width += rectWidth;
-          }
-
-          if (result.height > 0) {
-            const rectHeight = Number.parseFloat(rect.getAttribute('height'));
-            result.height += rectHeight;
-          }
+        // Add rect size ...
+        if (result.width > 0) {
+          const rectWidth = Number.parseFloat(rect.getAttribute('width'));
+          result.width += rectWidth;
         }
-        return result;
-      });
+
+        if (result.height > 0) {
+          const rectHeight = Number.parseFloat(rect.getAttribute('height'));
+          result.height += rectHeight;
+        }
+      }
+      return result;
+    });
 
     // Find max and mins ...
     const widths = translates.map((t) => t.width).sort((a, b) => a - b);
@@ -104,14 +101,15 @@ class SVGExporter extends Exporter {
     const maxY = heights[heights.length - 1] + SVGExporter.padding;
 
     return {
-      minX, maxX, minY, maxY,
+      minX,
+      maxX,
+      minY,
+      maxY,
     };
   }
 
   getImgSize(): SizeType {
-    const {
-      minX, maxX, minY, maxY,
-    } = this._calcualteDimensions();
+    const { minX, maxX, minY, maxY } = this._calcualteDimensions();
 
     let width: number = maxX + Math.abs(minX);
     let height: number = maxY + Math.abs(minY);
@@ -127,9 +125,7 @@ class SVGExporter extends Exporter {
   }
 
   private _normalizeToFit(document: Document): Document {
-    const {
-      minX, maxX, minY, maxY,
-    } = this._calcualteDimensions();
+    const { minX, maxX, minY, maxY } = this._calcualteDimensions();
     const svgElem = document.firstChild as Element;
 
     const width = maxX + Math.abs(minX);

@@ -29,11 +29,15 @@ class GenericFunctionCommand extends Command {
 
   private _commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes;
 
-  private _oldValues: (CommandTypes)[];
+  private _oldValues: CommandTypes[];
 
   private _applied: boolean;
 
-  constructor(commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes, topicsIds: number[], value: CommandTypes = undefined) {
+  constructor(
+    commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes,
+    topicsIds: number[],
+    value: CommandTypes = undefined,
+  ) {
     $assert(commandFunc, 'commandFunc must be defined');
     $assert($defined(topicsIds), 'topicsIds must be defined');
 
@@ -45,8 +49,8 @@ class GenericFunctionCommand extends Command {
   }
 
   /**
-     * Overrides abstract parent method
-     */
+   * Overrides abstract parent method
+   */
   execute(commandContext: CommandContext) {
     if (!this._applied) {
       const topics = commandContext.findTopics(this._topicsIds);
@@ -68,9 +72,9 @@ class GenericFunctionCommand extends Command {
     if (this._applied) {
       const topics = commandContext.findTopics(this._topicsIds);
 
-      topics.forEach(((topic: Topic, index: number) => {
+      topics.forEach((topic: Topic, index: number) => {
         this._commandFunc(topic, this._oldValues[index]);
-      }));
+      });
 
       this._applied = false;
       this._oldValues = [];

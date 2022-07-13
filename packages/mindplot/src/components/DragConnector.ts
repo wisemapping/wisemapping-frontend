@@ -83,7 +83,7 @@ class DragConnector {
       // That's why i need to divide it by two...
       const txborder = tpos.x + (topic.getSize().width / 2) * Math.sign(sPos.x);
       const distance = (sPos.x - txborder) * Math.sign(sPos.x);
-      return distance > 0 && (distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE);
+      return distance > 0 && distance < DragConnector.MAX_VERTICAL_CONNECTION_TOLERANCE;
     });
 
     // Assign a priority based on the distance:
@@ -99,19 +99,34 @@ class DragConnector {
 
       const av = me._isVerticallyAligned(a.getSize(), aPos, sPos);
       const bv = me._isVerticallyAligned(b.getSize(), bPos, sPos);
-      return me._proximityWeight(av, a, sPos, currentConnection)
-        - me._proximityWeight(bv, b, sPos, currentConnection);
+      return (
+        me._proximityWeight(av, a, sPos, currentConnection) -
+        me._proximityWeight(bv, b, sPos, currentConnection)
+      );
     });
     return topics;
   }
 
-  private _proximityWeight(isAligned: boolean, target: Topic, sPos: Point, currentConnection: Topic): number {
+  private _proximityWeight(
+    isAligned: boolean,
+    target: Topic,
+    sPos: Point,
+    currentConnection: Topic,
+  ): number {
     const tPos = target.getPosition();
-    return (isAligned ? 0 : 200) + Math.abs(tPos.x - sPos.x)
-      + Math.abs(tPos.y - sPos.y) + (currentConnection === target ? 0 : 100);
+    return (
+      (isAligned ? 0 : 200) +
+      Math.abs(tPos.x - sPos.x) +
+      Math.abs(tPos.y - sPos.y) +
+      (currentConnection === target ? 0 : 100)
+    );
   }
 
-  private _isVerticallyAligned(targetSize: SizeType, targetPosition: Point, sourcePosition: Point): boolean {
+  private _isVerticallyAligned(
+    targetSize: SizeType,
+    targetPosition: Point,
+    sourcePosition: Point,
+  ): boolean {
     return Math.abs(sourcePosition.y - targetPosition.y) < targetSize.height / 2;
   }
 

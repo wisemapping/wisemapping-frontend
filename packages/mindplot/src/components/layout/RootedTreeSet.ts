@@ -62,12 +62,12 @@ class RootedTreeSet {
   }
 
   /**
-         * @param parentId
-         * @param childId
-         * @throws will throw an error if parentId is null or undefined
-         * @throws will throw an error if childId is null or undefined
-         * @throws will throw an error if node with id childId is already a child of parent
-         */
+   * @param parentId
+   * @param childId
+   * @throws will throw an error if parentId is null or undefined
+   * @throws will throw an error if childId is null or undefined
+   * @throws will throw an error if node with id childId is already a child of parent
+   */
   connect(parentId: number, childId: number) {
     $assert($defined(parentId), 'parent can not be null');
     $assert($defined(childId), 'child can not be null');
@@ -85,10 +85,10 @@ class RootedTreeSet {
   }
 
   /**
-         * @param nodeId
-         * @throws will throw an error if nodeId is null or undefined
-         * @throws will throw an error if node is not connected
-         */
+   * @param nodeId
+   * @throws will throw an error if nodeId is null or undefined
+   * @throws will throw an error if node is not connected
+   */
   disconnect(nodeId: number) {
     $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
@@ -100,12 +100,12 @@ class RootedTreeSet {
   }
 
   /**
-         * @param id
-         * @param validate
-         * @throws will throw an error if id is null or undefined
-         * @throws will throw an error if node cannot be found
-         * @return node
-         */
+   * @param id
+   * @param validate
+   * @throws will throw an error if id is null or undefined
+   * @throws will throw an error if node cannot be found
+   * @return node
+   */
   find(id: number, validate = true): Node {
     $assert($defined(id), 'id can not be null');
 
@@ -143,20 +143,20 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @throws will throw an error if nodeId is null or undefined
-         * @return children
-         */
+   * @param node
+   * @throws will throw an error if nodeId is null or undefined
+   * @return children
+   */
   getChildren(node: Node): Node[] {
     $assert(node, 'node cannot be null');
     return node._children;
   }
 
   /**
-         * @param node
-         * @throws will throw an error if node is null or undefined
-         * @return root node or the provided node, if it has no parent
-         */
+   * @param node
+   * @throws will throw an error if node is null or undefined
+   * @return root node or the provided node, if it has no parent
+   */
   getRootNode(node: Node) {
     $assert(node, 'node cannot be null');
     const parent = this.getParent(node);
@@ -168,9 +168,9 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @throws will throw an error if node is null or undefined
-         * @return {Array} ancestors */
+   * @param node
+   * @throws will throw an error if node is null or undefined
+   * @return {Array} ancestors */
   getAncestors(node: Node): Node[] {
     $assert(node, 'node cannot be null');
     return this._getAncestors(this.getParent(node), []);
@@ -186,10 +186,10 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @throws will throw an error if node is null or undefined
-         * @return {Array} siblings
-         */
+   * @param node
+   * @throws will throw an error if node is null or undefined
+   * @return {Array} siblings
+   */
   getSiblings(node: Node): Node[] {
     $assert(node, 'node cannot be null');
     if (!$defined(node._parent)) {
@@ -200,10 +200,10 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @throws will throw an error if node is null or undefined
-         * @return {Boolean} whether the node has a single path to a single leaf (no branching)
-         */
+   * @param node
+   * @throws will throw an error if node is null or undefined
+   * @return {Boolean} whether the node has a single path to a single leaf (no branching)
+   */
   hasSinglePathToSingleLeaf(node: Node): boolean {
     $assert(node, 'node cannot be null');
     return this._hasSinglePathToSingleLeaf(node);
@@ -220,27 +220,27 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @return {Boolean} whether the node is the start of a subbranch */
+   * @param node
+   * @return {Boolean} whether the node is the start of a subbranch */
   isStartOfSubBranch(node: Node): boolean {
     return this.getSiblings(node).length > 0 && this.getChildren(node).length === 1;
   }
 
   /**
-         * @param node
-         * @throws will throw an error if node is null or undefined
-         * @return {Boolean} whether the node is a leaf
-         */
+   * @param node
+   * @throws will throw an error if node is null or undefined
+   * @return {Boolean} whether the node is a leaf
+   */
   isLeaf(node: Node): boolean {
     $assert(node, 'node cannot be null');
     return this.getChildren(node).length === 0;
   }
 
   /**
-         * @param node
-         * @throws will throw an error if node is null or undefined
-         * @return parent
-         */
+   * @param node
+   * @throws will throw an error if node is null or undefined
+   * @return parent
+   */
   getParent(node: Node): Node {
     $assert(node, 'node cannot be null');
     return node._parent;
@@ -271,8 +271,8 @@ class RootedTreeSet {
   }
 
   /**
-         * @param canvas
-         */
+   * @param canvas
+   */
   plot(canvas) {
     const branches = this._rootNodes;
     for (let i = 0; i < branches.length; i++) {
@@ -297,9 +297,7 @@ class RootedTreeSet {
     if (this._rootNodes.includes(node)) {
       fillColor = '#000';
     } else {
-      fillColor = node.isFree()
-        ? '#abc'
-        : '#c00';
+      fillColor = node.isFree() ? '#abc' : '#c00';
     }
     rect.attr('fill', fillColor);
 
@@ -310,28 +308,20 @@ class RootedTreeSet {
     const rectSize = { width: rect.attr('width'), height: rect.attr('height') };
     rect.click(() => {
       console.log(
-        `[id:${node.getId()
-        }, order:${node.getOrder()
-        }, position:(${rectPosition.x
-        }, ${rectPosition.y
-        }), size:${rectSize.width
-        },${rectSize.height
-        }, freeDisplacement:(${node.getFreeDisplacement().x
-        },${node.getFreeDisplacement().y
-        })]`,
+        `[id:${node.getId()}, order:${node.getOrder()}, position:(${rectPosition.x}, ${
+          rectPosition.y
+        }), size:${rectSize.width},${rectSize.height}, freeDisplacement:(${
+          node.getFreeDisplacement().x
+        },${node.getFreeDisplacement().y})]`,
       );
     });
     text.click(() => {
       console.log(
-        `[id:${node.getId()
-        }, order:${node.getOrder()
-        }, position:(${rectPosition.x
-        },${rectPosition.y
-        }), size:${rectSize.width
-        }x${rectSize.height
-        }, freeDisplacement:(${node.getFreeDisplacement().x
-        },${node.getFreeDisplacement().y
-        })]`,
+        `[id:${node.getId()}, order:${node.getOrder()}, position:(${rectPosition.x},${
+          rectPosition.y
+        }), size:${rectSize.width}x${rectSize.height}, freeDisplacement:(${
+          node.getFreeDisplacement().x
+        },${node.getFreeDisplacement().y})]`,
       );
     });
 
@@ -342,9 +332,9 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @param position
-         */
+   * @param node
+   * @param position
+   */
   updateBranchPosition(node: Node, position: PositionType): void {
     const oldPos = node.getPosition();
     node.setPosition(position);
@@ -360,10 +350,10 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @param xOffset
-         * @param yOffset
-         */
+   * @param node
+   * @param xOffset
+   * @param yOffset
+   */
   shiftBranchPosition(node: Node, xOffset: number, yOffset: number): void {
     const position = node.getPosition();
     node.setPosition({ x: position.x + xOffset, y: position.y + yOffset });
@@ -376,21 +366,21 @@ class RootedTreeSet {
   }
 
   /**
-     * @param node
-     * @param yOffset
-     * @return siblings in the offset (vertical) direction, i.e. with lower or higher order
-     */
+   * @param node
+   * @param yOffset
+   * @return siblings in the offset (vertical) direction, i.e. with lower or higher order
+   */
   getSiblingsInVerticalDirection(node: Node, yOffset: number): Node[] {
     // siblings with lower or higher order
     // (depending on the direction of the offset and on the same side as their parent)
     const parent = this.getParent(node);
     const siblings = this.getSiblings(node).filter((sibling) => {
-      const sameSide = node.getPosition().x > parent.getPosition().x
-        ? sibling.getPosition().x > parent.getPosition().x
-        : sibling.getPosition().x < parent.getPosition().x;
-      const orderOK = yOffset < 0
-        ? sibling.getOrder() < node.getOrder()
-        : sibling.getOrder() > node.getOrder();
+      const sameSide =
+        node.getPosition().x > parent.getPosition().x
+          ? sibling.getPosition().x > parent.getPosition().x
+          : sibling.getPosition().x < parent.getPosition().x;
+      const orderOK =
+        yOffset < 0 ? sibling.getOrder() < node.getOrder() : sibling.getOrder() > node.getOrder();
       return orderOK && sameSide;
     });
 
@@ -402,26 +392,27 @@ class RootedTreeSet {
   }
 
   /**
-         * @param node
-         * @param yOffset
-         * @return branches of the root node on the same side as the given node's, in the given
-         * vertical direction
-         */
+   * @param node
+   * @param yOffset
+   * @return branches of the root node on the same side as the given node's, in the given
+   * vertical direction
+   */
   getBranchesInVerticalDirection(node: Node, yOffset: number): Node[] {
     // direct descendants of the root that do not contain the node and are on the same side
     // and on the direction of the offset
     const rootNode = this.getRootNode(node);
-    const branches = this.getChildren(rootNode)
-      .filter(((child) => this._find(node.getId(), child)));
+    const branches = this.getChildren(rootNode).filter((child) => this._find(node.getId(), child));
 
     const branch = branches[0];
     const result = this.getSiblings(branch).filter((sibling) => {
-      const sameSide = node.getPosition().x > rootNode.getPosition().x
-        ? sibling.getPosition().x > rootNode.getPosition().x
-        : sibling.getPosition().x < rootNode.getPosition().x;
-      const sameDirection = yOffset < 0
-        ? sibling.getOrder() < branch.getOrder()
-        : sibling.getOrder() > branch.getOrder();
+      const sameSide =
+        node.getPosition().x > rootNode.getPosition().x
+          ? sibling.getPosition().x > rootNode.getPosition().x
+          : sibling.getPosition().x < rootNode.getPosition().x;
+      const sameDirection =
+        yOffset < 0
+          ? sibling.getOrder() < branch.getOrder()
+          : sibling.getOrder() > branch.getOrder();
       return sameSide && sameDirection;
     }, this);
 

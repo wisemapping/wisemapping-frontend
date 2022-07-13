@@ -73,7 +73,7 @@ class FloatingTip extends Events {
 
     if (this.addEvent) {
       Object.keys(options).forEach((option) => {
-        if (options[option] instanceof Function && (/^on[A-Z]/).test(option)) {
+        if (options[option] instanceof Function && /^on[A-Z]/.test(option)) {
           this.addEvent(option, options[option]);
           delete options[option];
         }

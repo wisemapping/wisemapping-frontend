@@ -6,78 +6,81 @@ import { useSelector } from 'react-redux';
 import AppConfig from '../classes/app-config';
 import { RootState } from './rootReducer';
 
-
 export interface ClientStatus {
-    state: 'healthy' | 'session-expired';
-    msg?: string;
+  state: 'healthy' | 'session-expired';
+  msg?: string;
 }
 
 export interface ClientState {
-    instance: Client;
-    status: ClientStatus;
+  instance: Client;
+  status: ClientStatus;
 }
 
 const initialState: ClientState = {
-    instance: AppConfig.buildClient(),
-    status: { state: 'healthy' },
+  instance: AppConfig.buildClient(),
+  status: { state: 'healthy' },
 };
 
 export const clientSlice = createSlice({
-    name: 'client',
-    initialState: initialState,
-    reducers: {
-        sessionExpired(state) {
-            state.status = {
-                state: 'session-expired',
-                msg: 'Sessions has expired. You need to login again',
-            };
-        },
+  name: 'client',
+  initialState: initialState,
+  reducers: {
+    sessionExpired(state) {
+      state.status = {
+        state: 'session-expired',
+        msg: 'Sessions has expired. You need to login again',
+      };
     },
+  },
 });
 
 type MapLoadResult = {
-    isLoading: boolean;
-    error: ErrorInfo | null;
-    map: MapInfo | null;
+  isLoading: boolean;
+  error: ErrorInfo | null;
+  map: MapInfo | null;
 };
 
 export const fetchMapById = (id: number): MapLoadResult => {
-    const client: Client = useSelector(activeInstance);
-    const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>(`maps-${id}`, () => {
-        return client.fetchAllMaps();
-    });
+  const client: Client = useSelector(activeInstance);
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>(`maps-${id}`, () => {
+    return client.fetchAllMaps();
+  });
 
-    // If the map can not be loaded, create an error object.
-    let map: MapInfo;
-    let errorMsg: ErrorInfo = error;
-    if (!isLoading) {
-        // Sanitize error structure ...
-        if (errorMsg) {
-            errorMsg = Object.keys(error).length !== 0 ? error : null;
-        }
-        //  Seach for object...
-        map = data?.find((m) => m.id == id);
-        if (!map && !errorMsg) {
-            errorMsg = { msg: `Map with id ${id} could not be found. Please, reflesh the page. Map: ${JSON.stringify(data)}` }
-        }
+  // If the map can not be loaded, create an error object.
+  let map: MapInfo;
+  let errorMsg: ErrorInfo = error;
+  if (!isLoading) {
+    // Sanitize error structure ...
+    if (errorMsg) {
+      errorMsg = Object.keys(error).length !== 0 ? error : null;
     }
-    return { isLoading: isLoading, error: errorMsg, map: map };
+    //  Seach for object...
+    map = data?.find((m) => m.id == id);
+    if (!map && !errorMsg) {
+      errorMsg = {
+        msg: `Map with id ${id} could not be found. Please, reflesh the page. Map: ${JSON.stringify(
+          data,
+        )}`,
+      };
+    }
+  }
+  return { isLoading: isLoading, error: errorMsg, map: map };
 };
 
 export const fetchAccount = (): AccountInfo | undefined => {
-    const client: Client = useSelector(activeInstance);
-    const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
-        return client.fetchAccountInfo();
-    });
-    return data;
+  const client: Client = useSelector(activeInstance);
+  const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
+    return client.fetchAccountInfo();
+  });
+  return data;
 };
 
 export const activeInstance = (state: RootState): Client => {
-    return state.client.instance;
+  return state.client.instance;
 };
 
 export const activeInstanceStatus = (state: RootState): ClientStatus => {
-    return state.client.status;
+  return state.client.status;
 };
 
 export const { sessionExpired } = clientSlice.actions;

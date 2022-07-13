@@ -77,11 +77,10 @@ class NoteIcon extends Icon {
     }
     const result = $('<div id="textPopoverNote"></div>').css({ padding: '5px' });
 
-    const text = $('<div></div>').text(this._linksModel.getText())
-      .css({
-        'white-space': 'pre-wrap',
-        'word-wrap': 'break-word',
-      });
+    const text = $('<div></div>').text(this._linksModel.getText()).css({
+      'white-space': 'pre-wrap',
+      'word-wrap': 'break-word',
+    });
     result.append(text);
     return result;
   }

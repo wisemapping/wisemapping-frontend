@@ -33,10 +33,12 @@
 					"?": "ignore",
 					">": "ignore",
 					"||": "ignore",
-					"&&": "ignore"
+					"&&": "ignore",
+					"(": "ignore"
 				}
 			}
 		],
+		"object-curly-newline": "off",
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",

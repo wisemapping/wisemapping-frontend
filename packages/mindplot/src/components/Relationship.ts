@@ -118,10 +118,7 @@ class Relationship extends ConnectionLine {
     this._line2d.setStroke(2);
     const ctrlPoints = this._line2d.getControlPoints();
     if (!this._line2d.isDestControlPointCustom() && !this._line2d.isSrcControlPointCustom()) {
-      const defaultPoints = Shape.calculateDefaultControlPoints(
-        sourcePosition,
-        targetPosition,
-      );
+      const defaultPoints = Shape.calculateDefaultControlPoints(sourcePosition, targetPosition);
       ctrlPoints[0].x = defaultPoints[0].x;
       ctrlPoints[0].y = defaultPoints[0].y;
 

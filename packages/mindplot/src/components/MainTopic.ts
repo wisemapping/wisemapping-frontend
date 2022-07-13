@@ -26,7 +26,7 @@ import Workspace from './Workspace';
 import SizeType from './SizeType';
 
 class MainTopic extends Topic {
-  private INNER_RECT_ATTRIBUTES: { stroke: string; };
+  private INNER_RECT_ATTRIBUTES: { stroke: string };
 
   constructor(model: NodeModel, options) {
     super(model, options);

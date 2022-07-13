@@ -30,7 +30,7 @@ abstract class IMindmap {
 
   abstract setDescription(value: string): void;
 
-  abstract getId(): string
+  abstract getId(): string;
 
   abstract setId(id: string): void;
 
@@ -58,10 +58,10 @@ abstract class IMindmap {
   }
 
   /**
-     * @param child
-     * @throws will throw an error if child is null or undefined
-     * @throws will throw an error if child's parent cannot be found
-     */
+   * @param child
+   * @throws will throw an error if child is null or undefined
+   * @throws will throw an error if child's parent cannot be found
+   */
   disconnect(child: INodeModel): void {
     const parent = child.getParent();
     $assert(child, 'Child can not be null.');
@@ -73,7 +73,7 @@ abstract class IMindmap {
 
   abstract hasAlreadyAdded(node): boolean;
 
-  abstract createNode(type: NodeType, id: number)
+  abstract createNode(type: NodeType, id: number);
 
   abstract createRelationship(fromNodeId: number, toNodeId: number): void;
 
@@ -81,7 +81,7 @@ abstract class IMindmap {
 
   abstract deleteRelationship(relationship: RelationshipModel): void;
 
-  inspect():string {
+  inspect(): string {
     let result = '';
     result = '{ ';
 
@@ -102,7 +102,7 @@ abstract class IMindmap {
     return result;
   }
 
-  copyTo(target:IMindmap) {
+  copyTo(target: IMindmap) {
     const version = this.getVersion();
     target.setVersion(version);
 

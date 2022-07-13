@@ -18,9 +18,7 @@
 import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import {
-  Rect, Image, Line, Text, Group, ElementClass, Point,
-} from '@wisemapping/web2d';
+import { Rect, Image, Line, Text, Group, ElementClass, Point } from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
@@ -177,10 +175,7 @@ abstract class Topic extends NodeGraph {
   getInnerShape(): ElementClass {
     if (!$defined(this._innerShape)) {
       // Create inner box.
-      this._innerShape = this._buildShape(
-        TopicConfig.INNER_RECT_ATTRIBUTES,
-        this.getShapeType(),
-      );
+      this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
 
       // Update bgcolor ...
       const bgColor = this.getBackgroundColor();
@@ -246,7 +241,9 @@ abstract class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = function getSize() { return this.size; };
+      result.getSize = function getSize() {
+        return this.size;
+      };
 
       result.setPosition = () => {
         // Overwrite behaviour ...
@@ -279,10 +276,7 @@ abstract class Topic extends NodeGraph {
 
   getOuterShape(): ElementClass {
     if (!$defined(this._outerShape)) {
-      const rect = this._buildShape(
-        TopicConfig.OUTER_SHAPE_ATTRIBUTES,
-        TopicShape.ROUNDED_RECT,
-      );
+      const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
       rect.setPosition(-2, -3);
       rect.setOpacity(0);
       this._outerShape = rect;
@@ -822,8 +816,8 @@ abstract class Topic extends NodeGraph {
   }
 
   /**
-     * Point: references the center of the rect shape.!!!
-     */
+   * Point: references the center of the rect shape.!!!
+   */
   setPosition(point: Point) {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
@@ -953,9 +947,9 @@ abstract class Topic extends NodeGraph {
       const targetParent = targetTopic.getModel().getParent();
       const sourceParent = sourceTopic.getModel().getParent();
       relationship.setVisibility(
-        value
-        && (targetParent == null || !targetParent.areChildrenShrunken())
-        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+        value &&
+          (targetParent == null || !targetParent.areChildrenShrunken()) &&
+          (sourceParent == null || !sourceParent.areChildrenShrunken()),
         fade,
       );
     });
@@ -1027,7 +1021,8 @@ abstract class Topic extends NodeGraph {
     };
 
     const oldSize = this.getSize();
-    const hasSizeChanged = oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
+    const hasSizeChanged =
+      oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
       NodeGraph.prototype.setSize.call(this, roundedSize);
 
@@ -1259,10 +1254,13 @@ abstract class Topic extends NodeGraph {
         const iconGroupWith = iconGroup.getSize().width;
         const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
-        this.setSize({
-          width: topicWith,
-          height: topicHeight,
-        }, false);
+        this.setSize(
+          {
+            width: topicWith,
+            height: topicHeight,
+          },
+          false,
+        );
 
         // Adjust all topic elements positions ...
         const yPosition = Math.round((topicHeight - textHeight) / 2);

@@ -75,10 +75,10 @@ class Mindmap extends IMindmap {
   }
 
   /**
-         * @param {mindplot.model.NodeModel} nodeModel
-         * @throws will throw an error if nodeModel is null, undefined or not a node model object
-         * @throws will throw an error if
-         */
+   * @param {mindplot.model.NodeModel} nodeModel
+   * @throws will throw an error if nodeModel is null, undefined or not a node model object
+   * @throws will throw an error if
+   */
   addBranch(nodeModel: INodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Add node must be invoked with model objects');
     const branches = this.getBranches();
@@ -93,14 +93,14 @@ class Mindmap extends IMindmap {
   }
 
   /**
-         * @param nodeModel
-         */
+   * @param nodeModel
+   */
   removeBranch(nodeModel: INodeModel): void {
     $assert(nodeModel && nodeModel.isNodeModel(), 'Remove node must be invoked with model objects');
     this._branches = this._branches.filter((b) => b !== nodeModel);
   }
 
-  getBranches():NodeModel[] {
+  getBranches(): NodeModel[] {
     return this._branches;
   }
 
@@ -122,7 +122,7 @@ class Mindmap extends IMindmap {
     return result;
   }
 
-  createNode(type: NodeModelType = 'MainTopic', id?: number):NodeModel {
+  createNode(type: NodeModelType = 'MainTopic', id?: number): NodeModel {
     return new NodeModel(type, this, id);
   }
 
@@ -141,8 +141,8 @@ class Mindmap extends IMindmap {
   }
 
   /**
-         * @param relationship
-         */
+   * @param relationship
+   */
   deleteRelationship(relationship: RelationshipModel) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }

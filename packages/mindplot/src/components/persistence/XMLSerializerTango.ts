@@ -60,8 +60,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const relationships = mindmap.getRelationships();
     relationships.forEach((relationship) => {
       if (
-        mindmap.findNodeById(relationship.getFromNode()) !== null
-        && mindmap.findNodeById(relationship.getToNode()) !== null
+        mindmap.findNodeById(relationship.getFromNode()) !== null &&
+        mindmap.findNodeById(relationship.getToNode()) !== null
       ) {
         // Isolated relationships are not persisted ....
         const relationDom = XMLSerializerTango._relationshipToXML(document, relationship);
@@ -99,14 +99,15 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
       if (shape === TopicShape.IMAGE) {
         const size = topic.getImageSize();
-        parentTopic.setAttribute(
-          'image',
-          `${size.width},${size.height}:${topic.getImageUrl()}`,
-        );
+        parentTopic.setAttribute('image', `${size.width},${size.height}:${topic.getImageUrl()}`);
       }
     }
 
-    if ((topic.areChildrenShrunken() && topic.getChildren().length > 0) && topic.getType() !== 'CentralTopic') {
+    if (
+      topic.areChildrenShrunken() &&
+      topic.getChildren().length > 0 &&
+      topic.getType() !== 'CentralTopic'
+    ) {
       parentTopic.setAttribute('shrink', 'true');
     }
 
@@ -132,11 +133,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     font += `${fontStyle || ''};`;
 
     if (
-      $defined(fontFamily)
-      || $defined(fontSize)
-      || $defined(fontColor)
-      || $defined(fontWeight)
-      || $defined(fontStyle)
+      $defined(fontFamily) ||
+      $defined(fontSize) ||
+      $defined(fontColor) ||
+      $defined(fontWeight) ||
+      $defined(fontStyle)
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -208,10 +209,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (lineType === ConnectionLine.CURVED || lineType === ConnectionLine.SIMPLE_CURVED) {
       if ($defined(relationship.getSrcCtrlPoint())) {
         const srcPoint = relationship.getSrcCtrlPoint();
-        result.setAttribute(
-          'srcCtrlPoint',
-          `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`,
-        );
+        result.setAttribute('srcCtrlPoint', `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`);
       }
       if ($defined(relationship.getDestCtrlPoint())) {
         const destPoint = relationship.getDestCtrlPoint();
@@ -246,9 +244,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
     const topicsNodes = childNodes
-      .filter(
-        (child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'topic',
-      )
+      .filter((child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'topic')
       .map((c) => c as Element);
     topicsNodes.forEach((child) => {
       const topic = this._deserializeNode(child, mindmap);
@@ -488,16 +484,16 @@ class XMLSerializerTango implements XMLMindmapSerializer {
   }
 
   /**
-     * This method ensures that the output String has only
-     * valid XML unicode characters as specified by the
-     * XML 1.0 standard. For reference, please see
-     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-     * standard</a>. This method will return an empty
-     * String if the input is null or empty.
-     *
-     * @param in The String whose non-valid characters we want to remove.
-     * @return The in String, stripped of non-valid characters.
-     */
+   * This method ensures that the output String has only
+   * valid XML unicode characters as specified by the
+   * XML 1.0 standard. For reference, please see
+   * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
+   * standard</a>. This method will return an empty
+   * String if the input is null or empty.
+   *
+   * @param in The String whose non-valid characters we want to remove.
+   * @return The in String, stripped of non-valid characters.
+   */
   protected _rmXmlInv(str: string) {
     if (str == null || str === undefined) return null;
 
@@ -505,12 +501,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     for (let i = 0; i < str.length; i++) {
       const c = str.charCodeAt(i);
       if (
-        c === 0x9
-        || c === 0xa
-        || c === 0xd
-        || (c >= 0x20 && c <= 0xd7ff)
-        || (c >= 0xe000 && c <= 0xfffd)
-        || (c >= 0x10000 && c <= 0x10ffff)
+        c === 0x9 ||
+        c === 0xa ||
+        c === 0xd ||
+        (c >= 0x20 && c <= 0xd7ff) ||
+        (c >= 0xe000 && c <= 0xfffd) ||
+        (c >= 0x10000 && c <= 0x10ffff)
       ) {
         result += str.charAt(i);
       }

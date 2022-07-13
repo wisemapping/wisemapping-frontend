@@ -24,8 +24,8 @@ class AddRelationshipCommand extends Command {
   private _model: RelationshipModel;
 
   /**
-     * @classdesc This command class handles do/undo of adding a relationship to a topic.
-     */
+   * @classdesc This command class handles do/undo of adding a relationship to a topic.
+   */
   constructor(model: RelationshipModel) {
     $assert(model, 'Relationship model can not be null');
 

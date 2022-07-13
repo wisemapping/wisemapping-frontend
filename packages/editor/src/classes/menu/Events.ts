@@ -48,9 +48,9 @@ class Events {
     if (!events) return this;
 
     const args = Array.isArray(eventArgs) ? eventArgs : [eventArgs];
-    events.forEach(((fn) => {
+    events.forEach((fn) => {
       fn.apply(this, args);
-    }));
+    });
     return this;
   }
 
