@@ -4,20 +4,20 @@ import { Group, Rect, Line } from '@wisemapping/web2d';
 export default class RemoveTip {
   /** @lends IconGroup.RemoveTip */
   /**
-     * @classdesc inner class of IconGroup
-     * @constructs
-     * @param container
-     */
+   * @classdesc inner class of IconGroup
+   * @constructs
+   * @param container
+   */
   constructor(container) {
     $assert(container, 'group can not be null');
     this._fadeElem = container;
   }
 
   /**
-     * @param topicId
-     * @param icon
-     * @throws will throw an error if icon is null or undefined
-     */
+   * @param topicId
+   * @param icon
+   * @throws will throw an error if icon is null or undefined
+   */
   show(topicId, icon) {
     $assert(icon, 'icon can not be null');
 
@@ -64,8 +64,8 @@ export default class RemoveTip {
   }
 
   /**
-     * @param delay
-     */
+   * @param delay
+   */
   close(delay) {
     // This is not ok, trying to close the same dialog twice ?
     if (this._closeTimeoutId) {
@@ -145,9 +145,9 @@ export default class RemoveTip {
   }
 
   /**
-     * @param topicId
-     * @param icon
-     */
+   * @param topicId
+   * @param icon
+   */
   decorate(topicId, icon) {
     const me = this;
 

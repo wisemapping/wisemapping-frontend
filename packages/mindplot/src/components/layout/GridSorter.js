@@ -42,12 +42,12 @@ class GridSorter extends AbstractBasicSorter {
     for (let i = 0; i < heights.length; i++) {
       const even = i % 2 === 0 ? 1 : -1;
 
-      const zeroHeight = i === 0 ? 0 : ((heights[0].height / 2) * even);
+      const zeroHeight = i === 0 ? 0 : (heights[0].height / 2) * even;
       let middleHeight = 0;
       for (let j = i - 2; j > 0; j -= 2) {
         middleHeight += heights[j].height * even;
       }
-      const finalHeight = i === 0 ? 0 : ((heights[i].height / 2) * even);
+      const finalHeight = i === 0 ? 0 : (heights[i].height / 2) * even;
 
       const yOffset = zeroHeight + middleHeight + finalHeight;
       const xOffset = node.getSize().width + GridSorter.GRID_HORIZONTAR_SIZE;
@@ -61,8 +61,8 @@ class GridSorter extends AbstractBasicSorter {
   }
 
   /**
-     * @return {String} the print name of this class
-     */
+   * @return {String} the print name of this class
+   */
   toString() {
     return 'Grid Sorter';
   }

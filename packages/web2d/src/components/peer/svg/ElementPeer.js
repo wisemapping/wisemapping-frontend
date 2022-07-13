@@ -83,19 +83,16 @@ class ElementPeer {
     children = children.filter((c) => c !== elementPeer);
     this.setChildren(children);
 
-    $assert(
-      children.length < oldLength,
-      `element could not be removed:${elementPeer}`,
-    );
+    $assert(children.length < oldLength, `element could not be removed:${elementPeer}`);
 
     // Append element as a child.
     this._native.removeChild(elementPeer._native);
   }
 
   /**
-     * http://www.w3.org/TR/DOM-Level-3-Events/events.html
-     * http://developer.mozilla.org/en/docs/addEvent
-     */
+   * http://www.w3.org/TR/DOM-Level-3-Events/events.html
+   * http://developer.mozilla.org/en/docs/addEvent
+   */
   addEvent(type, listener) {
     // wrap it so it can be ~backward compatible with jQuery.trigger
     const wrappedListener = (e) => listener(e, e.detail);
@@ -223,15 +220,15 @@ class ElementPeer {
   }
 
   /**
-     * Move element to the front
-     */
+   * Move element to the front
+   */
   moveToFront() {
     this._native.parentNode.appendChild(this._native);
   }
 
   /**
-     * Move element to the back
-     */
+   * Move element to the back
+   */
   moveToBack() {
     this._native.parentNode.insertBefore(this._native, this._native.parentNode.firstChild);
   }

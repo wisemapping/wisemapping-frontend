@@ -49,8 +49,8 @@ class LinePeer extends ElementPeer {
   }
 
   /*
-     * http://www.zvon.org/HowTo/Output/howto_jj_svg_27.html?at=marker-end
-     */
+   * http://www.zvon.org/HowTo/Output/howto_jj_svg_27.html?at=marker-end
+   */
   // eslint-disable-next-line class-methods-use-this
   setArrowStyle(startStyle, endStyle) {
     if ($defined(startStyle)) {

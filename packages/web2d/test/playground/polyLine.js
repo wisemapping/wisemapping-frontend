@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, PolyLine,
-} from '../../src';
+import { Workspace, PolyLine } from '../../src';
 
 global.$ = $;
 

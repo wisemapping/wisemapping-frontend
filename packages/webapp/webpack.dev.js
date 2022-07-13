@@ -13,18 +13,16 @@ module.exports = merge(common, {
     port: 3000,
     hot: true,
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/c\//, to: '/index.html' }
-      ]
-    }
+      rewrites: [{ from: /^\/c\//, to: '/index.html' }],
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
-        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
+        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
       },
-      base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000'
-    })
-  ]
+      base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
+    }),
+  ],
 });

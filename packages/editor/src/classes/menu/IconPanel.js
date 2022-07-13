@@ -19,15 +19,16 @@ import $ from 'jquery';
 import ToolbarPaneItem from './ToolbarPaneItem';
 import { ImageIcon } from '@wisemapping/mindplot';
 
-
 class IconPanel extends ToolbarPaneItem {
   _updateSelectedItem() {
     return this.getPanelElem();
   }
 
   buildPanel() {
-    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>')
-      .css({ width: 295, height: 305 });
+    const content = $('<div class="toolbarPanel" id="IconsPanel"></div>').css({
+      width: 295,
+      height: 305,
+    });
     content.on('click', (event) => {
       event.stopPropagation();
     });
@@ -37,7 +38,7 @@ class IconPanel extends ToolbarPaneItem {
     for (let i = 0; i < ImageIcon.prototype.ICON_FAMILIES.length; i += 1) {
       const familyIcons = ImageIcon.prototype.ICON_FAMILIES[i].icons;
       for (let j = 0; j < familyIcons.length; j += 1) {
-        if ((count % 12) === 0) {
+        if (count % 12 === 0) {
           familyContent = $('<div></div>');
           content.append(familyContent);
         }
@@ -52,10 +53,10 @@ class IconPanel extends ToolbarPaneItem {
 
         const panel = this;
         const model = this.getModel();
-        img.on('click', ((event) => {
+        img.on('click', (event) => {
           model.setValue($(event.target).attr('id'));
           panel.hide();
-        }));
+        });
 
         count += 1;
       }

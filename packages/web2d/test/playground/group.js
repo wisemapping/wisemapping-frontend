@@ -1,8 +1,6 @@
 /* eslint-disable no-alert */
 import $ from 'jquery';
-import {
-  Toolkit, Workspace, Line, Group, Elipse,
-} from '../../src';
+import { Toolkit, Workspace, Line, Group, Elipse } from '../../src';
 
 global.$ = $;
 
@@ -58,7 +56,7 @@ const basicTest = () => {
     //  Logger.logMsg("Moving group x,y:"+ x + "," + y);
     group.setPosition(x, y);
   };
-    // executer.periodical(100);
+  // executer.periodical(100);
 };
 basicTest();
 
@@ -68,7 +66,12 @@ const eventTest = () => {
   workspace.setCoordSize(100, 100);
 
   const groupAttributes = {
-    width: 50, height: 50, x: 25, y: 50, coordSize: '200 200', coordOrigin: '0 0',
+    width: 50,
+    height: 50,
+    x: 25,
+    y: 50,
+    coordSize: '200 200',
+    coordOrigin: '0 0',
   };
   const group = new Group(groupAttributes);
   workspace.append(group);
@@ -262,7 +265,7 @@ const groupVisibilitySample = () => {
     isVisible = !isVisible;
     group.setVisibility(isVisible);
   };
-    // executer.periodical(100);
+  // executer.periodical(100);
   workspace.addItAsChildTo($('#visibilityExample'));
 };
 groupVisibilitySample();
@@ -296,7 +299,7 @@ const groupVisibilitySample2 = () => {
     height = (height + 10) % 100;
     group.setCoordSize(width, height);
   };
-    // executer.periodical(100);
+  // executer.periodical(100);
   workspace.addItAsChildTo($('#scaleStrokeExample'));
 };
 groupVisibilitySample2();

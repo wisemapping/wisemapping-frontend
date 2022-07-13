@@ -10,23 +10,23 @@ module.exports = {
     },
   },
   stats: {
-    errorDetails: true
+    errorDetails: true,
   },
   entry: {
-    "editor.bundle": path.join(__dirname, 'src', 'index.tsx')
+    'editor.bundle': path.join(__dirname, 'src', 'index.tsx'),
   },
   mode: 'development',
   devtool: 'source-map',
   target: 'web',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: '/node_modules/'
+        exclude: '/node_modules/',
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -36,14 +36,15 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
-      }, {
+      },
+      {
         test: /\.css$/i,
-        loader: 'style-loader'
+        loader: 'style-loader',
       },
       {
         test: /\.css$/,
         loader: 'css-loader',
-      }
+      },
     ],
   },
 };

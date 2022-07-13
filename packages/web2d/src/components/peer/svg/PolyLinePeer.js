@@ -67,12 +67,7 @@ class PolyLinePeer extends ElementPeer {
   }
 
   _updateStraightPath() {
-    if (
-      $defined(this._x1)
-            && $defined(this._x2)
-            && $defined(this._y1)
-            && $defined(this._y2)
-    ) {
+    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
       const path = PolyLineUtils.buildStraightPath.call(
         this,
         this.breakDistance,
@@ -90,12 +85,7 @@ class PolyLinePeer extends ElementPeer {
     const y1 = this._y1;
     const x2 = this._x2;
     const y2 = this._y2;
-    if (
-      $defined(x1)
-            && $defined(x2)
-            && $defined(y1)
-            && $defined(y2)
-    ) {
+    if ($defined(x1) && $defined(x2) && $defined(y1) && $defined(y2)) {
       const diff = x2 - x1;
       const middlex = diff / 2 + x1;
       let signx = 1;
@@ -114,12 +104,7 @@ class PolyLinePeer extends ElementPeer {
   }
 
   _updateCurvePath() {
-    if (
-      $defined(this._x1)
-            && $defined(this._x2)
-            && $defined(this._y1)
-            && $defined(this._y2)
-    ) {
+    if ($defined(this._x1) && $defined(this._x2) && $defined(this._y1) && $defined(this._y2)) {
       const path = PolyLineUtils.buildCurvedPath.call(
         this,
         this.breakDistance,

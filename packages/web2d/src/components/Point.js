@@ -18,19 +18,19 @@
 
 class Point {
   /**
-     * @constructs
-     * @param {Number} x coordinate
-     * @param {Number} y coordinate
-     */
+   * @constructs
+   * @param {Number} x coordinate
+   * @param {Number} y coordinate
+   */
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
 
   /**
-     * @param {Number} x coordinate
-     * @param {Number} y coordinate
-     */
+   * @param {Number} x coordinate
+   * @param {Number} y coordinate
+   */
   setValue(x, y) {
     this.x = x;
     this.y = y;

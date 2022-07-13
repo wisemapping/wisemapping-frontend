@@ -1,10 +1,7 @@
 import $ from 'jquery';
-import {
-  Workspace, Rect,
-} from '../../src';
+import { Workspace, Rect } from '../../src';
 
 global.$ = $;
-
 
 const rectExampleTest = () => {
   const workspace = new Workspace();
@@ -24,7 +21,7 @@ const roundrectExampleTest = () => {
   function builder(container, x, width, height) {
     for (let i = 1; i <= 10; i++) {
       const rect = new Rect(i / 10);
-      rect.setPosition(x, ((i - 1) * (50 + 5)));
+      rect.setPosition(x, (i - 1) * (50 + 5));
       rect.setSize(width, height);
       container.append(rect);
     }

@@ -106,10 +106,7 @@ const Shape = {
     const x2 = tarPos.x + Math.sqrt((l * l) / (1 + m * m)) * fix * -1;
     const y2 = m * (x2 - tarPos.x) + tarPos.y;
 
-    return [
-      new Point(-srcPos.x + x1, -srcPos.y + y1),
-      new Point(-tarPos.x + x2, -tarPos.y + y2),
-    ];
+    return [new Point(-srcPos.x + x1, -srcPos.y + y1), new Point(-tarPos.x + x2, -tarPos.y + y2)];
   },
 
   workoutIncomingConnectionPoint(targetNode, sourcePosition) {

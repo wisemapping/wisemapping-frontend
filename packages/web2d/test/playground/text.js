@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, Text,
-} from '../../src';
+import { Workspace, Text } from '../../src';
 import TransformUtils from '../../src/components/peer/utils/TransformUtils';
 
 const workspaces = [];
@@ -14,7 +12,17 @@ global.zoomIn = function zoomIn() {
   }
 };
 
-const textTestHelper = function textTestHelper(coordSize, textval, font, fontSizeval, style, modifier, fontColor, htmlElemId, iesimo) {
+const textTestHelper = function textTestHelper(
+  coordSize,
+  textval,
+  font,
+  fontSizeval,
+  style,
+  modifier,
+  fontColor,
+  htmlElemId,
+  iesimo,
+) {
   const workspace = new Workspace();
 
   workspace.setSize('300px', '100px');
@@ -38,7 +46,10 @@ const textTestHelper = function textTestHelper(coordSize, textval, font, fontSiz
   const textHtml = document.createTextNode(textsize);
   const fontSize = text.getHtmlFontSize(textsize);
   span.append(textHtml);
-  span.setAttribute('style', `font-weight:${modifier};font-style: ${style}; font-size:${fontSize}pt; font-family: ${font};width:30;height:30;`);
+  span.setAttribute(
+    'style',
+    `font-weight:${modifier};font-style: ${style}; font-size:${fontSize}pt; font-family: ${font};width:30;height:30;`,
+  );
 
   parent.append(span);
   workspaces[iesimo] = workspace;

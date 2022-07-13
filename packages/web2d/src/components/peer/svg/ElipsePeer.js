@@ -43,8 +43,8 @@ class ElipsePeer extends ElementPeer {
   setPosition(pcx, pcy) {
     const size = this.getSize();
 
-    const cx = (size.width / 2) + pcx;
-    const cy = (size.height / 2) + pcy;
+    const cx = size.width / 2 + pcx;
+    const cy = size.height / 2 + pcy;
 
     if ($defined(cx)) {
       this._native.setAttribute('cx', cx);

@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, Elipse,
-} from '../../src';
+import { Workspace, Elipse } from '../../src';
 import Grid from './Grid';
 
 global.$ = $;
@@ -16,7 +14,10 @@ overflowWorkspace.addItAsChildTo($('#overflowExample'));
 
 const workspacePosition = () => {
   const elipseAttr = {
-    width: 100, height: 100, x: 100, y: 100,
+    width: 100,
+    height: 100,
+    x: 100,
+    y: 100,
   };
 
   const divElem = $('#positionExample');

@@ -75,9 +75,7 @@ class BootstrapDialog extends Options {
         )}</button>`,
       );
       footer.append(this.acceptButton);
-      this.acceptButton
-        .unbind('click')
-        .on('click', this.options.onEventData, this.onAcceptClick);
+      this.acceptButton.unbind('click').on('click', this.options.onEventData, this.onAcceptClick);
     }
     if (this.options.removeButton) {
       this.removeButton = $(

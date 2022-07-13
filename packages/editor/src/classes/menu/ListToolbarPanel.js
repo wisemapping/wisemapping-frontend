@@ -43,7 +43,9 @@ class ListToolbarPanel extends ToolbarPaneItem {
     const menuElems = panelElem.find('div');
     const value = this.getModel().getValue();
     menuElems.each((index, elem) => {
-      const elemValue = $defined($(elem).attr('model')) ? $(elem).attr('model') : $(elem).attr('id');
+      const elemValue = $defined($(elem).attr('model'))
+        ? $(elem).attr('model')
+        : $(elem).attr('id');
       $assert(elemValue, 'elemValue can not be null');
       if (elemValue === value) $(elem).attr('class', 'toolbarPanelLinkSelectedLink');
       else $(elem).attr('class', 'toolbarPanelLink');

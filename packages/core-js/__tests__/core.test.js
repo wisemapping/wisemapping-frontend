@@ -3,5 +3,5 @@
 import coreJs from '..';
 
 describe('core-js', () => {
-    it('needs tests');
+  it('needs tests');
 });

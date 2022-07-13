@@ -15,16 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import {
-  $assert,
-  $defined,
-} from '@wisemapping/core-js';
-import {
-  $msg,
-} from './Messages';
-import {
-  TopicShape,
-} from './model/INodeModel';
+import { $assert, $defined } from '@wisemapping/core-js';
+import { $msg } from './Messages';
+import { TopicShape } from './model/INodeModel';
 
 class TopicStyle {
   static _getStyles(topic) {
@@ -49,9 +42,7 @@ class TopicStyle {
   }
 
   static defaultText(topic) {
-    const {
-      msgKey,
-    } = this._getStyles(topic);
+    const { msgKey } = this._getStyles(topic);
     return $msg(msgKey);
   }
 

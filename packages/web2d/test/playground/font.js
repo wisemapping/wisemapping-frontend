@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, Text,
-} from '../../src';
+import { Workspace, Text } from '../../src';
 
 global.$ = $;
 
@@ -51,5 +49,9 @@ function alignments(text, family, elemId) {
 
 // Multine tests and alingments .. ...
 ['Arial', 'Tahoma', 'Verdana', 'Times', 'Brush Script MT'].forEach((fontName, i) => {
-  alignments('This multine text.\nThis is the long line just because :)\nShort line', fontName, `amulti${i}`);
+  alignments(
+    'This multine text.\nThis is the long line just because :)\nShort line',
+    fontName,
+    `amulti${i}`,
+  );
 });

@@ -9,12 +9,10 @@ const prodConfig = {
   },
   externals: {
     react: 'react',
-    "react-dom": 'react-dom',
-    "react-intl": 'react-intl',
+    'react-dom': 'react-dom',
+    'react-intl': 'react-intl',
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-  ]
+  plugins: [new CleanWebpackPlugin()],
 };
 
 module.exports = merge(common, prodConfig);

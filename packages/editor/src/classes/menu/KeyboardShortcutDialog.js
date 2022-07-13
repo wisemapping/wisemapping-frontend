@@ -18,14 +18,13 @@
 import BootstrapDialog from '../bootstrap/BootstrapDialog';
 import { $msg } from '@wisemapping/mindplot';
 
-
 class KeyboardShortcutDialog extends BootstrapDialog {
-    constructor() {
-        super($msg('SHORTCUTS'), {
-            closeButton: true,
-            acceptButton: false,
-        });
-        this.setContent(`<div id="keyboardTable">
+  constructor() {
+    super($msg('SHORTCUTS'), {
+      closeButton: true,
+      acceptButton: false,
+    });
+    this.setContent(`<div id="keyboardTable">
     <table>
         <colgroup>
             <col width="40%"/>
@@ -139,8 +138,8 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         </tbody>
     </table>
 </div>`);
-        this.show();
-    }
+    this.show();
+  }
 }
 
 export default KeyboardShortcutDialog;

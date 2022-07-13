@@ -36,7 +36,8 @@ class KeyboardShortcutTooltip extends FloatingTip {
       html: true,
       placement: 'bottom',
       className: 'keyboardShortcutTip',
-      template: '<div class="popover popoverBlack" role="tooltip"><div class="arrow arrowBlack"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+      template:
+        '<div class="popover popoverBlack" role="tooltip"><div class="arrow arrowBlack"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     });
     tipDiv.on('click', (e) => {
       tipDiv.trigger('mouseleave', e);

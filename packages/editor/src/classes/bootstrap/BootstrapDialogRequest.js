@@ -49,10 +49,7 @@ class BootstrapDialogRequest extends BootstrapDialog {
 
     this._native.find('.modal-body').load(url, () => {
       me.acceptButton.unbind('click').click(() => {
-        if (
-          $defined(global.submitDialogForm)
-                    && typeof global.submitDialogForm === 'function'
-        ) {
+        if ($defined(global.submitDialogForm) && typeof global.submitDialogForm === 'function') {
           global.submitDialogForm();
         }
       });
