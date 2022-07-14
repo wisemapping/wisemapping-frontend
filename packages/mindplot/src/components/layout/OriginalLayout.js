@@ -33,7 +33,8 @@ class OriginalLayout {
     $assert(position, 'position can not be null');
     $assert(type, 'type can not be null');
 
-    const strategy = type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
+    const strategy =
+      type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
     return new Node(id, size, position, strategy);
   }
 
@@ -77,7 +78,7 @@ class OriginalLayout {
   /** */
   layout() {
     const roots = this._treeSet.getTreeRoots();
-    roots.forEach(((node) => {
+    roots.forEach((node) => {
       // Calculate all node heights ...
       const sorter = node.getSorter();
 
@@ -85,7 +86,7 @@ class OriginalLayout {
       this._layoutChildren(node, heightById);
 
       this._fixOverlapping(node, heightById);
-    }));
+    });
   }
 
   _layoutChildren(node, heightById) {
@@ -117,8 +118,8 @@ class OriginalLayout {
         const direction = node.getSorter().getChildDirection(me._treeSet, child);
 
         if (
-          (direction > 0 && childFreeDisplacement.x < 0)
-          || (direction < 0 && childFreeDisplacement.x > 0)
+          (direction > 0 && childFreeDisplacement.x < 0) ||
+          (direction < 0 && childFreeDisplacement.x > 0)
         ) {
           child.resetFreeDisplacement();
           child.setFreeDisplacement({
@@ -145,9 +146,9 @@ class OriginalLayout {
     }
 
     // Continue reordering the children nodes ...
-    children.forEach(((child) => {
+    children.forEach((child) => {
       this._layoutChildren(child, heightById);
-    }));
+    });
   }
 
   _calculateAlignOffset(node, child, heightById) {
@@ -161,12 +162,13 @@ class OriginalLayout {
     const childHeight = child.getSize().height;
 
     if (
-      this._treeSet.isStartOfSubBranch(child)
-      && OriginalLayout._branchIsTaller(child, heightById)
+      this._treeSet.isStartOfSubBranch(child) &&
+      OriginalLayout._branchIsTaller(child, heightById)
     ) {
       if (this._treeSet.hasSinglePathToSingleLeaf(child)) {
-        offset = heightById[child.getId()] / 2
-          - (childHeight + child.getSorter()._getVerticalPadding() * 2) / 2;
+        offset =
+          heightById[child.getId()] / 2 -
+          (childHeight + child.getSorter()._getVerticalPadding() * 2) / 2;
       } else {
         offset = this._treeSet.isLeaf(child) ? 0 : -(childHeight - nodeHeight) / 2;
       }
@@ -189,8 +191,7 @@ class OriginalLayout {
 
   static _branchIsTaller(node, heightById) {
     return (
-      heightById[node.getId()]
-      > node.getSize().height + node.getSorter()._getVerticalPadding() * 2
+      heightById[node.getId()] > node.getSize().height + node.getSorter()._getVerticalPadding() * 2
     );
   }
 
@@ -200,9 +201,9 @@ class OriginalLayout {
     if (node.isFree()) {
       this._shiftBranches(node, heightById);
     }
-    children.forEach(((child) => {
+    children.forEach((child) => {
       this._fixOverlapping(child, heightById);
-    }));
+    });
   }
 
   _shiftBranches(node, heightById) {
@@ -213,27 +214,28 @@ class OriginalLayout {
       node.getFreeDisplacement().y,
     );
 
-    siblingsToShift.forEach(((sibling) => {
-      const overlappingOccurs = shiftedBranches.some(
-        ((shiftedBranch) => OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById)),
+    siblingsToShift.forEach((sibling) => {
+      /* eslint-disable */
+      const overlappingOccurs = shiftedBranches.some((shiftedBranch) =>
+        OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById),
       );
-
+      /* eslint-enable */
       if (!sibling.isFree() || overlappingOccurs) {
         const sAmount = node.getFreeDisplacement().y;
         this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
         shiftedBranches.push(sibling);
       }
-    }));
+    });
 
     const branchesToShift = this._treeSet
       .getBranchesInVerticalDirection(node, node.getFreeDisplacement().y)
       .filter((branch) => !shiftedBranches.includes(branch));
 
-    branchesToShift.forEach(((branch) => {
+    branchesToShift.forEach((branch) => {
       const bAmount = node.getFreeDisplacement().y;
       this._treeSet.shiftBranchPosition(branch, 0, bAmount);
       shiftedBranches.push(branch);
-    }));
+    });
   }
 
   static _branchesOverlap(branchA, branchB, heightById) {

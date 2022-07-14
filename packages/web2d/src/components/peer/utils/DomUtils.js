@@ -39,9 +39,11 @@ export const getPosition = (elem) => {
     // when a statically positioned element is identified
     doc = elem.ownerDocument;
     offsetParent = elem.offsetParent || doc.documentElement;
-    while (offsetParent
-          && (offsetParent === doc.body || offsetParent === doc.documentElement)
-          && getStyle(offsetParent, 'position') === 'static') {
+    while (
+      offsetParent &&
+      (offsetParent === doc.body || offsetParent === doc.documentElement) &&
+      getStyle(offsetParent, 'position') === 'static'
+    ) {
       offsetParent = offsetParent.parentNode;
     }
     if (offsetParent && offsetParent !== elem && offsetParent.nodeType === 1) {

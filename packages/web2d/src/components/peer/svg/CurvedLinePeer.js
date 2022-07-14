@@ -148,19 +148,25 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   _updatePath(avoidControlPointFix) {
-    if (
-      $defined(this._x1)
-      && $defined(this._y1)
-      && $defined(this._x2)
-      && $defined(this._y2)
-    ) {
+    if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
       this._calculateAutoControlPoints(avoidControlPointFix);
 
-      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed(2)} C${(this._control1.x + this._x1).toFixed(2)},${this._control1.y + this._y1
-      } ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2).toFixed(2)} ${(this._x2).toFixed(2)},${(this._y2).toFixed(2)}${this._lineStyle
-        ? ` ${(this._control2.x + this._x2).toFixed(2)},${(this._control2.y + this._y2 + 3).toFixed(2)} ${(this._control1.x + this._x1
-        ).toFixed(2)},${(this._control1.y + this._y1 + 5).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
-        : ''
+      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed(2)} C${(
+        this._control1.x + this._x1
+      ).toFixed(2)},${this._control1.y + this._y1} ${(this._control2.x + this._x2).toFixed(2)},${(
+        this._control2.y + this._y2
+      ).toFixed(2)} ${this._x2.toFixed(2)},${this._y2.toFixed(2)}${
+        this._lineStyle
+          ? ` ${(this._control2.x + this._x2).toFixed(2)},${(
+              this._control2.y +
+              this._y2 +
+              3
+            ).toFixed(2)} ${(this._control1.x + this._x1).toFixed(2)},${(
+              this._control1.y +
+              this._y1 +
+              5
+            ).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
+          : ''
       }`;
       this._native.setAttribute('d', path);
     }
@@ -193,10 +199,7 @@ class CurvedLinePeer extends ElementPeer {
     const x2 = tarPos.x + Math.sqrt((l * l) / (1 + m * m)) * fix * -1;
     const y2 = m * (x2 - tarPos.x) + tarPos.y;
 
-    return [
-      new Point(-srcPos.x + x1, -srcPos.y + y1),
-      new Point(-tarPos.x + x2, -tarPos.y + y2),
-    ];
+    return [new Point(-srcPos.x + x1, -srcPos.y + y1), new Point(-tarPos.x + x2, -tarPos.y + y2)];
   }
 
   _calculateAutoControlPoints(avoidControlPointFix) {
@@ -206,15 +209,15 @@ class CurvedLinePeer extends ElementPeer {
       new Point(this._x2, this._y2),
     );
     if (
-      !this._customControlPoint_1
-      && !($defined(avoidControlPointFix) && avoidControlPointFix === 0)
+      !this._customControlPoint_1 &&
+      !($defined(avoidControlPointFix) && avoidControlPointFix === 0)
     ) {
       this._control1.x = defaultpoints[0].x;
       this._control1.y = defaultpoints[0].y;
     }
     if (
-      !this._customControlPoint_2
-      && !($defined(avoidControlPointFix) && avoidControlPointFix === 1)
+      !this._customControlPoint_2 &&
+      !($defined(avoidControlPointFix) && avoidControlPointFix === 1)
     ) {
       this._control2.x = defaultpoints[1].x;
       this._control2.y = defaultpoints[1].y;

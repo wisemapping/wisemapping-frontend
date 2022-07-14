@@ -22,7 +22,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-		// ignore errores when a line finishes with (setting this value to 0 ignores all errors)
+		// ignore errors when a line finishes with (setting this value to 0 ignores all errors)
 		"operator-linebreak": [
 			"error", "after", { 
 				"overrides": { 
