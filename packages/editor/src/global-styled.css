@@ -161,6 +161,11 @@ div#position {
   background-size: 40px 40px;
   background-color: #fff;
   border-radius: 8px;
+  padding: 0;
+}
+
+#position-button>img {
+  vertical-align: middle;
 }
 
 #zoom-button {
@@ -178,7 +183,14 @@ div#position {
   background-position: center;
   cursor: pointer;
   background-color: #fff;
+  padding: 0;
 }
+
+#zoom-plus,
+#zoom-minus>img {
+  vertical-align: middle;
+}
+
 
 #zoom-plus {
   border-radius: 8px 8px 0 0;
@@ -188,7 +200,7 @@ div#position {
   border-radius: 0 0 8px 8px;
 }
 
-div#shotcuts > img {
+div#shotcuts>img {
   margin: 20px 0;
   width: 40px;
   height: 40px;
@@ -278,6 +290,6 @@ div#shotcuts > img {
   display: none;
 }
 
-.tryInfoPanel > p {
+.tryInfoPanel>p {
   justify-content: center;
 }
