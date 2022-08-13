@@ -1,5 +1,5 @@
 // Passive event listeners
-function regiterTouchHandler(jQuery) {
+function registerTouchHandler(jQuery) {
 
     jQuery.event.special.touchstart = {
         setup: function (_, ns, handle) {
@@ -12,4 +12,4 @@ function regiterTouchHandler(jQuery) {
         }
     };
 }
-export default regiterTouchHandler;
+export default registerTouchHandler;
