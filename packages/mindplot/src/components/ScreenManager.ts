@@ -17,6 +17,12 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
+// https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
+// https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
+// eslint-disable-next-line import/extensions
+import regiterTouchHandler from '../../../../libraries/jquery.touchevent';
+
+regiterTouchHandler($);
 
 class ScreenManager {
   private _divContainer: JQuery;
@@ -63,8 +69,11 @@ class ScreenManager {
   }
 
   addEvent(eventType: string, listener) {
-    if (eventType === 'click') this._clickEvents.push(listener);
-    else this._divContainer.bind(eventType, listener);
+    if (eventType === 'click') {
+      this._clickEvents.push(listener);
+    } else {
+      this._divContainer.bind(eventType, listener);
+    }
   }
 
   removeEvent(event: string, listener) {
