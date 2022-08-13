@@ -22,7 +22,7 @@ import { Point } from '@wisemapping/web2d';
 // eslint-disable-next-line import/extensions
 import regiterTouchHandler from '../../../../libraries/jquery.touchevent';
 
-regiterTouchHandler($);
+regiterTouchHandler();
 
 class ScreenManager {
   private _divContainer: JQuery;
