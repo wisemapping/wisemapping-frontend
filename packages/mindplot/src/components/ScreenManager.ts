@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 // https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
@@ -22,7 +23,7 @@ import { Point } from '@wisemapping/web2d';
 // eslint-disable-next-line import/extensions
 import regiterTouchHandler from '../../../../libraries/jquery.touchevent';
 
-regiterTouchHandler();
+regiterTouchHandler($);
 
 class ScreenManager {
   private _divContainer: JQuery;
