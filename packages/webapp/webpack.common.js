@@ -38,6 +38,10 @@ module.exports = {
   },
   optimization: {
     usedExports: true,
+<<<<<<< HEAD
+=======
+    chunkIds: 'named',
+>>>>>>> feature/lazy_load
     splitChunks: {
       cacheGroups: {
         vendors: {
