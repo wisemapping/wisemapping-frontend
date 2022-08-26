@@ -223,7 +223,9 @@ class Workspace {
 
             // Change cursor.
             window.document.body.style.cursor = 'move';
-            mouseMoveEvent.preventDefault();
+            // If I dont ignore touchmove events, browser console shows a lot of errors:
+            // Unable to preventDefault inside passive event listener invocation.
+            if (mouseMoveEvent.type !== 'touchmove') mouseMoveEvent.preventDefault();
 
             // Fire drag event ...
             screenManager.fireEvent('update');

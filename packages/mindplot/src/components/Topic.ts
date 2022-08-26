@@ -28,9 +28,7 @@ import ConnectionLine from './ConnectionLine';
 import IconGroup from './IconGroup';
 import EventBus from './layout/EventBus';
 import ShirinkConnector from './ShrinkConnector';
-import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
-import LinkEditor from './widget/LinkEditor';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import { TopicShape } from './model/INodeModel';
@@ -732,79 +730,65 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  showNoteEditor(): void {
-    const topicId = this.getId();
+  getNoteValue(): string {
     const model = this.getModel();
-    const editorModel = {
-      getValue(): string {
-        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
-        let result;
-        if (notes.length > 0) {
-          result = (notes[0] as NoteModel).getText();
-        }
+    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    let result;
+    if (notes.length > 0) {
+      result = (notes[0] as NoteModel).getText();
+    }
 
-        return result;
-      },
-
-      setValue(value: string) {
-        const dispatcher = ActionDispatcher.getInstance();
-        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
-        if (!$defined(value)) {
-          const featureId = notes[0].getId();
-          dispatcher.removeFeatureFromTopic(topicId, featureId);
-        } else if (notes.length > 0) {
-          dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
-            text: value,
-          });
-        } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
-            text: value,
-          });
-        }
-      },
-    };
-    const editor = new NoteEditor(editorModel);
-    this.closeEditors();
-    editor.show();
+    return result;
   }
 
-  /** opens a dialog where the user can enter or edit an existing link associated with this topic */
-  showLinkEditor() {
+  setNoteValue(value: string) {
     const topicId = this.getId();
     const model = this.getModel();
-    const editorModel = {
-      getValue(): string {
-        // @param {mindplot.model.LinkModel[]} links
-        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
-        let result;
-        if (links.length > 0) {
-          result = (links[0] as LinkModel).getUrl();
-        }
+    const dispatcher = ActionDispatcher.getInstance();
+    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    if (!$defined(value)) {
+      const featureId = notes[0].getId();
+      dispatcher.removeFeatureFromTopic(topicId, featureId);
+    } else if (notes.length > 0) {
+      dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
+        text: value,
+      });
+    } else {
+      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
+        text: value,
+      });
+    }
+  }
 
-        return result;
-      },
+  getLinkValue(): string {
+    const model = this.getModel();
+    // @param {mindplot.model.LinkModel[]} links
+    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    let result;
+    if (links.length > 0) {
+      result = (links[0] as LinkModel).getUrl();
+    }
 
-      setValue(value: string) {
-        const dispatcher = ActionDispatcher.getInstance();
-        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
-        if (!$defined(value)) {
-          const featureId = links[0].getId();
-          dispatcher.removeFeatureFromTopic(topicId, featureId);
-        } else if (links.length > 0) {
-          dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
-            url: value,
-          });
-        } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
-            url: value,
-          });
-        }
-      },
-    };
+    return result;
+  }
 
-    this.closeEditors();
-    const editor = new LinkEditor(editorModel);
-    editor.show();
+  setLinkValue(value: string) {
+    const topicId = this.getId();
+    const model = this.getModel();
+    const dispatcher = ActionDispatcher.getInstance();
+    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    if (!$defined(value)) {
+      const featureId = links[0].getId();
+      dispatcher.removeFeatureFromTopic(topicId, featureId);
+    } else if (links.length > 0) {
+      dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
+        url: value,
+      });
+    } else {
+      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
+        url: value,
+      });
+    }
   }
 
   closeEditors() {

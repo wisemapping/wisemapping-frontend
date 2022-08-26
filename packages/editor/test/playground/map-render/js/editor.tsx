@@ -22,7 +22,7 @@ import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
-    const elem = document.getElementById('mindplot');
+    const elem = document.getElementById('mindmap-comp');
     if (elem) {
       elem.classList.add('ready');
     }

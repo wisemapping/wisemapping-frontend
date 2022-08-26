@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ActionDispatcher from '../maps-page/action-dispatcher';
 import { ActionType } from '../maps-page/action-chooser';
 import Editor from '@wisemapping/editor';
-import { EditorRenderMode, PersistenceManager } from '@wisemapping/mindplot';
+import { EditorRenderMode, PersistenceManager } from '@wisemapping/editor';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';

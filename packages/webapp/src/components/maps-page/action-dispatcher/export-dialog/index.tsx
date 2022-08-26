@@ -16,12 +16,12 @@ import {
   ImageExporterFactory,
   Exporter,
   Mindmap,
-} from '@wisemapping/mindplot';
+} from '@wisemapping/editor';
 import Client from '../../../../classes/client';
 import { activeInstance } from '../../../../redux/clientSlice';
 
 import { useSelector } from 'react-redux';
-import SizeType from '@wisemapping/mindplot/src/components/SizeType';
+import SizeType from '@wisemapping/editor';
 import Checkbox from '@mui/material/Checkbox';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';

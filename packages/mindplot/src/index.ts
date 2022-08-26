@@ -31,7 +31,19 @@ import Exporter from './components/export/Exporter';
 import Importer from './components/import/Importer';
 import DesignerKeyboard from './components/DesignerKeyboard';
 import EditorRenderMode from './components/EditorRenderMode';
+
 import ImageIcon from './components/ImageIcon';
+import MindplotWebComponent, {
+  MindplotWebComponentInterface,
+} from './components/MindplotWebComponent';
+import LinkIcon from './components/LinkIcon';
+import NoteIcon from './components/NoteIcon';
+import Topic from './components/Topic';
+
+import LinkModel from './components/model/LinkModel';
+import NoteModel from './components/model/NoteModel';
+
+import WidgetManager from './components/WidgetManager';
 
 import { buildDesigner } from './components/DesignerBuilder';
 
@@ -39,10 +51,15 @@ import { $notify } from './components/widget/ToolbarNotifier';
 
 import { $msg } from './components/Messages';
 
-// This hack is required to initialize Bootstrap. In future, this should be removed.
+import './mindplot-styles.css';
+
 const globalAny: any = global;
 globalAny.jQuery = jquery;
-require('../../../libraries/bootstrap/js/bootstrap.min');
+// WebComponent registration
+// The if statement is the fix for doble registration problem. Can be deleted wen webapp-mindplot dependency be dead.
+if (!customElements.get('mindplot-component')) {
+  customElements.define('mindplot-component', MindplotWebComponent);
+}
 
 export {
   Mindmap,
@@ -64,4 +81,12 @@ export {
   $notify,
   $msg,
   DesignerKeyboard,
+  MindplotWebComponent,
+  MindplotWebComponentInterface,
+  LinkIcon,
+  LinkModel,
+  NoteIcon,
+  NoteModel,
+  WidgetManager,
+  Topic,
 };

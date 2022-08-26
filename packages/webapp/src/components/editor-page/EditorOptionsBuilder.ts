@@ -1,5 +1,5 @@
 import { EditorOptions } from '@wisemapping/editor';
-import { EditorRenderMode } from '@wisemapping/mindplot';
+import { EditorRenderMode } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
 
 class EditorOptionsBuilder {

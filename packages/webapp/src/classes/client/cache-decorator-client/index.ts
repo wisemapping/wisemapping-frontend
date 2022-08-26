@@ -1,4 +1,4 @@
-import { EditorRenderMode, Mindmap, PersistenceManager } from '@wisemapping/mindplot';
+import { EditorRenderMode, Mindmap, PersistenceManager } from '@wisemapping/editor';
 import Client, {
   AccountInfo,
   BasicMapInfo,

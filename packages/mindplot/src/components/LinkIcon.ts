@@ -16,13 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import $ from 'jquery';
 import Icon from './Icon';
-import LinkIconTooltip from './widget/LinkIconTooltip';
 import LinksImage from '../../assets/icons/links.svg';
 import LinkModel from './model/LinkModel';
 import Topic from './Topic';
 import FeatureModel from './model/FeatureModel';
+import WidgetManager from './WidgetManager';
 
 class LinkIcon extends Icon {
   private _linksModel: FeatureModel;
@@ -30,8 +29,6 @@ class LinkIcon extends Icon {
   private _topic: Topic;
 
   private _readOnly: boolean;
-
-  private _tip: LinkIconTooltip;
 
   constructor(topic: Topic, linkModel: LinkModel, readOnly: boolean) {
     $assert(topic, 'topic can not be null');
@@ -47,30 +44,12 @@ class LinkIcon extends Icon {
 
   private _registerEvents() {
     this._image.setCursor('pointer');
-    this._tip = new LinkIconTooltip(this);
 
-    const me = this;
+    const manager = WidgetManager.getInstance();
+    manager.createTooltipForLink(this._topic, this._linksModel as LinkModel, this);
     if (!this._readOnly) {
-      // Add on click event to open the editor ...
-      this.addEvent('click', (event) => {
-        me._tip.hide();
-        me._topic.showLinkEditor();
-        event.stopPropagation();
-      });
-      // FIXME: we shouldn't have timeout of that..
-      this.addEvent('mouseleave', (event) => {
-        setTimeout(() => {
-          if (!$('#linkPopover:hover').length) {
-            me._tip.hide();
-          }
-          event.stopPropagation();
-        }, 100);
-      });
+      manager.configureEditorForLink(this._topic, this._linksModel as LinkModel, this);
     }
-
-    $(this.getImage().peer._native).mouseenter(() => {
-      me._tip.show();
-    });
   }
 
   getModel(): FeatureModel {

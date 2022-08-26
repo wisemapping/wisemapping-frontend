@@ -1,5 +1,5 @@
-import { Mindmap, MockPersistenceManager, PersistenceManager } from '@wisemapping/mindplot';
-import XMLSerializerTango from '@wisemapping/mindplot/src/components/persistence/XMLSerializerTango';
+import { Mindmap, MockPersistenceManager, PersistenceManager } from '@wisemapping/editor';
+import XMLSerializerTango from '@wisemapping/editor';
 import Client, {
   AccountInfo,
   BasicMapInfo,

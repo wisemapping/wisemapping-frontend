@@ -17,9 +17,9 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
-import LinkIcon from '../LinkIcon';
-import LinkModel from '../model/LinkModel';
-import { $msg } from '../Messages';
+import { LinkIcon } from '@wisemapping/mindplot';
+import { LinkModel } from '@wisemapping/mindplot';
+import { $msg } from '@wisemapping/mindplot';
 import FloatingTip from './FloatingTip';
 
 class LinkIconTooltip extends FloatingTip {
@@ -56,7 +56,7 @@ class LinkIconTooltip extends FloatingTip {
       target: '_blank',
     });
 
-    link.append(linkText);
+    link.html(linkText);
     result.append(link);
     return result;
   }

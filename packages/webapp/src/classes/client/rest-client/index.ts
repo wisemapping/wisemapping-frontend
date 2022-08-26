@@ -4,8 +4,8 @@ import {
   Mindmap,
   PersistenceManager,
   RESTPersistenceManager,
-} from '@wisemapping/mindplot';
-import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
+} from '@wisemapping/editor';
+import { PersistenceError } from '@wisemapping/editor';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Client, {
   ErrorInfo,

@@ -35,6 +35,10 @@ module.exports = {
         test: /\.(png|svg)$/i,
         type: 'asset/inline',
       },
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
+      },
     ],
   },
   resolve: {

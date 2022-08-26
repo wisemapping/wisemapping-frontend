@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import merge from 'lodash/merge';
-import Events from '../Events';
+import Events from '../menu/Events';
 
 const defaultOptions = {
   animation: true,

@@ -16,14 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import $ from 'jquery';
-import { $msg } from './Messages';
 import Icon from './Icon';
 import NotesImage from '../../assets/icons/notes.svg';
 import Topic from './Topic';
 import NoteModel from './model/NoteModel';
 import FeatureModel from './model/FeatureModel';
-import FloatingTip from './widget/FloatingTip';
+import WidgetManager from './WidgetManager';
 
 class NoteIcon extends Icon {
   private _linksModel: NoteModel;
@@ -31,8 +29,6 @@ class NoteIcon extends Icon {
   private _topic: Topic;
 
   private _readOnly: boolean;
-
-  private _tip: FloatingTip;
 
   constructor(topic: Topic, noteModel: NoteModel, readOnly: boolean) {
     $assert(topic, 'topic can not be null');
@@ -47,42 +43,12 @@ class NoteIcon extends Icon {
 
   private _registerEvents(): void {
     this._image.setCursor('pointer');
-    const me = this;
 
+    const manager = WidgetManager.getInstance();
+    manager.createTooltipForNote(this._topic, this._linksModel as NoteModel, this);
     if (!this._readOnly) {
-      // Add on click event to open the editor ...
-      this.addEvent('click', (event) => {
-        me._topic.showNoteEditor();
-        event.stopPropagation();
-      });
+      manager.configureEditorForNote(this._topic, this._linksModel as NoteModel, this);
     }
-
-    this._tip = new FloatingTip($(me.getImage().peer._native), {
-      title: $msg('NOTE'),
-      // Content can also be a function of the target element!
-      content() {
-        return me._buildTooltipContent();
-      },
-      html: true,
-      placement: 'bottom',
-      destroyOnExit: true,
-    });
-  }
-
-  private _buildTooltipContent(): JQuery {
-    if ($('body').find('#textPopoverNote').length === 1) {
-      const text = $('body').find('#textPopoverNote');
-      text.text(this._linksModel.getText());
-      return text;
-    }
-    const result = $('<div id="textPopoverNote"></div>').css({ padding: '5px' });
-
-    const text = $('<div></div>').text(this._linksModel.getText()).css({
-      'white-space': 'pre-wrap',
-      'word-wrap': 'break-word',
-    });
-    result.append(text);
-    return result;
   }
 
   getModel(): FeatureModel {

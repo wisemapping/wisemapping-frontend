@@ -18,7 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import BootstrapDialog from '../../../../editor/src/classes/bootstrap/BootstrapDialog';
-import { $msg } from '../Messages';
+import { $msg } from '@wisemapping/mindplot';
 
 interface NoteEditorModel {
   getValue(): string;

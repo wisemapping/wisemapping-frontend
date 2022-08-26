@@ -17,14 +17,17 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import EditorRenderMode from './EditorRenderMode';
+import WidgetManager from './WidgetManager';
 import PersistenceManager from './PersistenceManager';
 
 export type DesignerOptions = {
   zoom: number;
   mode: EditorRenderMode;
   mapId?: string;
+  divContainer?: HTMLElement;
   container: string;
   persistenceManager?: PersistenceManager;
+  widgetManager?: WidgetManager;
   saveOnLoad?: boolean;
   locale?: string;
 };

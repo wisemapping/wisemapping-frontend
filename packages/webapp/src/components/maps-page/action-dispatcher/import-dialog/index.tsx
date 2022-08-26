@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import { Importer, TextImporterFactory } from '@wisemapping/mindplot';
+import { Importer, TextImporterFactory } from '@wisemapping/editor';
 import React from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Toolbar, { ToolbarActionType } from './components/toolbar';
 import Footer from './components/footer';
 import { IntlProvider } from 'react-intl';
@@ -10,15 +10,36 @@ import {
   Designer,
   DesignerKeyboard,
   EditorRenderMode,
+  MindplotWebComponentInterface,
+  Mindmap,
+  MockPersistenceManager,
+  LocalStorageManager,
+  RESTPersistenceManager,
+  TextExporterFactory,
+  ImageExporterFactory,
+  Exporter,
+  Importer,
+  TextImporterFactory,
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
 import Menu from './classes/menu/Menu';
+import BootstrapWidgetManager from './classes/bootstrap/BootstrapWidgetManager';
+
+require('../../../libraries/bootstrap/js/bootstrap.min');
 
 declare global {
   // used in mindplot
   var designer: Designer;
   var accountEmail: string;
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      ['mindplot-component']: MindplotWebComponentInterface;
+    }
+  }
 }
 
 export type EditorOptions = {
@@ -31,6 +52,23 @@ export type EditorOptions = {
   enableKeyboardEvents: boolean;
 };
 
+export {
+  PersistenceManager,
+  DesignerOptionsBuilder,
+  Designer,
+  DesignerKeyboard,
+  EditorRenderMode,
+  Mindmap,
+  MockPersistenceManager,
+  LocalStorageManager,
+  RESTPersistenceManager,
+  TextExporterFactory,
+  ImageExporterFactory,
+  Exporter,
+  Importer,
+  TextImporterFactory,
+};
+
 export type EditorProps = {
   mapId: string;
   options: EditorOptions;
@@ -41,22 +79,21 @@ export type EditorProps = {
 
 const Editor = ({ mapId, options, persistenceManager, onAction, onLoad }: EditorProps) => {
   const [isMobile, setIsMobile] = useState(undefined);
+  const mindplotComponent: any = useRef();
 
   useEffect(() => {
     // Change page title ...
     document.title = `${options.mapTitle} | WiseMapping `;
 
     // Load mindmap ...
+
     const designer = onLoadDesigner(mapId, options, persistenceManager);
     // Has extended actions been customized ...
     if (onLoad) {
       onLoad(designer);
     }
 
-    // Load mindmap ...
-    const instance = PersistenceManager.getInstance();
-    const mindmap = instance.load(mapId);
-    designer.loadMap(mindmap);
+    mindplotComponent.current.loadMap(mapId);
 
     setIsMobile(checkMobile());
 
@@ -89,17 +126,10 @@ const Editor = ({ mapId, options, persistenceManager, onAction, onLoad }: Editor
     options: EditorOptions,
     persistenceManager: PersistenceManager,
   ): Designer => {
-    const buildOptions = DesignerOptionsBuilder.buildOptions({
-      persistenceManager,
-      mode: options.mode,
-      mapId: mapId,
-      container: 'mindplot',
-      zoom: options.zoom,
-      locale: options.locale,
-    });
+    mindplotComponent.current.buildDesigner(persistenceManager, new BootstrapWidgetManager());
 
     // Build designer ...
-    const result = buildDesigner(buildOptions);
+    const result = mindplotComponent.current && mindplotComponent.current.getDesigner();
 
     // Register toolbar event ...
     if (
@@ -132,7 +162,11 @@ const Editor = ({ mapId, options, persistenceManager, onAction, onLoad }: Editor
           <Toolbar editorMode={options.mode} onAction={onAction} />
         )}
       </div>
-      <div id="mindplot" style={mindplotStyle} className="wise-editor"></div>
+      <mindplot-component
+        ref={mindplotComponent}
+        id="mindmap-comp"
+        mode={options.mode}
+      ></mindplot-component>
       <div id="mindplot-tooltips" className="wise-editor"></div>
       <Footer editorMode={options.mode} isMobile={isMobile} />
     </IntlProvider>

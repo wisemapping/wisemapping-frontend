@@ -34,6 +34,10 @@ module.exports = {
         test: /\.wxml$/i,
         type: 'asset/source',
       },
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
+      },
     ],
   },
   optimization: {

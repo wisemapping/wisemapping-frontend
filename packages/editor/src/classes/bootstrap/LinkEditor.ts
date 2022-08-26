@@ -17,8 +17,8 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-import { $msg } from '../Messages';
-import BootstrapDialog from './bootstrap/BootstrapDialog';
+import { $msg } from '@wisemapping/mindplot';
+import BootstrapDialog from './BootstrapDialog';
 
 interface LinkEditorModel {
   getValue(): string;

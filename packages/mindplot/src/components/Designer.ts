@@ -56,6 +56,7 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
 import FeatureType from './model/FeatureType';
+import WidgetManager from './WidgetManager';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -882,7 +883,8 @@ class Designer extends Events {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
-      topic.showLinkEditor();
+      const manager = WidgetManager.getInstance();
+      manager.showEditorForLink(topic, null, null);
       this.onObjectFocusEvent();
     }
   }
@@ -891,7 +893,8 @@ class Designer extends Events {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
-      topic.showNoteEditor();
+      const manager = WidgetManager.getInstance();
+      manager.showEditorForNote(topic, null, null);
       this.onObjectFocusEvent();
     }
   }
