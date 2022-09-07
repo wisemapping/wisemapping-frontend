@@ -65,7 +65,7 @@ class SVGExporter extends Exporter {
 
   private _calcualteDimensions(): { minX: number; maxX: number; minY: number; maxY: number } {
     // Collect all group elements ...
-    const rectElems = Array.from(document.querySelectorAll('g>rect'));
+    const rectElems = Array.from(this.svgElement.querySelectorAll('g>rect'));
     const translates: SizeType[] = rectElems.map((rect: Element) => {
       const g = rect.parentElement;
       const transformStr = g.getAttribute('transform');
