@@ -1,5 +1,3 @@
-import { Mindmap, MockPersistenceManager, PersistenceManager } from '@wisemapping/editor';
-import XMLSerializerTango from '@wisemapping/editor';
 import Client, {
   AccountInfo,
   BasicMapInfo,
@@ -11,7 +9,6 @@ import Client, {
   Permission,
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
-import exampleMap from './example-map.wxml';
 
 const label1: Label = {
   id: 1,
@@ -35,7 +32,6 @@ class MockClient implements Client {
   private maps: MapInfo[] = [];
   private labels: Label[] = [];
   private permissionsByMap: Map<number, Permission[]> = new Map();
-  private persistenceManager: PersistenceManager;
 
   constructor() {
     // Remove, just for develop ....
@@ -116,20 +112,6 @@ class MockClient implements Client {
     return callback;
   }
 
-  fetchMindmap(id: number): Mindmap {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(
-      `
-        <map name="${id}" version="tango">
-            <topic central="true" text="This is the map ${id}" id="1" fontStyle=";;#ffffff;;;"></topic>
-        </map>
-        `,
-      'text/xml',
-    );
-
-    const serializer = new XMLSerializerTango();
-    return serializer.loadFromDom(xmlDoc, String(id));
-  }
   deleteMapPermission(id: number, email: string): Promise<void> {
     let perm = this.permissionsByMap.get(id) || [];
     perm = perm.filter((p) => p.email != email);
@@ -404,21 +386,6 @@ class MockClient implements Client {
   resetPassword(email: string): Promise<void> {
     console.log('email:' + email);
     return Promise.resolve();
-  }
-
-  buildPersistenceManager(): PersistenceManager {
-    if (this.persistenceManager) {
-      return this.persistenceManager;
-    }
-    const persistence: PersistenceManager = new MockPersistenceManager(exampleMap);
-    this.persistenceManager = persistence;
-    return persistence;
-  }
-
-  removePersistenceManager(): void {
-    if (this.persistenceManager) {
-      delete this.persistenceManager;
-    }
   }
 }
 

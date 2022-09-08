@@ -1,11 +1,3 @@
-import {
-  EditorRenderMode,
-  LocalStorageManager,
-  Mindmap,
-  PersistenceManager,
-  RESTPersistenceManager,
-} from '@wisemapping/editor';
-import { PersistenceError } from '@wisemapping/editor';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Client, {
   ErrorInfo,
@@ -23,7 +15,6 @@ import { LocaleCode, localeFromStr } from '../../app-i18n';
 
 export default class RestClient implements Client {
   private baseUrl: string;
-  private persistenceManager: PersistenceManager;
   private axios: AxiosInstance;
 
   private checkResponseForSessionExpired = <T>(error: {
@@ -63,13 +54,6 @@ export default class RestClient implements Client {
     if (this._onSessionExpired) {
       this._onSessionExpired();
     }
-  }
-
-  fetchMindmap(id: number): Mindmap {
-    // Load mindmap ...
-    const persistence = new LocalStorageManager(`/c/restful/maps/{id}/document/xml`, true);
-    const mindmap = persistence.load(String(id));
-    return mindmap;
   }
 
   deleteMapPermission(id: number, email: string): Promise<void> {
@@ -619,44 +603,6 @@ export default class RestClient implements Client {
         });
     };
     return new Promise(handler);
-  }
-
-  private onPersistenceManagerError(error: PersistenceError) {
-    if (error.errorType === 'session-expired') {
-      this.sessionExpired();
-    }
-  }
-
-  buildPersistenceManager(editorMode: EditorRenderMode): PersistenceManager {
-    if (this.persistenceManager) {
-      return this.persistenceManager;
-    }
-
-    let persistence: PersistenceManager;
-    if (editorMode === 'edition-owner' || editorMode === 'edition-editor') {
-      persistence = new RESTPersistenceManager({
-        documentUrl: '/c/restful/maps/{id}/document',
-        revertUrl: '/c/restful/maps/{id}/history/latest',
-        lockUrl: '/c/restful/maps/{id}/lock',
-      });
-    } else {
-      persistence = new LocalStorageManager(
-        `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${
-          editorMode === 'showcase' ? '-pub' : ''
-        }`,
-        true,
-      );
-    }
-    persistence.addErrorHandler((err) => this.onPersistenceManagerError(err));
-    this.persistenceManager = persistence;
-    return persistence;
-  }
-
-  removePersistenceManager(): void {
-    if (this.persistenceManager) {
-      this.persistenceManager.removeErrorHandler();
-      delete this.persistenceManager;
-    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -16,12 +16,10 @@ import {
   ImageExporterFactory,
   Exporter,
   Mindmap,
+  SizeType,
 } from '@wisemapping/editor';
-import Client from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { getMindmapFromPersistence } from '../../../editor-page/PersistenceManagerUtils';
 
-import { useSelector } from 'react-redux';
-import SizeType from '@wisemapping/editor';
 import Checkbox from '@mui/material/Checkbox';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
@@ -42,7 +40,6 @@ const ExportDialog = ({
   const intl = useIntl();
   const [submit, setSubmit] = React.useState<boolean>(false);
   const { map } = fetchMapById(mapId);
-  const client: Client = useSelector(activeInstance);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
     enableImgExport ? 'image' : 'document',
@@ -96,14 +93,17 @@ const ExportDialog = ({
     let mindmap: Mindmap;
 
     const designer: Designer = global.designer;
+    // exporting from editor toolbar action
     if (designer != null) {
       // Depending on the type of export. It will require differt POST.
       const workspace = designer.getWorkSpace();
       svgElement = workspace.getSVGElement();
       size = { width: window.innerWidth, height: window.innerHeight };
       mindmap = designer.getMindmap();
-    } else {
-      mindmap = client.fetchMindmap(mapId);
+    }
+    // exporting from map list
+    else {
+      mindmap = getMindmapFromPersistence(String(mapId));
     }
 
     let exporter: Exporter;

@@ -35,6 +35,11 @@ class _AppConfig {
     return result;
   }
 
+  isRestClient(): boolean {
+    const config = this.getInstance();
+    return config.clientType === 'rest';
+  }
+
   isRecaptcha2Enabled(): boolean {
     const config = this.getInstance();
     return config.recaptcha2Enabled;

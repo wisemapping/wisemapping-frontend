@@ -1,4 +1,3 @@
-import { EditorRenderMode, Mindmap, PersistenceManager } from '@wisemapping/editor';
 import Client, {
   AccountInfo,
   BasicMapInfo,
@@ -20,10 +19,6 @@ class CacheDecoratorClient implements Client {
 
   onSessionExpired(callback?: () => void): () => void {
     return this.client.onSessionExpired(callback);
-  }
-
-  fetchMindmap(id: number): Mindmap {
-    return this.client.fetchMindmap(id);
   }
 
   deleteAccount(): Promise<void> {
@@ -128,14 +123,6 @@ class CacheDecoratorClient implements Client {
 
   revertHistory(id: number, cid: number): Promise<void> {
     return this.client.revertHistory(id, cid);
-  }
-
-  buildPersistenceManager(mode: EditorRenderMode): PersistenceManager {
-    return this.client.buildPersistenceManager(mode);
-  }
-
-  removePersistenceManager(): void {
-    return this.client.removePersistenceManager();
   }
 }
 

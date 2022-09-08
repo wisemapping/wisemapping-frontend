@@ -8,9 +8,9 @@ import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga4';
-import Client from '../../classes/client';
-import { activeInstance, fetchAccount, fetchMapById } from '../../redux/clientSlice';
+import { fetchAccount, fetchMapById } from '../../redux/clientSlice';
 import EditorOptionsBuilder from './EditorOptionsBuilder';
+import { buildPersistenceManagerForEditor } from './PersistenceManagerUtils';
 
 export type EditorPropsType = {
   isTryMode: boolean;
@@ -20,7 +20,6 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
   const hotkey = useSelector(hotkeysEnabled);
   const userLocale = AppI18n.getUserLocale();
-  const client: Client = useSelector(activeInstance);
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
@@ -62,7 +61,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   let options, persistence: PersistenceManager;
   if (loadCompleted) {
     options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
-    persistence = client.buildPersistenceManager(mode);
+    persistence = buildPersistenceManagerForEditor(mode);
   }
 
   return loadCompleted ? (
