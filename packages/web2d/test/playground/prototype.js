@@ -100,10 +100,8 @@ global.createShape = function createShape() {
           posx = e.pageX;
           posy = e.pageY;
         } else if (event.clientX || event.clientY) {
-          posx = event.clientX + document.body.scrollLeft
-                  + document.documentElement.scrollLeft;
-          posy = event.clientY + document.body.scrollTop
-                  + document.documentElement.scrollTop;
+          posx = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+          posy = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
         }
 
         shadowGroup.setPosition(posx - 50, posy - 150);

@@ -55,7 +55,11 @@ class LocalStorageManager extends PersistenceManager {
     if (xml == null || this.forceLoad) {
       $.ajax({
         url: this.documentUrl.replace('{id}', mapId),
-        headers: { 'Content-Type': 'text/plain', Accept: 'application/xml', 'X-CSRF-Token': this.getCSRFToken() },
+        headers: {
+          'Content-Type': 'text/plain',
+          Accept: 'application/xml',
+          'X-CSRF-Token': this.getCSRFToken(),
+        },
         type: 'get',
         dataType: 'text',
         async: false,

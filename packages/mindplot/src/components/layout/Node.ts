@@ -186,10 +186,12 @@ class Node {
     // This is a performance improvement to avoid movements that really could be avoided.
     const currentPos = this.getPosition();
     if (
-      currentPos == null
-      || Math.abs(currentPos.x - position.x) > 2
-      || Math.abs(currentPos.y - position.y) > 2
-    ) this._setProperty('position', position);
+      currentPos == null ||
+      Math.abs(currentPos.x - position.x) > 2 ||
+      Math.abs(currentPos.y - position.y) > 2
+    ) {
+      this._setProperty('position', position);
+    }
   }
 
   _setProperty(key: string, value) {
@@ -228,16 +230,11 @@ class Node {
 
   /** @return {String} returns id, order, position, size and shrink information */
   toString() {
-    return (
-      `[id:${this.getId()
-      }, order:${this.getOrder()
-      }, position: {${this.getPosition().x
-      },${this.getPosition().y
-      }}, size: {${this.getSize().width
-      },${this.getSize().height
-      }}, shrink:${this.areChildrenShrunken()
-      }]`
-    );
+    return `[id:${this.getId()}, order:${this.getOrder()}, position: {${this.getPosition().x},${
+      this.getPosition().y
+    }}, size: {${this.getSize().width},${
+      this.getSize().height
+    }}, shrink:${this.areChildrenShrunken()}]`;
   }
 }
 

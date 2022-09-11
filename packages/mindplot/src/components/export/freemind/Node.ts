@@ -7,7 +7,9 @@ import Icon from './Icon';
 import Richcontent from './Richcontent';
 
 class Node {
-  protected arrowlinkOrCloudOrEdge: Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>;
+  protected arrowlinkOrCloudOrEdge: Array<
+    Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this
+  >;
 
   protected BACKGROUND_COLOR: string;
 
@@ -43,9 +45,14 @@ class Node {
 
   private centralTopic: boolean;
 
-  getArrowlinkOrCloudOrEdge(): Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node> {
+  getArrowlinkOrCloudOrEdge(): Array<
+    /* eslint-disable */
+    Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node
+  > {
     if (!this.arrowlinkOrCloudOrEdge) {
-      this.arrowlinkOrCloudOrEdge = new Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>();
+      this.arrowlinkOrCloudOrEdge = new Array<
+        Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this
+      >();
     }
     return this.arrowlinkOrCloudOrEdge;
   }
@@ -118,7 +125,9 @@ class Node {
     return this.centralTopic;
   }
 
-  setArrowlinkOrCloudOrEdge(value: Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this): void {
+  setArrowlinkOrCloudOrEdge(
+    value: Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this,
+  ): void {
     this.getArrowlinkOrCloudOrEdge().push(value);
   }
 
@@ -268,6 +277,6 @@ class Node {
   }
 }
 
-export type Choise = Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node
+export type Choise = Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | Node;
 
 export default Node;

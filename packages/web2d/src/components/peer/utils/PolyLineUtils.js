@@ -30,10 +30,9 @@ export const buildCurvedPath = (dist, x1, y1, x2, y2) => {
     const middlex = x1 + (x2 - x1 > 0 ? dist : -dist);
     path = `${x1.toFixed(1)}, ${y1.toFixed(1)} ${middlex.toFixed(1)}, ${y1.toFixed(
       1,
-    )} ${middlex.toFixed(1)}, ${(y2 - 5 * signy).toFixed(1)} ${(
-      middlex
-        + 5 * signx
-    ).toFixed(1)}, ${y2.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
+    )} ${middlex.toFixed(1)}, ${(y2 - 5 * signy).toFixed(1)} ${(middlex + 5 * signx).toFixed(
+      1,
+    )}, ${y2.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
   } else {
     path = `${x1.toFixed(1)}, ${y1.toFixed(1)} ${x2.toFixed(1)}, ${y2.toFixed(1)}`;
   }

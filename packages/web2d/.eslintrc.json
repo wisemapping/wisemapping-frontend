@@ -15,7 +15,25 @@
         "import/no-extraneous-dependencies": ["warn", {
             "packageDir": ["./"],
             "devDependencies": ["!cypress/**/*.js"]
-        }]
+        }],
+		// ignore errors when a line finishes with (setting this value to 0 ignores all errors)
+		"operator-linebreak": [
+			"error", "after", { 
+				"overrides": { 
+					"+": "ignore", 
+					"-": "ignore",
+					":": "ignore",
+					"*": "ignore",
+					"?": "ignore",
+					">": "ignore",
+					"||": "ignore",
+					"&&": "ignore",
+					"(": "ignore"
+				}
+			}
+		],
+		"object-curly-newline": "off",
+		"indent": "off"
     },
     "settings": {
 		    "import/resolver": {

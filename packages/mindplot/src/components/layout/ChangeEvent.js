@@ -41,17 +41,17 @@ class ChangeEvent {
   }
 
   /**
-     * @param {} value the order to set
-     * @throws will throw an error if the given parameter is not/cannot be converted to a numerical
-     * value
-     */
+   * @param {} value the order to set
+   * @throws will throw an error if the given parameter is not/cannot be converted to a numerical
+   * value
+   */
   setOrder(value) {
     $assert(!Number.isNaN(value), 'value can not be null');
     this._order = value;
   }
 
   /** @param {} value
-     *  @throws will throw an error if the value is null or undefined */
+   *  @throws will throw an error if the value is null or undefined */
   setPosition(value) {
     $assert(value, 'value can not be null');
     this._position = value;
@@ -59,7 +59,9 @@ class ChangeEvent {
 
   /** @return {String} order and position */
   toString() {
-    return `[order:${this.getOrder()}, position: {${this.getPosition().x},${this.getPosition().y}}]`;
+    return `[order:${this.getOrder()}, position: {${this.getPosition().x},${
+      this.getPosition().y
+    }}]`;
   }
 }
 

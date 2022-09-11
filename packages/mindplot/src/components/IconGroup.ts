@@ -16,15 +16,8 @@
  *   limitations under the License.
  */
 
-import {
-  $assert,
-  $defined,
-} from '@wisemapping/core-js';
-import {
-  Group,
-  ElementClass,
-  Point,
-} from '@wisemapping/web2d';
+import { $assert, $defined } from '@wisemapping/core-js';
+import { Group, ElementClass, Point } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 import Icon from './Icon';
 import SizeType from './SizeType';
@@ -102,7 +95,10 @@ class IconGroup {
 
     icon.setGroup(this);
     icons.push(icon);
-    this._icons = icons.sort((a, b) => ORDER_BY_TYPE.get(a.getModel().getType()) - ORDER_BY_TYPE.get(b.getModel().getType()));
+    this._icons = icons.sort(
+      (a, b) =>
+        ORDER_BY_TYPE.get(a.getModel().getType()) - ORDER_BY_TYPE.get(b.getModel().getType()),
+    );
 
     // Add all the nodes back ...
     this._resize(this._icons.length);
@@ -185,10 +181,7 @@ class IconGroup {
 
   private _positionIcon(icon: Icon, order: number) {
     const iconSize = Icon.SIZE + IconGroup.ICON_PADDING * 2;
-    icon.getImage().setPosition(
-      iconSize * order + IconGroup.ICON_PADDING,
-      IconGroup.ICON_PADDING,
-    );
+    icon.getImage().setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
   }
 
   static ICON_PADDING = 5;

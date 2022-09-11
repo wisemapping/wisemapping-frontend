@@ -30,24 +30,24 @@ class WorkspacePeer extends ElementPeer {
   }
 
   /**
-     * http://www.w3.org/TR/SVG/coords.html 7.7 The viewBox  attribute
-     * It is often desirable to specify that a given set of graphics
-     * stretch to fit a particular container element. The viewBox attribute
-     * provides this capability.
-     *
-     * All elements that establish a new viewport (see elements that establish viewports),
-     * plus the 'marker', 'pattern' and 'view' elements have attribute viewBox.
-     * The value of the viewBox attribute is a list of four numbers <min-x>, <min-y>,
-     * <width> and <height>, separated by whitespace and/or a comma, which specify a rectangle
-     * in user space which should be mapped to the bounds of the viewport established by
-     * the given element, taking into account attribute preserveAspectRatio. If specified,
-     * an additional transformation is applied to all descendants of the given element to
-     * achieve the specified effect.
-     *
-     * A negative value for <width> or <height> is an error (see Error processing).
-     * A value of zero disables rendering of the element.
-     *
-     */
+   * http://www.w3.org/TR/SVG/coords.html 7.7 The viewBox  attribute
+   * It is often desirable to specify that a given set of graphics
+   * stretch to fit a particular container element. The viewBox attribute
+   * provides this capability.
+   *
+   * All elements that establish a new viewport (see elements that establish viewports),
+   * plus the 'marker', 'pattern' and 'view' elements have attribute viewBox.
+   * The value of the viewBox attribute is a list of four numbers <min-x>, <min-y>,
+   * <width> and <height>, separated by whitespace and/or a comma, which specify a rectangle
+   * in user space which should be mapped to the bounds of the viewport established by
+   * the given element, taking into account attribute preserveAspectRatio. If specified,
+   * an additional transformation is applied to all descendants of the given element to
+   * achieve the specified effect.
+   *
+   * A negative value for <width> or <height> is an error (see Error processing).
+   * A value of zero disables rendering of the element.
+   *
+   */
 
   setCoordSize(width, height) {
     const viewBox = this._native.getAttribute('viewBox');

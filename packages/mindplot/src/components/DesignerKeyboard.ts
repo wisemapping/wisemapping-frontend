@@ -33,7 +33,22 @@ class DesignerKeyboard extends Keyboard {
 
   private static _disabled: boolean;
 
-  private static excludeFromEditor = ['Enter', 'CapsLock', 'Escape', 'F1', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
+  private static excludeFromEditor = [
+    'Enter',
+    'CapsLock',
+    'Escape',
+    'F1',
+    'F3',
+    'F4',
+    'F5',
+    'F6',
+    'F7',
+    'F8',
+    'F9',
+    'F10',
+    'F11',
+    'F12',
+  ];
 
   constructor(designer: Designer) {
     super();
@@ -53,9 +68,13 @@ class DesignerKeyboard extends Keyboard {
   private _registerEvents(designer: Designer) {
     // Try with the keyboard ..
     const model = designer.getModel();
-    this.addShortcut(['backspace', 'del'], () => { designer.deleteSelectedEntities(); });
+    this.addShortcut(['backspace', 'del'], () => {
+      designer.deleteSelectedEntities();
+    });
 
-    this.addShortcut('space', () => { designer.shrinkSelectedBranch(); });
+    this.addShortcut('space', () => {
+      designer.shrinkSelectedBranch();
+    });
 
     this.addShortcut('f2', () => {
       const node = model.selectedTopic();
@@ -64,103 +83,128 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
-    this.addShortcut(['insert', 'tab', 'meta+enter'], () => { designer.createChildForSelectedNode(); });
+    this.addShortcut(['insert', 'tab', 'meta+enter'], () => {
+      designer.createChildForSelectedNode();
+    });
 
-    this.addShortcut('enter', () => { designer.createSiblingForSelectedNode(); });
+    this.addShortcut('enter', () => {
+      designer.createSiblingForSelectedNode();
+    });
 
-    this.addShortcut(['ctrl+z', 'meta+z'], () => { designer.undo(); });
+    this.addShortcut(['ctrl+z', 'meta+z'], () => {
+      designer.undo();
+    });
 
-    this.addShortcut(['ctrl+shift+z', 'meta+shift+z'], () => { designer.redo(); });
+    this.addShortcut(['ctrl+shift+z', 'meta+shift+z'], () => {
+      designer.redo();
+    });
 
-    this.addShortcut(['ctrl+c', 'meta+c'], () => { designer.copyToClipboard(); });
+    this.addShortcut(['ctrl+c', 'meta+c'], () => {
+      designer.copyToClipboard();
+    });
 
-    this.addShortcut(['ctrl+l', 'meta+l'], () => { designer.addLink(); });
+    this.addShortcut(['ctrl+l', 'meta+l'], () => {
+      designer.addLink();
+    });
 
-    this.addShortcut(['ctrl+k', 'meta+k'], () => { designer.addNote(); });
+    this.addShortcut(['ctrl+k', 'meta+k'], () => {
+      designer.addNote();
+    });
 
-    this.addShortcut(['ctrl+v', 'meta+v'], () => { designer.pasteClipboard(); });
+    this.addShortcut(['ctrl+v', 'meta+v'], () => {
+      designer.pasteClipboard();
+    });
 
-    this.addShortcut(['ctrl+a', 'meta+a'], () => { designer.selectAll(); });
+    this.addShortcut(['ctrl+a', 'meta+a'], () => {
+      designer.selectAll();
+    });
 
-    this.addShortcut(['ctrl+b', 'meta+b'], () => { designer.changeFontWeight(); });
+    this.addShortcut(['ctrl+b', 'meta+b'], () => {
+      designer.changeFontWeight();
+    });
 
-    this.addShortcut(['ctrl+s', 'meta+s'], () => { $(document).find('#save').trigger('click'); });
+    this.addShortcut(['ctrl+s', 'meta+s'], () => {
+      $(document).find('#save').trigger('click');
+    });
 
-    this.addShortcut(['ctrl+i', 'meta+i'], () => { designer.changeFontStyle(); });
+    this.addShortcut(['ctrl+i', 'meta+i'], () => {
+      designer.changeFontStyle();
+    });
 
-    this.addShortcut(['ctrl+shift+a', 'meta+shift+a'], () => { designer.deselectAll(); });
+    this.addShortcut(['ctrl+shift+a', 'meta+shift+a'], () => {
+      designer.deselectAll();
+    });
 
-    this.addShortcut(['meta+=', 'ctrl+='], () => { designer.zoomIn(); });
+    this.addShortcut(['meta+=', 'ctrl+='], () => {
+      designer.zoomIn();
+    });
 
-    this.addShortcut(['meta+-', 'ctrl+-'], () => { designer.zoomOut(); });
+    this.addShortcut(['meta+-', 'ctrl+-'], () => {
+      designer.zoomOut();
+    });
 
     const me = this;
-    this.addShortcut(
-      'right', () => {
-        const node = model.selectedTopic();
-        if (node) {
-          if (node.isCentralTopic()) {
-            me._goToSideChild(designer, node, 'RIGHT');
-          } else if (node.getPosition().x < 0) {
-            me._goToParent(designer, node);
-          } else if (!node.areChildrenShrunken()) {
-            me._goToChild(designer, node);
-          }
-        } else {
-          const centralTopic = model.getCentralTopic();
-          me._goToNode(designer, centralTopic);
+    this.addShortcut('right', () => {
+      const node = model.selectedTopic();
+      if (node) {
+        if (node.isCentralTopic()) {
+          me._goToSideChild(designer, node, 'RIGHT');
+        } else if (node.getPosition().x < 0) {
+          me._goToParent(designer, node);
+        } else if (!node.areChildrenShrunken()) {
+          me._goToChild(designer, node);
         }
-      },
-    );
+      } else {
+        const centralTopic = model.getCentralTopic();
+        me._goToNode(designer, centralTopic);
+      }
+    });
 
-    this.addShortcut(
-      'left', () => {
-        const node = model.selectedTopic();
-        if (node) {
-          if (node.isCentralTopic()) {
-            me._goToSideChild(designer, node, 'LEFT');
-          } else if (node.getPosition().x > 0) {
-            me._goToParent(designer, node);
-          } else if (!node.areChildrenShrunken()) {
-            me._goToChild(designer, node);
-          }
-        } else {
-          const centralTopic = model.getCentralTopic();
-          me._goToNode(designer, centralTopic);
+    this.addShortcut('left', () => {
+      const node = model.selectedTopic();
+      if (node) {
+        if (node.isCentralTopic()) {
+          me._goToSideChild(designer, node, 'LEFT');
+        } else if (node.getPosition().x > 0) {
+          me._goToParent(designer, node);
+        } else if (!node.areChildrenShrunken()) {
+          me._goToChild(designer, node);
         }
-      },
-    );
+      } else {
+        const centralTopic = model.getCentralTopic();
+        me._goToNode(designer, centralTopic);
+      }
+    });
 
-    this.addShortcut(
-      'up', () => {
-        const node = model.selectedTopic();
-        if (node) {
-          if (!node.isCentralTopic()) {
-            me._goToBrother(designer, node, 'UP');
-          }
-        } else {
-          const centralTopic = model.getCentralTopic();
-          me._goToNode(designer, centralTopic);
+    this.addShortcut('up', () => {
+      const node = model.selectedTopic();
+      if (node) {
+        if (!node.isCentralTopic()) {
+          me._goToBrother(designer, node, 'UP');
         }
-      },
-    );
-    this.addShortcut(
-      'down', () => {
-        const node = model.selectedTopic();
-        if (node) {
-          if (!node.isCentralTopic()) {
-            me._goToBrother(designer, node, 'DOWN');
-          }
-        } else {
-          const centralTopic = model.getCentralTopic();
-          me._goToNode(designer, centralTopic);
+      } else {
+        const centralTopic = model.getCentralTopic();
+        me._goToNode(designer, centralTopic);
+      }
+    });
+    this.addShortcut('down', () => {
+      const node = model.selectedTopic();
+      if (node) {
+        if (!node.isCentralTopic()) {
+          me._goToBrother(designer, node, 'DOWN');
         }
-      },
-    );
+      } else {
+        const centralTopic = model.getCentralTopic();
+        me._goToNode(designer, centralTopic);
+      }
+    });
 
     $(document).on('keypress', (event) => {
       // Needs to be ignored ?
-      if (DesignerKeyboard.isDisabled() || DesignerKeyboard.excludeFromEditor.includes(event.code)) {
+      if (
+        DesignerKeyboard.isDisabled() ||
+        DesignerKeyboard.excludeFromEditor.includes(event.code)
+      ) {
         return;
       }
 
@@ -189,14 +233,14 @@ class DesignerKeyboard extends Keyboard {
       const { x } = node.getPosition();
       let dist = null;
       for (let i = 0; i < brothers.length; i++) {
-        const sameSide = (x * brothers[i].getPosition().x) >= 0;
+        const sameSide = x * brothers[i].getPosition().x >= 0;
         if (brothers[i] !== node && sameSide) {
           const brother = brothers[i];
           const brotherY = brother.getPosition().y;
           if (direction === 'DOWN' && brotherY > y) {
             let distancia = y - brotherY;
             if (distancia < 0) {
-              distancia *= (-1);
+              distancia *= -1;
             }
             if (dist == null || dist > distancia) {
               dist = distancia;
@@ -205,7 +249,7 @@ class DesignerKeyboard extends Keyboard {
           } else if (direction === 'UP' && brotherY < y) {
             let distance = y - brotherY;
             if (distance < 0) {
-              distance *= (-1);
+              distance *= -1;
             }
             if (dist == null || dist > distance) {
               dist = distance;

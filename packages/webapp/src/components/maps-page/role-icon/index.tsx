@@ -9,40 +9,31 @@ import { FormattedMessage } from 'react-intl';
 import { Role } from '../../../classes/client';
 
 type RoleIconProps = {
-    role: Role;
+  role: Role;
 };
 
 const RoleIcon = ({ role }: RoleIconProps): React.ReactElement => {
-    return (
-        <span>
-            {role == 'owner' && (
-                <Tooltip
-                    title={<FormattedMessage id="role.owner" defaultMessage="Owner" />}
-                    arrow={true}
-                >
-                    <PersonSharpIcon />
-                </Tooltip>
-            )}
+  return (
+    <span>
+      {role == 'owner' && (
+        <Tooltip title={<FormattedMessage id="role.owner" defaultMessage="Owner" />} arrow={true}>
+          <PersonSharpIcon />
+        </Tooltip>
+      )}
 
-            {role == 'editor' && (
-                <Tooltip
-                    title={<FormattedMessage id="role.editor" defaultMessage="Editor" />}
-                    arrow={true}
-                >
-                    <EditSharpIcon />
-                </Tooltip>
-            )}
+      {role == 'editor' && (
+        <Tooltip title={<FormattedMessage id="role.editor" defaultMessage="Editor" />} arrow={true}>
+          <EditSharpIcon />
+        </Tooltip>
+      )}
 
-            {role == 'viewer' && (
-                <Tooltip
-                    title={<FormattedMessage id="role.viewer" defaultMessage="Viewer" />}
-                    arrow={true}
-                >
-                    <VisibilitySharpIcon />
-                </Tooltip>
-            )}
-        </span>
-    );
+      {role == 'viewer' && (
+        <Tooltip title={<FormattedMessage id="role.viewer" defaultMessage="Viewer" />} arrow={true}>
+          <VisibilitySharpIcon />
+        </Tooltip>
+      )}
+    </span>
+  );
 };
 
 export default RoleIcon;

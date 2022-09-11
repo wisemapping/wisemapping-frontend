@@ -18,10 +18,15 @@
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
 import BootstrapDialog from '../../../../editor/src/classes/bootstrap/BootstrapDialog';
-import { $msg } from '../Messages';
+import { $msg } from '@wisemapping/mindplot';
+
+interface NoteEditorModel {
+  getValue(): string;
+  setValue(value: string): void;
+}
 
 class NoteEditor extends BootstrapDialog {
-  constructor(model) {
+  constructor(model: NoteEditorModel) {
     $assert(model, 'model can not be null');
     super($msg('NOTE'), {
       cancelButton: true,
@@ -30,13 +35,12 @@ class NoteEditor extends BootstrapDialog {
       removeButton: typeof model.getValue() !== 'undefined',
       onEventData: { model },
     });
-    this._model = model;
     this.css({ margin: '150px auto' });
     const panel = this._buildPanel(model);
     this.setContent(panel);
   }
 
-  _buildPanel(model) {
+  _buildPanel(model: NoteEditorModel) {
     const result = $('<div></div>').css('padding-top', '5px');
 
     const form = $('<form></form>').attr({
@@ -68,20 +72,20 @@ class NoteEditor extends BootstrapDialog {
     return result;
   }
 
-  onAcceptClick(event) {
+  onAcceptClick(event): void {
     event.data.dialog._submitForm(event.data.model);
   }
 
-  _submitForm(model) {
+  _submitForm(model: NoteEditorModel) {
     const textarea = this._native.find('textarea');
     if (textarea.val()) {
-      model.setValue(textarea.val());
+      model.setValue(textarea.val() as string);
     }
     this.close();
   }
 
   onDialogShown() {
-    $(this).find('textarea').focus();
+    $(this).find('textarea').trigger('focus');
   }
 
   onRemoveClick(event) {

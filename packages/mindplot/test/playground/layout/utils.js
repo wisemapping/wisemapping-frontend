@@ -54,6 +54,7 @@ Grid.prototype._createContainer = function () {
   result.style.borderCollapse = 'collapse';
   result.style.emptyCells = 'show';
   result.style.position = 'absolute';
-  result.innerHTML = '<table style="table-layout:fixed;border-collapse:collapse;empty-cells:show;"><tbody id="tableBody"></tbody></table>';
+  result.innerHTML =
+    '<table style="table-layout:fixed;border-collapse:collapse;empty-cells:show;"><tbody id="tableBody"></tbody></table>';
   return result;
 };

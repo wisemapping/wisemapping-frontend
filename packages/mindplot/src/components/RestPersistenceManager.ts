@@ -31,7 +31,7 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private clearTimeout;
 
-  constructor(options: { documentUrl: string, revertUrl: string, lockUrl: string }) {
+  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
@@ -60,78 +60,87 @@ class RESTPersistenceManager extends PersistenceManager {
       }, 10000);
 
       const persistence = this;
-      fetch(
-        `${this.documentUrl.replace('{id}', mapId)}?${query}`,
-        {
-          method: 'PUT',
-          // Blob helps to resuce the memory on large payload.
-          body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-          headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json', 'X-CSRF-Token': this.getCSRFToken() },
+      fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
+        method: 'PUT',
+        // Blob helps to resuce the memory on large payload.
+        body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          Accept: 'application/json',
+          'X-CSRF-Token': this.getCSRFToken(),
         },
-      ).then(async (response: Response) => {
-        if (response.ok) {
-          events.onSuccess();
-        } else {
-          console.log(`Saving error: ${response.status}`);
-          let userMsg;
-          if (response.status === 405) {
-            userMsg = { severity: 'SEVERE', message: $msg('SESSION_EXPIRED'), errorType: 'session-expired' };
+      })
+        .then(async (response: Response) => {
+          if (response.ok) {
+            events.onSuccess();
           } else {
-            const responseText = await response.text();
-            const contentType = response.headers['Content-Type'];
-            if (contentType != null && contentType.indexOf('application/json') !== -1) {
-              let serverMsg = null;
-              try {
-                serverMsg = JSON.parse(responseText);
-                serverMsg = serverMsg.globalSeverity ? serverMsg : null;
-              } catch (e) {
-                // Message could not be decoded ...
+            console.log(`Saving error: ${response.status}`);
+            let userMsg;
+            if (response.status === 405) {
+              userMsg = {
+                severity: 'SEVERE',
+                message: $msg('SESSION_EXPIRED'),
+                errorType: 'session-expired',
+              };
+            } else {
+              const responseText = await response.text();
+              const contentType = response.headers['Content-Type'];
+              if (contentType != null && contentType.indexOf('application/json') !== -1) {
+                let serverMsg = null;
+                try {
+                  serverMsg = JSON.parse(responseText);
+                  serverMsg = serverMsg.globalSeverity ? serverMsg : null;
+                } catch (e) {
+                  // Message could not be decoded ...
+                }
+                userMsg = persistence._buildError(serverMsg);
               }
-              userMsg = persistence._buildError(serverMsg);
             }
+            this.triggerError(userMsg);
+            events.onError(userMsg);
           }
+
+          // Clear event timeout ...
+          if (persistence.clearTimeout) {
+            clearTimeout(persistence.clearTimeout);
+          }
+          persistence.onSave = false;
+        })
+        .catch(() => {
+          const userMsg: PersistenceError = {
+            severity: 'SEVERE',
+            message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+            errorType: 'generic',
+          };
           this.triggerError(userMsg);
           events.onError(userMsg);
-        }
 
-        // Clear event timeout ...
-        if (persistence.clearTimeout) {
-          clearTimeout(persistence.clearTimeout);
-        }
-        persistence.onSave = false;
-      }).catch(() => {
-        const userMsg: PersistenceError = {
-          severity: 'SEVERE', message: $msg('SAVE_COULD_NOT_BE_COMPLETED'), errorType: 'generic',
-        };
-        this.triggerError(userMsg);
-        events.onError(userMsg);
-
-        // Clear event timeout ...
-        if (persistence.clearTimeout) {
-          clearTimeout(persistence.clearTimeout);
-        }
-        persistence.onSave = false;
-      });
+          // Clear event timeout ...
+          if (persistence.clearTimeout) {
+            clearTimeout(persistence.clearTimeout);
+          }
+          persistence.onSave = false;
+        });
     }
   }
 
   discardChanges(mapId: string) {
-    fetch(this.revertUrl.replace('{id}', mapId),
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json', 'X-CSRF-Token': this.getCSRFToken() },
-      });
+    fetch(this.revertUrl.replace('{id}', mapId), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Accept: 'application/json',
+        'X-CSRF-Token': this.getCSRFToken(),
+      },
+    });
   }
 
   unlockMap(mapId: string): void {
-    fetch(
-      this.lockUrl.replace('{id}', mapId),
-      {
-        method: 'PUT',
-        headers: { 'Content-Type': 'text/plain', 'X-CSRF-Token': this.getCSRFToken() },
-        body: 'false',
-      },
-    );
+    fetch(this.lockUrl.replace('{id}', mapId), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'text/plain', 'X-CSRF-Token': this.getCSRFToken() },
+      body: 'false',
+    });
   }
 
   private _buildError(jsonSeverResponse) {
@@ -154,7 +163,11 @@ class RESTPersistenceManager extends PersistenceManager {
       url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
       method: 'get',
       async: false,
-      headers: { 'Content-Type': 'text/plain', Accept: 'application/xml', 'X-CSRF-Token': this.getCSRFToken() },
+      headers: {
+        'Content-Type': 'text/plain',
+        Accept: 'application/xml',
+        'X-CSRF-Token': this.getCSRFToken(),
+      },
       success(responseText) {
         xml = responseText;
       },

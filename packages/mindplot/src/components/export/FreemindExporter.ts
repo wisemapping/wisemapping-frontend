@@ -77,7 +77,11 @@ class FreemindExporter extends Exporter {
 
     if (centralTopic) {
       this.nodeMap.set(centralTopic.getId(), main);
-      this.setTopicPropertiesToNode({ freemindNode: main, mindmapTopic: centralTopic, isRoot: true });
+      this.setTopicPropertiesToNode({
+        freemindNode: main,
+        mindmapTopic: centralTopic,
+        isRoot: true,
+      });
       this.addNodeFromTopic(centralTopic, main);
     }
 
@@ -91,9 +95,13 @@ class FreemindExporter extends Exporter {
 
         arrowlink.setDestination(destNode.getId());
 
-        if (relationship.getEndArrow() && relationship.getEndArrow()) arrowlink.setEndarrow('Default');
+        if (relationship.getEndArrow() && relationship.getEndArrow()) {
+          arrowlink.setEndarrow('Default');
+        }
 
-        if (relationship.getStartArrow() && relationship.getStartArrow()) arrowlink.setStartarrow('Default');
+        if (relationship.getStartArrow() && relationship.getStartArrow()) {
+          arrowlink.setStartarrow('Default');
+        }
 
         srcNode.setArrowlinkOrCloudOrEdge(arrowlink);
       }
@@ -110,7 +118,15 @@ class FreemindExporter extends Exporter {
     return Promise.resolve(formatXml);
   }
 
-  private setTopicPropertiesToNode({ freemindNode, mindmapTopic, isRoot }: { freemindNode: FreeminNode; mindmapTopic: INodeModel; isRoot: boolean; }): void {
+  private setTopicPropertiesToNode({
+    freemindNode,
+    mindmapTopic,
+    isRoot,
+  }: {
+    freemindNode: FreeminNode;
+    mindmapTopic: INodeModel;
+    isRoot: boolean;
+  }): void {
     freemindNode.setId(`ID_${mindmapTopic.getId()}`);
 
     const text = mindmapTopic.getText();
@@ -154,7 +170,11 @@ class FreemindExporter extends Exporter {
       const newNode: FreeminNode = this.objectFactory.createNode();
       this.nodeMap.set(currentTopic.getId(), newNode);
 
-      this.setTopicPropertiesToNode({ freemindNode: newNode, mindmapTopic: currentTopic, isRoot: false });
+      this.setTopicPropertiesToNode({
+        freemindNode: newNode,
+        mindmapTopic: currentTopic,
+        isRoot: false,
+      });
 
       destNode.setArrowlinkOrCloudOrEdge(newNode);
 
@@ -163,7 +183,7 @@ class FreemindExporter extends Exporter {
       const position: PositionNodeType = currentTopic.getPosition();
       if (position) {
         const xPos: number = position.x;
-        newNode.setPosition((xPos < 0 ? 'left' : 'right'));
+        newNode.setPosition(xPos < 0 ? 'left' : 'right');
       } else newNode.setPosition('left');
     });
   }
@@ -193,28 +213,27 @@ class FreemindExporter extends Exporter {
   private addFeautreNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
     const branches: Array<FeatureModel> = mindmapTopic.getFeatures();
 
-    branches
-      .forEach((feature: FeatureModel) => {
-        const type = feature.getType();
+    branches.forEach((feature: FeatureModel) => {
+      const type = feature.getType();
 
-        if (type === 'link') {
-          const link = feature as LinkModel;
-          freemindNode.setLink(link.getUrl());
-        }
+      if (type === 'link') {
+        const link = feature as LinkModel;
+        freemindNode.setLink(link.getUrl());
+      }
 
-        if (type === 'note') {
-          const note = feature as NoteModel;
-          const richcontent: Richcontent = this.buildRichcontent(note.getText(), 'NOTE');
-          freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
-        }
+      if (type === 'note') {
+        const note = feature as NoteModel;
+        const richcontent: Richcontent = this.buildRichcontent(note.getText(), 'NOTE');
+        freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
+      }
 
-        if (type === 'icon') {
-          const icon = feature as IconModel;
-          const freemindIcon: Icon = new Icon();
-          freemindIcon.setBuiltin(icon.getIconType());
-          freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
-        }
-      });
+      if (type === 'icon') {
+        const icon = feature as IconModel;
+        const freemindIcon: Icon = new Icon();
+        freemindIcon.setBuiltin(icon.getIconType());
+        freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);
+      }
+    });
   }
 
   private addEdgeNode(freemainMap: FreeminNode, mindmapTopic: INodeModel): void {
@@ -286,7 +305,9 @@ class FreemindExporter extends Exporter {
         const g: string = rgb[1].trim();
         const b: string = rgb[2].trim();
 
-        result = `#${r.length === 1 ? `0${r}` : r}${g.length === 1 ? `0${g}` : g}${b.length === 1 ? `0${b}` : b}`;
+        result = `#${r.length === 1 ? `0${r}` : r}${g.length === 1 ? `0${g}` : g}${
+          b.length === 1 ? `0${b}` : b
+        }`;
       }
     }
     return result;

@@ -9,108 +9,108 @@ import { useSelector } from 'react-redux';
 import { activeInstance } from '../../../../redux/clientSlice';
 
 type ChangePasswordDialogProps = {
-    onClose: () => void;
+  onClose: () => void;
 };
 
 type ChangePasswordModel = {
-    password: string;
-    retryPassword: string;
+  password: string;
+  retryPassword: string;
 };
 
 const defaultModel: ChangePasswordModel = { password: '', retryPassword: '' };
 const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps): React.ReactElement => {
-    const client: Client = useSelector(activeInstance);
-    const [model, setModel] = React.useState<ChangePasswordModel>(defaultModel);
-    const [error, setError] = React.useState<ErrorInfo>();
-    const intl = useIntl();
+  const client: Client = useSelector(activeInstance);
+  const [model, setModel] = React.useState<ChangePasswordModel>(defaultModel);
+  const [error, setError] = React.useState<ErrorInfo>();
+  const intl = useIntl();
 
-    const mutation = useMutation<void, ErrorInfo, ChangePasswordModel>(
-        (model: ChangePasswordModel) => {
-            return client.updateAccountPassword(model.password);
-        },
-        {
-            onSuccess: () => {
-                onClose();
-            },
-            onError: (error) => {
-                setError(error);
-            },
-        }
-    );
-
-    const handleOnClose = (): void => {
+  const mutation = useMutation<void, ErrorInfo, ChangePasswordModel>(
+    (model: ChangePasswordModel) => {
+      return client.updateAccountPassword(model.password);
+    },
+    {
+      onSuccess: () => {
         onClose();
-        setModel(defaultModel);
-        setError(undefined);
-    };
+      },
+      onError: (error) => {
+        setError(error);
+      },
+    },
+  );
 
-    const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
+  const handleOnClose = (): void => {
+    onClose();
+    setModel(defaultModel);
+    setError(undefined);
+  };
 
-        // Check password are equal ...
-        if (model.password != model.retryPassword) {
-            setError({
-                msg: intl.formatMessage({
-                    id: 'changepwd.password-match',
-                    defaultMessage: 'Password do not match. Please, try again.',
-                }),
-            });
-            return;
-        }
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
 
-        mutation.mutate(model);
-    };
+    // Check password are equal ...
+    if (model.password != model.retryPassword) {
+      setError({
+        msg: intl.formatMessage({
+          id: 'changepwd.password-match',
+          defaultMessage: 'Password do not match. Please, try again.',
+        }),
+      });
+      return;
+    }
 
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        event.preventDefault();
+    mutation.mutate(model);
+  };
 
-        const name = event.target.name;
-        const value = event.target.value;
-        setModel({ ...model, [name as keyof ChangePasswordModel]: value });
-    };
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
 
-    return (
-        <BaseDialog
-            onClose={handleOnClose}
-            onSubmit={handleOnSubmit}
-            error={error}
-            title={intl.formatMessage({ id: 'changepwd.title', defaultMessage: 'Change Password' })}
-            description={intl.formatMessage({
-                id: 'changepwd.description',
-                defaultMessage: 'Please, provide the new password for your account.',
-            })}
-            submitButton={intl.formatMessage({ id: 'changepwd.button', defaultMessage: 'Change' })}
-        >
-            <FormControl fullWidth={true}>
-                <Input
-                    name="password"
-                    type="password"
-                    label={intl.formatMessage({
-                        id: 'changepwd.password',
-                        defaultMessage: 'Password',
-                    })}
-                    value={model.password}
-                    onChange={handleOnChange}
-                    error={error}
-                    fullWidth={true}
-                    autoComplete="new-password"
-                />
+    const name = event.target.name;
+    const value = event.target.value;
+    setModel({ ...model, [name as keyof ChangePasswordModel]: value });
+  };
 
-                <Input
-                    name="retryPassword"
-                    type="password"
-                    label={intl.formatMessage({
-                        id: 'changepwd.confirm-password',
-                        defaultMessage: 'Confirm Password',
-                    })}
-                    value={model.retryPassword}
-                    onChange={handleOnChange}
-                    required={true}
-                    fullWidth={true}
-                    autoComplete="new-password"
-                />
-            </FormControl>
-        </BaseDialog>
-    );
+  return (
+    <BaseDialog
+      onClose={handleOnClose}
+      onSubmit={handleOnSubmit}
+      error={error}
+      title={intl.formatMessage({ id: 'changepwd.title', defaultMessage: 'Change Password' })}
+      description={intl.formatMessage({
+        id: 'changepwd.description',
+        defaultMessage: 'Please, provide the new password for your account.',
+      })}
+      submitButton={intl.formatMessage({ id: 'changepwd.button', defaultMessage: 'Change' })}
+    >
+      <FormControl fullWidth={true}>
+        <Input
+          name="password"
+          type="password"
+          label={intl.formatMessage({
+            id: 'changepwd.password',
+            defaultMessage: 'Password',
+          })}
+          value={model.password}
+          onChange={handleOnChange}
+          error={error}
+          fullWidth={true}
+          autoComplete="new-password"
+        />
+
+        <Input
+          name="retryPassword"
+          type="password"
+          label={intl.formatMessage({
+            id: 'changepwd.confirm-password',
+            defaultMessage: 'Confirm Password',
+          })}
+          value={model.retryPassword}
+          onChange={handleOnChange}
+          required={true}
+          fullWidth={true}
+          autoComplete="new-password"
+        />
+      </FormControl>
+    </BaseDialog>
+  );
 };
 export default ChangePasswordDialog;

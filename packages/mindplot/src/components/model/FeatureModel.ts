@@ -28,11 +28,11 @@ class FeatureModel {
   private _attributes;
 
   /**
-     * @constructs
-     * @param type
-     * @throws will throw an exception if type is null or undefined
-     * assigns a unique id and the given type to the new model
-     */
+   * @constructs
+   * @param type
+   * @throws will throw an exception if type is null or undefined
+   * assigns a unique id and the given type to the new model
+   */
   constructor(type: FeatureType) {
     $assert(type, 'type can not be null');
     this._id = FeatureModel._nextUUID();

@@ -83,7 +83,7 @@ class Pela2TangoMigrator implements XMLMindmapSerializer {
     }
   }
 
-  private _fixNodePosition(node: NodeModel, parentPosition: { x: number, y: number }): void {
+  private _fixNodePosition(node: NodeModel, parentPosition: { x: number; y: number }): void {
     // Position was not required in previous versions. Try to synthesize one .
     let position = node.getPosition();
     if (!position) {

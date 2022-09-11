@@ -76,17 +76,17 @@ class ElementClass {
   }
 
   /**
-     * Allows the registration of event listeners on the event target.
-     * type
-     *     A string representing the event type to listen for.
-     * listener
-     *     The object that receives a notification when an event of the
-     * specified type occurs. This must be an object implementing the
-     * EventListener interface, or simply a function in JavaScript.
-     *
-     * The following events types are supported:
-     *
-     */
+   * Allows the registration of event listeners on the event target.
+   * type
+   *     A string representing the event type to listen for.
+   * listener
+   *     The object that receives a notification when an event of the
+   * specified type occurs. This must be an object implementing the
+   * EventListener interface, or simply a function in JavaScript.
+   *
+   * The following events types are supported:
+   *
+   */
   addEvent(type, listener) {
     this.peer.addEvent(type, listener);
   }
@@ -100,26 +100,26 @@ class ElementClass {
   }
 
   /**
-     *
-     * Allows the removal of event listeners from the event target.
-     *
-     * Parameters:
-     * type
-     *    A string representing the event type being registered.
-     * listener
-     *     The listener parameter takes an interface implemented by
-     * the user which contains the methods to be called when the event occurs.
-     *     This interace will be invoked passing an event as argument and
-     * the 'this' referece in the function will be the element.
-     */
+   *
+   * Allows the removal of event listeners from the event target.
+   *
+   * Parameters:
+   * type
+   *    A string representing the event type being registered.
+   * listener
+   *     The listener parameter takes an interface implemented by
+   * the user which contains the methods to be called when the event occurs.
+   *     This interace will be invoked passing an event as argument and
+   * the 'this' referece in the function will be the element.
+   */
   removeEvent(type, listener) {
     this.peer.removeEvent(type, listener);
   }
 
   /**
-     * /*
-     * Returns element type name.
-     */
+   * /*
+   * Returns element type name.
+   */
   // eslint-disable-next-line class-methods-use-this
   getType() {
     throw new Error(
@@ -128,17 +128,17 @@ class ElementClass {
   }
 
   /**
-     * Todo: Doc
-     */
+   * Todo: Doc
+   */
   getFill() {
     return this.peer.getFill();
   }
 
   /**
-     * Used to define the fill element color and element opacity.
-     * color: Fill color
-     * opacity: Opacity of the fill. It must be less than 1.
-     */
+   * Used to define the fill element color and element opacity.
+   * color: Fill color
+   * opacity: Opacity of the fill. It must be less than 1.
+   */
   setFill(color, opacity) {
     this.peer.setFill(color, opacity);
   }
@@ -152,21 +152,21 @@ class ElementClass {
   }
 
   /*
-     *  Defines the element stroke properties.
-     *  width: stroke width
-     *  style: "solid|dot|dash|dashdot|longdash".
-     *  color: stroke color
-     *  opacity: stroke visibility
-     */
+   *  Defines the element stroke properties.
+   *  width: stroke width
+   *  style: "solid|dot|dash|dashdot|longdash".
+   *  color: stroke color
+   *  opacity: stroke visibility
+   */
   setStroke(width, style, color, opacity) {
     if (
-      style != null
-      && style !== undefined
-      && style !== 'dash'
-      && style !== 'dot'
-      && style !== 'solid'
-      && style !== 'longdash'
-      && style !== 'dashdot'
+      style != null &&
+      style !== undefined &&
+      style !== 'dash' &&
+      style !== 'dot' &&
+      style !== 'solid' &&
+      style !== 'longdash' &&
+      style !== 'dashdot'
     ) {
       throw new Error(`Unsupported stroke style: '${style}'`);
     }
@@ -185,13 +185,13 @@ class ElementClass {
   }
 
   /**
-     * All element properties can be setted using either a method
-     *  invocation or attribute invocation.
-     *  key: size, width, height, position, x, y, stroke, strokeWidth, strokeStyle,
-     * strokeColor, strokeOpacity,
-     *       fill, fillColor, fillOpacity, coordSize, coordSizeWidth, coordSizeHeight,
-     * coordOrigin, coordOriginX, coordOrigiY
-     */
+   * All element properties can be setted using either a method
+   *  invocation or attribute invocation.
+   *  key: size, width, height, position, x, y, stroke, strokeWidth, strokeStyle,
+   * strokeColor, strokeOpacity,
+   *       fill, fillColor, fillOpacity, coordSize, coordSizeWidth, coordSizeHeight,
+   * coordOrigin, coordOriginX, coordOrigiY
+   */
   setAttribute(key, value) {
     const funcName = this._attributeNameToFuncName(key, 'set');
 
@@ -246,10 +246,10 @@ class ElementClass {
   }
 
   /**
-     * Defines the element opacity.
-     * Parameters:
-     *   opacity: A value between 0 and 1.
-     */
+   * Defines the element opacity.
+   * Parameters:
+   *   opacity: A value between 0 and 1.
+   */
   setOpacity(opacity) {
     this.peer.setStroke(null, null, null, opacity);
     this.peer.setFill(null, opacity);
@@ -264,15 +264,15 @@ class ElementClass {
   }
 
   /**
-     * Move the element to the front
-     */
+   * Move the element to the front
+   */
   moveToFront() {
     this.peer.moveToFront();
   }
 
   /**
-     * Move the element to the back
-     */
+   * Move the element to the back
+   */
   moveToBack() {
     this.peer.moveToBack();
   }

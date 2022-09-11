@@ -5,6 +5,18 @@
     "editor.try-welcome-description": {
         "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
     },
+	"editor.try-welcome-mobile": {
+		"defaultMessage": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
+	},
+    "editor.try-welcome-description-mobile": {
+        "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita. En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
+    },
+    "editor.edit-mobile": {
+        "defaultMessage": "Nota para dispositivos móbiles."
+    },
+    "editor.edit-description-mobile": {
+        "defaultMessage": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
+    },
     "login.signup": {
         "defaultMessage": "Crear cuenta"
     },

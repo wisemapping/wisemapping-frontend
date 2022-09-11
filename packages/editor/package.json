@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "dist/editor.bundle.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
@@ -16,11 +16,9 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-react": "^7.18.6",
     "@formatjs/cli": "^4.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "clean-webpack-plugin": "^4.0.0",
@@ -38,18 +36,18 @@
     "ts-loader": "^8.0.11",
     "ts-node": "^9.0.0",
     "typescript": "^4.1.2",
-    "webpack": "^5.67.0",
+    "webpack": "^5.74.0",
     "webpack-dev-server": "^4.7.3",
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@types/styled-components": "^5.1.4",
-    "@wisemapping/mindplot": "^5.0.1",
-    "styled-components": "^5.2.1"
+    "@wisemapping/mindplot": "^5.0.1"
   },
   "peerDependencies": {
+    "@types/styled-components": "^5.1.26",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-intl": "^5.24.3"
+    "react-intl": "^5.24.3",
+    "styled-components": "^5.3.5"
   }
 }

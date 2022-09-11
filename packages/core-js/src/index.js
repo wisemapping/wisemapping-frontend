@@ -20,22 +20,22 @@
  * Cross-browser implementation of creating an XML document object.
  */
 export const createDocument = function () {
-    var doc = null;
-    if ($defined(window.ActiveXObject)) {
-        //http://blogs.msdn.com/b/xmlteam/archive/2006/10/23/using-the-right-version-of-msxml-in-internet-explorer.aspx
-        var progIDs = ['Msxml2.DOMDocument.6.0', 'Msxml2.DOMDocument.3.0'];
-        for (var i = 0; i < progIDs.length; i++) {
-            try {
-                doc = new ActiveXObject(progIDs[i]);
-                break;
-            } catch (ex) {}
-        }
-    } else if (window.document.implementation && window.document.implementation.createDocument) {
-        doc = window.document.implementation.createDocument('', '', null);
+  var doc = null;
+  if ($defined(window.ActiveXObject)) {
+    //http://blogs.msdn.com/b/xmlteam/archive/2006/10/23/using-the-right-version-of-msxml-in-internet-explorer.aspx
+    var progIDs = ['Msxml2.DOMDocument.6.0', 'Msxml2.DOMDocument.3.0'];
+    for (var i = 0; i < progIDs.length; i++) {
+      try {
+        doc = new ActiveXObject(progIDs[i]);
+        break;
+      } catch (ex) {}
     }
-    $assert(doc, 'Parser could not be instantiated');
+  } else if (window.document.implementation && window.document.implementation.createDocument) {
+    doc = window.document.implementation.createDocument('', '', null);
+  }
+  $assert(doc, 'Parser could not be instantiated');
 
-    return doc;
+  return doc;
 };
 
 /*
@@ -47,47 +47,47 @@ export const createDocument = function () {
  */
 
 export const $defined = function (obj) {
-    return obj != undefined;
+  return obj != undefined;
 };
 
 export const $assert = function (assert, message) {
-    if (!$defined(assert) || !assert) {
-        logStackTrace();
-        console.log(message);
-        throw new Error(message);
-    }
+  if (!$defined(assert) || !assert) {
+    logStackTrace();
+    console.log(message);
+    throw new Error(message);
+  }
 };
 
 export const sign = function (value) {
-    return value >= 0 ? 1 : -1;
+  return value >= 0 ? 1 : -1;
 };
 
 export function logStackTrace(exception) {
-    if (!$defined(exception)) {
-        try {
-            throw Error('Unexpected Exception');
-        } catch (e) {
-            exception = e;
-        }
+  if (!$defined(exception)) {
+    try {
+      throw Error('Unexpected Exception');
+    } catch (e) {
+      exception = e;
     }
-    var result = '';
-    if (exception.stack) {
-        //Firefox  and Chrome...
-        result = exception.stack;
-    } else if (window.opera && exception.message) {
-        //Opera
-        result = exception.message;
-    } else {
-        //IE and Safari
-        result = exception.sourceURL + ': ' + exception.line + '\n\n';
+  }
+  var result = '';
+  if (exception.stack) {
+    //Firefox  and Chrome...
+    result = exception.stack;
+  } else if (window.opera && exception.message) {
+    //Opera
+    result = exception.message;
+  } else {
+    //IE and Safari
+    result = exception.sourceURL + ': ' + exception.line + '\n\n';
 
-        var currentFunction = arguments.callee.caller;
-        while (currentFunction) {
-            var fn = currentFunction.toString();
-            result = result + '\n' + fn;
-            currentFunction = currentFunction.caller;
-        }
+    var currentFunction = arguments.callee.caller;
+    while (currentFunction) {
+      var fn = currentFunction.toString();
+      result = result + '\n' + fn;
+      currentFunction = currentFunction.caller;
     }
-    window.errorStack = result;
-    return result;
+  }
+  window.errorStack = result;
+  return result;
 }

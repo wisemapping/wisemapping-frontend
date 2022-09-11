@@ -49,18 +49,18 @@ class NodeModel extends INodeModel {
   }
 
   /**
-     * @param type
-     * @param attributes
-     * @return {mindplot.model.FeatureModel} the created feature model
-     */
+   * @param type
+   * @param attributes
+   * @return {mindplot.model.FeatureModel} the created feature model
+   */
   createFeature(type: FeatureType, attributes): FeatureModel {
     return FeatureModelFactory.createModel(type, attributes);
   }
 
   /**
-     * @param feature
-     * @throws will throw an error if feature is null or undefined
-     */
+   * @param feature
+   * @throws will throw an error if feature is null or undefined
+   */
   addFeature(feature: FeatureModel) {
     $assert(feature, 'feature can not be null');
     this._features.push(feature);
@@ -78,20 +78,20 @@ class NodeModel extends INodeModel {
   }
 
   /**
-     * @param {String} type the feature type, e.g. icon or link
-     * @throws will throw an error if type is null or undefined
-     */
+   * @param {String} type the feature type, e.g. icon or link
+   * @throws will throw an error if type is null or undefined
+   */
   findFeatureByType(type: string): FeatureModel[] {
     $assert(type, 'type can not be null');
     return this._features.filter((feature) => feature.getType() === type);
   }
 
   /**
-     * @param {String} id
-     * @throws will throw an error if id is null or undefined
-     * @throws will throw an error if feature could not be found
-     * @return the feature with the given id
-     */
+   * @param {String} id
+   * @throws will throw an error if id is null or undefined
+   * @throws will throw an error if feature could not be found
+   * @return the feature with the given id
+   */
   findFeatureById(id: number): FeatureModel {
     $assert($defined(id), 'id can not be null');
     const result = this._features.filter((feature) => feature.getId() === id);
@@ -104,10 +104,10 @@ class NodeModel extends INodeModel {
   }
 
   /**
-     * @param key
-     * @param value
-     * @throws will throw an error if key is null or undefined
-     */
+   * @param key
+   * @param value
+   * @throws will throw an error if key is null or undefined
+   */
   putProperty(key: string, value: string | number | boolean) {
     $defined(key, 'key can not be null');
     this._properties[key] = value;

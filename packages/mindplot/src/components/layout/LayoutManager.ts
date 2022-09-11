@@ -64,13 +64,13 @@ class LayoutManager extends Events {
   }
 
   /**
-       * @param id
-       * @param position
-       * @throws will throw an error if id is null or undefined
-       * @throws will throw an error if position is null or undefined
-       * @throws will throw an error if the position's x property is null or undefined
-       * @throws will throw an error if the position's y property is null or undefined
-       */
+   * @param id
+   * @param position
+   * @throws will throw an error if id is null or undefined
+   * @throws will throw an error if position is null or undefined
+   * @throws will throw an error if the position's x property is null or undefined
+   * @throws will throw an error if the position's y property is null or undefined
+   */
   moveNode(id: number, position: PositionType) {
     $assert($defined(id), 'id cannot be null');
     $assert($defined(position), 'position cannot be null');
@@ -97,12 +97,12 @@ class LayoutManager extends Events {
   }
 
   /**
-       * @param id
-       * @param size
-       * @param position
-       * @throws will throw an error if id is null or undefined
-       * @return this
-       */
+   * @param id
+   * @param size
+   * @param position
+   * @throws will throw an error if id is null or undefined
+   * @return this
+   */
   addNode(id: number, size: SizeType, position: PositionType) {
     $assert($defined(id), 'id can not be null');
     const result = this._layout.createNode(id, size, position, 'topic');
@@ -126,7 +126,11 @@ class LayoutManager extends Events {
     return this;
   }
 
-  predict(parentId: number, nodeId: number, position: PositionType): { order: number, position: PositionType } {
+  predict(
+    parentId: number,
+    nodeId: number,
+    position: PositionType,
+  ): { order: number; position: PositionType } {
     $assert($defined(parentId), 'parentId can not be null');
 
     const parent = this._treeSet.find(parentId);
@@ -179,14 +183,14 @@ class LayoutManager extends Events {
   }
 
   private _flushEvents() {
-    this._events.forEach(((event) => {
+    this._events.forEach((event) => {
       this.fireEvent('change', event);
-    }));
+    });
     this._events = [];
   }
 
   private _collectChanges(nodes: Node[]) {
-    nodes.forEach(((node) => {
+    nodes.forEach((node) => {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
@@ -205,7 +209,7 @@ class LayoutManager extends Events {
         this._events.push(event);
       }
       this._collectChanges(this._treeSet.getChildren(node));
-    }));
+    });
   }
 }
 

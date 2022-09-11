@@ -6,7 +6,8 @@ describe('Balanced Test Suite', () => {
     const position = { x: 0, y: 0 };
     const manager = new LayoutManager(0, Constants.ROOT_NODE_SIZE);
     manager.addNode(1, Constants.NODE_SIZE, position);
-    manager.connectNode(0, 1, 0); manager.layout();
+    manager.connectNode(0, 1, 0);
+    manager.layout();
 
     manager.addNode(2, Constants.NODE_SIZE, position);
     manager.connectNode(0, 2, 1);
@@ -194,8 +195,7 @@ describe('Balanced Test Suite', () => {
     });
 
     test('Predict nodes added only a root node', () => {
-      manager.removeNode(1).removeNode(2).removeNode(3).removeNode(4)
-        .removeNode(5);
+      manager.removeNode(1).removeNode(2).removeNode(3).removeNode(4).removeNode(5);
       manager.layout();
       const prediction5a = manager.predict(0, null, null);
       const prediction5b = manager.predict(0, null, { x: 40, y: 100 });

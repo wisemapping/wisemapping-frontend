@@ -44,12 +44,17 @@ const TopicFeatureFactory = {
     $assert(topic, 'topic can not be null');
     $assert(model, 'model can not be null');
 
-    const { icon: Icon } = TopicFeatureFactory._featuresMetadataById
-      .filter((elem) => elem.id === model.getType())[0];
+    const { icon: Icon } = TopicFeatureFactory._featuresMetadataById.filter(
+      (elem) => elem.id === model.getType(),
+    )[0];
     return new Icon(topic, model, readOnly);
   },
 };
 
-TopicFeatureFactory._featuresMetadataById = [TopicFeatureFactory.Icon, TopicFeatureFactory.Link, TopicFeatureFactory.Note];
+TopicFeatureFactory._featuresMetadataById = [
+  TopicFeatureFactory.Icon,
+  TopicFeatureFactory.Link,
+  TopicFeatureFactory.Note,
+];
 
 export default TopicFeatureFactory;

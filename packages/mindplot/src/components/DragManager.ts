@@ -59,14 +59,14 @@ class DragManager {
 
         // Register mouse move listener ...
         const mouseMoveListener = dragManager._buildMouseMoveListener(
-          workspace, dragNode, dragManager,
+          workspace,
+          dragNode,
+          dragManager,
         );
         screen.addEvent('mousemove', mouseMoveListener);
 
         // Register mouse up listeners ...
-        const mouseUpListener = dragManager._buildMouseUpListener(
-          workspace, dragNode, dragManager,
-        );
+        const mouseUpListener = dragManager._buildMouseUpListener(workspace, dragNode, dragManager);
         screen.addEvent('mouseup', mouseUpListener);
 
         // Change cursor.

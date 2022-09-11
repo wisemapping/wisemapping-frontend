@@ -41,16 +41,20 @@ class LinkModel extends FeatureModel {
   // url format is already checked in LinkEditor.checkUrl
   static _fixUrl(url: string): string {
     let result = url;
-    if (!result.includes('http://') && !result.includes('https://') && !result.includes('mailto://')) {
+    if (
+      !result.includes('http://') &&
+      !result.includes('https://') &&
+      !result.includes('mailto://')
+    ) {
       result = `http://${result}`;
     }
     return result;
   }
 
   /**
-     * @param {String} urlType the url type, either 'mail' or 'url'
-     * @throws will throw an error if urlType is null or undefined
-     */
+   * @param {String} urlType the url type, either 'mail' or 'url'
+   * @throws will throw an error if urlType is null or undefined
+   */
   setUrlType(urlType) {
     $assert(urlType, 'urlType can not be null');
     this.setAttribute('urlType', urlType);

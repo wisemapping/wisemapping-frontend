@@ -52,3 +52,6 @@ Thumbs.db
 .vscode
 
 */test/playground/dist
+
+# visual code local workspaces
+wisemapping-frontend.code-workspace

@@ -1,29 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./rootReducer";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from './rootReducer';
 
 export interface EditorState {
-    hotkeysEnabled: boolean;
+  hotkeysEnabled: boolean;
 }
 
 const initialState: EditorState = {
-    hotkeysEnabled: true,
+  hotkeysEnabled: true,
 };
 
 export const editorSlice = createSlice({
-    name: 'editor',
-    initialState: initialState,
-    reducers: {
-        disableHotkeys(state) {
-            state.hotkeysEnabled = false;
-        },
-        enableHotkeys(state) {
-            state.hotkeysEnabled = true;
-        },
+  name: 'editor',
+  initialState: initialState,
+  reducers: {
+    disableHotkeys(state) {
+      state.hotkeysEnabled = false;
     },
+    enableHotkeys(state) {
+      state.hotkeysEnabled = true;
+    },
+  },
 });
 
 export const hotkeysEnabled = (state: RootState): boolean => {
-    return state.editor.hotkeysEnabled;
+  return state.editor.hotkeysEnabled;
 };
 
 export const { disableHotkeys, enableHotkeys } = editorSlice.actions;

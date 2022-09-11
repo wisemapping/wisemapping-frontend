@@ -40,12 +40,15 @@ describe('Symmetric Test Suite', () => {
     test('All nodes should be positioned symmetrically with respect to their common ancestors', () => {
       expect(manager.find(14).getPosition().y).toEqual(manager.find(13).getPosition().y);
       expect(manager.find(5).getPosition().y).toEqual(manager.find(10).getPosition().y);
-      expect(manager.find(11).getPosition().y - manager.find(6).getPosition().y)
-        .toEqual(-(manager.find(12).getPosition().y - manager.find(6).getPosition().y));
-      expect(manager.find(8).getPosition().y - manager.find(1).getPosition().y)
-        .toEqual(-(manager.find(11).getPosition().y - manager.find(1).getPosition().y));
-      expect(manager.find(9).getPosition().y - manager.find(1).getPosition().y)
-        .toEqual(-(manager.find(11).getPosition().y - manager.find(1).getPosition().y));
+      expect(manager.find(11).getPosition().y - manager.find(6).getPosition().y).toEqual(
+        -(manager.find(12).getPosition().y - manager.find(6).getPosition().y),
+      );
+      expect(manager.find(8).getPosition().y - manager.find(1).getPosition().y).toEqual(
+        -(manager.find(11).getPosition().y - manager.find(1).getPosition().y),
+      );
+      expect(manager.find(9).getPosition().y - manager.find(1).getPosition().y).toEqual(
+        -(manager.find(11).getPosition().y - manager.find(1).getPosition().y),
+      );
     });
   });
 

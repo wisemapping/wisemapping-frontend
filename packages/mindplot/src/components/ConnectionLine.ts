@@ -17,9 +17,7 @@
  */
 
 import { $assert, $defined } from '@wisemapping/core-js';
-import {
-  Point, CurvedLine, PolyLine, Line,
-} from '@wisemapping/web2d';
+import { Point, CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
 import { TopicShape } from './model/INodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';

@@ -18,56 +18,24 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import PositionType from '../PositionType';
 import AbstractBasicSorter from './AbstractBasicSorter';
+import Node from './Node';
+import RootedTreeSet from './RootedTreeSet';
 
 class BalancedSorter extends AbstractBasicSorter {
-  predict(graph, parent, node, position, free) {
-    // If its a free node...
-    if (free) {
-      $assert(
-        $defined(position),
-        'position cannot be null for predict in free positioning',
-      );
-      $assert($defined(node), 'node cannot be null for predict in free positioning');
+  private static INTERNODE_VERTICAL_PADDING = 5;
 
-      const rootNode = graph.getRootNode(parent);
-      const direction = this._getRelativeDirection(
-        rootNode.getPosition(),
-        node.getPosition(),
-      );
+  private static INTERNODE_HORIZONTAL_PADDING = 30;
 
-      const limitXPos = parent.getPosition().x
-        + direction
-        * (parent.getSize().width / 2
-          + node.getSize().width / 2
-          + BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
-
-      let xPos;
-      if (direction > 0) {
-        xPos = position.x >= limitXPos
-          ? position.x
-          : limitXPos;
-      } else {
-        xPos = position.x <= limitXPos
-          ? position.x
-          : limitXPos;
-      }
-      return [0, { x: xPos, y: position.y }];
-    }
-
+  predict(graph, parent, node: Node, position: PositionType) {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
     if (node) {
       $assert($defined(position), 'position cannot be null for predict in dragging');
-      const nodeDirection = this._getRelativeDirection(
-        rootNode.getPosition(),
-        node.getPosition(),
-      );
-      const positionDirection = this._getRelativeDirection(
-        rootNode.getPosition(),
-        position,
-      );
+      const nodeDirection = this._getRelativeDirection(rootNode.getPosition(), node.getPosition());
+      const positionDirection = this._getRelativeDirection(rootNode.getPosition(), position);
       const siblings = graph.getSiblings(node);
 
       const sameParent = parent === graph.getParent(node);
@@ -76,7 +44,8 @@ class BalancedSorter extends AbstractBasicSorter {
       }
     }
 
-    let right; let left;
+    let right;
+    let left;
     if (!position) {
       right = this._getChildrenForOrder(parent, graph, 0);
       left = this._getChildrenForOrder(parent, graph, 1);
@@ -84,19 +53,16 @@ class BalancedSorter extends AbstractBasicSorter {
     // Filter nodes on one side..
     let order;
     if (position) {
-      order = position.x > rootNode.getPosition().x
-        ? 0
-        : 1;
+      order = position.x > rootNode.getPosition().x ? 0 : 1;
     } else {
-      order = right.length - left.length > 0
-        ? 1
-        : 0;
+      order = right.length - left.length > 0 ? 1 : 0;
     }
     const direction = order % 2 === 0 ? 1 : -1;
 
     // Exclude the dragged node (if set)
-    const children = this._getChildrenForOrder(parent, graph, order)
-      .filter((child) => child !== node);
+    const children = this._getChildrenForOrder(parent, graph, order).filter(
+      (child) => child !== node,
+    );
 
     // No children?
     if (children.length === 0) {
@@ -104,10 +70,9 @@ class BalancedSorter extends AbstractBasicSorter {
         order,
         {
           x:
-            parent.getPosition().x
-            + direction
-            * (parent.getSize().width / 2
-              + BalancedSorter.INTERNODE_HORIZONTAL_PADDING * 2),
+            parent.getPosition().x +
+            direction *
+              (parent.getSize().width / 2 + BalancedSorter.INTERNODE_HORIZONTAL_PADDING * 2),
           y: parent.getPosition().y,
         },
       ];
@@ -120,9 +85,10 @@ class BalancedSorter extends AbstractBasicSorter {
     children.forEach((child, index) => {
       const cpos = child.getPosition();
       if (newestPosition.y > cpos.y) {
-        const yOffset = child === last
-          ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
-          : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
+        const yOffset =
+          child === last
+            ? child.getSize().height + BalancedSorter.INTERNODE_VERTICAL_PADDING * 2
+            : (children[index + 1].getPosition().y - child.getPosition().y) / 2;
         result = [child.getOrder() + 2, { x: cpos.x, y: cpos.y + yOffset }];
       }
     });
@@ -135,9 +101,9 @@ class BalancedSorter extends AbstractBasicSorter {
         {
           x: first.getPosition().x,
           y:
-            first.getPosition().y
-            - first.getSize().height
-            - BalancedSorter.INTERNODE_VERTICAL_PADDING * 2,
+            first.getPosition().y -
+            first.getSize().height -
+            BalancedSorter.INTERNODE_VERTICAL_PADDING * 2,
         },
       ];
     }
@@ -145,13 +111,7 @@ class BalancedSorter extends AbstractBasicSorter {
     return result;
   }
 
-  /**
-         * @param {} treeSet
-         * @param {} parent
-         * @param {} child
-         * @param {} order
-         */
-  insert(treeSet, parent, child, order) {
+  insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number) {
     const children = this._getChildrenForOrder(parent, treeSet, order);
 
     // If no children, return 0 or 1 depending on the side
@@ -176,11 +136,7 @@ class BalancedSorter extends AbstractBasicSorter {
     child.setOrder(newOrder);
   }
 
-  /**
-         * @param {} treeSet
-         * @param {} node
-         */
-  detach(treeSet, node) {
+  detach(treeSet: RootedTreeSet, node: Node): void {
     const parent = treeSet.getParent(node);
     // Filter nodes on one side..
     const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
@@ -193,12 +149,7 @@ class BalancedSorter extends AbstractBasicSorter {
     node.setOrder(node.getOrder() % 2 === 0 ? 0 : 1);
   }
 
-  /**
-         * @param {} treeSet
-         * @param {} node
-         * @return offsets
-         */
-  computeOffsets(treeSet, node) {
+  computeOffsets(treeSet: RootedTreeSet, node: Node) {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
 
@@ -243,10 +194,11 @@ class BalancedSorter extends AbstractBasicSorter {
       }
 
       const yOffset = ysum + heights[i].height / 2;
-      const xOffset = direction
-        * (node.getSize().width / 2
-          + heights[i].width / 2
-          + +BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
+      const xOffset =
+        direction *
+        (node.getSize().width / 2 +
+          heights[i].width / 2 +
+          +BalancedSorter.INTERNODE_HORIZONTAL_PADDING);
 
       $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
       $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
@@ -256,12 +208,7 @@ class BalancedSorter extends AbstractBasicSorter {
     return result;
   }
 
-  /**
-         * @param {} treeSet
-         * @param {} node
-         * @throw will throw an error if order elements are missing
-         */
-  verify(treeSet, node) {
+  verify(treeSet: RootedTreeSet, node: Node): void {
     // Check that all is consistent ...
     const children = this._getChildrenForOrder(node, treeSet, node.getOrder());
 
@@ -272,50 +219,30 @@ class BalancedSorter extends AbstractBasicSorter {
       const order = i === 0 && factor === 1 ? 1 : factor * i;
       $assert(
         children[i].getOrder() === order,
-        `Missing order elements. Missing order: ${i * factor
-        }. Parent:${node.getId()
-        },Node:${children[i].getId()}`,
+        `Missing order elements. Missing order: ${
+          i * factor
+        }. Parent:${node.getId()},Node:${children[i].getId()}`,
       );
     }
   }
 
-  /**
-         * @param {} treeSet
-         * @param {} child
-         * @return the direction of the child within the treeSet
-         */
-  getChildDirection(treeSet, child) {
+  getChildDirection(treeSet: RootedTreeSet, child: Node): 1 | -1 {
     return child.getOrder() % 2 === 0 ? 1 : -1;
   }
 
-  /**
-         * @return {String} the print name of this class
-         */
-  toString() {
+  toString(): string {
     return 'Balanced Sorter';
   }
 
-  _getChildrenForOrder(parent, graph, order) {
-    return this._getSortedChildren(graph, parent)
-      .filter((child) => child.getOrder() % 2 === order % 2);
+  protected _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number) {
+    return this._getSortedChildren(graph, parent).filter(
+      (child) => child.getOrder() % 2 === order % 2,
+    );
   }
 
-  _getVerticalPadding() {
+  protected _getVerticalPadding(): number {
     return BalancedSorter.INTERNODE_VERTICAL_PADDING;
   }
 }
-
-/**
- * @constant
- * @type {Number}
- * @default
- */
-BalancedSorter.INTERNODE_VERTICAL_PADDING = 5;
-/**
- * @constant
- * @type {Number}
- * @default
- */
-BalancedSorter.INTERNODE_HORIZONTAL_PADDING = 30;
 
 export default BalancedSorter;

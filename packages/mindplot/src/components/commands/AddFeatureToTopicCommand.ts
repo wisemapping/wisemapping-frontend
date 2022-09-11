@@ -31,15 +31,15 @@ class AddFeatureToTopicCommand extends Command {
   private _featureModel: FeatureModel;
 
   /*
-    * @classdesc This command class handles do/undo of adding features to topics, e.g. an
-    * icon or a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}
-    * @constructs
-    * @param {String} topicId the id of the topic
-    * @param {String} featureType the id of the feature type to add, e.g. "icon"
-    * @param {Object} attributes the attribute(s) of the respective feature model
-    * @extends mindplot.Command
-    * @see mindplot.model.FeatureModel and subclasses
-    */
+   * @classdesc This command class handles do/undo of adding features to topics, e.g. an
+   * icon or a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}
+   * @constructs
+   * @param {String} topicId the id of the topic
+   * @param {String} featureType the id of the feature type to add, e.g. "icon"
+   * @param {Object} attributes the attribute(s) of the respective feature model
+   * @extends mindplot.Command
+   * @see mindplot.model.FeatureModel and subclasses
+   */
   constructor(topicId: number, featureType: FeatureType, attributes: object) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert(featureType, 'featureType can not be null');

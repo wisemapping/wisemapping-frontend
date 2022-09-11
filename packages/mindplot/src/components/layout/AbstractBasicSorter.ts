@@ -16,24 +16,25 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import PositionType from '../PositionType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+import Node from './Node';
+import RootedTreeSet from './RootedTreeSet';
 
-/**
- * @class
- * @extends mindplot.layout.ChildrenSorterStrategy
- */
-class AbstractBasicSorter extends ChildrenSorterStrategy {
-  computeChildrenIdByHeights(treeSet, node) {
+abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
+  private INTERNODE_VERTICAL_PADDING = 5;
+
+  computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node) {
     const result = {};
     this._computeChildrenHeight(treeSet, node, result);
     return result;
   }
 
-  _getVerticalPadding() {
-    return AbstractBasicSorter.INTERNODE_VERTICAL_PADDING;
+  protected _getVerticalPadding() {
+    return this.INTERNODE_VERTICAL_PADDING;
   }
 
-  _computeChildrenHeight(treeSet, node, heightCache) {
+  protected _computeChildrenHeight(treeSet: RootedTreeSet, node: Node, heightCache?) {
     // 2* Top and down padding;
     const height = node.getSize().height + this._getVerticalPadding() * 2;
 
@@ -44,9 +45,9 @@ class AbstractBasicSorter extends ChildrenSorterStrategy {
     } else {
       let childrenHeight = 0;
 
-      children.forEach(((child) => {
+      children.forEach((child) => {
         childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-      }));
+      });
 
       result = Math.max(height, childrenHeight);
     }
@@ -59,29 +60,16 @@ class AbstractBasicSorter extends ChildrenSorterStrategy {
     return result;
   }
 
-  _getSortedChildren(treeSet, node) {
+  protected _getSortedChildren(treeSet: RootedTreeSet, node: Node) {
     const result = treeSet.getChildren(node);
     result.sort((a, b) => a.getOrder() - b.getOrder());
     return result;
   }
 
-  _getRelativeDirection(reference, position) {
+  protected _getRelativeDirection(reference: PositionType, position: PositionType): 1 | -1 {
     const offset = position.x - reference.x;
     return offset >= 0 ? 1 : -1;
   }
 }
-
-/**
- * @constant
- * @type {Number}
- * @default
- */
-AbstractBasicSorter.INTERNODE_VERTICAL_PADDING = 5;
-/**
- * @constant
- * @type {Number}
- * @default
- */
-AbstractBasicSorter.INTERNODE_HORIZONTAL_PADDING = 30;
 
 export default AbstractBasicSorter;

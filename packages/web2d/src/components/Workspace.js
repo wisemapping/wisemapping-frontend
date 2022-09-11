@@ -48,8 +48,8 @@ class Workspace extends ElementClass {
   }
 
   /**
-     * Appends an element as a child to the object.
-     */
+   * Appends an element as a child to the object.
+   */
   append(element) {
     if (!$defined(element)) {
       throw new Error('Child element can not be null');
@@ -74,8 +74,8 @@ class Workspace extends ElementClass {
   }
 
   /**
-     * Create a new div element that will be responsible for containing the workspace elements.
-     */
+   * Create a new div element that will be responsible for containing the workspace elements.
+   */
   static _createDivContainer() {
     const container = window.document.createElement('div');
     container.style.position = 'relative';
@@ -88,13 +88,13 @@ class Workspace extends ElementClass {
   }
 
   /**
-     *  Set the workspace area size. It can be defined using different units:
-     * in (inches; 1in=2.54cm)
-     * cm (centimeters; 1cm=10mm)
-     * mm (millimeters)
-     * pt (points; 1pt=1/72in)
-     * pc (picas; 1pc=12pt)
-     */
+   *  Set the workspace area size. It can be defined using different units:
+   * in (inches; 1in=2.54cm)
+   * cm (centimeters; 1cm=10mm)
+   * mm (millimeters)
+   * pt (points; 1pt=1/72in)
+   * pc (picas; 1pc=12pt)
+   */
   setSize(width, height) {
     // HTML container must have the size of the group element.
     if ($defined(width)) {
@@ -108,37 +108,37 @@ class Workspace extends ElementClass {
   }
 
   /**
-     * The workspace element is a containing blocks for this content
-     * - they define a CSS2 "block level box".
-     * Inside the containing block a local coordinate system is
-     * defined for any sub-elements using the coordsize and coordorigin attributes.
-     * All CSS2 positioning information is expressed in terms of this local coordinate space.
-     * Consequently CSS2 position attributes (left, top, width, height
-     * and so on) have no unit specifier -
-     * they are simple numbers, not CSS length quantities.
-     */
+   * The workspace element is a containing blocks for this content
+   * - they define a CSS2 "block level box".
+   * Inside the containing block a local coordinate system is
+   * defined for any sub-elements using the coordsize and coordorigin attributes.
+   * All CSS2 positioning information is expressed in terms of this local coordinate space.
+   * Consequently CSS2 position attributes (left, top, width, height
+   * and so on) have no unit specifier -
+   * they are simple numbers, not CSS length quantities.
+   */
   setCoordSize(width, height) {
     this.peer.setCoordSize(parseInt(width, 10), parseInt(height, 10));
   }
 
   /**
-     * @Todo: Complete Doc
-     */
+   * @Todo: Complete Doc
+   */
   setCoordOrigin(x, y) {
     this.peer.setCoordOrigin(x, y);
   }
 
   /**
-     * @Todo: Complete Doc
-     */
+   * @Todo: Complete Doc
+   */
   getCoordOrigin() {
     return this.peer.getCoordOrigin();
   }
 
   // Private method declaration area
   /**
-     * All the SVG elements will be children of this HTML element.
-     */
+   * All the SVG elements will be children of this HTML element.
+   */
   _getHtmlContainer() {
     return this._htmlContainer;
   }
@@ -176,8 +176,8 @@ class Workspace extends ElementClass {
   }
 
   /**
-     * Remove an element as a child to the object.
-     */
+   * Remove an element as a child to the object.
+   */
   removeChild(element) {
     if (!$defined(element)) {
       throw new Error('Child element can not be null');

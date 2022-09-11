@@ -31,7 +31,10 @@ class AddTopicCommand extends Command {
    */
   constructor(models: NodeModel[], parentTopicsId: number[]) {
     $assert(models, 'models can not be null');
-    $assert(parentTopicsId == null || parentTopicsId.length === models.length, 'parents and models must have the same size');
+    $assert(
+      parentTopicsId == null || parentTopicsId.length === models.length,
+      'parents and models must have the same size',
+    );
 
     super();
     this._models = models;

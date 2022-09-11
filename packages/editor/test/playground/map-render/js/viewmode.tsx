@@ -5,9 +5,8 @@ import Editor, { EditorOptions } from '../../../../src/index';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 
 const initialization = (designer: Designer) => {
-
   designer.addEvent('loadSuccess', () => {
-    const elem = document.getElementById('mindplot');
+    const elem = document.getElementById('mindmap-comp');
     if (elem) {
       elem.classList.add('ready');
     }
@@ -25,7 +24,6 @@ const initialization = (designer: Designer) => {
         option.selected = option.value === mapId;
       });
     }
-
   });
 };
 
@@ -36,10 +34,10 @@ const persistence = new LocalStorageManager('samples/{id}.wxml', false);
 const options: EditorOptions = {
   zoom: 0.8,
   locked: false,
-  mapTitle: "Develop WiseMapping",
+  mapTitle: 'Develop WiseMapping',
   mode: 'viewonly',
   locale: 'en',
-  enableKeyboardEvents: true
+  enableKeyboardEvents: true,
 };
 
 ReactDOM.render(

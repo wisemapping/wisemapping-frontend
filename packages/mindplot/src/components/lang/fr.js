@@ -80,6 +80,12 @@ const FR = {
   BACK_TO_MAP_LIST: 'Retour à la liste des cartes',
   KEYBOARD_SHOTCUTS: 'Raccourcis clavier',
   PASTE_URL_HERE: 'Collez l\'adresse URL souhaitée ici :',
+  CTRL: 'Ctrl',
+  SPACE_BAR: 'Space Bar',
+  K_INSERT: 'Insert',
+  MOUSE_CLICK: 'Clic de Souris',
+  K_DELETE: 'Delete',
+  BACKSPACE: 'Backspace',
 };
 
 export default FR;

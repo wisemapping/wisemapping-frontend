@@ -53,9 +53,9 @@ class Line extends ElementClass {
   }
 
   /**
-     * Defines the start and the end line arrow style.
-     * Can have values "none | block | classic | diamond | oval | open | chevron | doublechevron"
-     * */
+   * Defines the start and the end line arrow style.
+   * Can have values "none | block | classic | diamond | oval | open | chevron | doublechevron"
+   * */
   setArrowStyle(startStyle, endStyle) {
     this.peer.setArrowStyle(startStyle, endStyle);
   }

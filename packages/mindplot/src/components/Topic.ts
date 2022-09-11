@@ -18,9 +18,7 @@
 import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import {
-  Rect, Image, Line, Text, Group, ElementClass, Point,
-} from '@wisemapping/web2d';
+import { Rect, Image, Line, Text, Group, ElementClass, Point } from '@wisemapping/web2d';
 
 import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
@@ -30,9 +28,7 @@ import ConnectionLine from './ConnectionLine';
 import IconGroup from './IconGroup';
 import EventBus from './layout/EventBus';
 import ShirinkConnector from './ShrinkConnector';
-import NoteEditor from './widget/NoteEditor';
 import ActionDispatcher from './ActionDispatcher';
-import LinkEditor from './widget/LinkEditor';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import { TopicShape } from './model/INodeModel';
@@ -177,10 +173,7 @@ abstract class Topic extends NodeGraph {
   getInnerShape(): ElementClass {
     if (!$defined(this._innerShape)) {
       // Create inner box.
-      this._innerShape = this._buildShape(
-        TopicConfig.INNER_RECT_ATTRIBUTES,
-        this.getShapeType(),
-      );
+      this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
 
       // Update bgcolor ...
       const bgColor = this.getBackgroundColor();
@@ -246,7 +239,9 @@ abstract class Topic extends NodeGraph {
         result.setStroke(1, 'solid', stokeColor);
       };
 
-      result.getSize = function getSize() { return this.size; };
+      result.getSize = function getSize() {
+        return this.size;
+      };
 
       result.setPosition = () => {
         // Overwrite behaviour ...
@@ -279,10 +274,7 @@ abstract class Topic extends NodeGraph {
 
   getOuterShape(): ElementClass {
     if (!$defined(this._outerShape)) {
-      const rect = this._buildShape(
-        TopicConfig.OUTER_SHAPE_ATTRIBUTES,
-        TopicShape.ROUNDED_RECT,
-      );
+      const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
       rect.setPosition(-2, -3);
       rect.setOpacity(0);
       this._outerShape = rect;
@@ -738,79 +730,65 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  showNoteEditor(): void {
-    const topicId = this.getId();
+  getNoteValue(): string {
     const model = this.getModel();
-    const editorModel = {
-      getValue(): string {
-        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
-        let result;
-        if (notes.length > 0) {
-          result = (notes[0] as NoteModel).getText();
-        }
+    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    let result;
+    if (notes.length > 0) {
+      result = (notes[0] as NoteModel).getText();
+    }
 
-        return result;
-      },
-
-      setValue(value: string) {
-        const dispatcher = ActionDispatcher.getInstance();
-        const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
-        if (!$defined(value)) {
-          const featureId = notes[0].getId();
-          dispatcher.removeFeatureFromTopic(topicId, featureId);
-        } else if (notes.length > 0) {
-          dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
-            text: value,
-          });
-        } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
-            text: value,
-          });
-        }
-      },
-    };
-    const editor = new NoteEditor(editorModel);
-    this.closeEditors();
-    editor.show();
+    return result;
   }
 
-  /** opens a dialog where the user can enter or edit an existing link associated with this topic */
-  showLinkEditor() {
+  setNoteValue(value: string) {
     const topicId = this.getId();
     const model = this.getModel();
-    const editorModel = {
-      getValue(): string {
-        // @param {mindplot.model.LinkModel[]} links
-        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
-        let result;
-        if (links.length > 0) {
-          result = (links[0] as LinkModel).getUrl();
-        }
+    const dispatcher = ActionDispatcher.getInstance();
+    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    if (!$defined(value)) {
+      const featureId = notes[0].getId();
+      dispatcher.removeFeatureFromTopic(topicId, featureId);
+    } else if (notes.length > 0) {
+      dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
+        text: value,
+      });
+    } else {
+      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
+        text: value,
+      });
+    }
+  }
 
-        return result;
-      },
+  getLinkValue(): string {
+    const model = this.getModel();
+    // @param {mindplot.model.LinkModel[]} links
+    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    let result;
+    if (links.length > 0) {
+      result = (links[0] as LinkModel).getUrl();
+    }
 
-      setValue(value: string) {
-        const dispatcher = ActionDispatcher.getInstance();
-        const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
-        if (!$defined(value)) {
-          const featureId = links[0].getId();
-          dispatcher.removeFeatureFromTopic(topicId, featureId);
-        } else if (links.length > 0) {
-          dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
-            url: value,
-          });
-        } else {
-          dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
-            url: value,
-          });
-        }
-      },
-    };
+    return result;
+  }
 
-    this.closeEditors();
-    const editor = new LinkEditor(editorModel);
-    editor.show();
+  setLinkValue(value: string) {
+    const topicId = this.getId();
+    const model = this.getModel();
+    const dispatcher = ActionDispatcher.getInstance();
+    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    if (!$defined(value)) {
+      const featureId = links[0].getId();
+      dispatcher.removeFeatureFromTopic(topicId, featureId);
+    } else if (links.length > 0) {
+      dispatcher.changeFeatureToTopic(topicId, links[0].getId(), {
+        url: value,
+      });
+    } else {
+      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
+        url: value,
+      });
+    }
   }
 
   closeEditors() {
@@ -822,8 +800,8 @@ abstract class Topic extends NodeGraph {
   }
 
   /**
-     * Point: references the center of the rect shape.!!!
-     */
+   * Point: references the center of the rect shape.!!!
+   */
   setPosition(point: Point) {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
@@ -953,9 +931,9 @@ abstract class Topic extends NodeGraph {
       const targetParent = targetTopic.getModel().getParent();
       const sourceParent = sourceTopic.getModel().getParent();
       relationship.setVisibility(
-        value
-        && (targetParent == null || !targetParent.areChildrenShrunken())
-        && (sourceParent == null || !sourceParent.areChildrenShrunken()),
+        value &&
+          (targetParent == null || !targetParent.areChildrenShrunken()) &&
+          (sourceParent == null || !sourceParent.areChildrenShrunken()),
         fade,
       );
     });
@@ -1027,7 +1005,8 @@ abstract class Topic extends NodeGraph {
     };
 
     const oldSize = this.getSize();
-    const hasSizeChanged = oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
+    const hasSizeChanged =
+      oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
       NodeGraph.prototype.setSize.call(this, roundedSize);
 
@@ -1259,10 +1238,13 @@ abstract class Topic extends NodeGraph {
         const iconGroupWith = iconGroup.getSize().width;
         const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
-        this.setSize({
-          width: topicWith,
-          height: topicHeight,
-        }, false);
+        this.setSize(
+          {
+            width: topicWith,
+            height: topicHeight,
+          },
+          false,
+        );
 
         // Adjust all topic elements positions ...
         const yPosition = Math.round((topicHeight - textHeight) / 2);

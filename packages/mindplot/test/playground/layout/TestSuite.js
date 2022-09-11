@@ -164,11 +164,9 @@ class TestSuite extends ChildrenSorterStrategy {
     let events = [];
     manager.addEvent('change', (event) => {
       console.log(
-        `\tUpdated nodes: {id:${event.getId()
-        } order: ${event.getOrder()
-        }position: {${event.getPosition().x
-        }${event.getPosition().y
-        }}`,
+        `\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}position: {${
+          event.getPosition().x
+        }${event.getPosition().y}}`,
       );
       events.push(event);
     });
@@ -206,11 +204,9 @@ class TestSuite extends ChildrenSorterStrategy {
     let events = [];
     manager.addEvent('change', (event) => {
       console.log(
-        `\tUpdated nodes: {id:${event.getId()
-        } order: ${event.getOrder()
-        }position: {${event.getPosition().x
-        }${event.getPosition().y
-        }}`,
+        `\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}position: {${
+          event.getPosition().x
+        }${event.getPosition().y}}`,
       );
       events.push(event);
     });
@@ -259,12 +255,7 @@ class TestSuite extends ChildrenSorterStrategy {
       const pos = event.getPosition();
       const posStr = pos ? `,position: {${pos.x}${pos.y}` : '';
       const node = manager.find(event.getId());
-      console.log(
-        `\tUpdated nodes: {id:${event.getId()
-        } order: ${event.getOrder()
-        }${posStr
-        }}`,
-      );
+      console.log(`\tUpdated nodes: {id:${event.getId()} order: ${event.getOrder()}${posStr}}`);
       events.push(event);
     });
     manager.layout(true);
@@ -349,8 +340,8 @@ class TestSuite extends ChildrenSorterStrategy {
       'Node 6 and their children should be to the left of node 4',
     );
     $assert(
-      manager.find(6).getPosition().x > manager.find(11).getPosition().x
-      && manager.find(11).getPosition().x == manager.find(12).getPosition().x,
+      manager.find(6).getPosition().x > manager.find(11).getPosition().x &&
+        manager.find(11).getPosition().x == manager.find(12).getPosition().x,
       'Nodes 11 and 12 should be to the left of node 6 and horizontally aligned',
     );
 
@@ -471,8 +462,8 @@ class TestSuite extends ChildrenSorterStrategy {
 
     // Check that all enlarged nodes shift children accordingly
     $assert(
-      manager.find(10).getPosition().x > manager.find(3).getPosition().x
-      && manager.find(10).getPosition().x == manager.find(11).getPosition().x,
+      manager.find(10).getPosition().x > manager.find(3).getPosition().x &&
+        manager.find(10).getPosition().x == manager.find(11).getPosition().x,
       'Nodes 10 and 11 should be horizontally algined and to the right of enlarged node 3',
     );
     const xPosNode7 = manager.find(7).getPosition().x;
@@ -564,12 +555,7 @@ class TestSuite extends ChildrenSorterStrategy {
     }
     const { position } = prediction;
     const { order } = prediction;
-    console.log(
-      `\t\tprediction {order:${order
-      } position: (${position.x
-      }${position.y
-      })}`,
-    );
+    console.log(`\t\tprediction {order:${order} position: (${position.x}${position.y})}`);
     const cx = position.x + canvas.width / 2 - TestSuite.NODE_SIZE.width / 2;
     const cy = position.y + canvas.height / 2 - TestSuite.NODE_SIZE.height / 2;
     canvas.rect(cx, cy, TestSuite.NODE_SIZE.width, TestSuite.NODE_SIZE.height);

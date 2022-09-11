@@ -75,9 +75,7 @@ class BootstrapDialog extends Options {
         )}</button>`,
       );
       footer.append(this.acceptButton);
-      this.acceptButton
-        .unbind('click')
-        .on('click', this.options.onEventData, this.onAcceptClick);
+      this.acceptButton.unbind('click').on('click', this.options.onEventData, this.onAcceptClick);
     }
     if (this.options.removeButton) {
       this.removeButton = $(
@@ -114,7 +112,7 @@ class BootstrapDialog extends Options {
     return header;
   }
 
-  onAcceptClick() {
+  onAcceptClick(event) {
     throw new Error('Unsupported operation');
   }
 
@@ -122,7 +120,7 @@ class BootstrapDialog extends Options {
     // Overwrite default behaviour ...
   }
 
-  onRemoveClick() {
+  onRemoveClick(event) {
     throw new Error('Unsupported operation');
   }
 

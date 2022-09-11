@@ -1,12 +1,13 @@
 import $ from 'jquery';
-import {
-  Workspace, Line, Rect,
-} from '../../src';
+import { Workspace, Line, Rect } from '../../src';
 
 global.$ = $;
 
 const workspaceAttributes = {
-  width: '700px', height: '100px', coordSize: '350 50', fillColor: '#ffffcc',
+  width: '700px',
+  height: '100px',
+  coordSize: '350 50',
+  fillColor: '#ffffcc',
 };
 const strokeWidthWorkspace = new Workspace(workspaceAttributes);
 
@@ -18,8 +19,8 @@ strokeWidthWorkspace.append(rect);
 
 for (let i = 0; i <= 10; i++) {
   const line = new Line();
-  line.setFrom(5 + (i * 25), 5);
-  line.setTo(5 + (i * 25), 45);
+  line.setFrom(5 + i * 25, 5);
+  line.setTo(5 + i * 25, 45);
   line.setAttribute('strokeWidth', i + 1);
   strokeWidthWorkspace.append(line);
 }
@@ -30,8 +31,8 @@ strokeWidthWorkspace.addItAsChildTo($('#strokeWidthSample'));
 const strokeOpacityWorkspace = new Workspace(workspaceAttributes);
 for (let i = 0; i < 10; i++) {
   const line = new Line();
-  line.setFrom(15 + (i * 25), 5);
-  line.setTo(3 + (i * 25), 45);
+  line.setFrom(15 + i * 25, 5);
+  line.setTo(3 + i * 25, 45);
   line.setAttribute('strokeWidth', 2);
   line.setAttribute('strokeOpacity', 1 / (i + 1));
   line.setAttribute('strokeColor', 'red');
@@ -43,8 +44,8 @@ const strokeStyleWorkspace = new Workspace(workspaceAttributes);
 const styles = ['solid', 'dot', 'dash', 'dashdot', 'longdash'];
 for (let i = 0; i < styles.length; i++) {
   const line = new Line();
-  line.setFrom(25 + (i * 30), 5);
-  line.setTo(13 + (i * 30), 45);
+  line.setFrom(25 + i * 30, 5);
+  line.setTo(13 + i * 30, 45);
   line.setAttribute('strokeWidth', 2);
   line.setAttribute('strokeColor', 'red');
   line.setAttribute('strokeStyle', styles[i]);
@@ -53,11 +54,20 @@ for (let i = 0; i < styles.length; i++) {
 strokeStyleWorkspace.addItAsChildTo($('#strokeStyleSample'));
 
 const strokeArrowWorkspace = new Workspace(workspaceAttributes);
-const styles2 = ['none ', 'block ', 'classic', 'diamond ', 'oval', 'open', 'chevron', 'doublechevron'];
+const styles2 = [
+  'none ',
+  'block ',
+  'classic',
+  'diamond ',
+  'oval',
+  'open',
+  'chevron',
+  'doublechevron',
+];
 for (let i = 0; i < styles.length; i++) {
   const line = new Line();
-  line.setFrom(25 + (i * 30), 5);
-  line.setTo(13 + (i * 30), 45);
+  line.setFrom(25 + i * 30, 5);
+  line.setTo(13 + i * 30, 45);
   line.setAttribute('strokeWidth', 2);
   line.setAttribute('strokeColor', 'red');
   line.setArrowStyle(styles2[i]);

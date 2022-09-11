@@ -1,7 +1,7 @@
 version: '3'
 services:
     e2e:
-        image: cypress/included:8.4.1
+        image: cypress/included:10.7.0
         container_name: wisemapping-integration-tests
         entrypoint: '/bin/sh -c "yarn install && yarn bootstrap && yarn build && yarn test:integration"'
         working_dir: /e2e

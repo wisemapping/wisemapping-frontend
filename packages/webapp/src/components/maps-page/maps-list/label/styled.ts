@@ -8,7 +8,7 @@ export const LabelContainer = styled.div`
   align-items: center;
   font-size: smaller;
 `;
-  
+
 export const LabelText = styled.span`
   margin-left: 4px;
   margin-right: 2px;

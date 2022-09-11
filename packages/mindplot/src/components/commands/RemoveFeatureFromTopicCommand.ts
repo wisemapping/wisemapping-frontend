@@ -28,9 +28,9 @@ class RemoveFeatureFromTopicCommand extends Command {
   private _oldFeature: FeatureModel;
 
   /**
-     * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
-     * a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}.
-     */
+   * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
+   * a note. For a reference of existing features, refer to {@link mindplot.TopicFeature}.
+   */
   constructor(topicId: number, featureId: number) {
     $assert($defined(topicId), 'topicId can not be null');
     $assert(featureId, 'iconModel can not be null');
@@ -42,8 +42,8 @@ class RemoveFeatureFromTopicCommand extends Command {
   }
 
   /**
-     * Overrides abstract parent method
-     */
+   * Overrides abstract parent method
+   */
   execute(commandContext: CommandContext): void {
     const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
@@ -52,9 +52,9 @@ class RemoveFeatureFromTopicCommand extends Command {
   }
 
   /**
-     * Overrides abstract parent method
-     * @see {@link mindplot.Command.undoExecute}
-     */
+   * Overrides abstract parent method
+   * @see {@link mindplot.Command.undoExecute}
+   */
   undoExecute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
     topic.addFeature(this._oldFeature);

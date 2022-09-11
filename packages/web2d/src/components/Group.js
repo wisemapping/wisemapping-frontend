@@ -44,8 +44,8 @@ class Group extends ElementClass {
   }
 
   /**
-     * Remove an element as a child to the object.
-     */
+   * Remove an element as a child to the object.
+   */
   removeChild(element) {
     if (!$defined(element)) {
       throw new Error('Child element can not be null');
@@ -64,8 +64,8 @@ class Group extends ElementClass {
   }
 
   /**
-     * Appends an element as a child to the object.
-     */
+   * Appends an element as a child to the object.
+   */
   append(element) {
     if (!$defined(element)) {
       throw Error('Child element can not be null');
@@ -92,15 +92,15 @@ class Group extends ElementClass {
   }
 
   /**
-     * The group element is a containing blocks for this content
-     * - they define a CSS2 "block level box".
-     * Inside the containing block a local coordinate system is
-     * defined for any sub-elements using the coordsize and coordorigin attributes.
-     * All CSS2 positioning information is expressed in terms of this local coordinate space.
-     * Consequently CSS2 position attributes (left, top, width, height and so on)
-     * have no unit specifier -
-     * they are simple numbers, not CSS length quantities.
-     */
+   * The group element is a containing blocks for this content
+   * - they define a CSS2 "block level box".
+   * Inside the containing block a local coordinate system is
+   * defined for any sub-elements using the coordsize and coordorigin attributes.
+   * All CSS2 positioning information is expressed in terms of this local coordinate space.
+   * Consequently CSS2 position attributes (left, top, width, height and so on)
+   * have no unit specifier -
+   * they are simple numbers, not CSS length quantities.
+   */
   setCoordSize(width, height) {
     this.peer.setCoordSize(width, height);
   }

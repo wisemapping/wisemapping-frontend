@@ -1,25 +1,24 @@
-body
-{
-   font-size: 1em !important;
-   color: #000 !important;
-   font-family: Arial !important;
+body {
+  font-size: 1em !important;
+  color: #000 !important;
+  font-family: Arial !important;
 }
 
 table {
- border:  1px solid darkgray;
- border-spacing: 0px;
+  border: 1px solid darkgray;
+  border-spacing: 0px;
 }
 
 td {
- border:  1px solid darkgray;
- padding: 10px;
+  border: 1px solid darkgray;
+  padding: 10px;
 }
 
 tbody tr td:first-child {
-      width: 20%;
+  width: 20%;
 }
 
 .eventForm {
-      float: left;
-      margin: 10px;
-  }
+  float: left;
+  margin: 10px;
+}

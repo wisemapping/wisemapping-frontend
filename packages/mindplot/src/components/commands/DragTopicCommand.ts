@@ -31,9 +31,9 @@ class DragTopicCommand extends Command {
   private _order: number;
 
   /**
-     * @classdesc This command class handles do/undo of dragging a topic to a new position.
-     * @constructs
-     */
+   * @classdesc This command class handles do/undo of dragging a topic to a new position.
+   * @constructs
+   */
   constructor(topicId: number, position: Point, order: number, parentTopic: Topic) {
     $assert(topicId, 'topicId must be defined');
     super();

@@ -2,7 +2,7 @@
   "account.delete-warning": [
     {
       "type": 0,
-      "value": "Denken Sie daran, dass Sie keine von Ihnen erstellte Mindmap abrufen können. Alle Ihre Informationen werden gelöscht und können nicht wiederhergestellt werden."
+      "value": "Denke daran, dass du keine von dir erstellten Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
     }
   ],
   "accountinfo.button": [
@@ -20,7 +20,7 @@
   "accountinfo.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "E-Mail"
     }
   ],
   "accountinfo.firstname": [
@@ -50,7 +50,7 @@
   "action.close-button": [
     {
       "type": 0,
-      "value": "Nah dran"
+      "value": "Schließen"
     }
   ],
   "action.delete": [
@@ -62,7 +62,7 @@
   "action.delete-description": [
     {
       "type": 0,
-      "value": "Gelöschte Mindmaps können nicht wiederhergestellt werden. Möchtest du fortfahren ?."
+      "value": "Gelöschte Mindmaps können nicht wiederhergestellt werden. Möchtest du fortfahren?"
     }
   ],
   "action.delete-title": [
@@ -86,7 +86,7 @@
   "action.history": [
     {
       "type": 0,
-      "value": "Geschichte"
+      "value": "Historie"
     }
   ],
   "action.history-description": [
@@ -116,13 +116,13 @@
   "action.label": [
     {
       "type": 0,
-      "value": "Etikett hinzufügen"
+      "value": "Label hinzufügen"
     }
   ],
   "action.new": [
     {
       "type": 0,
-      "value": "Neue Karte"
+      "value": "Neue Mindmap"
     }
   ],
   "action.open": [
@@ -182,7 +182,7 @@
   "changepwd.description": [
     {
       "type": 0,
-      "value": "Bitte geben Sie das neue Passwort für Ihr Konto ein."
+      "value": "Bitte gebe das neue Passwort für dein Konto ein."
     }
   ],
   "changepwd.password": [
@@ -206,7 +206,7 @@
   "common.wait": [
     {
       "type": 0,
-      "value": "Warten Sie mal ..."
+      "value": "Bitte warten ..."
     }
   ],
   "create.button": [
@@ -218,25 +218,25 @@
   "create.description": [
     {
       "type": 0,
-      "value": "Bitte geben Sie den neuen Kartennamen und die Beschreibung ein."
+      "value": "Bitte gebe den Namen und die Beschreibung der neuen Mindmap ein."
     }
   ],
   "create.title": [
     {
       "type": 0,
-      "value": "Erstellen Sie eine neue Mindmap."
+      "value": "Erstelle eine neue Mindmap."
     }
   ],
   "deletem.title": [
     {
       "type": 0,
-      "value": "Alle ausgewählten Karten werden gelöscht"
+      "value": "Alle ausgewählten Mindmaps werden gelöscht"
     }
   ],
   "duplicate.title": [
     {
       "type": 0,
-      "value": "Duplikat"
+      "value": "Kopie"
     }
   ],
   "editor.try-welcome": [
@@ -248,13 +248,13 @@
   "editor.try-welcome-description": [
     {
       "type": 0,
-      "value": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+      "value": "Melde dich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
     }
   ],
   "expired.description": [
     {
       "type": 0,
-      "value": "Ihre aktuelle Sitzung ist abgelaufen. Bitte melden Sie sich an und versuchen Sie es erneut."
+      "value": "Deine aktuelle Sitzung ist abgelaufen. Bitte melde dich an und versuche es erneut."
     }
   ],
   "expired.title": [
@@ -266,25 +266,25 @@
   "export.desc": [
     {
       "type": 0,
-      "value": "Exportieren Sie diese Karte im gewünschten Format und verwenden Sie sie in Ihren Präsentationen oder teilen Sie sie per E-Mail"
+      "value": "Exportiere diese Mindmap im gewünschten Format und verwende sie in deinen Präsentationen oder teile sie per E-Mail"
     }
   ],
   "export.document": [
     {
       "type": 0,
-      "value": "Mindmap-Tools: Exportieren Sie Ihre Mindmap in Mindmap-Tool-Formate von Drittanbietern"
+      "value": "Mindmap-Tools: Exportiere deine Mindmap in Mindmap-Tool-Formate von Drittanbietern"
     }
   ],
   "export.document-label": [
     {
       "type": 0,
-      "value": "Dokument: Exportieren Sie Ihre Mindmap in ein eigenständiges Dokument, das Sie teilen können"
+      "value": "Dokument: Exportiere deine Mindmap in ein eigenständiges Dokument, das du teilen kannst"
     }
   ],
   "export.image": [
     {
       "type": 0,
-      "value": "Bild: Erhalten Sie eine grafische Darstellung Ihrer Karte mit allen Farben und Formen."
+      "value": "Bild: Erhalte eine grafische Darstellung deiner Mindmap mit allen Farben und Formen."
     }
   ],
   "export.title": [
@@ -320,7 +320,7 @@
   "footer.faq": [
     {
       "type": 0,
-      "value": "FAQ."
+      "value": "FAQ"
     }
   ],
   "footer.faqandhelp": [
@@ -350,13 +350,13 @@
   "footer.support": [
     {
       "type": 0,
-      "value": "Unterstützt"
+      "value": "Support"
     }
   ],
   "footer.team": [
     {
       "type": 0,
-      "value": "Ausrüstung"
+      "value": "Team"
     }
   ],
   "footer.termsandconditions": [
@@ -368,13 +368,13 @@
   "forgot.desc": [
     {
       "type": 0,
-      "value": "Wir senden Ihnen eine E-Mail, um Ihr Passwort zurückzusetzen."
+      "value": "Wir senden dir eine E-Mail, um dein Passwort zurückzusetzen."
     }
   ],
   "forgot.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "E-Mail"
     }
   ],
   "forgot.page-title": [
@@ -392,13 +392,13 @@
   "forgot.success.desc": [
     {
       "type": 0,
-      "value": "Wir haben Ihnen eine E-Mail gesendet, mit der Sie Ihr Passwort zurücksetzen können. Sie sollten es in den nächsten Minuten erhalten."
+      "value": "Wir haben dir eine E-Mail gesendet, mit der du dein Passwort zurücksetzen kannst. Du solltest sie in den nächsten Minuten erhalten."
     }
   ],
   "forgot.success.title": [
     {
       "type": 0,
-      "value": "Ihr temporäres Passwort wurde gesendet."
+      "value": "Dein temporäres Passwort wurde gesendet."
     }
   ],
   "forgot.title": [
@@ -416,13 +416,13 @@
   "header.donthaveaccount": [
     {
       "type": 0,
-      "value": "Sie haben kein Konto?"
+      "value": "Du hast noch kein Konto?"
     }
   ],
   "header.haveaccount": [
     {
       "type": 0,
-      "value": "Sie haben bereits ein Konto?"
+      "value": "Du hast bereits ein Konto?"
     }
   ],
   "help.support": [
@@ -446,7 +446,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Sie können Karten von WiseMapping oder Freemind in Ihre Kartenliste importieren. Wählen Sie die Datei aus, die Sie importieren möchten."
+      "value": "Du kannst Mindmaps von WiseMapping oder Freemind importieren. Wähle die Datei aus, die du importieren möchtest."
     }
   ],
   "import.error-file": [
@@ -462,13 +462,13 @@
   "import.title": [
     {
       "type": 0,
-      "value": "Importieren Sie vorhandene Mindmaps"
+      "value": "Importiere vorhandene Mindmaps"
     }
   ],
   "info.basic-info": [
     {
       "type": 0,
-      "value": "Basisinformation"
+      "value": "Allgemeine Informationen"
     }
   ],
   "info.button": [
@@ -486,7 +486,7 @@
   "info.creator": [
     {
       "type": 0,
-      "value": "Schöpfer"
+      "value": "Besitzer"
     }
   ],
   "info.description": [
@@ -498,7 +498,7 @@
   "info.description-msg": [
     {
       "type": 0,
-      "value": "Indem Sie die Karte veröffentlichen, machen Sie sie für jeden im Internet sichtbar."
+      "value": "Indem du die Mindmap veröffentlichen, machst du sie für jeden im Internet sichtbar."
     }
   ],
   "info.modified-time": [
@@ -534,25 +534,25 @@
   "info.starred": [
     {
       "type": 0,
-      "value": "Markiert"
+      "value": "Favoriten"
     }
   ],
   "info.title": [
     {
       "type": 0,
-      "value": "Die Info"
+      "value": "Informationen"
     }
   ],
   "label.add-button": [
     {
       "type": 0,
-      "value": "Etikett hinzufügen"
+      "value": "Label hinzufügen"
     }
   ],
   "label.add-for": [
     {
       "type": 0,
-      "value": "Beschriftungen für Karten bearbeiten:"
+      "value": "Labels für Mindmap bearbeiten:"
     }
   ],
   "label.add-placeholder": [
@@ -564,31 +564,31 @@
   "label.change-color": [
     {
       "type": 0,
-      "value": "Etikettenfarbe ändern"
+      "value": "Labelfarbe ändern"
     }
   ],
   "label.delete-description": [
     {
       "type": 0,
-      "value": "gelöscht, einschließlich der Zuordnungen zu allen vorhandenen Karten. Möchtest du fortfahren?"
+      "value": "Löschen des Labels, einschließlich der Zuordnungen zu allen vorhandenen Mindmaps. Möchtest du fortfahren?"
     }
   ],
   "label.delete-title": [
     {
       "type": 0,
-      "value": "Bestätigen Sie das Löschen des Labels"
+      "value": "Bestätige das Löschen des Labels"
     }
   ],
   "label.description": [
     {
       "type": 0,
-      "value": "Verwenden Sie Labels, um Ihre Karten zu organisieren."
+      "value": "Verwende Labels, um deine Mindmaps zu organisieren."
     }
   ],
   "label.title": [
     {
       "type": 0,
-      "value": "Etikett hinzufügen"
+      "value": "Label hinzufügen"
     }
   ],
   "language.change": [
@@ -606,13 +606,13 @@
   "login.desc": [
     {
       "type": 0,
-      "value": "Melde dich in deinem Konto an"
+      "value": "Melde dich mit deinem Konto an"
     }
   ],
   "login.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "E-Mail"
     }
   ],
   "login.error": [
@@ -624,13 +624,13 @@
   "login.forgotpwd": [
     {
       "type": 0,
-      "value": "Passwort vergessen ?"
+      "value": "Passwort vergessen?"
     }
   ],
   "login.hsqldbcofig": [
     {
       "type": 0,
-      "value": "Obwohl HSQLDB während der Installation standardmäßig mit WiseMapping gebündelt wird, empfehlen wir diese Datenbank nicht für den Produktionseinsatz. Bitte erwägen Sie stattdessen die Verwendung von MySQL 5.7. Weitere Informationen zur Konfiguration von MySQL finden Sie hier"
+      "value": "Obwohl HSQLDB während der Installation standardmäßig mit WiseMapping installiert wird, empfehlen wir diese Datenbank nicht für den Produktionseinsatz. Bitte erwäge stattdessen die Verwendung von MySQL 5.7. Weitere Informationen zur Konfiguration von MySQL findest du hier"
     }
   ],
   "login.page-title": [
@@ -648,7 +648,7 @@
   "login.remberme": [
     {
       "type": 0,
-      "value": "Behalte mich in Erinnerung"
+      "value": "Angemeldet bleiben?"
     }
   ],
   "login.signin": [
@@ -672,19 +672,19 @@
   "login.userinactive": [
     {
       "type": 0,
-      "value": "Entschuldigung, Ihr Konto wurde noch nicht aktiviert. Sie erhalten eine Benachrichtigungs-E-Mail, wenn es aktiv wird. Bleiben Sie dran!."
+      "value": "Entschuldigung, dein Konto wurde noch nicht aktiviert. Du erhältst eine Benachrichtigungs-E-Mail, wenn es aktiv wird."
     }
   ],
   "map.creator": [
     {
       "type": 0,
-      "value": "Schöpfer"
+      "value": "Besitzer"
     }
   ],
   "map.delete-selected": [
     {
       "type": 0,
-      "value": "Ausgewählte löschen"
+      "value": "Auswahl löschen"
     }
   ],
   "map.last-update": [
@@ -708,19 +708,19 @@
   "map.tooltip-add": [
     {
       "type": 0,
-      "value": "Label zu Ausgewähltem hinzufügen"
+      "value": "Label zur Auswahl hinzufügen"
     }
   ],
   "maps.choose-file": [
     {
       "type": 0,
-      "value": "Wählen Sie eine Datei"
+      "value": "Wähle eine Datei"
     }
   ],
   "maps.create-tooltip": [
     {
       "type": 0,
-      "value": "Erstellen Sie eine neue Mindmap"
+      "value": "Erstelle eine neue Mindmap"
     }
   ],
   "maps.empty-result": [
@@ -774,31 +774,31 @@
   "maps.nav-onwned": [
     {
       "type": 0,
-      "value": "Besitz"
+      "value": "Eigene"
     }
   ],
   "maps.nav-public": [
     {
       "type": 0,
-      "value": "Allgemein"
+      "value": "Freigegeben"
     }
   ],
   "maps.nav-shared": [
     {
       "type": 0,
-      "value": "Mit mir geteilt"
+      "value": "Geteilt"
     }
   ],
   "maps.nav-starred": [
     {
       "type": 0,
-      "value": "Markiert"
+      "value": "Favoriten"
     }
   ],
   "maps.page-title": [
     {
       "type": 0,
-      "value": "Meine Karten | WiseMapping"
+      "value": "Meine Mindmaps | WiseMapping"
     }
   ],
   "maps.revert": [
@@ -822,13 +822,13 @@
   "maps.tooltip-starred": [
     {
       "type": 0,
-      "value": "Markiert"
+      "value": "Favoriten"
     }
   ],
   "maps.view": [
     {
       "type": 0,
-      "value": "Aussicht"
+      "value": "Ansicht"
     }
   ],
   "menu.account": [
@@ -846,7 +846,7 @@
   "menu.signout": [
     {
       "type": 0,
-      "value": "Austragen"
+      "value": "Abmelden"
     }
   ],
   "publish.button": [
@@ -858,13 +858,13 @@
   "publish.checkbox": [
     {
       "type": 0,
-      "value": "Aktivieren Sie die öffentliche Freigabe"
+      "value": "Aktiviere die öffentliche Freigabe"
     }
   ],
   "publish.description": [
     {
       "type": 0,
-      "value": "Indem Sie die Karte veröffentlichen, machen Sie sie für jeden im Internet sichtbar."
+      "value": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
     }
   ],
   "publish.embedded": [
@@ -876,7 +876,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Kopieren Sie dieses Code-Snippet, um es in Ihren Blog oder Ihre Seite einzubetten:"
+      "value": "Kopiere dieses Code-Snippet, um es in deinem Blog oder deiner Webseite einzubetten:"
     }
   ],
   "publish.public-url": [
@@ -888,7 +888,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Kopieren Sie den folgenden Link und fügen Sie ihn ein, um Ihre Karte mit Kollegen zu teilen:"
+      "value": "Kopiere den folgenden Link und gebe ihn weiter, um deine Mindmap mit Kollegen zu teilen:"
     }
   ],
   "publish.title": [
@@ -906,13 +906,13 @@
   "registration.desc": [
     {
       "type": 0,
-      "value": "Die Anmeldung ist kostenlos und nehmen Sie sich einen Moment Zeit"
+      "value": "Nimm dir einen Moment Zeit. Die Anmeldung ist kostenlos."
     }
   ],
   "registration.email": [
     {
       "type": 0,
-      "value": "Email"
+      "value": "E-Mail"
     }
   ],
   "registration.firstname": [
@@ -942,13 +942,13 @@
   "registration.success.desc": [
     {
       "type": 0,
-      "value": "Klicken Sie unten auf die Schaltfläche „Anmelden“ und beginnen Sie mit der Erstellung von Mindmaps."
+      "value": "Klicke unten auf die Schaltfläche „Anmelden“ und beginne mit der Erstellung von Mindmaps."
     }
   ],
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Kundenbedingungen: Bitte überprüfen Sie die WiseMapping-Kontoinformationen, die Sie oben eingegeben haben, und sehen Sie sich die Kundenbedingungen hier an. Indem Sie unten auf „Registrieren“ klicken, stimmen Sie den obigen Kundenbedingungen und der Datenschutzrichtlinie zu"
+      "value": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf „Registrieren“ klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
     }
   ],
   "registration.title": [
@@ -960,7 +960,7 @@
   "rename.description": [
     {
       "type": 0,
-      "value": "Bitte geben Sie den neuen Kartennamen und die Beschreibung ein."
+      "value": "Bitte gebe den Namen und die Beschreibung der Mindmap ein."
     }
   ],
   "rename.title": [
@@ -972,13 +972,13 @@
   "resetpassword.success.title": [
     {
       "type": 0,
-      "value": "Ihr Konto wurde erfolgreich erstellt"
+      "value": "Dein Konto wurde erfolgreich erstellt"
     }
   ],
   "role.editor": [
     {
       "type": 0,
-      "value": "Editor"
+      "value": "Bearbeiter"
     }
   ],
   "role.owner": [
@@ -990,7 +990,7 @@
   "role.viewer": [
     {
       "type": 0,
-      "value": "Zuschauer"
+      "value": "Betrachter"
     }
   ],
   "share.add-button": [
@@ -1020,19 +1020,19 @@
   "share.delete": [
     {
       "type": 0,
-      "value": "Mitbearbeiter löschen"
+      "value": "Bearbeiter entfernen"
     }
   ],
   "share.delete-description": [
     {
       "type": 0,
-      "value": "Laden Sie Personen ein, mit Ihnen bei der Erstellung Ihrer Midnmap zusammenzuarbeiten. Sie werden per E-Mail benachrichtigt."
+      "value": "Lade Personen ein, die bei der Erstellung deiner Midnmap mitarbeiten. Sie werden per E-Mail benachrichtigt."
     }
   ],
   "share.delete-title": [
     {
       "type": 0,
-      "value": "Teilen Sie mit Menschen"
+      "value": "Teile deine Mindmap"
     }
   ],
   "share.message": [

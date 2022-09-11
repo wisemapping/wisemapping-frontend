@@ -1,6 +1,7 @@
 {
     "video": false,
     "videoUploadOnPasses": false,
-    "baseUrl": "http://localhost:8081"
+    "baseUrl": "http://localhost:8081",
+    "includeShadowDom": true
   }
   

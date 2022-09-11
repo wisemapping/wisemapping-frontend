@@ -65,9 +65,9 @@ class TopicEventDispatcher extends Events {
     // Open the new editor ...
     const model = topic.getModel();
     if (
-      model.getShapeType() !== TopicShape.IMAGE
-      && !this._readOnly
-      && eventType === TopicEvent.EDIT
+      model.getShapeType() !== TopicShape.IMAGE &&
+      !this._readOnly &&
+      eventType === TopicEvent.EDIT
     ) {
       this._multilineEditor.show(topic, options ? options.text : null);
       this._activeEditor = this._multilineEditor;

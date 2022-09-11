@@ -29,7 +29,13 @@ class BinaryImageExporter extends Exporter {
 
   private adjustToFit: boolean;
 
-  constructor(svgElement: Element, width: number, height: number, imgFormat: 'image/png' | 'image/jpeg', adjustToFit = true) {
+  constructor(
+    svgElement: Element,
+    width: number,
+    height: number,
+    imgFormat: 'image/png' | 'image/jpeg',
+    adjustToFit = true,
+  ) {
     super(imgFormat.split('/')[0], imgFormat);
     this.svgElement = svgElement;
     this.adjustToFit = adjustToFit;
@@ -55,12 +61,12 @@ class BinaryImageExporter extends Exporter {
       if (this.adjustToFit) {
         // Size must match with SVG image size ...
         const size = svgExporter.getImgSize();
-        width = (size.width * dpr);
-        height = (size.height * dpr);
+        width = size.width * dpr;
+        height = size.height * dpr;
       } else {
         // Use screensize as size ..
-        width = (this.width * dpr);
-        height = (this.height * dpr);
+        width = this.width * dpr;
+        height = this.height * dpr;
       }
 
       console.log(`Export size: ${width}:${height}`);

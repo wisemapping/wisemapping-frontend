@@ -3,7 +3,7 @@ import rootReducer from './rootReducer';
 
 // Create Service object...
 const store = configureStore({
-    reducer: rootReducer,
+  reducer: rootReducer,
 });
 
 export default store;

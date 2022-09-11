@@ -3,9 +3,9 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 
 const devConfig = {
-    mode: 'development',
-    plugins: [new HotModuleReplacementPlugin()],
-    devtool: 'eval-source-map'
+  mode: 'development',
+  plugins: [new HotModuleReplacementPlugin()],
+  devtool: 'eval-source-map',
 };
 
 module.exports = merge(common, devConfig);

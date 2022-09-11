@@ -43,11 +43,11 @@ class EventBusDispatcher {
     EventBus.instance.addEvent('forceLayout', this._forceLayout.bind(this));
   }
 
-  private _topicResizeEvent(args: { node: Topic, size: SizeType }) {
+  private _topicResizeEvent(args: { node: Topic; size: SizeType }) {
     this._layoutManager.updateNodeSize(args.node.getId(), args.size);
   }
 
-  private _topicMoved(args: { node: Topic, position: PositionType }) {
+  private _topicMoved(args: { node: Topic; position: PositionType }) {
     this._layoutManager.moveNode(args.node.getId(), args.position);
   }
 
@@ -55,9 +55,11 @@ class EventBusDispatcher {
     this._layoutManager.disconnectNode(node.getId());
   }
 
-  private _topicConnected(args: { parentNode: Topic, childNode: Topic }) {
+  private _topicConnected(args: { parentNode: Topic; childNode: Topic }) {
     this._layoutManager.connectNode(
-      args.parentNode.getId(), args.childNode.getId(), args.childNode.getOrder(),
+      args.parentNode.getId(),
+      args.childNode.getId(),
+      args.childNode.getOrder(),
     );
   }
 

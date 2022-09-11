@@ -108,8 +108,8 @@ class RelationshipModel {
   }
 
   /**
-       * @return a clone of the relationship model
-       */
+   * @return a clone of the relationship model
+   */
   clone() {
     const result = new RelationshipModel(this._sourceTargetId, this._targetTopicId);
     result._id = this._id;
@@ -122,14 +122,10 @@ class RelationshipModel {
   }
 
   /**
-       * @return {String} textual information about the relationship's source and target node
-       */
+   * @return {String} textual information about the relationship's source and target node
+   */
   inspect(): string {
-    return (
-      `(fromNode:${this.getFromNode()
-      } , toNode: ${this.getToNode()
-      })`
-    );
+    return `(fromNode:${this.getFromNode()} , toNode: ${this.getToNode()})`;
   }
 
   static _nextUUID() {

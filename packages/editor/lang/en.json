@@ -1,9 +1,21 @@
 {
     "editor.try-welcome": {
-        "defaultMessage": "This edition space showcases some of the mindmap editor capabilities !"
+        "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
     },
     "editor.try-welcome-description": {
-        "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+		"defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+    },
+	"editor.try-welcome-mobile": {
+		"defaultMessage": "This edition space showcases some of the mindmap capabilities!"
+	},
+    "editor.try-welcome-description-mobile": {
+        "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies."
+    },
+    "editor.edit-mobile": {
+        "defaultMessage": "Note for mobile devices."
+    },
+    "editor.edit-description-mobile": {
+        "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
     },
     "login.signup": {
         "defaultMessage": "Sign Up"

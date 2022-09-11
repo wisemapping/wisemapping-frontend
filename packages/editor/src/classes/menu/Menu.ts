@@ -61,7 +61,9 @@ class Menu extends IMenu {
     this._addButton('position', false, false, () => {
       designer.zoomToFit();
     });
-    Menu._registerTooltip('position', $msg('CENTER_POSITION'));
+    // Disabled because this tooltip overflows the screen and makes the button un-clickeable
+    // This should be enabled when migrating to material-ui
+    //Menu._registerTooltip('position', $msg('CENTER_POSITION'));
 
     // Edition actions ...
     if (!readOnly) {
@@ -181,7 +183,9 @@ class Menu extends IMenu {
           designer.changeBorderColor(hex);
         },
       };
-      this._toolbarElems.push(new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl));
+      this._toolbarElems.push(
+        new ColorPalettePanel('topicBorder', borderColorModel, widgetsBaseUrl),
+      );
       Menu._registerTooltip('topicBorder', $msg('TOPIC_BORDER_COLOR'));
 
       const fontColorModel = {
@@ -211,7 +215,7 @@ class Menu extends IMenu {
       if (undoButton) {
         undoButton.disable();
       }
-      Menu._registerTooltip('undoEdition', $msg('UNDO'));
+      Menu._registerTooltip('undoEdition', $msg('UNDO'), $msg('CTRL') + ' + Z');
 
       const redoButton = this._addButton('redoEdition', false, false, () => {
         designer.redo();
@@ -219,7 +223,7 @@ class Menu extends IMenu {
       if (redoButton) {
         redoButton.disable();
       }
-      Menu._registerTooltip('redoEdition', $msg('REDO'));
+      Menu._registerTooltip('redoEdition', $msg('REDO'), $msg('CTRL') + ' + Shift + Z');
 
       if (redoButton && undoButton) {
         designer.addEvent('modelUpdate', (event) => {
@@ -244,7 +248,7 @@ class Menu extends IMenu {
       this._addButton('deleteTopic', true, true, () => {
         designer.deleteSelectedEntities();
       });
-      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'));
+      Menu._registerTooltip('deleteTopic', $msg('TOPIC_DELETE'), $msg('K_DELETE'));
 
       this._addButton('topicLink', true, false, () => {
         designer.addLink();
@@ -264,22 +268,20 @@ class Menu extends IMenu {
       this._addButton('fontBold', true, false, () => {
         designer.changeFontWeight();
       });
-      Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), 'meta+B');
+      Menu._registerTooltip('fontBold', $msg('FONT_BOLD'), $msg('CTRL') + ' + B');
 
       this._addButton('fontItalic', true, false, () => {
         designer.changeFontStyle();
       });
-      Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), 'meta+I');
-
+      Menu._registerTooltip('fontItalic', $msg('FONT_ITALIC'), $msg('CTRL') + ' + I');
 
       if (!readOnly) {
         // Register action on save  ...
         const saveElem = $('#save');
-        this._addButton('save', false, false,
-          () => {
-            this.save(saveElem, designer, true);
-          });
-        Menu._registerTooltip('save', $msg('SAVE'));
+        this._addButton('save', false, false, () => {
+          this.save(saveElem, designer, true);
+        });
+        Menu._registerTooltip('save', $msg('SAVE'), $msg('CTRL') + ' + S');
 
         // Register unload save ...
         window.addEventListener('beforeunload', () => {
@@ -290,13 +292,11 @@ class Menu extends IMenu {
         });
 
         // Autosave on a fixed period of time ...
-        setInterval(
-          () => {
-            if (this.isSaveRequired()) {
-              this.save(saveElem, designer, false);
-            }
-          }, 10000,
-        );
+        setInterval(() => {
+          if (this.isSaveRequired()) {
+            this.save(saveElem, designer, false);
+          }
+        }, 10000);
       }
     }
 
@@ -394,10 +394,14 @@ class Menu extends IMenu {
     // Register Events ...
     let result = null;
     if ($(`#${buttonId}`)) {
-      const button = new ToolbarItem(buttonId, ((event) => {
-        fn(event);
-        this.clear();
-      }), { topicAction: isTopic, relAction: isRelationship });
+      const button = new ToolbarItem(
+        buttonId,
+        (event) => {
+          fn(event);
+          this.clear();
+        },
+        { topicAction: isTopic, relAction: isRelationship },
+      );
 
       this._toolbarElems.push(button);
       result = button;
@@ -409,9 +413,10 @@ class Menu extends IMenu {
     if ($(`#${buttonId}`)) {
       let tooltip = text;
       if (shortcut) {
-        const platformedShortcut = navigator.appVersion.indexOf('Mac') !== -1
-          ? shortcut.replace('meta+', '⌘')
-          : shortcut.replace('meta+', 'ctrl+');
+        const platformedShortcut =
+          navigator.appVersion.indexOf('Mac') !== -1
+            ? shortcut.replace('meta+', '⌘')
+            : shortcut.replace('meta+', 'ctrl+');
         tooltip = `${tooltip} (${platformedShortcut})`;
       }
       return new KeyboardShortcutTooltip($(`#${buttonId}`), tooltip);

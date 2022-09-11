@@ -25,12 +25,11 @@ class Keyboard {
   addShortcut(shortcuts: string[] | string, callback: () => void) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
     shortcutsArray.forEach((shortcut) => {
-      $(document).bind('keydown', shortcut,
-        (e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          callback();
-        });
+      $(document).bind('keydown', shortcut, (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        callback();
+      });
     });
   }
 }

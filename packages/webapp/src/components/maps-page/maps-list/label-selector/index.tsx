@@ -12,44 +12,44 @@ import AddLabelDialog from '../../action-dispatcher/add-label-dialog';
 import { LabelListContainer } from './styled';
 
 export type LabelSelectorProps = {
-    maps: MapInfo[];
-    onChange: (label: Label, checked: boolean) => void;
+  maps: MapInfo[];
+  onChange: (label: Label, checked: boolean) => void;
 };
 
 export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.ReactElement {
-    const client: Client = useSelector(activeInstance);
-    const { data: labels = [] } = useQuery<unknown, ErrorInfo, Label[]>('labels', async () =>
-        client.fetchLabels()
-    );
+  const client: Client = useSelector(activeInstance);
+  const { data: labels = [] } = useQuery<unknown, ErrorInfo, Label[]>('labels', async () =>
+    client.fetchLabels(),
+  );
 
-    const checkedLabelIds = labels
-        .map((l) => l.id)
-        .filter((labelId) => maps.every((m) => m.labels.find((l) => l.id === labelId)));
+  const checkedLabelIds = labels
+    .map((l) => l.id)
+    .filter((labelId) => maps.every((m) => m.labels.find((l) => l.id === labelId)));
 
-    return (
-        <Container>
-            <FormGroup>
-                <AddLabelDialog onAdd={(label) => onChange(label, true)} />
-            </FormGroup>
-            <LabelListContainer>
-                {labels.map(({ id, title, color }) => (
-                    <FormControlLabel
-                        key={id}
-                        control={
-                            <Checkbox
-                                id={`${id}`}
-                                checked={checkedLabelIds.includes(id)}
-                                onChange={(e) => {
-                                    onChange({ id, title, color }, e.target.checked);
-                                }}
-                                name={title}
-                                color="primary"
-                            />
-                        }
-                        label={<LabelComponent label={{ id, title, color }} size="big" />}
-                    />
-                ))}
-            </LabelListContainer>
-        </Container>
-    );
+  return (
+    <Container>
+      <FormGroup>
+        <AddLabelDialog onAdd={(label) => onChange(label, true)} />
+      </FormGroup>
+      <LabelListContainer>
+        {labels.map(({ id, title, color }) => (
+          <FormControlLabel
+            key={id}
+            control={
+              <Checkbox
+                id={`${id}`}
+                checked={checkedLabelIds.includes(id)}
+                onChange={(e) => {
+                  onChange({ id, title, color }, e.target.checked);
+                }}
+                name={title}
+                color="primary"
+              />
+            }
+            label={<LabelComponent label={{ id, title, color }} size="big" />}
+          />
+        ))}
+      </LabelListContainer>
+    </Container>
+  );
 }

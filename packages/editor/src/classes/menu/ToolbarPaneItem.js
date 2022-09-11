@@ -17,7 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import ToolbarItem from './ToolbarItem';
-import FloatingTip from '@wisemapping/mindplot/src/components/widget/FloatingTip';
+import FloatingTip from '../bootstrap/FloatingTip';
 
 class ToolbarPaneItem extends ToolbarItem {
   constructor(buttonId, model, delayInit) {

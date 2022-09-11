@@ -1,14 +1,26 @@
 {
-  "editor.try-welcome": {
-      "defaultMessage": "这个编辑区域展示了一些思维导图编辑器的功能！"
-  },
-  "editor.try-welcome-description": {
-      "defaultMessage": "注册后可以免费创建、分享和发布无限数量的思维导图。"
-  },
-  "login.signup": {
-      "defaultMessage": "注册"
-  },
-  "action.share": {
-      "defaultMessage": "分享"
-  }
+	"editor.try-welcome": {
+		"defaultMessage": "这个编辑区域展示了一些思维导图编辑器的功能！"
+	},
+	"editor.try-welcome-description": {
+		"defaultMessage": "注册后可以免费创建、分享和发布无限数量的思维导图。"
+	},
+	"editor.try-welcome-mobile": {
+		"defaultMessage": "这个版本空间展示了一些思维导图功能！"
+	},
+	"editor.try-welcome-description-mobile": {
+		"defaultMessage": "注册以开始免费创建、共享和发布无限数量的思维导图。 移动设备支持有限的思维导图编辑功能。 使用桌面浏览器获得完整的编辑器功能。"
+	},
+	"editor.edit-mobile": {
+		"defaultMessage": "移动设备注意事项."
+	},
+	"editor.edit-description-mobile": {
+		"defaultMessage": "移动设备支持有限的思维导图编辑功能。 使用桌面浏览器获得完整的编辑器功能。"
+	},
+	"login.signup": {
+		"defaultMessage": "注册"
+	},
+	"action.share": {
+		"defaultMessage": "分享"
+	}
 }

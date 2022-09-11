@@ -39,22 +39,23 @@ class TxtExporter extends Exporter {
 
   private traverseBranch(indent: string, prefix: string, branches: INodeModel[]) {
     let result = '';
-    branches
-      .forEach((node, index) => {
-        result = `${result}${indent}${prefix}${index + 1} ${node.getText() !== undefined ? node.getText() : ''}`;
-        node.getFeatures().forEach((f) => {
-          const type = f.getType();
-          if (type === 'link') {
-            result = `${result}\n ${indent}  [Link: ${(f as LinkModel).getUrl()}]`;
-          }
-          if (type === 'note') {
-            result = `${result}\n${indent}  [Note: ${(f as NoteModel).getText()}]`;
-          }
-        });
-        result = `${result}\n`;
-
-        result += this.traverseBranch(`\t${indent}`, `${prefix}${index + 1}.`, node.getChildren());
+    branches.forEach((node, index) => {
+      result = `${result}${indent}${prefix}${index + 1} ${
+        node.getText() !== undefined ? node.getText() : ''
+      }`;
+      node.getFeatures().forEach((f) => {
+        const type = f.getType();
+        if (type === 'link') {
+          result = `${result}\n ${indent}  [Link: ${(f as LinkModel).getUrl()}]`;
+        }
+        if (type === 'note') {
+          result = `${result}\n${indent}  [Note: ${(f as NoteModel).getText()}]`;
+        }
       });
+      result = `${result}\n`;
+
+      result += this.traverseBranch(`\t${indent}`, `${prefix}${index + 1}.`, node.getChildren());
+    });
     return result;
   }
 }

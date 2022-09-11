@@ -56,6 +56,7 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
 import FeatureType from './model/FeatureType';
+import WidgetManager from './WidgetManager';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -82,7 +83,6 @@ class Designer extends Events {
     super();
     $assert(options, 'options must be defined');
     $assert(options.zoom, 'zoom must be defined');
-    $assert(options.containerSize, 'size must be defined');
     $assert(divElement, 'divElement must be defined');
 
     // Set up i18n location ...
@@ -91,10 +91,10 @@ class Designer extends Events {
 
     this._options = options;
 
-    // Set full div elem render area ...
-    if (options.containerSize) {
-      divElement.css(options.containerSize);
-    }
+    // Set full div elem render area.The component must fill container size
+    // container is responsible for location and size
+    divElement.css('width', '100%');
+    divElement.css('height', '100%');
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -138,14 +138,18 @@ class Designer extends Events {
 
   private _registerWheelEvents(): void {
     const zoomFactor = 1.02;
-    document.addEventListener('wheel', (event: WheelEvent) => {
-      if (event.deltaX > 0 || event.deltaY > 0) {
-        this.zoomOut(zoomFactor);
-      } else {
-        this.zoomIn(zoomFactor);
-      }
-      event.preventDefault();
-    }, { passive: false });
+    document.addEventListener(
+      'wheel',
+      (event: WheelEvent) => {
+        if (event.deltaX > 0 || event.deltaY > 0) {
+          this.zoomOut(zoomFactor);
+        } else {
+          this.zoomIn(zoomFactor);
+        }
+        event.preventDefault();
+      },
+      { passive: false },
+    );
   }
 
   getActionDispatcher(): StandaloneActionDispatcher {
@@ -187,8 +191,7 @@ class Designer extends Events {
     screenManager.addEvent('dblclick', (event: MouseEvent) => {
       if (workspace.isWorkspaceEventsEnabled()) {
         const mousePos = screenManager.getWorkspaceMousePosition(event);
-        const centralTopic: CentralTopic = me.getModel()
-          .getCentralTopic();
+        const centralTopic: CentralTopic = me.getModel().getCentralTopic();
 
         const model = me._createChildModel(centralTopic, mousePos);
         this._actionDispatcher.addTopics([model], [centralTopic.getId()]);
@@ -568,9 +571,9 @@ class Designer extends Events {
   }
 
   /**
-         * @param {mindplot.Mindmap} mindmap
-         * @throws will throw an error if mindmapModel is null or undefined
-         */
+   * @param {mindplot.Mindmap} mindmap
+   * @throws will throw an error if mindmapModel is null or undefined
+   */
   loadMap(mindmap: Mindmap): void {
     $assert(mindmap, 'mindmapModel can not be null');
     this._mindmap = mindmap;
@@ -644,11 +647,11 @@ class Designer extends Events {
   }
 
   /**
-     * @private
-     * @param {mindplot.model.RelationshipModel} model
-     * @return {mindplot.Relationship} the relationship created to the model
-     * @throws will throw an error if model is null or undefined
-     */
+   * @private
+   * @param {mindplot.model.RelationshipModel} model
+   * @return {mindplot.Relationship} the relationship created to the model
+   * @throws will throw an error if model is null or undefined
+   */
   private _relationshipModelToRelationship(model: RelationshipModel): Relationship {
     $assert(model, 'Node model can not be null');
 
@@ -667,9 +670,9 @@ class Designer extends Events {
   }
 
   /**
-         * @param {mindplot.model.RelationshipModel} model
-         * @return {mindplot.Relationship} the relationship added to the mindmap
-         */
+   * @param {mindplot.model.RelationshipModel} model
+   * @return {mindplot.Relationship} the relationship added to the mindmap
+   */
   addRelationship(model: RelationshipModel): Relationship {
     const mindmap = this.getMindmap();
     mindmap.addRelationship(model);
@@ -677,9 +680,9 @@ class Designer extends Events {
   }
 
   /**
-         * deletes the relationship from the linked topics, DesignerModel, Workspace and Mindmap
-         * @param {mindplot.Relationship} rel the relationship to delete
-         */
+   * deletes the relationship from the linked topics, DesignerModel, Workspace and Mindmap
+   * @param {mindplot.Relationship} rel the relationship to delete
+   */
   deleteRelationship(rel: Relationship): void {
     const sourceTopic = rel.getSourceTopic();
     sourceTopic.deleteRelationship(rel);
@@ -704,9 +707,7 @@ class Designer extends Events {
     const targetTopic = dmodel.findTopicById(targetTopicId);
     $assert(
       targetTopic,
-      `targetTopic could not be found:${targetTopicId},${dmodel
-        .getTopics()
-        .map((e) => e.getId())}`,
+      `targetTopic could not be found:${targetTopicId},${dmodel.getTopics().map((e) => e.getId())}`,
     );
 
     // Build relationship line ....
@@ -797,16 +798,14 @@ class Designer extends Events {
   }
 
   changeFontFamily(font: string) {
-    const topicsIds = this.getModel()
-      .filterTopicsIds();
+    const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontFamilyToTopic(topicsIds, font);
     }
   }
 
   changeFontStyle(): void {
-    const topicsIds = this.getModel()
-      .filterTopicsIds();
+    const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontStyleToTopic(topicsIds);
     }
@@ -815,8 +814,7 @@ class Designer extends Events {
   changeFontColor(color: string) {
     $assert(color, 'color can not be null');
 
-    const topicsIds = this.getModel()
-      .filterTopicsIds();
+    const topicsIds = this.getModel().filterTopicsIds();
 
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontColorToTopic(topicsIds, color);
@@ -851,9 +849,8 @@ class Designer extends Events {
   }
 
   changeTopicShape(shape: string) {
-    const validateFunc = (topic: Topic) => !(
-      topic.getType() === 'CentralTopic' && shape === TopicShape.LINE
-    );
+    const validateFunc = (topic: Topic) =>
+      !(topic.getType() === 'CentralTopic' && shape === TopicShape.LINE);
 
     const validateError = 'Central Topic shape can not be changed to line figure.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -872,9 +869,13 @@ class Designer extends Events {
   addIconType(iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(topicsIds[0], TopicFeatureFactory.Icon.id as FeatureType, {
-        id: iconType,
-      });
+      this._actionDispatcher.addFeatureToTopic(
+        topicsIds[0],
+        TopicFeatureFactory.Icon.id as FeatureType,
+        {
+          id: iconType,
+        },
+      );
     }
   }
 
@@ -882,7 +883,8 @@ class Designer extends Events {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
-      topic.showLinkEditor();
+      const manager = WidgetManager.getInstance();
+      manager.showEditorForLink(topic, null, null);
       this.onObjectFocusEvent();
     }
   }
@@ -891,7 +893,8 @@ class Designer extends Events {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
-      topic.showNoteEditor();
+      const manager = WidgetManager.getInstance();
+      manager.showEditorForNote(topic, null, null);
       this.onObjectFocusEvent();
     }
   }

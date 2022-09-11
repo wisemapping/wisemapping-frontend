@@ -20,21 +20,12 @@ const playgroundConfig = {
   devServer: {
     historyApiFallback: true,
     port: 8083,
-    open: false,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader?url=false'],
-      },
-    ],
+    open: false
   },
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
-        { from: '../../libraries/bootstrap', to: 'bootstrap' },
         { from: 'test/playground/index.html', to: 'index.html' },
       ],
     }),

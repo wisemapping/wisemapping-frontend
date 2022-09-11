@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, CurvedLine, Point,
-} from '../../src';
+import { Workspace, CurvedLine, Point } from '../../src';
 
 const workspace = new Workspace({ fillColor: 'green' });
 workspace.setSize('400px', '400px');

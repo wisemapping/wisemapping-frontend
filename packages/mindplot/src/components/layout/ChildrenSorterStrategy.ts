@@ -24,15 +24,15 @@ abstract class ChildrenSorterStrategy {
 
   abstract computeOffsets(treeSet: RootedTreeSet, node: Node);
 
-  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number);
+  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void;
 
-  abstract detach(treeSet: RootedTreeSet, node: Node);
+  abstract detach(treeSet: RootedTreeSet, node: Node): void;
 
   abstract predict(treeSet: RootedTreeSet, parent, node: Node, position: PositionType);
 
   abstract verify(treeSet: RootedTreeSet, node: Node);
 
-  abstract getChildDirection(treeSet: RootedTreeSet, node: Node);
+  abstract getChildDirection(treeSet: RootedTreeSet, node: Node): 1 | -1;
 
   abstract toString(): string;
 }

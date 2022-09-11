@@ -17,17 +17,20 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-import { $msg } from '../Messages';
-import BootstrapDialog from './bootstrap/BootstrapDialog';
+import { $msg } from '@wisemapping/mindplot';
+import BootstrapDialog from './BootstrapDialog';
+
+interface LinkEditorModel {
+  getValue(): string;
+  setValue(value: string): void;
+}
 
 class LinkEditor extends BootstrapDialog {
-  /**
-     * @constructs
-     * @param model
-     * @throws will throw an error if model is null or undefined
-     * @extends BootstrapDialog
-     */
-  constructor(model) {
+  private form: JQuery<HTMLElement>;
+
+  private formSubmitted: boolean;
+
+  constructor(model: LinkEditorModel) {
     $assert(model, 'model can not be null');
     super($msg('LINK'), {
       cancelButton: true,
@@ -37,13 +40,12 @@ class LinkEditor extends BootstrapDialog {
       errorMessage: true,
       onEventData: { model },
     });
-    this._model = model;
     this.css({ margin: '150px auto' });
     const panel = this._buildPanel(model);
     this.setContent(panel);
   }
 
-  _buildPanel(model) {
+  protected _buildPanel(model: LinkEditorModel) {
     const result = $('<div></div>').css('padding-top', '5px');
     this.form = $('<form></form>').attr({
       action: 'none',
@@ -80,8 +82,9 @@ class LinkEditor extends BootstrapDialog {
     });
 
     openButton.html($msg('OPEN_LINK')).css('margin-left', '0px');
-    openButton.click(() => {
-      window.open(input.val(), '_blank', 'status=1,width=700,height=450,resize=1');
+    openButton.on('click', () => {
+      const value = input.val() as string;
+      window.open(value, '_blank', 'status=1,width=700,height=450,resize=1');
     });
     const spanControl = $('<span class="input-group-btn"></span>').append(openButton);
 
@@ -90,13 +93,13 @@ class LinkEditor extends BootstrapDialog {
     this.form.append(section);
 
     const me = this;
-    this.form.unbind('submit').submit((event) => {
+    this.form.off('submit').on('submit', (event) => {
       event.preventDefault();
-      let inputValue = input.val();
+      let inputValue = input.val() as string;
       inputValue = this.hasProtocol(inputValue) ? inputValue : `https://${inputValue}`;
       if (me.checkURL(inputValue)) {
         me.cleanError();
-        if (inputValue != null && $.trim(inputValue) !== '') {
+        if (inputValue !== null && inputValue.trim() !== '') {
           model.setValue(inputValue);
         }
         me.close();
@@ -115,18 +118,19 @@ class LinkEditor extends BootstrapDialog {
    * checks whether the input is a valid url
    * @return {Boolean} true if the url is valid
    */
-  checkURL(url) {
-    const regex = /^(http|https):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
-    return (regex.test(url));
+  private checkURL(url: string): boolean {
+    const regex =
+      /^(http|https):\/\/[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i;
+    return regex.test(url);
   }
 
   /**
    * checks whether the input is a valid url
    * @return {Boolean} true if the url is valid
    */
-  hasProtocol(url) {
+  private hasProtocol(url: string): boolean {
     const regex = /^(http|https):\/\//i;
-    return (regex.test(url));
+    return regex.test(url);
   }
 
   /**
@@ -134,7 +138,7 @@ class LinkEditor extends BootstrapDialog {
    * triggered when the user clicks the accept button - submits the url input
    * @param event
    */
-  onAcceptClick(event) {
+  onAcceptClick(event: Event): void {
     this.formSubmitted = false;
     $('#linkFormId').trigger('submit');
     if (!this.formSubmitted) {
@@ -146,7 +150,7 @@ class LinkEditor extends BootstrapDialog {
    * overrides parent method
    * sets the url input on focus
    */
-  onDialogShown() {
+  onDialogShown(): void {
     $(this).find('#inputUrl').focus();
   }
 

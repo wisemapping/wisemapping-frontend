@@ -46,14 +46,14 @@ class DeleteCommand extends Command {
   }
 
   /**
-     * Overrides abstract parent method
-     */
+   * Overrides abstract parent method
+   */
   execute(commandContext: CommandContext) {
     // If a parent has been selected for deletion, the children must be excluded from the delete ...
     const topics = this._filterChildren(this._topicIds, commandContext);
 
     if (topics.length > 0) {
-      topics.forEach(((topic) => {
+      topics.forEach((topic) => {
         // In case that it's editing text node, force close without update ...
         topic.closeEditors();
 
@@ -81,22 +81,22 @@ class DeleteCommand extends Command {
 
         // Finally, delete the topic from the workspace...
         commandContext.deleteTopic(topic);
-      }));
+      });
     }
 
     const rels = commandContext.findRelationships(this._relIds);
     if (rels.length > 0) {
-      rels.forEach(((rel) => {
+      rels.forEach((rel) => {
         this._deletedRelModel.push(rel.getModel().clone());
         commandContext.deleteRelationship(rel);
-      }));
+      });
     }
   }
 
   /**
-     * Overrides abstract parent method
-     * @see {@link mindplot.Command.undoExecute}
-     */
+   * Overrides abstract parent method
+   * @see {@link mindplot.Command.undoExecute}
+   */
   undoExecute(commandContext: CommandContext) {
     // Add all the topics ...
     this._deletedTopicModels.forEach((model) => {
@@ -104,7 +104,7 @@ class DeleteCommand extends Command {
     });
 
     // Do they need to be connected ?
-    this._deletedTopicModels.forEach(((topicModel, index) => {
+    this._deletedTopicModels.forEach((topicModel, index) => {
       const topics = commandContext.findTopics([topicModel.getId()]);
 
       const parentId = this._parentTopicIds[index];
@@ -112,7 +112,7 @@ class DeleteCommand extends Command {
         const parentTopics = commandContext.findTopics([parentId]);
         commandContext.connect(topics[0], parentTopics[0]);
       }
-    }));
+    });
 
     // Add rebuild relationships ...
     this._deletedRelModel.forEach((model) => {
@@ -165,11 +165,10 @@ class DeleteCommand extends Command {
     result = result.concat(topic.getRelationships());
 
     const children = topic.getChildren();
-    const rels: (Relationship[])[] = children
-      .map(((t: Topic) => this._collectInDepthRelationships(t)));
+    const rels: Relationship[][] = children.map((t: Topic) => this._collectInDepthRelationships(t));
 
     // flatten and concact
-    result = result.concat(([].concat(...rels)));
+    result = result.concat([].concat(...rels));
 
     if (result.length > 0) {
       // Filter for unique ...

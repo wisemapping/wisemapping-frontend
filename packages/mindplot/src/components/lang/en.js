@@ -80,6 +80,12 @@ const EN = {
   BACK_TO_MAP_LIST: 'Back to Maps List',
   KEYBOARD_SHOTCUTS: 'Keyboard Shorcuts',
   PASTE_URL_HERE: 'Paste your url address here:',
+  CTRL: 'Ctrl',
+  SPACE_BAR: 'Space Bar',
+  K_INSERT: 'Insert',
+  MOUSE_CLICK: 'Mouse Click',
+  K_DELETE: 'Delete',
+  BACKSPACE: 'Backspace',
 };
 
 export default EN;

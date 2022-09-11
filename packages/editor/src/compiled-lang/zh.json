@@ -5,6 +5,18 @@
       "value": "分享"
     }
   ],
+  "editor.edit-description-mobile": [
+    {
+      "type": 0,
+      "value": "移动设备支持有限的思维导图编辑功能。 使用桌面浏览器获得完整的编辑器功能。"
+    }
+  ],
+  "editor.edit-mobile": [
+    {
+      "type": 0,
+      "value": "移动设备注意事项."
+    }
+  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -15,6 +27,18 @@
     {
       "type": 0,
       "value": "注册后可以免费创建、分享和发布无限数量的思维导图。"
+    }
+  ],
+  "editor.try-welcome-description-mobile": [
+    {
+      "type": 0,
+      "value": "注册以开始免费创建、共享和发布无限数量的思维导图。 移动设备支持有限的思维导图编辑功能。 使用桌面浏览器获得完整的编辑器功能。"
+    }
+  ],
+  "editor.try-welcome-mobile": [
+    {
+      "type": 0,
+      "value": "这个版本空间展示了一些思维导图功能！"
     }
   ],
   "login.signup": [

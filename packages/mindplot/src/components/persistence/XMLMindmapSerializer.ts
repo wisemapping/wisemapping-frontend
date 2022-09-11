@@ -19,7 +19,7 @@
 import Mindmap from '../model/Mindmap';
 
 interface XMLMindmapSerializer {
-    toXML(mindmap: Mindmap): Document;
-    loadFromDom(dom: Document, mapId: string): Mindmap;
+  toXML(mindmap: Mindmap): Document;
+  loadFromDom(dom: Document, mapId: string): Mindmap;
 }
 export default XMLMindmapSerializer;

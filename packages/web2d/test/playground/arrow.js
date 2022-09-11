@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, Arrow, Point,
-} from '../../src';
+import { Workspace, Arrow, Point } from '../../src';
 
 const workspace = new Workspace({ fillColor: 'green' });
 workspace.setSize('200px', '200px');

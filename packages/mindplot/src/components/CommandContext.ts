@@ -47,9 +47,9 @@ class CommandContext {
 
     if (result.length !== topicsIds.length) {
       const ids = designerTopics.map((topic) => topic.getId());
-      throw new Error(`Could not find topic. Result:${result
-      } Filter Criteria:${topicsIds
-      } Current Topics: [${ids}])`);
+      throw new Error(
+        `Could not find topic. Result:${result} Filter Criteria:${topicsIds} Current Topics: [${ids}])`,
+      );
     }
     return result;
   }

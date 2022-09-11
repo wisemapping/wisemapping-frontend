@@ -18,14 +18,13 @@
 import BootstrapDialog from '../bootstrap/BootstrapDialog';
 import { $msg } from '@wisemapping/mindplot';
 
-
 class KeyboardShortcutDialog extends BootstrapDialog {
-    constructor() {
-        super($msg('SHORTCUTS'), {
-            closeButton: true,
-            acceptButton: false,
-        });
-        this.setContent(`<div id="keyboardTable">
+  constructor() {
+    super($msg('SHORTCUTS'), {
+      closeButton: true,
+      acceptButton: false,
+    });
+    this.setContent(`<div id="keyboardTable">
     <table>
         <colgroup>
             <col width="40%"/>
@@ -42,8 +41,8 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         <tbody>
         <tr>
             <td>${$msg('SAVE_CHANGES')}</td>
-            <td>Ctrl + s</td>
-            <td>⌘ + s</td>
+            <td>${$msg('CTRL')} + S</td>
+            <td>⌘ + S</td>
         </tr>
         <tr>
             <td>${$msg('CREATE_SIBLING_TOPIC')}</td>
@@ -52,12 +51,12 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         </tr>
         <tr>
             <td>${$msg('CREATE_CHILD_TOPIC')}</td>
-            <td>Insert / Tab</td>
+            <td>${$msg('K_INSERT')} / Tab</td>
             <td>⌘ + Enter / Tab</td>
         </tr>
         <tr>
             <td>${$msg('DELETE_TOPIC')}</td>
-            <td>Delete</td>
+            <td>${$msg('K_DELETE')}</td>
             <td>Delete</td>
         </tr>
         <tr>
@@ -67,19 +66,19 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         </tr>
         <tr>
             <td>${$msg('MULTIPLE_LINES')}</td>
-            <td>Ctrl + Enter</td>
+            <td>${$msg('CTRL')} + Enter</td>
             <td>⌘ + Enter</td>
         </tr>
         <tr>
             <td>${$msg('COPY_AND_PASTE_TOPICS')}</td>
-            <td>Ctrl + c/Ctrl + v</td>
-            <td>⌘ + c/⌘ + v</td>
+            <td>${$msg('CTRL')} + C / ${$msg('CTRL')} + V</td>
+            <td>⌘ + C / ⌘ + V</td>
         </tr>
 
         <tr>
             <td>${$msg('COLLAPSE_CHILDREN')}</td>
-            <td>Space bar</td>
-            <td>Space bar</td>
+            <td>${$msg('SPACE_BAR')}</td>
+            <td>${$msg('SPACE_BAR')}</td>
         </tr>
         <tr>
             <td>${$msg('TOPIC_NAVIGATION')}</td>
@@ -88,23 +87,23 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         </tr>
         <tr>
             <td>${$msg('SELECT_MULTIPLE_NODES')}</td>
-            <td>Ctrl + Mouse Click</td>
-            <td>Ctrl + Mouse Click</td>
+            <td>${$msg('CTRL')} + ${$msg('MOUSE_CLICK')}</td>
+            <td>${$msg('CTRL')} + ${$msg('MOUSE_CLICK')}</td>
         </tr>
         <tr>
             <td>${$msg('UNDO_EDITION')}</td>
-            <td>Ctrl + z</td>
-            <td>⌘ + z</td>
+            <td>${$msg('CTRL')} + Z</td>
+            <td>⌘ + Z</td>
         </tr>
         <tr>
             <td>${$msg('REDO_EDITION')}</td>
-            <td>Ctrl + Shift + z</td>
-            <td>⌘ + Shift + z</td>
+            <td>${$msg('CTRL')} + Shift + Z</td>
+            <td>⌘ + Shift + Z</td>
         </tr>
         <tr>
             <td>${$msg('SELECT_ALL_TOPIC')}</td>
-            <td>Ctrl + a</td>
-            <td>⌘ + a</td>
+            <td>${$msg('CTRL')} + A</td>
+            <td>⌘ + A</td>
         </tr>
         <tr>
             <td>${$msg('CANCEL_TEXT_CHANGES')}</td>
@@ -113,34 +112,34 @@ class KeyboardShortcutDialog extends BootstrapDialog {
         </tr>
         <tr>
             <td>${$msg('DESELECT_ALL_TOPIC')}</td>
-            <td>Ctrl + Shift + a</td>
-            <td>⌘ + Shift + a</td>
+            <td>${$msg('CTRL')} + Shift + A</td>
+            <td>⌘ + Shift + A</td>
         </tr>
         <tr>
             <td>${$msg('CHANGE_TEXT_ITALIC')}</td>
-            <td>Ctrl + i</td>
-            <td>⌘ + i</td>
+            <td>${$msg('CTRL')} + I</td>
+            <td>⌘ + I</td>
         </tr>
         <tr>
             <td>${$msg('CHANGE_TEXT_BOLD')}</td>
-            <td>Ctrl + b</td>
-            <td>⌘ + b</td>
+            <td>${$msg('CTRL')} + B</td>
+            <td>⌘ + B</td>
         </tr>
         <tr>
             <td>${$msg('TOPIC_NOTE')}</td>
-            <td>Ctrl + k</td>
-            <td>⌘ + k</td>
+            <td>${$msg('CTRL')} + K</td>
+            <td>⌘ + K</td>
         </tr>
         <tr>
             <td>${$msg('TOPIC_LINK')}</td>
-            <td>Ctrl + l</td>
-            <td>⌘ + l</td>
+            <td>${$msg('CTRL')} + L</td>
+            <td>⌘ + L</td>
         </tr>
         </tbody>
     </table>
 </div>`);
-        this.show();
-    }
+    this.show();
+  }
 }
 
 export default KeyboardShortcutDialog;

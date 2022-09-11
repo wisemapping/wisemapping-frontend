@@ -17,11 +17,13 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import $ from 'jquery';
-import { $msg } from '../Messages';
+import { LinkIcon } from '@wisemapping/mindplot';
+import { LinkModel } from '@wisemapping/mindplot';
+import { $msg } from '@wisemapping/mindplot';
 import FloatingTip from './FloatingTip';
 
 class LinkIconTooltip extends FloatingTip {
-  constructor(linkIcon) {
+  constructor(linkIcon: LinkIcon) {
     $assert(linkIcon, 'linkIcon can not be null');
     const nativeElement = $(linkIcon.getImage().peer._native);
     super(nativeElement, {
@@ -33,52 +35,29 @@ class LinkIconTooltip extends FloatingTip {
       placement: 'bottom',
       title: $msg('LINK'),
       trigger: 'manual',
-      template: '<div id="linkPopover" class="popover" onmouseover="jQuery(this).mouseleave(function() {jQuery(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+      template:
+        '<div id="linkPopover" class="popover" onmouseover="jQuery(this).mouseleave(function() {jQuery(this).fadeOut(200); });" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
       destroyOnExit: true,
     });
   }
 
-  static _buildContent(linkIcon) {
-    const url = linkIcon.getModel().getUrl();
+  private static _buildContent(linkIcon: LinkIcon): JQuery<HTMLElement> {
+    const model = linkIcon.getModel() as LinkModel;
+    const url = model.getUrl();
     const linkText = `${url}`;
-    const linkPreview = `https://free.pagepeeker.com/v2/thumbs.php?size=m&url=${url}`;
 
     const result = $('<div></div>').css({
       padding: '5px',
       width: '100%',
     });
-
-    const text = $('<div id="linkPopoverUrl"></div>').text(linkText)
-      .css({
-        'white-space': 'pre-wrap',
-        'word-wrap': 'break-word',
-      });
-    result.append(text);
-
-    const imgContainer = $('<div></div>')
-      .css({
-        width: '100%',
-        textAlign: 'right',
-        'padding-bottom': '5px',
-        'padding-top': '5px',
-      });
-
-    const img = $('<img id="linkPopoverPreview">')
-      .prop('src', linkPreview)
-      .prop('img', url)
-      .prop('alt', url);
-
-    img.css('padding', '5px');
-
     const link = $('<a id="linkPopoverAnchor"></a>').attr({
       href: url,
       alt: 'Open in new window ...',
       target: '_blank',
     });
 
-    link.append(img);
-    imgContainer.append(link);
-    result.append(imgContainer);
+    link.html(linkText);
+    result.append(link);
     return result;
   }
 }

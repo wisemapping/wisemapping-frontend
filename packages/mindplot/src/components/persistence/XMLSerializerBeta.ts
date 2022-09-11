@@ -14,9 +14,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import {
-  $defined, $assert, createDocument,
-} from '@wisemapping/core-js';
+import { $defined, $assert, createDocument } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
@@ -99,11 +97,11 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     font += `${fontStyle || ''};`;
 
     if (
-      $defined(fontFamily)
-      || $defined(fontSize)
-      || $defined(fontColor)
-      || $defined(fontWeight)
-      || $defined(fontStyle)
+      $defined(fontFamily) ||
+      $defined(fontSize) ||
+      $defined(fontColor) ||
+      $defined(fontWeight) ||
+      $defined(fontStyle)
     ) {
       parentTopic.setAttribute('fontStyle', font);
     }
@@ -180,7 +178,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     // Is a wisemap?.
     $assert(
       documentElement.tagName === XMLSerializerBeta.MAP_ROOT_NODE,
-      `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${dom.innerHTML
+      `This seem not to be a map document. Root Tag: '${documentElement.tagName}',HTML:${
+        dom.innerHTML
       }, XML:,${new XMLSerializer().serializeToString(dom)}`,
     );
 
@@ -202,9 +201,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
   }
 
   _deserializeNode(domElem, mindmap) {
-    const type = domElem.getAttribute('central') != null
-      ? 'CentralTopic'
-      : 'MainTopic';
+    const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
     const topic = mindmap.createNode(type);
 
     // Load attributes...
@@ -275,10 +272,10 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       const child = children[i];
       if (child.nodeType === 1) {
         $assert(
-          child.tagName === 'topic'
-          || child.tagName === 'icon'
-          || child.tagName === 'link'
-          || child.tagName === 'note',
+          child.tagName === 'topic' ||
+            child.tagName === 'icon' ||
+            child.tagName === 'link' ||
+            child.tagName === 'note',
           `Illegal node type:${child.tagName}`,
         );
         if (child.tagName === 'topic') {

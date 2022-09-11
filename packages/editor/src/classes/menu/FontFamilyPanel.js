@@ -22,7 +22,20 @@ class FontFamilyPanel extends ListToolbarPanel {
   // eslint-disable-next-line class-methods-use-this
   buildPanel() {
     const content = $("<div class='toolbarPanel' id='fontFamilyPanel'></div>");
-    const list = ['Arial', 'Baskerville', 'Tahoma', 'Limunari', 'Brush Script MT', 'Verdana', 'Times', 'Cursive', 'Fantasy', 'Perpetua', 'Brush Script', 'Copperplate']
+    const list = [
+      'Arial',
+      'Baskerville',
+      'Tahoma',
+      'Limunari',
+      'Brush Script MT',
+      'Verdana',
+      'Times',
+      'Cursive',
+      'Fantasy',
+      'Perpetua',
+      'Brush Script',
+      'Copperplate',
+    ]
       .sort()
       .map((f) => `<div model="${f}" class="toolbarPanelLink" style="font-family:${f};">${f}</div>`)
       .join('\n');

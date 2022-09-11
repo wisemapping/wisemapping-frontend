@@ -7,9 +7,12 @@ import { parseXMLFile, setupBlob, exporterAssert } from './Helper';
 setupBlob();
 
 describe('SVG export test execution', () => {
-  test.each(fs.readdirSync(path.resolve(__dirname, './input/'))
-    .filter((f) => f.endsWith('.wxml'))
-    .map((filename: string) => filename.split('.')[0]))('Exporting %p suite', async (testName: string) => {
+  test.each(
+    fs
+      .readdirSync(path.resolve(__dirname, './input/'))
+      .filter((f) => f.endsWith('.wxml'))
+      .map((filename: string) => filename.split('.')[0]),
+  )('Exporting %p suite', async (testName: string) => {
     // Load SVG ...
     const svgPath = path.resolve(__dirname, `./input/${testName}.svg`);
     expect(fs.existsSync(svgPath)).toEqual(true);

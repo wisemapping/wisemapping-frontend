@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import {
-  Workspace, Rect,
-} from '../../src';
+import { Workspace, Rect } from '../../src';
 
 global.$ = $;
 
@@ -96,7 +94,12 @@ const strokeOpacityTest = () => {
   workspace.append(rect);
 
   const rectAttributes = {
-    width: 60, height: 60, fillColor: 'yellow', strokeColor: 'black', strokeStyle: 'solid', strokeWidth: 10,
+    width: 60,
+    height: 60,
+    fillColor: 'yellow',
+    strokeColor: 'black',
+    strokeStyle: 'solid',
+    strokeWidth: 10,
   };
   rect = new Rect(0, rectAttributes);
   rect.setPosition(20, 20);
@@ -141,7 +144,12 @@ const fillOpacityTest = () => {
   workspace.append(rect);
 
   const rectAttributes = {
-    width: 60, height: 60, fillColor: 'yellow', strokeColor: 'black', strokeStyle: 'solid', strokeWidth: 10,
+    width: 60,
+    height: 60,
+    fillColor: 'yellow',
+    strokeColor: 'black',
+    strokeStyle: 'solid',
+    strokeWidth: 10,
   };
   rect = new Rect(0, rectAttributes);
   rect.setPosition(20, 20);
@@ -186,7 +194,12 @@ const opacityTest = () => {
   workspace.append(rect);
 
   const rectAttributes = {
-    width: 60, height: 60, fillColor: 'yellow', strokeColor: 'black', strokeStyle: 'solid', strokeWidth: 10,
+    width: 60,
+    height: 60,
+    fillColor: 'yellow',
+    strokeColor: 'black',
+    strokeStyle: 'solid',
+    strokeWidth: 10,
   };
   rect = new Rect(0, rectAttributes);
   rect.setPosition(20, 20);
@@ -219,7 +232,12 @@ const visibilityTest = () => {
   workspace.setCoordOrigin(0, 0);
 
   const rectAttributes = {
-    width: 60, height: 60, fillColor: 'green', strokeColor: 'black', strokeStyle: 'solid', strokeWidth: 10,
+    width: 60,
+    height: 60,
+    fillColor: 'green',
+    strokeColor: 'black',
+    strokeStyle: 'solid',
+    strokeWidth: 10,
   };
   const rect = new Rect(0, rectAttributes);
   rect.setPosition(120, 20);

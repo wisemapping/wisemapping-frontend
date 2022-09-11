@@ -20,11 +20,12 @@ import $ from 'jquery';
 import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
+import WidgetManager from './WidgetManager';
 
 let designer: Designer;
 
 export function buildDesigner(options: DesignerOptions): Designer {
-  const divContainer = $(`#${options.container}`);
+  const divContainer = options.divContainer ? $(options.divContainer) : $(`#${options.container}`);
   $assert(divContainer, 'container could not be null');
 
   // Register load events ...
@@ -34,7 +35,8 @@ export function buildDesigner(options: DesignerOptions): Designer {
   const persistence = options.persistenceManager;
   $assert(persistence, 'persistence must be defined');
   PersistenceManager.init(persistence);
-
+  const widgetManager = options.widgetManager ? options.widgetManager : new WidgetManager();
+  WidgetManager.init(widgetManager);
   return designer;
 }
 

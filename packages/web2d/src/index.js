@@ -28,16 +28,4 @@ import Text from './components/Text';
 import Point from './components/Point';
 import Image from './components/Image';
 
-export {
-  Arrow,
-  CurvedLine,
-  Elipse,
-  Group,
-  Image,
-  Line,
-  Point,
-  PolyLine,
-  Rect,
-  Text,
-  Workspace,
-};
+export { Arrow, CurvedLine, Elipse, Group, Image, Line, Point, PolyLine, Rect, Text, Workspace };

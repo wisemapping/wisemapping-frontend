@@ -14,8 +14,10 @@
     ]
   },
   "include": [
-    "src/**/*"
-, "../editor/src/classes/menu/AccountSettingsPanel.js", "../editor/src/classes/menu/IMenu.ts", "../editor/src/classes/bootstrap"  ],
+    "src/**/*",
+	"../editor/src/classes/menu/AccountSettingsPanel.js", 
+	"../editor/src/classes/menu/IMenu.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

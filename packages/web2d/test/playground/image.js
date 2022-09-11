@@ -2,9 +2,7 @@ import $ from 'jquery';
 import svgResource from './resources/logo-icon.svg';
 import pngResource from './resources/logo-icon.png';
 
-import {
-  Workspace, Image,
-} from '../../src';
+import { Workspace, Image } from '../../src';
 
 // URL Based image test ...
 const workspace = new Workspace({ fillColor: 'light-gray' });
