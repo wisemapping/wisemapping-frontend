@@ -41,7 +41,7 @@
         "xml-formatter": "^2.6.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.14.6",
+        "@babel/core": "^7.18.13",
         "@babel/preset-env": "^7.14.7",
         "@babel/preset-typescript": "^7.16.5",
         "@babel/register": "^7.16.0",
