@@ -8,6 +8,7 @@ services:
         environment:
             - CYPRESS_imageSnaphots=true
             - CYPRESS_updateSnapshots=true
+            - -DPNG_ARM_NEON_OPT=0
         volumes:
             - .:/e2e
             - node-modules:/e2e/node_modules
