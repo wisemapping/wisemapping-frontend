@@ -212,7 +212,7 @@ export default class RestClient implements Client {
           { headers: { 'Content-Type': 'application/xml' } },
         )
         .then((response) => {
-          const mapId = response.headers.resourceid;
+          const mapId = Number.parseInt(response.headers.resourceid, 10);
           success(mapId);
         })
         .catch((error) => {
@@ -367,7 +367,7 @@ export default class RestClient implements Client {
           { headers: { 'Content-Type': 'application/json' } },
         )
         .then((response) => {
-          const mapId = response.headers.resourceid;
+          const mapId = Number.parseInt(response.headers.resourceid, 10);
           success(mapId);
         })
         .catch((error) => {
@@ -480,7 +480,7 @@ export default class RestClient implements Client {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
-          const mapId = response.headers.resourceid;
+          const mapId = Number.parseInt(response.headers.resourceid, 10);
           success(mapId);
         })
         .catch((error) => {
@@ -548,7 +548,8 @@ export default class RestClient implements Client {
           },
         )
         .then((response) => {
-          success(response.headers.resourceid);
+          const mapId = Number.parseInt(response.headers.resourceid, 10);
+          success(mapId);
         })
         .catch((error) => {
           const errorInfo = this.parseResponseOnError(error.response);
