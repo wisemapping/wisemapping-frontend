@@ -47,7 +47,7 @@
     "@types/styled-components": "^5.1.26",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-intl": "^5.24.3",
+    "react-intl": "^4.7.6",
     "styled-components": "^5.3.5"
   }
 }
