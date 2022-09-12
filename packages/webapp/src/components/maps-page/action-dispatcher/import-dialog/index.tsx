@@ -1,4 +1,4 @@
-import { Alert } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import { Importer, TextImporterFactory } from '@wisemapping/editor';
