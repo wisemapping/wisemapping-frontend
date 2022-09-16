@@ -195,6 +195,9 @@ export default class RestClient implements Client {
         })
         .catch((error) => {
           const errorInfo = this.parseResponseOnError(error.response);
+
+          // Enrich with language ...
+          errorInfo.msg = `${errorInfo.msg} - Language: ${locale}`;
           reject(errorInfo);
         });
     };
