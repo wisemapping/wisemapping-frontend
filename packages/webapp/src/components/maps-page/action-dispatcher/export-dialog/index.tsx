@@ -22,7 +22,7 @@ import { getMindmapFromPersistence } from '../../../editor-page/PersistenceManag
 
 import Checkbox from '@mui/material/Checkbox';
 
-type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'xls' | 'md';
+type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
