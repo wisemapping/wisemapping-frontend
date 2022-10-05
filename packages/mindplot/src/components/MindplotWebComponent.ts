@@ -7,6 +7,9 @@ import Mindmap from './model/Mindmap';
 import PersistenceManager from './PersistenceManager';
 import WidgetManager from './WidgetManager';
 import mindplotStyles from './styles/mindplot-styles';
+import { $notify } from './widget/ToolbarNotifier';
+import { $msg } from './Messages';
+import DesignerKeyboard from './DesignerKeyboard';
 
 const defaultPersistenceManager = () => new LocalStorageManager('map.xml', false, false);
 
@@ -14,6 +17,7 @@ export type MindplotWebComponentInterface = {
   id: string;
   mode: string;
   ref: any;
+  locale?: string;
 };
 /**
  * WebComponent implementation for minplot designer.
@@ -26,6 +30,8 @@ class MindplotWebComponent extends HTMLElement {
   private _mindmap: Mindmap;
 
   private _designer: Designer;
+
+  private saveRequired: boolean;
 
   constructor() {
     super();
@@ -53,6 +59,7 @@ class MindplotWebComponent extends HTMLElement {
    */
   buildDesigner(persistence?: PersistenceManager, widgetManager?: WidgetManager) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
+    const locale = this.getAttribute('locale');
     const persistenceManager = persistence || defaultPersistenceManager();
     const mode = editorRenderMode || 'viewonly';
     const options = DesignerOptionsBuilder.buildOptions({
@@ -61,10 +68,32 @@ class MindplotWebComponent extends HTMLElement {
       widgetManager,
       divContainer: this._shadowRoot.getElementById('mindplot'),
       container: 'mindplot',
-      zoom: 0.85,
-      locale: 'en',
+      zoom: 1,
+      locale: locale || 'en',
     });
     this._designer = buildDesigner(options);
+    this._designer.addEvent('modelUpdate', () => {
+      this.setSaveRequired(true);
+    });
+
+    this.registerShortcuts();
+  }
+
+  private registerShortcuts() {
+    const designerKeyboard = DesignerKeyboard.getInstance();
+    if (designerKeyboard) {
+      designerKeyboard.addShortcut(['ctrl+s', 'meta+s'], () => {
+        this.save(true);
+      });
+    }
+  }
+
+  setSaveRequired(arg0: boolean) {
+    this.saveRequired = arg0;
+  }
+
+  getSaveRequired() {
+    return this.saveRequired;
   }
 
   /**
@@ -75,6 +104,64 @@ class MindplotWebComponent extends HTMLElement {
     const instance = PersistenceManager.getInstance();
     this._mindmap = instance.load(id);
     this._designer.loadMap(this._mindmap);
+  }
+
+  /**
+   * save the map
+   */
+  save(saveHistory: boolean) {
+    if (!saveHistory && !this.getSaveRequired()) return;
+    console.log('Saving...');
+    // Load map content ...
+    const mindmap = this._designer.getMindmap();
+    const mindmapProp = this._designer.getMindmapProperties();
+
+    // Display save message ..
+    if (saveHistory) {
+      $notify($msg('SAVING'));
+    }
+
+    // Call persistence manager for saving ...
+    const persistenceManager = PersistenceManager.getInstance();
+    persistenceManager.save(mindmap, mindmapProp, saveHistory, {
+      onSuccess() {
+        if (saveHistory) {
+          $notify($msg('SAVE_COMPLETE'));
+        }
+      },
+      onError(error) {
+        if (saveHistory) {
+          $notify(error.message);
+        }
+      },
+    });
+    this.setSaveRequired(false);
+  }
+
+  discardChanges() {
+    // Avoid autosave before leaving the page ....
+    // this.setRequireChange(false);
+
+    // Finally call discard function ...
+    const persistenceManager = PersistenceManager.getInstance();
+    const mindmap = this._designer.getMindmap();
+    persistenceManager.discardChanges(mindmap.getId());
+
+    // Unlock map ...
+    this.unlockMap();
+
+    // Reload the page ...
+    window.location.reload();
+  }
+
+  unlockMap() {
+    const mindmap = this._designer.getMindmap();
+    const persistenceManager = PersistenceManager.getInstance();
+
+    // If the map could not be loaded, partial map load could happen.
+    if (mindmap) {
+      persistenceManager.unlockMap(mindmap.getId());
+    }
   }
 }
 

@@ -11,6 +11,8 @@ import ReactGA from 'react-ga4';
 import { fetchAccount, fetchMapById } from '../../redux/clientSlice';
 import EditorOptionsBuilder from './EditorOptionsBuilder';
 import { buildPersistenceManagerForEditor } from './PersistenceManagerUtils';
+import { useTheme } from '@mui/material/styles';
+import AccountMenu from '../maps-page/account-menu';
 
 export type EditorPropsType = {
   isTryMode: boolean;
@@ -20,6 +22,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
   const hotkey = useSelector(hotkeysEnabled);
   const userLocale = AppI18n.getUserLocale();
+  const theme = useTheme();
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
@@ -75,6 +78,15 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
         options={options}
         persistenceManager={persistence}
         mapId={mapId}
+        theme={theme}
+        accountConfiguration={
+          <IntlProvider
+            locale={userLocale.code}
+            messages={userLocale.message as Record<string, string>}
+          >
+            <AccountMenu></AccountMenu>
+          </IntlProvider>
+        }
       />
       {activeDialog && (
         <ActionDispatcher

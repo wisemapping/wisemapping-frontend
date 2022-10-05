@@ -8,6 +8,7 @@
     "cy:run": "cypress run",
     "test:integration": "start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
     "test": "yarn test:integration",
+    "test:unit": "jest ./test/unit/* --detectOpenHandles",
     "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/es.json",
     "i18n:compile": "for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done"
   },
@@ -19,8 +20,12 @@
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-react": "^7.18.6",
     "@formatjs/cli": "^4.8.1",
+    "@babel/preset-typescript": "^7.16.5",
+    "@testing-library/react": "^12.0.0",
+    "@types/jest": "^29.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
+    "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^4.0.0",
     "compression-webpack-plugin": "^9.2.0",
     "copy-webpack-plugin": "^10.2.1",
@@ -33,6 +38,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^2.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "ts-jest": "^29.0.0",
     "ts-loader": "^8.0.11",
     "ts-node": "^9.0.0",
     "typescript": "^4.1.2",
@@ -41,13 +49,31 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@wisemapping/mindplot": "^5.0.1"
+    "@wisemapping/mindplot": "^5.0.1",
+    "react-color": "^2.19.3"
   },
   "peerDependencies": {
     "@types/styled-components": "^5.1.26",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-intl": "^4.7.6",
-    "styled-components": "^5.3.5"
+    "react-intl": "^5.24.3",
+    "styled-components": "^5.3.5",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.9.3",
+    "@mui/material": "^5.9.3"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "verbose": true,
+    "preset": "ts-jest",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "tsx"
+    ],
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    }
   }
 }

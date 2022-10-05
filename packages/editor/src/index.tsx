@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Toolbar, { ToolbarActionType } from './components/toolbar';
-import Footer from './components/footer';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ToolbarActionType } from './components/toolbar';
+import Popover from '@mui/material/Popover';
+
 import { IntlProvider } from 'react-intl';
 import {
   $notify,
-  buildDesigner,
   PersistenceManager,
   DesignerOptionsBuilder,
   Designer,
@@ -20,13 +20,17 @@ import {
   Exporter,
   Importer,
   TextImporterFactory,
+  MindplotWebComponent,
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
-import Menu from './classes/menu/Menu';
-import BootstrapWidgetManager from './classes/bootstrap/BootstrapWidgetManager';
-
-require('../../../libraries/bootstrap/js/bootstrap.min');
+import { useMuiWidgetManager } from './components/menu/useMuiWidgetManager';
+import Toolbar, { horizontalPosition, Appbar, configurationBuilder } from './components/toolbar';
+import { theme as defaultEditorTheme } from './theme';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { Theme } from '@mui/material/styles';
+import { Notifier } from './components/footer/styled';
+import Footer from './components/footer';
 
 declare global {
   // used in mindplot
@@ -75,32 +79,89 @@ export type EditorProps = {
   persistenceManager: PersistenceManager;
   onAction: (action: ToolbarActionType) => void;
   onLoad?: (designer: Designer) => void;
+  theme?: Theme;
+  accountConfiguration?: React.ReactElement;
 };
 
-const Editor = ({ mapId, options, persistenceManager, onAction, onLoad }: EditorProps) => {
+const Editor = ({
+  mapId,
+  options,
+  persistenceManager,
+  onAction,
+  onLoad,
+  theme,
+  accountConfiguration,
+}: EditorProps) => {
   const [isMobile, setIsMobile] = useState(undefined);
-  const mindplotComponent: any = useRef();
+  const [mindplotComponent, setMindplotComponent]: [MindplotWebComponent | undefined, Function] =
+    useState();
+
+  const editMode =
+    options.mode === 'edition-owner' ||
+    options.mode === 'edition-editor' ||
+    options.mode === 'edition-viewer';
+  const editorTheme: Theme = theme ? theme : defaultEditorTheme;
+  const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
+  const toolbarConfiguration = useRef([]);
+  const mindplotRef = useCallback((node: MindplotWebComponent) => {
+    setMindplotComponent(node);
+  }, []);
+
+  const [popoverOpen, popoverTarget, widgetManager] = useMuiWidgetManager();
+
+  const onNodeBlurHandler = () => {
+    if (!mindplotComponent.getDesigner().getModel().selectedTopic())
+      setToolbarsRerenderSwitch(Date.now());
+  };
+
+  const onNodeFocusHandler = () => {
+    setToolbarsRerenderSwitch(Date.now());
+  };
 
   useEffect(() => {
+    if (mindplotComponent === undefined) return;
     // Change page title ...
     document.title = `${options.mapTitle} | WiseMapping `;
 
     // Load mindmap ...
 
     const designer = onLoadDesigner(mapId, options, persistenceManager);
+
+    designer.addEvent('onblur', onNodeBlurHandler);
+
+    designer.addEvent('onfocus', onNodeFocusHandler);
+
+    designer.addEvent('modelUpdate', onNodeFocusHandler);
+
+    designer.getWorkSpace().getScreenManager().addEvent('update', onNodeFocusHandler);
+
+    if (editMode) {
+      // Register unload save ...
+      window.addEventListener('beforeunload', () => {
+        mindplotComponent.save(false);
+        mindplotComponent.unlockMap();
+      });
+
+      // Autosave on a fixed period of time ...
+      setInterval(() => {
+        mindplotComponent.save(false);
+      }, 10000);
+    }
+
+    toolbarConfiguration.current = configurationBuilder.buildToolbarCongiruation(designer);
     // Has extended actions been customized ...
     if (onLoad) {
       onLoad(designer);
     }
 
-    mindplotComponent.current.loadMap(mapId);
+    mindplotComponent.loadMap(mapId);
 
     setIsMobile(checkMobile());
 
     if (options.locked) {
       $notify(options.lockedMsg, false);
     }
-  }, []);
+  }, [mindplotComponent !== undefined]);
 
   useEffect(() => {
     if (options.enableKeyboardEvents) {
@@ -126,50 +187,68 @@ const Editor = ({ mapId, options, persistenceManager, onAction, onLoad }: Editor
     options: EditorOptions,
     persistenceManager: PersistenceManager,
   ): Designer => {
-    mindplotComponent.current.buildDesigner(persistenceManager, new BootstrapWidgetManager());
-
     // Build designer ...
-    const result = mindplotComponent.current && mindplotComponent.current.getDesigner();
-
-    // Register toolbar event ...
-    if (
-      options.mode === 'edition-owner' ||
-      options.mode === 'edition-editor' ||
-      options.mode === 'edition-viewer' ||
-      options.mode === 'showcase'
-    ) {
-      const menu = new Menu(designer, 'toolbar');
-
-      //  If a node has focus, focus can be move to another node using the keys.
-      designer.cleanScreen = () => {
-        menu.clear();
-      };
-    }
-    return result;
+    mindplotComponent.buildDesigner(persistenceManager, widgetManager);
+    return mindplotComponent.getDesigner();
   };
 
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
-  const mindplotStyle = options.mode === 'viewonly' ? { top: 0 } : { top: 'inherit' };
+  const menubarConfiguration = configurationBuilder.buildEditorAppBarConfiguration(
+    mindplotComponent?.getDesigner(),
+    onAction,
+    () => {
+      mindplotComponent.save(true);
+    },
+    options.mode,
+    isMobile,
+  );
+  menubarConfiguration.push({
+    render: () => accountConfiguration,
+  });
   // if the Toolbar is not hidden before the variable 'isMobile' is defined, it appears intermittently when the page loads
   // if the Toolbar is not rendered, Menu.ts cant find buttons for create event listeners
   // so, with this hack the Toolbar is rendered but no visible until the variable 'isMobile' is defined
-  const toolbarContainerStyle = isMobile === undefined ? { display: 'none' } : { display: 'block' };
   return (
-    <IntlProvider locale={locale} messages={msg}>
-      <div style={toolbarContainerStyle}>
-        {options.mode !== 'viewonly' && !isMobile && (
-          <Toolbar editorMode={options.mode} onAction={onAction} />
+    <ThemeProvider theme={editorTheme}>
+      <IntlProvider locale={locale} messages={msg}>
+        <Appbar configurations={menubarConfiguration} />
+        <Popover
+          id="popover"
+          open={popoverOpen}
+          anchorEl={popoverTarget}
+          onClose={widgetManager.handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          {widgetManager.getEditorContent()}
+        </Popover>
+        {editMode && !isMobile && (
+          <Toolbar
+            configurations={toolbarConfiguration.current}
+            rerender={toolbarsRerenderSwitch}
+          ></Toolbar>
         )}
-      </div>
-      <mindplot-component
-        ref={mindplotComponent}
-        id="mindmap-comp"
-        mode={options.mode}
-      ></mindplot-component>
-      <div id="mindplot-tooltips" className="wise-editor"></div>
-      <Footer editorMode={options.mode} isMobile={isMobile} />
-    </IntlProvider>
+        <Toolbar
+          configurations={configurationBuilder.buildZoomToolbarConfiguration(
+            isMobile,
+            mindplotComponent?.getDesigner(),
+          )}
+          position={horizontalPosition}
+          rerender={toolbarsRerenderSwitch}
+        ></Toolbar>
+        <mindplot-component
+          ref={mindplotRef}
+          id="mindmap-comp"
+          mode={options.mode}
+          locale={options.locale}
+        ></mindplot-component>
+        <Notifier id="headerNotifier"></Notifier>
+        <Footer editorMode={options.mode} isMobile={isMobile}></Footer>
+      </IntlProvider>
+    </ThemeProvider>
   );
 };
 export default Editor;

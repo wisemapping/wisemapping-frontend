@@ -27,7 +27,7 @@ abstract class Icon {
   protected _group: IconGroup;
 
   constructor(url: string) {
-    $assert(url, 'topic can not be null');
+    $assert(url, 'image url can not be null');
     this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(Icon.SIZE, Icon.SIZE);

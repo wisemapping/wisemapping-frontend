@@ -28,4 +28,5 @@ export const Notifier = styled.div`
   margin-top: 5px;
   display: none;
   bottom: 10px;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 `;

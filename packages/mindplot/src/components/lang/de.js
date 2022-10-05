@@ -6,10 +6,14 @@ const DE = {
   TOPIC_DELETE: 'Thema löschen',
   TOPIC_ICON: 'Symbol hinzufügen',
   TOPIC_LINK: 'Verbindung hinzufügen',
-  TOPIC_RELATIONSHIP: 'Beziehung',
+  TOPIC_RELATIONSHIP: 'Beziehung hinzufügen',
   TOPIC_COLOR: 'Themenfarbe',
   TOPIC_BORDER_COLOR: 'Thema Randfarbe',
   TOPIC_NOTE: 'Notiz hinzufügen',
+  TOPIC_SHAPE_RECTANGLE: 'Zweigform in Rechteck ändern',
+  TOPIC_SHAPE_ROUNDED: 'Zweigform in Rechteck mit abgerundeten Ecken ändern',
+  TOPIC_SHAPE_ELLIPSE: 'Zweigform in Ellipse ändern',
+  TOPIC_SHAPE_LINE: 'Zweigform in Linie ändern',
   FONT_FAMILY: 'Schriftart',
   FONT_SIZE: 'Schriftgröße',
   FONT_BOLD: 'Fett',
@@ -86,6 +90,11 @@ const DE = {
   MOUSE_CLICK: 'Mausklick',
   K_DELETE: 'Entf',
   BACKSPACE: 'Backspace',
+  CENTER_POSITION: 'Passend zoomen',
+  MAP_INFO: 'Informationen',
+  FONT_FORMAT: 'Schriftformat',
+  FONT_INCREASE: 'Schriftgröße erhöhen',
+  FONT_DECREASE: 'Schriftgröße verringern',
 };
 
 export default DE;

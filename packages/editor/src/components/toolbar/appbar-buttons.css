@@ -1,0 +1,16 @@
+
+.material-menubar .MuiButtonBase-root:last-child {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.truncated {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+button[aria-pressed="true"] {
+    background-color: rgba(0, 0, 0, 0.04);
+}

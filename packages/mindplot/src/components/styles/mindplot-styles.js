@@ -19,11 +19,11 @@ const mindplotStyles = `
     color: rgb(51, 51, 51);
     text-align: center;
     padding: 1px;
-    border-radius: 6px;
     position: absolute;
     z-index: 999;
     background-color: rgb(255, 255, 255);
     animation: fadeIn 0.4s;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
   }
 
   .fade-in {
@@ -60,28 +60,27 @@ const mindplotStyles = `
   }
 
 .mindplot-svg-tooltip-title {
-    background-color: rgb(247, 247, 247);
-    border-bottom-color: rgb(235, 235, 235);
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    box-sizing: border-box;
-    color: rgb(51, 51, 51);
-    cursor: default;
-    display: block;
+    background-color: #fff;
+    font-size: small;
+    font-family: sans;
+    text-transform: uppercase;
     padding: 8px 14px;
     text-align: left;
-    font-family: Arial;
-    font-size: small;
+    font-family: sans-serif;
+    font-weight: bold;
+    min-width: 200px;
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
 .mindplot-svg-tooltip-content {
     background-color: rgb(255, 255, 255);
     padding: 6px 4px;
-    max-width: 250px;
+    max-width: 300px;
+    word-wrap: break-word;
+    text-align: left;
+    font-size: small;
+    font-family: sans-serif;
+    white-space: pre-line
 }
 
 .mindplot-svg-tooltip-content-link {
@@ -89,44 +88,8 @@ const mindplotStyles = `
     overflow: hidden;
     font-size: smaller;
     text-decoration: none;
-    font-family: Arial;
-    font-size: small;
     color: #428bca;
 }
-
-.mindplot-svg-tooltip-content-note {
-    text-align: left;
-    font-family: Arial;
-    font-size: small;
-}
-
-.mindplot-svg-tooltip:before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #fff;
-    bottom: 100%;
-    right: 50%;
-    transform: translateX(50%);
-    z-index: 5;
-  }
-
-  .mindplot-svg-tooltip:after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid rgb(247, 247, 247);
-    bottom: calc(1px + 100%);
-    right: 50%;
-    transform: translateX(50%);
-  }
 `;
 
 export default mindplotStyles;

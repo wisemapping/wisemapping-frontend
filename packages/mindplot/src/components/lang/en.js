@@ -6,10 +6,14 @@ const EN = {
   TOPIC_DELETE: 'Delete Topic',
   TOPIC_ICON: 'Add Icon',
   TOPIC_LINK: 'Add Link',
-  TOPIC_RELATIONSHIP: 'Relationship',
+  TOPIC_RELATIONSHIP: 'Add Relationship',
   TOPIC_COLOR: 'Topic Color',
   TOPIC_BORDER_COLOR: 'Topic Border Color',
   TOPIC_NOTE: 'Add Note',
+  TOPIC_SHAPE_RECTANGLE: 'Change Topic Shape to Rectangle',
+  TOPIC_SHAPE_ROUNDED: 'Change Topic Shape to Rounded Corners Rectangle',
+  TOPIC_SHAPE_ELLIPSE: 'Change Topic Shape to Ellipse',
+  TOPIC_SHAPE_LINE: 'Change Topic Shape to Line',
   FONT_FAMILY: 'Font Type',
   FONT_SIZE: 'Text Size',
   FONT_BOLD: 'Text Bold',
@@ -86,6 +90,11 @@ const EN = {
   MOUSE_CLICK: 'Mouse Click',
   K_DELETE: 'Delete',
   BACKSPACE: 'Backspace',
+  CENTER_POSITION: 'Zoom To Fit',
+  MAP_INFO: 'Information',
+  FONT_FORMAT: 'Font Format',
+  FONT_INCREASE: 'Font Size Increase',
+  FONT_DECREASE: 'Font Size Decrease',
 };
 
 export default EN;

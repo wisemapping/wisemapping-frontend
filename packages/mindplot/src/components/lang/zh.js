@@ -10,6 +10,10 @@ const ZH = {
   TOPIC_COLOR: '主题颜色',
   TOPIC_BORDER_COLOR: '主题边框颜色',
   TOPIC_NOTE: '添加注释',
+  TOPIC_SHAPE_RECTANGLE: '改变主题形状为矩形',
+  TOPIC_SHAPE_ROUNDED: '改变主题形状为圆角矩形',
+  TOPIC_SHAPE_ELLIPSE: '改变主题形状为椭圆',
+  TOPIC_SHAPE_LINE: '将主题形状更改为线条',
   FONT_FAMILY: '字体类型',
   FONT_SIZE: '文本大小',
   FONT_BOLD: '粗体文本',
@@ -86,6 +90,11 @@ const ZH = {
   MOUSE_CLICK: 'Mouse Click',
   K_DELETE: 'Delete',
   BACKSPACE: 'Backspace',
+  CENTER_POSITION: '地图居中',
+  MAP_INFO: '信息',
+  FONT_FORMAT: '字体格​​式',
+  FONT_INCREASE: '字体大小增加',
+  FONT_DECREASE: '字体大小减小',
 };
 
 export default ZH;

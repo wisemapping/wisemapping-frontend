@@ -6,10 +6,14 @@ const FR = {
   TOPIC_DELETE: 'Supprimer le noeud',
   TOPIC_ICON: 'Ajouter une icône',
   TOPIC_LINK: 'Ajouter un lien',
-  TOPIC_RELATIONSHIP: 'Relation du noeud',
+  TOPIC_RELATIONSHIP: 'Ajouter une relation',
   TOPIC_COLOR: 'Couleur du noeud',
   TOPIC_BORDER_COLOR: 'Couleur de bordure du noeud',
   TOPIC_NOTE: 'Ajouter une note',
+  TOPIC_SHAPE_RECTANGLE: 'Changer la forme du sujet en rectangle',
+  TOPIC_SHAPE_ROUNDED: 'Modifier la forme du sujet en rectangle aux coins arrondis',
+  TOPIC_SHAPE_ELLIPSE: 'Changer la forme du sujet en ellipse',
+  TOPIC_SHAPE_LINE: 'Changer la forme du sujet en ligne',
   FONT_FAMILY: 'Type de police',
   FONT_SIZE: 'Taille de police',
   FONT_BOLD: 'Caractères gras',
@@ -86,6 +90,11 @@ const FR = {
   MOUSE_CLICK: 'Clic de Souris',
   K_DELETE: 'Delete',
   BACKSPACE: 'Backspace',
+  CENTER_POSITION: 'Centrer la carte',
+  MAP_INFO: 'Informations',
+  FONT_FORMAT: 'Format de la police',
+  FONT_INCREASE: 'Augmentation de la taille de la police',
+  FONT_DECREASE: 'Diminution de la taille de la police',
 };
 
 export default FR;

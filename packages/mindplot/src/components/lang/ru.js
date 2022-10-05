@@ -6,7 +6,7 @@ const EN = {
   TOPIC_DELETE: 'Delete Topic',
   TOPIC_ICON: 'Add Icon',
   TOPIC_LINK: 'Add Link',
-  TOPIC_RELATIONSHIP: 'Relationship',
+  TOPIC_RELATIONSHIP: 'Добавить связь',
   TOPIC_COLOR: 'Topic Color',
   TOPIC_BORDER_COLOR: 'Topic Border Color',
   TOPIC_NOTE: 'Add Note',
@@ -14,6 +14,10 @@ const EN = {
   FONT_SIZE: 'Text Size',
   FONT_BOLD: 'Text Bold',
   FONT_ITALIC: 'Text Italic',
+  TOPIC_SHAPE_RECTANGLE: 'Изменить форму темы на прямоугольник',
+  TOPIC_SHAPE_ROUNDED: 'Изменить форму темы на прямоугольник со скругленными углами',
+  TOPIC_SHAPE_ELLIPSE: 'Изменить форму темы на эллипс',
+  TOPIC_SHAPE_LINE: 'Изменить форму темы на линию',
   UNDO: 'Undo',
   REDO: 'Redo',
   INSERT: 'Insert',
@@ -86,6 +90,11 @@ const EN = {
   MOUSE_CLICK: 'Mouse Click',
   K_DELETE: 'Delete',
   BACKSPACE: 'Backspace',
+  CENTER_POSITION: 'Масштабировать по размеру',
+  MAP_INFO: 'Информация',
+  FONT_FORMAT: 'Формат шрифта',
+  FONT_INCREASE: 'Увеличение размера шрифта',
+  FONT_DECREASE: 'Уменьшение размера шрифта',
 };
 
 export default EN;

@@ -60,7 +60,7 @@ class WidgetManager {
       }
       const targetRect = evt.target.getBoundingClientRect();
       const newX = Math.max(0, targetRect.left + targetRect.width / 2 - tooltip.width() / 2);
-      const newY = Math.max(0, targetRect.bottom + 10);
+      const newY = Math.max(0, targetRect.bottom);
       tooltip.css({ top: newY, left: newX, position: 'absolute' });
       tooltip.css({ display: 'block' });
       evt.stopPropagation();

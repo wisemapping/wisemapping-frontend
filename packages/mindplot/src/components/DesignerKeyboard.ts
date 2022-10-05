@@ -123,10 +123,6 @@ class DesignerKeyboard extends Keyboard {
       designer.changeFontWeight();
     });
 
-    this.addShortcut(['ctrl+s', 'meta+s'], () => {
-      $(document).find('#save').trigger('click');
-    });
-
     this.addShortcut(['ctrl+i', 'meta+i'], () => {
       designer.changeFontStyle();
     });

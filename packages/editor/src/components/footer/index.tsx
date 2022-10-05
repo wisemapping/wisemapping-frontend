@@ -41,34 +41,10 @@ const Footer = ({ editorMode, isMobile }: FooterPropsType): React.ReactElement =
   }
 
   // if the toolbar is present, the alert must not overlap
-  var alertTopAdjustmentStyle =
-    editorMode !== 'viewonly' && !isMobile
-      ? 'tryInfoPanelWithToolbar'
-      : 'tryInfoPanelWithoutToolbar';
+  var alertTopAdjustmentStyle = 'tryInfoPanelWithToolbar';
 
   return (
     <>
-      <div id="floating-panel">
-        {!isMobile && (
-          <div id="keyboardShortcuts" className="buttonExtOn">
-            <img src={KeyboardSvg} />
-          </div>
-        )}
-        <div id="zoom-button">
-          <button id="zoom-plus">
-            <img src={AddSvg} />
-          </button>
-          <button id="zoom-minus">
-            <img src={MinusSvg} />
-          </button>
-        </div>
-        <div id="position">
-          <button id="position-button">
-            <img src={CenterFocusSvg} />
-          </button>
-        </div>
-      </div>
-      <StyledLogo id="bottom-logo"></StyledLogo>
       <Notifier id="headerNotifier"></Notifier>
       {titleKey && (
         <div className={dialogClass + ' ' + alertTopAdjustmentStyle}>
