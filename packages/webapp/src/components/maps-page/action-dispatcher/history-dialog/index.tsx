@@ -35,7 +35,6 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const changeHistory: ChangeHistory[] = data ? data : [];
 
   const handleOnClose = (): void => {
-    queryClient.invalidateQueries(`history-${mapId}`);
     onClose();
   };
 
