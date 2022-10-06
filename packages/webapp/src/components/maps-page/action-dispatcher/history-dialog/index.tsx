@@ -20,7 +20,6 @@ import Paper from '@mui/material/Paper';
 
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const queryClient = useQueryClient();
   const client: Client = useSelector(activeInstance);
   const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(
     `history-${mapId}`,

@@ -51,8 +51,6 @@ import { $notify } from './components/widget/ToolbarNotifier';
 
 import { $msg } from './components/Messages';
 
-import './mindplot-styles.css';
-
 const globalAny: any = global;
 globalAny.jQuery = jquery;
 // WebComponent registration
