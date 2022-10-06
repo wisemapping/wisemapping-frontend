@@ -22,9 +22,16 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const intl = useIntl();
   const queryClient = useQueryClient();
   const client: Client = useSelector(activeInstance);
-  const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(`history-${mapId}`, () => {
-    return client.fetchHistory(mapId);
-  });
+  const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(
+    `history-${mapId}`,
+    () => {
+      return client.fetchHistory(mapId);
+    },
+    {
+      cacheTime: 0, // Force reload...
+    },
+  );
+
   const changeHistory: ChangeHistory[] = data ? data : [];
 
   const handleOnClose = (): void => {
