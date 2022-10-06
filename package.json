@@ -28,7 +28,7 @@
         "Ezequiel Bergamaschi"
     ],
     "engines": {
-        "node": ">16.15.0"
+        "node": "16.*"
     },
     "browserslist": {
         "production": [
