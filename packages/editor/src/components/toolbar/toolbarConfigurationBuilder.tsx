@@ -34,7 +34,7 @@ import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import { $msg, Designer } from '@wisemapping/mindplot';
-import { ToolbarOptionConfiguration } from './ToolbarOptionConfigurationInterface';
+import ActionConfig from '../../classes/actions-config';
 import { SwitchValueDirection, NodePropertyValueModelBuilder } from './ToolbarValueModelBuilder';
 import {
   ColorPicker,
@@ -55,7 +55,7 @@ import Tooltip from '@mui/material/Tooltip';
  * @param designer designer to aply changes
  * @returns configuration for @wisemapping/editor primary toolbar
  */
-export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfiguration[] {
+export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
   if (!designer) return [];
 
   /**
@@ -70,7 +70,7 @@ export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfi
   /**
    * submenu to manipulate node color and shape
    */
-  const colorAndShapeToolbarConfiguration: ToolbarOptionConfiguration = {
+  const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <BrushOutlinedIcon />,
 
     tooltip: $msg('TOPIC_SHAPE'),
@@ -148,7 +148,7 @@ export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfi
   /**
    * submenu to manipulate node font
    */
-  const fontFormatToolbarConfiguration: ToolbarOptionConfiguration = {
+  const fontFormatToolbarConfiguration: ActionConfig = {
     icon: <FontDownloadOutlinedIcon></FontDownloadOutlinedIcon>,
     tooltip: $msg('FONT_FORMAT'),
     options: [
@@ -208,7 +208,7 @@ export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfi
   /**
    * button to show relation pivot
    */
-  const addRelationConfiguration: ToolbarOptionConfiguration = {
+  const addRelationConfiguration: ActionConfig = {
     icon: <SettingsEthernetIcon></SettingsEthernetIcon>,
     tooltip: $msg('TOPIC_RELATIONSHIP'),
     onClick: (e) => {
@@ -220,7 +220,7 @@ export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfi
   /**
    * tool for node link edition
    */
-  const editLinkUrlConfiguration: ToolbarOptionConfiguration = {
+  const editLinkUrlConfiguration: ActionConfig = {
     icon: <LinkOutlinedIcon />,
     tooltip: $msg('TOPIC_LINK'),
     useClickToClose: true,
@@ -240,7 +240,7 @@ export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfi
   /**
    * tool for node note edition
    */
-  const editNoteConfiguration: ToolbarOptionConfiguration = {
+  const editNoteConfiguration: ActionConfig = {
     icon: <NoteOutlinedIcon />,
     tooltip: $msg('TOPIC_NOTE'),
     useClickToClose: true,
@@ -261,7 +261,7 @@ export function buildToolbarCongiruation(designer: Designer): ToolbarOptionConfi
   /**
    * tool for emoji selection
    */
-  const editIconConfiguration: ToolbarOptionConfiguration = {
+  const editIconConfiguration: ActionConfig = {
     icon: <SentimentSatisfiedAltIcon />,
     tooltip: $msg('TOPIC_ICON'),
     options: [
@@ -359,7 +359,7 @@ export function buildEditorAppBarConfiguration(
   showMapEntityActions: boolean,
   showMindMapNodesActions: boolean,
   showPersistenceActions: boolean,
-): ToolbarOptionConfiguration[] {
+): ActionConfig[] {
   if (!designer) return [];
 
   let commonConfiguration = [
@@ -373,36 +373,39 @@ export function buildEditorAppBarConfiguration(
     },
     {
       render: () => (
-        <Tooltip title={designer.getMindmap().getCentralTopic().getText()}>
+        <Tooltip title={designer.getMindmap().getDescription()}>
           <Typography
             className="truncated"
             variant="body1"
             component="div"
             sx={{ marginX: '1.5rem' }}
           >
-            {designer.getMindmap().getCentralTopic().getText()}
+            {designer.getMindmap().getDescription()}
           </Typography>
         </Tooltip>
       ),
     },
   ];
 
-  const exportConfiguration = {
+  const exportConfiguration: ActionConfig = {
     icon: <FileDownloadOutlinedIcon />,
     tooltip: $msg('EXPORT'),
     onClick: () => onAction('export'),
   };
-  const helpConfiguration = {
+
+  const helpConfiguration: ActionConfig = {
     icon: <HelpOutlineOutlinedIcon />,
     onClick: () => onAction('info'),
     tooltip: $msg('MAP_INFO'),
   };
+
   const appBarDivisor = {
     render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
   };
 
-  if (showOnlyCommonActions)
-    return [...commonConfiguration, appBarDivisor, exportConfiguration, helpConfiguration];
+  if (showOnlyCommonActions) {
+    return [...commonConfiguration, appBarDivisor, exportConfiguration];
+  }
 
   return [
     ...commonConfiguration,

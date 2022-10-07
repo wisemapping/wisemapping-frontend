@@ -19,7 +19,7 @@ import Link from '@mui/material/Link';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { ToolbarMenuItem } from './Toolbar';
-import { ToolbarOptionConfiguration } from './ToolbarOptionConfigurationInterface';
+import ActionConfig from '../../classes/actions-config';
 
 /**
  * Color picker for toolbar
@@ -309,7 +309,7 @@ export const ToolbarEmojiPcker = (props: {
 };
 
 export const UndoAndRedoButton = (props: {
-  configuration: ToolbarOptionConfiguration;
+  configuration: ActionConfig;
   disabledCondition: (event) => boolean;
 }) => {
   const [disabled, setDisabled] = useState(true);

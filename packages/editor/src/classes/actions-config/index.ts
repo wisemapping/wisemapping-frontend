@@ -4,7 +4,7 @@
  * Property onClick is the event handler for a common button   of this menu. Set options for a submenu or render for a custom element in place (from the second level onwards).
  * On the first level option has priority over onClick. Second level onwards render is the first option.
  */
-export interface ToolbarOptionConfiguration {
+interface ActionConfig {
   /**
    * the React element for put in menu entry button
    */
@@ -24,7 +24,7 @@ export interface ToolbarOptionConfiguration {
   /**
    * submenu options. If null, a divider will be inserted.
    */
-  options?: (ToolbarOptionConfiguration | null)[];
+  options?: (ActionConfig | null)[];
   /**
    * option is disabled
    */
@@ -42,3 +42,5 @@ export interface ToolbarOptionConfiguration {
    */
   visible?: boolean;
 }
+
+export default ActionConfig;

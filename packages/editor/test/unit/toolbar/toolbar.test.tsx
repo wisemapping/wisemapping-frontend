@@ -9,45 +9,45 @@ import Toolbar, {
   ToolbarMenuItem,
   ToolbarSubmenu,
 } from '../../../src/components/toolbar/Toolbar';
-import { ToolbarOptionConfiguration } from '../../../src/components/toolbar/ToolbarOptionConfigurationInterface';
+import ActionConfig from '../../../src/classes/actions-config';
 import Menubar from '../../../src/components/toolbar/AppBar';
 require('babel-polyfill');
 jest.mock('../../../src/components/toolbar/appbar-buttons.css', () => '');
 
-const config: ToolbarOptionConfiguration = {
+const config: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
 };
 
-const notVisibleConfig: ToolbarOptionConfiguration = {
+const notVisibleConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
   visible: false,
 };
 
-const disabledAndNotSelectedButtonConfig: ToolbarOptionConfiguration = {
+const disabledAndNotSelectedButtonConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
   disabled: () => true,
   selected: () => false,
 };
 
-const selectedButtonConfig: ToolbarOptionConfiguration = {
+const selectedButtonConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
   selected: () => true,
 };
 
-const disabledSubMenuConfig: ToolbarOptionConfiguration = {
+const disabledSubMenuConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   options: [config],
   disabled: () => true,
 };
-const withRenderConfig: ToolbarOptionConfiguration = {
+const withRenderConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   render: () => <div data-testid="custom-render-div">test</div>,
 };
-const withCloseSubmenuRender: ToolbarOptionConfiguration = {
+const withCloseSubmenuRender: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   render: (closeMenu) => {
     return (
@@ -57,20 +57,20 @@ const withCloseSubmenuRender: ToolbarOptionConfiguration = {
     );
   },
 };
-const submenuConfig: ToolbarOptionConfiguration = {
+const submenuConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   options: [config, null, config, null, withRenderConfig],
 };
-const notVisibleSubmenuConfig: ToolbarOptionConfiguration = {
+const notVisibleSubmenuConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   options: [config, null, config, null, withRenderConfig],
   visible: false,
 };
-const submenuConfig2: ToolbarOptionConfiguration = {
+const submenuConfig2: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   options: [withCloseSubmenuRender],
 };
-const iconFunctionConfig: ToolbarOptionConfiguration = {
+const iconFunctionConfig: ActionConfig = {
   icon: () => <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
 };

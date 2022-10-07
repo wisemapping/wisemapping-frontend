@@ -277,6 +277,7 @@ function getToolsVisibilityConfiguration(options: EditorOptions, isMobile: any) 
   const showAccessChangeActions = options.mode === 'edition-owner' && !isMobile;
   const showPersistenceActions = editMode && !isMobile && !options.locked;
   const showOnlyCommonActions = options.mode === 'viewonly' || isMobile;
+
   return {
     editMode,
     showOnlyCommonActions,

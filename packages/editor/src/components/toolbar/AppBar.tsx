@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolbarOptionConfiguration } from './ToolbarOptionConfigurationInterface';
+import ActionConfig from '../../classes/actions-config';
 import MaterialToolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from './Toolbar';
@@ -9,7 +9,7 @@ import { ToolbarMenuItem } from './Toolbar';
  * @param props.configurations the configurations array
  * @returns toolbar wich contains an entry for each configuration in the array
  */
-const Menubar = (props: { configurations: ToolbarOptionConfiguration[] }) => {
+const Menubar = (props: { configurations: ActionConfig[] }) => {
   return (
     <AppBar
       role="menubar"

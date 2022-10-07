@@ -7,12 +7,12 @@ import {
   NoteModel,
   NoteIcon,
 } from '@wisemapping/mindplot';
-import { linkContent, noteContent } from './contents';
+import { linkContent, noteContent } from '../../components/menu/contents';
 
-export default class MuiWidgetManager extends WidgetManager {
+export class DefaultWidgetManager extends WidgetManager {
   private editorOpen: boolean;
   private editorContent: React.ReactElement;
-  private setPopoverOpen: (boolean) => void;
+  private setPopoverOpen: (value: boolean) => void;
   private setPopoverTarget: (target: Element) => void;
 
   constructor(
@@ -27,7 +27,7 @@ export default class MuiWidgetManager extends WidgetManager {
   showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
     const model: any = {
       getValue: () => topic.getLinkValue(),
-      setValue: (value) => topic.setLinkValue(value),
+      setValue: (value: string) => topic.setLinkValue(value),
     };
     this.editorContent = linkContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
@@ -64,3 +64,5 @@ export default class MuiWidgetManager extends WidgetManager {
     topic.closeEditors();
   }
 }
+
+export default DefaultWidgetManager;

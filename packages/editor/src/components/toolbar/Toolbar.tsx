@@ -6,7 +6,7 @@ import Popover, { PopoverOrigin } from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import './appbar-buttons.css';
 import Box from '@mui/material/Box';
-import { ToolbarOptionConfiguration } from './ToolbarOptionConfigurationInterface';
+import ActionConfig from '../../classes/actions-config';
 import ToolbarPosition, { defaultPosition } from './ToolbarPositionInterface';
 
 /**
@@ -14,7 +14,7 @@ import ToolbarPosition, { defaultPosition } from './ToolbarPositionInterface';
  * @param props.configuration the configuration
  * @returns common button menu entry that uses the onClick of the configuration.
  */
-export const ToolbarButtonOption = (props: { configuration: ToolbarOptionConfiguration }) => {
+export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
   const selected = props.configuration.selected && props.configuration.selected();
   return (
     <Tooltip title={props.configuration.tooltip || ''} disableInteractive>
@@ -62,7 +62,7 @@ const horizontalAligment: { anchorOrigin: PopoverOrigin; transformOrigin: Popove
  * @returns submenu entry that contains one ToolbarMenuItem for each option. Inserts a divider for null options.
  */
 export const ToolbarSubmenu = (props: {
-  configuration: ToolbarOptionConfiguration;
+  configuration: ActionConfig;
   vertical?: boolean;
   elevation?: number;
 }) => {
@@ -111,7 +111,7 @@ export const ToolbarSubmenu = (props: {
                 <ToolbarMenuItem
                   vertical={!!!props.vertical}
                   key={i}
-                  configuration={o as ToolbarOptionConfiguration}
+                  configuration={o as ActionConfig}
                   elevation={props.elevation + 3}
                 ></ToolbarMenuItem>
               );
@@ -131,7 +131,7 @@ export const ToolbarSubmenu = (props: {
  * @returns menu item wich contains a submenu if options is set or a button if onClick is set or null otherwise.
  */
 export const ToolbarMenuItem = (props: {
-  configuration: ToolbarOptionConfiguration | null;
+  configuration: ActionConfig | null;
   vertical?: boolean;
   elevation?: number;
 }) => {
@@ -174,7 +174,7 @@ export const ToolbarMenuItem = (props: {
  * @returns toolbar wich contains a button/submenu for each configuration in the array
  */
 const Toolbar = (props: {
-  configurations: ToolbarOptionConfiguration[];
+  configurations: ActionConfig[];
   position?: ToolbarPosition;
   rerender?: number;
 }) => {
