@@ -38,7 +38,7 @@ export interface ToolbarOptionConfiguration {
    */
   useClickToClose?: boolean;
   /**
-   * if false the nmenu entry or button is not visible. Entries with custom render will ignore this property
+   * if false the nmenu entry or button is not visible. Also custom render will be ignored.
    */
   visible?: boolean;
 }

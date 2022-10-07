@@ -96,10 +96,15 @@ const Editor = ({
   const [mindplotComponent, setMindplotComponent]: [MindplotWebComponent | undefined, Function] =
     useState();
 
-  const editMode =
-    options.mode === 'edition-owner' ||
-    options.mode === 'edition-editor' ||
-    options.mode === 'edition-viewer';
+  const {
+    editMode,
+    showOnlyCommonActions,
+    showAccessChangeActions,
+    showMapEntityActions,
+    showMindMapNodesActions,
+    showPersistenceActions,
+  } = getToolsVisibilityConfiguration(options, isMobile);
+
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
   const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
   const toolbarConfiguration = useRef([]);
@@ -200,12 +205,24 @@ const Editor = ({
     () => {
       mindplotComponent.save(true);
     },
-    options.mode,
-    isMobile,
+    showOnlyCommonActions,
+    showAccessChangeActions,
+    showMapEntityActions,
+    showMindMapNodesActions,
+    showPersistenceActions,
   );
-  menubarConfiguration.push({
-    render: () => accountConfiguration,
-  });
+  if (options.mode !== 'showcase') {
+    menubarConfiguration.push({
+      render: () => accountConfiguration,
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      mindplotComponent.unlockMap();
+    };
+  }, []);
+
   // if the Toolbar is not hidden before the variable 'isMobile' is defined, it appears intermittently when the page loads
   // if the Toolbar is not rendered, Menu.ts cant find buttons for create event listeners
   // so, with this hack the Toolbar is rendered but no visible until the variable 'isMobile' is defined
@@ -225,7 +242,7 @@ const Editor = ({
         >
           {widgetManager.getEditorContent()}
         </Popover>
-        {editMode && !isMobile && (
+        {showMindMapNodesActions && (
           <Toolbar
             configurations={toolbarConfiguration.current}
             rerender={toolbarsRerenderSwitch}
@@ -252,3 +269,20 @@ const Editor = ({
   );
 };
 export default Editor;
+function getToolsVisibilityConfiguration(options: EditorOptions, isMobile: any) {
+  const editMode = options.mode === 'edition-owner' || options.mode === 'edition-editor';
+  const showcaseMode = options.mode === 'showcase';
+  const showMindMapNodesActions = (editMode || showcaseMode) && !isMobile && !options.locked;
+  const showMapEntityActions = editMode && !isMobile;
+  const showAccessChangeActions = options.mode === 'edition-owner' && !isMobile;
+  const showPersistenceActions = editMode && !isMobile && !options.locked;
+  const showOnlyCommonActions = options.mode === 'viewonly' || isMobile;
+  return {
+    editMode,
+    showOnlyCommonActions,
+    showAccessChangeActions,
+    showMapEntityActions,
+    showMindMapNodesActions,
+    showPersistenceActions,
+  };
+}

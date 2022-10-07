@@ -105,6 +105,7 @@ export const ToolbarSubmenu = (props: {
       >
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
           {props.configuration.options?.map((o, i) => {
+            if (o?.visible === false) return null;
             if (!o?.render) {
               return (
                 <ToolbarMenuItem

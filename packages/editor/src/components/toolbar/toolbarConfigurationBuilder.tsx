@@ -33,7 +33,7 @@ import Box from '@mui/material/Box';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
-import { $msg, Designer, EditorRenderMode } from '@wisemapping/mindplot';
+import { $msg, Designer } from '@wisemapping/mindplot';
 import { ToolbarOptionConfiguration } from './ToolbarOptionConfigurationInterface';
 import { SwitchValueDirection, NodePropertyValueModelBuilder } from './ToolbarValueModelBuilder';
 import {
@@ -354,9 +354,14 @@ export function buildEditorAppBarConfiguration(
   designer: Designer,
   onAction: (type: ToolbarActionType) => void,
   save: () => void,
-  editorMode: EditorRenderMode,
-  isMobile: boolean,
+  showOnlyCommonActions: boolean,
+  showAccessChangeActions: boolean,
+  showMapEntityActions: boolean,
+  showMindMapNodesActions: boolean,
+  showPersistenceActions: boolean,
 ): ToolbarOptionConfiguration[] {
+  if (!designer) return [];
+
   let commonConfiguration = [
     {
       icon: <ArrowBackIosNewOutlinedIcon />,
@@ -366,104 +371,106 @@ export function buildEditorAppBarConfiguration(
     {
       render: () => <img src={LogoTextBlackSvg} />,
     },
-  ];
-  if (editorMode === 'viewonly' || editorMode === 'showcase' || isMobile)
-    return commonConfiguration;
-  if (!designer) return [];
-
-  const isEditor =
-    editorMode === 'edition-owner' ||
-    editorMode === 'edition-editor' ||
-    editorMode === 'edition-viewer';
-
-  if (isEditor) {
-    return [
-      ...commonConfiguration,
-      {
-        render: () => (
-          <Tooltip title={designer.getMindmap().getCentralTopic().getText()}>
-            <Typography
-              className="truncated"
-              variant="body1"
-              component="div"
-              sx={{ marginX: '1.5rem' }}
-            >
-              {designer.getMindmap().getCentralTopic().getText()}
-            </Typography>
-          </Tooltip>
-        ),
-      },
-      null,
-      {
-        render: () => (
-          <UndoAndRedoButton
-            configuration={{
-              icon: <UndoOutlinedIcon />,
-              tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
-              onClick: () => designer.undo(),
-            }}
-            disabledCondition={(event) => event.undoSteps > 0}
-          ></UndoAndRedoButton>
-        ),
-      },
-      {
-        render: () => (
-          <UndoAndRedoButton
-            configuration={{
-              icon: <RedoOutlinedIcon />,
-              tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
-              onClick: () => designer.redo(),
-            }}
-            disabledCondition={(event) => event.redoSteps > 0}
-          ></UndoAndRedoButton>
-        ),
-      },
-      null,
-      {
-        icon: <RestoreOutlinedIcon />,
-        tooltip: $msg('HISTORY'),
-        onClick: () => onAction('history'),
-      },
-      {
-        icon: <SaveOutlinedIcon />,
-        tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
-        onClick: save,
-      },
-      {
-        render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
-      },
-      {
-        icon: <PrintOutlinedIcon />,
-        tooltip: $msg('PRINT'),
-        onClick: () => onAction('print'),
-      },
-      {
-        icon: <FileDownloadOutlinedIcon />,
-        tooltip: $msg('EXPORT'),
-        onClick: () => onAction('export'),
-      },
-      {
-        icon: <CloudUploadOutlinedIcon />,
-        onClick: () => onAction('publish'),
-        tooltip: $msg('PUBLISH'),
-        disabled: () => editorMode !== 'edition-owner',
-      },
-      {
-        render: () => (
-          <Button
-            variant="contained"
-            onClick={() => onAction('share')}
-            disabled={editorMode !== 'edition-owner'}
+    {
+      render: () => (
+        <Tooltip title={designer.getMindmap().getCentralTopic().getText()}>
+          <Typography
+            className="truncated"
+            variant="body1"
+            component="div"
+            sx={{ marginX: '1.5rem' }}
           >
-            {$msg('COLLABORATE')}
-          </Button>
-        ),
-      },
-      {
-        icon: <HelpOutlineOutlinedIcon />,
-        onClick: () => onAction('info'),
-        tooltip: $msg('MAP_INFO'),
-      },
-    ];
-  }
+            {designer.getMindmap().getCentralTopic().getText()}
+          </Typography>
+        </Tooltip>
+      ),
+    },
+  ];
+
+  const exportConfiguration = {
+    icon: <FileDownloadOutlinedIcon />,
+    tooltip: $msg('EXPORT'),
+    onClick: () => onAction('export'),
+  };
+  const helpConfiguration = {
+    icon: <HelpOutlineOutlinedIcon />,
+    onClick: () => onAction('info'),
+    tooltip: $msg('MAP_INFO'),
+  };
+  const appBarDivisor = {
+    render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
+  };
+
+  if (showOnlyCommonActions)
+    return [...commonConfiguration, appBarDivisor, exportConfiguration, helpConfiguration];
+
+  return [
+    ...commonConfiguration,
+    null,
+    {
+      render: () => (
+        <UndoAndRedoButton
+          configuration={{
+            icon: <UndoOutlinedIcon />,
+            tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
+            onClick: () => designer.undo(),
+          }}
+          disabledCondition={(event) => event.undoSteps > 0}
+        ></UndoAndRedoButton>
+      ),
+      visible: showMindMapNodesActions,
+    },
+    {
+      render: () => (
+        <UndoAndRedoButton
+          configuration={{
+            icon: <RedoOutlinedIcon />,
+            tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
+            onClick: () => designer.redo(),
+          }}
+          disabledCondition={(event) => event.redoSteps > 0}
+        ></UndoAndRedoButton>
+      ),
+      visible: showMindMapNodesActions,
+    },
+    null,
+    {
+      icon: <RestoreOutlinedIcon />,
+      tooltip: $msg('HISTORY'),
+      onClick: () => onAction('history'),
+      visible: showPersistenceActions,
+    },
+    {
+      icon: <SaveOutlinedIcon />,
+      tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
+      onClick: save,
+      visible: showPersistenceActions,
+    },
+    appBarDivisor,
+    {
+      icon: <PrintOutlinedIcon />,
+      tooltip: $msg('PRINT'),
+      onClick: () => onAction('print'),
+      visible: showMapEntityActions,
+    },
+    exportConfiguration,
+    {
+      icon: <CloudUploadOutlinedIcon />,
+      onClick: () => onAction('publish'),
+      tooltip: $msg('PUBLISH'),
+      disabled: () => !showAccessChangeActions,
+    },
+    {
+      render: () => (
+        <Button
+          variant="contained"
+          onClick={() => onAction('share')}
+          disabled={!showAccessChangeActions}
+        >
+          {$msg('COLLABORATE')}
+        </Button>
+      ),
+    },
+    helpConfiguration,
+  ];
 }

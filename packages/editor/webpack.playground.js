@@ -11,6 +11,7 @@ const playgroundConfig = {
     viewmode: path.resolve(__dirname, './test/playground/map-render/js/viewmode'),
     editor: path.resolve(__dirname, './test/playground/map-render/js/editor'),
     showcase: path.resolve(__dirname, './test/playground/map-render/js/showcase'),
+    editorlocked: path.resolve(__dirname, './test/playground/map-render/js/editorlocked'),
   },
   output: {
     path: path.resolve(__dirname, 'test/playground/dist'),
@@ -52,6 +53,11 @@ const playgroundConfig = {
       chunks: ['showcase'],
       filename: 'showcase.html',
       template: 'test/playground/map-render/html/showcase.html',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['editorlocked'],
+      filename: 'editorlocked.html',
+      template: 'test/playground/map-render/html/editor.html',
     }),
   ],
 };
