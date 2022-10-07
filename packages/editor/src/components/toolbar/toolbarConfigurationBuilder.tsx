@@ -34,7 +34,7 @@ import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import { $msg, Designer } from '@wisemapping/mindplot';
-import ActionConfig from '../../classes/actions-config';
+import ActionConfig from '../../classes/action-config';
 import { SwitchValueDirection, NodePropertyValueModelBuilder } from './ToolbarValueModelBuilder';
 import {
   ColorPicker,

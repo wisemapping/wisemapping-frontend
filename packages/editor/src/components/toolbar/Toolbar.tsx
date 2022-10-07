@@ -6,7 +6,7 @@ import Popover, { PopoverOrigin } from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import './appbar-buttons.css';
 import Box from '@mui/material/Box';
-import ActionConfig from '../../classes/actions-config';
+import ActionConfig from '../../classes/action-config';
 import ToolbarPosition, { defaultPosition } from './ToolbarPositionInterface';
 
 /**

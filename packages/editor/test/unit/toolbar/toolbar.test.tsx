@@ -9,7 +9,7 @@ import Toolbar, {
   ToolbarMenuItem,
   ToolbarSubmenu,
 } from '../../../src/components/toolbar/Toolbar';
-import ActionConfig from '../../../src/classes/actions-config';
+import ActionConfig from '../../../src/classes/action-config';
 import Menubar from '../../../src/components/toolbar/AppBar';
 require('babel-polyfill');
 jest.mock('../../../src/components/toolbar/appbar-buttons.css', () => '');

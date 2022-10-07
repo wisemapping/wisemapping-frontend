@@ -19,7 +19,7 @@ import Link from '@mui/material/Link';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { ToolbarMenuItem } from './Toolbar';
-import ActionConfig from '../../classes/actions-config';
+import ActionConfig from '../../classes/action-config';
 
 /**
  * Color picker for toolbar
