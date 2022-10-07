@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Popover, { PopoverOrigin } from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
-import './appbar-buttons.css';
+import '../app-bar/styles.css';
 import Box from '@mui/material/Box';
 import ActionConfig from '../../classes/action-config';
 import ToolbarPosition, { defaultPosition } from './ToolbarPositionInterface';

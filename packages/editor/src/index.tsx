@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ToolbarActionType } from './components/toolbar';
 import Popover from '@mui/material/Popover';
 
 import { IntlProvider } from 'react-intl';
@@ -24,13 +23,18 @@ import {
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
-import Toolbar, { horizontalPosition, Appbar, configurationBuilder } from './components/toolbar';
+import Toolbar, {
+  horizontalPosition,
+  configurationBuilder,
+  ToolbarActionType,
+} from './components/toolbar';
 import { theme as defaultEditorTheme } from './theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { Theme } from '@mui/material/styles';
 import { Notifier } from './components/footer/styled';
 import Footer from './components/footer';
 import DefaultWidgetManager from './classes/default-widget-manager';
+import AppBar from './components/app-bar';
 
 declare global {
   // used in mindplot
@@ -230,7 +234,7 @@ const Editor = ({
   return (
     <ThemeProvider theme={editorTheme}>
       <IntlProvider locale={locale} messages={msg}>
-        <Appbar configurations={menubarConfiguration} />
+        <AppBar configurations={menubarConfiguration} />
         <Popover
           id="popover"
           open={popoverOpen}

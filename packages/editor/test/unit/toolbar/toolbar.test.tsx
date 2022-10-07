@@ -10,9 +10,9 @@ import Toolbar, {
   ToolbarSubmenu,
 } from '../../../src/components/toolbar/Toolbar';
 import ActionConfig from '../../../src/classes/action-config';
-import Menubar from '../../../src/components/toolbar/AppBar';
+import AppBar from '../../../src/components/app-bar';
 require('babel-polyfill');
-jest.mock('../../../src/components/toolbar/appbar-buttons.css', () => '');
+jest.mock('../../../src/components/app-bar/styles.css', () => '');
 
 const config: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
@@ -270,20 +270,20 @@ describe('Toolbar', () => {
 
 describe('Menubar', () => {
   it('When render it displays a menu', () => {
-    render(<Menubar configurations={[config, config]}></Menubar>);
+    render(<AppBar configurations={[config, config]}></AppBar>);
 
     screen.getByRole('menubar');
   });
 
   it('Given an options array for configurations with 2 options when render it displays a menu with 2 menuitems', () => {
-    render(<Menubar configurations={[config, config]}></Menubar>);
+    render(<AppBar configurations={[config, config]}></AppBar>);
     const items = screen.getAllByRole('button');
 
     expect(items).toHaveLength(2);
   });
 
   it('Execute render if set', () => {
-    render(<Menubar configurations={[withRenderConfig]} />);
+    render(<AppBar configurations={[withRenderConfig]} />);
 
     screen.getByTestId('custom-render-div');
   });

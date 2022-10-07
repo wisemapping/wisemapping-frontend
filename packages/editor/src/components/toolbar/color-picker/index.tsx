@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import React from 'react';
-import { NodePropertyValueModel } from '../../ToolbarValueModelBuilder';
+import { NodePropertyValueModel } from '../ToolbarValueModelBuilder';
 import { CirclePicker as ReactColorPicker } from 'react-color';
 import colors from './colors.json';
 

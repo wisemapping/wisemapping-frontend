@@ -43,13 +43,13 @@ import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import UrlForm from './component/link-form';
 import NoteForm from './component/note-form';
-import ColorPicker from './component/color-picker';
-import { KeyboardShorcutsHelp } from './component/keyboard-shortcut-help';
+import ColorPicker from './color-picker';
+import { KeyboardShorcutsHelp } from '../footer/keyboard-shortcut-help';
 
 /**
  *
  * @param designer designer to aply changes
- * @returns configuration for @wisemapping/editor primary toolbar
+ * @returns configuration for @wisemapping/editor priAppbarmary toolbar
  */
 export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
   if (!designer) return [];
