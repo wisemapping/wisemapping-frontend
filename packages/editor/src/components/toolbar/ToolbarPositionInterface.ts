@@ -21,15 +21,15 @@ export default interface ToolbarPosition {
 export const defaultPosition: ToolbarPosition = {
   vertical: true,
   position: {
-    right: '50px',
-    top: '100px',
+    right: '7px',
+    top: '150px',
   },
 };
 
 export const horizontalPosition = {
   position: {
-    right: '50px',
-    top: '90%',
+    right: '7px',
+    top: '93%',
   },
   vertical: false,
 };
