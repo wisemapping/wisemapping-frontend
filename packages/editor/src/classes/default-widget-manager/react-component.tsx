@@ -1,5 +1,6 @@
 import React from 'react';
-import { NoteForm, UrlForm } from './toolbarCustomComponents';
+import UrlForm from '../../components/toolbar/component/link-form';
+import NoteForm from '../../components/toolbar/component/note-form';
 
 const linkContent = (linkModel, closeModal): React.ReactElement => {
   return <UrlForm closeModal={closeModal} urlModel={linkModel}></UrlForm>;

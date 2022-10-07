@@ -7,7 +7,7 @@ import {
   NoteModel,
   NoteIcon,
 } from '@wisemapping/mindplot';
-import { linkContent, noteContent } from '../../components/toolbar/contents';
+import { linkContent, noteContent } from './react-component';
 
 export class DefaultWidgetManager extends WidgetManager {
   private editorOpen: boolean;

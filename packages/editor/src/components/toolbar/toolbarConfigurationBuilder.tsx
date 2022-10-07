@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
 import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
@@ -36,19 +36,15 @@ import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import { $msg, Designer } from '@wisemapping/mindplot';
 import ActionConfig from '../../classes/action-config';
 import { SwitchValueDirection, NodePropertyValueModelBuilder } from './ToolbarValueModelBuilder';
-import {
-  ColorPicker,
-  FontFamilySelect,
-  KeyboardShorcutsHelp,
-  NoteForm,
-  ToolbarEmojiPcker,
-  UndoAndRedoButton,
-  UrlForm,
-} from './toolbarCustomComponents';
+import { FontFamilySelect, ToolbarEmojiPcker, UndoAndRedoButton } from './toolbarCustomComponents';
 import Typography from '@mui/material/Typography';
 import { ToolbarActionType } from '.';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import UrlForm from './component/link-form';
+import NoteForm from './component/note-form';
+import ColorPicker from './component/color-picker';
+import { KeyboardShorcutsHelp } from './component/keyboard-shortcut-help';
 
 /**
  *

@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { StyledLogo, Notifier } from './styled';
+import { Notifier } from './styled';
 import { useIntl } from 'react-intl';
 
-import KeyboardSvg from '../../../images/keyboard.svg';
-import AddSvg from '../../../images/add.svg';
-import MinusSvg from '../../../images/minus.svg';
-import CenterFocusSvg from '../../../images/center_focus.svg';
 import CloseDialogSvg from '../../../images/close-dialog-icon.svg';
 
 import ActionButton from '../action-button';
