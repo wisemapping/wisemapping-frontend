@@ -24,13 +24,13 @@ import {
 } from '@wisemapping/mindplot';
 import './global-styled.css';
 import I18nMsg from './classes/i18n-msg';
-import { useMuiWidgetManager } from './components/menu/useMuiWidgetManager';
 import Toolbar, { horizontalPosition, Appbar, configurationBuilder } from './components/toolbar';
 import { theme as defaultEditorTheme } from './theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { Theme } from '@mui/material/styles';
 import { Notifier } from './components/footer/styled';
 import Footer from './components/footer';
+import DefaultWidgetManager from './classes/default-widget-manager';
 
 declare global {
   // used in mindplot
@@ -112,7 +112,7 @@ const Editor = ({
     setMindplotComponent(node);
   }, []);
 
-  const [popoverOpen, popoverTarget, widgetManager] = useMuiWidgetManager();
+  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
 
   const onNodeBlurHandler = () => {
     if (!mindplotComponent.getDesigner().getModel().selectedTopic())
@@ -200,8 +200,8 @@ const Editor = ({
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
   const menubarConfiguration = configurationBuilder.buildEditorAppBarConfiguration(
-    options.mapTitle,
     mindplotComponent?.getDesigner(),
+    options.mapTitle,
     onAction,
     () => {
       mindplotComponent.save(true);

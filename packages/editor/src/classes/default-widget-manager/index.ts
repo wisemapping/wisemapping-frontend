@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   WidgetManager,
   Topic,
@@ -7,7 +7,7 @@ import {
   NoteModel,
   NoteIcon,
 } from '@wisemapping/mindplot';
-import { linkContent, noteContent } from '../../components/menu/contents';
+import { linkContent, noteContent } from '../../components/toolbar/contents';
 
 export class DefaultWidgetManager extends WidgetManager {
   private editorOpen: boolean;
@@ -62,6 +62,14 @@ export class DefaultWidgetManager extends WidgetManager {
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
     topic.closeEditors();
+  }
+
+  static create(): [boolean, Element | undefined, DefaultWidgetManager] {
+    const [popoverOpen, setPopoverOpen] = useState(false);
+    const [popoverTarget, setPopoverTarget] = useState(undefined);
+    const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
+
+    return [popoverOpen, popoverTarget, widgetManager.current];
   }
 }
 
