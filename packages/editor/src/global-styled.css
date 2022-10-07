@@ -217,9 +217,8 @@ div#shotcuts>img {
   background-color: white;
   border: solid 2px #ffa800;
   margin: auto;
-  width: 99%;
   border-radius: 9px;
-  width: 96%;
+  width: 80%;
 }
 
 @media (min-width: 600px) {
@@ -261,7 +260,7 @@ div#shotcuts>img {
 }
 
 .tryInfoPanelWithToolbar {
-  top: 65px;
+  top: 75px;
 }
 
 .tryInfoPanelWithoutToolbar {
