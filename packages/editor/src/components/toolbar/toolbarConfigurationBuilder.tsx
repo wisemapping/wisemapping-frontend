@@ -352,6 +352,7 @@ export function buildZoomToolbarConfiguration(isMobile: boolean, designer: Desig
 
 export function buildEditorAppBarConfiguration(
   designer: Designer,
+  mapTitle: string,
   onAction: (type: ToolbarActionType) => void,
   save: () => void,
   showOnlyCommonActions: boolean,
@@ -373,14 +374,14 @@ export function buildEditorAppBarConfiguration(
     },
     {
       render: () => (
-        <Tooltip title={designer.getMindmap().getDescription()}>
+        <Tooltip title={mapTitle}>
           <Typography
             className="truncated"
             variant="body1"
             component="div"
             sx={{ marginX: '1.5rem' }}
           >
-            {designer.getMindmap().getDescription()}
+            {mapTitle}
           </Typography>
         </Tooltip>
       ),

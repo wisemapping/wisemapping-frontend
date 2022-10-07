@@ -200,6 +200,7 @@ const Editor = ({
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
   const menubarConfiguration = configurationBuilder.buildEditorAppBarConfiguration(
+    options.mapTitle,
     mindplotComponent?.getDesigner(),
     onAction,
     () => {
