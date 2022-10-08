@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import React from 'react';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
@@ -35,7 +52,8 @@ import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import { $msg, Designer } from '@wisemapping/mindplot';
 import ActionConfig from '../../classes/action-config';
-import { SwitchValueDirection, NodePropertyValueModelBuilder } from './ToolbarValueModelBuilder';
+import { SwitchValueDirection } from './ToolbarValueModelBuilder';
+import NodePropertyBuilder from '../../classes/model/node-property-builder';
 import Typography from '@mui/material/Typography';
 import { ToolbarActionType } from '.';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
@@ -59,7 +77,7 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
   /**
    * model builder
    */
-  const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(designer);
+  const toolbarValueModelBuilder = new NodePropertyBuilder(designer);
 
   // <div id="rectagle" model="rectagle"><img src="${RectangleImage}" alt="Rectangle"></div>
   // <div id="rounded_rectagle" model="rounded rectagle" ><img src="${RectangleRoundImage}" alt="Rounded Rectangle"></div>
