@@ -435,16 +435,22 @@ export function buildEditorAppBarConfiguration(
     },
     appBarDivisor,
     {
+      icon: <FileDownloadOutlinedIcon />,
+      tooltip: $msg('EXPORT'),
+      onClick: () => onAction('export'),
+      visible: !capability.isHidden('export'),
+    },
+    {
       icon: <PrintOutlinedIcon />,
       tooltip: $msg('PRINT'),
       onClick: () => onAction('print'),
       visible: !capability.isHidden('print'),
     },
     {
-      icon: <FileDownloadOutlinedIcon />,
-      tooltip: $msg('EXPORT'),
-      onClick: () => onAction('export'),
-      visible: !capability.isHidden('export'),
+      icon: <HelpOutlineOutlinedIcon />,
+      onClick: () => onAction('info'),
+      tooltip: $msg('MAP_INFO'),
+      visible: !capability.isHidden('info'),
     },
     {
       icon: <CloudUploadOutlinedIcon />,
@@ -459,12 +465,6 @@ export function buildEditorAppBarConfiguration(
         </Button>
       ),
       visible: !capability.isHidden('share'),
-    },
-    {
-      icon: <HelpOutlineOutlinedIcon />,
-      onClick: () => onAction('info'),
-      tooltip: $msg('MAP_INFO'),
-      visible: !capability.isHidden('info'),
     },
     {
       render: () => accountConfiguration,
