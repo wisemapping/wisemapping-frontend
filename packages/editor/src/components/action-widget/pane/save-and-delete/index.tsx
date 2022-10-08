@@ -13,20 +13,22 @@ const SaveAndDelete = (props: {
 }) => {
   return (
     <Box component="span">
-      <IconButton
-        onClick={() => {
-          props.closeModal();
-          props.model.setValue(undefined);
-        }}
-      >
-        <DeleteOutlineOutlinedIcon />
-      </IconButton>
       <Button color="primary" variant="outlined" onClick={props.submitHandler} sx={{ mr: 1 }}>
         {$msg('ACCEPT')}
       </Button>
       <Button color="primary" variant="contained" onClick={props.closeModal}>
         {$msg('CANCEL')}
       </Button>
+      {props.model.getValue() && props.model.getValue().trim() !== '' && (
+        <IconButton
+          onClick={() => {
+            props.closeModal();
+            props.model.setValue(undefined);
+          }}
+        >
+          <DeleteOutlineOutlinedIcon />
+        </IconButton>
+      )}
     </Box>
   );
 };
