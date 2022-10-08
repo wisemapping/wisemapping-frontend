@@ -249,7 +249,7 @@ export class NodePropertyValueModelBuilder {
   getFontStyleModel(): NodePropertyValueModel {
     if (!this.fontStyleModel)
       this.fontStyleModel = {
-        getValue: () => this.selectedTopic().getFontStyle(),
+        getValue: () => this.selectedTopic()?.getFontStyle(),
         switchValue: () => designer.changeFontStyle(),
       };
     return this.fontStyleModel;
