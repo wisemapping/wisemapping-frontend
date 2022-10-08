@@ -95,6 +95,7 @@ const DE = {
   FONT_FORMAT: 'Schriftformat',
   FONT_INCREASE: 'Schriftgröße erhöhen',
   FONT_DECREASE: 'Schriftgröße verringern',
+  SIGN_UP: 'Anmelden',
 };
 
 export default DE;

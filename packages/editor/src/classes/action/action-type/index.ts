@@ -16,11 +16,19 @@
  *   limitations under the License.
  */
 
-type EditorRenderMode =
-  | 'viewonly'
-  | 'edition-owner'
-  | 'edition-editor'
-  | 'edition-viewer'
-  | 'showcase'
-  | 'edition-locked';
-export default EditorRenderMode;
+type ActionType =
+  | 'undo-changes'
+  | 'redo-changes'
+  | 'history'
+  | 'save'
+  | 'print'
+  | 'export'
+  | 'publish'
+  | 'share'
+  | 'info'
+  | 'account'
+  | 'edition-toolbar'
+  | 'sign-up'
+  | 'keyboard-shortcuts';
+
+export default ActionType;

@@ -95,6 +95,7 @@ const FR = {
   FONT_FORMAT: 'Format de la police',
   FONT_INCREASE: 'Augmentation de la taille de la police',
   FONT_DECREASE: 'Diminution de la taille de la police',
+  SIGN_UP: 'S\'inscrire',
 };
 
 export default FR;

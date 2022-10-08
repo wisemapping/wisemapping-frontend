@@ -16,10 +16,10 @@
  *   limitations under the License.
  */
 import React from 'react';
-import ActionConfig from '../../classes/action-config';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar/Toolbar';
+import ActionConfig from '../../classes/action/action-config';
 
 /**
  * App bar

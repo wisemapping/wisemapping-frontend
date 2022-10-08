@@ -1,20 +1,3 @@
-/*
- *    Copyright [2021] [wisemapping]
- *
- *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
- *   It is basically the Apache License, Version 2.0 (the "License") plus the
- *   "powered by wisemapping" text requirement on every single page;
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the license at
- *
- *       http://www.wisemapping.org/license
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
 import React from 'react';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
@@ -51,20 +34,21 @@ import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import { $msg, Designer } from '@wisemapping/mindplot';
-import ActionConfig from '../../classes/action-config';
+import ActionConfig from '../../classes/action/action-config';
 import { SwitchValueDirection } from './ToolbarValueModelBuilder';
-import NodePropertyBuilder from '../../classes/model/node-property-builder';
+import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Typography from '@mui/material/Typography';
 import { ToolbarActionType } from '.';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import ColorPicker from '../action-widget/pane/color-picker';
-import { KeyboardShorcutsHelp } from '../action-widget/pane/keyboard-shortcut-help';
+import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import TopicLink from '../action-widget/pane/topic-link';
 import TopicNote from '../action-widget/pane/topic-note';
 import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
+import Capability from '../../classes/action/capability';
 
 /**
  *
@@ -77,7 +61,7 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
   /**
    * model builder
    */
-  const toolbarValueModelBuilder = new NodePropertyBuilder(designer);
+  const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(designer);
 
   // <div id="rectagle" model="rectagle"><img src="${RectangleImage}" alt="Rectangle"></div>
   // <div id="rounded_rectagle" model="rounded rectagle" ><img src="${RectangleRoundImage}" alt="Rounded Rectangle"></div>
@@ -318,14 +302,17 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
   ];
 }
 
-export function buildZoomToolbarConfiguration(isMobile: boolean, designer: Designer) {
+export function buildZoomToolbarConfiguration(
+  capability: Capability,
+  designer: Designer,
+): ActionConfig[] {
   if (!designer) return [];
 
   return [
     {
       icon: <KeyboardOutlined />,
       tooltip: $msg('KEYBOARD_SHOTCUTS'),
-      visible: !isMobile,
+      visible: !capability.isHidden('keyboard-shortcuts'),
       options: [
         {
           render: () => <KeyboardShorcutsHelp />,
@@ -345,21 +332,21 @@ export function buildZoomToolbarConfiguration(isMobile: boolean, designer: Desig
     {
       icon: <ZoomInOutlinedIcon />,
       tooltip: $msg('ZOOM_IN'),
-      onClick: (e) => {
+      onClick: () => {
         designer.zoomIn();
       },
     },
     {
       icon: <ZoomOutOutlinedIcon />,
       tooltip: $msg('ZOOM_OUT'),
-      onClick: (e) => {
+      onClick: () => {
         designer.zoomOut();
       },
     },
     {
       icon: <CenterFocusStrongOutlinedIcon />,
       tooltip: $msg('CENTER_POSITION'),
-      onClick: (e) => {
+      onClick: () => {
         designer.zoomToFit();
       },
     },
@@ -369,17 +356,15 @@ export function buildZoomToolbarConfiguration(isMobile: boolean, designer: Desig
 export function buildEditorAppBarConfiguration(
   designer: Designer,
   mapTitle: string,
+  capability: Capability,
   onAction: (type: ToolbarActionType) => void,
   save: () => void,
-  showOnlyCommonActions: boolean,
-  showAccessChangeActions: boolean,
-  showMapEntityActions: boolean,
-  showMindMapNodesActions: boolean,
-  showPersistenceActions: boolean,
 ): ActionConfig[] {
-  if (!designer) return [];
+  if (!designer) {
+    return [];
+  }
 
-  let commonConfiguration = [
+  let commonConfiguration: ActionConfig[] = [
     {
       icon: <ArrowBackIosNewOutlinedIcon />,
       tooltip: $msg('BACK_TO_MAP_LIST'),
@@ -404,25 +389,9 @@ export function buildEditorAppBarConfiguration(
     },
   ];
 
-  const exportConfiguration: ActionConfig = {
-    icon: <FileDownloadOutlinedIcon />,
-    tooltip: $msg('EXPORT'),
-    onClick: () => onAction('export'),
-  };
-
-  const helpConfiguration: ActionConfig = {
-    icon: <HelpOutlineOutlinedIcon />,
-    onClick: () => onAction('info'),
-    tooltip: $msg('MAP_INFO'),
-  };
-
   const appBarDivisor = {
     render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
   };
-
-  if (showOnlyCommonActions) {
-    return [...commonConfiguration, appBarDivisor, exportConfiguration];
-  }
 
   return [
     ...commonConfiguration,
@@ -438,7 +407,7 @@ export function buildEditorAppBarConfiguration(
           disabledCondition={(event) => event.undoSteps > 0}
         ></UndoAndRedo>
       ),
-      visible: showMindMapNodesActions,
+      visible: !capability.isHidden('undo-changes'),
     },
     {
       render: () => (
@@ -451,46 +420,61 @@ export function buildEditorAppBarConfiguration(
           disabledCondition={(event) => event.redoSteps > 0}
         ></UndoAndRedo>
       ),
-      visible: showMindMapNodesActions,
+      visible: !capability.isHidden('redo-changes'),
     },
     null,
     {
       icon: <RestoreOutlinedIcon />,
       tooltip: $msg('HISTORY'),
       onClick: () => onAction('history'),
-      visible: showPersistenceActions,
+      visible: !capability.isHidden('history'),
     },
     {
       icon: <SaveOutlinedIcon />,
       tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
       onClick: save,
-      visible: showPersistenceActions,
+      visible: !capability.isHidden('save'),
     },
     appBarDivisor,
     {
       icon: <PrintOutlinedIcon />,
       tooltip: $msg('PRINT'),
       onClick: () => onAction('print'),
-      visible: showMapEntityActions,
+      visible: !capability.isHidden('print'),
     },
-    exportConfiguration,
+    {
+      icon: <FileDownloadOutlinedIcon />,
+      tooltip: $msg('EXPORT'),
+      onClick: () => onAction('export'),
+      visible: !capability.isHidden('export'),
+    },
     {
       icon: <CloudUploadOutlinedIcon />,
       onClick: () => onAction('publish'),
       tooltip: $msg('PUBLISH'),
-      disabled: () => !showAccessChangeActions,
+      visible: !capability.isHidden('publish'),
     },
     {
       render: () => (
-        <Button
-          variant="contained"
-          onClick={() => onAction('share')}
-          disabled={!showAccessChangeActions}
-        >
+        <Button variant="contained" onClick={() => onAction('share')}>
           {$msg('COLLABORATE')}
         </Button>
       ),
+      visible: !capability.isHidden('share'),
     },
-    helpConfiguration,
+    {
+      render: () => (
+        <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
+          {$msg('SIGN_UP')}
+        </Button>
+      ),
+      visible: !capability.isHidden('sign-up'),
+    },
+    {
+      icon: <HelpOutlineOutlinedIcon />,
+      onClick: () => onAction('info'),
+      tooltip: $msg('MAP_INFO'),
+      visible: !capability.isHidden('info'),
+    },
   ];
 }

@@ -95,6 +95,7 @@ const EN = {
   FONT_FORMAT: 'Font Format',
   FONT_INCREASE: 'Font Size Increase',
   FONT_DECREASE: 'Font Size Decrease',
+  SIGN_UP: 'Sign Up',
 };
 
 export default EN;

@@ -20,36 +20,30 @@ import { Notifier } from './styled';
 import { useIntl } from 'react-intl';
 
 import CloseDialogSvg from '../../../images/close-dialog-icon.svg';
-import { EditorRenderMode } from '@wisemapping/mindplot';
-import { Button } from '@mui/material';
+import Capability from '../../classes/action/capability';
 
 export type FooterPropsType = {
-  editorMode: EditorRenderMode;
-  isMobile: boolean;
+  capability: Capability;
 };
 
-const Footer = ({ editorMode, isMobile }: FooterPropsType): React.ReactElement => {
+const WarningDialog = ({ capability }: FooterPropsType): React.ReactElement => {
   const intl = useIntl();
   const [dialogClass, setDialogClass] = useState('tryInfoPanel');
 
   var titleKey = undefined;
   var descriptionKey = undefined;
-  var showSignupButton = undefined;
 
-  if (editorMode !== 'viewonly' && editorMode !== 'showcase' && isMobile) {
+  if (capability.mode !== 'viewonly' && capability.mode !== 'showcase' && capability.isMobile) {
     titleKey = 'editor.edit-mobile';
     descriptionKey = 'editor.edit-description-mobile';
-    showSignupButton = false;
   }
-  if (editorMode === 'showcase' && isMobile) {
+  if (capability.mode === 'showcase' && capability.isMobile) {
     titleKey = 'editor.try-welcome-mobile';
     descriptionKey = 'editor.edit-description-mobile';
-    showSignupButton = true;
   }
-  if (editorMode === 'showcase' && !isMobile) {
+  if (capability.mode === 'showcase' && !capability.isMobile) {
     titleKey = 'editor.try-welcome';
     descriptionKey = 'editor.try-welcome-description';
-    showSignupButton = true;
   }
 
   // if the toolbar is present, the alert must not overlap
@@ -75,13 +69,6 @@ const Footer = ({ editorMode, isMobile }: FooterPropsType): React.ReactElement =
             <p>
               {intl.formatMessage({ id: titleKey })} {intl.formatMessage({ id: descriptionKey })}
             </p>
-            {showSignupButton && (
-              <a href="/c/registration">
-                <Button>
-                  {intl.formatMessage({ id: 'login.signup', defaultMessage: 'Sign Up' })}
-                </Button>
-              </a>
-            )}
           </div>
         </div>
       )}
@@ -89,4 +76,4 @@ const Footer = ({ editorMode, isMobile }: FooterPropsType): React.ReactElement =
   );
 };
 
-export default Footer;
+export default WarningDialog;

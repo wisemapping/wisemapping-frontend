@@ -95,6 +95,7 @@ const ZH = {
   FONT_FORMAT: '字体格​​式',
   FONT_INCREASE: '字体大小增加',
   FONT_DECREASE: '字体大小减小',
+  SIGN_UP: '报名',
 };
 
 export default ZH;

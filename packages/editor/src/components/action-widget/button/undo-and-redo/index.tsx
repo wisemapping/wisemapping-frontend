@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React, { useEffect, useState } from 'react';
-import ActionConfig from '../../../../classes/action-config';
+import ActionConfig from '../../../../classes/action/action-config';
 import { ToolbarMenuItem } from '../../../toolbar/Toolbar';
 
 const UndoAndRedo = (props: {

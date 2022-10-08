@@ -23,8 +23,8 @@ import Popover, { PopoverOrigin } from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import '../app-bar/styles.css';
 import Box from '@mui/material/Box';
-import ActionConfig from '../../classes/action-config';
 import ToolbarPosition, { defaultPosition } from './ToolbarPositionInterface';
+import ActionConfig from '../../classes/action/action-config';
 
 /**
  * Common button
@@ -122,7 +122,9 @@ export const ToolbarSubmenu = (props: {
       >
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
           {props.configuration.options?.map((o, i) => {
-            if (o?.visible === false) return null;
+            if (o?.visible === false) {
+              return null;
+            }
             if (!o?.render) {
               return (
                 <ToolbarMenuItem

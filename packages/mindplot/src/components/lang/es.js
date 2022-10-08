@@ -95,6 +95,7 @@ const ES = {
   FONT_FORMAT: 'Formato de Fuente',
   FONT_INCREASE: 'Incrementar Tamaño de Fuente',
   FONT_DECREASE: 'Decrementar Tamaño de Fuente',
+  SIGN_UP: 'Registrarse',
 };
 
 export default ES;

@@ -18,7 +18,7 @@
 import { $msg } from '@wisemapping/mindplot';
 import React from 'react';
 
-export const KeyboardShorcutsHelp = () => {
+const KeyboardShorcutsHelp = () => {
   return (
     <div id="keyboardTable" style={{ position: 'relative', zIndex: '2' }}>
       <table>
@@ -142,3 +142,4 @@ export const KeyboardShorcutsHelp = () => {
     </div>
   );
 };
+export default KeyboardShorcutsHelp;

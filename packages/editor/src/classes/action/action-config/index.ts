@@ -56,7 +56,7 @@ interface ActionConfig {
    */
   useClickToClose?: boolean;
   /**
-   * if false the nmenu entry or button is not visible. Also custom render will be ignored.
+   * if false the menu entry or button is not visible. Also custom render will be ignored.
    */
   visible?: boolean;
 }

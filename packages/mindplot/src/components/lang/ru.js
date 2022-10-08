@@ -95,6 +95,7 @@ const EN = {
   FONT_FORMAT: 'Формат шрифта',
   FONT_INCREASE: 'Увеличение размера шрифта',
   FONT_DECREASE: 'Уменьшение размера шрифта',
+  SIGN_UP: 'зарегистрироваться',
 };
 
 export default EN;
