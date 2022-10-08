@@ -164,7 +164,11 @@ export class NodePropertyValueModelBuilder {
       this.linkModel = {
         getValue: (): string => this.selectedTopic()?.getLinkValue(),
         setValue: (value: string) => {
-          this.selectedTopic().setLinkValue(value);
+          if (value && value.trim() !== '') {
+            this.selectedTopic().setLinkValue(value);
+          } else {
+            this.selectedTopic().setLinkValue(undefined);
+          }
         },
       };
     return this.linkModel;
@@ -218,7 +222,8 @@ export class NodePropertyValueModelBuilder {
       this.noteModel = {
         getValue: (): string => this.selectedTopic()?.getNoteValue(),
         setValue: (value: string) => {
-          this.selectedTopic().setNoteValue(value);
+          const note = value && value.trim() !== '' ? value : undefined;
+          this.selectedTopic()?.setNoteValue(note);
         },
       };
     return this.noteModel;

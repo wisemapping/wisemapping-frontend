@@ -55,7 +55,8 @@ export class DefaultWidgetManager extends WidgetManager {
         return topic.getNoteValue();
       },
       setValue(value: string) {
-        topic.setNoteValue(value);
+        const note = value && value.trim() !== '' ? value : undefined;
+        topic.setNoteValue(note);
       },
     };
     this.editorContent = noteContent(model, () => this.setPopoverOpen(false));

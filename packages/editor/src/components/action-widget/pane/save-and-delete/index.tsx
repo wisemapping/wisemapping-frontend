@@ -16,9 +16,11 @@ const SaveAndDelete = (props: {
       <Button color="primary" variant="outlined" onClick={props.submitHandler} sx={{ mr: 1 }}>
         {$msg('ACCEPT')}
       </Button>
+
       <Button color="primary" variant="contained" onClick={props.closeModal}>
         {$msg('CANCEL')}
       </Button>
+
       {props.model.getValue() && props.model.getValue().trim() !== '' && (
         <IconButton
           onClick={() => {
