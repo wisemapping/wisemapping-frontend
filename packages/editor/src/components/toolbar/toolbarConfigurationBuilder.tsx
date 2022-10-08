@@ -49,6 +49,8 @@ import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Capability from '../../classes/action/capability';
 
+export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
+
 /**
  *
  * @param designer designer to aply changes
@@ -305,11 +307,14 @@ export function buildZoomToolbarConfiguration(
 
   return [
     {
-      icon: <CenterFocusStrongOutlinedIcon />,
-      tooltip: $msg('CENTER_POSITION'),
-      onClick: () => {
-        designer.zoomToFit();
-      },
+      icon: <KeyboardOutlined />,
+      tooltip: $msg('KEYBOARD_SHOTCUTS'),
+      visible: !capability.isHidden('keyboard-shortcuts'),
+      options: [
+        {
+          render: () => <KeyboardShorcutsHelp />,
+        },
+      ],
     },
     {
       // zoom value candidate, neds to fixit
@@ -336,14 +341,11 @@ export function buildZoomToolbarConfiguration(
       },
     },
     {
-      icon: <KeyboardOutlined />,
-      tooltip: $msg('KEYBOARD_SHOTCUTS'),
-      visible: !capability.isHidden('keyboard-shortcuts'),
-      options: [
-        {
-          render: () => <KeyboardShorcutsHelp />,
-        },
-      ],
+      icon: <CenterFocusStrongOutlinedIcon />,
+      tooltip: $msg('CENTER_POSITION'),
+      onClick: () => {
+        designer.zoomToFit();
+      },
     },
   ];
 }
