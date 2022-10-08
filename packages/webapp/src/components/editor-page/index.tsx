@@ -68,7 +68,9 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   }
 
   useEffect(() => {
-    document.title = `${options.mapTitle} | WiseMapping `;
+    if (options?.mapTitle) {
+      document.title = `${options.mapTitle} | WiseMapping `;
+    }
   });
 
   return loadCompleted ? (
