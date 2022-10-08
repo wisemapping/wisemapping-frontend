@@ -38,7 +38,6 @@ import ActionConfig from '../../classes/action/action-config';
 import { SwitchValueDirection } from './ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Typography from '@mui/material/Typography';
-import { ToolbarActionType } from '.';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import ColorPicker from '../action-widget/pane/color-picker';
