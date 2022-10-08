@@ -149,8 +149,11 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
     },
   },
   'keyboard-shortcuts': {
+    desktop: {
+      hidden: ['viewonly', 'edition-viewer'],
+    },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: ['edition-editor', 'edition-owner', 'showcase'],
     },
   },
   history: {

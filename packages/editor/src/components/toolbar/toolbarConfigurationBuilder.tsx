@@ -55,7 +55,7 @@ import Capability from '../../classes/action/capability';
  * @param designer designer to aply changes
  * @returns configuration for @wisemapping/editor priAppbarmary toolbar
  */
-export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
+export function buildToolbarConfig(designer: Designer): ActionConfig[] {
   if (!designer) return [];
 
   /**
@@ -63,10 +63,6 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
    */
   const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(designer);
 
-  // <div id="rectagle" model="rectagle"><img src="${RectangleImage}" alt="Rectangle"></div>
-  // <div id="rounded_rectagle" model="rounded rectagle" ><img src="${RectangleRoundImage}" alt="Rounded Rectangle"></div>
-  // <div id="line" model="line"><img src="${LineImage}" alt="Line"></div>
-  // <div id="elipse" model="elipse"><img src="${CircleImage}"></div>`;
   /**
    * submenu to manipulate node color and shape
    */
@@ -310,14 +306,11 @@ export function buildZoomToolbarConfiguration(
 
   return [
     {
-      icon: <KeyboardOutlined />,
-      tooltip: $msg('KEYBOARD_SHOTCUTS'),
-      visible: !capability.isHidden('keyboard-shortcuts'),
-      options: [
-        {
-          render: () => <KeyboardShorcutsHelp />,
-        },
-      ],
+      icon: <CenterFocusStrongOutlinedIcon />,
+      tooltip: $msg('CENTER_POSITION'),
+      onClick: () => {
+        designer.zoomToFit();
+      },
     },
     {
       // zoom value candidate, neds to fixit
@@ -344,11 +337,14 @@ export function buildZoomToolbarConfiguration(
       },
     },
     {
-      icon: <CenterFocusStrongOutlinedIcon />,
-      tooltip: $msg('CENTER_POSITION'),
-      onClick: () => {
-        designer.zoomToFit();
-      },
+      icon: <KeyboardOutlined />,
+      tooltip: $msg('KEYBOARD_SHOTCUTS'),
+      visible: !capability.isHidden('keyboard-shortcuts'),
+      options: [
+        {
+          render: () => <KeyboardShorcutsHelp />,
+        },
+      ],
     },
   ];
 }

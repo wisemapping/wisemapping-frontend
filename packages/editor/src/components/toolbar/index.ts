@@ -20,7 +20,7 @@ import { horizontalPosition } from './ToolbarPositionInterface';
 import Header from '../app-bar';
 import {
   buildEditorAppBarConfiguration,
-  buildToolbarCongiruation,
+  buildToolbarConfig,
   buildZoomToolbarConfiguration,
 } from './toolbarConfigurationBuilder';
 
@@ -28,7 +28,7 @@ export default Toolbar;
 
 export const configurationBuilder = {
   buildEditorAppBarConfiguration,
-  buildToolbarCongiruation,
+  buildToolbarConfig,
   buildZoomToolbarConfiguration,
 };
 export { horizontalPosition, Header };

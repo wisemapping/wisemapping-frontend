@@ -20,13 +20,7 @@ import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 
 import { IntlProvider } from 'react-intl';
-import {
-  $notify,
-  PersistenceManager,
-  Designer,
-  DesignerKeyboard,
-  MindplotWebComponent,
-} from '@wisemapping/mindplot';
+import { DesignerKeyboard, MindplotWebComponent } from '@wisemapping/mindplot';
 import I18nMsg from '../classes/i18n-msg';
 import Toolbar, { horizontalPosition, configurationBuilder } from './toolbar';
 import { theme as defaultEditorTheme } from '../theme';
@@ -36,7 +30,7 @@ import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';
 import DefaultWidgetManager from '../classes/default-widget-manager';
 import AppBar from './app-bar';
-import { EditorOptions, EditorProps } from '..';
+import { EditorProps } from '..';
 import Capability from '../classes/action/capability';
 
 const Editor = ({
@@ -53,33 +47,27 @@ const Editor = ({
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
   const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
   const toolbarConfiguration = useRef([]);
-  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
 
-  // Load mindmap ...
+  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
   const capability = new Capability(options.mode, options.locked);
 
-  const mindplotRef = useCallback((node: MindplotWebComponent) => {
-    setMindplotComponent(node);
+  const mindplotRef = useCallback((component: MindplotWebComponent) => {
+    setMindplotComponent(component);
   }, []);
 
   useEffect(() => {
-    if (mindplotComponent === undefined) {
-      return;
+    if (mindplotComponent) {
+      // Initialized model ...
+      const model = new Model(mindplotComponent);
+      model.loadMindmap(mapId, persistenceManager, widgetManager);
+      model.registerEvents(setToolbarsRerenderSwitch, capability);
+      setModel(model);
+
+      toolbarConfiguration.current = configurationBuilder.buildToolbarConfig(
+        mindplotComponent.getDesigner(),
+      );
     }
-
-    // Initialized model ...
-    const model = new Model(mindplotComponent);
-    model.loadMindmap(mapId, persistenceManager, widgetManager);
-    model.registerEvents(setToolbarsRerenderSwitch, capability);
-    setModel(model);
-
-    toolbarConfiguration.current = configurationBuilder.buildToolbarCongiruation(designer);
   }, [mindplotComponent !== undefined]);
-
-  useEffect(() => {
-    // Change page title ...
-    document.title = `${options.mapTitle} | WiseMapping `;
-  });
 
   useEffect(() => {
     if (options.enableKeyboardEvents) {
@@ -89,6 +77,7 @@ const Editor = ({
     }
   }, [options.enableKeyboardEvents]);
 
+  // Initialize locate ...
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
 
