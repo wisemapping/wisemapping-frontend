@@ -18,8 +18,6 @@ body {
   width: 100%;
   height: 100%;
 }
-
-
 .panelIcon {
   width: 20px;
   height: 20px;
@@ -35,16 +33,6 @@ body {
 .wise-editor .popover {
   font-size: 13px;
   max-width: none;
-}
-
-#floating-panel {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  bottom: 20px;
-  right: 20px;
-  align-items: stretch;
 }
 
 #keyboardTable {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { times } from '../../size';
+import { times } from '../size';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 
 export const StyledFooter = styled.div`
