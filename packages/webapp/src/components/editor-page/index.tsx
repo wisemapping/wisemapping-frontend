@@ -67,6 +67,10 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     persistence = buildPersistenceManagerForEditor(mode);
   }
 
+  useEffect(() => {
+    document.title = `${options.mapTitle} | WiseMapping `;
+  }, [loadCompleted]);
+
   return loadCompleted ? (
     <IntlProvider
       locale={userLocale.code}
