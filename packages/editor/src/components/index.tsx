@@ -17,6 +17,7 @@
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Popover from '@mui/material/Popover';
+import Model from '../classes/model/editor';
 
 import { IntlProvider } from 'react-intl';
 import {
@@ -43,16 +44,16 @@ const Editor = ({
   options,
   persistenceManager,
   onAction,
-  onLoad,
   theme,
   accountConfiguration,
 }: EditorProps) => {
   const [mindplotComponent, setMindplotComponent]: [MindplotWebComponent | undefined, Function] =
     useState();
-
+  const [model, setModel]: [MindplotWebComponent | undefined, Function] = useState();
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
   const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
   const toolbarConfiguration = useRef([]);
+  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
 
   // Load mindmap ...
   const capability = new Capability(options.mode, options.locked);
@@ -61,59 +62,24 @@ const Editor = ({
     setMindplotComponent(node);
   }, []);
 
-  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
-
-  const onNodeBlurHandler = () => {
-    if (!mindplotComponent.getDesigner().getModel().selectedTopic())
-      setToolbarsRerenderSwitch(Date.now());
-  };
-
-  const onNodeFocusHandler = () => {
-    setToolbarsRerenderSwitch(Date.now());
-  };
-
   useEffect(() => {
     if (mindplotComponent === undefined) {
       return;
     }
 
-    // Change page title ...
-    document.title = `${options.mapTitle} | WiseMapping `;
-
-    const designer = onLoadDesigner(mapId, options, persistenceManager);
-
-    // Register events ...
-    designer.addEvent('onblur', onNodeBlurHandler);
-    designer.addEvent('onfocus', onNodeFocusHandler);
-    designer.addEvent('modelUpdate', onNodeFocusHandler);
-    designer.getWorkSpace().getScreenManager().addEvent('update', onNodeFocusHandler);
-
-    // Is the save action enabled ... ?
-    if (!capability.isHidden('save')) {
-      // Register unload save ...
-      window.addEventListener('beforeunload', () => {
-        mindplotComponent.save(false);
-        mindplotComponent.unlockMap();
-      });
-
-      // Autosave on a fixed period of time ...
-      setInterval(() => {
-        mindplotComponent.save(false);
-      }, 10000);
-    }
+    // Initialized model ...
+    const model = new Model(mindplotComponent);
+    model.loadMindmap(mapId, persistenceManager, widgetManager);
+    model.registerEvents(setToolbarsRerenderSwitch, capability);
+    setModel(model);
 
     toolbarConfiguration.current = configurationBuilder.buildToolbarCongiruation(designer);
-    // Has extended actions been customized ...
-    if (onLoad) {
-      onLoad(designer);
-    }
-
-    mindplotComponent.loadMap(mapId);
-
-    if (options.locked) {
-      $notify(options.lockedMsg, false);
-    }
   }, [mindplotComponent !== undefined]);
+
+  useEffect(() => {
+    // Change page title ...
+    document.title = `${options.mapTitle} | WiseMapping `;
+  });
 
   useEffect(() => {
     if (options.enableKeyboardEvents) {
@@ -123,16 +89,6 @@ const Editor = ({
     }
   }, [options.enableKeyboardEvents]);
 
-  const onLoadDesigner = (
-    _mapId: string,
-    _options: EditorOptions,
-    persistenceManager: PersistenceManager,
-  ): Designer => {
-    // Build designer ...
-    mindplotComponent.buildDesigner(persistenceManager, widgetManager);
-    return mindplotComponent.getDesigner();
-  };
-
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
 
@@ -141,22 +97,11 @@ const Editor = ({
     options.mapTitle,
     capability,
     onAction,
+    accountConfiguration,
     () => {
       mindplotComponent.save(true);
     },
   );
-
-  if (capability && !capability.isHidden('account')) {
-    menubarConfiguration.push({
-      render: () => accountConfiguration,
-    });
-  }
-
-  useEffect(() => {
-    return () => {
-      mindplotComponent.unlockMap();
-    };
-  }, []);
 
   // if the Toolbar is not hidden before the variable 'isMobile' is defined, it appears intermittently when the page loads
   // if the Toolbar is not rendered, Menu.ts cant find buttons for create event listeners
@@ -191,14 +136,20 @@ const Editor = ({
           position={horizontalPosition}
           rerender={toolbarsRerenderSwitch}
         ></Toolbar>
+
         <mindplot-component
           ref={mindplotRef}
           id="mindmap-comp"
           mode={options.mode}
           locale={options.locale}
         ></mindplot-component>
+
         <Notifier id="headerNotifier"></Notifier>
-        <WarningDialog capability={capability}></WarningDialog>
+
+        <WarningDialog
+          capability={capability}
+          message={options.locked ? options.lockedMsg : ''}
+        ></WarningDialog>
       </IntlProvider>
     </ThemeProvider>
   );

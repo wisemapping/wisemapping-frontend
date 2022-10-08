@@ -24,9 +24,10 @@ import Capability from '../../classes/action/capability';
 
 export type FooterPropsType = {
   capability: Capability;
+  message: string;
 };
 
-const WarningDialog = ({ capability }: FooterPropsType): React.ReactElement => {
+const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactElement => {
   const intl = useIntl();
   const [dialogClass, setDialogClass] = useState('tryInfoPanel');
 
@@ -52,7 +53,7 @@ const WarningDialog = ({ capability }: FooterPropsType): React.ReactElement => {
   return (
     <>
       <Notifier id="headerNotifier"></Notifier>
-      {titleKey && (
+      {(titleKey || message) && (
         <div className={dialogClass + ' ' + alertTopAdjustmentStyle}>
           <div className="tryInfoPanelInner">
             <div className="closeButton">
@@ -66,9 +67,12 @@ const WarningDialog = ({ capability }: FooterPropsType): React.ReactElement => {
                 <img src={CloseDialogSvg} />
               </button>
             </div>
-            <p>
-              {intl.formatMessage({ id: titleKey })} {intl.formatMessage({ id: descriptionKey })}
-            </p>
+            {titleKey && (
+              <p>
+                {intl.formatMessage({ id: titleKey })} {intl.formatMessage({ id: descriptionKey })}
+              </p>
+            )}
+            {message && <p>{message}</p>}
           </div>
         </div>
       )}

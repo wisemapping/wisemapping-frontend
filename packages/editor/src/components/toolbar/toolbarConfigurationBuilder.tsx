@@ -358,6 +358,7 @@ export function buildEditorAppBarConfiguration(
   mapTitle: string,
   capability: Capability,
   onAction: (type: ToolbarActionType) => void,
+  accountConfiguration,
   save: () => void,
 ): ActionConfig[] {
   if (!designer) {
@@ -463,18 +464,22 @@ export function buildEditorAppBarConfiguration(
       visible: !capability.isHidden('share'),
     },
     {
+      icon: <HelpOutlineOutlinedIcon />,
+      onClick: () => onAction('info'),
+      tooltip: $msg('MAP_INFO'),
+      visible: !capability.isHidden('info'),
+    },
+    {
+      render: () => accountConfiguration,
+      visible: !capability.isHidden('account'),
+    },
+    {
       render: () => (
         <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
           {$msg('SIGN_UP')}
         </Button>
       ),
       visible: !capability.isHidden('sign-up'),
-    },
-    {
-      icon: <HelpOutlineOutlinedIcon />,
-      onClick: () => onAction('info'),
-      tooltip: $msg('MAP_INFO'),
-      visible: !capability.isHidden('info'),
     },
   ];
 }

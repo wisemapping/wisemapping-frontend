@@ -68,8 +68,6 @@ class Capability {
     ) {
       result = true;
     }
-
-    console.log(`action: ${action}->${Boolean(result)}`);
     return Boolean(result);
   }
 
