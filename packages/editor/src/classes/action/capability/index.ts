@@ -122,7 +122,11 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       hidden: ['showcase', 'viewonly', 'edition-viewer'],
     },
   },
-  print: undefined,
+  print: {
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+    },
+  },
   publish: {
     desktop: {
       hidden: ['showcase', 'viewonly', 'edition-viewer', 'edition-editor'],
@@ -136,6 +140,9 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   info: {
     desktop: {
       hidden: ['showcase'],
+    },
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
     },
   },
   account: {
@@ -161,7 +168,11 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       hidden: ['viewonly', 'edition-viewer', 'showcase'],
     },
   },
-  export: undefined,
+  export: {
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+    },
+  },
   'sign-up': {
     desktop: {
       hidden: ['viewonly', 'edition-viewer', 'edition-editor', 'edition-owner'],
