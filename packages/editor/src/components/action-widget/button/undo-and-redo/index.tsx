@@ -17,7 +17,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import ActionConfig from '../../../../classes/action/action-config';
-import { ToolbarMenuItem } from '../../../toolbar/Toolbar';
+import { ToolbarMenuItem } from '../../../toolbar';
 
 const UndoAndRedo = (props: {
   configuration: ActionConfig;

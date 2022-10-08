@@ -69,7 +69,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
 
   useEffect(() => {
     document.title = `${options.mapTitle} | WiseMapping `;
-  }, [loadCompleted]);
+  });
 
   return loadCompleted ? (
     <IntlProvider
@@ -84,12 +84,17 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
         mapId={mapId}
         theme={theme}
         accountConfiguration={
-          <IntlProvider
-            locale={userLocale.code}
-            messages={userLocale.message as Record<string, string>}
-          >
-            <AccountMenu></AccountMenu>
-          </IntlProvider>
+          // Provent load on non-authenticated.
+          options.mode !== 'showcase' ? (
+            <IntlProvider
+              locale={userLocale.code}
+              messages={userLocale.message as Record<string, string>}
+            >
+              <AccountMenu />
+            </IntlProvider>
+          ) : (
+            <></>
+          )
         }
       />
       {activeDialog && (

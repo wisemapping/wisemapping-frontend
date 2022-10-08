@@ -35,9 +35,9 @@ import {
   TextImporterFactory,
 } from '@wisemapping/mindplot';
 import './global-styled.css';
-import { ToolbarActionType } from './components/toolbar';
 import { Theme } from '@mui/material/styles';
 import Editor from './components';
+import { ToolbarActionType } from './components/toolbar/toolbarConfigurationBuilder';
 
 declare global {
   // used in mindplot

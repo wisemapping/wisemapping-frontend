@@ -18,7 +18,7 @@
 /**
  * Configure position of a toolbar
  */
-export default interface ToolbarPosition {
+interface ToolbarPosition {
   /**
    * if true, first level will be displayed in vertical orientation
    */
@@ -34,19 +34,4 @@ export default interface ToolbarPosition {
     top: string;
   };
 }
-
-export const defaultPosition: ToolbarPosition = {
-  vertical: true,
-  position: {
-    right: '7px',
-    top: '150px',
-  },
-};
-
-export const horizontalPosition = {
-  position: {
-    right: '7px',
-    top: '93%',
-  },
-  vertical: false,
-};
+export default ToolbarPosition;

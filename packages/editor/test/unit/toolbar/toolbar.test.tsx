@@ -8,7 +8,7 @@ import Toolbar, {
   ToolbarButtonOption,
   ToolbarMenuItem,
   ToolbarSubmenu,
-} from '../../../src/components/toolbar/Toolbar';
+} from '../../../src/components/toolbar';
 import AppBar from '../../../src/components/app-bar';
 import ActionConfig from '../../../src/classes/action/action-config';
 require('babel-polyfill');

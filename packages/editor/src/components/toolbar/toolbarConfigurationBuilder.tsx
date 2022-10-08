@@ -10,7 +10,6 @@ import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
-import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import UndoOutlinedIcon from '@mui/icons-material/UndoOutlined';
 import RedoOutlinedIcon from '@mui/icons-material/RedoOutlined';
@@ -38,7 +37,6 @@ import ActionConfig from '../../classes/action/action-config';
 import { SwitchValueDirection } from './ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Typography from '@mui/material/Typography';
-import { ToolbarActionType } from '.';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import ColorPicker from '../action-widget/pane/color-picker';
@@ -49,6 +47,8 @@ import TopicNote from '../action-widget/pane/topic-note';
 import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Capability from '../../classes/action/capability';
+
+export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
 
 /**
  *
@@ -305,13 +305,6 @@ export function buildZoomToolbarConfiguration(
   if (!designer) return [];
 
   return [
-    {
-      icon: <CenterFocusStrongOutlinedIcon />,
-      tooltip: $msg('CENTER_POSITION'),
-      onClick: () => {
-        designer.zoomToFit();
-      },
-    },
     {
       // zoom value candidate, neds to fixit
       render: () => (

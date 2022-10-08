@@ -18,11 +18,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
+import {
+  buildEditorAppBarConfiguration,
+  buildToolbarConfig,
+  buildZoomToolbarConfiguration,
+} from './toolbar/toolbarConfigurationBuilder';
 
 import { IntlProvider } from 'react-intl';
 import { DesignerKeyboard, MindplotWebComponent } from '@wisemapping/mindplot';
 import I18nMsg from '../classes/i18n-msg';
-import Toolbar, { horizontalPosition, configurationBuilder } from './toolbar';
+import Toolbar from './toolbar';
 import { theme as defaultEditorTheme } from '../theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { Theme } from '@mui/material/styles';
@@ -63,9 +68,7 @@ const Editor = ({
       model.registerEvents(setToolbarsRerenderSwitch, capability);
       setModel(model);
 
-      toolbarConfiguration.current = configurationBuilder.buildToolbarConfig(
-        mindplotComponent.getDesigner(),
-      );
+      toolbarConfiguration.current = buildToolbarConfig(mindplotComponent.getDesigner());
     }
   }, [mindplotComponent !== undefined]);
 
@@ -81,7 +84,7 @@ const Editor = ({
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
 
-  const menubarConfiguration = configurationBuilder.buildEditorAppBarConfiguration(
+  const menubarConfiguration = buildEditorAppBarConfiguration(
     mindplotComponent?.getDesigner(),
     options.mapTitle,
     capability,
@@ -91,6 +94,14 @@ const Editor = ({
       mindplotComponent.save(true);
     },
   );
+
+  const horizontalPosition = {
+    position: {
+      right: '7px',
+      top: '93%',
+    },
+    vertical: false,
+  };
 
   // if the Toolbar is not hidden before the variable 'isMobile' is defined, it appears intermittently when the page loads
   // if the Toolbar is not rendered, Menu.ts cant find buttons for create event listeners
@@ -118,7 +129,7 @@ const Editor = ({
           ></Toolbar>
         )}
         <Toolbar
-          configurations={configurationBuilder.buildZoomToolbarConfiguration(
+          configurations={buildZoomToolbarConfiguration(
             capability,
             mindplotComponent?.getDesigner(),
           )}

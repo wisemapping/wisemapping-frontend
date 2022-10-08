@@ -23,7 +23,7 @@ import Popover, { PopoverOrigin } from '@mui/material/Popover';
 import Tooltip from '@mui/material/Tooltip';
 import '../app-bar/styles.css';
 import Box from '@mui/material/Box';
-import ToolbarPosition, { defaultPosition } from './ToolbarPositionInterface';
+import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
 
 /**
@@ -184,6 +184,14 @@ export const ToolbarMenuItem = (props: {
       );
     else return null;
   }
+};
+
+const defaultPosition: ToolbarPosition = {
+  vertical: true,
+  position: {
+    right: '7px',
+    top: '150px',
+  },
 };
 
 // const getOrientationProps = (orientation: 'horizontal' | 'vertical'): [top:number, number, ]

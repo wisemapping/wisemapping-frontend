@@ -18,7 +18,7 @@
 import React from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
-import { ToolbarMenuItem } from '../toolbar/Toolbar';
+import { ToolbarMenuItem } from '../toolbar';
 import ActionConfig from '../../classes/action/action-config';
 
 /**
