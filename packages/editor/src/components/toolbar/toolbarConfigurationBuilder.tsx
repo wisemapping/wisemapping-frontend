@@ -307,14 +307,11 @@ export function buildZoomToolbarConfiguration(
 
   return [
     {
-      icon: <KeyboardOutlined />,
-      tooltip: $msg('KEYBOARD_SHOTCUTS'),
-      visible: !capability.isHidden('keyboard-shortcuts'),
-      options: [
-        {
-          render: () => <KeyboardShorcutsHelp />,
-        },
-      ],
+      icon: <CenterFocusStrongOutlinedIcon />,
+      tooltip: $msg('CENTER_POSITION'),
+      onClick: () => {
+        designer.zoomToFit();
+      },
     },
     {
       // zoom value candidate, neds to fixit
@@ -341,11 +338,14 @@ export function buildZoomToolbarConfiguration(
       },
     },
     {
-      icon: <CenterFocusStrongOutlinedIcon />,
-      tooltip: $msg('CENTER_POSITION'),
-      onClick: () => {
-        designer.zoomToFit();
-      },
+      icon: <KeyboardOutlined />,
+      tooltip: $msg('KEYBOARD_SHOTCUTS'),
+      visible: !capability.isHidden('keyboard-shortcuts'),
+      options: [
+        {
+          render: () => <KeyboardShorcutsHelp />,
+        },
+      ],
     },
   ];
 }
