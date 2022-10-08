@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { $msg } from '@wisemapping/mindplot';
-import { NodePropertyValueModel } from '../../ToolbarValueModelBuilder';
+import { NodePropertyValueModel } from '../../../toolbar/ToolbarValueModelBuilder';
 import Box from '@mui/material/Box';
 import React from 'react';
-import Input from '../input';
+import Input from '../../input';
 import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import SaveAndDelete from '../save-and-delete';
@@ -12,7 +12,7 @@ import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 /**
  * Url form for toolbar and node contextual editor
  */
-const UrlForm = (props: { closeModal: () => void; urlModel: NodePropertyValueModel }) => {
+const TopicLink = (props: { closeModal: () => void; urlModel: NodePropertyValueModel }) => {
   const [url, setUrl] = useState(props.urlModel.getValue());
 
   /**
@@ -73,4 +73,4 @@ const UrlForm = (props: { closeModal: () => void; urlModel: NodePropertyValueMod
   );
 };
 
-export default UrlForm;
+export default TopicLink;

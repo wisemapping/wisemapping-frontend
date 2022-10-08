@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { $msg } from '@wisemapping/mindplot';
 import React from 'react';
-import { NodePropertyValueModel } from '../../ToolbarValueModelBuilder';
+import { NodePropertyValueModel } from '../../../toolbar/ToolbarValueModelBuilder';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const SaveAndDelete = (props: {

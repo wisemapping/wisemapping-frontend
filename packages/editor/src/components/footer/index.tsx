@@ -3,9 +3,8 @@ import { Notifier } from './styled';
 import { useIntl } from 'react-intl';
 
 import CloseDialogSvg from '../../../images/close-dialog-icon.svg';
-
-import ActionButton from '../action-button';
 import { EditorRenderMode } from '@wisemapping/mindplot';
+import { Button } from '@mui/material';
 
 export type FooterPropsType = {
   editorMode: EditorRenderMode;
@@ -61,9 +60,9 @@ const Footer = ({ editorMode, isMobile }: FooterPropsType): React.ReactElement =
             </p>
             {showSignupButton && (
               <a href="/c/registration">
-                <ActionButton>
+                <Button>
                   {intl.formatMessage({ id: 'login.signup', defaultMessage: 'Sign Up' })}
-                </ActionButton>
+                </Button>
               </a>
             )}
           </div>

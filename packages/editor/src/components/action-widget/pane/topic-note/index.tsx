@@ -1,14 +1,14 @@
 import Box from '@mui/material/Box';
 import { $msg } from '@wisemapping/mindplot';
 import React, { useState } from 'react';
-import { NodePropertyValueModel } from '../../ToolbarValueModelBuilder';
-import Input from '../input';
+import { NodePropertyValueModel } from '../../../toolbar/ToolbarValueModelBuilder';
+import Input from '../../input';
 import SaveAndDelete from '../save-and-delete';
 
 /**
  * Note form for toolbar and node contextual editor
  */
-const NoteForm = (props: { closeModal: () => void; noteModel: NodePropertyValueModel | null }) => {
+const TopicNote = (props: { closeModal: () => void; noteModel: NodePropertyValueModel | null }) => {
   const [note, setNote] = useState(props.noteModel.getValue());
 
   const submitHandler = () => {
@@ -39,4 +39,4 @@ const NoteForm = (props: { closeModal: () => void; noteModel: NodePropertyValueM
   );
 };
 
-export default NoteForm;
+export default TopicNote;

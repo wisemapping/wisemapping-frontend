@@ -36,15 +36,17 @@ import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import { $msg, Designer } from '@wisemapping/mindplot';
 import ActionConfig from '../../classes/action-config';
 import { SwitchValueDirection, NodePropertyValueModelBuilder } from './ToolbarValueModelBuilder';
-import { FontFamilySelect, ToolbarEmojiPcker, UndoAndRedoButton } from './toolbarCustomComponents';
 import Typography from '@mui/material/Typography';
 import { ToolbarActionType } from '.';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Tooltip from '@mui/material/Tooltip';
-import UrlForm from './component/link-form';
-import NoteForm from './component/note-form';
-import ColorPicker from './color-picker';
-import { KeyboardShorcutsHelp } from '../footer/keyboard-shortcut-help';
+import ColorPicker from '../action-widget/pane/color-picker';
+import { KeyboardShorcutsHelp } from '../action-widget/pane/keyboard-shortcut-help';
+import UndoAndRedo from '../action-widget/button/undo-and-redo';
+import TopicLink from '../action-widget/pane/topic-link';
+import TopicNote from '../action-widget/pane/topic-note';
+import IconPicker from '../action-widget/pane/icon-picker';
+import FontFamilySelector from '../action-widget/button/font-family-selector';
 
 /**
  *
@@ -150,7 +152,7 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
     options: [
       {
         render: () => (
-          <FontFamilySelect fontFamilyModel={toolbarValueModelBuilder.getFontFamilyModel()} />
+          <FontFamilySelector fontFamilyModel={toolbarValueModelBuilder.getFontFamilyModel()} />
         ),
       },
       null,
@@ -223,10 +225,10 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
     options: [
       {
         render: (closeModal) => (
-          <UrlForm
+          <TopicLink
             closeModal={closeModal}
             urlModel={toolbarValueModelBuilder.getLinkModel()}
-          ></UrlForm>
+          ></TopicLink>
         ),
       },
     ],
@@ -244,10 +246,10 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
       {
         tooltip: 'Node note',
         render: (closeModal) => (
-          <NoteForm
+          <TopicNote
             closeModal={closeModal}
             noteModel={toolbarValueModelBuilder.getNoteModel()}
-          ></NoteForm>
+          ></TopicNote>
         ),
       },
     ],
@@ -264,7 +266,7 @@ export function buildToolbarCongiruation(designer: Designer): ActionConfig[] {
       {
         tooltip: 'Node icon',
         render: (closeModal) => (
-          <ToolbarEmojiPcker
+          <IconPicker
             closeModal={closeModal}
             iconModel={toolbarValueModelBuilder.getTopicIconModel()}
           />
@@ -409,27 +411,27 @@ export function buildEditorAppBarConfiguration(
     null,
     {
       render: () => (
-        <UndoAndRedoButton
+        <UndoAndRedo
           configuration={{
             icon: <UndoOutlinedIcon />,
             tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
             onClick: () => designer.undo(),
           }}
           disabledCondition={(event) => event.undoSteps > 0}
-        ></UndoAndRedoButton>
+        ></UndoAndRedo>
       ),
       visible: showMindMapNodesActions,
     },
     {
       render: () => (
-        <UndoAndRedoButton
+        <UndoAndRedo
           configuration={{
             icon: <RedoOutlinedIcon />,
             tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
             onClick: () => designer.redo(),
           }}
           disabledCondition={(event) => event.redoSteps > 0}
-        ></UndoAndRedoButton>
+        ></UndoAndRedo>
       ),
       visible: showMindMapNodesActions,
     },
