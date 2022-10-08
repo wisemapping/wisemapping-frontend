@@ -123,6 +123,9 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
     },
   },
   print: {
+    desktop: {
+      hidden: ['showcase'],
+    },
     mobile: {
       hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
     },
