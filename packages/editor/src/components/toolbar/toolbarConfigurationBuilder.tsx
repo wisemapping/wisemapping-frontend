@@ -422,16 +422,16 @@ export function buildEditorAppBarConfiguration(
     },
     null,
     {
-      icon: <RestoreOutlinedIcon />,
-      tooltip: $msg('HISTORY'),
-      onClick: () => onAction('history'),
-      visible: !capability.isHidden('history'),
-    },
-    {
       icon: <SaveOutlinedIcon />,
       tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
       onClick: save,
       visible: !capability.isHidden('save'),
+    },
+    {
+      icon: <RestoreOutlinedIcon />,
+      tooltip: $msg('HISTORY'),
+      onClick: () => onAction('history'),
+      visible: !capability.isHidden('history'),
     },
     appBarDivisor,
     {
