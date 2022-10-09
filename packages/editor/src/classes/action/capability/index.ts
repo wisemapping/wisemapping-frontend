@@ -51,7 +51,7 @@ class Capability {
 
       // Had been overwrited for mobile ...
       if (!result && this.isMobile) {
-        const mobileCapability: EditorRenderMode[] = mapping.desktop?.hidden;
+        const mobileCapability: EditorRenderMode[] = mapping.mobile?.hidden;
         result = mobileCapability?.includes(this.mode);
       }
     }
@@ -85,7 +85,7 @@ class Capability {
 
         // Had been overwrited for mobile ...
         if (!result && this.isMobile) {
-          const mobileCapability: EditorRenderMode[] = mapping.desktop?.hidden;
+          const mobileCapability: EditorRenderMode[] = mapping.mobile?.hidden;
           result = mobileCapability?.includes(this.mode);
         }
       }
