@@ -23,7 +23,7 @@ export default abstract class AppI18n {
 
   public static getUserLocale(): Locale {
     // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
-    const isTryPage = window.location.href.endsWith('/try');
+    const isTryPage = window.location.pathname.endsWith('/try');
     let result: Locale;
     if (!isTryPage) {
       const account = fetchAccount();
