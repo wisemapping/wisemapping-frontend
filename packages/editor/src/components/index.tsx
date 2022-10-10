@@ -20,7 +20,7 @@ import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 import {
   buildAppBarConfig,
-  buildToolbarConfig,
+  buildEditorPanelConfig,
   buildZoomToolbarConfig,
 } from './toolbar/toolbarConfigBuilder';
 
@@ -63,12 +63,6 @@ const Editor = ({
   }, []);
 
   useEffect(() => {
-    if (model) {
-      toolbarConfiguration.current = buildToolbarConfig(model.getDesigner());
-    }
-  }, [model]);
-
-  useEffect(() => {
     if (options.enableKeyboardEvents) {
       DesignerKeyboard.resume();
     } else {
@@ -108,9 +102,9 @@ const Editor = ({
         >
           {widgetManager.getEditorContent()}
         </Popover>
-        {!capability.isHidden('edition-toolbar') && (
+        {!capability.isHidden('edition-toolbar') && model?.isMapLoadded() && (
           <Toolbar
-            configurations={toolbarConfiguration.current}
+            configurations={buildEditorPanelConfig(model)}
             rerender={toolbarsRerenderSwitch}
           ></Toolbar>
         )}

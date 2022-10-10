@@ -57,13 +57,8 @@ export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'sh
  * @param designer designer to aply changes
  * @returns configuration for @wisemapping/editor priAppbarmary toolbar
  */
-export function buildToolbarConfig(designer: Designer): ActionConfig[] {
-  if (!designer) return [];
-
-  /**
-   * model builder
-   */
-  const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(designer);
+export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
+  const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
 
   /**
    * submenu to manipulate node color and shape
