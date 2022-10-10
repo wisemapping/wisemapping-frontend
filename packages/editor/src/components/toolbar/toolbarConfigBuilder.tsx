@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import React from 'react';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
@@ -12,37 +29,24 @@ import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import UndoOutlinedIcon from '@mui/icons-material/UndoOutlined';
-import RedoOutlinedIcon from '@mui/icons-material/RedoOutlined';
-import RestoreOutlinedIcon from '@mui/icons-material/RestoreOutlined';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import SquareOutlinedIcon from '@mui/icons-material/SquareOutlined';
 import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
-import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
-import { $msg, Designer } from '@wisemapping/mindplot';
+import { $msg } from '@wisemapping/mindplot';
 import ActionConfig from '../../classes/action/action-config';
 import { SwitchValueDirection } from './ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import Typography from '@mui/material/Typography';
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
-import Tooltip from '@mui/material/Tooltip';
 import ColorPicker from '../action-widget/pane/color-picker';
 import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
-import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import TopicLink from '../action-widget/pane/topic-link';
 import TopicNote from '../action-widget/pane/topic-note';
 import IconPicker from '../action-widget/pane/icon-picker';
@@ -344,132 +348,6 @@ export function buildZoomToolbarConfig(model: Editor, capability: Capability): A
           render: () => <KeyboardShorcutsHelp />,
         },
       ],
-    },
-  ];
-}
-
-export function buildAppBarConfig(
-  model: Editor,
-  mapTitle: string,
-  capability: Capability,
-  onAction: (type: ToolbarActionType) => void,
-  accountConfiguration,
-  save: () => void,
-): ActionConfig[] {
-  const appBarDivisor = {
-    render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
-  };
-
-  return [
-    {
-      icon: <ArrowBackIosNewOutlinedIcon />,
-      tooltip: $msg('BACK_TO_MAP_LIST'),
-      onClick: () => history.back(),
-    },
-    {
-      render: () => <img src={LogoTextBlackSvg} />,
-    },
-    {
-      render: () => (
-        <Tooltip title={mapTitle}>
-          <Typography
-            className="truncated"
-            variant="body1"
-            component="div"
-            sx={{ marginX: '1.5rem' }}
-          >
-            {mapTitle}
-          </Typography>
-        </Tooltip>
-      ),
-    },
-    null,
-    {
-      render: () => (
-        <UndoAndRedo
-          configuration={{
-            icon: <UndoOutlinedIcon />,
-            tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
-            onClick: () => designer.undo(),
-          }}
-          disabledCondition={(event) => event.undoSteps > 0}
-        ></UndoAndRedo>
-      ),
-      visible: !capability.isHidden('undo-changes'),
-      disabled: () => !model?.isMapLoadded(),
-    },
-    {
-      render: () => (
-        <UndoAndRedo
-          configuration={{
-            icon: <RedoOutlinedIcon />,
-            tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
-            onClick: () => designer.redo(),
-          }}
-          disabledCondition={(event) => event.redoSteps > 0}
-        ></UndoAndRedo>
-      ),
-      visible: !capability.isHidden('redo-changes'),
-      disabled: () => !model?.isMapLoadded(),
-    },
-    null,
-    {
-      icon: <SaveOutlinedIcon />,
-      tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
-      onClick: save,
-      visible: !capability.isHidden('save'),
-      disabled: () => !model?.isMapLoadded(),
-    },
-    {
-      icon: <RestoreOutlinedIcon />,
-      tooltip: $msg('HISTORY'),
-      onClick: () => onAction('history'),
-      visible: !capability.isHidden('history'),
-    },
-    appBarDivisor,
-    {
-      icon: <FileDownloadOutlinedIcon />,
-      tooltip: $msg('EXPORT'),
-      onClick: () => onAction('export'),
-      visible: !capability.isHidden('export'),
-    },
-    {
-      icon: <PrintOutlinedIcon />,
-      tooltip: $msg('PRINT'),
-      onClick: () => onAction('print'),
-      visible: !capability.isHidden('print'),
-    },
-    {
-      icon: <HelpOutlineOutlinedIcon />,
-      onClick: () => onAction('info'),
-      tooltip: $msg('MAP_INFO'),
-      visible: !capability.isHidden('info'),
-    },
-    {
-      icon: <CloudUploadOutlinedIcon />,
-      onClick: () => onAction('publish'),
-      tooltip: $msg('PUBLISH'),
-      visible: !capability.isHidden('publish'),
-    },
-    {
-      render: () => (
-        <Button variant="contained" onClick={() => onAction('share')}>
-          {$msg('COLLABORATE')}
-        </Button>
-      ),
-      visible: !capability.isHidden('share'),
-    },
-    {
-      render: () => accountConfiguration,
-      visible: !capability.isHidden('account'),
-    },
-    {
-      render: () => (
-        <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
-          {$msg('SIGN_UP')}
-        </Button>
-      ),
-      visible: !capability.isHidden('sign-up'),
     },
   ];
 }

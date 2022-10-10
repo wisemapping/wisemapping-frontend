@@ -15,14 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
-import {
-  buildAppBarConfig,
-  buildEditorPanelConfig,
-  buildZoomToolbarConfig,
-} from './toolbar/toolbarConfigBuilder';
+import { buildEditorPanelConfig, buildZoomToolbarConfig } from './toolbar/toolbarConfigBuilder';
 
 import { IntlProvider } from 'react-intl';
 import { DesignerKeyboard, MindplotWebComponent } from '@wisemapping/mindplot';
@@ -49,7 +45,6 @@ const Editor = ({
   const [model, setModel]: [Model | undefined, Function] = useState();
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
   const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
-  const toolbarConfiguration = useRef([]);
 
   const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
   const capability = new Capability(options.mode, options.locked);
@@ -78,16 +73,11 @@ const Editor = ({
     <ThemeProvider theme={editorTheme}>
       <IntlProvider locale={locale} messages={msg}>
         <AppBar
-          configurations={buildAppBarConfig(
-            model,
-            options.mapTitle,
-            capability,
-            onAction,
-            accountConfiguration,
-            () => {
-              model.save(true);
-            },
-          )}
+          model={model}
+          mapTitle={options.mapTitle}
+          capability={capability}
+          onAction={onAction}
+          accountConfig={accountConfiguration}
         />
 
         <Popover
