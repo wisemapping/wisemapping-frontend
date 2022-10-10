@@ -80,24 +80,22 @@ const Editor = ({
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
 
-  const menubarConfiguration = buildAppBarConfig(
-    model,
-    options.mapTitle,
-    capability,
-    onAction,
-    accountConfiguration,
-    () => {
-      model.save(true);
-    },
-  );
-
-  // if the Toolbar is not hidden before the variable 'isMobile' is defined, it appears intermittently when the page loads
-  // if the Toolbar is not rendered, Menu.ts cant find buttons for create event listeners
-  // so, with this hack the Toolbar is rendered but no visible until the variable 'isMobile' is defined
   return (
     <ThemeProvider theme={editorTheme}>
       <IntlProvider locale={locale} messages={msg}>
-        <AppBar configurations={menubarConfiguration} />
+        <AppBar
+          configurations={buildAppBarConfig(
+            model,
+            options.mapTitle,
+            capability,
+            onAction,
+            accountConfiguration,
+            () => {
+              model.save(true);
+            },
+          )}
+        />
+
         <Popover
           id="popover"
           open={popoverOpen}
@@ -117,7 +115,7 @@ const Editor = ({
           ></Toolbar>
         )}
         <Toolbar
-          configurations={buildZoomToolbarConfig(capability, model?.getDesigner())}
+          configurations={buildZoomToolbarConfig(model, capability)}
           position={{
             position: {
               right: '7px',

@@ -300,40 +300,45 @@ export function buildToolbarConfig(designer: Designer): ActionConfig[] {
   ];
 }
 
-export function buildZoomToolbarConfig(capability: Capability, designer: Designer): ActionConfig[] {
-  if (!designer) return [];
-
+export function buildZoomToolbarConfig(model: Editor, capability: Capability): ActionConfig[] {
   return [
     {
       icon: <CenterFocusStrongOutlinedIcon />,
       tooltip: $msg('CENTER_POSITION'),
       onClick: () => {
-        designer.zoomToFit();
+        model.getDesigner().zoomToFit();
       },
+      disabled: () => !model?.isMapLoadded(),
     },
     {
       // zoom value candidate, neds to fixit
       render: () => (
         <Box sx={{ p: 0.5 }}>
           <Typography variant="overline" color="gray">
-            %{Math.floor((1 / designer.getWorkSpace()?.getZoom()) * 100)}
+            %
+            {!model?.isMapLoadded()
+              ? 100
+              : Math.floor((1 / designer.getWorkSpace()?.getZoom()) * 100)}
           </Typography>
         </Box>
       ),
+      disabled: () => !model?.isMapLoadded(),
     },
     {
       icon: <ZoomInOutlinedIcon />,
       tooltip: $msg('ZOOM_IN'),
       onClick: () => {
-        designer.zoomIn();
+        model.getDesigner().zoomIn();
       },
+      disabled: () => !model?.isMapLoadded(),
     },
     {
       icon: <ZoomOutOutlinedIcon />,
       tooltip: $msg('ZOOM_OUT'),
       onClick: () => {
-        designer.zoomOut();
+        model.getDesigner().zoomOut();
       },
+      disabled: () => !model?.isMapLoadded(),
     },
     {
       icon: <KeyboardOutlined />,
