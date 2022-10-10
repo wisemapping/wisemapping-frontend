@@ -299,10 +299,7 @@ export function buildToolbarConfig(designer: Designer): ActionConfig[] {
   ];
 }
 
-export function buildZoomToolbarConfiguration(
-  capability: Capability,
-  designer: Designer,
-): ActionConfig[] {
+export function buildZoomToolbarConfig(capability: Capability, designer: Designer): ActionConfig[] {
   if (!designer) return [];
 
   return [
@@ -350,7 +347,7 @@ export function buildZoomToolbarConfiguration(
   ];
 }
 
-export function buildEditorAppBarConfiguration(
+export function buildAppBarConfig(
   designer: Designer,
   mapTitle: string,
   capability: Capability,

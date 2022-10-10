@@ -37,7 +37,7 @@ import {
 import './global-styled.css';
 import { Theme } from '@mui/material/styles';
 import Editor from './components';
-import { ToolbarActionType } from './components/toolbar/toolbarConfigurationBuilder';
+import { ToolbarActionType } from './components/toolbar/toolbarConfigBuilder';
 
 declare global {
   // used in mindplot

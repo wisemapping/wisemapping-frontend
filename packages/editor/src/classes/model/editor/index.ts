@@ -15,13 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { MindplotWebComponent, PersistenceManager } from '@wisemapping/mindplot';
+import { Designer, MindplotWebComponent, PersistenceManager } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 
 class Editor {
   private component: MindplotWebComponent;
   constructor(mindplotComponent: MindplotWebComponent) {
     this.component = mindplotComponent;
+  }
+
+  save(minor: boolean) {
+    this.component.save(minor);
+  }
+
+  getDesigner(): Designer | undefined {
+    return this.component?.getDesigner();
   }
 
   loadMindmap(mapId: string, persistenceManager: PersistenceManager, widgetManager): void {

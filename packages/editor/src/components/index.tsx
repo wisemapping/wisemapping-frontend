@@ -19,10 +19,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 import {
-  buildEditorAppBarConfiguration,
+  buildAppBarConfig,
   buildToolbarConfig,
-  buildZoomToolbarConfiguration,
-} from './toolbar/toolbarConfigurationBuilder';
+  buildZoomToolbarConfig,
+} from './toolbar/toolbarConfigBuilder';
 
 import { IntlProvider } from 'react-intl';
 import { DesignerKeyboard, MindplotWebComponent } from '@wisemapping/mindplot';
@@ -46,9 +46,7 @@ const Editor = ({
   theme,
   accountConfiguration,
 }: EditorProps) => {
-  const [mindplotComponent, setMindplotComponent]: [MindplotWebComponent | undefined, Function] =
-    useState();
-  const [model, setModel]: [MindplotWebComponent | undefined, Function] = useState();
+  const [model, setModel]: [Model | undefined, Function] = useState();
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
   const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
   const toolbarConfiguration = useRef([]);
@@ -57,20 +55,18 @@ const Editor = ({
   const capability = new Capability(options.mode, options.locked);
 
   const mindplotRef = useCallback((component: MindplotWebComponent) => {
-    setMindplotComponent(component);
+    // Initialized model ...
+    const model = new Model(component);
+    model.loadMindmap(mapId, persistenceManager, widgetManager);
+    model.registerEvents(setToolbarsRerenderSwitch, capability);
+    setModel(model);
   }, []);
 
   useEffect(() => {
-    if (mindplotComponent) {
-      // Initialized model ...
-      const model = new Model(mindplotComponent);
-      model.loadMindmap(mapId, persistenceManager, widgetManager);
-      model.registerEvents(setToolbarsRerenderSwitch, capability);
-      setModel(model);
-
-      toolbarConfiguration.current = buildToolbarConfig(mindplotComponent.getDesigner());
+    if (model) {
+      toolbarConfiguration.current = buildToolbarConfig(model.getDesigner());
     }
-  }, [mindplotComponent !== undefined]);
+  }, [model]);
 
   useEffect(() => {
     if (options.enableKeyboardEvents) {
@@ -84,24 +80,16 @@ const Editor = ({
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
 
-  const menubarConfiguration = buildEditorAppBarConfiguration(
-    mindplotComponent?.getDesigner(),
+  const menubarConfiguration = buildAppBarConfig(
+    model?.getDesigner(),
     options.mapTitle,
     capability,
     onAction,
     accountConfiguration,
     () => {
-      mindplotComponent.save(true);
+      model.save(true);
     },
   );
-
-  const horizontalPosition = {
-    position: {
-      right: '7px',
-      top: '93%',
-    },
-    vertical: false,
-  };
 
   // if the Toolbar is not hidden before the variable 'isMobile' is defined, it appears intermittently when the page loads
   // if the Toolbar is not rendered, Menu.ts cant find buttons for create event listeners
@@ -129,11 +117,14 @@ const Editor = ({
           ></Toolbar>
         )}
         <Toolbar
-          configurations={buildZoomToolbarConfiguration(
-            capability,
-            mindplotComponent?.getDesigner(),
-          )}
-          position={horizontalPosition}
+          configurations={buildZoomToolbarConfig(capability, model?.getDesigner())}
+          position={{
+            position: {
+              right: '7px',
+              top: '93%',
+            },
+            vertical: false,
+          }}
           rerender={toolbarsRerenderSwitch}
         ></Toolbar>
 
