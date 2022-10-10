@@ -24,6 +24,10 @@ class Editor {
     this.component = mindplotComponent;
   }
 
+  isMapLoadded(): boolean {
+    return this.component.getDesigner()?.getMindmap() != null;
+  }
+
   save(minor: boolean) {
     this.component.save(minor);
   }

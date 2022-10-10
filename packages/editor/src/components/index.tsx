@@ -81,7 +81,7 @@ const Editor = ({
   const msg = I18nMsg.loadLocaleData(locale);
 
   const menubarConfiguration = buildAppBarConfig(
-    model?.getDesigner(),
+    model,
     options.mapTitle,
     capability,
     onAction,

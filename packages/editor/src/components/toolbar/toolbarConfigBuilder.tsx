@@ -48,6 +48,7 @@ import TopicNote from '../action-widget/pane/topic-note';
 import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Capability from '../../classes/action/capability';
+import Editor from '../../classes/model/editor';
 
 export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
 
@@ -348,18 +349,18 @@ export function buildZoomToolbarConfig(capability: Capability, designer: Designe
 }
 
 export function buildAppBarConfig(
-  designer: Designer,
+  model: Editor,
   mapTitle: string,
   capability: Capability,
   onAction: (type: ToolbarActionType) => void,
   accountConfiguration,
   save: () => void,
 ): ActionConfig[] {
-  if (!designer) {
-    return [];
-  }
+  const appBarDivisor = {
+    render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
+  };
 
-  let commonConfiguration: ActionConfig[] = [
+  return [
     {
       icon: <ArrowBackIosNewOutlinedIcon />,
       tooltip: $msg('BACK_TO_MAP_LIST'),
@@ -382,14 +383,6 @@ export function buildAppBarConfig(
         </Tooltip>
       ),
     },
-  ];
-
-  const appBarDivisor = {
-    render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
-  };
-
-  return [
-    ...commonConfiguration,
     null,
     {
       render: () => (
@@ -403,6 +396,7 @@ export function buildAppBarConfig(
         ></UndoAndRedo>
       ),
       visible: !capability.isHidden('undo-changes'),
+      disabled: () => !model?.isMapLoadded(),
     },
     {
       render: () => (
@@ -416,6 +410,7 @@ export function buildAppBarConfig(
         ></UndoAndRedo>
       ),
       visible: !capability.isHidden('redo-changes'),
+      disabled: () => !model?.isMapLoadded(),
     },
     null,
     {
@@ -423,6 +418,7 @@ export function buildAppBarConfig(
       tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
       onClick: save,
       visible: !capability.isHidden('save'),
+      disabled: () => !model?.isMapLoadded(),
     },
     {
       icon: <RestoreOutlinedIcon />,
