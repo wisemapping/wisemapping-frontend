@@ -22,7 +22,6 @@ import { ToolbarMenuItem } from '../toolbar';
 import ActionConfig from '../../classes/action/action-config';
 import Editor from '../../classes/model/editor';
 import Capability from '../../classes/action/capability';
-import { ToolbarActionType } from '../toolbar/toolbarConfigBuilder';
 import Tooltip from '@mui/material/Tooltip';
 import UndoOutlinedIcon from '@mui/icons-material/UndoOutlined';
 import RedoOutlinedIcon from '@mui/icons-material/RedoOutlined';
@@ -40,6 +39,7 @@ import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import IconButton from '@mui/material/IconButton';
+import { ToolbarActionType } from '../toolbar/ToolbarActionType';
 
 interface AppBarProps {
   model: Editor;

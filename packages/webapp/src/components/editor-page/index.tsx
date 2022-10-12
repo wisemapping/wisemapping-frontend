@@ -71,7 +71,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     if (options?.mapTitle) {
       document.title = `${options.mapTitle} | WiseMapping `;
     }
-  });
+  }, options?.mapTitle);
 
   return loadCompleted ? (
     <IntlProvider
@@ -86,7 +86,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
         mapId={mapId}
         theme={theme}
         accountConfiguration={
-          // Provent load on non-authenticated.
+          // Prevent load on non-authenticated.
           options.mode !== 'showcase' ? (
             <IntlProvider
               locale={userLocale.code}

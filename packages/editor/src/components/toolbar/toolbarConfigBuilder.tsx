@@ -54,8 +54,6 @@ import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Capability from '../../classes/action/capability';
 import Editor from '../../classes/model/editor';
 
-export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
-
 /**
  *
  * @param designer designer to aply changes

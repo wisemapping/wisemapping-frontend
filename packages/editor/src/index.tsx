@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
 
+import './global-styled.css';
 import {
   PersistenceManager,
   DesignerOptionsBuilder,
@@ -34,10 +34,7 @@ import {
   Importer,
   TextImporterFactory,
 } from '@wisemapping/mindplot';
-import './global-styled.css';
-import { Theme } from '@mui/material/styles';
 import Editor from './components';
-import { ToolbarActionType } from './components/toolbar/toolbarConfigBuilder';
 
 declare global {
   // used in mindplot
@@ -52,16 +49,6 @@ declare global {
     }
   }
 }
-
-export type EditorOptions = {
-  mode: EditorRenderMode;
-  locale: string;
-  zoom?: number;
-  locked?: boolean;
-  lockedMsg?: string;
-  mapTitle: string;
-  enableKeyboardEvents: boolean;
-};
 
 export {
   PersistenceManager,
@@ -78,16 +65,6 @@ export {
   Exporter,
   Importer,
   TextImporterFactory,
-};
-
-export type EditorProps = {
-  mapId: string;
-  options: EditorOptions;
-  persistenceManager: PersistenceManager;
-  onAction: (action: ToolbarActionType) => void;
-  onLoad?: (designer: Designer) => void;
-  theme?: Theme;
-  accountConfiguration?: React.ReactElement;
 };
 
 export default Editor;

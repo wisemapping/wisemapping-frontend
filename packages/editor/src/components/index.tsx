@@ -21,7 +21,14 @@ import Model from '../classes/model/editor';
 import { buildEditorPanelConfig, buildZoomToolbarConfig } from './toolbar/toolbarConfigBuilder';
 
 import { IntlProvider } from 'react-intl';
-import { DesignerKeyboard, MindplotWebComponent } from '@wisemapping/mindplot';
+import {
+  PersistenceManager,
+  Designer,
+  DesignerKeyboard,
+  MindplotWebComponent,
+  EditorRenderMode,
+} from '@wisemapping/mindplot';
+
 import I18nMsg from '../classes/i18n-msg';
 import Toolbar from './toolbar';
 import { theme as defaultEditorTheme } from '../theme';
@@ -31,8 +38,28 @@ import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';
 import DefaultWidgetManager from '../classes/default-widget-manager';
 import AppBar from './app-bar';
-import { EditorProps } from '..';
 import Capability from '../classes/action/capability';
+import { ToolbarActionType } from './toolbar/ToolbarActionType';
+
+type EditorOptions = {
+  mode: EditorRenderMode;
+  locale: string;
+  zoom?: number;
+  locked?: boolean;
+  lockedMsg?: string;
+  mapTitle: string;
+  enableKeyboardEvents: boolean;
+};
+
+type EditorProps = {
+  mapId: string;
+  options: EditorOptions;
+  persistenceManager: PersistenceManager;
+  onAction: (action: ToolbarActionType) => void;
+  onLoad?: (designer: Designer) => void;
+  theme?: Theme;
+  accountConfiguration?: React.ReactElement;
+};
 
 const Editor = ({
   mapId,
