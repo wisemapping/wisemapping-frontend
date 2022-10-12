@@ -26,15 +26,13 @@ const UndoAndRedo = (props: {
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
     const handleUpdate: any = (event) => {
-      if (props.disabledCondition(event)) {
-        setDisabled(false);
-      } else {
-        setDisabled(true);
-      }
-    };
-    designer.addEvent('modelUpdate', handleUpdate);
-    return () => {
-      designer.removeEvent('modelUpdate', handleUpdate);
+      const isDisabled = props.disabledCondition(event);
+      setDisabled(!isDisabled);
+
+      designer.addEvent('modelUpdate', handleUpdate);
+      return () => {
+        designer.removeEvent('modelUpdate', handleUpdate);
+      };
     };
   }, []);
 

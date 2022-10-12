@@ -19,20 +19,27 @@ import { Designer, MindplotWebComponent, PersistenceManager } from '@wisemapping
 import Capability from '../../action/capability';
 
 class Editor {
-  private component: MindplotWebComponent;
-  constructor(mindplotComponent: MindplotWebComponent) {
+  private component: MindplotWebComponent | null;
+
+  constructor(mindplotComponent: MindplotWebComponent | null) {
     this.component = mindplotComponent;
   }
 
   isMapLoadded(): boolean {
-    return this.component.getDesigner()?.getMindmap() != null;
+    return this.component?.getDesigner()?.getMindmap() != null;
   }
 
   save(minor: boolean) {
+    if (!this.component) {
+      throw new Error('Designer object has not been initialized.');
+    }
     this.component.save(minor);
   }
 
   getDesigner(): Designer | undefined {
+    if (!this.component) {
+      throw new Error('Designer object has not been initialized.');
+    }
     return this.component?.getDesigner();
   }
 

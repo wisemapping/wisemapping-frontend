@@ -272,17 +272,10 @@ describe('Toolbar', () => {
 });
 
 describe('AppBar', () => {
-  //Todo: Activate when all the bundle resources are migrated.
-  //  SyntaxError: Cannot use import statement outside a module
-  // @wisemapping/editor:       17 |  */
-  // @wisemapping/editor:       18 | import { $defined } from '@wisemapping/core - js';
-  // @wisemapping/editor:     > 19 | import Bundle from './lang / Bundle';
-  //
-  //
-  // it('When render it displays a menu', () => {
-  //   const capacity = new Capability('edition-owner', false);
-  //   const model = new Editor(null);
-  //   render(<AppBar mapTitle="Some title" capability={capacity} model={model} />);
-  //   screen.getByRole('menubar');
-  // });
+  it('When render it displays a menu', () => {
+    const capacity = new Capability('edition-owner', false);
+    const model = new Editor(null);
+    render(<AppBar mapTitle="Some title" capability={capacity} model={model} />);
+    screen.getByRole('menubar');
+  });
 });

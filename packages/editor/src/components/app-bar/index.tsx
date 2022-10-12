@@ -30,6 +30,7 @@ import RestoreOutlinedIcon from '@mui/icons-material/RestoreOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
@@ -38,19 +39,17 @@ import { $msg } from '@wisemapping/mindplot';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
+import IconButton from '@mui/material/IconButton';
 
-/**
- * App bar
- * @param props.configurations the configurations array
- * @returns toolbar wich contains an entry for each configuration in the array
- */
-const AppBar = (props: {
+interface AppBarProps {
   model: Editor;
   mapTitle: string;
   capability: Capability;
   onAction?: (type: ToolbarActionType) => void;
   accountConfig?;
-}) => {
+}
+
+const AppBar = ({ model, mapTitle, capability, onAction, accountConfig }: AppBarProps) => {
   const appBarDivisor = {
     render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
   };
@@ -132,6 +131,21 @@ const AppBar = (props: {
       },
       appBarDivisor,
       {
+        tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
+        render: () => (
+          <IconButton size="small" onClick={() => {}}>
+            <StarRateRoundedIcon
+              color="action"
+              style={{
+                color: 'yellow',
+              }}
+            />
+          </IconButton>
+        ),
+        visible: !capability.isHidden('starred'),
+        disabled: () => !model?.isMapLoadded(),
+      },
+      {
         icon: <FileDownloadOutlinedIcon />,
         tooltip: $msg('EXPORT'),
         onClick: () => onAction('export'),
@@ -178,13 +192,7 @@ const AppBar = (props: {
     ];
   };
 
-  const config = buildConfig(
-    props.model,
-    props.mapTitle,
-    props.capability,
-    props.onAction,
-    props.accountConfig,
-  );
+  const config = buildConfig(model, mapTitle, capability, onAction, accountConfig);
   return (
     <MaterialAppBar
       role="menubar"

@@ -181,5 +181,6 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       hidden: ['viewonly', 'edition-viewer', 'edition-editor', 'edition-owner'],
     },
   },
+  starred: undefined,
 };
 export default Capability;
