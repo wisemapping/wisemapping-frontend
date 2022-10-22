@@ -34,7 +34,10 @@ import {
   Importer,
   TextImporterFactory,
 } from '@wisemapping/mindplot';
+
 import Editor from './components';
+import { EditorOptions } from './components';
+import MapInfo from './classes/model/map-info';
 
 declare global {
   // used in mindplot
@@ -65,6 +68,8 @@ export {
   Exporter,
   Importer,
   TextImporterFactory,
+  EditorOptions,
+  MapInfo,
 };
 
 export default Editor;

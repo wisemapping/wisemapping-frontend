@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import Client, {
   AccountInfo,
   BasicMapInfo,
@@ -108,6 +125,10 @@ class MockClient implements Client {
     this.labels = [label1, label2, label3];
   }
 
+  fetchStarred(id: number): Promise<boolean> {
+    return Promise.resolve(this.maps.find((m) => m.id == id).starred);
+  }
+
   onSessionExpired(callback?: () => void): () => void {
     return callback;
   }
@@ -123,8 +144,6 @@ class MockClient implements Client {
     let perm = this.permissionsByMap.get(id) || [];
     perm = perm.concat(permissions);
     this.permissionsByMap.set(id, perm);
-
-    console.debug(`Message ${message}`);
     return Promise.resolve();
   }
 

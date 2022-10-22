@@ -19,6 +19,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Editor, { EditorOptions } from '../../../../src/index';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
+import MapInfoImpl from './MapInfoImpl';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
@@ -30,20 +31,16 @@ const initialization = (designer: Designer) => {
 };
 
 const persistence = new LocalStorageManager('samples/{id}.wxml', false, false);
-const mapId = 'welcome';
 const options: EditorOptions = {
-  zoom: 0.8,
-  locked: true,
-  lockedMsg: 'Blockeado',
-  mapTitle: 'Develop WiseMapping',
   mode: 'edition-editor',
   locale: 'en',
   enableKeyboardEvents: true,
 };
 
+const mapInfo = new MapInfoImpl('welcome', 'Develop WiseMapping', true);
 ReactDOM.render(
   <Editor
-    mapId={mapId}
+    mapInfo={mapInfo}
     options={options}
     persistenceManager={persistence}
     onAction={(action) => console.log('action called:', action)}

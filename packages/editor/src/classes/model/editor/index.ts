@@ -48,16 +48,16 @@ class Editor {
     this.component.loadMap(mapId);
   }
 
-  registerEvents(setToolbarsRerenderSwitch: (timestamp: number) => void, capability: Capability) {
+  registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability) {
     const desiger = this.component.getDesigner();
     const onNodeBlurHandler = () => {
       if (!desiger.getModel().selectedTopic()) {
-        setToolbarsRerenderSwitch(Date.now());
+        canvasUpdate(Date.now());
       }
     };
 
     const onNodeFocusHandler = () => {
-      setToolbarsRerenderSwitch(Date.now());
+      canvasUpdate(Date.now());
     };
 
     // Register events ...

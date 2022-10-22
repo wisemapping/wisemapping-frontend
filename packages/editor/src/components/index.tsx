@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ErrorInfo, useCallback, useEffect, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 import { buildEditorPanelConfig, buildZoomToolbarConfig } from './toolbar/toolbarConfigBuilder';
@@ -40,19 +40,16 @@ import DefaultWidgetManager from '../classes/default-widget-manager';
 import AppBar from './app-bar';
 import Capability from '../classes/action/capability';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
+import MapInfo from '../classes/model/map-info';
 
-type EditorOptions = {
+export type EditorOptions = {
   mode: EditorRenderMode;
   locale: string;
-  zoom?: number;
-  locked?: boolean;
-  lockedMsg?: string;
-  mapTitle: string;
   enableKeyboardEvents: boolean;
 };
 
 type EditorProps = {
-  mapId: string;
+  mapInfo: MapInfo;
   options: EditorOptions;
   persistenceManager: PersistenceManager;
   onAction: (action: ToolbarActionType) => void;
@@ -62,25 +59,24 @@ type EditorProps = {
 };
 
 const Editor = ({
-  mapId,
+  mapInfo,
   options,
   persistenceManager,
   onAction,
   theme,
   accountConfiguration,
 }: EditorProps) => {
-  const [model, setModel]: [Model | undefined, Function] = useState();
+  const [model, setModel] = useState<Model | undefined>();
+  const [canvasUpdate, setCanvasUpdate] = useState<number>();
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
-  const [toolbarsRerenderSwitch, setToolbarsRerenderSwitch] = useState(0);
-
   const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
-  const capability = new Capability(options.mode, options.locked);
+  const capability = new Capability(options.mode, mapInfo.isLocked());
 
   const mindplotRef = useCallback((component: MindplotWebComponent) => {
     // Initialized model ...
     const model = new Model(component);
-    model.loadMindmap(mapId, persistenceManager, widgetManager);
-    model.registerEvents(setToolbarsRerenderSwitch, capability);
+    model.loadMindmap(mapInfo.getId(), persistenceManager, widgetManager);
+    model.registerEvents(setCanvasUpdate, capability);
     setModel(model);
   }, []);
 
@@ -101,7 +97,7 @@ const Editor = ({
       <IntlProvider locale={locale} messages={msg}>
         <AppBar
           model={model}
-          mapTitle={options.mapTitle}
+          mapInfo={mapInfo}
           capability={capability}
           onAction={onAction}
           accountConfig={accountConfiguration}
@@ -120,11 +116,9 @@ const Editor = ({
           {widgetManager.getEditorContent()}
         </Popover>
         {!capability.isHidden('edition-toolbar') && model?.isMapLoadded() && (
-          <Toolbar
-            configurations={buildEditorPanelConfig(model)}
-            rerender={toolbarsRerenderSwitch}
-          ></Toolbar>
+          <Toolbar configurations={buildEditorPanelConfig(model)} />
         )}
+
         <Toolbar
           configurations={buildZoomToolbarConfig(model, capability)}
           position={{
@@ -134,22 +128,21 @@ const Editor = ({
             },
             vertical: false,
           }}
-          rerender={toolbarsRerenderSwitch}
-        ></Toolbar>
+        />
 
         <mindplot-component
           ref={mindplotRef}
           id="mindmap-comp"
           mode={options.mode}
           locale={options.locale}
-        ></mindplot-component>
+        />
 
-        <Notifier id="headerNotifier"></Notifier>
+        <Notifier id="headerNotifier" />
 
         <WarningDialog
           capability={capability}
-          message={options.locked ? options.lockedMsg : ''}
-        ></WarningDialog>
+          message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
+        />
       </IntlProvider>
     </ThemeProvider>
   );

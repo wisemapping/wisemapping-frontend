@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar';
@@ -40,159 +40,168 @@ import Button from '@mui/material/Button';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import IconButton from '@mui/material/IconButton';
 import { ToolbarActionType } from '../toolbar/ToolbarActionType';
+import MapInfo from '../../classes/model/map-info';
 
 interface AppBarProps {
   model: Editor;
-  mapTitle: string;
+  mapInfo: MapInfo;
   capability: Capability;
   onAction?: (type: ToolbarActionType) => void;
   accountConfig?;
 }
+const appBarDivisor = {
+  render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
+};
 
-const AppBar = ({ model, mapTitle, capability, onAction, accountConfig }: AppBarProps) => {
-  const appBarDivisor = {
-    render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
+const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarProps) => {
+  const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
+
+  const handleStarredOnClick = () => {
+    const newStatus = !isStarred;
+    mapInfo.updateStarred(newStatus).then(() => setStarred(newStatus));
   };
 
-  const buildConfig = (
-    model: Editor,
-    mapTitle: string,
-    capability: Capability,
-    onAction: (type: ToolbarActionType) => void,
-    accountConfig,
-  ): ActionConfig[] => {
-    return [
-      {
-        icon: <ArrowBackIosNewOutlinedIcon />,
-        tooltip: $msg('BACK_TO_MAP_LIST'),
-        onClick: () => history.back(),
-      },
-      {
-        render: () => <img src={LogoTextBlackSvg} />,
-      },
-      {
-        render: () => (
-          <Tooltip title={mapTitle}>
-            <Typography
-              className="truncated"
-              variant="body1"
-              component="div"
-              sx={{ marginX: '1.5rem' }}
-            >
-              {mapTitle}
-            </Typography>
-          </Tooltip>
-        ),
-      },
-      null,
-      {
-        render: () => (
-          <UndoAndRedo
-            configuration={{
-              icon: <UndoOutlinedIcon />,
-              tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
-              onClick: () => designer.undo(),
-            }}
-            disabledCondition={(event) => event.undoSteps > 0}
-          ></UndoAndRedo>
-        ),
-        visible: !capability.isHidden('undo-changes'),
-        disabled: () => !model?.isMapLoadded(),
-      },
-      {
-        render: () => (
-          <UndoAndRedo
-            configuration={{
-              icon: <RedoOutlinedIcon />,
-              tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
-              onClick: () => designer.redo(),
-            }}
-            disabledCondition={(event) => event.redoSteps > 0}
-          ></UndoAndRedo>
-        ),
-        visible: !capability.isHidden('redo-changes'),
-        disabled: () => !model?.isMapLoadded(),
-      },
-      null,
-      {
-        icon: <SaveOutlinedIcon />,
-        tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
-        onClick: () => {
-          model.save(true);
-        },
-        visible: !capability.isHidden('save'),
-        disabled: () => !model?.isMapLoadded(),
-      },
-      {
-        icon: <RestoreOutlinedIcon />,
-        tooltip: $msg('HISTORY'),
-        onClick: () => onAction('history'),
-        visible: !capability.isHidden('history'),
-      },
-      appBarDivisor,
-      {
-        tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
-        render: () => (
-          <IconButton size="small" onClick={() => {}}>
-            <StarRateRoundedIcon
-              color="action"
-              style={{
-                color: 'yellow',
-              }}
-            />
-          </IconButton>
-        ),
-        visible: !capability.isHidden('starred'),
-        disabled: () => !model?.isMapLoadded(),
-      },
-      {
-        icon: <FileDownloadOutlinedIcon />,
-        tooltip: $msg('EXPORT'),
-        onClick: () => onAction('export'),
-        visible: !capability.isHidden('export'),
-      },
-      {
-        icon: <PrintOutlinedIcon />,
-        tooltip: $msg('PRINT'),
-        onClick: () => onAction('print'),
-        visible: !capability.isHidden('print'),
-      },
-      {
-        icon: <HelpOutlineOutlinedIcon />,
-        onClick: () => onAction('info'),
-        tooltip: $msg('MAP_INFO'),
-        visible: !capability.isHidden('info'),
-      },
-      {
-        icon: <CloudUploadOutlinedIcon />,
-        onClick: () => onAction('publish'),
-        tooltip: $msg('PUBLISH'),
-        visible: !capability.isHidden('publish'),
-      },
-      {
-        render: () => (
-          <Button variant="contained" onClick={() => onAction('share')}>
-            {$msg('COLLABORATE')}
-          </Button>
-        ),
-        visible: !capability.isHidden('share'),
-      },
-      {
-        render: () => accountConfig,
-        visible: !capability.isHidden('account'),
-      },
-      {
-        render: () => (
-          <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
-            {$msg('SIGN_UP')}
-          </Button>
-        ),
-        visible: !capability.isHidden('sign-up'),
-      },
-    ];
-  };
+  useEffect(() => {
+    mapInfo
+      .isStarred()
+      .then((value) => setStarred(value))
+      .catch((e) => {
+        console.error(`Unexpected error loading starred status-> ${e}`);
+      });
+  }, []);
 
-  const config = buildConfig(model, mapTitle, capability, onAction, accountConfig);
+  console.log(``);
+  const config: ActionConfig[] = [
+    {
+      icon: <ArrowBackIosNewOutlinedIcon />,
+      tooltip: $msg('BACK_TO_MAP_LIST'),
+      onClick: () => history.back(),
+    },
+    {
+      render: () => <img src={LogoTextBlackSvg} />,
+    },
+    {
+      render: () => (
+        <Tooltip title={mapInfo.getTitle()}>
+          <Typography
+            className="truncated"
+            variant="body1"
+            component="div"
+            sx={{ marginX: '1.5rem' }}
+          >
+            {mapInfo.getTitle()}
+          </Typography>
+        </Tooltip>
+      ),
+    },
+    null,
+    {
+      render: () => (
+        <UndoAndRedo
+          configuration={{
+            icon: <UndoOutlinedIcon />,
+            tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
+            onClick: () => designer.undo(),
+          }}
+          disabledCondition={(event) => event.undoSteps > 0}
+        />
+      ),
+      visible: !capability.isHidden('undo-changes'),
+      disabled: () => !model?.isMapLoadded(),
+    },
+    {
+      render: () => (
+        <UndoAndRedo
+          configuration={{
+            icon: <RedoOutlinedIcon />,
+            tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
+            onClick: () => designer.redo(),
+          }}
+          disabledCondition={(event) => event.redoSteps > 0}
+        />
+      ),
+      visible: !capability.isHidden('redo-changes'),
+      disabled: () => !model?.isMapLoadded(),
+    },
+    null,
+    {
+      icon: <SaveOutlinedIcon />,
+      tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
+      onClick: () => {
+        model.save(true);
+      },
+      visible: !capability.isHidden('save'),
+      disabled: () => !model?.isMapLoadded(),
+    },
+    {
+      icon: <RestoreOutlinedIcon />,
+      tooltip: $msg('HISTORY'),
+      onClick: () => onAction('history'),
+      visible: !capability.isHidden('history'),
+    },
+    appBarDivisor,
+    {
+      tooltip: $msg('STARRED'),
+      render: () => (
+        <IconButton size="small" onClick={handleStarredOnClick}>
+          <StarRateRoundedIcon
+            color="action"
+            style={{
+              color: isStarred ? 'yellow' : 'gray',
+            }}
+          />
+        </IconButton>
+      ),
+
+      visible: !capability.isHidden('starred'),
+      disabled: () => isStarred !== undefined,
+    },
+    {
+      icon: <FileDownloadOutlinedIcon />,
+      tooltip: $msg('EXPORT'),
+      onClick: () => onAction('export'),
+      visible: !capability.isHidden('export'),
+    },
+    {
+      icon: <PrintOutlinedIcon />,
+      tooltip: $msg('PRINT'),
+      onClick: () => onAction('print'),
+      visible: !capability.isHidden('print'),
+    },
+    {
+      icon: <HelpOutlineOutlinedIcon />,
+      onClick: () => onAction('info'),
+      tooltip: $msg('MAP_INFO'),
+      visible: !capability.isHidden('info'),
+    },
+    {
+      icon: <CloudUploadOutlinedIcon />,
+      onClick: () => onAction('publish'),
+      tooltip: $msg('PUBLISH'),
+      visible: !capability.isHidden('publish'),
+    },
+    {
+      render: () => (
+        <Button variant="contained" onClick={() => onAction('share')}>
+          {$msg('COLLABORATE')}
+        </Button>
+      ),
+      visible: !capability.isHidden('share'),
+    },
+    {
+      render: () => accountConfig,
+      visible: !capability.isHidden('account'),
+    },
+    {
+      render: () => (
+        <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
+          {$msg('SIGN_UP')}
+        </Button>
+      ),
+      visible: !capability.isHidden('sign-up'),
+    },
+  ];
+
   return (
     <MaterialAppBar
       role="menubar"
