@@ -746,7 +746,8 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
     const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
-    if (!$defined(value)) {
+
+    if (!$defined(value) && notes.length > 0) {
       const featureId = notes[0].getId();
       dispatcher.removeFeatureFromTopic(topicId, featureId);
     } else if (notes.length > 0) {
