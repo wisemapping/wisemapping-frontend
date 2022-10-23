@@ -17,10 +17,61 @@
     "editor.edit-description-mobile": {
         "defaultMessage": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
-    "login.signup": {
+    "action.accept": {
+        "defaultMessage": "Accepter"
+    },
+    "action.cancel": {
+        "defaultMessage": "Annuler"
+    },
+    "appbar.back-to-map-list": {
+        "defaultMessage": "Retour à la liste des cartes"
+    },
+    "appbar.button-signup": {
         "defaultMessage": "S'inscrire"
     },
-    "action.share": {
+    "appbar.shared-button": {
         "defaultMessage": "Partager"
+    },
+    "appbar.tooltip-export": {
+        "defaultMessage": "Exporter"
+    },
+    "appbar.tooltip-history": {
+        "defaultMessage": "Historique"
+    },
+    "appbar.tooltip-info": {
+        "defaultMessage": "Informations"
+    },
+    "appbar.tooltip-print": {
+        "defaultMessage": "Imprimer"
+    },
+    "appbar.tooltip-publish": {
+        "defaultMessage": "Publier"
+    },
+    "appbar.tooltip-redo": {
+        "defaultMessage": "Refaire édition"
+    },
+    "appbar.tooltip-save": {
+        "defaultMessage": "Enregistrer"
+    },
+    "appbar.tooltip-shared": {
+        "defaultMessage": "Partager"
+    },
+    "appbar.tooltip-signup": {
+        "defaultMessage": "S'inscrire"
+    },
+    "appbar.tooltip-starred": {
+        "defaultMessage": "Exceptionnel"
+    },
+    "appbar.tooltip-undo": {
+        "defaultMessage": "Annuler édition"
+    },
+    "link.help_text": {
+        "defaultMessage": "Adresse invalide"
+    },
+    "link.placeholder": {
+        "defaultMessage": "https://www.example.com"
+    },
+    "note.label": {
+        "defaultMessage": "Noter"
     }
 }

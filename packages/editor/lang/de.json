@@ -22,5 +22,62 @@
     },
     "action.share": {
         "defaultMessage": "Teilen"
+    },
+    "action.accept": {
+        "defaultMessage": "Akzeptieren"
+    },
+    "action.cancel": {
+        "defaultMessage": "Abbrechen"
+    },
+    "appbar.back-to-map-list": {
+        "defaultMessage": "Zurück zur Mindmap Liste"
+    },
+    "appbar.button-signup": {
+        "defaultMessage": "Anmelden"
+    },
+    "appbar.shared-button": {
+        "defaultMessage": "Mitbenutzen"
+    },
+    "appbar.tooltip-export": {
+        "defaultMessage": "Exportieren"
+    },
+    "appbar.tooltip-history": {
+        "defaultMessage": "Historie"
+    },
+    "appbar.tooltip-info": {
+        "defaultMessage": "Informationen"
+    },
+    "appbar.tooltip-print": {
+        "defaultMessage": "Drucken"
+    },
+    "appbar.tooltip-publish": {
+        "defaultMessage": "Veröffentlichen"
+    },
+    "appbar.tooltip-redo": {
+        "defaultMessage": "Wiederholen"
+    },
+    "appbar.tooltip-save": {
+        "defaultMessage": "Speichern"
+    },
+    "appbar.tooltip-shared": {
+        "defaultMessage": "Mitbenutzen"
+    },
+    "appbar.tooltip-signup": {
+        "defaultMessage": "Anmelden"
+    },
+    "appbar.tooltip-starred": {
+        "defaultMessage": "Losgelöst"
+    },
+    "appbar.tooltip-undo": {
+        "defaultMessage": "Rückgängig"
+    },
+    "link.help_text": {
+        "defaultMessage": "Ingültige Adresse"
+    },
+    "link.placeholder": {
+        "defaultMessage": "https://www.example.com"
+    },
+    "note.label": {
+        "defaultMessage": "Notiz"
     }
 }

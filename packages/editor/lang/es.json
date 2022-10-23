@@ -17,10 +17,61 @@
     "editor.edit-description-mobile": {
         "defaultMessage": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     },
-    "login.signup": {
-        "defaultMessage": "Crear cuenta"
+    "action.accept": {
+        "defaultMessage": "Aceptar"
     },
-    "action.share": {
+    "action.cancel": {
+        "defaultMessage": "Cancelar"
+    },
+    "appbar.back-to-map-list": {
+        "defaultMessage": "Volver a lista de mapas"
+    },
+    "appbar.button-signup": {
+        "defaultMessage": "Registrarse"
+    },
+    "appbar.shared-button": {
         "defaultMessage": "Compartir"
+    },
+    "appbar.tooltip-export": {
+        "defaultMessage": "Exportar"
+    },
+    "appbar.tooltip-history": {
+        "defaultMessage": "Historia de Cambios"
+    },
+    "appbar.tooltip-info": {
+        "defaultMessage": "Detalles"
+    },
+    "appbar.tooltip-print": {
+        "defaultMessage": "Imprimir"
+    },
+    "appbar.tooltip-publish": {
+        "defaultMessage": "Publicar"
+    },
+    "appbar.tooltip-redo": {
+        "defaultMessage": "Rehacer"
+    },
+    "appbar.tooltip-save": {
+        "defaultMessage": "Grabar"
+    },
+    "appbar.tooltip-shared": {
+        "defaultMessage": "Compartir para Colaborar"
+    },
+    "appbar.tooltip-signup": {
+        "defaultMessage": "Registrarse"
+    },
+    "appbar.tooltip-starred": {
+        "defaultMessage": "Destacado"
+    },
+    "appbar.tooltip-undo": {
+        "defaultMessage": "Deshacer"
+    },
+    "link.help_text": {
+        "defaultMessage": "Dirección invalida"
+    },
+    "link.placeholder": {
+        "defaultMessage": "https://www.example.com"
+    },
+    "note.label": {
+        "defaultMessage": "Nota"
     }
 }
