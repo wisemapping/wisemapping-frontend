@@ -69,12 +69,14 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
   };
 
   useEffect(() => {
-    mapInfo
-      .isStarred()
-      .then((value) => setStarred(value))
-      .catch((e) => {
-        console.error(`Unexpected error loading starred status-> ${e}`);
-      });
+    if (!capability.isHidden('starred')) {
+      mapInfo
+        .isStarred()
+        .then((value) => setStarred(value))
+        .catch((e) => {
+          console.error(`Unexpected error loading starred status-> ${e}`);
+        });
+    }
   }, []);
 
   const config: ActionConfig[] = [

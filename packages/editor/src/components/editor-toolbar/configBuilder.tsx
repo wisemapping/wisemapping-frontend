@@ -35,15 +35,15 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
-import ActionConfig from '../../../classes/action/action-config';
-import { SwitchValueDirection } from '../../toolbar/ToolbarValueModelBuilder';
-import NodePropertyValueModelBuilder from '../../../classes/model/node-property-builder';
-import ColorPicker from '../../action-widget/pane/color-picker';
-import TopicLink from '../../action-widget/pane/topic-link';
-import TopicNote from '../../action-widget/pane/topic-note';
-import IconPicker from '../../action-widget/pane/icon-picker';
-import FontFamilySelector from '../../action-widget/button/font-family-selector';
-import Editor from '../../../classes/model/editor';
+import ActionConfig from '../../classes/action/action-config';
+import { SwitchValueDirection } from '../toolbar/ToolbarValueModelBuilder';
+import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
+import ColorPicker from '../action-widget/pane/color-picker';
+import TopicLink from '../action-widget/pane/topic-link';
+import TopicNote from '../action-widget/pane/topic-note';
+import IconPicker from '../action-widget/pane/icon-picker';
+import FontFamilySelector from '../action-widget/button/font-family-selector';
+import Editor from '../../classes/model/editor';
 import { useIntl } from 'react-intl';
 
 const keyTooltip = (msg: string, key: string): string => {

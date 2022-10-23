@@ -16,10 +16,10 @@
  *   limitations under the License.
  */
 import React from 'react';
-import ActionConfig from '../../../classes/action/action-config';
-import Capability from '../../../classes/action/capability';
-import Model from '../../../classes/model/editor';
-import Toolbar from '../../toolbar';
+import ActionConfig from '../../classes/action/action-config';
+import Capability from '../../classes/action/capability';
+import Model from '../../classes/model/editor';
+import Toolbar from '../toolbar';
 import { buildEditorPanelConfig } from './configBuilder';
 
 type EditorToolbarProps = {

@@ -39,8 +39,8 @@ import AppBar from './app-bar';
 import Capability from '../classes/action/capability';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import MapInfo from '../classes/model/map-info';
-import EditorToolbar from './app-bar/editor-toolbar';
-import ZoomPanel from './app-bar/zoom-panel';
+import EditorToolbar from './editor-toolbar';
+import ZoomPanel from './zoom-panel';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
