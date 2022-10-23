@@ -38,7 +38,7 @@ export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
       title={props.configuration.tooltip || ''}
       disableInteractive
       arrow={true}
-      enterDelay={7000}
+      enterDelay={700}
     >
       <Box component="span" my="auto">
         <IconButton
