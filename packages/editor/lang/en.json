@@ -47,6 +47,63 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Undo"
   },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "Add Icon"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "Add Link"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "Add Note"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "Add Relationship"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "Add Topic"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "Delete Topic"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "Border color"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "Fill color"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "Bigger"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "Bold"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "Italic"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "Smaller"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Font Style"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "Ellipse shape"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "Line shape"
+  },
+  "editor-panel.tooltip-topic-share-rectagle": {
+    "defaultMessage": "Rectagle shape"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "Rounded shape"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "Topic Style"
+  },
   "editor.edit-description-mobile": {
     "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
   },
@@ -73,5 +130,17 @@
   },
   "note.label": {
     "defaultMessage": "Note"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "Keyboard Shortcuts"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "Zoom In"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "Zoom Out"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "Zoom to Fit"
   }
 }

@@ -5,9 +5,9 @@
     "editor.try-welcome-description": {
         "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
     },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
-	},
+    "editor.try-welcome-mobile": {
+        "defaultMessage": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
+    },
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita. En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     },
@@ -73,5 +73,74 @@
     },
     "note.label": {
         "defaultMessage": "Nota"
+    },
+    "editor-panel.tooltip-add-icon": {
+        "defaultMessage": "Agregar Icono"
+    },
+    "editor-panel.tooltip-add-link": {
+        "defaultMessage": "Ajouter un lien"
+    },
+    "editor-panel.tooltip-add-note": {
+        "defaultMessage": "Ajouter une note"
+    },
+    "editor-panel.tooltip-add-relationship": {
+        "defaultMessage": "Ajouter une relation"
+    },
+    "editor-panel.tooltip-add-topic": {
+        "defaultMessage": "Ajouter le sujet "
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Supprimer le sujet"
+    },
+    "editor-panel.tooltip-topic-border-color": {
+        "defaultMessage": "Couleur de bord"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Couleur de contenu"
+    },
+    "editor-panel.tooltip-topic-font-bigger": {
+        "defaultMessage": "Plus gros"
+    },
+    "editor-panel.tooltip-topic-font-bold": {
+        "defaultMessage": "Caractère gras"
+    },
+    "editor-panel.tooltip-topic-font-color": {
+        "defaultMessage": "Couleur"
+    },
+    "editor-panel.tooltip-topic-font-italic": {
+        "defaultMessage": "Italica"
+    },
+    "editor-panel.tooltip-topic-font-smaller": {
+        "defaultMessage": "Petite"
+    },
+    "editor-panel.tooltip-topic-font-style": {
+        "defaultMessage": "Le style de police"
+    },
+    "editor-panel.tooltip-topic-share-ellipse": {
+        "defaultMessage": "Figure d'ellipse"
+    },
+    "editor-panel.tooltip-topic-share-line": {
+        "defaultMessage": "Forme de ligne"
+    },
+    "editor-panel.tooltip-topic-share-rectagle": {
+        "defaultMessage": "Forme Rectangulaire"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Forme redonda"
+    },
+    "editor-panel.tooltip-topic-style": {
+        "defaultMessage": "Style de sujet"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Raccourcis clavier"
+    },
+    "zoom-panel.tooltip-zoom-in": {
+        "defaultMessage": "Agrandir"
+    },
+    "zoom-panel.tooltip-zoom-out": {
+        "defaultMessage": "Dézoomer"
+    },
+    "zoom-panel.tooltip-zoom-to-fit": {
+        "defaultMessage": "Centre"
     }
 }

@@ -73,5 +73,74 @@
     },
     "note.label": {
         "defaultMessage": "Noter"
+    },
+    "editor-panel.tooltip-add-icon": {
+        "defaultMessage": "Agregar Icono"
+    },
+    "editor-panel.tooltip-add-link": {
+        "defaultMessage": "Agregar Enlace"
+    },
+    "editor-panel.tooltip-add-note": {
+        "defaultMessage": "Agregar Nota"
+    },
+    "editor-panel.tooltip-add-relationship": {
+        "defaultMessage": "Agregar Relación"
+    },
+    "editor-panel.tooltip-add-topic": {
+        "defaultMessage": "Agregar Topico"
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Borrar Topico"
+    },
+    "editor-panel.tooltip-topic-border-color": {
+        "defaultMessage": "Color del borde"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Color del cotenido"
+    },
+    "editor-panel.tooltip-topic-font-bigger": {
+        "defaultMessage": "Grande"
+    },
+    "editor-panel.tooltip-topic-font-bold": {
+        "defaultMessage": "Negrita"
+    },
+    "editor-panel.tooltip-topic-font-color": {
+        "defaultMessage": "Color"
+    },
+    "editor-panel.tooltip-topic-font-italic": {
+        "defaultMessage": "Italica"
+    },
+    "editor-panel.tooltip-topic-font-smaller": {
+        "defaultMessage": "Pequeña"
+    },
+    "editor-panel.tooltip-topic-font-style": {
+        "defaultMessage": "Estilo de Fuente"
+    },
+    "editor-panel.tooltip-topic-share-ellipse": {
+        "defaultMessage": "Figura elipse"
+    },
+    "editor-panel.tooltip-topic-share-line": {
+        "defaultMessage": "Figura linea"
+    },
+    "editor-panel.tooltip-topic-share-rectagle": {
+        "defaultMessage": "Figura rectangulo"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Figura redonda"
+    },
+    "editor-panel.tooltip-topic-style": {
+        "defaultMessage": "Estilo de Topico"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Keyboard Shortcuts"
+    },
+    "zoom-panel.tooltip-zoom-in": {
+        "defaultMessage": "Acercar"
+    },
+    "zoom-panel.tooltip-zoom-out": {
+        "defaultMessage": "Alejarse"
+    },
+    "zoom-panel.tooltip-zoom-to-fit": {
+        "defaultMessage": "Centrar"
     }
 }

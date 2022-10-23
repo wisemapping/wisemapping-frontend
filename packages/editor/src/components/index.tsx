@@ -15,10 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ErrorInfo, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
-import { buildEditorPanelConfig, buildZoomToolbarConfig } from './toolbar/toolbarConfigBuilder';
 
 import { IntlProvider } from 'react-intl';
 import {
@@ -30,7 +29,6 @@ import {
 } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
-import Toolbar from './toolbar';
 import { theme as defaultEditorTheme } from '../theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { Theme } from '@mui/material/styles';
@@ -41,6 +39,8 @@ import AppBar from './app-bar';
 import Capability from '../classes/action/capability';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import MapInfo from '../classes/model/map-info';
+import EditorToolbar from './app-bar/editor-toolbar';
+import ZoomPanel from './app-bar/zoom-panel';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -67,6 +67,8 @@ const Editor = ({
   accountConfiguration,
 }: EditorProps) => {
   const [model, setModel] = useState<Model | undefined>();
+
+  // This is required to redraw in case of chansges in the canvas...
   const [canvasUpdate, setCanvasUpdate] = useState<number>();
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
   const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
@@ -115,20 +117,9 @@ const Editor = ({
         >
           {widgetManager.getEditorContent()}
         </Popover>
-        {!capability.isHidden('edition-toolbar') && model?.isMapLoadded() && (
-          <Toolbar configurations={buildEditorPanelConfig(model)} />
-        )}
 
-        <Toolbar
-          configurations={buildZoomToolbarConfig(model, capability)}
-          position={{
-            position: {
-              right: '7px',
-              top: '93%',
-            },
-            vertical: false,
-          }}
-        />
+        <EditorToolbar model={model} capability={capability} />
+        <ZoomPanel model={model} capability={capability} />
 
         <mindplot-component
           ref={mindplotRef}
@@ -138,7 +129,6 @@ const Editor = ({
         />
 
         <Notifier id="headerNotifier" />
-
         <WarningDialog
           capability={capability}
           message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}

@@ -25,9 +25,6 @@ import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
-import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
-import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import SquareOutlinedIcon from '@mui/icons-material/SquareOutlined';
@@ -35,63 +32,69 @@ import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlin
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import Box from '@mui/material/Box';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
-import { $msg } from '@wisemapping/mindplot';
-import ActionConfig from '../../classes/action/action-config';
-import { SwitchValueDirection } from './ToolbarValueModelBuilder';
-import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
-import Typography from '@mui/material/Typography';
-import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
-import ColorPicker from '../action-widget/pane/color-picker';
-import KeyboardShorcutsHelp from '../action-widget/pane/keyboard-shortcut-help';
-import TopicLink from '../action-widget/pane/topic-link';
-import TopicNote from '../action-widget/pane/topic-note';
-import IconPicker from '../action-widget/pane/icon-picker';
-import FontFamilySelector from '../action-widget/button/font-family-selector';
-import Capability from '../../classes/action/capability';
-import Editor from '../../classes/model/editor';
+import ActionConfig from '../../../classes/action/action-config';
+import { SwitchValueDirection } from '../../toolbar/ToolbarValueModelBuilder';
+import NodePropertyValueModelBuilder from '../../../classes/model/node-property-builder';
+import ColorPicker from '../../action-widget/pane/color-picker';
+import TopicLink from '../../action-widget/pane/topic-link';
+import TopicNote from '../../action-widget/pane/topic-note';
+import IconPicker from '../../action-widget/pane/icon-picker';
+import FontFamilySelector from '../../action-widget/button/font-family-selector';
+import Editor from '../../../classes/model/editor';
+import { useIntl } from 'react-intl';
 
-/**
- *
- * @param designer designer to aply changes
- * @returns configuration for @wisemapping/editor priAppbarmary toolbar
- */
+const keyTooltip = (msg: string, key: string): string => {
+  const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
+};
+
 export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
   const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
-
-  /**
-   * submenu to manipulate node color and shape
-   */
+  const intl = useIntl();
   const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <BrushOutlinedIcon />,
-
-    tooltip: $msg('TOPIC_SHAPE'),
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-topic-style',
+      defaultMessage: 'Topic Style',
+    }),
     options: [
       {
         icon: <SquareOutlinedIcon />,
-        tooltip: $msg('TOPIC_SHAPE_RECTANGLE'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-share-rectagle',
+          defaultMessage: 'Rectagle shape',
+        }),
         onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rectagle'),
         selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rectagle',
       },
       {
         icon: <CheckBoxOutlineBlankOutlinedIcon />,
-        tooltip: $msg('TOPIC_SHAPE_ROUNDED'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-share-rounded',
+          defaultMessage: 'Rounded shape',
+        }),
         onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rounded rectagle'),
         selected: () =>
           toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rounded rectagle',
       },
       {
         icon: <HorizontalRuleOutlinedIcon />,
-        tooltip: $msg('TOPIC_SHAPE_LINE'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-share-line',
+          defaultMessage: 'Line shape',
+        }),
         onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('line'),
         selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'line',
       },
       {
         icon: <CircleOutlinedIcon />,
-        tooltip: $msg('TOPIC_SHAPE_ELLIPSE'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-share-ellipse',
+          defaultMessage: 'Ellipse shape',
+        }),
         onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('elipse'),
         selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'elipse',
       },
@@ -102,7 +105,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
             htmlColor={toolbarValueModelBuilder.getSelectedTopicColorModel().getValue()}
           ></Palette>
         ),
-        tooltip: $msg('TOPIC_COLOR'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-fill-color',
+          defaultMessage: 'Fill color',
+        }),
         options: [
           {
             render: (closeModal) => {
@@ -122,7 +128,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
             htmlColor={toolbarValueModelBuilder.getColorBorderModel().getValue()}
           ></SquareOutlined>
         ),
-        tooltip: $msg('TOPIC_BORDER_COLOR'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-border-color',
+          defaultMessage: 'Border color',
+        }),
         options: [
           {
             render: (closeModal) => {
@@ -145,7 +154,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
    */
   const fontFormatToolbarConfiguration: ActionConfig = {
     icon: <FontDownloadOutlinedIcon></FontDownloadOutlinedIcon>,
-    tooltip: $msg('FONT_FORMAT'),
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-topic-font-style',
+      defaultMessage: 'Font Style',
+    }),
     options: [
       {
         render: () => (
@@ -155,26 +167,44 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       null,
       {
         icon: <TextIncreaseOutlinedIcon></TextIncreaseOutlinedIcon>,
-        tooltip: $msg('FONT_INCREASE'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-font-bigger',
+          defaultMessage: 'Bigger',
+        }),
         onClick: () =>
           toolbarValueModelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.up),
       },
       {
         icon: <TextDecreaseOutlinedIcon></TextDecreaseOutlinedIcon>,
-        tooltip: $msg('FONT_DECREASE'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-font-smaller',
+          defaultMessage: 'Smaller',
+        }),
         onClick: () =>
           toolbarValueModelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.down),
       },
       null,
       {
         icon: <FormatBoldOutlinedIcon></FormatBoldOutlinedIcon>,
-        tooltip: $msg('FONT_BOLD') + ' (' + $msg('CTRL') + ' + B)',
+        tooltip: keyTooltip(
+          intl.formatMessage({
+            id: 'editor-panel.tooltip-topic-font-bold',
+            defaultMessage: 'Bold',
+          }),
+          'B',
+        ),
         onClick: toolbarValueModelBuilder.fontWeigthModel().switchValue,
         selected: () => toolbarValueModelBuilder.fontWeigthModel().getValue() === 'bold',
       },
       {
         icon: <FormatItalicIcon />,
-        tooltip: $msg('FONT_ITALIC') + ' (' + $msg('CTRL') + ' + I)',
+        tooltip: keyTooltip(
+          intl.formatMessage({
+            id: 'editor-panel.tooltip-topic-font-italic',
+            defaultMessage: 'Italic',
+          }),
+          'I',
+        ),
         onClick: toolbarValueModelBuilder.getFontStyleModel().switchValue,
         selected: () => toolbarValueModelBuilder.getFontStyleModel().getValue() === 'italic',
       },
@@ -182,7 +212,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         icon: () => (
           <Palette htmlColor={toolbarValueModelBuilder.getFontColorModel().getValue()}></Palette>
         ),
-        tooltip: $msg('FONT_COLOR'),
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-font-color',
+          defaultMessage: 'Color',
+        }),
         options: [
           {
             render: (closeModal) => {
@@ -205,7 +238,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
    */
   const addRelationConfiguration: ActionConfig = {
     icon: <SettingsEthernetIcon></SettingsEthernetIcon>,
-    tooltip: $msg('TOPIC_RELATIONSHIP'),
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-add-relationship',
+      defaultMessage: 'Add Relationship',
+    }),
     onClick: (e) => {
       designer.showRelPivot(e);
     },
@@ -217,7 +253,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
    */
   const editLinkUrlConfiguration: ActionConfig = {
     icon: <LinkOutlinedIcon />,
-    tooltip: $msg('TOPIC_LINK'),
+    tooltip: keyTooltip(
+      intl.formatMessage({ id: 'editor-panel.tooltip-add-link', defaultMessage: 'Add Link' }),
+      'L',
+    ),
     useClickToClose: true,
     options: [
       {
@@ -237,7 +276,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
    */
   const editNoteConfiguration: ActionConfig = {
     icon: <NoteOutlinedIcon />,
-    tooltip: $msg('TOPIC_NOTE'),
+    tooltip: keyTooltip(
+      intl.formatMessage({ id: 'editor-panel.tooltip-add-note', defaultMessage: 'Add Note' }),
+      'K',
+    ),
     useClickToClose: true,
     options: [
       {
@@ -258,7 +300,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
    */
   const editIconConfiguration: ActionConfig = {
     icon: <SentimentSatisfiedAltIcon />,
-    tooltip: $msg('TOPIC_ICON'),
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-add-icon',
+      defaultMessage: 'Add Icon',
+    }),
     options: [
       {
         tooltip: 'Node icon',
@@ -275,13 +320,19 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
 
   const addNodeToolbarConfiguration = {
     icon: <AddCircleOutlineOutlinedIcon />,
-    tooltip: $msg('TOPIC_ADD'),
+    tooltip:
+      intl.formatMessage({ id: 'editor-panel.tooltip-add-topic', defaultMessage: 'Add Topic' }) +
+      ' (Enter)',
     onClick: () => designer.createSiblingForSelectedNode(),
     disabled: () => designer.getModel().filterSelectedTopics().length === 0,
   };
   const deleteNodeToolbarConfiguration = {
     icon: <RemoveCircleOutlineIcon />,
-    tooltip: $msg('TOPIC_DELETE'),
+    tooltip:
+      intl.formatMessage({
+        id: 'editor-panel.tooltip-delete-topic',
+        defaultMessage: 'Delete Topic',
+      }) + ' (Delete)',
     onClick: () => designer.deleteSelectedEntities(),
     disabled: () => designer.getModel().filterSelectedTopics().length === 0,
   };
@@ -294,58 +345,5 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
     editNoteConfiguration,
     editLinkUrlConfiguration,
     addRelationConfiguration,
-  ];
-}
-
-export function buildZoomToolbarConfig(model: Editor, capability: Capability): ActionConfig[] {
-  return [
-    {
-      icon: <CenterFocusStrongOutlinedIcon />,
-      tooltip: $msg('CENTER_POSITION'),
-      onClick: () => {
-        model.getDesigner().zoomToFit();
-      },
-      disabled: () => !model?.isMapLoadded(),
-    },
-    {
-      // zoom value candidate, neds to fixit
-      render: () => (
-        <Box sx={{ p: 0.5 }}>
-          <Typography variant="overline" color="gray">
-            %
-            {!model?.isMapLoadded()
-              ? 100
-              : Math.floor((1 / designer.getWorkSpace()?.getZoom()) * 100)}
-          </Typography>
-        </Box>
-      ),
-      disabled: () => !model?.isMapLoadded(),
-    },
-    {
-      icon: <ZoomInOutlinedIcon />,
-      tooltip: $msg('ZOOM_IN'),
-      onClick: () => {
-        model.getDesigner().zoomIn();
-      },
-      disabled: () => !model?.isMapLoadded(),
-    },
-    {
-      icon: <ZoomOutOutlinedIcon />,
-      tooltip: $msg('ZOOM_OUT'),
-      onClick: () => {
-        model.getDesigner().zoomOut();
-      },
-      disabled: () => !model?.isMapLoadded(),
-    },
-    {
-      icon: <KeyboardOutlined />,
-      tooltip: $msg('KEYBOARD_SHOTCUTS'),
-      visible: !capability.isHidden('keyboard-shortcuts'),
-      options: [
-        {
-          render: () => <KeyboardShorcutsHelp />,
-        },
-      ],
-    },
   ];
 }

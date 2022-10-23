@@ -5,9 +5,9 @@
     "editor.try-welcome-description": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
     },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "Diese Edition zeigt einige der Mindmap-Funktionen!"
-	},
+    "editor.try-welcome-mobile": {
+        "defaultMessage": "Diese Edition zeigt einige der Mindmap-Funktionen!"
+    },
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
@@ -79,5 +79,74 @@
     },
     "note.label": {
         "defaultMessage": "Notiz"
-    }
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Tastatürkürzel"
+    },
+    "zoom-panel.tooltip-zoom-in": {
+        "defaultMessage": "Hineinzoomen"
+    },
+    "zoom-panel.tooltip-zoom-out": {
+        "defaultMessage": "Rauszoomen"
+    },
+    "zoom-panel.tooltip-zoom-to-fit": {
+        "defaultMessage": "Zoom zu passen"
+    },
+    "editor-panel.tooltip-add-icon": {
+        "defaultMessage":"Symbol hinzufügen"
+    },
+    "editor-panel.tooltip-add-link": {
+        "defaultMessage": "Link hinzufügen"
+    },
+    "editor-panel.tooltip-add-note": {
+        "defaultMessage": "Notiz hinzufügen"
+    },
+    "editor-panel.tooltip-add-relationship": {
+        "defaultMessage": "Beziehung hinzufügen"
+    },
+    "editor-panel.tooltip-add-topic": {
+        "defaultMessage": "Thema hinzufügen"
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Thema löschen"
+    },
+    "editor-panel.tooltip-topic-border-color": {
+        "defaultMessage": "Randfarbe"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Füllfarbe"
+    },
+    "editor-panel.tooltip-topic-font-bigger": {
+        "defaultMessage": "Größer"
+    },
+    "editor-panel.tooltip-topic-font-bold": {
+        "defaultMessage": "Fett gedruckt"
+    },
+    "editor-panel.tooltip-topic-font-color": {
+        "defaultMessage": "Farbe"
+    },
+    "editor-panel.tooltip-topic-font-italic": {
+        "defaultMessage": "Kursiv"
+    },
+    "editor-panel.tooltip-topic-font-smaller": {
+        "defaultMessage": "Kleiner"
+    },
+    "editor-panel.tooltip-topic-font-style": {
+        "defaultMessage": "Schriftstil"
+    },
+    "editor-panel.tooltip-topic-share-ellipse": {
+        "defaultMessage": "Ellipseform"
+    },
+    "editor-panel.tooltip-topic-share-line": {
+        "defaultMessage": "Linienform"
+    },
+    "editor-panel.tooltip-topic-share-rectagle": {
+        "defaultMessage": "Rechteckform"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Abgerundete Form"
+    },
+    "editor-panel.tooltip-topic-style": {
+        "defaultMessage": "Themenstil"
+    },
 }
