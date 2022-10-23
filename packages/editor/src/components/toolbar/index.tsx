@@ -34,7 +34,7 @@ import ActionConfig from '../../classes/action/action-config';
 export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
   const selected = props.configuration.selected && props.configuration.selected();
   return (
-    <Tooltip title={props.configuration.tooltip || ''} disableInteractive>
+    <Tooltip title={props.configuration.tooltip || ''} disableInteractive arrow={true}>
       <Box component="span" my="auto">
         <IconButton
           onClick={props.configuration.onClick}
