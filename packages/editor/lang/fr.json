@@ -5,9 +5,9 @@
     "editor.try-welcome-description": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
     },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
-	},
+    "editor.try-welcome-mobile": {
+        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
+    },
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
@@ -142,5 +142,74 @@
     },
     "zoom-panel.tooltip-zoom-to-fit": {
         "defaultMessage": "Centrar"
+    },
+    "shortcut-help-pane.action": {
+        "defaultMessage": "Action"
+    },
+    "shortcut-help-pane.add-child": {
+        "defaultMessage": "Ajouter le sujet de l'enfant"
+    },
+    "shortcut-help-pane.add-link": {
+        "defaultMessage": "Ajouter un lien"
+    },
+    "shortcut-help-pane.add-note": {
+        "defaultMessage": "Ajouter une note"
+    },
+    "shortcut-help-pane.add-sibling": {
+        "defaultMessage": "Ajouter un sujet de frère"
+    },
+    "shortcut-help-pane.cancel-text-changes": {
+        "defaultMessage": "Annuler les modifications du texte"
+    },
+    "shortcut-help-pane.change-font-bold": {
+        "defaultMessage": "Changer de texte en gras"
+    },
+    "shortcut-help-pane.change-font-italic": {
+        "defaultMessage": "Changer le texte en italique"
+    },
+    "shortcut-help-pane.collapse-children": {
+        "defaultMessage": "Effondrer les enfants"
+    },
+    "shortcut-help-pane.copy-and-text": {
+        "defaultMessage": "Copier et coller des sujets"
+    },
+    "shortcut-help-pane.delete-topic": {
+        "defaultMessage": "Supprimer le sujet"
+    },
+    "shortcut-help-pane.deselect-all-topics": {
+        "defaultMessage": "Désélectionner tous les sujets"
+    },
+    "shortcut-help-pane.edit-multiline": {
+        "defaultMessage": "Ajouter le texte du sujet multi-ligne"
+    },
+    "shortcut-help-pane.edit-topic": {
+        "defaultMessage": "Modifier le texte du sujet"
+    },
+    "shortcut-help-pane.edit-topic-key": {
+        "defaultMessage": "Commencez juste à taper"
+    },
+    "shortcut-help-pane.navigation": {
+        "defaultMessage": "La navigation"
+    },
+    "shortcut-help-pane.navigation-keys": {
+        "defaultMessage": "Touches directionnelles"
+    },
+    "shortcut-help-pane.redo": {
+        "defaultMessage": "Réduire l'édition"
+    },
+    "shortcut-help-pane.save-changes": {
+        "defaultMessage": "Sauvegarder les modifications"
+    },
+    "shortcut-help-pane.select-all-topics": {
+        "defaultMessage": "Sélectionnez tous les sujets"
+    },
+    "shortcut-help-pane.select-topics": {
+        "defaultMessage": "Sélectionnez plusieurs sujets"
+    },
+    "shortcut-help-pane.select-topics-keys": {
+        "defaultMessage": "Clic de souris"
+    },
+    "shortcut-help-pane.undo": {
+        "defaultMessage": "Annuler l'édition"
     }
 }

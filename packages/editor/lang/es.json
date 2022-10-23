@@ -78,34 +78,34 @@
         "defaultMessage": "Agregar Icono"
     },
     "editor-panel.tooltip-add-link": {
-        "defaultMessage": "Ajouter un lien"
+        "defaultMessage": "Agregar Enlace"
     },
     "editor-panel.tooltip-add-note": {
-        "defaultMessage": "Ajouter une note"
+        "defaultMessage": "Agregar Nota"
     },
     "editor-panel.tooltip-add-relationship": {
-        "defaultMessage": "Ajouter une relation"
+        "defaultMessage": "Agregar Relacion"
     },
     "editor-panel.tooltip-add-topic": {
-        "defaultMessage": "Ajouter le sujet "
+        "defaultMessage": "Agregar tópico"
     },
     "editor-panel.tooltip-delete-topic": {
-        "defaultMessage": "Supprimer le sujet"
+        "defaultMessage": "Borrar tópico"
     },
     "editor-panel.tooltip-topic-border-color": {
-        "defaultMessage": "Couleur de bord"
+        "defaultMessage": "Color del border"
     },
     "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Couleur de contenu"
+        "defaultMessage": "Color del figura"
     },
     "editor-panel.tooltip-topic-font-bigger": {
-        "defaultMessage": "Plus gros"
+        "defaultMessage": "Incrementar"
     },
     "editor-panel.tooltip-topic-font-bold": {
-        "defaultMessage": "Caractère gras"
+        "defaultMessage": "Negrita"
     },
     "editor-panel.tooltip-topic-font-color": {
-        "defaultMessage": "Couleur"
+        "defaultMessage": "Color"
     },
     "editor-panel.tooltip-topic-font-italic": {
         "defaultMessage": "Italica"
@@ -114,33 +114,102 @@
         "defaultMessage": "Petite"
     },
     "editor-panel.tooltip-topic-font-style": {
-        "defaultMessage": "Le style de police"
+        "defaultMessage": "Fuente"
     },
     "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Figure d'ellipse"
+        "defaultMessage": "Forma de elipse"
     },
     "editor-panel.tooltip-topic-share-line": {
-        "defaultMessage": "Forme de ligne"
+        "defaultMessage": "Forma de linea"
     },
     "editor-panel.tooltip-topic-share-rectagle": {
-        "defaultMessage": "Forme Rectangulaire"
+        "defaultMessage": "Forma rectagular"
     },
     "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Forme redonda"
+        "defaultMessage": "Forma redondeada"
     },
     "editor-panel.tooltip-topic-style": {
-        "defaultMessage": "Style de sujet"
+        "defaultMessage": "Estilo de tópico"
     },
     "zoom-panel.tooltip-keyboard": {
-        "defaultMessage": "Raccourcis clavier"
+        "defaultMessage": "Teclado"
     },
     "zoom-panel.tooltip-zoom-in": {
-        "defaultMessage": "Agrandir"
+        "defaultMessage": "Aumentar"
     },
     "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "Dézoomer"
+        "defaultMessage": "Decrementar"
     },
     "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Centre"
+        "defaultMessage": "Centrar"
+    },
+    "shortcut-help-pane.action": {
+        "defaultMessage": "Action"
+    },
+    "shortcut-help-pane.add-child": {
+        "defaultMessage": "Agregar tópico hijo"
+    },
+    "shortcut-help-pane.add-link": {
+        "defaultMessage": "Agregar enlace"
+    },
+    "shortcut-help-pane.add-note": {
+        "defaultMessage": "Agregar nota"
+    },
+    "shortcut-help-pane.add-sibling": {
+        "defaultMessage": "Agregar tópico hermano"
+    },
+    "shortcut-help-pane.cancel-text-changes": {
+        "defaultMessage": "Cancelar cambio de texto"
+    },
+    "shortcut-help-pane.change-font-bold": {
+        "defaultMessage": "Cambiar texto to negrita"
+    },
+    "shortcut-help-pane.change-font-italic": {
+        "defaultMessage": "Cambiar texto a italica"
+    },
+    "shortcut-help-pane.collapse-children": {
+        "defaultMessage": "Colapsar hijos"
+    },
+    "shortcut-help-pane.copy-and-text": {
+        "defaultMessage": "Copiar y pegar tópicos"
+    },
+    "shortcut-help-pane.delete-topic": {
+        "defaultMessage": "Borrar tópico"
+    },
+    "shortcut-help-pane.deselect-all-topics": {
+        "defaultMessage": "Deseleccionar tópicos"
+    },
+    "shortcut-help-pane.edit-multiline": {
+        "defaultMessage": "Agregar texto multi-linea"
+    },
+    "shortcut-help-pane.edit-topic": {
+        "defaultMessage": "Editar texto de tópico"
+    },
+    "shortcut-help-pane.edit-topic-key": {
+        "defaultMessage": "Empezar a escribir"
+    },
+    "shortcut-help-pane.navigation": {
+        "defaultMessage": "Navegar"
+    },
+    "shortcut-help-pane.navigation-keys": {
+        "defaultMessage": "Cursor"
+    },
+    "shortcut-help-pane.redo": {
+        "defaultMessage": "Rehacer cambios"
+    },
+    "shortcut-help-pane.save-changes": {
+        "defaultMessage": "Grabar cambios"
+    },
+    "shortcut-help-pane.select-all-topics": {
+        "defaultMessage": "Seleccionar todos los tópicos"
+    },
+    "shortcut-help-pane.select-topics": {
+        "defaultMessage": "Seleccionar multiples tópico"
+    },
+    "shortcut-help-pane.select-topics-keys": {
+        "defaultMessage": "Click del mouse"
+    },
+    "shortcut-help-pane.undo": {
+        "defaultMessage": "Deshacer cambios"
     }
 }

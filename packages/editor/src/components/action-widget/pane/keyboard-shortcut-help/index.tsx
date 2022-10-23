@@ -17,6 +17,7 @@
  */
 import { $msg } from '@wisemapping/mindplot';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const KeyboardShorcutsHelp = () => {
   return (
@@ -29,112 +30,220 @@ const KeyboardShorcutsHelp = () => {
         </colgroup>
         <thead>
           <tr>
-            <th>{$msg('ACTION')}</th>
+            <th>
+              <FormattedMessage id="shortcut-help-pane.action" defaultMessage="Action" />
+            </th>
             <th>Windows - Linux</th>
             <th>Mac OS X</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{$msg('SAVE_CHANGES')}</td>
-            <td>{$msg('CTRL')} + S</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.save-changes"
+                defaultMessage="Save changes"
+              />
+            </td>
+            <td>Ctrl + S</td>
             <td>⌘ + S</td>
           </tr>
           <tr>
-            <td>{$msg('CREATE_SIBLING_TOPIC')}</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.add-sibling"
+                defaultMessage="Add sibling topic"
+              />
+            </td>
             <td>Enter</td>
             <td>Enter</td>
           </tr>
           <tr>
-            <td>{$msg('CREATE_CHILD_TOPIC')}</td>
-            <td>{$msg('K_INSERT')} / Tab</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.add-child"
+                defaultMessage="Add child topic"
+              />
+            </td>
+            <td>Insert / Tab</td>
             <td>⌘ + Enter / Tab</td>
           </tr>
           <tr>
-            <td>{$msg('DELETE_TOPIC')}</td>
-            <td>{$msg('K_DELETE')}</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.delete-topic"
+                defaultMessage="Delete topic"
+              />
+            </td>
+            <td>Delete</td>
             <td>Delete</td>
           </tr>
           <tr>
-            <td>{$msg('EDIT_TOPIC_TEXT')}</td>
-            <td>{$msg('JUST_START_TYPING')} | F2</td>
-            <td>{$msg('JUST_START_TYPING')} | F2</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.edit-topic"
+                defaultMessage="Edit topic text"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.edit-topic-key"
+                defaultMessage="Just start typing"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.edit-topic-key"
+                defaultMessage="Just start typing"
+              />
+            </td>
           </tr>
           <tr>
-            <td>{$msg('MULTIPLE_LINES')}</td>
-            <td>{$msg('CTRL')} + Enter</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.edit-multiline"
+                defaultMessage="Add multi-line topic text"
+              />
+            </td>
+            <td>Ctrl + Enter</td>
             <td>⌘ + Enter</td>
           </tr>
           <tr>
-            <td>{$msg('COPY_AND_PASTE_TOPICS')}</td>
             <td>
-              {$msg('CTRL')} + C / {$msg('CTRL')} + V
+              <FormattedMessage
+                id="shortcut-help-pane.copy-and-text"
+                defaultMessage="Copy and paste topics"
+              />
             </td>
+            <td>Ctrl + C / Ctrl + V</td>
             <td>⌘ + C / ⌘ + V</td>
           </tr>
 
           <tr>
-            <td>{$msg('COLLAPSE_CHILDREN')}</td>
-            <td>{$msg('SPACE_BAR')}</td>
-            <td>{$msg('SPACE_BAR')}</td>
-          </tr>
-          <tr>
-            <td>{$msg('TOPIC_NAVIGATION')}</td>
-            <td>{$msg('ARROW_KEYS')}</td>
-            <td>{$msg('ARROW_KEYS')}</td>
-          </tr>
-          <tr>
-            <td>{$msg('SELECT_MULTIPLE_NODES')}</td>
             <td>
-              {$msg('CTRL')} + {$msg('MOUSE_CLICK')}
+              <FormattedMessage
+                id="shortcut-help-pane.collapse-children"
+                defaultMessage="Collpase children"
+              />
+            </td>
+            <td>Spacebar</td>
+            <td>Spacebar</td>
+          </tr>
+          <tr>
+            <td>
+              <FormattedMessage id="shortcut-help-pane.navigation" defaultMessage="Navigation" />
             </td>
             <td>
-              {$msg('CTRL')} + {$msg('MOUSE_CLICK')}
+              <FormattedMessage
+                id="shortcut-help-pane.navigation-keys"
+                defaultMessage="Arrow keys"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.navigation-keys"
+                defaultMessage="Arrow keys"
+              />
             </td>
           </tr>
           <tr>
-            <td>{$msg('UNDO_EDITION')}</td>
-            <td>{$msg('CTRL')} + Z</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.select-topics"
+                defaultMessage="Select multiple topics"
+              />
+            </td>
+            <td>
+              Ctrl +{' '}
+              <FormattedMessage
+                id="shortcut-help-pane.select-topics-keys"
+                defaultMessage="Mouse click"
+              />
+            </td>
+            <td>
+              Ctrl +{' '}
+              <FormattedMessage
+                id="shortcut-help-pane.select-topics-keys"
+                defaultMessage="Mouse click"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <FormattedMessage id="shortcut-help-pane.undo" defaultMessage="Undo edition" />
+            </td>
+            <td>Ctrl + Z</td>
             <td>⌘ + Z</td>
           </tr>
           <tr>
-            <td>{$msg('REDO_EDITION')}</td>
-            <td>{$msg('CTRL')} + Shift + Z</td>
+            <td>
+              <FormattedMessage id="shortcut-help-pane.redo" defaultMessage="Redo edition" />
+            </td>
+            <td>Ctrl + Shift + Z</td>
             <td>⌘ + Shift + Z</td>
           </tr>
           <tr>
-            <td>{$msg('SELECT_ALL_TOPIC')}</td>
-            <td>{$msg('CTRL')} + A</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.select-all-topics"
+                defaultMessage="Select all topics"
+              />
+            </td>
+            <td>Ctrl + A</td>
             <td>⌘ + A</td>
           </tr>
           <tr>
-            <td>{$msg('CANCEL_TEXT_CHANGES')}</td>
-            <td>Esc</td>
-            <td>Esc</td>
-          </tr>
-          <tr>
-            <td>{$msg('DESELECT_ALL_TOPIC')}</td>
-            <td>{$msg('CTRL')} + Shift + A</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.deselect-all-topics"
+                defaultMessage="Deselect all topics"
+              />
+            </td>
+            <td>Ctrl + Shift + A</td>
             <td>⌘ + Shift + A</td>
           </tr>
           <tr>
-            <td>{$msg('CHANGE_TEXT_ITALIC')}</td>
-            <td>{$msg('CTRL')} + I</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.cancel-text-changes"
+                defaultMessage="Cancel text changes"
+              />
+            </td>
+            <td>Esc</td>
+            <td>Esc</td>
+          </tr>
+          <tr>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.change-font-italic"
+                defaultMessage="Change text to italic"
+              />
+            </td>
+            <td>Ctrl + I</td>
             <td>⌘ + I</td>
           </tr>
           <tr>
-            <td>{$msg('CHANGE_TEXT_BOLD')}</td>
-            <td>{$msg('CTRL')} + B</td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.change-font-bold"
+                defaultMessage="Change text to bold"
+              />
+            </td>
+            <td>Ctrl + B</td>
             <td>⌘ + B</td>
           </tr>
           <tr>
-            <td>{$msg('TOPIC_NOTE')}</td>
-            <td>{$msg('CTRL')} + K</td>
+            <td>
+              <FormattedMessage id="shortcut-help-pane.add-note" defaultMessage="Add note" />
+            </td>
+            <td>Ctrl + K</td>
             <td>⌘ + K</td>
           </tr>
           <tr>
-            <td>{$msg('TOPIC_LINK')}</td>
-            <td>{$msg('CTRL')} + L</td>
+            <td>
+              <FormattedMessage id="shortcut-help-pane.add-link" defaultMessage="Add link" />
+            </td>
+            <td>Ctrl + L</td>
             <td>⌘ + L</td>
           </tr>
         </tbody>

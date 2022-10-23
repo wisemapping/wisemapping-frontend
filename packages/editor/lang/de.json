@@ -148,5 +148,74 @@
     },
     "editor-panel.tooltip-topic-style": {
         "defaultMessage": "Themenstil"
+    },
+    "shortcut-help-pane.action": {
+      "defaultMessage": "Aktion"
+    },
+    "shortcut-help-pane.add-child": {
+      "defaultMessage": "Kinderthema hinzufügen"
+    },
+    "shortcut-help-pane.add-link": {
+      "defaultMessage": "Link hinzufügen"
+    },
+    "shortcut-help-pane.add-note": {
+      "defaultMessage": "Notiz hinzufügen"
+    },
+    "shortcut-help-pane.add-sibling": {
+      "defaultMessage": "Geschwisterthema hinzufügen"
+    },
+    "shortcut-help-pane.cancel-text-changes": {
+      "defaultMessage": "Textänderungen abbrechen"
+    },
+    "shortcut-help-pane.change-font-bold": {
+      "defaultMessage": "Text in fett gedruckt"
+    },
+    "shortcut-help-pane.change-font-italic": {
+      "defaultMessage": "Text in Kursivschrift ändern"
+    },
+    "shortcut-help-pane.collapse-children": {
+      "defaultMessage": "Kinder zusammenbrechen"
+    },
+    "shortcut-help-pane.copy-and-text": {
+      "defaultMessage": "Themen kopieren und einfügen"
+    },
+    "shortcut-help-pane.delete-topic": {
+      "defaultMessage":"Thema löschen"
+    },
+    "shortcut-help-pane.deselect-all-topics": {
+      "defaultMessage": "Alle Themen auswählen"
+    },
+    "shortcut-help-pane.edit-multiline": {
+      "defaultMessage": "Multi-Line-Thementext hinzufügen"
+    },
+    "shortcut-help-pane.edit-topic": {
+      "defaultMessage": "Thementext bearbeiten"
+    },
+    "shortcut-help-pane.edit-topic-key": {
+      "defaultMessage": "Fang einfach an zu tippen"
+    },
+    "shortcut-help-pane.navigation": {
+      "defaultMessage": "navigation"
+    },
+    "shortcut-help-pane.navigation-keys": {
+      "defaultMessage": "Pfeiltasten"
+    },
+    "shortcut-help-pane.redo": {
+      "defaultMessage": "redoEdition"
+    },
+    "shortcut-help-pane.save-changes": {
+      "defaultMessage": "Änderungen speichern"
+    },
+    "shortcut-help-pane.select-all-topics": {
+      "defaultMessage": "Wählen Sie alle Themen aus"
+    },
+    "shortcut-help-pane.select-topics": {
+      "defaultMessage": "Wählen Sie mehrere Themen aus"
+    },
+    "shortcut-help-pane.select-topics-keys": {
+      "defaultMessage": "Mausklick"
+    },
+    "shortcut-help-pane.undo": {
+      "defaultMessage": "Undo edition"
     }
 }

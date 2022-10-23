@@ -131,6 +131,75 @@
   "note.label": {
     "defaultMessage": "Note"
   },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "Action"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "Add child topic"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "Add link"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "Add note"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "Add sibling topic"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "Cancel text changes"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "Change text to bold"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "Change text to italic"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "Collpase children"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "Copy and paste topics"
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "Delete topic"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "Deselect all topics"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "Add multi-line topic text"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "Edit topic text"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "Just start typing"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "Navigation"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "Arrow keys"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "Redo edition"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "Save changes"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "Select all topics"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "Select multiple topics"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "Mouse click"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "Undo edition"
+  },
   "zoom-panel.tooltip-keyboard": {
     "defaultMessage": "Keyboard Shortcuts"
   },
