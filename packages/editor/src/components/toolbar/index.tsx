@@ -111,6 +111,7 @@ export const ToolbarSubmenu = (props: {
       <Popover
         role="submenu"
         open={open}
+        style={{ zIndex: 1000 }}
         onClose={() => setOpen(false)}
         anchorEl={itemRef.current}
         container={itemRef.current}

@@ -21,7 +21,7 @@ import { FormattedMessage } from 'react-intl';
 
 const KeyboardShorcutsHelp = () => {
   return (
-    <div id="keyboardTable" style={{ position: 'relative', zIndex: '2' }}>
+    <div id="keyboardTable">
       <table>
         <colgroup>
           <col width="40%" />
