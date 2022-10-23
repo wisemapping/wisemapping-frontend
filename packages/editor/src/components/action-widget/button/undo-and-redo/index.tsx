@@ -29,11 +29,11 @@ const UndoAndRedo = (props: {
       const isDisabled = props.disabledCondition(event);
       setDisabled(!isDisabled);
 
-      designer.addEvent('modelUpdate', handleUpdate);
       return () => {
         designer.removeEvent('modelUpdate', handleUpdate);
       };
     };
+    designer.addEvent('modelUpdate', handleUpdate);
   }, []);
 
   return (

@@ -49,6 +49,7 @@ interface AppBarProps {
   onAction?: (type: ToolbarActionType) => void;
   accountConfig?;
 }
+
 const appBarDivisor = {
   render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
 };
