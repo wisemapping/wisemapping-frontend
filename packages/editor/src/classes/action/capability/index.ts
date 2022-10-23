@@ -176,6 +176,11 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
     },
   },
+  'appbar-title': {
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+    },
+  },
   'sign-up': {
     desktop: {
       hidden: ['viewonly', 'edition-viewer', 'edition-editor', 'edition-owner'],

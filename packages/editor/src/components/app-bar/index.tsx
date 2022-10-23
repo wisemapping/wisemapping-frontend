@@ -88,6 +88,7 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
     },
     {
       render: () => <img src={LogoTextBlackSvg} />,
+      visible: !capability.isHidden('appbar-title'),
     },
     {
       render: () => (

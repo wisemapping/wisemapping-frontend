@@ -30,6 +30,7 @@ type ActionType =
   | 'edition-toolbar'
   | 'sign-up'
   | 'starred'
+  | 'appbar-title'
   | 'keyboard-shortcuts';
 
 export default ActionType;
