@@ -17,29 +17,39 @@
  */
 import React, { useEffect, useState } from 'react';
 import ActionConfig from '../../../../classes/action/action-config';
+import Editor from '../../../../classes/model/editor';
 import { ToolbarMenuItem } from '../../../toolbar';
 
-const UndoAndRedo = (props: {
+type UndoAndRedo = {
   configuration: ActionConfig;
   disabledCondition: (event) => boolean;
-}) => {
-  const [disabled, setDisabled] = useState(true);
-  useEffect(() => {
-    const handleUpdate: any = (event) => {
-      const isDisabled = props.disabledCondition(event);
-      setDisabled(!isDisabled);
+  model: Editor;
+};
 
-      return () => {
-        designer.removeEvent('modelUpdate', handleUpdate);
+const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo) => {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (model?.isMapLoadded()) {
+      const handleUpdate: any = (event) => {
+        const isDisabled = disabledCondition(event);
+        setDisabled(!isDisabled);
+
+        return () => {
+          designer.removeEvent('modelUpdate', handleUpdate);
+        };
       };
-    };
-    designer.addEvent('modelUpdate', handleUpdate);
-  }, []);
+
+      if (model.getDesigner()) {
+        designer.addEvent('modelUpdate', handleUpdate);
+      }
+    }
+  }, [model?.isMapLoadded()]);
 
   return (
     <ToolbarMenuItem
       configuration={{
-        ...props.configuration,
+        ...configuration,
         disabled: () => disabled,
       }}
     ></ToolbarMenuItem>

@@ -116,6 +116,7 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
             onClick: () => designer.undo(),
           }}
           disabledCondition={(event) => event.undoSteps > 0}
+          model={model}
         />
       ),
       visible: !capability.isHidden('undo-changes'),
@@ -133,6 +134,7 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
             onClick: () => designer.redo(),
           }}
           disabledCondition={(event) => event.redoSteps > 0}
+          model={model}
         />
       ),
       visible: !capability.isHidden('redo-changes'),

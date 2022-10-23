@@ -273,20 +273,21 @@ describe('Toolbar', () => {
   });
 });
 
-// describe('AppBar', () => {
-//   it('When render it displays a menu', () => {
-//     const capacity = new Capability('edition-owner', false);
-//     const model = new Editor(null);
+describe('AppBar', () => {
+  it('When render it displays a menu', () => {
+    const capacity = new Capability('edition-owner', false);
+    const model = new Editor(null);
 
-//     render(
-//       <IntlProvider>
-//         <AppBar
-//           mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
-//           capability={capacity}
-//           model={model}
-//         />,
-//       </IntlProvider>
-//     );
-//     screen.getByRole('menubar');
-//   });
-// });
+    render(
+      <IntlProvider locale="en">
+        <AppBar
+          mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
+          capability={capacity}
+          model={model}
+        />
+        ,
+      </IntlProvider>,
+    );
+    screen.getByRole('menubar');
+  });
+});
