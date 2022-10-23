@@ -1,26 +1,77 @@
 {
-    "editor.try-welcome": {
-        "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
-    },
-    "editor.try-welcome-description": {
-		"defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
-    },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "This edition space showcases some of the mindmap capabilities!"
-	},
-    "editor.try-welcome-description-mobile": {
-        "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies."
-    },
-    "editor.edit-mobile": {
-        "defaultMessage": "Note for mobile devices."
-    },
-    "editor.edit-description-mobile": {
-        "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
-    },
-    "login.signup": {
-        "defaultMessage": "Sign Up"
-    },
-    "action.share": {
-        "defaultMessage": "Share"
-    }
+  "action.accept": {
+    "defaultMessage": "Accept"
+  },
+  "action.cancel": {
+    "defaultMessage": "Cancel"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "Back to maps list"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "Sign Up"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "Share"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "Export"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "Changes History"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "Information"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "Print"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "Publish"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "Redo"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "Save"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "Share for Collaboration"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "Sign Up"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "Starred"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "Undo"
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
+  },
+  "editor.edit-mobile": {
+    "defaultMessage": "Note for mobile devices."
+  },
+  "editor.try-welcome": {
+    "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies."
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
+  },
+  "link.help_text": {
+    "defaultMessage": "Address is not valid"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "note.label": {
+    "defaultMessage": "Note"
+  }
 }

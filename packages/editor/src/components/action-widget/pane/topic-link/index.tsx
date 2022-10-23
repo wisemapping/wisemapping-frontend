@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { useState } from 'react';
-import { $msg } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../classes/model/node-property';
 import Box from '@mui/material/Box';
 import React from 'react';
@@ -25,16 +24,15 @@ import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import SaveAndDelete from '../save-and-delete';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
+import { useIntl } from 'react-intl';
 
 /**
  * Url form for toolbar and node contextual editor
  */
 const TopicLink = (props: { closeModal: () => void; urlModel: NodeProperty }) => {
   const [url, setUrl] = useState(props.urlModel.getValue());
+  const intl = useIntl();
 
-  /**
-   * if url is valid set model value and calls closeModal
-   */
   const submitHandler = () => {
     if (checkURL(url)) {
       props.closeModal();
@@ -62,8 +60,15 @@ const TopicLink = (props: { closeModal: () => void; urlModel: NodeProperty }) =>
       <Input
         autoFocus
         error={!isValidUrl}
-        helperText={isValidUrl ? '' : $msg('URL_ERROR')}
-        placeholder={$msg('PASTE_URL_HERE')}
+        helperText={
+          isValidUrl
+            ? ''
+            : intl.formatMessage({ id: 'link.help_text', defaultMessage: 'Address is not valid' })
+        }
+        placeholder={intl.formatMessage({
+          id: 'link.placeholder',
+          defaultMessage: 'https://www.example.com',
+        })}
         label="URL"
         value={url}
         onChange={(event) => setUrl(event.target.value)}

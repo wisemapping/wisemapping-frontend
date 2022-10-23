@@ -34,13 +34,13 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import Typography from '@mui/material/Typography';
-import { $msg } from '@wisemapping/mindplot';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import IconButton from '@mui/material/IconButton';
 import { ToolbarActionType } from '../toolbar/ToolbarActionType';
 import MapInfo from '../../classes/model/map-info';
+import { useIntl } from 'react-intl';
 
 interface AppBarProps {
   model: Editor;
@@ -53,8 +53,14 @@ const appBarDivisor = {
   render: () => <Typography component="div" sx={{ flexGrow: 1 }} />,
 };
 
+const keyTooltip = (msg: string, key: string): string => {
+  const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
+};
+
 const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarProps) => {
   const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
+  const intl = useIntl();
 
   const handleStarredOnClick = () => {
     const newStatus = !isStarred;
@@ -70,11 +76,13 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
       });
   }, []);
 
-  console.log(``);
   const config: ActionConfig[] = [
     {
       icon: <ArrowBackIosNewOutlinedIcon />,
-      tooltip: $msg('BACK_TO_MAP_LIST'),
+      tooltip: intl.formatMessage({
+        id: 'appbar.back-to-map-list',
+        defaultMessage: 'Back to maps list',
+      }),
       onClick: () => history.back(),
     },
     {
@@ -100,7 +108,10 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
         <UndoAndRedo
           configuration={{
             icon: <UndoOutlinedIcon />,
-            tooltip: $msg('UNDO') + ' (' + $msg('CTRL') + ' + Z)',
+            tooltip: keyTooltip(
+              intl.formatMessage({ id: 'appbar.tooltip-undo', defaultMessage: 'Undo' }),
+              'Z',
+            ),
             onClick: () => designer.undo(),
           }}
           disabledCondition={(event) => event.undoSteps > 0}
@@ -114,7 +125,10 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
         <UndoAndRedo
           configuration={{
             icon: <RedoOutlinedIcon />,
-            tooltip: $msg('REDO') + ' (' + $msg('CTRL') + ' + Shift + Z)',
+            tooltip: keyTooltip(
+              intl.formatMessage({ id: 'appbar.tooltip-redo', defaultMessage: 'Redo' }),
+              'Shift + Z',
+            ),
             onClick: () => designer.redo(),
           }}
           disabledCondition={(event) => event.redoSteps > 0}
@@ -126,65 +140,80 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
     null,
     {
       icon: <SaveOutlinedIcon />,
-      tooltip: $msg('SAVE') + ' (' + $msg('CTRL') + ' + S)',
       onClick: () => {
         model.save(true);
       },
+      tooltip: keyTooltip(
+        intl.formatMessage({ id: 'appbar.tooltip-save', defaultMessage: 'Save' }),
+        'S',
+      ),
       visible: !capability.isHidden('save'),
       disabled: () => !model?.isMapLoadded(),
     },
     {
       icon: <RestoreOutlinedIcon />,
-      tooltip: $msg('HISTORY'),
       onClick: () => onAction('history'),
+      tooltip: intl.formatMessage({
+        id: 'appbar.tooltip-history',
+        defaultMessage: 'Changes History',
+      }),
       visible: !capability.isHidden('history'),
     },
     appBarDivisor,
     {
-      tooltip: $msg('STARRED'),
       render: () => (
-        <IconButton size="small" onClick={handleStarredOnClick}>
-          <StarRateRoundedIcon
-            color="action"
-            style={{
-              color: isStarred ? 'yellow' : 'gray',
-            }}
-          />
-        </IconButton>
+        <Tooltip
+          title={intl.formatMessage({ id: 'appbar.tooltip-starred', defaultMessage: 'Starred' })}
+        >
+          <IconButton size="small" onClick={handleStarredOnClick}>
+            <StarRateRoundedIcon
+              color="action"
+              style={{
+                color: isStarred ? 'yellow' : 'gray',
+              }}
+            />
+          </IconButton>
+        </Tooltip>
       ),
-
       visible: !capability.isHidden('starred'),
       disabled: () => isStarred !== undefined,
     },
     {
       icon: <FileDownloadOutlinedIcon />,
-      tooltip: $msg('EXPORT'),
       onClick: () => onAction('export'),
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-export', defaultMessage: 'Export' }),
       visible: !capability.isHidden('export'),
     },
     {
       icon: <PrintOutlinedIcon />,
-      tooltip: $msg('PRINT'),
       onClick: () => onAction('print'),
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-print', defaultMessage: 'Print' }),
       visible: !capability.isHidden('print'),
     },
     {
       icon: <HelpOutlineOutlinedIcon />,
       onClick: () => onAction('info'),
-      tooltip: $msg('MAP_INFO'),
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-info', defaultMessage: 'Information' }),
       visible: !capability.isHidden('info'),
     },
     {
       icon: <CloudUploadOutlinedIcon />,
       onClick: () => onAction('publish'),
-      tooltip: $msg('PUBLISH'),
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-publish', defaultMessage: 'Publish' }),
       visible: !capability.isHidden('publish'),
     },
     {
       render: () => (
-        <Button variant="contained" onClick={() => onAction('share')}>
-          {$msg('COLLABORATE')}
-        </Button>
+        <Tooltip
+          title={intl.formatMessage({
+            id: 'appbar.tooltip-shared',
+            defaultMessage: 'Share for Collaboration',
+          })}
+        >
+          <Button variant="contained" onClick={() => onAction('share')}>
+            {intl.formatMessage({ id: 'appbar.shared-button', defaultMessage: 'Share' })}
+          </Button>
+        </Tooltip>
       ),
       visible: !capability.isHidden('share'),
     },
@@ -194,9 +223,13 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
     },
     {
       render: () => (
-        <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
-          {$msg('SIGN_UP')}
-        </Button>
+        <Tooltip
+          title={intl.formatMessage({ id: 'appbar.tooltip-signup', defaultMessage: 'Sign Up' })}
+        >
+          <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
+            {intl.formatMessage({ id: 'appbar.button-signup', defaultMessage: 'Sign Up' })}
+          </Button>
+        </Tooltip>
       ),
       visible: !capability.isHidden('sign-up'),
     },

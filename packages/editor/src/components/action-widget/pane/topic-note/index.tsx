@@ -16,17 +16,18 @@
  *   limitations under the License.
  */
 import Box from '@mui/material/Box';
-import { $msg } from '@wisemapping/mindplot';
 import React, { useState } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import Input from '../../input';
 import SaveAndDelete from '../save-and-delete';
+import { useIntl } from 'react-intl';
 
 /**
  * Note form for toolbar and node contextual editor
  */
 const TopicNote = (props: { closeModal: () => void; noteModel: NodeProperty | null }) => {
   const [note, setNote] = useState(props.noteModel.getValue());
+  const intl = useIntl();
 
   const submitHandler = () => {
     props.closeModal();
@@ -38,7 +39,7 @@ const TopicNote = (props: { closeModal: () => void; noteModel: NodeProperty | nu
       <Input
         autoFocus
         multiline
-        label={$msg('NOTE')}
+        label={intl.formatMessage({ id: 'note.label', defaultMessage: 'Note' })}
         variant="outlined"
         fullWidth
         rows={12}

@@ -18,10 +18,10 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { $msg } from '@wisemapping/mindplot';
 import React from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { FormattedMessage } from 'react-intl';
 
 const SaveAndDelete = (props: {
   model: NodeProperty;
@@ -31,11 +31,11 @@ const SaveAndDelete = (props: {
   return (
     <Box component="span">
       <Button color="primary" variant="outlined" onClick={props.submitHandler} sx={{ mr: 1 }}>
-        {$msg('ACCEPT')}
+        <FormattedMessage id="action.accept" defaultMessage="Accept" />
       </Button>
 
       <Button color="primary" variant="contained" onClick={props.closeModal}>
-        {$msg('CANCEL')}
+        <FormattedMessage id="action.cancel" defaultMessage="Cancel" />
       </Button>
 
       {props.model.getValue() && props.model.getValue().trim() !== '' && (

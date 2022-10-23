@@ -132,7 +132,7 @@ export const ToolbarSubmenu = (props: {
                   key={i}
                   configuration={o as ActionConfig}
                   elevation={props.elevation + 3}
-                ></ToolbarMenuItem>
+                />
               );
             } else {
               return <span key={i}>{o.render(() => setOpen(false))}</span>;
@@ -180,7 +180,7 @@ export const ToolbarMenuItem = (props: {
           configuration={props.configuration}
           vertical={props.vertical}
           elevation={props.elevation || 0}
-        ></ToolbarSubmenu>
+        />
       );
     else return null;
   }

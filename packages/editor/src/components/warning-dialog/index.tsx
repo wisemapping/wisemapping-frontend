@@ -31,20 +31,41 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
   const intl = useIntl();
   const [dialogClass, setDialogClass] = useState('tryInfoPanel');
 
-  var titleKey = undefined;
-  var descriptionKey = undefined;
-
+  let msgExt, msg: string;
   if (capability.mode !== 'viewonly' && capability.mode !== 'showcase' && capability.isMobile) {
-    titleKey = 'editor.edit-mobile';
-    descriptionKey = 'editor.edit-description-mobile';
+    msg = intl.formatMessage({
+      id: 'editor.edit-mobile',
+      defaultMessage: 'Note for mobile devices.',
+    });
+    msgExt = intl.formatMessage({
+      id: 'editor.edit-description-mobile',
+      defaultMessage:
+        'Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities.',
+    });
   }
+
   if (capability.mode === 'showcase' && capability.isMobile) {
-    titleKey = 'editor.try-welcome-mobile';
-    descriptionKey = 'editor.edit-description-mobile';
+    msg = intl.formatMessage({
+      id: 'editor.try-welcome-mobile',
+      defaultMessage: 'This edition space showcases some of the mindmap editor capabilities!',
+    });
+    msgExt = intl.formatMessage({
+      id: 'editor.try-welcome-description-mobile',
+      defaultMessage:
+        'Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies.',
+    });
   }
+
   if (capability.mode === 'showcase' && !capability.isMobile) {
-    titleKey = 'editor.try-welcome';
-    descriptionKey = 'editor.try-welcome-description';
+    msg = intl.formatMessage({
+      id: 'editor.try-welcome',
+      defaultMessage: 'This edition space showcases some of the mindmap editor capabilities!',
+    });
+    msgExt = intl.formatMessage({
+      id: 'editor.try-welcome-description',
+      defaultMessage:
+        'Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free.',
+    });
   }
 
   // if the toolbar is present, the alert must not overlap
@@ -53,7 +74,7 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
   return (
     <>
       <Notifier id="headerNotifier"></Notifier>
-      {(titleKey || message) && (
+      {(msgExt || message) && (
         <div className={dialogClass + ' ' + alertTopAdjustmentStyle}>
           <div className="tryInfoPanelInner">
             <div className="closeButton">
@@ -67,11 +88,7 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
                 <img src={CloseDialogSvg} />
               </button>
             </div>
-            {titleKey && (
-              <p>
-                {intl.formatMessage({ id: titleKey })} {intl.formatMessage({ id: descriptionKey })}
-              </p>
-            )}
+            {msgExt && <p>{`${msg} ${msgExt}`}</p>}
             {message && <p>{message}</p>}
           </div>
         </div>
