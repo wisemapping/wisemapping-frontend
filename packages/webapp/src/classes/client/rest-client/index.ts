@@ -227,9 +227,9 @@ export default class RestClient implements Client {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(model.title)}&description=${
-            model.description ? model.description : ''
-          }`,
+          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(
+            model.title,
+          )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
           model.content,
           { headers: { 'Content-Type': 'application/xml' } },
         )
@@ -382,9 +382,9 @@ export default class RestClient implements Client {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${
-            model.description ? model.description : ''
-          }`,
+          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(
+            model.title,
+          )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
           null,
           { headers: { 'Content-Type': 'application/json' } },
         )
