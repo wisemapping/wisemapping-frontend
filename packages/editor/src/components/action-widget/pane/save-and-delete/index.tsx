@@ -30,11 +30,11 @@ const SaveAndDelete = (props: {
 }) => {
   return (
     <Box component="span">
-      <Button color="primary" variant="outlined" onClick={props.submitHandler} sx={{ mr: 1 }}>
+      <Button color="primary" variant="contained" onClick={props.submitHandler} sx={{ mr: 1 }}>
         <FormattedMessage id="action.accept" defaultMessage="Accept" />
       </Button>
 
-      <Button color="primary" variant="contained" onClick={props.closeModal}>
+      <Button color="primary" variant="outlined" onClick={props.closeModal}>
         <FormattedMessage id="action.cancel" defaultMessage="Cancel" />
       </Button>
 
