@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map name="basic" version="tango">
-    <topic central="true" id="0" position="0,0" shape="rounded rectagle">
+    <topic central="true" id="0" position="0,0" shape="rounded rectangle">
         <text><![CDATA[California]]></text>
         <topic id="1" order="7" position="-200,-200" shape="line">
             <text><![CDATA[Northern California]]></text>
@@ -85,27 +85,27 @@
                     <text><![CDATA[Orange County Eye and Transplant Bank]]></text>
                 </topic>
                 <topic bgColor="#00ffd5" id="29" order="1"
-                    position="380,-225" shape="rounded rectagle">
+                    position="380,-225" shape="rounded rectangle">
                     <text><![CDATA[Northern California Transplant Bank]]></text>
                     <topic id="30" order="0" position="470,-225" shape="line">
                         <text><![CDATA[In 2010, 2,500 referrals forwarded to OneLegacy]]></text>
                     </topic>
                 </topic>
                 <topic bgColor="#00ffd5" id="31" order="2"
-                    position="380,-200" shape="rounded rectagle">
+                    position="380,-200" shape="rounded rectangle">
                     <text><![CDATA[Doheny Eye and Tissue Transplant Bank]]></text>
                     <link url="http://www.dohenyeyebank.org/"/>
                 </topic>
             </topic>
             <topic bgColor="#00ffd5" id="32" order="1"
-                position="290,-175" shape="rounded rectagle">
+                position="290,-175" shape="rounded rectangle">
                 <text><![CDATA[OneLegacy]]></text>
                 <topic id="33" order="0" position="380,-200" shape="line">
                     <text><![CDATA[In 2010, 11,828 referrals]]></text>
                 </topic>
             </topic>
             <topic bgColor="#00ffd5" id="34" order="2"
-                position="290,-150" shape="rounded rectagle">
+                position="290,-150" shape="rounded rectangle">
                 <text><![CDATA[San Diego Eye Bank]]></text>
                 <topic id="35" order="0" position="380,-150" shape="line">
                     <text><![CDATA[In 2010, 2,555 referrals]]></text>
@@ -126,7 +126,7 @@
             <topic id="40" order="6" position="290,-50" shape="line">
                 <text><![CDATA[DCI Donor Services]]></text>
                 <topic bgColor="#00ffd5" id="41" order="0"
-                    position="380,-50" shape="rounded rectagle">
+                    position="380,-50" shape="rounded rectangle">
                     <text><![CDATA[Sierra Eye and Tissue Donor Services]]></text>
                     <topic id="42" order="0" position="470,-75" shape="line">
                         <text><![CDATA[In 2010, 2.023 referrals]]></text>
@@ -134,7 +134,7 @@
                 </topic>
             </topic>
             <topic bgColor="#00ffd5" id="43" order="7"
-                position="290,-25" shape="rounded rectagle">
+                position="290,-25" shape="rounded rectangle">
                 <text><![CDATA[SightLife]]></text>
             </topic>
         </topic>

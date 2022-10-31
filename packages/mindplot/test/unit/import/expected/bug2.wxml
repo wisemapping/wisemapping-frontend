@@ -27,7 +27,7 @@
         <topic position="-1100,150" order="9" text="Máximo 10/1 por taller" shape="line" id="19"/>
         <topic position="-1190,150" order="10" text="Actividades centradas en el contexto cercano" shape="line" id="37"/>
         <topic position="-1280,175" order="11" text="Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)" shape="line" id="22"/>
-        <topic position="-1370,200" order="12" text="Complementamos el trabajo de la escuela" shape="rounded rectagle" id="27">
+        <topic position="-1370,200" order="12" text="Complementamos el trabajo de la escuela" shape="rounded rectangle" id="27">
             <note><![CDATA[Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.
                         A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña,
                         ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea.

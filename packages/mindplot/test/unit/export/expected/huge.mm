@@ -55,7 +55,7 @@
             <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="voeding">
                 <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="zie bij handelingen --&gt;winkelen"/>
             </node>
-            <node ID="ID_null" POSITION="left" STYLE="rectagle" TEXT="kleding">
+            <node ID="ID_null" POSITION="left" STYLE="rectangle" TEXT="kleding">
                 <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="stijlen">
                     <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="begeleiding bij het winkelen naar gelijkaardige kleding"/>
                 </node>

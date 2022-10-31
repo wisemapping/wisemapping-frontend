@@ -64,11 +64,11 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       {
         icon: <SquareOutlinedIcon />,
         tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-share-rectagle',
-          defaultMessage: 'Rectagle shape',
+          id: 'editor-panel.tooltip-topic-share-rectangle',
+          defaultMessage: 'Rectangle shape',
         }),
-        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rectagle'),
-        selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rectagle',
+        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rectangle'),
+        selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rectangle',
       },
       {
         icon: <CheckBoxOutlineBlankOutlinedIcon />,
@@ -76,9 +76,9 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
           id: 'editor-panel.tooltip-topic-share-rounded',
           defaultMessage: 'Rounded shape',
         }),
-        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rounded rectagle'),
+        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rounded rectangle'),
         selected: () =>
-          toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rounded rectagle',
+          toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rounded rectangle',
       },
       {
         icon: <HorizontalRuleOutlinedIcon />,

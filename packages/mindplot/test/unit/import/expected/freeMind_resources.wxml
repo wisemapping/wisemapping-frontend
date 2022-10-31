@@ -65,7 +65,7 @@ Ctrl + F in your browser?]]></note>
             </topic>
         </topic>
         <topic position="-290,-37" order="0" text="Applet Browser" shape="line" id="1647062097" fontStyle=";;;;SansSerif;8;#0033ff;;;" bgColor="undefined">
-            <topic position="290,-62" order="0" text="What is it?" shape="rounded rectagle" id="287577997" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
+            <topic position="290,-62" order="0" text="What is it?" shape="rounded rectangle" id="287577997" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
                 <topic position="-290,-87" order="0" text="A Java applet based browser " shape="line" id="1855944960" fontStyle=";;;;SansSerif;8;#990000;;;"/>
                 <topic position="-380,-62" order="1" text="Expects Java 1.4 or above on client machine" shape="line" id="300344325" fontStyle=";;;;SansSerif;8;#990000;;;"/>
             </topic>

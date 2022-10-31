@@ -1,5 +1,5 @@
 <map name="26254">
-    <topic central="true" text="I Care" shape="rectagle" brColor="#121110">
+    <topic central="true" text="I Care" shape="rectangle" brColor="#121110">
         <topic position="328,-700" text="veiligheid">
             <topic order="0" text="verkeer">
                 <note text="info%20vanuit%20de%20verschillende%20auto%27s%20verzamelen%20en%20voor%20verkeersleiding%20en%20informatie%20naar%20de%20bestuurders%20toe"/>
@@ -55,9 +55,9 @@
                 </topic>
             </topic>
         </topic>
-        <topic position="-457,-750" text="De markt" shape="rounded rectagle">
+        <topic position="-457,-750" text="De markt" shape="rounded rectangle">
             <note text="monitoring%20van%20de%20markt%20en%20hieruit%20algemene%20info%20verzamelen%20welke%20in%20onderzoeken%20gebruikt%20kan%20worden%0A-%20info%20over%20de%20levensloop%20%28kwaliteit%20van%20een%20merk%20observeren%29%0A-%20info%20over%20eigendom%0A-%20gps%20tracking%0AGekoppeld%20aan%20een%20infoplatform%20dat%20kan%20worden%20geraadpleegd%20door%20de%20consument%20om%20zo%20objectieve%20info%20te%20krijgen%20over%20producten%2C%20merken%2C...%0A"/>
-            <topic order="0" text="kleding" shape="rectagle">
+            <topic order="0" text="kleding" shape="rectangle">
                 <topic order="0" text="informatiebronnen per merk">
                     <topic order="0" text="slimme kledij"/>
                 </topic>
@@ -307,7 +307,7 @@
             <topic order="0" text="GS1-databar: meer infor opslaan"/>
         </topic>
     </topic>
-    <topic position="651,23" text="levensfasen" shape="rounded rectagle">
+    <topic position="651,23" text="levensfasen" shape="rounded rectangle">
         <topic order="0" text="kinderen en peuters" fontStyle=";;;bold;;">
             <topic order="0" text="kinderen steeds asocialer">
                 <topic order="0" text="sociale networking voor kinderen"/>

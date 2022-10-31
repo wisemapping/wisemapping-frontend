@@ -92,7 +92,7 @@
             <note text="Assess%20and%20address%20reasons%20why%20talented%20people%20leave%20Freeform"/>
         </topic>
     </topic>
-    <topic position="726,413" text="Business Development Plan" shape="rounded rectagle" id="156"
+    <topic position="726,413" text="Business Development Plan" shape="rounded rectangle" id="156"
            fontStyle=";;#0d0826;;;" bgColor="#32e36a">
         <topic position="894,401" order="0" text="Goals" id="164">
             <topic position="975,422" order="0" text="Increase new clients" id="168">
@@ -113,26 +113,26 @@
             </topic>
         </topic>
     </topic>
-    <topic position="-621,395" text="Hosting NG Plan" shape="rounded rectagle" id="162" fontStyle=";;#0d0826;;;"
+    <topic position="-621,395" text="Hosting NG Plan" shape="rounded rectangle" id="162" fontStyle=";;#0d0826;;;"
            bgColor="#32e36a"/>
-    <topic position="-613,99" text="Freeform IT Plan" shape="rounded rectagle" id="163" bgColor="#52e380">
+    <topic position="-613,99" text="Freeform IT Plan" shape="rounded rectangle" id="163" bgColor="#52e380">
         <topic position="-753,68" order="0" text="Fragile" id="17" fontStyle=";;;bold;;"/>
         <topic position="-749,92" order="1" text="Tools" id="259"/>
         <topic position="-760,116" order="2" id="260"/>
     </topic>
-    <topic position="-548,-87" text="Project Teams" shape="rounded rectagle" shrink="true" id="9" bgColor="#52e380">
+    <topic position="-548,-87" text="Project Teams" shape="rounded rectangle" shrink="true" id="9" bgColor="#52e380">
         <topic position="-668,-142" order="0" text="Projects 1-3" id="13"/>
         <topic position="-668,-118" order="1" text="Projects 4-6" id="14"/>
         <topic position="-672,-94" order="2" text="Projects 7 &amp; 8" id="15"/>
         <topic position="-696,-70" order="3" text="General Work" id="12"/>
         <topic position="-686,-46" order="4" text="Learning Needs Plan" id="11"/>
     </topic>
-    <topic position="-532,-250" text="Restructure" shape="rounded rectagle" shrink="true" id="33" bgColor="#52e380">
+    <topic position="-532,-250" text="Restructure" shape="rounded rectangle" shrink="true" id="33" bgColor="#52e380">
         <topic position="-685,-282" order="0" text="Client Centric Process" id="216"/>
         <topic position="-692,-258" order="1" text="Freeform Project Process" id="217"/>
         <topic position="-693,-234" order="2" text="Supportive Systems Plan" id="218"/>
     </topic>
-    <topic position="-427,-329" text="Board and C Planning" shape="rounded rectagle" shrink="true" id="208"
+    <topic position="-427,-329" text="Board and C Planning" shape="rounded rectangle" shrink="true" id="208"
            bgColor="#52e380">
         <topic position="-614,-384" order="0" text="Mission Statements" id="23">
             <note text="In%20the%20absence%20of%20one%20clearly%20defined%20mission%20statement%2C%20we%20have%20reviewed%20various%20expressed%20mission%20statement%20as%20following%0A%0A%20%20%20%20Objects%20of%20Incorporation%20in%20Letters%20Patent%0A%20%20%20%20%20%20%20%20The%20objects%20of%20the%20Corporation%20are%3ATo%20provide%20solutions%20that%20facilitate%20the%20effective%20use%20of%20information%20technology%20in%20not-for-profit%2C%20non-governmental%2C%20and%20charitable%20organizations%20throughout%20Canada%2C%20to%20support%20and%20improve%20their%20mission%20delivery.%0A%20%20%20%202006%20Strategic%20Business%20Plan%20-%20Brand%20Positioning%0A%20%20%20%20%20%20%20%20We%20are%20a%20nonprofit%20dedicated%20to%20helping%20other%20nonprofits%20understand%20and%20employ%20technology%20appropriately%20and%20effectively%20to%20support%20their%20mission.%20Our%20mission%20is%20to%20provide%20flexible%20consulting%2C%20website%20development%2C%20and%20Internet%20hosting%20solutions%20that%20give%20you%20peace%20of%20mind%20and%20help%20you%20stay%20focused%20on%20your%20mission.%0A%20%20%20%20Freeform%20One%20Page%20%28Freeform%20Wiki%29%0A%20%20%20%20%20%20%20%20About%20Freeform%20Solutions%3A%20Freeform%20Solutions%20is%20a%20not-for-profit%20organization.%20Our%20mission%20is%20help%20%28sic%29%20other%20not-for-profits%20organizations%20to%20build%20their%20capacity%20and%20increase%20their%20effectiveness.%0A%20%20%20%20Result%20of%20Google%20search%20for%20%u201CFreeform%20Solutions%20mission%u201D%0A%20%20%20%20%20%20%20%20Freeform%20Solutions%20is%20a%20not-for-profit%20organization.%20Our%20mission%20is%20to%20help%20other%20not-for-profits%20use%20technology%20to%20build%20their%20capacity%20and%20increase%20their%20effectiveness.%20%28www.freeformsolutions.ca/en/files/AboutFreeformSolutions.pdf%0A%20%20%20%20%20%20%20%20Freeform%20Solutions%20%28www.freeformsolutions.ca%29%20is%20a%20non%20profit%20organization.%20Our%20mission%20is%20to%20help%20other%20non-profit%20organizations%20to%20realize%20their%20missions%20through%20the%20appropriate%20deployment%20of%20information%20and%20knowledge%20management%20systems.www.freeformsolutions.ca/en/sites/default/.../virtual.volunteering.pdf%0A%20%20%20%20%20%20%20%20We%20are%20a%20not-for-profit%20organization%20%28NFP%29%20that%20helps%20other%20NFPs%20use%20IT%20to%20achieve%20their%20organizational%20goals%20and%20better%20serve%20their%20communities.%20Freeform%20Solutions%20is%20a%20nonprofit%20organization%20dedicated%20to%20helping%20other%20nonprofit%20organizations%20understand%20and%20employ%20technology%20appropriately%20and%20effectively%20to%20support%20their%20missions.%20Our%20mission%20is%20to%20provide%20flexible%20consulting%2C%20website%20development%2C%20and%20hosting%20solutions%20%20http%3A//socialinnovation.ca/community/organizations/freeform-solutions%0A%20%20%20%20%20%20%20%20Freeform%20Solutions%20is%20a%20not-for-profit%20organization%2C%20with%20a%20mission%20to%20help%20other%20not-for-profits%20use%20technology%20more%20effectively%20to%20meet%20their%20own%20missions.%20http%3A//timreview.ca/article/387%0A%20%20%20%20%20%20%20%20Freeform%20Solutions%20%u2013%20their%20mission%3A%20%u201Cwe%20help%20not-for-profit%20organisations%20use%20technology%20to%20build%20their%20capacity%20and%20increase%20their%20effectiveness.%20http%3A//www.warnerlaw.ca/links/community-organisations-and-local-businesses/%0A%20%20%20%20%20%20%20%20Freeform%20Solutions%20is%20a%20not-for-profit%20organization%20with%20a%20mission%20to%20help%20other%20not-for-profits%20use%20technology%20to%20meet%20their%20goals.%20http%3A//xoops.org/modules/news/article.php%3Fstoryid%3D3860%0A%20%20%20%20%20%20%20%20At%20Freeform%20Solutions%2C%20we%20have%20a%20mission%20to%20help%20not-for-profit%20and%20public%20sector%20organizations%20use%20technology%20more%20effectively.%20http%3A//osbrca.blogspot.ca/2010/07/development-commons-approach.html%0A%20%20%20%20Freeform%20Solutions%20Facebook%20Page%0A%20%20%20%20%20%20%20%20Mission%3A%20Freeform%20Solutions%20is%20a%20not-for-profit%20organization%20%28NFP%29%20that%20helps%20other%20NFPs%20use%20IT%20to%20achieve%20their%20organizational%20goals%20and%20better%20serve%20their%20communities.%0A%20%20%20%20The%20current%20Freeform%20Solutions%20website%0A%20%20%20%20%20%20%20%20We%20started%20Freeform%20to%20help%20NFPs%20use%20IT%20to%20achieve%20their%20organizational%20goals%20and%20better%20serve%20their%20communities%20-%20to%20support%20and%20improve%20their%20mission%20delivery.%20Our%20mission%20is%20to%20strengthen%20the%20capacity%20of%20NFPs%20and%20the%20voluntary%20sector%2C%20and%20to%20help%20build%20a%20civil%20society."/>
@@ -173,7 +173,7 @@
             <icon id="time_calendar"/>
         </topic>
         <topic position="2514,-503" order="3" text="Have Heather create list benefits against Best Practice &amp; cost"
-               shape="rounded rectagle" id="132">
+               shape="rounded rectangle" id="132">
             <icon id="tick_tick"/>
         </topic>
         <topic position="2430,-479" order="4" text="Have Jason  review list" id="133">
@@ -190,7 +190,7 @@
             <note text="%20so%20that%20our%20efforts%20to%20excel%20are%20rewarded."/>
         </topic>
     </topic>
-    <topic position="607,-489" text="Community Outreach Plan" shape="rounded rectagle" id="248" fontStyle=";8;;bold;;"
+    <topic position="607,-489" text="Community Outreach Plan" shape="rounded rectangle" id="248" fontStyle=";8;;bold;;"
            bgColor="#51e898">
         <topic position="775,-545" order="0" text="Goals" id="285"/>
         <topic position="770,-521" order="1" text="CSI" id="249"/>
@@ -198,10 +198,10 @@
         <topic position="780,-473" order="3" text="CiviCRM" id="251"/>
         <topic position="774,-449" order="4" text="Other" id="252"/>
     </topic>
-    <topic position="469,-596" text="Backlog Plan" shape="rounded rectagle" id="215" fontStyle=";;;bold;;"
+    <topic position="469,-596" text="Backlog Plan" shape="rounded rectangle" id="215" fontStyle=";;;bold;;"
            bgColor="#2ee668">
         <link url="https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit"/>
-        <topic position="645,-605" order="0" text="Go To Backlog Plan " shape="rectagle" id="286" bgColor="#e8da6d">
+        <topic position="645,-605" order="0" text="Go To Backlog Plan " shape="rectangle" id="286" bgColor="#e8da6d">
             <icon id="funy_glasses"/>
             <link url="https://docs.google.com/a/freeform.ca/drawings/d/1mrtkVAN3_XefJJCgfxw4Va6xk9TVDBKXDt_uzyIF4Us/edit"/>
         </topic>
@@ -233,7 +233,7 @@
         </topic>
     </topic>
     <topic position="2250,-634" text="3 Month Onboarding Process" shape="elipse" id="298" bgColor="#adddf0"/>
-    <topic position="558,-26" text="Human Resources Plan" shape="rounded rectagle" id="6" fontStyle=";;#0d0826;bold;;"
+    <topic position="558,-26" text="Human Resources Plan" shape="rounded rectangle" id="6" fontStyle=";;#0d0826;bold;;"
            bgColor="#32e36a">
         <topic position="694,-284" order="0" text="Related Org Objectives" id="287" fontStyle=";;;bold;;">
             <topic position="772,-321" order="0" text="1" id="288">

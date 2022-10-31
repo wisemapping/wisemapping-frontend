@@ -1,6 +1,6 @@
 <map version="1.0.1">
     <node ID="ID_1" TEXT="Artigos GF comentários interessantes">
-        <node ID="ID_5" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#cccccc" TEXT="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities">
+        <node ID="ID_5" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" TEXT="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities">
             <edge COLOR="#cccccc"/>
             <node ID="ID_6" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
@@ -84,7 +84,7 @@
                 </richcontent>
             </node>
         </node>
-        <node ID="ID_17" POSITION="right" STYLE="rectagle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Chazdon 2010. Biotropica. 42(1): 31–40">
+        <node ID="ID_17" POSITION="right" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Chazdon 2010. Biotropica. 42(1): 31–40">
             <edge COLOR="#cccccc"/>
             <node ID="ID_24" POSITION="right" STYLE="fork" TEXT="Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação continue sendo usada em curto prazo enquanto não há informações confiáveis suficiente para esta simples classificação. Outras classificações como esta do artigo são bem vinda, contanto que tenham dados confiáveis. Porém dados estáticos já são difíceis de se obter, dados temporais, como taxa de crescimento em diâmetro ou altura, são mais difíceis ainda. Falar que vários tipos de classificações podem ser utilizadas e quanto mais detalhe melhor, porém os dados é que são mais limitantes. Se focarmos em dados de germinação e crescimento limitantes, como sugerem sainete e whitmore, da uma idéia maismrápida e a curto prazo da classificação destas espécies. Depois com o tempo conseguiremos construir classificações mais detalhadas e com mais dados confiáveis. "/>
             <node ID="ID_22" POSITION="right" STYLE="fork">
@@ -206,7 +206,7 @@
                 </richcontent>
             </node>
         </node>
-        <node ID="ID_2" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Poorter 1999. Functional Ecology. 13:396-410">
+        <node ID="ID_2" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Poorter 1999. Functional Ecology. 13:396-410">
             <edge COLOR="#cccccc"/>
             <node ID="ID_3" POSITION="left" STYLE="fork" TEXT="Espécies pioneiras crescem mais rápido do que as não pioneiras">
                 <node ID="ID_4" POSITION="left" STYLE="fork" TEXT="Tolerância a sombra está relacionada com persistência e não com crescimento"/>

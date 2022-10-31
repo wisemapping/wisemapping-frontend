@@ -320,8 +320,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
     }
 
-    const shape = domElem.getAttribute('shape');
+    let shape = domElem.getAttribute('shape');
     if ($defined(shape)) {
+      // Fix typo on serialization....
+      shape = shape.replace('rectagle', 'rectangle');
+
       topic.setShapeType(shape);
 
       if (shape === TopicShape.IMAGE) {

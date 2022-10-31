@@ -33,11 +33,17 @@ context('Node manager', () => {
   });
 
   it('undo changes', () => {
-    cy.get('#undoEditionTip').click();
+    cy.get('[data-testid="UndoOutlinedIcon"]').click();
 
     cy.get('[test-id=36] > text > tspan').should('exist');
 
     cy.matchImageSnapshot('undoChange');
+  });
+
+  it('redo changes', () => {
+    cy.get('[data-testid="RedoOutlinedIcon"]').click();
+    cy.get('[test-id=36] > text > tspan').should('exist');
+    cy.matchImageSnapshot('redoChange');
   });
 
   it('Save changes', () => {

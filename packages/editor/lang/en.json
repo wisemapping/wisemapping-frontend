@@ -95,8 +95,8 @@
   "editor-panel.tooltip-topic-share-line": {
     "defaultMessage": "Line shape"
   },
-  "editor-panel.tooltip-topic-share-rectagle": {
-    "defaultMessage": "Rectagle shape"
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "Rectangle shape"
   },
   "editor-panel.tooltip-topic-share-rounded": {
     "defaultMessage": "Rounded shape"

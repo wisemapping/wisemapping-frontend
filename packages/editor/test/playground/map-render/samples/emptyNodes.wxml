@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="tango" name="120724   ATG Business plan">
     <topic id="0" central="true" position="0,0" brColor="#808080"
-           bgColor="#ffcc33" fontStyle="Arial;16;#0000cc;bold;;" shape="rounded rectagle">
+           bgColor="#ffcc33" fontStyle="Arial;16;#0000cc;bold;;" shape="rounded rectangle">
         <text><![CDATA[]]></text>
         <note>
             <text><![CDATA[]]></text>
         </note>
         <topic id="1" position="200,0" order="0" brColor="#808080"
-               bgColor="#ffcc33" fontStyle="Arial;16;#0000cc;bold;;" shape="rounded rectagle">
+               bgColor="#ffcc33" fontStyle="Arial;16;#0000cc;bold;;" shape="rounded rectangle">
             <text><![CDATA[objectifs journée]]></text>
             <topic id="2" position="290,-50" order="0" brColor="#808080"
-                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectagle">
+                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectangle">
                 <text><![CDATA["business plan" associatif ?]]></text>
             </topic>
             <topic id="3" position="290,-25" order="1" brColor="#808080"
-                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectagle">
+                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectangle">
                 <text><![CDATA[modèle / activités responsabilités]]></text>
             </topic>
             <topic id="4" position="290,0" order="2" brColor="#808080"
-                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectagle">
+                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectangle">
                 <text><![CDATA[articulations / LOG]]></text>
             </topic>
         </topic>
         <topic id="5" position="200,100" order="4" brColor="#808080"
-               bgColor="#ffcc33" fontStyle="Arial;16;#0000cc;bold;;" shape="rounded rectagle">
+               bgColor="#ffcc33" fontStyle="Arial;16;#0000cc;bold;;" shape="rounded rectangle">
             <text><![CDATA[SWOT]]></text>
             <topic id="6" position="290,50" order="0" brColor="#808080"
-                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectagle">
+                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectangle">
                 <text><![CDATA[]]></text>
                 <topic id="7" position="380,-375" order="0" shape="line">
                     <text><![CDATA[l'entreprise a aujourd'hui un potentiel important]]></text>
@@ -147,7 +147,7 @@
                 </topic>
             </topic>
             <topic id="46" position="290,75" order="1" brColor="#808080"
-                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectagle">
+                   bgColor="#ffff33" fontStyle="Arial;14;#0000cc;bold;;" shape="rounded rectangle">
                 <text><![CDATA[Risques : cauchemars, dangers]]></text>
                 <topic id="47" position="380,-225" order="0" shape="line">
                     <text><![CDATA[disparition des forces vives, départ de membres actuels]]></text>

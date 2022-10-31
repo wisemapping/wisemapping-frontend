@@ -1,6 +1,6 @@
 <map name="pub_sub" version="tango">
     <topic central="true" text="Publish-Subscribe" id="1778785299">
-        <topic position="200,-100" order="0" text="Paradigm" shape="rounded rectagle" id="1019693507">
+        <topic position="200,-100" order="0" text="Paradigm" shape="rounded rectangle" id="1019693507">
             <topic position="200,-100" order="0" text="Publish-Subscribe Messaging" shape="line" id="175305277">
                 <topic position="200,-100" order="0" text="Supports Complex Interaction Models" shape="line" id="1"/>
                 <topic position="-290,-137" order="0" text="Application-to-Application" shape="line" id="2"/>
@@ -16,8 +16,8 @@
             </topic>
             <topic position="-380,-112" order="1" text="Net-Centric Architecture" shape="line" id="10"/>
         </topic>
-        <topic position="-290,-37" order="0" text="Environment" shape="rounded rectagle" id="886974979">
-            <topic position="290,-87" order="0" text="System Architceture" shape="rounded rectagle" id="1585705589">
+        <topic position="-290,-37" order="0" text="Environment" shape="rounded rectangle" id="886974979">
+            <topic position="290,-87" order="0" text="System Architceture" shape="rounded rectangle" id="1585705589">
                 <topic position="-290,-137" order="0" text="Enterprise Middleware" shape="line" id="11"/>
                 <topic position="-380,-112" order="1" text="Peer-to-Peer" shape="line" id="12"/>
                 <topic position="-470,-87" order="2" text="Web Services" shape="line" id="13"/>
@@ -56,8 +56,8 @@
                 <topic position="-650,-12" order="1" text="Security induces state" shape="line" id="35"/>
             </topic>
         </topic>
-        <topic position="-380,-12" order="1" text="Implementation" shape="rounded rectagle" id="244172068">
-            <topic position="380,-62" order="0" text="General" shape="rounded rectagle" id="1588169997">
+        <topic position="-380,-12" order="1" text="Implementation" shape="rounded rectangle" id="244172068">
+            <topic position="380,-62" order="0" text="General" shape="rounded rectangle" id="1588169997">
                 <topic position="-380,-137" order="0" text="Reliability, Availability" shape="line" id="36"/>
                 <topic position="-470,-112" order="1" text="Scalability" shape="line" id="37">
                     <topic position="470,-124" order="0" text="Hierarchical Dissemination" shape="line" id="38">
@@ -165,14 +165,14 @@
                 </topic>
             </topic>
         </topic>
-        <topic position="-470,13" order="2" text="Open Issues" shape="rounded rectagle" shrink="true" id="17419879">
+        <topic position="-470,13" order="2" text="Open Issues" shape="rounded rectangle" shrink="true" id="17419879">
             <topic position="470,-12" order="0" text="Deep technical problems vs. pragmatic issues" shape="line" id="106"/>
             <topic position="560,13" order="1" text="Mobility" shape="line" id="107">
                 <topic position="-560,-12" order="0" text="Freedom of movement" shape="line" id="108"/>
                 <topic position="-650,13" order="1" text="Reconfiguration of services" shape="line" id="109"/>
             </topic>
         </topic>
-        <topic position="-560,38" order="3" text="Data Model" shape="rounded rectagle" id="1570911201">
+        <topic position="-560,38" order="3" text="Data Model" shape="rounded rectangle" id="1570911201">
             <topic position="560,1" order="0" text="Taxonomy" shape="line" shrink="true" id="1041132637">
                 <topic position="-560,-49" order="0" text="Atomic" shape="line" id="110"/>
                 <topic position="-650,-24" order="1" text="Structured" shape="line" id="111"/>
@@ -196,7 +196,7 @@
                 <topic position="-920,64" order="2" text="Matching" shape="line" id="124"/>
             </topic>
         </topic>
-        <topic position="-650,63" order="4" text="Security Model" shape="rounded rectagle" id="227090963">
+        <topic position="-650,63" order="4" text="Security Model" shape="rounded rectangle" id="227090963">
             <topic position="650,-37" order="0" text="General" shape="line" id="1890338517">
                 <topic position="-650,-87" order="0" text="Require &quot;many-to-many &quot; semantic through many parties" shape="line" id="125"/>
                 <topic position="-740,-62" order="1" text="Security for pub-pub application" shape="line" id="126">

@@ -2,7 +2,7 @@
     <topic central="true" text="Artigos GF comentários interessantes" id="1">
         <topic position="-466,16" order="3"
                text="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities"
-               shape="rectagle" id="5" bgColor="#cccccc" brColor="#cccccc">
+               shape="rectangle" id="5" bgColor="#cccccc" brColor="#cccccc">
             <topic position="-1042,-163" order="0" id="6">
                 <text><![CDATA[Therecent growth of large functional trait data
 bases has been fuelled by standardized protocols forthe
@@ -62,7 +62,7 @@ for at least some traits.]]></text>
                     <![CDATA[Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.]]></note>
             </topic>
         </topic>
-        <topic position="297,0" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectagle" id="17"
+        <topic position="297,0" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17"
                fontStyle=";;#000000;;;" bgColor="#cccccc" brColor="#cccccc">
             <topic position="586,-383" order="1" id="22">
                 <text><![CDATA[Here, we develop a new approach that links functional attributes
@@ -176,7 +176,7 @@ J. Integr. Plant Biol. 50: 547–558.
 ]]></text>
             </topic>
         </topic>
-        <topic position="-313,-224" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectagle"
+        <topic position="-313,-224" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle"
                id="2" fontStyle=";;#000000;;;" bgColor="#cccccc" brColor="#cccccc">
             <topic position="-619,-221" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras"
                    id="3">

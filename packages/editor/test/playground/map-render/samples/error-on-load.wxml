@@ -6,7 +6,7 @@
             <topic order="0" text="College Newspapers"/>
         </topic>
         <topic position="-203,-300" text="Third Party ">
-            <topic order="0" text="Thumbshot" shape="rectagle">
+            <topic order="0" text="Thumbshot" shape="rectangle">
                 <link url="thumbshots.org"/>
             </topic>
         </topic>

@@ -6,39 +6,42 @@ context('Change Topic shape', () => {
   });
 
   it('change to square shape', () => {
-    cy.get('#topicShapeTip').click();
-    cy.get('#rectagle').click({ force: true });
+    cy.get(`[aria-label="Topic Style"]`).trigger('mouseover');
+    cy.get(`[aria-label="Rectangle shape"]`).click();
 
-    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '0');
+    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '0.0');
 
     cy.matchImageSnapshot('changeToSquareShape');
   });
 
-  it('change to rounded rectagle', () => {
-    cy.get('#topicShapeTip').click();
-    // TODO: The parameter {force: true} was placed because it does not detect that the element is visible
-    cy.get('#rounded_rectagle').click({ force: true });
+  it('change to rounded rectangle', () => {
+    cy.contains('Mind Mapping').click();
 
-    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '4.05');
+    cy.get(`[aria-label="Topic Style"]`).trigger('mouseover');
+    cy.get(`[aria-label="Rounded shape"]`).click();
 
-    cy.matchImageSnapshot('changeToRoundedRectagle');
+    cy.get('[test-id=6] > rect').eq(1).invoke('attr', 'rx').should('eq', '4.2');
+
+    cy.matchImageSnapshot('changeToRoundedRectangle');
   });
 
   it('change to line', () => {
-    cy.get('#topicShapeTip').click();
-    // TODO: The parameter {force: true} was placed because it does not detect that the element is visible
-    cy.get('#line').click({ force: true });
+    cy.contains('Try it Now!').click();
+    
+    cy.get(`[aria-label="Topic Style"]`).trigger('mouseover');
+    cy.get(`[aria-label="Line shape"]`).click();
 
     cy.matchImageSnapshot('changeToLine');
   });
 
-  it('change to elipse shape', () => {
-    cy.get('#topicShapeTip').click();
-    // TODO: The parameter {force: true} was placed because it does not detect that the element is visible
-    cy.get('#elipse').click({ force: true });
+  it('change to ellipse shape', () => {
+    cy.contains('Productivity').click();
 
-    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '12.15');
+    cy.get(`[aria-label="Topic Style"]`).trigger('mouseover');
+    cy.get(`[aria-label="Ellipse shape"]`).click();
 
-    cy.matchImageSnapshot('changeToElipseShape');
+    cy.get('[test-id=2] > rect').eq(1).invoke('attr', 'rx').should('eq', '12.6');
+
+    cy.matchImageSnapshot('changeToEllipseShape');
   });
 });

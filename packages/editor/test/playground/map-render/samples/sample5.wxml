@@ -44,7 +44,7 @@ Propias]]></text>
 * Beneficio de Operaciones]]></text>
             <note><![CDATA[El beneficio final sin todos los gastos.]]></note>
         </topic>
-        <topic position="158,17" order="4" text="Documentos" shape="rectagle" id="66">
+        <topic position="158,17" order="4" text="Documentos" shape="rectangle" id="66">
             <icon id="money_money"/>
             <topic position="316,-253" order="0" shrink="true" id="28">
                 <text><![CDATA[* Estado de Resultados
@@ -104,31 +104,31 @@ del importe]]></text>
                             <topic position="724,-219" order="0" text="Ciertos" id="31"/>
                             <topic position="731,-193" order="1" text="Estimados" id="34"/>
                         </topic>
-                        <topic position="658,-86" order="1" text="Por el momento de Cancelacion" shape="rounded rectagle" id="35" fontStyle=";;#444444;;;" brColor="#38761d">
-                            <topic position="794,-112" order="0" shape="rounded rectagle" id="36" fontStyle=";;#444444;;;" brColor="#38761d">
+                        <topic position="658,-86" order="1" text="Por el momento de Cancelacion" shape="rounded rectangle" id="35" fontStyle=";;#444444;;;" brColor="#38761d">
+                            <topic position="794,-112" order="0" shape="rounded rectangle" id="36" fontStyle=";;#444444;;;" brColor="#38761d">
                                 <text><![CDATA[* Circulantes
 * Corto Plazo]]></text>
-                                <topic position="904,-167" order="0" text="Dividendos a Pagar" shape="rounded rectagle" id="51" fontStyle=";;#444444;;;" brColor="#38761d"/>
-                                <topic position="965,-133" order="1" shape="rounded rectagle" id="47" fontStyle=";;#444444;;;" brColor="#38761d">
+                                <topic position="904,-167" order="0" text="Dividendos a Pagar" shape="rounded rectangle" id="51" fontStyle=";;#444444;;;" brColor="#38761d"/>
+                                <topic position="965,-133" order="1" shape="rounded rectangle" id="47" fontStyle=";;#444444;;;" brColor="#38761d">
                                     <text><![CDATA[Devengos: Costes por los cuales todavia no 
 se a emitido factura, pero se sabe que se va a 
 tener que pagar]]></text>
                                 </topic>
-                                <topic position="917,-99" order="2" text="Impuestos de Sociedades" shape="rounded rectagle" id="50" fontStyle=";;#444444;;;" brColor="#38761d"/>
-                                <topic position="921,-65" order="3" shape="rounded rectagle" id="46" fontStyle=";;#444444;;;" brColor="#38761d">
+                                <topic position="917,-99" order="2" text="Impuestos de Sociedades" shape="rounded rectangle" id="50" fontStyle=";;#444444;;;" brColor="#38761d"/>
+                                <topic position="921,-65" order="3" shape="rounded rectangle" id="46" fontStyle=";;#444444;;;" brColor="#38761d">
                                     <text><![CDATA[Acreedores Comerciales:
 Lo que le tengo que pagas 
 a proveedores]]></text>
                                 </topic>
                             </topic>
-                            <topic position="800,-18" order="1" shape="rounded rectagle" id="37" fontStyle=";;#444444;;;" brColor="#38761d">
+                            <topic position="800,-18" order="1" shape="rounded rectangle" id="37" fontStyle=";;#444444;;;" brColor="#38761d">
                                 <text><![CDATA[* Fijos
 * No Circulantes
 * Largo Plazo]]></text>
-                                <topic position="910,-31" order="0" text="Capital Social" shape="rounded rectagle" id="81" fontStyle=";;#444444;;;" brColor="#38761d">
+                                <topic position="910,-31" order="0" text="Capital Social" shape="rounded rectangle" id="81" fontStyle=";;#444444;;;" brColor="#38761d">
                                     <note><![CDATA[«Capital social», que representa los fondos propios correspondientes a las aportaciones realizadas por los socios.]]></note>
                                 </topic>
-                                <topic position="924,-5" order="1" text="Beneficio no distribuido" shape="rounded rectagle" id="82" fontStyle=";;#444444;;;" brColor="#38761d"/>
+                                <topic position="924,-5" order="1" text="Beneficio no distribuido" shape="rounded rectangle" id="82" fontStyle=";;#444444;;;" brColor="#38761d"/>
                             </topic>
                         </topic>
                     </topic>

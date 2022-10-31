@@ -1,12 +1,12 @@
 <map name="emptyNodes" version="tango">
     <topic central="true" id="0" fontStyle=";;;;;;#0000cc;;;" bgColor="#ffcc33">
-        <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectagle" id="1" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
-            <topic position="200,-100" order="0" text="&quot;business plan&quot; associatif ?" shape="rounded rectagle" id="2" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
-            <topic position="-290,-87" order="0" text="modèle / activités responsabilités" shape="rounded rectagle" id="3" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
-            <topic position="-380,-62" order="1" text="articulations / LOG" shape="rounded rectagle" id="4" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
+        <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectangle" id="1" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
+            <topic position="200,-100" order="0" text="&quot;business plan&quot; associatif ?" shape="rounded rectangle" id="2" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
+            <topic position="-290,-87" order="0" text="modèle / activités responsabilités" shape="rounded rectangle" id="3" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
+            <topic position="-380,-62" order="1" text="articulations / LOG" shape="rounded rectangle" id="4" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080"/>
         </topic>
-        <topic position="-290,-25" order="0" text="SWOT" shape="rounded rectagle" id="5" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
-            <topic position="290,-50" order="0" shape="rounded rectagle" id="6" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
+        <topic position="-290,-25" order="0" text="SWOT" shape="rounded rectangle" id="5" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
+            <topic position="290,-50" order="0" shape="rounded rectangle" id="6" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
                 <topic position="-290,-437" order="0" text="l'entreprise a aujourd'hui un potentiel important" shape="line" id="7">
                     <topic position="290,-474" order="0" text="compétences professionnel" shape="line" id="8"/>
                     <topic position="380,-449" order="1" text="citoyen" shape="line" id="9"/>
@@ -50,7 +50,7 @@
                 <topic position="-2900,288" order="29" text="attirer de nouveaux membres locomotives" shape="line" id="44"/>
                 <topic position="-2990,313" order="30" text="pratiquons en interne et externe une gouvernance explaire etune citoyennté de rêve" shape="line" id="45"/>
             </topic>
-            <topic position="380,-25" order="1" text="Risques : cauchemars, dangers" shape="rounded rectagle" id="46" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
+            <topic position="380,-25" order="1" text="Risques : cauchemars, dangers" shape="rounded rectangle" id="46" fontStyle=";;;;Arial;8;#0000cc;;;" bgColor="#808080">
                 <topic position="-380,-312" order="0" text="disparition des forces vives, départ de membres actuels" shape="line" id="47"/>
                 <topic position="-470,-287" order="1" text="opportunités atteignables mais difficile" shape="line" id="48"/>
                 <topic position="-560,-262" order="2" text="difficultés de travailler ensemble dans la durée" shape="line" id="49"/>

@@ -191,10 +191,10 @@
       "value": "Line shape"
     }
   ],
-  "editor-panel.tooltip-topic-share-rectagle": [
+  "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
-      "value": "Rectagle shape"
+      "value": "Rectangle shape"
     }
   ],
   "editor-panel.tooltip-topic-share-rounded": [

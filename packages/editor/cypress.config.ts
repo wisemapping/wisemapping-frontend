@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
+  projectId: 'it9g7s',
   video: false,
   videoUploadOnPasses: false,
   includeShadowDom: true,

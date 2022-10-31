@@ -45,10 +45,10 @@ Line 2]]></text>
                 <topic position="-404,111" order="1" text="Line" id="72" fontStyle=";;#525c61;;italic;">
                     <icon id="face_smile"/>
                 </topic>
-                <topic position="-404,142" order="2" text="Box" shape="rectagle" id="73" fontStyle=";;#525c61;;italic;">
+                <topic position="-404,142" order="2" text="Box" shape="rectangle" id="73" fontStyle=";;#525c61;;italic;">
                     <icon id="funy_angel"/>
                 </topic>
-                <topic position="-418,173" order="3" text="Round Box" shape="rounded rectagle" id="74" fontStyle=";;#525c61;;italic;">
+                <topic position="-418,173" order="3" text="Round Box" shape="rounded rectangle" id="74" fontStyle=";;#525c61;;italic;">
                     <icon id="face_wink"/>
                 </topic>
             </topic>
