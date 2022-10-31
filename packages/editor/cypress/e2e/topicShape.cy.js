@@ -9,7 +9,7 @@ context('Change Topic shape', () => {
     cy.get(`[aria-label="Topic Style"]`).trigger('mouseover');
     cy.get(`[aria-label="Rectangle shape"]`).click();
 
-    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').should('eq', '0.0');
+    cy.get('[test-id=11] > rect').eq(1).invoke('attr', 'rx').then(parseInt).should('be.a', 'number').should('eq', 0);
 
     cy.matchImageSnapshot('changeToSquareShape');
   });
