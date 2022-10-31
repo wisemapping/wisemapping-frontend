@@ -72,15 +72,15 @@ class WidgetManager {
   }
 
   createTooltipForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    this.createTooltip(linkIcon.getImage().peer, $msg('LINK'), linkModel, undefined);
+    this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
   }
 
   createTooltipForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
-    this.createTooltip(noteIcon.getImage().peer, $msg('NOTE'), undefined, noteModel);
+    this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
   }
 
   configureEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    const htmlImage = linkIcon.getImage().peer;
+    const htmlImage = linkIcon.getElement().peer;
     htmlImage.addEvent('click', (evt) => {
       this.showEditorForLink(topic, linkModel, linkIcon);
       evt.stopPropagation();
@@ -88,7 +88,7 @@ class WidgetManager {
   }
 
   configureEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
-    const htmlImage = noteIcon.getImage().peer;
+    const htmlImage = noteIcon.getElement().peer;
     htmlImage.addEvent('click', (evt) => {
       this.showEditorForNote(topic, noteModel, noteIcon);
       evt.stopPropagation();

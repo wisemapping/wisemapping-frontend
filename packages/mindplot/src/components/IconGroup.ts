@@ -19,7 +19,7 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Group, ElementClass, Point } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
-import Icon from './Icon';
+import ImageIcon from './ImageIcon';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 
@@ -29,7 +29,7 @@ ORDER_BY_TYPE.set('note', 1);
 ORDER_BY_TYPE.set('link', 2);
 
 class IconGroup {
-  private _icons: Icon[];
+  private _icons: ImageIcon[];
 
   private _group: any;
 
@@ -84,7 +84,7 @@ class IconGroup {
     this._resize(this._icons.length);
   }
 
-  addIcon(icon: Icon, remove: boolean) {
+  addIcon(icon: ImageIcon, remove: boolean) {
     $defined(icon, 'icon is not defined');
 
     // Order could have change, need to re-add all.
@@ -104,7 +104,7 @@ class IconGroup {
     this._resize(this._icons.length);
     this._icons.forEach((i, index) => {
       this._positionIcon(i, index);
-      const imageShape = i.getImage();
+      const imageShape = i.getElement();
       this._group.append(imageShape);
     });
 
@@ -140,11 +140,11 @@ class IconGroup {
     this._removeIcon(icon);
   }
 
-  private _removeIcon(icon: Icon) {
+  private _removeIcon(icon: ImageIcon) {
     $assert(icon, 'icon can not be null');
 
     this._removeTip.close(0);
-    this._group.removeChild(icon.getImage());
+    this._group.removeChild(icon.getElement());
 
     this._icons = this._icons.filter((i) => i !== icon);
     this._resize(this._icons.length);
@@ -175,13 +175,15 @@ class IconGroup {
   private _resize(iconsLength: number) {
     this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
 
-    const iconSize = Icon.SIZE + IconGroup.ICON_PADDING * 2;
+    const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
     this._group.setCoordSize(iconsLength * iconSize, iconSize);
   }
 
-  private _positionIcon(icon: Icon, order: number) {
-    const iconSize = Icon.SIZE + IconGroup.ICON_PADDING * 2;
-    icon.getImage().setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
+  private _positionIcon(icon: ImageIcon, order: number) {
+    const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
+    icon
+      .getElement()
+      .setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
   }
 
   static ICON_PADDING = 5;

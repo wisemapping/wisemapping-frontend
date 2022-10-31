@@ -53,7 +53,7 @@ export function buildZoomToolbarConfig(model: Editor, capability: Capability): A
             %
             {!model?.isMapLoadded()
               ? 100
-              : Math.floor((1 / designer.getWorkSpace()?.getZoom()) * 100)}
+              : Math.floor((1 / model.getDesigner().getWorkSpace()?.getZoom()) * 100)}
           </Typography>
         </Box>
       ),

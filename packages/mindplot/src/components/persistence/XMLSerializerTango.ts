@@ -172,7 +172,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           const cdata = document.createCDATASection(this._rmXmlInv(value));
           featureDom.appendChild(cdata);
         } else {
-          featureDom.setAttribute(key, this._rmXmlInv(value));
+          featureDom.setAttribute(key, value);
         }
       }
       parentTopic.appendChild(featureDom);

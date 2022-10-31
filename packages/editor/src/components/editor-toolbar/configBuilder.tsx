@@ -146,7 +146,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         ],
       },
     ],
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   /**
@@ -230,7 +230,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         ],
       },
     ],
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   /**
@@ -243,9 +243,9 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       defaultMessage: 'Add Relationship',
     }),
     onClick: (e) => {
-      designer.showRelPivot(e);
+      model.getDesigner().showRelPivot(e);
     },
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   /**
@@ -268,7 +268,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         ),
       },
     ],
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   /**
@@ -292,7 +292,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         ),
       },
     ],
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   /**
@@ -304,6 +304,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       id: 'editor-panel.tooltip-add-icon',
       defaultMessage: 'Add Icon',
     }),
+    useClickToClose: true,
     options: [
       {
         tooltip: 'Node icon',
@@ -315,7 +316,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         ),
       },
     ],
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   const addNodeToolbarConfiguration = {
@@ -323,9 +324,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
     tooltip:
       intl.formatMessage({ id: 'editor-panel.tooltip-add-topic', defaultMessage: 'Add Topic' }) +
       ' (Enter)',
-    onClick: () => designer.createSiblingForSelectedNode(),
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    onClick: () => model.getDesigner().createSiblingForSelectedNode(),
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
+
   const deleteNodeToolbarConfiguration = {
     icon: <RemoveCircleOutlineIcon />,
     tooltip:
@@ -333,9 +335,10 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
         id: 'editor-panel.tooltip-delete-topic',
         defaultMessage: 'Delete Topic',
       }) + ' (Delete)',
-    onClick: () => designer.deleteSelectedEntities(),
-    disabled: () => designer.getModel().filterSelectedTopics().length === 0,
+    onClick: () => model.getDesigner().deleteSelectedEntities(),
+    disabled: () => model.getDesigner().getModel().filterSelectedTopics().length === 0,
   };
+
   return [
     addNodeToolbarConfiguration,
     deleteNodeToolbarConfiguration,

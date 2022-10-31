@@ -1,4 +1,4 @@
-import { fetchAccount } from './../../redux/clientSlice';
+import { useFetchAccount } from './../../redux/clientSlice';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/en';
 import 'dayjs/locale/es';
@@ -26,7 +26,7 @@ export default abstract class AppI18n {
     const isTryPage = window.location.pathname.endsWith('/try');
     let result: Locale;
     if (!isTryPage) {
-      const account = fetchAccount();
+      const account = useFetchAccount();
       result = account?.locale ? account.locale : this.getDefaultLocale();
 
       // If the local storage value is different, update ...

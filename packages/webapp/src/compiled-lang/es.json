@@ -873,6 +873,12 @@
       "value": "Apellido"
     }
   ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "Registrarse | WiseMapping"
+    }
+  ],
   "registration.password": [
     {
       "type": 0,

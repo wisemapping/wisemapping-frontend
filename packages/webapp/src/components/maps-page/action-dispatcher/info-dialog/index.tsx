@@ -6,7 +6,7 @@ import BaseDialog from '../base-dialog';
 import { SimpleDialogProps } from '..';
 import { useStyles } from './style';
 import dayjs from 'dayjs';
-import { fetchMapById } from '../../../../redux/clientSlice';
+import { useFetchMapById } from '../../../../redux/clientSlice';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
 import ListItem from '@mui/material/ListItem';
@@ -18,7 +18,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(LocalizedFormat);
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const { map } = fetchMapById(mapId);
+  const { map } = useFetchMapById(mapId);
   const [error, setError] = React.useState<ErrorInfo>();
 
   const intl = useIntl();

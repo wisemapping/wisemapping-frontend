@@ -15,25 +15,22 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-class I18nMsg {
-  static loadLocaleData(locale: string): Record<string, string> {
-    switch (locale) {
-      case 'fr':
-        return require('./../../compiled-lang/fr.json');
-      case 'en':
-        return require('./../../compiled-lang/en.json');
-      case 'es':
-        return require('./../../compiled-lang/es.json');
-      case 'de':
-        return require('./../../compiled-lang/de.json');
-      case 'ru':
-        return require('./../../compiled-lang/ru.json');
-      case 'zh':
-        return require('./../../compiled-lang/zh.json');
-      default:
-        return require('./../../compiled-lang/en.json');
-    }
+import { $assert } from '@wisemapping/core-js';
+import FeatureModel from './FeatureModel';
+
+class EmojiIconModel extends FeatureModel {
+  constructor(attributes) {
+    super('eicon');
+    this.setIconType(attributes.id);
+  }
+
+  getIconType(): string {
+    return this.getAttribute('id') as string;
+  }
+
+  setIconType(iconType: string): void {
+    $assert(iconType, 'iconType id can not be null');
+    this.setAttribute('id', iconType);
   }
 }
-
-export default I18nMsg;
+export default EmojiIconModel;

@@ -2,7 +2,7 @@ import xmlFormatter from 'xml-formatter';
 import { Mindmap } from '../..';
 import INodeModel, { TopicShape } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
-import IconModel from '../model/IconModel';
+import SvgIconModel from '../model/SvgIconModel';
 import FeatureModel from '../model/FeatureModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
@@ -228,7 +228,7 @@ class FreemindExporter extends Exporter {
       }
 
       if (type === 'icon') {
-        const icon = feature as IconModel;
+        const icon = feature as SvgIconModel;
         const freemindIcon: Icon = new Icon();
         freemindIcon.setBuiltin(icon.getIconType());
         freemindNode.setArrowlinkOrCloudOrEdge(freemindIcon);

@@ -34,11 +34,13 @@ const ActionDispatcher = ({
   fromEditor,
 }: ActionDialogProps): React.ReactElement => {
   useEffect(() => {
-    ReactGA.event({
-      category: 'map metadata',
-      action: action,
-      nonInteraction: true,
-    });
+    if (action) {
+      ReactGA.event({
+        category: 'map metadata',
+        action: action,
+        nonInteraction: true,
+      });
+    }
   }, [action]);
 
   const handleOnClose = (success?: boolean): void => {

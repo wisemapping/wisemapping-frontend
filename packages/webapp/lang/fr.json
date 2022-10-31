@@ -14,6 +14,9 @@
     "accountinfo.lastname": {
         "defaultMessage": "Nom de famille"
     },
+    "registration.page-title": {
+        "defaultMessage": "Inscription | WiseMapping"
+    },
     "accountinfo.title": {
         "defaultMessage": "Informations de compte"
     },

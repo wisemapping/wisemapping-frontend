@@ -919,6 +919,12 @@
       "value": "Nom de famille"
     }
   ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "Inscription | WiseMapping"
+    }
+  ],
   "registration.password": [
     {
       "type": 0,

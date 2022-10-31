@@ -93,7 +93,6 @@ const Editor = ({
   // Initialize locate ...
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
-
   return (
     <ThemeProvider theme={editorTheme}>
       <IntlProvider locale={locale} messages={msg}>

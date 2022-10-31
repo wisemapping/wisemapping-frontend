@@ -40,7 +40,7 @@ import NoteModel from './model/NoteModel';
 import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
-import Icon from './Icon';
+import ImageIcon from './ImageIcon';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -322,13 +322,18 @@ abstract class Topic extends NodeGraph {
     const featuresModel = model.getFeatures();
     featuresModel.forEach((f) => {
       const icon = TopicFeatureFactory.createIcon(this, f, this.isReadOnly());
-      result.addIcon(icon, f.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly());
+
+      const type = f.getType();
+      const addRemoveAction =
+        type === TopicFeatureFactory.SvgIcon.id || type === TopicFeatureFactory.EmojiIcon.id;
+
+      result.addIcon(icon, addRemoveAction && !this.isReadOnly());
     });
 
     return result;
   }
 
-  addFeature(featureModel: FeatureModel): Icon {
+  addFeature(featureModel: FeatureModel): ImageIcon {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
 
@@ -336,11 +341,11 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.addFeature(featureModel);
 
-    const result: Icon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
-    iconGroup.addIcon(
-      result,
-      featureModel.getType() === TopicFeatureFactory.Icon.id && !this.isReadOnly(),
-    );
+    const result: ImageIcon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
+    const isIcon =
+      featureModel.getType() === TopicFeatureFactory.SvgIcon.id ||
+      featureModel.getType() === TopicFeatureFactory.EmojiIcon.id;
+    iconGroup.addIcon(result, isIcon && !this.isReadOnly());
 
     this.adjustShapes();
     return result;
@@ -533,7 +538,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setBackgroundColor(color: string) {
+  setBackgroundColor(color: string): void {
     this._setBackgroundColor(color, true);
   }
 
@@ -552,7 +557,6 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
   getBackgroundColor(): string {
     const model = this.getModel();
     let result = model.getBackgroundColor();

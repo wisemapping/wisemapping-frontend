@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Editor, { EditorOptions } from '../../../../src/index';
+import { createRoot } from 'react-dom/client';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 import MapInfoImpl from './MapInfoImpl';
 
@@ -38,7 +38,9 @@ const options: EditorOptions = {
   enableKeyboardEvents: true,
 };
 
-ReactDOM.render(
+const container = document.getElementById('app');
+const root = createRoot(container!);
+root.render(
   <Editor
     mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
     options={options}

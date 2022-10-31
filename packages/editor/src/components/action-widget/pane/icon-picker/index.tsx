@@ -15,78 +15,57 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import React from 'react';
-import iconGroups from './iconGroups.json';
-import { ImageIcon } from '@wisemapping/mindplot';
+import React, { useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
+import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
+import IconImageTab from './image-icon-tab';
+import Switch from '@mui/material/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-/**
- * emoji picker for editor toolbar
- */
-const IconPicker = (props: { closeModal: () => void; iconModel: NodeProperty }) => {
-  const [value, setValue] = React.useState(0);
+type IconPickerProp = {
+  closeModal: () => void;
+  iconModel: NodeProperty;
+};
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+const IconPicker = ({ closeModal, iconModel }: IconPickerProp) => {
+  const [checked, setChecked] = React.useState(true);
+
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(!checked);
+  };
+
+  // Review ...
+  useEffect(() => {
+    DesignerKeyboard.pause();
+    return () => { DesignerKeyboard.resume(); }
+  }, []);
+
+
+  const handleEmojiSelect = (emoji: EmojiClickData) => {
+    const emojiChar = emoji.emoji;
+    iconModel.setValue(`emoji:${emojiChar}`);
+    closeModal();
   };
 
   return (
-    <Box sx={{ width: '250px' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="Icons tabs">
-          {iconGroups.map((family, i) => (
-            <Tab
-              key={family.id}
-              icon={<img className="panelIcon" src={ImageIcon.getImageUrl(family.icons[0])} />}
-              {...a11yProps(i)}
-            />
-          ))}
-        </Tabs>
-      </Box>
-      {iconGroups.map((family, i) => (
-        <TabPanel key={family.id} value={value} index={i}>
-          {family.icons.map((icon) => (
-            <img
-              className="panelIcon"
-              key={icon}
-              src={ImageIcon.getImageUrl(icon)}
-              onClick={() => {
-                props.iconModel.setValue(icon);
-                props.closeModal();
-              }}
-            ></img>
-          ))}
-        </TabPanel>
-      ))}
-    </Box>
-  );
-};
+    <div style={{ padding: '5px' }}>
+      <FormGroup>
+        <FormControlLabel label="Show Images" control={<Switch onChange={handleCheck} />} />
+      </FormGroup>
 
-/**
- * tab panel used for display icon families in tabs
- */
-const TabPanel = (props: { children?: React.ReactNode; index: number; value: number }) => {
-  const { children, value, index } = props;
+      {checked && (
+        <EmojiPicker
+          onEmojiClick={handleEmojiSelect}
+          lazyLoadEmojis={true}
+          autoFocusSearch={true}
+          previewConfig={{ showPreview: false }}
+        />
+      )}
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
-      {value === index && <Box>{children}</Box>}
+      {!checked && <IconImageTab iconModel={iconModel} />}
     </div>
   );
-};
-
-const a11yProps = (index: number) => {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
 };
 export default IconPicker;

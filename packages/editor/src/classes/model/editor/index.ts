@@ -15,7 +15,12 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Designer, MindplotWebComponent, PersistenceManager } from '@wisemapping/mindplot';
+import {
+  Designer,
+  MindplotWebComponent,
+  PersistenceManager,
+  DesignerModel,
+} from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 
 class Editor {
@@ -43,15 +48,19 @@ class Editor {
     return this.component?.getDesigner();
   }
 
+  getDesignerModel(): DesignerModel | undefined {
+    return this.getDesigner().getModel();
+  }
+
   loadMindmap(mapId: string, persistenceManager: PersistenceManager, widgetManager): void {
     this.component.buildDesigner(persistenceManager, widgetManager);
     this.component.loadMap(mapId);
   }
 
   registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability) {
-    const desiger = this.component.getDesigner();
+    const designer = this.component.getDesigner();
     const onNodeBlurHandler = () => {
-      if (!desiger.getModel().selectedTopic()) {
+      if (!designer.getModel().selectedTopic()) {
         canvasUpdate(Date.now());
       }
     };

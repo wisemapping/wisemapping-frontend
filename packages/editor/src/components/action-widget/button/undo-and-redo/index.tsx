@@ -36,12 +36,12 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo) =
         setDisabled(!isDisabled);
 
         return () => {
-          designer.removeEvent('modelUpdate', handleUpdate);
+          model.getDesigner().removeEvent('modelUpdate', handleUpdate);
         };
       };
 
       if (model.getDesigner()) {
-        designer.addEvent('modelUpdate', handleUpdate);
+        model.getDesigner().addEvent('modelUpdate', handleUpdate);
       }
     }
   }, [model?.isMapLoadded()]);
@@ -52,7 +52,7 @@ const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo) =
         ...configuration,
         disabled: () => disabled,
       }}
-    ></ToolbarMenuItem>
+    />
   );
 };
 export default UndoAndRedo;

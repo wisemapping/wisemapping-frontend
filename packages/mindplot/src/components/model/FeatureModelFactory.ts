@@ -1,9 +1,10 @@
 import { $assert } from '@wisemapping/core-js';
-import IconModel from './IconModel';
+import SvgIconModel from './SvgIconModel';
 import LinkModel from './LinkModel';
 import NoteModel from './NoteModel';
 import FeatureModel from './FeatureModel';
 import FeatureType from './FeatureType';
+import EmojiIconModel from './EmojiIconModel';
 
 interface NodeById {
   id: FeatureType;
@@ -14,7 +15,11 @@ class FeatureModelFactory {
   static modelById: Array<NodeById> = [
     {
       id: 'icon',
-      model: IconModel,
+      model: SvgIconModel,
+    },
+    {
+      id: 'eicon',
+      model: EmojiIconModel,
     },
     {
       id: 'link',

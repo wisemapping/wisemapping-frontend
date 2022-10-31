@@ -9,7 +9,6 @@ const prodConfig = {
   },
   externals: {
     react: 'react',
-    'react-dom': 'react-dom',
     'react-intl': 'react-intl',
   },
   plugins: [new CleanWebpackPlugin()],

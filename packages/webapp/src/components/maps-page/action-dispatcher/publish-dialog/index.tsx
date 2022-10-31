@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
+import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
 import BaseDialog from '../base-dialog';
 import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
@@ -17,11 +17,11 @@ import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
 import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import Box from '@mui/system/Box';
 import AppConfig from '../../../../classes/app-config';
+import Box from '@mui/material/Box';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const { map } = fetchMapById(mapId);
+  const { map } = useFetchMapById(mapId);
 
   const client: Client = useSelector(activeInstance);
   const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
@@ -38,6 +38,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
       onSuccess: () => {
         setModel(model);
         handleOnMutationSuccess(onClose, queryClient);
+        queryClient.invalidateQueries(`maps-${mapId}`);
       },
       onError: (error) => {
         setError(error);

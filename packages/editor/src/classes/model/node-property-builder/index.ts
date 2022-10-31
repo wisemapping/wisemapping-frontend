@@ -1,4 +1,4 @@
-import { Designer } from '@wisemapping/mindplot';
+import { Designer, Topic } from '@wisemapping/mindplot';
 import NodeProperty from '../node-property';
 import {
   getTheUniqueValueOrNull,
@@ -7,10 +7,6 @@ import {
   fontSizes,
   getNextValue,
 } from '../../../components/toolbar/ToolbarValueModelBuilder';
-
-/**
- * Given a designer build NodePropertyValueModel instances for the mindplot node properties
- */
 
 class NodePropertyBuilder {
   designer: Designer;
@@ -26,24 +22,20 @@ class NodePropertyBuilder {
   noteModel: NodeProperty;
   linkModel: NodeProperty;
 
-  /**
-   *
-   * @param designer designer to change node properties values
-   */
   constructor(designer: Designer) {
     this.designer = designer;
   }
 
   private selectedTopic() {
-    return designer.getModel().selectedTopic();
+    return this.designer.getModel().selectedTopic();
   }
 
   private getFontSize() {
-    return designer.getModel().selectedTopic()?.getFontSize();
+    return this.designer.getModel().selectedTopic()?.getFontSize();
   }
 
-  private uniqueOrNull(propertyGetter: (Topic) => any | null) {
-    const nodes = designer.getModel().filterSelectedTopics();
+  private uniqueOrNull(propertyGetter: (Topic: Topic) => any | null) {
+    const nodes = this.designer.getModel().filterSelectedTopics();
     return getTheUniqueValueOrNull(nodes, propertyGetter);
   }
 
@@ -53,8 +45,8 @@ class NodePropertyBuilder {
    */
   fontWeigthModel(): NodeProperty {
     return {
-      getValue: () => designer.getModel().selectedTopic()?.getFontWeight(),
-      switchValue: () => designer.changeFontWeight(),
+      getValue: () => this.designer.getModel().selectedTopic()?.getFontWeight(),
+      switchValue: () => this.designer.changeFontWeight(),
     };
   }
 
@@ -74,7 +66,7 @@ class NodePropertyBuilder {
           if (direction === SwitchValueDirection.up) {
             newValue = getNextValue(fontSizes, this.getFontSize());
           }
-          designer.changeFontSize(newValue);
+          this.designer.changeFontSize(newValue);
         },
       };
     return this.fontSizeModel;
@@ -87,8 +79,8 @@ class NodePropertyBuilder {
   getSelectedTopicColorModel(): NodeProperty {
     if (!this.selectedTopicColorModel)
       this.selectedTopicColorModel = {
-        getValue: () => designer.getModel().selectedTopic()?.getBackgroundColor(),
-        setValue: (color) => designer.changeBackgroundColor(color),
+        getValue: () => this.designer.getModel().selectedTopic()?.getBackgroundColor(),
+        setValue: (color) => this.designer.changeBackgroundColor(color),
       };
 
     return this.selectedTopicColorModel;
@@ -122,7 +114,7 @@ class NodePropertyBuilder {
     if (!this.borderColorModel)
       this.borderColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getBorderColor()),
-        setValue: (hex: string) => designer.changeBorderColor(hex),
+        setValue: (hex: string) => this.designer.changeBorderColor(hex),
       };
     return this.borderColorModel;
   }
@@ -135,7 +127,7 @@ class NodePropertyBuilder {
     if (!this.fontColorModel)
       this.fontColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontColor()),
-        setValue: (hex: string) => designer.changeFontColor(hex),
+        setValue: (hex: string) => this.designer.changeFontColor(hex),
       };
     return this.fontColorModel;
   }
@@ -148,7 +140,10 @@ class NodePropertyBuilder {
     if (!this.topicIconModel)
       this.topicIconModel = {
         getValue: () => null,
-        setValue: (value: string) => designer.addIconType(value),
+        setValue: (value: string) => {
+          const values = value.split(':');
+          this.designer.addIconType(values[0] as 'image' | 'emoji', values[1]);
+        },
       };
     return this.topicIconModel;
   }
@@ -177,7 +172,7 @@ class NodePropertyBuilder {
     if (!this.fontFamilyModel)
       this.fontFamilyModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontFamily()),
-        setValue: (value: string) => designer.changeFontFamily(value),
+        setValue: (value: string) => this.designer.changeFontFamily(value),
       };
     return this.fontFamilyModel;
   }
@@ -190,7 +185,7 @@ class NodePropertyBuilder {
     if (!this.fontStyleModel)
       this.fontStyleModel = {
         getValue: () => this.selectedTopic()?.getFontStyle(),
-        switchValue: () => designer.changeFontStyle(),
+        switchValue: () => this.designer.changeFontStyle(),
       };
     return this.fontStyleModel;
   }
@@ -203,7 +198,7 @@ class NodePropertyBuilder {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
         getValue: () => this.uniqueOrNull((node) => node.getShapeType()),
-        setValue: (value: string) => designer.changeTopicShape(value),
+        setValue: (value: string) => this.designer.changeTopicShape(value),
       };
     return this.topicShapeModel;
   }

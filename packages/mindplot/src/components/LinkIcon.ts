@@ -16,14 +16,14 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import Icon from './Icon';
+import ImageIcon from './ImageIcon';
 import LinksImage from '../../assets/icons/links.svg';
 import LinkModel from './model/LinkModel';
 import Topic from './Topic';
 import FeatureModel from './model/FeatureModel';
 import WidgetManager from './WidgetManager';
 
-class LinkIcon extends Icon {
+class LinkIcon extends ImageIcon {
   private _linksModel: FeatureModel;
 
   private _topic: Topic;

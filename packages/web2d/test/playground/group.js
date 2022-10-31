@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import $ from 'jquery';
-import { Toolkit, Workspace, Line, Group, Elipse } from '../../src';
+import { Workspace, Line, Group, Elipse } from '../../src';
 
 global.$ = $;
 

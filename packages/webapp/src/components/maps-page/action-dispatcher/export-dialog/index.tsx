@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
 import { useStyles } from './style';
 import Alert from '@mui/material/Alert';
-import { fetchMapById } from '../../../../redux/clientSlice';
+import { useFetchMapById } from '../../../../redux/clientSlice';
 import FormControl from '@mui/material/FormControl';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -39,7 +39,7 @@ const ExportDialog = ({
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
   const [submit, setSubmit] = React.useState<boolean>(false);
-  const { map } = fetchMapById(mapId);
+  const { map } = useFetchMapById(mapId);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
     enableImgExport ? 'image' : 'document',

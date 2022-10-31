@@ -58,7 +58,7 @@ type MapLoadResult = {
   map: MapInfo | null;
 };
 
-export const fetchMapById = (id: number): MapLoadResult => {
+export const useFetchMapById = (id: number): MapLoadResult => {
   const client: Client = useSelector(activeInstance);
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>(`maps-${id}`, () => {
     return client.fetchAllMaps();
@@ -85,7 +85,7 @@ export const fetchMapById = (id: number): MapLoadResult => {
   return { isLoading: isLoading, error: errorMsg, map: map };
 };
 
-export const fetchAccount = (): AccountInfo | undefined => {
+export const useFetchAccount = (): AccountInfo | undefined => {
   const client: Client = useSelector(activeInstance);
   const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
     return client.fetchAccountInfo();

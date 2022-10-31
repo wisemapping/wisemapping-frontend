@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
+import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import BaseDialog from '../base-dialog';
 import Alert from '@mui/material/Alert';
@@ -30,7 +30,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     mutation.mutate(mapId);
   };
 
-  const { map } = fetchMapById(mapId);
+  const { map } = useFetchMapById(mapId);
   const alertTitle = `${intl.formatMessage({
     id: 'action.delete-title',
     defaultMessage: 'Delete',

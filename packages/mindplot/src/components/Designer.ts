@@ -873,16 +873,16 @@ class Designer extends Events {
     }
   }
 
-  addIconType(iconType: string): void {
+  addIconType(type: 'image' | 'emoji', iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
+
+    const featureType: FeatureType = (
+      type === 'emoji' ? TopicFeatureFactory.EmojiIcon.id : TopicFeatureFactory.SvgIcon.id
+    ) as FeatureType;
     if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(
-        topicsIds[0],
-        TopicFeatureFactory.Icon.id as FeatureType,
-        {
-          id: iconType,
-        },
-      );
+      this._actionDispatcher.addFeatureToTopic(topicsIds[0], featureType, {
+        id: iconType,
+      });
     }
   }
 

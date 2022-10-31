@@ -18,7 +18,7 @@
 import { $assert } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
 
-class IconModel extends FeatureModel {
+class SvgIconModel extends FeatureModel {
   constructor(attributes) {
     super('icon');
     this.setIconType(attributes.id);
@@ -33,4 +33,5 @@ class IconModel extends FeatureModel {
     this.setAttribute('id', iconType);
   }
 }
-export default IconModel;
+
+export default SvgIconModel;

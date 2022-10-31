@@ -116,7 +116,7 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
               intl.formatMessage({ id: 'appbar.tooltip-undo', defaultMessage: 'Undo' }),
               'Z',
             ),
-            onClick: () => designer.undo(),
+            onClick: () => model.getDesigner().undo(),
           }}
           disabledCondition={(event) => event.undoSteps > 0}
           model={model}
@@ -134,7 +134,7 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
               intl.formatMessage({ id: 'appbar.tooltip-redo', defaultMessage: 'Redo' }),
               'Shift + Z',
             ),
-            onClick: () => designer.redo(),
+            onClick: () => model.getDesigner().redo(),
           }}
           disabledCondition={(event) => event.redoSteps > 0}
           model={model}

@@ -25,7 +25,7 @@ import AppI18n, { Locales } from '../../classes/app-i18n';
 import { useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga4';
-import { fetchAccount, fetchMapById } from '../../redux/clientSlice';
+import { useFetchAccount, useFetchMapById } from '../../redux/clientSlice';
 import EditorOptionsBuilder from './EditorOptionsBuilder';
 import { buildPersistenceManagerForEditor } from './PersistenceManagerUtils';
 import { useTheme } from '@mui/material/styles';
@@ -50,14 +50,14 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
   }, []);
 
-  const findEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {
+  const useFindEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {
     let result: EditorRenderMode = null;
     if (isTryMode) {
       result = 'showcase';
     } else if (global.mindmapLocked) {
       result = 'viewonly';
     } else {
-      const fetchResult = fetchMapById(mapId);
+      const fetchResult = useFetchMapById(mapId);
       if (!fetchResult.isLoading) {
         if (fetchResult.error) {
           throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
@@ -76,11 +76,11 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
 
   // What is the role ?
   const mapId = EditorOptionsBuilder.loadMapId();
-  const mode = findEditorMode(isTryMode, mapId);
+  const mode = useFindEditorMode(isTryMode, mapId);
 
   // Account settings can be null and editor cannot be initilized multiple times. This creates problems
   // at the i18n resource loading.
-  const isAccountLoaded = mode === 'showcase' || fetchAccount;
+  const isAccountLoaded = mode === 'showcase' || useFetchAccount;
   const loadCompleted = mode && isAccountLoaded;
 
   let options, persistence: PersistenceManager;
@@ -99,10 +99,10 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   }
 
   useEffect(() => {
-    if (options?.mapTitle) {
-      document.title = `${options.mapTitle} | WiseMapping `;
+    if (mapInfo) {
+      document.title = `${mapInfo.getTitle()} | WiseMapping `;
     }
-  }, [loadCompleted]);
+  }, [mapInfo]);
 
   return loadCompleted ? (
     <IntlProvider

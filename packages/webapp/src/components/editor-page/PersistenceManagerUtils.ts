@@ -6,7 +6,7 @@ import {
   LocalStorageManager,
   Mindmap,
   MockPersistenceManager,
-  XMLSerializerTango,
+  XMLSerializerFactory,
 } from '@wisemapping/editor';
 
 export const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
@@ -54,7 +54,7 @@ export const getMindmapFromPersistence = (mapId: string): Mindmap => {
       'text/xml',
     );
 
-    const serializer = new XMLSerializerTango();
+    const serializer = XMLSerializerFactory.getSerializer('tango');
     mindmap = serializer.loadFromDom(xmlDoc, String(mapId));
   }
   return mindmap;
