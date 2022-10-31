@@ -4,7 +4,7 @@
 #  The workflow allows running tests and code linting on the default branch.
 
 # Node LTS
-image: cypress/included:10.9.0
+image: cypress/included:10.11.0
 
 pipelines:
   branches:
