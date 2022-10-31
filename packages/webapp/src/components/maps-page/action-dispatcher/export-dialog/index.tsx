@@ -92,7 +92,7 @@ const ExportDialog = ({
     let size: SizeType;
     let mindmap: Mindmap;
 
-    const designer: Designer = global.designer;
+    const designer: Designer = globalThis.designer;
     // exporting from editor toolbar action
     if (designer != null) {
       // Depending on the type of export. It will require differt POST.

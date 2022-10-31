@@ -20,9 +20,9 @@ export const buildPersistenceManagerForEditor = (mode: string): PersistenceManag
       });
     } else {
       persistenceManager = new LocalStorageManager(
-        `/c/restful/maps/{id}/${global.historyId ? `${global.historyId}/` : ''}document/xml${
-          mode === 'showcase' ? '-pub' : ''
-        }`,
+        `/c/restful/maps/{id}/${
+          globalThis.historyId ? `${globalThis.historyId}/` : ''
+        }document/xml${mode === 'showcase' ? '-pub' : ''}`,
         true,
       );
     }

@@ -133,7 +133,7 @@ class Designer extends Events {
     this._clipboard = [];
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
-    global.designer = this;
+    globalThis.designer = this;
   }
 
   private _registerWheelEvents(): void {

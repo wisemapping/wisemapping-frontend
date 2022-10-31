@@ -54,7 +54,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     let result: EditorRenderMode = null;
     if (isTryMode) {
       result = 'showcase';
-    } else if (global.mindmapLocked) {
+    } else if (globalThis.mindmapLocked) {
       result = 'viewonly';
     } else {
       const fetchResult = useFetchMapById(mapId);

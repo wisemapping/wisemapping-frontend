@@ -29,9 +29,9 @@ globalAny.jQuery = jquery;
 // WebComponent registration
 customElements.define('mindplot-component', MindplotWebComponent);
 // Configure designer options ...
-const historyId = global.historyId ? `${global.historyId}/` : '';
+const historyId = globalThis.historyId ? `${globalThis.historyId}/` : '';
 const persistence: PersistenceManager = new LocalStorageManager(
-  `/c/restful/maps/{id}/${historyId}document/xml${!global.isAuth ? '-pub' : ''}`,
+  `/c/restful/maps/{id}/${historyId}document/xml${!globalThis.isAuth ? '-pub' : ''}`,
   true,
 );
 
@@ -39,4 +39,4 @@ const webComponent: MindplotWebComponent = document.getElementById(
   'mindmap-comp',
 ) as MindplotWebComponent;
 webComponent.buildDesigner(persistence);
-webComponent.loadMap(global.mapId);
+webComponent.loadMap(globalThis.mapId);
