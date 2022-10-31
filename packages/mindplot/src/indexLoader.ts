@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import jquery from 'jquery';
-import {} from './components/widget/ToolbarNotifier';
 import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
 import MindplotWebComponent from './components/MindplotWebComponent';

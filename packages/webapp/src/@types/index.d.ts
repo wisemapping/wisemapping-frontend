@@ -4,6 +4,7 @@ declare module '*.wxml';
 declare global {
   const isAuth: boolean;
   const mapId: number;
+  const historyId: number;
   const userOptions: { zoom: string | number } | null;
   const mindmapLocked: boolean;
   const mindmapLockedMsg: string;
