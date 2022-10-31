@@ -17,7 +17,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import MapInfo from '../../../../classes/model/map-info';
 import { TitleInput } from './styled';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';

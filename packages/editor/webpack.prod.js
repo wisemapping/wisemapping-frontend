@@ -8,8 +8,12 @@ const prodConfig = {
     minimize: true,
   },
   externals: {
-    react: 'react',
+    'react': 'react',
+    'react-dom': 'react-dom',
     'react-intl': 'react-intl',
+    '@emotion/styled': '@emotion/styled',
+    '@mui/icons-material': '@mui/icons-material',
+    '@mui/material': '@mui/material',
   },
   plugins: [new CleanWebpackPlugin()],
 };
