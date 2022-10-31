@@ -38,7 +38,7 @@ const options: EditorOptions = {
   enableKeyboardEvents: true,
 };
 
-const container = document.getElementById('app');
+const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <Editor
@@ -48,5 +48,4 @@ root.render(
     onAction={(action) => console.log('action called:', action)}
     onLoad={initialization}
   />,
-  document.getElementById('root'),
 );
