@@ -91,7 +91,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     mapInfo = new MapInfoImpl(
       mapId,
       client,
-      options.title,
+      options.mapTitle,
       options.isLocked,
       options.lockedMsg,
       options.zoom,
@@ -99,10 +99,10 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   }
 
   useEffect(() => {
-    if (mapInfo) {
+    if (mapInfo?.getTitle()) {
       document.title = `${mapInfo.getTitle()} | WiseMapping `;
     }
-  }, [mapInfo]);
+  }, [mapInfo?.getTitle()]);
 
   return loadCompleted ? (
     <IntlProvider
