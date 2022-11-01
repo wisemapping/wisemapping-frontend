@@ -40,12 +40,12 @@ export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
       arrow={true}
       enterDelay={700}
     >
-      <Box component="span" my="auto" aria-label={props.configuration.tooltip || ''}>
+      <Box component="span" my="auto">
         <IconButton
           onClick={props.configuration.onClick}
           disabled={props.configuration.disabled && props.configuration.disabled()}
           aria-pressed={selected}
-          // color={selected ? 'secondary' : 'default'}
+          aria-label={props.configuration.tooltip || ''}
         >
           {typeof props.configuration.icon === 'function'
             ? props.configuration.icon()
