@@ -15,7 +15,6 @@
             <arrowlink DESTINATION="ID_11" STARTARROW="Default"/>
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
-            <icon BUILTIN="face_surprise"/>
             <edge COLOR="#080559"/>
             <node ID="ID_12" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Double Click"/>
             <node ID="ID_13" POSITION="left" STYLE="fork">
@@ -40,9 +39,7 @@
                 <node ID="ID_19" POSITION="right" COLOR="#525c61" TEXT="Topic Shapes"/>
                 <node ID="ID_18" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Topic Color"/>
             </node>
-            <node ID="ID_20" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Icons">
-                <icon BUILTIN="object_rainbow"/>
-            </node>
+            <node ID="ID_20" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Icons"/>
             <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes">
                 <icon BUILTIN="arrowc_turn_left"/>
             </node>
@@ -56,9 +53,7 @@
         </node>
         <node ID="ID_2" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Productivity">
             <icon BUILTIN="chart_bar"/>
-            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas">
-                <icon BUILTIN="bulb_light_on"/>
-            </node>
+            <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas"/>
             <node ID="ID_4" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Brainstorming"/>
             <node ID="ID_5" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Visual "/>
         </node>

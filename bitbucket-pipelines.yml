@@ -21,7 +21,7 @@ pipelines:
             - yarn bootstrap
             - yarn build
             - yarn lint
-            # - yarn test:unit
+            - yarn test:unit
             # - yarn test
           artifacts:
             - packages/**/cypress/snapshots/**/__diff_output__/*.diff.png
