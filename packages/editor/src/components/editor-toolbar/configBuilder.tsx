@@ -307,10 +307,13 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
     useClickToClose: true,
     options: [
       {
-        tooltip: 'Node icon',
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-add-icon',
+          defaultMessage: 'Add Icon',
+        }),
         render: (closeModal) => (
           <IconPicker
-            closeModal={closeModal}
+            triggerClose={closeModal}
             iconModel={toolbarValueModelBuilder.getTopicIconModel()}
           />
         ),
