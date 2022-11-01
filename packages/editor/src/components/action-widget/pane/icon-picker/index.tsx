@@ -25,11 +25,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 type IconPickerProp = {
-  closeModal: () => void;
+  triggerClose: () => void;
   iconModel: NodeProperty;
 };
 
-const IconPicker = ({ closeModal, iconModel }: IconPickerProp) => {
+const IconPicker = ({ triggerClose, iconModel }: IconPickerProp) => {
   const [checked, setChecked] = React.useState(true);
 
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,14 +39,15 @@ const IconPicker = ({ closeModal, iconModel }: IconPickerProp) => {
   // Review ...
   useEffect(() => {
     DesignerKeyboard.pause();
-    return () => { DesignerKeyboard.resume(); }
+    return () => {
+      DesignerKeyboard.resume();
+    };
   }, []);
-
 
   const handleEmojiSelect = (emoji: EmojiClickData) => {
     const emojiChar = emoji.emoji;
     iconModel.setValue(`emoji:${emojiChar}`);
-    closeModal();
+    triggerClose();
   };
 
   return (
@@ -64,7 +65,7 @@ const IconPicker = ({ closeModal, iconModel }: IconPickerProp) => {
         />
       )}
 
-      {!checked && <IconImageTab iconModel={iconModel} />}
+      {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
     </div>
   );
 };

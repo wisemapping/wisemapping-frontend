@@ -6,8 +6,9 @@ import NodeProperty from '../../../../../classes/model/node-property';
 
 type IconImageTab = {
   iconModel: NodeProperty;
+  triggerClose: () => void;
 };
-const IconImageTab = ({ iconModel }: IconImageTab) => {
+const IconImageTab = ({ iconModel, triggerClose }: IconImageTab) => {
   return (
     <Box sx={{ width: '350px' }}>
       {iconGroups.map((family, i) => (
@@ -19,6 +20,7 @@ const IconImageTab = ({ iconModel }: IconImageTab) => {
               src={SvgImageIcon.getImageUrl(icon)}
               onClick={() => {
                 iconModel.setValue(`image:${icon}`);
+                triggerClose();
               }}
             ></img>
           ))}
