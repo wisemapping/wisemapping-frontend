@@ -16,7 +16,6 @@
     {
         "id": "onoff",
         "icons": [
-            "onoff_clock",
             "onoff_add",
             "onoff_delete",
             "onoff_status_offline",
@@ -26,7 +25,6 @@
     {
         "id": "money",
         "icons": [
-            "money_money",
             "money_dollar",
             "money_coins",
             "money_ruby"
@@ -43,7 +41,6 @@
     {
         "id": "chart",
         "icons": [
-            "chart_bar",
             "chart_line",
             "chart_curve",
             "chart_pie",
@@ -55,7 +52,6 @@
         "icons": [
             "sign_warning",
             "sign_info",
-            "sign_stop",
             "sign_help",
             "sign_cancel"
         ]
@@ -87,7 +83,6 @@
     {
         "id": "soft",
         "icons": [
-            "soft_bug",
             "soft_cursor",
             "soft_database_table",
             "soft_database",
@@ -98,31 +93,12 @@
         ]
     },
     {
-        "id": "arrow",
-        "icons": [
-            "arrow_up",
-            "arrow_down",
-            "arrow_left",
-            "arrow_right"
-        ]
-    },
-    {
         "id": "arrowc",
         "icons": [
             "arrowc_rotate_anticlockwise",
             "arrowc_rotate_clockwise",
             "arrowc_turn_left",
             "arrowc_turn_right"
-        ]
-    },
-    {
-        "id": "people",
-        "icons": [
-            "people_group",
-            "people_male1",
-            "people_male2",
-            "people_female1",
-            "people_female2"
         ]
     },
     {

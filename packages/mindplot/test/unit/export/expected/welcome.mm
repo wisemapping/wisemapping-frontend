@@ -52,7 +52,6 @@
             <node ID="ID_10" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Free!!!"/>
         </node>
         <node ID="ID_2" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Productivity">
-            <icon BUILTIN="chart_bar"/>
             <node ID="ID_3" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Share your ideas"/>
             <node ID="ID_4" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Brainstorming"/>
             <node ID="ID_5" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Visual "/>
@@ -65,7 +64,6 @@
             <node ID="ID_28" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Download" LINK="http://www.wisemapping.com/inyourserver.html"/>
         </node>
         <node ID="ID_32" POSITION="left" STYLE="fork" TEXT="Collaborate">
-            <icon BUILTIN="people_group"/>
             <node ID="ID_33" POSITION="left" STYLE="fork" TEXT="Embed"/>
             <node ID="ID_34" POSITION="left" STYLE="fork" TEXT="Publish"/>
             <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition">

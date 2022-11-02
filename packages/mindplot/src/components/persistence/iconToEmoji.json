@@ -49,5 +49,20 @@
     "object_wizard": "🪄",
     "object_bell": "🔔",
     "object_clanbomber": "💣",
-    "object_camera": "📷"
+    "object_camera": "📷",
+    "people_group": "👨‍👧‍👦",
+    "people_male1": "👦",
+    "people_male2": "👨‍💼",
+    "people_female1": "👧",
+    "people_female2": "👩‍⚖️",
+    "sign_stop": "🛑",
+    "onoff_clock": "⏲️",
+    "hard_mouse": "🖱️",
+    "money_money": "💰",
+    "soft_bug": "🐞",
+    "chart_bar": "📊",
+    "arrow_up": "⬆️",
+    "arrow_down": "⬇️",
+    "arrow_left": "⬅️",
+    "arrow_right": "➡️"
 }
