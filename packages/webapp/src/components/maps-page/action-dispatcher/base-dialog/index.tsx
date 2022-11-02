@@ -57,9 +57,11 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
           <StyledDialogTitle>{props.title}</StyledDialogTitle>
 
           <StyledDialogContent>
-            {description}
-            <GlobalError error={props.error} />
-            {props.children}
+            <>
+              {description}
+              <GlobalError error={props.error} />
+              {props.children}
+            </>
           </StyledDialogContent>
 
           <StyledDialogActions>

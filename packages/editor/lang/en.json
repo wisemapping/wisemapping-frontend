@@ -1,26 +1,215 @@
 {
-    "editor.try-welcome": {
-        "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
-    },
-    "editor.try-welcome-description": {
-		"defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
-    },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "This edition space showcases some of the mindmap capabilities!"
-	},
-    "editor.try-welcome-description-mobile": {
-        "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies."
-    },
-    "editor.edit-mobile": {
-        "defaultMessage": "Note for mobile devices."
-    },
-    "editor.edit-description-mobile": {
-        "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
-    },
-    "login.signup": {
-        "defaultMessage": "Sign Up"
-    },
-    "action.share": {
-        "defaultMessage": "Share"
-    }
+  "action.accept": {
+    "defaultMessage": "Accept"
+  },
+  "action.cancel": {
+    "defaultMessage": "Cancel"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "Back to maps list"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "Sign Up"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "Share"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "Export"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "Changes History"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "Information"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "Print"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "Publish"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "Redo"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "Save"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "Share for Collaboration"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "Sign Up"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "Starred"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "Undo"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "Add Icon"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "Add Link"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "Add Note"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "Add Relationship"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "Add Topic"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "Delete Topic"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "Border color"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "Fill color"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "Bigger"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "Bold"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "Italic"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "Smaller"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Font Style"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "Ellipse shape"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "Line shape"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "Rectangle shape"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "Rounded shape"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "Topic Style"
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
+  },
+  "editor.edit-mobile": {
+    "defaultMessage": "Note for mobile devices."
+  },
+  "editor.try-welcome": {
+    "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies."
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
+  },
+  "link.help_text": {
+    "defaultMessage": "Address is not valid"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "note.label": {
+    "defaultMessage": "Note"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "Action"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "Add child topic"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "Add link"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "Add note"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "Add sibling topic"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "Cancel text changes"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "Change text to bold"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "Change text to italic"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "Collpase children"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "Copy and paste topics"
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "Delete topic"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "Deselect all topics"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "Add multi-line topic text"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "Edit topic text"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "Just start typing"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "Navigation"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "Arrow keys"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "Redo edition"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "Save changes"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "Select all topics"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "Select multiple topics"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "Mouse click"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "Undo edition"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "Keyboard Shortcuts"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "Zoom In"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "Zoom Out"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "Zoom to Fit"
+  }
 }

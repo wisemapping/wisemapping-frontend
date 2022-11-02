@@ -50,11 +50,11 @@ class FontPeer {
       result = (this._size * scale.height * 42) / 32;
     }
 
-    return result;
+    return result.toFixed(1);
   }
 
   getGraphSize() {
-    return (this._size * 43) / 32;
+    return ((this._size * 43) / 32).toFixed(1);
   }
 
   getSize() {

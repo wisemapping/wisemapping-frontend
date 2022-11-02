@@ -263,6 +263,10 @@ class Workspace {
     screenManager.addEvent('mousedown', mouseDownListener);
     screenManager.addEvent('touchstart', mouseDownListener);
   }
+
+  getZoom() {
+    return this._zoom;
+  }
 }
 
 export default Workspace;

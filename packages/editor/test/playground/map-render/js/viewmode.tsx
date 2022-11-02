@@ -1,8 +1,9 @@
 import '../css/viewmode.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Editor, { EditorOptions } from '../../../../src/index';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
+import MapInfoImpl from './MapInfoImpl';
+import { createRoot } from 'react-dom/client';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
@@ -32,21 +33,19 @@ const params = new URLSearchParams(window.location.search.substring(1));
 const mapId = params.get('id') || 'welcome';
 const persistence = new LocalStorageManager('samples/{id}.wxml', false);
 const options: EditorOptions = {
-  zoom: 0.8,
-  locked: false,
-  mapTitle: 'Develop WiseMapping',
   mode: 'viewonly',
   locale: 'en',
   enableKeyboardEvents: true,
 };
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(
   <Editor
-    mapId={mapId}
+    mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
     options={options}
     persistenceManager={persistence}
     onAction={(action) => console.log('action called:', action)}
     onLoad={initialization}
   />,
-  document.getElementById('root'),
 );

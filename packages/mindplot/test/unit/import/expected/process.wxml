@@ -33,17 +33,17 @@
         <topic position="-560,25" order="3" text="Corneal Tissue OPS" shape="line" id="26">
             <topic position="560,-75" order="0" text="Transplant Bank International" shape="line" id="27">
                 <topic position="-560,-112" order="0" text="Orange County Eye and Transplant Bank" shape="line" id="28"/>
-                <topic position="-650,-87" order="1" text="Northern California Transplant Bank" shape="rounded rectagle" id="29" bgColor="#00ffd5">
+                <topic position="-650,-87" order="1" text="Northern California Transplant Bank" shape="rounded rectangle" id="29" bgColor="#00ffd5">
                     <topic position="650,-99" order="0" text="In 2010, 2,500 referrals forwarded to OneLegacy" shape="line" id="30"/>
                 </topic>
-                <topic position="-740,-62" order="2" text="Doheny Eye and Tissue Transplant Bank" shape="rounded rectagle" id="31" bgColor="#00ffd5">
+                <topic position="-740,-62" order="2" text="Doheny Eye and Tissue Transplant Bank" shape="rounded rectangle" id="31" bgColor="#00ffd5">
                     <link url="http://www.dohenyeyebank.org/" urlType="url"/>
                 </topic>
             </topic>
-            <topic position="650,-50" order="1" text="OneLegacy" shape="rounded rectagle" id="32" bgColor="#00ffd5">
+            <topic position="650,-50" order="1" text="OneLegacy" shape="rounded rectangle" id="32" bgColor="#00ffd5">
                 <topic position="-650,-62" order="0" text="In 2010, 11,828 referrals" shape="line" id="33"/>
             </topic>
-            <topic position="740,-25" order="2" text="San Diego Eye Bank" shape="rounded rectagle" id="34" bgColor="#00ffd5">
+            <topic position="740,-25" order="2" text="San Diego Eye Bank" shape="rounded rectangle" id="34" bgColor="#00ffd5">
                 <topic position="-740,-37" order="0" text="In 2010, 2,555 referrals" shape="line" id="35"/>
             </topic>
             <topic position="830,0" order="3" text="California Transplant Donor Network" shape="line" id="36"/>
@@ -52,11 +52,11 @@
             </topic>
             <topic position="1010,50" order="5" text="Lifesharing" shape="line" id="39"/>
             <topic position="1100,75" order="6" text="DCI Donor Services" shape="line" id="40">
-                <topic position="-1100,63" order="0" text="Sierra Eye and Tissue Donor Services" shape="rounded rectagle" id="41" bgColor="#00ffd5">
+                <topic position="-1100,63" order="0" text="Sierra Eye and Tissue Donor Services" shape="rounded rectangle" id="41" bgColor="#00ffd5">
                     <topic position="1100,51" order="0" text="In 2010, 2.023 referrals" shape="line" id="42"/>
                 </topic>
             </topic>
-            <topic position="1190,100" order="7" text="SightLife" shape="rounded rectagle" id="43" bgColor="#00ffd5"/>
+            <topic position="1190,100" order="7" text="SightLife" shape="rounded rectangle" id="43" bgColor="#00ffd5"/>
         </topic>
         <topic position="-650,38" order="4" text="Tools" shape="line" id="44">
             <topic position="650,13" order="0" text="Darthmouth Atlas of Health" shape="line" id="45"/>

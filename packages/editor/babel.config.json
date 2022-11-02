@@ -1,0 +1,25 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": false,
+                "targets": {
+                    "esmodules": true
+                }
+            },
+            "@babel/preset-typescript",
+        ]
+    ],
+    "env": {
+        "test": {
+            "plugins": [
+                "transform-require-context"
+            ],
+        },
+    },
+    "plugins": [
+        "@babel/plugin-proposal-class-properties"
+    ],
+    "sourceType": "module"
+}

@@ -5,9 +5,9 @@
     "editor.try-welcome-description": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
     },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "Diese Edition zeigt einige der Mindmap-Funktionen!"
-	},
+    "editor.try-welcome-mobile": {
+        "defaultMessage": "Diese Edition zeigt einige der Mindmap-Funktionen!"
+    },
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
@@ -22,5 +22,200 @@
     },
     "action.share": {
         "defaultMessage": "Teilen"
+    },
+    "action.accept": {
+        "defaultMessage": "Akzeptieren"
+    },
+    "action.cancel": {
+        "defaultMessage": "Abbrechen"
+    },
+    "appbar.back-to-map-list": {
+        "defaultMessage": "Zurück zur Mindmap Liste"
+    },
+    "appbar.button-signup": {
+        "defaultMessage": "Anmelden"
+    },
+    "appbar.shared-button": {
+        "defaultMessage": "Mitbenutzen"
+    },
+    "appbar.tooltip-export": {
+        "defaultMessage": "Exportieren"
+    },
+    "appbar.tooltip-history": {
+        "defaultMessage": "Historie"
+    },
+    "appbar.tooltip-info": {
+        "defaultMessage": "Informationen"
+    },
+    "appbar.tooltip-print": {
+        "defaultMessage": "Drucken"
+    },
+    "appbar.tooltip-publish": {
+        "defaultMessage": "Veröffentlichen"
+    },
+    "appbar.tooltip-redo": {
+        "defaultMessage": "Wiederholen"
+    },
+    "appbar.tooltip-save": {
+        "defaultMessage": "Speichern"
+    },
+    "appbar.tooltip-shared": {
+        "defaultMessage": "Mitbenutzen"
+    },
+    "appbar.tooltip-signup": {
+        "defaultMessage": "Anmelden"
+    },
+    "appbar.tooltip-starred": {
+        "defaultMessage": "Losgelöst"
+    },
+    "appbar.tooltip-undo": {
+        "defaultMessage": "Rückgängig"
+    },
+    "link.help_text": {
+        "defaultMessage": "Ingültige Adresse"
+    },
+    "link.placeholder": {
+        "defaultMessage": "https://www.example.com"
+    },
+    "note.label": {
+        "defaultMessage": "Notiz"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Tastatürkürzel"
+    },
+    "zoom-panel.tooltip-zoom-in": {
+        "defaultMessage": "Hineinzoomen"
+    },
+    "zoom-panel.tooltip-zoom-out": {
+        "defaultMessage": "Rauszoomen"
+    },
+    "zoom-panel.tooltip-zoom-to-fit": {
+        "defaultMessage": "Zoom zu passen"
+    },
+    "editor-panel.tooltip-add-icon": {
+        "defaultMessage":"Symbol hinzufügen"
+    },
+    "editor-panel.tooltip-add-link": {
+        "defaultMessage": "Link hinzufügen"
+    },
+    "editor-panel.tooltip-add-note": {
+        "defaultMessage": "Notiz hinzufügen"
+    },
+    "editor-panel.tooltip-add-relationship": {
+        "defaultMessage": "Beziehung hinzufügen"
+    },
+    "editor-panel.tooltip-add-topic": {
+        "defaultMessage": "Thema hinzufügen"
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Thema löschen"
+    },
+    "editor-panel.tooltip-topic-border-color": {
+        "defaultMessage": "Randfarbe"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Füllfarbe"
+    },
+    "editor-panel.tooltip-topic-font-bigger": {
+        "defaultMessage": "Größer"
+    },
+    "editor-panel.tooltip-topic-font-bold": {
+        "defaultMessage": "Fett gedruckt"
+    },
+    "editor-panel.tooltip-topic-font-color": {
+        "defaultMessage": "Farbe"
+    },
+    "editor-panel.tooltip-topic-font-italic": {
+        "defaultMessage": "Kursiv"
+    },
+    "editor-panel.tooltip-topic-font-smaller": {
+        "defaultMessage": "Kleiner"
+    },
+    "editor-panel.tooltip-topic-font-style": {
+        "defaultMessage": "Schriftstil"
+    },
+    "editor-panel.tooltip-topic-share-ellipse": {
+        "defaultMessage": "Ellipseform"
+    },
+    "editor-panel.tooltip-topic-share-line": {
+        "defaultMessage": "Linienform"
+    },
+    "editor-panel.tooltip-topic-share-rectangle": {
+        "defaultMessage": "Rechteckform"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Abgerundete Form"
+    },
+    "editor-panel.tooltip-topic-style": {
+        "defaultMessage": "Themenstil"
+    },
+    "shortcut-help-pane.action": {
+      "defaultMessage": "Aktion"
+    },
+    "shortcut-help-pane.add-child": {
+      "defaultMessage": "Kinderthema hinzufügen"
+    },
+    "shortcut-help-pane.add-link": {
+      "defaultMessage": "Link hinzufügen"
+    },
+    "shortcut-help-pane.add-note": {
+      "defaultMessage": "Notiz hinzufügen"
+    },
+    "shortcut-help-pane.add-sibling": {
+      "defaultMessage": "Geschwisterthema hinzufügen"
+    },
+    "shortcut-help-pane.cancel-text-changes": {
+      "defaultMessage": "Textänderungen abbrechen"
+    },
+    "shortcut-help-pane.change-font-bold": {
+      "defaultMessage": "Text in fett gedruckt"
+    },
+    "shortcut-help-pane.change-font-italic": {
+      "defaultMessage": "Text in Kursivschrift ändern"
+    },
+    "shortcut-help-pane.collapse-children": {
+      "defaultMessage": "Kinder zusammenbrechen"
+    },
+    "shortcut-help-pane.copy-and-text": {
+      "defaultMessage": "Themen kopieren und einfügen"
+    },
+    "shortcut-help-pane.delete-topic": {
+      "defaultMessage":"Thema löschen"
+    },
+    "shortcut-help-pane.deselect-all-topics": {
+      "defaultMessage": "Alle Themen auswählen"
+    },
+    "shortcut-help-pane.edit-multiline": {
+      "defaultMessage": "Multi-Line-Thementext hinzufügen"
+    },
+    "shortcut-help-pane.edit-topic": {
+      "defaultMessage": "Thementext bearbeiten"
+    },
+    "shortcut-help-pane.edit-topic-key": {
+      "defaultMessage": "Fang einfach an zu tippen"
+    },
+    "shortcut-help-pane.navigation": {
+      "defaultMessage": "navigation"
+    },
+    "shortcut-help-pane.navigation-keys": {
+      "defaultMessage": "Pfeiltasten"
+    },
+    "shortcut-help-pane.redo": {
+      "defaultMessage": "redoEdition"
+    },
+    "shortcut-help-pane.save-changes": {
+      "defaultMessage": "Änderungen speichern"
+    },
+    "shortcut-help-pane.select-all-topics": {
+      "defaultMessage": "Wählen Sie alle Themen aus"
+    },
+    "shortcut-help-pane.select-topics": {
+      "defaultMessage": "Wählen Sie mehrere Themen aus"
+    },
+    "shortcut-help-pane.select-topics-keys": {
+      "defaultMessage": "Mausklick"
+    },
+    "shortcut-help-pane.undo": {
+      "defaultMessage": "Rückgängerausgabe"
     }
 }

@@ -1,164 +1,236 @@
-import React from 'react';
-import { useIntl } from 'react-intl';
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+import React, { useRef, useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Popover, { PopoverOrigin } from '@mui/material/Popover';
+import Tooltip from '@mui/material/Tooltip';
+import '../app-bar/styles.css';
+import Box from '@mui/material/Box';
+import ToolbarPosition from '../../classes/model/toolbar-position';
+import ActionConfig from '../../classes/action/action-config';
 
-import BackIconSvg from '../../../images/back-icon.svg';
-import SaveSvg from '../../../images/save.svg';
-import UndoSvg from '../../../images/undo.svg';
-import RedoSvg from '../../../images/redo.svg';
-import TopicAddSvg from '../../../images/topic-add.svg';
-import TopicDeleteSvg from '../../../images/topic-delete.svg';
-import TopicBorderSvg from '../../../images/topic-border.svg';
-import TopicColorSvg from '../../../images/topic-color.svg';
-import TopicShapeSvg from '../../../images/topic-shape.svg';
-import FontTypeSvg from '../../../images/font-type.svg';
-import FontSizeSvg from '../../../images/font-size.svg';
-import FontBoldSvg from '../../../images/font-bold.svg';
-import FontItalicSvg from '../../../images/font-italic.svg';
-import FontColorSvg from '../../../images/font-color.svg';
-import TopicIconSvg from '../../../images/topic-icon.svg';
-import TopicNoteSvg from '../../../images/topic-note.svg';
-import TopicLinkSvg from '../../../images/topic-link.svg';
-import TopicRelationSvg from '../../../images/topic-relation.svg';
-import ExportSvg from '../../../images/export.svg';
-import InfoSvg from '../../../images/info.svg';
-import PublicSvg from '../../../images/public.svg';
-import HistorySvg from '../../../images/history.svg';
-import PrintSvg from '../../../images/print.svg';
-import AccountSvg from '../../../images/account.svg';
-import './global-styled.css';
-
-import { HeaderContainer, ToolbarButton, ToolbarButtonExt, ToolbarRightContainer } from './styled';
-import ActionButton from '../action-button';
-import { EditorRenderMode } from '@wisemapping/mindplot';
-
-export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
-
-export type ToolbarPropsType = {
-  editorMode: EditorRenderMode;
-  onAction: (action: ToolbarActionType) => void;
+/**
+ * Common button
+ * @param props.configuration the configuration
+ * @returns common button menu entry that uses the onClick of the configuration.
+ */
+export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
+  const selected = props.configuration.selected && props.configuration.selected();
+  return (
+    <Tooltip
+      title={props.configuration.tooltip || ''}
+      disableInteractive
+      arrow={true}
+      enterDelay={700}
+    >
+      <Box component="span" my="auto">
+        <IconButton
+          onClick={props.configuration.onClick}
+          disabled={props.configuration.disabled && props.configuration.disabled()}
+          aria-pressed={selected}
+          aria-label={props.configuration.tooltip || ''}
+        >
+          {typeof props.configuration.icon === 'function'
+            ? props.configuration.icon()
+            : props.configuration.icon}
+        </IconButton>
+      </Box>
+    </Tooltip>
+  );
 };
 
-export default function Toolbar({
-  editorMode: editorMode,
-  onAction,
-}: ToolbarPropsType): React.ReactElement {
-  const intl = useIntl();
+const verticalAligment: { anchorOrigin: PopoverOrigin; transformOrigin: PopoverOrigin } = {
+  anchorOrigin: {
+    vertical: 48,
+    horizontal: 'right',
+  },
+  transformOrigin: {
+    vertical: 'top',
+    horizontal: 'right',
+  },
+};
+
+const horizontalAligment: { anchorOrigin: PopoverOrigin; transformOrigin: PopoverOrigin } = {
+  anchorOrigin: {
+    vertical: 'center',
+    horizontal: -3,
+  },
+  transformOrigin: {
+    vertical: 'center',
+    horizontal: 'right',
+  },
+};
+
+/**
+ * Submenu button and popover
+ * @param props.configuration the configuration
+ * @returns submenu entry that contains one ToolbarMenuItem for each option. Inserts a divider for null options.
+ */
+export const ToolbarSubmenu = (props: {
+  configuration: ActionConfig;
+  vertical?: boolean;
+  elevation?: number;
+}) => {
+  const [open, setOpen] = useState(false);
+  const itemRef = useRef(null);
+
+  const orientationProps = props.vertical ? verticalAligment : horizontalAligment;
+
   return (
-    <HeaderContainer className="wise-editor">
-      <div id="toolbar">
-        <div id="backToList">
-          <img src={BackIconSvg} />
+    <Box
+      component="span"
+      display="inline-flex"
+      role="menuitem"
+      ref={itemRef}
+      onMouseLeave={() => !props.configuration.useClickToClose && setOpen(false)}
+      onMouseEnter={() => {
+        if (props.configuration.disabled && props.configuration.disabled()) return;
+        if (!props.configuration.useClickToClose) setOpen(true);
+      }}
+    >
+      <ToolbarButtonOption
+        configuration={{ ...props.configuration, onClick: () => setOpen(true) }}
+      />
+      <Popover
+        role="submenu"
+        open={open}
+        onClose={() => setOpen(false)}
+        anchorEl={itemRef.current}
+        container={itemRef.current}
+        anchorOrigin={orientationProps.anchorOrigin}
+        transformOrigin={orientationProps.transformOrigin}
+        PaperProps={{
+          onMouseLeave: () => !props.configuration.useClickToClose && setOpen(false),
+          square: true,
+        }}
+        sx={{
+          zIndex: props.configuration.useClickToClose ? '1' : '-1',
+        }}
+        elevation={props.elevation}
+      >
+        <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
+          {props.configuration.options?.map((o, i) => {
+            if (o?.visible === false) {
+              return null;
+            }
+            if (!o?.render) {
+              return (
+                <ToolbarMenuItem
+                  vertical={!!!props.vertical}
+                  key={i}
+                  configuration={o as ActionConfig}
+                  elevation={props.elevation + 3}
+                />
+              );
+            } else {
+              return <span key={i}>{o.render(() => setOpen(false))}</span>;
+            }
+          })}
         </div>
-        {(editorMode === 'edition-editor' || editorMode === 'edition-owner') && (
-          <div id="persist" className="buttonContainer">
-            <ToolbarButton id="save" className="buttonOn">
-              <img src={SaveSvg} />
-            </ToolbarButton>
-          </div>
-        )}
-        {(editorMode === 'edition-editor' ||
-          editorMode === 'edition-owner' ||
-          editorMode === 'showcase') && (
-          <>
-            <div id="edit" className="buttonContainer">
-              <ToolbarButton id="undoEdition" className="buttonOn">
-                <img src={UndoSvg} />
-              </ToolbarButton>
-              <ToolbarButton id="redoEdition" className="buttonOn">
-                <img src={RedoSvg} />
-              </ToolbarButton>
-            </div>
-            <div id="nodeStyle" className="buttonContainer">
-              <ToolbarButton id="addTopic" className="buttonOn">
-                <img src={TopicAddSvg} />
-              </ToolbarButton>
-              <ToolbarButton id="deleteTopic" className="buttonOn">
-                <img src={TopicDeleteSvg} />
-              </ToolbarButton>
-              <ToolbarButtonExt id="topicBorder" className="buttonExtOn">
-                <img src={TopicBorderSvg} />
-              </ToolbarButtonExt>
-              <ToolbarButtonExt id="topicColor" className="buttonExtOn">
-                <img src={TopicColorSvg} />
-              </ToolbarButtonExt>
-              <ToolbarButtonExt id="topicShape" className="buttonExtOn">
-                <img src={TopicShapeSvg} />
-              </ToolbarButtonExt>
-            </div>
-            <div id="font" className="buttonContainer">
-              <ToolbarButton id="fontFamily" className="buttonOn">
-                <img src={FontTypeSvg} />
-              </ToolbarButton>
-              <ToolbarButtonExt id="fontSize" className="buttonExtOn">
-                <img src={FontSizeSvg} />
-              </ToolbarButtonExt>
-              <ToolbarButton id="fontBold" className="buttonOn">
-                <img src={FontBoldSvg} />
-              </ToolbarButton>
-              <ToolbarButton id="fontItalic" className="buttonOn">
-                <img src={FontItalicSvg} />
-              </ToolbarButton>
-              <ToolbarButtonExt id="fontColor" className="buttonExtOn">
-                <img src={FontColorSvg} />
-              </ToolbarButtonExt>
-            </div>
-            <div id="nodeContent" className="buttonContainer">
-              <ToolbarButtonExt id="topicIcon" className="buttonExtOn">
-                <img src={TopicIconSvg} />
-              </ToolbarButtonExt>
-              <ToolbarButton id="topicNote" className="buttonOn">
-                <img src={TopicNoteSvg} />
-              </ToolbarButton>
-              <ToolbarButton id="topicLink" className="buttonOn">
-                <img src={TopicLinkSvg} />
-              </ToolbarButton>
-              <ToolbarButton id="topicRelation" className="buttonOn">
-                <img src={TopicRelationSvg} />
-              </ToolbarButton>
-            </div>
-            <div id="separator" className="buttonContainer"></div>
-          </>
-        )}
-        <ToolbarRightContainer>
-          <ToolbarButton id="export" className="buttonOn" onClick={() => onAction('export')}>
-            <img src={ExportSvg} />
-          </ToolbarButton>
-          {(editorMode === 'edition-owner' ||
-            editorMode === 'edition-editor' ||
-            editorMode === 'edition-viewer') && (
-            <ToolbarButton id="print" className="buttonOn" onClick={() => onAction('print')}>
-              <img src={PrintSvg} />
-            </ToolbarButton>
-          )}
-          <ToolbarButton id="info" className="buttonOn" onClick={() => onAction('info')}>
-            <img src={InfoSvg} />
-          </ToolbarButton>
-          {editorMode === 'edition-owner' && (
-            <>
-              <ToolbarButton id="history" className="buttonOn" onClick={() => onAction('history')}>
-                <img src={HistorySvg} />
-              </ToolbarButton>
-              <ToolbarButton
-                id="publishIt"
-                className="buttonOn"
-                onClick={() => onAction('publish')}
-              >
-                <img src={PublicSvg} />
-              </ToolbarButton>
-            </>
-          )}
-          {(editorMode === 'edition-owner' || editorMode === 'edition-editor') && (
-            <ToolbarButton id="account">
-              <img src={AccountSvg} />
-            </ToolbarButton>
-          )}
-          {editorMode === 'edition-owner' && (
-            <ActionButton onClick={() => onAction('share')}>
-              {intl.formatMessage({ id: 'action.share', defaultMessage: 'Share' })}
-            </ActionButton>
-          )}
-        </ToolbarRightContainer>
-      </div>
-    </HeaderContainer>
+      </Popover>
+    </Box>
   );
-}
+};
+
+/**
+ * Wrapper for all menu entries
+ * @param props.configuration the configuration
+ * @returns menu item wich contains a submenu if options is set or a button if onClick is set or null otherwise.
+ */
+export const ToolbarMenuItem = (props: {
+  configuration: ActionConfig | null;
+  vertical?: boolean;
+  elevation?: number;
+}) => {
+  if (props.configuration === null)
+    return (
+      <Divider
+        data-testid="divider"
+        orientation={!props.vertical ? 'vertical' : 'horizontal'}
+        flexItem
+        sx={{
+          borderLeftWidth: 1,
+        }}
+      />
+    );
+  if (props.configuration.visible === false) {
+    return null;
+  }
+  if (props.configuration.render) {
+    return <>{props.configuration.render(null)}</>;
+  }
+  if (!props.configuration.options && props.configuration.onClick)
+    return <ToolbarButtonOption configuration={props.configuration}></ToolbarButtonOption>;
+  else {
+    if (props.configuration.options)
+      return (
+        <ToolbarSubmenu
+          configuration={props.configuration}
+          vertical={props.vertical}
+          elevation={props.elevation || 0}
+        />
+      );
+    else return null;
+  }
+};
+
+const defaultPosition: ToolbarPosition = {
+  vertical: true,
+  position: {
+    right: '7px',
+    top: '150px',
+  },
+};
+
+// const getOrientationProps = (orientation: 'horizontal' | 'vertical'): [top:number, number, ]
+/**
+ * The entry point for create a Toolbar
+ * @param props.configurations the configurations array
+ * @returns toolbar wich contains a button/submenu for each configuration in the array
+ */
+const Toolbar = (props: {
+  configurations: ActionConfig[];
+  position?: ToolbarPosition;
+  rerender?: number;
+}) => {
+  const position = props.position || defaultPosition;
+  return (
+    <AppBar
+      position="fixed"
+      sx={{
+        flexDirection: position.vertical ? 'column' : 'row',
+        width: position.vertical ? '40px' : 'unset',
+        right: position.position.right,
+        top: position.position.top,
+        backgroundColor: 'white',
+      }}
+      role="menu"
+      aria-orientation={position.vertical ? 'vertical' : 'horizontal'}
+    >
+      {props.configurations.map((c, i) => {
+        return (
+          <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!position.vertical} />
+        );
+      })}
+    </AppBar>
+  );
+};
+
+export default Toolbar;

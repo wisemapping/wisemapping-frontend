@@ -51,8 +51,8 @@ class RectPeer extends ElementPeer {
     if ($defined(this._arc)) {
       // Transform percentages to SVG format.
       const arc = (min / 2) * this._arc;
-      this._native.setAttribute('rx', arc);
-      this._native.setAttribute('ry', arc);
+      this._native.setAttribute('rx', arc.toFixed(1));
+      this._native.setAttribute('ry', arc.toFixed(1));
     }
   }
 }

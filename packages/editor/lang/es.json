@@ -5,9 +5,9 @@
     "editor.try-welcome-description": {
         "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
     },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
-	},
+    "editor.try-welcome-mobile": {
+        "defaultMessage": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
+    },
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita. En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     },
@@ -17,10 +17,199 @@
     "editor.edit-description-mobile": {
         "defaultMessage": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     },
-    "login.signup": {
-        "defaultMessage": "Crear cuenta"
+    "action.accept": {
+        "defaultMessage": "Aceptar"
     },
-    "action.share": {
+    "action.cancel": {
+        "defaultMessage": "Cancelar"
+    },
+    "appbar.back-to-map-list": {
+        "defaultMessage": "Volver a lista de mapas"
+    },
+    "appbar.button-signup": {
+        "defaultMessage": "Registrarse"
+    },
+    "appbar.shared-button": {
         "defaultMessage": "Compartir"
+    },
+    "appbar.tooltip-export": {
+        "defaultMessage": "Exportar"
+    },
+    "appbar.tooltip-history": {
+        "defaultMessage": "Historia de Cambios"
+    },
+    "appbar.tooltip-info": {
+        "defaultMessage": "Detalles"
+    },
+    "appbar.tooltip-print": {
+        "defaultMessage": "Imprimir"
+    },
+    "appbar.tooltip-publish": {
+        "defaultMessage": "Publicar"
+    },
+    "appbar.tooltip-redo": {
+        "defaultMessage": "Rehacer"
+    },
+    "appbar.tooltip-save": {
+        "defaultMessage": "Grabar"
+    },
+    "appbar.tooltip-shared": {
+        "defaultMessage": "Compartir para Colaborar"
+    },
+    "appbar.tooltip-signup": {
+        "defaultMessage": "Registrarse"
+    },
+    "appbar.tooltip-starred": {
+        "defaultMessage": "Destacado"
+    },
+    "appbar.tooltip-undo": {
+        "defaultMessage": "Deshacer"
+    },
+    "link.help_text": {
+        "defaultMessage": "Dirección invalida"
+    },
+    "link.placeholder": {
+        "defaultMessage": "https://www.example.com"
+    },
+    "note.label": {
+        "defaultMessage": "Nota"
+    },
+    "editor-panel.tooltip-add-icon": {
+        "defaultMessage": "Agregar Icono"
+    },
+    "editor-panel.tooltip-add-link": {
+        "defaultMessage": "Agregar Enlace"
+    },
+    "editor-panel.tooltip-add-note": {
+        "defaultMessage": "Agregar Nota"
+    },
+    "editor-panel.tooltip-add-relationship": {
+        "defaultMessage": "Agregar Relacion"
+    },
+    "editor-panel.tooltip-add-topic": {
+        "defaultMessage": "Agregar tópico"
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Borrar tópico"
+    },
+    "editor-panel.tooltip-topic-border-color": {
+        "defaultMessage": "Color del border"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Color del figura"
+    },
+    "editor-panel.tooltip-topic-font-bigger": {
+        "defaultMessage": "Incrementar"
+    },
+    "editor-panel.tooltip-topic-font-bold": {
+        "defaultMessage": "Negrita"
+    },
+    "editor-panel.tooltip-topic-font-color": {
+        "defaultMessage": "Color"
+    },
+    "editor-panel.tooltip-topic-font-italic": {
+        "defaultMessage": "Italica"
+    },
+    "editor-panel.tooltip-topic-font-smaller": {
+        "defaultMessage": "Petite"
+    },
+    "editor-panel.tooltip-topic-font-style": {
+        "defaultMessage": "Fuente"
+    },
+    "editor-panel.tooltip-topic-share-ellipse": {
+        "defaultMessage": "Forma de elipse"
+    },
+    "editor-panel.tooltip-topic-share-line": {
+        "defaultMessage": "Forma de linea"
+    },
+    "editor-panel.tooltip-topic-share-rectangle": {
+        "defaultMessage": "Forma rectagular"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Forma redondeada"
+    },
+    "editor-panel.tooltip-topic-style": {
+        "defaultMessage": "Estilo de tópico"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Teclado"
+    },
+    "zoom-panel.tooltip-zoom-in": {
+        "defaultMessage": "Aumentar"
+    },
+    "zoom-panel.tooltip-zoom-out": {
+        "defaultMessage": "Decrementar"
+    },
+    "zoom-panel.tooltip-zoom-to-fit": {
+        "defaultMessage": "Centrar"
+    },
+    "shortcut-help-pane.action": {
+        "defaultMessage": "Action"
+    },
+    "shortcut-help-pane.add-child": {
+        "defaultMessage": "Agregar tópico hijo"
+    },
+    "shortcut-help-pane.add-link": {
+        "defaultMessage": "Agregar enlace"
+    },
+    "shortcut-help-pane.add-note": {
+        "defaultMessage": "Agregar nota"
+    },
+    "shortcut-help-pane.add-sibling": {
+        "defaultMessage": "Agregar tópico hermano"
+    },
+    "shortcut-help-pane.cancel-text-changes": {
+        "defaultMessage": "Cancelar cambio de texto"
+    },
+    "shortcut-help-pane.change-font-bold": {
+        "defaultMessage": "Cambiar texto to negrita"
+    },
+    "shortcut-help-pane.change-font-italic": {
+        "defaultMessage": "Cambiar texto a italica"
+    },
+    "shortcut-help-pane.collapse-children": {
+        "defaultMessage": "Colapsar hijos"
+    },
+    "shortcut-help-pane.copy-and-text": {
+        "defaultMessage": "Copiar y pegar tópicos"
+    },
+    "shortcut-help-pane.delete-topic": {
+        "defaultMessage": "Borrar tópico"
+    },
+    "shortcut-help-pane.deselect-all-topics": {
+        "defaultMessage": "Deseleccionar tópicos"
+    },
+    "shortcut-help-pane.edit-multiline": {
+        "defaultMessage": "Agregar texto multi-linea"
+    },
+    "shortcut-help-pane.edit-topic": {
+        "defaultMessage": "Editar texto de tópico"
+    },
+    "shortcut-help-pane.edit-topic-key": {
+        "defaultMessage": "Empezar a escribir"
+    },
+    "shortcut-help-pane.navigation": {
+        "defaultMessage": "Navegar"
+    },
+    "shortcut-help-pane.navigation-keys": {
+        "defaultMessage": "Cursor"
+    },
+    "shortcut-help-pane.redo": {
+        "defaultMessage": "Rehacer cambios"
+    },
+    "shortcut-help-pane.save-changes": {
+        "defaultMessage": "Grabar cambios"
+    },
+    "shortcut-help-pane.select-all-topics": {
+        "defaultMessage": "Seleccionar todos los tópicos"
+    },
+    "shortcut-help-pane.select-topics": {
+        "defaultMessage": "Seleccionar multiples tópico"
+    },
+    "shortcut-help-pane.select-topics-keys": {
+        "defaultMessage": "Click del mouse"
+    },
+    "shortcut-help-pane.undo": {
+        "defaultMessage": "Deshacer cambios"
     }
 }

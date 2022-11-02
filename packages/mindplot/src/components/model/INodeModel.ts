@@ -365,8 +365,8 @@ abstract class INodeModel {
 }
 
 const TopicShape = {
-  RECTANGLE: 'rectagle',
-  ROUNDED_RECT: 'rounded rectagle',
+  RECTANGLE: 'rectangle',
+  ROUNDED_RECT: 'rounded rectangle',
   ELLIPSE: 'elipse',
   LINE: 'line',
   IMAGE: 'image',

@@ -1,16 +1,16 @@
-import { alpha, Theme } from '@mui/material/styles';
+import { alpha, useTheme } from '@mui/material/styles';
 
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 
-export const useStyles = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles(() =>
   createStyles({
     root: {
       width: '100%',
     },
     paper: {
       width: '100%',
-      marginBottom: theme.spacing(2),
+      marginBottom: useTheme().spacing(2),
     },
     table: {
       minWidth: 750,
@@ -66,14 +66,14 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     search: {
       borderRadius: 9,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
+      backgroundColor: alpha(useTheme().palette.common.white, 0.15),
       '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
+        backgroundColor: alpha(useTheme().palette.common.white, 0.25),
       },
       margin: '10px 0px',
       width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
+      [useTheme().breakpoints.up('sm')]: {
+        marginLeft: useTheme().spacing(1),
         width: 'auto',
       },
       float: 'right',
@@ -97,10 +97,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       // vertical padding + font size from searchIcon
       border: '1px solid #ffa800',
       borderRadius: 4,
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
+      paddingLeft: `calc(1em + ${useTheme().spacing(4)})`,
+      transition: useTheme().transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('sm')]: {
+      [useTheme().breakpoints.up('sm')]: {
         width: '12ch',
         '&:focus': {
           width: '20ch',

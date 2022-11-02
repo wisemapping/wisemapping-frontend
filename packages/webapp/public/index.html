@@ -7,9 +7,7 @@
 
   <meta charset="utf-8" />
   <link rel="icon" href="<%=PUBLIC_URL%>/favicon.ico" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;600&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;600&display=swap" rel="stylesheet" onload="if(media!='all')media='all'" media="none"/>
 
   <meta name="viewport" content="width=device-width" />
   <meta name="theme-color" content="#000000" />
@@ -26,7 +24,6 @@
   <meta property="og:title" content="WiseMapping" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.wisemapping.com" />
-  <meta property="og:image" content="https://www.wisemapping.com/images/logo.png" />
   <meta property="og:site_name" content="WiseMapping" />
 
 
@@ -51,7 +48,7 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
+  <div id="root" class="mindplot-root"></div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

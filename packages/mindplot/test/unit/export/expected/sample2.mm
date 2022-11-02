@@ -10,7 +10,7 @@
             </html>
         </richcontent>
         <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="Third Party ">
-            <node ID="ID_null" LINK="thumbshots.org" POSITION="left" STYLE="rectagle" TEXT="Thumbshot"/>
+            <node ID="ID_null" LINK="thumbshots.org" POSITION="left" STYLE="rectangle" TEXT="Thumbshot"/>
         </node>
         <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="Newspapers">
             <node ID="ID_null" POSITION="left" STYLE="fork" TEXT="College Newspapers"/>

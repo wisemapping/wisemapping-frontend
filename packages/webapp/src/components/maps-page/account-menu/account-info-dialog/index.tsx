@@ -5,7 +5,7 @@ import Client, { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../../action-dispatcher/base-dialog';
 import { useSelector } from 'react-redux';
-import { activeInstance, fetchAccount } from '../../../../redux/clientSlice';
+import { activeInstance, useFetchAccount } from '../../../../redux/clientSlice';
 
 import Alert from '@mui/material/Alert';
 import FormControl from '@mui/material/FormControl';
@@ -63,7 +63,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     },
   );
 
-  const account = fetchAccount();
+  const account = useFetchAccount();
   useEffect(() => {
     if (account) {
       setModel({

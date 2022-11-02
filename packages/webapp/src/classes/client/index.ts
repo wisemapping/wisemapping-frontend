@@ -80,6 +80,8 @@ interface Client {
   renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
   fetchAllMaps(): Promise<MapInfo[]>;
 
+  fetchStarred(id: number): Promise<boolean>;
+
   fetchMapPermissions(id: number): Promise<Permission[]>;
   addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void>;
   deleteMapPermission(id: number, email: string): Promise<void>;

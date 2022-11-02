@@ -1,20 +1,10 @@
-import { adaptV4Theme, createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme(
-  adaptV4Theme({
-    overrides: {
-      MuiCssBaseline: {
-        '@global': {
-          body: {
-            backgroundColor: 'white',
-            // Important: This size is the min to diplay all pages except maps list.
-            minWidth: '450px',
-          },
-        },
-      },
-      MuiOutlinedInput: {
+const theme = createTheme({
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
         root: {
-          height: '53px',
           borderRadius: '9px',
           fontSize: '14px',
           '& fieldset': {
@@ -25,15 +15,20 @@ const theme = createTheme(
           },
         },
       },
-      MuiInputLabel: {
+    },
+    MuiInputLabel: {
+      styleOverrides: {
         root: {
           color: '#f9a826',
         },
+
         outlined: {
           zIndex: 'inherit',
         },
       },
-      MuiButton: {
+    },
+    MuiButton: {
+      styleOverrides: {
         root: {
           fontSize: '15px',
           fontWeight: 600,
@@ -50,32 +45,32 @@ const theme = createTheme(
         },
       },
     },
-    typography: {
-      fontFamily: ['Montserrat'].join(','),
-      h4: {
-        color: '#ffa800',
-        fontWeight: 600,
-      },
-      h6: {
-        fontSize: '25px',
-        fontWeight: 'bold',
-      },
+  },
+  typography: {
+    fontFamily: ['Montserrat'].join(','),
+    h4: {
+      color: '#ffa800',
+      fontWeight: 600,
     },
-    palette: {
-      primary: {
-        light: '#ffa800',
-        main: '#ffa800',
-        dark: '#ffa800',
-        contrastText: '#FFFFFF',
-      },
-      secondary: {
-        light: '#a19f9f',
-        main: '#5a5a5a',
-        dark: '#000000',
-        contrastText: '#FFFFFF',
-      },
+    h6: {
+      fontSize: '25px',
+      fontWeight: 'bold',
     },
-  }),
-);
+  },
+  palette: {
+    primary: {
+      light: '#ffa800',
+      main: '#ffa800',
+      dark: '#ffa800',
+      contrastText: '#FFFFFF',
+    },
+    secondary: {
+      light: '#a19f9f',
+      main: '#5a5a5a',
+      dark: '#000000',
+      contrastText: '#FFFFFF',
+    },
+  },
+});
 
 export { theme };

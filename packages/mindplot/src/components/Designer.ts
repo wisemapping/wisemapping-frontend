@@ -133,7 +133,7 @@ class Designer extends Events {
     this._clipboard = [];
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
-    global.designer = this;
+    globalThis.designer = this;
   }
 
   private _registerWheelEvents(): void {
@@ -141,6 +141,9 @@ class Designer extends Events {
     document.addEventListener(
       'wheel',
       (event: WheelEvent) => {
+        // TODO re-do this better. This line avoid manage zoom with mouse wheel if mindplot kb shortcuts are disabled.
+        if (DesignerKeyboard.isDisabled()) return;
+
         if (event.deltaX > 0 || event.deltaY > 0) {
           this.zoomOut(zoomFactor);
         } else {
@@ -286,8 +289,7 @@ class Designer extends Events {
 
   onObjectFocusEvent(currentObject?: Topic, event?): void {
     // Close node editors ..
-    const topics = this.getModel().getTopics();
-    topics.forEach((topic) => topic.closeEditors());
+    this.closeNodeEditors();
 
     const model = this.getModel();
     const objects = model.getEntities();
@@ -299,6 +301,11 @@ class Designer extends Events {
         }
       }
     });
+  }
+
+  closeNodeEditors() {
+    const topics = this.getModel().getTopics();
+    topics.forEach((topic) => topic.closeEditors());
   }
 
   /** sets focus to all model entities, i.e. relationships and topics */
@@ -866,16 +873,16 @@ class Designer extends Events {
     }
   }
 
-  addIconType(iconType: string): void {
+  addIconType(type: 'image' | 'emoji', iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
+
+    const featureType: FeatureType = (
+      type === 'emoji' ? TopicFeatureFactory.EmojiIcon.id : TopicFeatureFactory.SvgIcon.id
+    ) as FeatureType;
     if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(
-        topicsIds[0],
-        TopicFeatureFactory.Icon.id as FeatureType,
-        {
-          id: iconType,
-        },
-      );
+      this._actionDispatcher.addFeatureToTopic(topicsIds[0], featureType, {
+        id: iconType,
+      });
     }
   }
 
@@ -885,7 +892,7 @@ class Designer extends Events {
     if (topic) {
       const manager = WidgetManager.getInstance();
       manager.showEditorForLink(topic, null, null);
-      this.onObjectFocusEvent();
+      this.closeNodeEditors();
     }
   }
 
@@ -895,7 +902,7 @@ class Designer extends Events {
     if (topic) {
       const manager = WidgetManager.getInstance();
       manager.showEditorForNote(topic, null, null);
-      this.onObjectFocusEvent();
+      this.closeNodeEditors();
     }
   }
 

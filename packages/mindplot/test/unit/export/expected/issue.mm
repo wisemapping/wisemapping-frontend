@@ -75,7 +75,7 @@
                 </node>
             </node>
         </node>
-        <node ID="ID_59" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#bf9000" COLOR="#000000">
+        <node ID="ID_59" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#bf9000" COLOR="#000000">
             <richcontent TYPE="NODE">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                     <head></head>
@@ -88,7 +88,7 @@
             </richcontent>
             <font SIZE="12" BOLD="true"/>
             <edge COLOR="#7f6000"/>
-            <node ID="ID_92" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#f1c232" COLOR="#000000">
+            <node ID="ID_92" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#f1c232" COLOR="#000000">
                 <richcontent TYPE="NODE">
                     <html xmlns="http://www.w3.org/1999/xhtml">
                         <head></head>
@@ -100,20 +100,20 @@
                 </richcontent>
                 <font SIZE="12" BOLD="true"/>
                 <edge COLOR="#7f6000"/>
-                <node ID="ID_101" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Microsoft Windows">
+                <node ID="ID_101" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Microsoft Windows">
                     <font SIZE="12"/>
                     <edge COLOR="#7f6000"/>
                 </node>
-                <node ID="ID_106" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="GNU/LINUX">
+                <node ID="ID_106" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="GNU/LINUX">
                     <font SIZE="12"/>
                     <edge COLOR="#7f6000"/>
                 </node>
-                <node ID="ID_107" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="MAC ">
+                <node ID="ID_107" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="MAC ">
                     <font SIZE="12"/>
                     <edge COLOR="#7f6000"/>
                 </node>
             </node>
-            <node ID="ID_93" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#f1c232" COLOR="#000000">
+            <node ID="ID_93" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#f1c232" COLOR="#000000">
                 <richcontent TYPE="NODE">
                     <html xmlns="http://www.w3.org/1999/xhtml">
                         <head></head>
@@ -125,24 +125,24 @@
                 </richcontent>
                 <font SIZE="12"/>
                 <edge COLOR="#7f6000"/>
-                <node ID="ID_108" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Office">
+                <node ID="ID_108" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Office">
                     <font SIZE="12"/>
                     <edge COLOR="#783f04"/>
                 </node>
-                <node ID="ID_109" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Libre Office">
+                <node ID="ID_109" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Libre Office">
                     <font SIZE="12"/>
                     <edge COLOR="#7f6000"/>
                 </node>
-                <node ID="ID_110" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Navegadores">
+                <node ID="ID_110" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Navegadores">
                     <font SIZE="12"/>
                     <edge COLOR="#7f6000"/>
                 </node>
-                <node ID="ID_111" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Msn">
+                <node ID="ID_111" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#ffd966" COLOR="#000000" TEXT="Msn">
                     <font SIZE="12"/>
                     <edge COLOR="#783f04"/>
                 </node>
             </node>
-            <node ID="ID_94" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#f1c232" COLOR="#000000">
+            <node ID="ID_94" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#f1c232" COLOR="#000000">
                 <richcontent TYPE="NODE">
                     <html xmlns="http://www.w3.org/1999/xhtml">
                         <head></head>

@@ -7,7 +7,7 @@ import SettingsApplicationsOutlined from '@mui/icons-material/SettingsApplicatio
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { fetchAccount } from '../../../redux/clientSlice';
+import { useFetchAccount } from '../../../redux/clientSlice';
 import AccountInfoDialog from './account-info-dialog';
 import ChangePasswordDialog from './change-password-dialog';
 import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
@@ -34,7 +34,7 @@ const AccountMenu = (): React.ReactElement => {
     elem.submit();
   };
 
-  const account = fetchAccount();
+  const account = useFetchAccount();
   return (
     <span>
       <Tooltip

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 
 import { Label } from '../../../../classes/client';
 import { StyledButton, NewLabelContainer, NewLabelColor, CreateLabel } from './styled';
-import { Tooltip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 const labelColors = [
   '#00b327',

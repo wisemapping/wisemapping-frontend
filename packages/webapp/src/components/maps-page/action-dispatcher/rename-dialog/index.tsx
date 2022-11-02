@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
 import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
-import { activeInstance, fetchMapById } from '../../../../redux/clientSlice';
+import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
@@ -58,7 +58,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     setModel({ ...model, [name as keyof BasicMapInfo]: value });
   };
 
-  const { map } = fetchMapById(mapId);
+  const { map } = useFetchMapById(mapId);
   useEffect(() => {
     if (map) {
       setModel(map);

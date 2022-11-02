@@ -1,6 +1,6 @@
 <map version="1.0.1">
     <node ID="ID_1" TEXT="Artigos GF comentários interessantes">
-        <node ID="ID_5" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#cccccc" TEXT="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities">
+        <node ID="ID_5" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" TEXT="Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant communities">
             <edge COLOR="#cccccc"/>
             <node ID="ID_6" POSITION="left" STYLE="fork">
                 <richcontent TYPE="NODE">
@@ -84,7 +84,7 @@
                 </richcontent>
             </node>
         </node>
-        <node ID="ID_17" POSITION="right" STYLE="rectagle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Chazdon 2010. Biotropica. 42(1): 31–40">
+        <node ID="ID_17" POSITION="right" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Chazdon 2010. Biotropica. 42(1): 31–40">
             <edge COLOR="#cccccc"/>
             <node ID="ID_22" POSITION="right" STYLE="fork">
                 <richcontent TYPE="NODE">
@@ -206,7 +206,7 @@
                 </richcontent>
             </node>
         </node>
-        <node ID="ID_2" POSITION="left" STYLE="rectagle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Poorter 1999. Functional Ecology. 13:396-410">
+        <node ID="ID_2" POSITION="left" STYLE="rectangle" BACKGROUND_COLOR="#cccccc" COLOR="#000000" TEXT="Poorter 1999. Functional Ecology. 13:396-410">
             <edge COLOR="#cccccc"/>
             <node ID="ID_3" POSITION="left" STYLE="fork" TEXT="Espécies pioneiras crescem mais rápido do que as não pioneiras">
                 <node ID="ID_4" POSITION="left" STYLE="fork" TEXT="Tolerância a sombra está relacionada com persistência e não com crescimento"/>

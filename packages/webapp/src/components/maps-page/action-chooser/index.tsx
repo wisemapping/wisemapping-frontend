@@ -12,7 +12,7 @@ import LabelOutlined from '@mui/icons-material/LabelOutlined';
 import HistoryOutlined from '@mui/icons-material/HistoryOutlined';
 
 import { FormattedMessage } from 'react-intl';
-import { fetchMapById } from '../../../redux/clientSlice';
+import { useFetchMapById } from '../../../redux/clientSlice';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -52,7 +52,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
     };
   };
 
-  const role = mapId ? fetchMapById(mapId)?.map?.role : undefined;
+  const role = mapId ? useFetchMapById(mapId)?.map?.role : undefined;
   return (
     <Menu
       anchorEl={anchor}

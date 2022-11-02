@@ -72,6 +72,25 @@ export default class RestClient implements Client {
     };
     return new Promise(handler);
   }
+
+  fetchStarred(id: number): Promise<boolean> {
+    const handler = (success: (starred: boolean) => void, reject: (error: ErrorInfo) => void) => {
+      this.axios
+        .get(`${this.baseUrl}/c/restful/maps/${id}/starred`, {
+          headers: { 'Content-Type': 'text/plain' },
+        })
+        .then((response) => {
+          const data = response.data;
+          success(data);
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
@@ -195,6 +214,9 @@ export default class RestClient implements Client {
         })
         .catch((error) => {
           const errorInfo = this.parseResponseOnError(error.response);
+
+          // Enrich with language ...
+          errorInfo.msg = `${errorInfo.msg} - Language: ${locale}`;
           reject(errorInfo);
         });
     };
@@ -205,9 +227,9 @@ export default class RestClient implements Client {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(model.title)}&description=${
-            model.description ? model.description : ''
-          }`,
+          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(
+            model.title,
+          )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
           model.content,
           { headers: { 'Content-Type': 'application/xml' } },
         )
@@ -360,9 +382,9 @@ export default class RestClient implements Client {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/maps?title=${model.title}&description=${
-            model.description ? model.description : ''
-          }`,
+          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(
+            model.title,
+          )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
           null,
           { headers: { 'Content-Type': 'application/json' } },
         )

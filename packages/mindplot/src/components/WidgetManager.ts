@@ -60,7 +60,7 @@ class WidgetManager {
       }
       const targetRect = evt.target.getBoundingClientRect();
       const newX = Math.max(0, targetRect.left + targetRect.width / 2 - tooltip.width() / 2);
-      const newY = Math.max(0, targetRect.bottom + 10);
+      const newY = Math.max(0, targetRect.bottom);
       tooltip.css({ top: newY, left: newX, position: 'absolute' });
       tooltip.css({ display: 'block' });
       evt.stopPropagation();
@@ -72,15 +72,15 @@ class WidgetManager {
   }
 
   createTooltipForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    this.createTooltip(linkIcon.getImage().peer, $msg('LINK'), linkModel, undefined);
+    this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
   }
 
   createTooltipForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
-    this.createTooltip(noteIcon.getImage().peer, $msg('NOTE'), undefined, noteModel);
+    this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
   }
 
   configureEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    const htmlImage = linkIcon.getImage().peer;
+    const htmlImage = linkIcon.getElement().peer;
     htmlImage.addEvent('click', (evt) => {
       this.showEditorForLink(topic, linkModel, linkIcon);
       evt.stopPropagation();
@@ -88,7 +88,7 @@ class WidgetManager {
   }
 
   configureEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
-    const htmlImage = noteIcon.getImage().peer;
+    const htmlImage = noteIcon.getElement().peer;
     htmlImage.addEvent('click', (evt) => {
       this.showEditorForNote(topic, noteModel, noteIcon);
       evt.stopPropagation();

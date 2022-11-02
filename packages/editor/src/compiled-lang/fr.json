@@ -1,8 +1,212 @@
 {
-  "action.share": [
+  "action.accept": [
+    {
+      "type": 0,
+      "value": "Accepter"
+    }
+  ],
+  "action.cancel": [
+    {
+      "type": 0,
+      "value": "Annuler"
+    }
+  ],
+  "appbar.back-to-map-list": [
+    {
+      "type": 0,
+      "value": "Retour à la liste des cartes"
+    }
+  ],
+  "appbar.button-signup": [
+    {
+      "type": 0,
+      "value": "S'inscrire"
+    }
+  ],
+  "appbar.shared-button": [
     {
       "type": 0,
       "value": "Partager"
+    }
+  ],
+  "appbar.tooltip-export": [
+    {
+      "type": 0,
+      "value": "Exporter"
+    }
+  ],
+  "appbar.tooltip-history": [
+    {
+      "type": 0,
+      "value": "Historique"
+    }
+  ],
+  "appbar.tooltip-info": [
+    {
+      "type": 0,
+      "value": "Informations"
+    }
+  ],
+  "appbar.tooltip-print": [
+    {
+      "type": 0,
+      "value": "Imprimer"
+    }
+  ],
+  "appbar.tooltip-publish": [
+    {
+      "type": 0,
+      "value": "Publier"
+    }
+  ],
+  "appbar.tooltip-redo": [
+    {
+      "type": 0,
+      "value": "Refaire édition"
+    }
+  ],
+  "appbar.tooltip-save": [
+    {
+      "type": 0,
+      "value": "Enregistrer"
+    }
+  ],
+  "appbar.tooltip-shared": [
+    {
+      "type": 0,
+      "value": "Partager"
+    }
+  ],
+  "appbar.tooltip-signup": [
+    {
+      "type": 0,
+      "value": "S'inscrire"
+    }
+  ],
+  "appbar.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Exceptionnel"
+    }
+  ],
+  "appbar.tooltip-undo": [
+    {
+      "type": 0,
+      "value": "Annuler édition"
+    }
+  ],
+  "editor-panel.tooltip-add-icon": [
+    {
+      "type": 0,
+      "value": "Agregar Icono"
+    }
+  ],
+  "editor-panel.tooltip-add-link": [
+    {
+      "type": 0,
+      "value": "Agregar Enlace"
+    }
+  ],
+  "editor-panel.tooltip-add-note": [
+    {
+      "type": 0,
+      "value": "Agregar Nota"
+    }
+  ],
+  "editor-panel.tooltip-add-relationship": [
+    {
+      "type": 0,
+      "value": "Agregar Relación"
+    }
+  ],
+  "editor-panel.tooltip-add-topic": [
+    {
+      "type": 0,
+      "value": "Agregar Topico"
+    }
+  ],
+  "editor-panel.tooltip-delete-topic": [
+    {
+      "type": 0,
+      "value": "Borrar Topico"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color": [
+    {
+      "type": 0,
+      "value": "Color del borde"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color": [
+    {
+      "type": 0,
+      "value": "Color del cotenido"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bigger": [
+    {
+      "type": 0,
+      "value": "Grande"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bold": [
+    {
+      "type": 0,
+      "value": "Negrita"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-italic": [
+    {
+      "type": 0,
+      "value": "Italica"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-smaller": [
+    {
+      "type": 0,
+      "value": "Pequeña"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-style": [
+    {
+      "type": 0,
+      "value": "Estilo de Fuente"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-ellipse": [
+    {
+      "type": 0,
+      "value": "Figura elipse"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-line": [
+    {
+      "type": 0,
+      "value": "Figura linea"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rectangle": [
+    {
+      "type": 0,
+      "value": "Figura rectangulo"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "Figura redonda"
+    }
+  ],
+  "editor-panel.tooltip-topic-style": [
+    {
+      "type": 0,
+      "value": "Estilo de Topico"
     }
   ],
   "editor.edit-description-mobile": [
@@ -41,10 +245,184 @@
       "value": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
     }
   ],
-  "login.signup": [
+  "link.help_text": [
     {
       "type": 0,
-      "value": "S'inscrire"
+      "value": "Adresse invalide"
+    }
+  ],
+  "link.placeholder": [
+    {
+      "type": 0,
+      "value": "https://www.example.com"
+    }
+  ],
+  "note.label": [
+    {
+      "type": 0,
+      "value": "Noter"
+    }
+  ],
+  "shortcut-help-pane.action": [
+    {
+      "type": 0,
+      "value": "Action"
+    }
+  ],
+  "shortcut-help-pane.add-child": [
+    {
+      "type": 0,
+      "value": "Ajouter le sujet de l'enfant"
+    }
+  ],
+  "shortcut-help-pane.add-link": [
+    {
+      "type": 0,
+      "value": "Ajouter un lien"
+    }
+  ],
+  "shortcut-help-pane.add-note": [
+    {
+      "type": 0,
+      "value": "Ajouter une note"
+    }
+  ],
+  "shortcut-help-pane.add-sibling": [
+    {
+      "type": 0,
+      "value": "Ajouter un sujet de frère"
+    }
+  ],
+  "shortcut-help-pane.cancel-text-changes": [
+    {
+      "type": 0,
+      "value": "Annuler les modifications du texte"
+    }
+  ],
+  "shortcut-help-pane.change-font-bold": [
+    {
+      "type": 0,
+      "value": "Changer de texte en gras"
+    }
+  ],
+  "shortcut-help-pane.change-font-italic": [
+    {
+      "type": 0,
+      "value": "Changer le texte en italique"
+    }
+  ],
+  "shortcut-help-pane.collapse-children": [
+    {
+      "type": 0,
+      "value": "Effondrer les enfants"
+    }
+  ],
+  "shortcut-help-pane.copy-and-text": [
+    {
+      "type": 0,
+      "value": "Copier et coller des sujets"
+    }
+  ],
+  "shortcut-help-pane.delete-topic": [
+    {
+      "type": 0,
+      "value": "Supprimer le sujet"
+    }
+  ],
+  "shortcut-help-pane.deselect-all-topics": [
+    {
+      "type": 0,
+      "value": "Désélectionner tous les sujets"
+    }
+  ],
+  "shortcut-help-pane.edit-multiline": [
+    {
+      "type": 0,
+      "value": "Ajouter le texte du sujet multi-ligne"
+    }
+  ],
+  "shortcut-help-pane.edit-topic": [
+    {
+      "type": 0,
+      "value": "Modifier le texte du sujet"
+    }
+  ],
+  "shortcut-help-pane.edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Commencez juste à taper"
+    }
+  ],
+  "shortcut-help-pane.navigation": [
+    {
+      "type": 0,
+      "value": "La navigation"
+    }
+  ],
+  "shortcut-help-pane.navigation-keys": [
+    {
+      "type": 0,
+      "value": "Touches directionnelles"
+    }
+  ],
+  "shortcut-help-pane.redo": [
+    {
+      "type": 0,
+      "value": "Réduire l'édition"
+    }
+  ],
+  "shortcut-help-pane.save-changes": [
+    {
+      "type": 0,
+      "value": "Sauvegarder les modifications"
+    }
+  ],
+  "shortcut-help-pane.select-all-topics": [
+    {
+      "type": 0,
+      "value": "Sélectionnez tous les sujets"
+    }
+  ],
+  "shortcut-help-pane.select-topics": [
+    {
+      "type": 0,
+      "value": "Sélectionnez plusieurs sujets"
+    }
+  ],
+  "shortcut-help-pane.select-topics-keys": [
+    {
+      "type": 0,
+      "value": "Clic de souris"
+    }
+  ],
+  "shortcut-help-pane.undo": [
+    {
+      "type": 0,
+      "value": "Annuler l'édition"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Keyboard Shortcuts"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Acercar"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Alejarse"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Centrar"
     }
   ]
 }

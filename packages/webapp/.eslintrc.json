@@ -23,11 +23,14 @@
     ],
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "rules": {
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/explicit-module-boundary-types": "error",
-        "@typescript-eslint/no-unused-vars": "error"
+        "@typescript-eslint/no-unused-vars": "error",
+        "react-hooks/rules-of-hooks": "warn" // Checks rules of Hooks
+        // "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
     }
 }

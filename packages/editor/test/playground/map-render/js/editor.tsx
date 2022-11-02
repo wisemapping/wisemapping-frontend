@@ -16,9 +16,10 @@
  *   limitations under the License.
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Editor, { EditorOptions } from '../../../../src/index';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
+import MapInfoImpl from './MapInfoImpl';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
@@ -30,23 +31,20 @@ const initialization = (designer: Designer) => {
 };
 
 const persistence = new LocalStorageManager('samples/{id}.wxml', false, false);
-const mapId = 'welcome';
 const options: EditorOptions = {
-  zoom: 0.8,
-  locked: false,
-  mapTitle: 'Develop WiseMapping',
   mode: 'edition-owner',
   locale: 'en',
   enableKeyboardEvents: true,
 };
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(
   <Editor
-    mapId={mapId}
+    mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
     options={options}
     persistenceManager={persistence}
     onAction={(action) => console.log('action called:', action)}
     onLoad={initialization}
   />,
-  document.getElementById('root'),
 );

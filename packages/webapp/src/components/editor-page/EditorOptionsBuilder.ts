@@ -13,12 +13,12 @@ class EditorOptionsBuilder {
     if (!AppConfig.isDevelopEnv()) {
       options = {
         zoom:
-          global.userOptions?.zoom != undefined
-            ? Number.parseFloat(global?.userOptions?.zoom as string)
+          globalThis.userOptions?.zoom != undefined
+            ? Number.parseFloat(globalThis?.userOptions?.zoom as string)
             : 0.8,
-        locked: global.mindmapLocked,
-        lockedMsg: global.mindmapLockedMsg,
-        mapTitle: global.mapTitle,
+        locked: globalThis.mindmapLocked,
+        lockedMsg: globalThis.mindmapLockedMsg,
+        mapTitle: globalThis.mapTitle,
         ...options,
       };
     } else {
@@ -35,10 +35,10 @@ class EditorOptionsBuilder {
   }
 
   static loadMapId(): number {
-    const result = !AppConfig.isDevelopEnv() ? global.mapId : 11;
+    const result = !AppConfig.isDevelopEnv() ? globalThis.mapId : 11;
     if (result === undefined) {
       throw Error(
-        `Could not resolve mapId. Map Id: global.mapId: ${result} , global.mapTitle: ${global.mapTitle}, global.lockSession: ${global.lockSession}`,
+        `Could not resolve mapId. Map Id: globalThis.mapId: ${result} , globalThis.mapTitle: ${globalThis.mapTitle}, globalThis.lockSession: ${globalThis.lockSession}`,
       );
     }
     return result;

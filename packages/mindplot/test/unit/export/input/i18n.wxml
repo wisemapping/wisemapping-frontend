@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map name="basic" version="tango">
-    <topic central="true" id="0" position="0,0" shape="rounded rectagle">
+    <topic central="true" id="0" position="0,0" shape="rounded rectangle">
         <text><![CDATA[i18n]]></text>
         <topic id="1" order="0" position="200,0" shape="line">
             <text><![CDATA[Este es un é con acento]]></text>

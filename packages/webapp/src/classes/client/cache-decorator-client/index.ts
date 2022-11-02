@@ -17,6 +17,10 @@ class CacheDecoratorClient implements Client {
     this.client = client;
   }
 
+  fetchStarred(id: number): Promise<boolean> {
+    return this.client.fetchStarred(id);
+  }
+
   onSessionExpired(callback?: () => void): () => void {
     return this.client.onSessionExpired(callback);
   }

@@ -31,8 +31,10 @@ import Exporter from './components/export/Exporter';
 import Importer from './components/import/Importer';
 import DesignerKeyboard from './components/DesignerKeyboard';
 import EditorRenderMode from './components/EditorRenderMode';
+import DesignerModel from './components/DesignerModel';
 
-import ImageIcon from './components/ImageIcon';
+import SvgImageIcon from './components/SvgImageIcon';
+
 import MindplotWebComponent, {
   MindplotWebComponentInterface,
 } from './components/MindplotWebComponent';
@@ -48,10 +50,13 @@ import WidgetManager from './components/WidgetManager';
 import { buildDesigner } from './components/DesignerBuilder';
 
 import { $notify } from './components/widget/ToolbarNotifier';
+import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 
-import { $msg } from './components/Messages';
-
-import './mindplot-styles.css';
+declare global {
+  // Todo: There are some global references that needs to be removed inside mindplot.
+  // eslint-disable-next-line vars-on-top, no-var
+  var designer: Designer;
+}
 
 const globalAny: any = global;
 globalAny.jQuery = jquery;
@@ -64,6 +69,7 @@ if (!customElements.get('mindplot-component')) {
 export {
   Mindmap,
   Designer,
+  DesignerModel,
   DesignerBuilder,
   PersistenceManager,
   RESTPersistenceManager,
@@ -76,10 +82,9 @@ export {
   ImageExporterFactory,
   TextImporterFactory,
   Exporter,
+  SvgImageIcon,
   Importer,
-  ImageIcon,
   $notify,
-  $msg,
   DesignerKeyboard,
   MindplotWebComponent,
   MindplotWebComponentInterface,
@@ -89,4 +94,5 @@ export {
   NoteModel,
   WidgetManager,
   Topic,
+  XMLSerializerFactory,
 };

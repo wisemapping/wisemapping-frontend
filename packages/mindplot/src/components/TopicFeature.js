@@ -17,15 +17,21 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import ImageIcon from './ImageIcon';
+import EmojiCharIcon from './EmojiCharIcon';
+import SvgImageIcon from './SvgImageIcon';
 import LinkIcon from './LinkIcon';
 import NoteIcon from './NoteIcon';
 
 const TopicFeatureFactory = {
   /** the icon object */
-  Icon: {
+  SvgIcon: {
     id: 'icon',
-    icon: ImageIcon,
+    icon: SvgImageIcon,
+  },
+
+  EmojiIcon: {
+    id: 'eicon',
+    icon: EmojiCharIcon,
   },
 
   /** the link object */
@@ -52,7 +58,8 @@ const TopicFeatureFactory = {
 };
 
 TopicFeatureFactory._featuresMetadataById = [
-  TopicFeatureFactory.Icon,
+  TopicFeatureFactory.SvgIcon,
+  TopicFeatureFactory.EmojiIcon,
   TopicFeatureFactory.Link,
   TopicFeatureFactory.Note,
 ];

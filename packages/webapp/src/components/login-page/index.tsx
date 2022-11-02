@@ -13,32 +13,6 @@ import Link from '@mui/material/Link';
 import ReactGA from 'react-ga4';
 import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 
-type ConfigStatusProps = {
-  enabled?: boolean;
-};
-
-const ConfigStatusMessage = ({ enabled = false }: ConfigStatusProps): React.ReactElement => {
-  let result;
-  if (enabled === true) {
-    result = (
-      <div className="db-warn-msg">
-        <p>
-          <FormattedMessage
-            id="login.hsqldbcofig"
-            defaultMessage="Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
-            description="Missing production database configured"
-          />
-          <a href="https://wisemapping.atlassian.net/wiki/display/WS/Database+Configuration">
-            {' '}
-            here
-          </a>
-        </p>
-      </div>
-    );
-  }
-  return result || null;
-};
-
 const LoginError = () => {
   // @Todo: This must be reviewed to be based on navigation state.
   // Login error example: http://localhost:8080/c/login?login.error=2
@@ -132,7 +106,6 @@ const LoginPage = (): React.ReactElement => {
         <Link component={RouterLink} to="/c/forgot-password">
           <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
         </Link>
-        <ConfigStatusMessage />
       </FormContainer>
 
       <Footer />

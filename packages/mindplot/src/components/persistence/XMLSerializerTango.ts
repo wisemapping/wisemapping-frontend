@@ -25,6 +25,7 @@ import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
+import emojiToIconMap from './iconToEmoji.json';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -172,7 +173,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
           const cdata = document.createCDATASection(this._rmXmlInv(value));
           featureDom.appendChild(cdata);
         } else {
-          featureDom.setAttribute(key, this._rmXmlInv(value));
+          featureDom.setAttribute(key, value);
         }
       }
       parentTopic.appendChild(featureDom);
@@ -320,8 +321,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
     }
 
-    const shape = domElem.getAttribute('shape');
+    let shape = domElem.getAttribute('shape');
     if ($defined(shape)) {
+      // Fix typo on serialization....
+      shape = shape.replace('rectagle', 'rectangle');
+
       topic.setShapeType(shape);
 
       if (shape === TopicShape.IMAGE) {
@@ -394,7 +398,18 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
           // Create a new element ....
           const featureType = elem.tagName as FeatureType;
-          const feature = FeatureModelFactory.createModel(featureType, attributes);
+          let feature = FeatureModelFactory.createModel(featureType, attributes);
+
+          // Migrate icons to emoji ...
+          if (featureType === 'icon') {
+            const svgIcon: string = attributes.id;
+            const emoji = XMLSerializerTango.emojiEquivalent(svgIcon);
+            if (emoji) {
+              attributes.id = emoji;
+              feature = FeatureModelFactory.createModel('eicon' as FeatureType, attributes);
+            }
+          }
+
           topic.addFeature(feature);
         } else if (elem.tagName === 'text') {
           const nodeText = XMLSerializerTango._deserializeNodeText(child);
@@ -441,7 +456,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value;
   }
 
-  static _deserializeNodeText(domElem: ChildNode) {
+  private static emojiEquivalent(icon: string): string | undefined {
+    return emojiToIconMap[icon];
+  }
+
+  private static _deserializeNodeText(domElem: ChildNode) {
     const children = domElem.childNodes;
     let value = null;
     for (let i = 0; i < children.length; i++) {
