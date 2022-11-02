@@ -188,15 +188,13 @@
     {
         "id": "object",
         "icons": [
-            "object_clanbomber",
             "object_key",
             "object_pencil",
             "object_magnifier",
             "object_clip",
             "object_music",
             "object_star",
-            "object_house",
-            "object_camera"
+            "object_house"
         ]
     },
     {
