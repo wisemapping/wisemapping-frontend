@@ -17,8 +17,8 @@
  */
 import KeyboardOutlined from '@mui/icons-material/KeyboardOutlined';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import React, { ReactElement } from 'react';
+import { IntlShape, useIntl } from 'react-intl';
 import ActionConfig from '../../classes/action/action-config';
 import Capability from '../../classes/action/capability';
 import Editor from '../../classes/model/editor';
@@ -30,9 +30,11 @@ import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
 import Box from '@mui/material/Box';
 
-export function buildZoomToolbarConfig(model: Editor, capability: Capability): ActionConfig[] {
-  const intl = useIntl();
-
+export function buildZoomToolbarConfig(
+  model: Editor,
+  capability: Capability,
+  intl: IntlShape,
+): ActionConfig[] {
   return [
     {
       icon: <CenterFocusStrongOutlinedIcon />,
@@ -99,8 +101,9 @@ type ZoomPanelProps = {
   capability: Capability;
 };
 
-const ZoomPanel = ({ model, capability }: ZoomPanelProps) => {
-  const config = buildZoomToolbarConfig(model, capability);
+const ZoomPanel = ({ model, capability }: ZoomPanelProps): ReactElement => {
+  const intl = useIntl();
+  const config = buildZoomToolbarConfig(model, capability, intl);
   return (
     <Toolbar
       configurations={config}

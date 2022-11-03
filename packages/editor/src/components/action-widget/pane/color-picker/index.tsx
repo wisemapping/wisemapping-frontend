@@ -24,7 +24,10 @@ import colors from './colors.json';
 /**
  * Color picker for toolbar
  */
-const ColorPicker = (props: { closeModal: () => void; colorModel: NodeProperty }): ReactElement => {
+const ColorPicker = (props: {
+  closeModal: () => void;
+  colorModel: NodeProperty<string>;
+}): ReactElement => {
   return (
     <Box component="div" sx={{ m: 2 }}>
       <ReactColorPicker

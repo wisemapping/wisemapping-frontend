@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -27,7 +27,7 @@ import NodeProperty from '../../../../classes/model/node-property';
 /**
  * Font family selector for editor toolbar
  */
-const FontFamilySelect = (props: { fontFamilyModel: NodeProperty }) => {
+const FontFamilySelect = (props: { fontFamilyModel: NodeProperty<string> }): ReactElement => {
   const [font, setFont] = React.useState(props.fontFamilyModel.getValue());
 
   const handleChange = (event: SelectChangeEvent) => {

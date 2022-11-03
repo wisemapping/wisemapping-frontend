@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 
@@ -30,6 +30,7 @@ import {
 
 import I18nMsg from '../classes/i18n-msg';
 import { theme as defaultEditorTheme } from '../theme';
+// eslint-disable-next-line no-restricted-imports
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { Theme } from '@mui/material/styles';
 import { Notifier } from './warning-dialog/styled';
@@ -65,13 +66,14 @@ const Editor = ({
   onAction,
   theme,
   accountConfiguration,
-}: EditorProps) => {
+}: EditorProps): ReactElement => {
   const [model, setModel] = useState<Model | undefined>();
 
   // This is required to redraw in case of chansges in the canvas...
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [canvasUpdate, setCanvasUpdate] = useState<number>();
   const editorTheme: Theme = theme ? theme : defaultEditorTheme;
-  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.create();
+  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.useCreate();
   const capability = new Capability(options.mode, mapInfo.isLocked());
 
   const mindplotRef = useCallback((component: MindplotWebComponent) => {

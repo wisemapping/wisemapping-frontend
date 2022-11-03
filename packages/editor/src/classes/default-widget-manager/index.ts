@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -16,14 +17,7 @@
  *   limitations under the License.
  */
 import React, { useRef, useState } from 'react';
-import {
-  WidgetManager,
-  Topic,
-  LinkModel,
-  LinkIcon,
-  NoteModel,
-  NoteIcon,
-} from '@wisemapping/mindplot';
+import { WidgetManager, Topic } from '@wisemapping/mindplot';
 import { linkContent, noteContent } from './react-component';
 
 export class DefaultWidgetManager extends WidgetManager {
@@ -41,8 +35,8 @@ export class DefaultWidgetManager extends WidgetManager {
     this.setPopoverTarget = setPopoverTarget;
   }
 
-  showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void {
-    const model: any = {
+  showEditorForLink(topic: Topic): void {
+    const model = {
       getValue: () => topic.getLinkValue(),
       setValue: (value: string) => topic.setLinkValue(value),
     };
@@ -60,13 +54,13 @@ export class DefaultWidgetManager extends WidgetManager {
     return this.editorContent;
   }
 
-  handleClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void = () => {
+  handleClose: (event, reason: 'backdropClick' | 'escapeKeyDown') => void = () => {
     this.setPopoverOpen(false);
     this.editorContent = undefined;
     this.setPopoverTarget(undefined);
   };
 
-  showEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
+  showEditorForNote(topic: Topic): void {
     const model = {
       getValue(): string {
         return topic.getNoteValue();
@@ -82,7 +76,7 @@ export class DefaultWidgetManager extends WidgetManager {
     topic.closeEditors();
   }
 
-  static create(): [boolean, Element | undefined, DefaultWidgetManager] {
+  static useCreate(): [boolean, Element | undefined, DefaultWidgetManager] {
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [popoverTarget, setPopoverTarget] = useState(undefined);
     const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));

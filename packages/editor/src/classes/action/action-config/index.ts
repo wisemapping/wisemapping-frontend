@@ -34,7 +34,7 @@ interface ActionConfig {
   /**
    * the event handler for a common button
    */
-  onClick?: (event: object) => void;
+  onClick?: (event) => void;
   /**
    * custom element for a menu entry
    */

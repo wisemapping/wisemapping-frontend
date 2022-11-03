@@ -29,8 +29,11 @@ import { useIntl } from 'react-intl';
 /**
  * Url form for toolbar and node contextual editor
  */
-const TopicLink = (props: { closeModal: () => void; urlModel: NodeProperty }): ReactElement => {
-  const [url, setUrl] = useState(props.urlModel.getValue());
+const TopicLink = (props: {
+  closeModal: () => void;
+  urlModel: NodeProperty<string>;
+}): ReactElement => {
+  const [url, setUrl] = useState<string>(props.urlModel.getValue());
   const intl = useIntl();
 
   const submitHandler = () => {

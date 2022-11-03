@@ -20,11 +20,17 @@ import TopicLink from '../../components/action-widget/pane/topic-link';
 import TopicNote from '../../components/action-widget/pane/topic-note';
 import NodeProperty from '../model/node-property';
 
-const linkContent = (linkModel: NodeProperty, closeModal: () => void): React.ReactElement => {
+const linkContent = (
+  linkModel: NodeProperty<string>,
+  closeModal: () => void,
+): React.ReactElement => {
   return <TopicLink closeModal={closeModal} urlModel={linkModel}></TopicLink>;
 };
 
-const noteContent = (noteModel: NodeProperty, closeModal: () => void): React.ReactElement => {
+const noteContent = (
+  noteModel: NodeProperty<string>,
+  closeModal: () => void,
+): React.ReactElement => {
   return <TopicNote closeModal={closeModal} noteModel={noteModel}></TopicNote>;
 };
 

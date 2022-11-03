@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import Box from '@mui/material/Box';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import Input from '../../input';
 import SaveAndDelete from '../save-and-delete';
@@ -25,7 +25,10 @@ import { useIntl } from 'react-intl';
 /**
  * Note form for toolbar and node contextual editor
  */
-const TopicNote = (props: { closeModal: () => void; noteModel: NodeProperty | null }) => {
+const TopicNote = (props: {
+  closeModal: () => void;
+  noteModel: NodeProperty<string> | null;
+}): ReactElement => {
   const [note, setNote] = useState(props.noteModel.getValue());
   const intl = useIntl();
 

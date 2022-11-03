@@ -27,7 +27,7 @@ class Events {
     return string.replace(/^on([A-Z])/, (_full, first) => first.toLowerCase());
   }
 
-  addEvent(typeName: string, fn: any, internal?: boolean): Events {
+  addEvent(typeName: string, fn: () => void, internal?: boolean): Events {
     const type = Events._normalizeEventName(typeName);
 
     // Add function had not been added yet
@@ -38,10 +38,13 @@ class Events {
     }
 
     // Mark reference ...
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     fn.internal = Boolean(internal);
     return this;
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   fireEvent(typeName: string, eventArgs?): Events {
     const type = Events._normalizeEventName(typeName);
     const events = this._handlerByType[type];
@@ -54,9 +57,12 @@ class Events {
     return this;
   }
 
-  removeEvent(typeName: string, fn?): Events {
+  removeEvent(typeName: string, fn?: () => void): Events {
     const type = Events._normalizeEventName(typeName);
     const events = this._handlerByType[type];
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (events && !fn.internal) {
       const index = events.indexOf(fn);
       if (index !== -1) events.splice(index, 1);

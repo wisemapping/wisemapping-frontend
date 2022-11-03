@@ -5,15 +5,15 @@ import { SvgImageIcon } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../../classes/model/node-property';
 
 type IconImageTab = {
-  iconModel: NodeProperty;
+  iconModel: NodeProperty<string>;
   triggerClose: () => void;
 };
 const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement => {
   return (
     <Box sx={{ width: '350px' }}>
-      {iconGroups.map((family) => (
-        <span>
-          {family.icons.map((icon) => (
+      {iconGroups.map((family, i) => (
+        <span key={i}>
+          {family.icons.map((icon: string) => (
             <img
               className="panelIcon"
               key={icon}

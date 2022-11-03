@@ -11,16 +11,16 @@ import {
 class NodePropertyBuilder {
   designer: Designer;
 
-  fontSizeModel: NodeProperty;
-  selectedTopicColorModel: NodeProperty;
-  fontFamilyModel: NodeProperty;
-  fontStyleModel: NodeProperty;
-  borderColorModel: NodeProperty;
-  fontColorModel: NodeProperty;
-  topicShapeModel: NodeProperty;
-  topicIconModel: NodeProperty;
-  noteModel: NodeProperty;
-  linkModel: NodeProperty;
+  fontSizeModel: NodeProperty<number>;
+  selectedTopicColorModel: NodeProperty<string>;
+  fontFamilyModel: NodeProperty<string>;
+  fontStyleModel: NodeProperty<string>;
+  borderColorModel: NodeProperty<string>;
+  fontColorModel: NodeProperty<string>;
+  topicShapeModel: NodeProperty<string>;
+  topicIconModel: NodeProperty<string>;
+  noteModel: NodeProperty<string>;
+  linkModel: NodeProperty<string>;
 
   constructor(designer: Designer) {
     this.designer = designer;
@@ -34,7 +34,7 @@ class NodePropertyBuilder {
     return this.designer.getModel().selectedTopic()?.getFontSize();
   }
 
-  private uniqueOrNull(propertyGetter: (Topic: Topic) => any | null) {
+  private uniqueOrNull(propertyGetter: (Topic: Topic) => string | number | null) {
     const nodes = this.designer.getModel().filterSelectedTopics();
     return getTheUniqueValueOrNull(nodes, propertyGetter);
   }
@@ -43,9 +43,9 @@ class NodePropertyBuilder {
    *
    * @returns model to and switch font weigth
    */
-  fontWeigthModel(): NodeProperty {
+  fontWeigthModel(): NodeProperty<string> {
     return {
-      getValue: () => this.designer.getModel().selectedTopic()?.getFontWeight(),
+      getValue: () => String(this.designer.getModel().selectedTopic()?.getFontWeight()),
       switchValue: () => this.designer.changeFontWeight(),
     };
   }
@@ -54,7 +54,7 @@ class NodePropertyBuilder {
    *
    * @returns model to and switch font size in both directions. Font sizes used to iterate: [6, 8, 10, 15]
    */
-  getFontSizeModel(): NodeProperty {
+  getFontSizeModel(): NodeProperty<number> {
     if (!this.fontSizeModel)
       this.fontSizeModel = {
         getValue: () => this.getFontSize(),
@@ -76,7 +76,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic color
    */
-  getSelectedTopicColorModel(): NodeProperty {
+  getSelectedTopicColorModel(): NodeProperty<string> {
     if (!this.selectedTopicColorModel)
       this.selectedTopicColorModel = {
         getValue: () => this.designer.getModel().selectedTopic()?.getBackgroundColor(),
@@ -90,7 +90,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set the node link
    */
-  getLinkModel(): NodeProperty {
+  getLinkModel(): NodeProperty<string> {
     // const selected = this.selectedTopic();
     if (!this.linkModel)
       this.linkModel = {
@@ -110,7 +110,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic border color
    */
-  getColorBorderModel(): NodeProperty {
+  getColorBorderModel(): NodeProperty<string> {
     if (!this.borderColorModel)
       this.borderColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getBorderColor()),
@@ -123,7 +123,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic font color
    */
-  getFontColorModel(): NodeProperty {
+  getFontColorModel(): NodeProperty<string> {
     if (!this.fontColorModel)
       this.fontColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontColor()),
@@ -136,7 +136,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic icon
    */
-  getTopicIconModel(): NodeProperty {
+  getTopicIconModel(): NodeProperty<string> {
     if (!this.topicIconModel)
       this.topicIconModel = {
         getValue: () => null,
@@ -152,7 +152,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic note
    */
-  getNoteModel(): NodeProperty {
+  getNoteModel(): NodeProperty<string> {
     if (!this.noteModel)
       this.noteModel = {
         getValue: (): string => this.selectedTopic()?.getNoteValue(),
@@ -168,7 +168,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic font family
    */
-  getFontFamilyModel(): NodeProperty {
+  getFontFamilyModel(): NodeProperty<string> {
     if (!this.fontFamilyModel)
       this.fontFamilyModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontFamily()),
@@ -181,7 +181,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and switch topic style
    */
-  getFontStyleModel(): NodeProperty {
+  getFontStyleModel(): NodeProperty<string> {
     if (!this.fontStyleModel)
       this.fontStyleModel = {
         getValue: () => this.selectedTopic()?.getFontStyle(),
@@ -194,7 +194,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic shape
    */
-  getTopicShapeModel(): NodeProperty {
+  getTopicShapeModel(): NodeProperty<string> {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
         getValue: () => this.uniqueOrNull((node) => node.getShapeType()),

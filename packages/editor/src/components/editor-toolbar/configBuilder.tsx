@@ -44,16 +44,16 @@ import TopicNote from '../action-widget/pane/topic-note';
 import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
-import { useIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 
 const keyTooltip = (msg: string, key: string): string => {
   const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
   return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
 };
 
-export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
+export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
   const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
-  const intl = useIntl();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <BrushOutlinedIcon />,
     tooltip: intl.formatMessage({
@@ -102,7 +102,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       {
         icon: () => (
           <Palette
-            htmlColor={toolbarValueModelBuilder.getSelectedTopicColorModel().getValue()}
+            htmlColor={toolbarValueModelBuilder.getSelectedTopicColorModel().getValue() as string}
           ></Palette>
         ),
         tooltip: intl.formatMessage({
@@ -125,7 +125,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       {
         icon: () => (
           <SquareOutlined
-            htmlColor={toolbarValueModelBuilder.getColorBorderModel().getValue()}
+            htmlColor={toolbarValueModelBuilder.getColorBorderModel().getValue() as string}
           ></SquareOutlined>
         ),
         tooltip: intl.formatMessage({
@@ -210,7 +210,7 @@ export function buildEditorPanelConfig(model: Editor): ActionConfig[] {
       },
       {
         icon: () => (
-          <Palette htmlColor={toolbarValueModelBuilder.getFontColorModel().getValue()}></Palette>
+          <Palette htmlColor={toolbarValueModelBuilder.getFontColorModel().getValue() as string} />
         ),
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-color',

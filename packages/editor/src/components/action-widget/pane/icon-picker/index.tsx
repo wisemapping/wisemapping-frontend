@@ -26,7 +26,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 type IconPickerProp = {
   triggerClose: () => void;
-  iconModel: NodeProperty;
+  iconModel: NodeProperty<string>;
 };
 
 const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {

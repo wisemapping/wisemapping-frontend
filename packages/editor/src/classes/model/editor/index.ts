@@ -20,6 +20,7 @@ import {
   MindplotWebComponent,
   PersistenceManager,
   DesignerModel,
+  WidgetManager,
 } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 
@@ -34,7 +35,7 @@ class Editor {
     return this.component?.getDesigner()?.getMindmap() != null;
   }
 
-  save(minor: boolean) {
+  save(minor: boolean): void {
     if (!this.component) {
       throw new Error('Designer object has not been initialized.');
     }
@@ -52,12 +53,16 @@ class Editor {
     return this.getDesigner().getModel();
   }
 
-  loadMindmap(mapId: string, persistenceManager: PersistenceManager, widgetManager): void {
+  loadMindmap(
+    mapId: string,
+    persistenceManager: PersistenceManager,
+    widgetManager: WidgetManager,
+  ): void {
     this.component.buildDesigner(persistenceManager, widgetManager);
     this.component.loadMap(mapId);
   }
 
-  registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability) {
+  registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability): void {
     const designer = this.component.getDesigner();
     const onNodeBlurHandler = () => {
       if (!designer.getModel().selectedTopic()) {

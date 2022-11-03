@@ -24,7 +24,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { FormattedMessage } from 'react-intl';
 
 const SaveAndDelete = (props: {
-  model: NodeProperty;
+  model: NodeProperty<string>;
   closeModal: () => void;
   submitHandler: () => void;
 }): ReactElement => {
