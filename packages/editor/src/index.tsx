@@ -42,10 +42,12 @@ import MapInfo from './classes/model/map-info';
 
 declare global {
   // used in mindplot
+  // eslint-disable-next-line no-var
   var accountEmail: string;
 }
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       ['mindplot-component']: MindplotWebComponentInterface;

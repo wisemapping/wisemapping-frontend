@@ -23,11 +23,11 @@ class Events {
     this._handlerByType = {};
   }
 
-  static _normalizeEventName(string: string) {
+  static _normalizeEventName(string: string): string {
     return string.replace(/^on([A-Z])/, (_full, first) => first.toLowerCase());
   }
 
-  addEvent(typeName: string, fn?, internal?: boolean): Events {
+  addEvent(typeName: string, fn: any, internal?: boolean): Events {
     const type = Events._normalizeEventName(typeName);
 
     // Add function had not been added yet

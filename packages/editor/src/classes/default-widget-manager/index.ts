@@ -41,7 +41,7 @@ export class DefaultWidgetManager extends WidgetManager {
     this.setPopoverTarget = setPopoverTarget;
   }
 
-  showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
+  showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void {
     const model: any = {
       getValue: () => topic.getLinkValue(),
       setValue: (value: string) => topic.setLinkValue(value),

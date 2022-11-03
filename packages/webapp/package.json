@@ -6,7 +6,7 @@
         "start": "webpack serve --config webpack.dev.js ",
         "build": "webpack --config webpack.prod.js",
         "dev": "webpack --config webpack.dev.js",
-        "lint": "eslint src",
+        "lint": "eslint src --ext js,ts,tsx",
         "cy:run": "cypress run",
         "test:integration": "start-server-and-test start http-get://localhost:3000 cy:run",
         "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
