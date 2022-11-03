@@ -13,6 +13,7 @@ const prodConfig = {
     'react-intl': 'react-intl',
     '@emotion/styled': '@emotion/styled',
     '@emotion/react': '@emotion/react',
+    'styled-components': 'styled-components',
   },
   plugins: [new CleanWebpackPlugin()],
 };

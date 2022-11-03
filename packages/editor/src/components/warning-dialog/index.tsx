@@ -69,7 +69,7 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
   }
 
   // if the toolbar is present, the alert must not overlap
-  var alertTopAdjustmentStyle = 'tryInfoPanelWithToolbar';
+  const alertTopAdjustmentStyle = 'tryInfoPanelWithToolbar';
 
   return (
     <>

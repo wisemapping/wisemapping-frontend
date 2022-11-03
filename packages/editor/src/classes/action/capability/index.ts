@@ -43,7 +43,7 @@ class Capability {
   isHidden(action: ActionType): boolean {
     const mapping = ActionConfigByRenderMode[action];
 
-    let result: boolean = false;
+    let result = false;
     if (mapping) {
       // Has been marked in desktop ...
       const desktopCapability: EditorRenderMode[] = mapping.desktop?.hidden;

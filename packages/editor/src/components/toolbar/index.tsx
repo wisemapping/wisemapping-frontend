@@ -133,7 +133,7 @@ export const ToolbarSubmenu = (props: {
             if (!o?.render) {
               return (
                 <ToolbarMenuItem
-                  vertical={!!!props.vertical}
+                  vertical={!props.vertical}
                   key={i}
                   configuration={o as ActionConfig}
                   elevation={props.elevation + 3}
