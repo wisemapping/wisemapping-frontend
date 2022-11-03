@@ -12,8 +12,7 @@ const prodConfig = {
     'react-dom': 'react-dom',
     'react-intl': 'react-intl',
     '@emotion/styled': '@emotion/styled',
-    '@mui/icons-material': '@mui/icons-material',
-    '@mui/material': '@mui/material',
+    '@emotion/react': '@emotion/react',
   },
   plugins: [new CleanWebpackPlugin()],
 };

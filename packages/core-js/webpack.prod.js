@@ -7,6 +7,7 @@ const prodConfig = {
   optimization: {
     splitChunks: {
       chunks: 'all',
+      usedExports: true,
     },
   },
 };

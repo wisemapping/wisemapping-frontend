@@ -72,9 +72,7 @@ const App = (): ReactElement => {
                     </Suspense>
                   </Route>
                   <Route exact path="/c/maps/:id/edit">
-                    <Suspense fallback={<div></div>}>
-                      <EnhacedEditorPage isTryMode={false} />
-                    </Suspense>
+                    <EnhacedEditorPage isTryMode={false} />
                   </Route>
                   <Route exact path="/c/maps/:id/try">
                     <Suspense fallback={<div></div>}>

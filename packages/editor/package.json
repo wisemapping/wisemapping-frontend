@@ -6,6 +6,7 @@
     "build": "webpack --config webpack.prod.js",
     "playground": "webpack serve --config webpack.playground.js",
     "cy:run": "cypress run",
+    "lint": "eslint src",
     "test:integration": "start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
     "test": "yarn test:integration",
     "test:unit": "jest ./test/unit/* --detectOpenHandles",
@@ -28,9 +29,12 @@
     "css-loader": "^6.7.1",
     "cypress": "^10.11.0",
     "cypress-image-snapshot": "^4.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.0",
     "jest-transform-stub": "^2.0.0",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "style-loader": "^3.3.1",
     "ts-jest": "^27.1.0",
@@ -47,12 +51,15 @@
     "styled-components": "^5.3.6"
   },
   "peerDependencies": {
+    "@emotion": "^11.10.5",
+    "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.9.3",
     "@mui/material": "^5.10.11",
+    "lodash": "^4.17.14",
     "react": "^18.2.0",
-    "react-intl": "^6.2.1",
     "react-dom": "^18.2.0",
+    "react-intl": "^6.2.1",
     "styled-components": "^5.3.6"
   }
 }
