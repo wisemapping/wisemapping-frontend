@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, ReactElement, useEffect, useState } from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar';
@@ -59,7 +59,13 @@ const keyTooltip = (msg: string, key: string): string => {
   return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
 };
 
-const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarProps) => {
+const AppBar = ({
+  model,
+  mapInfo,
+  capability,
+  onAction,
+  accountConfig,
+}: AppBarProps): ReactElement => {
   const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
   const intl = useIntl();
 

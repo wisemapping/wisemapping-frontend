@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import iconGroups from './iconGroups.json';
 import { SvgImageIcon } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../../classes/model/node-property';
@@ -8,10 +8,10 @@ type IconImageTab = {
   iconModel: NodeProperty;
   triggerClose: () => void;
 };
-const IconImageTab = ({ iconModel, triggerClose }: IconImageTab) => {
+const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement => {
   return (
     <Box sx={{ width: '350px' }}>
-      {iconGroups.map((family, i) => (
+      {iconGroups.map((family) => (
         <span>
           {family.icons.map((icon) => (
             <img
@@ -22,7 +22,7 @@ const IconImageTab = ({ iconModel, triggerClose }: IconImageTab) => {
                 iconModel.setValue(`image:${icon}`);
                 triggerClose();
               }}
-            ></img>
+            />
           ))}
         </span>
       ))}

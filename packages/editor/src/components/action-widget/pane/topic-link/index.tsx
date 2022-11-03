@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import Box from '@mui/material/Box';
 import React from 'react';
@@ -29,7 +29,7 @@ import { useIntl } from 'react-intl';
 /**
  * Url form for toolbar and node contextual editor
  */
-const TopicLink = (props: { closeModal: () => void; urlModel: NodeProperty }) => {
+const TopicLink = (props: { closeModal: () => void; urlModel: NodeProperty }): ReactElement => {
   const [url, setUrl] = useState(props.urlModel.getValue());
   const intl = useIntl();
 

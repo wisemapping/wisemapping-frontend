@@ -15,10 +15,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-const KeyboardShorcutsHelp = () => {
+const KeyboardShorcutsHelp = (): ReactElement => {
   return (
     <div id="keyboardTable">
       <table>

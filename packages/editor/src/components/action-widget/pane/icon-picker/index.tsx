@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
@@ -29,10 +29,10 @@ type IconPickerProp = {
   iconModel: NodeProperty;
 };
 
-const IconPicker = ({ triggerClose, iconModel }: IconPickerProp) => {
+const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
   const [checked, setChecked] = React.useState(true);
 
-  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheck = () => {
     setChecked(!checked);
   };
 

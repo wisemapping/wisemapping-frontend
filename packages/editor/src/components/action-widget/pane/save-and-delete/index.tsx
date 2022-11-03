@@ -18,7 +18,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { FormattedMessage } from 'react-intl';
@@ -27,7 +27,7 @@ const SaveAndDelete = (props: {
   model: NodeProperty;
   closeModal: () => void;
   submitHandler: () => void;
-}) => {
+}): ReactElement => {
   return (
     <Box component="span">
       <Button color="primary" variant="contained" onClick={props.submitHandler} sx={{ mr: 1 }}>

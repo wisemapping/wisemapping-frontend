@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import { CirclePicker as ReactColorPicker } from 'react-color';
 import colors from './colors.json';
@@ -24,7 +24,7 @@ import colors from './colors.json';
 /**
  * Color picker for toolbar
  */
-const ColorPicker = (props: { closeModal: () => void; colorModel: NodeProperty }) => {
+const ColorPicker = (props: { closeModal: () => void; colorModel: NodeProperty }): ReactElement => {
   return (
     <Box component="div" sx={{ m: 2 }}>
       <ReactColorPicker

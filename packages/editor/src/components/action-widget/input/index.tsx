@@ -17,14 +17,14 @@
  */
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 /**
  *
  * @param props text field props.
  * @returns wrapped mui TextField, that disable mindplot keyboard events on focus and enable it on blur
  */
-const Input = (props: TextFieldProps) => {
+const Input = (props: TextFieldProps): ReactElement => {
   useEffect(() => {
     return () => DesignerKeyboard.resume();
   }, []);

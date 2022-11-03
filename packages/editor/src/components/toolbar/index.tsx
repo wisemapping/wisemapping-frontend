@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -31,7 +31,7 @@ import ActionConfig from '../../classes/action/action-config';
  * @param props.configuration the configuration
  * @returns common button menu entry that uses the onClick of the configuration.
  */
-export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
+export const ToolbarButtonOption = (props: { configuration: ActionConfig }): ReactElement => {
   const selected = props.configuration.selected && props.configuration.selected();
   return (
     <Tooltip
@@ -87,7 +87,7 @@ export const ToolbarSubmenu = (props: {
   configuration: ActionConfig;
   vertical?: boolean;
   elevation?: number;
-}) => {
+}): ReactElement => {
   const [open, setOpen] = useState(false);
   const itemRef = useRef(null);
 
@@ -158,7 +158,7 @@ export const ToolbarMenuItem = (props: {
   configuration: ActionConfig | null;
   vertical?: boolean;
   elevation?: number;
-}) => {
+}): ReactElement => {
   if (props.configuration === null)
     return (
       <Divider
@@ -209,7 +209,7 @@ const Toolbar = (props: {
   configurations: ActionConfig[];
   position?: ToolbarPosition;
   rerender?: number;
-}) => {
+}): ReactElement => {
   const position = props.position || defaultPosition;
   return (
     <AppBar
