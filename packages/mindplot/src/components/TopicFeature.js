@@ -53,7 +53,15 @@ const TopicFeatureFactory = {
     const { icon: Icon } = TopicFeatureFactory._featuresMetadataById.filter(
       (elem) => elem.id === model.getType(),
     )[0];
-    return new Icon(topic, model, readOnly);
+
+    // Temporal catch to idenfify bug. Please, remove.
+    let result;
+    try {
+      result = new Icon(topic, model, readOnly);
+    } catch (e) {
+      throw new Error(`${e} - ${JSON.stringify(model)}`);
+    }
+    return result;
   },
 };
 
