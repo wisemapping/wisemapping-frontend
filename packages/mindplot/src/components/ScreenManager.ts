@@ -99,18 +99,17 @@ class ScreenManager {
 
   private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
 
-  // the received type was changed from MouseEvent to "any", because we must support touch events
-  getWorkspaceMousePosition(event: any) {
-    let x;
-    let y;
+  getWorkspaceMousePosition(event: MouseEvent | TouchEvent): Point {
+    let x: number;
+    let y: number;
 
     if (this.mouseEvents.includes(event.type)) {
       // Retrieve current mouse position.
-      x = event.clientX;
-      y = event.clientY;
+      x = (event as MouseEvent).clientX;
+      y = (event as MouseEvent).clientY;
     } else if (this.tocuchEvents.includes(event.type)) {
-      x = event.touches[0].clientX;
-      y = event.touches[0].clientY;
+      x = (event as TouchEvent).touches[0].clientX;
+      y = (event as TouchEvent).touches[0].clientY;
     }
 
     // if value is zero assert throws error
@@ -138,11 +137,11 @@ class ScreenManager {
     return new Point(x, y);
   }
 
-  getContainer() {
+  getContainer(): JQuery {
     return this._divContainer;
   }
 
-  setOffset(x: number, y: number) {
+  setOffset(x: number, y: number): void {
     this._padding.x = x;
     this._padding.y = y;
   }

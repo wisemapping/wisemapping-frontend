@@ -21,6 +21,7 @@ import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
 import WidgetManager from './WidgetManager';
+import ReadOnlyWidgetManager from './ReadOnlyWidgetManager';
 
 let designer: Designer;
 
@@ -35,8 +36,11 @@ export function buildDesigner(options: DesignerOptions): Designer {
   const persistence = options.persistenceManager;
   $assert(persistence, 'persistence must be defined');
   PersistenceManager.init(persistence);
-  const widgetManager = options.widgetManager ? options.widgetManager : new WidgetManager();
+
+  // If not manager was specifed, use the readonly one.
+  const widgetManager = options.widgetManager ? options.widgetManager : new ReadOnlyWidgetManager();
   WidgetManager.init(widgetManager);
+
   return designer;
 }
 

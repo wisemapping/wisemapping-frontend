@@ -6,9 +6,9 @@ import NoteIcon from './NoteIcon';
 import Topic from './Topic';
 import { $msg } from './Messages';
 
-class WidgetManager {
+abstract class WidgetManager {
   // eslint-disable-next-line no-use-before-define
-  static _instance: WidgetManager;
+  private static _instance: WidgetManager;
 
   static init = (instance: WidgetManager) => {
     this._instance = instance;
@@ -18,7 +18,7 @@ class WidgetManager {
     return this._instance;
   }
 
-  private createTooltip(mindmapElement, title, linkModel: LinkModel, noteModel: NoteModel) {
+  private createTooltip(mindmapElement, title: string, linkModel: LinkModel, noteModel: NoteModel) {
     const webcomponentShadowRoot = $($('#mindmap-comp')[0].shadowRoot);
     let tooltip = webcomponentShadowRoot.find('#mindplot-svg-tooltip');
     if (!tooltip.length) {
@@ -75,11 +75,11 @@ class WidgetManager {
     this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
   }
 
-  createTooltipForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
+  createTooltipForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
     this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
   }
 
-  configureEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
+  configureEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void {
     const htmlImage = linkIcon.getElement().peer;
     htmlImage.addEvent('click', (evt) => {
       this.showEditorForLink(topic, linkModel, linkIcon);
@@ -87,7 +87,7 @@ class WidgetManager {
     });
   }
 
-  configureEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
+  configureEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
     const htmlImage = noteIcon.getElement().peer;
     htmlImage.addEvent('click', (evt) => {
       this.showEditorForNote(topic, noteModel, noteIcon);
@@ -95,13 +95,9 @@ class WidgetManager {
     });
   }
 
-  showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    console.log('Show link editor not yet implemented');
-  }
+  abstract showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void;
 
-  showEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
-    console.log('Show note editor not yet implemented');
-  }
+  abstract showEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void;
 }
 
 export default WidgetManager;
