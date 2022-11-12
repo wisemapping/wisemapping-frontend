@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React, { useState } from 'react';
-import { Notifier } from './styled';
+import { CloseButton, InfoDialog, InfoDialogContent, Notifier } from './styled';
 import { useIntl } from 'react-intl';
 
 import CloseDialogSvg from '../../../images/close-dialog-icon.svg';
@@ -29,7 +29,6 @@ export type FooterPropsType = {
 
 const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactElement => {
   const intl = useIntl();
-  const [dialogClass, setDialogClass] = useState('tryInfoPanel');
 
   let msgExt, msg: string;
   if (capability.mode !== 'viewonly' && capability.mode !== 'showcase' && capability.isMobile) {
@@ -68,30 +67,28 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
     });
   }
 
-  // if the toolbar is present, the alert must not overlap
-  const alertTopAdjustmentStyle = 'tryInfoPanelWithToolbar';
-
+  const [open, setOpen] = useState(msgExt || message);
   return (
     <>
       <Notifier id="headerNotifier"></Notifier>
-      {(msgExt || message) && (
-        <div className={dialogClass + ' ' + alertTopAdjustmentStyle}>
-          <div className="tryInfoPanelInner">
-            <div className="closeButton">
+      {open && (
+        <InfoDialog>
+          <InfoDialogContent>
+            <CloseButton>
               <button
                 onClick={(e) => {
-                  setDialogClass('tryInfoPanelClosed');
+                  setOpen(false);
                   e.preventDefault();
                   e.stopPropagation();
                 }}
               >
                 <img src={CloseDialogSvg} />
               </button>
-            </div>
+            </CloseButton>
             {msgExt && <p>{`${msg} ${msgExt}`}</p>}
             {message && <p>{message}</p>}
-          </div>
-        </div>
+          </InfoDialogContent>
+        </InfoDialog>
       )}
     </>
   );

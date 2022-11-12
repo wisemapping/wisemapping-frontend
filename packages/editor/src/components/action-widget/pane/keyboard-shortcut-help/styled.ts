@@ -1,0 +1,35 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+import styled from 'styled-components';
+
+export const ShortcutsContainer = styled.div`
+  font-size: 13px;
+  width: 100%;
+  & td {
+    padding: 3px;
+    white-space: nowrap;
+  }
+  & th {
+    padding: 5px;
+    white-space: nowrap;
+  }
+  & th {
+    background-color: #000000;
+    color: #ffffff;
+  }
+`;

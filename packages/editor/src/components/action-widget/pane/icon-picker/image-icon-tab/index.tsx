@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import iconGroups from './iconGroups.json';
 import { SvgImageIcon } from '@wisemapping/mindplot';
 import NodeProperty from '../../../../../classes/model/node-property';
+import { SvgIcon } from './styled';
 
 type IconImageTab = {
   iconModel: NodeProperty<string>;
@@ -14,8 +15,7 @@ const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement =
       {iconGroups.map((family, i) => (
         <span key={i}>
           {family.icons.map((icon: string) => (
-            <img
-              className="panelIcon"
+            <SvgIcon
               key={icon}
               src={SvgImageIcon.getImageUrl(icon)}
               onClick={() => {

@@ -17,10 +17,11 @@
  */
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { ShortcutsContainer } from './styled';
 
 const KeyboardShorcutsHelp = (): ReactElement => {
   return (
-    <div id="keyboardTable">
+    <ShortcutsContainer>
       <table>
         <colgroup>
           <col width="40%" />
@@ -247,7 +248,7 @@ const KeyboardShorcutsHelp = (): ReactElement => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </ShortcutsContainer>
   );
 };
 export default KeyboardShorcutsHelp;
