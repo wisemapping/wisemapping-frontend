@@ -95,7 +95,7 @@ const AppBar = ({
       onClick: () => history.back(),
     },
     {
-      render: () => <img src={LogoTextBlackSvg} />,
+      render: () => <img src={LogoTextBlackSvg} aria-label="WiseMappping" />,
       visible: !capability.isHidden('appbar-title'),
     },
     {

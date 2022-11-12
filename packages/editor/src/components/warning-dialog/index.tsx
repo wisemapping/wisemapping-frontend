@@ -81,6 +81,8 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
                   e.preventDefault();
                   e.stopPropagation();
                 }}
+                name="close"
+                aria-label="Close"
               >
                 <img src={CloseDialogSvg} />
               </button>
