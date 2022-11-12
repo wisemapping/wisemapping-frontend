@@ -233,6 +233,12 @@
       "value": "Toutes les cartes sélectionnées seront supprimées"
     }
   ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Chargement ..."
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,

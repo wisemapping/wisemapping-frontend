@@ -227,6 +227,12 @@
       "value": "Todos los mapas seleccionados serán eliminados"
     }
   ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Cargando ..."
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,

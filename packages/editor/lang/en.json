@@ -122,6 +122,9 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
   },
+  "icon-picker.show-images": {
+    "defaultMessage": "Show images"
+  },
   "link.help_text": {
     "defaultMessage": "Address is not valid"
   },

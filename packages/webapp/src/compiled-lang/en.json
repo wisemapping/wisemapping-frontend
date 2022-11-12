@@ -233,6 +233,12 @@
       "value": "All selected maps will be deleted"
     }
   ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Loading ..."
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -446,7 +452,7 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "Import failed: "
+      "value": "Import error "
     },
     {
       "type": 1,
@@ -629,12 +635,6 @@
     {
       "type": 0,
       "value": "Forgot Password ?"
-    }
-  ],
-  "login.hsqldbcofig": [
-    {
-      "type": 0,
-      "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
     }
   ],
   "login.page-title": [

@@ -515,5 +515,8 @@
     },
     "footer.team": {
         "defaultMessage": "Equipe"
+    },
+    "dialog.loading": {
+        "defaultMessage": "Chargement ..."
     }
 }

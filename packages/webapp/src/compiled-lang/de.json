@@ -233,6 +233,12 @@
       "value": "Alle ausgewählten Mindmaps werden gelöscht"
     }
   ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Wird geladen ..."
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,

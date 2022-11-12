@@ -512,5 +512,8 @@
     },
     "footer.team": {
         "defaultMessage": "Team"
+    },
+    "dialog.loading": {
+        "defaultMessage": "Wird geladen ..."
     }
 }

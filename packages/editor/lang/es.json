@@ -211,5 +211,8 @@
     },
     "shortcut-help-pane.undo": {
         "defaultMessage": "Deshacer cambios"
+    },
+    "icon-picker.show-images": {
+        "defaultMessage": "Mostrar imagenes"
     }
 }

@@ -217,5 +217,8 @@
     },
     "shortcut-help-pane.undo": {
       "defaultMessage": "Rückgängerausgabe"
+    },
+    "icon-picker.show-images": {
+      "defaultMessage": "Bilder anzeigen"
     }
 }

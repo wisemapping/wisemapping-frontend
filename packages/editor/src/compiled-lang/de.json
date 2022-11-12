@@ -251,6 +251,12 @@
       "value": "Diese Edition zeigt einige der Mindmap-Funktionen!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Bilder anzeigen"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,

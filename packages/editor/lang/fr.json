@@ -211,5 +211,8 @@
     },
     "shortcut-help-pane.undo": {
         "defaultMessage": "Annuler l'édition"
+    },
+    "icon-picker.show-images": {
+        "defaultMessage": "Afficher les images"
     }
 }

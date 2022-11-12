@@ -488,5 +488,8 @@
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Regístrese para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
+    },
+    "dialog.loading": {
+      "defaultMessage": "Cargando ..."
     }
 }

@@ -245,6 +245,12 @@
       "value": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Mostrar imagenes"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,

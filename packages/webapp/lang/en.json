@@ -116,6 +116,9 @@
   "deletem.title": {
     "defaultMessage": "All selected maps will be deleted"
   },
+  "dialog.loading": {
+    "defaultMessage": "Loading ..."
+  },
   "duplicate.title": {
     "defaultMessage": "Duplicate"
   },
@@ -152,6 +155,9 @@
   "footer.contactus": {
     "defaultMessage": "Contact Us"
   },
+  "footer.donations": {
+    "defaultMessage": "Donations"
+  },
   "footer.faq": {
     "defaultMessage": "F.A.Q."
   },
@@ -172,9 +178,6 @@
   },
   "footer.team": {
     "defaultMessage": "Our Team"
-  },
-  "footer.donations": {
-    "defaultMessage": "Donations"
   },
   "footer.termsandconditions": {
     "defaultMessage": "Term And Conditions"
@@ -221,11 +224,11 @@
   "import.description": {
     "defaultMessage": "You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import."
   },
+  "import.error-file": {
+    "defaultMessage": "Import error {error}"
+  },
   "import.title": {
     "defaultMessage": "Import existing mindmap"
-  },
-  "import.error-file": {
-    "defaultMessage": "Import failed: {error}"
   },
   "info.basic-info": {
     "defaultMessage": "Basic Info"
@@ -310,10 +313,6 @@
   },
   "login.forgotpwd": {
     "defaultMessage": "Forgot Password ?"
-  },
-  "login.hsqldbcofig": {
-    "defaultMessage": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL",
-    "description": "Missing production database configured"
   },
   "login.page-title": {
     "defaultMessage": "Login | WiseMapping"
