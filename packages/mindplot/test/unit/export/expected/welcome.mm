@@ -45,7 +45,6 @@
             </node>
         </node>
         <node ID="ID_6" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Mind Mapping">
-            <icon BUILTIN="thumb_thumb_up"/>
             <node ID="ID_7" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Share with Collegues"/>
             <node ID="ID_8" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Online"/>
             <node ID="ID_9" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Anyplace, Anytime"/>

@@ -1,19 +1,5 @@
 [
     {
-        "id": "thumb",
-        "icons": [
-            "thumb_thumb_up",
-            "thumb_thumb_down"
-        ]
-    },
-    {
-        "id": "tick",
-        "icons": [
-            "tick_tick",
-            "tick_cross"
-        ]
-    },
-    {
         "id": "onoff",
         "icons": [
             "onoff_add",
