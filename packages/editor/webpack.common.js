@@ -11,8 +11,7 @@ module.exports = {
   },
   stats: {
     errorDetails: true,
-  },
-  entry: {
+  }, entry: {
     'editor.bundle': path.join(__dirname, 'src', 'index.tsx'),
   },
   mode: 'development',
