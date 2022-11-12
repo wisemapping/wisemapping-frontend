@@ -1,5 +1,5 @@
 import React, { ReactElement, Suspense } from 'react';
-import { IntlProvider } from 'react-intl';
+import { FormattedMessage, IntlProvider } from 'react-intl';
 import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
@@ -67,15 +67,35 @@ const App = (): ReactElement => {
                   <Route path="/c/forgot-password" component={ForgotPasswordPage} />
                   <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
                   <Route exact path="/c/maps/">
-                    <Suspense fallback={<div></div>}>
+                    <Suspense
+                      fallback={
+                        <div>
+                          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                        </div>
+                      }
+                    >
                       <MapsPage />
                     </Suspense>
                   </Route>
                   <Route exact path="/c/maps/:id/edit">
-                    <EnhacedEditorPage isTryMode={false} />
+                    <Suspense
+                      fallback={
+                        <div>
+                          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                        </div>
+                      }
+                    >
+                      <EnhacedEditorPage isTryMode={false} />
+                    </Suspense>
                   </Route>
                   <Route exact path="/c/maps/:id/try">
-                    <Suspense fallback={<div></div>}>
+                    <Suspense
+                      fallback={
+                        <div>
+                          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                        </div>
+                      }
+                    >
                       <EnhacedEditorPage isTryMode={true} />
                     </Suspense>
                   </Route>
