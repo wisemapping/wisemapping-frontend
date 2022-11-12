@@ -69,5 +69,20 @@
     "thumb_thumb_down": "👎",
     "thumb_thumb_up": "👍",
     "tick_tick": "✅",
-    "tick_cross": "❎"
+    "tick_cross": "❎",
+    "arrowc_rotate_anticlockwise": "↪️",
+    "arrowc_rotate_clockwise": "↩️",
+    "arrowc_turn_left": "⬅️",
+    "arrowc_turn_right": "➡️",
+    "mail_envelop": "✉️",
+    "mail_mailbox": "📫",
+    "mail_edit": "📧",
+    "mail_list": "🗒️",
+    "hard_cd": "💿",
+    "hard_computer": "🖥️",
+    "hard_controller": "🎮",
+    "hard_driver_disk": "💾",
+    "hard_printer": "🖨️",
+    "hard_webcam": "📷",
+    "hard_microphone": "🎤"
 }

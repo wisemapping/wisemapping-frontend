@@ -11,7 +11,6 @@
                     </body>
                 </html>
             </richcontent>
-            <icon BUILTIN="hard_computer"/>
             <arrowlink DESTINATION="ID_11" STARTARROW="Default"/>
         </node>
         <node ID="ID_11" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Try it Now!">
@@ -40,9 +39,7 @@
                 <node ID="ID_18" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Topic Color"/>
             </node>
             <node ID="ID_20" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Icons"/>
-            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes">
-                <icon BUILTIN="arrowc_turn_left"/>
-            </node>
+            <node ID="ID_21" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="History Changes"/>
         </node>
         <node ID="ID_6" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Mind Mapping">
             <node ID="ID_7" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Share with Collegues"/>
@@ -56,7 +53,6 @@
             <node ID="ID_5" POSITION="right" STYLE="fork" COLOR="#525c61" TEXT="Visual "/>
         </node>
         <node ID="ID_27" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Install In Your Server">
-            <icon BUILTIN="hard_computer"/>
             <node ID="ID_29" POSITION="left" STYLE="fork" COLOR="#525c61" TEXT="Open Source" LINK="http://www.wisemapping.org/">
                 <icon BUILTIN="soft_penguin"/>
             </node>
@@ -65,9 +61,7 @@
         <node ID="ID_32" POSITION="left" STYLE="fork" TEXT="Collaborate">
             <node ID="ID_33" POSITION="left" STYLE="fork" TEXT="Embed"/>
             <node ID="ID_34" POSITION="left" STYLE="fork" TEXT="Publish"/>
-            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition">
-                <icon BUILTIN="mail_envelop"/>
-            </node>
+            <node ID="ID_35" POSITION="left" STYLE="fork" TEXT="Share for Edition"/>
         </node>
     </node>
 </map>
