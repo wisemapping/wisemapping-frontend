@@ -59,6 +59,14 @@ const keyTooltip = (msg: string, key: string): string => {
   return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
 };
 
+const StarredOnStyle = {
+  color: '#FDDA0D',
+};
+
+const StarredOffStyle = {
+  color: 'gray',
+};
+
 const AppBar = ({
   model,
   mapInfo,
@@ -180,9 +188,7 @@ const AppBar = ({
           <IconButton size="small" onClick={handleStarredOnClick}>
             <StarRateRoundedIcon
               color="action"
-              style={{
-                color: isStarred ? 'yellow' : 'gray',
-              }}
+              style={isStarred ? StarredOnStyle : StarredOffStyle}
             />
           </IconButton>
         </Tooltip>
