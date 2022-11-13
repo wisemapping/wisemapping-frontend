@@ -27,6 +27,7 @@
         "@types/testing-library__cypress": "^5.0.8",
         "@typescript-eslint/eslint-plugin": "^5.41.0",
         "@typescript-eslint/parser": "^5.41.0",
+        "@welldone-software/why-did-you-render": "^7.0.1",
         "clean-webpack-plugin": "^3.0.05.10.11",
         "copy-webpack-plugin": "^7.0.0",
         "cypress": "^10.11.0",
