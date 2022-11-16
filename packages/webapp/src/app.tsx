@@ -1,6 +1,6 @@
-import React, { ReactElement, Suspense } from 'react';
+import React, { ReactElement, Suspense, useEffect } from 'react';
 import { FormattedMessage, IntlProvider } from 'react-intl';
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
@@ -41,6 +41,15 @@ const queryClient = new QueryClient({
   },
 });
 
+// eslint-disable-next-line react/prop-types
+function Redirect({ to }) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate(to);
+  });
+  return null;
+}
+
 const App = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
   const EnhacedEditorPage = withSessionExpirationHandling(EditorPage);
@@ -57,49 +66,36 @@ const App = (): ReactElement => {
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <Router>
-                <Switch>
-                  <Route exact path="/">
-                    <Redirect to="/c/login" />
-                  </Route>
-                  <Route path="/c/login" component={LoginPage} />
-                  <Route path="/c/registration" component={RegistationPage} />
-                  <Route path="/c/registration-success" component={RegistrationSuccessPage} />
-                  <Route path="/c/forgot-password" component={ForgotPasswordPage} />
-                  <Route path="/c/forgot-password-success" component={ForgotPasswordSuccessPage} />
-                  <Route exact path="/c/maps/">
-                    <Suspense
-                      fallback={
-                        <div>
-                          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                        </div>
-                      }
-                    >
-                      <MapsPage />
-                    </Suspense>
-                  </Route>
-                  <Route exact path="/c/maps/:id/edit">
-                    <Suspense
-                      fallback={
-                        <div>
-                          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                        </div>
-                      }
-                    >
-                      <EnhacedEditorPage isTryMode={false} />
-                    </Suspense>
-                  </Route>
-                  <Route exact path="/c/maps/:id/try">
-                    <Suspense
-                      fallback={
-                        <div>
-                          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                        </div>
-                      }
-                    >
-                      <EnhacedEditorPage isTryMode={true} />
-                    </Suspense>
-                  </Route>
-                </Switch>
+                <Routes>
+                  <Route path="/" element={<Redirect to="/c/login" />} />
+                  <Route path="/c/login" element={<LoginPage />} />
+                  <Route path="/c/registration" element={<RegistationPage />} />
+                  <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
+                  <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
+                  <Route
+                    path="/c/forgot-password-success"
+                    element={<ForgotPasswordSuccessPage />}
+                  />
+                  <Route
+                    path="/c/maps/"
+                    element={
+                      <Suspense
+                        fallback={
+                          <div>
+                            <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                          </div>
+                        }
+                      >
+                        <MapsPage />
+                      </Suspense>
+                    }
+                  />
+                  <Route
+                    path="/c/maps/:id/edit"
+                    element={<EnhacedEditorPage isTryMode={false} />}
+                  />
+                  <Route path="/c/maps/:id/try" element={<EnhacedEditorPage isTryMode={true} />} />
+                </Routes>
               </Router>
             </ThemeProvider>
           </StyledEngineProvider>

@@ -64,7 +64,7 @@ abstract class PersistenceManager {
   load(mapId: string): Promise<Mindmap> {
     $assert(mapId, 'mapId can not be null');
     return this.loadMapDom(mapId).then((document) => {
-      console.log(`Loding map with is ${mapId}}`);
+      console.log(`Loading map with is ${mapId}}`);
       return PersistenceManager.loadFromDom(mapId, document);
     });
   }

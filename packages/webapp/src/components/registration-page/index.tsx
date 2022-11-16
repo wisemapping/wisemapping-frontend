@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Client, { ErrorInfo } from '../../classes/client';
 import FormContainer from '../layout/form-container';
 
@@ -33,14 +33,14 @@ const RegistrationForm = () => {
   const [error, setError] = useState<ErrorInfo>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [captcha, setCaptcha] = useState<any>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const intl = useIntl();
 
   const Client: Client = useSelector(activeInstance);
   const mutation = useMutation<void, ErrorInfo, Model>(
     (model: Model) => Client.registerNewUser({ ...model }),
     {
-      onSuccess: () => history.push('/c/registration-success'),
+      onSuccess: () => navigate('/c/registration-success'),
       onError: (error) => {
         setError(error);
         captcha.reset();

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
 import Client, { ErrorInfo } from '../../classes/client';
 
 import Header from '../layout/header';
@@ -16,18 +15,19 @@ import ReactGA from 'react-ga4';
 
 import Typography from '@mui/material/Typography';
 import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<ErrorInfo>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const intl = useIntl();
 
   const service: Client = useSelector(activeInstance);
   const mutation = useMutation<void, ErrorInfo, string>(
     (email: string) => service.resetPassword(email),
     {
-      onSuccess: () => history.push('/c/forgot-password-success'),
+      onSuccess: () => navigate('/c/forgot-password-success'),
       onError: (error) => {
         setError(error);
       },
