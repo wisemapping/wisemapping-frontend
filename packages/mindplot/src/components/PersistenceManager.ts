@@ -61,10 +61,12 @@ abstract class PersistenceManager {
     return result;
   }
 
-  load(mapId: string) {
+  load(mapId: string): Promise<Mindmap> {
     $assert(mapId, 'mapId can not be null');
-    const domDocument = this.loadMapDom(mapId);
-    return PersistenceManager.loadFromDom(mapId, domDocument);
+    return this.loadMapDom(mapId).then((document) => {
+      console.log(`Loding map with is ${mapId}}`);
+      return PersistenceManager.loadFromDom(mapId, document);
+    });
   }
 
   triggerError(error: PersistenceError) {
@@ -75,7 +77,7 @@ abstract class PersistenceManager {
     this._errorHandlers.push(callback);
   }
 
-  removeErrorHandler(callback?: PersistenceErrorCallback) {
+  removeErrorHandler(callback?: PersistenceErrorCallback): void {
     if (!callback) {
       this._errorHandlers.length = 0;
     }
@@ -87,7 +89,7 @@ abstract class PersistenceManager {
 
   abstract discardChanges(mapId: string): void;
 
-  abstract loadMapDom(mapId: string): Document;
+  abstract loadMapDom(mapId: string): Promise<Document>;
 
   abstract saveMapXml(mapId: string, mapXml: Document, pref?, saveHistory?: boolean, events?);
 

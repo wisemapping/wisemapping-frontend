@@ -100,9 +100,9 @@ class MindplotWebComponent extends HTMLElement {
    * Load map in designer throught persistence manager instance
    * @param id the map id to be loaded.
    */
-  loadMap(id: string) {
+  async loadMap(id: string): Promise<void> {
     const instance = PersistenceManager.getInstance();
-    this._mindmap = instance.load(id);
+    this._mindmap = await instance.load(id);
     this._designer.loadMap(this._mindmap);
   }
 

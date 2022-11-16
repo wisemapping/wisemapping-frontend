@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import $ from 'jquery';
 import { $msg } from './Messages';
 import PersistenceManager, { PersistenceError } from './PersistenceManager';
 
@@ -157,31 +156,24 @@ class RESTPersistenceManager extends PersistenceManager {
     return { severity, message };
   }
 
-  loadMapDom(mapId: string): Document {
-    let xml: Document;
-    $.ajax({
-      url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
+  loadMapDom(mapId: string): Promise<Document> {
+    const url = `${this.documentUrl.replace('{id}', mapId)}/xml`;
+    return fetch(url, {
       method: 'get',
-      async: false,
       headers: {
         'Content-Type': 'text/plain',
         Accept: 'application/xml',
         'X-CSRF-Token': this.getCSRFToken(),
       },
-      success(responseText) {
-        xml = responseText;
-      },
-      error(xhr, ajaxOptions, thrownError) {
-        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
-      },
-    });
-
-    // If I could not load it from a file, hard code one.
-    if (xml == null) {
-      throw new Error(`Map with id ${mapId} could not be loaded`);
-    }
-
-    return xml;
+    })
+      .then((response: Response) => {
+        if (!response.ok) {
+          console.error(`load error: ${response.status}`);
+          throw new Error(`load error: ${response.status}, ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
   }
 }
 

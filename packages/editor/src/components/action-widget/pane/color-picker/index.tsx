@@ -32,7 +32,7 @@ const ColorPicker = (props: {
     <Box component="div" sx={{ m: 2 }}>
       <ReactColorPicker
         color={props.colorModel.getValue() || '#fff'}
-        onChangeComplete={(color) => {
+        onChangeComplete={(color: { hex: string }) => {
           props.colorModel.setValue(color.hex);
           props.closeModal();
         }}
@@ -40,7 +40,7 @@ const ColorPicker = (props: {
         width={216}
         circleSpacing={9}
         circleSize={18}
-      ></ReactColorPicker>
+      />
     </Box>
   );
 };
