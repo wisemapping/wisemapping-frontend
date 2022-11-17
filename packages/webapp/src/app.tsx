@@ -16,8 +16,8 @@ import ReactGA from 'react-ga4';
 import AppConfig from './classes/app-config';
 import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';
 import RegistrationSuccessPage from './components/registration-success-page';
-import EditorPage from './components/editor-page';
 
+const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
 
 declare module '@mui/styles/defaultTheme' {

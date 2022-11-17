@@ -12,7 +12,7 @@ import InfoDialog from './info-dialog';
 import DeleteMultiselectDialog from './delete-multiselect-dialog';
 import ExportDialog from './export-dialog';
 import ShareDialog from './share-dialog';
-// import LabelDialog from './label-dialog';
+import LabelDialog from './label-dialog';
 import ReactGA from 'react-ga4';
 
 export type BasicMapInfo = {
@@ -76,7 +76,7 @@ const ActionDispatcher = ({
         <ExportDialog onClose={handleOnClose} mapId={mapsId[0]} enableImgExport={fromEditor} />
       )}
       {action === 'share' && <ShareDialog onClose={handleOnClose} mapId={mapsId[0]} />}
-      {/* {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />} */}
+      {action === 'label' && <LabelDialog onClose={handleOnClose} mapsId={mapsId} />}
     </span>
   );
 };
