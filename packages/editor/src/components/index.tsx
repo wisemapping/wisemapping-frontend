@@ -79,10 +79,12 @@ const Editor = ({
   const capability = new Capability(options.mode, mapInfo.isLocked());
 
   const mindplotRef = useCallback((component: MindplotWebComponent) => {
-    // Initialized model ...
     const model = new Model(component);
-    model.loadMindmap(mapInfo.getId(), persistenceManager, widgetManager);
-    model.registerEvents(setCanvasUpdate, capability);
+
+    // Force refresh after map load ...
+    model.loadMindmap(mapInfo.getId(), persistenceManager, widgetManager).then(() => {
+      setCanvasUpdate(Date.now());
+    });
     setModel(model);
   }, []);
 
@@ -137,7 +139,7 @@ const Editor = ({
           message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
         />
 
-        {!model && (
+        {!model?.isMapLoadded() && (
           <SpinnerCentered>
             <Vortex
               visible={true}

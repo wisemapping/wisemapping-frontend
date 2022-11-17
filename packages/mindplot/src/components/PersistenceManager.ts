@@ -61,12 +61,11 @@ abstract class PersistenceManager {
     return result;
   }
 
-  load(mapId: string): Promise<Mindmap> {
+  async load(mapId: string): Promise<Mindmap> {
     $assert(mapId, 'mapId can not be null');
-    return this.loadMapDom(mapId).then((document) => {
-      console.log(`Loading map with is ${mapId}}`);
-      return PersistenceManager.loadFromDom(mapId, document);
-    });
+    // eslint-disable-next-line arrow-body-style
+    const document = await this.loadMapDom(mapId);
+    return PersistenceManager.loadFromDom(mapId, document);
   }
 
   triggerError(error: PersistenceError) {

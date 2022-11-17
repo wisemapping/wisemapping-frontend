@@ -35,6 +35,10 @@ class Workspace {
 
   private _visibleAreaSize: SizeType;
 
+  private _renderQueue: Element2D[];
+
+  private queueRenderEnabled: boolean;
+
   constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
     // Create a suitable container ...
     $assert(screenManager, 'Div container can not be null');
@@ -66,6 +70,8 @@ class Workspace {
     });
 
     this.setZoom(zoom, true);
+
+    this._renderQueue = [];
   }
 
   private _adjustWorkspace(): void {
@@ -97,11 +103,50 @@ class Workspace {
   }
 
   append(shape: Element2D): void {
+    if (this.queueRenderEnabled) {
+      this._renderQueue.push(shape);
+    } else {
+      this.appendInternal(shape);
+    }
+  }
+
+  private appendInternal(shape: Element2D): void {
     if ($defined(shape.addToWorkspace)) {
       shape.addToWorkspace(this);
     } else {
       this._workspace.append(shape);
     }
+  }
+
+  enableQueueRender(value: boolean): Promise<void> {
+    this.queueRenderEnabled = value;
+
+    let result = Promise.resolve();
+    if (!value) {
+      result = this.processRenderQueue(this._renderQueue.reverse(), 300);
+    }
+    return result;
+  }
+
+  private processRenderQueue(renderQueue: Element2D[], batch: number): Promise<void> {
+    function delay(t: number) {
+      return new Promise((resolve) => setTimeout(resolve, t));
+    }
+
+    let result: Promise<void>;
+    if (renderQueue.length > 0) {
+      result = new Promise((resolve: (queue: Element2D[]) => void) => {
+        for (let i = 0; i < batch && renderQueue.length > 0; i++) {
+          const elem = renderQueue.pop();
+          this.appendInternal(elem);
+        }
+
+        resolve(renderQueue);
+      }).then((queue) => delay(30).then(() => this.processRenderQueue(queue, batch)));
+    } else {
+      result = Promise.resolve();
+    }
+    return result;
   }
 
   removeChild(shape: Element2D): void {

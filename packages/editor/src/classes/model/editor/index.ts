@@ -32,7 +32,7 @@ class Editor {
   }
 
   isMapLoadded(): boolean {
-    return this.component?.getDesigner()?.getMindmap() != null;
+    return this.component.isLoaded();
   }
 
   save(minor: boolean): void {
@@ -57,9 +57,9 @@ class Editor {
     mapId: string,
     persistenceManager: PersistenceManager,
     widgetManager: WidgetManager,
-  ): void {
+  ): Promise<void> {
     this.component.buildDesigner(persistenceManager, widgetManager);
-    this.component.loadMap(mapId);
+    return this.component.loadMap(mapId);
   }
 
   registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability): void {

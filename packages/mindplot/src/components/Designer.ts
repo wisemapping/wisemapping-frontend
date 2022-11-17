@@ -577,13 +577,11 @@ class Designer extends Events {
     return { zoom: model.getZoom() };
   }
 
-  /**
-   * @param {mindplot.Mindmap} mindmap
-   * @throws will throw an error if mindmapModel is null or undefined
-   */
-  loadMap(mindmap: Mindmap): void {
+  loadMap(mindmap: Mindmap): Promise<void> {
     $assert(mindmap, 'mindmapModel can not be null');
     this._mindmap = mindmap;
+
+    this._workspace.enableQueueRender(true);
 
     // Init layout manager ...
     const size = { width: 25, height: 25 };
@@ -601,23 +599,29 @@ class Designer extends Events {
 
     // Building node graph ...
     const branches = mindmap.getBranches();
+
+    const nodesGraph: Topic[] = [];
     branches.forEach((branch) => {
       const nodeGraph = this.nodeModelToTopic(branch);
-      nodeGraph.setBranchVisibility(true);
+      nodesGraph.push(nodeGraph);
     });
-
-    // Connect relationships ...
-    const relationships = mindmap.getRelationships();
-    relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
     // Place the focus on the Central Topic
     const centralTopic = this.getModel().getCentralTopic();
     this.goToNode(centralTopic);
 
-    // Finally, sort the map ...
-    EventBus.instance.fireEvent('forceLayout');
+    return this._workspace.enableQueueRender(false).then(() => {
+      // Connect relationships ...
+      const relationships = mindmap.getRelationships();
+      relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
-    this.fireEvent('loadSuccess');
+      // Render nodes ...
+      nodesGraph.forEach((topic) => topic.setVisibility(true));
+
+      // Finally, sort the map ...
+      EventBus.instance.fireEvent('forceLayout');
+      this.fireEvent('loadSuccess');
+    });
   }
 
   getMindmap(): Mindmap {

@@ -3,7 +3,6 @@ import buildDesigner from './DesignerBuilder';
 import DesignerOptionsBuilder from './DesignerOptionsBuilder';
 import EditorRenderMode from './EditorRenderMode';
 import LocalStorageManager from './LocalStorageManager';
-import Mindmap from './model/Mindmap';
 import PersistenceManager from './PersistenceManager';
 import WidgetManager from './WidgetManager';
 import mindplotStyles from './styles/mindplot-styles';
@@ -27,11 +26,11 @@ export type MindplotWebComponentInterface = {
 class MindplotWebComponent extends HTMLElement {
   private _shadowRoot: ShadowRoot;
 
-  private _mindmap: Mindmap;
-
   private _designer: Designer;
 
   private saveRequired: boolean;
+
+  private _isLoaded: boolean;
 
   constructor() {
     super();
@@ -77,6 +76,16 @@ class MindplotWebComponent extends HTMLElement {
     });
 
     this.registerShortcuts();
+
+    this._designer.addEvent('loadSuccess', (): void => {
+      this._isLoaded = true;
+    });
+
+    return this._designer;
+  }
+
+  isLoaded(): boolean {
+    return this._isLoaded;
   }
 
   private registerShortcuts() {
@@ -100,10 +109,9 @@ class MindplotWebComponent extends HTMLElement {
    * Load map in designer throught persistence manager instance
    * @param id the map id to be loaded.
    */
-  async loadMap(id: string): Promise<void> {
+  loadMap(id: string): Promise<void> {
     const instance = PersistenceManager.getInstance();
-    this._mindmap = await instance.load(id);
-    this._designer.loadMap(this._mindmap);
+    return instance.load(id).then((mindmap) => this._designer.loadMap(mindmap));
   }
 
   /**

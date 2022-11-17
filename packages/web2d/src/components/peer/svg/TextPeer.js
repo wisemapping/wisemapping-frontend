@@ -159,12 +159,7 @@ class TextPeer extends ElementPeer {
   }
 
   getWidth() {
-    let computedWidth = this._native.getBBox().width;
-    if (computedWidth === 0) {
-      const bbox = this._native.getBBox();
-      computedWidth = bbox.width;
-    }
-
+    const computedWidth = this._native.getBBox().width;
     let width = parseInt(computedWidth, 10);
     width += this._font.getWidthMargin();
     return width;
