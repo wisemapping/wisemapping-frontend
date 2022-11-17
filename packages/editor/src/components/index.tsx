@@ -18,6 +18,7 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
+import { Vortex } from 'react-loader-spinner';
 
 import { IntlProvider } from 'react-intl';
 import {
@@ -42,6 +43,7 @@ import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import MapInfo from '../classes/model/map-info';
 import EditorToolbar from './editor-toolbar';
 import ZoomPanel from './zoom-panel';
+import { SpinnerCentered } from './style';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -134,6 +136,18 @@ const Editor = ({
           capability={capability}
           message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
         />
+
+        {!model && (
+          <SpinnerCentered>
+            <Vortex
+              visible={true}
+              height="160"
+              width="160"
+              ariaLabel="vortex-loading"
+              colors={['#ffde1a', '#ffce00', '#ffa700', '#ff8d00', '#ff7400', '#ffde1a']}
+            />
+          </SpinnerCentered>
+        )}
       </IntlProvider>
     </ThemeProvider>
   );

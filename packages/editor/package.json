@@ -45,7 +45,8 @@
   "dependencies": {
     "@wisemapping/mindplot": "^5.0.15",
     "emoji-picker-react": "^4.4.4",
-    "react-color": "^2.19.3"
+    "react-color": "^2.19.3",
+    "react-loader-spinner": "^5.3.4"
   },
   "peerDependencies": {
     "@emotion/react": "^11.10.5",
