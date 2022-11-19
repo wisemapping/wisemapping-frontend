@@ -37,7 +37,7 @@ class Workspace {
 
   private _renderQueue: Element2D[];
 
-  private queueRenderEnabled: boolean;
+  private _queueRenderEnabled: boolean;
 
   constructor(screenManager: ScreenManager, zoom: number, isReadOnly: boolean) {
     // Create a suitable container ...
@@ -103,7 +103,7 @@ class Workspace {
   }
 
   append(shape: Element2D): void {
-    if (this.queueRenderEnabled) {
+    if (this._queueRenderEnabled) {
       this._renderQueue.push(shape);
     } else {
       this.appendInternal(shape);
@@ -119,20 +119,23 @@ class Workspace {
   }
 
   enableQueueRender(value: boolean): Promise<void> {
-    this.queueRenderEnabled = value;
+    this._queueRenderEnabled = value;
 
     let result = Promise.resolve();
     if (!value) {
-      result = this.processRenderQueue(this._renderQueue.reverse(), 300);
+      // eslint-disable-next-line arrow-body-style
+      result = Workspace.delay(100).then(() => {
+        return this.processRenderQueue(this._renderQueue.reverse(), 300);
+      });
     }
     return result;
   }
 
-  private processRenderQueue(renderQueue: Element2D[], batch: number): Promise<void> {
-    function delay(t: number) {
-      return new Promise((resolve) => setTimeout(resolve, t));
-    }
+  private static delay(t: number) {
+    return new Promise((resolve) => setTimeout(resolve, t));
+  }
 
+  private processRenderQueue(renderQueue: Element2D[], batch: number): Promise<void> {
     let result: Promise<void>;
     if (renderQueue.length > 0) {
       result = new Promise((resolve: (queue: Element2D[]) => void) => {
@@ -142,7 +145,7 @@ class Workspace {
         }
 
         resolve(renderQueue);
-      }).then((queue) => delay(30).then(() => this.processRenderQueue(queue, batch)));
+      }).then((queue) => Workspace.delay(30).then(() => this.processRenderQueue(queue, batch)));
     } else {
       result = Promise.resolve();
     }
