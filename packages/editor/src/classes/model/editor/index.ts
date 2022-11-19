@@ -32,7 +32,7 @@ class Editor {
   }
 
   isMapLoadded(): boolean {
-    return this.component.isLoaded();
+    return this.component?.isLoaded();
   }
 
   save(minor: boolean): void {
