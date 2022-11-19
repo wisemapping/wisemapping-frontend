@@ -26,15 +26,19 @@ const LanguageMenu = (): React.ReactElement => {
   const open = Boolean(anchorEl);
   const intl = useIntl();
 
-  const mutation = useMutation((locale: LocaleCode) => client.updateAccountLanguage(locale), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('account');
-      handleClose();
+  // Todo: For some reasons, in some situations locale is null. More research needed.
+  const mutation = useMutation(
+    (locale: LocaleCode) => client.updateAccountLanguage(locale ? locale : 'en'),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('account');
+        handleClose();
+      },
+      onError: (error) => {
+        console.error(`Unexpected error ${error}`);
+      },
     },
-    onError: (error) => {
-      console.error(`Unexpected error ${error}`);
-    },
-  });
+  );
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
