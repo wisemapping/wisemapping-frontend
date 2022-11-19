@@ -82,9 +82,17 @@ const Editor = ({
     const model = new Model(component);
 
     // Force refresh after map load ...
-    model.loadMindmap(mapInfo.getId(), persistenceManager, widgetManager).then(() => {
-      setCanvasUpdate(Date.now());
-    });
+    model
+      .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
+      .then(() => {
+        setCanvasUpdate(Date.now());
+      })
+      .catch((e) => {
+        console.error(e);
+        window.newrelic?.noticeError(
+          new Error(`Unexpected error loading map ${mapInfo.getId()} = ${JSON.stringify(e)}`),
+        );
+      });
     setModel(model);
   }, []);
 

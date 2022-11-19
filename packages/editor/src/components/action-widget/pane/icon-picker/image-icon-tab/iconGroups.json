@@ -27,13 +27,9 @@
             "things_pin",
             "things_window-layout",
             "things_bubbles",
-            "object_key",
             "object_pencil",
-            "object_magnifier",
-            "object_clip",
             "object_music",
-            "object_star",
-            "object_house"
+            "object_star"
         ]
     },
     {
@@ -48,12 +44,10 @@
             "onoff_status_offline",
             "onoff_status_online",
             "money_dollar",
-            "money_euro",
             "money_coins",
             "money_ruby",
             "time_calendar",
             "time_clock",
-            "time_hourglass",
             "sign_warning",
             "sign_info",
             "sign_help",

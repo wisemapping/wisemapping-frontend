@@ -84,5 +84,11 @@
     "hard_driver_disk": "💾",
     "hard_printer": "🖨️",
     "hard_webcam": "📷",
-    "hard_microphone": "🎤"
+    "hard_microphone": "🎤",
+    "object_house": "🏠",
+    "object_magnifier": "🔍",
+    "object_key": "🔑",
+    "time_hourglass": "⌛",
+    "object_clip": "📎",
+    "money_euro": "💶"
 }
