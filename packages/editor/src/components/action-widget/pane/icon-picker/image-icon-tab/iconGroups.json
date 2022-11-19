@@ -24,12 +24,9 @@
             "hard_ipod",
             "things_address_book",
             "things_wrench",
-            "things_pin",
             "things_window-layout",
             "things_bubbles",
-            "object_pencil",
-            "object_music",
-            "object_star"
+            "object_music"
         ]
     },
     {
@@ -44,7 +41,6 @@
             "onoff_status_offline",
             "onoff_status_online",
             "money_dollar",
-            "money_coins",
             "money_ruby",
             "time_calendar",
             "time_clock",

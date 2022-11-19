@@ -12,7 +12,6 @@
         "id": "money",
         "icons": [
             "money_dollar",
-            "money_coins",
             "money_ruby"
         ]
     },
@@ -52,7 +51,6 @@
         "icons": [
             "things_address_book",
             "things_wrench",
-            "things_pin",
             "things_window-layout",
             "things_bubbles"
         ]
@@ -123,10 +121,8 @@
     {
         "id": "object",
         "icons": [
-            "object_pencil",
             "object_clip",
-            "object_music",
-            "object_star"
+            "object_music"
         ]
     },
     {
