@@ -273,14 +273,16 @@ class Workspace {
             window.document.body.style.cursor = 'move';
             // If I dont ignore touchmove events, browser console shows a lot of errors:
             // Unable to preventDefault inside passive event listener invocation.
-            if (mouseMoveEvent.type !== 'touchmove') mouseMoveEvent.preventDefault();
+            if (mouseMoveEvent.type !== 'touchmove') {
+              mouseMoveEvent.preventDefault();
+            }
 
             // Fire drag event ...
             screenManager.fireEvent('update');
             wasDragged = true;
           };
           screenManager.addEvent('mousemove', workspace._mouseMoveListener);
-          screenManager.addEvent('touchmove', workspace._mouseMoveListener);
+          // screenManager.addEvent('touchmove', workspace._mouseMoveListener);
 
           // Register mouse up listeners ...
           workspace._mouseUpListener = () => {
@@ -302,14 +304,14 @@ class Workspace {
             }
           };
           screenManager.addEvent('mouseup', workspace._mouseUpListener);
-          screenManager.addEvent('touchend', workspace._mouseUpListener);
+          // screenManager.addEvent('touchend', workspace._mouseUpListener);
         }
       } else {
         workspace._mouseUpListener();
       }
     };
     screenManager.addEvent('mousedown', mouseDownListener);
-    screenManager.addEvent('touchstart', mouseDownListener);
+    // screenManager.addEvent('touchstart', mouseDownListener);
   }
 
   getZoom() {
