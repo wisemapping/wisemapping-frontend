@@ -60,6 +60,16 @@ class Workspace {
     // Append to the workspace...
     workspace.addItAsChildTo(divContainer);
 
+    this.setZoom(zoom, true);
+
+    this._renderQueue = [];
+  }
+
+  private _adjustWorkspace(): void {
+    this.setZoom(this._zoom, false);
+  }
+
+  registerEvents() {
     // Register drag events ...
     this._registerDragEvents();
     this._eventsEnabled = true;
@@ -68,14 +78,6 @@ class Workspace {
     window.addEventListener('resize', () => {
       this._adjustWorkspace();
     });
-
-    this.setZoom(zoom, true);
-
-    this._renderQueue = [];
-  }
-
-  private _adjustWorkspace(): void {
-    this.setZoom(this._zoom, false);
   }
 
   isReadOnly(): boolean {
@@ -282,7 +284,7 @@ class Workspace {
             wasDragged = true;
           };
           screenManager.addEvent('mousemove', workspace._mouseMoveListener);
-          // screenManager.addEvent('touchmove', workspace._mouseMoveListener);
+          screenManager.addEvent('touchmove', workspace._mouseMoveListener);
 
           // Register mouse up listeners ...
           workspace._mouseUpListener = () => {
@@ -304,14 +306,14 @@ class Workspace {
             }
           };
           screenManager.addEvent('mouseup', workspace._mouseUpListener);
-          // screenManager.addEvent('touchend', workspace._mouseUpListener);
+          screenManager.addEvent('touchend', workspace._mouseUpListener);
         }
       } else {
         workspace._mouseUpListener();
       }
     };
     screenManager.addEvent('mousedown', mouseDownListener);
-    // screenManager.addEvent('touchstart', mouseDownListener);
+    screenManager.addEvent('touchstart', mouseDownListener);
   }
 
   getZoom() {
