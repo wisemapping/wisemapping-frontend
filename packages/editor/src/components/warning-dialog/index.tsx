@@ -84,7 +84,7 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
                 name="close"
                 aria-label="Close"
               >
-                <img src={CloseDialogSvg} />
+                <img src={CloseDialogSvg} title="Close" />
               </button>
             </CloseButton>
             {msgExt && <p>{`${msg} ${msgExt}`}</p>}
