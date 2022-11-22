@@ -38,11 +38,11 @@ export const buildPersistenceManagerForEditor = (mode: string): PersistenceManag
   return persistenceManager;
 };
 
-export const getMindmapFromPersistence = (mapId: string): Mindmap => {
+export const fetchMindmap = async (mapId: number): Promise<Mindmap> => {
   let mindmap: Mindmap;
   if (AppConfig.isRestClient()) {
     const persistence = new LocalStorageManager(`/c/restful/maps/{id}/document/xml`, true);
-    mindmap = persistence.load(String(mapId));
+    mindmap = await persistence.load(String(mapId));
   } else {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(
@@ -55,7 +55,7 @@ export const getMindmapFromPersistence = (mapId: string): Mindmap => {
     );
 
     const serializer = XMLSerializerFactory.getSerializer('tango');
-    mindmap = serializer.loadFromDom(xmlDoc, String(mapId));
+    mindmap = Promise.resolve(serializer.loadFromDom(xmlDoc, String(mapId)));
   }
   return mindmap;
 };

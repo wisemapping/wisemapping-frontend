@@ -18,7 +18,7 @@ import {
   Mindmap,
   SizeType,
 } from '@wisemapping/editor';
-import { getMindmapFromPersistence } from '../../../editor-page/PersistenceManagerUtils';
+import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 
 import Checkbox from '@mui/material/Checkbox';
 
@@ -87,7 +87,7 @@ const ExportDialog = ({
     setZoomToFit(!zoomToFit);
   };
 
-  const exporter = (formatType: ExportFormat): Promise<string> => {
+  const exporter = async (formatType: ExportFormat): Promise<string> => {
     let svgElement: Element | null = null;
     let size: SizeType;
     let mindmap: Mindmap;
@@ -103,7 +103,7 @@ const ExportDialog = ({
     }
     // exporting from map list
     else {
-      mindmap = getMindmapFromPersistence(String(mapId));
+      mindmap = await fetchMindmap(mapId);
     }
 
     let exporter: Exporter;
