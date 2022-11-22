@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Mindmap } from '../..';
+import EmojiIconModel from '../model/EmojiIconModel';
 import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
@@ -63,7 +64,14 @@ class MDExporter extends Exporter {
     branches
       .filter((n) => n.getText() !== undefined)
       .forEach((node) => {
-        result = `${result}${prefix}- ${node.getText()}`;
+        // Convert icons to list ...
+        const icons = node.getFeatures().filter((f) => f.getType() === 'eicon');
+        let iconStr = ' ';
+        if (icons.length > 0) {
+          iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
+        }
+
+        result = `${result}${prefix}-${iconStr}${node.getText()}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();
           // Dump all features ...
@@ -76,11 +84,6 @@ class MDExporter extends Exporter {
             this.footNotes.push(note.getText());
             result = `${result}[^${this.footNotes.length}] `;
           }
-
-          // if(type === 'icon'){
-          //     const icon = f as IconModel;
-          //     result = result + ` ![${icon.getIconType().replace('_','')}!](https://app.wisemapping.com/images/${icon.getIconType()}.svg )`
-          // }
         });
         result = `${result}\n`;
 

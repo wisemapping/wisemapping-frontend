@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { Mindmap } from '../..';
+import EmojiIconModel from '../model/EmojiIconModel';
 import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
@@ -40,7 +41,14 @@ class TxtExporter extends Exporter {
   private traverseBranch(indent: string, prefix: string, branches: INodeModel[]) {
     let result = '';
     branches.forEach((node, index) => {
-      result = `${result}${indent}${prefix}${index + 1} ${
+      // Convert icons to list ...
+      const icons = node.getFeatures().filter((f) => f.getType() === 'eicon');
+      let iconStr = ' ';
+      if (icons.length > 0) {
+        iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
+      }
+
+      result = `${result}${indent}${prefix}${index + 1}${iconStr}${
         node.getText() !== undefined ? node.getText() : ''
       }`;
       node.getFeatures().forEach((f) => {
