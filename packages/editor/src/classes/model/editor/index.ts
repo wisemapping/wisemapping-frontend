@@ -92,7 +92,7 @@ class Editor {
       // Autosave on a fixed period of time ...
       setInterval(() => {
         this.component.save(false);
-      }, 10000);
+      }, 5000);
     }
   }
 }
