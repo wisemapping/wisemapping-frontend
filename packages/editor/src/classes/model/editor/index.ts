@@ -83,7 +83,6 @@ class Editor {
     // Is the save action enabled ... ?
     if (!capability.isHidden('save')) {
       // Register unload save ...
-
       window.addEventListener('beforeunload', () => {
         this.component.save(false);
         this.component.unlockMap();

@@ -49,7 +49,7 @@ const TopicNote = (props: {
         margin="dense"
         value={note}
         onChange={(event) => setNote(event.target.value)}
-      ></Input>
+      />
       <br />
       <SaveAndDelete
         model={props.noteModel}
