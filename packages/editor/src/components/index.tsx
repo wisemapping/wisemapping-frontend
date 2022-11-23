@@ -80,13 +80,13 @@ const Editor = ({
 
   const mindplotRef = useCallback((component: MindplotWebComponent) => {
     const model = new Model(component);
-    model.registerEvents(setCanvasUpdate, capability);
 
     // Force refresh after map load ...
     model
       .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
       .then(() => {
         setCanvasUpdate(Date.now());
+        model.registerEvents(setCanvasUpdate, capability);
       })
       .catch((e) => {
         console.error(e);
