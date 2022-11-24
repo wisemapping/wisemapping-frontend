@@ -43,7 +43,7 @@ import MapInfo from '../../classes/model/map-info';
 import { useIntl } from 'react-intl';
 
 interface AppBarProps {
-  model: Editor;
+  model: Editor | undefined;
   mapInfo: MapInfo;
   capability: Capability;
   onAction?: (type: ToolbarActionType) => void;

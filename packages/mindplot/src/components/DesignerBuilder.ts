@@ -28,6 +28,9 @@ let designer: Designer;
 export function buildDesigner(options: DesignerOptions): Designer {
   const divContainer = options.divContainer ? $(options.divContainer) : $(`#${options.container}`);
   $assert(divContainer, 'container could not be null');
+  if (designer) {
+    throw new Error('Designer can does not support multiple initializations');
+  }
 
   // Register load events ...
   designer = new Designer(options, divContainer);

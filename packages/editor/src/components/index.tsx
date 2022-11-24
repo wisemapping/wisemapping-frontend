@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 import { Vortex } from 'react-loader-spinner';
@@ -25,7 +25,6 @@ import {
   PersistenceManager,
   Designer,
   DesignerKeyboard,
-  MindplotWebComponent,
   EditorRenderMode,
 } from '@wisemapping/mindplot';
 
@@ -70,6 +69,7 @@ const Editor = ({
   accountConfiguration,
 }: EditorProps): ReactElement => {
   const [model, setModel] = useState<Model | undefined>();
+  const mindplotRef = useRef(null);
 
   // This is required to redraw in case of chansges in the canvas...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -78,17 +78,9 @@ const Editor = ({
   const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.useCreate();
   const capability = new Capability(options.mode, mapInfo.isLocked());
 
-  const mindplotRef: (component: MindplotWebComponent) => void = useCallback(
-    (component: MindplotWebComponent) => {
-      if (!component) {
-        const error = new Error(`Unexpected error during initialization. ${component}`);
-        window.newrelic?.noticeError(error);
-        throw error;
-      }
-
-      const model = new Model(component);
-
-      // Force refresh after map load ...
+  useEffect(() => {
+    if (!model) {
+      const model = new Model(mindplotRef.current);
       model
         .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
         .then(() => {
@@ -102,9 +94,8 @@ const Editor = ({
           );
         });
       setModel(model);
-    },
-    [],
-  );
+    }
+  }, [mindplotRef]);
 
   useEffect(() => {
     if (options.enableKeyboardEvents) {

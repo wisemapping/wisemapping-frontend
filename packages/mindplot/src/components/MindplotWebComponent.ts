@@ -13,7 +13,7 @@ import LocalStorageManager from './LocalStorageManager';
 export type MindplotWebComponentInterface = {
   id: string;
   mode: string;
-  ref: (component: object) => void;
+  ref: object;
   locale?: string;
 };
 /**
