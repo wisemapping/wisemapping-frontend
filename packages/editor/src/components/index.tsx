@@ -78,24 +78,33 @@ const Editor = ({
   const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.useCreate();
   const capability = new Capability(options.mode, mapInfo.isLocked());
 
-  const mindplotRef = useCallback((component: MindplotWebComponent) => {
-    const model = new Model(component);
+  const mindplotRef: (component: MindplotWebComponent) => void = useCallback(
+    (component: MindplotWebComponent) => {
+      if (!component) {
+        const error = new Error(`Unexpected error during initialization. ${component}`);
+        window.newrelic?.noticeError(error);
+        throw error;
+      }
 
-    // Force refresh after map load ...
-    model
-      .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
-      .then(() => {
-        setCanvasUpdate(Date.now());
-        model.registerEvents(setCanvasUpdate, capability);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.newrelic?.noticeError(
-          new Error(`Unexpected error loading map ${mapInfo.getId()} = ${JSON.stringify(e)}`),
-        );
-      });
-    setModel(model);
-  }, []);
+      const model = new Model(component);
+
+      // Force refresh after map load ...
+      model
+        .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
+        .then(() => {
+          setCanvasUpdate(Date.now());
+          model.registerEvents(setCanvasUpdate, capability);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.newrelic?.noticeError(
+            new Error(`Unexpected error loading map ${mapInfo.getId()} = ${JSON.stringify(e)}`),
+          );
+        });
+      setModel(model);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (options.enableKeyboardEvents) {

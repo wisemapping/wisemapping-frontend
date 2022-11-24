@@ -2,20 +2,18 @@ import Designer from './Designer';
 import buildDesigner from './DesignerBuilder';
 import DesignerOptionsBuilder from './DesignerOptionsBuilder';
 import EditorRenderMode from './EditorRenderMode';
-import LocalStorageManager from './LocalStorageManager';
 import PersistenceManager from './PersistenceManager';
 import WidgetManager from './WidgetManager';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './widget/ToolbarNotifier';
 import { $msg } from './Messages';
 import DesignerKeyboard from './DesignerKeyboard';
-
-const defaultPersistenceManager = () => new LocalStorageManager('map.xml', false, false);
+import LocalStorageManager from './LocalStorageManager';
 
 export type MindplotWebComponentInterface = {
   id: string;
   mode: string;
-  ref: any;
+  ref: (component: object) => void;
   locale?: string;
 };
 /**
@@ -35,12 +33,15 @@ class MindplotWebComponent extends HTMLElement {
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({ mode: 'open' });
+
     const mindplotStylesElement = document.createElement('style');
     mindplotStylesElement.innerHTML = mindplotStyles;
     this._shadowRoot.appendChild(mindplotStylesElement);
+
     const wrapper = document.createElement('div');
     wrapper.setAttribute('class', 'wise-editor');
     wrapper.setAttribute('id', 'mindplot');
+
     this._shadowRoot.appendChild(wrapper);
   }
 
@@ -59,7 +60,8 @@ class MindplotWebComponent extends HTMLElement {
   buildDesigner(persistence?: PersistenceManager, widgetManager?: WidgetManager) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
-    const persistenceManager = persistence || defaultPersistenceManager();
+
+    const persistenceManager = persistence || new LocalStorageManager('map.xml', false, false);
     const mode = editorRenderMode || 'viewonly';
     const options = DesignerOptionsBuilder.buildOptions({
       persistenceManager,
@@ -97,26 +99,19 @@ class MindplotWebComponent extends HTMLElement {
     }
   }
 
-  setSaveRequired(arg0: boolean) {
-    this.saveRequired = arg0;
+  setSaveRequired(value: boolean) {
+    this.saveRequired = value;
   }
 
   getSaveRequired() {
     return this.saveRequired;
   }
 
-  /**
-   * Load map in designer throught persistence manager instance
-   * @param id the map id to be loaded.
-   */
   loadMap(id: string): Promise<void> {
     const instance = PersistenceManager.getInstance();
     return instance.load(id).then((mindmap) => this._designer.loadMap(mindmap));
   }
 
-  /**
-   * save the map
-   */
   save(saveHistory: boolean) {
     if (!saveHistory && !this.getSaveRequired()) return;
     console.log('Saving...');
@@ -144,22 +139,6 @@ class MindplotWebComponent extends HTMLElement {
       },
     });
     this.setSaveRequired(false);
-  }
-
-  discardChanges() {
-    // Avoid autosave before leaving the page ....
-    // this.setRequireChange(false);
-
-    // Finally call discard function ...
-    const persistenceManager = PersistenceManager.getInstance();
-    const mindmap = this._designer.getMindmap();
-    persistenceManager.discardChanges(mindmap.getId());
-
-    // Unlock map ...
-    this.unlockMap();
-
-    // Reload the page ...
-    window.location.reload();
   }
 
   unlockMap() {
