@@ -89,7 +89,7 @@ class RootedTreeSet {
    * @throws will throw an error if nodeId is null or undefined
    * @throws will throw an error if node is not connected
    */
-  disconnect(nodeId: number) {
+  disconnect(nodeId: number): void {
     $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
@@ -106,11 +106,11 @@ class RootedTreeSet {
    * @throws will throw an error if node cannot be found
    * @return node
    */
-  find(id: number, validate = true): Node {
+  find(id: number, validate = true): Node | null {
     $assert($defined(id), 'id can not be null');
 
     const graphs = this._rootNodes;
-    let result = null;
+    let result: Node | null = null;
     for (let i = 0; i < graphs.length; i++) {
       const node = graphs[i];
       result = this._find(id, node);
@@ -126,12 +126,12 @@ class RootedTreeSet {
     return result;
   }
 
-  private _find(id: number, parent: Node): Node {
+  private _find(id: number, parent: Node): Node | null {
     if (parent.getId() === id) {
       return parent;
     }
 
-    let result = null;
+    let result: Node | null = null;
     const children = parent._children;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
@@ -192,10 +192,10 @@ class RootedTreeSet {
    */
   getSiblings(node: Node): Node[] {
     $assert(node, 'node cannot be null');
-    if (!$defined(node._parent)) {
+    if (!node._parent) {
       return [];
     }
-    const siblings = node._parent._children.filter((child) => child !== node);
+    const siblings = node._parent?._children.filter((child) => child !== node);
     return siblings;
   }
 
@@ -241,7 +241,7 @@ class RootedTreeSet {
    * @throws will throw an error if node is null or undefined
    * @return parent
    */
-  getParent(node: Node): Node {
+  getParent(node: Node): Node | null {
     $assert(node, 'node cannot be null');
     return node._parent;
   }

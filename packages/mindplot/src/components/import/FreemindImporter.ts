@@ -169,7 +169,7 @@ export default class FreemindImporter extends Importer {
     }
 
     // Check for style...
-    const fontStyle = this.generateFontStyle(freeNode, null);
+    const fontStyle = this.generateFontStyle(freeNode);
     if (fontStyle && fontStyle !== ';;;;') wiseTopic.setFontStyle(fontStyle);
 
     // Is there any link...
@@ -393,7 +393,7 @@ export default class FreemindImporter extends Importer {
     return result;
   }
 
-  private generateFontStyle(node: FreemindNode, font: FreemindFont | undefined): string {
+  private generateFontStyle(node: FreemindNode, font?: FreemindFont): string {
     const fontStyle: Array<string> = [];
 
     // Font family
@@ -485,6 +485,6 @@ export default class FreemindImporter extends Importer {
   private html2Text(content: string): string {
     const temporalDivElement = document.createElement('div');
     temporalDivElement.innerHTML = content;
-    return temporalDivElement.textContent.trim() || temporalDivElement.innerText.trim() || '';
+    return temporalDivElement.textContent?.trim() || temporalDivElement.innerText.trim() || '';
   }
 }

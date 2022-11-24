@@ -31,7 +31,7 @@ ORDER_BY_TYPE.set('link', 2);
 class IconGroup {
   private _icons: ImageIcon[];
 
-  private _group: any;
+  private _group: Group;
 
   private _removeTip: IconGroupRemoveTip;
 

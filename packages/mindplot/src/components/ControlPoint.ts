@@ -21,6 +21,7 @@ import { $defined } from '@wisemapping/core-js';
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
 import Workspace from './Workspace';
+import PositionType from './PositionType';
 
 class ControlPoint {
   private control1: Elipse;
@@ -37,11 +38,13 @@ class ControlPoint {
 
   private _workspace: Workspace;
 
-  private _endPoint: any[];
+  // eslint-disable-next-line no-use-before-define
+  private _endPoint: PositionType[];
 
-  private _orignalCtrlPoint: any;
+  // eslint-disable-next-line no-use-before-define
+  private _orignalCtrlPoint: PositionType[];
 
-  private _controls: any;
+  private _controls: number;
 
   private _mouseMoveFunction: (e: Event) => void;
 
@@ -125,17 +128,20 @@ class ControlPoint {
       this._controls[ControlPoint.FROM].x + pos.x,
       this._controls[ControlPoint.FROM].y + pos.y - 3,
     );
+
     this._controlLines[0].setFrom(pos.x, pos.y);
     this._controlLines[0].setTo(
       this._controls[ControlPoint.FROM].x + pos.x + 3,
       this._controls[ControlPoint.FROM].y + pos.y,
     );
+
     pos = this._line.getLine().getTo();
     this._controlLines[1].setFrom(pos.x, pos.y);
     this._controlLines[1].setTo(
       this._controls[ControlPoint.TO].x + pos.x + 3,
       this._controls[ControlPoint.TO].y + pos.y,
     );
+
     this._controlPointsController[1].setPosition(
       this._controls[ControlPoint.TO].x + pos.x,
       this._controls[ControlPoint.TO].y + pos.y - 3,
@@ -223,8 +229,8 @@ class ControlPoint {
     workspace.append(this._controlLines[1]);
   }
 
-  removeFromWorkspace(workspace: Workspace) {
-    this._workspace = null;
+  removeFromWorkspace(workspace: Workspace): void {
+    this._workspace!;
     workspace.removeChild(this._controlPointsController[0]);
     workspace.removeChild(this._controlPointsController[1]);
     workspace.removeChild(this._controlLines[0]);
@@ -235,17 +241,17 @@ class ControlPoint {
     return this._controls[index];
   }
 
-  getOriginalEndPoint(index: number) {
+  getOriginalEndPoint(index: number): PositionType {
     return this._endPoint[index];
   }
 
-  getOriginalCtrlPoint(index: number): ControlPoint {
+  getOriginalCtrlPoint(index: number): PositionType {
     return this._orignalCtrlPoint[index];
   }
 
-  static FROM = 0;
+  private static FROM = 0;
 
-  static TO = 1;
+  private static TO = 1;
 }
 
 export default ControlPoint;

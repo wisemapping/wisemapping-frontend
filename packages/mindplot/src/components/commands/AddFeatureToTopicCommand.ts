@@ -28,7 +28,7 @@ class AddFeatureToTopicCommand extends Command {
 
   private _attributes: object;
 
-  private _featureModel: FeatureModel;
+  private _featureModel: FeatureModel | null;
 
   /*
    * @classdesc This command class handles do/undo of adding features to topics, e.g. an
@@ -65,7 +65,7 @@ class AddFeatureToTopicCommand extends Command {
 
   undoExecute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
-    topic.removeFeature(this._featureModel);
+    topic.removeFeature(this._featureModel!);
   }
 }
 

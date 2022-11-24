@@ -24,7 +24,7 @@ class Node {
   private _id: number;
 
   // eslint-disable-next-line no-use-before-define
-  _parent: Node;
+  _parent: Node | null;
 
   private _sorter: ChildrenSorterStrategy;
 

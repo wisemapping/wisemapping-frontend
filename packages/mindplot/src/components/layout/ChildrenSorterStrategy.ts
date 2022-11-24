@@ -28,7 +28,12 @@ abstract class ChildrenSorterStrategy {
 
   abstract detach(treeSet: RootedTreeSet, node: Node): void;
 
-  abstract predict(treeSet: RootedTreeSet, parent, node: Node | null, position: PositionType);
+  abstract predict(
+    treeSet: RootedTreeSet,
+    parent: Node,
+    node: Node | null,
+    position: PositionType | null,
+  );
 
   abstract verify(treeSet: RootedTreeSet, node: Node);
 
