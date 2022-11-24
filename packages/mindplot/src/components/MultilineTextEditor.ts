@@ -30,6 +30,7 @@ class MultilineTextEditor extends Events {
   constructor() {
     super();
     this._topic = null;
+    this._containerElem = null;
   }
 
   private static _buildEditor() {
