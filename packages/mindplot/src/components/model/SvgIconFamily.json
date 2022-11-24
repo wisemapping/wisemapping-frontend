@@ -121,7 +121,6 @@
     {
         "id": "object",
         "icons": [
-            "object_clip",
             "object_music"
         ]
     },

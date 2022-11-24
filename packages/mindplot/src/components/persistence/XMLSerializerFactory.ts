@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 import ModelCodeName from './ModelCodeName';
 import Beta2PelaMigrator from './Beta2PelaMigrator';
 import Pela2TangoMigrator from './Pela2TangoMigrator';
@@ -88,9 +89,7 @@ class XMLSerializerFactory {
         result = new migrator(result);
       }
     }
-    if (!result) {
-      throw new Error(`Cound not find serialized for ${version}`);
-    }
+    $assert(result, `Cound not find serialized for ${version}`);
     return result;
   }
 }

@@ -182,8 +182,8 @@ class Workspace {
     const workspace = this._workspace;
 
     const divContainer = this._screenManager.getContainer();
-    const containerWidth = divContainer.width()!;
-    const containerHeight = divContainer.height()!;
+    const containerWidth = divContainer.width();
+    const containerHeight = divContainer.height();
     const newVisibleAreaSize = { width: containerWidth, height: containerHeight };
 
     // - svg must fit container size

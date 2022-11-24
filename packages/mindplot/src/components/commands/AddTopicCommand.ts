@@ -70,7 +70,7 @@ class AddTopicCommand extends Command {
 
   undoExecute(commandContext: CommandContext) {
     // Delete disconnected the nodes. Create a copy of the topics ...
-    const clonedModel: NodeModel[] = [];
+    const clonedModel = [];
     this._models.forEach((model) => {
       clonedModel.push(model.clone());
     });

@@ -46,7 +46,7 @@ abstract class INodeModel {
   abstract getFeatures(): FeatureModel[];
 
   setId(id?: number): void {
-    if (id === null || id === undefined) {
+    if (!$defined(id)) {
       const newId = INodeModel._nextUUID();
       this.putProperty('id', newId);
     } else {

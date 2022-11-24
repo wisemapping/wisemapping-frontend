@@ -34,7 +34,7 @@ class MoveControlPointCommand extends Command {
 
   private _wasCustom: boolean;
 
-  private _endPoint: PositionType;
+  private _endPoint: any;
 
   private _point: number;
 
@@ -52,7 +52,7 @@ class MoveControlPointCommand extends Command {
     this._ctrlPointControler = ctrlPointController;
     this._line = ctrlPointController._line;
     this._controlPoint = { ...this._ctrlPointControler.getControlPoint(point) };
-    this._oldControlPoint = this._ctrlPointControler.getOriginalCtrlPoint(point);
+    this._oldControlPoint = { ...this._ctrlPointControler.getOriginalCtrlPoint(point) };
     this._originalEndPoint = this._ctrlPointControler.getOriginalEndPoint(point);
     switch (point) {
       case 0:
