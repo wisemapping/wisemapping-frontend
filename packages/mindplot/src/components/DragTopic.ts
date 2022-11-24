@@ -108,8 +108,6 @@ class DragTopic {
   }
 
   connectTo(parent: Topic) {
-    $assert(parent, 'Parent connection node can not be null.');
-
     // Where it should be connected ?
     const predict = this._layoutManager.predict(
       parent.getId(),
@@ -178,8 +176,8 @@ class DragTopic {
     const position = this.getPosition();
 
     if (!this.isFreeLayoutOn()) {
-      let order = null;
-      let parent = null;
+      let order: number | null = null;
+      let parent: Topic | null = null;
       const isDragConnected = this.isConnected();
       if (isDragConnected) {
         const targetTopic = this.getConnectedToTopic();

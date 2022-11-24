@@ -128,8 +128,8 @@ class LayoutManager extends Events {
 
   predict(
     parentId: number,
-    nodeId: number,
-    position: PositionType,
+    nodeId: number | null,
+    position: PositionType | null,
   ): { order: number; position: PositionType } {
     $assert($defined(parentId), 'parentId can not be null');
 
@@ -194,7 +194,7 @@ class LayoutManager extends Events {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
-        let event: ChangeEvent = this._events.find((e) => e.getId() === id);
+        let event: ChangeEvent | undefined = this._events.find((e) => e.getId() === id);
         if (!event) {
           event = new ChangeEvent(id);
         }

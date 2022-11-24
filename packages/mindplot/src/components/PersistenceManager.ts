@@ -54,7 +54,7 @@ abstract class PersistenceManager {
 
   protected getCSRFToken(): string | null {
     const meta = document.head.querySelector('meta[name="_csrf"]');
-    let result = null;
+    let result: string | null = null;
     if (meta) {
       result = meta.getAttribute('content');
     }

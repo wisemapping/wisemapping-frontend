@@ -85,7 +85,7 @@ class ScreenManager {
     }
   }
 
-  fireEvent(type: string, event: UIEvent = null) {
+  fireEvent(type: string, event?: UIEvent): void {
     if (type === 'click') {
       this._clickEvents.forEach((listener) => {
         listener(type, event);

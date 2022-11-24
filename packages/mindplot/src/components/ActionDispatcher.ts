@@ -48,7 +48,12 @@ abstract class ActionDispatcher extends Events {
 
   abstract deleteEntities(topicsIds: number[], relIds: number[]): void;
 
-  abstract dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic): void;
+  abstract dragTopic(
+    topicId: number,
+    position: Point,
+    order: number | null,
+    parentTopic: Topic | null,
+  ): void;
 
   abstract moveTopic(topicId: number, position: Point): void;
 

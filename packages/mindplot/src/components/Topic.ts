@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 
 import { Rect, Image, Line, Text, Group, ElementClass, Point } from '@wisemapping/web2d';
@@ -147,7 +146,7 @@ abstract class Topic extends NodeGraph {
 
       // Move connector to front
       const connector = this.getShrinkConnector();
-      if ($defined(connector)) {
+      if (connector) {
         connector.moveToFront();
       }
     }
@@ -508,7 +507,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  private _setText(text: string, updateModel?: boolean) {
+  private _setText(text: string | null, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
 
@@ -520,7 +519,7 @@ abstract class Topic extends NodeGraph {
 
   setText(text: string) {
     // Avoid empty nodes ...
-    if (!text || $.trim(text).length === 0) {
+    if (!text || text.trim().length === 0) {
       this._setText(null, true);
     } else {
       this._setText(text, true);
@@ -531,11 +530,8 @@ abstract class Topic extends NodeGraph {
 
   getText(): string {
     const model = this.getModel();
-    let result = model.getText();
-    if (!$defined(result)) {
-      result = TopicStyle.defaultText(this);
-    }
-    return result;
+    const text = model.getText();
+    return text || TopicStyle.defaultText(this);
   }
 
   setBackgroundColor(color: string): void {
@@ -622,7 +618,7 @@ abstract class Topic extends NodeGraph {
     }
 
     const shrinkConnector = this.getShrinkConnector();
-    if ($defined(shrinkConnector)) {
+    if (shrinkConnector) {
       shrinkConnector.addToWorkspace(group);
     }
 
@@ -706,7 +702,7 @@ abstract class Topic extends NodeGraph {
     EventBus.instance.fireEvent('childShrinked', model);
   }
 
-  getShrinkConnector(): ShirinkConnector | undefined {
+  getShrinkConnector(): ShirinkConnector | null {
     let result = this._connector;
     if (this._connector == null) {
       this._connector = new ShirinkConnector(this);
@@ -849,10 +845,10 @@ abstract class Topic extends NodeGraph {
       .map((node) => node.getOutgoingLine());
   }
 
-  getOutgoingConnectedTopic(): Topic {
+  getOutgoingConnectedTopic(): Topic | null {
     let result = null;
     const line = this.getOutgoingLine();
-    if ($defined(line)) {
+    if (line) {
       result = line.getTargetTopic();
     }
     return result;
@@ -875,7 +871,7 @@ abstract class Topic extends NodeGraph {
 
   setBranchVisibility(value: boolean): void {
     let current: Topic = this;
-    let parent: Topic = this;
+    let parent: Topic | null = this;
     while (parent != null && !parent.isCentralTopic()) {
       current = parent;
       parent = current.getParent();
@@ -905,7 +901,7 @@ abstract class Topic extends NodeGraph {
     this._relationships.forEach((r) => r.moveToBack());
 
     const connector = this.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.moveToBack();
     }
 
@@ -916,7 +912,7 @@ abstract class Topic extends NodeGraph {
   moveToFront(): void {
     this.get2DElement().moveToFront();
     const connector = this.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.moveToFront();
     }
     // Update relationship lines
@@ -951,7 +947,7 @@ abstract class Topic extends NodeGraph {
 
     if (this.getIncomingLines().length > 0) {
       const connector = this.getShrinkConnector();
-      if ($defined(connector)) {
+      if (connector) {
         connector.setVisibility(value, fade);
       }
     }
@@ -970,7 +966,7 @@ abstract class Topic extends NodeGraph {
     elem.setOpacity(opacity);
 
     const connector = this.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.setOpacity(opacity);
     }
     const textShape = this.getTextShape();
@@ -1132,7 +1128,7 @@ abstract class Topic extends NodeGraph {
 
     // Display connection node...
     const connector = targetTopic.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.setVisibility(true);
     }
 
@@ -1190,9 +1186,10 @@ abstract class Topic extends NodeGraph {
         EventBus.instance.fireEvent('topicAdded', this.getModel());
       }
 
-      if (this.getModel().isConnected()) {
+      const outgoingTopic = this.getOutgoingConnectedTopic();
+      if (this.getModel().isConnected() && outgoingTopic) {
         EventBus.instance.fireEvent('topicConnected', {
-          parentNode: this.getOutgoingConnectedTopic().getModel(),
+          parentNode: outgoingTopic.getModel(),
           childNode: this.getModel(),
         });
       }
@@ -1212,7 +1209,7 @@ abstract class Topic extends NodeGraph {
 
     // Is the node already connected ?
     const targetTopic = this.getOutgoingConnectedTopic();
-    if ($defined(targetTopic)) {
+    if (targetTopic) {
       result.connectTo(targetTopic);
       result.setVisibility(false);
     }
@@ -1265,19 +1262,18 @@ abstract class Topic extends NodeGraph {
   }
 
   private _flatten2DElements(topic: Topic): (Topic | Relationship)[] {
-    let result = [];
-
+    const result: (Topic | Relationship)[] = [];
     const children = topic.getChildren();
     children.forEach((child) => {
       result.push(child);
       result.push(child.getOutgoingLine());
 
       const relationships = child.getRelationships();
-      result = result.concat(relationships);
+      result.push(...relationships);
 
       if (!child.areChildrenShrunken()) {
         const innerChilds = this._flatten2DElements(child);
-        result = result.concat(innerChilds);
+        result.push(...innerChilds);
       }
     });
     return result;

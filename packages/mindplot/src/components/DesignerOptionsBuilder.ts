@@ -24,7 +24,7 @@ export type DesignerOptions = {
   zoom: number;
   mode: EditorRenderMode;
   mapId?: string;
-  divContainer?: HTMLElement;
+  divContainer: HTMLElement;
   container: string;
   persistenceManager?: PersistenceManager;
   widgetManager?: WidgetManager;
@@ -36,7 +36,7 @@ class OptionsBuilder {
   static buildOptions(options: DesignerOptions): DesignerOptions {
     $assert(options.persistenceManager, 'persistence must be defined');
 
-    const defaultOptions: DesignerOptions = {
+    const defaultOptions = {
       mode: 'edition-owner',
       zoom: 0.85,
       saveOnLoad: true,

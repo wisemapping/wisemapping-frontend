@@ -23,9 +23,9 @@ import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
 
 class MultilineTextEditor extends Events {
-  private _topic: Topic;
+  private _topic: Topic | null;
 
-  private _containerElem: JQuery;
+  private _containerElem: JQuery<HTMLElement> | null;
 
   constructor() {
     super();
@@ -54,7 +54,7 @@ class MultilineTextEditor extends Events {
 
   private _registerEvents(containerElem: JQuery) {
     const textareaElem = this._getTextareaElem();
-    textareaElem.on('keydown', (event) => {
+    textareaElem?.on('keydown', (event) => {
       switch (event.code) {
         case 'Escape':
           this.close(false);
@@ -85,12 +85,12 @@ class MultilineTextEditor extends Events {
       event.stopPropagation();
     });
 
-    textareaElem.on('keypress', (event) => {
+    textareaElem?.on('keypress', (event) => {
       event.stopPropagation();
     });
 
-    textareaElem.on('keyup', (event) => {
-      const text = this._getTextareaElem().val();
+    textareaElem?.on('keyup', (event) => {
+      const text = this._getTextareaElem()?.val();
       this.fireEvent('input', [event, text]);
       this._adjustEditorSize();
     });
@@ -117,22 +117,22 @@ class MultilineTextEditor extends Events {
         maxLineLength = Math.max(line.length, maxLineLength);
       });
 
-      textElem.attr('cols', maxLineLength);
-      textElem.attr('rows', lines.length);
+      textElem?.attr('cols', maxLineLength);
+      textElem?.attr('rows', lines.length);
 
-      this._containerElem.css({
+      this._containerElem?.css({
         width: `${maxLineLength + 2}em`,
-        height: textElem.height(),
+        height: textElem?.height() || 0,
       });
     }
   }
 
   isVisible(): boolean {
-    return $defined(this._containerElem) && this._containerElem.css('display') === 'block';
+    return this._containerElem !== null && this._containerElem.css('display') === 'block';
   }
 
   private _updateModel() {
-    if (this._topic.getText() !== this._getTextAreaText()) {
+    if (this._topic && this._topic.getText() !== this._getTextAreaText()) {
       const text = this._getTextAreaText();
       const topicId = this._topic.getId();
 
@@ -167,36 +167,39 @@ class MultilineTextEditor extends Events {
 
   private _showEditor(defaultText: string) {
     const topic = this._topic;
+    if (topic && this._containerElem) {
+      // Hide topic text ...
+      topic.getTextShape().setVisibility(false);
 
-    // Hide topic text ...
-    topic.getTextShape().setVisibility(false);
+      // Set Editor Style
+      const nodeText = topic.getTextShape();
+      const fontStyle = nodeText.getFontStyle();
+      fontStyle.size = nodeText.getHtmlFontSize();
+      fontStyle.color = nodeText.getColor();
+      this._setStyle(fontStyle);
 
-    // Set Editor Style
-    const nodeText = topic.getTextShape();
-    const fontStyle = nodeText.getFontStyle();
-    fontStyle.size = nodeText.getHtmlFontSize();
-    fontStyle.color = nodeText.getColor();
-    this._setStyle(fontStyle);
+      // Set editor's initial size
+      // Position the editor and set the size...
+      const textShape = topic.getTextShape();
 
-    // Set editor's initial size
-    // Position the editor and set the size...
-    const textShape = topic.getTextShape();
+      this._containerElem.css('display', 'block');
 
-    this._containerElem.css('display', 'block');
+      let { top, left } = textShape.getNativePosition();
+      // Adjust padding top position ...
+      top -= 4;
+      left -= 4;
+      this._containerElem.offset({ top, left });
 
-    let { top, left } = textShape.getNativePosition();
-    // Adjust padding top position ...
-    top -= 4;
-    left -= 4;
-    this._containerElem.offset({ top, left });
+      // Set editor's initial text ...
+      const text = $defined(defaultText) ? defaultText : topic.getText();
+      this._setText(text);
 
-    // Set editor's initial text ...
-    const text = $defined(defaultText) ? defaultText : topic.getText();
-    this._setText(text);
-
-    // Set the element focus and select the current text ...
-    const inputElem = this._getTextareaElem();
-    this._positionCursor(inputElem, !$defined(defaultText));
+      // Set the element focus and select the current text ...
+      const inputElem = this._getTextareaElem();
+      if (inputElem) {
+        this._positionCursor(inputElem, !$defined(defaultText));
+      }
+    }
   }
 
   private _setStyle(fontStyle) {
@@ -223,22 +226,22 @@ class MultilineTextEditor extends Events {
       fontWeight: fontStyle.weight,
       color: fontStyle.color,
     };
-    inputField.css(style);
-    this._containerElem.css(style);
+    inputField?.css(style);
+    this._containerElem?.css(style);
   }
 
   private _setText(text: string): void {
     const textareaElem = this._getTextareaElem();
-    textareaElem.val(text);
+    textareaElem?.val(text);
     this._adjustEditorSize();
   }
 
   private _getTextAreaText(): string {
-    return this._getTextareaElem().val() as string;
+    return this._getTextareaElem()?.val() as string;
   }
 
-  private _getTextareaElem(): JQuery<HTMLTextAreaElement> {
-    return this._containerElem.find('textarea');
+  private _getTextareaElem(): JQuery<HTMLTextAreaElement> | null {
+    return this._containerElem ? this._containerElem.find('textarea') : null;
   }
 
   private _positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
@@ -259,7 +262,7 @@ class MultilineTextEditor extends Events {
       }
 
       // Remove it form the screen ...
-      this._containerElem.remove();
+      this._containerElem?.remove();
       this._containerElem = null;
     }
 

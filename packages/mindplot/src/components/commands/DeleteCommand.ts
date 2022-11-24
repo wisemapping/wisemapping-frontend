@@ -137,10 +137,10 @@ class DeleteCommand extends Command {
     this._deletedRelModel = [];
   }
 
-  private _filterChildren(topicIds: number[], commandContext: CommandContext) {
+  private _filterChildren(topicIds: number[], commandContext: CommandContext): Topic[] {
     const topics = commandContext.findTopics(topicIds);
 
-    const result = [];
+    const result: Topic[] = [];
     topics.forEach((topic: Topic) => {
       let parent = topic.getParent();
       let found = false;

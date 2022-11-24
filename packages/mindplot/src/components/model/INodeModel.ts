@@ -66,11 +66,11 @@ abstract class INodeModel {
     this.putProperty('type', type);
   }
 
-  setText(text: string): void {
+  setText(text: string | null): void {
     this.putProperty('text', text);
   }
 
-  getText(): string | undefined {
+  getText(): string | null {
     return this.getProperty('text') as string;
   }
 
@@ -290,7 +290,7 @@ abstract class INodeModel {
 
   abstract getProperty(key: string): number | string | boolean;
 
-  abstract putProperty(key: string, value: number | string | boolean): void;
+  abstract putProperty(key: string, value: number | string | boolean | null): void;
 
   abstract setParent(parent: INodeModel): void;
 

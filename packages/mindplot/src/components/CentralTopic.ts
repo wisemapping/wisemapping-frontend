@@ -53,7 +53,6 @@ class CentralTopic extends Topic {
     this.setPosition(zeroPoint);
   }
 
-  /** */
   getShrinkConnector() {
     return null;
   }

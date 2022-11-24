@@ -87,7 +87,7 @@ class Designer extends Events {
 
     // Set up i18n location ...
     console.log(`Editor location: ${options.locale}`);
-    Messages.init(options.locale);
+    Messages.init(options.locale ? options.locale : 'en');
 
     this._options = options;
 
@@ -263,7 +263,10 @@ class Designer extends Events {
       } else {
         $assert(targetTopic, 'Could not find a topic to connect');
       }
-      topic.connectTo(targetTopic, this._workspace);
+
+      if (targetTopic) {
+        topic.connectTo(targetTopic, this._workspace);
+      }
     }
 
     topic.addEvent('ontblur', () => {
@@ -521,7 +524,7 @@ class Designer extends Events {
       const parentTopic = topic.getOutgoingConnectedTopic();
       const siblingModel = this._createSiblingModel(topic);
 
-      if (siblingModel) {
+      if (siblingModel && parentTopic) {
         // Hack: if parent is central topic, add node below not on opposite side.
         // This should be done in the layout
         if (parentTopic.getType() === 'CentralTopic') {
@@ -724,7 +727,7 @@ class Designer extends Events {
     );
 
     // Build relationship line ....
-    const result = new Relationship(sourceTopic, targetTopic, model);
+    const result = new Relationship(sourceTopic!, targetTopic!, model);
     const me = this;
 
     result.addEvent('ontblur', () => {

@@ -18,7 +18,12 @@ abstract class WidgetManager {
     return this._instance;
   }
 
-  private createTooltip(mindmapElement, title: string, linkModel: LinkModel, noteModel: NoteModel) {
+  private createTooltip(
+    mindmapElement,
+    title: string,
+    linkModel?: LinkModel,
+    noteModel?: NoteModel,
+  ) {
     const webcomponentShadowRoot = $($('#mindmap-comp')[0].shadowRoot);
     let tooltip = webcomponentShadowRoot.find('#mindplot-svg-tooltip');
     if (!tooltip.length) {
@@ -97,7 +102,11 @@ abstract class WidgetManager {
 
   abstract showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void;
 
-  abstract showEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void;
+  abstract showEditorForNote(
+    topic: Topic,
+    noteModel: NoteModel | null,
+    noteIcon: NoteIcon | null,
+  ): void;
 }
 
 export default WidgetManager;

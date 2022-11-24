@@ -37,8 +37,7 @@ export function buildDesigner(options: DesignerOptions): Designer {
 
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;
-  $assert(persistence, 'persistence must be defined');
-  PersistenceManager.init(persistence);
+  PersistenceManager.init(persistence!);
 
   // If not manager was specifed, use the readonly one.
   const widgetManager = options.widgetManager ? options.widgetManager : new ReadOnlyWidgetManager();
