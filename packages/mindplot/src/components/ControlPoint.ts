@@ -38,13 +38,11 @@ class ControlPoint {
 
   private _workspace: Workspace;
 
-  // eslint-disable-next-line no-use-before-define
   private _endPoint: PositionType[];
 
-  // eslint-disable-next-line no-use-before-define
   private _orignalCtrlPoint: PositionType[];
 
-  private _controls: number;
+  private _controls: PositionType[];
 
   private _mouseMoveFunction: (e: Event) => void;
 
@@ -76,25 +74,24 @@ class ControlPoint {
     ];
 
     this._isBinded = false;
-    const me = this;
-    this._controlPointsController[0].addEvent('mousedown', (event) => {
-      me._mouseDown(event, ControlPoint.FROM, me);
+    this._controlPointsController[0].addEvent('mousedown', (event: MouseEvent) => {
+      this._mouseDown(event, ControlPoint.FROM);
     });
-    this._controlPointsController[0].addEvent('click', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[0].addEvent('click', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
-    this._controlPointsController[0].addEvent('dblclick', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[0].addEvent('dblclick', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
 
-    this._controlPointsController[1].addEvent('mousedown', (event) => {
-      me._mouseDown(event, ControlPoint.TO, me);
+    this._controlPointsController[1].addEvent('mousedown', (event: MouseEvent) => {
+      this._mouseDown(event, ControlPoint.TO);
     });
-    this._controlPointsController[1].addEvent('click', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[1].addEvent('click', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
-    this._controlPointsController[1].addEvent('dblclick', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[1].addEvent('dblclick', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
   }
 
@@ -106,10 +103,11 @@ class ControlPoint {
     this._createControlPoint();
     this._endPoint = [];
     this._orignalCtrlPoint = [];
-    this._orignalCtrlPoint[0] = { ...this._controls[0] };
-    this._orignalCtrlPoint[1] = { ...this._controls[1] };
-    this._endPoint[0] = { ...this._line.getLine().getFrom() };
-    this._endPoint[1] = { ...this._line.getLine().getTo() };
+
+    [this._orignalCtrlPoint[0], this._orignalCtrlPoint[1]] = this._controls;
+
+    this._endPoint[0] = this._line.getLine().getFrom() as PositionType;
+    this._endPoint[1] = this._line.getLine().getTo() as PositionType;
   }
 
   setControlPointTestId(ctrlPoint1, ctrlPoint2) {
@@ -118,7 +116,9 @@ class ControlPoint {
   }
 
   redraw() {
-    if ($defined(this._line)) this._createControlPoint();
+    if (this._line) {
+      this._createControlPoint();
+    }
   }
 
   private _createControlPoint() {
@@ -152,16 +152,16 @@ class ControlPoint {
     // Overwrite default behaviour ...
   }
 
-  private _mouseDown(event: Event, point, me) {
+  private _mouseDown(event: MouseEvent, point: number) {
     if (!this._isBinded) {
       this._isBinded = true;
-      this._mouseMoveFunction = (e) => {
-        me._mouseMoveEvent(e, point, me);
+      this._mouseMoveFunction = (e: MouseEvent) => {
+        this._mouseMoveEvent(e, point);
       };
 
       this._workspace.getScreenManager().addEvent('mousemove', this._mouseMoveFunction);
-      this._mouseUpFunction = (e: Event) => {
-        me._mouseUp(e, point, me);
+      this._mouseUpFunction = (e: MouseEvent) => {
+        this._mouseUp(e, point);
       };
       this._workspace.getScreenManager().addEvent('mouseup', this._mouseUpFunction);
     }
@@ -170,7 +170,7 @@ class ControlPoint {
     return false;
   }
 
-  private _mouseMoveEvent(event: MouseEvent, point: Point) {
+  private _mouseMoveEvent(event: MouseEvent, point: number) {
     const screen = this._workspace.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
@@ -202,7 +202,7 @@ class ControlPoint {
     this._isBinded = false;
   }
 
-  _mouseClick(event: MouseEvent) {
+  private _mouseClick(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
     return false;
@@ -237,7 +237,7 @@ class ControlPoint {
     workspace.removeChild(this._controlLines[1]);
   }
 
-  getControlPoint(index: number): ControlPoint {
+  getControlPoint(index: number): PositionType {
     return this._controls[index];
   }
 
