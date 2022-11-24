@@ -90,7 +90,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const text = topic.getText();
-    if ($defined(text)) {
+    if (text) {
       this._noteTextToXML(document, parentTopic, text);
     }
 
@@ -273,21 +273,23 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return mindmap;
   }
 
-  protected _deserializeNode(domElem: Element, mindmap: Mindmap) {
+  protected _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
     const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
 
     // Load attributes...
-    let id: number | null = null;
-    if ($defined(domElem.getAttribute('id'))) {
-      id = Number.parseInt(domElem.getAttribute('id'), 10);
+    let id: number | undefined;
+    const idStr = domElem.getAttribute('id');
+    if (idStr) {
+      id = Number.parseInt(idStr, 10);
     }
 
-    if (this._idsMap[id]) {
-      id = null;
-    } else {
+    if (id !== undefined && !this._idsMap[id]) {
       this._idsMap[id] = domElem;
+    } else {
+      id = undefined;
     }
 
+    // Create element ...
     const topic = mindmap.createNode(type, id);
 
     // Set text property is it;s defined...
@@ -322,14 +324,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     let shape = domElem.getAttribute('shape');
-    if ($defined(shape)) {
+    if (shape) {
       // Fix typo on serialization....
       shape = shape.replace('rectagle', 'rectangle');
-
       topic.setShapeType(shape);
 
-      if (shape === TopicShape.IMAGE) {
-        const image = domElem.getAttribute('image');
+      // Is an image ?
+      const image = domElem.getAttribute('image');
+      if (image && shape === TopicShape.IMAGE) {
         const size = image.substring(0, image.indexOf(':'));
         const url = image.substring(image.indexOf(':') + 1, image.length);
         topic.setImageUrl(url);
@@ -340,17 +342,17 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const bgColor = domElem.getAttribute('bgColor');
-    if ($defined(bgColor)) {
+    if (bgColor) {
       topic.setBackgroundColor(bgColor);
     }
 
     const borderColor = domElem.getAttribute('brColor');
-    if ($defined(borderColor)) {
+    if (borderColor) {
       topic.setBorderColor(borderColor);
     }
 
     const order = domElem.getAttribute('order');
-    if ($defined(order) && order !== 'NaN') {
+    if (order !== null && order !== 'NaN') {
       // Hack for broken maps ...
       topic.setOrder(parseInt(order, 10));
     }
@@ -362,13 +364,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const position = domElem.getAttribute('position');
-    if ($defined(position)) {
+    if (position !== null) {
       const pos = position.split(',');
       topic.setPosition(Number.parseInt(pos[0], 10), Number.parseInt(pos[1], 10));
     }
 
     const metadata = domElem.getAttribute('metadata');
-    if ($defined(metadata)) {
+    if (metadata !== null) {
       topic.setMetadata(metadata);
     }
 
@@ -460,9 +462,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return emojiToIconMap[icon];
   }
 
-  private static _deserializeNodeText(domElem: ChildNode) {
+  private static _deserializeNodeText(domElem: ChildNode): string | null {
     const children = domElem.childNodes;
-    let value = null;
+    let value: string | null = null;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
       if (child.nodeType === Node.CDATA_SECTION_NODE) {
@@ -513,9 +515,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
    * @param in The String whose non-valid characters we want to remove.
    * @return The in String, stripped of non-valid characters.
    */
-  protected _rmXmlInv(str: string) {
-    if (str == null || str === undefined) return null;
-
+  protected _rmXmlInv(str: string): string {
     let result = '';
     for (let i = 0; i < str.length; i++) {
       const c = str.charCodeAt(i);
