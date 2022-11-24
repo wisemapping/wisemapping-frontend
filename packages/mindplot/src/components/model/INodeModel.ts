@@ -288,7 +288,7 @@ abstract class INodeModel {
 
   abstract getPropertiesKeys(): string[];
 
-  abstract getProperty(key: string): number | string | boolean | undefined;
+  abstract getProperty(key: string): number | string | boolean;
 
   abstract putProperty(key: string, value: number | string | boolean): void;
 

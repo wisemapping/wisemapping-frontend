@@ -73,24 +73,27 @@ export default class Freemap {
     freemap.setVesion(version);
 
     const mainTopicElement = rootElem.firstElementChild;
-    const mainTopic: Node = new Node().loadFromElement(mainTopicElement);
-    freemap.setNode(mainTopic);
+    if (mainTopicElement) {
+      const mainTopic: Node = new Node().loadFromElement(mainTopicElement);
+      freemap.setNode(mainTopic);
 
-    const childNodes = Array.from(mainTopicElement.childNodes);
-    const childsNodes = childNodes
-      .filter((child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'node')
-      .map((c) => c as Element);
+      const childNodes = Array.from(mainTopicElement.childNodes);
+      const childsNodes = childNodes
+        .filter((child: ChildNode) => child.nodeType === 1 && (child as Element).tagName === 'node')
+        .map((c) => c as Element);
 
-    childsNodes.forEach((child: Element) => {
-      const node = this.domToNode(child);
-      mainTopic.setArrowlinkOrCloudOrEdge(node);
-    });
-
+      childsNodes.forEach((child: Element) => {
+        const node = this.domToNode(child);
+        if (node) {
+          mainTopic.setArrowlinkOrCloudOrEdge(node);
+        }
+      });
+    }
     return freemap;
   }
 
-  private filterNodes(child: ChildNode): Element {
-    let element: Element;
+  private filterNodes(child: ChildNode): Element | null {
+    let element: Element | null = null;
     if (child.nodeType === 1) {
       if (
         (child as Element).tagName === 'node' ||
@@ -108,8 +111,8 @@ export default class Freemap {
     return element;
   }
 
-  private domToNode(nodeElem: Element): Choise {
-    let node: Choise;
+  private domToNode(nodeElem: Element): Choise | null {
+    let node: Choise | null = null;
 
     if (nodeElem.tagName === 'node') {
       node = new Node().loadFromElement(nodeElem);
@@ -122,84 +125,105 @@ export default class Freemap {
 
         childsNodes.forEach((child) => {
           const childNode = this.domToNode(child);
-          if (node instanceof Node) node.setArrowlinkOrCloudOrEdge(childNode);
+          if (node instanceof Node && childNode) {
+            node.setArrowlinkOrCloudOrEdge(childNode);
+          }
         });
       }
     }
 
     if (nodeElem.tagName === 'font') {
       node = new Font();
-      if (nodeElem.getAttribute('NAME')) {
-        node.setName(nodeElem.getAttribute('NAME'));
+
+      const nameAttr = nodeElem.getAttribute('NAME');
+      if (nameAttr) {
+        node.setName(nameAttr);
       }
-      if (nodeElem.getAttribute('BOLD')) {
-        node.setBold(nodeElem.getAttribute('BOLD'));
+
+      const boldAttr = nodeElem.getAttribute('BOLD');
+      if (boldAttr) {
+        node.setBold(boldAttr);
       }
-      if (nodeElem.getAttribute('ITALIC')) {
-        node.setItalic(nodeElem.getAttribute('ITALIC'));
+      const italicAttr = nodeElem.getAttribute('ITALIC');
+      if (italicAttr) {
+        node.setItalic(italicAttr);
       }
-      if (nodeElem.getAttribute('SIZE')) {
-        node.setSize(nodeElem.getAttribute('SIZE'));
+      const sizeAttr = nodeElem.getAttribute('SIZE');
+      if (sizeAttr) {
+        node.setSize(sizeAttr);
       }
     }
 
     if (nodeElem.tagName === 'edge') {
       node = new Edge();
-      if (nodeElem.getAttribute('COLOR')) {
-        node.setColor(nodeElem.getAttribute('COLOR'));
+      const colorAttr = nodeElem.getAttribute('COLOR');
+      if (colorAttr) {
+        node.setColor(colorAttr);
       }
-      if (nodeElem.getAttribute('STYLE')) {
-        node.setStyle(nodeElem.getAttribute('STYLE'));
+      const styleAttr = nodeElem.getAttribute('STYLE');
+      if (styleAttr) {
+        node.setStyle(styleAttr);
       }
-      if (nodeElem.getAttribute('WIDTH')) {
-        node.setWidth(nodeElem.getAttribute('WIDTH'));
+      const widthAttr = nodeElem.getAttribute('WIDTH');
+      if (widthAttr) {
+        node.setWidth(widthAttr);
       }
     }
 
     if (nodeElem.tagName === 'arrowlink') {
       node = new Arrowlink();
-      if (nodeElem.getAttribute('COLOR')) {
-        node.setColor(nodeElem.getAttribute('COLOR'));
+      const colorAttr = nodeElem.getAttribute('COLOR');
+      if (colorAttr) {
+        node.setColor(colorAttr);
       }
-      if (nodeElem.getAttribute('DESTINATION')) {
-        node.setDestination(nodeElem.getAttribute('DESTINATION'));
+      const destAttr = nodeElem.getAttribute('DESTINATION');
+      if (destAttr) {
+        node.setDestination(destAttr);
       }
-      if (nodeElem.getAttribute('ENDARROW')) {
-        node.setEndarrow(nodeElem.getAttribute('ENDARROW'));
+      const endAttr = nodeElem.getAttribute('ENDARROW');
+      if (endAttr) {
+        node.setEndarrow(endAttr);
       }
-      if (nodeElem.getAttribute('ENDINCLINATION')) {
-        node.setEndinclination(nodeElem.getAttribute('ENDINCLINATION'));
+      const endIncAttr = nodeElem.getAttribute('ENDINCLINATION');
+      if (endIncAttr) {
+        node.setEndinclination(endIncAttr);
       }
-      if (nodeElem.getAttribute('ID')) {
-        node.setId(nodeElem.getAttribute('ID'));
+      const idAttr = nodeElem.getAttribute('ID');
+      if (idAttr) {
+        node.setId(idAttr);
       }
-      if (nodeElem.getAttribute('STARTARROW')) {
-        node.setStartarrow(nodeElem.getAttribute('STARTARROW'));
+      const starAttr = nodeElem.getAttribute('STARTARROW');
+      if (starAttr) {
+        node.setStartarrow(starAttr);
       }
-      if (nodeElem.getAttribute('STARTINCLINATION')) {
-        node.setStartinclination(nodeElem.getAttribute('STARTINCLINATION'));
+      const startIncAttr = nodeElem.getAttribute('STARTINCLINATION');
+      if (startIncAttr) {
+        node.setStartinclination(startIncAttr);
       }
     }
 
     if (nodeElem.tagName === 'cloud') {
       node = new Cloud();
-      if (nodeElem.getAttribute('COLOR')) {
-        node.setColor(nodeElem.getAttribute('COLOR'));
+      const colorAttr = nodeElem.getAttribute('COLOR');
+      if (colorAttr) {
+        node.setColor(colorAttr);
       }
     }
 
     if (nodeElem.tagName === 'icon') {
       node = new Icon();
-      if (nodeElem.getAttribute('BUILTIN')) {
-        node.setBuiltin(nodeElem.getAttribute('BUILTIN'));
+      const bultInAttr = nodeElem.getAttribute('BUILTIN');
+      if (bultInAttr) {
+        node.setBuiltin(bultInAttr);
       }
     }
 
     if (nodeElem.tagName === 'richcontent') {
       node = new Richcontent();
 
-      if (nodeElem.getAttribute('TYPE')) {
-        node.setType(nodeElem.getAttribute('TYPE'));
+      const typeAttr = nodeElem.getAttribute('TYPE');
+      if (typeAttr) {
+        node.setType(typeAttr);
       }
       if (nodeElem.firstChild && nodeElem.getElementsByTagName('html')) {
         const content = nodeElem.getElementsByTagName('html');

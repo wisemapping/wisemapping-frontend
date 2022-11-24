@@ -69,7 +69,7 @@ class Node {
     return this.FOLDED;
   }
 
-  getId(): string {
+  getId(): string | null {
     return this.ID;
   }
 

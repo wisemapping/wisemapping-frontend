@@ -268,7 +268,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     });
 
     // Clean up from the recursion ...
-    this._idsMap = null;
+    this._idsMap = {};
     mindmap.setId(mapId);
     return mindmap;
   }
@@ -389,7 +389,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
           for (let j = 0; j < namedNodeMap.length; j++) {
             const attribute = namedNodeMap.item(j);
-            attributes[attribute.name] = attribute.value;
+            if (attribute !== null) {
+              attributes[attribute.name] = attribute.value;
+            }
           }
 
           // Has text node ?.
@@ -437,7 +439,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
   static _deserializeTextAttr(domElem: Element): string {
     let value = domElem.getAttribute('text');
-    if (!$defined(value)) {
+    if (!value) {
       const children = domElem.childNodes;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
@@ -448,11 +450,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     } else {
       // Notes must be decoded ...
       value = unescape(value);
-
-      // Hack for empty nodes ...
-      if (value === '') {
-        value = ' ';
-      }
+    }
+    // Hack for empty nodes ...
+    if (!value) {
+      value = ' ';
     }
 
     return value;
@@ -462,7 +463,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return emojiToIconMap[icon];
   }
 
-  private static _deserializeNodeText(domElem: ChildNode): string | null {
+  private static _deserializeNodeText(domElem: ChildNode): string {
     const children = domElem.childNodes;
     let value: string | null = null;
     for (let i = 0; i < children.length; i++) {
@@ -471,13 +472,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         value = child.nodeValue;
       }
     }
-    return value;
+    return value !== null ? value : '';
   }
 
   static _deserializeRelationship(domElement: Element, mindmap: Mindmap): RelationshipModel {
-    const srcId = Number.parseInt(domElement.getAttribute('srcTopicId'), 10);
-    const destId = Number.parseInt(domElement.getAttribute('destTopicId'), 10);
-    const lineType = Number.parseInt(domElement.getAttribute('lineType'), 10);
+    const srcId = Number.parseInt(domElement.getAttribute('srcTopicId')!, 10);
+    const destId = Number.parseInt(domElement.getAttribute('destTopicId')!, 10);
+    const lineType = Number.parseInt(domElement.getAttribute('lineType')!, 10);
     const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
     const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
 

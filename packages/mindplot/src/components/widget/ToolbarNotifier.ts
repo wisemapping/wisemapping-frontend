@@ -36,7 +36,7 @@ class ToolbarNotifier {
       this.container.data('transitioning', true);
       this.container.text(msg);
       this.container.css({
-        left: ($(window).width() - this.container.width()) / 2 - 9,
+        left: ($(window).width()! - this.container.width()!) / 2 - 9,
       });
 
       if (fade) {

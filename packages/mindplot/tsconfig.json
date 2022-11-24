@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "declaration": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "rootDirs": [
       "src",
     ]

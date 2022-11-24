@@ -28,7 +28,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
   private static INTERNODE_HORIZONTAL_PADDING = 30;
 
-  predict(graph, parent, node: Node, position: PositionType) {
+  predict(graph, parent, node: Node, position: PositionType): [number, PositionType] {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
@@ -44,19 +44,16 @@ class BalancedSorter extends AbstractBasicSorter {
       }
     }
 
-    let right;
-    let left;
+    // Find the order ...
+    let order: number;
     if (!position) {
-      right = this._getChildrenForOrder(parent, graph, 0);
-      left = this._getChildrenForOrder(parent, graph, 1);
-    }
-    // Filter nodes on one side..
-    let order;
-    if (position) {
-      order = position.x > rootNode.getPosition().x ? 0 : 1;
-    } else {
+      const right = this._getChildrenForOrder(parent, graph, 0);
+      const left = this._getChildrenForOrder(parent, graph, 1);
       order = right.length - left.length > 0 ? 1 : 0;
+    } else {
+      order = position.x > rootNode.getPosition().x ? 0 : 1;
     }
+
     const direction = order % 2 === 0 ? 1 : -1;
 
     // Exclude the dragged node (if set)
@@ -79,7 +76,7 @@ class BalancedSorter extends AbstractBasicSorter {
     }
 
     // Try to fit within ...
-    let result = null;
+    let result: [number, PositionType] | null = null;
     const last = children[children.length - 1];
     const newestPosition = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
@@ -234,7 +231,7 @@ class BalancedSorter extends AbstractBasicSorter {
     return 'Balanced Sorter';
   }
 
-  protected _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number) {
+  protected _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number): Node[] {
     return this._getSortedChildren(graph, parent).filter(
       (child) => child.getOrder() % 2 === order % 2,
     );

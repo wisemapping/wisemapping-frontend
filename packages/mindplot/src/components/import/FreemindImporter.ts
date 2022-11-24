@@ -342,7 +342,7 @@ export default class FreemindImporter extends Importer {
     const id = node.getId();
     let idFreeToIdWise: number;
 
-    if (id) {
+    if (id !== null && id !== undefined) {
       if (id === '_') {
         this.idDefault++;
         idFreeToIdWise = this.idDefault;
