@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -18,19 +19,23 @@
 import { $defined } from '@wisemapping/core-js';
 import $ from 'jquery';
 
-import Events from './Events';
 import ActionDispatcher from './ActionDispatcher';
+import Events from './Events';
 import Topic from './Topic';
 
-class MultilineTextEditor extends Events {
-  private _topic: Topic | null;
+class EditorComponent extends Events {
+  private _topic: Topic;
 
-  private _containerElem: JQuery<HTMLElement> | null;
+  private _containerElem: JQuery<HTMLElement>;
 
-  constructor() {
+  constructor(topic: Topic) {
     super();
-    this._topic = null;
-    this._containerElem = null;
+    this._topic = topic;
+
+    // Create editor ui
+    this._containerElem = EditorComponent._buildEditor();
+    $('body').append(this._containerElem);
+    this._registerEvents(this._containerElem);
   }
 
   private static _buildEditor() {
@@ -53,9 +58,9 @@ class MultilineTextEditor extends Events {
     return result;
   }
 
-  private _registerEvents(containerElem: JQuery) {
+  private _registerEvents(containerElem: JQuery): void {
     const textareaElem = this._getTextareaElem();
-    textareaElem?.on('keydown', (event) => {
+    textareaElem.on('keydown', (event) => {
       switch (event.code) {
         case 'Escape':
           this.close(false);
@@ -86,12 +91,12 @@ class MultilineTextEditor extends Events {
       event.stopPropagation();
     });
 
-    textareaElem?.on('keypress', (event) => {
+    textareaElem.on('keypress', (event) => {
       event.stopPropagation();
     });
 
-    textareaElem?.on('keyup', (event) => {
-      const text = this._getTextareaElem()?.val();
+    textareaElem.on('keyup', (event) => {
+      const text = this._getTextareaElem().val();
       this.fireEvent('input', [event, text]);
       this._adjustEditorSize();
     });
@@ -109,27 +114,21 @@ class MultilineTextEditor extends Events {
   }
 
   private _adjustEditorSize() {
-    if (this.isVisible()) {
-      const textElem = this._getTextareaElem();
+    const textElem = this._getTextareaElem();
 
-      const lines = this._getTextAreaText().split('\n');
-      let maxLineLength = 1;
-      lines.forEach((line: string) => {
-        maxLineLength = Math.max(line.length, maxLineLength);
-      });
+    const lines = this._getTextAreaText().split('\n');
+    let maxLineLength = 1;
+    lines.forEach((line: string) => {
+      maxLineLength = Math.max(line.length, maxLineLength);
+    });
 
-      textElem?.attr('cols', maxLineLength);
-      textElem?.attr('rows', lines.length);
+    textElem.attr('cols', maxLineLength);
+    textElem.attr('rows', lines.length);
 
-      this._containerElem?.css({
-        width: `${maxLineLength + 2}em`,
-        height: textElem?.height() || 0,
-      });
-    }
-  }
-
-  isVisible(): boolean {
-    return this._containerElem !== null && this._containerElem.css('display') === 'block';
+    this._containerElem.css({
+      width: `${maxLineLength + 2}em`,
+      height: textElem?.height() || 0,
+    });
   }
 
   private _updateModel() {
@@ -148,62 +147,49 @@ class MultilineTextEditor extends Events {
     }
   }
 
-  show(topic: Topic, text: string): void {
-    // Close a previous node editor if it's opened ...
-    if (this._topic) {
-      this.close(false);
-    }
-
-    this._topic = topic;
-    if (!this.isVisible()) {
-      // Create editor ui
-      const containerElem = MultilineTextEditor._buildEditor();
-      $('body').append(containerElem);
-
-      this._containerElem = containerElem;
-      this._registerEvents(containerElem);
-      this._showEditor(text);
-    }
-  }
-
-  private _showEditor(defaultText: string) {
+  show(defaultText: string) {
     const topic = this._topic;
-    if (topic && this._containerElem) {
-      // Hide topic text ...
-      topic.getTextShape().setVisibility(false);
 
-      // Set Editor Style
-      const nodeText = topic.getTextShape();
-      const fontStyle = nodeText.getFontStyle();
-      fontStyle.size = nodeText.getHtmlFontSize();
-      fontStyle.color = nodeText.getColor();
-      this._setStyle(fontStyle);
+    // Hide topic text ...
+    topic.getTextShape().setVisibility(false);
 
-      // Set editor's initial size
-      // Position the editor and set the size...
-      const textShape = topic.getTextShape();
+    // Set Editor Style
+    const nodeText = topic.getTextShape();
+    const fontStyle = nodeText.getFontStyle();
+    fontStyle.size = nodeText.getHtmlFontSize();
+    fontStyle.color = nodeText.getColor();
+    this._setStyle(fontStyle);
 
-      this._containerElem.css('display', 'block');
+    // Set editor's initial size
+    // Position the editor and set the size...
+    const textShape = topic.getTextShape();
 
-      let { top, left } = textShape.getNativePosition();
-      // Adjust padding top position ...
-      top -= 4;
-      left -= 4;
-      this._containerElem.offset({ top, left });
+    this._containerElem.css('display', 'block');
 
-      // Set editor's initial text ...
-      const text = $defined(defaultText) ? defaultText : topic.getText();
-      this._setText(text);
+    let { top, left } = textShape.getNativePosition();
+    // Adjust padding top position ...
+    top -= 4;
+    left -= 4;
+    this._containerElem.offset({ top, left });
 
-      // Set the element focus and select the current text ...
-      const inputElem = this._getTextareaElem();
-      if (inputElem) {
-        this._positionCursor(inputElem, !$defined(defaultText));
-      }
+    // Set editor's initial text ...
+    const text = topic.getText() || defaultText;
+    this._setText(text);
+
+    // Set the element focus and select the current text ...
+    const inputElem = this._getTextareaElem();
+    if (inputElem) {
+      this._positionCursor(inputElem, !$defined(defaultText));
     }
   }
 
-  private _setStyle(fontStyle) {
+  private _setStyle(fontStyle: {
+    fontFamily: string;
+    style: string;
+    weight: string;
+    size: number;
+    color: string;
+  }) {
     const inputField = this._getTextareaElem();
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     /* eslint-disable no-param-reassign */
@@ -227,22 +213,22 @@ class MultilineTextEditor extends Events {
       fontWeight: fontStyle.weight,
       color: fontStyle.color,
     };
-    inputField?.css(style);
-    this._containerElem?.css(style);
+    inputField.css(style);
+    this._containerElem.css(style);
   }
 
   private _setText(text: string): void {
     const textareaElem = this._getTextareaElem();
-    textareaElem?.val(text);
+    textareaElem.val(text);
     this._adjustEditorSize();
   }
 
   private _getTextAreaText(): string {
-    return this._getTextareaElem()?.val() as string;
+    return this._getTextareaElem().val() as string;
   }
 
-  private _getTextareaElem(): JQuery<HTMLTextAreaElement> | null {
-    return this._containerElem ? this._containerElem.find('textarea') : null;
+  private _getTextareaElem(): JQuery<HTMLTextAreaElement> {
+    return this._containerElem.find('textarea');
   }
 
   private _positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
@@ -257,20 +243,47 @@ class MultilineTextEditor extends Events {
   }
 
   close(update: boolean): void {
-    if (this.isVisible()) {
-      if (update) {
-        this._updateModel();
-      }
-
-      // Remove it form the screen ...
-      this._containerElem?.remove();
-      this._containerElem = null;
+    if (update) {
+      this._updateModel();
     }
+    // Remove it form the screen ...
+    this._containerElem.remove();
 
-    if (this._topic) {
-      this._topic.getTextShape().setVisibility(true);
-      this._topic = null;
+    // Restore topoc share visibility ...
+    this._topic.getTextShape().setVisibility(true);
+  }
+}
+
+class MultitTextEditor {
+  // eslint-disable-next-line no-use-before-define
+  private static instance: MultitTextEditor = new MultitTextEditor();
+
+  private component: EditorComponent | null;
+
+  static getInstance(): MultitTextEditor {
+    return MultitTextEditor.instance;
+  }
+
+  isActive(): boolean {
+    return this.component !== null;
+  }
+
+  show(topic: Topic, defaultText: string): void {
+    // Is it active ?
+    if (this.component) {
+      console.error('Editor was already displayed. Please, clouse it');
+      this.component.close(false);
+    }
+    // Create a new instance
+    this.component = new EditorComponent(topic);
+    this.component.show(defaultText);
+  }
+
+  close(update: boolean): void {
+    if (this.component) {
+      this.component.close(update);
+      this.component = null;
     }
   }
 }
-export default MultilineTextEditor;
+export default MultitTextEditor;
