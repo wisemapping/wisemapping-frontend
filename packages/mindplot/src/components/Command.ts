@@ -46,11 +46,11 @@ abstract class Command {
     return this._uuid;
   }
 
-  get discardDuplicated(): string {
+  getDiscardDuplicated(): string {
     return this._discardDuplicated;
   }
 
-  set discardDuplicated(value: string) {
+  setDiscardDuplicated(value: string) {
     this._discardDuplicated = value;
   }
 }

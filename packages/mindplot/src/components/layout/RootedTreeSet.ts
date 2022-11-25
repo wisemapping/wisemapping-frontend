@@ -110,7 +110,7 @@ class RootedTreeSet {
     $assert($defined(id), 'id can not be null');
 
     const graphs = this._rootNodes;
-    let result = null;
+    let result: Node | null = null;
     for (let i = 0; i < graphs.length; i++) {
       const node = graphs[i];
       result = this._find(id, node);
@@ -123,7 +123,7 @@ class RootedTreeSet {
       throw new Error(`node could not be found id:${id}\n,RootedTreeSet${this.dump()}`);
     }
 
-    return result;
+    return result!;
   }
 
   private _find(id: number, parent: Node): Node {
@@ -131,7 +131,7 @@ class RootedTreeSet {
       return parent;
     }
 
-    let result = null;
+    let result: Node | null = null;
     const children = parent._children;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
@@ -139,7 +139,7 @@ class RootedTreeSet {
       if (result) break;
     }
 
-    return result;
+    return result!;
   }
 
   /**

@@ -29,7 +29,7 @@ class AddTopicCommand extends Command {
    * @classdesc This command class handles do/undo of adding one or multiple topics to
    * the mindmap.
    */
-  constructor(models: NodeModel[], parentTopicsId: number[]) {
+  constructor(models: NodeModel[], parentTopicsId: number[] | null) {
     $assert(models, 'models can not be null');
     $assert(
       parentTopicsId == null || parentTopicsId.length === models.length,
@@ -48,7 +48,7 @@ class AddTopicCommand extends Command {
       const topic = commandContext.createTopic(model);
 
       // Connect to topic ...
-      if (me._parentsIds) {
+      if (this._parentsIds) {
         const parentId = me._parentsIds[index];
         if ($defined(parentId)) {
           const parentTopic = commandContext.findTopics([parentId])[0];
@@ -70,7 +70,7 @@ class AddTopicCommand extends Command {
 
   undoExecute(commandContext: CommandContext) {
     // Delete disconnected the nodes. Create a copy of the topics ...
-    const clonedModel = [];
+    const clonedModel: NodeModel[] = [];
     this._models.forEach((model) => {
       clonedModel.push(model.clone());
     });

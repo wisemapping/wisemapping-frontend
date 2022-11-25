@@ -52,7 +52,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this._actionRunner = new DesignerActionRunner(commandContext, this);
   }
 
-  addTopics(models: NodeModel[], parentTopicsId: number[] = undefined) {
+  addTopics(models: NodeModel[], parentTopicsId: number[] | null) {
     const command = new AddTopicCommand(models, parentTopicsId);
     this.execute(command);
   }
@@ -106,7 +106,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       topic.setFontStyle(style, true);
       return result;
     };
-    const command = new GenericFunctionCommand(commandFunc, topicsIds);
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, null);
     this.execute(command);
   }
 
@@ -153,7 +153,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-    command.discardDuplicated = 'fontColorCommandId';
+    command.setDiscardDuplicated('fontColorCommandId');
     this.execute(command);
   }
 
@@ -169,7 +169,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-    command.discardDuplicated = 'backColor';
+    command.setDiscardDuplicated('backColor');
     this.execute(command);
   }
 
@@ -185,7 +185,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-    command.discardDuplicated = 'borderColorCommandId';
+    command.setDiscardDuplicated('borderColorCommandId');
     this.execute(command);
   }
 
@@ -234,7 +234,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       return result;
     };
 
-    const command = new GenericFunctionCommand(commandFunc, topicsIds);
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, null);
     this.execute(command);
   }
 

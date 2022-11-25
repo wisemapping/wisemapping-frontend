@@ -41,21 +41,25 @@ class MDExporter extends Exporter {
 
     // Add cental node as text ...
     const centralTopic = this.mindmap.getCentralTopic();
-    const centralText = this.normalizeText(centralTopic.getText());
 
-    // Traverse all the branches ...
-    let result = `# ${centralText}\n\n`;
-    result += this.traverseBranch('', centralTopic.getChildren());
+    const centralTopicText = centralTopic.getText();
+    let result = '';
+    if (centralTopicText) {
+      const centralText = this.normalizeText(centralTopicText);
 
-    // White footnotes:
-    if (this.footNotes.length > 0) {
-      result += '\n\n\n';
-      this.footNotes.forEach((note, index) => {
-        result += `[^${index + 1}]: ${this.normalizeText(note)}`;
-      });
+      // Traverse all the branches ...
+      result = `# ${centralText}\n\n`;
+      result += this.traverseBranch('', centralTopic.getChildren());
+
+      // White footnotes:
+      if (this.footNotes.length > 0) {
+        result += '\n\n\n';
+        this.footNotes.forEach((note, index) => {
+          result += `[^${index + 1}]: ${this.normalizeText(note)}`;
+        });
+      }
+      result += '\n';
     }
-    result += '\n';
-
     return Promise.resolve(result);
   }
 

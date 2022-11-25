@@ -20,7 +20,7 @@ class TopicFactory {
     } else {
       $assert(false, `unsupported node type:${type}`);
     }
-    return result;
+    return result!;
   }
 }
 

@@ -70,7 +70,8 @@ abstract class WidgetManager {
       tooltip.css({ display: 'block' });
       evt.stopPropagation();
     });
-    mindmapElement.addEvent('mouseleave', (evt) => {
+
+    mindmapElement.addEvent('mouseleave', (evt: MouseEvent) => {
       tooltip.css({ display: 'none' });
       evt.stopPropagation();
     });
@@ -100,7 +101,11 @@ abstract class WidgetManager {
     });
   }
 
-  abstract showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void;
+  abstract showEditorForLink(
+    topic: Topic,
+    linkModel: LinkModel | null,
+    linkIcon: LinkIcon | null,
+  ): void;
 
   abstract showEditorForNote(
     topic: Topic,

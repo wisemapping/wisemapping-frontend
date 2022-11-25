@@ -173,7 +173,7 @@ class EditorComponent extends Events {
     this._containerElem.offset({ top, left });
 
     // Set editor's initial text ...
-    const text = topic.getText() || defaultText;
+    const text = defaultText || topic.getText();
     this._setText(text);
 
     // Set the element focus and select the current text ...

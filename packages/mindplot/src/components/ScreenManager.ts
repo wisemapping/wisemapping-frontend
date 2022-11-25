@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import { $assert } from '@wisemapping/core-js';
+import { $assert, $defined } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 // https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
 // https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
@@ -100,8 +100,8 @@ class ScreenManager {
   private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
 
   getWorkspaceMousePosition(event: MouseEvent | TouchEvent): Point {
-    let x: number;
-    let y: number;
+    let x: number | null = null;
+    let y: number | null = null;
 
     if (this.mouseEvents.includes(event.type)) {
       // Retrieve current mouse position.
@@ -113,11 +113,8 @@ class ScreenManager {
     }
 
     // if value is zero assert throws error
-    if (x !== 0) {
-      $assert(x, `clientX can not be null, eventType= ${event.type}`);
-    }
-    if (y !== 0) {
-      $assert(y, `clientY can not be null, eventType= ${event.type}`);
+    if (x === null || y === null) {
+      throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
 
     // Adjust the deviation of the container positioning ...

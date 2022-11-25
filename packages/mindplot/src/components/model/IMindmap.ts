@@ -67,7 +67,7 @@ abstract class IMindmap {
     $assert(child, 'Child can not be null.');
     $assert(parent, 'Child model seems to be already connected');
 
-    parent.removeChild(child);
+    parent?.removeChild(child);
     this.addBranch(child);
   }
 

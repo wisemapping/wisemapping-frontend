@@ -35,10 +35,10 @@ class DesignerUndoManager {
   enqueue(command: Command) {
     $assert(command, 'Command can  not be null');
     const { length } = this._undoQueue;
-    if (command.discardDuplicated && length > 0) {
+    if (command.getDiscardDuplicated() && length > 0) {
       // Skip duplicated events ...
       const lastItem = this._undoQueue[length - 1];
-      if (lastItem.discardDuplicated !== command.discardDuplicated) {
+      if (lastItem.getDiscardDuplicated() !== command.getDiscardDuplicated()) {
         this._undoQueue.push(command);
       }
     } else {

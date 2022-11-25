@@ -408,7 +408,7 @@ class Designer extends Events {
       $notify($msg('CLIPBOARD_IS_EMPTY'));
       return;
     }
-    this._actionDispatcher.addTopics(this._clipboard);
+    this._actionDispatcher.addTopics(this._clipboard, null);
     this._clipboard = [];
   }
 
@@ -589,10 +589,9 @@ class Designer extends Events {
     // Init layout manager ...
     const size = { width: 25, height: 25 };
     const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
-    const me = this;
     layoutManager.addEvent('change', (event) => {
       const id = event.getId();
-      const topic = me.getModel().findTopicById(id);
+      const topic = this.getModel().findTopicById(id);
       if (topic) {
         topic.setPosition(event.getPosition());
         topic.setOrder(event.getOrder());
@@ -728,23 +727,21 @@ class Designer extends Events {
 
     // Build relationship line ....
     const result = new Relationship(sourceTopic!, targetTopic!, model);
-    const me = this;
-
     result.addEvent('ontblur', () => {
-      const topics = me.getModel().filterSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+      const topics = this.getModel().filterSelectedTopics();
+      const rels = this.getModel().filterSelectedRelationships();
 
       if (topics.length === 0 || rels.length === 0) {
-        me.fireEvent('onblur');
+        this.fireEvent('onblur');
       }
     });
 
     result.addEvent('ontfocus', () => {
-      const topics = me.getModel().filterSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+      const topics = this.getModel().filterSelectedTopics();
+      const rels = this.getModel().filterSelectedRelationships();
 
       if (topics.length === 1 || rels.length === 1) {
-        me.fireEvent('onfocus');
+        this.fireEvent('onfocus');
       }
     });
 
@@ -771,7 +768,7 @@ class Designer extends Events {
       const model = node.getModel();
       model.deleteNode();
 
-      if ($defined(parent)) {
+      if (parent) {
         this.goToNode(parent);
       }
     }

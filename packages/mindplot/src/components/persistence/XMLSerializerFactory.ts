@@ -89,7 +89,9 @@ class XMLSerializerFactory {
         result = new migrator(result);
       }
     }
-    $assert(result, `Cound not find serialized for ${version}`);
+    if (!result) {
+      throw new Error(`Cound not find serialized for ${version}`);
+    }
     return result;
   }
 }

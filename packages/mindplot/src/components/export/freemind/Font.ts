@@ -7,15 +7,15 @@ export default class Font {
 
   protected SIZE: string;
 
-  getBold(): string {
+  getBold(): string | undefined {
     return this.BOLD;
   }
 
-  getItalic(): string {
+  getItalic(): string | undefined {
     return this.ITALIC;
   }
 
-  getName(): string {
+  getName(): string | undefined {
     return this.NAME;
   }
 

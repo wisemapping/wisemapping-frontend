@@ -68,23 +68,26 @@ class SVGExporter extends Exporter {
     const rectElems = Array.from(this.svgElement.querySelectorAll('g>rect'));
     const translates: SizeType[] = rectElems.map((rect: Element) => {
       const g = rect.parentElement;
-      const transformStr = g.getAttribute('transform');
-
-      // Looking to parse translate(220.00000,279.00000) scale(1.00000,1.00000)
-      const match = transformStr.match(SVGExporter.regexpTranslate);
+      const transformStr = g?.getAttribute('transform');
       let result: SizeType = { width: 0, height: 0 };
-      if (match !== null) {
-        result = { width: Number.parseFloat(match[1]), height: Number.parseFloat(match[2]) };
+      if (transformStr) {
+        // Looking to parse translate(220.00000,279.00000) scale(1.00000,1.00000)
+        const match = transformStr.match(SVGExporter.regexpTranslate);
+        if (match !== null) {
+          result = { width: Number.parseFloat(match[1]), height: Number.parseFloat(match[2]) };
 
-        // Add rect size ...
-        if (result.width > 0) {
-          const rectWidth = Number.parseFloat(rect.getAttribute('width'));
-          result.width += rectWidth;
-        }
+          // Add rect size ...
+          const widthAttr = rect.getAttribute('width');
+          if (result.width > 0 && widthAttr) {
+            const rectWidth = Number.parseFloat(widthAttr);
+            result.width += rectWidth;
+          }
 
-        if (result.height > 0) {
-          const rectHeight = Number.parseFloat(rect.getAttribute('height'));
-          result.height += rectHeight;
+          const heightAttr = rect.getAttribute('height');
+          if (result.height > 0 && heightAttr) {
+            const rectHeight = Number.parseFloat(heightAttr);
+            result.height += rectHeight;
+          }
         }
       }
       return result;

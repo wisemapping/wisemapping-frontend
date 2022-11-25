@@ -21,6 +21,7 @@ import { $defined } from '@wisemapping/core-js';
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
 import Workspace from './Workspace';
+import PositionType from './PositionType';
 
 class ControlPoint {
   private control1: Elipse;
@@ -37,15 +38,15 @@ class ControlPoint {
 
   private _workspace: Workspace;
 
-  private _endPoint: any[];
+  private _endPoint: PositionType[];
 
-  private _orignalCtrlPoint: any;
+  private _orignalCtrlPoint: PositionType[];
 
-  private _controls: any;
+  private _controls: PositionType[];
 
-  private _mouseMoveFunction: (e: Event) => void;
+  private _mouseMoveFunction: (e: MouseEvent) => void;
 
-  private _mouseUpFunction: (e: Event) => void;
+  private _mouseUpFunction: (e: MouseEvent) => void;
 
   constructor() {
     this.control1 = new Elipse({
@@ -73,25 +74,24 @@ class ControlPoint {
     ];
 
     this._isBinded = false;
-    const me = this;
-    this._controlPointsController[0].addEvent('mousedown', (event) => {
-      me._mouseDown(event, ControlPoint.FROM, me);
+    this._controlPointsController[0].addEvent('mousedown', (event: MouseEvent) => {
+      this._mouseDown(event, ControlPoint.FROM);
     });
-    this._controlPointsController[0].addEvent('click', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[0].addEvent('click', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
-    this._controlPointsController[0].addEvent('dblclick', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[0].addEvent('dblclick', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
 
-    this._controlPointsController[1].addEvent('mousedown', (event) => {
-      me._mouseDown(event, ControlPoint.TO, me);
+    this._controlPointsController[1].addEvent('mousedown', (event: MouseEvent) => {
+      this._mouseDown(event, ControlPoint.TO);
     });
-    this._controlPointsController[1].addEvent('click', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[1].addEvent('click', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
-    this._controlPointsController[1].addEvent('dblclick', (event) => {
-      me._mouseClick(event);
+    this._controlPointsController[1].addEvent('dblclick', (event: MouseEvent) => {
+      this._mouseClick(event);
     });
   }
 
@@ -103,8 +103,7 @@ class ControlPoint {
     this._createControlPoint();
     this._endPoint = [];
     this._orignalCtrlPoint = [];
-    this._orignalCtrlPoint[0] = { ...this._controls[0] };
-    this._orignalCtrlPoint[1] = { ...this._controls[1] };
+    [this._orignalCtrlPoint[0], this._orignalCtrlPoint[1]] = this._controls;
     this._endPoint[0] = { ...this._line.getLine().getFrom() };
     this._endPoint[1] = { ...this._line.getLine().getTo() };
   }
@@ -146,16 +145,16 @@ class ControlPoint {
     // Overwrite default behaviour ...
   }
 
-  private _mouseDown(event: Event, point, me) {
+  private _mouseDown(event: MouseEvent, point: number) {
     if (!this._isBinded) {
       this._isBinded = true;
       this._mouseMoveFunction = (e) => {
-        me._mouseMoveEvent(e, point, me);
+        this._mouseMoveEvent(e, point);
       };
 
       this._workspace.getScreenManager().addEvent('mousemove', this._mouseMoveFunction);
-      this._mouseUpFunction = (e: Event) => {
-        me._mouseUp(e, point, me);
+      this._mouseUpFunction = (e: MouseEvent) => {
+        this._mouseUp(e, MouseEvent);
       };
       this._workspace.getScreenManager().addEvent('mouseup', this._mouseUpFunction);
     }
@@ -224,22 +223,22 @@ class ControlPoint {
   }
 
   removeFromWorkspace(workspace: Workspace) {
-    this._workspace = null;
+    this._workspace!;
     workspace.removeChild(this._controlPointsController[0]);
     workspace.removeChild(this._controlPointsController[1]);
     workspace.removeChild(this._controlLines[0]);
     workspace.removeChild(this._controlLines[1]);
   }
 
-  getControlPoint(index: number): ControlPoint {
+  getControlPoint(index: number): PositionType {
     return this._controls[index];
   }
 
-  getOriginalEndPoint(index: number) {
+  getOriginalEndPoint(index: number): PositionType {
     return this._endPoint[index];
   }
 
-  getOriginalCtrlPoint(index: number): ControlPoint {
+  getOriginalCtrlPoint(index: number): PositionType {
     return this._orignalCtrlPoint[index];
   }
 
