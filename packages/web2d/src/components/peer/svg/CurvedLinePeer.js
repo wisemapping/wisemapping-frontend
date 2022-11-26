@@ -35,10 +35,8 @@ class CurvedLinePeer extends ElementPeer {
   setSrcControlPoint(control) {
     this._customControlPoint_1 = true;
     const change = this._control1.x !== control.x || this._control1.y !== control.y;
-    if ($defined(control.x)) {
-      this._control1 = control;
-      this._control1.x = Number.parseFloat(this._control1.x, 10);
-      this._control1.y = Number.parseFloat(this._control1.y, 10);
+    if (control) {
+      this._control1 = { ...control };
     }
     if (change) {
       this._updatePath();
@@ -48,12 +46,12 @@ class CurvedLinePeer extends ElementPeer {
   setDestControlPoint(control) {
     this._customControlPoint_2 = true;
     const change = this._control2.x !== control.x || this._control2.y !== control.y;
-    if ($defined(control.x)) {
-      this._control2 = control;
-      this._control2.x = Number.parseFloat(this._control2.x, 10);
-      this._control2.y = Number.parseFloat(this._control2.y, 10);
+    if (control) {
+      this._control2 = { ...control };
     }
-    if (change) this._updatePath();
+    if (change) {
+      this._updatePath();
+    }
   }
 
   isSrcControlPointCustom() {
@@ -73,7 +71,7 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   getControlPoints() {
-    return [this._control1, this._control2];
+    return [{ ...this._control1 }, { ...this._control2 }];
   }
 
   setFrom(x1, y1) {
@@ -155,19 +153,18 @@ class CurvedLinePeer extends ElementPeer {
         this._control1.x + this._x1
       ).toFixed(2)},${this._control1.y + this._y1} ${(this._control2.x + this._x2).toFixed(2)},${(
         this._control2.y + this._y2
-      ).toFixed(2)} ${this._x2.toFixed(2)},${this._y2.toFixed(2)}${
-        this._lineStyle
-          ? ` ${(this._control2.x + this._x2).toFixed(2)},${(
-              this._control2.y +
-              this._y2 +
-              3
-            ).toFixed(2)} ${(this._control1.x + this._x1).toFixed(2)},${(
-              this._control1.y +
-              this._y1 +
-              5
-            ).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
-          : ''
-      }`;
+      ).toFixed(2)} ${this._x2.toFixed(2)},${this._y2.toFixed(2)}${this._lineStyle
+        ? ` ${(this._control2.x + this._x2).toFixed(2)},${(
+          this._control2.y +
+          this._y2 +
+          3
+        ).toFixed(2)} ${(this._control1.x + this._x1).toFixed(2)},${(
+          this._control1.y +
+          this._y1 +
+          5
+        ).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
+        : ''
+        }`;
       this._native.setAttribute('d', path);
     }
   }

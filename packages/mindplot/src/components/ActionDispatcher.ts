@@ -21,7 +21,7 @@ import { $assert } from '@wisemapping/core-js';
 import Point from '@wisemapping/web2d';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
-import ControlPoint from './ControlPoint';
+import RelationshipControlPoints from './RelationshipControlPoints';
 import Events from './Events';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
@@ -57,7 +57,7 @@ abstract class ActionDispatcher extends Events {
 
   abstract moveTopic(topicId: number, position: Point): void;
 
-  abstract moveControlPoint(ctrlPoint: ControlPoint, point: Point): void;
+  abstract moveControlPoint(ctrlPoint: RelationshipControlPoints, point: Point): void;
 
   abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string): void;
 

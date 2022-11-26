@@ -35,6 +35,7 @@ import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import Command from './Command';
 import FeatureType from './model/FeatureType';
+import RelationshipControlPoints from './RelationshipControlPoints';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -93,8 +94,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  moveControlPoint(ctrlPoint: Point, point: Point) {
-    const command = new MoveControlPointCommand(ctrlPoint, point);
+  moveControlPoint(ctrlPoint: RelationshipControlPoints, index: number) {
+    const command = new MoveControlPointCommand(ctrlPoint, index);
     this.execute(command);
   }
 

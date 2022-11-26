@@ -15,28 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Line } from '@wisemapping/web2d';
 import Command from '../Command';
-import ControlPoint from '../ControlPoint';
+import RelationshipControlPoints from '../RelationshipControlPoints';
 import PositionType from '../PositionType';
 
 class MoveControlPointCommand extends Command {
-  private _ctrlPointControler: ControlPoint;
+  private _controlPoints: RelationshipControlPoints;
 
-  private _line: Line;
+  private _ctrPointPosition: PositionType;
 
-  private _controlPoint: Line;
+  private _endPosition: PositionType;
 
-  private _oldControlPoint: Line;
-
-  private _originalEndPoint: PositionType;
-
-  private _wasCustom: boolean;
-
-  private _endPoint: any;
-
-  private _point: number;
+  private _controlPointIndex: number;
 
   /**
    * @classdesc This command handles do/undo of changing the control points of a relationship
@@ -44,85 +34,72 @@ class MoveControlPointCommand extends Command {
    * influence how the arrow is drawn (not the source or the destination topic nor the arrow
    * direction)
    */
-  constructor(ctrlPointController: ControlPoint, point: number) {
-    $assert(ctrlPointController, 'line can not be null');
-    $assert($defined(point), 'point can not be null');
-
+  constructor(controlPoints: RelationshipControlPoints, controlPointIndex: number) {
     super();
-    this._ctrlPointControler = ctrlPointController;
-    this._line = ctrlPointController._line;
-    this._controlPoint = { ...this._ctrlPointControler.getControlPoint(point) };
-    this._oldControlPoint = { ...this._ctrlPointControler.getOriginalCtrlPoint(point) };
-    this._originalEndPoint = this._ctrlPointControler.getOriginalEndPoint(point);
-    switch (point) {
-      case 0:
-        this._wasCustom = this._line.getLine().isSrcControlPointCustom();
-        this._endPoint = { ...this._line.getLine().getFrom() };
-        break;
-      case 1:
-        this._wasCustom = this._line.getLine().isDestControlPointCustom();
-        this._endPoint = { ...this._line.getLine().getTo() };
-        break;
-      default:
-        break;
-    }
-    this._point = point;
+    this._ctrPointPosition = controlPoints.getControlPointPosition(controlPointIndex);
+    this._controlPointIndex = controlPointIndex;
+    this._controlPoints = controlPoints;
+
+    const relLine = controlPoints.getRelationship().getLine();
+    this._endPosition = controlPointIndex === 0 ? relLine.getFrom() : relLine.getTo();
   }
 
   execute() {
-    const model = this._line.getModel();
-    switch (this._point) {
+    const relationship = this._controlPoints.getRelationship();
+    const model = relationship.getModel();
+    switch (this._controlPointIndex) {
       case 0:
-        model.setSrcCtrlPoint({ ...this._controlPoint });
-        this._line.setFrom(this._endPoint.x, this._endPoint.y);
-        this._line.setIsSrcControlPointCustom(true);
-        this._line.setSrcControlPoint({ ...this._controlPoint });
+        model.setSrcCtrlPoint(this._ctrPointPosition);
+        relationship.setIsSrcControlPointCustom(true);
+
+        relationship.setFrom(this._endPosition.x, this._endPosition.y);
+        relationship.setSrcControlPoint(this._ctrPointPosition);
         break;
       case 1:
-        model.setDestCtrlPoint({ ...this._controlPoint });
-        this._wasCustom = this._line.getLine().isDestControlPointCustom();
-        this._line.setTo(this._endPoint.x, this._endPoint.y);
-        this._line.setIsDestControlPointCustom(true);
-        this._line.setDestControlPoint({ ...this._controlPoint });
+        model.setDestCtrlPoint(this._ctrPointPosition);
+        relationship.setIsDestControlPointCustom(true);
+
+        relationship.setTo(this._endPosition.x, this._endPosition.y);
+        relationship.setDestControlPoint(this._ctrPointPosition);
         break;
       default:
-        break;
+        throw new Error('Illegal state exception');
     }
-    if (this._line.isOnFocus()) {
-      this._line._refreshShape();
-      this._ctrlPointControler.setLine(this._line);
+
+    if (relationship.isOnFocus()) {
+      relationship.refreshShape();
     }
-    this._line.getLine().updateLine(this._point);
+    // this.relationship.getLine().updateLine(this._point);
   }
 
   undoExecute() {
-    const line = this._line;
-    const model = line.getModel();
-    switch (this._point) {
-      case 0:
-        if ($defined(this._oldControlPoint)) {
-          line.setFrom(this._originalEndPoint.x, this._originalEndPoint.y);
-          model.setSrcCtrlPoint({ ...this._oldControlPoint });
-          line.setSrcControlPoint({ ...this._oldControlPoint });
-          line.setIsSrcControlPointCustom(this._wasCustom);
-        }
-        break;
-      case 1:
-        if ($defined(this._oldControlPoint)) {
-          line.setTo(this._originalEndPoint.x, this._originalEndPoint.y);
-          model.setDestCtrlPoint({ ...this._oldControlPoint });
-          line.setDestControlPoint({ ...this._oldControlPoint });
-          line.setIsDestControlPointCustom(this._wasCustom);
-        }
-        break;
-      default:
-        break;
-    }
-    this._line.getLine().updateLine(this._point);
-    if (this._line.isOnFocus()) {
-      this._ctrlPointControler.setLine(line);
-      line._refreshShape();
-    }
+    // const line = this._line;
+    // const model = line.getModel();
+    // switch (this._controlPointIndex) {
+    //   case 0:
+    //     if ($defined(this._oldControlPoint)) {
+    //       line.setFrom(this._oldRelEndpoint.x, this._oldRelEndpoint.y);
+    //       model.setSrcCtrlPoint({ ...this._oldControlPoint });
+    //       line.setSrcControlPoint({ ...this._oldControlPoint });
+    //       line.setIsSrcControlPointCustom(this._isControlPointDefined);
+    //     }
+    //     break;
+    //   case 1:
+    //     if ($defined(this._oldControlPoint)) {
+    //       line.setTo(this._oldRelEndpoint.x, this._oldRelEndpoint.y);
+    //       model.setDestCtrlPoint({ ...this._oldControlPoint });
+    //       line.setDestControlPoint({ ...this._oldControlPoint });
+    //       line.setIsDestControlPointCustom(this._isControlPointDefined);
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
+    // // this._line.getLine().updateLine(this._point);
+    // // if (this._line.isOnFocus()) {
+    // //   this._ctrlPointControler.setRelationshipLine(line);
+    // //   line._refreshShape();
+    // // }
   }
 }
 

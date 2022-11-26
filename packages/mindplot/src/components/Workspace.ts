@@ -113,7 +113,7 @@ class Workspace {
   }
 
   private appendInternal(shape: Element2D): void {
-    if ($defined(shape.addToWorkspace)) {
+    if (shape.addToWorkspace) {
       shape.addToWorkspace(this);
     } else {
       this._workspace.append(shape);
@@ -156,7 +156,7 @@ class Workspace {
 
   removeChild(shape: Element2D): void {
     // Element is a node, not a web2d element?
-    if ($defined(shape.removeFromWorkspace)) {
+    if (shape.removeFromWorkspace) {
       shape.removeFromWorkspace(this);
     } else {
       this._workspace.removeChild(shape);
