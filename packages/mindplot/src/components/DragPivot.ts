@@ -17,6 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Point, CurvedLine, Rect } from '@wisemapping/web2d';
+import PositionType from './PositionType';
 
 import SizeType from './SizeType';
 import Topic from './Topic';
@@ -24,7 +25,7 @@ import Shape from './util/Shape';
 import Workspace from './Workspace';
 
 class DragPivot {
-  private _position: Point;
+  private _position: PositionType;
 
   private _isVisible: boolean;
 
@@ -41,7 +42,7 @@ class DragPivot {
   private _size: SizeType;
 
   constructor() {
-    this._position = new Point();
+    this._position = { x: 0, y: 0 };
     this._size = DragPivot.DEFAULT_PIVOT_SIZE;
 
     this._straightLine = this._buildStraightLine();

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Arrow, Point, ElementClass } from '@wisemapping/web2d';
+import { Arrow, Point, CurvedLine } from '@wisemapping/web2d';
 import ConnectionLine from './ConnectionLine';
 import RelationshipControlPoints from './RelationshipControlPoints';
 import RelationshipModel from './model/RelationshipModel';
@@ -26,7 +26,7 @@ import Shape from './util/Shape';
 import Workspace from './Workspace';
 
 class Relationship extends ConnectionLine {
-  private _focusShape: ElementClass;
+  private _focusShape: CurvedLine;
 
   private _onFocus: boolean;
 
@@ -53,23 +53,22 @@ class Relationship extends ConnectionLine {
 
     const strokeColor = Relationship.getStrokeColor();
 
+    // Build line ..
     this._line2d.setIsSrcControlPointCustom(false);
     this._line2d.setIsDestControlPointCustom(false);
     this._line2d.setCursor('pointer');
     this._line2d.setStroke(1, 'solid', strokeColor);
     this._line2d.setDashed(4, 2);
     this._line2d.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
+
+    // Build focus shape ...
     this._focusShape = this._createLine(this.getLineType(), ConnectionLine.SIMPLE_CURVED);
     this._focusShape.setStroke(2, 'solid', '#3f96ff');
-
-    const ctrlPoints = this._line2d.getControlPoints();
-    this._focusShape.setSrcControlPoint(ctrlPoints[0]);
-    this._focusShape.setDestControlPoint(ctrlPoints[1]);
+    this._focusShape.setIsSrcControlPointCustom(false);
+    this._focusShape.setIsDestControlPointCustom(false);
     this._focusShape.setVisibility(false);
-    this._onFocus = false;
-    this._isInWorkspace = false;
-    this._controlPointsController = new RelationshipControlPoints(this);
 
+    // Build arrow ...
     this._startArrow = new Arrow();
     this._startArrow.setStrokeColor(strokeColor);
     this._startArrow.setStrokeWidth(2);
@@ -81,6 +80,9 @@ class Relationship extends ConnectionLine {
       this._endArrow.setStrokeColor(strokeColor);
       this._endArrow.setStrokeWidth(2);
     }
+    this._onFocus = false;
+    this._isInWorkspace = false;
+    this._controlPointsController = new RelationshipControlPoints(this);
 
     // Position the line ...
     if (model.getSrcCtrlPoint()) {
@@ -92,6 +94,10 @@ class Relationship extends ConnectionLine {
       const destPoint = { ...model.getDestCtrlPoint() };
       this.setDestControlPoint(destPoint);
     }
+
+    // Reposition all nodes ...
+    this._updatePositions();
+    this._controlPointsController = new RelationshipControlPoints(this);
   }
 
   setStroke(color: string, style: string, opacity: number): void {
@@ -99,43 +105,44 @@ class Relationship extends ConnectionLine {
     this._startArrow.setStrokeColor(color);
   }
 
-  redraw(): void {
+  private _updatePositions() {
     const line2d = this._line2d;
     const sourceTopic = this._sourceTopic;
-    const sourcePosition = sourceTopic.getPosition();
+    const sPos = sourceTopic.getPosition();
 
     const targetTopic = this._targetTopic;
-    let targetPosition = targetTopic.getPosition();
+    let tPos = targetTopic.getPosition();
     if (targetTopic.getType() === 'CentralTopic') {
-      targetPosition = Shape.workoutIncomingConnectionPoint(targetTopic, sourcePosition);
+      tPos = Shape.workoutIncomingConnectionPoint(targetTopic, sPos);
     }
 
     this._line2d.setStroke(2);
-    const ctrlPoints = this._line2d.getControlPoints();
-    if (!this._line2d.isDestControlPointCustom() && !this._line2d.isSrcControlPointCustom()) {
-      const defaultPoints = Shape.calculateDefaultControlPoints(sourcePosition, targetPosition);
-      ctrlPoints[0].x = defaultPoints[0].x;
-      ctrlPoints[0].y = defaultPoints[0].y;
+    let ctrlPoints: [Point, Point];
 
-      ctrlPoints[1].x = defaultPoints[1].x;
-      ctrlPoints[1].y = defaultPoints[1].y;
+    // Position line ...
+    if (!line2d.isDestControlPointCustom() && !line2d.isSrcControlPointCustom()) {
+      ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [PositionType, PositionType];
+    } else {
+      ctrlPoints = line2d.getControlPoints();
     }
 
-    const spoint = new Point();
-    spoint.x = parseInt(ctrlPoints[0].x, 10) + parseInt(sourcePosition.x, 10);
-    spoint.y = parseInt(ctrlPoints[0].y, 10) + parseInt(sourcePosition.y, 10);
+    const spointX = ctrlPoints[0].x + sPos.x;
+    const spointY = ctrlPoints[0].y + sPos.y;
 
-    const tpoint = new Point();
-    tpoint.x = parseInt(ctrlPoints[1].x, 10) + parseInt(targetPosition.x, 10);
-    tpoint.y = parseInt(ctrlPoints[1].y, 10) + parseInt(targetPosition.y, 10);
+    const tpointX = ctrlPoints[1].x + tPos.x;
+    const tpointY = ctrlPoints[1].y + tPos.y;
 
-    const sPos = Shape.calculateRelationShipPointCoordinates(sourceTopic, spoint);
-    const tPos = Shape.calculateRelationShipPointCoordinates(targetTopic, tpoint);
+    const nsPos = Shape.calculateRelationShipPointCoordinates(
+      sourceTopic,
+      new Point(spointX, spointY),
+    );
+    const ntPos = Shape.calculateRelationShipPointCoordinates(
+      targetTopic,
+      new Point(tpointX, tpointY),
+    );
 
-    line2d.setFrom(sPos.x, sPos.y);
-    line2d.setTo(tPos.x, tPos.y);
-
-    line2d.moveToFront();
+    line2d.setFrom(nsPos.x, nsPos.y);
+    line2d.setTo(ntPos.x, ntPos.y);
 
     // Positionate Arrows
     this._positionArrows();
@@ -143,11 +150,25 @@ class Relationship extends ConnectionLine {
     // Add connector ...
     this._positionateConnector(targetTopic);
 
-    if (this.isOnFocus()) {
-      this.refreshShape();
-    }
-    this._focusShape.moveToBack();
+    // Poisition refresh shape ...
+    this._positionRefreshShape();
+  }
 
+  redraw(): void {
+    this._updatePositions();
+
+    this._line2d.moveToFront();
+    this._startArrow.moveToBack();
+    if (this._endArrow) {
+      this._endArrow.moveToBack();
+    }
+
+    if (this._showEndArrow) {
+      this._endArrow.setVisibility(this.isVisible());
+    }
+    this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
+
+    this._focusShape.moveToBack();
     this._controlPointsController.redraw();
   }
 
@@ -156,11 +177,8 @@ class Relationship extends ConnectionLine {
     const spos = this._line2d.getFrom();
 
     this._startArrow.setFrom(spos.x, spos.y);
-    this._startArrow.moveToBack();
-
     if (this._endArrow) {
       this._endArrow.setFrom(tpos.x, tpos.y);
-      this._endArrow.moveToBack();
     }
 
     if (this._line2d.getType() === 'CurvedLine') {
@@ -175,14 +193,11 @@ class Relationship extends ConnectionLine {
         this._endArrow.setControlPoint(this._line2d.getFrom());
       }
     }
-
-    if (this._showEndArrow) {
-      this._endArrow.setVisibility(this.isVisible());
-    }
-    this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
   }
 
   addToWorkspace(workspace: Workspace): void {
+    this._updatePositions();
+
     workspace.append(this._focusShape);
     workspace.append(this._controlPointsController);
 
@@ -225,12 +240,11 @@ class Relationship extends ConnectionLine {
   }
 
   setOnFocus(focus: boolean): void {
+    if (focus) {
+      this._positionRefreshShape();
+    }
     // Change focus shape
     if (this.isOnFocus() !== focus) {
-      if (focus) {
-        this.refreshShape();
-      }
-
       this._focusShape.setVisibility(focus);
       this._controlPointsController.setVisibility(focus);
       this._onFocus = focus;
@@ -238,17 +252,16 @@ class Relationship extends ConnectionLine {
     }
   }
 
-  refreshShape(): void {
+  private _positionRefreshShape(): void {
     const sPos = this._line2d.getFrom();
     const tPos = this._line2d.getTo();
+
     const ctrlPoints = this._line2d.getControlPoints();
     this._focusShape.setFrom(sPos.x, sPos.y);
     this._focusShape.setTo(tPos.x, tPos.y);
-    const shapeCtrlPoints = this._focusShape.getControlPoints();
-    shapeCtrlPoints[0].x = ctrlPoints[0].x;
-    shapeCtrlPoints[0].y = ctrlPoints[0].y;
-    shapeCtrlPoints[1].x = ctrlPoints[1].x;
-    shapeCtrlPoints[1].y = ctrlPoints[1].y;
+
+    this._focusShape.setSrcControlPoint(ctrlPoints[0]);
+    this._focusShape.setDestControlPoint(ctrlPoints[1]);
 
     this._focusShape.updateLine();
   }
@@ -302,12 +315,12 @@ class Relationship extends ConnectionLine {
     }
   }
 
-  setShowStartArrow(visible: boolean) {
+  setShowStartArrow(visible: boolean): void {
     this._showStartArrow = visible;
     if (this._isInWorkspace) this.redraw();
   }
 
-  setFrom(x: number, y: number) {
+  setFrom(x: number, y: number): void {
     $assert($defined(x), 'x must be defined');
     $assert($defined(y), 'y must be defined');
 
@@ -325,12 +338,16 @@ class Relationship extends ConnectionLine {
 
   setSrcControlPoint(control: PositionType): void {
     this._line2d.setSrcControlPoint(control);
+    this._focusShape.setSrcControlPoint(control);
     this._startArrow.setControlPoint(control);
   }
 
   setDestControlPoint(control: PositionType) {
     this._line2d.setDestControlPoint(control);
-    if (this._showEndArrow) this._endArrow.setControlPoint(control);
+    this._focusShape.setSrcControlPoint(control);
+    if (this._showEndArrow) {
+      this._endArrow.setControlPoint(control);
+    }
   }
 
   getControlPoints(): PositionType {

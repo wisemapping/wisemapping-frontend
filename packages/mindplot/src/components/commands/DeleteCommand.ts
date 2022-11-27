@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import flatten from 'lodash/flatten';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import NodeModel from '../model/NodeModel';
@@ -169,7 +170,7 @@ class DeleteCommand extends Command {
     const rels: Relationship[][] = children.map((t: Topic) => this._collectInDepthRelationships(t));
 
     // flatten and concact
-    result.push(...rels.flat());
+    result.push(...flatten(rels));
 
     if (result.length > 0) {
       // Filter for unique ...

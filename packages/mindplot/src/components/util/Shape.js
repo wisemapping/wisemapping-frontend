@@ -32,18 +32,16 @@ const Shape = {
     $assert(rectSize, 'rectSize can  not be null');
     $assert($defined(isAtRight), 'isRight can  not be null');
 
-    // Node is placed at the right ?
-    const result = new Point();
-
     // This is used fix a minor difference ...z
     const correctionHardcode = 2;
+    let result;
     if (isAtRight) {
-      result.setValue(
+      result = new Point(
         rectCenterPoint.x - rectSize.width / 2 + correctionHardcode,
         rectCenterPoint.y,
       );
     } else {
-      result.setValue(
+      result = new Point(
         parseFloat(rectCenterPoint.x) + rectSize.width / 2 - correctionHardcode,
         rectCenterPoint.y,
       );

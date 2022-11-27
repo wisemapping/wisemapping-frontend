@@ -91,7 +91,7 @@ class MDExporter extends Exporter {
         });
         result = `${result}\n`;
 
-        if (node.getChildren().filter((n) => n.getText() !== undefined).length > 0) {
+        if (node.getChildren().filter((n) => n.getText() !== null).length > 0) {
           result += this.traverseBranch(`${prefix}\t`, node.getChildren());
         }
       });

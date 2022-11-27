@@ -23,7 +23,8 @@ import Workspace from './Workspace';
 import PositionType from './PositionType';
 import Relationship from './Relationship';
 
-enum PivotType {
+// eslint-disable-next-line no-shadow
+export enum PivotType {
   Start = 0,
   End = 1,
 }
@@ -41,21 +42,20 @@ class ControlPivotLine {
 
   private _changeHander: () => void;
 
-  private _moveRelHandler: (
-    relationPosition: PositionType,
-    controlPointPosition: PositionType,
-  ) => void;
+  private _moveRelHandler: (controlPointPosition: PositionType) => void;
 
   private _isVisible: boolean;
 
   private _mouseMoveHandler: (e: MouseEvent) => void;
 
-  private _mousedUpHandler: () => void;
+  private _mouseUpHandler: () => void;
+
+  private _mouseDownHandler: (event: MouseEvent) => void;
 
   constructor(
     pivotType: PivotType,
     relationship: Relationship,
-    mouseMoveHandler: (relationPosition: PositionType, controlPointPosition: PositionType) => void,
+    mouseMoveHandler: (controlPointPosition: PositionType) => void,
     changeHander: () => void,
   ) {
     this._pivotType = pivotType;
@@ -76,11 +76,6 @@ class ControlPivotLine {
     // Build line ...
     this._line = new Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 });
 
-    // Register events ...
-    this._dot.addEvent('mousedown', (event: MouseEvent) => {
-      this._mouseDown(event);
-    });
-
     const mouseClick = (event: MouseEvent): boolean => {
       event.preventDefault();
       event.stopPropagation();
@@ -91,32 +86,39 @@ class ControlPivotLine {
 
     // Register handled ...
     this._mouseMoveHandler = (e: MouseEvent) => this.mouseMoveHandler(e);
-    this._mousedUpHandler = () => this._mouseUpHandler();
+    this._mouseUpHandler = () => this.mouseUpHandler();
+    this._mouseDownHandler = (event: MouseEvent) => this.mouseDownHandler(event);
   }
 
-  private _mouseDown(event: MouseEvent) {
-    this.getWorkspace().getScreenManager().addEvent('mousemove', this._mouseMoveHandler);
-    this.getWorkspace().getScreenManager().addEvent('mouseup', this._mousedUpHandler);
+  private mouseDownHandler(event: MouseEvent) {
+    const screenManager = this.getWorkspace().getScreenManager();
+    screenManager.addEvent('mousemove', this._mouseMoveHandler);
+    screenManager.addEvent('mouseup', this._mouseUpHandler);
 
     event.preventDefault();
     event.stopPropagation();
-    return false;
   }
 
   setVisibility(value: boolean) {
-    this._isVisible = value;
+    if (this._isVisible !== value) {
+      const screenManager = this.getWorkspace().getScreenManager();
+      if (!value) {
+        screenManager.removeEvent('mousemove', this._mouseMoveHandler);
+        screenManager.removeEvent('mouseup', this._mouseUpHandler);
+        this._dot.removeEvent('mousedown', this._mouseDownHandler);
+      } else {
+        // Register events ...
+        this._dot.addEvent('mousedown', this._mouseDownHandler);
+      }
 
-    const screenManager = this.getWorkspace().getScreenManager();
-    if (!value) {
-      screenManager.removeEvent('mousemove', this._mouseMoveHandler);
-      screenManager.removeEvent('mouseup', this._mouseUpHandler);
+      // Make it visible ...
+      this._dot.setVisibility(value);
+      this._line.setVisibility(value);
     }
 
-    // Make it visible ...
-    this._dot.setVisibility(value);
-    this._line.setVisibility(value);
-
+    this._isVisible = value;
     if (value) {
+      // Register events ...
       this.redraw();
       this._line.moveToFront();
       this._dot.moveToFront();
@@ -132,15 +134,15 @@ class ControlPivotLine {
     if (this._isVisible) {
       const relationshipLine = this._relationship.getLine();
       const startPosition =
-        this._pivotType === PivotType.Start ? relationshipLine.getTo() : relationshipLine.getFrom();
+        this._pivotType === PivotType.End ? relationshipLine.getTo() : relationshipLine.getFrom();
       const ctrPosition = relationshipLine.getControlPoints()[this._pivotType];
 
       this._line.setFrom(startPosition.x, startPosition.y);
-      this._line.setTo(startPosition.x - ctrPosition.x - 5, startPosition.y - ctrPosition.y - 5);
+      this._line.setTo(startPosition.x + ctrPosition.x - 5, startPosition.y + ctrPosition.y - 5);
 
       this._dot.setPosition(
-        startPosition.x - ctrPosition.x - 8,
-        startPosition.y - ctrPosition.y - 8,
+        startPosition.x + ctrPosition.x - 8,
+        startPosition.y + ctrPosition.y - 8,
       );
     }
   }
@@ -150,37 +152,24 @@ class ControlPivotLine {
     const mousePosition = screen.getWorkspaceMousePosition(event);
 
     // Update relatioship position ...
-    let relationshipPosition: PositionType;
-    console.log(this._pivotType);
-    if (this._pivotType === PivotType.Start) {
-      relationshipPosition = Shape.calculateRelationShipPointCoordinates(
-        this._relationship.getSourceTopic(),
-        mousePosition,
-      );
-      this._moveRelHandler(relationshipPosition, {
-        x: mousePosition.x - relationshipPosition.x,
-        y: mousePosition.y - relationshipPosition.y,
-      });
-    } else {
-      relationshipPosition = Shape.calculateRelationShipPointCoordinates(
-        this._relationship.getTargetTopic(),
-        mousePosition,
-      );
-      this._moveRelHandler(relationshipPosition, {
-        x: mousePosition.x - relationshipPosition.x,
-        y: mousePosition.y - relationshipPosition.y,
-      });
-    }
+    const topic =
+      this._pivotType === PivotType.Start
+        ? this._relationship.getSourceTopic()
+        : this._relationship.getTargetTopic();
+
+    const relPos = Shape.calculateRelationShipPointCoordinates(topic, mousePosition);
+    const ctlPoint = { x: mousePosition.x - relPos.x, y: mousePosition.y - relPos.y };
+    this._moveRelHandler(ctlPoint);
 
     // Update pivot ...
-    this._dot.setPosition(mousePosition.x - 5, mousePosition.y - 3);
-    this._line.setTo(mousePosition.x - 2, mousePosition.y);
+    this._dot.setPosition(mousePosition.x - 8, mousePosition.y - 8);
 
-    // Update controller ...
-    this._relationship.getLine().updateLine(this._pivotType);
+    // Update line ...
+    this._line.setTo(mousePosition.x - 5, mousePosition.y - 5);
+    this._line.setFrom(relPos.x, relPos.y);
   }
 
-  private _mouseUpHandler() {
+  private mouseUpHandler() {
     const screenManager = this.getWorkspace().getScreenManager();
     screenManager.removeEvent('mousemove', this._mouseMoveHandler);
     screenManager.removeEvent('mouseup', this._mouseUpHandler);
@@ -222,12 +211,10 @@ class RelationshipControlPoints {
     const startControlLine = new ControlPivotLine(
       PivotType.Start,
       relationship,
-      (relationPosition, controlPointPosition) => {
+      (controlPointPosition) => {
         const line = this._relationship.getLine();
-        line.setFrom(relationPosition.x, relationPosition.y);
         line.setSrcControlPoint(controlPointPosition);
-
-        console.log(JSON.stringify(controlPointPosition));
+        relationship.redraw();
       },
       () => {
         const actionDispatcher = ActionDispatcher.getInstance();
@@ -240,12 +227,10 @@ class RelationshipControlPoints {
     const endControlLine = new ControlPivotLine(
       PivotType.End,
       relationship,
-      (relationPosition, controlPointPosition) => {
+      (controlPointPosition) => {
         const line = this._relationship.getLine();
-        line.setTo(relationPosition.x, relationPosition.y);
         line.setDestControlPoint(controlPointPosition);
-
-        console.log(JSON.stringify(controlPointPosition));
+        relationship.redraw();
       },
       () => {
         const actionDispatcher = ActionDispatcher.getInstance();

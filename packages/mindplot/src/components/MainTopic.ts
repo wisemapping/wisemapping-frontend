@@ -123,9 +123,8 @@ class MainTopic extends Topic {
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
 
-    let result: Point;
+    let result: Point = { x: 0, y: 0 };
     if (this.getShapeType() === TopicShape.LINE) {
-      result = new Point();
       const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();
 
@@ -150,7 +149,7 @@ class MainTopic extends Topic {
     } else {
       result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
     }
-    return result;
+    return new Point(result.x, result.y);
   }
 }
 

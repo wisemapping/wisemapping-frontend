@@ -25,13 +25,10 @@ class ArrowPeer extends ElementPeer {
     const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'path');
     super(svgElement);
     this._style = {};
-    this._controlPoint = new Point();
-    this._fromPoint = new Point();
   }
 
   setFrom(x, y) {
-    this._fromPoint.x = x;
-    this._fromPoint.y = y;
+    this._fromPoint = new Point(x, y);
     this._redraw();
   }
 
@@ -71,12 +68,7 @@ class ArrowPeer extends ElementPeer {
     let y;
     let xp;
     let yp;
-    if (
-      $defined(this._fromPoint.x) &&
-      $defined(this._fromPoint.y) &&
-      $defined(this._controlPoint.x) &&
-      $defined(this._controlPoint.y)
-    ) {
+    if (this._fromPoint && this._controlPoint) {
       if (this._controlPoint.y === 0) this._controlPoint.y = 1;
 
       const y0 = this._controlPoint.y;
@@ -100,8 +92,7 @@ class ArrowPeer extends ElementPeer {
 
       const path =
         `M${this._fromPoint.x},${this._fromPoint.y} ` +
-        `L${x + this._fromPoint.x},${y + this._fromPoint.y} M${this._fromPoint.x},${
-          this._fromPoint.y
+        `L${x + this._fromPoint.x},${y + this._fromPoint.y} M${this._fromPoint.x},${this._fromPoint.y
         } ` +
         `L${xp + this._fromPoint.x},${yp + this._fromPoint.y}`;
       this._native.setAttribute('d', path);

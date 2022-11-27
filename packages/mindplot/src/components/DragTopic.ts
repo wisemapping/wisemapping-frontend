@@ -49,8 +49,8 @@ class DragTopic {
     this._order = null;
     this._draggedNode = draggedNode;
     this._layoutManager = layoutManger;
-    this._position = new Point();
     this._isInWorkspace = false;
+    this._position = new Point(0, 0);
   }
 
   setOrder(order: number): void {
@@ -59,15 +59,14 @@ class DragTopic {
 
   setPosition(x: number, y: number): void {
     // Update drag shadow position ....
-    const position = { x, y };
-    this._position.setValue(position.x, position.y);
+    this._position = { x, y };
 
     // Elements are positioned in the center.
     // All topic element must be positioned based on the innerShape.
     const draggedNode = this._draggedNode;
     const size = draggedNode.getSize();
-    const cx = position.x - (position.x > 0 ? 0 : size.width);
-    const cy = Math.ceil(position.y - size.height / 2);
+    const cx = x - (x > 0 ? 0 : size.width);
+    const cy = Math.ceil(y - size.height / 2);
     this._elem2d.setPosition(cx, cy);
 
     // In case is not free, pivot must be draw ...

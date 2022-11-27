@@ -27,8 +27,8 @@ class CurvedLinePeer extends ElementPeer {
     this._updateStyle();
     this._customControlPoint_1 = false;
     this._customControlPoint_2 = false;
-    this._control1 = new Point();
-    this._control2 = new Point();
+    this._control1 = new Point(0, 0);
+    this._control2 = new Point(0, 0);
     this._lineStyle = true;
   }
 
@@ -78,7 +78,7 @@ class CurvedLinePeer extends ElementPeer {
     const change = this._x1 !== Number.parseFloat(x1, 10) || this._y1 !== Number.parseFloat(y1, 10);
     this._x1 = Number.parseFloat(x1, 10);
     this._y1 = Number.parseFloat(y1, 10);
-    if (change) this._updatePath();
+    if (change) { this._updatePath(); }
   }
 
   setTo(x2, y2) {
@@ -149,16 +149,16 @@ class CurvedLinePeer extends ElementPeer {
     if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
       this._calculateAutoControlPoints(avoidControlPointFix);
 
-      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed(2)} C${(
+      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed()} C${(
         this._control1.x + this._x1
-      ).toFixed(2)},${this._control1.y + this._y1} ${(this._control2.x + this._x2).toFixed(2)},${(
+      ).toFixed(2)},${this._control1.y + this._y1} ${(this._control2.x + this._x2).toFixed()},${(
         this._control2.y + this._y2
-      ).toFixed(2)} ${this._x2.toFixed(2)},${this._y2.toFixed(2)}${this._lineStyle
-        ? ` ${(this._control2.x + this._x2).toFixed(2)},${(
+      ).toFixed(2)} ${this._x2.toFixed(2)},${this._y2.toFixed()}${this._lineStyle
+        ? ` ${(this._control2.x + this._x2).toFixed()},${(
           this._control2.y +
           this._y2 +
           3
-        ).toFixed(2)} ${(this._control1.x + this._x1).toFixed(2)},${(
+        ).toFixed(2)} ${(this._control1.x + this._x1).toFixed()},${(
           this._control1.y +
           this._y1 +
           5

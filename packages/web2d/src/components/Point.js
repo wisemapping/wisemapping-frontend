@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { $assert } from '@wisemapping/core-js';
 
 class Point {
   /**
@@ -23,15 +24,9 @@ class Point {
    * @param {Number} y coordinate
    */
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
+    $assert(typeof x === 'number', `x is not a number: ${x}`);
+    $assert(typeof y === 'number', `x is not a number: ${y}`);
 
-  /**
-   * @param {Number} x coordinate
-   * @param {Number} y coordinate
-   */
-  setValue(x, y) {
     this.x = x;
     this.y = y;
   }
@@ -47,7 +42,7 @@ class Point {
 
 Point.fromString = function pointFromString(point) {
   const values = point.split(',');
-  return new Point(values[0], values[1]);
+  return new Point(Number.parseInt(values[0], 10), Number.parseInt(values[1], 10));
 };
 
 export default Point;
