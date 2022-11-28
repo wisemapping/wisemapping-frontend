@@ -40,7 +40,7 @@ class Relationship extends ConnectionLine {
 
   private _endArrow: Arrow;
 
-  private _controlPointControllerListener;
+  private _onFocusHandler: (event: MouseEvent) => void;
 
   private _showStartArrow: Arrow;
 
@@ -63,10 +63,12 @@ class Relationship extends ConnectionLine {
 
     // Build focus shape ...
     this._focusShape = this._createLine(this.getLineType(), ConnectionLine.SIMPLE_CURVED);
-    this._focusShape.setStroke(2, 'solid', '#3f96ff');
+    this._focusShape.setStroke(8, 'solid', '#3f96ff');
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);
-    this._focusShape.setVisibility(false);
+    this._focusShape.setVisibility(true);
+    this._focusShape.setOpacity(0);
+    this._focusShape.setCursor('pointer');
 
     // Build arrow ...
     this._startArrow = new Arrow();
@@ -96,8 +98,16 @@ class Relationship extends ConnectionLine {
     }
 
     // Reposition all nodes ...
-    this._updatePositions();
+    this.updatePositions();
     this._controlPointsController = new RelationshipControlPoints(this);
+
+    // Initialize handler ..
+
+    this._onFocusHandler = (event) => {
+      this.setOnFocus(true);
+      event.stopPropagation();
+      event.preventDefault();
+    };
   }
 
   setStroke(color: string, style: string, opacity: number): void {
@@ -105,7 +115,7 @@ class Relationship extends ConnectionLine {
     this._startArrow.setStrokeColor(color);
   }
 
-  private _updatePositions() {
+  private updatePositions() {
     const line2d = this._line2d;
     const sourceTopic = this._sourceTopic;
     const sPos = sourceTopic.getPosition();
@@ -145,17 +155,17 @@ class Relationship extends ConnectionLine {
     line2d.setTo(ntPos.x, ntPos.y);
 
     // Positionate Arrows
-    this._positionArrows();
+    this.positionArrows();
 
     // Add connector ...
     this._positionateConnector(targetTopic);
 
     // Poisition refresh shape ...
-    this._positionRefreshShape();
+    this.positionRefreshShape();
   }
 
   redraw(): void {
-    this._updatePositions();
+    this.updatePositions();
 
     this._line2d.moveToFront();
     this._startArrow.moveToBack();
@@ -172,7 +182,7 @@ class Relationship extends ConnectionLine {
     this._controlPointsController.redraw();
   }
 
-  private _positionArrows(): void {
+  private positionArrows(): void {
     const tpos = this._line2d.getTo();
     const spos = this._line2d.getFrom();
 
@@ -196,16 +206,16 @@ class Relationship extends ConnectionLine {
   }
 
   addToWorkspace(workspace: Workspace): void {
-    this._updatePositions();
+    this.updatePositions();
 
     workspace.append(this._focusShape);
     workspace.append(this._controlPointsController);
 
-    this._controlPointControllerListener = this._initializeControlPointController.bind(this);
     if (workspace.isReadOnly()) {
       this._line2d.setCursor('default');
     } else {
-      this._line2d.addEvent('click', this._controlPointControllerListener);
+      this._line2d.addEvent('click', this._onFocusHandler);
+      this._focusShape.addEvent('click', this._onFocusHandler);
     }
     this._isInWorkspace = true;
 
@@ -213,19 +223,15 @@ class Relationship extends ConnectionLine {
     if (this._endArrow) workspace.append(this._endArrow);
 
     super.addToWorkspace(workspace);
-    this._positionArrows();
+    this.positionArrows();
     this.redraw();
-  }
-
-  private _initializeControlPointController(): void {
-    this.setOnFocus(true);
   }
 
   removeFromWorkspace(workspace: Workspace): void {
     workspace.removeChild(this._focusShape);
     workspace.removeChild(this._controlPointsController);
 
-    this._line2d.removeEvent('click', this._controlPointControllerListener);
+    this._line2d.removeEvent('click', this._onFocusHandler);
     this._isInWorkspace = false;
     workspace.removeChild(this._startArrow);
     if (this._endArrow) {
@@ -241,18 +247,21 @@ class Relationship extends ConnectionLine {
 
   setOnFocus(focus: boolean): void {
     if (focus) {
-      this._positionRefreshShape();
+      this.positionRefreshShape();
     }
     // Change focus shape
     if (this.isOnFocus() !== focus) {
-      this._focusShape.setVisibility(focus);
+      // Focus is always present to support on over
+      this._focusShape.setOpacity(focus ? 1 : 0);
+      this._focusShape.setStroke(focus ? 2 : 8, 'solid', '#3f96ff');
+
       this._controlPointsController.setVisibility(focus);
       this._onFocus = focus;
       this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
     }
   }
 
-  private _positionRefreshShape(): void {
+  private positionRefreshShape(): void {
     const sPos = this._line2d.getFrom();
     const tPos = this._line2d.getTo();
 
@@ -292,10 +301,13 @@ class Relationship extends ConnectionLine {
     // If visibility change, remove the on focus.
     this.setOnFocus(false);
 
+    // Hide on gocus shade ...
+
     if (this._showEndArrow) {
       this._endArrow.setVisibility(this._showEndArrow);
     }
     this._startArrow.setVisibility(this._showStartArrow && value, fade);
+    this._focusShape.setVisibility(value);
   }
 
   setOpacity(opacity: number): void {
