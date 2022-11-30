@@ -157,7 +157,7 @@ class ControlPivotLine {
         ? this._relationship.getSourceTopic()
         : this._relationship.getTargetTopic();
 
-    const relPos = Shape.calculateRelationShipPointCoordinates(topic, mousePosition);
+    let relPos = Shape.calculateRelationShipPointCoordinates(topic, mousePosition);
     const ctlPoint = { x: mousePosition.x - relPos.x, y: mousePosition.y - relPos.y };
     this._moveRelHandler(ctlPoint);
 
@@ -166,6 +166,10 @@ class ControlPivotLine {
 
     // Update line ...
     this._line.setTo(mousePosition.x - 5, mousePosition.y - 5);
+    relPos =
+      this._pivotType === PivotType.Start
+        ? this._relationship.getLine().getFrom()
+        : this._relationship.getLine().getTo();
     this._line.setFrom(relPos.x, relPos.y);
   }
 
