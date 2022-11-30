@@ -46,9 +46,10 @@ class MoveControlPointCommand extends Command {
     const model = relationship.getModel();
     this._oldCtrPoint =
       PivotType.Start === ctrIndex ? model.getSrcCtrlPoint() : model.getDestCtrlPoint();
+    this._oldCtrPoint = { ...this._oldCtrPoint };
 
     // New relationship ...
-    this._newCtrPoint = controlPoints.getControlPointPosition(ctrIndex);
+    this._newCtrPoint = { ...controlPoints.getControlPointPosition(ctrIndex) };
   }
 
   execute() {
