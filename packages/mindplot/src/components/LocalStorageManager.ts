@@ -48,20 +48,27 @@ class LocalStorageManager extends PersistenceManager {
 
   loadMapDom(mapId: string): Promise<Document> {
     let result: Promise<Document>;
-    let localStorate;
+    let localStorate: string | null = null;
     if (!this.readOnly) {
       localStorate = localStorage.getItem(`${mapId}-xml`);
     }
 
     if (localStorate == null || this.forceLoad) {
       const url = this.documentUrl.replace('{id}', mapId);
+      const csrfToken = this.getCSRFToken();
       result = fetch(url, {
         method: 'get',
-        headers: {
-          'Content-Type': 'text/plain',
-          Accept: 'application/xml',
-          'X-CSRF-Token': this.getCSRFToken(),
-        },
+        headers:
+          csrfToken != null
+            ? {
+                'Content-Type': 'text/plain',
+                Accept: 'application/xml',
+                'X-CSRF-Token': csrfToken,
+              }
+            : {
+                'Content-Type': 'text/plain',
+                Accept: 'application/xml',
+              },
       })
         .then((response: Response) => {
           if (!response.ok) {

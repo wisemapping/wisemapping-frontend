@@ -38,7 +38,6 @@ class RemoveFeatureFromTopicCommand extends Command {
     super();
     this._topicId = topicId;
     this._featureId = featureId;
-    this._oldFeature = null;
   }
 
   /**
@@ -48,7 +47,6 @@ class RemoveFeatureFromTopicCommand extends Command {
     const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
     topic.removeFeature(feature);
-    this._oldFeature = feature;
   }
 
   /**
@@ -58,7 +56,6 @@ class RemoveFeatureFromTopicCommand extends Command {
   undoExecute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
     topic.addFeature(this._oldFeature);
-    this._oldFeature = null;
   }
 }
 

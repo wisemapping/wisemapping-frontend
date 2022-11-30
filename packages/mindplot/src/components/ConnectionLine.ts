@@ -72,7 +72,7 @@ class ConnectionLine {
   protected _createLine(lineTypeParam: number, defaultStyle: number): Line {
     const lineType = $defined(lineTypeParam) ? lineTypeParam : defaultStyle;
     this._lineType = lineType;
-    let line = null;
+    let line: ConnectionLine;
     switch (lineType) {
       case ConnectionLine.POLYLINE:
         line = new PolyLine();
@@ -82,7 +82,7 @@ class ConnectionLine {
         break;
       case ConnectionLine.SIMPLE_CURVED:
         line = new CurvedLine();
-        line.setStyle(CurvedLine.SIMPLE_LINE);
+        (line as CurvedLine).setStyle(CurvedLine.SIMPLE_LINE);
         break;
       default:
         line = new Line();
@@ -141,7 +141,7 @@ class ConnectionLine {
     y -= offset;
 
     const connector = targetTopic.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       if (Math.sign(targetPosition.x) > 0) {
         x = targetTopicSize.width;
         connector.setPosition(x, y);

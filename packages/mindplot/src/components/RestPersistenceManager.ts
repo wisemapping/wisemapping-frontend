@@ -59,22 +59,28 @@ class RESTPersistenceManager extends PersistenceManager {
       }, 10000);
 
       const persistence = this;
+      const crfs = this.getCSRFToken();
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
         // Blob helps to resuce the memory on large payload.
         body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          Accept: 'application/json',
-          'X-CSRF-Token': this.getCSRFToken(),
-        },
+        headers: crfs
+          ? {
+              'Content-Type': 'application/json; charset=utf-8',
+              Accept: 'application/json',
+              'X-CSRF-Token': crfs,
+            }
+          : {
+              'Content-Type': 'application/json; charset=utf-8',
+              Accept: 'application/json',
+            },
       })
         .then(async (response: Response) => {
           if (response.ok) {
             events.onSuccess();
           } else {
             console.log(`Saving error: ${response.status}`);
-            let userMsg;
+            let userMsg: PersistenceError | null = null;
             if (response.status === 405) {
               userMsg = {
                 severity: 'SEVERE',
@@ -85,18 +91,20 @@ class RESTPersistenceManager extends PersistenceManager {
               const responseText = await response.text();
               const contentType = response.headers['Content-Type'];
               if (contentType != null && contentType.indexOf('application/json') !== -1) {
-                let serverMsg = null;
+                let serverMsg: null | { globalSeverity: string } = null;
                 try {
                   serverMsg = JSON.parse(responseText);
-                  serverMsg = serverMsg.globalSeverity ? serverMsg : null;
+                  serverMsg = serverMsg && serverMsg.globalSeverity ? serverMsg : null;
                 } catch (e) {
                   // Message could not be decoded ...
                 }
                 userMsg = persistence._buildError(serverMsg);
               }
             }
-            this.triggerError(userMsg);
-            events.onError(userMsg);
+            if (userMsg) {
+              this.triggerError(userMsg);
+              events.onError(userMsg);
+            }
           }
 
           // Clear event timeout ...
@@ -123,21 +131,36 @@ class RESTPersistenceManager extends PersistenceManager {
     }
   }
 
-  discardChanges(mapId: string) {
+  discardChanges(mapId: string): void {
+    const csrfToken = this.getCSRFToken();
+
     fetch(this.revertUrl.replace('{id}', mapId), {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-        'X-CSRF-Token': this.getCSRFToken(),
-      },
+      headers: csrfToken
+        ? {
+            'Content-Type': 'application/json; charset=utf-8',
+            Accept: 'application/json',
+            'X-CSRF-Token': csrfToken,
+          }
+        : {
+            'Content-Type': 'application/json; charset=utf-8',
+            Accept: 'application/json',
+          },
     });
   }
 
   unlockMap(mapId: string): void {
+    const csrfToken = this.getCSRFToken();
     fetch(this.lockUrl.replace('{id}', mapId), {
       method: 'PUT',
-      headers: { 'Content-Type': 'text/plain', 'X-CSRF-Token': this.getCSRFToken() },
+      headers: csrfToken
+        ? {
+            'Content-Type': 'text/plain',
+            'X-CSRF-Token': csrfToken,
+          }
+        : {
+            'Content-Type': 'text/plain',
+          },
       body: 'false',
     });
   }
@@ -158,13 +181,19 @@ class RESTPersistenceManager extends PersistenceManager {
 
   loadMapDom(mapId: string): Promise<Document> {
     const url = `${this.documentUrl.replace('{id}', mapId)}/xml`;
+    const csrfToken = this.getCSRFToken();
     return fetch(url, {
       method: 'get',
-      headers: {
-        'Content-Type': 'text/plain',
-        Accept: 'application/xml',
-        'X-CSRF-Token': this.getCSRFToken(),
-      },
+      headers: csrfToken
+        ? {
+            'Content-Type': 'text/plain',
+            Accept: 'application/xml',
+            'X-CSRF-Token': csrfToken,
+          }
+        : {
+            'Content-Type': 'text/plain',
+            Accept: 'application/xml',
+          },
     })
       .then((response: Response) => {
         if (!response.ok) {

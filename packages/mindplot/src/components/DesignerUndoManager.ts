@@ -32,7 +32,7 @@ class DesignerUndoManager {
     this._baseId = 0;
   }
 
-  enqueue(command: Command) {
+  enqueue(command: Command): void {
     $assert(command, 'Command can  not be null');
     const { length } = this._undoQueue;
     if (command.getDiscardDuplicated() && length > 0) {
@@ -47,20 +47,23 @@ class DesignerUndoManager {
     this._redoQueue = [];
   }
 
-  execUndo(commandContext: CommandContext) {
+  execUndo(commandContext: CommandContext): void {
     if (this._undoQueue.length > 0) {
       const command = this._undoQueue.pop();
-      this._redoQueue.push(command);
-
-      command.undoExecute(commandContext);
+      if (command) {
+        this._redoQueue.push(command);
+        command.undoExecute(commandContext);
+      }
     }
   }
 
-  execRedo(commandContext) {
+  execRedo(commandContext: CommandContext): void {
     if (this._redoQueue.length > 0) {
       const command = this._redoQueue.pop();
-      this._undoQueue.push(command);
-      command.execute(commandContext);
+      if (command) {
+        this._undoQueue.push(command);
+        command.execute(commandContext);
+      }
     }
   }
 
@@ -68,7 +71,7 @@ class DesignerUndoManager {
     return { undoSteps: this._undoQueue.length, redoSteps: this._redoQueue.length };
   }
 
-  markAsChangeBase() {
+  markAsChangeBase(): void {
     const undoLength = this._undoQueue.length;
     if (undoLength > 0) {
       const command = this._undoQueue[undoLength - 1];
@@ -78,7 +81,7 @@ class DesignerUndoManager {
     }
   }
 
-  hasBeenChanged() {
+  hasBeenChanged(): boolean {
     let result = true;
     const undoLength = this._undoQueue.length;
     if (undoLength === 0 && this._baseId === 0) {

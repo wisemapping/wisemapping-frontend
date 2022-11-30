@@ -22,7 +22,7 @@ import Font from './freemind/Font';
 class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
 
-  private nodeMap: Map<number, FreeminNode> = null;
+  private nodeMap: Map<number, FreeminNode>;
 
   private version: VersionNumber = FreemindConstant.SUPPORTED_FREEMIND_VERSION;
 
@@ -87,13 +87,16 @@ class FreemindExporter extends Exporter {
 
     const relationships: Array<RelationshipModel> = this.mindmap.getRelationships();
     relationships.forEach((relationship: RelationshipModel) => {
-      const srcNode: FreeminNode = this.nodeMap.get(relationship.getFromNode());
-      const destNode: FreeminNode = this.nodeMap.get(relationship.getToNode());
+      const srcNode: FreeminNode | undefined = this.nodeMap.get(relationship.getFromNode());
+      const destNode: FreeminNode | undefined = this.nodeMap.get(relationship.getToNode());
 
       if (srcNode && destNode) {
         const arrowlink: Arrowlink = this.objectFactory.crateArrowlink();
 
-        arrowlink.setDestination(destNode.getId());
+        const idRel = destNode.getId();
+        if (idRel) {
+          arrowlink.setDestination(idRel);
+        }
 
         if (relationship.getEndArrow() && relationship.getEndArrow()) {
           arrowlink.setEndarrow('Default');
@@ -287,7 +290,10 @@ class FreemindExporter extends Exporter {
 
       if (fontNodeNeeded) {
         if (!font.getSize()) {
-          font.setSize(FreemindExporter.wisweToFreeFontSize.get(8).toString());
+          const size = FreemindExporter.wisweToFreeFontSize.get(8);
+          if (size) {
+            font.setSize(size.toString());
+          }
         }
         freemindNode.setArrowlinkOrCloudOrEdge(font);
       }

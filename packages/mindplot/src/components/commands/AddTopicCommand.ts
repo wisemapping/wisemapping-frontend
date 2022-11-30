@@ -23,7 +23,7 @@ import NodeModel from '../model/NodeModel';
 class AddTopicCommand extends Command {
   private _models: NodeModel[];
 
-  private _parentsIds: number[];
+  private _parentsIds: number[] | null;
 
   /**
    * @classdesc This command class handles do/undo of adding one or multiple topics to
@@ -42,14 +42,13 @@ class AddTopicCommand extends Command {
   }
 
   execute(commandContext: CommandContext) {
-    const me = this;
     this._models.forEach((model, index) => {
       // Add a new topic ...
       const topic = commandContext.createTopic(model);
 
       // Connect to topic ...
       if (this._parentsIds) {
-        const parentId = me._parentsIds[index];
+        const parentId = this._parentsIds[index];
         if ($defined(parentId)) {
           const parentTopic = commandContext.findTopics([parentId])[0];
           commandContext.connect(topic, parentTopic);

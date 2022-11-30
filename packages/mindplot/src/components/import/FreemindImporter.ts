@@ -19,6 +19,7 @@ import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import { off } from 'process';
 
 export default class FreemindImporter extends Importer {
   private mindmap: Mindmap;
@@ -98,50 +99,57 @@ export default class FreemindImporter extends Importer {
 
       // Fix dest ID
       const destId: string = relationship.getDestCtrlPoint();
-      const destTopic: NodeModel = this.nodesmap.get(destId);
-      relationship.setDestCtrlPoint(destTopic.getId());
+      const destTopic: NodeModel | undefined = this.nodesmap.get(destId);
+      if (destTopic) {
+        relationship.setDestCtrlPoint(destTopic.getId());
+      }
 
       // Fix src ID
       const srcId: string = relationship.getSrcCtrlPoint();
-      const srcTopic: NodeModel = this.nodesmap.get(srcId);
-      relationship.setSrcCtrlPoint(srcTopic.getId());
+      const srcTopic: NodeModel | undefined = this.nodesmap.get(srcId);
+      if (srcTopic) {
+        relationship.setSrcCtrlPoint(srcTopic.getId());
+      }
 
       mapRelaitonship.push(relationship);
     });
   }
 
   private fixRelationshipControlPoints(relationship: RelationshipModel): void {
-    const srcTopic: NodeModel = this.nodesmap.get(relationship.getToNode().toString());
-    const destNode: NodeModel = this.nodesmap.get(relationship.getFromNode().toString());
+    const srcTopic: NodeModel | undefined = this.nodesmap.get(relationship.getToNode().toString());
+    const destNode: NodeModel | undefined = this.nodesmap.get(
+      relationship.getFromNode().toString(),
+    );
+    if (srcTopic && destNode) {
+      // Fix x coord
+      const srcCtrlPoint: string = relationship.getSrcCtrlPoint();
+      if (srcCtrlPoint) {
+        const coords = srcTopic.getPosition();
+        if (coords.x < 0) {
+          const x = coords.x * -1;
+          relationship.setSrcCtrlPoint(`${x},${coords.y}`);
 
-    // Fix x coord
-    const srcCtrlPoint: string = relationship.getSrcCtrlPoint();
-    if (srcCtrlPoint) {
-      const coords = srcTopic.getPosition();
-      if (coords.x < 0) {
-        const x = coords.x * -1;
-        relationship.setSrcCtrlPoint(`${x},${coords.y}`);
-
-        // Fix coord
-        if (srcTopic.getOrder() && srcTopic.getOrder() % 2 !== 0) {
-          const y = coords.y * -1;
-          relationship.setSrcCtrlPoint(`${coords.x},${y}`);
+          // Fix coord
+          if (srcTopic.getOrder() && srcTopic.getOrder() % 2 !== 0) {
+            const y = coords.y * -1;
+            relationship.setSrcCtrlPoint(`${coords.x},${y}`);
+          }
         }
       }
-    }
 
-    const destCtrlPoint: string = relationship.getDestCtrlPoint();
-    if (destCtrlPoint) {
-      const coords = destNode.getPosition();
+      const destCtrlPoint: string = relationship.getDestCtrlPoint();
+      if (destCtrlPoint) {
+        const coords = destNode.getPosition();
 
-      if (coords.x < 0) {
-        const x = coords.x * -1;
-        relationship.setDestCtrlPoint(`${x},${coords.y}`);
-      }
+        if (coords.x < 0) {
+          const x = coords.x * -1;
+          relationship.setDestCtrlPoint(`${x},${coords.y}`);
+        }
 
-      if (destNode.getOrder() && destNode.getOrder() % 2 !== 0) {
-        const y = coords.y * -1;
-        relationship.setDestCtrlPoint(`${coords.x},${y}`);
+        if (destNode.getOrder() && destNode.getOrder() % 2 !== 0) {
+          const y = coords.y * -1;
+          relationship.setDestCtrlPoint(`${coords.x},${y}`);
+        }
       }
     }
   }
@@ -169,7 +177,7 @@ export default class FreemindImporter extends Importer {
     }
 
     // Check for style...
-    const fontStyle = this.generateFontStyle(freeNode, null);
+    const fontStyle = this.generateFontStyle(freeNode, undefined);
     if (fontStyle && fontStyle !== ';;;;') wiseTopic.setFontStyle(fontStyle);
 
     // Is there any link...
@@ -200,7 +208,10 @@ export default class FreemindImporter extends Importer {
         const wiseId = this.getIdNode(child);
         const wiseChild = mindmap.createNode('MainTopic', wiseId);
 
-        this.nodesmap.set(child.getId(), wiseChild);
+        const id = child.getId();
+        if (id !== null) {
+          this.nodesmap.set(id, wiseChild);
+        }
 
         let norder: number;
         if (depth !== 1) {
@@ -347,7 +358,7 @@ export default class FreemindImporter extends Importer {
         this.idDefault++;
         idFreeToIdWise = this.idDefault;
       } else {
-        idFreeToIdWise = parseInt(id.split('_').pop(), 10);
+        idFreeToIdWise = parseInt(id.split('_').pop()!, 10);
       }
     } else {
       this.idDefault++;
@@ -398,7 +409,10 @@ export default class FreemindImporter extends Importer {
 
     // Font family
     if (font) {
-      fontStyle.push(font.getName());
+      const name = font.getName();
+      if (name) {
+        fontStyle.push(name);
+      }
     }
     fontStyle.push(';');
 
@@ -485,6 +499,6 @@ export default class FreemindImporter extends Importer {
   private html2Text(content: string): string {
     const temporalDivElement = document.createElement('div');
     temporalDivElement.innerHTML = content;
-    return temporalDivElement.textContent.trim() || temporalDivElement.innerText.trim() || '';
+    return temporalDivElement.textContent?.trim() || temporalDivElement.innerText.trim() || '';
   }
 }

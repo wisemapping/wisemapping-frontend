@@ -34,7 +34,7 @@ class RelationshipPivot {
 
   private _onTopicClick: (event: MouseEvent) => void;
 
-  private _sourceTopic: Topic;
+  private _sourceTopic: Topic | null;
 
   private _pivot: CurvedLine;
 
@@ -46,8 +46,8 @@ class RelationshipPivot {
     this._workspace = workspace;
     this._designer = designer;
 
-    this._mouseMoveEvent = this._mouseMove.bind(this);
-    this._onClickEvent = this._cleanOnMouseClick.bind(this);
+    this._mouseMoveEvent = this.mouseMoveHandler.bind(this);
+    this._onClickEvent = this.cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
   }
 
@@ -57,40 +57,38 @@ class RelationshipPivot {
 
     this.dispose();
     this._sourceTopic = sourceTopic;
-    if (sourceTopic != null) {
-      this._workspace.enableWorkspaceEvents(false);
+    this._workspace.enableWorkspaceEvents(false);
 
-      const sourcePos = sourceTopic.getPosition();
-      const strokeColor = Relationship.getStrokeColor();
+    const sourcePos = sourceTopic.getPosition();
+    const strokeColor = Relationship.getStrokeColor();
 
-      this._pivot = new CurvedLine();
-      this._pivot.setStyle(CurvedLine.SIMPLE_LINE);
+    this._pivot = new CurvedLine();
+    this._pivot.setStyle(CurvedLine.SIMPLE_LINE);
 
-      const fromPos = this._calculateFromPosition(sourcePos);
-      this._pivot.setFrom(fromPos.x, fromPos.y);
+    const fromPos = this._calculateFromPosition(sourcePos);
+    this._pivot.setFrom(fromPos.x, fromPos.y);
 
-      this._pivot.setTo(targetPos.x, targetPos.y);
-      this._pivot.setStroke(2, 'solid', strokeColor);
-      this._pivot.setDashed(4, 2);
+    this._pivot.setTo(targetPos.x, targetPos.y);
+    this._pivot.setStroke(2, 'solid', strokeColor);
+    this._pivot.setDashed(4, 2);
 
-      this._startArrow = new Arrow();
-      this._startArrow.setStrokeColor(strokeColor);
-      this._startArrow.setStrokeWidth(2);
-      this._startArrow.setFrom(sourcePos.x, sourcePos.y);
+    this._startArrow = new Arrow();
+    this._startArrow.setStrokeColor(strokeColor);
+    this._startArrow.setStrokeWidth(2);
+    this._startArrow.setFrom(sourcePos.x, sourcePos.y);
 
-      this._workspace.append(this._pivot);
-      this._workspace.append(this._startArrow);
+    this._workspace.append(this._pivot);
+    this._workspace.append(this._startArrow);
 
-      this._workspace.addEvent('mousemove', this._mouseMoveEvent);
-      this._workspace.addEvent('click', this._onClickEvent);
+    this._workspace.addEvent('mousemove', this._mouseMoveEvent);
+    this._workspace.addEvent('click', this._onClickEvent);
 
-      // Register focus events on all topics ...
-      const model = this._designer.getModel();
-      const topics = model.getTopics();
-      topics.forEach((topic) => {
-        topic.addEvent('ontfocus', this._onTopicClick);
-      });
-    }
+    // Register focus events on all topics ...
+    const model = this._designer.getModel();
+    const topics = model.getTopics();
+    topics.forEach((topic) => {
+      topic.addEvent('ontfocus', this._onTopicClick);
+    });
   }
 
   dispose(): void {
@@ -117,12 +115,12 @@ class RelationshipPivot {
     }
   }
 
-  _mouseMove(event: MouseEvent): boolean {
+  private mouseMoveHandler(event: MouseEvent): boolean {
     const screen = this._workspace.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
     // Leave the arrow a couple of pixels away from the cursor.
-    const sourcePosition = this._sourceTopic.getPosition();
+    const sourcePosition = this._sourceTopic!.getPosition();
     const gapDistance = Math.sign(pos.x - sourcePosition.x) * 5;
 
     const sPos = this._calculateFromPosition(pos);
@@ -139,7 +137,7 @@ class RelationshipPivot {
     return false;
   }
 
-  _cleanOnMouseClick(event: MouseEvent): void {
+  private cleanOnMouseClick(event: MouseEvent): void {
     // The user clicks on a desktop on in other element that is not a node.
     this.dispose();
     event.stopPropagation();
@@ -147,8 +145,8 @@ class RelationshipPivot {
 
   private _calculateFromPosition(toPosition: Point): Point {
     // Calculate origin position ...
-    let sourcePosition = this._sourceTopic.getPosition();
-    if (this._sourceTopic.getType() === 'CentralTopic') {
+    let sourcePosition = this._sourceTopic!.getPosition();
+    if (this._sourceTopic!.getType() === 'CentralTopic') {
       sourcePosition = Shape.workoutIncomingConnectionPoint(this._sourceTopic, toPosition);
     }
     const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);
@@ -164,8 +162,8 @@ class RelationshipPivot {
     const mindmap = this._designer.getMindmap();
 
     // Avoid circular connections ...
-    if (targetTopic.getId() !== sourceTopic.getId()) {
-      const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic.getId());
+    if (targetTopic.getId() !== sourceTopic!.getId()) {
+      const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic!.getId());
       this._designer.getActionDispatcher().addRelationship(relModel);
     }
     this.dispose();
