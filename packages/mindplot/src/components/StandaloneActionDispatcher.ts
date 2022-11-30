@@ -35,7 +35,8 @@ import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import Command from './Command';
 import FeatureType from './model/FeatureType';
-import RelationshipControlPoints from './RelationshipControlPoints';
+import PositionType from './PositionType';
+import { PivotType } from './RelationshipControlPoints';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -94,8 +95,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  moveControlPoint(ctrlPoint: RelationshipControlPoints, index: number) {
-    const command = new MoveControlPointCommand(ctrlPoint, index);
+  moveControlPoint(model: RelationshipModel, ctrlPoint: PositionType, index: PivotType): void {
+    const command = new MoveControlPointCommand(model, ctrlPoint, index);
     this.execute(command);
   }
 

@@ -16,85 +16,59 @@
  *   limitations under the License.
  */
 import Command from '../Command';
-import RelationshipControlPoints, { PivotType } from '../RelationshipControlPoints';
+import { PivotType } from '../RelationshipControlPoints';
 import PositionType from '../PositionType';
+import RelationshipModel from '../model/RelationshipModel';
+import CommandContext from '../CommandContext';
 
 class MoveControlPointCommand extends Command {
-  private _controlPoints: RelationshipControlPoints;
-
   private _ctrIndex: PivotType;
 
-  private _oldCtrPoint: PositionType;
+  private _controlPoint: PositionType;
 
-  private _newCtrPoint: PositionType;
+  private _modelId: number;
 
-  /**
-   * @classdesc This command handles do/undo of changing the control points of a relationship
-   * arrow. These are the two points that appear when the relationship is on focus. They
-   * influence how the arrow is drawn (not the source or the destination topic nor the arrow
-   * direction)
-   */
-  constructor(controlPoints: RelationshipControlPoints, ctrIndex: PivotType) {
+  constructor(model: RelationshipModel, controlPoint: PositionType, ctrIndex: PivotType) {
     super();
     // New control points ...
-    this._controlPoints = controlPoints;
     this._ctrIndex = ctrIndex;
-    this._newCtrPoint = controlPoints.getControlPointPosition(ctrIndex);
-
-    // Backup previous control points ...
-    const relationship = controlPoints.getRelationship();
-    const model = relationship.getModel();
-    this._oldCtrPoint =
-      PivotType.Start === ctrIndex ? model.getSrcCtrlPoint() : model.getDestCtrlPoint();
-    this._oldCtrPoint = { ...this._oldCtrPoint };
-
-    // New relationship ...
-    this._newCtrPoint = { ...controlPoints.getControlPointPosition(ctrIndex) };
+    this._controlPoint = controlPoint;
+    this._modelId = model.getId();
   }
 
-  execute() {
-    const relationship = this._controlPoints.getRelationship();
+  execute(commandContext: CommandContext): void {
+    const relationship = commandContext.findRelationships([this._modelId])[0];
     const model = relationship.getModel();
+
+    let oldCtlPoint: PositionType;
     switch (this._ctrIndex) {
       case PivotType.Start:
-        model.setSrcCtrlPoint(this._newCtrPoint);
-        relationship.setIsSrcControlPointCustom(true);
-        relationship.setSrcControlPoint(this._newCtrPoint);
+        oldCtlPoint = model.getSrcCtrlPoint();
+        model.setSrcCtrlPoint(this._controlPoint);
+        relationship.setIsSrcControlPointCustom(this._controlPoint != null);
+        if (this._controlPoint) {
+          relationship.setSrcControlPoint(this._controlPoint);
+        }
         break;
       case PivotType.End:
-        model.setDestCtrlPoint(this._newCtrPoint);
-        relationship.setIsDestControlPointCustom(true);
-        relationship.setDestControlPoint(this._newCtrPoint);
+        oldCtlPoint = model.getDestCtrlPoint();
+        model.setDestCtrlPoint(this._controlPoint);
+        relationship.setIsDestControlPointCustom(this._controlPoint != null);
+        if (this._controlPoint) {
+          relationship.setDestControlPoint(this._controlPoint);
+        }
         break;
       default:
         throw new Error('Illegal state exception');
     }
+    this._controlPoint = { ...oldCtlPoint };
 
     relationship.redraw();
+    relationship.setOnFocus(true);
   }
 
-  undoExecute() {
-    const relationship = this._controlPoints.getRelationship();
-    const model = relationship.getModel();
-
-    const isCustom = this._oldCtrPoint != null;
-    relationship.setIsDestControlPointCustom(isCustom);
-
-    switch (this._ctrIndex) {
-      case PivotType.Start:
-        model.setSrcCtrlPoint(this._oldCtrPoint);
-        relationship.setSrcControlPoint(this._oldCtrPoint);
-        break;
-      case PivotType.End:
-        model.setDestCtrlPoint(this._oldCtrPoint);
-        relationship.setDestControlPoint(this._oldCtrPoint);
-        break;
-      default:
-        throw new Error('Illegal state exception');
-    }
-
-    console.log('undo ...');
-    relationship.redraw();
+  undoExecute(commandContext: CommandContext): void {
+    this.execute(commandContext);
   }
 }
 

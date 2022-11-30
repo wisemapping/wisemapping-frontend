@@ -222,9 +222,11 @@ class RelationshipControlPoints {
       },
       () => {
         const actionDispatcher = ActionDispatcher.getInstance();
-        actionDispatcher.moveControlPoint(this, PivotType.Start);
-
-        relationship.setOnFocus(true);
+        actionDispatcher.moveControlPoint(
+          relationship.getModel(),
+          this.getControlPointPosition(PivotType.Start),
+          PivotType.Start,
+        );
       },
     );
 
@@ -238,9 +240,11 @@ class RelationshipControlPoints {
       },
       () => {
         const actionDispatcher = ActionDispatcher.getInstance();
-        actionDispatcher.moveControlPoint(this, PivotType.End);
-
-        relationship.setOnFocus(true);
+        actionDispatcher.moveControlPoint(
+          relationship.getModel(),
+          this.getControlPointPosition(PivotType.End),
+          PivotType.End,
+        );
       },
     );
     this._pivotLines = [startControlLine, endControlLine];
