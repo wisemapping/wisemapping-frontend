@@ -59,21 +59,21 @@ class RESTPersistenceManager extends PersistenceManager {
       }, 10000);
 
       const persistence = this;
+
       const crfs = this.getCSRFToken();
+      const headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        Accept: 'application/json',
+      };
+      if (crfs) {
+        headers['X-CSRF-Token'] = crfs;
+      }
+
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
         // Blob helps to resuce the memory on large payload.
         body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-        headers: crfs
-          ? {
-              'Content-Type': 'application/json; charset=utf-8',
-              Accept: 'application/json',
-              'X-CSRF-Token': crfs,
-            }
-          : {
-              'Content-Type': 'application/json; charset=utf-8',
-              Accept: 'application/json',
-            },
+        headers,
       })
         .then(async (response: Response) => {
           if (response.ok) {
@@ -132,35 +132,33 @@ class RESTPersistenceManager extends PersistenceManager {
   }
 
   discardChanges(mapId: string): void {
-    const csrfToken = this.getCSRFToken();
+    const crfs = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      Accept: 'application/json',
+    };
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
+    }
 
     fetch(this.revertUrl.replace('{id}', mapId), {
       method: 'POST',
-      headers: csrfToken
-        ? {
-            'Content-Type': 'application/json; charset=utf-8',
-            Accept: 'application/json',
-            'X-CSRF-Token': csrfToken,
-          }
-        : {
-            'Content-Type': 'application/json; charset=utf-8',
-            Accept: 'application/json',
-          },
+      headers,
     });
   }
 
   unlockMap(mapId: string): void {
-    const csrfToken = this.getCSRFToken();
+    const crfs = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'text/plain; charset=utf-8',
+    };
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
+    }
+
     fetch(this.lockUrl.replace('{id}', mapId), {
       method: 'PUT',
-      headers: csrfToken
-        ? {
-            'Content-Type': 'text/plain',
-            'X-CSRF-Token': csrfToken,
-          }
-        : {
-            'Content-Type': 'text/plain',
-          },
+      headers,
       body: 'false',
     });
   }
@@ -181,19 +179,18 @@ class RESTPersistenceManager extends PersistenceManager {
 
   loadMapDom(mapId: string): Promise<Document> {
     const url = `${this.documentUrl.replace('{id}', mapId)}/xml`;
-    const csrfToken = this.getCSRFToken();
+    const crfs = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'text/plain; charset=utf-8',
+      Accept: 'application/xml',
+    };
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
+    }
+
     return fetch(url, {
       method: 'get',
-      headers: csrfToken
-        ? {
-            'Content-Type': 'text/plain',
-            Accept: 'application/xml',
-            'X-CSRF-Token': csrfToken,
-          }
-        : {
-            'Content-Type': 'text/plain',
-            Accept: 'application/xml',
-          },
+      headers,
     })
       .then((response: Response) => {
         if (!response.ok) {

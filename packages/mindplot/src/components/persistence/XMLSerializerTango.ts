@@ -475,7 +475,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value !== null ? value : '';
   }
 
-  static _deserializeRelationship(domElement: Element, mindmap: Mindmap): RelationshipModel {
+  static _deserializeRelationship(domElement: Element, mindmap: Mindmap): RelationshipModel | null {
     const srcId = Number.parseInt(domElement.getAttribute('srcTopicId')!, 10);
     const destId = Number.parseInt(domElement.getAttribute('destTopicId')!, 10);
     const lineType = Number.parseInt(domElement.getAttribute('lineType')!, 10);
@@ -494,11 +494,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const model = mindmap.createRelationship(srcId, destId);
     model.setLineType(lineType);
-    if ($defined(srcCtrlPoint) && srcCtrlPoint !== '') {
-      model.setSrcCtrlPoint(Point.fromString(srcCtrlPoint));
+    const spoint = Point.fromString(srcCtrlPoint);
+    if (spoint) {
+      model.setSrcCtrlPoint(spoint);
     }
-    if ($defined(destCtrlPoint) && destCtrlPoint !== '') {
-      model.setDestCtrlPoint(Point.fromString(destCtrlPoint));
+
+    const dpoint = Point.fromString(destCtrlPoint);
+    if (dpoint) {
+      model.setDestCtrlPoint(dpoint);
     }
     model.setEndArrow(false);
     model.setStartArrow(true);

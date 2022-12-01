@@ -46,6 +46,18 @@ class LocalStorageManager extends PersistenceManager {
     }
   }
 
+  private buildHeader() {
+    const csrfToken = this.getCSRFToken();
+    const result = {
+      'Content-Type': 'text/plain',
+      Accept: 'application/xml',
+    };
+    if (csrfToken) {
+      result['X-CSRF-Token'] = csrfToken;
+    }
+    return result;
+  }
+
   loadMapDom(mapId: string): Promise<Document> {
     let result: Promise<Document>;
     let localStorate: string | null = null;
@@ -55,20 +67,10 @@ class LocalStorageManager extends PersistenceManager {
 
     if (localStorate == null || this.forceLoad) {
       const url = this.documentUrl.replace('{id}', mapId);
-      const csrfToken = this.getCSRFToken();
+
       result = fetch(url, {
         method: 'get',
-        headers:
-          csrfToken != null
-            ? {
-                'Content-Type': 'text/plain',
-                Accept: 'application/xml',
-                'X-CSRF-Token': csrfToken,
-              }
-            : {
-                'Content-Type': 'text/plain',
-                Accept: 'application/xml',
-              },
+        headers: this.buildHeader(),
       })
         .then((response: Response) => {
           if (!response.ok) {

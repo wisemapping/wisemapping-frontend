@@ -1,4 +1,5 @@
 import xmlFormatter from 'xml-formatter';
+import { off } from 'process';
 import Importer from './Importer';
 import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';
@@ -19,7 +20,6 @@ import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
-import { off } from 'process';
 
 export default class FreemindImporter extends Importer {
   private mindmap: Mindmap;
