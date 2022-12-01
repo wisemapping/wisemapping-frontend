@@ -1,5 +1,4 @@
 import xmlFormatter from 'xml-formatter';
-import { off } from 'process';
 import Importer from './Importer';
 import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';

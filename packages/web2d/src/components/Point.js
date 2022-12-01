@@ -41,14 +41,16 @@ class Point {
 }
 
 Point.fromString = function pointFromString(point) {
-  const values = point.split(',');
   let result = null;
-  if (values.lenght > 1) {
-    const x = Number.parseInt(values[0], 10);
-    const y = Number.parseInt(values[1], 10);
+  if (point) {
+    const values = point.split(',');
+    if (values.lenght > 1) {
+      const x = Number.parseInt(values[0], 10);
+      const y = Number.parseInt(values[1], 10);
 
-    if (!Number.isNaN(x) && !Number.isNaN(y)) {
-      result = new Point(x, y);
+      if (!Number.isNaN(x) && !Number.isNaN(y)) {
+        result = new Point(x, y);
+      }
     }
   }
   return result;
