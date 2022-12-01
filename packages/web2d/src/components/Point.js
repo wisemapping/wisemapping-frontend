@@ -44,7 +44,7 @@ Point.fromString = function pointFromString(point) {
   let result = null;
   if (point) {
     const values = point.split(',');
-    if (values.lenght > 1) {
+    if (values.length === 2) {
       const x = Number.parseInt(values[0], 10);
       const y = Number.parseInt(values[1], 10);
 

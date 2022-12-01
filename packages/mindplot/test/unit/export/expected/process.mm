@@ -37,6 +37,8 @@
                     <node ID="ID_30" POSITION="right" TEXT="In 2010, 2,500 referrals forwarded to OneLegacy"/>
                 </node>
                 <node ID="ID_31" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="Doheny Eye and Tissue Transplant Bank" LINK="http://www.dohenyeyebank.org/"/>
+                <arrowlink DESTINATION="ID_32" STARTARROW="Default"/>
+                <arrowlink DESTINATION="ID_36" STARTARROW="Default"/>
             </node>
             <node ID="ID_32" POSITION="right" STYLE="bubble" BACKGROUND_COLOR="#00ffd5" TEXT="OneLegacy">
                 <node ID="ID_33" POSITION="right" TEXT="In 2010, 11,828 referrals"/>

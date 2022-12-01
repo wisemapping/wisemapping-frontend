@@ -61,7 +61,7 @@ class MoveControlPointCommand extends Command {
       default:
         throw new Error('Illegal state exception');
     }
-    this._controlPoint = { ...oldCtlPoint };
+    this._controlPoint = oldCtlPoint ? { ...oldCtlPoint } : null;
 
     relationship.redraw();
     relationship.setOnFocus(true);
