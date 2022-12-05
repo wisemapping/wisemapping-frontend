@@ -494,18 +494,22 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const model = mindmap.createRelationship(srcId, destId);
     model.setLineType(lineType);
-    const spoint = Point.fromString(srcCtrlPoint);
-    if (spoint) {
-      model.setSrcCtrlPoint(spoint);
-    } else {
-      console.error(`srcCtrlPoint could not be parsed: ${srcCtrlPoint}`);
+    if (srcCtrlPoint) {
+      const spoint = Point.fromString(srcCtrlPoint);
+      if (spoint) {
+        model.setSrcCtrlPoint(spoint);
+      } else {
+        console.error(`srcCtrlPoint could not be parsed: ${srcCtrlPoint}`);
+      }
     }
 
-    const dpoint = Point.fromString(destCtrlPoint);
-    if (dpoint) {
-      model.setDestCtrlPoint(dpoint);
-    } else {
-      console.error(`destCtrlPoint could not be parsed: ${destCtrlPoint}`);
+    if (destCtrlPoint) {
+      const dpoint = Point.fromString(destCtrlPoint);
+      if (dpoint) {
+        model.setDestCtrlPoint(dpoint);
+      } else {
+        console.error(`destCtrlPoint could not be parsed: ${destCtrlPoint}`);
+      }
     }
 
     model.setEndArrow(false);
