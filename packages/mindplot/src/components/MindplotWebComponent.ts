@@ -15,6 +15,7 @@ export type MindplotWebComponentInterface = {
   mode: string;
   ref: object;
   locale?: string;
+  zoom?: number;
 };
 /**
  * WebComponent implementation for minplot designer.
@@ -60,6 +61,7 @@ class MindplotWebComponent extends HTMLElement {
   buildDesigner(persistence?: PersistenceManager, widgetManager?: WidgetManager) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
+    const zoom = this.getAttribute('zoom');
 
     const persistenceManager = persistence || new LocalStorageManager('map.xml', false, false);
     const mode = editorRenderMode || 'viewonly';
@@ -69,7 +71,7 @@ class MindplotWebComponent extends HTMLElement {
       widgetManager,
       divContainer: this._shadowRoot.getElementById('mindplot'),
       container: 'mindplot',
-      zoom: 1,
+      zoom: zoom ? Number.parseFloat(zoom) : 1,
       locale: locale || 'en',
     });
     this._designer = buildDesigner(options);

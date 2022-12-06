@@ -47,6 +47,7 @@ import { SpinnerCentered } from './style';
 export type EditorOptions = {
   mode: EditorRenderMode;
   locale: string;
+  zoom: number;
   enableKeyboardEvents: boolean;
 };
 
@@ -140,6 +141,7 @@ const Editor = ({
           id="mindmap-comp"
           mode={options.mode}
           locale={options.locale}
+          zoom={options.zoom}
         />
 
         <Notifier id="headerNotifier" />
