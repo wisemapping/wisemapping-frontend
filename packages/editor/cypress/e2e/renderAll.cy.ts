@@ -24,7 +24,7 @@ context('Render all sample maps', () => {
       cy.reload();
 
       cy.get('svg > path').should('be.visible');
-      cy.get('[aria-label="vortex-loading"]', { timeout: 40000 }).should('not.exist');
+      cy.get('[aria-label="vortex-loading"]', { timeout: 60000 }).should('not.exist');
       cy.matchImageSnapshot(`map-${mapId}`);
     });
   });

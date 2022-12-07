@@ -4,7 +4,7 @@ context('Node manager', () => {
   });
 
   it('shortcut add sibling node', () => {
-    cy.contains('Mind Mapping').click();
+    cy.contains('Mind Mapping').click({ force: true });
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
 
     cy.get('[test-id=36] > text > tspan').should('exist');
@@ -13,7 +13,7 @@ context('Node manager', () => {
   });
 
   it('shortcut add child node', () => {
-    cy.contains('Mind Mapping rocks!!').click();
+    cy.contains('Mind Mapping rocks!!').click({ force: true });
     cy.get('body').type('{insert}').type('Child 1 mind Mapping rocks!!').type('{enter}');
     cy.get('body').type('{enter}').type('Child 2 mind Mapping rocks!!').type('{enter}');
 
@@ -47,7 +47,7 @@ context('Node manager', () => {
   });
 
   it('Save changes', () => {
-    cy.contains('Mind Mapping rocks!!').click();
+    cy.contains('Mind Mapping rocks!!').click({ force: true });
     cy.get('body').type('{ctrl}s');
 
     cy.matchImageSnapshot('saveChagesShortcut');
