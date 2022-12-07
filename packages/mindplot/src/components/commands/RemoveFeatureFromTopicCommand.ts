@@ -46,6 +46,7 @@ class RemoveFeatureFromTopicCommand extends Command {
   execute(commandContext: CommandContext): void {
     const topic = commandContext.findTopics([this._topicId])[0];
     const feature = topic.findFeatureById(this._featureId);
+    this._oldFeature = feature;
     topic.removeFeature(feature);
   }
 
