@@ -72,6 +72,11 @@ class ControlPivotLine {
       visibility: false,
     });
     this._dot.setCursor('pointer');
+    this._dot.setTestId(
+      `relctl:${pivotType}:${relationship.getSourceTopic()?.getId()}-${relationship
+        .getTargetTopic()
+        ?.getId()}`,
+    );
 
     // Build line ...
     this._line = new Line({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 });

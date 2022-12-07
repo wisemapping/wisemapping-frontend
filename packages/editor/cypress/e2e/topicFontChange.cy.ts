@@ -18,56 +18,55 @@ context('Edit Topic', () => {
 
   it('Change Font Size', () => {
     // Go to the minimal size.
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
-    cy.get(`[aria-label="Smaller"]`).first().click();
-    cy.get(`[aria-label="Smaller"]`).first().click();
+    cy.get('[aria-label="Font Style"]').first().trigger('mouseover');
+    cy.get('[aria-label="Smaller"]').as('smaller');
+    cy.get('@smaller').eq(1).click();
+    cy.get('@smaller').eq(1).click();
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-size').should('eq', '8.1');
     cy.matchImageSnapshot('changeFontSizeSmall');
 
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
-    cy.get(`[aria-label="Bigger"]`).first().click();
+    cy.get('[aria-label="Bigger"]').as('bigger');
+    cy.get('@bigger').eq(1).click();
     cy.matchImageSnapshot('changeFontSizeNormal');
 
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
-    cy.get(`[aria-label="Bigger"]`).first().click();
+    cy.get('@bigger').eq(1).click();
     cy.get('[test-id=1] > text').invoke('attr', 'font-size').should('eq', '13.4');
     cy.matchImageSnapshot('changeFontSizeLarge');
 
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
-    cy.get(`[aria-label="Bigger"]`).first().click();
-
+    cy.get('@bigger').eq(1).click();
     cy.get('[test-id=1] > text').invoke('attr', 'font-size').should('eq', '20.2');
     cy.matchImageSnapshot('changeFontSizeHuge');
 
-    // Can not scale it more.
-    cy.get(`[aria-label="Bigger"]`).first().click();
+    cy.get('@bigger').eq(1).click();
     cy.get('[test-id=1] > text').invoke('attr', 'font-size').should('eq', '20.2');
     cy.matchImageSnapshot('changeFontSizeHuge');
   });
 
-  it.skip('Change Font To Italic', () => {
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
-    cy.get(`[data-test-id="FormatItalicIcon"]`).first().click();
-
-    cy.get('[test-id=1] > text').invoke('attr', 'font-family').should('eq', 'Times');
-    cy.matchImageSnapshot('changeFontType');
-  });
-
-  it.skip('Change Font to Bold', () => {
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
-    cy.contains('[data-testid="FormatItalicIcon"]').click();
+  it('Change Font To Italic', () => {
+    cy.get('[aria-label="Font Style"]').first().trigger('mouseover');
+    cy.get('[aria-label^="Italic ').first().click();
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-style').should('eq', 'italic');
 
     cy.matchImageSnapshot('changeFontItalic');
   });
 
-  it.skip('Change Font color', () => {
-    cy.get('#fontColorTip').click();
-    cy.get('[title="RGB (153, 0, 255)"]').click({ force: true });
+  it('Change Font to Bold', () => {
+    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
+    cy.get('[aria-label^="Bold ').first().click();
 
-    cy.get('[test-id=1] > text').invoke('attr', 'fill').should('eq', 'rgb(153, 0, 255)');
+    cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', 'normal');
+
+    cy.matchImageSnapshot('changeFontBold');
+  });
+
+  it('Change Font Color', () => {
+    cy.get('[aria-label="Font Style"]').eq(1).trigger('mouseover');
+    cy.get('[aria-label="Color"]').eq(1).click();
+    cy.get('[title="#cc0000"]').click({ force: true });
+
+    cy.get('[test-id=1] > text').invoke('attr', 'fill').should('eq', '#cc0000');
 
     cy.matchImageSnapshot('changeFontColor');
   });
