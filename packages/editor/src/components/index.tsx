@@ -47,7 +47,7 @@ import { SpinnerCentered } from './style';
 export type EditorOptions = {
   mode: EditorRenderMode;
   locale: string;
-  zoom: number;
+  zoom?: number;
   enableKeyboardEvents: boolean;
 };
 
