@@ -21,8 +21,6 @@ import EmojiCharIcon from './EmojiCharIcon';
 import SvgImageIcon from './SvgImageIcon';
 import LinkIcon from './LinkIcon';
 import NoteIcon from './NoteIcon';
-import Topic from './Topic';
-import FeatureModel from './model/FeatureModel';
 
 const TopicFeatureFactory = {
   /** the icon object */
@@ -48,7 +46,7 @@ const TopicFeatureFactory = {
     icon: NoteIcon,
   },
 
-  createIcon(topic: Topic, model: FeatureModel, readOnly: boolean) {
+  createIcon(topic, model, readOnly) {
     $assert(topic, 'topic can not be null');
     $assert(model, 'model can not be null');
 
