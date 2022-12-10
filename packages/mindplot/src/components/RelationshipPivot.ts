@@ -145,16 +145,17 @@ class RelationshipPivot {
 
   private _calculateFromPosition(toPosition: Point): Point {
     // Calculate origin position ...
+    const sourceTopic = this._sourceTopic!;
     let sourcePosition = this._sourceTopic!.getPosition();
-    if (this._sourceTopic!.getType() === 'CentralTopic') {
-      sourcePosition = Shape.workoutIncomingConnectionPoint(this._sourceTopic, toPosition);
+    if (sourceTopic!.getType() === 'CentralTopic') {
+      sourcePosition = Shape.workoutIncomingConnectionPoint(sourceTopic, toPosition);
     }
     const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);
-    const point = new Point(
-      parseInt(controlPoint[0].x, 10) + sourcePosition.x,
-      parseInt(controlPoint[0].y, 10) + sourcePosition.y,
-    );
-    return Shape.calculateRelationShipPointCoordinates(this._sourceTopic, point);
+    const point = {
+      x: controlPoint[0].x + sourcePosition.x,
+      y: controlPoint[0].y + sourcePosition.y,
+    };
+    return Shape.calculateRelationShipPointCoordinates(sourceTopic, point);
   }
 
   private _connectOnFocus(event: string, targetTopic: Topic): void {

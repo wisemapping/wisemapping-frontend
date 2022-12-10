@@ -19,46 +19,56 @@ import { Point } from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
 import { TopicShape } from '../model/INodeModel';
 import TopicConfig from '../TopicConfig';
+import PositionType from '../PositionType';
+import SizeType from '../SizeType';
+import Topic from '../Topic';
 
-const Shape = {
-  isAtRight(sourcePoint, targetPoint) {
+class Shape {
+  static isAtRight(sourcePoint: PositionType, targetPoint: PositionType): boolean {
     $assert(sourcePoint, 'Source can not be null');
     $assert(targetPoint, 'Target can not be null');
     return sourcePoint.x < targetPoint.x;
-  },
+  }
 
-  calculateRectConnectionPoint(rectCenterPoint, rectSize, isAtRight) {
+  static calculateRectConnectionPoint(
+    rectCenterPoint: PositionType,
+    rectSize: SizeType,
+    isAtRight: boolean,
+  ): PositionType {
     $assert(rectCenterPoint, 'rectCenterPoint can  not be null');
     $assert(rectSize, 'rectSize can  not be null');
     $assert($defined(isAtRight), 'isRight can  not be null');
 
     // This is used fix a minor difference ...z
     const correctionHardcode = 2;
-    let result;
+    let result: PositionType;
     if (isAtRight) {
-      result = new Point(
-        rectCenterPoint.x - rectSize.width / 2 + correctionHardcode,
-        rectCenterPoint.y,
-      );
+      result = {
+        x: rectCenterPoint.x - rectSize.width / 2 + correctionHardcode,
+        y: rectCenterPoint.y,
+      };
     } else {
-      result = new Point(
-        parseFloat(rectCenterPoint.x) + rectSize.width / 2 - correctionHardcode,
-        rectCenterPoint.y,
-      );
+      result = {
+        x: rectCenterPoint.x + rectSize.width / 2 - correctionHardcode,
+        y: rectCenterPoint.y,
+      };
     }
 
     return result;
-  },
+  }
 
-  calculateRelationShipPointCoordinates(topic, controlPoint) {
+  static calculateRelationShipPointCoordinates(
+    topic: Topic,
+    controlPoint: PositionType,
+  ): PositionType {
     const size = topic.getSize();
     const position = topic.getPosition();
     const yGap = position.y - controlPoint.y;
     const xGap = position.x - controlPoint.x;
     const disable = Math.abs(yGap) < 5 || Math.abs(xGap) < 5 || Math.abs(yGap - xGap) < 5;
 
-    let y;
-    let x;
+    let y: number;
+    let x: number;
     const gap = 5;
     if (controlPoint.y > position.y + size.height / 2) {
       y = position.y + size.height / 2 + gap;
@@ -84,10 +94,13 @@ const Shape = {
       y = !disable ? position.y - (yGap / xGap) * (position.x - x) : position.y;
     }
 
-    return new Point(x, y);
-  },
+    return { x, y };
+  }
 
-  calculateDefaultControlPoints(srcPos, tarPos) {
+  static calculateDefaultControlPoints(
+    srcPos: PositionType,
+    tarPos: PositionType,
+  ): [PositionType, PositionType] {
     const y = srcPos.y - tarPos.y;
     const x = srcPos.x - tarPos.x;
     const div = Math.abs(x) > 0.1 ? x : 0.1; // Prevent division by 0.
@@ -105,9 +118,9 @@ const Shape = {
     const y2 = m * (x2 - tarPos.x) + tarPos.y;
 
     return [new Point(-srcPos.x + x1, -srcPos.y + y1), new Point(-tarPos.x + x2, -tarPos.y + y2)];
-  },
+  }
 
-  workoutIncomingConnectionPoint(targetNode, sourcePosition) {
+  static workoutIncomingConnectionPoint(targetNode: Topic, sourcePosition: PositionType) {
     $assert(sourcePosition, 'sourcePoint can not be null');
     const pos = targetNode.getPosition();
     const size = targetNode.getSize();
@@ -129,7 +142,7 @@ const Shape = {
     result.x = Math.ceil(result.x);
     result.y = Math.ceil(result.y);
     return result;
-  },
-};
+  }
+}
 
 export default Shape;

@@ -1,24 +1,22 @@
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import { Group, Rect, Line } from '@wisemapping/web2d';
+import ImageIcon from './ImageIcon';
 
-export default class RemoveTip {
-  /** @lends IconGroup.RemoveTip */
-  /**
-   * @classdesc inner class of IconGroup
-   * @constructs
-   * @param container
-   */
-  constructor(container) {
-    $assert(container, 'group can not be null');
-    this._fadeElem = container;
+class IconGroupRemoveTip {
+  private _group: Group;
+
+  private _activeIcon: ImageIcon | null;
+
+  private _widget: Group;
+
+  private _closeTimeoutId;
+
+  constructor(group: Group) {
+    $assert(group, 'group can not be null');
+    this._group = group;
   }
 
-  /**
-   * @param topicId
-   * @param icon
-   * @throws will throw an error if icon is null or undefined
-   */
-  show(topicId, icon) {
+  show(topicId: number, icon: ImageIcon) {
     $assert(icon, 'icon can not be null');
 
     // Nothing to do ...
@@ -48,50 +46,43 @@ export default class RemoveTip {
       });
 
       widget.setPosition(pos.x + 80, pos.y - 50);
-      this._fadeElem.append(widget);
+      this._group.append(widget);
 
       // Setup current element ...
       this._activeIcon = icon;
       this._widget = widget;
-    } else {
+    } else if (this._closeTimeoutId) {
       clearTimeout(this._closeTimeoutId);
     }
   }
 
-  /** */
   hide() {
     this.close(200);
   }
 
-  /**
-   * @param delay
-   */
-  close(delay) {
-    // This is not ok, trying to close the same dialog twice ?
+  close(delay: number) {
     if (this._closeTimeoutId) {
       clearTimeout(this._closeTimeoutId);
     }
 
-    const me = this;
     if (this._activeIcon) {
       const widget = this._widget;
-      const close = function close() {
-        me._activeIcon = null;
-        me._fadeElem.removeChild(widget);
-        me._widget = null;
-        me._closeTimeoutId = null;
+      const close = () => {
+        this._activeIcon = null;
+        this._group.removeChild(widget);
+        this._widget = null;
+        this._closeTimeoutId = null;
       };
 
-      if (!$defined(delay) || delay === 0) {
-        close();
-      } else {
+      if (delay > 0) {
         this._closeTimeoutId = setTimeout(close, delay);
+      } else {
+        close();
       }
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  _buildWeb2d() {
+  private _buildWeb2d(): Group {
     const result = new Group({
       width: 10,
       height: 10,
@@ -144,23 +135,19 @@ export default class RemoveTip {
     return result;
   }
 
-  /**
-   * @param topicId
-   * @param icon
-   */
-  decorate(topicId, icon) {
-    const me = this;
-
+  decorate(topicId: number, icon) {
     if (!icon.__remove) {
       icon.addEvent('mouseover', () => {
-        me.show(topicId, icon);
+        this.show(topicId, icon);
       });
 
       icon.addEvent('mouseout', () => {
-        me.hide();
+        this.hide();
       });
       // eslint-disable-next-line no-param-reassign
       icon.__remove = true;
     }
   }
 }
+
+export default IconGroupRemoveTip;
