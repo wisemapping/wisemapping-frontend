@@ -15,59 +15,26 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import { $msg } from './Messages';
 import { TopicShape } from './model/INodeModel';
+import Topic from './Topic';
 
-class TopicStyle {
-  static _getStyles(topic) {
-    $assert(topic, 'topic can not be null');
+type TopicStyleType = {
+  borderColor: string;
+  backgroundColor: string;
+  fontStyle: {
+    font: string;
+    size: number;
+    style: string;
+    weight: string;
+    color: string;
+  };
+  msgKey: string;
+  shapeType: string;
+};
 
-    let result;
-    if (topic.isCentralTopic()) {
-      result = TopicStyle.STYLES.CENTRAL_TOPIC;
-    } else {
-      const targetTopic = topic.getOutgoingConnectedTopic();
-      if ($defined(targetTopic)) {
-        if (targetTopic.isCentralTopic()) {
-          result = TopicStyle.STYLES.MAIN_TOPIC;
-        } else {
-          result = TopicStyle.STYLES.SUB_TOPIC;
-        }
-      } else {
-        result = TopicStyle.STYLES.ISOLATED_TOPIC;
-      }
-    }
-    return result;
-  }
-
-  static defaultText(topic) {
-    const { msgKey } = this._getStyles(topic);
-    return $msg(msgKey);
-  }
-
-  static defaultFontStyle(topic) {
-    return this._getStyles(topic).fontStyle;
-  }
-
-  static defaultBackgroundColor(topic) {
-    return this._getStyles(topic).backgroundColor;
-  }
-
-  static defaultBorderColor(topic) {
-    return this._getStyles(topic).borderColor;
-  }
-
-  static getInnerPadding(topic) {
-    return Math.round(topic.getTextShape().getFontHeight() * 0.5);
-  }
-
-  static defaultShapeType(topic) {
-    return this._getStyles(topic).shapeType;
-  }
-}
-
-TopicStyle.STYLES = {
+const TopicDefaultStyles = {
   CENTRAL_TOPIC: {
     borderColor: 'rgb(57,113,177)',
     backgroundColor: 'rgb(80,157,192)',
@@ -81,7 +48,6 @@ TopicStyle.STYLES = {
     msgKey: 'CENTRAL_TOPIC',
     shapeType: TopicShape.ROUNDED_RECT,
   },
-
   MAIN_TOPIC: {
     borderColor: 'rgb(2,59,185)',
     backgroundColor: 'rgb(224,229,239)',
@@ -95,7 +61,6 @@ TopicStyle.STYLES = {
     msgKey: 'MAIN_TOPIC',
     shapeType: TopicShape.LINE,
   },
-
   SUB_TOPIC: {
     borderColor: 'rgb(2,59,185)',
     backgroundColor: 'rgb(224,229,239)',
@@ -124,5 +89,53 @@ TopicStyle.STYLES = {
     shapeType: TopicShape.LINE,
   },
 };
+
+class TopicStyle {
+  static _getStyles(topic: Topic): TopicStyleType {
+    $assert(topic, 'topic can not be null');
+
+    let result: TopicStyleType;
+    if (topic.isCentralTopic()) {
+      result = TopicDefaultStyles.CENTRAL_TOPIC;
+    } else {
+      const targetTopic = topic.getOutgoingConnectedTopic();
+      if (targetTopic) {
+        if (targetTopic.isCentralTopic()) {
+          result = TopicDefaultStyles.MAIN_TOPIC;
+        } else {
+          result = TopicDefaultStyles.SUB_TOPIC;
+        }
+      } else {
+        result = TopicDefaultStyles.ISOLATED_TOPIC;
+      }
+    }
+    return result;
+  }
+
+  static defaultText(topic: Topic) {
+    const { msgKey } = this._getStyles(topic);
+    return $msg(msgKey);
+  }
+
+  static defaultFontStyle(topic: Topic) {
+    return this._getStyles(topic).fontStyle;
+  }
+
+  static defaultBackgroundColor(topic: Topic) {
+    return this._getStyles(topic).backgroundColor;
+  }
+
+  static defaultBorderColor(topic: Topic) {
+    return this._getStyles(topic).borderColor;
+  }
+
+  static getInnerPadding(topic: Topic) {
+    return Math.round(topic.getTextShape().getFontHeight() * 0.5);
+  }
+
+  static defaultShapeType(topic) {
+    return this._getStyles(topic).shapeType;
+  }
+}
 
 export default TopicStyle;

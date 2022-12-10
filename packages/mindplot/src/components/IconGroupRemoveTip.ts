@@ -67,6 +67,7 @@ class IconGroupRemoveTip {
 
     if (this._activeIcon) {
       const widget = this._widget;
+
       const close = () => {
         this._activeIcon = null;
         this._group.removeChild(widget);
