@@ -24,7 +24,7 @@ import CommandContext from '../CommandContext';
 class MoveControlPointCommand extends Command {
   private _ctrIndex: PivotType;
 
-  private _controlPoint: PositionType;
+  private _controlPoint: PositionType | null;
 
   private _modelId: number;
 

@@ -24,9 +24,11 @@ abstract class WidgetManager {
     linkModel?: LinkModel,
     noteModel?: NoteModel,
   ) {
-    const webcomponentShadowRoot = $($('#mindmap-comp')[0].shadowRoot);
+    const { shadowRoot } = $('#mindmap-comp')[0];
+    const webcomponentShadowRoot = $(shadowRoot!);
+
     let tooltip = webcomponentShadowRoot.find('#mindplot-svg-tooltip');
-    if (!tooltip.length) {
+    if (!tooltip.length || !tooltip) {
       webcomponentShadowRoot.append(
         '<div id="mindplot-svg-tooltip" class="mindplot-svg-tooltip">' +
           '<div id="mindplot-svg-tooltip-title" class="mindplot-svg-tooltip-title"></div>' +
@@ -48,7 +50,7 @@ abstract class WidgetManager {
       });
     }
 
-    mindmapElement.addEvent('mouseenter', (evt) => {
+    mindmapElement.addEvent('mouseenter', (evt: MouseEvent) => {
       webcomponentShadowRoot.find('#mindplot-svg-tooltip-title').html(title);
       if (linkModel) {
         webcomponentShadowRoot
@@ -63,8 +65,9 @@ abstract class WidgetManager {
         webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-note').css({ display: 'block' });
         webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-link').css({ display: 'none' });
       }
-      const targetRect = evt.target.getBoundingClientRect();
-      const newX = Math.max(0, targetRect.left + targetRect.width / 2 - tooltip.width() / 2);
+      const targetRect = (evt.target as Element).getBoundingClientRect();
+      const width = tooltip.width() || 0;
+      const newX = Math.max(0, targetRect.left + targetRect.width / 2 - width / 2);
       const newY = Math.max(0, targetRect.bottom);
       tooltip.css({ top: newY, left: newX, position: 'absolute' });
       tooltip.css({ display: 'block' });
@@ -77,11 +80,11 @@ abstract class WidgetManager {
     });
   }
 
-  createTooltipForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
+  createTooltipForLink(_topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
     this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
   }
 
-  createTooltipForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
+  createTooltipForNote(_topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
     this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
   }
 

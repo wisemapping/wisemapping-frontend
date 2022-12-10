@@ -73,14 +73,14 @@ class DragTopic {
     if (this.isConnected() && !this.isFreeLayoutOn()) {
       const parent = this.getConnectedToTopic();
       const predict = this._layoutManager.predict(
-        parent.getId(),
+        parent!.getId(),
         this._draggedNode.getId(),
         this.getPosition(),
       );
       if (this._order !== predict.order) {
         const dragPivot = this._getDragPivot();
         const pivotPosition = predict.position;
-        dragPivot.connectTo(parent, pivotPosition);
+        dragPivot.connectTo(parent!, pivotPosition);
         this.setOrder(predict.order);
       }
     }
@@ -191,7 +191,7 @@ class DragTopic {
     }
   }
 
-  getConnectedToTopic(): Topic {
+  getConnectedToTopic(): Topic | null {
     const dragPivot = this._getDragPivot();
     return dragPivot.getTargetTopic();
   }

@@ -97,7 +97,7 @@ class IconGroup {
     icons.push(icon);
     this._icons = icons.sort(
       (a, b) =>
-        ORDER_BY_TYPE.get(a.getModel().getType()) - ORDER_BY_TYPE.get(b.getModel().getType()),
+        ORDER_BY_TYPE.get(a.getModel().getType())! - ORDER_BY_TYPE.get(b.getModel().getType())!,
     );
 
     // Add all the nodes back ...
@@ -115,7 +115,7 @@ class IconGroup {
   }
 
   private _findIconFromModel(iconModel: FeatureModel) {
-    let result = null;
+    let result: ImageIcon | null = null;
 
     this._icons.forEach((icon) => {
       const elModel = icon.getModel();

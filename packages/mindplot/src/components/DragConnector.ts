@@ -100,8 +100,8 @@ class DragConnector {
       const av = me._isVerticallyAligned(a.getSize(), aPos, sPos);
       const bv = me._isVerticallyAligned(b.getSize(), bPos, sPos);
       return (
-        me._proximityWeight(av, a, sPos, currentConnection) -
-        me._proximityWeight(bv, b, sPos, currentConnection)
+        me._proximityWeight(av, a, sPos, currentConnection!) -
+        me._proximityWeight(bv, b, sPos, currentConnection!)
       );
     });
     return topics;

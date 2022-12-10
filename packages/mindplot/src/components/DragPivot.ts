@@ -29,7 +29,7 @@ class DragPivot {
 
   private _isVisible: boolean;
 
-  private _targetTopic: Topic;
+  private _targetTopic: Topic | null;
 
   private _connectRect: Rect;
 
@@ -57,7 +57,7 @@ class DragPivot {
     return this._isVisible;
   }
 
-  getTargetTopic(): Topic {
+  getTargetTopic(): Topic | null {
     return this._targetTopic;
   }
 
@@ -91,7 +91,7 @@ class DragPivot {
 
     // Calculate pivot connection point ...
     const size = this._size;
-    const targetPosition = targetTopic.getPosition();
+    const targetPosition = targetTopic!.getPosition();
     const line = this._getConnectionLine();
 
     // Update Line position.
@@ -106,7 +106,7 @@ class DragPivot {
 
     // Make line visible only when the position has been already changed.
     // This solve several strange effects ;)
-    const targetPoint = targetTopic.workoutIncomingConnectionPoint(pivotPoint);
+    const targetPoint = targetTopic!.workoutIncomingConnectionPoint(pivotPoint);
     line.setTo(targetPoint.x, targetPoint.y);
   }
 

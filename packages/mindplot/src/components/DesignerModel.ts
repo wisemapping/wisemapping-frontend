@@ -107,7 +107,7 @@ class DesignerModel extends Events {
       // Add node only if it's valid.
       if (isValid) {
         result.push(topic.getId());
-      } else {
+      } else if (errorMsg) {
         $notify(errorMsg);
       }
     });

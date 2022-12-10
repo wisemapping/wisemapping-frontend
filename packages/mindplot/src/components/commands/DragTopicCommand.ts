@@ -24,7 +24,7 @@ import Topic from '../Topic';
 class DragTopicCommand extends Command {
   private _topicsId: number;
 
-  private _parentId: number;
+  private _parentId: number | null;
 
   private _position: Point;
 
@@ -73,14 +73,14 @@ class DragTopicCommand extends Command {
     }
 
     // Finally, connect topic ...
-    if ($defined(this._parentId)) {
+    if (this._parentId != null) {
       const parentTopic = commandContext.findTopics([this._parentId])[0];
       commandContext.connect(topic, parentTopic);
     }
 
     // Backup old parent id ...
     this._parentId = null;
-    if ($defined(origParentTopic)) {
+    if (origParentTopic != null) {
       this._parentId = origParentTopic.getId();
     }
     topic.setVisibility(true);

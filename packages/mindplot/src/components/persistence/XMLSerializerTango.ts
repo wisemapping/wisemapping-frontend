@@ -475,7 +475,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return value !== null ? value : '';
   }
 
-  static _deserializeRelationship(domElement: Element, mindmap: Mindmap): RelationshipModel | null {
+  private static _deserializeRelationship(
+    domElement: Element,
+    mindmap: Mindmap,
+  ): RelationshipModel {
     const srcId = Number.parseInt(domElement.getAttribute('srcTopicId')!, 10);
     const destId = Number.parseInt(domElement.getAttribute('destTopicId')!, 10);
     const lineType = Number.parseInt(domElement.getAttribute('lineType')!, 10);

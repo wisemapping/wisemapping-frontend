@@ -23,7 +23,7 @@ abstract class Command {
 
   static _uuid: number;
 
-  private _discardDuplicated: string;
+  private _discardDuplicated: string | undefined;
 
   constructor() {
     this._id = Command._nextUUID();
@@ -46,7 +46,7 @@ abstract class Command {
     return this._uuid;
   }
 
-  getDiscardDuplicated(): string {
+  getDiscardDuplicated(): string | undefined {
     return this._discardDuplicated;
   }
 
