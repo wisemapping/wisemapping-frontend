@@ -81,7 +81,7 @@ class EmojiCharIcon implements Icon {
     return this.group.getPosition();
   }
 
-  addEvent(type: string, fnc: any): void {
+  addEvent(type: string, fnc: (e: object) => void): void {
     this.element.addEvent(type, fnc);
   }
 

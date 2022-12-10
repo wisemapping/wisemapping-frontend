@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import Point from '@wisemapping/web2d';
-import ConnectionLine from '../ConnectionLine';
+import { LineType } from '../ConnectionLine';
 
 class RelationshipModel {
   static _nextUuid = 0;
@@ -47,7 +47,7 @@ class RelationshipModel {
     this._id = RelationshipModel._nextUUID();
     this._sourceTargetId = sourceTopicId;
     this._targetTopicId = targetTopicId;
-    this._lineType = ConnectionLine.SIMPLE_CURVED;
+    this._lineType = LineType.SIMPLE_CURVED;
     this._srcCtrlPoint = null;
     this._destCtrlPoint = null;
     this._endArrow = true;

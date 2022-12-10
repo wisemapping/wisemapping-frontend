@@ -21,7 +21,7 @@ import { $assert } from '@wisemapping/core-js';
 import Point from '@wisemapping/web2d';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
-import RelationshipControlPoints, { PivotType } from './RelationshipControlPoints';
+import { PivotType } from './RelationshipControlPoints';
 import Events from './Events';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';

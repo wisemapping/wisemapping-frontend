@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Arrow, Point, CurvedLine } from '@wisemapping/web2d';
-import ConnectionLine from './ConnectionLine';
+import ConnectionLine, { LineType } from './ConnectionLine';
 import RelationshipControlPoints from './RelationshipControlPoints';
 import RelationshipModel from './model/RelationshipModel';
 import PositionType from './PositionType';
@@ -48,7 +48,7 @@ class Relationship extends ConnectionLine {
     $assert(sourceNode, 'sourceNode can not be null');
     $assert(targetNode, 'targetNode can not be null');
 
-    super(sourceNode, targetNode, model.getLineType());
+    super(sourceNode, targetNode);
     this.setModel(model);
 
     const strokeColor = Relationship.getStrokeColor();
@@ -62,7 +62,7 @@ class Relationship extends ConnectionLine {
     this._line2d.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Build focus shape ...
-    this._focusShape = this._createLine(this.getLineType(), ConnectionLine.SIMPLE_CURVED);
+    this._focusShape = this._createLine(LineType.SIMPLE_CURVED);
     this._focusShape.setStroke(8, 'solid', '#3f96ff');
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);

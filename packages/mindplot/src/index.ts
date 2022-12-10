@@ -58,6 +58,7 @@ declare global {
   var designer: Designer;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalAny: any = global;
 globalAny.jQuery = jquery;
 // WebComponent registration

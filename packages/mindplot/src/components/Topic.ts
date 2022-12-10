@@ -629,7 +629,7 @@ abstract class Topic extends NodeGraph {
     group.setTestId(model.getId());
   }
 
-  _registerDefaultListenersToElement(elem: ElementClass, topic: Topic) {
+  private _registerDefaultListenersToElement(elem: ElementClass, topic: Topic) {
     const mouseOver = function mouseOver() {
       if (topic.isMouseEventsEnabled()) {
         topic.handleMouseOver();

@@ -19,7 +19,7 @@ import { $assert, $defined, createDocument } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
 import { TopicShape } from '../model/INodeModel';
-import ConnectionLine from '../ConnectionLine';
+import { LineType } from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
@@ -207,7 +207,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const lineType = relationship.getLineType();
     result.setAttribute('lineType', lineType.toString());
-    if (lineType === ConnectionLine.CURVED || lineType === ConnectionLine.SIMPLE_CURVED) {
+    if (lineType === LineType.CURVED || lineType === LineType.SIMPLE_CURVED) {
       if ($defined(relationship.getSrcCtrlPoint())) {
         const srcPoint = relationship.getSrcCtrlPoint();
         result.setAttribute('srcCtrlPoint', `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`);

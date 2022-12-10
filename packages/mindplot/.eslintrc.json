@@ -22,23 +22,25 @@
         "@typescript-eslint"
     ],
     "rules": {
-		// ignore errors when a line finishes with (setting this value to 0 ignores all errors)
-		"operator-linebreak": [
-			"error", "after", { 
-				"overrides": { 
-					"+": "ignore", 
-					"-": "ignore",
-					":": "ignore",
-					"*": "ignore",
-					"?": "ignore",
-					">": "ignore",
-					"||": "ignore",
-					"&&": "ignore",
-					"(": "ignore"
-				}
-			}
-		],
-		"object-curly-newline": "off",
+        // ignore errors when a line finishes with (setting this value to 0 ignores all errors)
+        "operator-linebreak": [
+            "error",
+            "after",
+            {
+                "overrides": {
+                    "+": "ignore",
+                    "-": "ignore",
+                    ":": "ignore",
+                    "*": "ignore",
+                    "?": "ignore",
+                    ">": "ignore",
+                    "||": "ignore",
+                    "&&": "ignore",
+                    "(": "ignore"
+                }
+            }
+        ],
+        "object-curly-newline": "off",
         "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-param-reassign": "off",
@@ -48,10 +50,10 @@
         ],
         "class-methods-use-this": "off",
         "no-console": "off",
-        // codebase contains many this aliases, fix in the future?
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-this-alias": "off",
-        // Remove once migration is completed ...
-        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -62,7 +64,7 @@
                 "tsx": "never"
             }
         ],
-	"implicit-arrow-linebreak": "off" 
+        "implicit-arrow-linebreak": "off"
     },
     "settings": {
         "import/resolver": {

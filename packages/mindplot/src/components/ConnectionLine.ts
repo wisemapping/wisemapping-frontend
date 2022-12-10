@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import { Point, CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
 import { TopicShape } from './model/INodeModel';
 import RelationshipModel from './model/RelationshipModel';
@@ -24,18 +24,26 @@ import Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import Workspace from './Workspace';
 
+// eslint-disable-next-line no-shadow
+export enum LineType {
+  SIMPLE,
+  POLYLINE,
+  CURVED,
+  SIMPLE_CURVED,
+}
+
 class ConnectionLine {
   protected _targetTopic: Topic;
 
   protected _sourceTopic: Topic;
 
-  protected _lineType: number;
+  protected _lineType: LineType;
 
   protected _line2d: Line;
 
   protected _model: RelationshipModel;
 
-  constructor(sourceNode: Topic, targetNode: Topic, lineType?: number) {
+  constructor(sourceNode: Topic, targetNode: Topic) {
     $assert(targetNode, 'parentNode node can not be null');
     $assert(sourceNode, 'childNode node can not be null');
     $assert(sourceNode !== targetNode, 'Circular connection');
@@ -46,11 +54,11 @@ class ConnectionLine {
     let line: Line;
     const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
     if (targetNode.getType() === 'CentralTopic') {
-      line = this._createLine(lineType, ConnectionLine.CURVED);
+      line = this._createLine(LineType.CURVED);
       line.setSrcControlPoint(ctrlPoints[0]);
       line.setDestControlPoint(ctrlPoints[1]);
     } else {
-      line = this._createLine(lineType, ConnectionLine.SIMPLE_CURVED);
+      line = this._createLine(LineType.SIMPLE_CURVED);
       line.setSrcControlPoint(ctrlPoints[0]);
       line.setDestControlPoint(ctrlPoints[1]);
     }
@@ -69,24 +77,25 @@ class ConnectionLine {
     return [new Point(deltaX, 0), new Point(-deltaX, 0)];
   }
 
-  protected _createLine(lineTypeParam: number, defaultStyle: number): Line {
-    const lineType = $defined(lineTypeParam) ? lineTypeParam : defaultStyle;
+  protected _createLine(lineType: LineType): Line {
     this._lineType = lineType;
     let line: ConnectionLine;
     switch (lineType) {
-      case ConnectionLine.POLYLINE:
+      case LineType.POLYLINE:
         line = new PolyLine();
         break;
-      case ConnectionLine.CURVED:
+      case LineType.CURVED:
         line = new CurvedLine();
         break;
-      case ConnectionLine.SIMPLE_CURVED:
+      case LineType.SIMPLE_CURVED:
         line = new CurvedLine();
         (line as CurvedLine).setStyle(CurvedLine.SIMPLE_LINE);
         break;
-      default:
+      case LineType.SIMPLE:
         line = new Line();
         break;
+      default:
+        throw new Error(`Unexpected line type. ${lineType}`);
     }
     return line;
   }
@@ -204,14 +213,6 @@ class ConnectionLine {
   moveToFront() {
     this._line2d.moveToFront();
   }
-
-  static SIMPLE = 0;
-
-  static POLYLINE = 1;
-
-  static CURVED = 2;
-
-  static SIMPLE_CURVED = 3;
 
   static getStrokeColor = () => '#495879';
 }

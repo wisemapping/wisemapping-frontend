@@ -89,10 +89,8 @@ const Editor = ({
           model.registerEvents(setCanvasUpdate, capability);
         })
         .catch((e) => {
-          console.error(JSON.stringify(e));
-          window.newrelic?.noticeError(
-            new Error(`Unexpected error loading map ${mapInfo.getId()} = ${JSON.stringify(e)}`),
-          );
+          console.error(e);
+          window.newrelic?.noticeError(e);
         });
       setModel(model);
     }

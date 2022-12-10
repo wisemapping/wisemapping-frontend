@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 // https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
 // https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
