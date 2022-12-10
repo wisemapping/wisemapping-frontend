@@ -70,7 +70,7 @@ export default class FreemindImporter extends Importer {
 
     this.convertNodeProperties(freeNode, wiseTopic, true);
 
-    this.nodesmap.set(freeNode.getId(), wiseTopic);
+    this.nodesmap.set(freeNode.getId()!, wiseTopic);
 
     this.convertChildNodes(freeNode, wiseTopic, this.mindmap, 1);
     this.addRelationship(this.mindmap);

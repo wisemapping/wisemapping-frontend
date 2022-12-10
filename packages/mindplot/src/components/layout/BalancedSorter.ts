@@ -135,15 +135,17 @@ class BalancedSorter extends AbstractBasicSorter {
 
   detach(treeSet: RootedTreeSet, node: Node): void {
     const parent = treeSet.getParent(node);
-    // Filter nodes on one side..
-    const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
+    if (parent) {
+      // Filter nodes on one side..
+      const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
 
-    children.forEach((child) => {
-      if (child.getOrder() > node.getOrder()) {
-        child.setOrder(child.getOrder() - 2);
-      }
-    });
-    node.setOrder(node.getOrder() % 2 === 0 ? 0 : 1);
+      children.forEach((child) => {
+        if (child.getOrder() > node.getOrder()) {
+          child.setOrder(child.getOrder() - 2);
+        }
+      });
+      node.setOrder(node.getOrder() % 2 === 0 ? 0 : 1);
+    }
   }
 
   computeOffsets(treeSet: RootedTreeSet, node: Node) {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -90,7 +89,7 @@ class BalancedTestSuite extends TestSuite {
     manager.plot('testBalanced9', { width: 1000, height: 400 });
 
     // Check orders have shifted accordingly
-    $assert(manager.find(5).getOrder() == 6, 'Node 5 should have order 6');
+    $assert(manager.find(5).getOrder() === 6, 'Node 5 should have order 6');
 
     manager.addNode(14, TestSuite.NODE_SIZE, position);
     manager.connectNode(0, 14, 5);
@@ -98,7 +97,7 @@ class BalancedTestSuite extends TestSuite {
     manager.plot('testBalanced10', { width: 1000, height: 400 });
 
     // Check orders have shifted accordingly
-    $assert(manager.find(6).getOrder() == 7, 'Node 6 should have order 7');
+    $assert(manager.find(6).getOrder() === 7, 'Node 6 should have order 7');
 
     manager.addNode(15, TestSuite.NODE_SIZE, position);
     manager.connectNode(0, 15, 4);
@@ -106,8 +105,8 @@ class BalancedTestSuite extends TestSuite {
     manager.plot('testBalanced11', { width: 1000, height: 400 });
 
     // Check orders have shifted accordingly
-    $assert(manager.find(13).getOrder() == 6, 'Node 13 should have order 6');
-    $assert(manager.find(5).getOrder() == 8, 'Node 5 should have order 8');
+    $assert(manager.find(13).getOrder() === 6, 'Node 13 should have order 6');
+    $assert(manager.find(5).getOrder() === 8, 'Node 5 should have order 8');
 
     manager.addNode(16, TestSuite.NODE_SIZE, position);
     manager.connectNode(0, 16, 25);
@@ -115,7 +114,7 @@ class BalancedTestSuite extends TestSuite {
     manager.plot('testBalanced12', { width: 1000, height: 400 });
 
     // Check orders have shifted accordingly
-    $assert(manager.find(16).getOrder() == 9, 'Node 16 should have order 9');
+    $assert(manager.find(16).getOrder() === 9, 'Node 16 should have order 9');
 
     manager.addNode(17, TestSuite.NODE_SIZE, position);
     manager.addNode(18, TestSuite.NODE_SIZE, position);
@@ -216,42 +215,42 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph1, prediction1a);
     $assert(
       prediction1a.position.y < manager.find(1).getPosition().y &&
-        prediction1a.position.x == manager.find(1).getPosition().x,
+      prediction1a.position.x === manager.find(1).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction1a.order == 0, 'Prediction order should be 0');
+    $assert(prediction1a.order === 0, 'Prediction order should be 0');
 
     console.log('\tAdded as child of node 0 and dropped at (165, -10):');
     const prediction1b = manager.predict(0, null, { x: 165, y: -10 });
     this._plotPrediction(graph1, prediction1b);
     $assert(
       prediction1b.position.y > manager.find(1).getPosition().y &&
-        prediction1b.position.y < manager.find(3).getPosition().y &&
-        prediction1b.position.x == manager.find(1).getPosition().x,
+      prediction1b.position.y < manager.find(3).getPosition().y &&
+      prediction1b.position.x === manager.find(1).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction1b.order == 2, 'Prediction order should be 2');
+    $assert(prediction1b.order === 2, 'Prediction order should be 2');
 
     console.log('\tAdded as child of node 0 and dropped at (145, 15):');
     const prediction1c = manager.predict(0, null, { x: 145, y: 15 });
     this._plotPrediction(graph1, prediction1c);
     $assert(
       prediction1c.position.y > manager.find(3).getPosition().y &&
-        prediction1c.position.y < manager.find(5).getPosition().y &&
-        prediction1c.position.x == manager.find(3).getPosition().x,
+      prediction1c.position.y < manager.find(5).getPosition().y &&
+      prediction1c.position.x === manager.find(3).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction1c.order == 4, 'Prediction order should be 4');
+    $assert(prediction1c.order === 4, 'Prediction order should be 4');
 
     console.log('\tAdded as child of node 0 and dropped at (145, 70):');
     const prediction1d = manager.predict(0, null, { x: 145, y: 70 });
     this._plotPrediction(graph1, prediction1d);
     $assert(
       prediction1d.position.y > manager.find(5).getPosition().y &&
-        prediction1d.position.x == manager.find(5).getPosition().x,
+      prediction1d.position.x === manager.find(5).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction1d.order == 6, 'Prediction order should be 6');
+    $assert(prediction1d.order === 6, 'Prediction order should be 6');
 
     // Graph 2
     const graph2 = manager.plot('testBalancedPredict2', { width: 1000, height: 400 });
@@ -261,31 +260,31 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph2, prediction2a);
     $assert(
       prediction2a.position.y < manager.find(2).getPosition().y &&
-        prediction2a.position.x == manager.find(2).getPosition().x,
+      prediction2a.position.x === manager.find(2).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction2a.order == 1, 'Prediction order should be 1');
+    $assert(prediction2a.order === 1, 'Prediction order should be 1');
 
     console.log('\tAdded as child of node 0 and dropped at (-145, -10):');
     const prediction2b = manager.predict(0, null, { x: -145, y: -10 });
     this._plotPrediction(graph2, prediction2b);
     $assert(
       prediction2b.position.y > manager.find(2).getPosition().y &&
-        prediction2b.position.y < manager.find(4).getPosition().y &&
-        prediction2b.position.x == manager.find(2).getPosition().x,
+      prediction2b.position.y < manager.find(4).getPosition().y &&
+      prediction2b.position.x === manager.find(2).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction2b.order == 3, 'Prediction order should be 3');
+    $assert(prediction2b.order === 3, 'Prediction order should be 3');
 
     console.log('\tAdded as child of node 0 and dropped at (-145, 40):');
     const prediction2c = manager.predict(0, null, { x: -145, y: 400 });
     this._plotPrediction(graph2, prediction2c);
     $assert(
       prediction2c.position.y > manager.find(4).getPosition().y &&
-        prediction2c.position.x == manager.find(4).getPosition().x,
+      prediction2c.position.x === manager.find(4).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction2c.order == 5, 'Prediction order should be 5');
+    $assert(prediction2c.order === 5, 'Prediction order should be 5');
 
     // Graph 3
     console.log('\tPredict nodes added with no position:');
@@ -294,10 +293,10 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph3, prediction3);
     $assert(
       prediction3.position.y > manager.find(4).getPosition().y &&
-        prediction3.position.x == manager.find(4).getPosition().x,
+      prediction3.position.x === manager.find(4).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction3.order == 5, 'Prediction order should be 5');
+    $assert(prediction3.order === 5, 'Prediction order should be 5');
 
     console.log('\tPredict nodes added with no position:');
     manager.addNode(6, TestSuite.NODE_SIZE, prediction3.position);
@@ -308,10 +307,10 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph4, prediction4);
     $assert(
       prediction4.position.y > manager.find(5).getPosition().y &&
-        prediction4.position.x == manager.find(5).getPosition().x,
+      prediction4.position.x === manager.find(5).getPosition().x,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction4.order == 6, 'Prediction order should be 6');
+    $assert(prediction4.order === 6, 'Prediction order should be 6');
 
     console.log('\tPredict nodes added only a root node:');
     manager.removeNode(1).removeNode(2).removeNode(3).removeNode(4).removeNode(5);
@@ -323,16 +322,16 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph5, prediction5b);
     $assert(
       prediction5a.position.x > manager.find(0).getPosition().x &&
-        prediction5a.position.y == manager.find(0).getPosition().y,
+      prediction5a.position.y === manager.find(0).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction5a.order == 0, 'Prediction order should be 0');
+    $assert(prediction5a.order === 0, 'Prediction order should be 0');
     $assert(
-      prediction5a.position.x == prediction5b.position.x &&
-        prediction5a.position.y == prediction5b.position.y,
+      prediction5a.position.x === prediction5b.position.x &&
+      prediction5a.position.y === prediction5b.position.y,
       'Both predictions should be the same',
     );
-    $assert(prediction5a.order == prediction5b.order, 'Both predictions should be the same');
+    $assert(prediction5a.order === prediction5b.order, 'Both predictions should be the same');
 
     console.log('OK!\n\n');
   }
@@ -350,24 +349,24 @@ class BalancedTestSuite extends TestSuite {
     const prediction1a = manager.predict(0, 1, { x: 50, y: 50 });
     this._plotPrediction(graph1, prediction1a);
     $assert(
-      prediction1a.position.x == manager.find(1).getPosition().x &&
-        prediction1a.position.y == manager.find(1).getPosition().y,
+      prediction1a.position.x === manager.find(1).getPosition().x &&
+      prediction1a.position.y === manager.find(1).getPosition().y,
       'Prediction position should be the same as node 1',
     );
     $assert(
-      prediction1a.order == manager.find(1).getOrder(),
+      prediction1a.order === manager.find(1).getOrder(),
       'Prediction order should be the same as node 1',
     );
 
     const prediction1b = manager.predict(0, 1, { x: 50, y: -50 });
     this._plotPrediction(graph1, prediction1b);
     $assert(
-      prediction1b.position.x == manager.find(1).getPosition().x &&
-        prediction1b.position.y == manager.find(1).getPosition().y,
+      prediction1b.position.x === manager.find(1).getPosition().x &&
+      prediction1b.position.y === manager.find(1).getPosition().y,
       'Prediction position should be the same as node 1',
     );
     $assert(
-      prediction1b.order == manager.find(1).getOrder(),
+      prediction1b.order === manager.find(1).getOrder(),
       'Prediction order should be the same as node 1',
     );
 
@@ -375,19 +374,19 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph1, prediction1c);
     $assert(
       prediction1c.position.x < manager.find(0).getPosition().x &&
-        prediction1c.position.y == manager.find(0).getPosition().y,
+      prediction1c.position.y === manager.find(0).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction1c.order == 1, 'Prediction order should be the same as node 1');
+    $assert(prediction1c.order === 1, 'Prediction order should be the same as node 1');
 
     const prediction1d = manager.predict(0, 1, { x: -50, y: -50 });
     this._plotPrediction(graph1, prediction1d);
     $assert(
       prediction1d.position.x < manager.find(0).getPosition().x &&
-        prediction1d.position.y == manager.find(0).getPosition().y,
+      prediction1d.position.y === manager.find(0).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction1d.order == 1, 'Prediction order should be the same as node 1');
+    $assert(prediction1d.order === 1, 'Prediction order should be the same as node 1');
 
     // Graph 2
     manager.disconnectNode(1);
@@ -399,41 +398,41 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph2, prediction2a);
     $assert(
       prediction2a.position.x > manager.find(0).getPosition().x &&
-        prediction2a.position.y == manager.find(0).getPosition().y,
+      prediction2a.position.y === manager.find(0).getPosition().y,
       'Prediction is positioned incorrectly',
     );
-    $assert(prediction2a.order == 0, 'Prediction order should be 0');
+    $assert(prediction2a.order === 0, 'Prediction order should be 0');
 
     const prediction2b = manager.predict(0, 1, { x: 50, y: -50 });
     this._plotPrediction(graph2, prediction2b);
     $assert(
       prediction2b.position.x > manager.find(0).getPosition().x &&
-        prediction2b.position.y == manager.find(0).getPosition().y,
+      prediction2b.position.y === manager.find(0).getPosition().y,
       'Prediction is positioned incorrectly',
     );
-    $assert(prediction2b.order == 0, 'Prediction order should be 0');
+    $assert(prediction2b.order === 0, 'Prediction order should be 0');
 
     const prediction2c = manager.predict(0, 1, { x: -50, y: 50 });
     this._plotPrediction(graph2, prediction2c);
     $assert(
-      prediction2c.position.x == manager.find(1).getPosition().x &&
-        prediction2c.position.y == manager.find(1).getPosition().y,
+      prediction2c.position.x === manager.find(1).getPosition().x &&
+      prediction2c.position.y === manager.find(1).getPosition().y,
       'Prediction position should be the same as node 1',
     );
     $assert(
-      prediction2c.order == manager.find(1).getOrder(),
+      prediction2c.order === manager.find(1).getOrder(),
       'Prediction order should be the same as node 1',
     );
 
     const prediction2d = manager.predict(0, 1, { x: -50, y: -50 });
     this._plotPrediction(graph2, prediction2d);
     $assert(
-      prediction2d.position.x == manager.find(1).getPosition().x &&
-        prediction2d.position.y == manager.find(1).getPosition().y,
+      prediction2d.position.x === manager.find(1).getPosition().x &&
+      prediction2d.position.y === manager.find(1).getPosition().y,
       'Prediction position should be the same as node 1',
     );
     $assert(
-      prediction2d.order == manager.find(1).getOrder(),
+      prediction2d.order === manager.find(1).getOrder(),
       'Prediction order should be the same as node 1',
     );
 
@@ -447,18 +446,18 @@ class BalancedTestSuite extends TestSuite {
     const prediction3a = manager.predict(0, 1, { x: 50, y: 50 });
     this._plotPrediction(graph3, prediction3a);
     $assert(
-      prediction3a.position.x == manager.find(2).getPosition().x &&
-        prediction3a.position.y > manager.find(2).getPosition().y,
+      prediction3a.position.x === manager.find(2).getPosition().x &&
+      prediction3a.position.y > manager.find(2).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction3a.order == 4, 'Prediction order should be 4');
+    $assert(prediction3a.order === 4, 'Prediction order should be 4');
 
     const prediction3b = manager.predict(0, 1, { x: 50, y: -50 });
     this._plotPrediction(graph3, prediction3b);
     $assert(
-      prediction3b.position.x == manager.find(1).getPosition().x &&
-        prediction3b.position.y == manager.find(1).getPosition().y &&
-        prediction3b.order == manager.find(1).getOrder(),
+      prediction3b.position.x === manager.find(1).getPosition().x &&
+      prediction3b.position.y === manager.find(1).getPosition().y &&
+      prediction3b.order === manager.find(1).getOrder(),
       'Prediction should be the exact same as dragged node',
     );
 
@@ -466,29 +465,29 @@ class BalancedTestSuite extends TestSuite {
     this._plotPrediction(graph3, prediction3c);
     $assert(
       prediction3c.position.x < manager.find(0).getPosition().x &&
-        prediction3c.position.y == manager.find(0).getPosition().y,
+      prediction3c.position.y === manager.find(0).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction3c.order == 1, 'Prediction order should be 1');
+    $assert(prediction3c.order === 1, 'Prediction order should be 1');
 
     const prediction3d = manager.predict(0, 1, { x: -50, y: -50 });
     this._plotPrediction(graph3, prediction3d);
     $assert(
       prediction3d.position.x < manager.find(0).getPosition().x &&
-        prediction3d.position.y == manager.find(0).getPosition().y,
+      prediction3d.position.y === manager.find(0).getPosition().y,
       'Prediction is incorrectly positioned',
     );
-    $assert(prediction3d.order == 1, 'Prediction order should be 1');
+    $assert(prediction3d.order === 1, 'Prediction order should be 1');
 
     const prediction3e = manager.predict(0, 1, { x: 50, y: 0 });
     this._plotPrediction(graph3, prediction3e);
     $assert(
-      prediction3e.position.x == manager.find(1).getPosition().x &&
-        prediction3e.position.y == manager.find(1).getPosition().y,
+      prediction3e.position.x === manager.find(1).getPosition().x &&
+      prediction3e.position.y === manager.find(1).getPosition().y,
       'Prediction position should be the same as node 1',
     );
     $assert(
-      prediction3e.order == manager.find(1).getOrder(),
+      prediction3e.order === manager.find(1).getOrder(),
       'Prediction order should be the same as node 1',
     );
 

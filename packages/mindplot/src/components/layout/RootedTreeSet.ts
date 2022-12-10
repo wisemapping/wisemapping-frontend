@@ -94,7 +94,7 @@ class RootedTreeSet {
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
 
-    node._parent._children = node._parent._children.filter((n) => node !== n);
+    node._parent!._children = node._parent!._children.filter((n) => node !== n);
     this._rootNodes.push(node);
     node._parent = null;
   }
@@ -160,7 +160,7 @@ class RootedTreeSet {
   getRootNode(node: Node) {
     $assert(node, 'node cannot be null');
     const parent = this.getParent(node);
-    if ($defined(parent)) {
+    if (parent) {
       return this.getRootNode(parent);
     }
 
@@ -176,7 +176,7 @@ class RootedTreeSet {
     return this._getAncestors(this.getParent(node), []);
   }
 
-  _getAncestors(node: Node, ancestors: Node[]) {
+  private _getAncestors(node: Node | null, ancestors: Node[]) {
     const result = ancestors;
     if (node) {
       result.push(node);
@@ -192,7 +192,7 @@ class RootedTreeSet {
    */
   getSiblings(node: Node): Node[] {
     $assert(node, 'node cannot be null');
-    if (!$defined(node._parent)) {
+    if (!node._parent) {
       return [];
     }
     const siblings = node._parent._children.filter((child) => child !== node);
@@ -241,7 +241,7 @@ class RootedTreeSet {
    * @throws will throw an error if node is null or undefined
    * @return parent
    */
-  getParent(node: Node): Node {
+  getParent(node: Node): Node | null {
     $assert(node, 'node cannot be null');
     return node._parent;
   }
@@ -373,7 +373,7 @@ class RootedTreeSet {
   getSiblingsInVerticalDirection(node: Node, yOffset: number): Node[] {
     // siblings with lower or higher order
     // (depending on the direction of the offset and on the same side as their parent)
-    const parent = this.getParent(node);
+    const parent = this.getParent(node)!;
     const siblings = this.getSiblings(node).filter((sibling) => {
       const sameSide =
         node.getPosition().x > parent.getPosition().x
