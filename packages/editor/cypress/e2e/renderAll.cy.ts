@@ -9,7 +9,7 @@ context('Render all sample maps', () => {
     'icon-sample',
     'img-support',
     'order',
-    'rel-error',
+    //'rel-error',
     'sample1',
     'sample2',
     'sample3',
@@ -24,7 +24,7 @@ context('Render all sample maps', () => {
       cy.reload();
 
       cy.get('svg > path').should('be.visible');
-      cy.get('[aria-label="vortex-loading"]', { timeout: 60000 }).should('not.exist');
+      cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
       cy.matchImageSnapshot(`map-${mapId}`);
     });
   });

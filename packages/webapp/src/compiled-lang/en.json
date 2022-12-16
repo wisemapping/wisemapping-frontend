@@ -377,6 +377,18 @@
       "value": "Email"
     }
   ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Back to login"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "You dont need password, please login using Google"
+    }
+  ],
   "forgot.page-title": [
     {
       "type": 0,
@@ -635,6 +647,12 @@
     {
       "type": 0,
       "value": "Forgot Password ?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Sign in with Google"
     }
   ],
   "login.page-title": [
@@ -901,16 +919,64 @@
       "value": "Publish"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "An error occurred validating your identity with Google, you can try again from the login page"
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "Registation Success | WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Back to login"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "An account with the same email was previously registered. Do you want to link your google account to that WiseMapping account?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Confirm"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Sync account"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Please wait while we validate your identity"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Finishing ..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "Signing up is free and just take a moment"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "or"
     }
   ],
   "registration.email": [
@@ -923,6 +989,12 @@
     {
       "type": 0,
       "value": "First Name"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Sign up with Google"
     }
   ],
   "registration.lastname": [

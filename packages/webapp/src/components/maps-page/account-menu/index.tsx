@@ -71,16 +71,18 @@ const AccountMenu = (): React.ReactElement => {
           <FormattedMessage id="menu.account" defaultMessage="Account" />
         </MenuItem>
 
-        <MenuItem
-          onClick={() => {
-            handleClose(), setAction('change-password');
-          }}
-        >
-          <ListItemIcon>
-            <LockOpenOutlined fontSize="small" />
-          </ListItemIcon>
-          <FormattedMessage id="menu.change-password" defaultMessage="Change password" />
-        </MenuItem>
+        {account?.authenticationType !== 'GOOGLE_OAUTH2' && (
+          <MenuItem
+            onClick={() => {
+              handleClose(), setAction('change-password');
+            }}
+          >
+            <ListItemIcon>
+              <LockOpenOutlined fontSize="small" />
+            </ListItemIcon>
+            <FormattedMessage id="menu.change-password" defaultMessage="Change password" />
+          </MenuItem>
+        )}
 
         <MenuItem onClick={handleClose}>
           <form action="/c/logout" method="POST" id="logoutFrom"></form>

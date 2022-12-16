@@ -383,6 +383,18 @@
       "value": "E-Mail"
     }
   ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Zurück zur Anmeldung"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "Sie benötigen kein Passwort, bitte melden Sie sich mit Google an"
+    }
+  ],
   "forgot.page-title": [
     {
       "type": 0,
@@ -615,6 +627,12 @@
       "value": "Melde dich mit deinem Konto an"
     }
   ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "oder"
+    }
+  ],
   "login.email": [
     {
       "type": 0,
@@ -631,6 +649,12 @@
     {
       "type": 0,
       "value": "Passwort vergessen?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Anmeldung mit Google"
     }
   ],
   "login.hsqldbcofig": [
@@ -903,16 +927,64 @@
       "value": "Veröffentlichen"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Beim Überprüfen Ihrer Identität bei Google ist ein Fehler aufgetreten. Sie können es auf der Anmeldeseite erneut versuchen"
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "Registrierung erfolgreich | WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Zurück zur Anmeldung"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchten Sie Ihr Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Bestätigen"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Konto synchronisieren"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Bitte warten Sie, während wir Ihre Identität überprüfen"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Fertigstellung ..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "Nimm dir einen Moment Zeit. Die Anmeldung ist kostenlos."
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "oder"
     }
   ],
   "registration.email": [
@@ -925,6 +997,12 @@
     {
       "type": 0,
       "value": "Vorname"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Melden Sie sich bei Google an"
     }
   ],
   "registration.lastname": [

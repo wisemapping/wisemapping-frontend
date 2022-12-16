@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-      "jsx": "react",
       "outDir": "./dist/",
       "sourceMap": true,
       "noImplicitAny": false,
@@ -10,7 +9,10 @@
       "target": "es6",
       "allowJs": true,
       "esModuleInterop": true,
-      "declaration": true
+      "declaration": true,
+	  "jsx": "react-jsx",
+	  "jsxImportSource": "@emotion/react"
+
     }
 }
   

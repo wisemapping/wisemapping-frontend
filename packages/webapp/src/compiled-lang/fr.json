@@ -375,6 +375,18 @@
       "value": "E-mail"
     }
   ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Retour connexion"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter en utilisant Google"
+    }
+  ],
   "forgot.page-title": [
     {
       "type": 0,
@@ -607,6 +619,12 @@
       "value": "Connectez-vous à votre compte"
     }
   ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "ou"
+    }
+  ],
   "login.email": [
     {
       "type": 0,
@@ -623,6 +641,12 @@
     {
       "type": 0,
       "value": "Mot de passe oublié ?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Connectez-vous avec Google"
     }
   ],
   "login.hsqldbcofig": [
@@ -895,16 +919,64 @@
       "value": "Publier"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Une erreur s'est produite lors de la validation de votre identité auprès de Google, vous pouvez réessayer depuis la page de connexion"
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "Inscription réussie | WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Retour connexion"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Confirmer"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Compte de synchronisation"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Veuillez patienter pendant que nous validons votre identité"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Finition ..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "L'inscription est gratuite et ne prends qu'un instant"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "ou"
     }
   ],
   "registration.email": [
@@ -917,6 +989,12 @@
     {
       "type": 0,
       "value": "Prénom"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "S'inscrire avec Google"
     }
   ],
   "registration.lastname": [

@@ -58,17 +58,30 @@ export type ErrorInfo = {
   fields?: Map<string, string>;
 };
 
+export type AuthenticationType = 'GOOGLE_OAUTH2' | 'DATABASE' | 'LDAP';
+
 export type AccountInfo = {
   firstname: string;
   lastname: string;
   email: string;
   locale?: Locale;
+  authenticationType: AuthenticationType;
 };
 
 export type Permission = {
   name?: string;
   email: string;
   role: Role;
+};
+
+export type Oauth2CallbackResult = {
+  email: string;
+  googleSync: boolean;
+  syncCode?: string;
+};
+
+export type ForgotPasswordResult = {
+  action: 'EMAIL_SENT' | 'OAUTH2_USER';
 };
 
 interface Client {
@@ -103,7 +116,9 @@ interface Client {
   fetchAccountInfo(): Promise<AccountInfo>;
 
   registerNewUser(user: NewUser): Promise<void>;
-  resetPassword(email: string): Promise<void>;
+  resetPassword(email: string): Promise<ForgotPasswordResult>;
+  processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
+  confirmAccountSync(email: string, code: string): Promise<void>;
 
   fetchHistory(id: number): Promise<ChangeHistory[]>;
   revertHistory(id: number, cid: number): Promise<void>;

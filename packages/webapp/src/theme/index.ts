@@ -51,6 +51,7 @@ const theme = createTheme({
     h4: {
       color: '#ffa800',
       fontWeight: 600,
+      marginBottom: '10px',
     },
     h6: {
       fontSize: '25px',

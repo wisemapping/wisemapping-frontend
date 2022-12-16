@@ -491,5 +491,44 @@
     },
     "dialog.loading": {
       "defaultMessage": "Cargando ..."
-    }
+    },
+	"registration.google.button": {
+		"defaultMessage": "Regístrate con Google"
+	},
+	"login.google.button": {
+		"defaultMessage": "Ingresar con Google"
+	},
+	"registration.division": {
+		"defaultMessage": "ó"
+	},
+	"login.division": {
+		"defaultMessage": "ó"
+	},
+	"registration.callback.confirm.title": {
+	  "defaultMessage": "Confirmación"
+	},
+	"registration.callback.waiting.title": {
+	  "defaultMessage": "Finalizando ..."
+	},
+	"registration.callback.confirm.description": {
+	  "defaultMessage": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de Google con esa cuenta de WiseMapping?"
+	},
+	"registration.callback.waiting.description": {
+	  "defaultMessage": "Por favor espera mientras validamos tu identidad"
+	},
+	"registation.callback.error.message": {
+	  "defaultMessage": "Ocurrió un error al validar tu identidad con Google, puedes volver a intentarlo desde la página de inicio de sesión"
+	},
+	"registration.callback.back": {
+	  "defaultMessage": "Volver"
+	},
+	"registration.callback.sync": {
+	  "defaultMessage": "Sincronizar cuenta"
+	},
+	"forgot.oauth.message": {
+	  "defaultMessage": "No necesitas contraseña, por favor ingresa usando Google"
+	},
+	"forgot.oauth.back": {
+	  "defaultMessage": "Volver"
+	}
 }

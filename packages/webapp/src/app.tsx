@@ -16,6 +16,7 @@ import ReactGA from 'react-ga4';
 import AppConfig from './classes/app-config';
 import withSessionExpirationHandling from './components/HOCs/withSessionExpirationHandling';
 import RegistrationSuccessPage from './components/registration-success-page';
+import RegistrationCallbackPage from './components/registration-callback';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
@@ -70,6 +71,7 @@ const App = (): ReactElement => {
                   <Route path="/" element={<Redirect to="/c/login" />} />
                   <Route path="/c/login" element={<LoginPage />} />
                   <Route path="/c/registration" element={<RegistationPage />} />
+                  <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
                   <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
                   <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
                   <Route

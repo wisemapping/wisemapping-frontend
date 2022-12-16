@@ -188,6 +188,12 @@
   "forgot.email": {
     "defaultMessage": "Email"
   },
+  "forgot.oauth.back": {
+    "defaultMessage": "Back to login"
+  },
+  "forgot.oauth.message": {
+    "defaultMessage": "You dont need password, please login using Google."
+  },
   "forgot.page-title": {
     "defaultMessage": "Forgot Password | WiseMapping"
   },
@@ -305,6 +311,9 @@
   "login.desc": {
     "defaultMessage": "Log into your account"
   },
+  "login.division": {
+    "defaultMessage": "or"
+  },
   "login.email": {
     "defaultMessage": "Email"
   },
@@ -313,6 +322,9 @@
   },
   "login.forgotpwd": {
     "defaultMessage": "Forgot Password ?"
+  },
+  "login.google.button": {
+    "defaultMessage": "Sign in with Google"
   },
   "login.page-title": {
     "defaultMessage": "Login | WiseMapping"
@@ -440,17 +452,44 @@
   "publish.title": {
     "defaultMessage": "Publish"
   },
+  "registation.callback.error.message": {
+    "defaultMessage": "An error occurred validating your identity with Google, you can try again from the login page"
+  },
   "registation.success-title": {
     "defaultMessage": "Registation Success | WiseMapping"
   },
+  "registration.callback.back": {
+    "defaultMessage": "Back to login"
+  },
+  "registration.callback.confirm.description": {
+    "defaultMessage": "An account with the same email was previously registered. Do you want to link your google account to that WiseMapping account?"
+  },
+  "registration.callback.confirm.title": {
+    "defaultMessage": "Confirm"
+  },
+  "registration.callback.sync": {
+    "defaultMessage": "Sync account"
+  },
+  "registration.callback.waiting.description": {
+    "defaultMessage": "Please wait while we validate your identity"
+  },
+  "registration.callback.waiting.title": {
+    "defaultMessage": "Finishing..."
+  },
   "registration.desc": {
     "defaultMessage": "Signing up is free and just take a moment"
+  },
+  "registration.division": {
+    "defaultMessage": "or"
   },
   "registration.email": {
     "defaultMessage": "Email"
   },
   "registration.firstname": {
     "defaultMessage": "First Name"
+  },
+  "registration.google.button": {
+    "defaultMessage": "Sign up with Google"
   },
   "registration.lastname": {
     "defaultMessage": "Last Name"

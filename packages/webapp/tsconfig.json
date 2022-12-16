@@ -5,9 +5,11 @@
       "noImplicitAny": false,
       "module": "es6",
       "target": "es6",
-      "jsx": "react",
       "allowJs": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+	  "jsx": "react-jsx",
+	  "jsxImportSource": "@emotion/react"
+
     },
     "exclude": ["node_modules"]
   }

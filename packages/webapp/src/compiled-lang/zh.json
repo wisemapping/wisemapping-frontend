@@ -371,6 +371,18 @@
       "value": "电子邮件"
     }
   ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "回到登入"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "您不需要密码，请使用谷歌登录"
+    }
+  ],
   "forgot.page-title": [
     {
       "type": 0,
@@ -603,6 +615,12 @@
       "value": "登录您的账号"
     }
   ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "或者"
+    }
+  ],
   "login.email": [
     {
       "type": 0,
@@ -619,6 +637,12 @@
     {
       "type": 0,
       "value": "忘记密码？"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "使用 Google 登錄"
     }
   ],
   "login.hsqldbcofig": [
@@ -891,16 +915,64 @@
       "value": "发布"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "使用 Google 验证您的身份时出错，您可以从登录页面重试"
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "注册成功|WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "回到登入"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "之前注册了一个具有相同电子邮件地址的帐户。你想将你的谷歌账户链接到那个 WiseMapping 账户吗？"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "确认"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "同步账户"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "我们正在验证您的身份，请稍候"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "整理 ..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "注册免费，分分钟就好"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "或者"
     }
   ],
   "registration.email": [
@@ -913,6 +985,12 @@
     {
       "type": 0,
       "value": "名字"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "註冊谷歌"
     }
   ],
   "registration.lastname": [

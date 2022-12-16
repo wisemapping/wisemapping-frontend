@@ -7,6 +7,8 @@ import Client, {
   MapInfo,
   NewUser,
   Permission,
+  Oauth2CallbackResult,
+  ForgotPasswordResult,
 } from '..';
 import { LocaleCode } from '../../app-i18n';
 
@@ -15,6 +17,14 @@ class CacheDecoratorClient implements Client {
 
   constructor(client: Client) {
     this.client = client;
+  }
+
+  processGoogleCallback(code: string): Promise<Oauth2CallbackResult> {
+    return this.client.processGoogleCallback(code);
+  }
+
+  confirmAccountSync(email: string, code: string): Promise<void> {
+    return this.client.confirmAccountSync(email, code);
   }
 
   fetchStarred(id: number): Promise<boolean> {
@@ -117,7 +127,7 @@ class CacheDecoratorClient implements Client {
     return this.client.registerNewUser(user);
   }
 
-  resetPassword(email: string): Promise<void> {
+  resetPassword(email: string): Promise<ForgotPasswordResult> {
     return this.client.resetPassword(email);
   }
 

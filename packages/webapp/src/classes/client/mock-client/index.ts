@@ -24,6 +24,8 @@ import Client, {
   MapInfo,
   NewUser,
   Permission,
+  Oauth2CallbackResult,
+  ForgotPasswordResult,
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 
@@ -204,6 +206,7 @@ class MockClient implements Client {
       lastname: 'Fulanito',
       email: 'test@example.com',
       locale: localeFromStr(locale),
+      authenticationType: 'DATABASE',
     });
   }
 
@@ -402,8 +405,30 @@ class MockClient implements Client {
     return Promise.resolve(this.maps);
   }
 
-  resetPassword(email: string): Promise<void> {
+  resetPassword(email: string): Promise<ForgotPasswordResult> {
     console.log('email:' + email);
+    return Promise.resolve({ action: 'EMAIL_SENT' });
+  }
+
+  processGoogleCallback(): Promise<Oauth2CallbackResult> {
+    // artificial delay for more realistic mock experience
+    const handler = (success: (result: Oauth2CallbackResult) => void) => {
+      setTimeout(() => {
+        success({
+          email: 'test@email.com',
+          // -- use case 1) user must confirm if he wants to link accounts
+          // googleSync: false,
+          // syncCode: "834580239598234650234578"
+          // -- use case 2) user already confirmed
+          googleSync: true,
+          syncCode: undefined,
+        });
+      }, 3000);
+    };
+    return new Promise(handler);
+  }
+
+  confirmAccountSync(): Promise<void> {
     return Promise.resolve();
   }
 }
