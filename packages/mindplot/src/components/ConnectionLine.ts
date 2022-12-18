@@ -18,7 +18,6 @@
 
 import { $assert } from '@wisemapping/core-js';
 import { Point, CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
-import { TopicShape } from './model/INodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
@@ -133,9 +132,9 @@ class ConnectionLine {
     const targetPosition = targetTopic.getPosition();
     const offset = TopicConfig.CONNECTOR_WIDTH / 2;
     const targetTopicSize = targetTopic.getSize();
-    let y;
-    let x;
-    if (targetTopic.getShapeType() === TopicShape.LINE) {
+    let y: number;
+    let x: number;
+    if (targetTopic.getShapeType() === 'line') {
       y = targetTopicSize.height;
     } else {
       y = targetTopicSize.height / 2;

@@ -19,7 +19,6 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import { Point, Group, ElementClass } from '@wisemapping/web2d';
 
 import Topic from './Topic';
-import { TopicShape } from './model/INodeModel';
 import Shape from './util/Shape';
 import NodeModel from './model/NodeModel';
 import Workspace from './Workspace';
@@ -59,7 +58,7 @@ class MainTopic extends Topic {
     group.append(innerShape);
 
     // Add Text ...
-    if (this.getShapeType() !== TopicShape.IMAGE) {
+    if (this.getShapeType() !== 'image') {
       const textShape = this._buildTextShape(true);
       const text = this.getText();
       textShape.setText(text);
@@ -94,7 +93,7 @@ class MainTopic extends Topic {
     if (!$defined(shapeType)) {
       // Change figure ...
       shapeType = this.getShapeType();
-      this._setShapeType(TopicShape.ROUNDED_RECT, false);
+      this._setShapeType('rounded rectangle', false);
     }
     const innerShape = this.getInnerShape();
     innerShape.setVisibility(true);
@@ -124,7 +123,7 @@ class MainTopic extends Topic {
     const size = this.getSize();
 
     let result: Point = { x: 0, y: 0 };
-    if (this.getShapeType() === TopicShape.LINE) {
+    if (this.getShapeType() === 'line') {
       const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();
 

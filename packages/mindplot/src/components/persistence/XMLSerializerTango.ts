@@ -18,7 +18,6 @@
 import { $assert, $defined, createDocument } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
-import { TopicShape } from '../model/INodeModel';
 import { LineType } from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
@@ -98,7 +97,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if ($defined(shape)) {
       parentTopic.setAttribute('shape', shape);
 
-      if (shape === TopicShape.IMAGE) {
+      if (shape === 'image') {
         const size = topic.getImageSize();
         parentTopic.setAttribute('image', `${size.width},${size.height}:${topic.getImageUrl()}`);
       }
@@ -331,7 +330,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
       // Is an image ?
       const image = domElem.getAttribute('image');
-      if (image && shape === TopicShape.IMAGE) {
+      if (image && shape === 'image') {
         const size = image.substring(0, image.indexOf(':'));
         const url = image.substring(image.indexOf(':') + 1, image.length);
         topic.setImageUrl(url);

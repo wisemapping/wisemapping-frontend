@@ -17,7 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { $msg } from './Messages';
-import { TopicShape } from './model/INodeModel';
+import { TopicShapeType } from './model/INodeModel';
 import Topic from './Topic';
 
 type TopicStyleType = {
@@ -31,7 +31,7 @@ type TopicStyleType = {
     color: string;
   };
   msgKey: string;
-  shapeType: string;
+  shapeType: TopicShapeType;
 };
 
 const TopicDefaultStyles = {
@@ -46,7 +46,7 @@ const TopicDefaultStyles = {
       color: '#ffffff',
     },
     msgKey: 'CENTRAL_TOPIC',
-    shapeType: TopicShape.ROUNDED_RECT,
+    shapeType: 'rounded rectangle' as TopicShapeType,
   },
   MAIN_TOPIC: {
     borderColor: 'rgb(2,59,185)',
@@ -59,7 +59,7 @@ const TopicDefaultStyles = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'MAIN_TOPIC',
-    shapeType: TopicShape.LINE,
+    shapeType: 'line' as TopicShapeType,
   },
   SUB_TOPIC: {
     borderColor: 'rgb(2,59,185)',
@@ -72,7 +72,7 @@ const TopicDefaultStyles = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'SUB_TOPIC',
-    shapeType: TopicShape.LINE,
+    shapeType: 'line' as TopicShapeType,
   },
 
   ISOLATED_TOPIC: {
@@ -86,7 +86,7 @@ const TopicDefaultStyles = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'ISOLATED_TOPIC',
-    shapeType: TopicShape.LINE,
+    shapeType: 'line' as TopicShapeType,
   },
 };
 
@@ -133,7 +133,7 @@ class TopicStyle {
     return Math.round(topic.getTextShape().getFontHeight() * 0.5);
   }
 
-  static defaultShapeType(topic) {
+  static defaultShapeType(topic: Topic) {
     return this._getStyles(topic).shapeType;
   }
 }

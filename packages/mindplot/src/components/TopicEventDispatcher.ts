@@ -17,7 +17,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import Events from './Events';
-import { TopicShape } from './model/INodeModel';
 import Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
 
@@ -59,11 +58,7 @@ class TopicEventDispatcher extends Events {
 
     // Open the new editor ...
     const model = topic.getModel();
-    if (
-      model.getShapeType() !== TopicShape.IMAGE &&
-      !this._readOnly &&
-      eventType === TopicEvent.EDIT
-    ) {
+    if (model.getShapeType() !== 'image' && !this._readOnly && eventType === TopicEvent.EDIT) {
       editor.show(topic, options ? options.text : '');
     } else {
       this.fireEvent(eventType, { model, readOnly: this._readOnly });

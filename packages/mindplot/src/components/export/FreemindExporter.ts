@@ -1,6 +1,6 @@
 import xmlFormatter from 'xml-formatter';
 import { Mindmap } from '../..';
-import INodeModel, { TopicShape } from '../model/INodeModel';
+import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import SvgIconModel from '../model/SvgIconModel';
 import FeatureModel from '../model/FeatureModel';
@@ -143,18 +143,18 @@ class FreemindExporter extends Exporter {
       }
     }
 
-    const wiseShape: string = mindmapTopic.getShapeType();
-    if (wiseShape && TopicShape.LINE !== wiseShape) {
+    const wiseShape: TopicShapeType = mindmapTopic.getShapeType();
+    if (wiseShape && wiseShape !== 'line') {
       freemindNode.setBackgorundColor(this.rgbToHex(mindmapTopic.getBackgroundColor()));
     }
 
     if (wiseShape) {
-      const isRootRoundedRectangle = isRoot && TopicShape.ROUNDED_RECT !== wiseShape;
-      const notIsRootLine = !isRoot && TopicShape.LINE !== wiseShape;
+      const isRootRoundedRectangle = isRoot && wiseShape !== 'rounded rectangle';
+      const notIsRootLine = !isRoot && wiseShape !== 'line';
 
       if (isRootRoundedRectangle || notIsRootLine) {
         let style: string = wiseShape;
-        if (TopicShape.ROUNDED_RECT === style || TopicShape.ELLIPSE === style) {
+        if (style === 'rounded rectangle' || style === 'elipse') {
           style = 'bubble';
         }
         freemindNode.setStyle(style);

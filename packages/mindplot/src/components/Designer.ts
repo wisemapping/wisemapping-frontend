@@ -46,7 +46,6 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
 
-import { TopicShape } from './model/INodeModel';
 import { $notify } from './widget/ToolbarNotifier';
 import RelationshipModel from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
@@ -836,7 +835,7 @@ class Designer extends Events {
 
   /** */
   changeBackgroundColor(color: string) {
-    const validateFunc = (topic: Topic) => topic.getShapeType() !== TopicShape.LINE;
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
 
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -846,7 +845,7 @@ class Designer extends Events {
   }
 
   changeBorderColor(color: string) {
-    const validateFunc = (topic: Topic) => topic.getShapeType() !== TopicShape.LINE;
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
@@ -863,7 +862,7 @@ class Designer extends Events {
 
   changeTopicShape(shape: string) {
     const validateFunc = (topic: Topic) =>
-      !(topic.getType() === 'CentralTopic' && shape === TopicShape.LINE);
+      !(topic.getType() === 'CentralTopic' && shape === 'line');
 
     const validateError = 'Central Topic shape can not be changed to line figure.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);

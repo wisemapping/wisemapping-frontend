@@ -17,7 +17,6 @@
  */
 import { Point } from '@wisemapping/web2d';
 import { $assert, $defined } from '@wisemapping/core-js';
-import { TopicShape } from '../model/INodeModel';
 import TopicConfig from '../TopicConfig';
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
@@ -127,7 +126,7 @@ class Shape {
 
     const isAtRight = Shape.isAtRight(sourcePosition, pos);
     const result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
-    if (targetNode.getShapeType() === TopicShape.LINE) {
+    if (targetNode.getShapeType() === 'line') {
       result.y += targetNode.getSize().height / 2;
     }
 

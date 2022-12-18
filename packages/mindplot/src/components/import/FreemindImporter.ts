@@ -3,7 +3,6 @@ import Importer from './Importer';
 import Mindmap from '../model/Mindmap';
 import RelationshipModel from '../model/RelationshipModel';
 import NodeModel from '../model/NodeModel';
-import { TopicShape } from '../model/INodeModel';
 import FreemindConstant from '../export/freemind/FreemindConstant';
 import FreemindMap from '../export/freemind/Map';
 import FreemindNode, { Choise } from '../export/freemind/Node';
@@ -19,6 +18,7 @@ import NoteModel from '../model/NoteModel';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import { TopicShapeType } from '../model/INodeModel';
 
 export default class FreemindImporter extends Importer {
   private mindmap: Mindmap;
@@ -172,7 +172,9 @@ export default class FreemindImporter extends Importer {
 
     if (centralTopic === false) {
       const shape = this.getShapeFromFreeNode(freeNode);
-      if (shape && shape !== 'fork') wiseTopic.setShapeType(shape);
+      if (shape) {
+        wiseTopic.setShapeType(shape);
+      }
     }
 
     // Check for style...
@@ -390,15 +392,16 @@ export default class FreemindImporter extends Importer {
     return result;
   }
 
-  private getShapeFromFreeNode(node: FreemindNode): string {
-    let result: string = node.getStyle();
+  private getShapeFromFreeNode(node: FreemindNode): TopicShapeType {
+    const shape = node.getStyle();
 
-    if (result === 'bubble') {
-      result = TopicShape.ROUNDED_RECT;
+    let result: TopicShapeType;
+    if (shape === 'bubble') {
+      result = 'rounded rectangle';
     } else if (node.getBackgorundColor()) {
-      result = TopicShape.RECTANGLE;
+      result = 'rectangle';
     } else {
-      result = TopicShape.LINE;
+      result = 'line';
     }
     return result;
   }

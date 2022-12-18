@@ -37,6 +37,7 @@ import Command from './Command';
 import FeatureType from './model/FeatureType';
 import PositionType from './PositionType';
 import { PivotType } from './RelationshipControlPoints';
+import { TopicShapeType } from './model/INodeModel';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -215,7 +216,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, commandShapeType: string) => {
       const result = topic.getShapeType();
-      topic.setShapeType(commandShapeType);
+      topic.setShapeType(commandShapeType as TopicShapeType);
       return result;
     };
 

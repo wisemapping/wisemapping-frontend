@@ -23,6 +23,8 @@ import Mindmap from './Mindmap';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
+export type TopicShapeType = 'rectangle' | 'rounded rectangle' | 'elipse' | 'line' | 'image';
+
 // regex taken from https://stackoverflow.com/a/34763398/58128
 const parseJsObject = (str: string) =>
   JSON.parse(str.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": '));
@@ -131,8 +133,8 @@ abstract class INodeModel {
   }
 
   /** */
-  getShapeType(): string {
-    return this.getProperty('shapeType') as string;
+  getShapeType(): TopicShapeType {
+    return this.getProperty('shapeType') as TopicShapeType;
   }
 
   /** */
@@ -357,24 +359,11 @@ abstract class INodeModel {
     return result;
   }
 
-  abstract removeChild(child: INodeModel);
+  abstract removeChild(child: INodeModel): void;
 
   static _nextUUID(): number {
     INodeModel._nextUuid += 1;
     return INodeModel._nextUuid;
   }
 }
-
-const TopicShape = {
-  RECTANGLE: 'rectangle',
-  ROUNDED_RECT: 'rounded rectangle',
-  ELLIPSE: 'elipse',
-  LINE: 'line',
-  IMAGE: 'image',
-};
-
-/**
- * @todo: This method must be implemented. (unascribed)
- */
-export { TopicShape };
 export default INodeModel;

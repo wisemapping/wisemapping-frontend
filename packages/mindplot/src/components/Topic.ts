@@ -30,7 +30,7 @@ import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
-import { TopicShape } from './model/INodeModel';
+import { TopicShapeType } from './model/INodeModel';
 import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
 import Workspace from './Workspace';
@@ -100,7 +100,7 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  setShapeType(type: string): void {
+  setShapeType(type: TopicShapeType): void {
     this._setShapeType(type, true);
   }
 
@@ -108,14 +108,14 @@ abstract class Topic extends NodeGraph {
     return this._parent;
   }
 
-  protected _setShapeType(type: string, updateModel: boolean) {
+  protected _setShapeType(type: TopicShapeType, updateModel: boolean) {
     // Remove inner shape figure ...
     const model = this.getModel();
     if ($defined(updateModel) && updateModel) {
       model.setShapeType(type);
     }
     // If shape is line, reset background color to default.
-    if (type === TopicShape.LINE) {
+    if (type === 'line') {
       const color = TopicStyle.defaultBackgroundColor(this);
       this.setBackgroundColor(color);
     }
@@ -152,10 +152,10 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  getShapeType(): string {
+  getShapeType(): TopicShapeType {
     const model = this.getModel();
     let result = model.getShapeType();
-    if (!$defined(result)) {
+    if (!result) {
       result = TopicStyle.defaultShapeType(this);
     }
     return result;
@@ -192,14 +192,14 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  _buildShape(attributes, shapeType: string) {
+  _buildShape(attributes, shapeType: TopicShapeType): ElementClass {
     $assert(attributes, 'attributes can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
     let result;
-    if (shapeType === TopicShape.RECTANGLE) {
+    if (shapeType === 'rectangle') {
       result = new Rect(0, attributes);
-    } else if (shapeType === TopicShape.IMAGE) {
+    } else if (shapeType === 'image') {
       const model = this.getModel();
       const url = model.getImageUrl();
       const size = model.getImageSize();
@@ -215,11 +215,11 @@ abstract class Topic extends NodeGraph {
       result.setPosition = function setPosition() {
         // Ignore ...
       };
-    } else if (shapeType === TopicShape.ELLIPSE) {
+    } else if (shapeType === 'elipse') {
       result = new Rect(0.9, attributes);
-    } else if (shapeType === TopicShape.ROUNDED_RECT) {
+    } else if (shapeType === 'rounded rectangle') {
       result = new Rect(0.3, attributes);
-    } else if (shapeType === TopicShape.LINE) {
+    } else if (shapeType === 'line') {
       result = new Line({
         strokeColor: '#495879',
         strokeWidth: 1,
@@ -273,7 +273,7 @@ abstract class Topic extends NodeGraph {
 
   getOuterShape(): ElementClass {
     if (!$defined(this._outerShape)) {
-      const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
+      const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, 'rounded rectangle');
       rect.setPosition(-2, -3);
       rect.setOpacity(0);
       this._outerShape = rect;
@@ -957,7 +957,7 @@ abstract class Topic extends NodeGraph {
 
     // Hide text shape ...
     const textShape = this.getTextShape();
-    textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false, fade);
+    textShape.setVisibility(this.getShapeType() !== 'image' ? value : false, fade);
   }
 
   /** */
@@ -1223,7 +1223,7 @@ abstract class Topic extends NodeGraph {
   adjustShapes(): void {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
-      if (this.getShapeType() !== TopicShape.IMAGE) {
+      if (this.getShapeType() !== 'image') {
         // Calculate topic size and adjust elements ...
         const textWidth = textShape.getWidth();
         const textHeight = textShape.getHeight();
