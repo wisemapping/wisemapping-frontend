@@ -51,17 +51,10 @@ class ConnectionLine {
     this._targetTopic = targetNode;
     this._sourceTopic = sourceNode;
 
-    let line: Line;
     const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
-    if (targetNode.getType() === 'CentralTopic') {
-      line = this._createLine(LineType.CURVED);
-      line.setSrcControlPoint(ctrlPoints[0]);
-      line.setDestControlPoint(ctrlPoints[1]);
-    } else {
-      line = this._createLine(LineType.SIMPLE_CURVED);
-      line.setSrcControlPoint(ctrlPoints[0]);
-      line.setDestControlPoint(ctrlPoints[1]);
-    }
+    const line = this._createLine(LineType.SIMPLE_CURVED);
+    line.setSrcControlPoint(ctrlPoints[0]);
+    line.setDestControlPoint(ctrlPoints[1]);
     // Set line styles ...
     const strokeColor = ConnectionLine.getStrokeColor();
     line.setStroke(1, 'solid', strokeColor, 1);

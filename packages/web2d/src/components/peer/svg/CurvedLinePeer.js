@@ -149,24 +149,21 @@ class CurvedLinePeer extends ElementPeer {
     if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
       this._calculateAutoControlPoints(avoidControlPointFix);
 
-      const path = `M${this._x1.toFixed(2)},${this._y1.toFixed()} C${(
-        this._control1.x + this._x1
-      ).toFixed(2)},${this._control1.y + this._y1} ${(this._control2.x + this._x2).toFixed()},${(
-        this._control2.y + this._y2
-      ).toFixed(2)} ${this._x2.toFixed(2)},${this._y2.toFixed()}${this._lineStyle
-        ? ` ${(this._control2.x + this._x2).toFixed()},${(
-          this._control2.y +
-          this._y2 +
-          3
-        ).toFixed(2)} ${(this._control1.x + this._x1).toFixed()},${(
-          this._control1.y +
-          this._y1 +
-          5
-        ).toFixed(2)} ${this._x1.toFixed(2)},${(this._y1 + 7).toFixed(2)} Z`
-        : ''
-        }`;
+      const moveTo = CurvedLinePeer._pointToStr(this._x1, this._y1);
+      const curveP1 = CurvedLinePeer._pointToStr(this._control1.x + this._x1, this._control1.y + this._y1);
+      const curveP2 = CurvedLinePeer._pointToStr(this._control2.x + this._x2, this._control2.y + this._y2);
+      const curveP3 = CurvedLinePeer._pointToStr(this._x2, this._y2);
+      const curveP4 = CurvedLinePeer._pointToStr(this._control2.x + this._x2, this._control2.y + this._y2 + 3);
+      const curveP5 = CurvedLinePeer._pointToStr(this._control1.x + this._x1, this._control1.y + this._y1 + 5);
+      const curveP6 = CurvedLinePeer._pointToStr(this._x1, this._y1 + 7);
+
+      const path = `M${moveTo} C${curveP1} ${curveP2} ${curveP3} ${this._lineStyle ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''}`;
       this._native.setAttribute('d', path);
     }
+  }
+
+  static _pointToStr(x, y) {
+    return `${(x).toFixed(3)},${(y).toFixed(3)} `;
   }
 
   _updateStyle() {
