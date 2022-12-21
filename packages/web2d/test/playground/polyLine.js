@@ -1,64 +1,78 @@
 import $ from 'jquery';
-import { Workspace, PolyLine } from '../../src';
+import { Workspace, PolyLine, Elipse } from '../../src';
 
 global.$ = $;
+const drawLine = (type) => {
+    const workspace = new Workspace();
+    workspace.setSize('300px', '300px');
+    workspace.setCoordSize(300, 300);
+    workspace.setCoordOrigin(-150, -150);
 
-let overflowWorkspace = new Workspace({ fillColor: 'green' });
-overflowWorkspace.setSize('100px', '100px');
+    // Add referene point ...
+    const e1 = new Elipse();
+    e1.setSize(10, 10);
+    e1.setPosition(0, 0);
+    workspace.append(e1);
 
-const line = new PolyLine();
-line.setTo(165, 165);
-line.setFrom(95, 95);
-line.setStyle('Straight');
-line.setStroke('10');
-overflowWorkspace.append(line);
+    const e2 = new Elipse();
+    e2.setPosition(-100, -100);
+    e2.setSize(10, 10);
+    workspace.append(e2);
 
-overflowWorkspace.addItAsChildTo($('#overflowExample'));
+    const e3 = new Elipse();
+    e3.setPosition(100, 100);
+    e3.setSize(10, 10);
+    workspace.append(e3);
 
-overflowWorkspace = new Workspace();
-overflowWorkspace.setSize('100px', '100px');
-let line1 = new PolyLine();
-line1.setFrom(95, 95);
-line1.setTo(165, 165);
-line1.setStyle('Curved');
-overflowWorkspace.append(line1);
+    const e4 = new Elipse();
+    e4.setPosition(-100, 100);
+    e4.setSize(10, 10);
+    workspace.append(e4);
 
-line1 = new PolyLine();
-line1.setFrom(95, 95);
-line1.setTo(165, 135);
-line1.setStyle('Curved');
-overflowWorkspace.append(line1);
+    const e5 = new Elipse();
+    e5.setPosition(100, -100);
+    e5.setSize(10, 10);
+    workspace.append(e5);
 
-line1 = new PolyLine();
-line1.setFrom(95, 90);
-line1.setTo(160, 20);
-line1.setStyle('Straight');
-overflowWorkspace.append(line1);
+    // Line 1 ...
+    const line1 = new PolyLine();
+    line1.setFrom(0, 0);
+    line1.setTo(100, 100);
+    line1.setStyle(type);
+    line1.setStroke('1');
+    workspace.append(line1);
 
-line1 = new PolyLine();
-line1.setFrom(95, 90);
-line1.setTo(160, 50);
-line1.setStyle('Straight');
-overflowWorkspace.append(line1);
+    const line2 = new PolyLine();
+    line2.setFrom(0, 0);
+    line2.setTo(-100, -100);
+    line2.setStyle(type);
+    line2.setStroke('1');
+    workspace.append(line2);
 
-line1 = new PolyLine();
-line1.setFrom(90, 90);
-line1.setTo(20, 20);
-overflowWorkspace.append(line1);
+    const line3 = new PolyLine();
+    line3.setFrom(0, 0);
+    line3.setTo(100, -100);
+    line3.setStyle(type);
+    line3.setStroke('1');
+    workspace.append(line3);
 
-line1 = new PolyLine();
-line1.setFrom(90, 90);
-line1.setTo(20, 50);
-overflowWorkspace.append(line1);
+    const line4 = new PolyLine();
+    line4.setFrom(0, 0);
+    line4.setTo(-100, 100);
+    line4.setStyle(type);
+    line2.setStroke('1');
+    workspace.append(line4);
 
-line1 = new PolyLine();
-line1.setFrom(90, 95);
-line1.setTo(20, 165);
-overflowWorkspace.append(line1);
+    return workspace;
+};
+const w1 = drawLine('Straight');
+w1.addItAsChildTo($('#straightSample'));
 
-line1 = new PolyLine();
-line1.setFrom(90, 95);
-line1.setTo(20, 135);
-overflowWorkspace.append(line1);
+const w2 = drawLine('MiddleStraight');
+w2.addItAsChildTo($('#middleStraightSample'));
 
-overflowWorkspace.addItAsChildTo($('#multipleLineExample'));
+const w3 = drawLine('MiddleCurved');
+w3.addItAsChildTo($('#middleCurvedSample'));
+
+const w4 = drawLine('Curved');
+w4.addItAsChildTo($('#curvedSample'));

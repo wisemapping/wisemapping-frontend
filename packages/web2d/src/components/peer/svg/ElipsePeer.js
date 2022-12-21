@@ -24,6 +24,7 @@ class ElipsePeer extends ElementPeer {
     super(svgElement);
     this.attachChangeEventListener('strokeStyle', ElementPeer.prototype.updateStrokeStyle);
     this._position = { x: 0, y: 0 };
+    this._size = { width: 5, height: 5 };
   }
 
   setSize(width, height) {
@@ -35,23 +36,16 @@ class ElipsePeer extends ElementPeer {
     if ($defined(height)) {
       this._native.setAttribute('ry', height / 2);
     }
-
-    const pos = this.getPosition();
-    this.setPosition(pos.x, pos.y);
   }
 
   setPosition(pcx, pcy) {
-    const size = this.getSize();
-
-    const cx = size.width / 2 + pcx;
-    const cy = size.height / 2 + pcy;
-
-    if ($defined(cx)) {
-      this._native.setAttribute('cx', cx);
+    this._position = { x: pcx, y: pcy };
+    if ($defined(pcx)) {
+      this._native.setAttribute('cx', pcx);
     }
 
-    if ($defined(cy)) {
-      this._native.setAttribute('cy', cy);
+    if ($defined(pcy)) {
+      this._native.setAttribute('cy', pcy);
     }
   }
 

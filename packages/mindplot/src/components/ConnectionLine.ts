@@ -17,7 +17,7 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import { Point, CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
+import { CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
@@ -42,7 +42,7 @@ class ConnectionLine {
 
   protected _model: RelationshipModel;
 
-  constructor(sourceNode: Topic, targetNode: Topic) {
+  constructor(sourceNode: Topic, targetNode: Topic, type: LineType = LineType.SIMPLE_CURVED) {
     $assert(targetNode, 'parentNode node can not be null');
     $assert(sourceNode, 'childNode node can not be null');
     $assert(sourceNode !== targetNode, 'Circular connection');
@@ -50,15 +50,16 @@ class ConnectionLine {
     this._targetTopic = targetNode;
     this._sourceTopic = sourceNode;
 
-    const ctrlPoints = this._getCtrlPoints(sourceNode, targetNode);
-    const line = this._createLine(LineType.SIMPLE_CURVED);
-    line.setSrcControlPoint(ctrlPoints[0]);
-    line.setDestControlPoint(ctrlPoints[1]);
-    // Set line styles ...
+    const line = this._createLine(type);
     const strokeColor = ConnectionLine.getStrokeColor();
-    line.setStroke(1, 'solid', strokeColor, 1);
-    line.setFill(strokeColor, 1);
+    if (type === LineType.SIMPLE_CURVED) {
+      line.setStroke(1, 'solid', strokeColor, 1);
+      line.setFill(strokeColor, 1);
+    } else {
+      line.setStroke(2, 'solid', strokeColor, 1);
+    }
 
+    // Set line styles ...
     this._line2d = line;
   }
 
@@ -66,7 +67,10 @@ class ConnectionLine {
     const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
     const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
     const deltaX = (srcPos.x - destPos.x) / 3;
-    return [new Point(deltaX, 0), new Point(-deltaX, 0)];
+    return [
+      { x: deltaX, y: 0 },
+      { x: -deltaX, y: 0 },
+    ];
   }
 
   protected _createLine(lineType: LineType): Line {

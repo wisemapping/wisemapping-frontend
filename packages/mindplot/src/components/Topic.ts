@@ -1034,7 +1034,7 @@ abstract class Topic extends NodeGraph {
 
   disconnect(workspace: Workspace): void {
     const outgoingLine = this.getOutgoingLine();
-    if ($defined(outgoingLine)) {
+    if (outgoingLine) {
       $assert(workspace, 'workspace can not be null');
 
       this._outgoingLine = null;
@@ -1069,7 +1069,7 @@ abstract class Topic extends NodeGraph {
       // Hide connection line?.
       if (targetTopic.getChildren().length === 0) {
         const connector = targetTopic.getShrinkConnector();
-        if ($defined(connector)) {
+        if (connector) {
           connector.setVisibility(false);
           targetTopic.isCollapsed(false);
         }
@@ -1146,13 +1146,13 @@ abstract class Topic extends NodeGraph {
 
   abstract updateTopicShape(targetTopic: Topic);
 
-  append(child: Topic) {
+  append(child: Topic): void {
     const children = this.getChildren();
     children.push(child);
   }
 
   /** */
-  removeChild(child: Topic) {
+  removeChild(child: Topic): void {
     const children = this.getChildren();
     this._children = children.filter((c) => c !== child);
   }
@@ -1167,7 +1167,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  removeFromWorkspace(workspace: Workspace) {
+  removeFromWorkspace(workspace: Workspace): void {
     const elem2d = this.get2DElement();
     workspace.removeChild(elem2d);
     const line = this.getOutgoingLine();
@@ -1178,7 +1178,7 @@ abstract class Topic extends NodeGraph {
     EventBus.instance.fireEvent('topicRemoved', this.getModel());
   }
 
-  addToWorkspace(workspace: Workspace) {
+  addToWorkspace(workspace: Workspace): void {
     const elem = this.get2DElement();
     workspace.append(elem);
     if (!this.isInWorkspace()) {

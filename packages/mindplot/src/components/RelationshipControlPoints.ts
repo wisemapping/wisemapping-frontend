@@ -146,8 +146,8 @@ class ControlPivotLine {
       this._line.setTo(startPosition.x + ctrPosition.x - 5, startPosition.y + ctrPosition.y - 5);
 
       this._dot.setPosition(
-        startPosition.x + ctrPosition.x - 8,
-        startPosition.y + ctrPosition.y - 8,
+        startPosition.x + ctrPosition.x - 5,
+        startPosition.y + ctrPosition.y - 5,
       );
     }
   }
@@ -167,7 +167,7 @@ class ControlPivotLine {
     this._moveRelHandler(ctlPoint);
 
     // Update pivot ...
-    this._dot.setPosition(mousePosition.x - 8, mousePosition.y - 8);
+    this._dot.setPosition(mousePosition.x - 5, mousePosition.y - 5);
 
     // Update line ...
     this._line.setTo(mousePosition.x - 5, mousePosition.y - 5);

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Elipse } from '@wisemapping/web2d';
+import { Elipse, Group } from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
@@ -94,12 +94,12 @@ class ShirinkConnector {
     this._ellipse.setAttribute(name, value);
   }
 
-  addToWorkspace(group): void {
+  addToWorkspace(group: Group): void {
     group.append(this._ellipse);
   }
 
   setPosition(x: number, y: number): void {
-    this._ellipse.setPosition(x, y);
+    this._ellipse.setPosition(x + 3, y + 3);
   }
 
   moveToBack(): void {
