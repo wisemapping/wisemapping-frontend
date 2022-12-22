@@ -131,6 +131,30 @@
       "value": "Thema hinzufügen"
     }
   ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Verbindungsstil"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved": [
+    {
+      "type": 0,
+      "value": "Kurve"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polylinie"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Gekrümmte Polylinie"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,

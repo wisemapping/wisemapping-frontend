@@ -548,10 +548,17 @@ abstract class Topic extends NodeGraph {
   }
 
   setConnectionStyle(type: LineType): void {
-    this.getModel().setConnectionStyle(type);
+    const model = this.getModel();
+    model.setConnectionStyle(type);
 
     // Needs to change change all the lines types. Outgoing are part of the children.
     this.getChildren().map((topic: Topic) => topic.redraw());
+
+    // If chidren nodes does not children, set the connection style too. We don't want to have cascade changes on all the branches.
+    model
+      .getChildren()
+      .filter((c) => c.getChildren().length === 0)
+      .forEach((c) => c.setConnectionStyle(type));
   }
 
   private _setBackgroundColor(color: string, updateModel: boolean) {
@@ -1157,7 +1164,6 @@ abstract class Topic extends NodeGraph {
 
   private createConnectionLine(targetTopic: Topic): ConnectionLine {
     const type: LineType = targetTopic.getConnectionStyle();
-    console.log(`redraw ...: ${type}`);
     return new ConnectionLine(this, targetTopic, type);
   }
 

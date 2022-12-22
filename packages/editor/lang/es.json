@@ -214,5 +214,17 @@
     },
     "icon-picker.show-images": {
         "defaultMessage": "Mostrar imagenes"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Estilo de Connexión"
+    },
+    "editor-panel.tooltip-connection-style-curved": {
+        "defaultMessage": "Curva"
+    },
+    "editor-panel.tooltip-connection-style-polyline": {
+        "defaultMessage": "Polilinea"
+    },
+    "editor-panel.tooltip-connection-style-polyline-curved": {
+        "defaultMessage": "Polilinea Curva"
     }
 }

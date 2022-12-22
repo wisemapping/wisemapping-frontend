@@ -62,6 +62,18 @@
   "editor-panel.tooltip-add-topic": {
     "defaultMessage": "Add Topic"
   },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "Connection Style"
+  },
+  "editor-panel.tooltip-connection-style-curved": {
+    "defaultMessage": "Curved"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "Polyline"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "Curved Polyline"
+  },
   "editor-panel.tooltip-delete-topic": {
     "defaultMessage": "Delete Topic"
   },

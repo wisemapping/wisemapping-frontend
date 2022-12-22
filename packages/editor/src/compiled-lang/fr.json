@@ -125,6 +125,30 @@
       "value": "Agregar Topico"
     }
   ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Style de connexion"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved": [
+    {
+      "type": 0,
+      "value": "Courbe"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polyligne"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Polyligne courbe"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,

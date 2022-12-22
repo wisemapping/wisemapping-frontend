@@ -660,7 +660,7 @@ class Designer extends Events {
 
     this._workspace.append(result);
     children.forEach((child) => {
-      if ($defined(child)) {
+      if (child) {
         this.nodeModelToTopic(child);
       }
     });
@@ -690,10 +690,6 @@ class Designer extends Events {
     return result;
   }
 
-  /**
-   * @param {mindplot.model.RelationshipModel} model
-   * @return {mindplot.Relationship} the relationship added to the mindmap
-   */
   addRelationship(model: RelationshipModel): Relationship {
     const mindmap = this.getMindmap();
     mindmap.addRelationship(model);
@@ -881,7 +877,7 @@ class Designer extends Events {
   changeConnectionStyle(type: LineType): void {
     const validateFunc = (topic: Topic) => !topic.isCentralTopic();
 
-    const validateError = 'Central Topic can not be changed to line figure.';
+    const validateError = 'Central topic connection style can not be changed for central topic.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeConnectionStyleToTopic(topicsIds, type);

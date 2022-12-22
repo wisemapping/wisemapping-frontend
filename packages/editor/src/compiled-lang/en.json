@@ -125,6 +125,30 @@
       "value": "Add Topic"
     }
   ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Connection Style"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved": [
+    {
+      "type": 0,
+      "value": "Curved"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polyline"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Curved Polyline"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,

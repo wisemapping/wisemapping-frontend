@@ -159,6 +159,15 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
+        icon: <GestureOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-curved',
+          defaultMessage: 'Curved',
+        }),
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.SIMPLE_CURVED),
+        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.SIMPLE_CURVED,
+      },
+      {
         icon: <PolylineOutlined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-style-polyline',
@@ -172,20 +181,11 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         icon: <TimelineOutined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-style-polyline-curved',
-          defaultMessage: 'Polyline Curved',
+          defaultMessage: 'Curved Polyline',
         }),
         onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.POLYLINE_CURVED),
         selected: () =>
           valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
-      },
-      {
-        icon: <GestureOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-curved',
-          defaultMessage: 'Curved',
-        }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.SIMPLE_CURVED),
-        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.SIMPLE_CURVED,
       },
     ],
     disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,

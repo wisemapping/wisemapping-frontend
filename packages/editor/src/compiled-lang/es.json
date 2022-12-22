@@ -125,6 +125,30 @@
       "value": "Agregar tópico"
     }
   ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Estilo de Connexión"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved": [
+    {
+      "type": 0,
+      "value": "Curva"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polilinea"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Polilinea Curva"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,
