@@ -32,10 +32,10 @@ import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlin
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import ShapeLineOutlined from '@mui/icons-material/ShapeLineOutlined';
 import PolylineOutlined from '@mui/icons-material/PolylineOutlined';
 import GestureOutlined from '@mui/icons-material/GestureOutlined';
 import TimelineOutined from '@mui/icons-material/TimelineOutlined';
+import ShareOutlined from '@mui/icons-material/ShareOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -152,7 +152,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   };
 
   const connectionStyleConfiguration: ActionConfig = {
-    icon: <ShapeLineOutlined />,
+    icon: <ShareOutlined />,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-connection-style',
       defaultMessage: 'Connection Style',
