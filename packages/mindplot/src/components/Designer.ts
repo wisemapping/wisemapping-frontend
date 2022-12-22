@@ -56,6 +56,8 @@ import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
 import FeatureType from './model/FeatureType';
 import WidgetManager from './WidgetManager';
+import { TopicShapeType } from './model/INodeModel';
+import { LineType } from './ConnectionLine';
 
 class Designer extends Events {
   private _mindmap: Mindmap;
@@ -480,6 +482,11 @@ class Designer extends Events {
     if (backgroundColor) {
       targetModel.setBackgroundColor(backgroundColor);
     }
+
+    const connectType = sourceModel.getConnectionStyle();
+    if ($defined(connectType)) {
+      targetModel.setConnectionStyle(connectType!);
+    }
   }
 
   private _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
@@ -860,7 +867,7 @@ class Designer extends Events {
     }
   }
 
-  changeTopicShape(shape: string) {
+  changeTopicShape(shape: TopicShapeType): void {
     const validateFunc = (topic: Topic) =>
       !(topic.getType() === 'CentralTopic' && shape === 'line');
 
@@ -868,6 +875,16 @@ class Designer extends Events {
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeShapeTypeToTopic(topicsIds, shape);
+    }
+  }
+
+  changeConnectionStyle(type: LineType): void {
+    const validateFunc = (topic: Topic) => !topic.isCentralTopic();
+
+    const validateError = 'Central Topic can not be changed to line figure.';
+    const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
+    if (topicsIds.length > 0) {
+      this._actionDispatcher.changeConnectionStyleToTopic(topicsIds, type);
     }
   }
 

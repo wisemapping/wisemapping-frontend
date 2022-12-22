@@ -32,6 +32,10 @@ import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlin
 import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import ShapeLineOutlined from '@mui/icons-material/ShapeLineOutlined';
+import PolylineOutlined from '@mui/icons-material/PolylineOutlined';
+import GestureOutlined from '@mui/icons-material/GestureOutlined';
+import TimelineOutined from '@mui/icons-material/TimelineOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -45,6 +49,7 @@ import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
+import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 
 const keyTooltip = (msg: string, key: string): string => {
   const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -52,7 +57,7 @@ const keyTooltip = (msg: string, key: string): string => {
 };
 
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
-  const toolbarValueModelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+  const valueBulder = new NodePropertyValueModelBuilder(model.getDesigner());
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <BrushOutlinedIcon />,
@@ -67,8 +72,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-rectangle',
           defaultMessage: 'Rectangle shape',
         }),
-        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rectangle'),
-        selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rectangle',
+        onClick: () => valueBulder.getTopicShapeModel().setValue('rectangle'),
+        selected: () => valueBulder.getTopicShapeModel().getValue() === 'rectangle',
       },
       {
         icon: <CheckBoxOutlineBlankOutlinedIcon />,
@@ -76,9 +81,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-rounded',
           defaultMessage: 'Rounded shape',
         }),
-        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('rounded rectangle'),
-        selected: () =>
-          toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'rounded rectangle',
+        onClick: () => valueBulder.getTopicShapeModel().setValue('rounded rectangle'),
+        selected: () => valueBulder.getTopicShapeModel().getValue() === 'rounded rectangle',
       },
       {
         icon: <HorizontalRuleOutlinedIcon />,
@@ -86,8 +90,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-line',
           defaultMessage: 'Line shape',
         }),
-        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('line'),
-        selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'line',
+        onClick: () => valueBulder.getTopicShapeModel().setValue('line'),
+        selected: () => valueBulder.getTopicShapeModel().getValue() === 'line',
       },
       {
         icon: <CircleOutlinedIcon />,
@@ -95,14 +99,14 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-ellipse',
           defaultMessage: 'Ellipse shape',
         }),
-        onClick: () => toolbarValueModelBuilder.getTopicShapeModel().setValue('elipse'),
-        selected: () => toolbarValueModelBuilder.getTopicShapeModel().getValue() === 'elipse',
+        onClick: () => valueBulder.getTopicShapeModel().setValue('elipse'),
+        selected: () => valueBulder.getTopicShapeModel().getValue() === 'elipse',
       },
       null,
       {
         icon: () => (
           <Palette
-            htmlColor={toolbarValueModelBuilder.getSelectedTopicColorModel().getValue() as string}
+            htmlColor={valueBulder.getSelectedTopicColorModel().getValue() as string}
           ></Palette>
         ),
         tooltip: intl.formatMessage({
@@ -115,7 +119,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               return (
                 <ColorPicker
                   closeModal={closeModal}
-                  colorModel={toolbarValueModelBuilder.getSelectedTopicColorModel()}
+                  colorModel={valueBulder.getSelectedTopicColorModel()}
                 ></ColorPicker>
               );
             },
@@ -124,9 +128,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       {
         icon: () => (
-          <SquareOutlined
-            htmlColor={toolbarValueModelBuilder.getColorBorderModel().getValue() as string}
-          ></SquareOutlined>
+          <SquareOutlined htmlColor={valueBulder.getColorBorderModel().getValue() as string} />
         ),
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-border-color',
@@ -138,12 +140,52 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               return (
                 <ColorPicker
                   closeModal={closeModal}
-                  colorModel={toolbarValueModelBuilder.getColorBorderModel()}
+                  colorModel={valueBulder.getColorBorderModel()}
                 ></ColorPicker>
               );
             },
           },
         ],
+      },
+    ],
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+  };
+
+  const connectionStyleConfiguration: ActionConfig = {
+    icon: <ShapeLineOutlined />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-connection-style',
+      defaultMessage: 'Connection Style',
+    }),
+    options: [
+      {
+        icon: <PolylineOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-polyline',
+          defaultMessage: 'Polyline',
+        }),
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.POLYLINE_MIDDLE),
+        selected: () =>
+          valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_MIDDLE,
+      },
+      {
+        icon: <TimelineOutined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-polyline-curved',
+          defaultMessage: 'Polyline Curved',
+        }),
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.POLYLINE_CURVED),
+        selected: () =>
+          valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
+      },
+      {
+        icon: <GestureOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-curved',
+          defaultMessage: 'Curved',
+        }),
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.SIMPLE_CURVED),
+        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.SIMPLE_CURVED,
       },
     ],
     disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
@@ -160,9 +202,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        render: () => (
-          <FontFamilySelector fontFamilyModel={toolbarValueModelBuilder.getFontFamilyModel()} />
-        ),
+        render: () => <FontFamilySelector fontFamilyModel={valueBulder.getFontFamilyModel()} />,
       },
       null,
       {
@@ -171,8 +211,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-bigger',
           defaultMessage: 'Bigger',
         }),
-        onClick: () =>
-          toolbarValueModelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.up),
+        onClick: () => valueBulder.getFontSizeModel().switchValue(SwitchValueDirection.up),
       },
       {
         icon: <TextDecreaseOutlinedIcon></TextDecreaseOutlinedIcon>,
@@ -180,8 +219,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-smaller',
           defaultMessage: 'Smaller',
         }),
-        onClick: () =>
-          toolbarValueModelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.down),
+        onClick: () => valueBulder.getFontSizeModel().switchValue(SwitchValueDirection.down),
       },
       null,
       {
@@ -193,8 +231,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           }),
           'B',
         ),
-        onClick: toolbarValueModelBuilder.fontWeigthModel().switchValue,
-        selected: () => toolbarValueModelBuilder.fontWeigthModel().getValue() === 'bold',
+        onClick: valueBulder.fontWeigthModel().switchValue,
+        selected: () => valueBulder.fontWeigthModel().getValue() === 'bold',
       },
       {
         icon: <FormatItalicIcon />,
@@ -205,13 +243,11 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           }),
           'I',
         ),
-        onClick: toolbarValueModelBuilder.getFontStyleModel().switchValue,
-        selected: () => toolbarValueModelBuilder.getFontStyleModel().getValue() === 'italic',
+        onClick: valueBulder.getFontStyleModel().switchValue,
+        selected: () => valueBulder.getFontStyleModel().getValue() === 'italic',
       },
       {
-        icon: () => (
-          <Palette htmlColor={toolbarValueModelBuilder.getFontColorModel().getValue() as string} />
-        ),
+        icon: () => <Palette htmlColor={valueBulder.getFontColorModel().getValue() as string} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-color',
           defaultMessage: 'Color',
@@ -222,7 +258,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               return (
                 <ColorPicker
                   closeModal={closeModal}
-                  colorModel={toolbarValueModelBuilder.getFontColorModel()}
+                  colorModel={valueBulder.getFontColorModel()}
                 ></ColorPicker>
               );
             },
@@ -261,10 +297,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     options: [
       {
         render: (closeModal) => (
-          <TopicLink
-            closeModal={closeModal}
-            urlModel={toolbarValueModelBuilder.getLinkModel()}
-          ></TopicLink>
+          <TopicLink closeModal={closeModal} urlModel={valueBulder.getLinkModel()}></TopicLink>
         ),
       },
     ],
@@ -285,10 +318,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       {
         tooltip: 'Node note',
         render: (closeModal) => (
-          <TopicNote
-            closeModal={closeModal}
-            noteModel={toolbarValueModelBuilder.getNoteModel()}
-          ></TopicNote>
+          <TopicNote closeModal={closeModal} noteModel={valueBulder.getNoteModel()}></TopicNote>
         ),
       },
     ],
@@ -312,10 +342,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Add Icon',
         }),
         render: (closeModal) => (
-          <IconPicker
-            triggerClose={closeModal}
-            iconModel={toolbarValueModelBuilder.getTopicIconModel()}
-          />
+          <IconPicker triggerClose={closeModal} iconModel={valueBulder.getTopicIconModel()} />
         ),
       },
     ],
@@ -350,6 +377,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     editIconConfiguration,
     editNoteConfiguration,
     editLinkUrlConfiguration,
+    connectionStyleConfiguration,
     addRelationConfiguration,
   ];
 }

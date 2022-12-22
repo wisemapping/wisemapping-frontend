@@ -99,7 +99,7 @@ class PolyLinePeer extends ElementPeer {
       if (y2 < y1) {
         signy = -1;
       }
-      const path = `${x1}, ${y1} ${middlex - 10 * signx}, ${y1} ${middlex}, ${y1 + 10 * signy
+      const path = `${x1}, ${y1} ${(middlex - 10 * signx).toFixed(0)}, ${y1} ${(middlex).toFixed(0)}, ${y1 + 10 * signy
         } ${middlex}, ${y2 - 10 * signy} ${middlex + 10 * signx}, ${y2} ${x2}, ${y2}`;
       this._native.setAttribute('points', path);
     }
@@ -112,7 +112,7 @@ class PolyLinePeer extends ElementPeer {
     const y2 = this._y2;
     if ($defined(x1) && $defined(x2) && $defined(y1) && $defined(y2)) {
       const diff = x2 - x1;
-      const middlex = diff / 2 + x1;
+      const middlex = (diff * 0.75 + x1).toFixed(0);
       const path = `${x1}, ${y1} ${middlex}, ${y1} ${middlex}, ${y1} ${middlex}, ${y2} ${middlex}, ${y2} ${x2}, ${y2}`;
       this._native.setAttribute('points', path);
     }

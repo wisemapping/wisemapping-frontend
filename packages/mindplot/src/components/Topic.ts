@@ -23,7 +23,7 @@ import NodeGraph from './NodeGraph';
 import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
 import TopicFeatureFactory from './TopicFeature';
-import ConnectionLine from './ConnectionLine';
+import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
 import EventBus from './layout/EventBus';
 import ShirinkConnector from './ShrinkConnector';
@@ -64,7 +64,7 @@ abstract class Topic extends NodeGraph {
 
   private _connector: ShirinkConnector;
 
-  private _outgoingLine: Line;
+  private _outgoingLine: ConnectionLine | null;
 
   constructor(model: NodeModel, options) {
     super(model, options);
@@ -140,7 +140,7 @@ abstract class Topic extends NodeGraph {
 
       // Move iconGroup to front ...
       const iconGroup = this.getIconGroup();
-      if ($defined(iconGroup)) {
+      if (iconGroup) {
         iconGroup.moveToFront();
       }
 
@@ -157,6 +157,15 @@ abstract class Topic extends NodeGraph {
     let result = model.getShapeType();
     if (!result) {
       result = TopicStyle.defaultShapeType(this);
+    }
+    return result;
+  }
+
+  getConnectionStyle(): LineType {
+    const model = this.getModel();
+    let result = model.getConnectionStyle();
+    if (!result) {
+      result = TopicStyle.defaultConnectionType(this);
     }
     return result;
   }
@@ -192,7 +201,7 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  _buildShape(attributes, shapeType: TopicShapeType): ElementClass {
+  protected _buildShape(attributes, shapeType: TopicShapeType): ElementClass {
     $assert(attributes, 'attributes can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
@@ -346,7 +355,7 @@ abstract class Topic extends NodeGraph {
       featureModel.getType() === TopicFeatureFactory.EmojiIcon.id;
     iconGroup.addIcon(result, isIcon && !this.isReadOnly());
 
-    this.adjustShapes();
+    this.redraw();
     return result;
   }
 
@@ -368,7 +377,7 @@ abstract class Topic extends NodeGraph {
     if ($defined(iconGroup)) {
       iconGroup.removeIconByModel(featureModel);
     }
-    this.adjustShapes();
+    this.redraw();
   }
 
   addRelationship(relationship: Relationship) {
@@ -414,7 +423,7 @@ abstract class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontFamily(value);
     }
-    this.adjustShapes();
+    this.redraw();
   }
 
   setFontSize(value: number, updateModel?: boolean) {
@@ -425,7 +434,7 @@ abstract class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontSize(value);
     }
-    this.adjustShapes();
+    this.redraw();
   }
 
   setFontStyle(value: string, updateModel?: boolean) {
@@ -435,7 +444,7 @@ abstract class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontStyle(value);
     }
-    this.adjustShapes();
+    this.redraw();
   }
 
   setFontWeight(value: string, updateModel?: boolean) {
@@ -445,7 +454,7 @@ abstract class Topic extends NodeGraph {
       const model = this.getModel();
       model.setFontWeight(value);
     }
-    this.adjustShapes();
+    this.redraw();
   }
 
   getFontWeight() {
@@ -525,7 +534,7 @@ abstract class Topic extends NodeGraph {
       this._setText(text, true);
     }
 
-    this.adjustShapes();
+    this.redraw();
   }
 
   getText(): string {
@@ -536,6 +545,13 @@ abstract class Topic extends NodeGraph {
 
   setBackgroundColor(color: string): void {
     this._setBackgroundColor(color, true);
+  }
+
+  setConnectionStyle(type: LineType): void {
+    this.getModel().setConnectionStyle(type);
+
+    // Needs to change change all the lines types. Outgoing are part of the children.
+    this.getChildren().map((topic: Topic) => topic.redraw());
   }
 
   private _setBackgroundColor(color: string, updateModel: boolean) {
@@ -857,7 +873,7 @@ abstract class Topic extends NodeGraph {
   private _updateConnectionLines(): void {
     // Update this to parent line ...
     const outgoingLine = this.getOutgoingLine();
-    if ($defined(outgoingLine)) {
+    if (outgoingLine) {
       outgoingLine.redraw();
     }
 
@@ -880,13 +896,13 @@ abstract class Topic extends NodeGraph {
   }
 
   setVisibility(value: boolean, fade = 0): void {
-    this._setTopicVisibility(value, fade);
+    this.setTopicVisibility(value, fade);
 
     // Hide all children...
     this._setChildrenVisibility(value, fade);
 
     // If there there are connection to the node, topic must be hidden.
-    this._setRelationshipLinesVisibility(value, fade);
+    this.setRelationshipLinesVisibility(value, fade);
 
     // If it's connected, the connection must be rendered.
     const outgoingLine = this.getOutgoingLine();
@@ -895,8 +911,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  moveToBack(): void {
+  protected moveToBack(): void {
     // Update relationship lines
     this._relationships.forEach((r) => r.moveToBack());
 
@@ -908,8 +923,7 @@ abstract class Topic extends NodeGraph {
     this.get2DElement().moveToBack();
   }
 
-  /** */
-  moveToFront(): void {
+  protected moveToFront(): void {
     this.get2DElement().moveToFront();
     const connector = this.getShrinkConnector();
     if (connector) {
@@ -919,13 +933,12 @@ abstract class Topic extends NodeGraph {
     this._relationships.forEach((r) => r.moveToFront());
   }
 
-  /** */
   isVisible(): boolean {
     const elem = this.get2DElement();
     return elem.isVisible();
   }
 
-  private _setRelationshipLinesVisibility(value: boolean, fade = 0): void {
+  private setRelationshipLinesVisibility(value: boolean, fade = 0): void {
     this._relationships.forEach((relationship) => {
       const sourceTopic = relationship.getSourceTopic();
       const targetTopic = relationship.getTargetTopic();
@@ -941,7 +954,7 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  private _setTopicVisibility(value: boolean, fade = 0) {
+  private setTopicVisibility(value: boolean, fade = 0) {
     const elem = this.get2DElement();
     elem.setVisibility(value, fade);
 
@@ -960,7 +973,6 @@ abstract class Topic extends NodeGraph {
     textShape.setVisibility(this.getShapeType() !== 'image' ? value : false, fade);
   }
 
-  /** */
   setOpacity(opacity: number): void {
     const elem = this.get2DElement();
     elem.setOpacity(opacity);
@@ -1088,7 +1100,6 @@ abstract class Topic extends NodeGraph {
     model.setOrder(value);
   }
 
-  /** */
   connectTo(targetTopic: Topic, workspace: Workspace) {
     $assert(!this._outgoingLine, 'Could not connect an already connected node');
     $assert(targetTopic !== this, 'Circular connection are not allowed');
@@ -1105,7 +1116,7 @@ abstract class Topic extends NodeGraph {
     childModel.connectTo(targetModel);
 
     // Create a connection line ...
-    const outgoingLine = new ConnectionLine(this, targetTopic);
+    const outgoingLine = this.createConnectionLine(targetTopic);
     outgoingLine.setVisibility(false);
 
     this._outgoingLine = outgoingLine;
@@ -1144,7 +1155,13 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  abstract updateTopicShape(targetTopic: Topic);
+  private createConnectionLine(targetTopic: Topic): ConnectionLine {
+    const type: LineType = targetTopic.getConnectionStyle();
+    console.log(`redraw ...: ${type}`);
+    return new ConnectionLine(this, targetTopic, type);
+  }
+
+  abstract updateTopicShape(targetTopic: Topic): void;
 
   append(child: Topic): void {
     const children = this.getChildren();
@@ -1195,7 +1212,7 @@ abstract class Topic extends NodeGraph {
       }
     }
     this._isInWorkspace = true;
-    this.adjustShapes();
+    this.redraw();
   }
 
   /** */
@@ -1220,7 +1237,29 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  adjustShapes(): void {
+  private redrawConnection(): boolean {
+    let result = false;
+    if (this._isInWorkspace) {
+      // Adjust connection line if there is a change in the parent...
+      const connStyleChanged =
+        this._outgoingLine?.getLineType() !== this.getParent()?.getConnectionStyle();
+      if (this._outgoingLine && connStyleChanged) {
+        // Todo: Review static reference  ...
+        const workspace = designer.getWorkSpace();
+        this._outgoingLine.removeFromWorkspace(workspace);
+
+        const targetTopic = this.getOutgoingConnectedTopic()!;
+        this._outgoingLine = this.createConnectionLine(targetTopic);
+        this._outgoingLine.setVisibility(this.isVisible());
+        workspace.append(this._outgoingLine);
+
+        result = true;
+      }
+    }
+    return result;
+  }
+
+  redraw(): void {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
       if (this.getShapeType() !== 'image') {
@@ -1241,13 +1280,9 @@ abstract class Topic extends NodeGraph {
         const iconGroupWith = iconGroup.getSize().width;
         const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
-        this.setSize(
-          {
-            width: topicWith,
-            height: topicHeight,
-          },
-          false,
-        );
+        // Update connections ...
+        const changed = this.redrawConnection();
+        this.setSize({ width: topicWith, height: topicHeight }, changed);
 
         // Adjust all topic elements positions ...
         const yPosition = Math.round((topicHeight - textHeight) / 2);

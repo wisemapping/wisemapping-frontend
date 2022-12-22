@@ -17,6 +17,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { LineType } from '../ConnectionLine';
 import PositionType from '../PositionType';
 import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
@@ -132,12 +133,10 @@ abstract class INodeModel {
     mindmap.disconnect(this);
   }
 
-  /** */
   getShapeType(): TopicShapeType {
     return this.getProperty('shapeType') as TopicShapeType;
   }
 
-  /** */
   setShapeType(type: string) {
     this.putProperty('shapeType', type);
   }
@@ -162,7 +161,6 @@ abstract class INodeModel {
     return this.getProperty('fontFamily') as string;
   }
 
-  /** */
   setFontStyle(fontStyle: string) {
     this.putProperty('fontStyle', fontStyle);
   }
@@ -179,7 +177,7 @@ abstract class INodeModel {
     return this.getProperty('fontWeight');
   }
 
-  setFontColor(color: string) {
+  setFontColor(color: string): void {
     this.putProperty('fontColor', color);
   }
 
@@ -187,7 +185,7 @@ abstract class INodeModel {
     return this.getProperty('fontColor') as string;
   }
 
-  setFontSize(size: number) {
+  setFontSize(size: number): void {
     this.putProperty('fontSize', size);
   }
 
@@ -219,8 +217,16 @@ abstract class INodeModel {
   /**
    * @return {Boolean} true if the children nodes are hidden by the shrink option
    */
-  setChildrenShrunken(value: boolean) {
+  setChildrenShrunken(value: boolean): void {
     this.putProperty('shrunken', value);
+  }
+
+  setConnectionStyle(type: LineType): void {
+    this.putProperty('connectionStyle', type);
+  }
+
+  getConnectionStyle(): LineType | null {
+    return this.getProperty('connectionStyle') as LineType;
   }
 
   isNodeModel(): boolean {
@@ -234,7 +240,7 @@ abstract class INodeModel {
     return this.getParent() != null;
   }
 
-  abstract append(node): void;
+  abstract append(node: INodeModel): void;
 
   /**
    * lets the mindmap handle the connect node operation

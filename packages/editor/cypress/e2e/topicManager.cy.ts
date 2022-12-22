@@ -1,6 +1,9 @@
 context('Node manager', () => {
   before(() => {
     cy.visit('/editor.html');
+
+    // Wait for load complate ...
+    cy.get('[aria-label="vortex-loading"]').should('not.exist');
   });
 
   it('shortcut add sibling node', () => {

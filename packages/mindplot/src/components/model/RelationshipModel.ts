@@ -28,7 +28,7 @@ class RelationshipModel {
 
   private _targetTopicId: number;
 
-  private _lineType: number;
+  private _lineType: LineType;
 
   private _srcCtrlPoint: Point;
 
@@ -67,11 +67,11 @@ class RelationshipModel {
     return this._id;
   }
 
-  getLineType(): number {
+  getLineType(): LineType {
     return this._lineType;
   }
 
-  setLineType(lineType: number) {
+  setLineType(lineType: LineType) {
     this._lineType = lineType;
   }
 

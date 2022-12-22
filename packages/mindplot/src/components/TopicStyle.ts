@@ -16,20 +16,23 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { LineType } from './ConnectionLine';
 import { $msg } from './Messages';
 import { TopicShapeType } from './model/INodeModel';
 import Topic from './Topic';
 
+type FontStlye = {
+  font: string;
+  size: number;
+  style: string;
+  weight: string;
+  color: string;
+};
 type TopicStyleType = {
   borderColor: string;
   backgroundColor: string;
-  fontStyle: {
-    font: string;
-    size: number;
-    style: string;
-    weight: string;
-    color: string;
-  };
+  connectionStyle: LineType;
+  fontStyle: FontStlye;
   msgKey: string;
   shapeType: TopicShapeType;
 };
@@ -45,6 +48,7 @@ const TopicDefaultStyles = {
       weight: 'bold',
       color: '#ffffff',
     },
+    connectionStyle: LineType.SIMPLE_CURVED,
     msgKey: 'CENTRAL_TOPIC',
     shapeType: 'rounded rectangle' as TopicShapeType,
   },
@@ -58,6 +62,7 @@ const TopicDefaultStyles = {
       weight: 'normal',
       color: 'rgb(82,92,97)',
     },
+    connectionStyle: LineType.SIMPLE_CURVED,
     msgKey: 'MAIN_TOPIC',
     shapeType: 'line' as TopicShapeType,
   },
@@ -71,6 +76,7 @@ const TopicDefaultStyles = {
       weight: 'normal',
       color: 'rgb(82,92,97)',
     },
+    connectionStyle: LineType.SIMPLE_CURVED,
     msgKey: 'SUB_TOPIC',
     shapeType: 'line' as TopicShapeType,
   },
@@ -86,6 +92,7 @@ const TopicDefaultStyles = {
       color: 'rgb(82,92,97)',
     },
     msgKey: 'ISOLATED_TOPIC',
+    connectionStyle: LineType.SIMPLE_CURVED,
     shapeType: 'line' as TopicShapeType,
   },
 };
@@ -112,29 +119,33 @@ class TopicStyle {
     return result;
   }
 
-  static defaultText(topic: Topic) {
+  static defaultText(topic: Topic): string {
     const { msgKey } = this._getStyles(topic);
     return $msg(msgKey);
   }
 
-  static defaultFontStyle(topic: Topic) {
+  static defaultFontStyle(topic: Topic): FontStlye {
     return this._getStyles(topic).fontStyle;
   }
 
-  static defaultBackgroundColor(topic: Topic) {
+  static defaultBackgroundColor(topic: Topic): string {
     return this._getStyles(topic).backgroundColor;
   }
 
-  static defaultBorderColor(topic: Topic) {
+  static defaultBorderColor(topic: Topic): string {
     return this._getStyles(topic).borderColor;
   }
 
-  static getInnerPadding(topic: Topic) {
+  static getInnerPadding(topic: Topic): number {
     return Math.round(topic.getTextShape().getFontHeight() * 0.5);
   }
 
-  static defaultShapeType(topic: Topic) {
+  static defaultShapeType(topic: Topic): TopicShapeType {
     return this._getStyles(topic).shapeType;
+  }
+
+  static defaultConnectionType(topic: Topic): LineType {
+    return this._getStyles(topic).connectionStyle;
   }
 }
 

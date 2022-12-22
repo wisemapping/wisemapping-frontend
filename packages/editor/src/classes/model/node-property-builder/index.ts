@@ -7,20 +7,23 @@ import {
   fontSizes,
   getNextValue,
 } from '../../../components/toolbar/ToolbarValueModelBuilder';
+import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
+import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
 
 class NodePropertyBuilder {
   designer: Designer;
 
-  fontSizeModel: NodeProperty<number>;
-  selectedTopicColorModel: NodeProperty<string>;
-  fontFamilyModel: NodeProperty<string>;
-  fontStyleModel: NodeProperty<string>;
-  borderColorModel: NodeProperty<string>;
-  fontColorModel: NodeProperty<string>;
-  topicShapeModel: NodeProperty<string>;
-  topicIconModel: NodeProperty<string>;
-  noteModel: NodeProperty<string>;
-  linkModel: NodeProperty<string>;
+  private fontSizeModel: NodeProperty<number>;
+  private selectedTopicColorModel: NodeProperty<string>;
+  private fontFamilyModel: NodeProperty<string>;
+  private fontStyleModel: NodeProperty<string>;
+  private borderColorModel: NodeProperty<string>;
+  private fontColorModel: NodeProperty<string>;
+  private topicShapeModel: NodeProperty<TopicShapeType>;
+  private topicIconModel: NodeProperty<string>;
+  private connetionStyleModel: NodeProperty<LineType>;
+  private noteModel: NodeProperty<string>;
+  private linkModel: NodeProperty<string>;
 
   constructor(designer: Designer) {
     this.designer = designer;
@@ -34,7 +37,9 @@ class NodePropertyBuilder {
     return this.designer.getModel().selectedTopic()?.getFontSize();
   }
 
-  private uniqueOrNull(propertyGetter: (Topic: Topic) => string | number | null) {
+  private uniqueOrNull(
+    propertyGetter: (Topic: Topic) => string | number | null | LineType,
+  ): string {
     const nodes = this.designer.getModel().filterSelectedTopics();
     return getTheUniqueValueOrNull(nodes, propertyGetter);
   }
@@ -190,15 +195,20 @@ class NodePropertyBuilder {
     return this.fontStyleModel;
   }
 
-  /**
-   *
-   * @returns model to get and set topic shape
-   */
-  getTopicShapeModel(): NodeProperty<string> {
+  getConnectionStyleModel(): NodeProperty<LineType> {
+    if (!this.connetionStyleModel)
+      this.connetionStyleModel = {
+        getValue: () => this.selectedTopic()?.getConnectionStyle(),
+        setValue: (value: LineType) => this.designer.changeConnectionStyle(value),
+      };
+    return this.connetionStyleModel;
+  }
+
+  getTopicShapeModel(): NodeProperty<TopicShapeType> {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
-        getValue: () => this.uniqueOrNull((node) => node.getShapeType()),
-        setValue: (value: string) => this.designer.changeTopicShape(value),
+        getValue: () => this.uniqueOrNull((node) => node.getShapeType()) as TopicShapeType,
+        setValue: (value: TopicShapeType) => this.designer.changeTopicShape(value),
       };
     return this.topicShapeModel;
   }

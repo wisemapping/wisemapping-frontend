@@ -38,6 +38,7 @@ import FeatureType from './model/FeatureType';
 import PositionType from './PositionType';
 import { PivotType } from './RelationshipControlPoints';
 import { TopicShapeType } from './model/INodeModel';
+import { LineType } from './ConnectionLine';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -136,7 +137,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontFamily();
       topic.setFontFamily(commandFontFamily, true);
 
-      topic.adjustShapes();
+      topic.redraw();
       return result;
     };
 
@@ -201,7 +202,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontSize();
       topic.setFontSize(commandSize, true);
 
-      topic.adjustShapes();
+      topic.redraw();
       return result;
     };
 
@@ -209,14 +210,13 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
-  changeShapeTypeToTopic(topicsIds: number[], shapeType: string) {
+  changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
     $assert(topicsIds, 'topicsIds can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
-    const commandFunc = (topic: Topic, commandShapeType: string) => {
+    const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
       const result = topic.getShapeType();
-      topic.setShapeType(commandShapeType as TopicShapeType);
+      topic.setShapeType(commandShapeType);
       return result;
     };
 
@@ -224,7 +224,17 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
+  changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType) {
+    const commandFunc = (topic: Topic, commandShapeType: LineType) => {
+      const result = topic.getConnectionStyle();
+      topic.setConnectionStyle(commandShapeType);
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, lineType);
+    this.execute(command);
+  }
+
   changeFontWeightToTopic(topicsIds: number[]) {
     $assert(topicsIds, 'topicsIds can not be null');
 
@@ -232,8 +242,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontWeight();
       const weight = result === 'bold' ? 'normal' : 'bold';
       topic.setFontWeight(weight, true);
-
-      topic.adjustShapes();
+      topic.redraw();
       return result;
     };
 

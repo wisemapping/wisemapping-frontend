@@ -18,13 +18,13 @@
 import { $assert, $defined, createDocument } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
-import { LineType } from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
 import emojiToIconMap from './iconToEmoji.json';
+import { LineType } from '../ConnectionLine';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -152,6 +152,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       parentTopic.setAttribute('brColor', brColor);
     }
 
+    const connectionStyle = topic.getConnectionStyle();
+    if ($defined(connectionStyle)) {
+      parentTopic.setAttribute('connStyle', `${connectionStyle}`);
+    }
+
     const metadata = topic.getMetadata();
     if ($defined(metadata)) {
       parentTopic.setAttribute('metadata', metadata);
@@ -206,18 +211,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const lineType = relationship.getLineType();
     result.setAttribute('lineType', lineType.toString());
-    if (lineType === LineType.CURVED || lineType === LineType.SIMPLE_CURVED) {
-      if ($defined(relationship.getSrcCtrlPoint())) {
-        const srcPoint = relationship.getSrcCtrlPoint();
-        result.setAttribute('srcCtrlPoint', `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`);
-      }
-      if ($defined(relationship.getDestCtrlPoint())) {
-        const destPoint = relationship.getDestCtrlPoint();
-        result.setAttribute(
-          'destCtrlPoint',
-          `${Math.round(destPoint.x)},${Math.round(destPoint.y)}`,
-        );
-      }
+    if ($defined(relationship.getSrcCtrlPoint())) {
+      const srcPoint = relationship.getSrcCtrlPoint();
+      result.setAttribute('srcCtrlPoint', `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`);
+    }
+    if ($defined(relationship.getDestCtrlPoint())) {
+      const destPoint = relationship.getDestCtrlPoint();
+      result.setAttribute('destCtrlPoint', `${Math.round(destPoint.x)},${Math.round(destPoint.y)}`);
     }
     result.setAttribute('endArrow', String(relationship.getEndArrow()));
     result.setAttribute('startArrow', String(relationship.getStartArrow()));
@@ -343,6 +343,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const bgColor = domElem.getAttribute('bgColor');
     if (bgColor) {
       topic.setBackgroundColor(bgColor);
+    }
+
+    const connStyle = domElem.getAttribute('connStyle');
+    if ($defined(connStyle) && connStyle) {
+      const lineType = Number.parseInt(connStyle, 10) as LineType;
+      topic.setConnectionStyle(lineType);
     }
 
     const borderColor = domElem.getAttribute('brColor');

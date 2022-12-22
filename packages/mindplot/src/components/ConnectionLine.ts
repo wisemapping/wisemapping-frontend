@@ -25,10 +25,9 @@ import Workspace from './Workspace';
 
 // eslint-disable-next-line no-shadow
 export enum LineType {
-  SIMPLE,
-  POLYLINE,
-  CURVED,
   SIMPLE_CURVED,
+  POLYLINE_MIDDLE,
+  POLYLINE_CURVED,
 }
 
 class ConnectionLine {
@@ -52,11 +51,18 @@ class ConnectionLine {
 
     const line = this._createLine(type);
     const strokeColor = ConnectionLine.getStrokeColor();
-    if (type === LineType.SIMPLE_CURVED) {
-      line.setStroke(1, 'solid', strokeColor, 1);
-      line.setFill(strokeColor, 1);
-    } else {
-      line.setStroke(2, 'solid', strokeColor, 1);
+
+    switch (type) {
+      case LineType.POLYLINE_MIDDLE:
+      case LineType.POLYLINE_CURVED:
+        line.setStroke(1, 'solid', strokeColor, 1);
+        break;
+      case LineType.SIMPLE_CURVED:
+        line.setStroke(1, 'solid', strokeColor, 1);
+        line.setFill(strokeColor, 2);
+        break;
+      default:
+        line.setStroke(2, 'solid', strokeColor, 1);
     }
 
     // Set line styles ...
@@ -77,18 +83,17 @@ class ConnectionLine {
     this._lineType = lineType;
     let line: ConnectionLine;
     switch (lineType) {
-      case LineType.POLYLINE:
+      case LineType.POLYLINE_MIDDLE:
         line = new PolyLine();
+        (line as PolyLine).setStyle('MiddleStraight');
         break;
-      case LineType.CURVED:
-        line = new CurvedLine();
+      case LineType.POLYLINE_CURVED:
+        line = new PolyLine();
+        (line as PolyLine).setStyle('Curved');
         break;
       case LineType.SIMPLE_CURVED:
         line = new CurvedLine();
         (line as CurvedLine).setStyle(CurvedLine.SIMPLE_LINE);
-        break;
-      case LineType.SIMPLE:
-        line = new Line();
         break;
       default:
         throw new Error(`Unexpected line type. ${lineType}`);
