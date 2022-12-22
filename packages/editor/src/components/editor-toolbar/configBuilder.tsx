@@ -167,6 +167,15 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.SIMPLE_CURVED),
         selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.SIMPLE_CURVED,
       },
+      // {
+      //   icon: <GestureOutlined />,
+      //   tooltip: intl.formatMessage({
+      //     id: 'editor-panel.tooltip-connection-style-curved-nice',
+      //     defaultMessage: 'Curved',
+      //   }),
+      //   onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.NICE_CURVED),
+      //   selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.NICE_CURVED,
+      // },
       {
         icon: <PolylineOutlined />,
         tooltip: intl.formatMessage({
@@ -188,7 +197,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => {
+      const selected = model.getDesignerModel().filterSelectedTopics();
+      return selected.length === 0 || (selected.length === 1 && selected[0].isCentralTopic());
+    },
   };
 
   /**

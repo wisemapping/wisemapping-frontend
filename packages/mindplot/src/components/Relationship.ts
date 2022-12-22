@@ -44,12 +44,14 @@ class Relationship extends ConnectionLine {
 
   private _showStartArrow: Arrow;
 
+  private _model: RelationshipModel;
+
   constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
     $assert(sourceNode, 'sourceNode can not be null');
     $assert(targetNode, 'targetNode can not be null');
 
     super(sourceNode, targetNode);
-    this.setModel(model);
+    this._model = model;
 
     const strokeColor = Relationship.getStrokeColor();
 
@@ -113,6 +115,10 @@ class Relationship extends ConnectionLine {
   setStroke(color: string, style: string, opacity: number): void {
     super.setStroke(color, style, opacity);
     this._startArrow.setStrokeColor(color);
+  }
+
+  getModel(): RelationshipModel {
+    return this._model;
   }
 
   private updatePositions() {

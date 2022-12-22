@@ -18,7 +18,6 @@
 
 import { $assert } from '@wisemapping/core-js';
 import { CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
-import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import Workspace from './Workspace';
@@ -28,6 +27,7 @@ export enum LineType {
   SIMPLE_CURVED,
   POLYLINE_MIDDLE,
   POLYLINE_CURVED,
+  NICE_CURVED,
 }
 
 class ConnectionLine {
@@ -39,7 +39,7 @@ class ConnectionLine {
 
   protected _line2d: Line;
 
-  protected _model: RelationshipModel;
+  private _type: LineType;
 
   constructor(sourceNode: Topic, targetNode: Topic, type: LineType = LineType.SIMPLE_CURVED) {
     $assert(targetNode, 'parentNode node can not be null');
@@ -48,22 +48,9 @@ class ConnectionLine {
 
     this._targetTopic = targetNode;
     this._sourceTopic = sourceNode;
+    this._type = type;
 
     const line = this._createLine(type);
-    const strokeColor = ConnectionLine.getStrokeColor();
-
-    switch (type) {
-      case LineType.POLYLINE_MIDDLE:
-      case LineType.POLYLINE_CURVED:
-        line.setStroke(1, 'solid', strokeColor, 1);
-        break;
-      case LineType.SIMPLE_CURVED:
-        line.setStroke(1, 'solid', strokeColor, 1);
-        line.setFill(strokeColor, 2);
-        break;
-      default:
-        line.setStroke(2, 'solid', strokeColor, 1);
-    }
 
     // Set line styles ...
     this._line2d = line;
@@ -79,25 +66,37 @@ class ConnectionLine {
     ];
   }
 
-  protected _createLine(lineType: LineType): Line {
+  protected _createLine(lineType: LineType): ConnectionLine {
     this._lineType = lineType;
     let line: ConnectionLine;
+    const strokeColor = ConnectionLine.getStrokeColor();
     switch (lineType) {
       case LineType.POLYLINE_MIDDLE:
         line = new PolyLine();
         (line as PolyLine).setStyle('MiddleStraight');
+        (line as PolyLine).setStroke(1, 'solid', strokeColor, 1);
         break;
       case LineType.POLYLINE_CURVED:
         line = new PolyLine();
         (line as PolyLine).setStyle('Curved');
+        (line as PolyLine).setStroke(1, 'solid', strokeColor, 1);
         break;
       case LineType.SIMPLE_CURVED:
         line = new CurvedLine();
         (line as CurvedLine).setStyle(CurvedLine.SIMPLE_LINE);
+        (line as CurvedLine).setStroke(1, 'solid', strokeColor, 1);
+        (line as CurvedLine).setFill(strokeColor, 1);
+        break;
+      case LineType.NICE_CURVED:
+        line = new CurvedLine();
+        (line as CurvedLine).setStyle(CurvedLine.NICE_LINE);
+        (line as CurvedLine).setStroke(1, 'solid', strokeColor, 1);
+        (line as CurvedLine).setFill(strokeColor, 1);
         break;
       default:
         throw new Error(`Unexpected line type. ${lineType}`);
     }
+
     return line;
   }
 
@@ -127,7 +126,7 @@ class ConnectionLine {
     line2d.setFrom(tPos.x, tPos.y);
     line2d.setTo(sPos.x, sPos.y);
 
-    if (line2d.getType() === 'CurvedLine') {
+    if (this._type === LineType.NICE_CURVED || this._type === LineType.SIMPLE_CURVED) {
       const ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
       line2d.setSrcControlPoint(ctrlPoints[0]);
       line2d.setDestControlPoint(ctrlPoints[1]);
@@ -191,20 +190,8 @@ class ConnectionLine {
     return this._line2d;
   }
 
-  getModel(): RelationshipModel {
-    return this._model;
-  }
-
-  setModel(model: RelationshipModel): void {
-    this._model = model;
-  }
-
   getType(): string {
     return 'ConnectionLine';
-  }
-
-  getId(): number {
-    return this._model.getId();
   }
 
   moveToBack(): void {

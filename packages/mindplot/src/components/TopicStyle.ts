@@ -48,7 +48,7 @@ const TopicDefaultStyles = {
       weight: 'bold',
       color: '#ffffff',
     },
-    connectionStyle: LineType.SIMPLE_CURVED,
+    connectionStyle: LineType.NICE_CURVED,
     msgKey: 'CENTRAL_TOPIC',
     shapeType: 'rounded rectangle' as TopicShapeType,
   },
