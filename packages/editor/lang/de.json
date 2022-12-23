@@ -224,8 +224,11 @@
     "editor-panel.tooltip-connection-style": {
         "defaultMessage": "Verbindungsstil"
     },
-    "editor-panel.tooltip-connection-style-curved": {
-        "defaultMessage": "Kurve"
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Dünne Kurve"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Dicke Kurve"
     },
     "editor-panel.tooltip-connection-style-polyline": {
         "defaultMessage": "Polylinie"

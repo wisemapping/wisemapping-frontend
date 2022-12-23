@@ -137,10 +137,16 @@
       "value": "Verbindungsstil"
     }
   ],
-  "editor-panel.tooltip-connection-style-curved": [
+  "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Kurve"
+      "value": "Dicke Kurve"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Dünne Kurve"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [

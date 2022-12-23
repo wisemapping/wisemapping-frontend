@@ -63,7 +63,6 @@ class DragPivot {
 
   private _buildStraightLine(): CurvedLine {
     const line = new CurvedLine();
-    line.setStyle(CurvedLine.SIMPLE_LINE);
     line.setStroke(1, 'solid', '#CC0033');
     line.setOpacity(0.4);
     line.setVisibility(false);
@@ -72,7 +71,6 @@ class DragPivot {
 
   private _buildCurvedLine(): CurvedLine {
     const line = new CurvedLine();
-    line.setStyle(CurvedLine.SIMPLE_LINE);
     line.setStroke(1, 'solid', '#CC0033');
     line.setOpacity(0.4);
     line.setVisibility(false);

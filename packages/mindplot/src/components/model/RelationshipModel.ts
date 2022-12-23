@@ -47,7 +47,7 @@ class RelationshipModel {
     this._id = RelationshipModel._nextUUID();
     this._sourceTargetId = sourceTopicId;
     this._targetTopicId = targetTopicId;
-    this._lineType = LineType.SIMPLE_CURVED;
+    this._lineType = LineType.THIN_CURVED;
     this._srcCtrlPoint = null;
     this._destCtrlPoint = null;
     this._endArrow = true;

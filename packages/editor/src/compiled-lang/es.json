@@ -131,10 +131,16 @@
       "value": "Estilo de Connexión"
     }
   ],
-  "editor-panel.tooltip-connection-style-curved": [
+  "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Curva"
+      "value": "Curva guesa"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Curva fina"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [

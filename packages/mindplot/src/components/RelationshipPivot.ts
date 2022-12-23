@@ -63,8 +63,6 @@ class RelationshipPivot {
     const strokeColor = Relationship.getStrokeColor();
 
     this._pivot = new CurvedLine();
-    this._pivot.setStyle(CurvedLine.SIMPLE_LINE);
-
     const fromPos = this._calculateFromPosition(sourcePos);
     this._pivot.setFrom(fromPos.x, fromPos.y);
 

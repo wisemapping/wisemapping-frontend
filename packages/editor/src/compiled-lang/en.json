@@ -131,16 +131,22 @@
       "value": "Connection Style"
     }
   ],
-  "editor-panel.tooltip-connection-style-curved": [
+  "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Curved"
+      "value": "Think Curve"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Thin Curve"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
     {
       "type": 0,
-      "value": "Polyline"
+      "value": "Simple Polyline"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline-curved": [

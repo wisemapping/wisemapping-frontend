@@ -161,26 +161,26 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       {
         icon: <GestureOutlined />,
         tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-curved',
-          defaultMessage: 'Curved',
+          id: 'editor-panel.tooltip-connection-style-curved-thin',
+          defaultMessage: 'Thin Curved',
         }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.SIMPLE_CURVED),
-        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.SIMPLE_CURVED,
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
+        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
       },
-      // {
-      //   icon: <GestureOutlined />,
-      //   tooltip: intl.formatMessage({
-      //     id: 'editor-panel.tooltip-connection-style-curved-nice',
-      //     defaultMessage: 'Curved',
-      //   }),
-      //   onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.NICE_CURVED),
-      //   selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.NICE_CURVED,
-      // },
+      {
+        icon: <GestureOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-curved-thick',
+          defaultMessage: 'Thick Curved',
+        }),
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
+        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
+      },
       {
         icon: <PolylineOutlined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-style-polyline',
-          defaultMessage: 'Polyline',
+          defaultMessage: 'Simple Polyline',
         }),
         onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.POLYLINE_MIDDLE),
         selected: () =>
@@ -196,6 +196,26 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         selected: () =>
           valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
       },
+      // null,
+      // {
+      //   icon: () => <Palette htmlColor={valueBulder.getFontColorModel().getValue() as string} />,
+      //   tooltip: intl.formatMessage({
+      //     id: 'editor-panel.tooltip-connection-style-color',
+      //     defaultMessage: 'Color',
+      //   }),
+      //   options: [
+      //     {
+      //       render: (closeModal) => {
+      //         return (
+      //           <ColorPicker
+      //             closeModal={closeModal}
+      //             colorModel={valueBulder.getFontColorModel()}
+      //           />
+      //         );
+      //       },
+      //     },
+      //   ],
+      // },
     ],
     disabled: () => {
       const selected = model.getDesignerModel().filterSelectedTopics();
@@ -268,10 +288,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           {
             render: (closeModal) => {
               return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={valueBulder.getFontColorModel()}
-                ></ColorPicker>
+                <ColorPicker closeModal={closeModal} colorModel={valueBulder.getFontColorModel()} />
               );
             },
           },

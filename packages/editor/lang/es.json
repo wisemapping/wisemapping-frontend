@@ -218,8 +218,11 @@
     "editor-panel.tooltip-connection-style": {
         "defaultMessage": "Estilo de Connexión"
     },
-    "editor-panel.tooltip-connection-style-curved": {
-        "defaultMessage": "Curva"
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Curva fina"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Curva guesa"
     },
     "editor-panel.tooltip-connection-style-polyline": {
         "defaultMessage": "Polilinea"

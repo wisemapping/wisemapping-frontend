@@ -24,10 +24,10 @@ import Workspace from './Workspace';
 
 // eslint-disable-next-line no-shadow
 export enum LineType {
-  SIMPLE_CURVED,
+  THIN_CURVED,
   POLYLINE_MIDDLE,
   POLYLINE_CURVED,
-  NICE_CURVED,
+  THICK_CURVED,
 }
 
 class ConnectionLine {
@@ -41,7 +41,7 @@ class ConnectionLine {
 
   private _type: LineType;
 
-  constructor(sourceNode: Topic, targetNode: Topic, type: LineType = LineType.SIMPLE_CURVED) {
+  constructor(sourceNode: Topic, targetNode: Topic, type: LineType = LineType.THIN_CURVED) {
     $assert(targetNode, 'parentNode node can not be null');
     $assert(sourceNode, 'childNode node can not be null');
     $assert(sourceNode !== targetNode, 'Circular connection');
@@ -81,17 +81,16 @@ class ConnectionLine {
         (line as PolyLine).setStyle('Curved');
         (line as PolyLine).setStroke(1, 'solid', strokeColor, 1);
         break;
-      case LineType.SIMPLE_CURVED:
+      case LineType.THIN_CURVED:
         line = new CurvedLine();
-        (line as CurvedLine).setStyle(CurvedLine.SIMPLE_LINE);
         (line as CurvedLine).setStroke(1, 'solid', strokeColor, 1);
         (line as CurvedLine).setFill(strokeColor, 1);
         break;
-      case LineType.NICE_CURVED:
+      case LineType.THICK_CURVED:
         line = new CurvedLine();
-        (line as CurvedLine).setStyle(CurvedLine.NICE_LINE);
         (line as CurvedLine).setStroke(1, 'solid', strokeColor, 1);
         (line as CurvedLine).setFill(strokeColor, 1);
+        (line as CurvedLine).setWidth(this._targetTopic.isCentralTopic() ? 15 : 3);
         break;
       default:
         throw new Error(`Unexpected line type. ${lineType}`);
@@ -126,7 +125,7 @@ class ConnectionLine {
     line2d.setFrom(tPos.x, tPos.y);
     line2d.setTo(sPos.x, sPos.y);
 
-    if (this._type === LineType.NICE_CURVED || this._type === LineType.SIMPLE_CURVED) {
+    if (this._type === LineType.THICK_CURVED || this._type === LineType.THIN_CURVED) {
       const ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
       line2d.setSrcControlPoint(ctrlPoints[0]);
       line2d.setDestControlPoint(ctrlPoints[1]);

@@ -218,8 +218,11 @@
     "editor-panel.tooltip-connection-style": {
         "defaultMessage": "Style de connexion"
     },
-    "editor-panel.tooltip-connection-style-curved": {
-        "defaultMessage": "Courbe"
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Mince courbe"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "épaisse courbé"
     },
     "editor-panel.tooltip-connection-style-polyline": {
         "defaultMessage": "Polyligne"

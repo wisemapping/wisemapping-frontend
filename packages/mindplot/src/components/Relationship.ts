@@ -64,7 +64,7 @@ class Relationship extends ConnectionLine {
     this._line2d.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Build focus shape ...
-    this._focusShape = this._createLine(LineType.SIMPLE_CURVED);
+    this._focusShape = this._createLine(LineType.THIN_CURVED);
     this._focusShape.setStroke(8, 'solid', '#3f96ff');
     this._focusShape.setIsSrcControlPointCustom(false);
     this._focusShape.setIsDestControlPointCustom(false);

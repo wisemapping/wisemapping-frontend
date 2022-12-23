@@ -112,20 +112,17 @@ class CurvedLine extends ElementClass {
     return this.peer.updateLine(avoidControlPointFix);
   }
 
-  setStyle(style) {
-    this.peer.setLineStyle(style);
-  }
-
-  getStyle() {
-    return this.peer.getLineStyle();
-  }
-
   setDashed(length, spacing) {
     this.peer.setDashed(length, spacing);
   }
-}
 
-CurvedLine.SIMPLE_LINE = false;
-CurvedLine.NICE_LINE = true;
+  getWidth() {
+    return this.peer.getWidth();
+  }
+
+  setWidth(value) {
+    this.peer.setWidth(value);
+  }
+}
 
 export default CurvedLine;
