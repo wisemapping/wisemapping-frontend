@@ -114,11 +114,6 @@ abstract class Topic extends NodeGraph {
     if ($defined(updateModel) && updateModel) {
       model.setShapeType(type);
     }
-    // If shape is line, reset background color to default.
-    if (type === 'line') {
-      const color = TopicStyle.defaultBackgroundColor(this);
-      this.setBackgroundColor(color);
-    }
 
     const oldInnerShape = this.getInnerShape();
     if (oldInnerShape != null) {
@@ -163,11 +158,34 @@ abstract class Topic extends NodeGraph {
 
   getConnectionStyle(): LineType {
     const model = this.getModel();
-    let result = model.getConnectionStyle();
-    if (!result) {
-      result = TopicStyle.defaultConnectionType(this);
+    let result: LineType | undefined = model.getConnectionStyle();
+
+    // Style is infered looking recursivelly on the parent nodes.
+    if (result === undefined) {
+      const parent = this.getParent();
+      if (parent) {
+        result = parent.getConnectionStyle();
+      } else {
+        result = TopicStyle.defaultConnectionType(this);
+      }
     }
-    return result;
+    return result!;
+  }
+
+  getConnectionColor(): string {
+    const model = this.getModel();
+    let result: string | undefined = model.getConnectionColor();
+
+    // Style is infered looking recursivelly on the parent nodes.
+    if (!result) {
+      const parent = this.getParent();
+      if (parent) {
+        result = parent.getConnectionColor();
+      } else {
+        result = TopicStyle.defaultConnectionColor(this);
+      }
+    }
+    return result!;
   }
 
   private _removeInnerShape(): ElementClass {
@@ -205,7 +223,7 @@ abstract class Topic extends NodeGraph {
     $assert(attributes, 'attributes can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
-    let result;
+    let result: ElementClass;
     if (shapeType === 'rectangle') {
       result = new Rect(0, attributes);
     } else if (shapeType === 'image') {
@@ -229,22 +247,21 @@ abstract class Topic extends NodeGraph {
     } else if (shapeType === 'rounded rectangle') {
       result = new Rect(0.3, attributes);
     } else if (shapeType === 'line') {
+      const stokeColor = this.getConnectionColor();
       result = new Line({
-        strokeColor: '#495879',
+        strokeColor: stokeColor,
         strokeWidth: 1,
       });
 
+      const me = this;
       result.setSize = function setSize(width: number, height: number) {
-        this.size = {
-          width,
-          height,
-        };
+        this.size = { width, height };
         result.setFrom(0, height);
         result.setTo(width, height);
 
-        // Lines will have the same color of the default connection lines...
-        const stokeColor = ConnectionLine.getStrokeColor();
-        result.setStroke(1, 'solid', stokeColor);
+        // // Lines will have the same color of the default connection lines...
+        const color = me.getConnectionColor();
+        result.setStroke(1, 'solid', color);
       };
 
       result.getSize = function getSize() {
@@ -522,7 +539,7 @@ abstract class Topic extends NodeGraph {
 
     if ($defined(updateModel) && updateModel) {
       const model = this.getModel();
-      model.setText(text);
+      model.setText(text || undefined);
     }
   }
 
@@ -552,13 +569,29 @@ abstract class Topic extends NodeGraph {
     model.setConnectionStyle(type);
 
     // Needs to change change all the lines types. Outgoing are part of the children.
-    this.getChildren().map((topic: Topic) => topic.redraw());
+    this.getChildren().forEach((topic: Topic) => topic.redraw());
 
-    // If chidren nodes does not children, set the connection style too. We don't want to have cascade changes on all the branches.
-    model
-      .getChildren()
-      .filter((c) => c.getChildren().length === 0)
-      .forEach((c) => c.setConnectionStyle(type));
+    // If connection of the childen matches, just reset the style in the model.
+    this.getChildren().forEach((topic: Topic) => {
+      if (topic.getModel().getConnectionStyle() === type) {
+        topic.getModel().setConnectionStyle(undefined);
+      }
+    });
+  }
+
+  setConnectionColor(value: string): void {
+    const model = this.getModel();
+    model.setConnectionColor(value);
+
+    // Needs to change change all the lines color. Outgoing are part of the children.
+    this.getChildren().forEach((topic: Topic) => topic.redraw());
+
+    // If connection of the childen matches, just reset the style in the model.
+    this.getChildren().forEach((topic: Topic) => {
+      if (topic.getModel().getConnectionColor() === value) {
+        topic.getModel().setConnectionColor(undefined);
+      }
+    });
   }
 
   private _setBackgroundColor(color: string, updateModel: boolean) {
@@ -1247,19 +1280,33 @@ abstract class Topic extends NodeGraph {
     let result = false;
     if (this._isInWorkspace) {
       // Adjust connection line if there is a change in the parent...
-      const connStyleChanged =
-        this._outgoingLine?.getLineType() !== this.getParent()?.getConnectionStyle();
-      if (this._outgoingLine && connStyleChanged) {
-        // Todo: Review static reference  ...
-        const workspace = designer.getWorkSpace();
-        this._outgoingLine.removeFromWorkspace(workspace);
+      if (this._outgoingLine) {
+        // Has the style change ?
+        const connStyleChanged =
+          this._outgoingLine.getLineType() !== this.getParent()!.getConnectionStyle();
+        if (connStyleChanged) {
+          // Todo: Review static reference  ...
+          const workspace = designer.getWorkSpace();
+          this._outgoingLine.removeFromWorkspace(workspace);
 
-        const targetTopic = this.getOutgoingConnectedTopic()!;
-        this._outgoingLine = this.createConnectionLine(targetTopic);
-        this._outgoingLine.setVisibility(this.isVisible());
-        workspace.append(this._outgoingLine);
+          const targetTopic = this.getOutgoingConnectedTopic()!;
+          this._outgoingLine = this.createConnectionLine(targetTopic);
+          this._outgoingLine.setVisibility(this.isVisible());
+          workspace.append(this._outgoingLine);
 
-        result = true;
+          // Update all the children...
+          this.getChildren().forEach((t) => t.redraw());
+          result = true;
+        }
+
+        // Has the color changed ?
+        const color = this._outgoingLine.getStrokeColor();
+        const connColorChanged = color !== this.getParent()!.getConnectionColor();
+        if (connColorChanged) {
+          this._outgoingLine.redraw();
+          this._connector.setFill(color);
+          this.getChildren().forEach((t) => t.redraw());
+        }
       }
     }
     return result;

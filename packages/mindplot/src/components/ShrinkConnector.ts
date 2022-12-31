@@ -31,7 +31,8 @@ class ShirinkConnector {
     const ellipse = new Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
     this._ellipse = ellipse;
 
-    ellipse.setFill('rgb(62,118,179)');
+    const fillColor = topic.getConnectionColor();
+    ellipse.setFill(fillColor);
 
     ellipse.setSize(TopicConfig.CONNECTOR_WIDTH, TopicConfig.CONNECTOR_WIDTH);
     ellipse.addEvent('click', (event: Event) => {

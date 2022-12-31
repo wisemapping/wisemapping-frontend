@@ -70,7 +70,7 @@ abstract class INodeModel {
     this.putProperty('type', type);
   }
 
-  setText(text: string | null): void {
+  setText(text: string | undefined): void {
     this.putProperty('text', text);
   }
 
@@ -221,12 +221,20 @@ abstract class INodeModel {
     this.putProperty('shrunken', value);
   }
 
-  setConnectionStyle(type: LineType): void {
+  setConnectionStyle(type: LineType | undefined): void {
     this.putProperty('connectionStyle', type);
   }
 
-  getConnectionStyle(): LineType | null {
+  getConnectionStyle(): LineType | undefined {
     return this.getProperty('connectionStyle') as LineType;
+  }
+
+  setConnectionColor(value: string | undefined): void {
+    this.putProperty('connectionColor', value);
+  }
+
+  getConnectionColor(): string | undefined {
+    return this.getProperty('connectionColor') as string;
   }
 
   isNodeModel(): boolean {
@@ -297,9 +305,9 @@ abstract class INodeModel {
 
   abstract getPropertiesKeys(): string[];
 
-  abstract getProperty(key: string): number | string | boolean;
+  abstract getProperty(key: string): number | string | boolean | undefined;
 
-  abstract putProperty(key: string, value: number | string | boolean | null): void;
+  abstract putProperty(key: string, value: number | string | boolean | undefined): void;
 
   abstract setParent(parent: INodeModel): void;
 

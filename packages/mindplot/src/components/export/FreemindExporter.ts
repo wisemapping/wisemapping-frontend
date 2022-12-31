@@ -251,7 +251,7 @@ class FreemindExporter extends Exporter {
     const fontFamily: string = mindmapTopic.getFontFamily();
     const fontSize: number = mindmapTopic.getFontSize();
     const fontColor: string = mindmapTopic.getFontColor();
-    const fontWeigth: string | number | boolean = mindmapTopic.getFontWeight();
+    const fontWeigth: string | number | boolean | undefined = mindmapTopic.getFontWeight();
     const fontStyle: string = mindmapTopic.getFontStyle();
 
     if (fontFamily || fontSize || fontColor || fontWeigth || fontStyle) {

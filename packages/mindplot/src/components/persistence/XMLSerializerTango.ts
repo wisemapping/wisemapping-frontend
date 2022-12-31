@@ -148,13 +148,18 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const brColor = topic.getBorderColor();
-    if ($defined(brColor)) {
+    if (brColor) {
       parentTopic.setAttribute('brColor', brColor);
     }
 
     const connectionStyle = topic.getConnectionStyle();
     if ($defined(connectionStyle)) {
       parentTopic.setAttribute('connStyle', `${connectionStyle}`);
+    }
+
+    const connectionColor = topic.getConnectionColor();
+    if (connectionColor) {
+      parentTopic.setAttribute('connColor', connectionColor);
     }
 
     const metadata = topic.getMetadata();
@@ -349,6 +354,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if ($defined(connStyle) && connStyle) {
       const lineType = Number.parseInt(connStyle, 10) as LineType;
       topic.setConnectionStyle(lineType);
+    }
+
+    const connColor = domElem.getAttribute('connColor');
+    if ($defined(connColor) && connColor) {
+      topic.setConnectionColor(connColor);
     }
 
     const borderColor = domElem.getAttribute('brColor');

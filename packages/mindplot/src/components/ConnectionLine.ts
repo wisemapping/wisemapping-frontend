@@ -37,23 +37,20 @@ class ConnectionLine {
 
   protected _lineType: LineType;
 
-  protected _line2d: Line;
+  protected _line: Line;
 
   private _type: LineType;
 
+  private _color: string;
+
   constructor(sourceNode: Topic, targetNode: Topic, type: LineType = LineType.THIN_CURVED) {
-    $assert(targetNode, 'parentNode node can not be null');
-    $assert(sourceNode, 'childNode node can not be null');
     $assert(sourceNode !== targetNode, 'Circular connection');
 
     this._targetTopic = targetNode;
     this._sourceTopic = sourceNode;
     this._type = type;
-
-    const line = this._createLine(type);
-
-    // Set line styles ...
-    this._line2d = line;
+    this._line = this.createLine(type);
+    this.updateColor();
   }
 
   private _getCtrlPoints(sourceNode: Topic, targetNode: Topic) {
@@ -66,53 +63,68 @@ class ConnectionLine {
     ];
   }
 
-  protected _createLine(lineType: LineType): ConnectionLine {
+  protected createLine(lineType: LineType): ConnectionLine {
     this._lineType = lineType;
     let line: ConnectionLine;
-    const strokeColor = ConnectionLine.getStrokeColor();
     switch (lineType) {
       case LineType.POLYLINE_MIDDLE:
         line = new PolyLine();
         (line as PolyLine).setStyle('MiddleStraight');
-        (line as PolyLine).setStroke(1, 'solid', strokeColor, 1);
         break;
       case LineType.POLYLINE_CURVED:
         line = new PolyLine();
         (line as PolyLine).setStyle('Curved');
-        (line as PolyLine).setStroke(1, 'solid', strokeColor, 1);
         break;
       case LineType.THIN_CURVED:
         line = new CurvedLine();
-        (line as CurvedLine).setStroke(1, 'solid', strokeColor, 1);
-        (line as CurvedLine).setFill(strokeColor, 1);
         break;
       case LineType.THICK_CURVED:
         line = new CurvedLine();
-        (line as CurvedLine).setStroke(1, 'solid', strokeColor, 1);
-        (line as CurvedLine).setFill(strokeColor, 1);
         (line as CurvedLine).setWidth(this._targetTopic.isCentralTopic() ? 15 : 3);
         break;
       default:
         throw new Error(`Unexpected line type. ${lineType}`);
     }
-
     return line;
   }
 
+  private updateColor(): void {
+    const color = this._targetTopic.getConnectionColor();
+    this._color = color;
+    switch (this._lineType) {
+      case LineType.POLYLINE_MIDDLE:
+        this._line.setStroke(1, 'solid', color, 1);
+        break;
+      case LineType.POLYLINE_CURVED:
+        this._line.setStroke(1, 'solid', color, 1);
+        break;
+      case LineType.THIN_CURVED:
+        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setFill(color, 1);
+        break;
+      case LineType.THICK_CURVED:
+        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setFill(color, 1);
+        break;
+      default:
+        throw new Error(`Unexpected line type. ${this._lineType}`);
+    }
+  }
+
   setVisibility(value: boolean, fade = 0): void {
-    this._line2d.setVisibility(value, fade);
+    this._line.setVisibility(value, fade);
   }
 
   isVisible(): boolean {
-    return this._line2d.isVisible();
+    return this._line.isVisible();
   }
 
   setOpacity(opacity: number): void {
-    this._line2d.setOpacity(opacity);
+    this._line.setOpacity(opacity);
   }
 
   redraw(): void {
-    const line2d = this._line2d;
+    const line2d = this._line;
     const sourceTopic = this._sourceTopic;
     const sourcePosition = sourceTopic.getPosition();
 
@@ -132,10 +144,13 @@ class ConnectionLine {
     }
 
     // Add connector ...
-    this._positionateConnector(targetTopic);
+    this._positionLine(targetTopic);
+
+    // Update color ...
+    this.updateColor();
   }
 
-  protected _positionateConnector(targetTopic: Topic): void {
+  protected _positionLine(targetTopic: Topic): void {
     const targetPosition = targetTopic.getPosition();
     const offset = TopicConfig.CONNECTOR_WIDTH / 2;
     const targetTopicSize = targetTopic.getSize();
@@ -161,16 +176,21 @@ class ConnectionLine {
   }
 
   setStroke(color: string, style: string, opacity: number) {
-    this._line2d.setStroke(null, null, color, opacity);
+    this._line.setStroke(null, null, color, opacity);
+    this._color = color;
+  }
+
+  getStrokeColor(): string {
+    return this._color;
   }
 
   addToWorkspace(workspace: Workspace) {
-    workspace.append(this._line2d);
-    this._line2d.moveToBack();
+    workspace.append(this._line);
+    this._line.moveToBack();
   }
 
   removeFromWorkspace(workspace: Workspace) {
-    workspace.removeChild(this._line2d);
+    workspace.removeChild(this._line);
   }
 
   getTargetTopic(): Topic {
@@ -186,7 +206,7 @@ class ConnectionLine {
   }
 
   getLine(): Line {
-    return this._line2d;
+    return this._line;
   }
 
   getType(): string {
@@ -194,14 +214,12 @@ class ConnectionLine {
   }
 
   moveToBack(): void {
-    this._line2d.moveToBack();
+    this._line.moveToBack();
   }
 
   moveToFront() {
-    this._line2d.moveToFront();
+    this._line.moveToFront();
   }
-
-  static getStrokeColor = () => '#495879';
 }
 
 export default ConnectionLine;

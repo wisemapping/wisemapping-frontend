@@ -439,56 +439,6 @@ class Designer extends Events {
     this._actionDispatcher.addTopics([childModel], [parentTopicId]);
   }
 
-  private _copyNodeProps(sourceModel: NodeModel, targetModel: NodeModel) {
-    // I don't copy the font size if the target is the source is the central topic.
-    if (sourceModel.getType() !== 'CentralTopic') {
-      const fontSize = sourceModel.getFontSize();
-      if (fontSize) {
-        targetModel.setFontSize(fontSize);
-      }
-    }
-
-    const fontFamily = sourceModel.getFontFamily();
-    if (fontFamily) {
-      targetModel.setFontFamily(fontFamily);
-    }
-
-    const fontColor = sourceModel.getFontColor();
-    if (fontColor) {
-      targetModel.setFontColor(fontColor);
-    }
-
-    const fontWeight = sourceModel.getFontWeight();
-    if (fontWeight) {
-      targetModel.setFontWeight(fontWeight);
-    }
-
-    const fontStyle = sourceModel.getFontStyle();
-    if (fontStyle) {
-      targetModel.setFontStyle(fontStyle);
-    }
-
-    const shape = sourceModel.getShapeType();
-    if (shape) {
-      targetModel.setShapeType(shape);
-    }
-
-    const borderColor = sourceModel.getBorderColor();
-    if (borderColor) {
-      targetModel.setBorderColor(borderColor);
-    }
-
-    const backgroundColor = sourceModel.getBackgroundColor();
-    if (backgroundColor) {
-      targetModel.setBackgroundColor(backgroundColor);
-    }
-
-    const connectType = sourceModel.getConnectionStyle();
-    if ($defined(connectType)) {
-      targetModel.setConnectionStyle(connectType!);
-    }
-  }
-
   private _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
     // Create a new node ...
     const parentModel = topic.getModel();
@@ -503,7 +453,7 @@ class Designer extends Events {
     const { position } = result;
     childModel.setPosition(position.x, position.y);
 
-    this._copyNodeProps(parentModel, childModel);
+    childModel.copy(parentModel);
 
     return childModel;
   }
@@ -558,8 +508,7 @@ class Designer extends Events {
       const order = topic.getOrder() + 1;
       result.setOrder(order);
       result.setPosition(10, 10); // Set a dummy position ...
-
-      this._copyNodeProps(model, result);
+      result.copy(model);
     }
 
     return result;
@@ -881,6 +830,15 @@ class Designer extends Events {
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeConnectionStyleToTopic(topicsIds, type);
+    }
+  }
+
+  changeConnectionColor(value: string): void {
+    const topicsIds = this.getModel()
+      .filterSelectedTopics()
+      .map((t) => t.getId());
+    if (topicsIds.length > 0) {
+      this._actionDispatcher.changeConnectionColorToTopic(topicsIds, value);
     }
   }
 

@@ -108,7 +108,7 @@ class NodeModel extends INodeModel {
    * @param value
    * @throws will throw an error if key is null or undefined
    */
-  putProperty(key: string, value: string | number | boolean) {
+  putProperty(key: string, value: string | number | boolean): void {
     $defined(key, 'key can not be null');
     this._properties[key] = value;
   }
@@ -117,7 +117,7 @@ class NodeModel extends INodeModel {
     return this._properties;
   }
 
-  getProperty(key: string): number | string | boolean {
+  getProperty(key: string): number | string | boolean | undefined {
     $defined(key, 'key can not be null');
     return this._properties[key];
   }
@@ -133,6 +133,61 @@ class NodeModel extends INodeModel {
     result._properties = cloneDeep(this._properties);
     result._features = cloneDeep(this._features);
     return result;
+  }
+
+  copy(value: NodeModel) {
+    // I don't copy the font size if the target is the source is the central topic.
+    if (value.getType() !== 'CentralTopic') {
+      const fontSize = value.getFontSize();
+      if (fontSize) {
+        this.setFontSize(fontSize);
+      }
+    }
+
+    const fontFamily = value.getFontFamily();
+    if (fontFamily) {
+      this.setFontFamily(fontFamily);
+    }
+
+    const fontColor = value.getFontColor();
+    if (fontColor) {
+      this.setFontColor(fontColor);
+    }
+
+    const fontWeight = value.getFontWeight();
+    if (fontWeight) {
+      this.setFontWeight(fontWeight);
+    }
+
+    const fontStyle = value.getFontStyle();
+    if (fontStyle) {
+      this.setFontStyle(fontStyle);
+    }
+
+    const shape = value.getShapeType();
+    if (shape) {
+      this.setShapeType(shape);
+    }
+
+    const borderColor = value.getBorderColor();
+    if (borderColor) {
+      this.setBorderColor(borderColor);
+    }
+
+    const backgroundColor = value.getBackgroundColor();
+    if (backgroundColor) {
+      this.setBackgroundColor(backgroundColor);
+    }
+
+    const connectType = value.getConnectionStyle();
+    if ($defined(connectType)) {
+      this.setConnectionStyle(connectType!);
+    }
+
+    const connectColor = value.getConnectionColor();
+    if ($defined(connectColor)) {
+      this.setConnectionColor(connectColor!);
+    }
   }
 
   deepCopy(): NodeModel {

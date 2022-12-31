@@ -22,6 +22,7 @@ class NodePropertyBuilder {
   private topicShapeModel: NodeProperty<TopicShapeType>;
   private topicIconModel: NodeProperty<string>;
   private connetionStyleModel: NodeProperty<LineType>;
+  private connectionColoreModel: NodeProperty<string>;
   private noteModel: NodeProperty<string>;
   private linkModel: NodeProperty<string>;
 
@@ -137,10 +138,6 @@ class NodePropertyBuilder {
     return this.fontColorModel;
   }
 
-  /**
-   *
-   * @returns model to get and set topic icon
-   */
   getTopicIconModel(): NodeProperty<string> {
     if (!this.topicIconModel)
       this.topicIconModel = {
@@ -202,6 +199,15 @@ class NodePropertyBuilder {
         setValue: (value: LineType) => this.designer.changeConnectionStyle(value),
       };
     return this.connetionStyleModel;
+  }
+
+  getConnectionColorModel(): NodeProperty<string> {
+    if (!this.connectionColoreModel)
+      this.connectionColoreModel = {
+        getValue: () => this.selectedTopic()?.getConnectionColor(),
+        setValue: (value: string) => this.designer.changeConnectionColor(value),
+      };
+    return this.connectionColoreModel;
   }
 
   getTopicShapeModel(): NodeProperty<TopicShapeType> {

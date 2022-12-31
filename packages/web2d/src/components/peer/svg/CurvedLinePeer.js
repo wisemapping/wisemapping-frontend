@@ -24,12 +24,11 @@ class CurvedLinePeer extends ElementPeer {
     const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'path');
     super(svgElement);
     this._style = { fill: '#495879' };
-    this._updateStyle();
     this._customControlPoint_1 = false;
     this._customControlPoint_2 = false;
     this._control1 = new Point(0, 0);
     this._control2 = new Point(0, 0);
-    this._width = 1;
+    this.setWidth(1);
   }
 
   setSrcControlPoint(control) {

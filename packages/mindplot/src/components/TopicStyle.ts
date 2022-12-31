@@ -28,10 +28,12 @@ type FontStlye = {
   weight: string;
   color: string;
 };
+
 type TopicStyleType = {
   borderColor: string;
   backgroundColor: string;
   connectionStyle: LineType;
+  connectionColor: string;
   fontStyle: FontStlye;
   msgKey: string;
   shapeType: TopicShapeType;
@@ -49,6 +51,7 @@ const TopicDefaultStyles = {
       color: '#ffffff',
     },
     connectionStyle: LineType.THICK_CURVED,
+    connectionColor: '#495879',
     msgKey: 'CENTRAL_TOPIC',
     shapeType: 'rounded rectangle' as TopicShapeType,
   },
@@ -63,6 +66,7 @@ const TopicDefaultStyles = {
       color: 'rgb(82,92,97)',
     },
     connectionStyle: LineType.THICK_CURVED,
+    connectionColor: '#495879',
     msgKey: 'MAIN_TOPIC',
     shapeType: 'line' as TopicShapeType,
   },
@@ -76,7 +80,8 @@ const TopicDefaultStyles = {
       weight: 'normal',
       color: 'rgb(82,92,97)',
     },
-    connectionStyle: LineType.THIN_CURVED,
+    connectionStyle: LineType.THICK_CURVED,
+    connectionColor: '#495879',
     msgKey: 'SUB_TOPIC',
     shapeType: 'line' as TopicShapeType,
   },
@@ -93,6 +98,7 @@ const TopicDefaultStyles = {
     },
     msgKey: 'ISOLATED_TOPIC',
     connectionStyle: LineType.THIN_CURVED,
+    connectionColor: '#495879',
     shapeType: 'line' as TopicShapeType,
   },
 };
@@ -146,6 +152,10 @@ class TopicStyle {
 
   static defaultConnectionType(topic: Topic): LineType {
     return this._getStyles(topic).connectionStyle;
+  }
+
+  static defaultConnectionColor(topic: Topic): string {
+    return this._getStyles(topic).connectionColor;
   }
 }
 

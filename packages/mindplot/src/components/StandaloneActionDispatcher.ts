@@ -110,7 +110,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       topic.setFontStyle(style, true);
       return result;
     };
-    const command = new GenericFunctionCommand(commandFunc, topicsIds, null);
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
     this.execute(command);
   }
 
@@ -225,13 +225,24 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType) {
-    const commandFunc = (topic: Topic, commandShapeType: LineType) => {
+    const commandFunc = (topic: Topic, type: LineType) => {
       const result = topic.getConnectionStyle();
-      topic.setConnectionStyle(commandShapeType);
+      topic.setConnectionStyle(type);
       return result;
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, lineType);
+    this.execute(command);
+  }
+
+  changeConnectionColorToTopic(topicsIds: number[], value: string) {
+    const commandFunc = (topic: Topic, color: string) => {
+      const result: string = topic.getConnectionColor();
+      topic.setConnectionColor(color);
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, value);
     this.execute(command);
   }
 
@@ -246,7 +257,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       return result;
     };
 
-    const command = new GenericFunctionCommand(commandFunc, topicsIds, null);
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
     this.execute(command);
   }
 

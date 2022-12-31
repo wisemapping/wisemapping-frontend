@@ -20,7 +20,7 @@ import Command from '../Command';
 import CommandContext from '../CommandContext';
 import Topic from '../Topic';
 
-type CommandTypes = string | object | boolean | number | null;
+type CommandTypes = string | object | boolean | number | undefined;
 
 class GenericFunctionCommand extends Command {
   private _value: CommandTypes;

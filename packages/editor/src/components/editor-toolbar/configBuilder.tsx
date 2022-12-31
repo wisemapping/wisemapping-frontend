@@ -36,6 +36,7 @@ import PolylineOutlined from '@mui/icons-material/PolylineOutlined';
 import GestureOutlined from '@mui/icons-material/GestureOutlined';
 import TimelineOutined from '@mui/icons-material/TimelineOutlined';
 import ShareOutlined from '@mui/icons-material/ShareOutlined';
+import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -104,11 +105,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => (
-          <Palette
-            htmlColor={valueBulder.getSelectedTopicColorModel().getValue() as string}
-          ></Palette>
-        ),
+        icon: () => <Palette htmlColor={valueBulder.getSelectedTopicColorModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-fill-color',
           defaultMessage: 'Fill color',
@@ -120,16 +117,14 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
                 <ColorPicker
                   closeModal={closeModal}
                   colorModel={valueBulder.getSelectedTopicColorModel()}
-                ></ColorPicker>
+                />
               );
             },
           },
         ],
       },
       {
-        icon: () => (
-          <SquareOutlined htmlColor={valueBulder.getColorBorderModel().getValue() as string} />
-        ),
+        icon: () => <SquareOutlined htmlColor={valueBulder.getColorBorderModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-border-color',
           defaultMessage: 'Border color',
@@ -141,7 +136,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
                 <ColorPicker
                   closeModal={closeModal}
                   colorModel={valueBulder.getColorBorderModel()}
-                ></ColorPicker>
+                />
               );
             },
           },
@@ -161,20 +156,20 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       {
         icon: <GestureOutlined />,
         tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-curved-thin',
-          defaultMessage: 'Thin Curved',
-        }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
-        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
-      },
-      {
-        icon: <GestureOutlined />,
-        tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-style-curved-thick',
           defaultMessage: 'Thick Curved',
         }),
         onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
         selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
+      },
+      {
+        icon: <SwapCallsOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-curved-thin',
+          defaultMessage: 'Thin Curved',
+        }),
+        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THIN_CURVED),
+        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THIN_CURVED,
       },
       {
         icon: <PolylineOutlined />,
@@ -196,30 +191,30 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         selected: () =>
           valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
       },
-      // null,
-      // {
-      //   icon: () => <Palette htmlColor={valueBulder.getFontColorModel().getValue() as string} />,
-      //   tooltip: intl.formatMessage({
-      //     id: 'editor-panel.tooltip-connection-style-color',
-      //     defaultMessage: 'Color',
-      //   }),
-      //   options: [
-      //     {
-      //       render: (closeModal) => {
-      //         return (
-      //           <ColorPicker
-      //             closeModal={closeModal}
-      //             colorModel={valueBulder.getFontColorModel()}
-      //           />
-      //         );
-      //       },
-      //     },
-      //   ],
-      // },
+      null,
+      {
+        icon: () => <Palette htmlColor={valueBulder.getConnectionColorModel().getValue()} />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-color',
+          defaultMessage: 'Color',
+        }),
+        options: [
+          {
+            render: (closeModal) => {
+              return (
+                <ColorPicker
+                  closeModal={closeModal}
+                  colorModel={valueBulder.getConnectionColorModel()}
+                />
+              );
+            },
+          },
+        ],
+      },
     ],
     disabled: () => {
       const selected = model.getDesignerModel().filterSelectedTopics();
-      return selected.length === 0 || (selected.length === 1 && selected[0].isCentralTopic());
+      return selected.length === 0;
     },
   };
 
@@ -278,6 +273,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         onClick: valueBulder.getFontStyleModel().switchValue,
         selected: () => valueBulder.getFontStyleModel().getValue() === 'italic',
       },
+      null,
       {
         icon: () => <Palette htmlColor={valueBulder.getFontColorModel().getValue() as string} />,
         tooltip: intl.formatMessage({
@@ -347,7 +343,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       {
         tooltip: 'Node note',
         render: (closeModal) => (
-          <TopicNote closeModal={closeModal} noteModel={valueBulder.getNoteModel()}></TopicNote>
+          <TopicNote closeModal={closeModal} noteModel={valueBulder.getNoteModel()} />
         ),
       },
     ],
@@ -403,10 +399,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     deleteNodeToolbarConfiguration,
     colorAndShapeToolbarConfiguration,
     fontFormatToolbarConfiguration,
+    connectionStyleConfiguration,
     editIconConfiguration,
     editNoteConfiguration,
     editLinkUrlConfiguration,
-    connectionStyleConfiguration,
     addRelationConfiguration,
   ];
 }
