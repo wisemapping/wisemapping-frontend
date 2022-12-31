@@ -89,7 +89,12 @@ class ConnectionLine {
   }
 
   private updateColor(): void {
-    const color = this._targetTopic.getConnectionColor();
+    // In case that the main topic has changed the color, overwrite the main topic definiton.
+    let color = this._targetTopic.getConnectionColor();
+    if (this._targetTopic.isCentralTopic()) {
+      color = this._sourceTopic.getModel().getConnectionColor() || color;
+    }
+
     this._color = color;
     switch (this._lineType) {
       case LineType.POLYLINE_MIDDLE:

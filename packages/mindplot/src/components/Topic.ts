@@ -17,9 +17,9 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import { Rect, Image, Line, Text, Group, ElementClass, Point } from '@wisemapping/web2d';
+import { Rect, Line, Text, Group, ElementClass } from '@wisemapping/web2d';
 
-import NodeGraph from './NodeGraph';
+import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
 import TopicFeatureFactory from './TopicFeature';
@@ -40,6 +40,9 @@ import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import ImageIcon from './ImageIcon';
+import PositionType from './PositionType';
+import LineTopicShape from './widget/LineTopicShape';
+import ImageTopicShape from './widget/ImageTopicShape';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -66,7 +69,7 @@ abstract class Topic extends NodeGraph {
 
   private _outgoingLine: ConnectionLine | null;
 
-  constructor(model: NodeModel, options) {
+  constructor(model: NodeModel, options: NodeOption) {
     super(model, options);
     this._children = [];
     this._parent = null;
@@ -179,12 +182,18 @@ abstract class Topic extends NodeGraph {
     // Style is infered looking recursivelly on the parent nodes.
     if (!result) {
       const parent = this.getParent();
-      if (parent) {
-        result = parent.getConnectionColor();
+      if (parent && parent.isCentralTopic()) {
+        // This means that this is central main node, in this case, I will overwrite with the main color if it was defined.
+        result = this.getModel().getConnectionColor() || parent.getModel().getConnectionColor();
       } else {
-        result = TopicStyle.defaultConnectionColor(this);
+        result = parent?.getConnectionColor();
       }
     }
+
+    if (!result) {
+      result = TopicStyle.defaultConnectionColor(this);
+    }
+
     return result!;
   }
 
@@ -219,74 +228,34 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  protected _buildShape(attributes, shapeType: TopicShapeType): ElementClass {
-    $assert(attributes, 'attributes can not be null');
-    $assert(shapeType, 'shapeType can not be null');
-
+  protected _buildShape(attributes: object, shapeType: TopicShapeType): ElementClass {
     let result: ElementClass;
-    if (shapeType === 'rectangle') {
-      result = new Rect(0, attributes);
-    } else if (shapeType === 'image') {
-      const model = this.getModel();
-      const url = model.getImageUrl();
-      const size = model.getImageSize();
-
-      result = new Image();
-      result.setHref(url);
-      result.setSize(size.width, size.height);
-
-      result.getSize = function getSize() {
-        return model.getImageSize();
-      };
-
-      result.setPosition = function setPosition() {
-        // Ignore ...
-      };
-    } else if (shapeType === 'elipse') {
-      result = new Rect(0.9, attributes);
-    } else if (shapeType === 'rounded rectangle') {
-      result = new Rect(0.3, attributes);
-    } else if (shapeType === 'line') {
-      const stokeColor = this.getConnectionColor();
-      result = new Line({
-        strokeColor: stokeColor,
-        strokeWidth: 1,
-      });
-
-      const me = this;
-      result.setSize = function setSize(width: number, height: number) {
-        this.size = { width, height };
-        result.setFrom(0, height);
-        result.setTo(width, height);
-
-        // // Lines will have the same color of the default connection lines...
-        const color = me.getConnectionColor();
-        result.setStroke(1, 'solid', color);
-      };
-
-      result.getSize = function getSize() {
-        return this.size;
-      };
-
-      result.setPosition = () => {
-        // Overwrite behaviour ...
-      };
-
-      result.setFill = () => {
-        // Overwrite behaviour ...
-      };
-
-      result.setStroke = () => {
-        // Overwrite behaviour ...
-      };
-    } else {
-      $assert(false, `Unsupported figure shapeType:${shapeType}`);
+    switch (shapeType) {
+      case 'rectangle':
+        result = new Rect(0, attributes);
+        break;
+      case 'elipse':
+        result = new Rect(0.9, attributes);
+        break;
+      case 'rounded rectangle':
+        result = new Rect(0.3, attributes);
+        break;
+      case 'line':
+        result = new LineTopicShape(this);
+        break;
+      case 'image':
+        result = new ImageTopicShape(this);
+        break;
+      default: {
+        const exhaustiveCheck: never = shapeType;
+        throw new Error(exhaustiveCheck);
+      }
     }
     result.setPosition(0, 0);
     return result;
   }
 
-  setCursor(type: string) {
+  setCursor(type: string): void {
     const innerShape = this.getInnerShape();
     innerShape.setCursor(type);
 
@@ -583,6 +552,9 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setConnectionColor(value);
 
+    // Force redraw for changing line color ...
+    this.redraw();
+
     // Needs to change change all the lines color. Outgoing are part of the children.
     this.getChildren().forEach((topic: Topic) => topic.redraw());
 
@@ -738,7 +710,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setChildrenShrunken(value: boolean) {
+  setChildrenShrunken(value: boolean): void {
     // Update Model ...
     const model = this.getModel();
     model.setChildrenShrunken(value);
@@ -860,7 +832,7 @@ abstract class Topic extends NodeGraph {
   /**
    * Point: references the center of the rect shape.!!!
    */
-  setPosition(point: Point) {
+  setPosition(point: PositionType): void {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     // eslint-disable-next-line no-param-reassign
@@ -1306,6 +1278,7 @@ abstract class Topic extends NodeGraph {
           this._outgoingLine.redraw();
           this._connector.setFill(color);
           this.getChildren().forEach((t) => t.redraw());
+          result = true;
         }
       }
     }
@@ -1341,6 +1314,17 @@ abstract class Topic extends NodeGraph {
         const yPosition = Math.round((topicHeight - textHeight) / 2);
         iconGroup.setPosition(padding, yPosition);
         textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
+
+        // Has color changed ?
+        if (this.getShapeType() === 'line') {
+          const color = this.getConnectionColor();
+          this.getInnerShape().setStroke(1, 'solid', color);
+
+          // Force the repaint in case that the main topic color has changed.
+          if (this.getParent() && this.getParent()?.isCentralTopic()) {
+            this._outgoingLine?.redraw();
+          }
+        }
       } else {
         // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
@@ -1367,9 +1351,9 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  abstract workoutOutgoingConnectionPoint(position: Point): Point;
+  abstract workoutOutgoingConnectionPoint(position: PositionType): PositionType;
 
-  abstract workoutIncomingConnectionPoint(position: Point): Point;
+  abstract workoutIncomingConnectionPoint(position: PositionType): PositionType;
 
   isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();

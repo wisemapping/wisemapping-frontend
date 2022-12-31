@@ -30,7 +30,7 @@ class CentralTopic extends Topic {
 
     // This disable the drag of the central topic.
     // But solves the problem of deselecting the nodes when the screen is clicked.
-    this.addEvent('mousedown', (event) => {
+    this.addEvent('mousedown', (event: MouseEvent) => {
       event.stopPropagation();
     });
   }

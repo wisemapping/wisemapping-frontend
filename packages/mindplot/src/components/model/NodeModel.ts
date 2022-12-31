@@ -178,16 +178,6 @@ class NodeModel extends INodeModel {
     if (backgroundColor) {
       this.setBackgroundColor(backgroundColor);
     }
-
-    const connectType = value.getConnectionStyle();
-    if ($defined(connectType)) {
-      this.setConnectionStyle(connectType!);
-    }
-
-    const connectColor = value.getConnectionColor();
-    if ($defined(connectColor)) {
-      this.setConnectionColor(connectColor!);
-    }
   }
 
   deepCopy(): NodeModel {

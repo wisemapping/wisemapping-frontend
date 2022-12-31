@@ -23,11 +23,13 @@ import Shape from './util/Shape';
 import NodeModel from './model/NodeModel';
 import Workspace from './Workspace';
 import SizeType from './SizeType';
+import PositionType from './PositionType';
+import { NodeOption } from './NodeGraph';
 
 class MainTopic extends Topic {
   private INNER_RECT_ATTRIBUTES: { stroke: string };
 
-  constructor(model: NodeModel, options) {
+  constructor(model: NodeModel, options: NodeOption) {
     super(model, options);
     this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
   }
@@ -112,11 +114,11 @@ class MainTopic extends Topic {
     }
   }
 
-  workoutIncomingConnectionPoint(sourcePosition: Point) {
+  workoutIncomingConnectionPoint(sourcePosition: PositionType): PositionType {
     return Shape.workoutIncomingConnectionPoint(this, sourcePosition);
   }
 
-  workoutOutgoingConnectionPoint(targetPosition: Point) {
+  workoutOutgoingConnectionPoint(targetPosition: PositionType): PositionType {
     $assert(targetPosition, 'targetPoint can not be null');
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);
@@ -148,7 +150,7 @@ class MainTopic extends Topic {
     } else {
       result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
     }
-    return new Point(result.x, result.y);
+    return { ...result };
   }
 }
 

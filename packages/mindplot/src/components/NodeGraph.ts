@@ -24,10 +24,14 @@ import DragTopic from './DragTopic';
 import LayoutManager from './layout/LayoutManager';
 import SizeType from './SizeType';
 
+export type NodeOption = {
+  readOnly: boolean;
+};
+
 abstract class NodeGraph {
   private _mouseEvents: boolean;
 
-  private _options;
+  private _options: NodeOption;
 
   private _onFocus: boolean;
 
@@ -37,7 +41,7 @@ abstract class NodeGraph {
 
   private _elem2d: ElementClass;
 
-  constructor(nodeModel: NodeModel, options) {
+  constructor(nodeModel: NodeModel, options: NodeOption) {
     $assert(nodeModel, 'model can not be null');
 
     this._options = options;
