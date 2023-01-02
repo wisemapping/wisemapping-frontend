@@ -151,10 +151,10 @@ class EditorComponent extends Events {
     const topic = this._topic;
 
     // Hide topic text ...
-    topic.getTextShape().setVisibility(false);
+    topic.getOrBuildTextShape().setVisibility(false);
 
     // Set Editor Style
-    const nodeText = topic.getTextShape();
+    const nodeText = topic.getOrBuildTextShape();
     const fontStyle = nodeText.getFontStyle();
     fontStyle.size = nodeText.getHtmlFontSize();
     fontStyle.color = nodeText.getColor();
@@ -162,7 +162,7 @@ class EditorComponent extends Events {
 
     // Set editor's initial size
     // Position the editor and set the size...
-    const textShape = topic.getTextShape();
+    const textShape = topic.getOrBuildTextShape();
     this._containerElem.css('display', 'block');
 
     let { top, left } = textShape.getNativePosition();
@@ -250,7 +250,7 @@ class EditorComponent extends Events {
     this._containerElem.remove();
 
     // Restore topoc share visibility ...
-    this._topic.getTextShape().setVisibility(true);
+    this._topic.getOrBuildTextShape().setVisibility(true);
   }
 }
 

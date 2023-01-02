@@ -67,7 +67,7 @@ class MainTopic extends Topic {
       textShape.setOpacity(0.5);
 
       // Copy text position of the topic element ...
-      const textPosition = this.getTextShape().getPosition();
+      const textPosition = this.getOrBuildTextShape().getPosition();
       textShape.setPosition(textPosition.x, textPosition.y);
 
       group.append(textShape);
@@ -76,27 +76,16 @@ class MainTopic extends Topic {
   }
 
   updateTopicShape(targetTopic: Topic) {
-    // Change figure based on the connected topic ...
-    const model = this.getModel();
-    let shapeType = model.getShapeType();
     if (!targetTopic.isCentralTopic()) {
-      if (!$defined(shapeType)) {
-        // Get the real shape type ...
-        shapeType = this.getShapeType();
-        this._setShapeType(shapeType, false);
-      }
+      // Get the real shape type ...
+      this.redrawShapeType();
     }
   }
 
   disconnect(workspace: Workspace) {
     super.disconnect(workspace);
-    const model = this.getModel();
-    let shapeType = model.getShapeType();
-    if (!$defined(shapeType)) {
-      // Change figure ...
-      shapeType = this.getShapeType();
-      this._setShapeType('rounded rectangle', false);
-    }
+    this.redrawShapeType();
+
     const innerShape = this.getInnerShape();
     innerShape.setVisibility(true);
   }

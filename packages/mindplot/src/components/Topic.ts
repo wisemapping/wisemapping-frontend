@@ -105,20 +105,18 @@ abstract class Topic extends NodeGraph {
   }
 
   setShapeType(type: TopicShapeType): void {
-    this._setShapeType(type, true);
+    const model = this.getModel();
+    model.setShapeType(type);
+
+    this.redrawShapeType();
+    this.redraw();
   }
 
   getParent(): Topic | null {
     return this._parent;
   }
 
-  protected _setShapeType(type: TopicShapeType, updateModel: boolean) {
-    // Remove inner shape figure ...
-    const model = this.getModel();
-    if (updateModel) {
-      model.setShapeType(type);
-    }
-
+  protected redrawShapeType() {
     const oldInnerShape = this.getInnerShape();
     if (oldInnerShape != null) {
       this._removeInnerShape();
@@ -134,7 +132,7 @@ abstract class Topic extends NodeGraph {
       group.append(innerShape);
 
       // Move text to the front ...
-      const text = this.getTextShape();
+      const text = this.getOrBuildTextShape();
       text.moveToFront();
 
       // Move iconGroup to front ...
@@ -255,12 +253,12 @@ abstract class Topic extends NodeGraph {
     const outerShape = this.getOuterShape();
     outerShape.setCursor(type);
 
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
     textShape.setCursor(type);
   }
 
   getOuterShape(): ElementClass {
-    if (!$defined(this._outerShape)) {
+    if (!this._outerShape) {
       const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, 'rounded rectangle');
       rect.setPosition(-2, -3);
       rect.setOpacity(0);
@@ -270,35 +268,35 @@ abstract class Topic extends NodeGraph {
     return this._outerShape;
   }
 
-  getTextShape(): Text {
-    if (!$defined(this._text)) {
+  getOrBuildTextShape(): Text {
+    if (!this._text) {
       this._text = this._buildTextShape(false);
 
-      // Set Text ...
+      // @todo: Review this. Get should not modify the state ....
       const text = this.getText();
-      this._setText(text, false);
+      this._text.setText(text);
     }
 
     return this._text;
   }
 
-  getOrBuildIconGroup(): Group {
+  private getOrBuildIconGroup(): Group {
     if (!$defined(this._iconsGroup)) {
       this._iconsGroup = this._buildIconGroup();
       const group = this.get2DElement();
+
       group.append(this._iconsGroup.getNativeElement());
       this._iconsGroup.moveToFront();
     }
     return this._iconsGroup;
   }
 
-  /** */
-  getIconGroup(): IconGroup {
+  private getIconGroup(): IconGroup {
     return this._iconsGroup;
   }
 
   private _buildIconGroup(): Group {
-    const textHeight = this.getTextShape().getFontHeight();
+    const textHeight = this.getOrBuildTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
     const result = new IconGroup(this.getId(), iconSize);
     const padding = TopicStyle.getInnerPadding(this);
@@ -394,45 +392,31 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  setFontFamily(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setFontName(value);
-    if (updateModel) {
-      const model = this.getModel();
-      model.setFontFamily(value);
-    }
+  setFontFamily(value: string) {
+    const model = this.getModel();
+    model.setFontFamily(value);
+
     this.redraw();
   }
 
-  setFontSize(value: number, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setSize(value);
+  setFontSize(value: number) {
+    const model = this.getModel();
+    model.setFontSize(value);
 
-    if (updateModel) {
-      const model = this.getModel();
-      model.setFontSize(value);
-    }
     this.redraw();
   }
 
-  setFontStyle(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setStyle(value);
-    if (updateModel) {
-      const model = this.getModel();
-      model.setFontStyle(value);
-    }
+  setFontStyle(value: string) {
+    const model = this.getModel();
+    model.setFontStyle(value);
+
     this.redraw();
   }
 
-  setFontWeight(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setWeight(value);
-    if (updateModel) {
-      const model = this.getModel();
-      model.setFontWeight(value);
-    }
+  setFontWeight(value: string) {
+    const model = this.getModel();
+    model.setFontWeight(value);
+
     this.redraw();
   }
 
@@ -449,7 +433,7 @@ abstract class Topic extends NodeGraph {
   getFontFamily(): string {
     const model = this.getModel();
     let result = model.getFontFamily();
-    if (!$defined(result)) {
+    if (!result) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.font;
     }
@@ -493,23 +477,12 @@ abstract class Topic extends NodeGraph {
     this.redraw();
   }
 
-  private _setText(text: string | null, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
-
-    if (updateModel) {
-      const model = this.getModel();
-      model.setText(text || undefined);
-    }
-  }
-
-  setText(text: string) {
+  setText(text: string | undefined) {
     // Avoid empty nodes ...
-    if (!text || text.trim().length === 0) {
-      this._setText(null, true);
-    } else {
-      this._setText(text, true);
-    }
+    const modelText = !text || text.trim().length === 0 ? undefined : text;
+
+    const model = this.getModel();
+    model.setText(modelText);
 
     this.redraw();
   }
@@ -599,7 +572,7 @@ abstract class Topic extends NodeGraph {
     // Shape must be build based on the model width ...
     const outerShape = this.getOuterShape();
     const innerShape = this.getInnerShape();
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
 
     // Add to the group ...
     group.append(outerShape);
@@ -946,7 +919,7 @@ abstract class Topic extends NodeGraph {
     this.getInnerShape().setVisibility(value, fade);
 
     // Hide text shape ...
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
     textShape.setVisibility(this.getShapeType() !== 'image' ? value : false, fade);
   }
 
@@ -958,7 +931,7 @@ abstract class Topic extends NodeGraph {
     if (connector) {
       connector.setOpacity(opacity);
     }
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
     textShape.setOpacity(opacity);
   }
 
@@ -988,8 +961,6 @@ abstract class Topic extends NodeGraph {
   }
 
   setSize(size: SizeType, force?: boolean): void {
-    $assert(size, 'size can not be null');
-    $assert($defined(size.width), 'size seem not to be a valid element');
     const roundedSize = {
       width: Math.ceil(size.width),
       height: Math.ceil(size.height),
@@ -1035,25 +1006,10 @@ abstract class Topic extends NodeGraph {
       // Update model ...
       const childModel = this.getModel();
       childModel.disconnect();
-
       this._parent = null;
 
       // Remove graphical element from the workspace...
       outgoingLine.removeFromWorkspace(workspace);
-
-      // Remove from workspace.
-      EventBus.instance.fireEvent('topicDisconect', this.getModel());
-
-      // Change text based on the current connection ...
-      const model = this.getModel();
-      if (!model.getText()) {
-        const text = this.getText();
-        this._setText(text, false);
-      }
-      if (!model.getFontSize()) {
-        const size = this.getFontSize();
-        this.setFontSize(size, false);
-      }
 
       // Hide connection line?.
       if (targetTopic.getChildren().length === 0) {
@@ -1063,6 +1019,12 @@ abstract class Topic extends NodeGraph {
           targetTopic.isCollapsed(false);
         }
       }
+
+      this.redrawShapeType();
+      this.redraw(true);
+
+      // Remove from workspace.
+      EventBus.instance.fireEvent('topicDisconect', this.getModel());
     }
   }
 
@@ -1078,11 +1040,6 @@ abstract class Topic extends NodeGraph {
   }
 
   connectTo(targetTopic: Topic, workspace: Workspace) {
-    $assert(!this._outgoingLine, 'Could not connect an already connected node');
-    $assert(targetTopic !== this, 'Circular connection are not allowed');
-    $assert(targetTopic, 'Parent Graph can not be null');
-    $assert(workspace, 'Workspace can not be null');
-
     // Connect Graphical Nodes ...
     targetTopic.append(this);
     this._parent = targetTopic;
@@ -1102,26 +1059,11 @@ abstract class Topic extends NodeGraph {
     // Update figure is necessary.
     this.updateTopicShape(targetTopic);
 
-    // Change text based on the current connection ...
-    const model = this.getModel();
-    if (!model.getText()) {
-      const text = this.getText();
-      this._setText(text, false);
-    }
-    if (!model.getFontSize()) {
-      const size = this.getFontSize();
-      this.setFontSize(size, false);
-    }
-    this.getTextShape();
-
     // Display connection node...
     const connector = targetTopic.getShrinkConnector();
     if (connector) {
       connector.setVisibility(true);
     }
-
-    // Redraw line ...
-    outgoingLine.redraw();
 
     // Fire connection event ...
     if (this.isInWorkspace()) {
@@ -1130,6 +1072,8 @@ abstract class Topic extends NodeGraph {
         childNode: this.getModel(),
       });
     }
+
+    this.redraw(true);
   }
 
   private createConnectionLine(targetTopic: Topic): ConnectionLine {
@@ -1247,8 +1191,27 @@ abstract class Topic extends NodeGraph {
 
   redraw(redrawChildren = false): void {
     if (this._isInWorkspace) {
-      const textShape = this.getTextShape();
+      const textShape = this.getOrBuildTextShape();
       if (this.getShapeType() !== 'image') {
+        // Update font ...
+        const fontColor = this.getFontColor();
+        textShape.setColor(fontColor);
+
+        const fontSize = this.getFontSize();
+        textShape.setSize(fontSize);
+
+        const fontWeight = this.getFontWeight();
+        textShape.setWeight(fontWeight);
+
+        const fontStyle = this.getFontStyle();
+        textShape.setStyle(fontStyle);
+
+        const fontFamily = this.getFontFamily();
+        textShape.setFontName(fontFamily);
+
+        const text = this.getText();
+        textShape.setText(text);
+
         // Calculate topic size and adjust elements ...
         const textWidth = textShape.getWidth();
         const textHeight = textShape.getHeight();
@@ -1256,7 +1219,7 @@ abstract class Topic extends NodeGraph {
 
         // Adjust icons group based on the font size ...
         const iconGroup = this.getOrBuildIconGroup();
-        const fontHeight = this.getTextShape().getFontHeight();
+        const fontHeight = this.getOrBuildTextShape().getFontHeight();
         const iconHeight = ICON_SCALING_FACTOR * fontHeight;
         iconGroup.seIconSize(iconHeight, iconHeight);
 
@@ -1272,7 +1235,7 @@ abstract class Topic extends NodeGraph {
 
         // Adjust all topic elements positions ...
         const yPosition = Math.round((topicHeight - textHeight) / 2);
-        iconGroup.setPosition(padding, yPosition);
+        iconGroup.setPosition(padding, yPosition - yPosition / 10);
         textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
 
         // Update topic color ...
@@ -1281,10 +1244,6 @@ abstract class Topic extends NodeGraph {
 
         const bgColor = this.getBackgroundColor();
         this.getInnerShape().setFill(bgColor);
-
-        // Update font ...
-        const fontColor = this.getFontColor();
-        textShape.setColor(fontColor);
 
         // Force the repaint in case that the main topic color has changed.
         if (this.getParent()) {

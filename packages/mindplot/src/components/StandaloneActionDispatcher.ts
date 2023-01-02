@@ -107,7 +107,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     const commandFunc = (topic: Topic) => {
       const result = topic.getFontStyle();
       const style = result === 'italic' ? 'normal' : 'italic';
-      topic.setFontStyle(style, true);
+      topic.setFontStyle(style);
       return result;
     };
     const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
@@ -135,7 +135,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, commandFontFamily: string) => {
       const result = topic.getFontFamily();
-      topic.setFontFamily(commandFontFamily, true);
+      topic.setFontFamily(commandFontFamily);
 
       topic.redraw();
       return result;
@@ -194,7 +194,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, commandSize: number) => {
       const result = topic.getFontSize();
-      topic.setFontSize(commandSize, true);
+      topic.setFontSize(commandSize);
 
       topic.redraw();
       return result;
@@ -246,7 +246,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     const commandFunc = (topic: Topic) => {
       const result = topic.getFontWeight();
       const weight = result === 'bold' ? 'normal' : 'bold';
-      topic.setFontWeight(weight, true);
+      topic.setFontWeight(weight);
       topic.redraw();
       return result;
     };
