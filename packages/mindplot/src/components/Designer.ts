@@ -445,6 +445,11 @@ class Designer extends Events {
     const mindmap = parentModel.getMindmap();
     const childModel = mindmap.createNode();
 
+    // If node is shink, expand ...
+    if (topic.areChildrenShrunken()) {
+      topic.setChildrenShrunken(false);
+    }
+
     // Create a new node ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
     const result = layoutManager.predict(topic.getId(), null, mousePos);

@@ -633,7 +633,6 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  /** */
   areChildrenShrunken(): boolean {
     const model = this.getModel();
     return model.areChildrenShrunken() && !this.isCentralTopic();
