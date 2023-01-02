@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import { Point } from '@wisemapping/web2d';
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import TopicConfig from '../TopicConfig';
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
@@ -24,8 +24,6 @@ import Topic from '../Topic';
 
 class Shape {
   static isAtRight(sourcePoint: PositionType, targetPoint: PositionType): boolean {
-    $assert(sourcePoint, 'Source can not be null');
-    $assert(targetPoint, 'Target can not be null');
     return sourcePoint.x < targetPoint.x;
   }
 
@@ -34,10 +32,6 @@ class Shape {
     rectSize: SizeType,
     isAtRight: boolean,
   ): PositionType {
-    $assert(rectCenterPoint, 'rectCenterPoint can  not be null');
-    $assert(rectSize, 'rectSize can  not be null');
-    $assert($defined(isAtRight), 'isRight can  not be null');
-
     // This is used fix a minor difference ...z
     const correctionHardcode = 2;
     let result: PositionType;
@@ -138,8 +132,6 @@ class Shape {
       result.x -= offset;
     }
 
-    result.x = Math.ceil(result.x);
-    result.y = Math.ceil(result.y);
     return result;
   }
 }

@@ -57,12 +57,13 @@ class CentralTopic extends Topic {
     return null;
   }
 
-  /** */
   workoutOutgoingConnectionPoint(targetPosition: Point) {
     $assert(targetPosition, 'targetPoint can not be null');
+
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
+
     return Shape.calculateRectConnectionPoint(pos, size, !isAtRight);
   }
 }

@@ -1020,11 +1020,11 @@ abstract class Topic extends NodeGraph {
         }
       }
 
-      this.redrawShapeType();
-      this.redraw(true);
-
       // Remove from workspace.
       EventBus.instance.fireEvent('topicDisconect', this.getModel());
+
+      this.redrawShapeType();
+      this.redraw(true);
     }
   }
 
@@ -1088,13 +1088,11 @@ abstract class Topic extends NodeGraph {
     children.push(child);
   }
 
-  /** */
   removeChild(child: Topic): void {
     const children = this.getChildren();
     this._children = children.filter((c) => c !== child);
   }
 
-  /** */
   getChildren(): Topic[] {
     let result = this._children;
     if (!$defined(result)) {
@@ -1135,12 +1133,10 @@ abstract class Topic extends NodeGraph {
     this.redraw();
   }
 
-  /** */
   isInWorkspace(): boolean {
     return this._isInWorkspace;
   }
 
-  /** */
   createDragNode(layoutManager: LayoutManager) {
     const result = super.createDragNode(layoutManager);
 

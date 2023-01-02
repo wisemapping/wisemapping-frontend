@@ -163,7 +163,7 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   static _pointToStr(x, y) {
-    return `${(x).toFixed()},${(y).toFixed(1)} `;
+    return `${x.toFixed(1)},${y.toFixed(1)} `;
   }
 
   _updateStyle() {
