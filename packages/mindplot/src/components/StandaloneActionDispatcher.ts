@@ -152,7 +152,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, commandColor: string) => {
       const result = topic.getFontColor();
-      topic.setFontColor(commandColor, true);
+      topic.setFontColor(commandColor);
       return result;
     };
 

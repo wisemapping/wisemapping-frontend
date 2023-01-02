@@ -211,14 +211,6 @@ abstract class Topic extends NodeGraph {
       // Create inner box.
       this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
 
-      // Update bgcolor ...
-      const bgColor = this.getBackgroundColor();
-      this._setBackgroundColor(bgColor, false);
-
-      // Update border color ...
-      const brColor = this.getBorderColor();
-      this._setBorderColor(brColor, false);
-
       // Define the pointer ...
       if (!this.isCentralTopic() && !this.isReadOnly()) {
         this._innerShape.setCursor('move');
@@ -494,13 +486,11 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setFontColor(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setColor(value);
-    if (updateModel) {
-      const model = this.getModel();
-      model.setFontColor(value);
-    }
+  setFontColor(value: string) {
+    const model = this.getModel();
+    model.setFontColor(value);
+
+    this.redraw();
   }
 
   private _setText(text: string | null, updateModel?: boolean) {
@@ -531,30 +521,24 @@ abstract class Topic extends NodeGraph {
   }
 
   setBackgroundColor(color: string | undefined): void {
-    this._setBackgroundColor(color, true);
+    const model = this.getModel();
+    model.setBackgroundColor(color);
+
     this.redraw();
   }
 
   setConnectionStyle(type: LineType): void {
     const model = this.getModel();
     model.setConnectionStyle(type);
+
     this.redraw(true);
   }
 
   setConnectionColor(value: string | undefined): void {
     const model = this.getModel();
     model.setConnectionColor(value);
+
     this.redraw(true);
-  }
-
-  private _setBackgroundColor(color: string | undefined, updateModel: boolean) {
-    const innerShape = this.getInnerShape();
-    innerShape.setFill(color);
-
-    if (updateModel) {
-      const model = this.getModel();
-      model.setBackgroundColor(color);
-    }
   }
 
   getBackgroundColor(): string {
@@ -573,24 +557,10 @@ abstract class Topic extends NodeGraph {
   }
 
   setBorderColor(color: string | undefined): void {
-    this._setBorderColor(color, true);
+    const model = this.getModel();
+    model.setBorderColor(color);
+
     this.redraw(true);
-  }
-
-  private _setBorderColor(color: string | undefined, updateModel: boolean): void {
-    if (updateModel) {
-      const model = this.getModel();
-      model.setBorderColor(color);
-    }
-
-    const bgColor = this.getBackgroundColor();
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.setColor(bgColor);
-    }
-
-    const innerShape = this.getInnerShape();
-    innerShape.setAttribute('strokeColor', color);
   }
 
   getBorderColor(): string {
@@ -1311,6 +1281,10 @@ abstract class Topic extends NodeGraph {
 
         const bgColor = this.getBackgroundColor();
         this.getInnerShape().setFill(bgColor);
+
+        // Update font ...
+        const fontColor = this.getFontColor();
+        textShape.setColor(fontColor);
 
         // Force the repaint in case that the main topic color has changed.
         if (this.getParent()) {
