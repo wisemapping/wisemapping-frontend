@@ -106,35 +106,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => <Palette htmlColor={modelBuilder.getSelectedTopicColorModel().getValue()} />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-fill-color',
-          defaultMessage: 'Fill color',
-        }),
-        options: [
-          {
-            render: (closeModal) => {
-              return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={modelBuilder.getSelectedTopicColorModel()}
-                />
-              );
-            },
-          },
-        ],
-      },
-      {
-        icon: <ClearOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-fill-color-default',
-          defaultMessage: 'Default fill color',
-        }),
-        onClick: () => modelBuilder.getSelectedTopicColorModel().setValue(undefined),
-        selected: () => modelBuilder.getSelectedTopicColorModel().getValue() === undefined,
-      },
-      null,
-      {
         icon: () => <SquareOutlined htmlColor={modelBuilder.getColorBorderModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-border-color',
@@ -161,6 +132,35 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         }),
         onClick: () => modelBuilder.getColorBorderModel().setValue(undefined),
         selected: () => modelBuilder.getColorBorderModel().getValue() === undefined,
+      },
+      null,
+      {
+        icon: () => <Palette htmlColor={modelBuilder.getSelectedTopicColorModel().getValue()} />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-fill-color',
+          defaultMessage: 'Fill color',
+        }),
+        options: [
+          {
+            render: (closeModal) => {
+              return (
+                <ColorPicker
+                  closeModal={closeModal}
+                  colorModel={modelBuilder.getSelectedTopicColorModel()}
+                />
+              );
+            },
+          },
+        ],
+      },
+      {
+        icon: <ClearOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-fill-color-default',
+          defaultMessage: 'Default fill color',
+        }),
+        onClick: () => modelBuilder.getSelectedTopicColorModel().setValue(undefined),
+        selected: () => modelBuilder.getSelectedTopicColorModel().getValue() === undefined,
       },
     ],
     disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
@@ -429,9 +429,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   return [
     addNodeToolbarConfiguration,
     deleteNodeToolbarConfiguration,
-    colorAndShapeToolbarConfiguration,
-    fontFormatToolbarConfiguration,
     connectionStyleConfiguration,
+    fontFormatToolbarConfiguration,
+    colorAndShapeToolbarConfiguration,
     editIconConfiguration,
     editNoteConfiguration,
     editLinkUrlConfiguration,

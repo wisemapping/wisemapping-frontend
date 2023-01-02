@@ -21,6 +21,7 @@ import { Elipse, Group } from '@wisemapping/web2d';
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
+import ColorUtil from './render/ColorUtil';
 
 class ShirinkConnector {
   private _isShrink: boolean;
@@ -79,34 +80,7 @@ class ShirinkConnector {
 
   setColor(color: string) {
     this._ellipse.setStroke('1', 'solid', color);
-    this._ellipse.setFill(this.lightenColor(color, 100));
-  }
-
-  private lightenColor(col: string, amt: number): string {
-    let usePound = false;
-
-    if (col[0] === '#') {
-      col = col.slice(1);
-      usePound = true;
-    }
-
-    const num = parseInt(col, 16);
-    let r = (num >> 16) + amt;
-
-    if (r > 255) r = 255;
-    else if (r < 0) r = 0;
-
-    let b = ((num >> 8) & 0x00ff) + amt;
-
-    if (b > 255) b = 255;
-    else if (b < 0) b = 0;
-
-    let g = (num & 0x0000ff) + amt;
-
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
-
-    return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
+    this._ellipse.setFill(ColorUtil.lightenColor(color, 100));
   }
 
   setVisibility(value: boolean, fade = 0): void {

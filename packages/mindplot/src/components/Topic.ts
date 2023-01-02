@@ -43,6 +43,7 @@ import ImageIcon from './ImageIcon';
 import PositionType from './PositionType';
 import LineTopicShape from './widget/LineTopicShape';
 import ImageTopicShape from './widget/ImageTopicShape';
+import ColorUtil from './render/ColorUtil';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -531,25 +532,19 @@ abstract class Topic extends NodeGraph {
 
   setBackgroundColor(color: string | undefined): void {
     this._setBackgroundColor(color, true);
+    this.redraw();
   }
 
   setConnectionStyle(type: LineType): void {
     const model = this.getModel();
     model.setConnectionStyle(type);
-
-    // Needs to change change all the lines types. Outgoing are part of the children.
-    this.getChildren().forEach((topic: Topic) => topic.redraw());
+    this.redraw(true);
   }
 
   setConnectionColor(value: string | undefined): void {
     const model = this.getModel();
     model.setConnectionColor(value);
-
-    // Force redraw for changing line color ...
-    this.redraw();
-
-    // Needs to change change all the lines color. Outgoing are part of the children.
-    this.getChildren().forEach((topic: Topic) => topic.redraw());
+    this.redraw(true);
   }
 
   private _setBackgroundColor(color: string | undefined, updateModel: boolean) {
@@ -565,6 +560,12 @@ abstract class Topic extends NodeGraph {
   getBackgroundColor(): string {
     const model = this.getModel();
     let result = model.getBackgroundColor();
+
+    if (!result && !this.isCentralTopic()) {
+      const bolderColor = this.getBorderColor();
+      result = ColorUtil.lightenColor(bolderColor, 140);
+    }
+
     if (!result) {
       result = TopicStyle.defaultBackgroundColor(this);
     }
@@ -573,9 +574,7 @@ abstract class Topic extends NodeGraph {
 
   setBorderColor(color: string | undefined): void {
     this._setBorderColor(color, true);
-
-    // @todo: review this ...
-    this.getChildren().forEach((t) => t.redraw());
+    this.redraw(true);
   }
 
   private _setBorderColor(color: string | undefined, updateModel: boolean): void {
@@ -1281,7 +1280,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  redraw(): void {
+  redraw(redrawChildren = false): void {
     if (this._isInWorkspace) {
       const textShape = this.getTextShape();
       if (this.getShapeType() !== 'image') {
@@ -1315,6 +1314,9 @@ abstract class Topic extends NodeGraph {
         const borderColor = this.getBorderColor();
         this.getInnerShape().setStroke(1, 'solid', borderColor);
 
+        const bgColor = this.getBackgroundColor();
+        this.getInnerShape().setFill(bgColor);
+
         // Force the repaint in case that the main topic color has changed.
         if (this.getParent()) {
           this._connector.setColor(borderColor);
@@ -1327,6 +1329,10 @@ abstract class Topic extends NodeGraph {
         // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
         this.setSize(size, false);
+      }
+
+      if (redrawChildren) {
+        this.getChildren().forEach((t) => t.redraw(redrawChildren));
       }
     }
   }
