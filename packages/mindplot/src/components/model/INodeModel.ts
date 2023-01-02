@@ -197,7 +197,7 @@ abstract class INodeModel {
     return this.getProperty('borderColor') as string;
   }
 
-  setBorderColor(color: string): void {
+  setBorderColor(color: string | undefined): void {
     this.putProperty('borderColor', color);
   }
 
@@ -205,7 +205,7 @@ abstract class INodeModel {
     return this.getProperty('backgroundColor') as string;
   }
 
-  setBackgroundColor(color: string): void {
+  setBackgroundColor(color: string | undefined): void {
     this.putProperty('backgroundColor', color);
   }
 

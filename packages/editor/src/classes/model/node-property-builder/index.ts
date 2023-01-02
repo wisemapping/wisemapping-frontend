@@ -82,7 +82,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic color
    */
-  getSelectedTopicColorModel(): NodeProperty<string> {
+  getSelectedTopicColorModel(): NodeProperty<string | undefined> {
     if (!this.selectedTopicColorModel)
       this.selectedTopicColorModel = {
         getValue: () => this.designer.getModel().selectedTopic()?.getBackgroundColor(),
@@ -116,7 +116,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic border color
    */
-  getColorBorderModel(): NodeProperty<string> {
+  getColorBorderModel(): NodeProperty<string | undefined> {
     if (!this.borderColorModel)
       this.borderColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getBorderColor()),
@@ -201,11 +201,11 @@ class NodePropertyBuilder {
     return this.connetionStyleModel;
   }
 
-  getConnectionColorModel(): NodeProperty<string> {
+  getConnectionColorModel(): NodeProperty<string | undefined> {
     if (!this.connectionColoreModel)
       this.connectionColoreModel = {
         getValue: () => this.selectedTopic()?.getConnectionColor(),
-        setValue: (value: string) => this.designer.changeConnectionColor(value),
+        setValue: (value: string | undefined) => this.designer.changeConnectionColor(value),
       };
     return this.connectionColoreModel;
   }

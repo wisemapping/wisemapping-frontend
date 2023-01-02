@@ -786,7 +786,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeBackgroundColor(color: string) {
+  changeBackgroundColor(color: string | undefined) {
     const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
 
@@ -796,7 +796,7 @@ class Designer extends Events {
     }
   }
 
-  changeBorderColor(color: string) {
+  changeBorderColor(color: string | undefined) {
     const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -833,7 +833,7 @@ class Designer extends Events {
     }
   }
 
-  changeConnectionColor(value: string): void {
+  changeConnectionColor(value: string | undefined): void {
     const topicsIds = this.getModel()
       .filterSelectedTopics()
       .map((t) => t.getId());

@@ -37,6 +37,7 @@ import GestureOutlined from '@mui/icons-material/GestureOutlined';
 import TimelineOutined from '@mui/icons-material/TimelineOutlined';
 import ShareOutlined from '@mui/icons-material/ShareOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
+import ClearOutlined from '@mui/icons-material/ClearOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -58,7 +59,7 @@ const keyTooltip = (msg: string, key: string): string => {
 };
 
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
-  const valueBulder = new NodePropertyValueModelBuilder(model.getDesigner());
+  const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <BrushOutlinedIcon />,
@@ -73,8 +74,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-rectangle',
           defaultMessage: 'Rectangle shape',
         }),
-        onClick: () => valueBulder.getTopicShapeModel().setValue('rectangle'),
-        selected: () => valueBulder.getTopicShapeModel().getValue() === 'rectangle',
+        onClick: () => modelBuilder.getTopicShapeModel().setValue('rectangle'),
+        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'rectangle',
       },
       {
         icon: <CheckBoxOutlineBlankOutlinedIcon />,
@@ -82,8 +83,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-rounded',
           defaultMessage: 'Rounded shape',
         }),
-        onClick: () => valueBulder.getTopicShapeModel().setValue('rounded rectangle'),
-        selected: () => valueBulder.getTopicShapeModel().getValue() === 'rounded rectangle',
+        onClick: () => modelBuilder.getTopicShapeModel().setValue('rounded rectangle'),
+        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'rounded rectangle',
       },
       {
         icon: <HorizontalRuleOutlinedIcon />,
@@ -91,8 +92,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-line',
           defaultMessage: 'Line shape',
         }),
-        onClick: () => valueBulder.getTopicShapeModel().setValue('line'),
-        selected: () => valueBulder.getTopicShapeModel().getValue() === 'line',
+        onClick: () => modelBuilder.getTopicShapeModel().setValue('line'),
+        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'line',
       },
       {
         icon: <CircleOutlinedIcon />,
@@ -100,12 +101,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-ellipse',
           defaultMessage: 'Ellipse shape',
         }),
-        onClick: () => valueBulder.getTopicShapeModel().setValue('elipse'),
-        selected: () => valueBulder.getTopicShapeModel().getValue() === 'elipse',
+        onClick: () => modelBuilder.getTopicShapeModel().setValue('elipse'),
+        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'elipse',
       },
       null,
       {
-        icon: () => <Palette htmlColor={valueBulder.getSelectedTopicColorModel().getValue()} />,
+        icon: () => <Palette htmlColor={modelBuilder.getSelectedTopicColorModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-fill-color',
           defaultMessage: 'Fill color',
@@ -116,7 +117,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               return (
                 <ColorPicker
                   closeModal={closeModal}
-                  colorModel={valueBulder.getSelectedTopicColorModel()}
+                  colorModel={modelBuilder.getSelectedTopicColorModel()}
                 />
               );
             },
@@ -124,7 +125,17 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ],
       },
       {
-        icon: () => <SquareOutlined htmlColor={valueBulder.getColorBorderModel().getValue()} />,
+        icon: <ClearOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-fill-color-default',
+          defaultMessage: 'Default fill color',
+        }),
+        onClick: () => modelBuilder.getSelectedTopicColorModel().setValue(undefined),
+        selected: () => modelBuilder.getSelectedTopicColorModel().getValue() === undefined,
+      },
+      null,
+      {
+        icon: () => <SquareOutlined htmlColor={modelBuilder.getColorBorderModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-border-color',
           defaultMessage: 'Border color',
@@ -135,12 +146,21 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               return (
                 <ColorPicker
                   closeModal={closeModal}
-                  colorModel={valueBulder.getColorBorderModel()}
+                  colorModel={modelBuilder.getColorBorderModel()}
                 />
               );
             },
           },
         ],
+      },
+      {
+        icon: <ClearOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-border-color-default',
+          defaultMessage: 'Default border color',
+        }),
+        onClick: () => modelBuilder.getColorBorderModel().setValue(undefined),
+        selected: () => modelBuilder.getColorBorderModel().getValue() === undefined,
       },
     ],
     disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
@@ -159,8 +179,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-curved-thick',
           defaultMessage: 'Thick Curved',
         }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
-        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
+        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
+        selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
       },
       {
         icon: <SwapCallsOutlined />,
@@ -168,8 +188,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-curved-thin',
           defaultMessage: 'Thin Curved',
         }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.THIN_CURVED),
-        selected: () => valueBulder.getConnectionStyleModel().getValue() === LineType.THIN_CURVED,
+        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.THIN_CURVED),
+        selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THIN_CURVED,
       },
       {
         icon: <PolylineOutlined />,
@@ -177,9 +197,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-polyline',
           defaultMessage: 'Simple Polyline',
         }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.POLYLINE_MIDDLE),
+        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.POLYLINE_MIDDLE),
         selected: () =>
-          valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_MIDDLE,
+          modelBuilder.getConnectionStyleModel().getValue() === LineType.POLYLINE_MIDDLE,
       },
       {
         icon: <TimelineOutined />,
@@ -187,13 +207,13 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-polyline-curved',
           defaultMessage: 'Curved Polyline',
         }),
-        onClick: () => valueBulder.getConnectionStyleModel().setValue(LineType.POLYLINE_CURVED),
+        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.POLYLINE_CURVED),
         selected: () =>
-          valueBulder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
+          modelBuilder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
       },
       null,
       {
-        icon: () => <Palette htmlColor={valueBulder.getConnectionColorModel().getValue()} />,
+        icon: () => <Palette htmlColor={modelBuilder.getConnectionColorModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-color',
           defaultMessage: 'Color',
@@ -204,12 +224,21 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               return (
                 <ColorPicker
                   closeModal={closeModal}
-                  colorModel={valueBulder.getConnectionColorModel()}
+                  colorModel={modelBuilder.getConnectionColorModel()}
                 />
               );
             },
           },
         ],
+      },
+      {
+        icon: <ClearOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-color-default',
+          defaultMessage: 'Default color',
+        }),
+        onClick: () => modelBuilder.getConnectionColorModel().setValue(undefined),
+        selected: () => modelBuilder.getConnectionColorModel().getValue() === undefined,
       },
     ],
     disabled: () => {
@@ -229,7 +258,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        render: () => <FontFamilySelector fontFamilyModel={valueBulder.getFontFamilyModel()} />,
+        render: () => <FontFamilySelector fontFamilyModel={modelBuilder.getFontFamilyModel()} />,
       },
       null,
       {
@@ -238,7 +267,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-bigger',
           defaultMessage: 'Bigger',
         }),
-        onClick: () => valueBulder.getFontSizeModel().switchValue(SwitchValueDirection.up),
+        onClick: () => modelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.up),
       },
       {
         icon: <TextDecreaseOutlinedIcon></TextDecreaseOutlinedIcon>,
@@ -246,7 +275,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-smaller',
           defaultMessage: 'Smaller',
         }),
-        onClick: () => valueBulder.getFontSizeModel().switchValue(SwitchValueDirection.down),
+        onClick: () => modelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.down),
       },
       null,
       {
@@ -258,8 +287,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           }),
           'B',
         ),
-        onClick: valueBulder.fontWeigthModel().switchValue,
-        selected: () => valueBulder.fontWeigthModel().getValue() === 'bold',
+        onClick: modelBuilder.fontWeigthModel().switchValue,
+        selected: () => modelBuilder.fontWeigthModel().getValue() === 'bold',
       },
       {
         icon: <FormatItalicIcon />,
@@ -270,12 +299,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           }),
           'I',
         ),
-        onClick: valueBulder.getFontStyleModel().switchValue,
-        selected: () => valueBulder.getFontStyleModel().getValue() === 'italic',
+        onClick: modelBuilder.getFontStyleModel().switchValue,
+        selected: () => modelBuilder.getFontStyleModel().getValue() === 'italic',
       },
       null,
       {
-        icon: () => <Palette htmlColor={valueBulder.getFontColorModel().getValue() as string} />,
+        icon: () => <Palette htmlColor={modelBuilder.getFontColorModel().getValue() as string} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-color',
           defaultMessage: 'Color',
@@ -284,7 +313,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           {
             render: (closeModal) => {
               return (
-                <ColorPicker closeModal={closeModal} colorModel={valueBulder.getFontColorModel()} />
+                <ColorPicker
+                  closeModal={closeModal}
+                  colorModel={modelBuilder.getFontColorModel()}
+                />
               );
             },
           },
@@ -322,7 +354,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     options: [
       {
         render: (closeModal) => (
-          <TopicLink closeModal={closeModal} urlModel={valueBulder.getLinkModel()}></TopicLink>
+          <TopicLink closeModal={closeModal} urlModel={modelBuilder.getLinkModel()}></TopicLink>
         ),
       },
     ],
@@ -343,7 +375,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       {
         tooltip: 'Node note',
         render: (closeModal) => (
-          <TopicNote closeModal={closeModal} noteModel={valueBulder.getNoteModel()} />
+          <TopicNote closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
         ),
       },
     ],
@@ -367,7 +399,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Add Icon',
         }),
         render: (closeModal) => (
-          <IconPicker triggerClose={closeModal} iconModel={valueBulder.getTopicIconModel()} />
+          <IconPicker triggerClose={closeModal} iconModel={modelBuilder.getTopicIconModel()} />
         ),
       },
     ],

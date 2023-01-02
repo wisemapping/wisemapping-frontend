@@ -114,7 +114,7 @@ abstract class Topic extends NodeGraph {
   protected _setShapeType(type: TopicShapeType, updateModel: boolean) {
     // Remove inner shape figure ...
     const model = this.getModel();
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       model.setShapeType(type);
     }
 
@@ -405,7 +405,7 @@ abstract class Topic extends NodeGraph {
   setFontFamily(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setFontName(value);
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setFontFamily(value);
     }
@@ -416,7 +416,7 @@ abstract class Topic extends NodeGraph {
     const textShape = this.getTextShape();
     textShape.setSize(value);
 
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setFontSize(value);
     }
@@ -426,7 +426,7 @@ abstract class Topic extends NodeGraph {
   setFontStyle(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setStyle(value);
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setFontStyle(value);
     }
@@ -436,7 +436,7 @@ abstract class Topic extends NodeGraph {
   setFontWeight(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setWeight(value);
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setFontWeight(value);
     }
@@ -496,7 +496,7 @@ abstract class Topic extends NodeGraph {
   setFontColor(value: string, updateModel?: boolean) {
     const textShape = this.getTextShape();
     textShape.setColor(value);
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setFontColor(value);
     }
@@ -506,7 +506,7 @@ abstract class Topic extends NodeGraph {
     const textShape = this.getTextShape();
     textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
 
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setText(text || undefined);
     }
@@ -529,7 +529,7 @@ abstract class Topic extends NodeGraph {
     return text || TopicStyle.defaultText(this);
   }
 
-  setBackgroundColor(color: string): void {
+  setBackgroundColor(color: string | undefined): void {
     this._setBackgroundColor(color, true);
   }
 
@@ -539,16 +539,9 @@ abstract class Topic extends NodeGraph {
 
     // Needs to change change all the lines types. Outgoing are part of the children.
     this.getChildren().forEach((topic: Topic) => topic.redraw());
-
-    // If connection of the childen matches, just reset the style in the model.
-    this.getChildren().forEach((topic: Topic) => {
-      if (topic.getModel().getConnectionStyle() === type) {
-        topic.getModel().setConnectionStyle(undefined);
-      }
-    });
   }
 
-  setConnectionColor(value: string): void {
+  setConnectionColor(value: string | undefined): void {
     const model = this.getModel();
     model.setConnectionColor(value);
 
@@ -557,20 +550,13 @@ abstract class Topic extends NodeGraph {
 
     // Needs to change change all the lines color. Outgoing are part of the children.
     this.getChildren().forEach((topic: Topic) => topic.redraw());
-
-    // If connection of the childen matches, just reset the style in the model.
-    this.getChildren().forEach((topic: Topic) => {
-      if (topic.getModel().getConnectionColor() === value) {
-        topic.getModel().setConnectionColor(undefined);
-      }
-    });
   }
 
-  private _setBackgroundColor(color: string, updateModel: boolean) {
+  private _setBackgroundColor(color: string | undefined, updateModel: boolean) {
     const innerShape = this.getInnerShape();
     innerShape.setFill(color);
 
-    if ($defined(updateModel) && updateModel) {
+    if (updateModel) {
       const model = this.getModel();
       model.setBackgroundColor(color);
     }
@@ -585,26 +571,27 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setBorderColor(color: string): void {
+  setBorderColor(color: string | undefined): void {
     this._setBorderColor(color, true);
 
     // @todo: review this ...
     this.getChildren().forEach((t) => t.redraw());
   }
 
-  private _setBorderColor(color: string, updateModel: boolean): void {
-    const innerShape = this.getInnerShape();
-    innerShape.setAttribute('strokeColor', color);
-
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.setAttribute('strokeColor', color);
-    }
-
-    if ($defined(updateModel) && updateModel) {
+  private _setBorderColor(color: string | undefined, updateModel: boolean): void {
+    if (updateModel) {
       const model = this.getModel();
       model.setBorderColor(color);
     }
+
+    const bgColor = this.getBackgroundColor();
+    const connector = this.getShrinkConnector();
+    if (connector) {
+      connector.setColor(bgColor);
+    }
+
+    const innerShape = this.getInnerShape();
+    innerShape.setAttribute('strokeColor', color);
   }
 
   getBorderColor(): string {
@@ -1324,7 +1311,7 @@ abstract class Topic extends NodeGraph {
         iconGroup.setPosition(padding, yPosition);
         textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
 
-        // Has color changed ?
+        // Update topic color ...
         const borderColor = this.getBorderColor();
         this.getInnerShape().setStroke(1, 'solid', borderColor);
 

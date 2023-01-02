@@ -162,13 +162,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeBackgroundColorToTopic(topicsIds: number[], color: string) {
-    $assert(topicsIds, 'topicIds can not be null');
-    $assert(color, 'color can not be null');
-
-    const commandFunc = (topic: Topic, commandColor: string) => {
+  changeBackgroundColorToTopic(topicsIds: number[], color: string | undefined) {
+    const commandFunc = (topic: Topic, value: string | undefined) => {
       const result = topic.getBackgroundColor();
-      topic.setBackgroundColor(commandColor);
+      topic.setBackgroundColor(value);
       return result;
     };
 
@@ -178,11 +175,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeBorderColorToTopic(topicsIds: number[], color: string): void {
-    $assert(topicsIds, 'topicIds can not be null');
-    $assert(color, 'topicIds can not be null');
-
-    const commandFunc = (topic: Topic, commandColor: string) => {
+  changeBorderColorToTopic(topicsIds: number[], color: string | undefined): void {
+    const commandFunc = (topic: Topic, commandColor: string | undefined) => {
       const result = topic.getBorderColor();
       topic.setBorderColor(commandColor);
       return result;
@@ -235,8 +229,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  changeConnectionColorToTopic(topicsIds: number[], value: string) {
-    const commandFunc = (topic: Topic, color: string) => {
+  changeConnectionColorToTopic(topicsIds: number[], value: string | undefined) {
+    const commandFunc = (topic: Topic, color: string | undefined) => {
       const result: string = topic.getConnectionColor();
       topic.setConnectionColor(color);
       return result;
