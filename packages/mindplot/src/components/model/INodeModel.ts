@@ -193,7 +193,7 @@ abstract class INodeModel {
     return this.getProperty('fontSize') as number;
   }
 
-  getBorderColor(): string {
+  getBorderColor(): string | undefined {
     return this.getProperty('borderColor') as string;
   }
 
@@ -201,11 +201,11 @@ abstract class INodeModel {
     this.putProperty('borderColor', color);
   }
 
-  getBackgroundColor(): string {
+  getBackgroundColor(): string | undefined {
     return this.getProperty('backgroundColor') as string;
   }
 
-  setBackgroundColor(color: string) {
+  setBackgroundColor(color: string): void {
     this.putProperty('backgroundColor', color);
   }
 

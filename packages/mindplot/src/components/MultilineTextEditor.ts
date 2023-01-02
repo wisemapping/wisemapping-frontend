@@ -33,12 +33,12 @@ class EditorComponent extends Events {
     this._topic = topic;
 
     // Create editor ui
-    this._containerElem = EditorComponent._buildEditor();
+    this._containerElem = EditorComponent.buildEditor();
     $('body').append(this._containerElem);
-    this._registerEvents(this._containerElem);
+    this.registerEvents(this._containerElem);
   }
 
-  private static _buildEditor() {
+  private static buildEditor() {
     const result = $('<div></div>').attr('id', 'textContainer').css({
       display: 'none',
       zIndex: '8',
@@ -58,8 +58,8 @@ class EditorComponent extends Events {
     return result;
   }
 
-  private _registerEvents(containerElem: JQuery): void {
-    const textareaElem = this._getTextareaElem();
+  private registerEvents(containerElem: JQuery): void {
+    const textareaElem = this.getTextareaElem();
     textareaElem.on('keydown', (event) => {
       switch (event.code) {
         case 'Escape':
@@ -68,7 +68,7 @@ class EditorComponent extends Events {
         case 'Enter': {
           if (event.metaKey || event.ctrlKey) {
             // Add return ...
-            const text = this._getTextAreaText();
+            const text = this.getTextAreaText();
             const cursorPosition = text.length;
             const head = text.substring(0, cursorPosition);
             let tail = '';
@@ -96,9 +96,9 @@ class EditorComponent extends Events {
     });
 
     textareaElem.on('keyup', (event) => {
-      const text = this._getTextareaElem().val();
+      const text = this.getTextareaElem().val();
       this.fireEvent('input', [event, text]);
-      this._adjustEditorSize();
+      this.adjustEditorSize();
     });
 
     // If the user clicks on the input, all event must be ignored ...
@@ -113,10 +113,10 @@ class EditorComponent extends Events {
     });
   }
 
-  private _adjustEditorSize() {
-    const textElem = this._getTextareaElem();
+  private adjustEditorSize() {
+    const textElem = this.getTextareaElem();
 
-    const lines = this._getTextAreaText().split('\n');
+    const lines = this.getTextAreaText().split('\n');
     let maxLineLength = 1;
     lines.forEach((line: string) => {
       maxLineLength = Math.max(line.length, maxLineLength);
@@ -131,9 +131,9 @@ class EditorComponent extends Events {
     });
   }
 
-  private _updateModel() {
-    if (this._topic && this._topic.getText() !== this._getTextAreaText()) {
-      const text = this._getTextAreaText();
+  private updateModel() {
+    if (this._topic && this._topic.getText() !== this.getTextAreaText()) {
+      const text = this.getTextAreaText();
       const topicId = this._topic.getId();
 
       const actionDispatcher = ActionDispatcher.getInstance();
@@ -147,7 +147,7 @@ class EditorComponent extends Events {
     }
   }
 
-  show(defaultText: string) {
+  show(textOverwrite?: string) {
     const topic = this._topic;
 
     // Hide topic text ...
@@ -158,12 +158,11 @@ class EditorComponent extends Events {
     const fontStyle = nodeText.getFontStyle();
     fontStyle.size = nodeText.getHtmlFontSize();
     fontStyle.color = nodeText.getColor();
-    this._setStyle(fontStyle);
+    this.setStyle(fontStyle);
 
     // Set editor's initial size
     // Position the editor and set the size...
     const textShape = topic.getTextShape();
-
     this._containerElem.css('display', 'block');
 
     let { top, left } = textShape.getNativePosition();
@@ -172,25 +171,26 @@ class EditorComponent extends Events {
     left -= 4;
     this._containerElem.offset({ top, left });
 
-    // Set editor's initial text ...
-    const text = defaultText || topic.getText();
-    this._setText(text);
+    // Set editor's initial text. If the text has not been specifed, it will be empty
+    const modelText = topic.getModel().getText();
+    const text = textOverwrite || modelText || '';
+    this.setText(text);
 
     // Set the element focus and select the current text ...
-    const inputElem = this._getTextareaElem();
+    const inputElem = this.getTextareaElem();
     if (inputElem) {
-      this._positionCursor(inputElem, !$defined(defaultText));
+      this.positionCursor(inputElem, textOverwrite === undefined);
     }
   }
 
-  private _setStyle(fontStyle: {
+  private setStyle(fontStyle: {
     fontFamily: string;
     style: string;
     weight: string;
     size: number;
     color: string;
   }) {
-    const inputField = this._getTextareaElem();
+    const inputField = this.getTextareaElem();
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     /* eslint-disable no-param-reassign */
     if (!$defined(fontStyle.fontFamily)) {
@@ -217,23 +217,23 @@ class EditorComponent extends Events {
     this._containerElem.css(style);
   }
 
-  private _setText(text: string): void {
-    const textareaElem = this._getTextareaElem();
+  private setText(text: string): void {
+    const textareaElem = this.getTextareaElem();
     textareaElem.val(text);
-    this._adjustEditorSize();
+    this.adjustEditorSize();
   }
 
-  private _getTextAreaText(): string {
-    return this._getTextareaElem().val() as string;
+  private getTextAreaText(): string {
+    return this.getTextareaElem().val() as string;
   }
 
-  private _getTextareaElem(): JQuery<HTMLTextAreaElement> {
+  private getTextareaElem(): JQuery<HTMLTextAreaElement> {
     return this._containerElem.find('textarea');
   }
 
-  private _positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
+  private positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
     textareaElem.focus();
-    const { length } = this._getTextAreaText();
+    const { length } = this.getTextAreaText();
     if (selectText) {
       // Mark text as selected ...
       textareaElem[0].setSelectionRange(0, length);
@@ -244,7 +244,7 @@ class EditorComponent extends Events {
 
   close(update: boolean): void {
     if (update) {
-      this._updateModel();
+      this.updateModel();
     }
     // Remove it form the screen ...
     this._containerElem.remove();
@@ -268,7 +268,7 @@ class MultitTextEditor {
     return this.component !== null;
   }
 
-  show(topic: Topic, defaultText: string): void {
+  show(topic: Topic, textOverwrite?: string): void {
     // Is it active ?
     if (this.component) {
       console.error('Editor was already displayed. Please, clouse it');
@@ -276,7 +276,7 @@ class MultitTextEditor {
     }
     // Create a new instance
     this.component = new EditorComponent(topic);
-    this.component.show(defaultText);
+    this.component.show(textOverwrite);
   }
 
   close(update: boolean): void {

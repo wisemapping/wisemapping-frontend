@@ -88,13 +88,33 @@ const KeyboardShorcutsHelp = (): ReactElement => {
             <td>
               <FormattedMessage
                 id="shortcut-help-pane.edit-topic-key"
-                defaultMessage="Just start typing"
+                defaultMessage="F2 or Double Click"
               />
             </td>
             <td>
               <FormattedMessage
                 id="shortcut-help-pane.edit-topic-key"
-                defaultMessage="Just start typing"
+                defaultMessage="F2 or Double Click"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.overwrite-edit-topic"
+                defaultMessage="Overwrite topic text"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.overwrite-edit-topic-key"
+                defaultMessage="Type on a selected topic"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.overwrite-edit-topic-key"
+                defaultMessage="Type on a selected topic"
               />
             </td>
           </tr>

@@ -108,12 +108,12 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     const bgColor = topic.getBackgroundColor();
-    if ($defined(bgColor)) {
+    if (bgColor) {
       parentTopic.setAttribute('bgColor', bgColor);
     }
 
     const brColor = topic.getBorderColor();
-    if ($defined(brColor)) {
+    if (brColor) {
       parentTopic.setAttribute('brColor', brColor);
     }
 

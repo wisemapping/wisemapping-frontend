@@ -143,7 +143,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const bgColor = topic.getBackgroundColor();
-    if ($defined(bgColor)) {
+    if (bgColor) {
       parentTopic.setAttribute('bgColor', bgColor);
     }
 

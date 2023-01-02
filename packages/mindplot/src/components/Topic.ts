@@ -570,11 +570,6 @@ abstract class Topic extends NodeGraph {
     const innerShape = this.getInnerShape();
     innerShape.setFill(color);
 
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.setFill(color);
-    }
-
     if ($defined(updateModel) && updateModel) {
       const model = this.getModel();
       model.setBackgroundColor(color);
@@ -584,15 +579,17 @@ abstract class Topic extends NodeGraph {
   getBackgroundColor(): string {
     const model = this.getModel();
     let result = model.getBackgroundColor();
-    if (!$defined(result)) {
+    if (!result) {
       result = TopicStyle.defaultBackgroundColor(this);
     }
     return result;
   }
 
-  /** */
   setBorderColor(color: string): void {
     this._setBorderColor(color, true);
+
+    // @todo: review this ...
+    this.getChildren().forEach((t) => t.redraw());
   }
 
   private _setBorderColor(color: string, updateModel: boolean): void {
@@ -613,8 +610,22 @@ abstract class Topic extends NodeGraph {
   getBorderColor(): string {
     const model = this.getModel();
     let result = model.getBorderColor();
-    if (!$defined(result)) {
-      result = TopicStyle.defaultBorderColor(this);
+
+    // If the the style is a line, the color is alward the connection one.
+    if (this.getShapeType() === 'line') {
+      result = this.getConnectionColor();
+    }
+
+    if (result === undefined) {
+      const parent = this.getParent();
+      if (parent) {
+        result = parent.getBorderColor();
+      }
+    }
+
+    // If border color has not been defined, use the connection color for the border ...
+    if (!result) {
+      result = this.getConnectionColor();
     }
     return result;
   }
@@ -753,9 +764,7 @@ abstract class Topic extends NodeGraph {
   }
 
   showTextEditor(text: string) {
-    this._getTopicEventDispatcher().show(this, {
-      text,
-    });
+    this._getTopicEventDispatcher().show(this, text);
   }
 
   getNoteValue(): string {
@@ -1276,7 +1285,7 @@ abstract class Topic extends NodeGraph {
         const connColorChanged = color !== this.getParent()!.getConnectionColor();
         if (connColorChanged) {
           this._outgoingLine.redraw();
-          this._connector.setFill(color);
+
           this.getChildren().forEach((t) => t.redraw());
           result = true;
         }
@@ -1316,12 +1325,14 @@ abstract class Topic extends NodeGraph {
         textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
 
         // Has color changed ?
-        if (this.getShapeType() === 'line') {
-          const color = this.getConnectionColor();
-          this.getInnerShape().setStroke(1, 'solid', color);
+        const borderColor = this.getBorderColor();
+        this.getInnerShape().setStroke(1, 'solid', borderColor);
 
-          // Force the repaint in case that the main topic color has changed.
-          if (this.getParent() && this.getParent()?.isCentralTopic()) {
+        // Force the repaint in case that the main topic color has changed.
+        if (this.getParent()) {
+          this._connector.setColor(borderColor);
+
+          if (this.getParent()?.isCentralTopic()) {
             this._outgoingLine?.redraw();
           }
         }

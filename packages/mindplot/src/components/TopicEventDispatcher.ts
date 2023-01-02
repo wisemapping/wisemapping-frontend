@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '@wisemapping/core-js';
 import Events from './Events';
 import Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
@@ -43,13 +42,11 @@ class TopicEventDispatcher extends Events {
     }
   }
 
-  show(topic: Topic, options?): void {
-    this.process(TopicEvent.EDIT, topic, options);
+  show(topic: Topic, textOverwrite?: string): void {
+    this.process(TopicEvent.EDIT, topic, textOverwrite);
   }
 
-  process(eventType: string, topic: Topic, options?): void {
-    $assert(eventType, 'eventType can not be null');
-
+  process(eventType: string, topic: Topic, textOverwrite?: string): void {
     // Close all previous open editor ....
     const editor = MultitTextEditor.getInstance();
     if (editor.isActive()) {
@@ -59,7 +56,7 @@ class TopicEventDispatcher extends Events {
     // Open the new editor ...
     const model = topic.getModel();
     if (model.getShapeType() !== 'image' && !this._readOnly && eventType === TopicEvent.EDIT) {
-      editor.show(topic, options ? options.text : '');
+      editor.show(topic, textOverwrite);
     } else {
       this.fireEvent(eventType, { model, readOnly: this._readOnly });
     }

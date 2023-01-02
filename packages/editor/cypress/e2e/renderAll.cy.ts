@@ -16,6 +16,7 @@ context('Render all sample maps', () => {
     'sample4',
     'sample5',
     'sample6',
+    'connection-style',
     'sample8',
     'welcome',
   ].forEach((mapId) => {

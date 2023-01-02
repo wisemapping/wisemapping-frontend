@@ -145,7 +145,10 @@ class FreemindExporter extends Exporter {
 
     const wiseShape: TopicShapeType = mindmapTopic.getShapeType();
     if (wiseShape && wiseShape !== 'line') {
-      freemindNode.setBackgorundColor(this.rgbToHex(mindmapTopic.getBackgroundColor()));
+      const color = mindmapTopic.getBackgroundColor();
+      if (color) {
+        freemindNode.setBackgorundColor(this.rgbToHex(color));
+      }
     }
 
     if (wiseShape) {
@@ -242,7 +245,10 @@ class FreemindExporter extends Exporter {
   private addEdgeNode(freemainMap: FreeminNode, mindmapTopic: INodeModel): void {
     if (mindmapTopic.getBorderColor()) {
       const edgeNode: Edge = this.objectFactory.createEdge();
-      edgeNode.setColor(this.rgbToHex(mindmapTopic.getBorderColor()));
+      const color = mindmapTopic.getBorderColor();
+      if (color) {
+        edgeNode.setColor(this.rgbToHex(color));
+      }
       freemainMap.setArrowlinkOrCloudOrEdge(edgeNode);
     }
   }

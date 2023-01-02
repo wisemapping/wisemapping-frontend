@@ -169,11 +169,6 @@ class NodeModel extends INodeModel {
       this.setShapeType(shape);
     }
 
-    const borderColor = value.getBorderColor();
-    if (borderColor) {
-      this.setBorderColor(borderColor);
-    }
-
     const backgroundColor = value.getBackgroundColor();
     if (backgroundColor) {
       this.setBackgroundColor(backgroundColor);
