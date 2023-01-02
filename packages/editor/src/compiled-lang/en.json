@@ -125,6 +125,18 @@
       "value": "Add Topic"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Default color"
+    }
+  ],
   "editor-panel.tooltip-connection-style": [
     {
       "type": 0,
@@ -134,13 +146,13 @@
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Think Curve"
+      "value": "Thick Curved"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "Thin Curve"
+      "value": "Thin Curved"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
@@ -167,10 +179,22 @@
       "value": "Border color"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Default border color"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
       "value": "Fill color"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Default fill color"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -386,7 +410,7 @@
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Just start typing"
+      "value": "F2 or Double Click"
     }
   ],
   "shortcut-help-pane.navigation": [
@@ -399,6 +423,18 @@
     {
       "type": 0,
       "value": "Arrow keys"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Overwrite topic text"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Type on a selected topic"
     }
   ],
   "shortcut-help-pane.redo": [

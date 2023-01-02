@@ -125,22 +125,34 @@
       "value": "Agregar tópico"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Color por defecto"
+    }
+  ],
   "editor-panel.tooltip-connection-style": [
     {
       "type": 0,
-      "value": "Estilo de Connexión"
+      "value": "Estilo de conexión"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Curva guesa"
+      "value": "Curva ancha"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "Curva fina"
+      "value": "Curva delgada"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
@@ -167,10 +179,22 @@
       "value": "Color del border"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Color de border por defecto"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
-      "value": "Color del figura"
+      "value": "Color de relleno"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Color de relleno por defecto"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -399,6 +423,18 @@
     {
       "type": 0,
       "value": "Cursor"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Sobrescribir el texto del tópico"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Comenzar a escibribir en el tópico seleccionado"
     }
   ],
   "shortcut-help-pane.redo": [

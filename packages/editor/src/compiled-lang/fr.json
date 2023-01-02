@@ -125,6 +125,18 @@
       "value": "Agregar Topico"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Couleur"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur par défaut"
+    }
+  ],
   "editor-panel.tooltip-connection-style": [
     {
       "type": 0,
@@ -134,13 +146,13 @@
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "épaisse courbé"
+      "value": "Courbe large"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "Mince courbe"
+      "value": "Courbe mince"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
@@ -152,7 +164,7 @@
   "editor-panel.tooltip-connection-style-polyline-curved": [
     {
       "type": 0,
-      "value": "Polyligne courbe"
+      "value": "Courbe polyligne"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -167,10 +179,22 @@
       "value": "Color del borde"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur de bordure par défaut"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
-      "value": "Color del cotenido"
+      "value": "La couleur de remplissage"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Color de relleno por defecto"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -399,6 +423,18 @@
     {
       "type": 0,
       "value": "Touches directionnelles"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Sobrescribir el texto del tópico"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Commencer à écrire sur le sujet sélectionné"
     }
   ],
   "shortcut-help-pane.redo": [

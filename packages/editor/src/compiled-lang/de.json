@@ -131,6 +131,18 @@
       "value": "Thema hinzufügen"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Farbe"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Standardfarbe"
+    }
+  ],
   "editor-panel.tooltip-connection-style": [
     {
       "type": 0,
@@ -140,13 +152,13 @@
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Dicke Kurve"
+      "value": "Weite Kurve"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "Dünne Kurve"
+      "value": "Schlanke Kurve"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
@@ -158,7 +170,7 @@
   "editor-panel.tooltip-connection-style-polyline-curved": [
     {
       "type": 0,
-      "value": "Gekrümmte Polylinie"
+      "value": "Gebogene Polylinie"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -173,10 +185,22 @@
       "value": "Randfarbe"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Standardrandfarbe"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
       "value": "Füllfarbe"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Standardfüllfarbe"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -411,6 +435,18 @@
     {
       "type": 0,
       "value": "Pfeiltasten"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Thementext überschreiben"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Beginnen Sie mit dem Schreiben über das ausgewählte Thema"
     }
   ],
   "shortcut-help-pane.redo": [

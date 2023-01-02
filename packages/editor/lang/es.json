@@ -95,9 +95,6 @@
     "editor-panel.tooltip-topic-border-color": {
         "defaultMessage": "Color del border"
     },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Color del figura"
-    },
     "editor-panel.tooltip-topic-font-bigger": {
         "defaultMessage": "Incrementar"
     },
@@ -215,19 +212,40 @@
     "icon-picker.show-images": {
         "defaultMessage": "Mostrar imagenes"
     },
-    "editor-panel.tooltip-connection-style": {
-        "defaultMessage": "Estilo de Connexión"
-    },
-    "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "Curva fina"
-    },
-    "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "Curva guesa"
-    },
     "editor-panel.tooltip-connection-style-polyline": {
         "defaultMessage": "Polilinea"
     },
     "editor-panel.tooltip-connection-style-polyline-curved": {
         "defaultMessage": "Polilinea Curva"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Sobrescribir el texto del tópico"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Comenzar a escibribir en el tópico seleccionado"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Color"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Color por defecto"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Estilo de conexión"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Curva ancha"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Curva delgada"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Color de border por defecto"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Color de relleno"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Color de relleno por defecto"
     }
 }

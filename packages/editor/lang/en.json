@@ -62,14 +62,20 @@
   "editor-panel.tooltip-add-topic": {
     "defaultMessage": "Add Topic"
   },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "Default color"
+  },
   "editor-panel.tooltip-connection-style": {
     "defaultMessage": "Connection Style"
   },
-  "editor-panel.tooltip-connection-style-curved-thin": {
-    "defaultMessage": "Thin Curve"
-  },
   "editor-panel.tooltip-connection-style-curved-thick": {
-    "defaultMessage": "Think Curve"
+    "defaultMessage": "Thick Curved"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "Thin Curved"
   },
   "editor-panel.tooltip-connection-style-polyline": {
     "defaultMessage": "Simple Polyline"
@@ -83,8 +89,14 @@
   "editor-panel.tooltip-topic-border-color": {
     "defaultMessage": "Border color"
   },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "Default border color"
+  },
   "editor-panel.tooltip-topic-fill-color": {
     "defaultMessage": "Fill color"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "Default fill color"
   },
   "editor-panel.tooltip-topic-font-bigger": {
     "defaultMessage": "Bigger"
@@ -192,13 +204,19 @@
     "defaultMessage": "Edit topic text"
   },
   "shortcut-help-pane.edit-topic-key": {
-    "defaultMessage": "Just start typing"
+    "defaultMessage": "F2 or Double Click"
   },
   "shortcut-help-pane.navigation": {
     "defaultMessage": "Navigation"
   },
   "shortcut-help-pane.navigation-keys": {
     "defaultMessage": "Arrow keys"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "Overwrite topic text"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "Type on a selected topic"
   },
   "shortcut-help-pane.redo": {
     "defaultMessage": "Redo edition"

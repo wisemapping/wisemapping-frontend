@@ -113,9 +113,6 @@
     "editor-panel.tooltip-topic-border-color": {
         "defaultMessage": "Randfarbe"
     },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Füllfarbe"
-    },
     "editor-panel.tooltip-topic-font-bigger": {
         "defaultMessage": "Größer"
     },
@@ -221,19 +218,40 @@
     "icon-picker.show-images": {
         "defaultMessage": "Bilder anzeigen"
     },
-    "editor-panel.tooltip-connection-style": {
-        "defaultMessage": "Verbindungsstil"
-    },
-    "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "Dünne Kurve"
-    },
-    "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "Dicke Kurve"
-    },
     "editor-panel.tooltip-connection-style-polyline": {
         "defaultMessage": "Polylinie"
     },
     "editor-panel.tooltip-connection-style-polyline-curved": {
-        "defaultMessage": "Gekrümmte Polylinie"
+        "defaultMessage": "Gebogene Polylinie"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Thementext überschreiben"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Beginnen Sie mit dem Schreiben über das ausgewählte Thema"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Farbe"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Standardfarbe"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Verbindungsstil"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Weite Kurve"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Schlanke Kurve"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Standardrandfarbe"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Füllfarbe"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Standardfüllfarbe"
     }
 }

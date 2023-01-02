@@ -95,9 +95,6 @@
     "editor-panel.tooltip-topic-border-color": {
         "defaultMessage": "Color del borde"
     },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Color del cotenido"
-    },
     "editor-panel.tooltip-topic-font-bigger": {
         "defaultMessage": "Grande"
     },
@@ -215,19 +212,40 @@
     "icon-picker.show-images": {
         "defaultMessage": "Afficher les images"
     },
-    "editor-panel.tooltip-connection-style": {
-        "defaultMessage": "Style de connexion"
-    },
-    "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "Mince courbe"
-    },
-    "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "épaisse courbé"
-    },
     "editor-panel.tooltip-connection-style-polyline": {
         "defaultMessage": "Polyligne"
     },
     "editor-panel.tooltip-connection-style-polyline-curved": {
-        "defaultMessage": "Polyligne courbe"
+        "defaultMessage": "Courbe polyligne"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Sobrescribir el texto del tópico"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Commencer à écrire sur le sujet sélectionné"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Couleur"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Couleur par défaut"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Style de connexion"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Courbe large"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Courbe mince"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Couleur de bordure par défaut"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "La couleur de remplissage"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Color de relleno por defecto"
     }
 }
