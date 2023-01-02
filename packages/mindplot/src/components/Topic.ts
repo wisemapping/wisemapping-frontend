@@ -1260,9 +1260,6 @@ abstract class Topic extends NodeGraph {
           this._outgoingLine = this.createConnectionLine(targetTopic);
           this._outgoingLine.setVisibility(this.isVisible());
           workspace.append(this._outgoingLine);
-
-          // Update all the children...
-          this.getChildren().forEach((t) => t.redraw());
           result = true;
         }
 
@@ -1271,8 +1268,6 @@ abstract class Topic extends NodeGraph {
         const connColorChanged = color !== this.getParent()!.getConnectionColor();
         if (connColorChanged) {
           this._outgoingLine.redraw();
-
-          this.getChildren().forEach((t) => t.redraw());
           result = true;
         }
       }
