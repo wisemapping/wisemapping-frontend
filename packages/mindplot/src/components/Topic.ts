@@ -39,11 +39,11 @@ import NoteModel from './model/NoteModel';
 import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
-import ImageIcon from './ImageIcon';
 import PositionType from './PositionType';
 import LineTopicShape from './widget/LineTopicShape';
 import ImageTopicShape from './widget/ImageTopicShape';
 import ColorUtil from './render/ColorUtil';
+import Icon from './Icon';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -305,20 +305,19 @@ abstract class Topic extends NodeGraph {
     // Load topic features ...
     const model = this.getModel();
     const featuresModel = model.getFeatures();
+
     featuresModel.forEach((f) => {
       const icon = TopicFeatureFactory.createIcon(this, f, this.isReadOnly());
 
       const type = f.getType();
-      const addRemoveAction =
-        type === TopicFeatureFactory.SvgIcon.id || type === TopicFeatureFactory.EmojiIcon.id;
-
+      const addRemoveAction = type === 'eicon' || type === 'icon';
       result.addIcon(icon, addRemoveAction && !this.isReadOnly());
     });
 
     return result;
   }
 
-  addFeature(featureModel: FeatureModel): ImageIcon {
+  addFeature(featureModel: FeatureModel): Icon {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
 
@@ -326,10 +325,8 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.addFeature(featureModel);
 
-    const result: ImageIcon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
-    const isIcon =
-      featureModel.getType() === TopicFeatureFactory.SvgIcon.id ||
-      featureModel.getType() === TopicFeatureFactory.EmojiIcon.id;
+    const result: Icon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
+    const isIcon = featureModel.getType() === 'icon' || featureModel.getType() === 'eicon';
     iconGroup.addIcon(result, isIcon && !this.isReadOnly());
 
     this.redraw();
@@ -697,7 +694,7 @@ abstract class Topic extends NodeGraph {
 
   getNoteValue(): string {
     const model = this.getModel();
-    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    const notes = model.findFeatureByType('note');
     let result;
     if (notes.length > 0) {
       result = (notes[0] as NoteModel).getText();
@@ -710,7 +707,7 @@ abstract class Topic extends NodeGraph {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
-    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    const notes = model.findFeatureByType('note');
 
     if (!$defined(value) && notes.length > 0) {
       const featureId = notes[0].getId();
@@ -720,7 +717,7 @@ abstract class Topic extends NodeGraph {
         text: value,
       });
     } else {
-      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
+      dispatcher.addFeatureToTopic(topicId, 'note', {
         text: value,
       });
     }
@@ -729,7 +726,7 @@ abstract class Topic extends NodeGraph {
   getLinkValue(): string {
     const model = this.getModel();
     // @param {mindplot.model.LinkModel[]} links
-    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    const links = model.findFeatureByType('link');
     let result;
     if (links.length > 0) {
       result = (links[0] as LinkModel).getUrl();
@@ -742,7 +739,7 @@ abstract class Topic extends NodeGraph {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
-    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {
       const featureId = links[0].getId();
@@ -752,7 +749,7 @@ abstract class Topic extends NodeGraph {
         url: value,
       });
     } else {
-      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
+      dispatcher.addFeatureToTopic(topicId, 'link', {
         url: value,
       });
     }

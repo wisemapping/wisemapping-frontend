@@ -26,8 +26,6 @@ import Topic from './Topic';
 import ActionDispatcher from './ActionDispatcher';
 
 class EmojiCharIcon implements Icon {
-  private char: string;
-
   private element: ElementClass;
 
   private group: IconGroup;

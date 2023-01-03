@@ -22,6 +22,7 @@ import IconGroupRemoveTip from './IconGroupRemoveTip';
 import ImageIcon from './ImageIcon';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
+import Icon from './Icon';
 
 const ORDER_BY_TYPE = new Map<string, number>();
 ORDER_BY_TYPE.set('icon', 0);
@@ -29,7 +30,7 @@ ORDER_BY_TYPE.set('note', 1);
 ORDER_BY_TYPE.set('link', 2);
 
 class IconGroup {
-  private _icons: ImageIcon[];
+  private _icons: Icon[];
 
   private _group: Group;
 
@@ -84,7 +85,7 @@ class IconGroup {
     this._resize(this._icons.length);
   }
 
-  addIcon(icon: ImageIcon, remove: boolean) {
+  addIcon(icon: Icon, remove: boolean): void {
     $defined(icon, 'icon is not defined');
 
     // Order could have change, need to re-add all.
@@ -114,8 +115,8 @@ class IconGroup {
     }
   }
 
-  private _findIconFromModel(iconModel: FeatureModel) {
-    let result: ImageIcon | null = null;
+  private _findIconFromModel(iconModel: FeatureModel): Icon {
+    let result: Icon | null = null;
 
     this._icons.forEach((icon) => {
       const elModel = icon.getModel();
@@ -140,7 +141,7 @@ class IconGroup {
     this._removeIcon(icon);
   }
 
-  private _removeIcon(icon: ImageIcon) {
+  private _removeIcon(icon: Icon) {
     $assert(icon, 'icon can not be null');
 
     this._removeTip.close(0);
@@ -179,7 +180,7 @@ class IconGroup {
     this._group.setCoordSize(iconsLength * iconSize, iconSize);
   }
 
-  private _positionIcon(icon: ImageIcon, order: number) {
+  private _positionIcon(icon: Icon, order: number) {
     const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
     icon
       .getElement()

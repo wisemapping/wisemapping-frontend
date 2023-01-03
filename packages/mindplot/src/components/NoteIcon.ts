@@ -42,7 +42,7 @@ class NoteIcon extends ImageIcon {
   }
 
   private _registerEvents(): void {
-    this._image.setCursor('pointer');
+    this.getElement().setCursor('pointer');
 
     const manager = WidgetManager.getInstance();
     manager.createTooltipForNote(this._topic, this._linksModel as NoteModel, this);

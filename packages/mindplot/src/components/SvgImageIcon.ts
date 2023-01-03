@@ -19,6 +19,8 @@ import { $assert } from '@wisemapping/core-js';
 import ImageIcon from './ImageIcon';
 import ActionDispatcher from './ActionDispatcher';
 import iconFamily from './model/SvgIconFamily.json';
+import Topic from './Topic';
+import SvgIconModel from './model/SvgIconModel';
 
 function importAll(r) {
   const images = {};
@@ -28,10 +30,16 @@ function importAll(r) {
   return images;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const images = importAll(require.context('../../assets/icons', false, /\.(png|svg)$/));
 
 class SvgImageIcon extends ImageIcon {
-  constructor(topic, iconModel, readOnly) {
+  private _topicId: number;
+
+  private _featureModel: SvgIconModel;
+
+  constructor(topic: Topic, iconModel: SvgIconModel, readOnly: boolean) {
     $assert(iconModel, 'iconModel can not be null');
     $assert(topic, 'topic can not be null');
 
@@ -52,13 +60,13 @@ class SvgImageIcon extends ImageIcon {
         const newIconType = SvgImageIcon._getNextFamilyIconId(iconTypeClick);
         iconModel.setIconType(newIconType);
 
-        me._image.setHref(SvgImageIcon.getImageUrl(newIconType));
+        me.getElement().setHref(SvgImageIcon.getImageUrl(newIconType));
       });
-      this._image.setCursor('pointer');
+      this.getElement().setCursor('pointer');
     }
   }
 
-  static getImageUrl(iconId) {
+  static getImageUrl(iconId: string) {
     let result = images[`${iconId}.svg`];
     if (!result) {
       result = images[`${iconId}.png`];
@@ -70,11 +78,11 @@ class SvgImageIcon extends ImageIcon {
     return this._featureModel;
   }
 
-  static _getNextFamilyIconId(iconId) {
+  private static _getNextFamilyIconId(iconId: string): string {
     const familyIcons = SvgImageIcon._getFamilyIcons(iconId);
     $assert(familyIcons !== null, `Family Icon not found: ${iconId}`);
 
-    let result = null;
+    let result: string | null = null;
     for (let i = 0; i < familyIcons.length && result == null; i++) {
       if (familyIcons[i] === iconId) {
         // Is last one?
@@ -87,28 +95,18 @@ class SvgImageIcon extends ImageIcon {
       }
     }
 
-    return result;
-  }
-
-  static _getNextUnicode(iconId) {
-    let result = null;
-    for (let i = 0; i < iconFamily.length; i++) {
-      const family = iconFamily[i];
-      const iconFamilyId = iconId.substr(0, iconId.indexOf('_'));
-
-      if (family.id === iconFamilyId) {
-        result = family.icons;
-        break;
-      }
+    if (!result) {
+      throw new Error(`Could not find iconId ${iconId}`);
     }
+
     return result;
   }
 
-  static _getFamilyIcons(iconId) {
+  private static _getFamilyIcons(iconId: string): string[] {
     $assert(iconId != null, 'id must not be null');
     $assert(iconId.indexOf('_') !== -1, `Invalid icon id (it must contain '_'). Id: ${iconId}`);
 
-    let result = null;
+    let result: string[] | null = null;
     for (let i = 0; i < iconFamily.length; i++) {
       const family = iconFamily[i];
       const iconFamilyId = iconId.substr(0, iconId.indexOf('_'));
@@ -118,6 +116,11 @@ class SvgImageIcon extends ImageIcon {
         break;
       }
     }
+
+    if (!result) {
+      throw new Error(`Could not find icon id ${iconId}`);
+    }
+
     return result;
   }
 

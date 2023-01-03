@@ -856,10 +856,8 @@ class Designer extends Events {
 
   addIconType(type: 'image' | 'emoji', iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
+    const featureType: FeatureType = type === 'emoji' ? 'eicon' : 'icon';
 
-    const featureType: FeatureType = (
-      type === 'emoji' ? TopicFeatureFactory.EmojiIcon.id : TopicFeatureFactory.SvgIcon.id
-    ) as FeatureType;
     if (topicsIds.length > 0) {
       this._actionDispatcher.addFeatureToTopic(topicsIds[0], featureType, {
         id: iconType,

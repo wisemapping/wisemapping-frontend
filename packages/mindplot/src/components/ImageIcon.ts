@@ -23,9 +23,9 @@ import FeatureModel from './model/FeatureModel';
 import Icon from './Icon';
 
 abstract class ImageIcon implements Icon {
-  protected _image: Image;
+  private _image: Image;
 
-  protected _group: IconGroup;
+  private _group: IconGroup;
 
   constructor(url: string) {
     $assert(url, 'image url can not be null');
