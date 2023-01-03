@@ -25,6 +25,8 @@ import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
 import emojiToIconMap from './iconToEmoji.json';
 import { LineType } from '../ConnectionLine';
+import { FontWeightType } from '../FontWeightType';
+import { FontStyleType } from '../FontStyleType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -319,11 +321,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
 
       if (font[3]) {
-        topic.setFontWeight(font[3]);
+        topic.setFontWeight(font[3] as FontWeightType);
       }
 
       if (font[4]) {
-        topic.setFontStyle(font[4]);
+        topic.setFontStyle(font[4] as FontStyleType);
       }
     }
 

@@ -1,6 +1,6 @@
 <map name="bug3" version="tango">
     <topic central="true" text="Indicator needs" id="1">
-        <topic position="200,-100" order="0" text="Which new measures" shape="rounded rectangle" id="5" fontStyle=";;;;;8;;;;">
+        <topic position="200,-100" order="0" text="Which new measures" shape="rounded rectangle" id="5">
             <note><![CDATA[Identifying new measures or investments that should be implemented.]]></note>
             <topic position="200,-50" order="0" text="Landscape of measures" shape="rounded rectangle" id="56" bgColor="#feffff">
                 <topic position="200,-50" order="0" text="Diversity index of innovation support instruments in the region" shape="line" id="45">
@@ -14,7 +14,7 @@
                 <topic position="470,-112" order="2" text="Number of specific types of measures per capita" shape="line" id="112"/>
             </topic>
         </topic>
-        <topic position="-290,-37" order="0" text="How to design &amp; implement measures" shape="rounded rectangle" id="6" fontStyle=";;;;;8;;;;">
+        <topic position="-290,-37" order="0" text="How to design &amp; implement measures" shape="rounded rectangle" id="6">
             <note><![CDATA[Understanding how to design the details of a particular measure and how to implement them.]]></note>
             <topic position="290,-62" order="0" text="Good practices" shape="rounded rectangle" id="41" bgColor="#feffff"/>
             <topic position="380,-37" order="1" text="Diagnostics" shape="rounded rectangle" id="80" bgColor="#feffff">
@@ -58,7 +58,7 @@
                 </topic>
             </topic>
         </topic>
-        <topic position="-380,-12" order="1" text="How much effort: where &amp; how" shape="rounded rectangle" id="2" fontStyle=";;;;;8;;;;">
+        <topic position="-380,-12" order="1" text="How much effort: where &amp; how" shape="rounded rectangle" id="2">
             <note><![CDATA[Understanding the level of effort the region needs to take to compete on innovation and where to put this effort]]></note>
             <topic position="380,-37" order="0" text="The bottom-line" shape="rounded rectangle" id="3" bgColor="#feffff">
                 <note><![CDATA[This is what policy makers care about in the end]]></note>
@@ -358,7 +358,7 @@
                 </topic>
             </topic>
         </topic>
-        <topic position="-470,13" order="2" text="What to do about existing measures" shape="rounded rectangle" id="4" fontStyle=";;;;;8;;;;">
+        <topic position="-470,13" order="2" text="What to do about existing measures" shape="rounded rectangle" id="4">
             <note><![CDATA[Understanding which measures should be strengthened, dropped or improved, and how.]]></note>
             <topic position="470,-37" order="0" text="Demand for measure" shape="rounded rectangle" id="42" bgColor="#feffff">
                 <topic position="-470,-87" order="0" text="Quality of beneficiaries" shape="line" id="50">
@@ -459,7 +459,7 @@ international)
                 </topic>
             </topic>
         </topic>
-        <topic position="-560,38" order="3" text="What investments in innovative projects" shape="rounded rectangle" id="7" fontStyle=";;;;;8;;;;">
+        <topic position="-560,38" order="3" text="What investments in innovative projects" shape="rounded rectangle" id="7">
             <note><![CDATA[Understanding what investments should be made in innovative projects.]]></note>
             <topic position="560,13" order="0" text="Competitive niches" shape="rounded rectangle" id="61" bgColor="#feffff">
                 <topic position="-560,-37" order="0" text="Clusters behavior" shape="line" id="59">
@@ -507,7 +507,7 @@ international)
                 <topic position="-650,26" order="0" text="Private investment in innovation" shape="line" id="68"/>
             </topic>
         </topic>
-        <topic position="-650,63" order="4" text="How to improve image" shape="rounded rectangle" id="69" fontStyle=";;;;;8;;;;" bgColor="#e0e5ef">
+        <topic position="-650,63" order="4" text="How to improve image" shape="rounded rectangle" id="69" bgColor="#e0e5ef">
             <topic position="650,38" order="0" text="Rankings" shape="rounded rectangle" id="75" bgColor="#feffff">
                 <topic position="-650,13" order="0" text="macro indicators" shape="line" id="70"/>
                 <topic position="-740,38" order="1" text="meso-indicators" shape="line" id="71"/>

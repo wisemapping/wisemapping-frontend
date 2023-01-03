@@ -37,8 +37,6 @@ import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
-import TopicFeatureFactory from './TopicFeature';
-
 import TopicFactory from './TopicFactory';
 
 import EventBus from './layout/EventBus';

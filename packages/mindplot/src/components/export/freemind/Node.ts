@@ -57,7 +57,7 @@ class Node {
     return this.arrowlinkOrCloudOrEdge;
   }
 
-  getBackgorundColor(): string {
+  getBackgroundColor(): string {
     return this.BACKGROUND_COLOR;
   }
 

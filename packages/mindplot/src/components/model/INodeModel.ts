@@ -19,6 +19,8 @@
 import { $assert, $defined } from '@wisemapping/core-js';
 import { LineType } from '../ConnectionLine';
 import PositionType from '../PositionType';
+import { FontWeightType } from '../FontWeightType';
+import { FontStyleType } from '../FontStyleType';
 import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
 
@@ -161,20 +163,20 @@ abstract class INodeModel {
     return this.getProperty('fontFamily') as string;
   }
 
-  setFontStyle(fontStyle: string) {
+  setFontStyle(fontStyle: FontStyleType) {
     this.putProperty('fontStyle', fontStyle);
   }
 
-  getFontStyle(): string {
-    return this.getProperty('fontStyle') as string;
+  getFontStyle(): FontStyleType {
+    return this.getProperty('fontStyle') as FontStyleType;
   }
 
-  setFontWeight(weight) {
+  setFontWeight(weight: FontWeightType) {
     this.putProperty('fontWeight', weight);
   }
 
-  getFontWeight() {
-    return this.getProperty('fontWeight');
+  getFontWeight(): FontWeightType | undefined {
+    return this.getProperty('fontWeight') as FontWeightType;
   }
 
   setFontColor(color: string): void {

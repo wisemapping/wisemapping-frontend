@@ -55,7 +55,7 @@ tb.]]></text>
                 <note><![CDATA[Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.]]></note>
             </topic>
         </topic>
-        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" fontStyle=";;;;;;#000000;;;" bgColor="#cccccc">
+        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
             <topic position="290,-137" order="0" shape="line" id="22">
                 <text><![CDATA[Here, we develop a new approach that links functional attributes
                             of tree species with studies of forest recovery and regional
@@ -134,7 +134,7 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             J. Integr. Plant Biol. 50: 547–558.]]></text>
             </topic>
         </topic>
-        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" fontStyle=";;;;;;#000000;;;" bgColor="#cccccc">
+        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">
             <topic position="380,-12" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
                 <topic position="-380,-24" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
             </topic>

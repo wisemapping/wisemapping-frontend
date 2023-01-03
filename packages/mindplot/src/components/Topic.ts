@@ -22,6 +22,8 @@ import { Rect, Line, Text, Group, ElementClass } from '@wisemapping/web2d';
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
+import { FontWeightType } from './FontWeightType';
+import { FontStyleType } from './FontStyleType';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
@@ -97,9 +99,9 @@ abstract class Topic extends NodeGraph {
     this.addEvent('click', (event: Event) => {
       event.stopPropagation();
     });
-    const me = this;
+
     this.addEvent('dblclick', (event: Event) => {
-      me._getTopicEventDispatcher().show(me);
+      this._getTopicEventDispatcher().show(this);
       event.stopPropagation();
     });
   }
@@ -281,7 +283,7 @@ abstract class Topic extends NodeGraph {
   }
 
   private getOrBuildIconGroup(): Group {
-    if (!$defined(this._iconsGroup)) {
+    if (!this._iconsGroup) {
       this._iconsGroup = this._buildIconGroup();
       const group = this.get2DElement();
 
@@ -338,7 +340,6 @@ abstract class Topic extends NodeGraph {
     return model.findFeatureById(id);
   }
 
-  /** */
   removeFeature(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel could not be null');
 
@@ -348,9 +349,10 @@ abstract class Topic extends NodeGraph {
 
     // Removing the icon from UI
     const iconGroup = this.getIconGroup();
-    if ($defined(iconGroup)) {
+    if (iconGroup) {
       iconGroup.removeIconByModel(featureModel);
     }
+
     this.redraw();
   }
 
@@ -396,31 +398,31 @@ abstract class Topic extends NodeGraph {
     this.redraw();
   }
 
-  setFontSize(value: number) {
+  setFontSize(value: number): void {
     const model = this.getModel();
     model.setFontSize(value);
 
     this.redraw();
   }
 
-  setFontStyle(value: string) {
+  setFontStyle(value: FontStyleType): void {
     const model = this.getModel();
     model.setFontStyle(value);
 
     this.redraw();
   }
 
-  setFontWeight(value: string) {
+  setFontWeight(value: FontWeightType): void {
     const model = this.getModel();
     model.setFontWeight(value);
 
     this.redraw();
   }
 
-  getFontWeight() {
+  getFontWeight(): FontWeightType {
     const model = this.getModel();
     let result = model.getFontWeight();
-    if (!$defined(result)) {
+    if (!result) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.weight;
     }
@@ -609,23 +611,22 @@ abstract class Topic extends NodeGraph {
     };
     elem.addEvent('mouseout', outout);
 
-    const me = this;
     // Focus events ...
-    elem.addEvent('mousedown', (event) => {
+    elem.addEvent('mousedown', (event: MouseEvent) => {
       const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      if (!me.isReadOnly()) {
+      if (this.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
         if ((event.metaKey && isMac) || (event.ctrlKey && !isMac)) {
-          value = !me.isOnFocus();
+          value = !this.isOnFocus();
           event.stopPropagation();
           event.preventDefault();
         }
         topic.setOnFocus(value);
       }
 
-      const eventDispatcher = me._getTopicEventDispatcher();
-      eventDispatcher.process(TopicEvent.CLICK, me);
+      const eventDispatcher = this._getTopicEventDispatcher();
+      eventDispatcher.process(TopicEvent.CLICK, this);
       event.stopPropagation();
     });
   }

@@ -17,15 +17,17 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { LineType } from './ConnectionLine';
+import { FontStyleType } from './FontStyleType';
+import { FontWeightType } from './FontWeightType';
 import { $msg } from './Messages';
 import { TopicShapeType } from './model/INodeModel';
 import Topic from './Topic';
 
-type FontStlye = {
+type FontStyle = {
   font: string;
   size: number;
-  style: string;
-  weight: string;
+  style: FontStyleType;
+  weight: FontWeightType;
   color: string;
 };
 
@@ -34,7 +36,7 @@ type TopicStyleType = {
   backgroundColor: string;
   connectionStyle: LineType;
   connectionColor: string;
-  fontStyle: FontStlye;
+  fontStyle: FontStyle;
   msgKey: string;
   shapeType: TopicShapeType;
 };
@@ -46,8 +48,8 @@ const TopicDefaultStyles = {
     fontStyle: {
       font: 'Verdana',
       size: 10,
-      style: 'normal',
-      weight: 'bold',
+      style: 'normal' as FontStyleType,
+      weight: 'bold' as FontWeightType,
       color: '#ffffff',
     },
     connectionStyle: LineType.THICK_CURVED,
@@ -61,8 +63,8 @@ const TopicDefaultStyles = {
     fontStyle: {
       font: 'Arial',
       size: 8,
-      style: 'normal',
-      weight: 'normal',
+      style: 'normal' as FontStyleType,
+      weight: 'normal' as FontWeightType,
       color: 'rgb(82,92,97)',
     },
     connectionStyle: LineType.THICK_CURVED,
@@ -76,8 +78,8 @@ const TopicDefaultStyles = {
     fontStyle: {
       font: 'Arial',
       size: 6,
-      style: 'normal',
-      weight: 'normal',
+      style: 'normal' as FontStyleType,
+      weight: 'normal' as FontWeightType,
       color: 'rgb(82,92,97)',
     },
     connectionStyle: LineType.THICK_CURVED,
@@ -92,8 +94,8 @@ const TopicDefaultStyles = {
     fontStyle: {
       font: 'Verdana',
       size: 8,
-      style: 'normal',
-      weight: 'normal',
+      style: 'normal' as FontStyleType,
+      weight: 'normal' as FontWeightType,
       color: 'rgb(82,92,97)',
     },
     msgKey: 'ISOLATED_TOPIC',
@@ -130,7 +132,7 @@ class TopicStyle {
     return $msg(msgKey);
   }
 
-  static defaultFontStyle(topic: Topic): FontStlye {
+  static defaultFontStyle(topic: Topic): FontStyle {
     return this._getStyles(topic).fontStyle;
   }
 

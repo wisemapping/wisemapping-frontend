@@ -281,8 +281,7 @@ class Relationship extends ConnectionLine {
     this._focusShape.updateLine();
   }
 
-  // @typescript-eslint/ban-types
-  addEvent(eventType: string, listener) {
+  addEvent(eventType: string, listener: () => void) {
     let type = eventType;
     // Translate to web 2d events ...
     if (type === 'onfocus') {

@@ -167,8 +167,10 @@ export default class FreemindImporter extends Importer {
       }
     }
 
-    const bgColor: string = freeNode.getBackgorundColor();
-    if (bgColor) wiseTopic.setBackgroundColor(bgColor);
+    const bgColor: string = freeNode.getBackgroundColor();
+    if (bgColor) {
+      wiseTopic.setBackgroundColor(bgColor);
+    }
 
     if (centralTopic === false) {
       const shape = this.getShapeFromFreeNode(freeNode);
@@ -178,8 +180,10 @@ export default class FreemindImporter extends Importer {
     }
 
     // Check for style...
-    const fontStyle = this.generateFontStyle(freeNode, undefined);
-    if (fontStyle && fontStyle !== ';;;;') wiseTopic.setFontStyle(fontStyle);
+    // const fontStyle = this.generateFontStyle(freeNode, undefined);
+    // if (fontStyle && fontStyle !== ';;;;') {
+    //   wiseTopic.setFontStyle(fontStyle);
+    // }
 
     // Is there any link...
     const url: string = freeNode.getLink();
@@ -250,13 +254,13 @@ export default class FreemindImporter extends Importer {
         currentWiseTopic = wiseChild;
       }
 
-      if (child instanceof FreemindFont) {
-        const font: FreemindFont = child as FreemindFont;
-        const fontStyle: string = this.generateFontStyle(freeParent, font);
-        if (fontStyle) {
-          currentWiseTopic.setFontStyle(fontStyle);
-        }
-      }
+      // if (child instanceof FreemindFont) {
+      //   const font: FreemindFont = child as FreemindFont;
+      //   const fontStyle: string = this.generateFontStyle(freeParent, font);
+      //   if (fontStyle) {
+      //     currentWiseTopic.setFontStyle(fontStyle);
+      //   }
+      // }
 
       if (child instanceof FreemindEdge) {
         const edge: FreemindEdge = child as FreemindEdge;
@@ -398,7 +402,7 @@ export default class FreemindImporter extends Importer {
     let result: TopicShapeType;
     if (shape === 'bubble') {
       result = 'rounded rectangle';
-    } else if (node.getBackgorundColor()) {
+    } else if (node.getBackgroundColor()) {
       result = 'rectangle';
     } else {
       result = 'line';
