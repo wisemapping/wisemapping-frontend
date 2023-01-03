@@ -42,7 +42,7 @@ const RegistrationCallbackPage = (): React.ReactElement => {
       .then((result) => {
         if (result.googleSync) {
           // if service reports that user already has sync accounts, go to maps page
-          navigate('/c/maps');
+          navigate('/c/maps/');
         }
         setCallbackResult(result);
       })
@@ -57,7 +57,7 @@ const RegistrationCallbackPage = (): React.ReactElement => {
     client
       .confirmAccountSync(callbackResult.email, callbackResult.syncCode)
       .then(() => {
-        navigate('/c/maps');
+        navigate('/c/maps/');
       })
       .catch((error) => {
         console.log('ERROR', error);
