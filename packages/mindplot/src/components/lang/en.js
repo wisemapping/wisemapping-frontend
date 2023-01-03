@@ -19,6 +19,8 @@ const EN = {
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'Relationship could not be created. A parent relationship topic must be selected first.',
   SELECTION_COPIED_TO_CLIPBOARD: 'Topics copied to the clipboard',
   SESSION_EXPIRED: 'Your session has expired, please log-in again.',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Connection style can not be changed for central topic.',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Central topic can not be changed to line style.',
 };
 
 export default EN;

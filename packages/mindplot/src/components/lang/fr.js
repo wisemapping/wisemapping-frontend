@@ -19,6 +19,9 @@ const FR = {
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'Impossible de créer relation. Un noeud parent doit être sélectionné au préalable.',
   SELECTION_COPIED_TO_CLIPBOARD: 'Noeuds sélectionnés copiés dans le presse-papiers.',
   SESSION_EXPIRED: 'Votre session a expiré, veuillez vous reconnecter.',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Le style de connexion ne peut pas être modifié pour le sujet central.',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Le sujet central ne peut pas être changé en style de ligne.',
+
 };
 
 export default FR;

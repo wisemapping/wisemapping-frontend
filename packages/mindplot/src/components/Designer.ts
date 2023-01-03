@@ -819,7 +819,7 @@ class Designer extends Events {
     const validateFunc = (topic: Topic) =>
       !(topic.getType() === 'CentralTopic' && shape === 'line');
 
-    const validateError = 'Central Topic shape can not be changed to line figure.';
+    const validateError = $msg('CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED');
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeShapeTypeToTopic(topicsIds, shape);
@@ -829,7 +829,7 @@ class Designer extends Events {
   changeConnectionStyle(type: LineType): void {
     const validateFunc = (topic: Topic) => !topic.isCentralTopic();
 
-    const validateError = 'Central topic connection style can not be changed for central topic.';
+    const validateError = $msg('CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED');
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeConnectionStyleToTopic(topicsIds, type);

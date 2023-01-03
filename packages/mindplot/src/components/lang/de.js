@@ -19,6 +19,8 @@ const DE = {
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'Die Beziehung konnte nicht angelegt werden. Es muss erst ein Vater-Thema ausgewählt werden, um die Beziehung herzustellen.',
   SELECTION_COPIED_TO_CLIPBOARD: 'Themen in der Zwischenablage',
   SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen, bitte melde dich erneut an.',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Le style de connexion ne peut pas être modifié pour le sujet central.',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Le sujet central ne peut pas être changé en style de ligne.',
 };
 
 export default DE;

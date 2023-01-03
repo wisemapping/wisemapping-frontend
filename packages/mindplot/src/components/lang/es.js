@@ -19,6 +19,8 @@ const ES = {
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'La relación no pudo ser creada. Una relación padre debe ser seleccionada primero.',
   SELECTION_COPIED_TO_CLIPBOARD: 'Tópicos copiados al clipboard',
   SESSION_EXPIRED: 'Su session ha expirado. Por favor, ingrese nuevamente.',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'El estilo de conexión no se puede cambiar para el tópico central.',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Tópico central no se puede cambiar al estilo de línea.',
 };
 
 export default ES;
