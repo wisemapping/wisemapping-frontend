@@ -284,9 +284,6 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
-        } else if (child.tagName === 'icon') {
-          const icon = this._deserializeIcon(child);
-          topic.addFeature(icon);
         } else if (child.tagName === 'link') {
           const link = this._deserializeLink(child);
           topic.addFeature(link);
