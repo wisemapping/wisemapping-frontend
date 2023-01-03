@@ -216,8 +216,10 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       topic.setOrder(parseInt(order, 10));
     }
 
-    const shape = domElem.getAttribute('shape');
+    let shape = domElem.getAttribute('shape');
     if ($defined(shape)) {
+      // Hack for legacy mapping loading ...
+      shape = shape === 'rectagle' ? 'rectangle' : shape;
       topic.setShapeType(shape);
     }
 
