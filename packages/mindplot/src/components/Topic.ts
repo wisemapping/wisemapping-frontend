@@ -22,8 +22,6 @@ import { Rect, Line, Text, Group, ElementClass } from '@wisemapping/web2d';
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
-import { FontWeightType } from './FontWeightType';
-import { FontStyleType } from './FontStyleType';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
@@ -46,6 +44,8 @@ import LineTopicShape from './widget/LineTopicShape';
 import ImageTopicShape from './widget/ImageTopicShape';
 import ColorUtil from './render/ColorUtil';
 import Icon from './Icon';
+import { FontStyleType } from './FontStyleType';
+import { FontWeightType } from './FontWeightType';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -340,6 +340,7 @@ abstract class Topic extends NodeGraph {
     return model.findFeatureById(id);
   }
 
+  /** */
   removeFeature(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel could not be null');
 
@@ -349,10 +350,9 @@ abstract class Topic extends NodeGraph {
 
     // Removing the icon from UI
     const iconGroup = this.getIconGroup();
-    if (iconGroup) {
+    if ($defined(iconGroup)) {
       iconGroup.removeIconByModel(featureModel);
     }
-
     this.redraw();
   }
 
@@ -398,31 +398,31 @@ abstract class Topic extends NodeGraph {
     this.redraw();
   }
 
-  setFontSize(value: number): void {
+  setFontSize(value: number) {
     const model = this.getModel();
     model.setFontSize(value);
 
     this.redraw();
   }
 
-  setFontStyle(value: FontStyleType): void {
+  setFontStyle(value: FontStyleType) {
     const model = this.getModel();
     model.setFontStyle(value);
 
     this.redraw();
   }
 
-  setFontWeight(value: FontWeightType): void {
+  setFontWeight(value: FontWeightType) {
     const model = this.getModel();
     model.setFontWeight(value);
 
     this.redraw();
   }
 
-  getFontWeight(): FontWeightType {
+  getFontWeight() {
     const model = this.getModel();
     let result = model.getFontWeight();
-    if (!result) {
+    if (!$defined(result)) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.weight;
     }
@@ -611,22 +611,23 @@ abstract class Topic extends NodeGraph {
     };
     elem.addEvent('mouseout', outout);
 
+    const me = this;
     // Focus events ...
     elem.addEvent('mousedown', (event: MouseEvent) => {
       const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      if (this.isReadOnly()) {
+      if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
         let value = true;
         if ((event.metaKey && isMac) || (event.ctrlKey && !isMac)) {
-          value = !this.isOnFocus();
+          value = !me.isOnFocus();
           event.stopPropagation();
           event.preventDefault();
         }
         topic.setOnFocus(value);
       }
 
-      const eventDispatcher = this._getTopicEventDispatcher();
-      eventDispatcher.process(TopicEvent.CLICK, this);
+      const eventDispatcher = me._getTopicEventDispatcher();
+      eventDispatcher.process(TopicEvent.CLICK, me);
       event.stopPropagation();
     });
   }
