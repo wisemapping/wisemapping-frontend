@@ -5918,10 +5918,17 @@ emittery@^0.8.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.8.1.tgz#bb23cc86d03b30aa75a7f734819dee2e1ba70860"
   integrity sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
 
-emoji-picker-react@^4.4.3, emoji-picker-react@^4.4.4:
+emoji-picker-react@^4.4.3:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.5.tgz#c4999a180e785e8c36b368449ca528d784a32a36"
   integrity sha512-0iwtqg2WyNIQ+uCUUlEQ/UlJ8uOLbAo7jZ5MX0VEYe/NXsrphIQHZhuwC1h85REsCI9eYj60yuGIdvzFRnOkmQ==
+  dependencies:
+    clsx "^1.2.1"
+
+emoji-picker-react@^4.4.7:
+  version "4.4.7"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-4.4.7.tgz#faff798cf7acad41c5eb6b103c93480e777f2222"
+  integrity sha512-HcB1Fr57W6M+gLLm/W4YhbAnUQqYBUAhZBOHmPlSQODLtsDI8vecyqNIF9RrStZHfZwzUSLlpZMfY07AA6gxmA==
   dependencies:
     clsx "^1.2.1"
 
