@@ -70,7 +70,7 @@ const MapsPage = (): ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [desktopOpen, setDesktopOpen] = React.useState(true);
+  const [desktopOpen, setDesktopOpen] = React.useState(false);
   const classes = useStyles(desktopOpen);
 
   const handleMobileDrawerToggle = () => {
