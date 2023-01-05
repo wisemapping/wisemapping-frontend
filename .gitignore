@@ -24,6 +24,7 @@ Thumbs.db
 wisemapping-frontend.code-workspace
 
 .yarn/*
+./yarn/cache
 !.yarn/releases
 !.yarn/plugins
 .pnp.*
