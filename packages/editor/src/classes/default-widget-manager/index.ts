@@ -76,12 +76,12 @@ export class DefaultWidgetManager extends WidgetManager {
     topic.closeEditors();
   }
 
-  static useCreate(): [boolean, Element | undefined, DefaultWidgetManager] {
+  static useCreate(): [boolean, (boolean) => void, Element | undefined, DefaultWidgetManager] {
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [popoverTarget, setPopoverTarget] = useState(undefined);
     const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
 
-    return [popoverOpen, popoverTarget, widgetManager.current];
+    return [popoverOpen, setPopoverOpen, popoverTarget, widgetManager.current];
   }
 }
 

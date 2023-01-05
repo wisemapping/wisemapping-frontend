@@ -263,6 +263,33 @@
     "info.title": {
         "defaultMessage": "Información"
     },
+    "label.add-button": {
+        "defaultMessage": "Agregar etiqueta"
+    },
+    "label.add-for": {
+        "defaultMessage": "Editando etiquetas para el mapa:"
+    },
+    "label.add-placeholder": {
+        "defaultMessage": "Título"
+    },
+    "label.change-color": {
+        "defaultMessage": "Cambiar el color"
+    },
+    "label.delete-description": {
+        "defaultMessage": "será borrado de todos los mapas a los que se encuentra asociado. Desea continuar?"
+    },
+    "label.delete-title": {
+        "defaultMessage": "Confirmación"
+    },
+    "label.description": {
+        "defaultMessage": "Usa las etiquetas para organizar tus mapas."
+    },
+    "label.maps-count": {
+        "defaultMessage": "{count} mapas"
+    },
+    "label.title": {
+        "defaultMessage": "Agregar etiqueta"
+    },
     "language.change": {
         "defaultMessage": "Cambiar idioma"
     },

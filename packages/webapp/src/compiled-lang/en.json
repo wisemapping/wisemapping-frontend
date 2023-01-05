@@ -386,7 +386,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "You dont need password, please login using Google"
+      "value": "You dont need password, please login using Google."
     }
   ],
   "forgot.page-title": [
@@ -629,6 +629,12 @@
     {
       "type": 0,
       "value": "Log into your account"
+    }
+  ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "or"
     }
   ],
   "login.email": [
@@ -964,7 +970,7 @@
   "registration.callback.waiting.title": [
     {
       "type": 0,
-      "value": "Finishing ..."
+      "value": "Finishing..."
     }
   ],
   "registration.desc": [

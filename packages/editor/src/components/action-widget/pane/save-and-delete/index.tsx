@@ -34,10 +34,6 @@ const SaveAndDelete = (props: {
         <FormattedMessage id="action.accept" defaultMessage="Accept" />
       </Button>
 
-      <Button color="primary" variant="outlined" onClick={props.closeModal}>
-        <FormattedMessage id="action.cancel" defaultMessage="Cancel" />
-      </Button>
-
       {props.model.getValue() && props.model.getValue().trim() !== '' && (
         <IconButton
           onClick={() => {

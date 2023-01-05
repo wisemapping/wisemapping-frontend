@@ -1,11 +1,9 @@
-import withStyles from '@mui/styles/withStyles';
+import withEmotionStyles from '../../HOCs/withEmotionStyles';
 import Alert from '@mui/material/Alert';
 
-export const StyledAlert = withStyles({
-  root: {
-    padding: '10px 15px',
-    margin: '5px 0px ',
-  },
+export const StyledAlert = withEmotionStyles({
+  padding: '10px 15px',
+  margin: '5px 0px ',
 })(Alert);
 
 export default StyledAlert;

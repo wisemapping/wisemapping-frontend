@@ -555,6 +555,64 @@
       "value": "Información"
     }
   ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Agregar etiqueta"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Editando etiquetas para el mapa:"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Título"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Cambiar el color"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "será borrado de todos los mapas a los que se encuentra asociado. Desea continuar?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Confirmación"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Usa las etiquetas para organizar tus mapas."
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " mapas"
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Agregar etiqueta"
+    }
+  ],
   "language.change": [
     {
       "type": 0,

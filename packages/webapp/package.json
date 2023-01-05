@@ -49,7 +49,6 @@
         "@mui/icons-material": "^5.9.3",
         "@mui/lab": "^5.0.0-alpha.98",
         "@mui/material": "^5.10.11",
-        "@mui/styles": "^5.9.3",
         "@reduxjs/toolkit": "^1.5.0",
         "@wisemapping/editor": "^0.4.0",
         "axios": "^0.27.2",

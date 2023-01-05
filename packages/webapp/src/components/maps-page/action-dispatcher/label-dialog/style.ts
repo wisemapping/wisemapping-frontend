@@ -1,10 +1,13 @@
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import useClasses from '../../../../theme/useStyles';
 
-export const useStyles = makeStyles(() =>
-  createStyles({
+export const useStyles = () =>
+  useClasses({
     paper: {
       maxWidth: '420px',
     },
-  }),
-);
+    title: {
+      maxWidth: '100%',
+      wordBreak: 'break-all',
+    },
+  });

@@ -16,6 +16,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Divider from '@mui/material/Divider';
+import { useTheme } from '@mui/material/styles';
+import { mobileAppbarButton } from '../style';
 
 const LanguageMenu = (): React.ReactElement => {
   const queryClient = useQueryClient();
@@ -25,6 +27,8 @@ const LanguageMenu = (): React.ReactElement => {
 
   const open = Boolean(anchorEl);
   const intl = useIntl();
+  const theme = useTheme();
+  const smMediaQuery = theme.breakpoints.down('sm');
 
   // Todo: For some reasons, in some situations locale is null. More research needed.
   const mutation = useMutation(
@@ -68,11 +72,14 @@ const LanguageMenu = (): React.ReactElement => {
           variant="outlined"
           disableElevation={true}
           color="primary"
+          css={{
+            [smMediaQuery]: mobileAppbarButton,
+          }}
           style={{ borderColor: 'gray', color: 'gray' }}
           onClick={handleMenu}
           startIcon={<TranslateTwoTone style={{ color: 'inherit' }} />}
         >
-          {userLocale.label}
+          <span className="message">{userLocale.label}</span>
         </Button>
       </Tooltip>
       <Menu

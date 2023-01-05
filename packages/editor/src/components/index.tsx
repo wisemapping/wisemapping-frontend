@@ -29,9 +29,7 @@ import {
 } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
-import { theme as defaultEditorTheme } from '../theme';
 // eslint-disable-next-line no-restricted-imports
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { Theme } from '@mui/material/styles';
 import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';
@@ -42,6 +40,9 @@ import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import MapInfo from '../classes/model/map-info';
 import EditorToolbar from './editor-toolbar';
 import ZoomPanel from './zoom-panel';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import CloseIcon from '@mui/icons-material/Close';
 import { SpinnerCentered } from './style';
 
 export type EditorOptions = {
@@ -66,7 +67,6 @@ const Editor = ({
   options,
   persistenceManager,
   onAction,
-  theme,
   accountConfiguration,
 }: EditorProps): ReactElement => {
   const [model, setModel] = useState<Model | undefined>();
@@ -75,8 +75,8 @@ const Editor = ({
   // This is required to redraw in case of chansges in the canvas...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [canvasUpdate, setCanvasUpdate] = useState<number>();
-  const editorTheme: Theme = theme ? theme : defaultEditorTheme;
-  const [popoverOpen, popoverTarget, widgetManager] = DefaultWidgetManager.useCreate();
+  const [popoverOpen, setPopoverOpen, popoverTarget, widgetManager] =
+    DefaultWidgetManager.useCreate();
   const capability = new Capability(options.mode, mapInfo.isLocked());
 
   useEffect(() => {
@@ -108,59 +108,62 @@ const Editor = ({
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
   return (
-    <ThemeProvider theme={editorTheme}>
-      <IntlProvider locale={locale} messages={msg}>
-        <AppBar
-          model={model}
-          mapInfo={mapInfo}
-          capability={capability}
-          onAction={onAction}
-          accountConfig={accountConfiguration}
-        />
+    <IntlProvider locale={locale} messages={msg}>
+      <AppBar
+        model={model}
+        mapInfo={mapInfo}
+        capability={capability}
+        onAction={onAction}
+        accountConfig={accountConfiguration}
+      />
 
-        <Popover
-          id="popover"
-          open={popoverOpen}
-          anchorEl={popoverTarget}
-          onClose={widgetManager.handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-        >
-          {widgetManager.getEditorContent()}
-        </Popover>
+      <Popover
+        id="popover"
+        open={popoverOpen}
+        anchorEl={popoverTarget}
+        onClose={widgetManager.handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Box alignItems={'end'}>
+          <IconButton onClick={() => setPopoverOpen(false)} aria-label={'Close'}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        {widgetManager.getEditorContent()}
+      </Popover>
 
-        <EditorToolbar model={model} capability={capability} />
-        <ZoomPanel model={model} capability={capability} />
+      <EditorToolbar model={model} capability={capability} />
+      <ZoomPanel model={model} capability={capability} />
 
-        <mindplot-component
-          ref={mindplotRef}
-          id="mindmap-comp"
-          mode={options.mode}
-          locale={options.locale}
-          zoom={options.zoom}
-        />
+      <mindplot-component
+        ref={mindplotRef}
+        id="mindmap-comp"
+        mode={options.mode}
+        locale={options.locale}
+        zoom={options.zoom}
+      />
 
-        <Notifier id="headerNotifier" />
-        <WarningDialog
-          capability={capability}
-          message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
-        />
+      <Notifier id="headerNotifier" />
+      <WarningDialog
+        capability={capability}
+        message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
+      />
 
-        {!model?.isMapLoadded() && (
-          <SpinnerCentered>
-            <Vortex
-              visible={true}
-              height="160"
-              width="160"
-              ariaLabel="vortex-loading"
-              colors={['#ffde1a', '#ffce00', '#ffa700', '#ff8d00', '#ff7400', '#ffde1a']}
-            />
-          </SpinnerCentered>
-        )}
-      </IntlProvider>
-    </ThemeProvider>
+      {!model?.isMapLoadded() && (
+        <SpinnerCentered>
+          <Vortex
+            visible={true}
+            height="160"
+            width="160"
+            ariaLabel="vortex-loading"
+            colors={['#ffde1a', '#ffce00', '#ffa700', '#ff8d00', '#ff7400', '#ffde1a']}
+          />
+        </SpinnerCentered>
+      )}
+    </IntlProvider>
   );
 };
 export default Editor;

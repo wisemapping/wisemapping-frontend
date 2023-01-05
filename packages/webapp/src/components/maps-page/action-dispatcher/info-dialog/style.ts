@@ -1,8 +1,9 @@
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { useTheme } from '@mui/material/styles';
+import useClasses from '../../../../theme/useStyles';
 
-export const useStyles = makeStyles(() =>
-  createStyles({
+export const useStyles = () =>
+  useClasses({
     textarea: {
       width: '100%',
       padding: '15px 15px',
@@ -11,5 +12,14 @@ export const useStyles = makeStyles(() =>
     textDesc: {
       width: '150px',
     },
-  }),
-);
+    list: {
+      '& li': {
+        [useTheme().breakpoints.down('sm')]: {
+          display: 'block',
+        },
+        '& p': {
+          marginLeft: 5,
+        },
+      },
+    },
+  });

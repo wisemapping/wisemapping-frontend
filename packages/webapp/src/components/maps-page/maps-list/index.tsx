@@ -29,6 +29,8 @@ import InputBase from '@mui/material/InputBase';
 import Link from '@mui/material/Link';
 
 import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
+
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import SearchIcon from '@mui/icons-material/Search';
@@ -38,6 +40,12 @@ import { LabelsCell } from './labels-cell';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import AppI18n from '../../../classes/app-i18n';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
+import { CSSObject, Interpolation, Theme } from '@emotion/react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardHeader from '@mui/material/CardHeader';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -134,7 +142,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           padding="checkbox"
           key="select"
           style={{ width: '20px' }}
-          className={classes.headerCell}
+          css={classes.headerCell}
         >
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -145,7 +153,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           />
         </TableCell>
 
-        <TableCell padding="checkbox" key="starred" className={classes.headerCell}></TableCell>
+        <TableCell padding="checkbox" key="starred" css={classes.headerCell}></TableCell>
 
         {headCells.map((headCell) => {
           return (
@@ -153,7 +161,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               key={headCell.id}
               sortDirection={orderBy === headCell.id ? order : false}
               style={headCell.style}
-              className={classes.headerCell}
+              css={classes.headerCell}
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
@@ -163,7 +171,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 {headCell.label}
 
                 {orderBy === headCell.id && (
-                  <span className={classes.visuallyHidden}>
+                  <span css={classes.visuallyHidden as Interpolation<Theme>}>
                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                   </span>
                 )}
@@ -172,7 +180,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           );
         })}
 
-        <TableCell padding="checkbox" key="action" className={classes.headerCell}></TableCell>
+        <TableCell padding="checkbox" key="action" css={classes.headerCell}></TableCell>
       </TableRow>
     </TableHead>
   );
@@ -334,7 +342,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
         mapId: mapId,
         el: event.currentTarget,
       });
-      event.stopPropagation();
+      event.preventDefault();
     };
   };
 
@@ -364,7 +372,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   );
 
   const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
-    event.stopPropagation();
+    event.preventDefault();
     starredMultation.mutate(id);
   };
 
@@ -423,16 +431,16 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   return (
-    <div className={classes.root}>
+    <div css={classes.root}>
       <ActionChooser
         anchor={activeRowAction?.el}
         onClose={handleActionMenuClose}
         mapId={activeRowAction?.mapId}
       />
 
-      <Paper className={classes.paper} elevation={0}>
-        <Toolbar className={classes.toolbar} variant="dense">
-          <div className={classes.toolbarActions}>
+      <Paper css={classes.paper} elevation={0}>
+        <Toolbar css={classes.toolbar} variant="dense">
+          <div css={classes.toolbarActions}>
             {selected.length > 0 && (
               <Tooltip
                 arrow={true}
@@ -479,9 +487,24 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             )}
           </div>
 
-          <div className={classes.toolbarListActions}>
+          <div>
+            <div css={classes.search as Interpolation<Theme>}>
+              <div css={classes.searchIcon as Interpolation<Theme>}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder={intl.formatMessage({
+                  id: 'maps.search-action',
+                  defaultMessage: 'Search ...',
+                })}
+                css={[classes.searchInputRoot, classes.searchInputInput]}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={handleOnSearchChange}
+                // startAdornment={<SearchIcon />}
+              />
+            </div>
             <TablePagination
-              style={{ float: 'right', border: '0', paddingBottom: '5px' }}
+              css={classes.tablePagination as Interpolation<Theme>}
               count={mapsInfo.length}
               rowsPerPageOptions={[]}
               rowsPerPage={rowsPerPage}
@@ -490,29 +513,108 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
               onRowsPerPageChange={handleChangeRowsPerPage}
               component="div"
             />
-
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder={intl.formatMessage({
-                  id: 'maps.search-action',
-                  defaultMessage: 'Search ...',
-                })}
-                classes={{
-                  root: classes.searchInputRoot,
-                  input: classes.searchInputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={handleOnSearchChange}
-              />
-            </div>
           </div>
         </Toolbar>
 
         <TableContainer>
-          <Table className={classes.table} size="small" stickyHeader>
+          <Box css={classes.cards}>
+            {isLoading ? (
+              <Card>
+                <CardContent>Loading ...</CardContent>
+              </Card>
+            ) : mapsInfo.length == 0 ? (
+              <Card>
+                <CardContent>
+                  <FormattedMessage
+                    id="maps.empty-result"
+                    defaultMessage="No matching mindmap found with the current filter criteria."
+                  />
+                </CardContent>
+              </Card>
+            ) : (
+              stableSort(mapsInfo, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row: MapInfo) => {
+                  return (
+                    <Card key={row.id} css={{ maxWidth: '94vw', margin: '3vw' }}>
+                      <Link
+                        href={`/c/maps/${row.id}/edit`}
+                        underline="none"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <CardHeader
+                          css={classes.cardHeader}
+                          avatar={
+                            <Tooltip
+                              arrow={true}
+                              title={intl.formatMessage({
+                                id: 'maps.tooltip-starred',
+                                defaultMessage: 'Starred',
+                              })}
+                            >
+                              <div className="hola" onClick={(e) => e.stopPropagation()}>
+                                <IconButton size="small" onClick={(e) => handleStarred(e, row.id)}>
+                                  <StarRateRoundedIcon
+                                    color="action"
+                                    style={{
+                                      color: row.starred ? 'yellow' : 'gray',
+                                    }}
+                                  />
+                                </IconButton>
+                              </div>
+                            </Tooltip>
+                          }
+                          action={
+                            <Tooltip
+                              arrow={true}
+                              title={intl.formatMessage({
+                                id: 'map.more-actions',
+                                defaultMessage: 'More Actions',
+                              })}
+                            >
+                              <IconButton aria-label="settings" onClick={handleActionClick(row.id)}>
+                                <MoreVertIcon color="action" />
+                              </IconButton>
+                            </Tooltip>
+                          }
+                          title={
+                            <Typography sx={{ fontSize: 'large' }} noWrap color="text.secondary">
+                              {row.title}
+                            </Typography>
+                          }
+                          subheader={
+                            <Typography variant="subtitle2">
+                              {intl.formatMessage({
+                                id: 'map.last-update',
+                                defaultMessage: 'Last Update',
+                              })}
+                              <span>: </span>
+                              <Tooltip
+                                arrow={true}
+                                title={intl.formatMessage(
+                                  {
+                                    id: 'maps.modified-by-desc',
+                                    defaultMessage: 'Modified by {by} on {on}',
+                                  },
+                                  {
+                                    by: row.lastModificationBy,
+                                    on: dayjs(row.lastModificationTime).format('lll'),
+                                  },
+                                )}
+                                placement="bottom-start"
+                              >
+                                <span>{dayjs(row.lastModificationTime).fromNow()}</span>
+                              </Tooltip>
+                            </Typography>
+                          }
+                        />
+                      </Link>
+                    </Card>
+                  );
+                })
+            )}
+          </Box>
+          <Table css={classes.table} size="small" stickyHeader>
             <EnhancedTableHead
               classes={classes}
               numSelected={selected.length}
@@ -555,7 +657,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                         selected={isItemSelected}
                         style={{ border: '0' }}
                       >
-                        <TableCell padding="checkbox" className={classes.bodyCell}>
+                        <TableCell padding="checkbox" css={classes.bodyCell}>
                           <Checkbox
                             checked={isItemSelected}
                             inputProps={{
@@ -565,7 +667,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           />
                         </TableCell>
 
-                        <TableCell padding="checkbox" className={classes.bodyCell}>
+                        <TableCell padding="checkbox" css={classes.bodyCell}>
                           <Tooltip
                             arrow={true}
                             title={intl.formatMessage({
@@ -584,7 +686,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Tooltip>
                         </TableCell>
 
-                        <TableCell className={classes.bodyCell}>
+                        <TableCell css={classes.bodyCell}>
                           <Tooltip
                             arrow={true}
                             title={intl.formatMessage({
@@ -604,7 +706,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Tooltip>
                         </TableCell>
 
-                        <TableCell className={[classes.bodyCell, classes.labelsCell].join(' ')}>
+                        <TableCell css={[classes.bodyCell, classes.labelsCell as CSSObject]}>
                           <LabelsCell
                             labels={row.labels}
                             onDelete={(lbl) => {
@@ -613,9 +715,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           />
                         </TableCell>
 
-                        <TableCell className={classes.bodyCell}>{row.createdBy}</TableCell>
+                        <TableCell css={classes.bodyCell}>{row.createdBy}</TableCell>
 
-                        <TableCell className={classes.bodyCell}>
+                        <TableCell css={classes.bodyCell}>
                           <Tooltip
                             arrow={true}
                             title={intl.formatMessage(
@@ -634,7 +736,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                           </Tooltip>
                         </TableCell>
 
-                        <TableCell className={classes.bodyCell}>
+                        <TableCell css={classes.bodyCell}>
                           <Tooltip
                             arrow={true}
                             title={intl.formatMessage({

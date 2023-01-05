@@ -122,7 +122,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 />
               </Typography>
               <TextareaAutosize
-                className={classes.textarea}
+                css={classes.textarea}
                 readOnly={true}
                 spellCheck={false}
                 maxRows={6}
@@ -137,7 +137,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
                 />
               </Typography>
               <TextareaAutosize
-                className={classes.textarea}
+                css={classes.textarea}
                 readOnly={true}
                 spellCheck={false}
                 maxRows={1}

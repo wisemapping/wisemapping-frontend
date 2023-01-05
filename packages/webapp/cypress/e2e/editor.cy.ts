@@ -1,6 +1,6 @@
 context('Editor Page', () => {
   beforeEach(() => {
-    cy.visit('c/maps/11/edit');
+    cy.visit('/c/maps/11/edit');
   });
 
   it('page loaded', () => {

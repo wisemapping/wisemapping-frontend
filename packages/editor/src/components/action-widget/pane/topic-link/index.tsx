@@ -59,7 +59,7 @@ const TopicLink = (props: {
   const isValidUrl = !url || checkURL(url);
 
   return (
-    <Box display="flex" sx={{ p: 1 }}>
+    <Box sx={{ p: 1 }}>
       <Input
         autoFocus
         error={!isValidUrl}
@@ -87,8 +87,9 @@ const TopicLink = (props: {
             </Link>
           ),
         }}
-        sx={{ pr: 1 }}
+        margin="dense"
       ></Input>
+      <br />
       <SaveAndDelete
         model={props.urlModel}
         closeModal={props.closeModal}

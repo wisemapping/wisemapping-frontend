@@ -42,7 +42,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
     >
       <Paper style={{ maxHeight: 200, overflowY: 'scroll' }} variant="outlined" elevation={0}>
         <Card variant="outlined">
-          <List dense={true}>
+          <List dense={true} css={classes.list}>
             <ListItem>
               <Typography variant="body1" style={{ fontWeight: 'bold' }}>
                 <FormattedMessage id="info.basic-info" defaultMessage="Basic Info" />
@@ -50,42 +50,42 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.name" defaultMessage="Name" />:
               </Typography>
               <Typography variant="body2">{map?.title}</Typography>
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.description" defaultMessage="Description" />:
               </Typography>
               <Typography variant="body2">{map?.description}</Typography>
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.creator" defaultMessage="Creator" />:
               </Typography>
               <Typography variant="body2">{map?.createdBy}</Typography>
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.creation-time" defaultMessage="Creation Date" />:
               </Typography>
               <Typography variant="body2">{dayjs(map?.creationTime).format('LLL')}</Typography>
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.modified-tny" defaultMessage="Last Modified By" />:
               </Typography>
               <Typography variant="body2">{map?.lastModificationBy}</Typography>
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.modified-time" defaultMessage="Last Modified Date" />:
               </Typography>
               <Typography variant="body2">
@@ -94,7 +94,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
             </ListItem>
 
             <ListItem>
-              <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+              <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
                 <FormattedMessage id="info.starred" defaultMessage="Starred" />:
               </Typography>
               <Typography variant="body2">{Boolean(map?.starred).toString()}</Typography>
@@ -111,7 +111,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
             </ListItem>
           </List>
           <ListItem>
-            <Typography variant="caption" color="textPrimary" className={classes.textDesc}>
+            <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
               <FormattedMessage id="info.public-visibility" defaultMessage="Publicly Visible" />:
             </Typography>
             <Typography variant="body2">{Boolean(map?.isPublic).toString()}</Typography>

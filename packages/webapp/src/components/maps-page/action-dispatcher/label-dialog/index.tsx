@@ -11,6 +11,7 @@ import Client, { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
 import { LabelSelector } from '../../maps-list/label-selector';
 import { activeInstance } from '../../../../redux/clientSlice';
 import { ChangeLabelMutationFunctionParam, getChangeLabelMutationFunction } from '../../maps-list';
+import { Interpolation, Theme } from '@emotion/react';
 
 const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
@@ -62,11 +63,11 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
           id: 'label.description',
           defaultMessage: 'Use labels to organize your maps.',
         })}
-        PaperProps={{ classes: { root: classes.paper } }}
+        paperCss={classes.paper}
         error={error}
       >
         <>
-          <Typography variant="body2" marginTop="10px">
+          <Typography variant="body2" marginTop="10px" css={classes.title as Interpolation<Theme>}>
             <FormattedMessage id="label.add-for" defaultMessage="Editing labels for " />
             {maps.length > 1 ? (
               <FormattedMessage

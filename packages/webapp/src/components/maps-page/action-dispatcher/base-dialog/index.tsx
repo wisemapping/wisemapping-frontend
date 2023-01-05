@@ -5,9 +5,9 @@ import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTit
 import GlobalError from '../../../form/global-error';
 import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
-import { PaperProps } from '@mui/material/Paper';
 import { useDispatch } from 'react-redux';
 import { disableHotkeys, enableHotkeys } from '../../../../redux/editorSlice';
+import { CSSObject } from '@emotion/react';
 
 export type DialogProps = {
   onClose: () => void;
@@ -21,7 +21,7 @@ export type DialogProps = {
   submitButton?: string;
   actionUrl?: string;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
-  PaperProps?: Partial<PaperProps>;
+  paperCss?: CSSObject;
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
@@ -32,7 +32,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
       dispatch(enableHotkeys());
     };
   }, []);
-  const { onClose, onSubmit, maxWidth = 'sm', PaperProps } = props;
+  const { onClose, onSubmit, maxWidth = 'sm', paperCss } = props;
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         open={true}
         onClose={onClose}
         maxWidth={maxWidth}
-        PaperProps={PaperProps}
+        paperCss={{ '& .MuiPaper-root.MuiDialog-paper': paperCss }}
         fullWidth={true}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>

@@ -69,7 +69,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <FormContainer>
+    <FormContainer maxWidth="xs">
       <Typography variant="h4" component="h1">
         <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
       </Typography>

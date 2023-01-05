@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen, findByLabelText } from '@testing-library/react';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import Toolbar, {
   ToolbarButtonOption,
@@ -78,6 +78,12 @@ const submenuConfig2: ActionConfig = {
 const iconFunctionConfig: ActionConfig = {
   icon: () => <ThreeDRotation></ThreeDRotation>,
   onClick: jest.fn(),
+};
+
+const submenuOnClickConfig: ActionConfig = {
+  icon: <ThreeDRotation></ThreeDRotation>,
+  useClickToClose: true,
+  options: [config, null, config, null],
 };
 
 afterEach(() => {
@@ -192,6 +198,7 @@ describe('Editor Toolbar Submenu', () => {
     const item = screen.getByRole('menuitem');
     fireEvent.mouseOver(item);
     const clickeableDiv = await screen.findByTestId('custom-render-div');
+    expect(screen.queryByRole('submenu')).toBeTruthy();
 
     fireEvent.click(clickeableDiv);
 
@@ -204,6 +211,28 @@ describe('Editor Toolbar Submenu', () => {
 
     fireEvent.mouseOver(item);
 
+    expect(screen.queryByRole('submenu')).toBeFalsy();
+  });
+
+  it('Given a useClickToOpen configuration when mouse is over, not shows a submenu ', async () => {
+    render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
+    const item = screen.getByRole('menuitem');
+
+    fireEvent.mouseOver(item);
+
+    expect(screen.queryByRole('submenu')).toBeFalsy();
+  });
+
+  it('Given a useClickToOpen configuration when click, shows a submenu with close button', async () => {
+    render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
+    const item = screen.getByRole('button');
+
+    fireEvent.click(item);
+
+    await screen.findByRole('submenu');
+    const closeButton = await screen.findByLabelText('Close');
+
+    fireEvent.click(closeButton);
     expect(screen.queryByRole('submenu')).toBeFalsy();
   });
 });

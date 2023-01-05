@@ -25,6 +25,7 @@ import '../app-bar/styles.css';
 import Box from '@mui/material/Box';
 import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
+import CloseIcon from '@mui/icons-material/Close';
 
 /**
  * Common button
@@ -106,7 +107,11 @@ export const ToolbarSubmenu = (props: {
       }}
     >
       <ToolbarButtonOption
-        configuration={{ ...props.configuration, onClick: () => setOpen(true) }}
+        configuration={{
+          ...props.configuration,
+          onClick: () => setOpen(true),
+          selected: () => open,
+        }}
       />
       <Popover
         role="submenu"
@@ -125,6 +130,13 @@ export const ToolbarSubmenu = (props: {
         }}
         elevation={props.elevation}
       >
+        {props.configuration.useClickToClose && (
+          <Box alignItems={'end'}>
+            <IconButton onClick={() => setOpen(false)} aria-label={'Close'}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        )}
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
           {props.configuration.options?.map((o, i) => {
             if (o?.visible === false) {
