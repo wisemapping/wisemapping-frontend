@@ -134,10 +134,16 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
     desktop: {
       hidden: ['showcase', 'viewonly', 'edition-viewer', 'edition-editor'],
     },
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+    },
   },
   share: {
     desktop: {
       hidden: ['showcase', 'viewonly', 'edition-viewer', 'edition-editor'],
+    },
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
     },
   },
   info: {
@@ -170,6 +176,9 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
     desktop: {
       hidden: ['viewonly', 'edition-viewer', 'showcase'],
     },
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+    },
   },
   export: {
     mobile: {
@@ -189,6 +198,9 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   starred: {
     desktop: {
       hidden: ['showcase', 'viewonly'],
+    },
+    mobile: {
+      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
     },
   },
 };
