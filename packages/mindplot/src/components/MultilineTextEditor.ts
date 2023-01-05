@@ -38,7 +38,7 @@ class EditorComponent extends Events {
     this.registerEvents(this._containerElem);
   }
 
-  private static buildEditor() {
+  private static buildEditor(): JQuery<HTMLElement> {
     const result = $('<div></div>').attr('id', 'textContainer').css({
       display: 'none',
       zIndex: '8',
@@ -140,14 +140,14 @@ class EditorComponent extends Events {
       try {
         actionDispatcher.changeTextToTopic([topicId], text);
       } catch (e) {
-        // Hack: For some reasom, editor seems to end up connexted to a deleted node.
+        // Hack: For some reasom, editor seems to end up connected to a deleted node.
         // More research required.
         console.error(`Text could not be update -> ${JSON.stringify(e)}`);
       }
     }
   }
 
-  show(textOverwrite?: string) {
+  show(textOverwrite?: string): void {
     const topic = this._topic;
 
     // Hide topic text ...
@@ -177,10 +177,11 @@ class EditorComponent extends Events {
     this.setText(text);
 
     // Set the element focus and select the current text ...
-    const inputElem = this.getTextareaElem();
-    if (inputElem) {
-      this.positionCursor(inputElem, textOverwrite === undefined);
+    const textAreaElem = this.getTextareaElem();
+    if (textAreaElem) {
+      this.positionCursor(textAreaElem, textOverwrite === undefined);
     }
+    textAreaElem.trigger('focus');
   }
 
   private setStyle(fontStyle: {
@@ -192,14 +193,13 @@ class EditorComponent extends Events {
   }) {
     const inputField = this.getTextareaElem();
     // allowed param reassign to avoid risks of existing code relying in this side-effect
-    /* eslint-disable no-param-reassign */
-    if (!$defined(fontStyle.fontFamily)) {
+    if (!fontStyle.fontFamily) {
       fontStyle.fontFamily = 'Arial';
     }
-    if (!$defined(fontStyle.style)) {
+    if (!fontStyle.style) {
       fontStyle.style = 'normal';
     }
-    if (!$defined(fontStyle.weight)) {
+    if (!fontStyle.weight) {
       fontStyle.weight = 'normal';
     }
     if (!$defined(fontStyle.size)) {
@@ -232,14 +232,9 @@ class EditorComponent extends Events {
   }
 
   private positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
-    textareaElem.focus();
     const { length } = this.getTextAreaText();
-    if (selectText) {
-      // Mark text as selected ...
-      textareaElem[0].setSelectionRange(0, length);
-    } else {
-      textareaElem[0].setSelectionRange(length, length);
-    }
+    const start = selectText ? 0 : length;
+    textareaElem[0].setSelectionRange(start, length);
   }
 
   close(update: boolean): void {
