@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const prodConfig = {
   optimization: {
@@ -25,7 +24,6 @@ const prodConfig = {
     /^lodash/
     
   ],
-  plugins: [new CleanWebpackPlugin()],
 };
 
 module.exports = merge(common, prodConfig);

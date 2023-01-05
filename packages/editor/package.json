@@ -16,7 +16,6 @@
   "repository": "http://www.wisemapping.com",
   "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
   "license": "MIT",
-  "private": false,
   "devDependencies": {
     "@babel/preset-env": "^7.19.4",
     "@formatjs/cli": "^5.1.3",
@@ -24,7 +23,6 @@
     "@types/jest": "^29.0.0",
     "babel-plugin-transform-require-context": "^0.1.1",
     "babel-polyfill": "^6.26.0",
-    "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.1",
     "css-loader": "^6.7.1",
     "cypress": "11.2.0",
@@ -53,7 +51,6 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.9.3",
     "@mui/material": "^5.10.11",
-    "@mui/material/esm": "^5.10.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.2.1",

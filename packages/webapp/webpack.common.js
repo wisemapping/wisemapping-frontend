@@ -2,7 +2,6 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 webpack;
@@ -54,10 +53,6 @@ module.exports = {
     },
   },
   plugins: [
-    new CleanWebpackPlugin({
-      dangerouslyAllowCleanPatternsOutsideProject: true,
-      dry: false,
-    }),
     new CopyWebpackPlugin({
       patterns: [
         {

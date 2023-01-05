@@ -20,7 +20,6 @@
     "repository": "http://www.wisemapping.com",
     "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
     "license": "MIT",
-    "private": false,
     "devDependencies": {
         "@formatjs/cli": "^2.13.15",
         "@testing-library/cypress": "^8.0.3",
@@ -28,7 +27,6 @@
         "@typescript-eslint/eslint-plugin": "^5.41.0",
         "@typescript-eslint/parser": "^5.41.0",
         "@welldone-software/why-did-you-render": "^7.0.1",
-        "clean-webpack-plugin": "^3.0.05.10.11",
         "copy-webpack-plugin": "^7.0.0",
         "cypress": "11.2.0",
         "cypress-image-snapshot": "^4.0.1",

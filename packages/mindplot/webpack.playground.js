@@ -1,5 +1,4 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { merge } = require('webpack-merge');
@@ -23,7 +22,6 @@ const playgroundConfig = {
     open: false
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         { from: 'test/playground/index.html', to: 'index.html' },

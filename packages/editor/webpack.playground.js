@@ -1,5 +1,4 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common');
@@ -26,10 +25,6 @@ const playgroundConfig = {
     open: false,
   },
   plugins: [
-    new CleanWebpackPlugin({
-      dangerouslyAllowCleanPatternsOutsideProject: true,
-      dry: false,
-    }),
     new CopyPlugin({
       patterns: [
         { from: 'test/playground/map-render/images/favicon.ico', to: 'favicon.ico' },

@@ -9,7 +9,6 @@
         "src",
         "dist"
     ],
-    "private": false,
     "publishConfig": {
         "registry": "https://registry.yarnpkg.com"
     },
@@ -31,7 +30,6 @@
         "@babel/plugin-transform-modules-commonjs": "^7.14.5",
         "@babel/preset-env": "^7.19.4",
         "babel-loader": "^8.2.2",
-        "clean-webpack-plugin": "^4.0.0",
         "cypress": "11.2.0",
         "cypress-image-snapshot": "^4.0.1",
         "eslint": "^5.16.0",
