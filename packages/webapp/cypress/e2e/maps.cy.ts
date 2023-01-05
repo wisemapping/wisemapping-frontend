@@ -4,7 +4,7 @@ context('Maps Page', () => {
   });
 
   it('should match the snapshot', () => {
-    // cy.matchImageSnapshot('maps');
+    cy.matchImageSnapshot('maps');
   });
 });
 
@@ -31,6 +31,10 @@ context('iphone-5 resolution', () => {
   it('Displays a card list', () => {
     cy.get('.MuiCard-root').should('have.length', 3);
   });
+
+  it('should match the snapshot', () => {
+    cy.matchImageSnapshot('maps-iphone-5');
+  });
 });
 
 context('720p resolution', () => {
@@ -45,5 +49,9 @@ context('720p resolution', () => {
 
   it('Displays a table with maps', () => {
     cy.get('.MuiTableBody-root').should('be.visible');
+  });
+
+  it('should match the snapshot', () => {
+    cy.matchImageSnapshot('maps-720p-resolution');
   });
 });
