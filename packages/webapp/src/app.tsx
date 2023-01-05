@@ -124,7 +124,9 @@ const App = (): ReactElement => {
       </QueryClientProvider>
     </Provider>
   ) : (
-    <div>Loading ... </div>
+    <div>
+      <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+    </div>
   );
 };
 
