@@ -21,6 +21,8 @@ import $ from 'jquery';
 
 import ActionDispatcher from './ActionDispatcher';
 import Events from './Events';
+import { FontStyleType } from './FontStyleType';
+import { FontWeightType } from './FontWeightType';
 import Topic from './Topic';
 
 class EditorComponent extends Events {
@@ -77,7 +79,7 @@ class EditorComponent extends Events {
             }
             textareaElem.val(`${head}\n${tail}`);
 
-            textareaElem.focus();
+            textareaElem.trigger('focus');
             textareaElem[0].setSelectionRange(cursorPosition + 1, cursorPosition + 1);
           } else {
             this.close(true);
@@ -186,8 +188,8 @@ class EditorComponent extends Events {
 
   private setStyle(fontStyle: {
     fontFamily: string;
-    style: string;
-    weight: string;
+    style: FontStyleType;
+    weight: FontWeightType;
     size: number;
     color: string;
   }) {
@@ -234,6 +236,7 @@ class EditorComponent extends Events {
   private positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
     const { length } = this.getTextAreaText();
     const start = selectText ? 0 : length;
+    textareaElem.trigger('focus');
     textareaElem[0].setSelectionRange(start, length);
   }
 

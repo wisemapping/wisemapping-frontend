@@ -77,18 +77,19 @@ const TopicLink = (props: {
         onChange={(event) => setUrl(event.target.value)}
         variant="outlined"
         size="small"
+        type="url"
         onKeyDown={keyDownHandler}
         InputProps={{
           endAdornment: (
             <Link href={isValidUrl ? url : ''} target="_blank">
               <IconButton disabled={!isValidUrl}>
-                <OpenInNewOutlinedIcon></OpenInNewOutlinedIcon>
+                <OpenInNewOutlinedIcon />
               </IconButton>
             </Link>
           ),
         }}
         margin="dense"
-      ></Input>
+      />
       <br />
       <SaveAndDelete
         model={props.urlModel}
