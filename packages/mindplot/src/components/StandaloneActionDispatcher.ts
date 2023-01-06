@@ -145,12 +145,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
-  changeFontColorToTopic(topicsIds: number[], color: string) {
-    $assert(topicsIds, 'topicIds can not be null');
-    $assert(color, 'color can not be null');
-
-    const commandFunc = (topic: Topic, commandColor: string) => {
+  changeFontColorToTopic(topicsIds: number[], color: string | undefined) {
+    const commandFunc = (topic: Topic, commandColor: string | undefined) => {
       const result = topic.getFontColor();
       topic.setFontColor(commandColor);
       return result;

@@ -179,11 +179,11 @@ abstract class INodeModel {
     return this.getProperty('fontWeight') as FontWeightType;
   }
 
-  setFontColor(color: string): void {
+  setFontColor(color: string | undefined): void {
     this.putProperty('fontColor', color);
   }
 
-  getFontColor(): string {
+  getFontColor(): string | undefined {
     return this.getProperty('fontColor') as string;
   }
 
@@ -191,7 +191,7 @@ abstract class INodeModel {
     this.putProperty('fontSize', size);
   }
 
-  getFontSize(): number {
+  getFontSize(): number | undefined {
     return this.getProperty('fontSize') as number;
   }
 

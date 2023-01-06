@@ -77,13 +77,13 @@
     "link.placeholder": {
         "defaultMessage": "https://www.example.com"
     },
-    "note.label": {
+    "editor-panel.note-panel-title": {
         "defaultMessage": "Notiz"
     },
     "icon.label": {
         "defaultMessage": "Symbol"
     },
-    "link.label": {
+    "editor-panel.link-panel-title": {
         "defaultMessage": "Link"
     },
     "zoom-panel.tooltip-keyboard": {

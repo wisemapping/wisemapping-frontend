@@ -158,13 +158,13 @@
   "link.placeholder": {
     "defaultMessage": "https://www.example.com"
   },
-  "note.label": {
+  "editor-panel.note-panel-title": {
     "defaultMessage": "Note"
   },
   "icon.label": {
       "defaultMessage": "Icon"
   },
-  "link.label": {
+  "editor-panel.link-panel-title": {
       "defaultMessage": "Link"
   },
   "shortcut-help-pane.action": {

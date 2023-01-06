@@ -20,8 +20,6 @@ import React, { ReactElement, useState } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import Input from '../../input';
 import SaveAndDelete from '../save-and-delete';
-import { useIntl } from 'react-intl';
-
 /**
  * Note form for toolbar and node contextual editor
  */
@@ -30,19 +28,16 @@ const TopicNote = (props: {
   noteModel: NodeProperty<string> | null;
 }): ReactElement => {
   const [note, setNote] = useState(props.noteModel.getValue());
-  const intl = useIntl();
-
   const submitHandler = () => {
     props.closeModal();
     props.noteModel.setValue(note);
   };
 
   return (
-    <Box sx={{ p: 2, width: '300px' }}>
+    <Box sx={{ px: 2, pb: 2, width: '300px' }}>
       <Input
         autoFocus
         multiline
-        label={intl.formatMessage({ id: 'note.label', defaultMessage: 'Note' })}
         variant="outlined"
         fullWidth
         rows={12}

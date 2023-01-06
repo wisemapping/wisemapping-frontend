@@ -251,7 +251,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    * submenu to manipulate node font
    */
   const fontFormatToolbarConfiguration: ActionConfig = {
-    icon: <FontDownloadOutlinedIcon></FontDownloadOutlinedIcon>,
+    icon: <FontDownloadOutlinedIcon />,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-topic-font-style',
       defaultMessage: 'Font Style',
@@ -262,7 +262,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: <TextIncreaseOutlinedIcon></TextIncreaseOutlinedIcon>,
+        icon: <TextIncreaseOutlinedIcon />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-bigger',
           defaultMessage: 'Bigger',
@@ -270,7 +270,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         onClick: () => modelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.up),
       },
       {
-        icon: <TextDecreaseOutlinedIcon></TextDecreaseOutlinedIcon>,
+        icon: <TextDecreaseOutlinedIcon />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-smaller',
           defaultMessage: 'Smaller',
@@ -279,7 +279,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: <FormatBoldOutlinedIcon></FormatBoldOutlinedIcon>,
+        icon: <FormatBoldOutlinedIcon />,
         tooltip: keyTooltip(
           intl.formatMessage({
             id: 'editor-panel.tooltip-topic-font-bold',
@@ -322,6 +322,15 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           },
         ],
       },
+      {
+        icon: <ClearOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-font-color-default',
+          defaultMessage: 'Default color',
+        }),
+        onClick: () => modelBuilder.getFontColorModel().setValue(undefined),
+        selected: () => modelBuilder.getFontColorModel().getValue() === undefined,
+      },
     ],
     disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
@@ -330,7 +339,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    * button to show relation pivot
    */
   const addRelationConfiguration: ActionConfig = {
-    icon: <SettingsEthernetIcon></SettingsEthernetIcon>,
+    icon: <SettingsEthernetIcon />,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-add-relationship',
       defaultMessage: 'Add Relationship',
@@ -351,7 +360,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       'L',
     ),
     useClickToClose: true,
-    title: intl.formatMessage({ id: 'link.label', defaultMessage: 'Link' }),
+    title: intl.formatMessage({ id: 'editor-panel.link-panel-title', defaultMessage: 'Link' }),
     options: [
       {
         render: (closeModal) => (
@@ -372,10 +381,13 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       'K',
     ),
     useClickToClose: true,
-    title: intl.formatMessage({ id: 'note.label', defaultMessage: 'Note' }),
+    title: intl.formatMessage({ id: 'editor-panel.note-panel-title', defaultMessage: 'Note' }),
     options: [
       {
-        tooltip: 'Node note',
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.note-panel-title',
+          defaultMessage: 'Note',
+        }),
         render: (closeModal) => (
           <TopicNote closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
         ),

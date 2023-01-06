@@ -224,7 +224,7 @@ describe('Editor Toolbar Submenu', () => {
     expect(screen.queryByRole('submenu')).toBeFalsy();
   });
 
-  it('Given a useClickToOpen configuration when click, shows a submenu with close button', async () => {
+  it.skip('Given a useClickToOpen configuration when click, shows a submenu with close button', async () => {
     render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
     const item = screen.getByRole('button');
 

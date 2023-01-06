@@ -323,7 +323,7 @@
       "value": "Ingültige Adresse"
     }
   ],
-  "link.label": [
+  "editor-panel.link-panel-title": [
     {
       "type": 0,
       "value": "Link"
@@ -341,7 +341,7 @@
       "value": "Anmeldung"
     }
   ],
-  "note.label": [
+  "editor-panel.note-panel-title": [
     {
       "type": 0,
       "value": "Notiz"

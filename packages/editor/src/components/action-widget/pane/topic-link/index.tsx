@@ -59,10 +59,12 @@ const TopicLink = (props: {
   const isValidUrl = !url || checkURL(url);
 
   return (
-    <Box sx={{ p: 1 }}>
+    <Box sx={{ px: 2, pb: 2, width: '300px' }}>
       <Input
         autoFocus
         error={!isValidUrl}
+        fullWidth
+        margin="dense"
         helperText={
           isValidUrl
             ? ''
@@ -88,7 +90,6 @@ const TopicLink = (props: {
             </Link>
           ),
         }}
-        margin="dense"
       />
       <br />
       <SaveAndDelete

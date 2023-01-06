@@ -71,13 +71,13 @@
     "link.placeholder": {
         "defaultMessage": "https://www.example.com"
     },
-    "note.label": {
+    "editor-panel.note-panel-title": {
         "defaultMessage": "Nota"
     },
     "icon.label": {
         "defaultMessage": "Icono"
     },
-    "link.label": {
+    "editor-panel.link-panel-title": {
         "defaultMessage": "Enlace"
     },
     "editor-panel.tooltip-add-icon": {

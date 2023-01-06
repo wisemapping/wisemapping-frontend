@@ -317,7 +317,7 @@
       "value": "Address is not valid"
     }
   ],
-  "link.label": [
+  "editor-panel.link-panel-title": [
     {
       "type": 0,
       "value": "Link"
@@ -329,7 +329,7 @@
       "value": "https://www.example.com"
     }
   ],
-  "note.label": [
+  "editor-panel.note-panel-title": [
     {
       "type": 0,
       "value": "Note"

@@ -129,7 +129,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic font color
    */
-  getFontColorModel(): NodeProperty<string> {
+  getFontColorModel(): NodeProperty<string | undefined> {
     if (!this.fontColorModel)
       this.fontColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontColor()),

@@ -44,7 +44,7 @@ export class DefaultWidgetManager extends WidgetManager {
     this.editorContent = linkContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
-    this.editorTitle = 'link.label';
+    this.editorTitle = 'editor-panel.link-panel-title';
     topic.closeEditors();
   }
 
@@ -75,7 +75,7 @@ export class DefaultWidgetManager extends WidgetManager {
     this.editorContent = noteContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
-    this.editorTitle = 'note.label';
+    this.editorTitle = 'editor-panel.note-panel-title';
     topic.closeEditors();
   }
 

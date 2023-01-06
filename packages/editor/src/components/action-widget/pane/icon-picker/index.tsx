@@ -24,6 +24,7 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormattedMessage } from 'react-intl';
+import Box from '@mui/material/Box';
 
 type IconPickerProp = {
   triggerClose: () => void;
@@ -52,8 +53,8 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
   };
 
   return (
-    <div style={{ padding: '5px' }}>
-      <FormGroup>
+    <Box style={{ padding: '5px' }}>
+      <FormGroup sx={{ align: 'center' }}>
         <FormControlLabel
           label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}
           control={<Switch onChange={handleCheck} />}
@@ -70,7 +71,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
       )}
 
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
-    </div>
+    </Box>
   );
 };
 export default IconPicker;

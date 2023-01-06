@@ -133,11 +133,24 @@ export const ToolbarSubmenu = (props: {
       >
         {props.configuration.useClickToClose && (
           <Box textAlign={'right'} ml={1}>
-            <Typography variant="body1" style={{ paddingTop: '10px', float: 'left' }}>
+            <Typography
+              variant="body1"
+              style={{
+                paddingTop: '15px',
+                paddingLeft: '5px',
+                float: 'left',
+                fontWeight: 'bold',
+                fontSize: '20px',
+              }}
+            >
               {props.configuration.title}
             </Typography>
-            <IconButton onClick={() => setOpen(false)} aria-label={'Close'}>
-              <CloseIcon />
+            <IconButton
+              onClick={() => setOpen(false)}
+              aria-label={'Close'}
+              sx={{ marginTop: '10px', marginRight: '5px' }}
+            >
+              <CloseIcon aria-label={'Close'} />
             </IconButton>
           </Box>
         )}

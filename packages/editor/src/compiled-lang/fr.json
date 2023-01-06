@@ -317,7 +317,7 @@
       "value": "Adresse invalide"
     }
   ],
-  "link.label": [
+  "editor-panel.link-panel-title": [
     {
       "type": 0,
       "value": "Lien"
@@ -329,7 +329,7 @@
       "value": "https://www.example.com"
     }
   ],
-  "note.label": [
+  "editor-panel.note-panel-title": [
     {
       "type": 0,
       "value": "Note"

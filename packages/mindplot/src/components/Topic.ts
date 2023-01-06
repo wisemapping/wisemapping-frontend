@@ -391,38 +391,38 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setFontFamily(value: string) {
+  setFontFamily(value: string): void {
     const model = this.getModel();
     model.setFontFamily(value);
 
     this.redraw();
   }
 
-  setFontSize(value: number) {
+  setFontSize(value: number): void {
     const model = this.getModel();
     model.setFontSize(value);
 
     this.redraw();
   }
 
-  setFontStyle(value: FontStyleType) {
+  setFontStyle(value: FontStyleType): void {
     const model = this.getModel();
     model.setFontStyle(value);
 
     this.redraw();
   }
 
-  setFontWeight(value: FontWeightType) {
+  setFontWeight(value: FontWeightType): void {
     const model = this.getModel();
     model.setFontWeight(value);
 
     this.redraw();
   }
 
-  getFontWeight() {
+  getFontWeight(): FontWeightType {
     const model = this.getModel();
     let result = model.getFontWeight();
-    if (!$defined(result)) {
+    if (!result) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.weight;
     }
@@ -469,7 +469,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setFontColor(value: string) {
+  setFontColor(value: string | undefined) {
     const model = this.getModel();
     model.setFontColor(value);
 
@@ -1032,12 +1032,12 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  setOrder(value: number) {
+  setOrder(value: number): void {
     const model = this.getModel();
     model.setOrder(value);
   }
 
-  connectTo(targetTopic: Topic, workspace: Workspace) {
+  connectTo(targetTopic: Topic, workspace: Workspace): void {
     // Connect Graphical Nodes ...
     targetTopic.append(this);
     this._parent = targetTopic;

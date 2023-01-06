@@ -778,7 +778,7 @@ class Designer extends Events {
     }
   }
 
-  changeFontColor(color: string) {
+  changeFontColor(color: string | undefined): void {
     $assert(color, 'color can not be null');
 
     const topicsIds = this.getModel().filterTopicsIds();
@@ -789,7 +789,7 @@ class Designer extends Events {
   }
 
   /** */
-  changeBackgroundColor(color: string | undefined) {
+  changeBackgroundColor(color: string | undefined): void {
     const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
 
