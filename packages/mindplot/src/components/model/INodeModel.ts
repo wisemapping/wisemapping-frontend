@@ -159,7 +159,7 @@ abstract class INodeModel {
     this.putProperty('fontFamily', fontFamily);
   }
 
-  getFontFamily(): string {
+  getFontFamily(): string | undefined {
     return this.getProperty('fontFamily') as string;
   }
 
@@ -167,11 +167,11 @@ abstract class INodeModel {
     this.putProperty('fontStyle', fontStyle);
   }
 
-  getFontStyle(): FontStyleType {
+  getFontStyle(): FontStyleType | undefined {
     return this.getProperty('fontStyle') as FontStyleType;
   }
 
-  setFontWeight(weight: FontWeightType) {
+  setFontWeight(weight: FontWeightType): void {
     this.putProperty('fontWeight', weight);
   }
 

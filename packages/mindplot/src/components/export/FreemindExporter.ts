@@ -254,11 +254,11 @@ class FreemindExporter extends Exporter {
   }
 
   private addFontNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
-    const fontFamily: string = mindmapTopic.getFontFamily();
-    const fontSize: number = mindmapTopic.getFontSize();
-    const fontColor: string = mindmapTopic.getFontColor();
+    const fontFamily: string | undefined = mindmapTopic.getFontFamily();
+    const fontSize: number | undefined = mindmapTopic.getFontSize();
+    const fontColor: string | undefined = mindmapTopic.getFontColor();
     const fontWeigth: string | number | boolean | undefined = mindmapTopic.getFontWeight();
-    const fontStyle: string = mindmapTopic.getFontStyle();
+    const fontStyle: string | undefined = mindmapTopic.getFontStyle();
 
     if (fontFamily || fontSize || fontColor || fontWeigth || fontStyle) {
       const font: Font = this.objectFactory.createFont();
