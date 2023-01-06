@@ -23,6 +23,7 @@ import { FontWeightType } from '../FontWeightType';
 import { FontStyleType } from '../FontStyleType';
 import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
+import SizeType from '../SizeType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
@@ -93,14 +94,14 @@ abstract class INodeModel {
     return result;
   }
 
-  setImageSize(width: number, height: number) {
+  setImageSize(width: number, height: number): void {
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
-  getImageSize(): { width: number; height: number } {
+  getImageSize(): SizeType | undefined {
     const value = this.getProperty('imageSize') as string;
-    let result;
-    if (value != null) {
+    let result: SizeType | undefined;
+    if (value) {
       result = parseJsObject(value);
     }
     return result;
@@ -143,7 +144,7 @@ abstract class INodeModel {
     this.putProperty('shapeType', type);
   }
 
-  setOrder(value: number) {
+  setOrder(value: number): void {
     $assert(
       (typeof value === 'number' && Number.isFinite(value)) || value == null,
       'Order must be null or a number',
@@ -163,7 +164,7 @@ abstract class INodeModel {
     return this.getProperty('fontFamily') as string;
   }
 
-  setFontStyle(fontStyle: FontStyleType) {
+  setFontStyle(fontStyle: FontStyleType | undefined) {
     this.putProperty('fontStyle', fontStyle);
   }
 
@@ -336,9 +337,8 @@ abstract class INodeModel {
     return result;
   }
 
-  findNodeById(id: number): INodeModel {
-    $assert(Number.isFinite(id));
-    let result;
+  findNodeById(id: number): INodeModel | undefined {
+    let result: INodeModel | undefined;
     if (this.getId() === id) {
       result = this;
     } else {

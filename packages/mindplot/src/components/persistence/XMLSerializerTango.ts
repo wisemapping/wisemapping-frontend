@@ -98,9 +98,8 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const shape = topic.getShapeType();
     if ($defined(shape)) {
       parentTopic.setAttribute('shape', shape);
-
-      if (shape === 'image') {
-        const size = topic.getImageSize();
+      const size = topic.getImageSize();
+      if (shape === 'image' && size) {
         parentTopic.setAttribute('image', `${size.width},${size.height}:${topic.getImageUrl()}`);
       }
     }

@@ -476,7 +476,7 @@ abstract class Topic extends NodeGraph {
     this.redraw();
   }
 
-  setText(text: string | undefined) {
+  setText(text: string | undefined): void {
     // Avoid empty nodes ...
     const modelText = !text || text.trim().length === 0 ? undefined : text;
 
@@ -1250,7 +1250,9 @@ abstract class Topic extends NodeGraph {
       } else {
         // In case of images, the size is fixed ...
         const size = this.getModel().getImageSize();
-        this.setSize(size, false);
+        if (size) {
+          this.setSize(size, false);
+        }
       }
 
       if (redrawChildren) {

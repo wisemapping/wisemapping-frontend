@@ -29,11 +29,13 @@ class ImageTopicShape extends Image {
     const size = model.getImageSize();
 
     super.setHref(url);
-    super.setSize(size.width, size.height);
+    if (size) {
+      super.setSize(size.width, size.height);
+    }
     this._topic = topic;
   }
 
-  getSize(): SizeType {
+  getSize(): SizeType | undefined {
     return this._topic.getModel().getImageSize();
   }
 
