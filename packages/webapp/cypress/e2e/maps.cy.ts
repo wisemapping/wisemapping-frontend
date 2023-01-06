@@ -1,6 +1,7 @@
 context('Maps Page', () => {
   beforeEach(() => {
     cy.visit('/c/maps');
+    cy.get('.MuiCard-root').should('have.length', 3);
   });
 
   it('should match the snapshot', () => {
@@ -11,11 +12,8 @@ context('Maps Page', () => {
 context('iphone-5 resolution', () => {
   beforeEach(() => {
     cy.viewport('iphone-5');
-    cy.visit('/c/maps', {
-      onLoad: (win) => {
-        win.onerror = null;
-      },
-    });
+    cy.visit('/c/maps');
+    cy.get('.MuiCard-root').should('have.length', 3);
   });
 
   it('Displays mobile menu button', () => {
@@ -41,6 +39,7 @@ context('720p resolution', () => {
   beforeEach(() => {
     cy.viewport(1280, 720);
     cy.visit('/c/maps');
+    cy.get('.MuiCard-root').should('have.length', 3);
   });
 
   it('Displays mobile menu button', () => {

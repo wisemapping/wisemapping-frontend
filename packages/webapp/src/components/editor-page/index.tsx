@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React, { useEffect } from 'react';
-import Editor from '@wisemapping/editor';
+import Editor, { EditorOptions } from '@wisemapping/editor';
 import {
   EditorRenderMode,
   PersistenceManager,
@@ -136,7 +136,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const isAccountLoaded = mode === 'showcase' || useFetchAccount;
   const loadCompleted = mode && isAccountLoaded;
 
-  let options, persistence: PersistenceManager;
+  let options: EditorOptions, persistence: PersistenceManager;
   let mapInfo: MapInfo;
   if (loadCompleted) {
     options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
@@ -145,7 +145,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
       mapId,
       client,
       options.mapTitle,
-      options.isLocked,
+      options.locked,
       options.lockedMsg,
       options.zoom,
     );

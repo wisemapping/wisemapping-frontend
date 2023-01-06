@@ -54,13 +54,6 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
 
   return (
     <Box style={{ padding: '5px' }}>
-      <FormGroup sx={{ align: 'center' }}>
-        <FormControlLabel
-          label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}
-          control={<Switch onChange={handleCheck} />}
-        />
-      </FormGroup>
-
       {checked && (
         <EmojiPicker
           onEmojiClick={handleEmojiSelect}
@@ -69,8 +62,13 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
           previewConfig={{ showPreview: false }}
         />
       )}
-
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
+      <FormGroup sx={{ float: 'right' }}>
+        <FormControlLabel
+          label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}
+          control={<Switch onChange={handleCheck} />}
+        />
+      </FormGroup>
     </Box>
   );
 };
