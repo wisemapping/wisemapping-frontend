@@ -442,7 +442,7 @@ abstract class Topic extends NodeGraph {
   getFontColor(): string {
     const model = this.getModel();
     let result = model.getFontColor();
-    if (!$defined(result)) {
+    if (!result) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.color;
     }
@@ -452,7 +452,7 @@ abstract class Topic extends NodeGraph {
   getFontStyle(): string {
     const model = this.getModel();
     let result = model.getFontStyle();
-    if (!$defined(result)) {
+    if (!result) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.style;
     }
@@ -462,7 +462,7 @@ abstract class Topic extends NodeGraph {
   getFontSize(): number {
     const model = this.getModel();
     let result = model.getFontSize();
-    if (!$defined(result)) {
+    if (!result) {
       const font = TopicStyle.defaultFontStyle(this);
       result = font.size;
     }
