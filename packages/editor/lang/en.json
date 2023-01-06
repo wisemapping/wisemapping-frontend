@@ -161,6 +161,12 @@
   "note.label": {
     "defaultMessage": "Note"
   },
+  "icon.label": {
+      "defaultMessage": "Icon"
+  },
+  "link.label": {
+      "defaultMessage": "Link"
+  },
   "shortcut-help-pane.action": {
     "defaultMessage": "Action"
   },

@@ -72,73 +72,79 @@
         "defaultMessage": "https://www.example.com"
     },
     "note.label": {
-        "defaultMessage": "Noter"
+        "defaultMessage": "Note"
+    },
+    "icon.label": {
+        "defaultMessage": "Icône"
+    },
+    "link.label": {
+        "defaultMessage": "Lien"
     },
     "editor-panel.tooltip-add-icon": {
-        "defaultMessage": "Agregar Icono"
+        "defaultMessage": "Ajouter une icône"
     },
     "editor-panel.tooltip-add-link": {
-        "defaultMessage": "Agregar Enlace"
+        "defaultMessage": "Ajouter un lien"
     },
     "editor-panel.tooltip-add-note": {
-        "defaultMessage": "Agregar Nota"
+        "defaultMessage": "Ajouter une note"
     },
     "editor-panel.tooltip-add-relationship": {
-        "defaultMessage": "Agregar Relación"
+        "defaultMessage": "Ajouter une relation"
     },
     "editor-panel.tooltip-add-topic": {
-        "defaultMessage": "Agregar Topico"
+        "defaultMessage": "Ajouter un sujet"
     },
-    "editor-panel.tooltip-delete-topic": {
-        "defaultMessage": "Borrar Topico"
+    "editor-panel.tooltip-delete-sujet": {
+        "defaultMessage": "Supprimer le sujet"
     },
     "editor-panel.tooltip-topic-border-color": {
-        "defaultMessage": "Color del borde"
+        "defaultMessage": "Couleur de bordure"
     },
     "editor-panel.tooltip-topic-font-bigger": {
-        "defaultMessage": "Grande"
+        "defaultMessage": "Grand"
     },
     "editor-panel.tooltip-topic-font-bold": {
-        "defaultMessage": "Negrita"
+        "defaultMessage": "Gras"
     },
     "editor-panel.tooltip-topic-font-color": {
-        "defaultMessage": "Color"
+        "defaultMessage": "Couleur"
     },
     "editor-panel.tooltip-topic-font-italic": {
-        "defaultMessage": "Italica"
+        "defaultMessage": "Italique"
     },
     "editor-panel.tooltip-topic-font-smaller": {
-        "defaultMessage": "Pequeña"
+        "defaultMessage": "Petit"
     },
     "editor-panel.tooltip-topic-font-style": {
-        "defaultMessage": "Estilo de Fuente"
+        "defaultMessage": "Style de police"
     },
     "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Figura elipse"
+        "defaultMessage": "Forme d'ellipse"
     },
     "editor-panel.tooltip-topic-share-line": {
-        "defaultMessage": "Figura linea"
+        "defaultMessage": "Chiffre de ligne"
     },
     "editor-panel.tooltip-topic-share-rectangle": {
-        "defaultMessage": "Figura rectangulo"
+        "defaultMessage": "Forme rectangulaire"
     },
-    "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Figura redonda"
+    "editor-panel.tooltip-topic-share-arrondi": {
+        "defaultMessage": "Forme ronde"
     },
     "editor-panel.tooltip-topic-style": {
-        "defaultMessage": "Estilo de Topico"
+        "defaultMessage": "Style de sujet"
     },
-    "zoom-panel.tooltip-keyboard": {
-        "defaultMessage": "Keyboard Shortcuts"
+    "zoom-panel.tooltip-clavier": {
+        "defaultMessage": "Raccourcis clavier"
     },
     "zoom-panel.tooltip-zoom-in": {
-        "defaultMessage": "Acercar"
+        "defaultMessage": "Zoom avant"
     },
     "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "Alejarse"
+        "defaultMessage": "S'éloigner"
     },
     "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Centrar"
+        "defaultMessage": "Centre"
     },
     "shortcut-help-pane.action": {
         "defaultMessage": "Action"

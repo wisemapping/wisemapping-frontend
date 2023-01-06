@@ -26,6 +26,7 @@ import Box from '@mui/material/Box';
 import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
 import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
 
 /**
  * Common button
@@ -131,7 +132,10 @@ export const ToolbarSubmenu = (props: {
         elevation={props.elevation}
       >
         {props.configuration.useClickToClose && (
-          <Box alignItems={'end'}>
+          <Box textAlign={'right'} ml={1}>
+            <Typography variant="body1" style={{ paddingTop: '10px', float: 'left' }}>
+              {props.configuration.title}
+            </Typography>
             <IconButton onClick={() => setOpen(false)} aria-label={'Close'}>
               <CloseIcon />
             </IconButton>

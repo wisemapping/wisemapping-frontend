@@ -23,6 +23,7 @@ import { linkContent, noteContent } from './react-component';
 export class DefaultWidgetManager extends WidgetManager {
   private editorOpen: boolean;
   private editorContent: React.ReactElement;
+  private editorTitle: string;
   private setPopoverOpen: (value: boolean) => void;
   private setPopoverTarget: (target: Element) => void;
 
@@ -43,6 +44,7 @@ export class DefaultWidgetManager extends WidgetManager {
     this.editorContent = linkContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
+    this.editorTitle = 'link.label';
     topic.closeEditors();
   }
 
@@ -73,6 +75,7 @@ export class DefaultWidgetManager extends WidgetManager {
     this.editorContent = noteContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
+    this.editorTitle = 'note.label';
     topic.closeEditors();
   }
 
@@ -82,6 +85,10 @@ export class DefaultWidgetManager extends WidgetManager {
     const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
 
     return [popoverOpen, setPopoverOpen, popoverTarget, widgetManager.current];
+  }
+
+  getEditorTile(): string {
+    return this.editorTitle;
   }
 }
 

@@ -520,7 +520,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
           <Box css={classes.cards}>
             {isLoading ? (
               <Card>
-                <CardContent>Loading ...</CardContent>
+                <CardContent>
+                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                </CardContent>
               </Card>
             ) : mapsInfo.length == 0 ? (
               <Card>
@@ -578,7 +580,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             </Tooltip>
                           }
                           title={
-                            <Typography sx={{ fontSize: 'large' }} noWrap color="text.secondary">
+                            <Typography css={classes.cardTitle} noWrap color="text.secondary">
                               {row.title}
                             </Typography>
                           }
@@ -628,7 +630,9 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={6}>Loading ...</TableCell>
+                  <TableCell colSpan={6}>
+                    <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                  </TableCell>
                 </TableRow>
               ) : mapsInfo.length == 0 ? (
                 <TableRow>

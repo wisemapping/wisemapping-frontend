@@ -80,6 +80,12 @@
     "note.label": {
         "defaultMessage": "Notiz"
     },
+    "icon.label": {
+        "defaultMessage": "Symbol"
+    },
+    "link.label": {
+        "defaultMessage": "Link"
+    },
     "zoom-panel.tooltip-keyboard": {
         "defaultMessage": "Tastatürkürzel"
     },

@@ -351,6 +351,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       'L',
     ),
     useClickToClose: true,
+    title: intl.formatMessage({ id: 'link.label', defaultMessage: 'Link' }),
     options: [
       {
         render: (closeModal) => (
@@ -371,6 +372,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       'K',
     ),
     useClickToClose: true,
+    title: intl.formatMessage({ id: 'note.label', defaultMessage: 'Note' }),
     options: [
       {
         tooltip: 'Node note',
@@ -392,6 +394,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       defaultMessage: 'Add Icon',
     }),
     useClickToClose: true,
+    title: intl.formatMessage({ id: 'icon.label', defaultMessage: 'Icon' }),
     options: [
       {
         tooltip: intl.formatMessage({

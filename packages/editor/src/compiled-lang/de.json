@@ -311,10 +311,22 @@
       "value": "Bilder anzeigen"
     }
   ],
+  "icon.label": [
+    {
+      "type": 0,
+      "value": "Symbol"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
       "value": "Ingültige Adresse"
+    }
+  ],
+  "link.label": [
+    {
+      "type": 0,
+      "value": "Link"
     }
   ],
   "link.placeholder": [

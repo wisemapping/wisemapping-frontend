@@ -305,10 +305,22 @@
       "value": "Mostrar imagenes"
     }
   ],
+  "icon.label": [
+    {
+      "type": 0,
+      "value": "Icono"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
       "value": "Dirección invalida"
+    }
+  ],
+  "link.label": [
+    {
+      "type": 0,
+      "value": "Enlace"
     }
   ],
   "link.placeholder": [

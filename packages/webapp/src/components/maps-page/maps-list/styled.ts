@@ -128,5 +128,8 @@ export const useStyles = () => {
     cardHeader: {
       padding: '4px',
     },
+    cardTitle: {
+      maxWidth: '70vw',
+    },
   });
 };

@@ -69,16 +69,20 @@ const MapsPage = (): ReactElement => {
   const queryClient = useQueryClient();
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [desktopOpen, setDesktopOpen] = React.useState(false);
-  const classes = useStyles(desktopOpen);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
+  const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
+    localStorage.getItem('desktopDrawerOpen') === 'true',
+  );
+  const classes = useStyles(desktopDrawerOpen);
 
   const handleMobileDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setMobileDrawerOpen(!mobileDrawerOpen);
   };
 
   const handleDesktopDrawerToggle = () => {
-    setDesktopOpen(!desktopOpen);
+    if (!desktopDrawerOpen) localStorage.setItem('desktopDrawerOpen', 'true');
+    else localStorage.removeItem('desktopDrawerOpen');
+    setDesktopDrawerOpen(!desktopDrawerOpen);
   };
   // Reload based on user preference ...
   const userLocale = AppI18n.getUserLocale();
@@ -115,7 +119,7 @@ const MapsPage = (): ReactElement => {
   const handleMenuClick = (filter: Filter) => {
     queryClient.invalidateQueries('maps');
     setFilter(filter);
-    mobileOpen && setMobileOpen(false);
+    mobileDrawerOpen && setMobileDrawerOpen(false);
   };
 
   const handleLabelDelete = (id: number) => {
@@ -227,8 +231,8 @@ const MapsPage = (): ReactElement => {
               sx={{ p: 0, mr: 2, display: { xs: 'none', sm: 'inherit' } }}
               id="open-desktop-drawer"
             >
-              {!desktopOpen && <ArrowRight />}
-              {desktopOpen && <ArrowLeft />}
+              {!desktopDrawerOpen && <ArrowRight />}
+              {desktopDrawerOpen && <ArrowLeft />}
             </IconButton>
             <Tooltip
               arrow={true}
@@ -293,7 +297,7 @@ const MapsPage = (): ReactElement => {
         <Drawer
           container={container}
           variant={'temporary'}
-          open={mobileOpen}
+          open={mobileDrawerOpen}
           onClose={handleMobileDrawerToggle}
           ModalProps={{
             keepMounted: true,

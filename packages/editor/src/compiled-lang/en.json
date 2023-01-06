@@ -305,10 +305,22 @@
       "value": "Show images"
     }
   ],
+  "icon.label": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
       "value": "Address is not valid"
+    }
+  ],
+  "link.label": [
+    {
+      "type": 0,
+      "value": "Link"
     }
   ],
   "link.placeholder": [

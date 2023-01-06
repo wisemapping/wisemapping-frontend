@@ -59,6 +59,10 @@ interface ActionConfig {
    * if false the menu entry or button is not visible. Also custom render will be ignored.
    */
   visible?: boolean;
+  /**
+   * title for popover. Only used if useClickToClose is true
+   */
+  title?: string;
 }
 
 export default ActionConfig;

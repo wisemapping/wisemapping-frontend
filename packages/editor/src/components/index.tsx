@@ -20,7 +20,7 @@ import Popover from '@mui/material/Popover';
 import Model from '../classes/model/editor';
 import { Vortex } from 'react-loader-spinner';
 
-import { IntlProvider } from 'react-intl';
+import { FormattedMessage, IntlProvider } from 'react-intl';
 import {
   PersistenceManager,
   Designer,
@@ -44,6 +44,7 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
 import { SpinnerCentered } from './style';
+import Typography from '@mui/material/Typography';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -127,7 +128,14 @@ const Editor = ({
           horizontal: 'left',
         }}
       >
-        <Box alignItems={'end'}>
+        <Box textAlign={'right'} ml={1}>
+          <Typography variant="body1" style={{ paddingTop: '10px', float: 'left' }}>
+            <FormattedMessage
+              id={widgetManager.getEditorTile()}
+              defaultMessage=""
+            ></FormattedMessage>
+          </Typography>
+
           <IconButton onClick={() => setPopoverOpen(false)} aria-label={'Close'}>
             <CloseIcon />
           </IconButton>

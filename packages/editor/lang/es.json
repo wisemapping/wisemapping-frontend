@@ -74,6 +74,12 @@
     "note.label": {
         "defaultMessage": "Nota"
     },
+    "icon.label": {
+        "defaultMessage": "Icono"
+    },
+    "link.label": {
+        "defaultMessage": "Enlace"
+    },
     "editor-panel.tooltip-add-icon": {
         "defaultMessage": "Agregar Icono"
     },

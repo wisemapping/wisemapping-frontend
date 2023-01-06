@@ -84,6 +84,7 @@ const submenuOnClickConfig: ActionConfig = {
   icon: <ThreeDRotation></ThreeDRotation>,
   useClickToClose: true,
   options: [config, null, config, null],
+  title: 'Submenu title',
 };
 
 afterEach(() => {
@@ -234,6 +235,15 @@ describe('Editor Toolbar Submenu', () => {
 
     fireEvent.click(closeButton);
     expect(screen.queryByRole('submenu')).toBeFalsy();
+  });
+
+  it('Given a useClickToOpen configuration when click, shows a submenu with title', async () => {
+    render(<ToolbarSubmenu configuration={submenuOnClickConfig}></ToolbarSubmenu>);
+    const item = screen.getByRole('button');
+
+    fireEvent.click(item);
+
+    await screen.findByText('Submenu title');
   });
 });
 
