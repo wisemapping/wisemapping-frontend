@@ -11,6 +11,12 @@
       "value": "Annuler"
     }
   ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Supprimer"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -93,6 +99,24 @@
     {
       "type": 0,
       "value": "Annuler édition"
+    }
+  ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Icône"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Lien"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Note"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -194,7 +218,7 @@
   "editor-panel.tooltip-topic-fill-color-default": [
     {
       "type": 0,
-      "value": "Color de relleno por defecto"
+      "value": "Couleur de relleno por defecto"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -213,6 +237,12 @@
     {
       "type": 0,
       "value": "Couleur"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur par défaut"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
@@ -269,12 +299,6 @@
       "value": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     }
   ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Remarque pour les appareils mobiles."
-    }
-  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -305,34 +329,16 @@
       "value": "Afficher les images"
     }
   ],
-  "icon.label": [
-    {
-      "type": 0,
-      "value": "Icône"
-    }
-  ],
   "link.help_text": [
     {
       "type": 0,
       "value": "Adresse invalide"
     }
   ],
-  "editor-panel.link-panel-title": [
-    {
-      "type": 0,
-      "value": "Lien"
-    }
-  ],
   "link.placeholder": [
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "editor-panel.note-panel-title": [
-    {
-      "type": 0,
-      "value": "Note"
     }
   ],
   "shortcut-help-pane.action": [
@@ -405,6 +411,12 @@
     {
       "type": 0,
       "value": "Désélectionner tous les sujets"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Déconnecter le sujet"
     }
   ],
   "shortcut-help-pane.edit-multiline": [

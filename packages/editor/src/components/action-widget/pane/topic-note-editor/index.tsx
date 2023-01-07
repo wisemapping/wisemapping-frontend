@@ -23,7 +23,7 @@ import SaveAndDelete from '../save-and-delete';
 /**
  * Note form for toolbar and node contextual editor
  */
-const TopicNote = (props: {
+const TopicNoteEditor = (props: {
   closeModal: () => void;
   noteModel: NodeProperty<string> | null;
 }): ReactElement => {
@@ -55,4 +55,4 @@ const TopicNote = (props: {
   );
 };
 
-export default TopicNote;
+export default TopicNoteEditor;

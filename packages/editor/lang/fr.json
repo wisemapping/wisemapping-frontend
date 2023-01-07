@@ -11,9 +11,6 @@
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
-    "editor.edit-mobile": {
-        "defaultMessage": "Remarque pour les appareils mobiles."
-    },
     "editor.edit-description-mobile": {
         "defaultMessage": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
@@ -74,7 +71,7 @@
     "editor-panel.note-panel-title": {
         "defaultMessage": "Note"
     },
-    "icon.label": {
+    "editor-panel.icon-title": {
         "defaultMessage": "Icône"
     },
     "editor-panel.link-panel-title": {
@@ -252,6 +249,15 @@
         "defaultMessage": "La couleur de remplissage"
     },
     "editor-panel.tooltip-topic-fill-color-default": {
-        "defaultMessage": "Color de relleno por defecto"
+        "defaultMessage": "Couleur de relleno por defecto"
+    },
+    "action.delete": {
+        "defaultMessage": "Supprimer"
+    },
+    "editor-panel.tooltip-topic-font-color-default": {
+        "defaultMessage": "Couleur par défaut"
+    },
+    "shortcut-help-pane.drag-disconnect": {
+        "defaultMessage": "Déconnecter le sujet"
     }
 }

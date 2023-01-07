@@ -46,6 +46,7 @@ import ColorUtil from './render/ColorUtil';
 import Icon from './Icon';
 import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
+import DragTopic from './DragTopic';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -1135,7 +1136,7 @@ abstract class Topic extends NodeGraph {
     return this._isInWorkspace;
   }
 
-  createDragNode(layoutManager: LayoutManager) {
+  createDragNode(layoutManager: LayoutManager): DragTopic {
     const result = super.createDragNode(layoutManager);
 
     // Is the node already connected ?

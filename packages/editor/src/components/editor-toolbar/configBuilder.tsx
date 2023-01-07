@@ -45,8 +45,8 @@ import ActionConfig from '../../classes/action/action-config';
 import { SwitchValueDirection } from '../toolbar/ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import ColorPicker from '../action-widget/pane/color-picker';
-import TopicLink from '../action-widget/pane/topic-link';
-import TopicNote from '../action-widget/pane/topic-note';
+import TopicLinkEditor from '../action-widget/pane/topic-link-editor';
+import TopicNoteEditor from '../action-widget/pane/topic-note-editor';
 import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
@@ -364,7 +364,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     options: [
       {
         render: (closeModal) => (
-          <TopicLink closeModal={closeModal} urlModel={modelBuilder.getLinkModel()}></TopicLink>
+          <TopicLinkEditor closeModal={closeModal} urlModel={modelBuilder.getLinkModel()} />
         ),
       },
     ],
@@ -389,7 +389,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Note',
         }),
         render: (closeModal) => (
-          <TopicNote closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
+          <TopicNoteEditor closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
         ),
       },
     ],
@@ -406,7 +406,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       defaultMessage: 'Add Icon',
     }),
     useClickToClose: true,
-    title: intl.formatMessage({ id: 'icon.label', defaultMessage: 'Icon' }),
+    title: intl.formatMessage({ id: 'editor-panel.icon-title', defaultMessage: 'Icon' }),
     options: [
       {
         tooltip: intl.formatMessage({

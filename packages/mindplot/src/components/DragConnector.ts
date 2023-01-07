@@ -36,11 +36,15 @@ class DragConnector {
     this._workspace = workspace;
   }
 
-  checkConnection(dragTopic: DragTopic): void {
-    // Must be disconnected from their current connection ?.
-    const candidates = this._searchConnectionCandidates(dragTopic);
-    const currentConnection = dragTopic.getConnectedToTopic();
+  checkConnection(dragTopic: DragTopic, forceDisconnected: boolean): void {
+    // Is forced disconexion enabled ?
+    let candidates: Topic[] = [];
+    if (!forceDisconnected) {
+      candidates = this._searchConnectionCandidates(dragTopic);
+    }
 
+    // Must be disconnected from their current connection ?.
+    const currentConnection = dragTopic.getConnectedToTopic();
     if (currentConnection && (candidates.length === 0 || candidates[0] !== currentConnection)) {
       dragTopic.disconnect(this._workspace);
     }

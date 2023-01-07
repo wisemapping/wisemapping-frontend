@@ -11,6 +11,12 @@
       "value": "Abbrechen"
     }
   ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Löschen"
+    }
+  ],
   "action.share": [
     {
       "type": 0,
@@ -99,6 +105,24 @@
     {
       "type": 0,
       "value": "Rückgängig"
+    }
+  ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Symbol"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Notiz"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -221,6 +245,12 @@
       "value": "Farbe"
     }
   ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Farbe defekt"
+    }
+  ],
   "editor-panel.tooltip-topic-font-italic": [
     {
       "type": 0,
@@ -275,12 +305,6 @@
       "value": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     }
   ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Hinweis für Mobilgeräte."
-    }
-  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -311,22 +335,10 @@
       "value": "Bilder anzeigen"
     }
   ],
-  "icon.label": [
-    {
-      "type": 0,
-      "value": "Symbol"
-    }
-  ],
   "link.help_text": [
     {
       "type": 0,
       "value": "Ingültige Adresse"
-    }
-  ],
-  "editor-panel.link-panel-title": [
-    {
-      "type": 0,
-      "value": "Link"
     }
   ],
   "link.placeholder": [
@@ -339,12 +351,6 @@
     {
       "type": 0,
       "value": "Anmeldung"
-    }
-  ],
-  "editor-panel.note-panel-title": [
-    {
-      "type": 0,
-      "value": "Notiz"
     }
   ],
   "shortcut-help-pane.action": [
@@ -417,6 +423,12 @@
     {
       "type": 0,
       "value": "Alle Themen auswählen"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Color de relleno por defekto"
     }
   ],
   "shortcut-help-pane.edit-multiline": [

@@ -214,7 +214,7 @@ class Designer extends Events {
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
       // The node is being drag. Is the connection still valid ?
-      dragConnector.checkConnection(dragTopic);
+      dragConnector.checkConnection(dragTopic, event.metaKey || event.ctrlKey);
 
       if (!dragTopic.isVisible() && dragTopic.isConnected()) {
         dragTopic.setVisibility(true);

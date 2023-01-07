@@ -95,7 +95,7 @@ abstract class NodeGraph {
   }
 
   /** */
-  setMouseEventsEnabled(isEnabled) {
+  setMouseEventsEnabled(isEnabled: boolean) {
     this._mouseEvents = isEnabled;
   }
 
@@ -163,7 +163,7 @@ abstract class NodeGraph {
     workspace.removeChild(this);
   }
 
-  createDragNode(layoutManager: LayoutManager) {
+  createDragNode(layoutManager: LayoutManager): DragTopic {
     const dragShape = this._buildDragShape();
 
     return new DragTopic(dragShape, this, layoutManager);

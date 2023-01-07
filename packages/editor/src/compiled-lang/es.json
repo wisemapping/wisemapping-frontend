@@ -11,6 +11,12 @@
       "value": "Cancelar"
     }
   ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Borrar"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -93,6 +99,24 @@
     {
       "type": 0,
       "value": "Deshacer"
+    }
+  ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Icono"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Enlace"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Nota"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -215,6 +239,12 @@
       "value": "Color"
     }
   ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Color por defecto"
+    }
+  ],
   "editor-panel.tooltip-topic-font-italic": [
     {
       "type": 0,
@@ -269,12 +299,6 @@
       "value": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     }
   ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Nota para dispositivos móbiles."
-    }
-  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -305,34 +329,16 @@
       "value": "Mostrar imagenes"
     }
   ],
-  "icon.label": [
-    {
-      "type": 0,
-      "value": "Icono"
-    }
-  ],
   "link.help_text": [
     {
       "type": 0,
       "value": "Dirección invalida"
     }
   ],
-  "editor-panel.link-panel-title": [
-    {
-      "type": 0,
-      "value": "Enlace"
-    }
-  ],
   "link.placeholder": [
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "editor-panel.note-panel-title": [
-    {
-      "type": 0,
-      "value": "Nota"
     }
   ],
   "shortcut-help-pane.action": [
@@ -405,6 +411,12 @@
     {
       "type": 0,
       "value": "Deseleccionar tópicos"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Desconectar tópico"
     }
   ],
   "shortcut-help-pane.edit-multiline": [

@@ -131,8 +131,6 @@ class LayoutManager extends Events {
     nodeId: number | null,
     position: PositionType | null,
   ): { order: number; position: PositionType } {
-    $assert($defined(parentId), 'parentId can not be null');
-
     const parent = this._treeSet.find(parentId);
     const node = nodeId ? this._treeSet.find(nodeId) : null;
     const sorter = parent.getSorter();

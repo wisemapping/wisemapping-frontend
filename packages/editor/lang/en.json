@@ -2,8 +2,8 @@
   "action.accept": {
     "defaultMessage": "Accept"
   },
-  "action.cancel": {
-    "defaultMessage": "Cancel"
+  "action.delete": {
+    "defaultMessage": "Delete"
   },
   "appbar.back-to-map-list": {
     "defaultMessage": "Back to maps list"
@@ -46,6 +46,12 @@
   },
   "appbar.tooltip-undo": {
     "defaultMessage": "Undo"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "Link"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "Note"
   },
   "editor-panel.tooltip-add-icon": {
     "defaultMessage": "Add Icon"
@@ -107,6 +113,9 @@
   "editor-panel.tooltip-topic-font-color": {
     "defaultMessage": "Color"
   },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "Default color"
+  },
   "editor-panel.tooltip-topic-font-italic": {
     "defaultMessage": "Italic"
   },
@@ -134,9 +143,6 @@
   "editor.edit-description-mobile": {
     "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
   },
-  "editor.edit-mobile": {
-    "defaultMessage": "Note for mobile devices."
-  },
   "editor.try-welcome": {
     "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
   },
@@ -152,20 +158,14 @@
   "icon-picker.show-images": {
     "defaultMessage": "Show images"
   },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Icon"
+  },
   "link.help_text": {
     "defaultMessage": "Address is not valid"
   },
   "link.placeholder": {
     "defaultMessage": "https://www.example.com"
-  },
-  "editor-panel.note-panel-title": {
-    "defaultMessage": "Note"
-  },
-  "icon.label": {
-      "defaultMessage": "Icon"
-  },
-  "editor-panel.link-panel-title": {
-      "defaultMessage": "Link"
   },
   "shortcut-help-pane.action": {
     "defaultMessage": "Action"
@@ -202,6 +202,9 @@
   },
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "Deselect all topics"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "Disconnect topic"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "Add multi-line topic text"

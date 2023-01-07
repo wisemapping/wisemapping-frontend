@@ -128,6 +128,7 @@ const KeyboardShorcutsHelp = (): ReactElement => {
             <td>Ctrl + Enter</td>
             <td>⌘ + Enter</td>
           </tr>
+
           <tr>
             <td>
               <FormattedMessage
@@ -138,7 +139,16 @@ const KeyboardShorcutsHelp = (): ReactElement => {
             <td>Ctrl + C / Ctrl + V</td>
             <td>⌘ + C / ⌘ + V</td>
           </tr>
-
+          <tr>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.drag-disconnect"
+                defaultMessage="Disconnect topic"
+              />
+            </td>
+            <td>Ctrl + drag topic</td>
+            <td>⌘ + drag topic</td>
+          </tr>
           <tr>
             <td>
               <FormattedMessage

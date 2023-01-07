@@ -258,7 +258,7 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT') {
+  private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT'): void {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
@@ -284,14 +284,14 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToParent(designer: Designer, node: Topic) {
+  private _goToParent(designer: Designer, node: Topic): void {
     const parent = node.getParent();
     if (parent) {
       this._goToNode(designer, parent);
     }
   }
 
-  private _goToChild(designer: Designer, node: Topic) {
+  private _goToChild(designer: Designer, node: Topic): void {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
@@ -307,7 +307,7 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToNode(designer: Designer, node: Topic) {
+  private _goToNode(designer: Designer, node: Topic): void {
     // First deselect all the nodes ...
     designer.deselectAll();
 
@@ -315,10 +315,10 @@ class DesignerKeyboard extends Keyboard {
     node.setOnFocus(true);
   }
 
-  static register = function register(designer: Designer) {
+  static register(designer: Designer) {
     this._instance = new DesignerKeyboard(designer);
     this._disabled = false;
-  };
+  }
 
   static pause() {
     this._disabled = true;

@@ -17,10 +17,8 @@
  */
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import React, { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { FormattedMessage } from 'react-intl';
 
 const SaveAndDelete = (props: {
@@ -28,21 +26,31 @@ const SaveAndDelete = (props: {
   closeModal: () => void;
   submitHandler: () => void;
 }): ReactElement => {
+  const value = props.model.getValue();
   return (
-    <Box component="span">
-      <Button color="primary" variant="contained" onClick={props.submitHandler} sx={{ mr: 1 }}>
+    <Box component="span" justifyContent="flex-end" display="flex" sx={{ pt: 1 }}>
+      <Button
+        color="primary"
+        variant="outlined"
+        onClick={props.submitHandler}
+        sx={{ mr: 1 }}
+        size="small"
+      >
         <FormattedMessage id="action.accept" defaultMessage="Accept" />
       </Button>
 
-      {props.model.getValue() && props.model.getValue().trim() !== '' && (
-        <IconButton
+      {value && value.trim() !== '' && (
+        <Button
+          color="secondary"
+          variant="outlined"
           onClick={() => {
             props.closeModal();
             props.model.setValue(undefined);
           }}
+          size="small"
         >
-          <DeleteOutlineOutlinedIcon />
-        </IconButton>
+          <FormattedMessage id="action.delete" defaultMessage="Delete" />
+        </Button>
       )}
     </Box>
   );

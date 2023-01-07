@@ -29,7 +29,7 @@ import { useIntl } from 'react-intl';
 /**
  * Url form for toolbar and node contextual editor
  */
-const TopicLink = (props: {
+const TopicLinkEditor = (props: {
   closeModal: () => void;
   urlModel: NodeProperty<string>;
 }): ReactElement => {
@@ -91,7 +91,6 @@ const TopicLink = (props: {
           ),
         }}
       />
-      <br />
       <SaveAndDelete
         model={props.urlModel}
         closeModal={props.closeModal}
@@ -101,4 +100,4 @@ const TopicLink = (props: {
   );
 };
 
-export default TopicLink;
+export default TopicLinkEditor;

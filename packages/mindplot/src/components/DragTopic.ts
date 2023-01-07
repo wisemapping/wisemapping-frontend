@@ -70,13 +70,14 @@ class DragTopic {
     this._elem2d.setPosition(cx, cy);
 
     // In case is not free, pivot must be draw ...
-    if (this.isConnected() && !this.isFreeLayoutOn()) {
+    if (this.isConnected()) {
       const parent = this.getConnectedToTopic();
       const predict = this._layoutManager.predict(
         parent!.getId(),
         this._draggedNode.getId(),
         this.getPosition(),
       );
+
       if (this._order !== predict.order) {
         const dragPivot = this._getDragPivot();
         const pivotPosition = predict.position;

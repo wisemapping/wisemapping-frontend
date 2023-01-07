@@ -30,10 +30,10 @@ abstract class ChildrenSorterStrategy {
 
   abstract predict(
     treeSet: RootedTreeSet,
-    parent,
+    parent: Node,
     node: Node | null,
     position: PositionType | null,
-  ): void;
+  );
 
   abstract verify(treeSet: RootedTreeSet, node: Node): void;
 

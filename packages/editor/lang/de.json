@@ -11,9 +11,7 @@
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
-    "editor.edit-mobile": {
-        "defaultMessage": "Hinweis für Mobilgeräte."
-    },
+
     "editor.edit-description-mobile": {
         "defaultMessage": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
@@ -80,7 +78,7 @@
     "editor-panel.note-panel-title": {
         "defaultMessage": "Notiz"
     },
-    "icon.label": {
+    "editor-panel.icon-title": {
         "defaultMessage": "Symbol"
     },
     "editor-panel.link-panel-title": {
@@ -259,5 +257,14 @@
     },
     "editor-panel.tooltip-topic-fill-color-default": {
         "defaultMessage": "Standardfüllfarbe"
+    },
+    "action.delete": {
+        "defaultMessage": "Löschen"
+    },
+    "editor-panel.tooltip-topic-font-color-default": {
+        "defaultMessage": "Farbe defekt"
+    },
+    "shortcut-help-pane.drag-disconnect": {
+        "defaultMessage": "Color de relleno por defekto"
     }
 }
