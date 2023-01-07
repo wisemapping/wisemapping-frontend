@@ -57,6 +57,7 @@ class Relationship extends ConnectionLine {
     this._line.setIsDestControlPointCustom(false);
     this._line.setCursor('pointer');
     this._line.setStroke(1, 'solid', strokeColor);
+    this._line.setFill('none', 1);
     this._line.setDashed(4, 2);
     this._line.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
@@ -67,6 +68,7 @@ class Relationship extends ConnectionLine {
     this._focusShape.setIsDestControlPointCustom(false);
     this._focusShape.setVisibility(true);
     this._focusShape.setOpacity(0);
+    this._focusShape.setFill('none', 1);
     this._focusShape.setCursor('pointer');
 
     // Build arrow ...

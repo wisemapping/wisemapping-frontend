@@ -97,13 +97,6 @@ class CurvedLinePeer extends ElementPeer {
 
   setStrokeWidth(width) {
     this._style['stroke-width'] = width;
-    this._updateStyle();
-  }
-
-  setColor(color) {
-    this._style.stroke = color;
-    this._style.fill = color;
-    this._updateStyle();
   }
 
   updateLine(avoidControlPointFix) {
@@ -140,7 +133,6 @@ class CurvedLinePeer extends ElementPeer {
       this._fill = this._style.fill;
       this._style.fill = 'none';
     }
-    this._updateStyle();
     this.updateLine();
   }
 
@@ -164,16 +156,6 @@ class CurvedLinePeer extends ElementPeer {
 
   static _pointToStr(x, y) {
     return `${x.toFixed(1)},${y.toFixed(1)} `;
-  }
-
-  _updateStyle() {
-    let style = '';
-    for (const key in this._style) {
-      if (Object.prototype.hasOwnProperty.call(this._style, key)) {
-        style += `${key}:${this._style[key]} `;
-      }
-    }
-    this._native.setAttribute('style', style);
   }
 
   static _calculateDefaultControlPoints(srcPos, tarPos) {

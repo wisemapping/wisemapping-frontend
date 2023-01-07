@@ -37,7 +37,7 @@ const FontFamilySelect = (props: { fontFamilyModel: NodeProperty<string> }): Rea
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 220 }} size="small">
+      <FormControl variant="standard" sx={{ m: 1 }} size="small">
         <Select id="demo-simple-select" value={font || ''} onChange={handleChange}>
           {[
             'Arial',
