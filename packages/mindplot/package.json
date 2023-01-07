@@ -54,7 +54,7 @@
         "compression-webpack-plugin": "^9.2.0",
         "copy-webpack-plugin": "^10.0.0",
         "core-js": "^3.15.2",
-        "cypress": "^11.2.0",
+        "cypress": "^12.3.0",
         "cypress-image-snapshot": "^4.0.1",
         "eslint": "^8.4.1",
         "eslint-config-airbnb-base": "^14.2.1",
