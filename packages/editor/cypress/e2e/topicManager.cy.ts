@@ -12,6 +12,7 @@ context('Node manager', () => {
 
     cy.get('[test-id=36] > text > tspan').should('exist');
 
+    cy.wait(200);
     cy.matchImageSnapshot('editor-shortcut-edit');
   });
 
@@ -23,6 +24,7 @@ context('Node manager', () => {
     cy.get('[test-id=36] > text > tspan').should('exist');
     cy.get('[test-id=37] > text > tspan').should('exist');
 
+    cy.wait(200);
     cy.matchImageSnapshot('addChildNodeSortcut');
   });
 
@@ -32,6 +34,7 @@ context('Node manager', () => {
 
     cy.get('[test-id=37]').should('not.exist');
 
+    cy.wait(200);
     cy.matchImageSnapshot('deleteTopicShortcut');
   });
 
@@ -40,12 +43,15 @@ context('Node manager', () => {
 
     cy.get('[test-id=36] > text > tspan').should('exist');
 
+    cy.wait(200);
     cy.matchImageSnapshot('undoChange');
   });
 
   it('redo changes', () => {
     cy.get('[data-testid="RedoOutlinedIcon"]').click();
     cy.get('[test-id=36] > text > tspan').should('exist');
+
+    cy.wait(200);
     cy.matchImageSnapshot('redoChange');
   });
 
@@ -53,6 +59,7 @@ context('Node manager', () => {
     cy.contains('Mind Mapping rocks!!').click({ force: true });
     cy.get('body').type('{ctrl}s');
 
+    cy.wait(200);
     cy.matchImageSnapshot('saveChagesShortcut');
   });
 });

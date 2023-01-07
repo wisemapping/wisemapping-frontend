@@ -37,7 +37,7 @@ import GestureOutlined from '@mui/icons-material/GestureOutlined';
 import TimelineOutined from '@mui/icons-material/TimelineOutlined';
 import ShareOutlined from '@mui/icons-material/ShareOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
-import ClearOutlined from '@mui/icons-material/ClearOutlined';
+import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -125,7 +125,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ],
       },
       {
-        icon: <ClearOutlined />,
+        icon: <NotInterestedOutlined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-border-color-default',
           defaultMessage: 'Default border color',
@@ -154,7 +154,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ],
       },
       {
-        icon: <ClearOutlined />,
+        icon: <NotInterestedOutlined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-fill-color-default',
           defaultMessage: 'Default fill color',
@@ -232,7 +232,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ],
       },
       {
-        icon: <ClearOutlined />,
+        icon: <NotInterestedOutlined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-color-default',
           defaultMessage: 'Default color',
@@ -323,7 +323,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ],
       },
       {
-        icon: <ClearOutlined />,
+        icon: <NotInterestedOutlined />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-color-default',
           defaultMessage: 'Default color',

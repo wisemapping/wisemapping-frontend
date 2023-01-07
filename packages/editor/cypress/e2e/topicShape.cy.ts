@@ -16,6 +16,7 @@ context('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('eq', 0);
 
+    cy.wait(200);
     cy.matchImageSnapshot('changeToSquareShape');
   });
 
@@ -39,6 +40,7 @@ context('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('be.lt', 5);
 
+    cy.wait(200);
     cy.matchImageSnapshot('changeToRoundedRectangle');
   });
 
@@ -48,6 +50,7 @@ context('Change Topic shape', () => {
     cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
     cy.get(`[aria-label="Line shape"]`).first().click();
 
+    cy.wait(200);
     cy.matchImageSnapshot('changeToLine');
   });
 
@@ -71,6 +74,7 @@ context('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('be.lt', 15);
 
+    cy.wait(200);
     cy.matchImageSnapshot('changeToEllipseShape');
   });
 });
