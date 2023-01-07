@@ -23,7 +23,6 @@ class CurvedLinePeer extends ElementPeer {
   constructor() {
     const svgElement = window.document.createElementNS(ElementPeer.svgNamespace, 'path');
     super(svgElement);
-    this._style = { fill: '#495879' };
     this._customControlPoint_1 = false;
     this._customControlPoint_2 = false;
     this._control1 = new Point(0, 0);
@@ -96,7 +95,7 @@ class CurvedLinePeer extends ElementPeer {
   }
 
   setStrokeWidth(width) {
-    this._style['stroke-width'] = width;
+    this._native.setAttribute('stroke-width', width);
   }
 
   updateLine(avoidControlPointFix) {
@@ -127,11 +126,8 @@ class CurvedLinePeer extends ElementPeer {
 
   setWidth(value) {
     this._width = value;
-    if (this._width > 1) {
-      this._style.fill = this._fill;
-    } else {
-      this._fill = this._style.fill;
-      this._style.fill = 'none';
+    if (this._width === 1) {
+      this.setFill('none');
     }
     this.updateLine();
   }
