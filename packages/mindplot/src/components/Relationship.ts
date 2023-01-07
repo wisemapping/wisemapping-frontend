@@ -47,10 +47,7 @@ class Relationship extends ConnectionLine {
   private _model: RelationshipModel;
 
   constructor(sourceNode: Topic, targetNode: Topic, model: RelationshipModel) {
-    $assert(sourceNode, 'sourceNode can not be null');
-    $assert(targetNode, 'targetNode can not be null');
-
-    super(sourceNode, targetNode);
+    super(sourceNode, targetNode, LineType.THIN_CURVED);
     this._model = model;
 
     const strokeColor = Relationship.getStrokeColor();

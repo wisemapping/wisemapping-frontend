@@ -134,7 +134,7 @@ class CurvedLinePeer extends ElementPeer {
 
   setWidth(value) {
     this._width = value;
-    if (this._width >= 1) {
+    if (this._width > 1) {
       this._style.fill = this._fill;
     } else {
       this._fill = this._style.fill;
@@ -157,7 +157,7 @@ class CurvedLinePeer extends ElementPeer {
       const curveP5 = CurvedLinePeer._pointToStr(this._control1.x + this._x1, this._control1.y + this._y1 + this.getWidth() * 0.7);
       const curveP6 = CurvedLinePeer._pointToStr(this._x1, this._y1 + this.getWidth() / 2);
 
-      const path = `M${moveTo} C${curveP1} ${curveP2} ${curveP3} ${this.getWidth() >= 1 ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''}`;
+      const path = `M${moveTo} C${curveP1} ${curveP2} ${curveP3} ${this.getWidth() > 1 ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''}`;
       this._native.setAttribute('d', path);
     }
   }
