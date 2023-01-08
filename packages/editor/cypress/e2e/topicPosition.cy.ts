@@ -1,9 +1,9 @@
+/// <reference types="cypress" />
 describe('Change topic position', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
-    cy.clearLocalStorage('welcome-xml');
-    cy.reload();
+    cy.waitEditorLoaded();
 
     // Wait for load complate ...
     cy.get('[aria-label="vortex-loading"]').should('not.exist');

@@ -1,19 +1,22 @@
+/// <reference types="cypress" />
 describe('Edit Topic', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
-    cy.clearLocalStorage('welcome-xml');
-    cy.reload();
-
-    // Wait for load complate ...
-    cy.get('[aria-label="vortex-loading"]').should('not.exist');
+    cy.waitEditorLoaded();
     cy.get('[test-id=1]').click();
+  });
+
+  it('Open Font Shape Panel', () => {
+    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.matchImageSnapshot('fontShapePanel');
   });
 
   it('Change Main Topic Text', () => {
     cy.get('body').type('New Title Main Topic{enter}');
     cy.get('[test-id=1] > text > tspan').should('have.text', 'New Title Main Topic');
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeMainTopicText');
   });
 
@@ -51,6 +54,7 @@ describe('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-style').should('eq', 'italic');
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeFontItalic');
   });
 
@@ -60,6 +64,7 @@ describe('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', 'normal');
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeFontBold');
   });
 
@@ -70,6 +75,7 @@ describe('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'fill').should('eq', '#cc0000');
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeFontColor');
   });
 });

@@ -1,9 +1,8 @@
+/// <reference types="cypress" />
 describe('Node manager', () => {
   beforeEach(() => {
     cy.visit('/editor.html');
-
-    // Wait for load complate ...
-    cy.get('[aria-label="vortex-loading"]').should('not.exist');
+    cy.waitEditorLoaded();
 
     // Select root node ...
     cy.contains('Mind Mapping').click({ force: true });

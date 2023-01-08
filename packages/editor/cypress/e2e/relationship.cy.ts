@@ -1,12 +1,12 @@
+/// <reference types="cypress" />
+
+import { css } from 'cypress/types/jquery';
+
 describe('Relationship Topics', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
-    cy.clearLocalStorage('welcome-xml');
-    cy.reload();
-
-    // Wait for load complate ...
-    cy.get('[aria-label="vortex-loading"]').should('not.exist');
+    cy.waitEditorLoaded();
   });
 
   it('Add Relationship', () => {

@@ -1,8 +1,18 @@
+/// <reference types="cypress" />
 describe('Change Topic shape', () => {
   beforeEach(() => {
     cy.visit('/editor.html');
-    cy.reload();
+
+    // Wait all has been loaded ...
+    cy.waitEditorLoaded();
+
+    // Select one node ...
     cy.contains('Try it Now!').click();
+  });
+
+  it('open shape', () => {
+    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.matchImageSnapshot('topicShapePanel');
   });
 
   it('change to square shape', () => {
@@ -16,6 +26,7 @@ describe('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('eq', 0);
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeToSquareShape');
   });
 
@@ -39,6 +50,7 @@ describe('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('be.lt', 5);
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeToRoundedRectangle');
   });
 
@@ -48,6 +60,7 @@ describe('Change Topic shape', () => {
     cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
     cy.get(`[aria-label="Line shape"]`).first().click();
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeToLine');
   });
 
@@ -71,6 +84,7 @@ describe('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('be.lt', 15);
 
+    cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeToEllipseShape');
   });
 });

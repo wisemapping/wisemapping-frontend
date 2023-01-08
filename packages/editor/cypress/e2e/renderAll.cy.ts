@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('Render all sample maps', () => {
   [
     'complex',
@@ -22,7 +23,7 @@ describe('Render all sample maps', () => {
   ].forEach((mapId) => {
     it(`Render map => ${mapId}`, () => {
       cy.visit(`/viewmode.html?id=${mapId}`);
-      cy.reload();
+      cy.waitEditorLoaded();
 
       cy.get('svg > path').should('be.visible');
       cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');

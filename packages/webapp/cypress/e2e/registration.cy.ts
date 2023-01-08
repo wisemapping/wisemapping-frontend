@@ -1,6 +1,7 @@
 describe('Registration Page', () => {
   beforeEach(() => {
     cy.visit('/c/registration');
+    cy.waitForPageLoaded();
   });
 
   it('registation load', () => {

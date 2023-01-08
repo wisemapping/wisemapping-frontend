@@ -1,6 +1,7 @@
 describe('Maps Page', () => {
   beforeEach(() => {
     cy.visit('/c/maps');
+    cy.waitForPageLoaded();
     cy.get('.MuiCard-root').should('have.length', 3);
   });
 
