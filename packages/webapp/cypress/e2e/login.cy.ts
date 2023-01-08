@@ -1,4 +1,4 @@
-context('Login Page', () => {
+describe('Login Page', () => {
   beforeEach(() => {
     cy.visit('/c/login');
   });

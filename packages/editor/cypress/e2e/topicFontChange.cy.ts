@@ -1,4 +1,4 @@
-context('Edit Topic', () => {
+describe('Edit Topic', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
@@ -14,7 +14,6 @@ context('Edit Topic', () => {
     cy.get('body').type('New Title Main Topic{enter}');
     cy.get('[test-id=1] > text > tspan').should('have.text', 'New Title Main Topic');
 
-    cy.wait(200);
     cy.matchImageSnapshot('changeMainTopicText');
   });
 
@@ -43,7 +42,6 @@ context('Edit Topic', () => {
     cy.get('@bigger').eq(1).click();
     cy.get('[test-id=1] > text').invoke('attr', 'font-size').should('eq', '20.2');
 
-    cy.wait(200);
     cy.matchImageSnapshot('changeFontSizeHuge');
   });
 
@@ -53,7 +51,6 @@ context('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-style').should('eq', 'italic');
 
-    cy.wait(200);
     cy.matchImageSnapshot('changeFontItalic');
   });
 
@@ -63,7 +60,6 @@ context('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', 'normal');
 
-    cy.wait(200);
     cy.matchImageSnapshot('changeFontBold');
   });
 
@@ -74,7 +70,6 @@ context('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'fill').should('eq', '#cc0000');
 
-    cy.wait(200);
     cy.matchImageSnapshot('changeFontColor');
   });
 });

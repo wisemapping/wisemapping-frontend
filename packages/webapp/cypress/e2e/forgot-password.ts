@@ -1,6 +1,4 @@
-import MapsPage from '../pageObject/MapsPage';
-
-context('Forgot Password Page', () => {
+describe('Forgot Password Page', () => {
   beforeEach(() => {
     cy.visit('/c/forgot-password');
   });

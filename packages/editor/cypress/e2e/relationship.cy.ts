@@ -1,4 +1,4 @@
-context('Relationship Topics', () => {
+describe('Relationship Topics', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');

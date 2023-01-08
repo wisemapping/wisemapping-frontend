@@ -1,4 +1,4 @@
-context('Render all sample maps', () => {
+describe('Render all sample maps', () => {
   [
     'complex',
     'emoji',

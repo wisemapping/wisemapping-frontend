@@ -1,4 +1,4 @@
-context('Maps Page', () => {
+describe('Maps Page', () => {
   beforeEach(() => {
     cy.visit('/c/maps');
     cy.get('.MuiCard-root').should('have.length', 3);

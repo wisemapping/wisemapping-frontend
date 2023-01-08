@@ -1,4 +1,4 @@
-context('Change topic position', () => {
+describe('Change topic position', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
