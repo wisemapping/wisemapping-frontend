@@ -4734,6 +4734,7 @@ __metadata:
     "@testing-library/react": ^13.4.0
     "@types/jest": ^29.0.0
     "@wisemapping/mindplot": ^5.0.15
+    babel-polyfill: ^6.26.0
     copy-webpack-plugin: ^10.2.1
     css-loader: ^6.7.1
     cypress: ^12.3.0
@@ -4741,7 +4742,6 @@ __metadata:
     emoji-picker-react: ^4.4.7
     html-webpack-plugin: ^5.5.0
     jest-transform-stub: ^2.0.0
-    prettier: ^2.7.1
     react: ^18.2.0
     react-color: ^2.19.3
     react-loader-spinner: ^5.3.4
@@ -4837,7 +4837,6 @@ __metadata:
     cypress-image-snapshot: ^4.0.1
     dayjs: ^1.10.7
     html-webpack-plugin: ^5.1.0
-    prettier: ^2.2.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-ga4: ^1.4.1
@@ -5668,6 +5667,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-polyfill@npm:^6.26.0":
+  version: 6.26.0
+  resolution: "babel-polyfill@npm:6.26.0"
+  dependencies:
+    babel-runtime: ^6.26.0
+    core-js: ^2.5.0
+    regenerator-runtime: ^0.10.5
+  checksum: 6fb1a3c0bfe1b6fc56ce1afcf531878aa629b309277a05fbf3fe950589b24cb4052a6e487db21d318eb5336b68730a21f5ef62166b6cc8aea3406261054d1118
+  languageName: node
+  linkType: hard
+
 "babel-preset-current-node-syntax@npm:^1.0.0":
   version: 1.0.1
   resolution: "babel-preset-current-node-syntax@npm:1.0.1"
@@ -5699,6 +5709,16 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0
   checksum: 1b09a2db968c36e064daf98082cfffa39c849b63055112ddc56fc2551fd0d4783897265775b1d2f8a257960a3339745de92e74feb01bad86d41c4cecbfa854fc
+  languageName: node
+  linkType: hard
+
+"babel-runtime@npm:^6.26.0":
+  version: 6.26.0
+  resolution: "babel-runtime@npm:6.26.0"
+  dependencies:
+    core-js: ^2.4.0
+    regenerator-runtime: ^0.11.0
+  checksum: 8aeade94665e67a73c1ccc10f6fd42ba0c689b980032b70929de7a6d9a12eb87ef51902733f8fefede35afea7a5c3ef7e916a64d503446c1eedc9e3284bd3d50
   languageName: node
   linkType: hard
 
@@ -6984,6 +7004,13 @@ __metadata:
   version: 3.26.0
   resolution: "core-js-pure@npm:3.26.0"
   checksum: bbf5fa65cf3368a25f9d9cc525863acc8082fa3797efc8dc514f85d7f4aa870f4999b68863f3c7b96ed0b062add261a448758e6d337626c2535ad89ee8481a92
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^2.4.0, core-js@npm:^2.5.0":
+  version: 2.6.12
+  resolution: "core-js@npm:2.6.12"
+  checksum: 44fa9934a85f8c78d61e0c8b7b22436330471ffe59ec5076fe7f324d6e8cf7f824b14b1c81ca73608b13bdb0fef035bd820989bf059767ad6fa13123bb8bd016
   languageName: node
   linkType: hard
 
@@ -14511,7 +14538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.2.1, prettier@npm:^2.7.1":
+"prettier@npm:^2.7.1":
   version: 2.7.1
   resolution: "prettier@npm:2.7.1"
   bin:
@@ -15288,6 +15315,13 @@ __metadata:
   version: 0.10.5
   resolution: "regenerator-runtime@npm:0.10.5"
   checksum: 35b33dbe5381d268b2be98f4ee4b028702acb38b012bff90723df067f915a337e5c979cce4dab4ed23febb223bbebb8820d46902f897742c55818c22c14e2a7c
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.11.0":
+  version: 0.11.1
+  resolution: "regenerator-runtime@npm:0.11.1"
+  checksum: 3c97bd2c7b2b3247e6f8e2147a002eb78c995323732dad5dc70fac8d8d0b758d0295e7015b90d3d444446ae77cbd24b9f9123ec3a77018e81d8999818301b4f4
   languageName: node
   linkType: hard
 
@@ -18302,6 +18336,7 @@ __metadata:
     husky: 4
     lerna: ^3.16.4
     lint-staged: ^10.5.4
+    prettier: ^2.7.1
     typescript: ^4.8.4
     webpack: ^5.75.0
   languageName: unknown

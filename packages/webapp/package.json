@@ -30,7 +30,6 @@
         "cypress": "^12.3.0",
         "cypress-image-snapshot": "^4.0.1",
         "html-webpack-plugin": "^5.1.0",
-        "prettier": "^2.2.1",
         "start-server-and-test": "^1.12.0",
         "webpack-bundle-analyzer": "^4.4.0"
     },

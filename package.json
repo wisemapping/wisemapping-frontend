@@ -31,6 +31,7 @@
         "husky": "4",
         "lerna": "^3.16.4",
         "lint-staged": "^10.5.4",
+        "prettier": "^2.7.1",
         "typescript": "^4.8.4",
         "webpack": "^5.75.0"
     },
