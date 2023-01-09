@@ -12,11 +12,27 @@
     },
     "private": true,
     "devDependencies": {
-        "cypress": "^12.3.0",
-        "eslint-import-resolver-webpack": "^0.13.2",
+        "@babel/core": "^7.20.12",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-typescript": "^7.16.5",
+        "@babel/register": "^7.16.0",
+        "@typescript-eslint/eslint-plugin": "^5.48.0        ",
+        "@typescript-eslint/parser": "^5.48.0",
+        "babel-loader": "^9.1.2",
+        "eslint": "^8.4.1",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-standard": "^17.0.0",
+        "eslint-nibble": "^8.0.0",
+        "eslint-plugin-cypress": "^2.12.1",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-react": "^7.31.10",
+        "eslint-plugin-react-hooks": "^4.6.0",
         "husky": "4",
         "lerna": "^3.16.4",
-        "lint-staged": "^10.5.4"
+        "lint-staged": "^10.5.4",
+        "typescript": "^4.8.4",
+        "webpack": "^5.75.0"
     },
     "workspaces": [
         "packages/*"

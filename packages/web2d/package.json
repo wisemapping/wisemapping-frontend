@@ -26,22 +26,11 @@
         "test": "yarn test:integration"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "@babel/plugin-transform-modules-commonjs": "^7.14.5",
-        "@babel/preset-env": "^7.19.4",
-        "babel-loader": "^8.2.2",
         "cypress": "12.3.0",
         "cypress-image-snapshot": "^4.0.1",
-        "eslint": "^5.16.0",
-        "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-config-standard": "^17.0.0",
-        "eslint-import-resolver-webpack": "^0.13.2",
-        "eslint-plugin-cypress": "^2.12.1",
-        "eslint-plugin-import": "^2.25.3",
         "html-webpack-plugin": "^5.3.2",
         "nodemon": "^2.0.12",
         "start-server-and-test": "^1.14.0",
-        "webpack": "^5.75.0",
         "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.11.1"
     },

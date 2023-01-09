@@ -66,17 +66,17 @@
         ],
         "implicit-arrow-linebreak": "off"
     },
-    "settings": {
-        "import/resolver": {
-            "webpack": {
-                "config": "./webpack.common.js"
-            },
-            "node": {
-                "extensions": [
-                    ".js",
-                    ".ts"
-                ]
-            }
-        }
-    }
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [
+					".js",
+					".ts"
+				]
+			},
+			"webpack": {
+				"config": "./webpack.common.js"
+			}
+		}
+	}
 }
