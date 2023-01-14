@@ -84,7 +84,7 @@ abstract class ActionDispatcher extends Events {
 
   abstract shrinkBranch(topicsIds: number[], collapse: boolean): void;
 
-  abstract addFeatureToTopic(topicId: number, type: string, attributes: object): void;
+  abstract addFeatureToTopic(topicIds: number[], type: string, attributes: object): void;
 
   abstract changeFeatureToTopic(topicId: number, featureId: number, attributes: object): void;
 

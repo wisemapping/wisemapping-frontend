@@ -263,7 +263,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  addFeatureToTopic(topicId: number, featureType: FeatureType, attributes) {
+  addFeatureToTopic(topicId: number[], featureType: FeatureType, attributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);
   }

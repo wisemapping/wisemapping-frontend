@@ -15,14 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import FeatureModel from '../model/FeatureModel';
 import FeatureType from '../model/FeatureType';
 
 class AddFeatureToTopicCommand extends Command {
-  private _topicId: number;
+  private _topicIds: number[];
 
   private _featureType: FeatureType;
 
@@ -40,32 +39,31 @@ class AddFeatureToTopicCommand extends Command {
    * @extends mindplot.Command
    * @see mindplot.model.FeatureModel and subclasses
    */
-  constructor(topicId: number, featureType: FeatureType, attributes: object) {
-    $assert($defined(topicId), 'topicId can not be null');
-    $assert(featureType, 'featureType can not be null');
-    $assert(attributes, 'attributes can not be null');
-
+  constructor(topicIds: number[], featureType: FeatureType, attributes: object) {
     super();
-    this._topicId = topicId;
+    this._topicIds = topicIds;
     this._featureType = featureType;
     this._attributes = attributes;
     this._featureModel = null;
   }
 
-  execute(commandContext: CommandContext) {
-    const topic = commandContext.findTopics([this._topicId])[0];
-
-    // Feature must be created only one time.
-    if (!this._featureModel) {
-      const model = topic.getModel();
-      this._featureModel = model.createFeature(this._featureType, this._attributes);
-    }
-    topic.addFeature(this._featureModel);
+  execute(commandContext: CommandContext): void {
+    const topics = commandContext.findTopics(this._topicIds);
+    topics.forEach((topic) => {
+      // Feature must be created only one time.
+      if (!this._featureModel) {
+        const model = topic.getModel();
+        this._featureModel = model.createFeature(this._featureType, this._attributes);
+      }
+      topic.addFeature(this._featureModel);
+    });
   }
 
   undoExecute(commandContext: CommandContext) {
-    const topic = commandContext.findTopics([this._topicId])[0];
-    topic.removeFeature(this._featureModel!);
+    const topics = commandContext.findTopics(this._topicIds);
+    topics.forEach((topic) => {
+      topic.removeFeature(this._featureModel!);
+    });
   }
 }
 

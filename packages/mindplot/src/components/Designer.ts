@@ -853,11 +853,9 @@ class Designer extends Events {
     const topicsIds = this.getModel().filterTopicsIds();
     const featureType: FeatureType = type === 'emoji' ? 'eicon' : 'icon';
 
-    if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(topicsIds[0], featureType, {
-        id: iconType,
-      });
-    }
+    this._actionDispatcher.addFeatureToTopic(topicsIds, featureType, {
+      id: iconType,
+    });
   }
 
   addLink(): void {

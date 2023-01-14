@@ -721,7 +721,7 @@ abstract class Topic extends NodeGraph {
         text: value,
       });
     } else {
-      dispatcher.addFeatureToTopic(topicId, 'note', {
+      dispatcher.addFeatureToTopic([topicId], 'note', {
         text: value,
       });
     }
@@ -753,7 +753,7 @@ abstract class Topic extends NodeGraph {
         url: value,
       });
     } else {
-      dispatcher.addFeatureToTopic(topicId, 'link', {
+      dispatcher.addFeatureToTopic([topicId], 'link', {
         url: value,
       });
     }
