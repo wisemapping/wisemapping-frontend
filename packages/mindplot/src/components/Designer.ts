@@ -404,12 +404,21 @@ class Designer extends Events {
   }
 
   pasteClipboard(): void {
-    if (this._clipboard.length === 0) {
-      $notify($msg('CLIPBOARD_IS_EMPTY'));
-      return;
+    // If the no selection has been made, update with the text on the clipboard.
+    if (this._clipboard.length !== 0) {
+      this._actionDispatcher.addTopics(this._clipboard, null);
+      this._clipboard = [];
+    } else {
+      const topics = this.getModel().filterSelectedTopics();
+      if (topics.length > 0) {
+        navigator.clipboard.readText().then((text) => {
+          this._actionDispatcher.changeTextToTopic(
+            topics.map((t) => t.getId()),
+            text.trim(),
+          );
+        });
+      }
     }
-    this._actionDispatcher.addTopics(this._clipboard, null);
-    this._clipboard = [];
   }
 
   getModel(): DesignerModel {
