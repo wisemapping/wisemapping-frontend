@@ -8,7 +8,8 @@
         "playground": "lerna run playground --stream",
         "test": "lerna run test --stream",
         "test:unit": "lerna run test:unit --stream",
-        "test:integration": "lerna run test:integration --stream"
+        "test:integration": "lerna run test:integration --stream",
+        "prepare": "husky install"
     },
     "private": true,
     "devDependencies": {
@@ -28,7 +29,7 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-react": "^7.31.10",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "husky": "4",
+        "husky": "^8.0.0",
         "lerna": "^3.16.4",
         "lint-staged": "^10.5.4",
         "prettier": "^2.7.1",
