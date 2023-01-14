@@ -89,7 +89,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         const extensionFile = file.name.split('.').pop();
         const extensionAccept = ['wxml', 'mm'];
 
-        if (!extensionAccept.includes(extensionFile!)) {
+        if (!extensionFile || !extensionAccept.includes(extensionFile)) {
           setErrorFile({
             error: true,
             message: intl.formatMessage(

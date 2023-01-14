@@ -1,4 +1,20 @@
 {
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts"
+                ]
+            },
+            "webpack": {
+                "config": "./webpack.common.js"
+            }
+        }
+    },
     "env": {
         "browser": true,
         "es2021": true
