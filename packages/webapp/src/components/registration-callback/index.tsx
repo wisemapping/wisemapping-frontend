@@ -20,7 +20,7 @@ const RegistrationCallbackPage = (): React.ReactElement => {
   const client: Client = useSelector(activeInstance);
 
   const [showError, setShowError] = useState(false);
-  const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>(undefined);
+  const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +37,10 @@ const RegistrationCallbackPage = (): React.ReactElement => {
 
   useEffect(() => {
     const googleOauthCode = new URLSearchParams(window.location.search).get('code');
+    if (!googleOauthCode) {
+      throw new Error(`Missing code definition: ${window.location.search}`);
+    }
+
     client
       .processGoogleCallback(googleOauthCode)
       .then((result) => {
@@ -54,8 +58,13 @@ const RegistrationCallbackPage = (): React.ReactElement => {
   }, []);
 
   const confirmAccountSynching = () => {
+    const callback = callbackResult;
+    if (!callback) {
+      throw new Error(`callbackResult can not be null`);
+    }
+
     client
-      .confirmAccountSync(callbackResult.email, callbackResult.syncCode)
+      .confirmAccountSync(callback.email, callback.syncCode)
       .then(() => {
         navigate('/c/maps/');
       })

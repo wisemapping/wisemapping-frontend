@@ -39,6 +39,7 @@ class RESTPersistenceManager extends PersistenceManager {
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;
     this.lockUrl = options.lockUrl;
+    this.onSave = false;
   }
 
   saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {

@@ -89,7 +89,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         const extensionFile = file.name.split('.').pop();
         const extensionAccept = ['wxml', 'mm'];
 
-        if (!extensionAccept.includes(extensionFile)) {
+        if (!extensionAccept.includes(extensionFile!)) {
           setErrorFile({
             error: true,
             message: intl.formatMessage(
@@ -108,8 +108,8 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         model.contentType = 'application/xml';
 
         const fileContent = event?.target?.result;
-        const mapConent: string =
-          typeof fileContent === 'string' ? fileContent : fileContent.toString();
+        const mapConent: string | undefined =
+          typeof fileContent === 'string' ? fileContent : fileContent?.toString();
 
         try {
           const importer: Importer = TextImporterFactory.create(extensionFile, mapConent);

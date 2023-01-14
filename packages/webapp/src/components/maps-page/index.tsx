@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import React, { ErrorInfo, ReactElement, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -200,7 +217,7 @@ const MapsPage = (): ReactElement => {
   );
 
   const container = document !== undefined ? () => document.body : undefined;
-
+  const label = labels.find((l) => l.id === labelToDelete);
   return (
     <IntlProvider
       locale={userLocale.code}
@@ -210,7 +227,7 @@ const MapsPage = (): ReactElement => {
       <div css={classes.root}>
         <AppBar
           position="fixed"
-          css={[classes.appBar, open && classes.appBarShift]}
+          css={[classes.appBar, classes.appBarShift]}
           variant="outlined"
           elevation={0}
         >
@@ -321,14 +338,14 @@ const MapsPage = (): ReactElement => {
           <MapsList filter={filter} />
         </main>
       </div>
-      {labelToDelete && (
+      {label && labelToDelete && (
         <LabelDeleteConfirm
           onClose={() => setLabelToDelete(null)}
           onConfirm={() => {
             handleLabelDelete(labelToDelete);
             setLabelToDelete(null);
           }}
-          label={labels.find((l) => l.id === labelToDelete)}
+          label={label}
         />
       )}
     </IntlProvider>

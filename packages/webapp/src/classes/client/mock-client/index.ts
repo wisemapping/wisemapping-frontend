@@ -128,10 +128,10 @@ class MockClient implements Client {
   }
 
   fetchStarred(id: number): Promise<boolean> {
-    return Promise.resolve(this.maps.find((m) => m.id == id).starred);
+    return Promise.resolve(Boolean(this.maps.find((m) => m.id == id)?.starred));
   }
 
-  onSessionExpired(callback?: () => void): () => void {
+  onSessionExpired(callback?: () => void): (() => void) | undefined {
     return callback;
   }
 

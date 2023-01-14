@@ -2,19 +2,19 @@
     <topic central="true" id="704795576">
         <text><![CDATA[Writing an Essay
 With FreeMind]]></text>
-        <topic position="200,-200" order="0" text="Getting Started" shape="line" shrink="true" id="60307947" bgColor="undefined">
-            <topic position="200,-150" order="0" shape="line" id="484974719" bgColor="undefined">
+        <topic position="200,-200" order="0" text="Getting Started" shape="line" shrink="true" id="60307947">
+            <topic position="200,-150" order="0" shape="line" id="484974719">
                 <text><![CDATA[The first thing you'll want to do is to create a new FreeMind file for your essay. Select File->New
 on the menu, and a blank file will appear.
 ]]></text>
             </topic>
-            <topic position="-290,-250" order="0" shape="line" id="1072554383" bgColor="undefined">
+            <topic position="-290,-250" order="0" shape="line" id="1072554383">
                 <text><![CDATA[Next, click in the centre of the map, and replace the text there with the essay title you have
 chosen. It's good to have the question you're answering before you the whole time, so you can
 immediately see how your ideas relate to
 it.]]></text>
             </topic>
-            <topic position="-380,-225" order="1" shape="line" id="1631286703" bgColor="undefined">
+            <topic position="-380,-225" order="1" shape="line" id="1631286703">
                 <text><![CDATA[<!--
         p { margin-top: 0 }
       -->
@@ -28,22 +28,22 @@ it.]]></text>
     
       (When you're a bit more familiar with FreeMind, you'll find it quicker to use the Shortcut Keys -- you can also use Alt + Shift + Left, or Alt + Shift + Right to move between maps.)]]></text>
             </topic>
-            <topic position="-470,-200" order="2" text="You're now ready to start work on the essay." shape="line" id="538231078" bgColor="undefined"/>
+            <topic position="-470,-200" order="2" text="You're now ready to start work on the essay." shape="line" id="538231078"/>
         </topic>
-        <topic position="-290,-62" order="0" text="The process of research" shape="line" shrink="true" id="1886958546" bgColor="undefined">
-            <topic position="290,-124" order="0" shape="line" id="499702363" bgColor="undefined">
+        <topic position="-290,-62" order="0" text="The process of research" shape="line" shrink="true" id="1886958546">
+            <topic position="290,-124" order="0" shape="line" id="499702363">
                 <text><![CDATA[If a question is worth asking at all (and be generous to your teachers, and assume that their
 question is!), then it's not going to have the kind of answer that you can just make up on the spot.
 It will require
 research.]]></text>
             </topic>
-            <topic position="380,-99" order="1" text="Research requires both finding things out about the world, and hard thinking." shape="line" id="1374284784" bgColor="undefined"/>
-            <topic position="470,-74" order="2" shape="line" id="1038997740" bgColor="undefined">
+            <topic position="380,-99" order="1" text="Research requires both finding things out about the world, and hard thinking." shape="line" id="1374284784"/>
+            <topic position="470,-74" order="2" shape="line" id="1038997740">
                 <text><![CDATA[FreeMind helps you with both aspects of research. FreeMind helps you to capture all the new
 information you need for your essay, and also to order your
 thoughts.]]></text>
             </topic>
-            <topic position="560,-49" order="3" text="FreeMind does this by facilitating:" shape="line" id="1522470300" bgColor="undefined">
+            <topic position="560,-49" order="3" text="FreeMind does this by facilitating:" shape="line" id="1522470300">
                 <topic position="-560,-99" order="0" text="Taking Notes" shape="line" id="1963065372">
                     <link url="http://#Freemind_Link_513978291" urlType="url"/>
                 </topic>
@@ -57,7 +57,7 @@ thoughts.]]></text>
                     <link url="http://#Freemind_Link_341601142" urlType="url"/>
                 </topic>
             </topic>
-            <topic position="650,-24" order="4" text="When you've made your outline you can" shape="line" id="759053646" bgColor="undefined">
+            <topic position="650,-24" order="4" text="When you've made your outline you can" shape="line" id="759053646">
                 <topic position="-650,-61" order="0" text="Print your map" shape="line" id="996906209"/>
                 <topic position="-740,-36" order="1" text="Export to your wordprocessor" shape="line" id="1501502447">
                     <link url="http://#Freemind_Link_877777095" urlType="url"/>
@@ -67,8 +67,8 @@ thoughts.]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="-380,-37" order="1" text="Planning an Essay" shape="line" shrink="true" id="1034561457" bgColor="undefined">
-            <topic position="380,-87" order="0" text="Brainstorming" shape="line" shrink="true" id="1" bgColor="undefined">
+        <topic position="-380,-37" order="1" text="Planning an Essay" shape="line" shrink="true" id="1034561457">
+            <topic position="380,-87" order="0" text="Brainstorming" shape="line" shrink="true" id="1">
                 <topic position="-380,-162" order="0" shape="line" id="1420002558">
                     <text><![CDATA[Brainstorming is a way of trying to geting all your ideas about a topic down on paper as quickly as
 possible.]]></text>
@@ -83,18 +83,18 @@ later.]]></text>
                 <topic position="-740,-62" order="4" text="Pressing Insert adds another idea as a subidea of the one you've currently selected." shape="line" id="1371557121"/>
                 <topic position="-830,-37" order="5" text="(The imagination you'll have to supply yourself!)" shape="line" id="443781940"/>
             </topic>
-            <topic position="470,-62" order="1" text="Taking Notes" shape="line" shrink="true" id="513978291" bgColor="undefined">
-                <topic position="-470,-124" order="0" shape="line" id="709453371" bgColor="undefined">
+            <topic position="470,-62" order="1" text="Taking Notes" shape="line" shrink="true" id="513978291">
+                <topic position="-470,-124" order="0" shape="line" id="709453371">
                     <text><![CDATA[Different people take notes in different ways. Whichever way you take notes, you should find
 FreeMind
 helpful.]]></text>
                 </topic>
-                <topic position="-560,-99" order="1" shape="line" id="249608113" bgColor="undefined">
+                <topic position="-560,-99" order="1" shape="line" id="249608113">
                     <text><![CDATA[One good way of using FreeMind is to add one node per book or article you read. Name the node a
 short version of the article title.
 ]]></text>
                 </topic>
-                <topic position="-650,-74" order="2" shape="line" shrink="true" id="1470413282" bgColor="undefined">
+                <topic position="-650,-74" order="2" shape="line" shrink="true" id="1470413282">
                     <text><![CDATA[Then add your notes on the article as a node note. To insert a note,  go to the View menu, and
 select "Show Note Window". You can then add your notes
 below.]]></text>
@@ -104,8 +104,8 @@ helpful to hide it after you've added your note, by selecting "Show Note Window"
 menu.]]></text>
                     </topic>
                 </topic>
-                <topic position="-740,-49" order="3" text="Don't forget to take full references for all the quotations you use. " shape="line" id="1226928695" bgColor="undefined"/>
-                <topic position="-830,-24" order="4" text="FreeMind can also do some clever things with web links and email addresses." shape="line" shrink="true" id="1195317986" bgColor="undefined">
+                <topic position="-740,-49" order="3" text="Don't forget to take full references for all the quotations you use. " shape="line" id="1226928695"/>
+                <topic position="-830,-24" order="4" text="FreeMind can also do some clever things with web links and email addresses." shape="line" shrink="true" id="1195317986">
                     <topic position="830,-86" order="0" shape="line" id="1167090962">
                         <text><![CDATA[If you're researching on the web, then FreeMind can automatically link your note to the web page
 you're writing about.
@@ -132,7 +132,7 @@ address.]]></text>
                     </topic>
                 </topic>
             </topic>
-            <topic position="560,-37" order="2" text="Sifting and organising your ideas" shape="line" shrink="true" id="331016293" bgColor="undefined">
+            <topic position="560,-37" order="2" text="Sifting and organising your ideas" shape="line" shrink="true" id="331016293">
                 <topic position="-560,-124" order="0" shape="line" id="136989740">
                     <text><![CDATA[After you've done a bit of brainstorming, and have written all the ideas you can think of, it's time
 to start sorting your ideas
@@ -174,7 +174,7 @@ menu, and call the new one it something like "Essay_Outline v1".
 ]]></text>
                 </topic>
             </topic>
-            <topic position="650,-12" order="3" text="Outlining" shape="line" shrink="true" id="341601142" bgColor="undefined">
+            <topic position="650,-12" order="3" text="Outlining" shape="line" shrink="true" id="341601142">
                 <topic position="-650,-87" order="0" text="Now you know what your main point is, you can write an outline of the argument of the essay." shape="line" id="190098699"/>
                 <topic position="-740,-62" order="1" text="The point of producing an outline is to work out how you will argue for your essay's main claim." shape="line" id="132833105"/>
                 <topic position="-830,-37" order="2" shape="line" id="1132818589">
@@ -237,14 +237,14 @@ point.]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="-470,-12" order="2" text="From Outline to Finished Work" shape="line" shrink="true" id="1755853195" bgColor="undefined">
-            <topic position="470,-74" order="0" shape="line" id="1449950809" bgColor="undefined">
+        <topic position="-470,-12" order="2" text="From Outline to Finished Work" shape="line" shrink="true" id="1755853195">
+            <topic position="470,-74" order="0" shape="line" id="1449950809">
                 <text><![CDATA[Writing the outline of your essay is the hard part. Once you have a good outline, it's much easier
 to write a good essay or a good
 presentation.]]></text>
             </topic>
-            <topic position="560,-49" order="1" text="You'll probably find it easier to to the actual writing of the essay in your wordprocessor." shape="line" id="1607766784" bgColor="undefined"/>
-            <topic position="650,-24" order="2" text="Exporting your outline to your Wordprocessor" shape="line" shrink="true" id="877777095" bgColor="undefined">
+            <topic position="560,-49" order="1" text="You'll probably find it easier to to the actual writing of the essay in your wordprocessor." shape="line" id="1607766784"/>
+            <topic position="650,-24" order="2" text="Exporting your outline to your Wordprocessor" shape="line" shrink="true" id="877777095">
                 <topic position="-650,-99" order="0" shape="line" shrink="true" id="1821901940">
                     <text><![CDATA[FreeMind currently exports much better to OpenOffice than to Microsoft Word. So if you don't yet
 have OpenOffice, it's well worth downloading it (it's
@@ -280,7 +280,7 @@ wordprocessor as
 normal.]]></text>
                 </topic>
             </topic>
-            <topic position="740,1" order="3" text="Making a presentation" shape="line" shrink="true" id="781772166" bgColor="undefined">
+            <topic position="740,1" order="3" text="Making a presentation" shape="line" shrink="true" id="781772166">
                 <topic position="-740,-74" order="0" text="FreeMind also provides a good way of outlining PowerPoint presentations." shape="line" id="1714771405"/>
                 <topic position="-830,-49" order="1" text="You'll need OpenOffice again." shape="line" id="233010529"/>
                 <topic position="-920,-24" order="2" text="Follow the instructions above to export your outline to OpenOffice." shape="line" id="1394183501"/>
@@ -296,50 +296,50 @@ best
 results.]]></text>
                 </topic>
             </topic>
-            <topic position="830,26" order="4" text="Things to check before you submit your essay" shape="line" shrink="true" id="1657086138" bgColor="undefined">
+            <topic position="830,26" order="4" text="Things to check before you submit your essay" shape="line" shrink="true" id="1657086138">
                 <topic position="-830,-111" order="0" shape="line" id="1855894453">
                     <text><![CDATA[(This advice doesn't tell you anything about how to use FreeMind, but it may help you get a better
 mark in your
 essay!)]]></text>
                 </topic>
-                <topic position="-920,-86" order="1" text="Does my essay have a main claim?" shape="line" id="1803078302" bgColor="undefined">
+                <topic position="-920,-86" order="1" text="Does my essay have a main claim?" shape="line" id="1803078302">
                     <note><![CDATA[Another way of asking this question is can you sum up in a sentence what the main point is that your essay is making?) If you don't have a main claim (or don't know what your main claim is!), then your essay will not get a good mark. You are assessed on the quality of the argument you put forward for your main claim, and in order to be able to do this we (and you) need to know what your main claim is.]]></note>
                 </topic>
-                <topic position="-1010,-61" order="2" text="Does my main claim provide a full answer the question that I have been asked?" shape="line" id="107276913" bgColor="undefined">
+                <topic position="-1010,-61" order="2" text="Does my main claim provide a full answer the question that I have been asked?" shape="line" id="107276913">
                     <note><![CDATA[You must be honest with yourself at this point: if you suspect that you haven't fully answered the question, then you must either (a) revise your answer so that you do have a full answer to the question, or (b) provide an argument for why it is that the angle you want to bring to the question is legitimate (for example, explain why it is legitimate to focus on just one aspect of the question).]]></note>
                 </topic>
-                <topic position="-1100,-36" order="3" text="Have I made it obvious what my main claim is?" shape="line" id="1628680821" bgColor="undefined">
+                <topic position="-1100,-36" order="3" text="Have I made it obvious what my main claim is?" shape="line" id="1628680821">
                     <note><![CDATA[You should state what your main claim is in at least two places, first in the introduction, and second in the conclusion. (The bits in between should be devoted to arguing for your main claim).]]></note>
                 </topic>
-                <topic position="-1190,-11" order="4" text="Do I have an argument for my main claim?" shape="line" id="927542090" bgColor="undefined">
+                <topic position="-1190,-11" order="4" text="Do I have an argument for my main claim?" shape="line" id="927542090">
                     <note><![CDATA[What reasons have you put forward as to why a reasonable (but sceptical) person should accept that your main claim is true? If you don't have any reasons (but merely a gut intuition) then you need to go back and revise, and find some arguments.]]></note>
                 </topic>
-                <topic position="-1280,14" order="5" text="Is my argument for my main claim sound?" shape="line" id="337592890" bgColor="undefined">
+                <topic position="-1280,14" order="5" text="Is my argument for my main claim sound?" shape="line" id="337592890">
                     <note><![CDATA[Does your main claim follow logically from the supporting reasons you put forward? And are those supporting reasons themselves true (or at least plausibly true)?]]></note>
                 </topic>
-                <topic position="-1370,39" order="6" text="Do I have an introduction which provides an overview of the structure of my argument?" shape="line" id="1338320981" bgColor="undefined">
+                <topic position="-1370,39" order="6" text="Do I have an introduction which provides an overview of the structure of my argument?" shape="line" id="1338320981">
                     <note><![CDATA[It is not enough e.g. to say that “I will be looking at arguments on both sides of this issue and coming to a conclusion”. You should tell us which arguments you will be looking at, whatyour evaluation of each of these arguments will be, and howthis analysis justifies the overall main claim you will be making. There are two reasons to give an overview of the structure of your argument: (a) it makes it much easier for the reader to grasp what you are saying, and why; (b) writing a summary of the structure of your argument is a good way of testing that you do in fact have a coherent argument.]]></note>
                 </topic>
-                <topic position="-1460,64" order="7" text="What reasons might a reasonable person have for doubting my main claim?" shape="line" id="1521390030" bgColor="undefined">
+                <topic position="-1460,64" order="7" text="What reasons might a reasonable person have for doubting my main claim?" shape="line" id="1521390030">
                     <note><![CDATA[Remember that in any academic debate, anything worth saying will be disputed. If you can't think of any reasons why someone might doubt your main claim, it's likely that you are in the grip of a dogmatic certainty that you are right. This is not good: your essay will come across as a rant, which is the last thing you want.]]></note>
                 </topic>
-                <topic position="-1550,89" order="8" text="Have I responded to these reasons for doubting my main claim in a convincing way?" shape="line" id="1843933327" bgColor="undefined">
+                <topic position="-1550,89" order="8" text="Have I responded to these reasons for doubting my main claim in a convincing way?" shape="line" id="1843933327">
                     <note><![CDATA[To be convincing, you might show that the doubts, while reasonable, are not well founded; or you could make your main claim more specific or nuanced in deference to them.]]></note>
                 </topic>
-                <topic position="-1640,114" order="9" text="Is there any material in my essay which might seem irrelevant to establishing my main point?" shape="line" id="982795475" bgColor="undefined">
+                <topic position="-1640,114" order="9" text="Is there any material in my essay which might seem irrelevant to establishing my main point?" shape="line" id="982795475">
                     <note><![CDATA[If there is, then either delete this material, or explain why this material is after all relevant.]]></note>
                 </topic>
-                <topic position="-1730,139" order="10" text="Have I fully acknowledged all my sources, and marked all quotations as quotations?" shape="line" id="606334721" bgColor="undefined">
+                <topic position="-1730,139" order="10" text="Have I fully acknowledged all my sources, and marked all quotations as quotations?" shape="line" id="606334721">
                     <note><![CDATA[If not then you are guilty of plagiarism. This is a serious offence, and you are likely to fail your course..]]></note>
                 </topic>
             </topic>
         </topic>
-        <topic position="-560,13" order="3" text="About this map" shape="line" shrink="true" id="854745518" bgColor="undefined">
-            <topic position="560,-24" order="0" text="Version 0.1, Jan 2 2008" shape="line" id="1464926185" bgColor="undefined"/>
-            <topic position="650,1" order="1" text="James Wilson" shape="line" id="1351075037" bgColor="undefined">
+        <topic position="-560,13" order="3" text="About this map" shape="line" shrink="true" id="854745518">
+            <topic position="560,-24" order="0" text="Version 0.1, Jan 2 2008" shape="line" id="1464926185"/>
+            <topic position="650,1" order="1" text="James Wilson" shape="line" id="1351075037">
                 <link url="http://mailto:j.g.wilson@peak.keele.ac.uk" urlType="mail"/>
             </topic>
-            <topic position="740,26" order="2" text="Notes on this map" shape="line" id="1843583599" bgColor="undefined">
+            <topic position="740,26" order="2" text="Notes on this map" shape="line" id="1843583599">
                 <note><![CDATA[This map is intended to help someone who has to write an argumentative essay in a subject such as history or philosophy to write better essays with the help of FreeMind. Copyright for this map resides with the author. Released under the Creative Commons Attribution-ShareAlike licence v.2.00. http://creativecommons.org/licenses/by-sa/2.0/uk/
     
     

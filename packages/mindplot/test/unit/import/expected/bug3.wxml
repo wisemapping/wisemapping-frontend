@@ -320,7 +320,7 @@
                                 </topic>
                             </topic>
                             <topic position="1190,2" order="1" text="Spin-offs" shape="line" id="309">
-                                <topic position="-1190,-10" order="0" text="undefined" shape="line" id="300"/>
+                                <topic position="-1190,-10" order="0" shape="line" id="300"/>
                             </topic>
                             <topic position="1280,27" order="2" text="Industry contracts" shape="line" id="310">
                                 <topic position="-1280,-35" order="0" text="Industry revenue per staff " shape="line" id="297"/>
@@ -330,7 +330,7 @@
                                                 per 1,000 researchers [contracts/researchers]]]></text>
                                 </topic>
                                 <topic position="-1460,15" order="2" text="Share of industry income from foreign companies" shape="line" id="307"/>
-                                <topic position="-1550,40" order="3" text="undefined" shape="line" id="90"/>
+                                <topic position="-1550,40" order="3" shape="line" id="90"/>
                                 <topic position="-1640,65" order="4" text="Difficulties faced by research organization in collaborating with SMEs" shape="line" id="311"/>
                             </topic>
                         </topic>

@@ -69,7 +69,12 @@ const RegistrationForm = () => {
   const maxFormWidth = 350;
 
   const handleRegisterWithGoogleClick = () => {
-    window.location.href = AppConfig.getGoogleOauth2Url();
+    const url = AppConfig.getGoogleOauth2Url();
+    if (url) {
+      window.location.href = url;
+    } else {
+      console.error('Auth callback url is null');
+    }
   };
 
   return (

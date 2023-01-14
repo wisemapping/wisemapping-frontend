@@ -2,15 +2,22 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
-    "noImplicitAny": false,
     "module": "amd",
     "moduleResolution": "node",
-    "target": "ES2020",
+    "target": "es6",
     "allowJs": true,
+    "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "declaration": true,
     "strictNullChecks": true,
+
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "strictFunctionTypes": true,
+
     "rootDirs": [
       "src",
     ]

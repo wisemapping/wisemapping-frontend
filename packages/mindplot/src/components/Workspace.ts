@@ -33,7 +33,7 @@ class Workspace {
 
   private _eventsEnabled: boolean;
 
-  private _visibleAreaSize: SizeType;
+  private _visibleAreaSize!: SizeType;
 
   private _renderQueue: Element2D[];
 
@@ -61,8 +61,9 @@ class Workspace {
     workspace.addItAsChildTo(divContainer);
 
     this.setZoom(zoom, true);
-
     this._renderQueue = [];
+    this._eventsEnabled = false;
+    this._queueRenderEnabled = false;
   }
 
   private _adjustWorkspace(): void {
@@ -163,11 +164,11 @@ class Workspace {
     }
   }
 
-  addEvent(type: string, listener: (event: Event) => void): void {
+  addEvent(type: string, listener: (event: MouseEvent) => void): void {
     this._workspace.addEvent(type, listener);
   }
 
-  removeEvent(type: string, listener: (event: Event) => void): void {
+  removeEvent(type: string, listener: (event: MouseEvent) => void): void {
     $assert(type, 'type can not be null');
     $assert(listener, 'listener can not be null');
     this._workspace.removeEvent(type, listener);

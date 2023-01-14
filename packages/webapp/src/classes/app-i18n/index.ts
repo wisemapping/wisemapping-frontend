@@ -57,8 +57,8 @@ export default abstract class AppI18n {
 
   public static getDefaultLocale(): Locale {
     // Fetch local from local storage ...
-    let result: Locale;
-    const userLocaleCode: string = localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY);
+    let result: Locale | null = null;
+    const userLocaleCode: string | null = localStorage.getItem(AppI18n.LOCAL_STORAGE_KEY);
     if (userLocaleCode) {
       result = localeFromStr(userLocaleCode);
     }

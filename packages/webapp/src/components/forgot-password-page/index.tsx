@@ -15,9 +15,9 @@ import ReactGA from 'react-ga4';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Typography from '@mui/material/Typography';
-import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import CSRFInput from '../common/csrf-input';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -84,7 +84,7 @@ const ForgotPassword = () => {
       <GlobalError error={error} />
 
       <form onSubmit={handleOnSubmit}>
-        <input type="hidden" value={getCsrfToken()} name={getCsrfTokenParameter()} />
+        <CSRFInput />
         <Input
           type="email"
           name="email"

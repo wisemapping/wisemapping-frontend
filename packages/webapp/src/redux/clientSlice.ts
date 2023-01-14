@@ -55,7 +55,7 @@ export const clientSlice = createSlice({
 type MapLoadResult = {
   isLoading: boolean;
   error: ErrorInfo | null;
-  map: MapInfo | null;
+  map: MapInfo | undefined;
 };
 
 export const useFetchMapById = (id: number): MapLoadResult => {
@@ -65,12 +65,12 @@ export const useFetchMapById = (id: number): MapLoadResult => {
   });
 
   // If the map can not be loaded, create an error object.
-  let map: MapInfo;
-  let errorMsg: ErrorInfo = error;
+  let map: MapInfo | undefined;
+  let errorMsg: ErrorInfo | null = error;
   if (!isLoading) {
     // Sanitize error structure ...
     if (errorMsg) {
-      errorMsg = Object.keys(error).length !== 0 ? error : null;
+      errorMsg = Object.keys(errorMsg).length !== 0 ? error : null;
     }
     //  Seach for object...
     map = data?.find((m) => m.id == id);

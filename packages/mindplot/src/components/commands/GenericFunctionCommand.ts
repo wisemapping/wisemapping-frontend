@@ -15,37 +15,28 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import Topic from '../Topic';
 
-type CommandTypes = string | object | boolean | number | undefined;
-
-class GenericFunctionCommand extends Command {
-  private _value: CommandTypes;
+class GenericFunctionCommand<T> extends Command {
+  private _value: T;
 
   private _topicsIds: number[];
 
-  private _commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes;
+  private _commandFunc: (topic: Topic, value: T) => T;
 
-  private _oldValues: CommandTypes[];
+  private _oldValues: T[];
 
   private _applied: boolean;
 
-  constructor(
-    commandFunc: (topic: Topic, value: CommandTypes) => CommandTypes,
-    topicsIds: number[],
-    value: CommandTypes,
-  ) {
-    $assert(commandFunc, 'commandFunc must be defined');
-    $assert($defined(topicsIds), 'topicsIds must be defined');
-
+  constructor(commandFunc: (topic: Topic, value: T) => T, topicsIds: number[], value: T) {
     super();
     this._value = value;
     this._topicsIds = topicsIds;
     this._commandFunc = commandFunc;
     this._oldValues = [];
+    this._applied = false;
   }
 
   /**

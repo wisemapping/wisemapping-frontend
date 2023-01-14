@@ -36,14 +36,11 @@ class IconGroup {
 
   private _removeTip: IconGroupRemoveTip;
 
-  private _iconSize: SizeType;
+  private _iconSize: SizeType | null;
 
   private _topicId: number;
 
   constructor(topicId: number, iconSize: number) {
-    $assert($defined(topicId), 'topicId can not be null');
-    $assert($defined(iconSize), 'iconSize can not be null');
-
     this._topicId = topicId;
     this._icons = [];
     this._group = new Group({
@@ -57,6 +54,7 @@ class IconGroup {
     this._removeTip = new IconGroupRemoveTip(this._group);
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
+    this._iconSize = null;
   }
 
   setPosition(x: number, y: number): void {
@@ -142,8 +140,6 @@ class IconGroup {
   }
 
   private _removeIcon(icon: Icon) {
-    $assert(icon, 'icon can not be null');
-
     this._removeTip.close(0);
     this._group.removeChild(icon.getElement());
 
@@ -174,10 +170,12 @@ class IconGroup {
   }
 
   private _resize(iconsLength: number) {
-    this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
+    if (this._iconSize) {
+      this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
 
-    const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
-    this._group.setCoordSize(iconsLength * iconSize, iconSize);
+      const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
+      this._group.setCoordSize(iconsLength * iconSize, iconSize);
+    }
   }
 
   private _positionIcon(icon: Icon, order: number) {

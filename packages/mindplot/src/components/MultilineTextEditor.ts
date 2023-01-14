@@ -256,31 +256,35 @@ class MultitTextEditor {
   // eslint-disable-next-line no-use-before-define
   private static instance: MultitTextEditor = new MultitTextEditor();
 
-  private component: EditorComponent | null;
+  private _component: EditorComponent | null;
+
+  constructor() {
+    this._component = null;
+  }
 
   static getInstance(): MultitTextEditor {
     return MultitTextEditor.instance;
   }
 
   isActive(): boolean {
-    return this.component !== null;
+    return this._component !== null;
   }
 
   show(topic: Topic, textOverwrite?: string): void {
     // Is it active ?
-    if (this.component) {
+    if (this._component) {
       console.error('Editor was already displayed. Please, clouse it');
-      this.component.close(false);
+      this._component.close(false);
     }
     // Create a new instance
-    this.component = new EditorComponent(topic);
-    this.component.show(textOverwrite);
+    this._component = new EditorComponent(topic);
+    this._component.show(textOverwrite);
   }
 
   close(update: boolean): void {
-    if (this.component) {
-      this.component.close(update);
-      this.component = null;
+    if (this._component) {
+      this._component.close(update);
+      this._component = null;
     }
   }
 }

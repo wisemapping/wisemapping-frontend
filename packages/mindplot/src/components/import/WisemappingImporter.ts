@@ -1,11 +1,8 @@
-import Mindmap from '../model/Mindmap';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import Importer from './Importer';
 
 export default class WisemappingImporter extends Importer {
   private wisemappingInput: string;
-
-  private mindmap: Mindmap;
 
   constructor(map: string) {
     super();
@@ -17,11 +14,11 @@ export default class WisemappingImporter extends Importer {
     const wiseDoc = parser.parseFromString(this.wisemappingInput, 'application/xml');
 
     const serialize = XMLSerializerFactory.createInstanceFromDocument(wiseDoc);
-    this.mindmap = serialize.loadFromDom(wiseDoc, nameMap);
+    const mindmap = serialize.loadFromDom(wiseDoc, nameMap);
 
-    this.mindmap.setDescription(description);
+    mindmap.setDescription(description);
 
-    const mindmapToXml = serialize.toXML(this.mindmap);
+    const mindmapToXml = serialize.toXML(mindmap);
 
     const xmlStr = new XMLSerializer().serializeToString(mindmapToXml);
     return Promise.resolve(xmlStr);

@@ -11,10 +11,10 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import ReactGA from 'react-ga4';
-import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import AppConfig from '../../classes/app-config';
+import CSRFInput from '../common/csrf-input';
 
 const LoginError = () => {
   // @Todo: This must be reviewed to be based on navigation state.
@@ -70,7 +70,7 @@ const LoginPage = (): React.ReactElement => {
 
         <FormControl>
           <form action="/c/perform-login" method="POST">
-            <input type="hidden" value={getCsrfToken()} name={getCsrfTokenParameter()} />
+            <CSRFInput />
             <Input
               name="username"
               type="email"
@@ -121,7 +121,12 @@ const LoginPage = (): React.ReactElement => {
             defaultMessage: 'Sign in with Google',
           })}
           onClick={() => {
-            window.location.href = AppConfig.getGoogleOauth2Url();
+            const authUrl = AppConfig.getGoogleOauth2Url();
+            if (authUrl) {
+              window.location.href = authUrl;
+            } else {
+              console.log('GoogleOauth2Url is not configured.');
+            }
           }}
         />
       </FormContainer>

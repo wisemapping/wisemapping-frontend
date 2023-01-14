@@ -1,21 +1,21 @@
 import Parameters from './Parameters';
 
 export default class Hook {
-  protected PARAMETERS: Parameters;
+  protected PARAMETERS: Parameters | undefined;
 
-  protected TEXT: string;
+  protected TEXT: string | undefined;
 
-  protected NAME: string;
+  protected NAME: string | undefined;
 
-  getParameters(): Parameters {
+  getParameters(): Parameters | undefined {
     return this.PARAMETERS;
   }
 
-  getText(): string {
+  getText(): string | undefined {
     return this.TEXT;
   }
 
-  getName(): string {
+  getName(): string | undefined {
     return this.NAME;
   }
 

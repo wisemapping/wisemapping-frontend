@@ -1,15 +1,27 @@
-  {
-    "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "noImplicitAny": false,
-      "module": "es6",
-      "target": "es6",
-      "allowJs": true,
-      "esModuleInterop": true,
-	  "jsx": "react-jsx",
-	  "jsxImportSource": "@emotion/react"
-
-    },
-    "exclude": ["node_modules"]
-  }
+{
+  "include": [
+    "src/**/*"
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "amd",
+    "moduleResolution": "node",
+    "strict": false,
+    "target": "es6",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "strictNullChecks": true,
+    "rootDirs": [
+      "src",
+    ],
+    "jsxImportSource": "@emotion/react",
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

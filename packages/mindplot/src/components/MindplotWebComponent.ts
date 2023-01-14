@@ -43,9 +43,9 @@ export type MindplotWebComponentInterface = {
 class MindplotWebComponent extends HTMLElement {
   private _shadowRoot: ShadowRoot;
 
-  private _designer: Designer;
+  private _designer: Designer | null;
 
-  private saveRequired: boolean;
+  private _saveRequired: boolean;
 
   private _isLoaded: boolean;
 
@@ -62,12 +62,15 @@ class MindplotWebComponent extends HTMLElement {
     wrapper.setAttribute('id', 'mindplot');
 
     this._shadowRoot.appendChild(wrapper);
+    this._isLoaded = false;
+    this._saveRequired = false;
+    this._designer = null;
   }
 
   /**
    * @returns the designer
    */
-  getDesigner(): Designer {
+  getDesigner(): Designer | null {
     return this._designer;
   }
 
@@ -124,24 +127,24 @@ class MindplotWebComponent extends HTMLElement {
   }
 
   setSaveRequired(value: boolean) {
-    this.saveRequired = value;
+    this._saveRequired = value;
   }
 
   getSaveRequired() {
-    return this.saveRequired;
+    return this._saveRequired;
   }
 
   loadMap(id: string): Promise<void> {
     const instance = PersistenceManager.getInstance();
-    return instance.load(id).then((mindmap) => this._designer.loadMap(mindmap));
+    return instance.load(id).then((mindmap) => this._designer!.loadMap(mindmap));
   }
 
   save(saveHistory: boolean) {
     if (!saveHistory && !this.getSaveRequired()) return;
     console.log('Saving...');
     // Load map content ...
-    const mindmap = this._designer.getMindmap();
-    const mindmapProp = this._designer.getMindmapProperties();
+    const mindmap = this._designer!.getMindmap();
+    const mindmapProp = this._designer!.getMindmapProperties();
 
     // Display save message ..
     if (saveHistory) {
@@ -166,7 +169,7 @@ class MindplotWebComponent extends HTMLElement {
   }
 
   unlockMap() {
-    const mindmap = this._designer.getMindmap();
+    const mindmap = this._designer!.getMindmap();
     const persistenceManager = PersistenceManager.getInstance();
 
     // If the map could not be loaded, partial map load could happen.

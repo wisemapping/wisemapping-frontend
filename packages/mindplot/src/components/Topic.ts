@@ -67,11 +67,11 @@ abstract class Topic extends NodeGraph {
 
   private _text: Text | null;
 
-  private _iconsGroup: IconGroup;
+  private _iconsGroup!: IconGroup;
 
-  private _connector: ShirinkConnector;
+  private _connector!: ShirinkConnector;
 
-  private _outgoingLine: ConnectionLine | null;
+  private _outgoingLine!: ConnectionLine | null;
 
   constructor(model: NodeModel, options: NodeOption) {
     super(model, options);
@@ -83,7 +83,7 @@ abstract class Topic extends NodeGraph {
 
     // Position a topic ....
     const pos = model.getPosition();
-    if (pos != null && this.isCentralTopic()) {
+    if (pos && this.isCentralTopic()) {
       this.setPosition(pos);
     }
 
@@ -121,7 +121,7 @@ abstract class Topic extends NodeGraph {
 
   protected redrawShapeType() {
     const oldInnerShape = this.getInnerShape();
-    if (oldInnerShape != null) {
+    if (oldInnerShape) {
       this._removeInnerShape();
 
       // Create a new one ...
@@ -208,7 +208,7 @@ abstract class Topic extends NodeGraph {
   }
 
   getInnerShape(): ElementClass {
-    if (!$defined(this._innerShape)) {
+    if (!this._innerShape) {
       // Create inner box.
       this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
 
@@ -285,16 +285,17 @@ abstract class Topic extends NodeGraph {
 
   private getOrBuildIconGroup(): Group {
     if (!this._iconsGroup) {
-      this._iconsGroup = this._buildIconGroup();
+      const iconGroup = this._buildIconGroup();
       const group = this.get2DElement();
 
-      group.append(this._iconsGroup.getNativeElement());
-      this._iconsGroup.moveToFront();
+      group.append(iconGroup.getNativeElement());
+      iconGroup.moveToFront();
+      this._iconsGroup = iconGroup;
     }
     return this._iconsGroup;
   }
 
-  private getIconGroup(): IconGroup {
+  private getIconGroup(): IconGroup | null {
     return this._iconsGroup;
   }
 
@@ -351,7 +352,7 @@ abstract class Topic extends NodeGraph {
 
     // Removing the icon from UI
     const iconGroup = this.getIconGroup();
-    if ($defined(iconGroup)) {
+    if (iconGroup) {
       iconGroup.removeIconByModel(featureModel);
     }
     this.redraw();
@@ -837,7 +838,7 @@ abstract class Topic extends NodeGraph {
   setBranchVisibility(value: boolean): void {
     let current: Topic = this;
     let parent: Topic | null = this;
-    while (parent != null && !parent.isCentralTopic()) {
+    while (parent && !parent.isCentralTopic()) {
       current = parent;
       parent = current.getParent();
     }
@@ -896,8 +897,8 @@ abstract class Topic extends NodeGraph {
       const sourceParent = sourceTopic.getModel().getParent();
       relationship.setVisibility(
         value &&
-          (targetParent == null || !targetParent.areChildrenShrunken()) &&
-          (sourceParent == null || !sourceParent.areChildrenShrunken()),
+          (!targetParent || !targetParent.areChildrenShrunken()) &&
+          (!sourceParent || !sourceParent.areChildrenShrunken()),
         fade,
       );
     });
@@ -1242,7 +1243,7 @@ abstract class Topic extends NodeGraph {
 
         // Force the repaint in case that the main topic color has changed.
         if (this.getParent()) {
-          this._connector.setColor(borderColor);
+          this._connector!.setColor(borderColor);
 
           if (this.getParent()?.isCentralTopic()) {
             this._outgoingLine?.redraw();

@@ -8,15 +8,15 @@ import Node, { Choise } from './Node';
 import Richcontent from './Richcontent';
 
 export default class Freemap {
-  protected node: Node;
+  protected node: Node | undefined;
 
-  protected version: string;
+  protected version: string | undefined;
 
-  getNode(): Node {
+  getNode(): Node | undefined {
     return this.node;
   }
 
-  getVersion(): string {
+  getVersion(): string | undefined {
     return this.version;
   }
 
@@ -38,7 +38,7 @@ export default class Freemap {
     document.appendChild(mapElem);
 
     // Create main node
-    const mainNode: Node = this.node;
+    const mainNode: Node = this.node!;
     mainNode.setCentralTopic(true);
     const mainNodeElem = mainNode.toXml(document);
     mapElem.appendChild(mainNodeElem);

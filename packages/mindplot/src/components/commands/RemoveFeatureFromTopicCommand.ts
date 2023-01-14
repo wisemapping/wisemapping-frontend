@@ -25,7 +25,7 @@ class RemoveFeatureFromTopicCommand extends Command {
 
   private _featureId: number;
 
-  private _oldFeature: FeatureModel;
+  private _oldFeature: FeatureModel | null;
 
   /**
    * @classdesc This command handles do/undo of removing a feature from a topic, e.g. an icon or
@@ -38,6 +38,7 @@ class RemoveFeatureFromTopicCommand extends Command {
     super();
     this._topicId = topicId;
     this._featureId = featureId;
+    this._oldFeature = null;
   }
 
   /**
@@ -56,7 +57,7 @@ class RemoveFeatureFromTopicCommand extends Command {
    */
   undoExecute(commandContext: CommandContext) {
     const topic = commandContext.findTopics([this._topicId])[0];
-    topic.addFeature(this._oldFeature);
+    topic.addFeature(this._oldFeature!);
   }
 }
 

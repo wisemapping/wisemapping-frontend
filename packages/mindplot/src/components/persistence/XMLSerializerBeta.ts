@@ -20,7 +20,6 @@ import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
-import FeatureModel from '../model/FeatureModel';
 
 class XMLSerializerBeta implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -295,12 +294,6 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     return topic;
-  }
-
-  private _deserializeIcon(domElem: Element): FeatureModel {
-    let icon = domElem.getAttribute('id');
-    icon = icon ? icon.replace('images/', 'icons/legacy/') : 'missing';
-    return FeatureModelFactory.createModel('icon', { id: icon });
   }
 
   _deserializeLink(domElem: Element) {

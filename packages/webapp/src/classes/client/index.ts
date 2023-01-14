@@ -118,12 +118,12 @@ interface Client {
   registerNewUser(user: NewUser): Promise<void>;
   resetPassword(email: string): Promise<ForgotPasswordResult>;
   processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
-  confirmAccountSync(email: string, code: string): Promise<void>;
+  confirmAccountSync(email: string, code?: string): Promise<void>;
 
   fetchHistory(id: number): Promise<ChangeHistory[]>;
   revertHistory(id: number, cid: number): Promise<void>;
 
-  onSessionExpired(callback?: () => void): () => void;
+  onSessionExpired(callback?: () => void): (() => void) | undefined;
 }
 
 export default Client;

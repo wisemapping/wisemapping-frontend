@@ -1,7 +1,7 @@
 export default class Icon {
-  protected BUILTIN: string;
+  protected BUILTIN: string | undefined;
 
-  getBuiltin(): string {
+  getBuiltin(): string | undefined {
     return this.BUILTIN;
   }
 
@@ -12,8 +12,9 @@ export default class Icon {
   toXml(document: Document): HTMLElement {
     // Set node attributes
     const iconElem = document.createElement('icon');
-
-    iconElem.setAttribute('BUILTIN', this.BUILTIN);
+    if (this.BUILTIN) {
+      iconElem.setAttribute('BUILTIN', this.BUILTIN);
+    }
 
     return iconElem;
   }

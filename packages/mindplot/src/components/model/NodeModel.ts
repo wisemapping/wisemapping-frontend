@@ -35,8 +35,6 @@ class NodeModel extends INodeModel {
   private _parent: NodeModel | null;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id?: number) {
-    $assert(type, 'Node type can not be null');
-    $assert(mindmap, 'mindmap can not be null');
     super(mindmap);
 
     this._properties = {};
@@ -46,6 +44,7 @@ class NodeModel extends INodeModel {
 
     this._children = [];
     this._features = [];
+    this._parent = null;
   }
 
   /**

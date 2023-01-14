@@ -17,7 +17,6 @@
  */
 
 import Client from '../client';
-import CacheDecoratorClient from '../client/cache-decorator-client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
 
@@ -91,8 +90,7 @@ class _AppConfig {
       result = new MockClient();
     }
 
-    // Wrap with a cache decorator ...
-    return new CacheDecoratorClient(result);
+    return result;
   }
 
   getBaseUrl(): string {

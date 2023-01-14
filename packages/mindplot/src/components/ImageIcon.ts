@@ -25,13 +25,14 @@ import Icon from './Icon';
 abstract class ImageIcon implements Icon {
   private _image: Image;
 
-  private _group: IconGroup;
+  private _group: IconGroup | null;
 
   constructor(url: string) {
     $assert(url, 'image url can not be null');
     this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(ImageIcon.SIZE, ImageIcon.SIZE);
+    this._group = null;
   }
 
   getElement(): ElementClass {
@@ -42,7 +43,7 @@ abstract class ImageIcon implements Icon {
     this._group = group;
   }
 
-  getGroup(): IconGroup {
+  getGroup(): IconGroup | null {
     return this._group;
   }
 

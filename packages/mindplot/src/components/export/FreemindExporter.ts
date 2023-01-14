@@ -22,11 +22,11 @@ import Font from './freemind/Font';
 class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
 
-  private nodeMap: Map<number, FreeminNode>;
+  private nodeMap!: Map<number, FreeminNode>;
 
   private version: VersionNumber = FreemindConstant.SUPPORTED_FREEMIND_VERSION;
 
-  private objectFactory: ObjectFactory;
+  private objectFactory!: ObjectFactory;
 
   private static wisweToFreeFontSize: Map<number, number> = new Map<number, number>();
 

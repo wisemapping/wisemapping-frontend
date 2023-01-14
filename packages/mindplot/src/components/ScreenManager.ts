@@ -52,6 +52,7 @@ class ScreenManager {
         event.preventDefault();
       },
     );
+    this._scale = 1;
   }
 
   /**
@@ -65,7 +66,6 @@ class ScreenManager {
   }
 
   setScale(scale: number) {
-    $assert(scale, 'Screen scale can not be null');
     this._scale = scale;
   }
 

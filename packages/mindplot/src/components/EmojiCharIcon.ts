@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { Text, Group, ElementClass, Point } from '@wisemapping/web2d';
-import { $assert } from '@wisemapping/core-js';
 
 import Icon from './Icon';
 import IconGroup from './IconGroup';
@@ -28,17 +27,15 @@ import ActionDispatcher from './ActionDispatcher';
 class EmojiCharIcon implements Icon {
   private element: ElementClass;
 
-  private group: IconGroup;
+  private _group: IconGroup | null;
 
-  private iconModel: SvgIconModel;
+  private _iconModel: SvgIconModel;
 
-  private topic: Topic;
+  private _topic: Topic;
 
   constructor(topic: Topic, iconModel: SvgIconModel, readOnly: boolean) {
-    $assert(iconModel, 'iconModel can not be null');
-    $assert(topic, 'topic can not be null');
-    this.iconModel = iconModel;
-    this.topic = topic;
+    this._iconModel = iconModel;
+    this._topic = topic;
 
     this.element = new Group({
       width: 90,
@@ -57,6 +54,7 @@ class EmojiCharIcon implements Icon {
     if (!readOnly) {
       this.element.setCursor('pointer');
     }
+    this._group = null;
   }
 
   getElement(): ElementClass {
@@ -64,19 +62,19 @@ class EmojiCharIcon implements Icon {
   }
 
   setGroup(group: IconGroup) {
-    this.group = group;
+    this._group = group;
   }
 
   getGroup(): IconGroup {
-    return this.group;
+    return this._group!;
   }
 
   getSize(): SizeType {
-    return this.group.getSize();
+    return this._group!.getSize();
   }
 
   getPosition(): Point {
-    return this.group.getPosition();
+    return this._group!.getPosition();
   }
 
   addEvent(type: string, fnc: (e: object) => void): void {
@@ -85,12 +83,12 @@ class EmojiCharIcon implements Icon {
 
   remove() {
     const actionDispatcher = ActionDispatcher.getInstance();
-    const featureId = this.iconModel.getId();
-    actionDispatcher.removeFeatureFromTopic(this.topic.getId(), featureId);
+    const featureId = this._iconModel.getId();
+    actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }
 
   getModel(): SvgIconModel {
-    return this.iconModel;
+    return this._iconModel;
   }
 }
 

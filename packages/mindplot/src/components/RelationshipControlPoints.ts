@@ -36,7 +36,7 @@ class ControlPivotLine {
 
   private _pivotType: PivotType;
 
-  private _workspace: Workspace;
+  private _workspace: Workspace | null;
 
   private _relationship: Relationship;
 
@@ -93,6 +93,9 @@ class ControlPivotLine {
     this._mouseMoveHandler = (e: MouseEvent) => this.mouseMoveHandler(e);
     this._mouseUpHandler = () => this.mouseUpHandler();
     this._mouseDownHandler = (event: MouseEvent) => this.mouseDownHandler(event);
+
+    this._isVisible = false;
+    this._workspace = null;
   }
 
   private mouseDownHandler(event: MouseEvent) {
@@ -153,7 +156,7 @@ class ControlPivotLine {
   }
 
   private mouseMoveHandler(event: MouseEvent) {
-    const screen = this._workspace.getScreenManager();
+    const screen = this._workspace!.getScreenManager();
     const mousePosition = screen.getWorkspaceMousePosition(event);
 
     // Update relatioship position ...
@@ -212,8 +215,6 @@ class RelationshipControlPoints {
   private _pivotLines: [ControlPivotLine, ControlPivotLine];
 
   private _relationship: Relationship;
-
-  private _relationshipLinePositions: [PositionType, PositionType];
 
   constructor(relationship: Relationship) {
     this._relationship = relationship;
@@ -277,10 +278,6 @@ class RelationshipControlPoints {
 
   getControlPointPosition(pivotType: PivotType): PositionType {
     return this._pivotLines[pivotType].getPosition();
-  }
-
-  getRelationshipPosition(index: number): PositionType {
-    return { ...this._relationshipLinePositions[index] };
   }
 }
 

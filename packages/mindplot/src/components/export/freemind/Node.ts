@@ -7,43 +7,43 @@ import Icon from './Icon';
 import Richcontent from './Richcontent';
 
 class Node {
-  protected arrowlinkOrCloudOrEdge: Array<
-    Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this
-  >;
+  protected arrowlinkOrCloudOrEdge:
+    | Array<Arrowlink | Cloud | Edge | Font | Hook | Icon | Richcontent | this>
+    | undefined;
 
-  protected BACKGROUND_COLOR: string;
+  protected BACKGROUND_COLOR: string | undefined;
 
-  protected COLOR: string;
+  protected COLOR: string | undefined;
 
-  protected FOLDED: string;
+  protected FOLDED: string | undefined;
 
-  protected ID: string;
+  protected ID: string | undefined;
 
-  protected LINK: string;
+  protected LINK: string | undefined;
 
-  protected POSITION: string;
+  protected POSITION: string | undefined;
 
-  protected STYLE: string;
+  protected STYLE: string | undefined;
 
-  protected TEXT: string;
+  protected TEXT: string | undefined;
 
-  protected CREATED: string;
+  protected CREATED: string | undefined;
 
-  protected MODIFIED: string;
+  protected MODIFIED: string | undefined;
 
-  protected HGAP: string;
+  protected HGAP: string | undefined;
 
-  protected VGAP: string;
+  protected VGAP: string | undefined;
 
-  protected WCOORDS: string;
+  protected WCOORDS: string | undefined;
 
-  protected WORDER: string;
+  protected WORDER: string | undefined;
 
-  protected VSHIFT: string;
+  protected VSHIFT: string | undefined;
 
-  protected ENCRYPTED_CONTENT: string;
+  protected ENCRYPTED_CONTENT: string | undefined;
 
-  private centralTopic: boolean;
+  private centralTopic = false;
 
   getArrowlinkOrCloudOrEdge(): Array<
     /* eslint-disable */
@@ -57,67 +57,67 @@ class Node {
     return this.arrowlinkOrCloudOrEdge;
   }
 
-  getBackgroundColor(): string {
+  getBackgroundColor(): string | undefined {
     return this.BACKGROUND_COLOR;
   }
 
-  getColor(): string {
+  getColor(): string | undefined {
     return this.COLOR;
   }
 
-  getFolded(): string {
+  getFolded(): string | undefined {
     return this.FOLDED;
   }
 
-  getId(): string | null {
+  getId(): string | undefined {
     return this.ID;
   }
 
-  getLink(): string {
+  getLink(): string | undefined {
     return this.LINK;
   }
 
-  getPosition(): string {
+  getPosition(): string | undefined {
     return this.POSITION;
   }
 
-  getStyle(): string {
+  getStyle(): string | undefined {
     return this.STYLE;
   }
 
-  getText(): string {
+  getText(): string | undefined {
     return this.TEXT;
   }
 
-  getCreated(): string {
+  getCreated(): string | undefined {
     return this.CREATED;
   }
 
-  getModified(): string {
+  getModified(): string | undefined {
     return this.MODIFIED;
   }
 
-  getHgap(): string {
+  getHgap(): string | undefined {
     return this.HGAP;
   }
 
-  getVgap(): string {
+  getVgap(): string | undefined {
     return this.VGAP;
   }
 
-  getWcoords(): string {
+  getWcoords(): string | undefined {
     return this.WCOORDS;
   }
 
-  getWorder(): string {
+  getWorder(): string | undefined {
     return this.WORDER;
   }
 
-  getVshift(): string {
+  getVshift(): string | undefined {
     return this.VSHIFT;
   }
 
-  getEncryptedContent(): string {
+  getEncryptedContent(): string | undefined {
     return this.ENCRYPTED_CONTENT;
   }
 

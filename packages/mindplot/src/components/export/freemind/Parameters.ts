@@ -1,7 +1,7 @@
 export default class Parameters {
-  protected REMINDUSERAT: number;
+  protected REMINDUSERAT: number | undefined;
 
-  getReminduserat(): number {
+  getReminduserat(): number | undefined {
     return this.REMINDUSERAT;
   }
 

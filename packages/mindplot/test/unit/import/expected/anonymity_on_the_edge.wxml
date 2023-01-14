@@ -197,7 +197,7 @@ unencrypted.]]></text>
                     <topic position="1100,26" order="0" text="but it can't encrypted" shape="line" id="1190504719"/>
                     <topic position="1190,51" order="1" text="unless you have some UDP SSL thing" shape="line" id="878085542"/>
                 </topic>
-                <topic position="-1190,76" order="3" shape="line" id="252326982" bgColor="undefined">
+                <topic position="-1190,76" order="3" shape="line" id="252326982">
                     <text><![CDATA[Egerstad said the process of snooping on the traffic is trivial. The problem is not with Tor, which
 still works as intended, but with users' expectations: the Tor system is designed to merely
 anonymize Internet traffic and does not perform end-to-end

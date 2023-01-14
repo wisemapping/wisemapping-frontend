@@ -157,7 +157,6 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
   changeBackgroundColorToTopic(topicsIds: number[], color: string | undefined) {
     const commandFunc = (topic: Topic, value: string | undefined) => {
       const result = topic.getBackgroundColor();

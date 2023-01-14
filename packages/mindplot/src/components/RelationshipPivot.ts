@@ -32,7 +32,7 @@ class RelationshipPivot {
 
   private _onClickEvent: (event: MouseEvent) => void;
 
-  private _onTopicClick: (event: MouseEvent) => void;
+  private _onTopicClick: (event: MouseEvent, targetTopic: Topic) => void;
 
   private _sourceTopic: Topic | null;
 
@@ -49,6 +49,7 @@ class RelationshipPivot {
     this._mouseMoveEvent = this.mouseMoveHandler.bind(this);
     this._onClickEvent = this.cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
+    this._sourceTopic = null;
   }
 
   start(sourceTopic: Topic, targetPos: Point) {
@@ -156,7 +157,7 @@ class RelationshipPivot {
     return Shape.calculateRelationShipPointCoordinates(sourceTopic, point);
   }
 
-  private _connectOnFocus(event: string, targetTopic: Topic): void {
+  private _connectOnFocus(event: MouseEvent, targetTopic: Topic): void {
     const sourceTopic = this._sourceTopic;
     const mindmap = this._designer.getMindmap();
 

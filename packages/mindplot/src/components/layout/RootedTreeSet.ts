@@ -15,21 +15,20 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import PositionType from '../PositionType';
 import Node from './Node';
 
 class RootedTreeSet {
   private _rootNodes: Node[];
 
-  protected _children: Node[];
+  protected _children!: Node[];
 
   constructor() {
     this._rootNodes = [];
   }
 
   setRoot(root: Node) {
-    $assert(root, 'root can not be null');
     this._rootNodes.push(this._decodate(root));
   }
 
@@ -43,7 +42,6 @@ class RootedTreeSet {
   }
 
   add(node: Node) {
-    $assert(node, 'node can not be null');
     if (this.find(node.getId(), false)) {
       throw new Error(`node already exits with this id. Id:${node.getId()}: ${this.dump()}`);
     }
@@ -56,7 +54,6 @@ class RootedTreeSet {
    * @throws will throw an error if nodeId is null or undefined
    */
   remove(nodeId: number) {
-    $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
     this._rootNodes = this._rootNodes.filter((n) => n !== node);
   }
@@ -69,9 +66,6 @@ class RootedTreeSet {
    * @throws will throw an error if node with id childId is already a child of parent
    */
   connect(parentId: number, childId: number) {
-    $assert($defined(parentId), 'parent can not be null');
-    $assert($defined(childId), 'child can not be null');
-
     const parent = this.find(parentId);
     const child = this.find(childId, true);
     $assert(
@@ -90,7 +84,6 @@ class RootedTreeSet {
    * @throws will throw an error if node is not connected
    */
   disconnect(nodeId: number) {
-    $assert($defined(nodeId), 'nodeId can not be null');
     const node = this.find(nodeId);
     $assert(node._parent, 'Node is not connected');
 
@@ -107,8 +100,6 @@ class RootedTreeSet {
    * @return node
    */
   find(id: number, validate = true): Node {
-    $assert($defined(id), 'id can not be null');
-
     const graphs = this._rootNodes;
     let result: Node | null = null;
     for (let i = 0; i < graphs.length; i++) {

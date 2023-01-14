@@ -26,19 +26,23 @@ import {
 } from '@wisemapping/editor';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga4';
-import { useFetchAccount, useFetchMapById } from '../../redux/clientSlice';
+import {
+  useFetchAccount,
+  useFetchMapById,
+  activeInstance,
+  sessionExpired,
+} from '../../redux/clientSlice';
 import EditorOptionsBuilder from './EditorOptionsBuilder';
 import { useTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
-import { activeInstance } from '../../redux/clientSlice';
 import Client from '../../classes/client';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
-import withSessionExpirationHandling from '../HOCs/withSessionExpirationHandling';
+import ClientHealthSentinel from '../common/client-health-sentinel';
 
 const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   let persistenceManager: PersistenceManager;
@@ -72,6 +76,7 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
 export type EditorPropsType = {
   isTryMode: boolean;
 };
+
 type ActionType =
   | 'open'
   | 'share'
@@ -98,6 +103,17 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
   const client: Client = useSelector(activeInstance);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (client) {
+      client.onSessionExpired(() => {
+        dispatch(sessionExpired());
+      });
+    } else {
+      console.warn('Session expiration wont be handled because could not find client');
+    }
+  }, []);
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
@@ -163,6 +179,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
       defaultLocale={Locales.EN.code}
       messages={userLocale.message as Record<string, string>}
     >
+      <ClientHealthSentinel />
       <Editor
         onAction={setActiveDialog}
         options={options}
@@ -197,4 +214,4 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   );
 };
 
-export default withSessionExpirationHandling(EditorPage);
+export default EditorPage;

@@ -14,6 +14,7 @@ class IconGroupRemoveTip {
   constructor(group: Group) {
     $assert(group, 'group can not be null');
     this._group = group;
+    this._activeIcon = null;
   }
 
   show(topicId: number, icon: ImageIcon) {

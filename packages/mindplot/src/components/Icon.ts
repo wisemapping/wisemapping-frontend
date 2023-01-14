@@ -8,7 +8,7 @@ interface Icon {
 
   setGroup(group: IconGroup): Group;
 
-  getGroup(): IconGroup;
+  getGroup(): IconGroup | null;
 
   getSize(): SizeType;
 

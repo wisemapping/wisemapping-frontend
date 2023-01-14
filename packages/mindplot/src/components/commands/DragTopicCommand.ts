@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import Point from '@wisemapping/web2d';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
@@ -30,18 +30,10 @@ class DragTopicCommand extends Command {
 
   private _order: number;
 
-  /**
-   * @classdesc This command class handles do/undo of dragging a topic to a new position.
-   * @constructs
-   */
   constructor(topicId: number, position: Point, order: number, parentTopic: Topic) {
-    $assert(topicId, 'topicId must be defined');
     super();
-
     this._topicsId = topicId;
-    if ($defined(parentTopic)) {
-      this._parentId = parentTopic.getId();
-    }
+    this._parentId = parentTopic ? parentTopic.getId() : null;
 
     this._position = position;
     this._order = order;
@@ -59,7 +51,7 @@ class DragTopicCommand extends Command {
     const origPosition = topic.getPosition();
 
     // Disconnect topic ..
-    if ($defined(origParentTopic)) {
+    if (origParentTopic) {
       commandContext.disconnect(topic);
     }
 

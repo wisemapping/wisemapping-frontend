@@ -1,7 +1,7 @@
 export default class Cloud {
-  protected COLOR: string;
+  protected COLOR: string | undefined;
 
-  getColor(): string {
+  getColor(): string | undefined {
     return this.COLOR;
   }
 
@@ -12,8 +12,9 @@ export default class Cloud {
   toXml(document: Document): HTMLElement {
     // Set node attributes
     const cloudElem = document.createElement('cloud');
-
-    cloudElem.setAttribute('COLOR', this.COLOR);
+    if (this.COLOR) {
+      cloudElem.setAttribute('COLOR', this.COLOR);
+    }
 
     return cloudElem;
   }

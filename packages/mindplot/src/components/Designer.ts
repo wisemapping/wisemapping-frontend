@@ -58,7 +58,7 @@ import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 
 class Designer extends Events {
-  private _mindmap: Mindmap;
+  private _mindmap: Mindmap | null;
 
   private _options: DesignerOptions;
 
@@ -70,13 +70,13 @@ class Designer extends Events {
 
   _eventBussDispatcher: EventBusDispatcher;
 
-  private _dragManager: DragManager;
+  private _dragManager!: DragManager;
 
   private _relPivot: RelationshipPivot;
 
   private _clipboard: NodeModel[];
 
-  private _cleanScreen: () => void;
+  private _cleanScreen!: () => void;
 
   constructor(options: DesignerOptions, divElement: JQuery) {
     super();
@@ -133,6 +133,7 @@ class Designer extends Events {
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     globalThis.designer = this;
+    this._mindmap = null;
   }
 
   private _registerWheelEvents(): void {
@@ -539,7 +540,6 @@ class Designer extends Events {
   }
 
   loadMap(mindmap: Mindmap): Promise<void> {
-    $assert(mindmap, 'mindmapModel can not be null');
     this._mindmap = mindmap;
 
     this._workspace.enableQueueRender(true);
@@ -587,7 +587,7 @@ class Designer extends Events {
   }
 
   getMindmap(): Mindmap {
-    return this._mindmap;
+    return this._mindmap!;
   }
 
   undo(): void {

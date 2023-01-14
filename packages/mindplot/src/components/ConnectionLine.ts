@@ -35,8 +35,6 @@ class ConnectionLine {
 
   protected _sourceTopic: Topic;
 
-  protected _lineType: LineType;
-
   protected _line: Line;
 
   private _type: LineType;
@@ -50,7 +48,7 @@ class ConnectionLine {
     this._sourceTopic = sourceNode;
     this._type = type;
     this._line = this.createLine(type);
-    this.updateColor();
+    this._color = this.updateColor();
   }
 
   private _getCtrlPoints(sourceNode: Topic, targetNode: Topic) {
@@ -64,7 +62,6 @@ class ConnectionLine {
   }
 
   protected createLine(lineType: LineType): ConnectionLine {
-    this._lineType = lineType;
     let line: ConnectionLine;
     switch (lineType) {
       case LineType.POLYLINE_MIDDLE:
@@ -88,7 +85,7 @@ class ConnectionLine {
     return line;
   }
 
-  private updateColor(): void {
+  private updateColor(): string {
     // In case that the main topic has changed the color, overwrite the main topic definiton.
     let color = this._targetTopic.getConnectionColor();
     if (this._targetTopic.isCentralTopic()) {
@@ -96,7 +93,7 @@ class ConnectionLine {
     }
 
     this._color = color;
-    switch (this._lineType) {
+    switch (this._type) {
       case LineType.POLYLINE_MIDDLE:
         this._line.setStroke(1, 'solid', color, 1);
         break;
@@ -112,8 +109,9 @@ class ConnectionLine {
         this._line.setFill(color, 1);
         break;
       default:
-        throw new Error(`Unexpected line type. ${this._lineType}`);
+        throw new Error(`Unexpected line type. ${this._type}`);
     }
+    return color;
   }
 
   setVisibility(value: boolean, fade = 0): void {
@@ -207,7 +205,7 @@ class ConnectionLine {
   }
 
   getLineType(): number {
-    return this._lineType;
+    return this._type;
   }
 
   getLine(): Line {

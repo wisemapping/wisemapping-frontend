@@ -2,7 +2,7 @@ import { css, SerializedStyles } from '@emotion/react';
 
 export const containerStyle = (
   responsive: boolean,
-  maxWidth: number,
+  maxWidth: number | undefined,
   breakPointDownMd: string,
 ): SerializedStyles => {
   return css([

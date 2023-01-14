@@ -33,6 +33,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
   private _idsMap: Record<number, Element>;
 
+  constructor() {
+    this._idsMap = {};
+  }
+
   toXML(mindmap: Mindmap): Document {
     $assert(mindmap, 'Can not save a null mindmap');
 
@@ -242,7 +246,6 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       `This seem not to be a map document. Found tag: ${rootElem.tagName}`,
     );
 
-    this._idsMap = {};
     // Start the loading process ...
     const version = rootElem.getAttribute('version') || 'pela';
     const mindmap = new Mindmap(mapId, version);

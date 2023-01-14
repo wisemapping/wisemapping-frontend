@@ -46,7 +46,7 @@ abstract class NodeGraph {
 
     this._options = options;
     this._mouseEvents = true;
-    this.setModel(nodeModel);
+    this._model = nodeModel;
     this._onFocus = false;
     this._size = { width: 50, height: 20 };
   }
@@ -70,7 +70,6 @@ abstract class NodeGraph {
   }
 
   get2DElement(): ElementClass {
-    $assert(this._elem2d, 'NodeGraph has not been initialized properly');
     return this._elem2d;
   }
 
@@ -118,7 +117,7 @@ abstract class NodeGraph {
     return this._model;
   }
 
-  setModel(model: NodeModel) {
+  setModel(model: NodeModel): void {
     $assert(model, 'Model can not be null');
     this._model = model;
   }

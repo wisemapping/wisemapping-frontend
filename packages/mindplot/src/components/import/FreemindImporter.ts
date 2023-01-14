@@ -6,7 +6,6 @@ import NodeModel from '../model/NodeModel';
 import FreemindConstant from '../export/freemind/FreemindConstant';
 import FreemindMap from '../export/freemind/Map';
 import FreemindNode, { Choise } from '../export/freemind/Node';
-import FreemindFont from '../export/freemind/Font';
 import FreemindEdge from '../export/freemind/Edge';
 import FreemindIcon from '../export/freemind/Icon';
 import FreemindHook from '../export/freemind/Hook';
@@ -21,15 +20,15 @@ import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
 
 export default class FreemindImporter extends Importer {
-  private mindmap: Mindmap;
+  private mindmap!: Mindmap;
 
   private freemindInput: string;
 
-  private freemindMap: FreemindMap;
+  private freemindMap!: FreemindMap;
 
-  private nodesmap: Map<string, NodeModel>;
+  private nodesmap!: Map<string, NodeModel>;
 
-  private relationship: Array<RelationshipModel>;
+  private relationship!: Array<RelationshipModel>;
 
   private idDefault = 0;
 
@@ -47,7 +46,7 @@ export default class FreemindImporter extends Importer {
     const freemindDoc = parser.parseFromString(this.freemindInput, 'application/xml');
     this.freemindMap = new FreemindMap().loadFromDom(freemindDoc);
 
-    const version: string = this.freemindMap.getVersion();
+    const version: string | undefined = this.freemindMap.getVersion();
 
     if (!version || version.startsWith('freeplane')) {
       throw new Error(
@@ -60,10 +59,10 @@ export default class FreemindImporter extends Importer {
       }
     }
 
-    const freeNode: FreemindNode = this.freemindMap.getNode();
+    const freeNode = this.freemindMap.getNode()!;
     this.mindmap.setVersion(FreemindConstant.CODE_VERSION);
 
-    const wiseTopicId = this.getIdNode(this.freemindMap.getNode());
+    const wiseTopicId = this.getIdNode(freeNode);
     const wiseTopic = this.mindmap.createNode('CentralTopic');
     wiseTopic.setPosition(0, 0);
     wiseTopic.setId(wiseTopicId);
@@ -158,7 +157,7 @@ export default class FreemindImporter extends Importer {
     wiseTopic: NodeModel,
     centralTopic: boolean,
   ): void {
-    const text: string = freeNode.getText();
+    const text = freeNode.getText();
     if (text) {
       if (!centralTopic && text.length > 100) {
         wiseTopic.setText(text.replace(/([^\n]{1,100})\s/g, '$1\n'));
@@ -167,7 +166,7 @@ export default class FreemindImporter extends Importer {
       }
     }
 
-    const bgColor: string = freeNode.getBackgroundColor();
+    const bgColor = freeNode.getBackgroundColor();
     if (bgColor) {
       wiseTopic.setBackgroundColor(bgColor);
     }
@@ -186,7 +185,7 @@ export default class FreemindImporter extends Importer {
     // }
 
     // Is there any link...
-    const url: string = freeNode.getLink();
+    const url = freeNode.getLink();
     if (url) {
       const link: FeatureModel = FeatureModelFactory.createModel('link', { url });
       wiseTopic.addFeature(link);
@@ -214,7 +213,7 @@ export default class FreemindImporter extends Importer {
         const wiseChild = mindmap.createNode('MainTopic', wiseId);
 
         const id = child.getId();
-        if (id !== null) {
+        if (id !== undefined) {
           this.nodesmap.set(id, wiseChild);
         }
 
@@ -269,13 +268,15 @@ export default class FreemindImporter extends Importer {
 
       if (child instanceof FreemindIcon) {
         const freeIcon: FreemindIcon = child as FreemindIcon;
-        const iconId: string = freeIcon.getBuiltin();
-        const wiseIconId = FreemindIconConverter.toWiseId(iconId);
-        if (wiseIconId) {
-          const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', {
-            id: wiseIconId,
-          });
-          currentWiseTopic.addFeature(mindmapIcon);
+        const iconId = freeIcon.getBuiltin();
+        if (iconId) {
+          const wiseIconId = FreemindIconConverter.toWiseId(iconId);
+          if (wiseIconId) {
+            const mindmapIcon: FeatureModel = FeatureModelFactory.createModel('icon', {
+              id: wiseIconId,
+            });
+            currentWiseTopic.addFeature(mindmapIcon);
+          }
         }
       }
 
@@ -283,7 +284,7 @@ export default class FreemindImporter extends Importer {
         const hook: FreemindHook = child as FreemindHook;
         const mindmapNote: NoteModel = new NoteModel({ text: '' });
 
-        let textNote: string = hook.getText();
+        let textNote = hook.getText();
         if (!textNote) {
           textNote = FreemindConstant.EMPTY_NOTE;
           mindmapNote.setText(textNote);
@@ -294,27 +295,28 @@ export default class FreemindImporter extends Importer {
       if (child instanceof FreemindRichcontent) {
         const type = child.getType();
         const html = child.getHtml();
-        const text = this.html2Text(html);
+        if (html) {
+          const text = this.html2Text(html);
+          switch (type) {
+            case 'NOTE': {
+              const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+                text: text || FreemindConstant.EMPTY_NOTE,
+              });
+              currentWiseTopic.addFeature(noteModel);
+              break;
+            }
 
-        switch (type) {
-          case 'NOTE': {
-            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
-              text: text || FreemindConstant.EMPTY_NOTE,
-            });
-            currentWiseTopic.addFeature(noteModel);
-            break;
-          }
+            case 'NODE': {
+              currentWiseTopic.setText(text);
+              break;
+            }
 
-          case 'NODE': {
-            currentWiseTopic.setText(text);
-            break;
-          }
-
-          default: {
-            const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
-              text: text || FreemindConstant.EMPTY_NOTE,
-            });
-            currentWiseTopic.addFeature(noteModel);
+            default: {
+              const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
+                text: text || FreemindConstant.EMPTY_NOTE,
+              });
+              currentWiseTopic.addFeature(noteModel);
+            }
           }
         }
       }
@@ -322,28 +324,28 @@ export default class FreemindImporter extends Importer {
       if (child instanceof FreemindArrowLink) {
         const arrow: FreemindArrowLink = child as FreemindArrowLink;
         const relationship: RelationshipModel = new RelationshipModel(0, 0);
-        const destId: string = arrow.getDestination();
+        const destId = arrow.getDestination();
 
         relationship.setSrcCtrlPoint(destId);
         relationship.setDestCtrlPoint(freeParent.getId());
-        const endinclination: string = arrow.getEndInclination();
+        const endinclination = arrow.getEndInclination();
         if (endinclination) {
           const inclination: Array<string> = endinclination.split(';');
           relationship.setDestCtrlPoint(`${inclination[0]},${inclination[1]}`);
         }
 
-        const startinclination: string = arrow.getStartinclination();
+        const startinclination = arrow.getStartinclination();
         if (startinclination) {
           const inclination: Array<string> = startinclination.split(';');
           relationship.setSrcCtrlPoint(`${inclination[0]},${inclination[1]}`);
         }
 
-        const endarrow: string = arrow.getEndarrow();
+        const endarrow = arrow.getEndarrow();
         if (endarrow) {
           relationship.setEndArrow(endarrow.toLowerCase() !== 'none');
         }
 
-        const startarrow: string = arrow.getStartarrow();
+        const startarrow = arrow.getStartarrow();
         if (startarrow) {
           relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
         }
@@ -375,7 +377,7 @@ export default class FreemindImporter extends Importer {
 
   private getChildrenCountSameSide(freeChilden: Array<Choise>, freeChild: FreemindNode): number {
     let result = 0;
-    let childSide: string = freeChild.getPosition();
+    let childSide = freeChild.getPosition();
 
     if (!childSide) {
       childSide = FreemindConstant.POSITION_RIGHT;
@@ -410,55 +412,54 @@ export default class FreemindImporter extends Importer {
     return result;
   }
 
-  private generateFontStyle(node: FreemindNode, font: FreemindFont | undefined): string {
-    const fontStyle: Array<string> = [];
+  // private generateFontStyle(node: FreemindNode, font: FreemindFont | undefined): string {
+  //   const fontStyle: Array<string> = [];
 
-    // Font family
-    if (font) {
-      const name = font.getName();
-      if (name) {
-        fontStyle.push(name);
-      }
-    }
-    fontStyle.push(';');
+  //   // Font family
+  //   if (font) {
+  //     const name = font.getName();
+  //     if (name) {
+  //       fontStyle.push(name);
+  //     }
+  //   }
+  //   fontStyle.push(';');
 
-    // Font Size
-    if (font) {
-      const fontSize: number =
-        !font.getSize() || parseInt(font.getSize(), 10) < 8
-          ? FreemindConstant.FONT_SIZE_NORMAL
-          : parseInt(font.getSize(), 10);
-      let wiseFontSize: number = FreemindConstant.FONT_SIZE_SMALL;
-      if (fontSize >= 24) {
-        wiseFontSize = FreemindConstant.FONT_SIZE_HUGE;
-      }
-      if (fontSize >= 16) {
-        wiseFontSize = FreemindConstant.FONT_SIZE_LARGE;
-      }
-      if (fontSize >= 8) {
-        wiseFontSize = FreemindConstant.FONT_SIZE_NORMAL;
-      }
-      fontStyle.push(wiseFontSize.toString());
-    }
-    fontStyle.push(';');
+  //   // Font Size
+  //   if (font) {
+  //     const size = font.getSize();
+  //     const fontSize: number =
+  //       !size || parseInt(size, 10) < 8 ? FreemindConstant.FONT_SIZE_NORMAL : parseInt(size, 10);
+  //     let wiseFontSize: number = FreemindConstant.FONT_SIZE_SMALL;
+  //     if (fontSize >= 24) {
+  //       wiseFontSize = FreemindConstant.FONT_SIZE_HUGE;
+  //     }
+  //     if (fontSize >= 16) {
+  //       wiseFontSize = FreemindConstant.FONT_SIZE_LARGE;
+  //     }
+  //     if (fontSize >= 8) {
+  //       wiseFontSize = FreemindConstant.FONT_SIZE_NORMAL;
+  //     }
+  //     fontStyle.push(wiseFontSize.toString());
+  //   }
+  //   fontStyle.push(';');
 
-    // Font Color
-    const color: string = node.getColor();
-    if (color && color !== '') {
-      fontStyle.push(color);
-    }
-    fontStyle.push(';');
+  //   // Font Color
+  //   const color = node.getColor();
+  //   if (color && color !== '') {
+  //     fontStyle.push(color);
+  //   }
+  //   fontStyle.push(';');
 
-    // Font Italic
-    if (font) {
-      const hasItalic = Boolean(font.getItalic());
-      fontStyle.push(hasItalic ? FreemindConstant.ITALIC : '');
-    }
-    fontStyle.push(';');
+  //   // Font Italic
+  //   if (font) {
+  //     const hasItalic = Boolean(font.getItalic());
+  //     fontStyle.push(hasItalic ? FreemindConstant.ITALIC : '');
+  //   }
+  //   fontStyle.push(';');
 
-    const result: string = fontStyle.join('');
-    return result;
-  }
+  //   const result: string = fontStyle.join('');
+  //   return result;
+  // }
 
   private convertPosition(
     wiseParent: NodeModel,
@@ -471,7 +472,7 @@ export default class FreemindImporter extends Importer {
       FreemindConstant.CENTRAL_TO_TOPIC_DISTANCE +
       (depth - 1) * FreemindConstant.TOPIC_TO_TOPIC_DISTANCE;
     if (depth === 1) {
-      const side: string = freeChild.getPosition();
+      const side = freeChild.getPosition();
       x *= side && FreemindConstant.POSITION_LEFT === side ? -1 : 1;
     } else {
       const position = wiseParent.getPosition();

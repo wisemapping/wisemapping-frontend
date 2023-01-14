@@ -20,9 +20,7 @@ import SizeType from '../SizeType';
 import Topic from '../Topic';
 
 class LineTopicShape extends Line {
-  private _topic: Topic;
-
-  private _size: SizeType;
+  private _size: SizeType | null;
 
   constructor(topic: Topic) {
     const stokeColor = topic.getConnectionColor();
@@ -30,7 +28,7 @@ class LineTopicShape extends Line {
       strokeColor: stokeColor,
       strokeWidth: 1,
     });
-    this._topic = topic;
+    this._size = null;
   }
 
   setSize(width: number, height: number): void {
@@ -39,7 +37,7 @@ class LineTopicShape extends Line {
     super.setTo(width, height);
   }
 
-  getSize() {
+  getSize(): SizeType | null {
     return this._size;
   }
 
