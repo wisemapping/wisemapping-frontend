@@ -57,6 +57,7 @@ import WidgetManager from './WidgetManager';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
+import ImageExpoterFactory from './export/ImageExporterFactory';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -378,51 +379,63 @@ class Designer extends Events {
   }
 
   async copyToClipboard(): Promise<void> {
+    const enableImageSupport = true;
     let topics = this.getModel().filterSelectedTopics();
-    if (topics.length > 0) {
-      const mindmap = new Mindmap();
-      const central: NodeModel = new NodeModel('CentralTopic', mindmap);
-      mindmap.addBranch(central);
 
-      // Exclude central topic ..
-      topics = topics.filter((topic) => !topic.isCentralTopic());
-      topics.forEach((topic) => {
-        const nodeModel: NodeModel = topic.getModel().deepCopy();
-        nodeModel.connectTo(central);
-      });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore - Permissions is not defined on PermissionsName.
+    const permissions = await navigator.permissions.query({ name: 'clipboard-write' });
+    if (permissions.state === 'granted' || permissions.state === 'prompt') {
+      // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
+      if (topics.length > 0) {
+        const blobs = {};
+        const mindmap = new Mindmap();
+        const central: NodeModel = new NodeModel('CentralTopic', mindmap);
+        mindmap.addBranch(central);
 
-      // Create text blob ...
-      const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
-      const document = serializer.toXML(mindmap);
-      const xmlStr: string = new XMLSerializer().serializeToString(document);
-      const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
+        // Exclude central topic ..
+        topics = topics.filter((topic) => !topic.isCentralTopic());
+        topics.forEach((topic) => {
+          const nodeModel: NodeModel = topic.getModel().deepCopy();
+          nodeModel.connectTo(central);
+        });
 
-      // Create image blob ...
-      // const workspace = designer.getWorkSpace();
-      // const svgElement = workspace.getSVGElement();
-      // const size = { width: window.innerWidth, height: window.innerHeight };
+        // Create text blob ...
+        const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+        const document = serializer.toXML(mindmap);
+        const xmlStr: string = new XMLSerializer().serializeToString(document);
+        const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
+        blobs[textPlainBlob.type] = textPlainBlob;
 
-      // const imageUrl = ImageExpoterFactory.create(
-      //   'png',
-      //   svgElement,
-      //   size.width,
-      //   size.height,
-      //   false,
-      // );
-      // let imgStr = await imageUrl.exportAndEncode();
-      // imgStr = imgStr.replace('octet/stream', 'image/png');
-      // const imgBlob = await (await fetch(imgStr)).blob();
+        if (enableImageSupport) {
+          // Create image blob ...
+          const workspace = designer.getWorkSpace();
+          const svgElement = workspace.getSVGElement();
+          const size = { width: window.innerWidth, height: window.innerHeight };
 
-      // Finally, add to clipboard ...
-      const clipboard = new ClipboardItem({
-        [textPlainBlob.type]: textPlainBlob,
-        // [imgBlob.type]: imgBlob,
-      });
+          const imageUrl = ImageExpoterFactory.create(
+            'png',
+            svgElement,
+            size.width,
+            size.height,
+            false,
+          );
+          let imgStr = await imageUrl.exportAndEncode();
+          imgStr = imgStr.replace('octet/stream', 'image/png');
+          const imgBlob = await (await fetch(imgStr)).blob();
+          blobs[imgBlob.type] = imgBlob;
+        }
 
-      navigator.clipboard.write([clipboard]).then(
-        () => console.log('Copy of node success'),
-        (e) => console.error(e),
-      );
+        // Finally, add to clipboard ...
+        const clipboard = new ClipboardItem(blobs);
+        navigator.clipboard.write([clipboard]).then(
+          () => console.log('Copy of node success'),
+          (e) => {
+            console.error('Unexpected error adding to clipboard');
+            console.error(e);
+          },
+        );
+      }
     }
   }
 
