@@ -1,27 +1,29 @@
 /// <reference types="cypress" />
-describe('Edit Topic', () => {
+describe('Topic Font Suite', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
-    cy.get('[test-id=1]').click();
+
+    cy.focusTopicById(1);
   });
 
   it('Open Font Shape Panel', () => {
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Font Style');
     cy.matchImageSnapshot('fontShapePanel');
   });
 
   it('Change Main Topic Text', () => {
     cy.get('body').type('New Title Main Topic{enter}');
     cy.get('[test-id=1] > text > tspan').should('have.text', 'New Title Main Topic');
-    cy.onFocusTopicByText('Mind Mapping');
+    cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeMainTopicText');
   });
 
   it('Change Font Size', () => {
     // Go to the minimal size.
-    cy.get('[aria-label="Font Style"]').first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Font Style');
+
     cy.get('[aria-label="Smaller"]').as('smaller');
     cy.get('@smaller').eq(1).click();
     cy.get('@smaller').eq(1).click();
@@ -48,7 +50,7 @@ describe('Edit Topic', () => {
   });
 
   it('Change Font To Italic', () => {
-    cy.get('[aria-label="Font Style"]').first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Font Style');
     cy.get('[aria-label^="Italic ').first().click();
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-style').should('eq', 'italic');
@@ -58,7 +60,7 @@ describe('Edit Topic', () => {
   });
 
   it('Change Font to Bold', () => {
-    cy.get(`[aria-label="Font Style"]`).first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Font Style');
     cy.get('[aria-label^="Bold ').first().click();
 
     cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', 'normal');
@@ -68,13 +70,13 @@ describe('Edit Topic', () => {
   });
 
   it('Change Font Color', () => {
-    cy.get('[aria-label="Font Style"]').eq(1).trigger('mouseover');
+    cy.onMouseOverToolbarButton('Font Style');
     cy.get('[aria-label="Color"]').eq(1).click();
     cy.get('[title="#cc0000"]').click({ force: true });
 
     cy.get('[test-id=1] > text').invoke('attr', 'fill').should('eq', '#cc0000');
 
-    cy.onFocusTopicByText('Mind Mapping');
+    cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeFontColor');
   });
 });

@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-describe('Change topic position', () => {
+describe('Topic Drag and Drop', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');

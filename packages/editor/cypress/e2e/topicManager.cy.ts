@@ -5,7 +5,7 @@ describe('Node manager', () => {
     cy.waitEditorLoaded();
 
     // Select root node ...
-    cy.onFocusTopicByText('Mind Mapping');
+    cy.focusTopicByText('Mind Mapping');
   });
 
   it('shortcut add sibling node', () => {
@@ -18,15 +18,15 @@ describe('Node manager', () => {
     cy.get('body').type('{insert}').type('Child 1 mind Mapping rocks!!').type('{enter}');
     cy.get('body').type('{enter}').type('Child 2 mind Mapping rocks!!').type('{enter}');
 
-    cy.get('[test-id=36] > text > tspan').should('exist');
-    cy.get('[test-id=37] > text > tspan').should('exist');
+    cy.focusTopicById(36);
+    cy.focusTopicById(37);
 
     cy.matchImageSnapshot('addChildNodeSortcut');
   });
 
   it('Delete topic', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
-    cy.onFocusTopicById(36);
+    cy.focusTopicById(36);
     cy.get('body').type('{del}');
 
     cy.get('[test-id=37]').should('not.exist');
@@ -36,19 +36,19 @@ describe('Node manager', () => {
 
   it('undo changes', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
-    cy.get('[data-testid="UndoOutlinedIcon"]').click();
-    cy.get('[test-id=36] > text > tspan').should('exist');
+    cy.triggerUndo();
+    cy.focusTopicById(36);
 
     cy.matchImageSnapshot('undoChange');
   });
 
   it('redo changes', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
-    cy.get('[data-testid="UndoOutlinedIcon"]').click();
-    cy.get('[test-id=36] > text > tspan').should('exist');
+    cy.triggerUndo();
+    cy.focusTopicById(36);
 
-    cy.get('[data-testid="RedoOutlinedIcon"]').click();
-    cy.get('[test-id=36] > text > tspan').should('exist');
+    cy.triggerRedo();
+    cy.focusTopicById(36);
 
     cy.matchImageSnapshot('redoChange');
   });

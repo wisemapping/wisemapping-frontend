@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-import { css } from 'cypress/types/jquery';
-
 describe('Relationship Topics', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
@@ -11,9 +9,10 @@ describe('Relationship Topics', () => {
 
   it('Add Relationship', () => {
     // Create new relationship ...
-    cy.contains('Features').click({ force: true });
-    cy.get(`[aria-label="Add Relationship"]`).click({ multiple: true });
-    cy.onFocusTopicByText('Try it Now!');
+    cy.focusTopicByText('Features');
+    cy.onClickToolbarButton('Add Relationship');
+
+    cy.focusTopicByText('Try it Now!');
 
     cy.get('[test-id="11-15-relationship"]').as('rel');
     cy.get('@rel').click({ force: true });
@@ -28,9 +27,9 @@ describe('Relationship Topics', () => {
 
   it('Delete Relationship', () => {
     // Add new relationship ...
-    cy.contains('Features').first().click({ force: true });
-    cy.get(`[aria-label="Add Relationship"]`).first().click();
-    cy.contains('Try it Now!').first().click();
+    cy.focusTopicByText('Features');
+    cy.onClickToolbarButton('Add Relationship');
+    cy.focusTopicByText('Try it Now!');
 
     // Delete it ...
     cy.get('[test-id="11-15-relationship"]').as('rel');
@@ -43,15 +42,15 @@ describe('Relationship Topics', () => {
     cy.matchImageSnapshot('delete relationship');
 
     // Undo relationship ...
-    cy.get('[aria-label^="Undo ').eq(1).click();
+    cy.triggerUndo();
     cy.get('@rel').should('exist');
   });
 
   it('Change Control Point', () => {
     // Create new relationship ...
-    cy.onFocusTopicByText('Features');
-    cy.get(`[aria-label="Add Relationship"]`).click({ multiple: true });
-    cy.contains('Try it Now!').click();
+    cy.focusTopicByText('Features');
+    cy.onClickToolbarButton('Add Relationship');
+    cy.focusTopicByText('Try it Now!');
 
     // Select relationship ...
     cy.get('[test-id="11-15-relationship"]').as('rel');
@@ -71,8 +70,8 @@ describe('Relationship Topics', () => {
     cy.matchImageSnapshot('move ctl pont 1');
 
     // Test undo and redo ...
-    cy.get('[aria-label^="Undo ').eq(1).click();
-    cy.get('[aria-label^="Undo ').eq(1).click();
+    cy.triggerUndo();
+    cy.triggerUndo();
     cy.get('@rel').should('exist');
     cy.matchImageSnapshot('rel ctl undo');
   });

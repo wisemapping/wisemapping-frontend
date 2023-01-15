@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-describe('Change Topic shape', () => {
+describe('Topic Shape Suite', () => {
   beforeEach(() => {
     cy.visit('/editor.html');
 
@@ -7,16 +7,16 @@ describe('Change Topic shape', () => {
     cy.waitEditorLoaded();
 
     // Select one node ...
-    cy.contains('Try it Now!').click();
+    cy.focusTopicByText('Try it Now!');
   });
 
   it('open shape', () => {
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Topic Style');
     cy.matchImageSnapshot('topicShapePanel');
   });
 
   it('change to square shape', () => {
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Topic Style');
     cy.get(`[aria-label="Rectangle shape"]`).first().click();
 
     cy.get('[test-id=11] > rect')
@@ -26,14 +26,14 @@ describe('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('eq', 0);
 
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeToSquareShape');
   });
 
   it('change to rounded rectangle', () => {
-    cy.contains('Mind Mapping').click();
+    cy.focusTopicByText('Mind Mapping');
 
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Topic Style');
     cy.get(`[aria-label="Rounded shape"]`).first().click();
 
     // Todo: Check how to validate this. Difference when it run in docker vs test:integration
@@ -50,24 +50,22 @@ describe('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('be.lt', 5);
 
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeToRoundedRectangle');
   });
 
   it('change to line', () => {
-    cy.contains('Try it Now!').click();
-
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
+    cy.onMouseOverToolbarButton('Topic Style');
     cy.get(`[aria-label="Line shape"]`).first().click();
 
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeToLine');
   });
 
   it('change to ellipse shape', () => {
-    cy.contains('Productivity').click();
+    cy.focusTopicByText('Productivity');
+    cy.onMouseOverToolbarButton('Topic Style');
 
-    cy.get(`[aria-label="Topic Style"]`).first().trigger('mouseover');
     cy.get(`[aria-label="Ellipse shape"]`).first().click();
 
     // Todo: Check how to validate this. Difference when it run in docker vs test:integration
@@ -84,7 +82,7 @@ describe('Change Topic shape', () => {
       .should('be.a', 'number')
       .should('be.lt', 15);
 
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeToEllipseShape');
   });
 });

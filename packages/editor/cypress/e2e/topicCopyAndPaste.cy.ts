@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
-describe('Edit Topic', () => {
+describe('Topic Copy and Paste Suite', () => {
   beforeEach(() => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
-    cy.onFocusTopicById(2);
+    cy.focusTopicById(2);
   });
 
   it('Copy and Paste', () => {
