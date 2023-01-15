@@ -379,7 +379,7 @@ class Designer extends Events {
   }
 
   async copyToClipboard(): Promise<void> {
-    const enableImageSupport = true;
+    const enableImageSupport = false;
     let topics = this.getModel().filterSelectedTopics();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
