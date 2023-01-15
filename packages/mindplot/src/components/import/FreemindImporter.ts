@@ -77,7 +77,7 @@ export default class FreemindImporter extends Importer {
     this.mindmap.setDescription(description);
     this.mindmap.addBranch(wiseTopic);
 
-    const serialize = XMLSerializerFactory.createInstanceFromMindmap(this.mindmap);
+    const serialize = XMLSerializerFactory.createFromMindmap(this.mindmap);
     const domMindmap = serialize.toXML(this.mindmap);
     const xmlToString = new XMLSerializer().serializeToString(domMindmap);
     const formatXml = xmlFormatter(xmlToString, {

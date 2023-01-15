@@ -49,7 +49,7 @@ class XMLSerializerFactory {
    * @return {mindplot.persistence.XMLSerializer_Beta|mindplot.persistence.XMLSerializer_Pela|
    * mindplot.persistence.XMLSerializer_Tango} serializer corresponding to the mindmap's version
    */
-  static createInstanceFromMindmap(mindmap: Mindmap) {
+  static createFromMindmap(mindmap: Mindmap): XMLMindmapSerializer {
     return XMLSerializerFactory.getSerializer(mindmap.getVersion());
   }
 
@@ -57,7 +57,7 @@ class XMLSerializerFactory {
    * @param domDocument
    * @return serializer corresponding to the mindmap's version
    */
-  static createInstanceFromDocument(domDocument: Document) {
+  static createFromDocument(domDocument: Document): XMLMindmapSerializer {
     const rootElem = domDocument.documentElement;
 
     // Legacy version don't have version defined.
@@ -71,8 +71,6 @@ class XMLSerializerFactory {
    * retrieves the serializer for the mindmap's version and migrates to the current version,
    * e.g. for a Beta mindmap and current version Tango:
    * serializer = new Pela2TangoMigrator(new Beta2PelaMigrator(new XMLSerializer_Beta()))
-   * @param {String} version the version name
-   * @return serializer
    */
   static getSerializer(version = ModelCodeName.TANGO): XMLMindmapSerializer {
     let found = false;

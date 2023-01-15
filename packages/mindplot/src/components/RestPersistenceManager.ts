@@ -80,7 +80,7 @@ class RESTPersistenceManager extends PersistenceManager {
           if (response.ok) {
             events.onSuccess();
           } else {
-            console.log(`Saving error: ${response.status}`);
+            console.error(`Saving error: ${response.status}`);
             let userMsg: PersistenceError | null = null;
             if (response.status === 405) {
               userMsg = {

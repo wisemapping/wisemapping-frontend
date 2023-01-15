@@ -56,6 +56,7 @@ import FeatureType from './model/FeatureType';
 import WidgetManager from './WidgetManager';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
+import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -73,8 +74,6 @@ class Designer extends Events {
   private _dragManager!: DragManager;
 
   private _relPivot: RelationshipPivot;
-
-  private _clipboard: NodeModel[];
 
   private _cleanScreen!: () => void;
 
@@ -129,7 +128,6 @@ class Designer extends Events {
     this._relPivot = new RelationshipPivot(this._workspace, this);
 
     TopicEventDispatcher.configure(this.isReadOnly());
-    this._clipboard = [];
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     globalThis.designer = this;
@@ -381,44 +379,79 @@ class Designer extends Events {
 
   copyToClipboard(): void {
     let topics = this.getModel().filterSelectedTopics();
-    if (topics.length <= 0) {
-      // If there are more than one node selected,
-      $notify($msg('AT_LEAST_ONE_TOPIC_MUST_BE_SELECTED'));
-      return;
+    if (topics.length > 0) {
+      const mindmap = new Mindmap();
+      const central: NodeModel = new NodeModel('CentralTopic', mindmap);
+      mindmap.addBranch(central);
+
+      // Exclude central topic ..
+      topics = topics.filter((topic) => !topic.isCentralTopic());
+      topics.forEach((topic) => {
+        const nodeModel: NodeModel = topic.getModel().deepCopy();
+        nodeModel.connectTo(central);
+      });
+
+      // Serialize to mindmap ...
+      const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+      const document = serializer.toXML(mindmap);
+      const xmmStr: string = new XMLSerializer().serializeToString(document);
+
+      // Convert to node, only text/html is supported...
+      const type = 'text/plain';
+      const blob = new Blob([xmmStr], { type });
+      const clipboard = new ClipboardItem({
+        [blob.type]: blob,
+      });
+
+      // Copy to clipboard ...
+      navigator.clipboard.write([clipboard]).then(
+        () => console.log('Copy of node success'),
+        (e) => console.error(e),
+      );
     }
-
-    // Exclude central topic ..
-    topics = topics.filter((topic) => !topic.isCentralTopic());
-
-    this._clipboard = topics.map((topic) => {
-      const nodeModel = topic.getModel().deepCopy();
-
-      // Change position to make the new topic evident...
-      const pos = nodeModel.getPosition();
-      nodeModel.setPosition(pos.x + 60 * Math.sign(pos.x), pos.y + 30);
-
-      return nodeModel;
-    });
-
-    $notify($msg('SELECTION_COPIED_TO_CLIPBOARD'));
   }
 
-  pasteClipboard(): void {
-    // If the no selection has been made, update with the text on the clipboard.
-    if (this._clipboard.length !== 0) {
-      this._actionDispatcher.addTopics(this._clipboard, null);
-      this._clipboard = [];
-    } else {
-      const topics = this.getModel().filterSelectedTopics();
-      if (topics.length > 0) {
-        navigator.clipboard.readText().then((text) => {
+  async pasteClipboard(): Promise<void> {
+    const type = 'text/plain';
+    const clipboardItems = await navigator.clipboard.read();
+    clipboardItems.forEach(async (item) => {
+      if (item.types.includes(type)) {
+        const blob: Blob = await item.getType(type);
+        const text: string = await blob.text();
+
+        // Is a mindmap ?. Try to infer if it's a text or a map...
+        if (text.indexOf('</map>') !== -1) {
+          const dom = new DOMParser().parseFromString(text, 'application/xml');
+
+          const serializer = XMLSerializerFactory.createFromDocument(dom);
+          const mindmap = serializer.loadFromDom(dom, 'application/xml');
+
+          // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
+          const central = mindmap.getBranches()[0];
+          let children = central.getChildren();
+          children.forEach((c) => c.disconnect());
+          children = children.map((m: NodeModel) => m.deepCopy());
+
+          // Charge position to avoid overlap ...
+          children.forEach((m) => {
+            const pos = m.getPosition();
+            m.setPosition(
+              pos.x * Math.sign(pos.x) + Math.random() * 60,
+              pos.y + Math.random() * 30,
+            );
+          });
+
+          // Finally, add the node ...
+          this._actionDispatcher.addTopics(children, null);
+        } else {
+          const topics = this.getModel().filterSelectedTopics();
           this._actionDispatcher.changeTextToTopic(
             topics.map((t) => t.getId()),
             text.trim(),
           );
-        });
+        }
       }
-    }
+    });
   }
 
   getModel(): DesignerModel {

@@ -38,10 +38,10 @@ abstract class PersistenceManager {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
-    const mapId = mindmap.getId();
+    const mapId = mindmap.getId() || 'WiseMapping';
     $assert(mapId, 'mapId can not be null');
 
-    const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
+    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
     const pref = JSON.stringify(editorProperties);
     try {
@@ -106,7 +106,7 @@ abstract class PersistenceManager {
     $assert(mapId, 'mapId can not be null');
     $assert(mapDom, 'mapDom can not be null');
 
-    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDom);
+    const serializer = XMLSerializerFactory.createFromDocument(mapDom);
     return serializer.loadFromDom(mapDom, mapId);
   }
 }

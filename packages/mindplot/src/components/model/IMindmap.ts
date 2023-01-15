@@ -19,6 +19,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import INodeModel, { NodeModelType as NodeType } from './INodeModel';
+import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 
 abstract class IMindmap {
@@ -30,7 +31,7 @@ abstract class IMindmap {
 
   abstract setDescription(value: string): void;
 
-  abstract getId(): string;
+  abstract getId(): string | undefined;
 
   abstract setId(id: string): void;
 
@@ -38,11 +39,11 @@ abstract class IMindmap {
 
   abstract setVersion(version: string): void;
 
-  abstract addBranch(nodeModel): void;
+  abstract addBranch(nodeModel: INodeModel): void;
 
-  abstract getBranches();
+  abstract getBranches(): NodeModel[];
 
-  abstract removeBranch(node): void;
+  abstract removeBranch(node: INodeModel): void;
 
   abstract getRelationships(): RelationshipModel[];
 

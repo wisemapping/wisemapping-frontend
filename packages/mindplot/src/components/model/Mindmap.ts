@@ -27,16 +27,14 @@ class Mindmap extends IMindmap {
 
   private _version: string;
 
-  private _id: string;
+  private _id: string | undefined;
 
   private _branches: Array<NodeModel>;
 
   private _relationships: Array<RelationshipModel>;
 
-  constructor(id: string, version: string = ModelCodeName.TANGO) {
+  constructor(id?: string, version: string = ModelCodeName.TANGO) {
     super();
-    $assert(id, 'Id can not be null');
-
     this._branches = [];
     this._description = '';
     this._relationships = [];
@@ -54,8 +52,7 @@ class Mindmap extends IMindmap {
     this._description = value;
   }
 
-  /** */
-  getId(): string {
+  getId(): string | undefined {
     return this._id;
   }
 

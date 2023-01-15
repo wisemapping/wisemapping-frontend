@@ -13,7 +13,7 @@ export default class WisemappingImporter extends Importer {
     const parser = new DOMParser();
     const wiseDoc = parser.parseFromString(this.wisemappingInput, 'application/xml');
 
-    const serialize = XMLSerializerFactory.createInstanceFromDocument(wiseDoc);
+    const serialize = XMLSerializerFactory.createFromDocument(wiseDoc);
     const mindmap = serialize.loadFromDom(wiseDoc, nameMap);
 
     mindmap.setDescription(description);

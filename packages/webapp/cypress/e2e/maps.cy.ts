@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Maps Page', () => {
   beforeEach(() => {
     cy.visit('/c/maps');

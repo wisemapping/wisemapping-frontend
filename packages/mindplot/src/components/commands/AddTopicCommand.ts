@@ -30,7 +30,6 @@ class AddTopicCommand extends Command {
    * the mindmap.
    */
   constructor(models: NodeModel[], parentTopicsId: number[] | null) {
-    $assert(models, 'models can not be null');
     $assert(
       parentTopicsId == null || parentTopicsId.length === models.length,
       'parents and models must have the same size',

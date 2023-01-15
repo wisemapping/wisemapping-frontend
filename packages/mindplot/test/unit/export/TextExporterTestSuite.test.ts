@@ -20,7 +20,7 @@ describe('WXML export test execution', () => {
     const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
 
     // Convert to mindmap ...
-    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDocument);
+    const serializer = XMLSerializerFactory.createFromDocument(mapDocument);
     const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
 
     const exporter = TextExporterFactory.create('wxml', mindmap);
@@ -35,7 +35,7 @@ describe('Txt export test execution', () => {
     const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
 
     // Convert to mindmap ...
-    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDocument);
+    const serializer = XMLSerializerFactory.createFromDocument(mapDocument);
     const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
 
     const exporter = TextExporterFactory.create('txt', mindmap);
@@ -50,7 +50,7 @@ describe('MD export test execution', () => {
     const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
 
     // Convert to mindmap ...
-    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDocument);
+    const serializer = XMLSerializerFactory.createFromDocument(mapDocument);
     const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
 
     const exporter = TextExporterFactory.create('md', mindmap);
@@ -65,7 +65,7 @@ describe('MM export test execution', () => {
     const mapDocument = parseXMLFile(mindmapPath, 'text/xml');
 
     // Convert to mindmap...
-    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDocument);
+    const serializer = XMLSerializerFactory.createFromDocument(mapDocument);
     const mindmap: Mindmap = serializer.loadFromDom(mapDocument, testName);
 
     const exporter = TextExporterFactory.create('mm', mindmap);

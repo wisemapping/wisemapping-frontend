@@ -45,7 +45,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Store map attributes ...
     const mapElem = document.createElement('map');
     const name = mindmap.getId();
-    if ($defined(name)) {
+    if (name) {
       mapElem.setAttribute('name', this._rmXmlInv(name));
     }
     const version = mindmap.getVersion();

@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Forgot Password Page', () => {
   beforeEach(() => {
     cy.visit('/c/forgot-password');

@@ -13,7 +13,6 @@
         }
     ],
     "permissions" : [
-        "http://*/*",
         "https://*/*",
         "clipboardRead",
         "clipboardWrite",

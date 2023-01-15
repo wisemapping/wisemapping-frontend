@@ -173,8 +173,9 @@ class MindplotWebComponent extends HTMLElement {
     const persistenceManager = PersistenceManager.getInstance();
 
     // If the map could not be loaded, partial map load could happen.
-    if (mindmap) {
-      persistenceManager.unlockMap(mindmap.getId());
+    const mapId = mindmap.getId();
+    if (mindmap && mapId) {
+      persistenceManager.unlockMap(mapId);
     }
   }
 }
