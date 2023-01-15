@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
 // make matchImageSnapshot() call the real implementation only if CYPRESS_imageSnaphots is set
@@ -17,7 +19,25 @@ if (Cypress.env('imageSnaphots')) {
   );
 }
 
-// https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
-Cypress.Commands.add('getIframeBody', () =>
-  cy.get('iframe').its('0.contentDocument.body').should('not.be.empty').then(cy.wrap),
-);
+Cypress.Commands.add('waitEditorLoaded', () => {
+  // Wait editor ...
+  cy.get('svg > path').should('be.visible');
+  cy.get('[aria-label="vortex-loading"]', { timeout: 120000 }).should('not.exist');
+  cy.clearLocalStorage('welcome-xml');
+
+  // Wait for font ...
+  cy.document().its('fonts.status').should('equal', 'loaded');
+});
+
+Cypress.Commands.add('waitForLoad', () => {
+  cy.document().its('fonts.status').should('equal', 'loaded');
+});
+
+// Mindmap commands ...
+Cypress.Commands.add('onFocusTopicById', (id: number) => {
+  cy.get(`[test-id=${id}]`).click();
+});
+
+Cypress.Commands.add('onFocusTopicByText', (text: string) => {
+  cy.contains(text).click({ force: true });
+});

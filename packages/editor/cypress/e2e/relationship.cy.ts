@@ -13,7 +13,7 @@ describe('Relationship Topics', () => {
     // Create new relationship ...
     cy.contains('Features').click({ force: true });
     cy.get(`[aria-label="Add Relationship"]`).click({ multiple: true });
-    cy.contains('Try it Now!').click();
+    cy.onFocusTopicByText('Try it Now!');
 
     cy.get('[test-id="11-15-relationship"]').as('rel');
     cy.get('@rel').click({ force: true });
@@ -49,7 +49,7 @@ describe('Relationship Topics', () => {
 
   it('Change Control Point', () => {
     // Create new relationship ...
-    cy.contains('Features').click({ force: true });
+    cy.onFocusTopicByText('Features');
     cy.get(`[aria-label="Add Relationship"]`).click({ multiple: true });
     cy.contains('Try it Now!').click();
 

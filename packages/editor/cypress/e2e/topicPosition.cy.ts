@@ -4,9 +4,6 @@ describe('Change topic position', () => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
-
-    // Wait for load complate ...
-    cy.get('[aria-label="vortex-loading"]').should('not.exist');
   });
 
   it('Move up node "Mind Mapping"', () => {

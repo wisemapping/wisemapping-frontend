@@ -4,7 +4,7 @@ describe('Edit Topic', () => {
     // Remove storage for autosave ...
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
-    cy.get('[test-id=2]').click();
+    cy.onFocusTopicById(2);
   });
 
   it('Copy and Paste', () => {

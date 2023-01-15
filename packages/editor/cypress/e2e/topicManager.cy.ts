@@ -5,7 +5,7 @@ describe('Node manager', () => {
     cy.waitEditorLoaded();
 
     // Select root node ...
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.onFocusTopicByText('Mind Mapping');
   });
 
   it('shortcut add sibling node', () => {
@@ -26,7 +26,7 @@ describe('Node manager', () => {
 
   it('Delete topic', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
-    cy.get('[test-id=36]').click();
+    cy.onFocusTopicById(36);
     cy.get('body').type('{del}');
 
     cy.get('[test-id=37]').should('not.exist');

@@ -3864,6 +3864,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cypress-image-snapshot@npm:^3.1.6":
+  version: 3.1.6
+  resolution: "@types/cypress-image-snapshot@npm:3.1.6"
+  checksum: cd0128d330233702095dac1d2b4524c8bab9f9bc4070e27942e3e26e7701ec2f1d90faa7901bf335523160e4b9689eff9f6c192f30c0e90b9b846b8dde310ebc
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.4
   resolution: "@types/eslint-scope@npm:3.7.4"
@@ -4732,6 +4739,7 @@ __metadata:
   dependencies:
     "@formatjs/cli": ^5.1.3
     "@testing-library/react": ^13.4.0
+    "@types/cypress-image-snapshot": ^3.1.6
     "@types/jest": ^29.0.0
     "@wisemapping/mindplot": ^5.0.15
     babel-polyfill: ^6.26.0

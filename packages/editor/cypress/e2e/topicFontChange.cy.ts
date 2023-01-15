@@ -15,8 +15,7 @@ describe('Edit Topic', () => {
   it('Change Main Topic Text', () => {
     cy.get('body').type('New Title Main Topic{enter}');
     cy.get('[test-id=1] > text > tspan').should('have.text', 'New Title Main Topic');
-
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.onFocusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeMainTopicText');
   });
 
@@ -75,7 +74,7 @@ describe('Edit Topic', () => {
 
     cy.get('[test-id=1] > text').invoke('attr', 'fill').should('eq', '#cc0000');
 
-    cy.contains('Mind Mapping').click({ force: true });
+    cy.onFocusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeFontColor');
   });
 });
