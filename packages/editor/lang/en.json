@@ -47,6 +47,9 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Undo"
   },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Icon"
+  },
   "editor-panel.link-panel-title": {
     "defaultMessage": "Link"
   },
@@ -158,9 +161,6 @@
   "icon-picker.show-images": {
     "defaultMessage": "Show images"
   },
-  "editor-panel.icon-title": {
-    "defaultMessage": "Icon"
-  },
   "link.help_text": {
     "defaultMessage": "Address is not valid"
   },
@@ -195,7 +195,7 @@
     "defaultMessage": "Collpase children"
   },
   "shortcut-help-pane.copy-and-text": {
-    "defaultMessage": "Copy and paste topics"
+    "defaultMessage": "Copy and paste topics/Copy mindmap image to clipboard."
   },
   "shortcut-help-pane.delete-topic": {
     "defaultMessage": "Delete topic"

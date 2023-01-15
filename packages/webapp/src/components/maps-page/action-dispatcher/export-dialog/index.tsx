@@ -127,8 +127,10 @@ const ExportDialog = ({
         exporter = TextExporterFactory.create(formatType, mindmap);
         break;
       }
-      default:
-        throw new Error('Unsupported encoding');
+      default: {
+        const exhaustiveCheck: never = formatType;
+        throw new Error(`Unhandled color case: ${exhaustiveCheck}`);
+      }
     }
 
     return exporter.exportAndEncode();

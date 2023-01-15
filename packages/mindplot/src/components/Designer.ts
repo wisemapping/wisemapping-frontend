@@ -57,6 +57,7 @@ import WidgetManager from './WidgetManager';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
+import ImageExpoterFactory from './export/ImageExporterFactory';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -377,7 +378,7 @@ class Designer extends Events {
     }
   }
 
-  copyToClipboard(): void {
+  async copyToClipboard(): Promise<void> {
     let topics = this.getModel().filterSelectedTopics();
     if (topics.length > 0) {
       const mindmap = new Mindmap();
@@ -391,19 +392,34 @@ class Designer extends Events {
         nodeModel.connectTo(central);
       });
 
-      // Serialize to mindmap ...
+      // Create text blob ...
       const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
       const document = serializer.toXML(mindmap);
-      const xmmStr: string = new XMLSerializer().serializeToString(document);
+      const xmlStr: string = new XMLSerializer().serializeToString(document);
+      const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
 
-      // Convert to node, only text/html is supported...
-      const type = 'text/plain';
-      const blob = new Blob([xmmStr], { type });
+      // Create image blob ...
+      const workspace = designer.getWorkSpace();
+      const svgElement = workspace.getSVGElement();
+      const size = { width: window.innerWidth, height: window.innerHeight };
+
+      const imageUrl = ImageExpoterFactory.create(
+        'png',
+        svgElement,
+        size.width,
+        size.height,
+        false,
+      );
+      let imgStr = await imageUrl.exportAndEncode();
+      imgStr = imgStr.replace('octet/stream', 'image/png');
+      const imgBlob = await (await fetch(imgStr)).blob();
+
+      // Finally, add to clipboard ...
       const clipboard = new ClipboardItem({
-        [blob.type]: blob,
+        [textPlainBlob.type]: textPlainBlob,
+        [imgBlob.type]: imgBlob,
       });
 
-      // Copy to clipboard ...
       navigator.clipboard.write([clipboard]).then(
         () => console.log('Copy of node success'),
         (e) => console.error(e),

@@ -44,7 +44,7 @@ class BinaryImageExporter extends Exporter {
   }
 
   export(): Promise<string> {
-    throw new Error('Images can not be exporeted');
+    throw new Error('Images can not be exported');
   }
 
   exportAndEncode(): Promise<string> {

@@ -133,7 +133,7 @@ const KeyboardShorcutsHelp = (): ReactElement => {
             <td>
               <FormattedMessage
                 id="shortcut-help-pane.copy-and-text"
-                defaultMessage="Copy and paste topics"
+                defaultMessage="Copy and paste topics/Copy mindmap image to clipboard."
               />
             </td>
             <td>Ctrl + C / Ctrl + V</td>
