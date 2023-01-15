@@ -57,7 +57,6 @@ import WidgetManager from './WidgetManager';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
-import ImageExpoterFactory from './export/ImageExporterFactory';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -399,25 +398,25 @@ class Designer extends Events {
       const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
 
       // Create image blob ...
-      const workspace = designer.getWorkSpace();
-      const svgElement = workspace.getSVGElement();
-      const size = { width: window.innerWidth, height: window.innerHeight };
+      // const workspace = designer.getWorkSpace();
+      // const svgElement = workspace.getSVGElement();
+      // const size = { width: window.innerWidth, height: window.innerHeight };
 
-      const imageUrl = ImageExpoterFactory.create(
-        'png',
-        svgElement,
-        size.width,
-        size.height,
-        false,
-      );
-      let imgStr = await imageUrl.exportAndEncode();
-      imgStr = imgStr.replace('octet/stream', 'image/png');
-      const imgBlob = await (await fetch(imgStr)).blob();
+      // const imageUrl = ImageExpoterFactory.create(
+      //   'png',
+      //   svgElement,
+      //   size.width,
+      //   size.height,
+      //   false,
+      // );
+      // let imgStr = await imageUrl.exportAndEncode();
+      // imgStr = imgStr.replace('octet/stream', 'image/png');
+      // const imgBlob = await (await fetch(imgStr)).blob();
 
       // Finally, add to clipboard ...
       const clipboard = new ClipboardItem({
         [textPlainBlob.type]: textPlainBlob,
-        [imgBlob.type]: imgBlob,
+        // [imgBlob.type]: imgBlob,
       });
 
       navigator.clipboard.write([clipboard]).then(
