@@ -1,6 +1,8 @@
 const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('../../webpack.common');
 
-module.exports = {
+const prodConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -12,38 +14,11 @@ module.exports = {
     mindplot: './src/index.ts',
     loader: './src/indexLoader.ts',
   },
-  stats: {
-    errorDetails: true,
-  },
   mode: 'production',
-  devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        test: /.(js$)/,
-        use: ['babel-loader'],
-        exclude: [/node_modules/],
-        enforce: 'pre',
-      },
-      {
-        test: /\.(ts)$/,
-        use: 'ts-loader',
-        exclude: '/node_modules/',
-      },
-      {
-        test: /\.(png|svg)$/i,
-        type: 'asset/inline',
-      },
-      {
-        test: /\.css$/,
-        loader: 'css-loader',
-      },
-    ],
-  },
   resolve: {
     alias: {
       '@libraries': path.resolve(__dirname, '../../libraries/'),
     },
-    extensions: ['.js', '.ts', '.json'],
   },
 };
+module.exports = merge(common, prodConfig);

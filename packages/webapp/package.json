@@ -22,11 +22,9 @@
     "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@formatjs/cli": "^2.13.15",
         "@testing-library/cypress": "^8.0.3",
         "@types/testing-library__cypress": "^5.0.8",
         "@welldone-software/why-did-you-render": "^7.0.1",
-        "copy-webpack-plugin": "^7.0.0",
         "cypress": "^12.3.0",
         "cypress-image-snapshot": "^4.0.1"
     },

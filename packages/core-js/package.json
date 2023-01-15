@@ -18,8 +18,5 @@
     "scripts": {
         "build": "webpack --config webpack.prod.js",
         "dev": "webpack --mode development --config webpack.dev.js"
-    },
-    "devDependencies": {
-        "core-js": "^3.15.2"
     }
 }

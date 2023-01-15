@@ -1,5 +1,8 @@
 const path = require('path');
-module.exports = {
+const { merge } = require('webpack-merge');
+const common = require('../../webpack.common');
+
+const prodConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'core.js',
@@ -9,19 +12,8 @@ module.exports = {
     },
   },
   target: 'web',
-  optimization: {
-    usedExports: true,
-  },
-  module: {
-    rules: [
-      {
-        use: 'babel-loader',
-        test: /.js$/,
-        exclude: [/node_modules/],
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.js'],
-  }
+ 
+  
 };
+
+module.exports = merge(common, prodConfig);

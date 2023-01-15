@@ -463,10 +463,7 @@ class Designer extends Events {
           // Charge position to avoid overlap ...
           children.forEach((m) => {
             const pos = m.getPosition();
-            m.setPosition(
-              pos.x * Math.sign(pos.x) + Math.random() * 60,
-              pos.y + Math.random() * 30,
-            );
+            m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
           });
 
           // Finally, add the node ...
