@@ -149,11 +149,11 @@ class ElementPeer {
   }
 
   getStroke() {
-    const vmlStroke = this._native;
-    const color = vmlStroke.getAttribute('stroke');
+    const stoke = this._native;
+    const color = stoke.getAttribute('stroke');
     const dashstyle = this._stokeStyle;
-    const opacity = vmlStroke.getAttribute('stroke-opacity');
-    const width = vmlStroke.getAttribute('stroke-width');
+    const opacity = stoke.getAttribute('stroke-opacity');
+    const width = stoke.getAttribute('stroke-width');
     return {
       color,
       style: dashstyle,
@@ -171,6 +171,28 @@ class ElementPeer {
     }
     if ($defined(style)) {
       this._stokeStyle = style;
+
+      switch (style) {
+        case 'dash':
+          this._native.setAttribute('stroke-dasharray', '5 5');
+          this._native.setAttribute('stroke-linecap', null);
+          break;
+        case 'dot':
+          this._native.setAttribute('stroke-dasharray', '1 8');
+          this._native.setAttribute('stroke-linecap', 'round');
+          break;
+        case 'dashdot':
+        case 'longdash':
+          this._native.setAttribute('stroke-dasharray', '10 5 2');
+          this._native.setAttribute('stroke-linecap', 'round');
+          break;
+        case 'solid':
+          this._native.setAttribute('stroke-dasharray', null);
+          this._native.setAttribute('stroke-linecap', null);
+          break;
+        default:
+          throw new Error(`Unsupported style: ${style}`);
+      }
     }
 
     if ($defined(opacity)) {

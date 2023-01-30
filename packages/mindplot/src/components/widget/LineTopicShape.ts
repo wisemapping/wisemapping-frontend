@@ -15,11 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Line } from '@wisemapping/web2d';
+import { StraightLine } from '@wisemapping/web2d';
 import SizeType from '../SizeType';
 import Topic from '../Topic';
 
-class LineTopicShape extends Line {
+class LineTopicShape extends StraightLine {
   private _size: SizeType | null;
 
   constructor(topic: Topic) {

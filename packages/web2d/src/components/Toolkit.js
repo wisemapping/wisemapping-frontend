@@ -19,7 +19,7 @@ import FontPeer from './peer/svg/FontPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import ElipsePeer from './peer/svg/ElipsePeer';
-import LinePeer from './peer/svg/LinePeer';
+import StraightLinePeer from './peer/svg/StraightPeer';
 import PolyLinePeer from './peer/svg/PolyLinePeer';
 import CurvedLinePeer from './peer/svg/CurvedLinePeer';
 import ArrowPeer from './peer/svg/ArrowPeer';
@@ -40,8 +40,8 @@ class Toolkit {
     return new ElipsePeer();
   }
 
-  static createLine() {
-    return new LinePeer();
+  static createStraightLine() {
+    return new StraightLinePeer();
   }
 
   static createPolyLine() {

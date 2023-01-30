@@ -1,5 +1,5 @@
 import { $assert } from '@wisemapping/core-js';
-import { Group, Rect, Line } from '@wisemapping/web2d';
+import { Group, Rect, StraightLine } from '@wisemapping/web2d';
 import ImageIcon from './ImageIcon';
 
 class IconGroupRemoveTip {
@@ -115,12 +115,12 @@ class IconGroupRemoveTip {
     });
     result.append(innerRect);
 
-    const line = new Line({ stroke: '1 solid white' });
+    const line = new StraightLine({ stroke: '1 solid white' });
     line.setFrom(1, 1);
     line.setTo(9, 9);
     result.append(line);
 
-    const line2 = new Line({ stroke: '1 solid white' });
+    const line2 = new StraightLine({ stroke: '1 solid white' });
     line2.setFrom(1, 9);
     line2.setTo(9, 1);
     result.append(line2);

@@ -12,7 +12,7 @@ const prodConfig = {
     library: {
       type: 'umd',
     },
-  }
+  },
 };
 
 module.exports = merge(common, prodConfig);

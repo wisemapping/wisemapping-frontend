@@ -7,6 +7,9 @@ describe('Topic Icon Suite', () => {
 
   it('Open panel', () => {
     cy.onClickToolbarButton('Add Icon');
+    // Icon images must be loaded. No better solution than wait.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000);
     cy.matchImageSnapshot('icons-pannel');
   });
 
