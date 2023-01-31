@@ -140,7 +140,7 @@ abstract class INodeModel {
     return this.getProperty('shapeType') as TopicShapeType;
   }
 
-  setShapeType(type: string) {
+  setShapeType(type: TopicShapeType | undefined) {
     this.putProperty('shapeType', type);
   }
 
@@ -156,7 +156,7 @@ abstract class INodeModel {
     return this.getProperty('order') as number;
   }
 
-  setFontFamily(fontFamily: string): void {
+  setFontFamily(fontFamily: string | undefined): void {
     this.putProperty('fontFamily', fontFamily);
   }
 
@@ -188,7 +188,7 @@ abstract class INodeModel {
     return this.getProperty('fontColor') as string;
   }
 
-  setFontSize(size: number): void {
+  setFontSize(size: number | undefined): void {
     this.putProperty('fontSize', size);
   }
 

@@ -25,7 +25,6 @@ export type DesignerOptions = {
   mode: EditorRenderMode;
   mapId?: string;
   divContainer: HTMLElement;
-  container: string;
   persistenceManager?: PersistenceManager;
   widgetManager?: WidgetManager;
   saveOnLoad?: boolean;
@@ -40,7 +39,6 @@ class OptionsBuilder {
       mode: 'edition-owner',
       zoom: 0.85,
       saveOnLoad: true,
-      container: 'mindplot',
       locale: 'en',
     };
 

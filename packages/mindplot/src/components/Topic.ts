@@ -1206,7 +1206,7 @@ abstract class Topic extends NodeGraph {
         textShape.setFontName(fontFamily);
 
         const text = this.getText();
-        textShape.setText(text);
+        textShape.setText(text.trim());
 
         // Calculate topic size and adjust elements ...
         const textWidth = textShape.getWidth();

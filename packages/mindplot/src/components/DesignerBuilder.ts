@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import $ from 'jquery';
 import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
@@ -26,14 +25,14 @@ import ReadOnlyWidgetManager from './ReadOnlyWidgetManager';
 let designer: Designer;
 
 export function buildDesigner(options: DesignerOptions): Designer {
-  const divContainer = options.divContainer ? $(options.divContainer) : $(`#${options.container}`);
-  $assert(divContainer, 'container could not be null');
+  const containerElem = options.divContainer;
+  $assert(containerElem, 'container could not be null');
   if (designer) {
     throw new Error('Designer can does not support multiple initializations');
   }
 
   // Register load events ...
-  designer = new Designer(options, divContainer);
+  designer = new Designer(options);
 
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;

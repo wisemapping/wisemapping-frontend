@@ -27,6 +27,7 @@ import emojiToIconMap from './iconToEmoji.json';
 import { LineType } from '../ConnectionLine';
 import { FontWeightType } from '../FontWeightType';
 import { FontStyleType } from '../FontStyleType';
+import { TopicShapeType } from '../model/INodeModel';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -335,7 +336,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (shape) {
       // Fix typo on serialization....
       shape = shape.replace('rectagle', 'rectangle');
-      topic.setShapeType(shape);
+      topic.setShapeType(shape as TopicShapeType);
 
       // Is an image ?
       const image = domElem.getAttribute('image');

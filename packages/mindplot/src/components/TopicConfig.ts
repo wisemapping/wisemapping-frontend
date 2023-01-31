@@ -20,7 +20,7 @@ const CONNECTOR_WIDTH = 6;
 
 const OUTER_SHAPE_ATTRIBUTES = {
   fillColor: 'rgb(252,235,192)',
-  stroke: '1 dot rgb(241,163,39)',
+  stroke: '1 solid rgb(241,163,39)',
   x: 0,
   y: 0,
 };

@@ -28,13 +28,6 @@ import { $msg } from './Messages';
 import DesignerKeyboard from './DesignerKeyboard';
 import LocalStorageManager from './LocalStorageManager';
 
-export type MindplotWebComponentInterface = {
-  id: string;
-  mode: string;
-  ref: object;
-  locale?: string;
-  zoom?: number;
-};
 /**
  * WebComponent implementation for minplot designer.
  * This component is registered as mindplot-component in customElements api. (see https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)
@@ -59,7 +52,7 @@ class MindplotWebComponent extends HTMLElement {
 
     const wrapper = document.createElement('div');
     wrapper.setAttribute('class', 'wise-editor');
-    wrapper.setAttribute('id', 'mindplot');
+    wrapper.setAttribute('id', 'mindplot-div-container');
 
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;
@@ -87,7 +80,7 @@ class MindplotWebComponent extends HTMLElement {
     const persistenceManager = persistence || new LocalStorageManager('map.xml', false, false);
     const mode = editorRenderMode || 'viewonly';
 
-    const mindplodElem = this._shadowRoot.getElementById('mindplot');
+    const mindplodElem = this._shadowRoot.getElementById('mindplot-div-container');
     $assert(mindplodElem, 'Root mindplot element could not be loaded');
 
     const options = DesignerOptionsBuilder.buildOptions({
@@ -95,7 +88,6 @@ class MindplotWebComponent extends HTMLElement {
       mode,
       widgetManager,
       divContainer: mindplodElem!,
-      container: 'mindplot',
       zoom: zoom ? Number.parseFloat(zoom) : 1,
       locale: locale || 'en',
     });

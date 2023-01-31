@@ -26,7 +26,7 @@ import registerTouchHandler from '../../../../libraries/jquery.touchevent';
 registerTouchHandler($);
 
 class ScreenManager {
-  private _divContainer: JQuery;
+  private _divContainer: JQuery<HTMLDivElement>;
 
   private _padding: { x: number; y: number };
 
@@ -34,9 +34,9 @@ class ScreenManager {
 
   private _scale: number;
 
-  constructor(divElement: JQuery) {
+  constructor(divElement: HTMLElement) {
     $assert(divElement, 'can not be null');
-    this._divContainer = divElement;
+    this._divContainer = $(divElement) as JQuery<HTMLDivElement>;
     this._padding = { x: 0, y: 0 };
 
     // Ignore default click event propagation. Prevent 'click' event on drag.
@@ -56,12 +56,12 @@ class ScreenManager {
   }
 
   /**
-   * Return the current visibile area in the browser.
+   * Return the current visible area in the browser.
    */
   getVisibleBrowserSize(): { width: number; height: number } {
     return {
       width: window.innerWidth,
-      height: window.innerHeight - Number.parseInt(this._divContainer.css('top'), 10),
+      height: window.innerHeight,
     };
   }
 

@@ -44,10 +44,12 @@ class NoteIcon extends ImageIcon {
   private _registerEvents(): void {
     this.getElement().setCursor('pointer');
 
-    const manager = WidgetManager.getInstance();
-    manager.createTooltipForNote(this._topic, this._linksModel as NoteModel, this);
-    if (!this._readOnly) {
-      manager.configureEditorForNote(this._topic, this._linksModel as NoteModel, this);
+    if (WidgetManager.isInitialized()) {
+      const manager = WidgetManager.getInstance();
+      manager.createTooltipForNote(this._topic, this._linksModel as NoteModel, this);
+      if (!this._readOnly) {
+        manager.configureEditorForNote(this._topic, this._linksModel as NoteModel, this);
+      }
     }
   }
 

@@ -15,7 +15,14 @@ abstract class WidgetManager {
   };
 
   static getInstance(): WidgetManager {
+    if (!this._instance) {
+      throw new Error('WidgetManager has not been initialized');
+    }
     return this._instance;
+  }
+
+  static isInitialized() {
+    return this._instance !== undefined;
   }
 
   private createTooltip(

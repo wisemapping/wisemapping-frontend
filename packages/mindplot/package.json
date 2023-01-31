@@ -1,49 +1,63 @@
 {
-    "name": "@wisemapping/mindplot",
-    "version": "5.0.19",
-    "description": "WiseMapping - Mindplot Canvas Library",
-    "homepage": "http://www.wisemapping.org/",
-    "directories": {
-        "lib": "src",
-        "test": "__tests__"
-    },
-    "main": "src/index.ts",
-    "files": [
-        "src",
-        "assets",
-        "dist"
-    ],
-    "publishConfig": {
-        "registry": "https://registry.yarnpkg.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
-    },
-    "scripts": {
-        "build": "webpack --config webpack.prod.js",
-        "dev": "webpack serve --config webpack.dev.js",
-        "lint": "eslint src --ext js,ts",
-        "playground": "webpack serve --config webpack.playground.js",
-        "cy:run": "cypress run",
-        "cy:open": "cypress open",
-        "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts ./test/unit/layout/*.js --verbose --silent --detectOpenHandles",
-        "test:integration": "start-server-and-test playground http-get://localhost:8083 cy:run",
-        "test": "yarn test:unit && yarn test:integration"
-    },
-    "dependencies": {
-        "@types/jquery": "^3.5.11",
-        "@wisemapping/core-js": "^0.4.0",
-        "@wisemapping/web2d": "^0.4.0",
-        "emoji-picker-react": "^4.4.3",
-        "jquery": "3.6.0",
-        "lodash": "^4.17.21",
-        "xml-formatter": "^2.6.1"
-    },
-    "devDependencies": {
-        "blob-polyfill": "^6.0.20211015",
-        "cypress": "^12.3.0",
-        "cypress-image-snapshot": "^4.0.1",
-        "mocha": "^9.1.3"
-    }
+  "name": "@wisemapping/mindplot",
+  "version": "5.0.19",
+  "description": "WiseMapping - Mindplot Canvas Library",
+  "homepage": "http://www.wisemapping.org/",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "main": "src/index.ts",
+  "files": [
+    "src",
+    "assets",
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "lint": "eslint src --ext js,ts",
+    "playground": "webpack serve --config webpack.playground.js",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts ./test/unit/layout/*.js --verbose --silent --detectOpenHandles",
+    "test:integration": "start-server-and-test playground http-get://localhost:8083 cy:run",
+    "test": "yarn test:unit && yarn test:integration",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.5.11",
+    "@wisemapping/core-js": "^0.4.0",
+    "@wisemapping/web2d": "^0.4.0",
+    "emoji-picker-react": "^4.4.3",
+    "jquery": "3.6.0",
+    "lodash": "^4.17.21",
+    "xml-formatter": "^2.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@mdx-js/react": "^1.6.22",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-docs": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/html": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-loader": "^8.3.0",
+    "blob-polyfill": "^6.0.20211015",
+    "cypress": "^12.3.0",
+    "cypress-image-snapshot": "^4.0.1",
+    "mocha": "^9.1.3"
+  }
 }

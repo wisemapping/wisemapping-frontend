@@ -15,6 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
+
 import { $assert, $defined } from '@wisemapping/core-js';
 import Point from '@wisemapping/web2d';
 import Messages, { $msg } from './Messages';
@@ -78,22 +80,19 @@ class Designer extends Events {
 
   private _cleanScreen!: () => void;
 
-  constructor(options: DesignerOptions, divElement: JQuery) {
+  constructor(options: DesignerOptions) {
     super();
-    $assert(options, 'options must be defined');
-    $assert(options.zoom, 'zoom must be defined');
-    $assert(divElement, 'divElement must be defined');
-
     // Set up i18n location ...
     console.log(`Editor location: ${options.locale}`);
     Messages.init(options.locale ? options.locale : 'en');
+    const divElem = options.divContainer;
 
     this._options = options;
 
     // Set full div elem render area.The component must fill container size
     // container is responsible for location and size
-    divElement.css('width', '100%');
-    divElement.css('height', '100%');
+    $(divElem).css('width', '100%');
+    $(divElem).css('height', '100%');
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -108,7 +107,7 @@ class Designer extends Events {
     this._model = new DesignerModel(options);
 
     // Init Screen manager..
-    const screenManager = new ScreenManager(divElement);
+    const screenManager = new ScreenManager(divElem);
     this._workspace = new Workspace(screenManager, this._model.getZoom(), this.isReadOnly());
 
     // Init layout manager ...
