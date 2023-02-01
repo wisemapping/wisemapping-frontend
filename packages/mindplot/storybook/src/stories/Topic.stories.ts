@@ -1,6 +1,6 @@
-import createTopic from './Topic';
+import { Story, Meta } from '@storybook/html';
+import createTopic, { TopicArgs } from './Topic';
 
-// More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
   title: 'Mindplot/Topic',
   // More on argTypes: https://storybook.js.org/docs/html/api/argtypes
@@ -22,22 +22,17 @@ export default {
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
   },
-};
+} as Meta;
 
-// More on component templates: https://storybook.js.org/docs/html/writing-stories/introduction#using-args
-const Template = ({ ...args }) => createTopic({ ...args });
+const Template: Story<TopicArgs> = (args: TopicArgs) => createTopic(args);
 
 export const BoderderStyle = Template.bind({});
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 BoderderStyle.args = {
   text: 'Border Style',
-  borderColor: 'red',
+  borderColor: '#52E661',
 };
 
 export const FontStyle = Template.bind({});
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 FontStyle.args = {
   text: 'Font Style',
   fontColor: 'red',
@@ -46,33 +41,39 @@ FontStyle.args = {
 };
 
 export const BackgroundColor = Template.bind({});
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 BackgroundColor.args = {
-  text: 'Background Color Style',
-  backgroundColor: 'red',
+  text: 'Back Color Style',
+  backgroundColor: '#52E661',
 };
 
 export const NoteFeature = Template.bind({});
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 NoteFeature.args = {
   text: 'Note Feature',
   noteText: 'This is great note\nwith two lines',
 };
 
 export const LinkFeature = Template.bind({});
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 LinkFeature.args = {
   text: 'Link Feature',
   linkText: 'https://www.google.com/',
 };
 
 export const IconFeature = Template.bind({});
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 IconFeature.args = {
   text: 'EIcon Feature\n with multi-line',
   eicon: ['❤️', '🌈', '🖇️'],
+};
+
+export const ShapeLine = Template.bind({});
+ShapeLine.args = {
+  text: 'Shape Line',
+  shapeType: 'line',
+  eicon: ['🖇️'],
+};
+
+export const ShapeEllipse = Template.bind({});
+ShapeEllipse.args = {
+  text: 'Shape Ellipse',
+  eicon: ['🌈'],
+  shapeType: 'elipse',
 };

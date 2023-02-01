@@ -55,7 +55,7 @@ class TopicEventDispatcher extends Events {
 
     // Open the new editor ...
     const model = topic.getModel();
-    if (model.getShapeType() !== 'image' && !this._readOnly && eventType === TopicEvent.EDIT) {
+    if (!this._readOnly && eventType === TopicEvent.EDIT) {
       editor.show(topic, textOverwrite);
     } else {
       this.fireEvent(eventType, { model, readOnly: this._readOnly });
@@ -71,6 +71,9 @@ class TopicEventDispatcher extends Events {
   }
 
   static getInstance(): TopicEventDispatcher {
+    if (!this._instance) {
+      throw new Error('Event dispatched has not been initialized');
+    }
     return this._instance;
   }
 }

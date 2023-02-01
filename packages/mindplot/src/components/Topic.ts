@@ -262,8 +262,9 @@ abstract class Topic extends NodeGraph {
 
   getOuterShape(): ElementClass {
     if (!this._outerShape) {
-      const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, 'rounded rectangle');
-      rect.setPosition(-2, -3);
+      const rect = this._buildShape({}, 'rounded rectangle');
+
+      rect.setPosition(-3, -3);
       rect.setOpacity(0);
       this._outerShape = rect;
     }
@@ -520,8 +521,8 @@ abstract class Topic extends NodeGraph {
     let result = model.getBackgroundColor();
 
     if (!result && !this.isCentralTopic()) {
-      const bolderColor = this.getBorderColor();
-      result = ColorUtil.lightenColor(bolderColor, 140);
+      const borderColor = this.getBorderColor();
+      result = ColorUtil.lightenColor(borderColor, 40);
     }
 
     if (!result) {
@@ -632,6 +633,28 @@ abstract class Topic extends NodeGraph {
       eventDispatcher.process(TopicEvent.CLICK, me);
       event.stopPropagation();
     });
+  }
+
+  setOnFocus(focus: boolean) {
+    if (this.isOnFocus() !== focus) {
+      this._onFocus = focus;
+      const outerShape = this.getOuterShape();
+
+      const fillColor = TopicStyle.defaultOuterBackgroundColor(this, focus);
+      const borderColor = TopicStyle.defaultOuterBorderColor(this);
+
+      outerShape.setFill(fillColor);
+      outerShape.setStroke(1, 'solid', borderColor);
+      outerShape.setOpacity(focus ? 1 : 0);
+
+      this.setCursor('move');
+
+      // In any case, always try to hide the editor ...
+      this.closeEditors();
+
+      // Fire event ...
+      this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
+    }
   }
 
   areChildrenShrunken(): boolean {
@@ -975,7 +998,7 @@ abstract class Topic extends NodeGraph {
       const outerShape = this.getOuterShape();
       const innerShape = this.getInnerShape();
 
-      outerShape.setSize(roundedSize.width + 4, roundedSize.height + 6);
+      outerShape.setSize(roundedSize.width + 6, roundedSize.height + 6);
       innerShape.setSize(roundedSize.width, roundedSize.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
@@ -1207,6 +1230,14 @@ abstract class Topic extends NodeGraph {
 
         const text = this.getText();
         textShape.setText(text.trim());
+
+        // Update other shape style ...
+        const outerShape = this.getOuterShape();
+        const outerFillColor = TopicStyle.defaultOuterBackgroundColor(this, this.isOnFocus());
+        const outerBorderColor = TopicStyle.defaultOuterBorderColor(this);
+
+        outerShape.setFill(outerFillColor);
+        outerShape.setStroke(1, 'solid', outerBorderColor);
 
         // Calculate topic size and adjust elements ...
         const textWidth = textShape.getWidth();

@@ -17,7 +17,6 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { ElementClass, Point } from '@wisemapping/web2d';
-import TopicConfig from './TopicConfig';
 import NodeModel from './model/NodeModel';
 import Workspace from './Workspace';
 import DragTopic from './DragTopic';
@@ -33,7 +32,7 @@ abstract class NodeGraph {
 
   private _options: NodeOption;
 
-  private _onFocus: boolean;
+  protected _onFocus: boolean;
 
   private _size: SizeType;
 
@@ -126,26 +125,7 @@ abstract class NodeGraph {
     return this._model.getId();
   }
 
-  setOnFocus(focus: boolean) {
-    if (this._onFocus !== focus) {
-      this._onFocus = focus;
-      const outerShape = this.getOuterShape();
-      if (focus) {
-        outerShape.setFill(TopicConfig.OUTER_SHAPE_ATTRIBUTES_FOCUS.fillColor);
-        outerShape.setOpacity(1);
-      } else {
-        outerShape.setFill(TopicConfig.OUTER_SHAPE_ATTRIBUTES.fillColor);
-        outerShape.setOpacity(0);
-      }
-      this.setCursor('move');
-
-      // In any case, always try to hide the editor ...
-      this.closeEditors();
-
-      // Fire event ...
-      this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
-    }
-  }
+  abstract setOnFocus(focus: boolean): void;
 
   abstract closeEditors(): void;
 

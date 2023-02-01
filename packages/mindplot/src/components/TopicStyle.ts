@@ -21,6 +21,7 @@ import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import { $msg } from './Messages';
 import { TopicShapeType } from './model/INodeModel';
+import ColorUtil from './render/ColorUtil';
 import Topic from './Topic';
 
 type FontStyle = {
@@ -43,8 +44,8 @@ type TopicStyleType = {
 
 const TopicDefaultStyles = {
   CENTRAL_TOPIC: {
-    borderColor: 'rgb(57,113,177)',
-    backgroundColor: 'rgb(80,157,192)',
+    borderColor: '#3971B1',
+    backgroundColor: '#509DC0',
     fontStyle: {
       font: 'Verdana',
       size: 10,
@@ -58,14 +59,14 @@ const TopicDefaultStyles = {
     shapeType: 'rounded rectangle' as TopicShapeType,
   },
   MAIN_TOPIC: {
-    borderColor: 'rgb(2,59,185)',
-    backgroundColor: 'rgb(224,229,239)',
+    borderColor: '#023BB9',
+    backgroundColor: '#E0E5EF',
     fontStyle: {
       font: 'Arial',
       size: 8,
       style: 'normal' as FontStyleType,
       weight: 'normal' as FontWeightType,
-      color: 'rgb(82,92,97)',
+      color: '#525C61',
     },
     connectionStyle: LineType.THICK_CURVED,
     connectionColor: '#495879',
@@ -73,14 +74,14 @@ const TopicDefaultStyles = {
     shapeType: 'line' as TopicShapeType,
   },
   SUB_TOPIC: {
-    borderColor: 'rgb(2,59,185)',
-    backgroundColor: 'rgb(224,229,239)',
+    borderColor: '#96e3ff',
+    backgroundColor: '#96e3ff',
     fontStyle: {
       font: 'Arial',
       size: 6,
       style: 'normal' as FontStyleType,
       weight: 'normal' as FontWeightType,
-      color: 'rgb(82,92,97)',
+      color: '#525C61',
     },
     connectionStyle: LineType.THICK_CURVED,
     connectionColor: '#495879',
@@ -89,14 +90,14 @@ const TopicDefaultStyles = {
   },
 
   ISOLATED_TOPIC: {
-    borderColor: 'rgb(2,59,185)',
-    backgroundColor: 'rgb(224,229,239)',
+    borderColor: '#023BB9',
+    backgroundColor: '#96e3ff',
     fontStyle: {
       font: 'Verdana',
       size: 8,
       style: 'normal' as FontStyleType,
       weight: 'normal' as FontWeightType,
-      color: 'rgb(82,92,97)',
+      color: '#525C61',
     },
     msgKey: 'ISOLATED_TOPIC',
     connectionStyle: LineType.THIN_CURVED,
@@ -134,6 +135,28 @@ class TopicStyle {
 
   static defaultFontStyle(topic: Topic): FontStyle {
     return this._getStyles(topic).fontStyle;
+  }
+
+  static defaultOuterBorderColor(topic: Topic): string {
+    let result: string;
+    if (topic.getShapeType() === 'line') {
+      result = '#F4B82D';
+    } else {
+      const innerBorderColor = topic.getBorderColor();
+      result = ColorUtil.lightenColor(innerBorderColor, 70);
+    }
+    return result;
+  }
+
+  static defaultOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
+    let result: string;
+    if (topic.getShapeType() === 'line') {
+      result = onFocus ? '#F4B82D' : '#FCEBC0';
+    } else {
+      const innerBgColor = topic.getBackgroundColor();
+      result = ColorUtil.lightenColor(innerBgColor, 70);
+    }
+    return result;
   }
 
   static defaultBackgroundColor(topic: Topic): string {
