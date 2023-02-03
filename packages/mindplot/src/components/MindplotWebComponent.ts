@@ -27,6 +27,7 @@ import { $notify } from './widget/ToolbarNotifier';
 import { $msg } from './Messages';
 import DesignerKeyboard from './DesignerKeyboard';
 import LocalStorageManager from './LocalStorageManager';
+import TopicStyle from './TopicStyle';
 
 /**
  * WebComponent implementation for minplot designer.
@@ -52,7 +53,8 @@ class MindplotWebComponent extends HTMLElement {
 
     const wrapper = document.createElement('div');
     wrapper.setAttribute('class', 'wise-editor');
-    wrapper.setAttribute('id', 'mindplot-div-container');
+    wrapper.setAttribute('id', 'mindplot-canvas');
+    wrapper.setAttribute('style', TopicStyle.defaultCanvasCssStyle());
 
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;
@@ -80,7 +82,7 @@ class MindplotWebComponent extends HTMLElement {
     const persistenceManager = persistence || new LocalStorageManager('map.xml', false, false);
     const mode = editorRenderMode || 'viewonly';
 
-    const mindplodElem = this._shadowRoot.getElementById('mindplot-div-container');
+    const mindplodElem = this._shadowRoot.getElementById('mindplot-canvas');
     $assert(mindplodElem, 'Root mindplot element could not be loaded');
 
     const options = DesignerOptionsBuilder.buildOptions({
