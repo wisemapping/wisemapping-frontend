@@ -23,10 +23,13 @@ import ActionDispatcher from './ActionDispatcher';
 import Events from './Events';
 import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
+import EventBus from './layout/EventBus';
 import Topic from './Topic';
 
 class EditorComponent extends Events {
   private _topic: Topic;
+
+  private _oldText: string | undefined;
 
   private _containerElem: JQuery<HTMLElement>;
 
@@ -38,6 +41,7 @@ class EditorComponent extends Events {
     this._containerElem = EditorComponent.buildEditor();
     $('body').append(this._containerElem);
     this.registerEvents(this._containerElem);
+    this._oldText = topic.getText();
   }
 
   private static buildEditor(): JQuery<HTMLElement> {
@@ -48,12 +52,12 @@ class EditorComponent extends Events {
     });
 
     const textareaElem = $('<textarea tabindex="-1" value="" wrap="off" ></textarea>').css({
-      border: '1px gray dashed',
-      background: 'rgba(98, 135, 167, .4)',
+      border: '0px',
+      background: 'rgba(0, 0, 0, 0)',
       outline: '0 none',
       resize: 'none',
       overflow: 'hidden',
-      padding: '2px 0px 2px 4px',
+      padding: '0px 0px 0px 0px',
     });
 
     result.append(textareaElem);
@@ -65,6 +69,9 @@ class EditorComponent extends Events {
     textareaElem.on('keydown', (event) => {
       switch (event.code) {
         case 'Escape':
+          // Revert to previous text ...
+          this._topic.setText(this._oldText);
+          this.resize();
           this.close(false);
           break;
         case 'Enter': {
@@ -99,8 +106,11 @@ class EditorComponent extends Events {
 
     textareaElem.on('keyup', (event) => {
       const text = this.getTextareaElem().val();
+
+      this._topic.setText(text?.toString());
+      this.resize();
+
       this.fireEvent('input', [event, text]);
-      this.adjustEditorSize();
     });
 
     // If the user clicks on the input, all event must be ignored ...
@@ -115,10 +125,18 @@ class EditorComponent extends Events {
     });
   }
 
-  private adjustEditorSize() {
-    const textElem = this.getTextareaElem();
+  private resize() {
+    // Force relayout ...
+    EventBus.instance.fireEvent('forceLayout');
 
+    // Adjust position ...
+    const textShape = this._topic.getOrBuildTextShape();
+    const { top, left } = textShape.getNativePosition();
+    this._containerElem.offset({ top, left });
+
+    const textElem = this.getTextareaElem();
     const lines = this.getTextAreaText().split('\n');
+
     let maxLineLength = 1;
     lines.forEach((line: string) => {
       maxLineLength = Math.max(line.length, maxLineLength);
@@ -134,18 +152,17 @@ class EditorComponent extends Events {
   }
 
   private updateModel() {
-    if (this._topic && this._topic.getText() !== this.getTextAreaText()) {
-      const text = this.getTextAreaText();
-      const topicId = this._topic.getId();
+    const text = this.getTextAreaText();
+    const topicId = this._topic.getId();
 
-      const actionDispatcher = ActionDispatcher.getInstance();
-      try {
-        actionDispatcher.changeTextToTopic([topicId], text);
-      } catch (e) {
-        // Hack: For some reasom, editor seems to end up connected to a deleted node.
-        // More research required.
-        console.error(`Text could not be update -> ${JSON.stringify(e)}`);
-      }
+    const actionDispatcher = ActionDispatcher.getInstance();
+    try {
+      actionDispatcher.changeTextToTopic([topicId], text);
+    } catch (e) {
+      // Hack: For some reasom, editor seems to end up connected to a deleted node.
+      // More research required.
+      console.error(e);
+      console.error(`Text could not be update -> ${JSON.stringify(e)}`);
     }
   }
 
@@ -164,14 +181,7 @@ class EditorComponent extends Events {
 
     // Set editor's initial size
     // Position the editor and set the size...
-    const textShape = topic.getOrBuildTextShape();
     this._containerElem.css('display', 'block');
-
-    let { top, left } = textShape.getNativePosition();
-    // Adjust padding top position ...
-    top -= 4;
-    left -= 4;
-    this._containerElem.offset({ top, left });
 
     // Set editor's initial text. If the text has not been specifed, it will be empty
     const modelText = topic.getModel().getText();
@@ -184,6 +194,8 @@ class EditorComponent extends Events {
       this.positionCursor(textAreaElem, textOverwrite === undefined);
     }
     textAreaElem.trigger('focus');
+
+    this.resize();
   }
 
   private setStyle(fontStyle: {
@@ -222,7 +234,7 @@ class EditorComponent extends Events {
   private setText(text: string): void {
     const textareaElem = this.getTextareaElem();
     textareaElem.val(text);
-    this.adjustEditorSize();
+    this.resize();
   }
 
   private getTextAreaText(): string {
@@ -273,7 +285,7 @@ class MultitTextEditor {
   show(topic: Topic, textOverwrite?: string): void {
     // Is it active ?
     if (this._component) {
-      console.error('Editor was already displayed. Please, clouse it');
+      console.error('Editor was already displayed. Please, close it');
       this._component.close(false);
     }
     // Create a new instance
