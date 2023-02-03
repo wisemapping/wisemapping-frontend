@@ -36,24 +36,24 @@ describe('Node manager', () => {
 
   it('undo changes', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
+    cy.focusTopicByText('Mind Mapping rocks!!');
     cy.triggerUndo();
-    cy.focusTopicById(36);
 
     cy.matchImageSnapshot('undoChange');
   });
 
   it('redo changes', () => {
     cy.get('body').type('{enter}').type('Mind Mapping rocks!!').type('{enter}');
-    cy.triggerUndo();
-    cy.focusTopicById(36);
+    cy.focusTopicByText('Mind Mapping rocks!!');
 
+    cy.triggerUndo();
     cy.triggerRedo();
-    cy.focusTopicById(36);
+    cy.focusTopicByText('Mind Mapping rocks!!');
 
     cy.matchImageSnapshot('redoChange');
   });
 
-  it('Save changes', () => {
+  it('save changes', () => {
     cy.get('body').type('{ctrl}s');
     cy.matchImageSnapshot('saveChagesShortcut');
   });

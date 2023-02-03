@@ -70,8 +70,6 @@ class EditorComponent extends Events {
       switch (event.code) {
         case 'Escape':
           // Revert to previous text ...
-          this._topic.setText(this._oldText);
-          this.resize();
           this.close(false);
           break;
         case 'Enter': {
@@ -253,6 +251,8 @@ class EditorComponent extends Events {
   }
 
   close(update: boolean): void {
+    this._topic.setText(this._oldText);
+
     if (update) {
       this.updateModel();
     }
@@ -261,6 +261,8 @@ class EditorComponent extends Events {
 
     // Restore topoc share visibility ...
     this._topic.getOrBuildTextShape().setVisibility(true);
+
+    this.resize();
   }
 }
 
