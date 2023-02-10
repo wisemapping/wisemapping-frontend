@@ -31,7 +31,9 @@ class EditorComponent extends Events {
 
   private _containerElem: JQuery<HTMLElement>;
 
-  constructor(topic: Topic) {
+  private _onClose: () => void;
+
+  constructor(topic: Topic, onClose: () => void) {
     super();
     this._topic = topic;
 
@@ -40,6 +42,7 @@ class EditorComponent extends Events {
     $('body').append(this._containerElem);
     this.registerEvents(this._containerElem);
     this._oldText = topic.getText();
+    this._onClose = onClose;
   }
 
   private static buildEditor(): JQuery<HTMLElement> {
@@ -64,7 +67,7 @@ class EditorComponent extends Events {
 
   private registerEvents(containerElem: JQuery): void {
     const textareaElem = this.getTextareaElem();
-    textareaElem.on('keydown', (event) => {
+    textareaElem.on('keydown', (event: JQuery.KeyDownEvent) => {
       switch (event.code) {
         case 'Escape':
           // Revert to previous text ...
@@ -96,7 +99,7 @@ class EditorComponent extends Events {
       event.stopPropagation();
     });
 
-    textareaElem.on('keypress', (event: JQuery.Event) => {
+    textareaElem.on('keypress', (event: JQuery.KeyPressEvent) => {
       const c = String.fromCharCode(event.which!);
       const text = this.getTextareaElem().val() + c;
       this._topic.setText(text);
@@ -241,6 +244,7 @@ class EditorComponent extends Events {
   }
 
   close(update: boolean): void {
+    // Revert to all text ...
     this._topic.setText(this._oldText);
 
     if (update) {
@@ -253,6 +257,9 @@ class EditorComponent extends Events {
     this._topic.getOrBuildTextShape().setVisibility(true);
 
     this.resize();
+
+    // Purge ...
+    this._onClose();
   }
 }
 
@@ -281,7 +288,9 @@ class MultitTextEditor {
       this._component.close(false);
     }
     // Create a new instance
-    this._component = new EditorComponent(topic);
+    this._component = new EditorComponent(topic, () => {
+      this._component = null;
+    });
     this._component.show(textOverwrite);
   }
 
