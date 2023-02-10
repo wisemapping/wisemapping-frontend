@@ -15,28 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import AbstractBasicSorter from './AbstractBasicSorter';
+import RootedTreeSet from './RootedTreeSet';
+import Node from './Node';
+import PositionType from '../PositionType';
 
 class SymmetricSorter extends AbstractBasicSorter {
   /**
    * Predict the order and position of a dragged node.
-   *
-   * @param graph The tree set
-   * @param parent The parent of the node
-   * @param node The node
-   * @param position The position of the drag
-   * @param free Free drag or not
-   * @return {*}
    */
-  predict(graph, parent, node, position, free) {
+  predict(graph: RootedTreeSet, parent: Node, node: Node, position: PositionType, free?: boolean) {
     const self = this;
     const rootNode = graph.getRootNode(parent);
 
     // If its a free node...
     if (free) {
-      $assert($defined(position), 'position cannot be null for predict in free positioning');
-      $assert($defined(node), 'node cannot be null for predict in free positioning');
+      $assert(position, 'position cannot be null for predict in free positioning');
+      $assert(node, 'node cannot be null for predict in free positioning');
 
       const direction = this._getRelativeDirection(rootNode.getPosition(), parent.getPosition());
       const limitXPos =
@@ -46,7 +42,7 @@ class SymmetricSorter extends AbstractBasicSorter {
             node.getSize().width / 2 +
             SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
 
-      let xPos;
+      let xPos: number;
       if (direction > 0) {
         xPos = position.x >= limitXPos ? position.x : limitXPos;
       } else {
@@ -72,7 +68,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     }
 
     // If it is a dragged node...
-    $assert($defined(position), 'position cannot be null for predict in dragging');
+    $assert(position, 'position cannot be null for predict in dragging');
     const nodeDirection = this._getRelativeDirection(rootNode.getPosition(), node.getPosition());
     const positionDirection = this._getRelativeDirection(rootNode.getPosition(), position);
     const siblings = graph.getSiblings(node);
@@ -101,12 +97,12 @@ class SymmetricSorter extends AbstractBasicSorter {
     const last = parentChildren[parentChildren.length - 1];
     for (let i = 0; i < parentChildren.length; i++) {
       const parentChild = parentChildren[i];
-      const nodeAfter = i + 1 === parentChild.length ? null : parentChildren[i + 1];
+      const nodeAfter = i + 1 === parentChildren.length ? null : parentChildren[i + 1];
 
       // Fit at the bottom
       if (!nodeAfter && position.y > parentChild.getPosition().y) {
         const order =
-          graph.getParent(node) && graph.getParent(node).getId() === parent.getId()
+          graph.getParent(node) && graph.getParent(node)!.getId() === parent.getId()
             ? last.getOrder()
             : last.getOrder() + 1;
 
@@ -162,7 +158,7 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @param order
    * @throws will throw an error if the order is not strictly continuous
    */
-  insert(treeSet, parent, child, order) {
+  insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void {
     const children = this._getSortedChildren(treeSet, parent);
     $assert(
       order <= children.length,
@@ -181,9 +177,10 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @param treeSet
    * @param node
    * @throws will throw an error if the node is in the wrong position */
-  detach(treeSet, node) {
+  detach(treeSet: RootedTreeSet, node: Node) {
     const parent = treeSet.getParent(node);
-    const children = this._getSortedChildren(treeSet, parent);
+    $assert(parent != null, 'can not detach null parent');
+    const children = this._getSortedChildren(treeSet, parent!);
     const order = node.getOrder();
     $assert(children[order] === node, 'Node seems not to be in the right position');
 
@@ -206,7 +203,7 @@ class SymmetricSorter extends AbstractBasicSorter {
    * value, is null or undefined
    * @return offsets
    */
-  computeOffsets(treeSet, node) {
+  computeOffsets(treeSet: RootedTreeSet, node: Node) {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
 
@@ -257,7 +254,7 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @param node
    * @throws will throw an error if order elements are missing
    */
-  verify(treeSet, node) {
+  verify(treeSet: RootedTreeSet, node: Node) {
     // Check that all is consistent ...
     const children = this._getSortedChildren(treeSet, node);
 
@@ -270,7 +267,7 @@ class SymmetricSorter extends AbstractBasicSorter {
    * @param treeSet
    * @param child
    * @return direction of the given child from its parent or from the root node, if isolated */
-  getChildDirection(treeSet, child) {
+  getChildDirection(treeSet: RootedTreeSet, child: Node) {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(treeSet.getParent(child), 'This should not happen');
 
@@ -281,8 +278,8 @@ class SymmetricSorter extends AbstractBasicSorter {
       result = Math.sign(rootNode.getPosition().x);
     } else {
       // if this is not the case, honor the direction of the parent ...
-      const parent = treeSet.getParent(child);
-      const grandParent = treeSet.getParent(parent);
+      const parent = treeSet.getParent(child)!;
+      const grandParent = treeSet.getParent(parent)!;
       const sorter = grandParent.getSorter();
       result = sorter.getChildDirection(treeSet, parent);
     }
@@ -290,26 +287,17 @@ class SymmetricSorter extends AbstractBasicSorter {
   }
 
   /** @return {String} the print name of this class */
-  toString() {
+  toString(): string {
     return 'Symmetric Sorter';
   }
 
-  _getVerticalPadding() {
+  protected _getVerticalPadding() {
     return SymmetricSorter.INTERNODE_VERTICAL_PADDING;
   }
-}
 
-/**
- * @constant
- * @type {Number}
- * @default
- */
-SymmetricSorter.INTERNODE_VERTICAL_PADDING = 5;
-/**
- * @constant
- * @type {Number}
- * @default
- */
-SymmetricSorter.INTERNODE_HORIZONTAL_PADDING = 30;
+  static INTERNODE_VERTICAL_PADDING = 5;
+
+  static INTERNODE_HORIZONTAL_PADDING = 30;
+}
 
 export default SymmetricSorter;

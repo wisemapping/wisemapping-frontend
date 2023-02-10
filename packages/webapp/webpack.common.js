@@ -27,7 +27,7 @@ const prodConfig = {
     splitChunks: {
       cacheGroups: {
         vendors: {
-          test: /node_modules\/.!(@wisemapping)/,
+          test: /node_modules\/.*/,
           name: 'vendors',
           chunks: 'all',
         },
