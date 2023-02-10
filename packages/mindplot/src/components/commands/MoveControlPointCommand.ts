@@ -40,11 +40,11 @@ class MoveControlPointCommand extends Command {
     const relationship = commandContext.findRelationships([this._modelId])[0];
     const model = relationship.getModel();
 
-    let oldCtlPoint: PositionType;
+    let oldCtlPoint;
     switch (this._ctrIndex) {
       case PivotType.Start:
         oldCtlPoint = model.getSrcCtrlPoint();
-        model.setSrcCtrlPoint(this._controlPoint);
+        model.setSrcCtrlPoint(this._controlPoint!);
         relationship.setIsSrcControlPointCustom(this._controlPoint != null);
         if (this._controlPoint) {
           relationship.setSrcControlPoint(this._controlPoint);
@@ -52,7 +52,7 @@ class MoveControlPointCommand extends Command {
         break;
       case PivotType.End:
         oldCtlPoint = model.getDestCtrlPoint();
-        model.setDestCtrlPoint(this._controlPoint);
+        model.setDestCtrlPoint(this._controlPoint!);
         relationship.setIsDestControlPointCustom(this._controlPoint != null);
         if (this._controlPoint) {
           relationship.setDestControlPoint(this._controlPoint);

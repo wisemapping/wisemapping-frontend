@@ -17,11 +17,11 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-import { Point } from '@wisemapping/web2d';
 // https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
 // https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
 // eslint-disable-next-line import/extensions
-import registerTouchHandler from '../../../../libraries/jquery.touchevent';
+import registerTouchHandler from '../../libraries/jquery.touchevent';
+import PositionType from './PositionType';
 
 registerTouchHandler($);
 
@@ -99,7 +99,7 @@ class ScreenManager {
 
   private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
 
-  getWorkspaceMousePosition(event: MouseEvent | TouchEvent): Point {
+  getWorkspaceMousePosition(event: MouseEvent | TouchEvent): PositionType {
     let x: number | null = null;
     let y: number | null = null;
 
@@ -131,10 +131,10 @@ class ScreenManager {
     y += this._padding.y;
 
     // Remove decimal part..
-    return new Point(x, y);
+    return { x, y };
   }
 
-  getContainer(): JQuery {
+  getContainer(): JQuery<HTMLDivElement> {
     return this._divContainer;
   }
 

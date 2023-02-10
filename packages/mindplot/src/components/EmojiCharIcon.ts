@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Text, Group, ElementClass, Point } from '@wisemapping/web2d';
+import { Text, Group } from '@wisemapping/web2d';
 
 import Icon from './Icon';
 import IconGroup from './IconGroup';
@@ -23,11 +23,12 @@ import SvgIconModel from './model/SvgIconModel';
 import SizeType from './SizeType';
 import Topic from './Topic';
 import ActionDispatcher from './ActionDispatcher';
+import PositionType from './PositionType';
 
 class EmojiCharIcon implements Icon {
-  private element: ElementClass;
+  private _group: Group;
 
-  private _group: IconGroup | null;
+  private _iconGroup: IconGroup | null;
 
   private _iconModel: SvgIconModel;
 
@@ -37,48 +38,48 @@ class EmojiCharIcon implements Icon {
     this._iconModel = iconModel;
     this._topic = topic;
 
-    this.element = new Group({
-      width: 90,
-      height: 90,
+    this._group = new Group({
+      width: 70,
+      height: 70,
       x: 0,
       y: 0,
       coordSizeWidth: 15,
       coordSizeHeight: 15,
-      coordOriginY: 2,
+      coordOriginY: 0,
     });
     const iconText = new Text();
     iconText.setText(iconModel.getIconType());
-    this.element.append(iconText);
+    this._group.append(iconText);
 
     // Add events ...
     if (!readOnly) {
-      this.element.setCursor('pointer');
+      this._group.setCursor('pointer');
     }
-    this._group = null;
+    this._iconGroup = null;
   }
 
-  getElement(): ElementClass {
-    return this.element;
+  getElement(): Group {
+    return this._group;
   }
 
   setGroup(group: IconGroup) {
-    this._group = group;
+    this._iconGroup = group;
   }
 
   getGroup(): IconGroup {
-    return this._group!;
+    return this._iconGroup!;
   }
 
   getSize(): SizeType {
-    return this._group!.getSize();
+    return this._iconGroup!.getSize();
   }
 
-  getPosition(): Point {
-    return this._group!.getPosition();
+  getPosition(): PositionType {
+    return this._iconGroup!.getPosition();
   }
 
   addEvent(type: string, fnc: (e: object) => void): void {
-    this.element.addEvent(type, fnc);
+    this._group.addEvent(type, fnc);
   }
 
   remove() {

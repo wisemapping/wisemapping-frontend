@@ -23,7 +23,7 @@
     ]
   },
   "include": [
-    "src/**/*", "storybook/src/stories",
+    "src/**/*", "storybook/src/stories", "libraries",
   ],
   "exclude": [
     "node_modules"

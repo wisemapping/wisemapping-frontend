@@ -32,7 +32,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     // Store map attributes ...
     const mapElem = document.createElement('map');
     const name = mindmap.getId();
-    if ($defined(name)) {
+    if (name) {
       mapElem.setAttribute('name', name);
     }
     document.append(mapElem);

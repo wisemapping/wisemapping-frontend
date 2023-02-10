@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
 import Rect from '../../../src/components/Rect';
-import Elipse from '../../../src/components/Elipse';
+import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 
 export const createRectangle = ({
@@ -33,7 +33,7 @@ export const createRectangle = ({
   rect.addEvent('click', onClick);
 
   // Add referene point ...
-  const e1 = new Elipse();
+  const e1 = new Ellipse();
   e1.setSize(5, 5);
   e1.setPosition(0, 0);
   e1.setFill('red');

@@ -22,9 +22,10 @@ import PositionType from './PositionType';
 import SizeType from './SizeType';
 import Topic from './Topic';
 import Shape from './util/Shape';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
+import CanvasElement from './CanvasElement';
 
-class DragPivot {
+class DragPivot implements CanvasElement {
   private _position: PositionType;
 
   private _isVisible: boolean;
@@ -95,7 +96,7 @@ class DragPivot {
     // Update Line position.
     const isAtRight = Shape.isAtRight(targetPosition, position);
     const pivotPoint = Shape.calculateRectConnectionPoint(position, size, isAtRight);
-    line.setFrom(pivotPoint.x, pivotPoint.y);
+    line?.setFrom(pivotPoint.x, pivotPoint.y);
 
     // Update rect position
     const cx = position.x - size.width / 2;
@@ -105,7 +106,7 @@ class DragPivot {
     // Make line visible only when the position has been already changed.
     // This solve several strange effects ;)
     const targetPoint = targetTopic!.workoutIncomingConnectionPoint(pivotPoint);
-    line.setTo(targetPoint.x, targetPoint.y);
+    line?.setTo(targetPoint.x, targetPoint.y);
   }
 
   setPosition(point: Point): void {
@@ -113,7 +114,7 @@ class DragPivot {
     this._redrawLine();
   }
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     return this._position;
   }
 
@@ -157,8 +158,8 @@ class DragPivot {
   }
 
   // If the node is connected, validate that there is a line connecting both...
-  _getConnectionLine(): CurvedLine {
-    let result = null;
+  _getConnectionLine(): CurvedLine | null {
+    let result: CurvedLine | null = null;
     const parentTopic = this._targetTopic;
     if (parentTopic) {
       if (parentTopic.getType() === 'CentralTopic') {
@@ -170,7 +171,7 @@ class DragPivot {
     return result;
   }
 
-  addToWorkspace(workspace: Workspace) {
+  addToWorkspace(workspace: Canvas) {
     const pivotRect = this._getPivotRect();
     workspace.append(pivotRect);
 
@@ -196,7 +197,7 @@ class DragPivot {
     connectRect.moveToBack();
   }
 
-  removeFromWorkspace(workspace: Workspace) {
+  removeFromWorkspace(workspace: Canvas) {
     const shape = this._getPivotRect();
     workspace.removeChild(shape);
 
@@ -212,7 +213,7 @@ class DragPivot {
     }
   }
 
-  connectTo(targetTopic: Topic, position: Point) {
+  connectTo(targetTopic: Topic, position: PositionType) {
     $assert(position, 'position can not be null');
     $assert(targetTopic, 'parent can not be null');
 
@@ -242,7 +243,7 @@ class DragPivot {
     this._redrawLine();
   }
 
-  disconnect(workspace: Workspace): void {
+  disconnect(workspace: Canvas): void {
     $assert(workspace, 'workspace can not be null.');
     $assert(this._targetTopic, 'There are not connected topic.');
 

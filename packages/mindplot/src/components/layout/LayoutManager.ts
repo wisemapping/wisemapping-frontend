@@ -111,8 +111,7 @@ class LayoutManager extends Events {
     return this;
   }
 
-  removeNode(id: number) {
-    $assert($defined(id), 'id can not be null');
+  removeNode(id: number): LayoutManager {
     const node = this._treeSet.find(id);
 
     // Is It connected ?
@@ -166,7 +165,7 @@ class LayoutManager extends Events {
     return canvas;
   }
 
-  layout(flush: boolean): LayoutManager {
+  layout(flush?: boolean): LayoutManager {
     // File repositioning ...
     this._layout.layout();
 

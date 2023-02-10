@@ -1,6 +1,6 @@
 import Group from '../../../src/components/Group';
 import Workspace from '../../../src/components/Workspace';
-import Elipse from '../../../src/components/Elipse';
+import Ellipse from '../../../src/components/Ellipse';
 import StraightLine from '../../../src/components/StraightLine';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
@@ -29,7 +29,7 @@ export const Container = () => {
   group.setCoordOrigin(0, 0);
   workspace.append(group);
 
-  const elipse = new Elipse();
+  const elipse = new Ellipse();
   elipse.setSize(200, 200);
   elipse.setPosition(100, 100);
   group.append(elipse);
@@ -78,12 +78,12 @@ export const EventBubbling = (args) => {
   const group = new Group(groupAttributes);
   workspace.append(group);
 
-  const elipseLeft = new Elipse();
+  const elipseLeft = new Ellipse();
   elipseLeft.setSize(200, 200);
   elipseLeft.setPosition(200, 0);
   group.append(elipseLeft);
 
-  const elipseRight = new Elipse();
+  const elipseRight = new Ellipse();
   elipseRight.setSize(200, 200);
   elipseRight.setPosition(0, 0);
   group.append(elipseRight);
@@ -118,7 +118,7 @@ export const Nested = () => {
   groupOuter.setCoordOrigin(0, 0);
   workspace.append(groupOuter);
 
-  const elipseOuter = new Elipse();
+  const elipseOuter = new Ellipse();
   elipseOuter.setSize(200, 200);
   elipseOuter.setPosition(100, 100);
   elipseOuter.setFill('red');
@@ -143,7 +143,7 @@ export const Nested = () => {
   groupInner.setCoordOrigin(0, 0);
   groupOuter.append(groupInner);
 
-  const elipse = new Elipse();
+  const elipse = new Ellipse();
   elipse.setSize(200, 200);
   elipse.setPosition(100, 100);
   groupInner.append(elipse);
@@ -191,7 +191,7 @@ export const CoordSize = () => {
     workspace.setCoordSize(150, 150);
     workspace.setCoordOrigin(-20, -20);
 
-    const elipseOuter = new Elipse();
+    const elipseOuter = new Ellipse();
     elipseOuter.setPosition(50, 50);
     elipseOuter.setSize(100, 100);
     workspace.append(elipseOuter);
@@ -202,7 +202,7 @@ export const CoordSize = () => {
     group.setPosition(25, 25);
     workspace.append(group);
 
-    const elipseInner = new Elipse();
+    const elipseInner = new Ellipse();
     elipseInner.setPosition(50, 50);
     elipseInner.setSize(100, 100);
     elipseInner.setFill('red');
@@ -246,7 +246,7 @@ export const CoordOrigin = () => {
     workspace.setCoordSize(200, 200);
     workspace.setCoordOrigin(-30, -30);
 
-    const elipseOuter = new Elipse();
+    const elipseOuter = new Ellipse();
     elipseOuter.setPosition(50, 50);
     elipseOuter.setSize(100, 100);
     workspace.append(elipseOuter);
@@ -258,7 +258,7 @@ export const CoordOrigin = () => {
     group.setPosition(25, 25);
     workspace.append(group);
 
-    const elipseInner = new Elipse();
+    const elipseInner = new Ellipse();
     elipseInner.setPosition(50, 50);
     elipseInner.setSize(50, 50);
     elipseInner.setFill('red');

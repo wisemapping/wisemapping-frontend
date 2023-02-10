@@ -26,8 +26,8 @@ export default {
 
 const Template: Story<TopicArgs> = (args: TopicArgs) => createTopic(args);
 
-export const BoderderStyle = Template.bind({});
-BoderderStyle.args = {
+export const BorderStyle = Template.bind({});
+BorderStyle.args = {
   text: 'Border Style',
   borderColor: '#52E661',
 };

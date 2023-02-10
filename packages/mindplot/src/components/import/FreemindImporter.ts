@@ -10,7 +10,6 @@ import FreemindEdge from '../export/freemind/Edge';
 import FreemindIcon from '../export/freemind/Icon';
 import FreemindHook from '../export/freemind/Hook';
 import FreemindRichcontent from '../export/freemind/Richcontent';
-import FreemindArrowLink from '../export/freemind/Arrowlink';
 import VersionNumber from '../export/freemind/importer/VersionNumber';
 import FreemindIconConverter from './FreemindIconConverter';
 import NoteModel from '../model/NoteModel';
@@ -28,8 +27,6 @@ export default class FreemindImporter extends Importer {
 
   private nodesmap!: Map<string, NodeModel>;
 
-  private relationship!: Array<RelationshipModel>;
-
   private idDefault = 0;
 
   constructor(map: string) {
@@ -40,7 +37,6 @@ export default class FreemindImporter extends Importer {
   import(nameMap: string, description: string): Promise<string> {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
-    this.relationship = new Array<RelationshipModel>();
 
     const parser = new DOMParser();
     const freemindDoc = parser.parseFromString(this.freemindInput, 'application/xml');
@@ -95,19 +91,19 @@ export default class FreemindImporter extends Importer {
     mapRelaitonship.forEach((relationship: RelationshipModel) => {
       this.fixRelationshipControlPoints(relationship);
 
-      // Fix dest ID
-      const destId: string = relationship.getDestCtrlPoint();
-      const destTopic: NodeModel | undefined = this.nodesmap.get(destId);
-      if (destTopic) {
-        relationship.setDestCtrlPoint(destTopic.getId());
-      }
+      // // Fix dest ID
+      // const destId: string = relationship.getDestCtrlPoint();
+      // const destTopic: NodeModel | undefined = this.nodesmap.get(destId);
+      // if (destTopic) {
+      //   relationship.setDestCtrlPoint(destTopic.getId());
+      // }
 
-      // Fix src ID
-      const srcId: string = relationship.getSrcCtrlPoint();
-      const srcTopic: NodeModel | undefined = this.nodesmap.get(srcId);
-      if (srcTopic) {
-        relationship.setSrcCtrlPoint(srcTopic.getId());
-      }
+      // // Fix src ID
+      // const srcId: string = relationship.getSrcCtrlPoint();
+      // const srcTopic: NodeModel | undefined = this.nodesmap.get(srcId);
+      // if (srcTopic) {
+      //   relationship.setSrcCtrlPoint(srcTopic.getId());
+      // }
 
       mapRelaitonship.push(relationship);
     });
@@ -120,33 +116,33 @@ export default class FreemindImporter extends Importer {
     );
     if (srcTopic && destNode) {
       // Fix x coord
-      const srcCtrlPoint: string = relationship.getSrcCtrlPoint();
+      const srcCtrlPoint = relationship.getSrcCtrlPoint();
       if (srcCtrlPoint) {
         const coords = srcTopic.getPosition();
         if (coords.x < 0) {
           const x = coords.x * -1;
-          relationship.setSrcCtrlPoint(`${x},${coords.y}`);
+          relationship.setSrcCtrlPoint({ x, y: coords.y });
 
           // Fix coord
           if (srcTopic.getOrder() && srcTopic.getOrder() % 2 !== 0) {
             const y = coords.y * -1;
-            relationship.setSrcCtrlPoint(`${coords.x},${y}`);
+            relationship.setSrcCtrlPoint({ x: coords.x, y });
           }
         }
       }
 
-      const destCtrlPoint: string = relationship.getDestCtrlPoint();
+      const destCtrlPoint = relationship.getDestCtrlPoint();
       if (destCtrlPoint) {
         const coords = destNode.getPosition();
 
         if (coords.x < 0) {
           const x = coords.x * -1;
-          relationship.setDestCtrlPoint(`${x},${coords.y}`);
+          relationship.setDestCtrlPoint({ x, y: coords.y });
         }
 
         if (destNode.getOrder() && destNode.getOrder() % 2 !== 0) {
           const y = coords.y * -1;
-          relationship.setDestCtrlPoint(`${coords.x},${y}`);
+          relationship.setDestCtrlPoint({ x: coords.x, y });
         }
       }
     }
@@ -321,38 +317,38 @@ export default class FreemindImporter extends Importer {
         }
       }
 
-      if (child instanceof FreemindArrowLink) {
-        const arrow: FreemindArrowLink = child as FreemindArrowLink;
-        const relationship: RelationshipModel = new RelationshipModel(0, 0);
-        const destId = arrow.getDestination();
+      // if (child instanceof FreemindArrowLink) {
+      //   const arrow: FreemindArrowLink = child as FreemindArrowLink;
+      //   const relationship: RelationshipModel = new RelationshipModel(0, 0);
+      //   const destId = arrow.getDestination();
 
-        relationship.setSrcCtrlPoint(destId);
-        relationship.setDestCtrlPoint(freeParent.getId());
-        const endinclination = arrow.getEndInclination();
-        if (endinclination) {
-          const inclination: Array<string> = endinclination.split(';');
-          relationship.setDestCtrlPoint(`${inclination[0]},${inclination[1]}`);
-        }
+      //   relationship.setSrcCtrlPoint(destId);
+      //   relationship.setDestCtrlPoint(freeParent.getId());
+      //   const endinclination = arrow.getEndInclination();
+      //   if (endinclination) {
+      //     const inclination: Array<string> = endinclination.split(';');
+      //     relationship.setDestCtrlPoint(`${ inclination[0]}, ${ inclination[1]}`);
+      //   }
 
-        const startinclination = arrow.getStartinclination();
-        if (startinclination) {
-          const inclination: Array<string> = startinclination.split(';');
-          relationship.setSrcCtrlPoint(`${inclination[0]},${inclination[1]}`);
-        }
+      //   const startinclination = arrow.getStartinclination();
+      //   if (startinclination) {
+      //     const inclination: Array<string> = startinclination.split(';');
+      //     relationship.setSrcCtrlPoint(`${ inclination[0]}, ${ inclination[1]}`);
+      //   }
 
-        const endarrow = arrow.getEndarrow();
-        if (endarrow) {
-          relationship.setEndArrow(endarrow.toLowerCase() !== 'none');
-        }
+      //   const endarrow = arrow.getEndarrow();
+      //   if (endarrow) {
+      //     relationship.setEndArrow(endarrow.toLowerCase() !== 'none');
+      //   }
 
-        const startarrow = arrow.getStartarrow();
-        if (startarrow) {
-          relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
-        }
+      //   const startarrow = arrow.getStartarrow();
+      //   if (startarrow) {
+      //     relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
+      //   }
 
-        relationship.setLineType(3);
-        this.relationship.push(relationship);
-      }
+      //   relationship.setLineType(3);
+      //   this.relationship.push(relationship);
+      // }
     });
   }
 

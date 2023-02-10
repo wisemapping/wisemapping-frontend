@@ -71,15 +71,15 @@ class ShirinkConnector {
   changeRender(isShrink: boolean) {
     const elipse = this._ellipse;
     if (isShrink) {
-      elipse.setStroke('2', 'solid');
+      elipse.setStroke(2, 'solid');
     } else {
-      elipse.setStroke('1', 'solid');
+      elipse.setStroke(1, 'solid');
     }
     this._isShrink = isShrink;
   }
 
   setColor(color: string) {
-    this._ellipse.setStroke('1', 'solid', color);
+    this._ellipse.setStroke(1, 'solid', color);
     this._ellipse.setFill(ColorUtil.lightenColor(color, 100));
   }
 

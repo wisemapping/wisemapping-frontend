@@ -16,6 +16,8 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { Image } from '@wisemapping/web2d';
+
 import ImageIcon from './ImageIcon';
 import ActionDispatcher from './ActionDispatcher';
 import iconFamily from './model/SvgIconFamily.json';
@@ -54,13 +56,13 @@ class SvgImageIcon extends ImageIcon {
     if (!readOnly) {
       // Icon
       const image = this.getElement();
-      const me = this;
       image.addEvent('click', () => {
         const iconTypeClick = iconModel.getIconType();
         const newIconType = SvgImageIcon._getNextFamilyIconId(iconTypeClick);
         iconModel.setIconType(newIconType);
 
-        me.getElement().setHref(SvgImageIcon.getImageUrl(newIconType));
+        const url = SvgImageIcon.getImageUrl(newIconType);
+        (this.getElement() as Image).setHref(url);
       });
       this.getElement().setCursor('pointer');
     }

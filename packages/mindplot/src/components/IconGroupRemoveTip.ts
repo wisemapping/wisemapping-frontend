@@ -7,7 +7,7 @@ class IconGroupRemoveTip {
 
   private _activeIcon: ImageIcon | null;
 
-  private _widget: Group;
+  private _widget: Group | null;
 
   private _closeTimeoutId;
 
@@ -15,6 +15,7 @@ class IconGroupRemoveTip {
     $assert(group, 'group can not be null');
     this._group = group;
     this._activeIcon = null;
+    this._widget = null;
   }
 
   show(topicId: number, icon: ImageIcon) {
@@ -71,7 +72,9 @@ class IconGroupRemoveTip {
 
       const close = () => {
         this._activeIcon = null;
-        this._group.removeChild(widget);
+        if (widget) {
+          this._group.removeChild(widget);
+        }
         this._widget = null;
         this._closeTimeoutId = null;
       };

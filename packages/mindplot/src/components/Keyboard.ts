@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import $ from 'jquery';
-import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
+import initHotKeyPluggin from '../../libraries/jquery.hotkeys';
 
 // Provides dispatcher of keyevents by key...
 initHotKeyPluggin($);

@@ -15,19 +15,21 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
-import { ElementClass, Point } from '@wisemapping/web2d';
 import NodeModel from './model/NodeModel';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import DragTopic from './DragTopic';
 import LayoutManager from './layout/LayoutManager';
 import SizeType from './SizeType';
+import PositionType from './PositionType';
+import CanvasElement from './CanvasElement';
 
 export type NodeOption = {
   readOnly: boolean;
 };
 
-abstract class NodeGraph {
+abstract class NodeGraph implements CanvasElement {
   private _mouseEvents: boolean;
 
   private _options: NodeOption;
@@ -38,7 +40,7 @@ abstract class NodeGraph {
 
   private _model: NodeModel;
 
-  private _elem2d: ElementClass;
+  private _elem2d: Group | undefined;
 
   constructor(nodeModel: NodeModel, options: NodeOption) {
     $assert(nodeModel, 'model can not be null');
@@ -49,6 +51,10 @@ abstract class NodeGraph {
     this._onFocus = false;
     this._size = { width: 50, height: 20 };
   }
+
+  abstract addToWorkspace(workspace: Canvas): void;
+
+  abstract removeFromWorkspace(workspace: Canvas): void;
 
   isReadOnly(): boolean {
     return this._options.readOnly;
@@ -64,15 +70,18 @@ abstract class NodeGraph {
     this.getModel().setId(id);
   }
 
-  protected _set2DElement(elem2d: ElementClass) {
+  protected _set2DElement(elem2d: Group) {
     this._elem2d = elem2d;
   }
 
-  get2DElement(): ElementClass {
+  get2DElement(): Group {
+    if (!this._elem2d) {
+      throw new Error('Eleemnt has not been initialized.');
+    }
     return this._elem2d;
   }
 
-  abstract setPosition(point, fireEvent): void;
+  abstract setPosition(point: PositionType, fireEvent): void;
 
   /** */
   addEvent(type: string, listener) {
@@ -81,13 +90,13 @@ abstract class NodeGraph {
   }
 
   /** */
-  removeEvent(type, listener) {
+  removeEvent(type: string, listener) {
     const elem = this.get2DElement();
     elem.removeEvent(type, listener);
   }
 
   /** */
-  fireEvent(type, event) {
+  fireEvent(type: string, event) {
     const elem = this.get2DElement();
     elem.trigger(type, event);
   }
@@ -131,26 +140,26 @@ abstract class NodeGraph {
 
   abstract setCursor(type: string): void;
 
-  abstract getOuterShape(): ElementClass;
+  abstract getOuterShape(): ElementClass<ElementPeer>;
 
   isOnFocus(): boolean {
     return this._onFocus;
   }
 
-  dispose(workspace: Workspace) {
+  dispose(workspace: Canvas) {
     this.setOnFocus(false);
     workspace.removeChild(this);
   }
 
   createDragNode(layoutManager: LayoutManager): DragTopic {
-    const dragShape = this._buildDragShape();
+    const dragShape = this.buildDragShape();
 
     return new DragTopic(dragShape, this, layoutManager);
   }
 
-  abstract _buildDragShape();
+  abstract buildDragShape();
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     const model = this.getModel();
     return model.getPosition();
   }

@@ -58,7 +58,7 @@ abstract class INodeModel {
       this.putProperty('id', newId);
     } else {
       if (id > INodeModel._nextUuid) {
-        $assert(Number.isFinite(id));
+        $assert(Number.isFinite(id), `value is not a number ${id}`);
         INodeModel._nextUuid = id;
       }
       this.putProperty('id', id);

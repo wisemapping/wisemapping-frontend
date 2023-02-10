@@ -19,10 +19,10 @@ import { $assert } from '@wisemapping/core-js';
 import DragTopic from './DragTopic';
 import EventBusDispatcher from './layout/EventBusDispatcher';
 import Topic from './Topic';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 
 class DragManager {
-  private _workspace: Workspace;
+  private _workspace: Canvas;
 
   private _isDragInProcess: boolean;
 
@@ -34,7 +34,7 @@ class DragManager {
 
   private _mouseUpListener;
 
-  constructor(workspace: Workspace, eventDispatcher: EventBusDispatcher) {
+  constructor(workspace: Canvas, eventDispatcher: EventBusDispatcher) {
     this._workspace = workspace;
     this._listeners = {};
     this._isDragInProcess = false;
@@ -81,7 +81,7 @@ class DragManager {
   }
 
   protected buildMouseMoveListener(
-    workspace: Workspace,
+    workspace: Canvas,
     dragNode: DragTopic,
     dragManager: DragManager,
   ): (event: MouseEvent) => void {
@@ -115,7 +115,7 @@ class DragManager {
   }
 
   protected _buildMouseUpListener(
-    workspace: Workspace,
+    workspace: Canvas,
     dragNode: DragTopic,
     dragManager: DragManager,
   ) {

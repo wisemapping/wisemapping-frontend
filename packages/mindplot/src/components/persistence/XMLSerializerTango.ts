@@ -222,13 +222,19 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const lineType = relationship.getLineType();
     result.setAttribute('lineType', lineType.toString());
-    if ($defined(relationship.getSrcCtrlPoint())) {
-      const srcPoint = relationship.getSrcCtrlPoint();
-      result.setAttribute('srcCtrlPoint', `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`);
+    const strCtrlPoint = relationship.getSrcCtrlPoint();
+    if (strCtrlPoint) {
+      result.setAttribute(
+        'srcCtrlPoint',
+        `${Math.round(strCtrlPoint.x)},${Math.round(strCtrlPoint.y)}`,
+      );
     }
-    if ($defined(relationship.getDestCtrlPoint())) {
-      const destPoint = relationship.getDestCtrlPoint();
-      result.setAttribute('destCtrlPoint', `${Math.round(destPoint.x)},${Math.round(destPoint.y)}`);
+    const destCtrPoint = relationship.getDestCtrlPoint();
+    if (destCtrPoint) {
+      result.setAttribute(
+        'destCtrlPoint',
+        `${Math.round(destCtrPoint.x)},${Math.round(destCtrPoint.y)}`,
+      );
     }
     result.setAttribute('endArrow', String(relationship.getEndArrow()));
     result.setAttribute('startArrow', String(relationship.getStartArrow()));
@@ -518,20 +524,20 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const model = mindmap.createRelationship(srcId, destId);
     model.setLineType(lineType);
     if (srcCtrlPoint) {
-      const spoint = Point.fromString(srcCtrlPoint);
-      if (spoint) {
+      try {
+        const spoint = Point.fromString(srcCtrlPoint);
         model.setSrcCtrlPoint(spoint);
-      } else {
-        console.error(`srcCtrlPoint could not be parsed: ${srcCtrlPoint}`);
+      } catch (e) {
+        console.error(e);
       }
     }
 
     if (destCtrlPoint) {
-      const dpoint = Point.fromString(destCtrlPoint);
-      if (dpoint) {
+      try {
+        const dpoint = Point.fromString(destCtrlPoint);
         model.setDestCtrlPoint(dpoint);
-      } else {
-        console.error(`destCtrlPoint could not be parsed: ${destCtrlPoint}`);
+      } catch (e) {
+        console.error(e);
       }
     }
 

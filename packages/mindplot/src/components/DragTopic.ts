@@ -16,17 +16,19 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { Point, ElementClass } from '@wisemapping/web2d';
+import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
 
 import ActionDispatcher from './ActionDispatcher';
 import DragPivot from './DragPivot';
 import LayoutManager from './layout/LayoutManager';
 import NodeGraph from './NodeGraph';
+import PositionType from './PositionType';
 import Topic from './Topic';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
+import CanvasElement from './CanvasElement';
 
 class DragTopic {
-  private _elem2d: ElementClass;
+  private _elem2d: Group;
 
   private _order: number | null;
 
@@ -34,23 +36,19 @@ class DragTopic {
 
   private _layoutManager: LayoutManager;
 
-  private _position: Point;
+  private _position: PositionType;
 
   private _isInWorkspace: boolean;
 
   static _dragPivot: DragPivot = new DragPivot();
 
-  constructor(dragShape: ElementClass, draggedNode: NodeGraph, layoutManger: LayoutManager) {
-    $assert(dragShape, 'Rect can not be null.');
-    $assert(draggedNode, 'draggedNode can not be null.');
-    $assert(layoutManger, 'layoutManger can not be null.');
-
+  constructor(dragShape: Group, draggedNode: NodeGraph, layoutManger: LayoutManager) {
     this._elem2d = dragShape;
     this._order = null;
     this._draggedNode = draggedNode;
     this._layoutManager = layoutManger;
     this._isInWorkspace = false;
-    this._position = new Point(0, 0);
+    this._position = { x: 0, y: 0 };
   }
 
   setOrder(order: number): void {
@@ -97,11 +95,11 @@ class DragTopic {
     return dragPivot.isVisible();
   }
 
-  getInnerShape(): ElementClass {
+  getInnerShape(): ElementClass<ElementPeer> {
     return this._elem2d;
   }
 
-  disconnect(workspace: Workspace) {
+  disconnect(workspace: Canvas) {
     // Clear connection line ...
     const dragPivot = this._getDragPivot();
     dragPivot.disconnect(workspace);
@@ -128,7 +126,7 @@ class DragTopic {
     return this._draggedNode as Topic;
   }
 
-  removeFromWorkspace(workspace: Workspace) {
+  removeFromWorkspace(workspace: Canvas) {
     if (this._isInWorkspace) {
       // Remove drag shadow.
       workspace.removeChild(this._elem2d);
@@ -146,7 +144,7 @@ class DragTopic {
     return this._isInWorkspace;
   }
 
-  addToWorkspace(workspace: Workspace) {
+  addToWorkspace(workspace: Canvas) {
     if (!this._isInWorkspace) {
       workspace.append(this._elem2d);
       const dragPivot = this._getDragPivot();
@@ -159,7 +157,7 @@ class DragTopic {
     return DragTopic._dragPivot;
   }
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     return this._position;
   }
 
@@ -167,7 +165,7 @@ class DragTopic {
     return true;
   }
 
-  applyChanges(workspace: Workspace) {
+  applyChanges(workspace: Canvas) {
     $assert(workspace, 'workspace can not be null');
 
     const actionDispatcher = ActionDispatcher.getInstance();
@@ -205,9 +203,9 @@ class DragTopic {
     return false;
   }
 
-  static init(workspace: Workspace) {
+  static init(workspace: Canvas) {
     $assert(workspace, 'workspace can not be null');
-    const pivot = DragTopic._dragPivot;
+    const pivot: CanvasElement = DragTopic._dragPivot;
     workspace.append(pivot);
   }
 }

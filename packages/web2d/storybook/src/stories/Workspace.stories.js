@@ -1,5 +1,5 @@
 import Workspace from '../../../src/components/Workspace';
-import Elipse from '../../../src/components/Elipse';
+import Ellipse from '../../../src/components/Ellipse';
 
 // More on default export: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 export default {
@@ -14,7 +14,7 @@ export const Visibility = () => {
 
   const overflowWorkspace = new Workspace();
   overflowWorkspace.setSize('400px', '400px');
-  const elipse1 = new Elipse();
+  const elipse1 = new Ellipse();
   elipse1.setSize(300, 300);
   elipse1.setPosition(0, 0);
   overflowWorkspace.append(elipse1);
@@ -47,7 +47,7 @@ export const Position = () => {
   const workPosition = new Workspace();
   workPosition.setSize('400px', '400px');
 
-  const elipse = new Elipse(elipseAttr);
+  const elipse = new Ellipse(elipseAttr);
   workPosition.append(elipse);
   workPosition.addItAsChildTo(div);
 
@@ -69,23 +69,23 @@ export const CoordsSize = (args) => {
     workspace.setSize('100px', '100px');
     workspace.setCoordSize(width, height);
 
-    let elipse = new Elipse();
+    let elipse = new Ellipse();
     elipse.setPosition(50, 50);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(0, 0);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(0, 100);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(100, 0);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(100, 100);
     workspace.append(elipse);
     return workspace;
@@ -147,27 +147,27 @@ export const CoordsOrigin = (args) => {
     workspace.setCoordSize(100, 100);
     workspace.setCoordOrigin(x, y);
 
-    let elipse = new Elipse();
+    let elipse = new Ellipse();
     elipse.setPosition(0, 0);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(0, 100);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(100, 0);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(100, 100);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(50, 50);
     workspace.append(elipse);
 
-    elipse = new Elipse();
+    elipse = new Ellipse();
     elipse.setPosition(100, 100);
     workspace.append(elipse);
 

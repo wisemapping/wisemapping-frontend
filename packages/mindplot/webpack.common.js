@@ -15,10 +15,5 @@ const prodConfig = {
     loader: './src/indexLoader.ts',
   },
   mode: 'production',
-  resolve: {
-    alias: {
-      '@libraries': path.resolve(__dirname, '../../libraries/'),
-    },
-  },
 };
 module.exports = merge(common, prodConfig);

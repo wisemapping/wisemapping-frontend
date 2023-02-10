@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
-import Elipse from '../../../src/components/Elipse';
+import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 
 export const createEllipse = ({
@@ -19,7 +19,7 @@ export const createEllipse = ({
   workspace.setCoordSize(300, 300);
   workspace.setCoordOrigin(-150, -150);
 
-  const rect = new Elipse(arc);
+  const rect = new Ellipse(arc);
   rect.setFill(backgroundColor);
 
   const parsedSize = JSON.parse(size);
@@ -32,7 +32,7 @@ export const createEllipse = ({
   rect.addEvent('click', onClick);
 
   // Add referene point ...
-  const e1 = new Elipse();
+  const e1 = new Ellipse();
   e1.setSize(5, 5);
   e1.setPosition(0, 0);
   e1.setFill('red');

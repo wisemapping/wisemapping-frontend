@@ -16,13 +16,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $defined } from '@wisemapping/core-js';
+import { FontStyle } from '@wisemapping/web2d/src/components/peer/svg/FontPeer';
 import $ from 'jquery';
 
 import ActionDispatcher from './ActionDispatcher';
 import Events from './Events';
-import { FontStyleType } from './FontStyleType';
-import { FontWeightType } from './FontWeightType';
 import EventBus from './layout/EventBus';
 import Topic from './Topic';
 
@@ -98,32 +96,29 @@ class EditorComponent extends Events {
       event.stopPropagation();
     });
 
-    textareaElem.on('keypress', (event) => {
-      event.stopPropagation();
-    });
-
-    textareaElem.on('keyup', (event) => {
-      const text = this.getTextareaElem().val();
-
-      this._topic.setText(text?.toString());
-      this.resize();
+    textareaElem.on('keypress', (event: JQuery.Event) => {
+      const c = String.fromCharCode(event.which!);
+      const text = this.getTextareaElem().val() + c;
+      this._topic.setText(text);
+      this.resize(text);
 
       this.fireEvent('input', [event, text]);
+      event.stopPropagation();
     });
 
     // If the user clicks on the input, all event must be ignored ...
-    containerElem.on('click', (event) => {
+    containerElem.on('click', (event: JQuery.Event) => {
       event.stopPropagation();
     });
-    containerElem.on('dblclick', (event) => {
+    containerElem.on('dblclick', (event: JQuery.Event) => {
       event.stopPropagation();
     });
-    containerElem.on('mousedown', (event) => {
+    containerElem.on('mousedown', (event: JQuery.Event) => {
       event.stopPropagation();
     });
   }
 
-  private resize() {
+  private resize(text?: string) {
     // Force relayout ...
     EventBus.instance.fireEvent('forceLayout');
 
@@ -132,8 +127,9 @@ class EditorComponent extends Events {
     const { top, left } = textShape.getNativePosition();
     this._containerElem.offset({ top, left });
 
+    const textValue = text || this.getTextAreaText();
     const textElem = this.getTextareaElem();
-    const lines = this.getTextAreaText().split('\n');
+    const lines = textValue.split('\n');
 
     let maxLineLength = 1;
     lines.forEach((line: string) => {
@@ -175,6 +171,7 @@ class EditorComponent extends Events {
     const fontStyle = nodeText.getFontStyle();
     fontStyle.size = nodeText.getHtmlFontSize();
     fontStyle.color = nodeText.getColor();
+
     this.setStyle(fontStyle);
 
     // Set editor's initial size
@@ -192,17 +189,9 @@ class EditorComponent extends Events {
       this.positionCursor(textAreaElem, textOverwrite === undefined);
     }
     textAreaElem.trigger('focus');
-
-    this.resize();
   }
 
-  private setStyle(fontStyle: {
-    fontFamily: string;
-    style: FontStyleType;
-    weight: FontWeightType;
-    size: number;
-    color: string;
-  }) {
+  private setStyle(fontStyle: FontStyle) {
     const inputField = this.getTextareaElem();
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     if (!fontStyle.fontFamily) {
@@ -214,25 +203,26 @@ class EditorComponent extends Events {
     if (!fontStyle.weight) {
       fontStyle.weight = 'normal';
     }
-    if (!$defined(fontStyle.size)) {
-      fontStyle.size = 12;
-    }
+
     /* eslint-enable no-param-reassign */
-    const style = {
-      fontSize: `${fontStyle.size}px`,
-      fontFamily: fontStyle.fontFamily,
-      fontStyle: fontStyle.style,
-      fontWeight: fontStyle.weight,
-      color: fontStyle.color,
+    const cssStyle = {
+      'font-size': `${fontStyle.size}px`,
+      'font-family': fontStyle.fontFamily,
+      'font-style': fontStyle.style,
+      'font-weight': fontStyle.weight,
+      color: fontStyle.color!,
     };
-    inputField.css(style);
-    this._containerElem.css(style);
+    inputField.css(cssStyle);
+    this._containerElem.css(cssStyle);
   }
 
   private setText(text: string): void {
     const textareaElem = this.getTextareaElem();
     textareaElem.val(text);
-    this.resize();
+
+    this._topic.setText(text);
+
+    this.resize(text);
   }
 
   private getTextAreaText(): string {

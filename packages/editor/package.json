@@ -3,6 +3,7 @@
   "version": "0.4.2",
   "main": "dist/editor.bundle.js",
   "scripts": {
+    "bootstrap": "yalc publish;yalc add @wisemapping/mindplot",
     "build": "webpack --config webpack.prod.js",
     "playground": "webpack serve --config webpack.playground.js",
     "cy:run": "cypress run",

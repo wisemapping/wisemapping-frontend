@@ -16,19 +16,19 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { Point } from '@wisemapping/web2d';
 import DesignerModel from './DesignerModel';
 import DragTopic from './DragTopic';
 import SizeType from './SizeType';
 import Topic from './Topic';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
+import PositionType from './PositionType';
 
 class DragConnector {
   private _designerModel: DesignerModel;
 
-  private _workspace: Workspace;
+  private _workspace: Canvas;
 
-  constructor(designerModel: DesignerModel, workspace: Workspace) {
+  constructor(designerModel: DesignerModel, workspace: Canvas) {
     $assert(designerModel, 'designerModel can not be null');
     $assert(workspace, 'workspace can not be null');
 
@@ -114,7 +114,7 @@ class DragConnector {
   private _proximityWeight(
     isAligned: boolean,
     target: Topic,
-    sPos: Point,
+    sPos: PositionType,
     currentConnection: Topic,
   ): number {
     const tPos = target.getPosition();
@@ -128,8 +128,8 @@ class DragConnector {
 
   private _isVerticallyAligned(
     targetSize: SizeType,
-    targetPosition: Point,
-    sourcePosition: Point,
+    targetPosition: PositionType,
+    sourcePosition: PositionType,
   ): boolean {
     return Math.abs(sourcePosition.y - targetPosition.y) < targetSize.height / 2;
   }

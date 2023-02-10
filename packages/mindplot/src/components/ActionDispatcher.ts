@@ -18,7 +18,6 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
 import { PivotType } from './RelationshipControlPoints';
@@ -51,12 +50,12 @@ abstract class ActionDispatcher extends Events {
 
   abstract dragTopic(
     topicId: number,
-    position: Point,
+    position: PositionType,
     order: number | null,
     parentTopic: Topic | null,
   ): void;
 
-  abstract moveTopic(topicId: number, position: Point): void;
+  abstract moveTopic(topicId: number, position: PositionType): void;
 
   abstract moveControlPoint(
     model: RelationshipModel,

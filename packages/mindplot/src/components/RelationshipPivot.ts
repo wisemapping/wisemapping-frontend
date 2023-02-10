@@ -15,16 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { CurvedLine, Arrow, Point } from '@wisemapping/web2d';
-import { $assert } from '@wisemapping/core-js';
+import { CurvedLine, Arrow } from '@wisemapping/web2d';
 import Relationship from './Relationship';
 import Shape from './util/Shape';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import { Designer } from '..';
 import Topic from './Topic';
+import PositionType from './PositionType';
 
 class RelationshipPivot {
-  private _workspace: Workspace;
+  private _canvas: Canvas;
 
   private _designer: Designer;
 
@@ -36,29 +36,26 @@ class RelationshipPivot {
 
   private _sourceTopic: Topic | null;
 
-  private _pivot: CurvedLine;
+  private _pivot: CurvedLine | null;
 
-  private _startArrow: Arrow;
+  private _startArrow: Arrow | null;
 
-  constructor(workspace: Workspace, designer: Designer) {
-    $assert(workspace, 'workspace can not be null');
-    $assert(designer, 'designer can not be null');
-    this._workspace = workspace;
+  constructor(canvas: Canvas, designer: Designer) {
+    this._canvas = canvas;
     this._designer = designer;
 
     this._mouseMoveEvent = this.mouseMoveHandler.bind(this);
     this._onClickEvent = this.cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
     this._sourceTopic = null;
+    this._pivot = null;
+    this._startArrow = null;
   }
 
-  start(sourceTopic: Topic, targetPos: Point) {
-    $assert(sourceTopic, 'sourceTopic can not be null');
-    $assert(targetPos, 'targetPos can not be null');
-
+  start(sourceTopic: Topic, targetPos: PositionType): void {
     this.dispose();
     this._sourceTopic = sourceTopic;
-    this._workspace.enableWorkspaceEvents(false);
+    this._canvas.enableWorkspaceEvents(false);
 
     const sourcePos = sourceTopic.getPosition();
     const strokeColor = Relationship.getStrokeColor();
@@ -76,11 +73,11 @@ class RelationshipPivot {
     this._startArrow.setStrokeWidth(2);
     this._startArrow.setFrom(sourcePos.x, sourcePos.y);
 
-    this._workspace.append(this._pivot);
-    this._workspace.append(this._startArrow);
+    this._canvas.append(this._pivot);
+    this._canvas.append(this._startArrow);
 
-    this._workspace.addEvent('mousemove', this._mouseMoveEvent);
-    this._workspace.addEvent('click', this._onClickEvent);
+    this._canvas.addEvent('mousemove', this._mouseMoveEvent);
+    this._canvas.addEvent('click', this._onClickEvent);
 
     // Register focus events on all topics ...
     const model = this._designer.getModel();
@@ -91,7 +88,7 @@ class RelationshipPivot {
   }
 
   dispose(): void {
-    const workspace = this._workspace;
+    const workspace = this._canvas;
 
     if (this._isActive()) {
       workspace.removeEvent('mousemove', this._mouseMoveEvent);
@@ -104,8 +101,12 @@ class RelationshipPivot {
         topic.removeEvent('ontfocus', this._onTopicClick);
       });
 
-      workspace.removeChild(this._pivot);
-      workspace.removeChild(this._startArrow);
+      if (this._pivot) {
+        workspace.removeChild(this._pivot);
+      }
+      if (this._startArrow) {
+        workspace.removeChild(this._startArrow);
+      }
       workspace.enableWorkspaceEvents(true);
 
       this._sourceTopic = null;
@@ -115,7 +116,7 @@ class RelationshipPivot {
   }
 
   private mouseMoveHandler(event: MouseEvent): boolean {
-    const screen = this._workspace.getScreenManager();
+    const screen = this._canvas.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
     // Leave the arrow a couple of pixels away from the cursor.
@@ -123,14 +124,14 @@ class RelationshipPivot {
     const gapDistance = Math.sign(pos.x - sourcePosition.x) * 5;
 
     const sPos = this._calculateFromPosition(pos);
-    this._pivot.setFrom(sPos.x, sPos.y);
+    this._pivot!.setFrom(sPos.x, sPos.y);
 
     // Update target position ...
-    this._pivot.setTo(pos.x - gapDistance, pos.y);
+    this._pivot!.setTo(pos.x - gapDistance, pos.y);
 
-    const controlPoints = this._pivot.getControlPoints();
-    this._startArrow.setFrom(pos.x - gapDistance, pos.y);
-    this._startArrow.setControlPoint(controlPoints[1]);
+    const controlPoints = this._pivot!.getControlPoints();
+    this._startArrow!.setFrom(pos.x - gapDistance, pos.y);
+    this._startArrow!.setControlPoint(controlPoints[1]);
 
     event.stopPropagation();
     return false;
@@ -142,7 +143,7 @@ class RelationshipPivot {
     event.stopPropagation();
   }
 
-  private _calculateFromPosition(toPosition: Point): Point {
+  private _calculateFromPosition(toPosition: PositionType): PositionType {
     // Calculate origin position ...
     const sourceTopic = this._sourceTopic!;
     let sourcePosition = this._sourceTopic!.getPosition();

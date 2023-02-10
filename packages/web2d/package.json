@@ -4,10 +4,9 @@
   "description": "WiseMapping - Web2D Render Library",
   "homepage": "http://www.wisemapping.org/",
   "license": "MIT",
-  "main": "dist/web2d.js",
+  "main": "src/index.ts",
   "files": [
-    "src",
-    "dist"
+    "src"
   ],
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
@@ -17,6 +16,7 @@
     "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
   },
   "scripts": {
+    "bootstrap": "yalc publish;yalc add @wisemapping/core-js",
     "dev": "webpack --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint src",

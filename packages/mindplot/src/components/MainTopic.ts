@@ -16,12 +16,12 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Point, Group, ElementClass } from '@wisemapping/web2d';
+import { Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
 
 import Topic from './Topic';
 import Shape from './util/Shape';
 import NodeModel from './model/NodeModel';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import SizeType from './SizeType';
 import PositionType from './PositionType';
 import { NodeOption } from './NodeGraph';
@@ -34,7 +34,7 @@ class MainTopic extends Topic {
     this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
   }
 
-  _buildDragShape(): ElementClass {
+  buildDragShape(): ElementClass<ElementPeer> {
     const innerShape = this._buildShape(this.INNER_RECT_ATTRIBUTES, this.getShapeType());
     const size = this.getSize();
     innerShape.setSize(size.width, size.height);
@@ -82,9 +82,8 @@ class MainTopic extends Topic {
     }
   }
 
-  disconnect(workspace: Workspace) {
+  disconnect(workspace: Canvas) {
     super.disconnect(workspace);
-    this.redrawShapeType();
 
     const innerShape = this.getInnerShape();
     innerShape.setVisibility(true);
@@ -113,7 +112,7 @@ class MainTopic extends Topic {
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
 
-    let result: Point = { x: 0, y: 0 };
+    let result: PositionType = { x: 0, y: 0 };
     if (this.getShapeType() === 'line') {
       const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();

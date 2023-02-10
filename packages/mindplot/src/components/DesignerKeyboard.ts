@@ -21,7 +21,7 @@ import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
 
-import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
+import initHotKeyPluggin from '../../libraries/jquery.hotkeys';
 
 // Provides dispatcher of keyevents by key...
 initHotKeyPluggin($);
@@ -262,7 +262,7 @@ class DesignerKeyboard extends Keyboard {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
-      let top = null;
+      let top: number | null = null;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
         const childY = child.getPosition().y;

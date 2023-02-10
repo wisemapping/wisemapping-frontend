@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import { Designer } from '..';
 import EventBus from './layout/EventBus';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
+import PositionType from './PositionType';
 import Relationship from './Relationship';
 import Topic from './Topic';
 
@@ -102,7 +102,7 @@ class CommandContext {
   }
 
   /** */
-  moveTopic(topic: Topic, position: Point): void {
+  moveTopic(topic: Topic, position: PositionType): void {
     $assert(topic, 'topic cannot be null');
     $assert(position, 'position cannot be null');
     EventBus.instance.fireEvent('topicMoved', {

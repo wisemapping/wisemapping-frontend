@@ -4,7 +4,8 @@ const config = {
   preset: 'ts-jest',
   moduleFileExtensions: ['js', 'ts'],
   transform: {
-    '^.+\\.js?$': 'babel-jest',
+    '^.+\\.(ts)?$': 'ts-jest',
+    '^.+\\.(js)$': 'babel-jest',
   },
 };
 

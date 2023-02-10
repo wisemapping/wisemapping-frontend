@@ -16,13 +16,14 @@
  *   limitations under the License.
  */
 
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Group, ElementClass, Point } from '@wisemapping/web2d';
+import { $assert } from '@wisemapping/core-js';
+import { Group } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 import ImageIcon from './ImageIcon';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import Icon from './Icon';
+import PositionType from './PositionType';
 
 const ORDER_BY_TYPE = new Map<string, number>();
 ORDER_BY_TYPE.set('icon', 0);
@@ -61,12 +62,8 @@ class IconGroup {
     this._group.setPosition(x, y);
   }
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     return this._group.getPosition();
-  }
-
-  getNativeElement(): ElementClass {
-    return this._group;
   }
 
   /** */
@@ -84,8 +81,6 @@ class IconGroup {
   }
 
   addIcon(icon: Icon, remove: boolean): void {
-    $defined(icon, 'icon is not defined');
-
     // Order could have change, need to re-add all.
     const icons = this._icons.slice();
     this._icons.forEach((i) => {
@@ -102,7 +97,7 @@ class IconGroup {
     // Add all the nodes back ...
     this._resize(this._icons.length);
     this._icons.forEach((i, index) => {
-      this._positionIcon(i, index);
+      this.positionIcon(i, index);
       const imageShape = i.getElement();
       this._group.append(imageShape);
     });
@@ -132,14 +127,14 @@ class IconGroup {
   }
 
   /** */
-  removeIconByModel(featureModel: FeatureModel) {
+  removeIconByModel(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel can not be null');
 
     const icon = this._findIconFromModel(featureModel);
     this._removeIcon(icon);
   }
 
-  private _removeIcon(icon: Icon) {
+  private _removeIcon(icon: Icon): void {
     this._removeTip.close(0);
     this._group.removeChild(icon.getElement());
 
@@ -149,7 +144,7 @@ class IconGroup {
 
     // Add all again ...
     this._icons.forEach((elem, i) => {
-      me._positionIcon(elem, i);
+      me.positionIcon(elem, i);
     });
   }
 
@@ -169,7 +164,7 @@ class IconGroup {
     });
   }
 
-  private _resize(iconsLength: number) {
+  private _resize(iconsLength: number): void {
     if (this._iconSize) {
       this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
 
@@ -178,14 +173,19 @@ class IconGroup {
     }
   }
 
-  private _positionIcon(icon: Icon, order: number) {
+  private positionIcon(icon: Icon, order: number): void {
     const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
     icon
       .getElement()
       .setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
   }
 
-  static ICON_PADDING = 5;
+  appendTo(group: Group): void {
+    group.append(this._group);
+    this._group.moveToFront();
+  }
+
+  static ICON_PADDING = 2;
 }
 
 export default IconGroup;

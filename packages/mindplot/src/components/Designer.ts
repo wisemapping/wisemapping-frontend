@@ -18,7 +18,6 @@
 import $ from 'jquery';
 
 import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import Messages, { $msg } from './Messages';
 
 import Events from './Events';
@@ -31,7 +30,7 @@ import DesignerModel from './DesignerModel';
 import DesignerKeyboard from './DesignerKeyboard';
 
 import ScreenManager from './ScreenManager';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 
 import DragConnector from './DragConnector';
 import DragManager from './DragManager';
@@ -60,6 +59,7 @@ import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 import ImageExpoterFactory from './export/ImageExporterFactory';
+import PositionType from './PositionType';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -70,7 +70,7 @@ class Designer extends Events {
 
   private _model: DesignerModel;
 
-  private _workspace: Workspace;
+  private _workspace: Canvas;
 
   _eventBussDispatcher: EventBusDispatcher;
 
@@ -108,7 +108,7 @@ class Designer extends Events {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElem);
-    this._workspace = new Workspace(screenManager, this._model.getZoom(), this.isReadOnly());
+    this._workspace = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly());
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -200,7 +200,7 @@ class Designer extends Events {
     });
   }
 
-  private _buildDragManager(workspace: Workspace): DragManager {
+  private _buildDragManager(workspace: Canvas): DragManager {
     const designerModel = this.getModel();
     const dragConnector = new DragConnector(designerModel, this._workspace);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
@@ -504,7 +504,7 @@ class Designer extends Events {
     this._actionDispatcher.addTopics([childModel], [parentTopicId]);
   }
 
-  private _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
+  private _createChildModel(topic: Topic, mousePos?: PositionType): NodeModel {
     // Create a new node ...
     const parentModel = topic.getModel();
     const mindmap = parentModel.getMindmap();
@@ -517,7 +517,7 @@ class Designer extends Events {
 
     // Create a new node ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
-    const result = layoutManager.predict(topic.getId(), null, mousePos);
+    const result = layoutManager.predict(topic.getId(), null, mousePos || null);
     childModel.setOrder(result.order);
 
     const { position } = result;
@@ -949,7 +949,7 @@ class Designer extends Events {
     this.onObjectFocusEvent(node);
   }
 
-  getWorkSpace(): Workspace {
+  getWorkSpace(): Canvas {
     return this._workspace;
   }
 

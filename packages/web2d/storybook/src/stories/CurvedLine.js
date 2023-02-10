@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
 import CurvedLine from '../../../src/components/CurvedLine';
-import Elipse from '../../../src/components/Elipse';
+import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 import Point from '../../../src/components/Point';
 
@@ -61,28 +61,28 @@ export const createCurvedLine = ({
   workspace.append(line4);
 
   // Add referene point ...
-  const e1 = new Elipse();
+  const e1 = new Ellipse();
   e1.setSize(5, 5);
   e1.setPosition(0, 0);
   e1.setFill('red');
   workspace.append(e1);
 
-  const e2 = new Elipse();
+  const e2 = new Ellipse();
   e2.setPosition(-100, -100);
   e2.setSize(10, 10);
   workspace.append(e2);
 
-  const e3 = new Elipse();
+  const e3 = new Ellipse();
   e3.setPosition(100, 100);
   e3.setSize(10, 10);
   workspace.append(e3);
 
-  const e4 = new Elipse();
+  const e4 = new Ellipse();
   e4.setPosition(-100, 100);
   e4.setSize(10, 10);
   workspace.append(e4);
 
-  const e5 = new Elipse();
+  const e5 = new Ellipse();
   e5.setPosition(100, -100);
   e5.setSize(10, 10);
   workspace.append(e5);

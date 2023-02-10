@@ -4,7 +4,7 @@
     "description": "WiseMapping - Core Common Libraries",
     "homepage": "http://www.wisemapping.org/",
     "license": "MIT",
-    "main": "dist/core.js",
+    "main": "src/index.ts",
     "files": [
         "src"
     ],
@@ -17,6 +17,7 @@
     },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "dev": "webpack --mode development --config webpack.dev.js"
+        "dev": "webpack --mode development --config webpack.dev.js",
+        "bootstrap": "yalc publish"
     }
 }

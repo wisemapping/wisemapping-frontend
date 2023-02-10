@@ -17,10 +17,11 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import { CurvedLine, PolyLine, Line } from '@wisemapping/web2d';
+import { CurvedLine, Line, PolyLine } from '@wisemapping/web2d';
+import PositionType from './PositionType';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 
 // eslint-disable-next-line no-shadow
 export enum LineType {
@@ -51,7 +52,7 @@ class ConnectionLine {
     this._color = this.updateColor();
   }
 
-  private _getCtrlPoints(sourceNode: Topic, targetNode: Topic) {
+  private _getCtrlPoints(sourceNode: Topic, targetNode: Topic): [PositionType, PositionType] {
     const srcPos = sourceNode.workoutOutgoingConnectionPoint(targetNode.getPosition());
     const destPos = targetNode.workoutIncomingConnectionPoint(sourceNode.getPosition());
     const deltaX = (srcPos.x - destPos.x) / 3;
@@ -61,8 +62,8 @@ class ConnectionLine {
     ];
   }
 
-  protected createLine(lineType: LineType): ConnectionLine {
-    let line: ConnectionLine;
+  protected createLine(lineType: LineType): Line {
+    let line: Line;
     switch (lineType) {
       case LineType.POLYLINE_MIDDLE:
         line = new PolyLine();
@@ -142,8 +143,8 @@ class ConnectionLine {
 
     if (this._type === LineType.THICK_CURVED || this._type === LineType.THIN_CURVED) {
       const ctrlPoints = this._getCtrlPoints(this._sourceTopic, this._targetTopic);
-      line2d.setSrcControlPoint(ctrlPoints[0]);
-      line2d.setDestControlPoint(ctrlPoints[1]);
+      (line2d as CurvedLine).setSrcControlPoint(ctrlPoints[0]);
+      (line2d as CurvedLine).setDestControlPoint(ctrlPoints[1]);
     }
 
     // Add connector ...
@@ -179,7 +180,7 @@ class ConnectionLine {
   }
 
   setStroke(color: string, style: string, opacity: number) {
-    this._line.setStroke(null, null, color, opacity);
+    this._line.setStroke(1, style, color, opacity);
     this._color = color;
   }
 
@@ -187,13 +188,13 @@ class ConnectionLine {
     return this._color;
   }
 
-  addToWorkspace(workspace: Workspace) {
-    workspace.append(this._line);
+  addToWorkspace(workspace: Canvas) {
+    workspace.append(this._line.getElementClass());
     this._line.moveToBack();
   }
 
-  removeFromWorkspace(workspace: Workspace) {
-    workspace.removeChild(this._line);
+  removeFromWorkspace(workspace: Canvas) {
+    workspace.removeChild(this._line.getElementClass());
   }
 
   getTargetTopic(): Topic {

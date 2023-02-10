@@ -15,18 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Arrow, Point, CurvedLine } from '@wisemapping/web2d';
+import { Arrow, Line } from '@wisemapping/web2d';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import RelationshipControlPoints from './RelationshipControlPoints';
 import RelationshipModel from './model/RelationshipModel';
 import PositionType from './PositionType';
 import Topic from './Topic';
 import Shape from './util/Shape';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 
 class Relationship extends ConnectionLine {
-  private _focusShape: CurvedLine;
+  private _focusShape: Line;
 
   private _onFocus: boolean;
 
@@ -34,15 +33,15 @@ class Relationship extends ConnectionLine {
 
   private _controlPointsController: RelationshipControlPoints;
 
+  private _showStartArrow: boolean;
+
+  private _showEndArrow: boolean;
+
+  private _endArrow!: Arrow;
+
   private _startArrow: Arrow;
 
-  private _showEndArrow: Arrow;
-
-  private _endArrow: Arrow;
-
   private _onFocusHandler: (event: MouseEvent) => void;
-
-  private _showStartArrow: Arrow;
 
   private _model: RelationshipModel;
 
@@ -70,6 +69,8 @@ class Relationship extends ConnectionLine {
     this._focusShape.setOpacity(0);
     this._focusShape.setFill('none', 1);
     this._focusShape.setCursor('pointer');
+    this._showStartArrow = false;
+    this._showEndArrow = false;
 
     // Build arrow ...
     this._startArrow = new Arrow();
@@ -89,12 +90,12 @@ class Relationship extends ConnectionLine {
 
     // Position the line ...
     if (model.getSrcCtrlPoint()) {
-      const srcPoint = { ...model.getSrcCtrlPoint() };
+      const srcPoint = { ...model.getSrcCtrlPoint()! };
       this.setSrcControlPoint(srcPoint);
     }
 
     if (model.getDestCtrlPoint()) {
-      const destPoint = { ...model.getDestCtrlPoint() };
+      const destPoint = { ...model.getDestCtrlPoint()! };
       this.setDestControlPoint(destPoint);
     }
 
@@ -113,7 +114,7 @@ class Relationship extends ConnectionLine {
 
   setStroke(color: string, style: string, opacity: number): void {
     super.setStroke(color, style, opacity);
-    this._startArrow.setStrokeColor(color);
+    this._startArrow?.setStrokeColor(color);
   }
 
   getModel(): RelationshipModel {
@@ -132,7 +133,7 @@ class Relationship extends ConnectionLine {
     }
 
     this._line.setStroke(2);
-    let ctrlPoints: [Point, Point];
+    let ctrlPoints: [PositionType, PositionType];
 
     // Position line ...
     if (!line2d.isDestControlPointCustom() && !line2d.isSrcControlPointCustom()) {
@@ -147,14 +148,14 @@ class Relationship extends ConnectionLine {
     const tpointX = ctrlPoints[1].x + tPos.x;
     const tpointY = ctrlPoints[1].y + tPos.y;
 
-    const nsPos = Shape.calculateRelationShipPointCoordinates(
-      sourceTopic,
-      new Point(spointX, spointY),
-    );
-    const ntPos = Shape.calculateRelationShipPointCoordinates(
-      targetTopic,
-      new Point(tpointX, tpointY),
-    );
+    const nsPos = Shape.calculateRelationShipPointCoordinates(sourceTopic, {
+      x: spointX,
+      y: spointY,
+    });
+    const ntPos = Shape.calculateRelationShipPointCoordinates(targetTopic, {
+      x: tpointX,
+      y: tpointY,
+    });
 
     line2d.setFrom(nsPos.x, nsPos.y);
     line2d.setTo(ntPos.x, ntPos.y);
@@ -210,10 +211,10 @@ class Relationship extends ConnectionLine {
     }
   }
 
-  addToWorkspace(workspace: Workspace): void {
+  addToWorkspace(workspace: Canvas): void {
     this.updatePositions();
 
-    workspace.append(this._focusShape);
+    workspace.append(this._focusShape.getElementClass());
     workspace.append(this._controlPointsController);
 
     if (workspace.isReadOnly()) {
@@ -232,8 +233,8 @@ class Relationship extends ConnectionLine {
     this.redraw();
   }
 
-  removeFromWorkspace(workspace: Workspace): void {
-    workspace.removeChild(this._focusShape);
+  removeFromWorkspace(workspace: Canvas): void {
+    workspace.removeChild(this._focusShape.getElementClass());
     workspace.removeChild(this._controlPointsController);
 
     this._line.removeEvent('click', this._onFocusHandler);
@@ -337,17 +338,11 @@ class Relationship extends ConnectionLine {
   }
 
   setFrom(x: number, y: number): void {
-    $assert($defined(x), 'x must be defined');
-    $assert($defined(y), 'y must be defined');
-
     this._line.setFrom(x, y);
-    this._startArrow.setFrom(x, y);
+    this._startArrow?.setFrom(x, y);
   }
 
   setTo(x: number, y: number) {
-    $assert($defined(x), 'x must be defined');
-    $assert($defined(y), 'y must be defined');
-
     this._line.setTo(x, y);
     if (this._endArrow) this._endArrow.setFrom(x, y);
   }
@@ -355,18 +350,18 @@ class Relationship extends ConnectionLine {
   setSrcControlPoint(control: PositionType): void {
     this._line.setSrcControlPoint(control);
     this._focusShape.setSrcControlPoint(control);
-    this._startArrow.setControlPoint(control);
+    this._startArrow?.setControlPoint(control);
   }
 
   setDestControlPoint(control: PositionType) {
     this._line.setDestControlPoint(control);
     this._focusShape.setSrcControlPoint(control);
     if (this._showEndArrow) {
-      this._endArrow.setControlPoint(control);
+      this._endArrow?.setControlPoint(control);
     }
   }
 
-  getControlPoints(): PositionType {
+  getControlPoints(): [PositionType, PositionType] {
     return this._line.getControlPoints();
   }
 

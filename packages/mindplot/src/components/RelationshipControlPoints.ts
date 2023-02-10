@@ -19,7 +19,7 @@
 import { Elipse, StraightLine } from '@wisemapping/web2d';
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import PositionType from './PositionType';
 import Relationship from './Relationship';
 
@@ -36,7 +36,7 @@ class ControlPivotLine {
 
   private _pivotType: PivotType;
 
-  private _workspace: Workspace | null;
+  private _canvas: Canvas | null;
 
   private _relationship: Relationship;
 
@@ -95,7 +95,7 @@ class ControlPivotLine {
     this._mouseDownHandler = (event: MouseEvent) => this.mouseDownHandler(event);
 
     this._isVisible = false;
-    this._workspace = null;
+    this._canvas = null;
   }
 
   private mouseDownHandler(event: MouseEvent) {
@@ -156,7 +156,7 @@ class ControlPivotLine {
   }
 
   private mouseMoveHandler(event: MouseEvent) {
-    const screen = this._workspace!.getScreenManager();
+    const screen = this._canvas!.getScreenManager();
     const mousePosition = screen.getWorkspaceMousePosition(event);
 
     // Update relatioship position ...
@@ -189,14 +189,14 @@ class ControlPivotLine {
     this._changeHander();
   }
 
-  addToWorkspace(workspace: Workspace): void {
-    this._workspace = workspace;
+  addToWorkspace(workspace: Canvas): void {
+    this._canvas = workspace;
 
     workspace.append(this._line);
     workspace.append(this._dot);
   }
 
-  removeFromWorkspace(workspace: Workspace) {
+  removeFromWorkspace(workspace: Canvas) {
     // Hide all elements ...
     this.setVisibility(false);
 
@@ -205,8 +205,8 @@ class ControlPivotLine {
     workspace.removeChild(this._dot);
   }
 
-  private getWorkspace(): Workspace {
-    return this._workspace!;
+  private getWorkspace(): Canvas {
+    return this._canvas!;
   }
 }
 
@@ -256,11 +256,11 @@ class RelationshipControlPoints {
     this._pivotLines = [startControlLine, endControlLine];
   }
 
-  addToWorkspace(workspace: Workspace): void {
+  addToWorkspace(workspace: Canvas): void {
     this._pivotLines.forEach((pivot) => workspace.append(pivot));
   }
 
-  removeFromWorkspace(workspace: Workspace) {
+  removeFromWorkspace(workspace: Canvas) {
     this._pivotLines.forEach((pivot) => workspace.removeChild(pivot));
   }
 

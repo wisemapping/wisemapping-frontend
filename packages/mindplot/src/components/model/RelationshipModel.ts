@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import { LineType } from '../ConnectionLine';
+import PositionType from '../PositionType';
 
 class RelationshipModel {
   static _nextUuid = 0;
@@ -30,9 +30,9 @@ class RelationshipModel {
 
   private _lineType: LineType;
 
-  private _srcCtrlPoint: Point;
+  private _srcCtrlPoint: PositionType | null;
 
-  private _destCtrlPoint: Point;
+  private _destCtrlPoint: PositionType | null;
 
   private _endArrow: boolean;
 
@@ -75,19 +75,19 @@ class RelationshipModel {
     this._lineType = lineType;
   }
 
-  getSrcCtrlPoint(): Point {
+  getSrcCtrlPoint(): PositionType | null {
     return this._srcCtrlPoint;
   }
 
-  setSrcCtrlPoint(srcCtrlPoint: Point) {
+  setSrcCtrlPoint(srcCtrlPoint: PositionType): void {
     this._srcCtrlPoint = srcCtrlPoint;
   }
 
-  getDestCtrlPoint(): Point {
+  getDestCtrlPoint(): PositionType | null {
     return this._destCtrlPoint;
   }
 
-  setDestCtrlPoint(destCtrlPoint: Point): void {
+  setDestCtrlPoint(destCtrlPoint: PositionType): void {
     this._destCtrlPoint = destCtrlPoint;
   }
 

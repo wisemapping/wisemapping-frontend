@@ -108,7 +108,6 @@ class NodeModel extends INodeModel {
    * @throws will throw an error if key is null or undefined
    */
   putProperty(key: string, value: string | number | boolean): void {
-    $defined(key, 'key can not be null');
     this._properties[key] = value;
   }
 
@@ -117,7 +116,6 @@ class NodeModel extends INodeModel {
   }
 
   getProperty(key: string): number | string | boolean | undefined {
-    $defined(key, 'key can not be null');
     return this._properties[key];
   }
 

@@ -33,7 +33,9 @@ export default class Freemap {
 
     // Set map attributes
     const mapElem = document.createElement('map');
-    mapElem.setAttribute('version', this.version);
+    if (this.version) {
+      mapElem.setAttribute('version', this.version);
+    }
 
     document.appendChild(mapElem);
 

@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Point } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
 import TopicConfig from '../TopicConfig';
 import PositionType from '../PositionType';
@@ -110,7 +109,10 @@ class Shape {
     const x2 = tarPos.x + Math.sqrt((l * l) / (1 + m * m)) * fix * -1;
     const y2 = m * (x2 - tarPos.x) + tarPos.y;
 
-    return [new Point(-srcPos.x + x1, -srcPos.y + y1), new Point(-tarPos.x + x2, -tarPos.y + y2)];
+    return [
+      { x: -srcPos.x + x1, y: -srcPos.y + y1 },
+      { x: -tarPos.x + x2, y: -tarPos.y + y2 },
+    ];
   }
 
   static workoutIncomingConnectionPoint(targetNode: Topic, sourcePosition: PositionType) {

@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 // eslint-disable-next-line import/prefer-default-export
 import Rect from '../../../src/components/Rect';
-import Elipse from '../../../src/components/Elipse';
+import Ellipse from '../../../src/components/Ellipse';
 import Workspace from '../../../src/components/Workspace';
 
 export const createElement = ({
@@ -34,7 +34,7 @@ export const createElement = ({
   rect.addEvent('dblclick', onDblClick);
 
   // Add referene point ...
-  const e1 = new Elipse();
+  const e1 = new Ellipse();
   e1.setSize(70, 70);
   e1.setPosition(0, 0);
   e1.setFill('red', fillOpacity);
@@ -79,12 +79,12 @@ export const createEventRegistration = ({
   workspace.setSize('150px', '150px');
   workspace.setCoordSize(150, 150);
 
-  const bigElipse = new Elipse();
+  const bigElipse = new Ellipse();
   bigElipse.setSize(100, 100);
   bigElipse.setPosition(75, 75);
   workspace.append(bigElipse);
 
-  const smallElipse = new Elipse();
+  const smallElipse = new Ellipse();
   smallElipse.setSize(50, 50);
   smallElipse.setPosition(75, 75);
   smallElipse.setFill('red');

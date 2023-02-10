@@ -28,3 +28,6 @@ wisemapping-frontend.code-workspace
 !.yarn/releases
 !.yarn/plugins
 .pnp.*
+
+packages/**/.yalc/
+packages/**/yalc.lock

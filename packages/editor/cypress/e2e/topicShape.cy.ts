@@ -74,7 +74,7 @@ describe('Topic Shape Suite', () => {
       .invoke('attr', 'rx')
       .then(parseInt)
       .should('be.a', 'number')
-      .should('be.gte', 12);
+      .should('be.gte', 11);
     cy.get('[test-id=2] > rect')
       .eq(1)
       .invoke('attr', 'rx')

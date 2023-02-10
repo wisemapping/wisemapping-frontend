@@ -16,11 +16,12 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { Image, Point, ElementClass } from '@wisemapping/web2d';
+import { Group, Image } from '@wisemapping/web2d';
 import IconGroup from './IconGroup';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import Icon from './Icon';
+import PositionType from './PositionType';
 
 abstract class ImageIcon implements Icon {
   private _image: Image;
@@ -35,11 +36,11 @@ abstract class ImageIcon implements Icon {
     this._group = null;
   }
 
-  getElement(): ElementClass {
+  getElement(): Image | Group {
     return this._image;
   }
 
-  setGroup(group: IconGroup) {
+  setGroup(group: IconGroup): void {
     this._group = group;
   }
 
@@ -47,11 +48,11 @@ abstract class ImageIcon implements Icon {
     return this._group;
   }
 
-  getSize(): SizeType {
+  getSize(): SizeType | undefined {
     return this._image.getSize();
   }
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     return this._image.getPosition();
   }
 

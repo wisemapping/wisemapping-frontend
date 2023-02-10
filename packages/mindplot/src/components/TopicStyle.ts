@@ -186,7 +186,7 @@ class TopicStyle {
   }
 
   static getInnerPadding(topic: Topic): number {
-    return Math.round(topic.getOrBuildTextShape().getFontHeight() * 0.5);
+    return topic.getOrBuildTextShape().getFontHeight() * 0.5;
   }
 
   static defaultShapeType(topic: Topic): TopicShapeType {

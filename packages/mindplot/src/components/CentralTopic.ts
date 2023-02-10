@@ -15,18 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Point } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
+import PositionType from './PositionType';
 import Topic from './Topic';
 import Shape from './util/Shape';
 
 class CentralTopic extends Topic {
-  _buildDragShape() {
+  buildDragShape() {
     // Ignore ..
   }
 
-  _registerEvents(): void {
-    super._registerEvents();
+  registerEvents(): void {
+    super.registerEvents();
 
     // This disable the drag of the central topic.
     // But solves the problem of deselecting the nodes when the screen is clicked.
@@ -35,29 +35,29 @@ class CentralTopic extends Topic {
     });
   }
 
-  workoutIncomingConnectionPoint(): Point {
+  workoutIncomingConnectionPoint(): PositionType {
     return this.getPosition();
   }
 
-  setCursor(type: string) {
+  setCursor(type: string): void {
     super.setCursor(type === 'move' ? 'default' : type);
   }
 
-  updateTopicShape() {
+  updateTopicShape(): void {
     // Overwite behaviour ...
   }
 
   _updatePositionOnChangeSize(): void {
     // Center main topic ...
-    const zeroPoint = new Point(0, 0);
+    const zeroPoint = { x: 0, y: 0 };
     this.setPosition(zeroPoint);
   }
 
-  getShrinkConnector() {
+  getShrinkConnector(): null {
     return null;
   }
 
-  workoutOutgoingConnectionPoint(targetPosition: Point) {
+  workoutOutgoingConnectionPoint(targetPosition: PositionType) {
     $assert(targetPosition, 'targetPoint can not be null');
 
     const pos = this.getPosition();

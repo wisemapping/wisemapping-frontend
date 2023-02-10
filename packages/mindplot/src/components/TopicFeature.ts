@@ -25,8 +25,8 @@ import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 import LinkModel from './model/LinkModel';
 import NoteModel from './model/NoteModel';
-import Icon from './Icon';
 import EmojiIconModel from './model/EmojiIconModel';
+import Icon from './Icon';
 
 class TopicFeatureFactory {
   static createIcon(topic: Topic, model: FeatureModel, readOnly: boolean): Icon {

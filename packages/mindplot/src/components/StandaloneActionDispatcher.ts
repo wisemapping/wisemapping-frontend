@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $defined, $assert } from '@wisemapping/core-js';
-import { Point } from '@wisemapping/web2d';
 import ActionDispatcher from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
@@ -73,17 +72,17 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic) {
+  dragTopic(topicId: number, position: PositionType, order: number, parentTopic: Topic): void {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);
   }
 
   /** */
-  moveTopic(topicId: number, position: Point) {
+  moveTopic(topicId: number, position: PositionType): void {
     $assert($defined(topicId), 'topicsId can not be null');
     $assert($defined(position), 'position can not be null');
 
-    const commandFunc = (topic: Topic, pos: Point) => {
+    const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
       EventBus.instance.fireEvent('topicMoved', {
         node: topic.getModel(),

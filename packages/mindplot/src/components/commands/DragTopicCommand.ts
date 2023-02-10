@@ -15,10 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import PositionType from '../PositionType';
 import Topic from '../Topic';
 
 class DragTopicCommand extends Command {
@@ -26,11 +25,11 @@ class DragTopicCommand extends Command {
 
   private _parentId: number | null;
 
-  private _position: Point;
+  private _position: PositionType;
 
   private _order: number;
 
-  constructor(topicId: number, position: Point, order: number, parentTopic: Topic) {
+  constructor(topicId: number, position: PositionType, order: number, parentTopic: Topic) {
     super();
     this._topicsId = topicId;
     this._parentId = parentTopic ? parentTopic.getId() : null;
@@ -61,7 +60,7 @@ class DragTopicCommand extends Command {
     } else if (this._position != null) {
       commandContext.moveTopic(topic, this._position);
     } else {
-      $assert('Illegal command state exception.');
+      throw new Error('Illegal command state exception.');
     }
 
     // Finally, connect topic ...

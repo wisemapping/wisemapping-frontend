@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import { Rect, Line, Text, Group, ElementClass } from '@wisemapping/web2d';
+import { Rect, Text, Group, ElementClass, ElementPeer, StyleAttributes } from '@wisemapping/web2d';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicConfig from './TopicConfig';
@@ -33,7 +33,7 @@ import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
 import { TopicShapeType } from './model/INodeModel';
 import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import LayoutManager from './layout/LayoutManager';
 import NoteModel from './model/NoteModel';
 import LinkModel from './model/LinkModel';
@@ -41,7 +41,6 @@ import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
 import LineTopicShape from './widget/LineTopicShape';
-import ImageTopicShape from './widget/ImageTopicShape';
 import ColorUtil from './render/ColorUtil';
 import Icon from './Icon';
 import { FontStyleType } from './FontStyleType';
@@ -51,7 +50,7 @@ import DragTopic from './DragTopic';
 const ICON_SCALING_FACTOR = 1.3;
 
 abstract class Topic extends NodeGraph {
-  private _innerShape: ElementClass;
+  private _innerShape: LineTopicShape | Rect | LineTopicShape | null;
 
   private _relationships: Relationship[];
 
@@ -63,9 +62,9 @@ abstract class Topic extends NodeGraph {
   // eslint-disable-next-line no-use-before-define
   private _parent: Topic | null;
 
-  private _outerShape: ElementClass;
+  private _outerShape: ElementClass<ElementPeer> | undefined;
 
-  private _text: Text | null;
+  private _text: Text | undefined;
 
   private _iconsGroup!: IconGroup;
 
@@ -79,6 +78,7 @@ abstract class Topic extends NodeGraph {
     this._parent = null;
     this._relationships = [];
     this._isInWorkspace = false;
+    this._innerShape = null;
     this._buildTopicShape();
 
     // Position a topic ....
@@ -89,11 +89,11 @@ abstract class Topic extends NodeGraph {
 
     // Register events for the topic ...
     if (!this.isReadOnly()) {
-      this._registerEvents();
+      this.registerEvents();
     }
   }
 
-  protected _registerEvents(): void {
+  protected registerEvents(): void {
     this.setMouseEventsEnabled(true);
 
     // Prevent click on the topics being propagated ...
@@ -199,15 +199,16 @@ abstract class Topic extends NodeGraph {
     return result!;
   }
 
-  private _removeInnerShape(): ElementClass {
+  private _removeInnerShape(): ElementClass<ElementPeer> {
     const group = this.get2DElement();
     const innerShape = this.getInnerShape();
+
     group.removeChild(innerShape);
     this._innerShape = null;
     return innerShape;
   }
 
-  getInnerShape(): ElementClass {
+  getInnerShape(): LineTopicShape | Rect | LineTopicShape {
     if (!this._innerShape) {
       // Create inner box.
       this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
@@ -222,8 +223,11 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  protected _buildShape(attributes: object, shapeType: TopicShapeType): ElementClass {
-    let result: ElementClass;
+  protected _buildShape(
+    attributes: StyleAttributes,
+    shapeType: TopicShapeType,
+  ): LineTopicShape | Rect | LineTopicShape {
+    let result: LineTopicShape | Rect | LineTopicShape;
     switch (shapeType) {
       case 'rectangle':
         result = new Rect(0, attributes);
@@ -238,7 +242,7 @@ abstract class Topic extends NodeGraph {
         result = new LineTopicShape(this);
         break;
       case 'image':
-        result = new ImageTopicShape(this);
+        result = new LineTopicShape(this);
         break;
       default: {
         const exhaustiveCheck: never = shapeType;
@@ -260,7 +264,7 @@ abstract class Topic extends NodeGraph {
     textShape.setCursor(type);
   }
 
-  getOuterShape(): ElementClass {
+  getOuterShape(): ElementClass<ElementPeer> {
     if (!this._outerShape) {
       const rect = this._buildShape({}, 'rounded rectangle');
 
@@ -284,13 +288,12 @@ abstract class Topic extends NodeGraph {
     return this._text;
   }
 
-  private getOrBuildIconGroup(): Group {
+  private getOrBuildIconGroup(): IconGroup {
     if (!this._iconsGroup) {
       const iconGroup = this._buildIconGroup();
       const group = this.get2DElement();
 
-      group.append(iconGroup.getNativeElement());
-      iconGroup.moveToFront();
+      iconGroup.appendTo(group);
       this._iconsGroup = iconGroup;
     }
     return this._iconsGroup;
@@ -300,7 +303,7 @@ abstract class Topic extends NodeGraph {
     return this._iconsGroup;
   }
 
-  private _buildIconGroup(): Group {
+  private _buildIconGroup(): IconGroup {
     const textHeight = this.getOrBuildTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
     const result = new IconGroup(this.getId(), iconSize);
@@ -363,7 +366,7 @@ abstract class Topic extends NodeGraph {
     this._relationships.push(relationship);
   }
 
-  deleteRelationship(relationship: Rect) {
+  deleteRelationship(relationship: Relationship) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
@@ -519,10 +522,12 @@ abstract class Topic extends NodeGraph {
   getBackgroundColor(): string {
     const model = this.getModel();
     let result = model.getBackgroundColor();
-
     if (!result && !this.isCentralTopic()) {
-      const borderColor = this.getBorderColor();
-      result = ColorUtil.lightenColor(borderColor, 40);
+      // Be sure that not overwride default background color ...
+      const borderColor = model.getBorderColor();
+      if (borderColor) {
+        result = ColorUtil.lightenColor(borderColor, 40);
+      }
     }
 
     if (!result) {
@@ -561,7 +566,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  _buildTopicShape(): ElementClass {
+  _buildTopicShape(): void {
     const groupAttributes = {
       width: 100,
       height: 100,
@@ -596,10 +601,10 @@ abstract class Topic extends NodeGraph {
     this._registerDefaultListenersToElement(group, this);
 
     // Set test id
-    group.setTestId(model.getId());
+    group.setTestId(String(model.getId()));
   }
 
-  private _registerDefaultListenersToElement(elem: ElementClass, topic: Topic) {
+  private _registerDefaultListenersToElement(elem: ElementClass<ElementPeer>, topic: Topic) {
     const mouseOver = function mouseOver() {
       if (topic.isMouseEventsEnabled()) {
         topic.handleMouseOver();
@@ -730,7 +735,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setNoteValue(value: string) {
+  setNoteValue(value: string): void {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
@@ -823,19 +828,19 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  getOutgoingLine(): Line {
+  getOutgoingLine(): ConnectionLine | null {
     return this._outgoingLine;
   }
 
-  getIncomingLines() {
+  getIncomingLines(): ConnectionLine[] {
     const children = this.getChildren();
     return children
       .filter((node) => $defined(node.getOutgoingLine()))
-      .map((node) => node.getOutgoingLine());
+      .map((node) => node.getOutgoingLine()!);
   }
 
   getOutgoingConnectedTopic(): Topic | null {
-    let result = null;
+    let result: Topic | null = null;
     const line = this.getOutgoingLine();
     if (line) {
       result = line.getTargetTopic();
@@ -966,8 +971,9 @@ abstract class Topic extends NodeGraph {
     const visibility = value ? !model.areChildrenShrunken() : value;
     children.forEach((child) => {
       child.setVisibility(visibility, fade);
+
       const outgoingLine = child.getOutgoingLine();
-      outgoingLine.setVisibility(visibility);
+      outgoingLine?.setVisibility(visibility);
     });
   }
 
@@ -993,21 +999,20 @@ abstract class Topic extends NodeGraph {
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
-      NodeGraph.prototype.setSize.call(this, roundedSize);
+      super.setSize(size);
 
       const outerShape = this.getOuterShape();
       const innerShape = this.getInnerShape();
-
-      outerShape.setSize(roundedSize.width + 6, roundedSize.height + 6);
-      innerShape.setSize(roundedSize.width, roundedSize.height);
+      outerShape.setSize(size.width + 6, size.height + 6);
+      innerShape.setSize(size.width, size.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this._updatePositionOnChangeSize(oldSize, roundedSize);
+      this._updatePositionOnChangeSize(oldSize, size);
 
       if (hasSizeChanged) {
         EventBus.instance.fireEvent('topicResize', {
           node: this.getModel(),
-          size: roundedSize,
+          size,
         });
       }
     }
@@ -1015,7 +1020,7 @@ abstract class Topic extends NodeGraph {
 
   protected abstract _updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
 
-  disconnect(workspace: Workspace): void {
+  disconnect(workspace: Canvas): void {
     const outgoingLine = this.getOutgoingLine();
     if (outgoingLine) {
       $assert(workspace, 'workspace can not be null');
@@ -1039,7 +1044,7 @@ abstract class Topic extends NodeGraph {
         const connector = targetTopic.getShrinkConnector();
         if (connector) {
           connector.setVisibility(false);
-          targetTopic.isCollapsed(false);
+          targetTopic.setChildrenShrunken(true);
         }
       }
 
@@ -1062,7 +1067,7 @@ abstract class Topic extends NodeGraph {
     model.setOrder(value);
   }
 
-  connectTo(targetTopic: Topic, workspace: Workspace): void {
+  connectTo(targetTopic: Topic, workspace: Canvas): void {
     // Connect Graphical Nodes ...
     targetTopic.append(this);
     this._parent = targetTopic;
@@ -1125,18 +1130,18 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  removeFromWorkspace(workspace: Workspace): void {
+  removeFromWorkspace(workspace: Canvas): void {
     const elem2d = this.get2DElement();
     workspace.removeChild(elem2d);
     const line = this.getOutgoingLine();
-    if ($defined(line)) {
+    if (line) {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
     EventBus.instance.fireEvent('topicRemoved', this.getModel());
   }
 
-  addToWorkspace(workspace: Workspace): void {
+  addToWorkspace(workspace: Canvas): void {
     const elem = this.get2DElement();
     workspace.append(elem);
     if (!this.isInWorkspace()) {
@@ -1192,6 +1197,7 @@ abstract class Topic extends NodeGraph {
           const targetTopic = this.getOutgoingConnectedTopic()!;
           this._outgoingLine = this.createConnectionLine(targetTopic);
           this._outgoingLine.setVisibility(this.isVisible());
+
           workspace.append(this._outgoingLine);
           result = true;
         }
@@ -1211,80 +1217,72 @@ abstract class Topic extends NodeGraph {
   redraw(redrawChildren = false): void {
     if (this._isInWorkspace) {
       const textShape = this.getOrBuildTextShape();
-      if (this.getShapeType() !== 'image') {
-        // Update font ...
-        const fontColor = this.getFontColor();
-        textShape.setColor(fontColor);
+      // Update font ...
+      const fontColor = this.getFontColor();
+      textShape.setColor(fontColor);
 
-        const fontSize = this.getFontSize();
-        textShape.setSize(fontSize);
+      const fontSize = this.getFontSize();
+      textShape.setFontSize(fontSize);
 
-        const fontWeight = this.getFontWeight();
-        textShape.setWeight(fontWeight);
+      const fontWeight = this.getFontWeight();
+      textShape.setWeight(fontWeight);
 
-        const fontStyle = this.getFontStyle();
-        textShape.setStyle(fontStyle);
+      const fontStyle = this.getFontStyle();
+      textShape.setStyle(fontStyle);
 
-        const fontFamily = this.getFontFamily();
-        textShape.setFontName(fontFamily);
+      const fontFamily = this.getFontFamily();
+      textShape.setFontName(fontFamily);
 
-        const text = this.getText();
-        textShape.setText(text.trim());
+      const text = this.getText();
+      textShape.setText(text.trim());
 
-        // Update other shape style ...
-        const outerShape = this.getOuterShape();
-        const outerFillColor = TopicStyle.defaultOuterBackgroundColor(this, this.isOnFocus());
-        const outerBorderColor = TopicStyle.defaultOuterBorderColor(this);
+      // Update outer shape style ...
+      const outerShape = this.getOuterShape();
+      const outerFillColor = TopicStyle.defaultOuterBackgroundColor(this, this.isOnFocus());
+      const outerBorderColor = TopicStyle.defaultOuterBorderColor(this);
 
-        outerShape.setFill(outerFillColor);
-        outerShape.setStroke(1, 'solid', outerBorderColor);
+      outerShape.setFill(outerFillColor);
+      outerShape.setStroke(1, 'solid', outerBorderColor);
 
-        // Calculate topic size and adjust elements ...
-        const textWidth = textShape.getWidth();
-        const textHeight = textShape.getHeight();
-        const padding = TopicStyle.getInnerPadding(this);
+      // Calculate topic size and adjust elements ...
+      const textWidth = textShape.getShapeWidth();
+      const textHeight = textShape.getShapeHeight();
+      const padding = TopicStyle.getInnerPadding(this);
 
-        // Adjust icons group based on the font size ...
-        const iconGroup = this.getOrBuildIconGroup();
-        const fontHeight = this.getOrBuildTextShape().getFontHeight();
-        const iconHeight = ICON_SCALING_FACTOR * fontHeight;
-        iconGroup.seIconSize(iconHeight, iconHeight);
+      // Adjust icons group based on the font size ...
+      const iconGroup = this.getOrBuildIconGroup();
+      const fontHeight = textShape.getFontHeight();
+      const iconHeight = ICON_SCALING_FACTOR * fontHeight;
+      iconGroup.seIconSize(iconHeight, iconHeight);
 
-        // Calculate size and adjust ...
-        const topicHeight = Math.max(iconHeight, textHeight) + padding * 2;
-        const textIconSpacing = Math.round(fontHeight / 4);
-        const iconGroupWith = iconGroup.getSize().width;
-        const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
+      // Calculate size and adjust ...
+      const topicHeight = textHeight + padding * 2;
+      const textIconSpacing = fontHeight / 50;
+      const iconGroupWith = iconGroup.getSize().width;
+      const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
-        // Update connections ...
-        const changed = this.redrawConnection();
-        this.setSize({ width: topicWith, height: topicHeight }, changed);
+      // Update connections ...
+      const changed = this.redrawConnection();
+      this.setSize({ width: topicWith, height: topicHeight }, changed);
 
-        // Adjust all topic elements positions ...
-        const yPosition = Math.round((topicHeight - textHeight) / 2);
-        iconGroup.setPosition(padding, yPosition - yPosition / 10);
-        textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
+      // Adjust all topic elements positions ...
+      const yPosition = (topicHeight - textHeight) / 2;
+      iconGroup.setPosition(padding, yPosition - yPosition / 4);
+      textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
 
-        // Update topic color ...
-        const borderColor = this.getBorderColor();
-        this.getInnerShape().setStroke(1, 'solid', borderColor);
+      // Update topic color ...
+      const borderColor = this.getBorderColor();
+      this.getInnerShape().setStroke(1, 'solid', borderColor);
 
-        const bgColor = this.getBackgroundColor();
-        this.getInnerShape().setFill(bgColor);
+      const bgColor = this.getBackgroundColor();
+      this.getInnerShape().setFill(bgColor);
 
-        // Force the repaint in case that the main topic color has changed.
-        if (this.getParent()) {
-          this._connector!.setColor(borderColor);
+      // Force the repaint in case that the main topic color has changed.
+      if (this.getParent()) {
+        this._connector!.setColor(borderColor);
 
-          if (this.getParent()?.isCentralTopic()) {
-            this._outgoingLine?.redraw();
-          }
-        }
-      } else {
-        // In case of images, the size is fixed ...
-        const size = this.getModel().getImageSize();
-        if (size) {
-          this.setSize(size, false);
+        if (this.getParent()?.isCentralTopic()) {
+          this._outgoingLine?.redraw();
         }
       }
 
@@ -1294,13 +1292,15 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  private _flatten2DElements(topic: Topic): (Topic | Relationship)[] {
-    const result: (Topic | Relationship)[] = [];
+  private _flatten2DElements(topic: Topic): (Topic | Relationship | ConnectionLine)[] {
+    const result: (Topic | Relationship | ConnectionLine)[] = [];
     const children = topic.getChildren();
     children.forEach((child) => {
       result.push(child);
-      result.push(child.getOutgoingLine());
-
+      const line = child.getOutgoingLine();
+      if (line) {
+        result.push(line);
+      }
       const relationships = child.getRelationships();
       result.push(...relationships);
 

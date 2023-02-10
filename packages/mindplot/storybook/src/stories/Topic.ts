@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { LinkModel, Mindmap, NoteModel, Topic } from '../../../src';
 import NodeModel from '../../../src/components/model/NodeModel';
 import CentralTopic from '../../../src/components/CentralTopic';
-import Workspace from '../../../src/components/Workspace';
+import Canvas from '../../../src/components/Canvas';
 import ScreenManager from '../../../src/components/ScreenManager';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
@@ -59,7 +59,7 @@ const createTopic = ({
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);
-  const workspace = new Workspace(screenManager, 0.3, readOnly);
+  const workspace = new Canvas(screenManager, 0.3, readOnly);
   TopicEventDispatcher.configure(readOnly);
 
   // Update model ...
