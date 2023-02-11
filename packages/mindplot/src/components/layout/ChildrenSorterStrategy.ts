@@ -20,7 +20,7 @@ import Node from './Node';
 import PositionType from '../PositionType';
 
 abstract class ChildrenSorterStrategy {
-  abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node): void;
+  abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node): Map<number, number>;
 
   abstract computeOffsets(treeSet: RootedTreeSet, node: Node): void;
 
@@ -33,13 +33,15 @@ abstract class ChildrenSorterStrategy {
     parent: Node,
     node: Node | null,
     position: PositionType | null,
-  );
+  ): void;
 
   abstract verify(treeSet: RootedTreeSet, node: Node): void;
 
   abstract getChildDirection(treeSet: RootedTreeSet, node: Node): 1 | -1;
 
   abstract toString(): string;
+
+  abstract getVerticalPadding(): number;
 }
 
 export default ChildrenSorterStrategy;

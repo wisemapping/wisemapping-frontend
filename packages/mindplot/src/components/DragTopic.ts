@@ -67,7 +67,7 @@ class DragTopic {
     const cy = Math.ceil(y - size.height / 2);
     this._elem2d.setPosition(cx, cy);
 
-    // In case is not free, pivot must be draw ...
+    // In case is not free, pivot must be drawn ...
     if (this.isConnected()) {
       const parent = this.getConnectedToTopic();
       const predict = this._layoutManager.predict(

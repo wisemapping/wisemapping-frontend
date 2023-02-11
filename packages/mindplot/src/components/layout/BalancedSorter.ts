@@ -233,13 +233,13 @@ class BalancedSorter extends AbstractBasicSorter {
     return 'Balanced Sorter';
   }
 
-  protected _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number): Node[] {
+  _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number): Node[] {
     return this._getSortedChildren(graph, parent).filter(
       (child) => child.getOrder() % 2 === order % 2,
     );
   }
 
-  protected _getVerticalPadding(): number {
+  getVerticalPadding(): number {
     return BalancedSorter.INTERNODE_VERTICAL_PADDING;
   }
 }

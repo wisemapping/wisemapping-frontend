@@ -19,27 +19,26 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import Node from './Node';
 import SymmetricSorter from './SymmetricSorter';
 import BalancedSorter from './BalancedSorter';
+import RootedTreeSet from './RootedTreeSet';
+import SizeType from '../SizeType';
+import PositionType from '../PositionType';
+import ChildrenSorterStrategy from './ChildrenSorterStrategy';
 
 class OriginalLayout {
-  constructor(treeSet) {
+  private _treeSet: RootedTreeSet;
+
+  constructor(treeSet: RootedTreeSet) {
     this._treeSet = treeSet;
   }
 
-  /** */
-  // eslint-disable-next-line class-methods-use-this
-  createNode(id, size, position, type) {
+  createNode(id: number, size: SizeType, position: PositionType, type: string): Node {
     $assert($defined(id), 'id can not be null');
-    $assert(size, 'size can not be null');
-    $assert(position, 'position can not be null');
-    $assert(type, 'type can not be null');
-
-    const strategy =
+    const strategy: ChildrenSorterStrategy =
       type === 'root' ? OriginalLayout.BALANCED_SORTER : OriginalLayout.SYMMETRIC_SORTER;
     return new Node(id, size, position, strategy);
   }
 
-  /** */
-  connectNode(parentId, childId, order) {
+  connectNode(parentId: number, childId: number, order: number): void {
     const parent = this._treeSet.find(parentId);
     const child = this._treeSet.find(childId);
 
@@ -54,11 +53,12 @@ class OriginalLayout {
     sorter.verify(this._treeSet, parent);
   }
 
-  /** */
-  disconnectNode(nodeId) {
+  disconnectNode(nodeId: number): void {
     const node = this._treeSet.find(nodeId);
     const parent = this._treeSet.getParent(node);
-    $assert(parent, 'Node already disconnected');
+    if (!parent) {
+      throw new Error('Node already disconnected');
+    }
 
     // Make it fixed
     node.setFree(false);
@@ -75,21 +75,18 @@ class OriginalLayout {
     parent.getSorter().verify(this._treeSet, parent);
   }
 
-  /** */
-  layout() {
+  layout(): void {
     const roots = this._treeSet.getTreeRoots();
     roots.forEach((node) => {
       // Calculate all node heights ...
       const sorter = node.getSorter();
-
       const heightById = sorter.computeChildrenIdByHeights(this._treeSet, node);
       this._layoutChildren(node, heightById);
-
       this._fixOverlapping(node, heightById);
     });
   }
 
-  _layoutChildren(node, heightById) {
+  private _layoutChildren(node: Node, heightById: Map<number, number>): void {
     const nodeId = node.getId();
     const children = this._treeSet.getChildren(node);
     const parent = this._treeSet.getParent(node);
@@ -98,9 +95,9 @@ class OriginalLayout {
 
     // If ether any of the nodes has been changed of position or the height of the children is not
     // the same, children nodes must be repositioned ....
-    const newBranchHeight = heightById[nodeId];
+    const newBranchHeight = heightById.get(nodeId)!;
 
-    const parentHeightChanged = $defined(parent) ? parent._heightChanged : false;
+    const parentHeightChanged = parent ? parent._heightChanged : false;
     const heightChanged = node._branchHeight !== newBranchHeight;
     // eslint-disable-next-line no-param-reassign
     node._heightChanged = heightChanged || parentHeightChanged;
@@ -141,7 +138,6 @@ class OriginalLayout {
         me._treeSet.updateBranchPosition(child, newPos);
       });
 
-      // eslint-disable-next-line no-param-reassign
       node._branchHeight = newBranchHeight;
     }
 
@@ -151,7 +147,7 @@ class OriginalLayout {
     });
   }
 
-  _calculateAlignOffset(node, child, heightById) {
+  private _calculateAlignOffset(node: Node, child: Node, heightById: Map<number, number>): number {
     if (child.isFree()) {
       return 0;
     }
@@ -167,8 +163,8 @@ class OriginalLayout {
     ) {
       if (this._treeSet.hasSinglePathToSingleLeaf(child)) {
         offset =
-          heightById[child.getId()] / 2 -
-          (childHeight + child.getSorter()._getVerticalPadding() * 2) / 2;
+          heightById.get(child.getId())! / 2 -
+          (childHeight + child.getSorter().getVerticalPadding() * 2) / 2;
       } else {
         offset = this._treeSet.isLeaf(child) ? 0 : -(childHeight - nodeHeight) / 2;
       }
@@ -189,13 +185,14 @@ class OriginalLayout {
     return offset;
   }
 
-  static _branchIsTaller(node, heightById) {
+  static _branchIsTaller(node: Node, heightById: Map<number, number>): boolean {
     return (
-      heightById[node.getId()] > node.getSize().height + node.getSorter()._getVerticalPadding() * 2
+      heightById.get(node.getId())! >
+      node.getSize().height + node.getSorter().getVerticalPadding() * 2
     );
   }
 
-  _fixOverlapping(node, heightById) {
+  private _fixOverlapping(node: Node, heightById: Map<number, number>): void {
     const children = this._treeSet.getChildren(node);
 
     if (node.isFree()) {
@@ -206,7 +203,7 @@ class OriginalLayout {
     });
   }
 
-  _shiftBranches(node, heightById) {
+  _shiftBranches(node: Node, heightById: Map<number, number>): void {
     const shiftedBranches = [node];
 
     const siblingsToShift = this._treeSet.getSiblingsInVerticalDirection(
@@ -238,28 +235,22 @@ class OriginalLayout {
     });
   }
 
-  static _branchesOverlap(branchA, branchB, heightById) {
+  static _branchesOverlap(branchA: Node, branchB: Node, heightById: Map<number, number>): boolean {
     // a branch doesn't really overlap with itself
     if (branchA === branchB) {
       return false;
     }
 
-    const topA = branchA.getPosition().y - heightById[branchA.getId()] / 2;
-    const bottomA = branchA.getPosition().y + heightById[branchA.getId()] / 2;
-    const topB = branchB.getPosition().y - heightById[branchB.getId()] / 2;
-    const bottomB = branchB.getPosition().y + heightById[branchB.getId()] / 2;
+    const topA = branchA.getPosition().y - heightById.get(branchA.getId())! / 2;
+    const bottomA = branchA.getPosition().y + heightById.get(branchA.getId())! / 2;
+    const topB = branchB.getPosition().y - heightById.get(branchB.getId())! / 2;
+    const bottomB = branchB.getPosition().y + heightById.get(branchB.getId())! / 2;
 
     return !(topA >= bottomB || bottomA <= topB);
   }
+
+  static SYMMETRIC_SORTER: ChildrenSorterStrategy = new SymmetricSorter();
+
+  static BALANCED_SORTER: ChildrenSorterStrategy = new BalancedSorter();
 }
-
-/**
- * @type {mindplot.layout.SymmetricSorter}
- */
-OriginalLayout.SYMMETRIC_SORTER = new SymmetricSorter();
-/**
- * @type {mindplot.layout.BalancedSorter}
- */
-OriginalLayout.BALANCED_SORTER = new BalancedSorter();
-
 export default OriginalLayout;

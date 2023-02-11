@@ -25,7 +25,13 @@ class SymmetricSorter extends AbstractBasicSorter {
   /**
    * Predict the order and position of a dragged node.
    */
-  predict(graph: RootedTreeSet, parent: Node, node: Node, position: PositionType, free?: boolean) {
+  predict(
+    graph: RootedTreeSet,
+    parent: Node,
+    node: Node,
+    position: PositionType,
+    free?: boolean,
+  ): [number, PositionType] {
     const self = this;
     const rootNode = graph.getRootNode(parent);
 
@@ -97,7 +103,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     const last = parentChildren[parentChildren.length - 1];
     for (let i = 0; i < parentChildren.length; i++) {
       const parentChild = parentChildren[i];
-      const nodeAfter = i + 1 === parentChildren.length ? null : parentChildren[i + 1];
+      const nodeAfter = parentChildren[i + 1];
 
       // Fit at the bottom
       if (!nodeAfter && position.y > parentChild.getPosition().y) {
@@ -291,7 +297,7 @@ class SymmetricSorter extends AbstractBasicSorter {
     return 'Symmetric Sorter';
   }
 
-  protected _getVerticalPadding() {
+  getVerticalPadding() {
     return SymmetricSorter.INTERNODE_VERTICAL_PADDING;
   }
 

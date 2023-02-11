@@ -1044,7 +1044,6 @@ abstract class Topic extends NodeGraph {
         const connector = targetTopic.getShrinkConnector();
         if (connector) {
           connector.setVisibility(false);
-          targetTopic.setChildrenShrunken(true);
         }
       }
 
