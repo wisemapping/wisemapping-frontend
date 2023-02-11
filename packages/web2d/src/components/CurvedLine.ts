@@ -64,7 +64,7 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     return this.peer.getTo();
   }
 
-  setShowEndArrow(visible) {
+  setShowEndArrow(visible: boolean) {
     this.peer.setShowEndArrow(visible);
   }
 
@@ -72,15 +72,15 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     return this;
   }
 
-  isShowEndArrow() {
+  isShowEndArrow(): boolean {
     return this.peer.isShowEndArrow();
   }
 
-  setShowStartArrow(visible) {
+  setShowStartArrow(visible: boolean): void {
     this.peer.setShowStartArrow(visible);
   }
 
-  isShowStartArrow() {
+  isShowStartArrow(): boolean {
     return this.peer.isShowStartArrow();
   }
 

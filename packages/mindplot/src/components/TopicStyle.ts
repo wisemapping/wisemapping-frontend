@@ -100,7 +100,7 @@ const TopicDefaultStyles = {
       color: '#525C61',
     },
     msgKey: 'ISOLATED_TOPIC',
-    connectionStyle: LineType.THIN_CURVED,
+    connectionStyle: LineType.THICK_CURVED,
     connectionColor: '#495879',
     shapeType: 'line' as TopicShapeType,
   },

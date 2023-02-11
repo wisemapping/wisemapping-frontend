@@ -30,7 +30,7 @@ class CurvedLinePeer extends ElementPeer {
   private _y2: number;
   private _showEndArrow: boolean;
   private _showStartArrow: boolean;
-  private _width: any;
+  private _width: number;
 
   constructor() {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -39,13 +39,14 @@ class CurvedLinePeer extends ElementPeer {
     this._customControlPoint_2 = false;
     this._control1 = { x: 0, y: 0 };
     this._control2 = { x: 0, y: 0 };
-    this.setWidth(1);
     this._showEndArrow = false;
     this._showStartArrow = false;
     this._x1 = 0;
     this._x2 = 0;
     this._y1 = 0;
     this._y2 = 0;
+    this._width = 1;
+    this._updatePath();
   }
 
   setSrcControlPoint(control: PositionType): void {
@@ -136,7 +137,7 @@ class CurvedLinePeer extends ElementPeer {
     this._updatePath();
   }
 
-  isShowStartArrow() {
+  isShowStartArrow(): boolean {
     return this._showStartArrow;
   }
 
@@ -144,15 +145,18 @@ class CurvedLinePeer extends ElementPeer {
     return this._width;
   }
 
-  setWidth(value: number) {
+  setWidth(value: number): void {
     this._width = value;
-    if (this._width === 1) {
-      this.setFill('none');
-    }
+    this._updatePath();
+  }
+
+  setFill(color: string, opacity?: number) {
+    super.setFill(color, opacity);
     this._updatePath();
   }
 
   private _updatePath(avoidControlPointFix?: boolean) {
+    // Update style based on width ....
     if ($defined(this._x1) && $defined(this._y1) && $defined(this._x2) && $defined(this._y2)) {
       this._calculateAutoControlPoints(avoidControlPointFix);
 
@@ -178,7 +182,7 @@ class CurvedLinePeer extends ElementPeer {
       const curveP6 = CurvedLinePeer._pointToStr(this._x1, this._y1 + this.getWidth() / 2);
 
       const path = `M${moveTo} C${curveP1} ${curveP2} ${curveP3} ${
-        this.getWidth() > 1 ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''
+        this.getWidth() >= 1 ? ` ${curveP4} ${curveP5} ${curveP6} Z` : ''
       }`;
       this._native.setAttribute('d', path);
     }
@@ -233,7 +237,7 @@ class CurvedLinePeer extends ElementPeer {
     }
   }
 
-  setDashed(length, spacing) {
+  setDashed(length: number, spacing: number) {
     if ($defined(length) && $defined(spacing)) {
       this._native.setAttribute('stroke-dasharray', `${length},${spacing}`);
     } else {
