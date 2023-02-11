@@ -198,25 +198,11 @@ class SymmetricSorter extends AbstractBasicSorter {
     node.setOrder(0);
   }
 
-  /**
-   * @param treeSet
-   * @param node
-   * @throws will throw an error if treeSet is null or undefined
-   * @throws will throw an error if node is null or undefined
-   * @throws will throw an error if the calculated x offset cannot be converted to a numeric
-   * value, is null or undefined
-   * @throws will throw an error if the calculated y offset cannot be converted to a numeric
-   * value, is null or undefined
-   * @return offsets
-   */
-  computeOffsets(treeSet: RootedTreeSet, node: Node) {
-    $assert(treeSet, 'treeSet can no be null.');
-    $assert(node, 'node can no be null.');
-
+  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     const children = this._getSortedChildren(treeSet, node);
 
     // Compute heights ...
-    const heights = children
+    const sizeById = children
       .map((child) => ({
         id: child.getId(),
         order: child.getOrder(),
@@ -227,30 +213,26 @@ class SymmetricSorter extends AbstractBasicSorter {
       .reverse();
 
     // Compute the center of the branch ...
-    let totalHeight = 0;
-    heights.forEach((elem) => {
-      totalHeight += elem.height;
-    });
+    const totalHeight = sizeById
+      .map((e) => e.height)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     let ysum = totalHeight / 2;
 
     // Calculate the offsets ...
-    const result = {};
-    for (let i = 0; i < heights.length; i++) {
-      ysum -= heights[i].height;
-      const childNode = treeSet.find(heights[i].id);
+    const result = new Map<number, PositionType>();
+    for (let i = 0; i < sizeById.length; i++) {
+      ysum -= sizeById[i].height;
+      const childNode = treeSet.find(sizeById[i].id);
       const direction = this.getChildDirection(treeSet, childNode);
 
-      const yOffset = ysum + heights[i].height / 2;
+      const yOffset = ysum + sizeById[i].height / 2;
       const xOffset =
         direction *
-        (heights[i].width / 2 +
+        (sizeById[i].width / 2 +
           node.getSize().width / 2 +
           SymmetricSorter.INTERNODE_HORIZONTAL_PADDING);
 
-      $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
-      $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
-
-      result[heights[i].id] = { x: xOffset, y: yOffset };
+      result.set(sizeById[i].id, { x: xOffset, y: yOffset });
     }
     return result;
   }

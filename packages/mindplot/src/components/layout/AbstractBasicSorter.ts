@@ -47,12 +47,9 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
     if (children.length === 0 || node.areChildrenShrunken()) {
       result = height;
     } else {
-      let childrenHeight = 0;
-
-      children.forEach((child) => {
-        childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-      });
-
+      const childrenHeight = children
+        .map((child) => this._computeChildrenHeight(treeSet, child, heightCache))
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       result = Math.max(height, childrenHeight);
     }
 
@@ -63,7 +60,7 @@ abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
     return result;
   }
 
-  protected _getSortedChildren(treeSet: RootedTreeSet, node: Node) {
+  protected _getSortedChildren(treeSet: RootedTreeSet, node: Node): Node[] {
     const result = treeSet.getChildren(node);
     result.sort((a, b) => a.getOrder() - b.getOrder());
     return result;

@@ -96,8 +96,7 @@ class Text extends WorkspaceElement<TextPeer> {
   }
 
   getFontHeight(): number {
-    const lines = this.peer.getText().split('\n').length;
-    return this.getShapeHeight() / lines;
+    return this.getShapeHeight() / this.peer.getTextLines().length;
   }
 
   getPosition(): PositionType {

@@ -1233,7 +1233,7 @@ abstract class Topic extends NodeGraph {
       textShape.setFontName(fontFamily);
 
       const text = this.getText();
-      textShape.setText(text.trim());
+      textShape.setText(text);
 
       // Update outer shape style ...
       const outerShape = this.getOuterShape();

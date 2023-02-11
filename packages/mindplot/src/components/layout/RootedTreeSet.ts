@@ -334,9 +334,8 @@ class RootedTreeSet {
     const yOffset = oldPos.y - position.y;
 
     const children = this.getChildren(node);
-    const me = this;
     children.forEach((child) => {
-      me.shiftBranchPosition(child, xOffset, yOffset);
+      this.shiftBranchPosition(child, xOffset, yOffset);
     });
   }
 

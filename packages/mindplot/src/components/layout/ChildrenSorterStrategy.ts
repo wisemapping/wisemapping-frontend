@@ -22,7 +22,7 @@ import PositionType from '../PositionType';
 abstract class ChildrenSorterStrategy {
   abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node): Map<number, number>;
 
-  abstract computeOffsets(treeSet: RootedTreeSet, node: Node): void;
+  abstract computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType>;
 
   abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void;
 

@@ -20,53 +20,77 @@ import FontPeer, { FontStyle } from './FontPeer';
 import ElementPeer from './ElementPeer';
 import { getPosition } from '../utils/DomUtils';
 import SizeType from '../../SizeType';
+import PositionType from '../../PositionType';
 
 class TextPeer extends ElementPeer {
   private _position: { x: number; y: number };
   private _font: FontPeer;
-  private _textAlign: any;
-  private _text: string | undefined;
+  private _textAlign: string;
+  private _text: string;
 
   constructor(fontPeer: FontPeer) {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'text');
     super(svgElement);
     this._position = { x: 0, y: 0 };
     this._font = fontPeer;
+    this._text = '';
+    this._textAlign = 'left';
   }
 
-  append(element: ElementPeer) {
+  append(element: ElementPeer): void {
     this._native.appendChild(element._native);
   }
 
-  setTextAlignment(align: string) {
+  setTextAlignment(align: string): void {
     this._textAlign = align;
   }
 
-  getTextAlignment() {
-    return $defined(this._textAlign) ? this._textAlign : 'left';
+  getTextAlignment(): 'left' | 'right' | 'center' {
+    return this._textAlign ? (this._textAlign as 'left' | 'right' | 'center') : 'left';
   }
 
   setText(text: string) {
+    this._text = text;
+
     // Remove all previous nodes ...
     while (this._native.firstChild) {
       this._native.removeChild(this._native.firstChild);
     }
 
-    this._text = text;
-    if (text) {
-      const lines = text.split('\n');
-      lines.forEach((line) => {
-        const tspan = window.document.createElementNS(ElementPeer.svgNamespace, 'tspan');
-        tspan.setAttribute('dy', '1em');
-        tspan.setAttribute('x', String(this.getPosition().x));
+    // Add nodes ...
+    this.getTextLines().forEach((l) => {
+      // Append a new line ...
+      const tspan = window.document.createElementNS(ElementPeer.svgNamespace, 'tspan');
+      tspan.setAttribute('dy', '1em');
+      tspan.setAttribute('x', this.getPosition().x.toFixed(1));
 
-        tspan.textContent = line.length === 0 ? ' ' : line;
-        this._native.appendChild(tspan);
-      });
-    }
+      // Add new line ...
+      tspan.textContent = l || ' ';
+      this._native.appendChild(tspan);
+    });
   }
 
-  getText(): any {
+  getTextLines(): string[] {
+    const result: string[] = [];
+    if (this._text) {
+      const text = this._text;
+      let line = '';
+      let i = 0;
+      do {
+        const c = text[i];
+        if (c === '\n' || i === text.length) {
+          result.push(line);
+          line = '';
+        } else {
+          line = line + c;
+        }
+        i = i + 1;
+      } while (i < text.length + 1);
+    }
+    return result;
+  }
+
+  getText(): string {
     return this._text;
   }
 
@@ -81,20 +105,20 @@ class TextPeer extends ElementPeer {
     });
   }
 
-  getPosition() {
+  getPosition(): PositionType {
     return this._position;
   }
 
-  getNativePosition() {
+  getNativePosition(): { left: number; top: number } {
     return getPosition(this._native);
   }
 
   setFont(fontName: string, size: number, style: string, weight: string): void {
-    if ($defined(fontName)) {
+    if (fontName) {
       this._font = new FontPeer(fontName);
     }
 
-    if ($defined(style)) {
+    if (style) {
       this._font.setStyle(style);
     }
     if ($defined(weight)) {
@@ -103,10 +127,10 @@ class TextPeer extends ElementPeer {
     if ($defined(size)) {
       this._font.setSize(size);
     }
-    this._updateFontStyle();
+    this.updateFontStyle();
   }
 
-  _updateFontStyle() {
+  private updateFontStyle() {
     this._native.setAttribute('font-family', this._font.getFontName());
     this._native.setAttribute('font-size', this._font.getGraphSize());
     this._native.setAttribute('font-style', this._font.getStyle());
@@ -123,17 +147,17 @@ class TextPeer extends ElementPeer {
 
   setTextSize(size: number) {
     this._font.setSize(size);
-    this._updateFontStyle();
+    this.updateFontStyle();
   }
 
   setStyle(style: string) {
     this._font.setStyle(style);
-    this._updateFontStyle();
+    this.updateFontStyle();
   }
 
   setWeight(weight: string) {
     this._font.setWeight(weight);
-    this._updateFontStyle();
+    this.updateFontStyle();
   }
 
   setFontName(fontName: string): void {
@@ -142,7 +166,7 @@ class TextPeer extends ElementPeer {
     this._font.setSize(oldFont.getSize());
     this._font.setStyle(oldFont.getStyle());
     this._font.setWeight(oldFont.getWeight());
-    this._updateFontStyle();
+    this.updateFontStyle();
   }
 
   getFontStyle(): FontStyle {
@@ -159,7 +183,7 @@ class TextPeer extends ElementPeer {
 
   setFontSize(size: number): void {
     this._font.setSize(size);
-    this._updateFontStyle();
+    this.updateFontStyle();
   }
 
   getShapeWidth(): number {

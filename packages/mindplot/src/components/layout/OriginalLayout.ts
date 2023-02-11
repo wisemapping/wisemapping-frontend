@@ -81,15 +81,17 @@ class OriginalLayout {
       // Calculate all node heights ...
       const sorter = node.getSorter();
       const heightById = sorter.computeChildrenIdByHeights(this._treeSet, node);
-      this._layoutChildren(node, heightById);
-      this._fixOverlapping(node, heightById);
+
+      this.layoutChildren(node, heightById);
+      // this.fixOverlapping(node, heightById);
     });
   }
 
-  private _layoutChildren(node: Node, heightById: Map<number, number>): void {
+  private layoutChildren(node: Node, heightById: Map<number, number>): void {
     const nodeId = node.getId();
     const children = this._treeSet.getChildren(node);
     const parent = this._treeSet.getParent(node);
+
     const childrenOrderMoved = children.some((child) => child.hasOrderChanged());
     const childrenSizeChanged = children.some((child) => child.hasSizeChanged());
 
@@ -99,43 +101,24 @@ class OriginalLayout {
 
     const parentHeightChanged = parent ? parent._heightChanged : false;
     const heightChanged = node._branchHeight !== newBranchHeight;
-    // eslint-disable-next-line no-param-reassign
     node._heightChanged = heightChanged || parentHeightChanged;
 
     if (childrenOrderMoved || childrenSizeChanged || heightChanged || parentHeightChanged) {
       const sorter = node.getSorter();
       const offsetById = sorter.computeOffsets(this._treeSet, node);
       const parentPosition = node.getPosition();
-      const me = this;
 
       children.forEach((child) => {
-        const offset = offsetById[child.getId()];
-
-        const childFreeDisplacement = child.getFreeDisplacement();
-        const direction = node.getSorter().getChildDirection(me._treeSet, child);
-
-        if (
-          (direction > 0 && childFreeDisplacement.x < 0) ||
-          (direction < 0 && childFreeDisplacement.x > 0)
-        ) {
-          child.resetFreeDisplacement();
-          child.setFreeDisplacement({
-            x: -childFreeDisplacement.x,
-            y: childFreeDisplacement.y,
-          });
-        }
-
-        offset.x += child.getFreeDisplacement().x;
-        offset.y += child.getFreeDisplacement().y;
+        const offset = offsetById.get(child.getId())!;
 
         const parentX = parentPosition.x;
         const parentY = parentPosition.y;
 
         const newPos = {
           x: parentX + offset.x,
-          y: parentY + offset.y + me._calculateAlignOffset(node, child, heightById),
+          y: parentY + offset.y + this.calculateAlignOffset(node, child, heightById),
         };
-        me._treeSet.updateBranchPosition(child, newPos);
+        this._treeSet.updateBranchPosition(child, newPos);
       });
 
       node._branchHeight = newBranchHeight;
@@ -143,15 +126,11 @@ class OriginalLayout {
 
     // Continue reordering the children nodes ...
     children.forEach((child) => {
-      this._layoutChildren(child, heightById);
+      this.layoutChildren(child, heightById);
     });
   }
 
-  private _calculateAlignOffset(node: Node, child: Node, heightById: Map<number, number>): number {
-    if (child.isFree()) {
-      return 0;
-    }
-
+  private calculateAlignOffset(node: Node, child: Node, heightById: Map<number, number>): number {
     let offset = 0;
 
     const nodeHeight = node.getSize().height;
@@ -192,14 +171,11 @@ class OriginalLayout {
     );
   }
 
-  private _fixOverlapping(node: Node, heightById: Map<number, number>): void {
+  private fixOverlapping(node: Node, heightById: Map<number, number>): void {
     const children = this._treeSet.getChildren(node);
 
-    if (node.isFree()) {
-      this._shiftBranches(node, heightById);
-    }
     children.forEach((child) => {
-      this._fixOverlapping(child, heightById);
+      this.fixOverlapping(child, heightById);
     });
   }
 

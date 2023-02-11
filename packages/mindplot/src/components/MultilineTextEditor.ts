@@ -59,6 +59,7 @@ class EditorComponent extends Events {
       resize: 'none',
       overflow: 'hidden',
       padding: '0px 0px 0px 0px',
+      lineHeight: '100%',
     });
 
     result.append(textareaElem);
@@ -121,7 +122,7 @@ class EditorComponent extends Events {
     });
   }
 
-  private resize(text?: string) {
+  private resize(text?: string): void {
     // Force relayout ...
     EventBus.instance.fireEvent('forceLayout');
 
@@ -132,15 +133,12 @@ class EditorComponent extends Events {
 
     const textValue = text || this.getTextAreaText();
     const textElem = this.getTextareaElem();
-    const lines = textValue.split('\n');
 
-    let maxLineLength = 1;
-    lines.forEach((line: string) => {
-      maxLineLength = Math.max(line.length, maxLineLength);
-    });
+    const rows = [...textValue].filter((x) => x === '\n').length + 1;
+    const maxLineLength = Math.max(...textValue.split('\n').map((l) => l.length));
 
     textElem.attr('cols', maxLineLength);
-    textElem.attr('rows', lines.length);
+    textElem.attr('rows', rows);
 
     this._containerElem.css({
       width: `${maxLineLength + 2}em`,

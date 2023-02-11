@@ -148,7 +148,7 @@ class BalancedSorter extends AbstractBasicSorter {
     }
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node) {
+  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
 
@@ -180,7 +180,7 @@ class BalancedSorter extends AbstractBasicSorter {
     let ysum = 0;
 
     // Calculate the offsets ...
-    const result = {};
+    const result = new Map<number, PositionType>();
     for (let i = 0; i < heights.length; i++) {
       const direction = heights[i].order % 2 ? -1 : 1;
 
@@ -202,7 +202,7 @@ class BalancedSorter extends AbstractBasicSorter {
       $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
       $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
 
-      result[heights[i].id] = { x: xOffset, y: yOffset };
+      result.set(heights[i].id, { x: xOffset, y: yOffset });
     }
     return result;
   }

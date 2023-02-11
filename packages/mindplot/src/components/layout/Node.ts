@@ -145,7 +145,6 @@ class Node {
 
   /** */
   setSize(size: SizeType) {
-    $assert($defined(size), 'Size can not be null');
     this._setProperty('size', { ...size });
   }
 
@@ -177,14 +176,7 @@ class Node {
 
   setPosition(position: PositionType) {
     // This is a performance improvement to avoid movements that really could be avoided.
-    const currentPos = this.getPosition();
-    if (
-      currentPos == null ||
-      Math.abs(currentPos.x - position.x) > 2 ||
-      Math.abs(currentPos.y - position.y) > 2
-    ) {
-      this._setProperty('position', position);
-    }
+    this._setProperty('position', position);
   }
 
   _setProperty(key: string, value) {
