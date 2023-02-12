@@ -20,22 +20,13 @@ import { Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
 
 import Topic from './Topic';
 import Shape from './util/Shape';
-import NodeModel from './model/NodeModel';
 import Canvas from './Canvas';
 import SizeType from './SizeType';
 import PositionType from './PositionType';
-import { NodeOption } from './NodeGraph';
 
 class MainTopic extends Topic {
-  private INNER_RECT_ATTRIBUTES: { stroke: string };
-
-  constructor(model: NodeModel, options: NodeOption) {
-    super(model, options);
-    this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
-  }
-
   buildDragShape(): ElementClass<ElementPeer> {
-    const innerShape = this._buildShape(this.INNER_RECT_ATTRIBUTES, this.getShapeType());
+    const innerShape = this._buildShape(this.getShapeType());
     const size = this.getSize();
     innerShape.setSize(size.width, size.height);
     innerShape.setPosition(0, 0);

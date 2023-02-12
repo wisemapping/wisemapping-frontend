@@ -17,9 +17,7 @@
  */
 
 const CONNECTOR_WIDTH = 6;
-const INNER_RECT_ATTRIBUTES = { stroke: '2 solid' };
 
 export default {
   CONNECTOR_WIDTH,
-  INNER_RECT_ATTRIBUTES,
 };

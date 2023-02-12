@@ -143,7 +143,7 @@ abstract class WorkspaceElement<T extends ElementPeer> {
    *  color: stroke color
    *  opacity: stroke visibility
    */
-  setStroke(width: number, style: string, color?: string, opacity?: number) {
+  setStroke(width: number | null, style?: string, color?: string, opacity?: number) {
     if (
       style != null &&
       style !== undefined &&

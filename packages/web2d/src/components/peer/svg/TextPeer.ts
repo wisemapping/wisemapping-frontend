@@ -96,12 +96,12 @@ class TextPeer extends ElementPeer {
 
   setPosition(x: number, y: number) {
     this._position = { x, y };
-    this._native.setAttribute('y', String(y));
-    this._native.setAttribute('x', String(x));
+    this._native.setAttribute('y', y.toFixed(2));
+    this._native.setAttribute('x', x.toFixed(2));
 
     // tspan must be positioned manually.
     Array.from(this._native.querySelectorAll('tspan')).forEach((element) => {
-      (element as Element).setAttribute('x', String(x));
+      (element as Element).setAttribute('x', x.toFixed(2));
     });
   }
 

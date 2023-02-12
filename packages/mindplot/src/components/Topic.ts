@@ -17,10 +17,9 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import { Rect, Text, Group, ElementClass, ElementPeer, StyleAttributes } from '@wisemapping/web2d';
+import { Rect, Text, Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
-import TopicConfig from './TopicConfig';
 import TopicStyle from './TopicStyle';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
@@ -211,7 +210,7 @@ abstract class Topic extends NodeGraph {
   getInnerShape(): LineTopicShape | Rect | LineTopicShape {
     if (!this._innerShape) {
       // Create inner box.
-      this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
+      this._innerShape = this._buildShape(this.getShapeType());
 
       // Define the pointer ...
       if (!this.isCentralTopic() && !this.isReadOnly()) {
@@ -223,23 +222,20 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  protected _buildShape(
-    attributes: StyleAttributes,
-    shapeType: TopicShapeType,
-  ): LineTopicShape | Rect | LineTopicShape {
+  protected _buildShape(shapeType: TopicShapeType): LineTopicShape | Rect | LineTopicShape {
     let result: LineTopicShape | Rect | LineTopicShape;
     switch (shapeType) {
       case 'rectangle':
-        result = new Rect(0, attributes);
+        result = new Rect(0, { strokeWidth: 2 });
         break;
       case 'elipse':
-        result = new Rect(0.9, attributes);
+        result = new Rect(0.9, { strokeWidth: 2 });
         break;
       case 'rounded rectangle':
-        result = new Rect(0.3, attributes);
+        result = new Rect(0.3, { strokeWidth: 2 });
         break;
       case 'line':
-        result = new LineTopicShape(this);
+        result = new LineTopicShape(this, { strokeWidth: 2 });
         break;
       case 'image':
         result = new LineTopicShape(this);
@@ -266,7 +262,7 @@ abstract class Topic extends NodeGraph {
 
   getOuterShape(): ElementClass<ElementPeer> {
     if (!this._outerShape) {
-      const rect = this._buildShape({}, 'rounded rectangle');
+      const rect = this._buildShape('rounded rectangle');
 
       rect.setPosition(-3, -3);
       rect.setOpacity(0);
@@ -1271,7 +1267,7 @@ abstract class Topic extends NodeGraph {
 
       // Update topic color ...
       const borderColor = this.getBorderColor();
-      this.getInnerShape().setStroke(1, 'solid', borderColor);
+      this.getInnerShape().setStroke(null, 'solid', borderColor);
 
       const bgColor = this.getBackgroundColor();
       this.getInnerShape().setFill(bgColor);

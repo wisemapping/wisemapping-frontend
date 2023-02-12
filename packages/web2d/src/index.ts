@@ -37,7 +37,7 @@ export {
   Arrow,
   CurvedLine,
   WorkspaceElement as ElementClass,
-  Ellipse as Elipse,
+  Ellipse,
   Group,
   Image,
   StraightLine,

@@ -15,19 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { StraightLine } from '@wisemapping/web2d';
+import { StraightLine, StyleAttributes } from '@wisemapping/web2d';
 import SizeType from '../SizeType';
 import Topic from '../Topic';
 
 class LineTopicShape extends StraightLine {
   private _size: SizeType | null;
 
-  constructor(topic: Topic) {
+  constructor(topic: Topic, attributes?: StyleAttributes) {
     const stokeColor = topic.getConnectionColor();
-    super({
-      strokeColor: stokeColor,
-      strokeWidth: 1,
-    });
+    super({ ...attributes, strokeColor: stokeColor });
     this._size = null;
   }
 

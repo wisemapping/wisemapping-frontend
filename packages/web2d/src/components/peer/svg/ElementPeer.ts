@@ -159,7 +159,7 @@ class ElementPeer {
 
   setStroke(width: number | null, style?: string | null, color?: string | null, opacity?: number) {
     if ($defined(width)) {
-      this._native.setAttribute('stroke-width', `${width}px`);
+      this._native.setAttribute('stroke-width', `${width}`);
     }
 
     if (color) {

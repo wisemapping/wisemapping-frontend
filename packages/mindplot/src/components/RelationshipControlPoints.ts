@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 // eslint-disable-next-line max-classes-per-file
-import { Elipse, StraightLine } from '@wisemapping/web2d';
+import { Ellipse, StraightLine } from '@wisemapping/web2d';
 import Shape from './util/Shape';
 import ActionDispatcher from './ActionDispatcher';
 import Canvas from './Canvas';
@@ -30,7 +30,7 @@ export enum PivotType {
 }
 
 class ControlPivotLine {
-  private _dot: Elipse;
+  private _dot: Ellipse;
 
   private _line: StraightLine;
 
@@ -64,7 +64,7 @@ class ControlPivotLine {
     this._relationship = relationship;
 
     // Build dot controller ...
-    this._dot = new Elipse({
+    this._dot = new Ellipse({
       width: 6,
       height: 6,
       stroke: '1 solid #6589de',

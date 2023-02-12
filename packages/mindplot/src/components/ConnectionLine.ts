@@ -104,21 +104,21 @@ class ConnectionLine {
     this._color = color;
     switch (this._type) {
       case LineType.POLYLINE_MIDDLE:
-        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setStroke(2, 'solid', color, 1);
         break;
       case LineType.POLYLINE_CURVED:
-        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setStroke(2, 'solid', color, 1);
         break;
       case LineType.THIN_CURVED:
-        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setStroke(2, 'solid', color, 1);
         this._line.setFill(color, 1);
         break;
       case LineType.THICK_CURVED:
-        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setStroke(2, 'solid', color, 1);
         this._line.setFill(color, 1);
         break;
       case LineType.ARC:
-        this._line.setStroke(1, 'solid', color, 1);
+        this._line.setStroke(2, 'solid', color, 1);
         break;
       default: {
         const exhaustiveCheck: never = this._type;

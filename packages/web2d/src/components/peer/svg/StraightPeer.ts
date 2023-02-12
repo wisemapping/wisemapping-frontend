@@ -37,15 +37,15 @@ class StraightLinePeer extends ElementPeer {
   setFrom(x1: number, y1: number) {
     this._x1 = x1;
     this._y1 = y1;
-    this._native.setAttribute('x1', String(x1));
-    this._native.setAttribute('y1', String(y1));
+    this._native.setAttribute('x1', x1.toFixed(2));
+    this._native.setAttribute('y1', y1.toFixed(2));
   }
 
   setTo(x2: number, y2: number) {
     this._x2 = x2;
     this._y2 = y2;
-    this._native.setAttribute('x2', String(x2));
-    this._native.setAttribute('y2', String(y2));
+    this._native.setAttribute('x2', x2.toFixed(2));
+    this._native.setAttribute('y2', y2.toFixed(2));
   }
 
   getFrom() {

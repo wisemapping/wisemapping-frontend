@@ -25,7 +25,7 @@ class ArcLine extends ArcLine2d {
   private _sourceTopic: Topic;
 
   constructor(sourceTopic: Topic, targetTopic: Topic) {
-    super();
+    super({ strokeWidth: 2 });
     this._targetTopic = targetTopic;
     this._sourceTopic = sourceTopic;
   }
