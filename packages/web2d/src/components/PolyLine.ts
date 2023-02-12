@@ -42,9 +42,6 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
     return this;
   }
 
-  updateLine() {
-    throw new Error('Method not implemented.');
-  }
   getTo(): PositionType {
     throw new Error('Method not implemented.');
   }

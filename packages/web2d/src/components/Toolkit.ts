@@ -26,6 +26,7 @@ import ArrowPeer from './peer/svg/ArrowPeer';
 import TextPeer from './peer/svg/TextPeer';
 import ImagePeer from './peer/svg/ImagePeer';
 import RectPeer from './peer/svg/RectPeer';
+import ArcLinePeer from './peer/svg/ArcLinePeer';
 
 class Toolkit {
   static createWorkspace(element?: HTMLElement) {
@@ -50,6 +51,10 @@ class Toolkit {
 
   static createCurvedLine(): CurvedLinePeer {
     return new CurvedLinePeer();
+  }
+
+  static createArcLine(): ArcLinePeer {
+    return new ArcLinePeer();
   }
 
   static createArrow() {

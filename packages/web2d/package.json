@@ -20,7 +20,6 @@
     "dev": "webpack --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint src",
-    "playground": "webpack serve --config webpack.playground.js",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test:integration": "start-server-and-test storybook http-get://localhost:6006 cy:run",

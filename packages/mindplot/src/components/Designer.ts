@@ -890,10 +890,9 @@ class Designer extends Events {
   }
 
   changeConnectionStyle(type: LineType): void {
-    const validateFunc = (topic: Topic) => !topic.isCentralTopic();
-
-    const validateError = $msg('CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED');
-    const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
+    const topicsIds = this.getModel()
+      .filterSelectedTopics()
+      .map((t) => t.getId());
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeConnectionStyleToTopic(topicsIds, type);
     }

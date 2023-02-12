@@ -22,6 +22,7 @@ import PositionType from './PositionType';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import Canvas from './Canvas';
+import ArcLine from './widget/ArcLine';
 
 // eslint-disable-next-line no-shadow
 export enum LineType {
@@ -29,6 +30,7 @@ export enum LineType {
   POLYLINE_MIDDLE,
   POLYLINE_CURVED,
   THICK_CURVED,
+  ARC,
 }
 
 class ConnectionLine {
@@ -81,8 +83,13 @@ class ConnectionLine {
         line = new CurvedLine();
         (line as CurvedLine).setWidth(this._targetTopic.isCentralTopic() ? 15 : 3);
         break;
-      default:
-        throw new Error(`Unexpected line type. ${lineType}`);
+      case LineType.ARC:
+        line = new ArcLine(this._sourceTopic, this._targetTopic);
+        break;
+      default: {
+        const exhaustiveCheck: never = lineType;
+        throw new Error(exhaustiveCheck);
+      }
     }
     return line;
   }
@@ -110,8 +117,13 @@ class ConnectionLine {
         this._line.setStroke(1, 'solid', color, 1);
         this._line.setFill(color, 1);
         break;
-      default:
-        throw new Error(`Unexpected line type. ${this._type}`);
+      case LineType.ARC:
+        this._line.setStroke(1, 'solid', color, 1);
+        break;
+      default: {
+        const exhaustiveCheck: never = this._type;
+        throw new Error(exhaustiveCheck);
+      }
     }
     return color;
   }

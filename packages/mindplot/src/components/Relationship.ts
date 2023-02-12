@@ -277,8 +277,6 @@ class Relationship extends ConnectionLine {
 
     this._focusShape.setSrcControlPoint(ctrlPoints[0]);
     this._focusShape.setDestControlPoint(ctrlPoints[1]);
-
-    this._focusShape.updateLine();
   }
 
   addEvent(eventType: string, listener: () => void) {

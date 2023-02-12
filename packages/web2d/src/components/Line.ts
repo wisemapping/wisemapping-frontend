@@ -70,8 +70,6 @@ interface Line {
 
   removeEvent(value, listener): void;
 
-  updateLine(): void;
-
   getElementClass(): WorkspaceElement<ElementPeer>;
 }
 export default Line;

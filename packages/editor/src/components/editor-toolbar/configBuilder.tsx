@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React from 'react';
-import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
+import FormatPaintIconOutlineIcon from '@mui/icons-material/FormatPaintOutlined';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
 import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
 import TextDecreaseOutlinedIcon from '@mui/icons-material/TextDecreaseOutlined';
@@ -38,6 +38,7 @@ import TimelineOutined from '@mui/icons-material/TimelineOutlined';
 import ShareOutlined from '@mui/icons-material/ShareOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
+import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -62,7 +63,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colorAndShapeToolbarConfiguration: ActionConfig = {
-    icon: <BrushOutlinedIcon />,
+    icon: <FormatPaintIconOutlineIcon />,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-topic-style',
       defaultMessage: 'Topic Style',
@@ -181,6 +182,15 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         }),
         onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
         selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
+      },
+      {
+        icon: <ShortcutIconOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-connection-style-arc',
+          defaultMessage: 'Arc',
+        }),
+        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.ARC),
+        selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.ARC,
       },
       {
         icon: <SwapCallsOutlined />,
@@ -444,9 +454,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   return [
     addNodeToolbarConfiguration,
     deleteNodeToolbarConfiguration,
-    connectionStyleConfiguration,
-    fontFormatToolbarConfiguration,
     colorAndShapeToolbarConfiguration,
+    fontFormatToolbarConfiguration,
+    connectionStyleConfiguration,
     editIconConfiguration,
     editNoteConfiguration,
     editLinkUrlConfiguration,
