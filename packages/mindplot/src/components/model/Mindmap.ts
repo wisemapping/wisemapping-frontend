@@ -21,6 +21,7 @@ import INodeModel, { NodeModelType } from './INodeModel';
 import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
+import ThemeType from './ThemeType';
 
 class Mindmap extends IMindmap {
   private _description: string;
@@ -33,6 +34,8 @@ class Mindmap extends IMindmap {
 
   private _relationships: Array<RelationshipModel>;
 
+  private _theme: ThemeType | undefined;
+
   constructor(id?: string, version: string = ModelCodeName.TANGO) {
     super();
     this._branches = [];
@@ -40,6 +43,10 @@ class Mindmap extends IMindmap {
     this._relationships = [];
     this._version = version;
     this._id = id;
+  }
+
+  getTheme(): ThemeType {
+    return this._theme ? this._theme : 'classic';
   }
 
   /** */

@@ -20,7 +20,6 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import { Rect, Text, Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
-import TopicStyle from './TopicStyle';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
@@ -40,11 +39,11 @@ import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
 import LineTopicShape from './widget/LineTopicShape';
-import ColorUtil from './render/ColorUtil';
 import Icon from './Icon';
 import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import DragTopic from './DragTopic';
+import ThemeFactory from './theme/ThemeFactory';
 
 const ICON_SCALING_FACTOR = 1.3;
 
@@ -119,83 +118,51 @@ abstract class Topic extends NodeGraph {
   }
 
   protected redrawShapeType() {
-    const oldInnerShape = this.getInnerShape();
-    if (oldInnerShape) {
-      this._removeInnerShape();
+    this._removeInnerShape();
 
-      // Create a new one ...
-      const innerShape = this.getInnerShape();
+    // Create a new one ...
+    const innerShape = this.getInnerShape();
 
-      // Update figure size ...
-      const size = this.getSize();
-      this.setSize(size, true);
+    // Update figure size ...
+    const size = this.getSize();
+    this.setSize(size, true);
 
-      const group = this.get2DElement();
-      group.append(innerShape);
+    const group = this.get2DElement();
+    group.append(innerShape);
 
-      // Move text to the front ...
-      const text = this.getOrBuildTextShape();
-      text.moveToFront();
+    // Move text to the front ...
+    const text = this.getOrBuildTextShape();
+    text.moveToFront();
 
-      // Move iconGroup to front ...
-      const iconGroup = this.getIconGroup();
-      if (iconGroup) {
-        iconGroup.moveToFront();
-      }
+    // Move iconGroup to front ...
+    const iconGroup = this.getIconGroup();
+    if (iconGroup) {
+      iconGroup.moveToFront();
+    }
 
-      // Move connector to front
-      const connector = this.getShrinkConnector();
-      if (connector) {
-        connector.moveToFront();
-      }
+    // Move connector to front
+    const connector = this.getShrinkConnector();
+    if (connector) {
+      connector.moveToFront();
     }
   }
 
   getShapeType(): TopicShapeType {
     const model = this.getModel();
-    let result = model.getShapeType();
-    if (!result) {
-      result = TopicStyle.defaultShapeType(this);
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getShapeType(this);
   }
 
   getConnectionStyle(): LineType {
     const model = this.getModel();
-    let result: LineType | undefined = model.getConnectionStyle();
-
-    // Style is infered looking recursivelly on the parent nodes.
-    if (result === undefined) {
-      const parent = this.getParent();
-      if (parent) {
-        result = parent.getConnectionStyle();
-      } else {
-        result = TopicStyle.defaultConnectionType(this);
-      }
-    }
-    return result!;
+    const theme = ThemeFactory.create(model);
+    return theme.getConnectionType(this);
   }
 
   getConnectionColor(): string {
     const model = this.getModel();
-    let result: string | undefined = model.getConnectionColor();
-
-    // Style is infered looking recursivelly on the parent nodes.
-    if (!result) {
-      const parent = this.getParent();
-      if (parent && parent.isCentralTopic()) {
-        // This means that this is central main node, in this case, I will overwrite with the main color if it was defined.
-        result = this.getModel().getConnectionColor() || parent.getModel().getConnectionColor();
-      } else {
-        result = parent?.getConnectionColor();
-      }
-    }
-
-    if (!result) {
-      result = TopicStyle.defaultConnectionColor(this);
-    }
-
-    return result!;
+    const theme = ThemeFactory.create(model);
+    return theme.getConnectionColor(this);
   }
 
   private _removeInnerShape(): ElementClass<ElementPeer> {
@@ -232,7 +199,7 @@ abstract class Topic extends NodeGraph {
         result = new Rect(0.9, { strokeWidth: 2 });
         break;
       case 'rounded rectangle':
-        result = new Rect(0.3, { strokeWidth: 2 });
+        result = new Rect(0.6, { strokeWidth: 2 });
         break;
       case 'line':
         result = new LineTopicShape(this, { strokeWidth: 2 });
@@ -300,14 +267,16 @@ abstract class Topic extends NodeGraph {
   }
 
   private _buildIconGroup(): IconGroup {
+    const model = this.getModel();
+    const theme = ThemeFactory.create(model);
+
     const textHeight = this.getOrBuildTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
     const result = new IconGroup(this.getId(), iconSize);
-    const padding = TopicStyle.getInnerPadding(this);
+    const padding = theme.getInnerPadding(this);
     result.setPosition(padding, padding);
 
     // Load topic features ...
-    const model = this.getModel();
     const featuresModel = model.getFeatures();
 
     featuresModel.forEach((f) => {
@@ -397,78 +366,58 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setFontFamily(value);
 
-    this.redraw();
+    this.redraw(true);
   }
 
   setFontSize(value: number): void {
     const model = this.getModel();
     model.setFontSize(value);
 
-    this.redraw();
+    this.redraw(true);
   }
 
   setFontStyle(value: FontStyleType): void {
     const model = this.getModel();
     model.setFontStyle(value);
 
-    this.redraw();
+    this.redraw(true);
   }
 
   setFontWeight(value: FontWeightType): void {
     const model = this.getModel();
     model.setFontWeight(value);
 
-    this.redraw();
+    this.redraw(true);
   }
 
   getFontWeight(): FontWeightType {
     const model = this.getModel();
-    let result = model.getFontWeight();
-    if (!result) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.weight;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontWeight(this);
   }
 
   getFontFamily(): string {
     const model = this.getModel();
-    let result = model.getFontFamily();
-    if (!result) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.font;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontFamily(this);
   }
 
   getFontColor(): string {
     const model = this.getModel();
-    let result = model.getFontColor();
-    if (!result) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.color;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontColor(this);
   }
 
-  getFontStyle(): string {
+  getFontStyle(): FontStyleType {
     const model = this.getModel();
-    let result = model.getFontStyle();
-    if (!result) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.style;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontStyle(this);
   }
 
   getFontSize(): number {
     const model = this.getModel();
-    let result = model.getFontSize();
-    if (!result) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.size;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontSize(this);
   }
 
   setFontColor(value: string | undefined) {
@@ -485,20 +434,22 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setText(modelText);
 
-    this.redraw();
+    this.redraw(true);
   }
 
   getText(): string {
     const model = this.getModel();
+    const theme = ThemeFactory.create(model);
+
     const text = model.getText();
-    return text || TopicStyle.defaultText(this);
+    return text || theme.getText(this);
   }
 
   setBackgroundColor(color: string | undefined): void {
     const model = this.getModel();
     model.setBackgroundColor(color);
 
-    this.redraw();
+    this.redraw(true);
   }
 
   setConnectionStyle(type: LineType): void {
@@ -517,19 +468,8 @@ abstract class Topic extends NodeGraph {
 
   getBackgroundColor(): string {
     const model = this.getModel();
-    let result = model.getBackgroundColor();
-    if (!result && !this.isCentralTopic()) {
-      // Be sure that not overwride default background color ...
-      const borderColor = model.getBorderColor();
-      if (borderColor) {
-        result = ColorUtil.lightenColor(borderColor, 40);
-      }
-    }
-
-    if (!result) {
-      result = TopicStyle.defaultBackgroundColor(this);
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getBackgroundColor(this);
   }
 
   setBorderColor(color: string | undefined): void {
@@ -541,25 +481,8 @@ abstract class Topic extends NodeGraph {
 
   getBorderColor(): string {
     const model = this.getModel();
-    let result = model.getBorderColor();
-
-    // If the the style is a line, the color is alward the connection one.
-    if (this.getShapeType() === 'line') {
-      result = this.getConnectionColor();
-    }
-
-    if (result === undefined) {
-      const parent = this.getParent();
-      if (parent) {
-        result = parent.getBorderColor();
-      }
-    }
-
-    // If border color has not been defined, use the connection color for the border ...
-    if (!result) {
-      result = this.getConnectionColor();
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getBorderColor(this);
   }
 
   _buildTopicShape(): void {
@@ -638,11 +561,12 @@ abstract class Topic extends NodeGraph {
 
   setOnFocus(focus: boolean) {
     if (this.isOnFocus() !== focus) {
+      const theme = ThemeFactory.create(this.getModel());
       this._onFocus = focus;
       const outerShape = this.getOuterShape();
 
-      const fillColor = TopicStyle.defaultOuterBackgroundColor(this, focus);
-      const borderColor = TopicStyle.defaultOuterBorderColor(this);
+      const fillColor = theme.getOuterBackgroundColor(this, focus);
+      const borderColor = theme.getOuterBorderColor(this);
 
       outerShape.setFill(fillColor);
       outerShape.setStroke(1, 'solid', borderColor);
@@ -1051,7 +975,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  getOrder(): number {
+  getOrder(): number | undefined {
     const model = this.getModel();
     return model.getOrder();
   }
@@ -1184,6 +1108,7 @@ abstract class Topic extends NodeGraph {
         // Has the style change ?
         const connStyleChanged =
           this._outgoingLine.getLineType() !== this.getParent()!.getConnectionStyle();
+
         if (connStyleChanged) {
           // Todo: Review static reference  ...
           const workspace = designer.getWorkSpace();
@@ -1197,13 +1122,8 @@ abstract class Topic extends NodeGraph {
           result = true;
         }
 
-        // Has the color changed ?
-        const color = this._outgoingLine.getStrokeColor();
-        const connColorChanged = color !== this.getParent()!.getConnectionColor();
-        if (connColorChanged) {
-          this._outgoingLine.redraw();
-          result = true;
-        }
+        this._outgoingLine.redraw();
+        result = true;
       }
     }
     return result;
@@ -1211,6 +1131,7 @@ abstract class Topic extends NodeGraph {
 
   redraw(redrawChildren = false): void {
     if (this._isInWorkspace) {
+      const theme = ThemeFactory.create(this.getModel());
       const textShape = this.getOrBuildTextShape();
       // Update font ...
       const fontColor = this.getFontColor();
@@ -1233,8 +1154,8 @@ abstract class Topic extends NodeGraph {
 
       // Update outer shape style ...
       const outerShape = this.getOuterShape();
-      const outerFillColor = TopicStyle.defaultOuterBackgroundColor(this, this.isOnFocus());
-      const outerBorderColor = TopicStyle.defaultOuterBorderColor(this);
+      const outerFillColor = theme.getOuterBackgroundColor(this, this.isOnFocus());
+      const outerBorderColor = theme.getOuterBorderColor(this);
 
       outerShape.setFill(outerFillColor);
       outerShape.setStroke(1, 'solid', outerBorderColor);
@@ -1242,7 +1163,7 @@ abstract class Topic extends NodeGraph {
       // Calculate topic size and adjust elements ...
       const textWidth = textShape.getShapeWidth();
       const textHeight = textShape.getShapeHeight();
-      const padding = TopicStyle.getInnerPadding(this);
+      const padding = theme.getInnerPadding(this);
 
       // Adjust icons group based on the font size ...
       const iconGroup = this.getOrBuildIconGroup();

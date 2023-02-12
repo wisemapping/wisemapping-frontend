@@ -124,7 +124,8 @@ export default class FreemindImporter extends Importer {
           relationship.setSrcCtrlPoint({ x, y: coords.y });
 
           // Fix coord
-          if (srcTopic.getOrder() && srcTopic.getOrder() % 2 !== 0) {
+          const order = srcTopic.getOrder();
+          if (order !== undefined && order % 2 !== 0) {
             const y = coords.y * -1;
             relationship.setSrcCtrlPoint({ x: coords.x, y });
           }
@@ -140,7 +141,8 @@ export default class FreemindImporter extends Importer {
           relationship.setDestCtrlPoint({ x, y: coords.y });
         }
 
-        if (destNode.getOrder() && destNode.getOrder() % 2 !== 0) {
+        const order = destNode.getOrder();
+        if (order !== undefined && order % 2 !== 0) {
           const y = coords.y * -1;
           relationship.setDestCtrlPoint({ x: coords.x, y });
         }

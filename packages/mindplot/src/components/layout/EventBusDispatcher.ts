@@ -60,7 +60,7 @@ class EventBusDispatcher {
     this._layoutManager!.connectNode(
       args.parentNode.getId(),
       args.childNode.getId(),
-      args.childNode.getOrder(),
+      args.childNode.getOrder()!, // @todo: This can be a issue ...
     );
   }
 

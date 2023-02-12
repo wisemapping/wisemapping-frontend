@@ -26,7 +26,8 @@ import PositionType from './PositionType';
 
 class MainTopic extends Topic {
   buildDragShape(): ElementClass<ElementPeer> {
-    const innerShape = this._buildShape(this.getShapeType());
+    const shapeType = this.getShapeType();
+    const innerShape = this._buildShape(shapeType);
     const size = this.getSize();
     innerShape.setSize(size.width, size.height);
     innerShape.setPosition(0, 0);
@@ -50,27 +51,21 @@ class MainTopic extends Topic {
     const group = new Group(groupAttributes);
     group.append(innerShape);
 
-    // Add Text ...
-    if (this.getShapeType() !== 'image') {
-      const textShape = this._buildTextShape(true);
-      const text = this.getText();
-      textShape.setText(text);
-      textShape.setOpacity(0.5);
+    const textShape = this._buildTextShape(true);
+    const text = this.getText();
+    textShape.setText(text);
+    textShape.setOpacity(0.5);
 
-      // Copy text position of the topic element ...
-      const textPosition = this.getOrBuildTextShape().getPosition();
-      textShape.setPosition(textPosition.x, textPosition.y);
+    // Copy text position of the topic element ...
+    const textPosition = this.getOrBuildTextShape().getPosition();
+    textShape.setPosition(textPosition.x, textPosition.y);
 
-      group.append(textShape);
-    }
+    group.append(textShape);
     return group;
   }
 
-  updateTopicShape(targetTopic: Topic) {
-    if (!targetTopic.isCentralTopic()) {
-      // Get the real shape type ...
-      this.redrawShapeType();
-    }
+  updateTopicShape(_targetTopic: Topic) {
+    this.redrawShapeType();
   }
 
   disconnect(workspace: Canvas) {

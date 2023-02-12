@@ -114,6 +114,7 @@ class OriginalLayout {
         const parentX = parentPosition.x;
         const parentY = parentPosition.y;
 
+        console.log(`${parent?.getId()}:${offset.x}`);
         const newPos = {
           x: parentX + offset.x,
           y: parentY + offset.y + this.calculateAlignOffset(node, child, heightById),
@@ -174,6 +175,9 @@ class OriginalLayout {
   private fixOverlapping(node: Node, heightById: Map<number, number>): void {
     const children = this._treeSet.getChildren(node);
 
+    if (node.isFree()) {
+      this._shiftBranches(node, heightById);
+    }
     children.forEach((child) => {
       this.fixOverlapping(child, heightById);
     });

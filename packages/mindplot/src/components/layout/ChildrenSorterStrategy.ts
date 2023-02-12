@@ -24,7 +24,7 @@ abstract class ChildrenSorterStrategy {
 
   abstract computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType>;
 
-  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void;
+  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order?: number): void;
 
   abstract detach(treeSet: RootedTreeSet, node: Node): void;
 

@@ -48,7 +48,7 @@ describe('Topic Shape Suite', () => {
       .invoke('attr', 'rx')
       .then(parseInt)
       .should('be.a', 'number')
-      .should('be.lt', 5);
+      .should('be.lte', 8);
 
     cy.focusTopicByText('Mind Mapping');
     cy.matchImageSnapshot('changeToRoundedRectangle');

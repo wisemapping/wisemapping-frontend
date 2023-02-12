@@ -137,7 +137,8 @@ abstract class INodeModel {
   }
 
   getShapeType(): TopicShapeType {
-    return this.getProperty('shapeType') as TopicShapeType;
+    const result = this.getProperty('shapeType') as TopicShapeType;
+    return result;
   }
 
   setShapeType(type: TopicShapeType | undefined) {
@@ -152,7 +153,7 @@ abstract class INodeModel {
     this.putProperty('order', value);
   }
 
-  getOrder(): number {
+  getOrder(): number | undefined {
     return this.getProperty('order') as number;
   }
 

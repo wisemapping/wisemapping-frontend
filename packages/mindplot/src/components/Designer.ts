@@ -523,8 +523,6 @@ class Designer extends Events {
     const { position } = result;
     childModel.setPosition(position.x, position.y);
 
-    childModel.copy(parentModel);
-
     return childModel;
   }
 
@@ -554,7 +552,7 @@ class Designer extends Events {
         // Hack: if parent is central topic, add node below not on opposite side.
         // This should be done in the layout
         if (parentTopic.getType() === 'CentralTopic') {
-          siblingModel.setOrder(topic.getOrder() + 2);
+          siblingModel.setOrder(topic.getOrder()! + 2);
         }
 
         const parentTopicId = parentTopic.getId();
@@ -575,10 +573,9 @@ class Designer extends Events {
       result = mindmap.createNode();
 
       // Create a new node ...
-      const order = topic.getOrder() + 1;
+      const order = topic.getOrder()! + 1;
       result.setOrder(order);
       result.setPosition(10, 10); // Set a dummy position ...
-      result.copy(model);
     }
 
     return result;
@@ -671,7 +668,7 @@ class Designer extends Events {
   nodeModelToTopic(nodeModel: NodeModel): Topic {
     $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
-    children = children.sort((a, b) => a.getOrder() - b.getOrder());
+    children = children.sort((a, b) => a.getOrder()! - b.getOrder()!);
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);

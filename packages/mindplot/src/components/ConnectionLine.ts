@@ -96,10 +96,7 @@ class ConnectionLine {
 
   private updateColor(): string {
     // In case that the main topic has changed the color, overwrite the main topic definiton.
-    let color = this._targetTopic.getConnectionColor();
-    if (this._targetTopic.isCentralTopic()) {
-      color = this._sourceTopic.getModel().getConnectionColor() || color;
-    }
+    const color = this._sourceTopic.getConnectionColor();
 
     this._color = color;
     switch (this._type) {

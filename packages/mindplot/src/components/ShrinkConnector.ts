@@ -21,7 +21,7 @@ import { Ellipse, Group } from '@wisemapping/web2d';
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
-import ColorUtil from './render/ColorUtil';
+import ColorUtil from './theme/ColorUtil';
 
 class ShirinkConnector {
   private _isShrink: boolean;

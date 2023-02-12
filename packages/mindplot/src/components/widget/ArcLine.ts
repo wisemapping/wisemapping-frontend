@@ -35,7 +35,7 @@ class ArcLine extends ArcLine2d {
     let xOffset = x;
     if (this._targetTopic.isCentralTopic()) {
       const sourceX = this._sourceTopic.getPosition().x;
-      xOffset = Math.sign(sourceX) * (this._targetTopic.getSize().width / 3);
+      xOffset = Math.sign(sourceX) * 10;
     } else {
       xOffset = x + 3 * Math.sign(x);
     }

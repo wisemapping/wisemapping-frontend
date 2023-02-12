@@ -60,7 +60,9 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
       } else {
         const order = topic.getOrder();
-        parentTopic.setAttribute('order', order.toString());
+        if (order !== undefined) {
+          parentTopic.setAttribute('order', order.toString());
+        }
       }
     }
 

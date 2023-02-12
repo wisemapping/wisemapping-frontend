@@ -27,7 +27,7 @@ import { $notify } from './widget/ToolbarNotifier';
 import { $msg } from './Messages';
 import DesignerKeyboard from './DesignerKeyboard';
 import LocalStorageManager from './LocalStorageManager';
-import TopicStyle from './TopicStyle';
+import ThemeFactory from './theme/ThemeFactory';
 
 /**
  * WebComponent implementation for minplot designer.
@@ -54,7 +54,9 @@ class MindplotWebComponent extends HTMLElement {
     const wrapper = document.createElement('div');
     wrapper.setAttribute('class', 'wise-editor');
     wrapper.setAttribute('id', 'mindplot-canvas');
-    wrapper.setAttribute('style', TopicStyle.defaultCanvasCssStyle());
+
+    const theme = ThemeFactory.createById('classic');
+    wrapper.setAttribute('style', theme.getCanvasCssStyle());
 
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;

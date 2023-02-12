@@ -132,46 +132,6 @@ class NodeModel extends INodeModel {
     return result;
   }
 
-  copy(value: NodeModel) {
-    // I don't copy the font size if the target is the source is the central topic.
-    if (value.getType() !== 'CentralTopic') {
-      const fontSize = value.getFontSize();
-      if (fontSize) {
-        this.setFontSize(fontSize);
-      }
-    }
-
-    const fontFamily = value.getFontFamily();
-    if (fontFamily) {
-      this.setFontFamily(fontFamily);
-    }
-
-    const fontColor = value.getFontColor();
-    if (fontColor) {
-      this.setFontColor(fontColor);
-    }
-
-    const fontWeight = value.getFontWeight();
-    if (fontWeight) {
-      this.setFontWeight(fontWeight);
-    }
-
-    const fontStyle = value.getFontStyle();
-    if (fontStyle) {
-      this.setFontStyle(fontStyle);
-    }
-
-    const shape = value.getShapeType();
-    if (shape) {
-      this.setShapeType(shape);
-    }
-
-    const backgroundColor = value.getBackgroundColor();
-    if (backgroundColor) {
-      this.setBackgroundColor(backgroundColor);
-    }
-  }
-
   deepCopy(): NodeModel {
     const result = new NodeModel(this.getType(), this._mindmap);
     result._children = this._children.map((node) => {

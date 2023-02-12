@@ -15,36 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { StraightLine, StyleAttributes } from '@wisemapping/web2d';
-import SizeType from '../SizeType';
-import Topic from '../Topic';
+type ThemeType = 'classic' | 'prism';
 
-class LineTopicShape extends StraightLine {
-  private _size: SizeType | null;
-
-  constructor(topic: Topic, attributes?: StyleAttributes) {
-    const stokeColor = topic.getBorderColor();
-    super({ ...attributes, strokeColor: stokeColor });
-    this._size = null;
-  }
-
-  setSize(width: number, height: number): void {
-    this._size = { width, height };
-    super.setFrom(0, height);
-    super.setTo(width, height);
-  }
-
-  getSize(): SizeType | null {
-    return this._size;
-  }
-
-  setPosition() {
-    // Overwrite behaviour ...
-  }
-
-  setFill() {
-    // Overwrite behaviour ...
-  }
-}
-
-export default LineTopicShape;
+export default ThemeType;
