@@ -14,6 +14,7 @@ describe('Render all sample maps', () => {
     'sample1',
     'sample2',
     'sample3',
+    'welcome-prism',
     'sample4',
     'sample5',
     'sample6',
