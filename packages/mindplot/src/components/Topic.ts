@@ -44,11 +44,12 @@ import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
+import NoneTopicShape from './widget/NoneTopicShape';
 
 const ICON_SCALING_FACTOR = 1.3;
 
 abstract class Topic extends NodeGraph {
-  private _innerShape: LineTopicShape | Rect | LineTopicShape | null;
+  private _innerShape: LineTopicShape | Rect | LineTopicShape | NoneTopicShape | null;
 
   private _innerShapeType: TopicShapeType | undefined;
 
@@ -175,7 +176,7 @@ abstract class Topic extends NodeGraph {
     return innerShape;
   }
 
-  getInnerShape(): LineTopicShape | Rect | LineTopicShape {
+  getInnerShape(): LineTopicShape | Rect | LineTopicShape | NoneTopicShape {
     if (!this._innerShape) {
       // Create inner box.
       this._innerShape = this._buildShape(this.getShapeType());
@@ -190,8 +191,10 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  protected _buildShape(shapeType: TopicShapeType): LineTopicShape | Rect | LineTopicShape {
-    let result: LineTopicShape | Rect | LineTopicShape;
+  protected _buildShape(
+    shapeType: TopicShapeType,
+  ): LineTopicShape | Rect | LineTopicShape | NoneTopicShape {
+    let result: LineTopicShape | Rect | LineTopicShape | NoneTopicShape;
     switch (shapeType) {
       case 'rectangle':
         result = new Rect(0, { strokeWidth: 2 });
@@ -204,6 +207,9 @@ abstract class Topic extends NodeGraph {
         break;
       case 'line':
         result = new LineTopicShape(this, { strokeWidth: 2 });
+        break;
+      case 'none':
+        result = new NoneTopicShape();
         break;
       case 'image':
         result = new LineTopicShape(this);

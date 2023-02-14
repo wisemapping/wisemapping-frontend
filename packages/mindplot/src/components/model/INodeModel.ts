@@ -27,7 +27,13 @@ import SizeType from '../SizeType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
-export type TopicShapeType = 'rectangle' | 'rounded rectangle' | 'elipse' | 'line' | 'image';
+export type TopicShapeType =
+  | 'rectangle'
+  | 'rounded rectangle'
+  | 'elipse'
+  | 'line'
+  | 'none'
+  | 'image';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
 const parseJsObject = (str: string) =>

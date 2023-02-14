@@ -107,6 +107,15 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         onClick: () => modelBuilder.getTopicShapeModel().setValue('elipse'),
         selected: () => modelBuilder.getTopicShapeModel().getValue() === 'elipse',
       },
+      {
+        icon: <NotInterestedOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-topic-share-none',
+          defaultMessage: 'None shape',
+        }),
+        onClick: () => modelBuilder.getTopicShapeModel().setValue('none'),
+        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'none',
+      },
       null,
       {
         icon: () => <SquareOutlined htmlColor={modelBuilder.getColorBorderModel().getValue()} />,

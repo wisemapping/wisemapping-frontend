@@ -106,7 +106,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
       fontColor: '#000000',
       connectionStyle: LineType.THICK_CURVED,
       connectionColor: '#345780',
-      shapeType: 'line' as TopicShapeType,
+      shapeType: 'none' as TopicShapeType,
       outerBackgroundColor: '#F4B82D',
       outerBorderColor: '#F4B82D',
     },
@@ -180,19 +180,15 @@ class PrismTheme extends DefaultTheme {
 
     // If border color has not been defined, use the connection color for the border ...
     if (!result) {
-      if (topic.getShapeType() === 'line') {
-        result = 'none';
-      } else {
-        let colors: string[] = [];
-        colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
+      let colors: string[] = [];
+      colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
 
-        // if the element is an array, use topic order to decide color ..
-        let order = topic.getOrder();
-        order = order || 0;
+      // if the element is an array, use topic order to decide color ..
+      let order = topic.getOrder();
+      order = order || 0;
 
-        const index = order % colors.length;
-        result = colors[index];
-      }
+      const index = order % colors.length;
+      result = colors[index];
     }
     return result;
   }

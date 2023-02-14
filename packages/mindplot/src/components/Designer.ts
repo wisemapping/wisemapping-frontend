@@ -884,7 +884,7 @@ class Designer extends Events {
 
   changeTopicShape(shape: TopicShapeType): void {
     const validateFunc = (topic: Topic) =>
-      !(topic.getType() === 'CentralTopic' && shape === 'line');
+      !(topic.getType() === 'CentralTopic' && (shape === 'line' || shape === 'none'));
 
     const validateError = $msg('CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED');
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
