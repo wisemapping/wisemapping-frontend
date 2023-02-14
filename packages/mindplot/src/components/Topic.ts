@@ -50,6 +50,8 @@ const ICON_SCALING_FACTOR = 1.3;
 abstract class Topic extends NodeGraph {
   private _innerShape: LineTopicShape | Rect | LineTopicShape | null;
 
+  private _innerShapeType: TopicShapeType | undefined;
+
   private _relationships: Relationship[];
 
   private _isInWorkspace: boolean;
@@ -109,7 +111,6 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setShapeType(type);
 
-    this.redrawShapeType();
     this.redraw();
   }
 
@@ -212,6 +213,7 @@ abstract class Topic extends NodeGraph {
         throw new Error(exhaustiveCheck);
       }
     }
+    this._innerShapeType = shapeType;
     result.setPosition(0, 0);
     return result;
   }
@@ -970,7 +972,6 @@ abstract class Topic extends NodeGraph {
       // Remove from workspace.
       EventBus.instance.fireEvent('topicDisconect', this.getModel());
 
-      this.redrawShapeType();
       this.redraw(true);
     }
   }
@@ -1133,6 +1134,13 @@ abstract class Topic extends NodeGraph {
     if (this._isInWorkspace) {
       const theme = ThemeFactory.create(this.getModel());
       const textShape = this.getOrBuildTextShape();
+
+      // Needs to update inner shape ...
+      const shapeType = this.getShapeType();
+      if (shapeType !== this._innerShapeType) {
+        this.redrawShapeType();
+      }
+
       // Update font ...
       const fontColor = this.getFontColor();
       textShape.setColor(fontColor);

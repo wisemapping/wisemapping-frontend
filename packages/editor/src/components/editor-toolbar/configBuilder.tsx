@@ -39,6 +39,7 @@ import ShareOutlined from '@mui/icons-material/ShareOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
+import ColorLensOutlined from '@mui/icons-material/ColorLensOutlined';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -53,6 +54,7 @@ import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
+import ThemeEditor from '../action-widget/pane/theme-editor';
 
 const keyTooltip = (msg: string, key: string): string => {
   const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -382,6 +384,24 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   };
 
   /**
+   * tool for node link edition
+   */
+  const editThemeConfiguration: ActionConfig = {
+    icon: <ColorLensOutlined />,
+    tooltip: intl.formatMessage({ id: 'editor-panel.tooltip-theme', defaultMessage: 'Theme' }),
+    useClickToClose: true,
+    title: intl.formatMessage({ id: 'editor-panel.theme-title', defaultMessage: 'Theme' }),
+    options: [
+      {
+        render: (closeModal) => (
+          <ThemeEditor closeModal={closeModal} themeModel={modelBuilder.getThemeModel()} />
+        ),
+      },
+    ],
+    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+  };
+
+  /**
    * tool for node note edition
    */
   const editNoteConfiguration: ActionConfig = {
@@ -461,5 +481,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     editNoteConfiguration,
     editLinkUrlConfiguration,
     addRelationConfiguration,
+    editThemeConfiguration,
   ];
 }

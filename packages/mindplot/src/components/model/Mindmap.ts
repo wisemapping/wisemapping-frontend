@@ -49,6 +49,10 @@ class Mindmap extends IMindmap {
     return this._theme ? this._theme : 'classic';
   }
 
+  setTheme(value: ThemeType): void {
+    this._theme = value;
+  }
+
   /** */
   getDescription(): string {
     return this._description;

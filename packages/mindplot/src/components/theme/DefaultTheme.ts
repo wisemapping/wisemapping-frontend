@@ -1,3 +1,4 @@
+/* eslint-disable func-call-spacing */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -44,6 +45,7 @@ export type TopicStyleType = {
 
 type StyleType = string | string[] | number | undefined | LineType;
 
+// eslint-disable-next-line no-spaced-func
 const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType>([
   ['borderColor', (m: NodeModel) => m.getBorderColor()],
   ['backgroundColor', (m: NodeModel) => m.getBackgroundColor()],

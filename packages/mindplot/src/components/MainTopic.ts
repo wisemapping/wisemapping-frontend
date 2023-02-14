@@ -64,12 +64,12 @@ class MainTopic extends Topic {
     return group;
   }
 
-  updateTopicShape(_targetTopic: Topic) {
+  updateTopicShape() {
     this.redrawShapeType();
   }
 
-  disconnect(workspace: Canvas) {
-    super.disconnect(workspace);
+  disconnect(canvas: Canvas) {
+    super.disconnect(canvas);
 
     const innerShape = this.getInnerShape();
     innerShape.setVisibility(true);

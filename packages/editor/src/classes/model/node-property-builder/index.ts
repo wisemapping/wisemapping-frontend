@@ -9,6 +9,7 @@ import {
 } from '../../../components/toolbar/ToolbarValueModelBuilder';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
+import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 
 class NodePropertyBuilder {
   designer: Designer;
@@ -25,6 +26,7 @@ class NodePropertyBuilder {
   private connectionColoreModel: NodeProperty<string>;
   private noteModel: NodeProperty<string>;
   private linkModel: NodeProperty<string>;
+  private _themeModel: NodeProperty<ThemeType>;
 
   constructor(designer: Designer) {
     this.designer = designer;
@@ -92,10 +94,6 @@ class NodePropertyBuilder {
     return this.selectedTopicColorModel;
   }
 
-  /**
-   *
-   * @returns model to get and set the node link
-   */
   getLinkModel(): NodeProperty<string> {
     // const selected = this.selectedTopic();
     if (!this.linkModel)
@@ -110,6 +108,18 @@ class NodePropertyBuilder {
         },
       };
     return this.linkModel;
+  }
+
+  getThemeModel(): NodeProperty<ThemeType> {
+    // const selected = this.selectedTopic();
+    if (!this._themeModel)
+      this._themeModel = {
+        getValue: (): ThemeType => this.designer.getMindmap().getTheme(),
+        setValue: (value: ThemeType) => {
+          this.designer.changeTheme(value);
+        },
+      };
+    return this._themeModel;
   }
 
   /**

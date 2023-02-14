@@ -114,7 +114,6 @@ class OriginalLayout {
         const parentX = parentPosition.x;
         const parentY = parentPosition.y;
 
-        console.log(`${parent?.getId()}:${offset.x}`);
         const newPos = {
           x: parentX + offset.x,
           y: parentY + offset.y + this.calculateAlignOffset(node, child, heightById),

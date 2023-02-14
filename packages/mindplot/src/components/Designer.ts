@@ -60,6 +60,7 @@ import { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 import ImageExpoterFactory from './export/ImageExporterFactory';
 import PositionType from './PositionType';
+import ThemeType from './model/ThemeType';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -70,7 +71,7 @@ class Designer extends Events {
 
   private _model: DesignerModel;
 
-  private _workspace: Canvas;
+  private _canvas: Canvas;
 
   _eventBussDispatcher: EventBusDispatcher;
 
@@ -108,7 +109,7 @@ class Designer extends Events {
 
     // Init Screen manager..
     const screenManager = new ScreenManager(divElem);
-    this._workspace = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly());
+    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly());
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -121,11 +122,11 @@ class Designer extends Events {
       // Register keyboard events ...
       DesignerKeyboard.register(this);
 
-      this._dragManager = this._buildDragManager(this._workspace);
+      this._dragManager = this._buildDragManager(this._canvas);
     }
     this._registerWheelEvents();
 
-    this._relPivot = new RelationshipPivot(this._workspace, this);
+    this._relPivot = new RelationshipPivot(this._canvas, this);
 
     TopicEventDispatcher.configure(this.isReadOnly());
 
@@ -168,7 +169,7 @@ class Designer extends Events {
   }
 
   private _registerMouseEvents() {
-    const workspace = this._workspace;
+    const workspace = this._canvas;
     const screenManager = workspace.getScreenManager();
     const me = this;
     // Initialize workspace event listeners.
@@ -202,7 +203,7 @@ class Designer extends Events {
 
   private _buildDragManager(workspace: Canvas): DragManager {
     const designerModel = this.getModel();
-    const dragConnector = new DragConnector(designerModel, this._workspace);
+    const dragConnector = new DragConnector(designerModel, this._canvas);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
     const topics = designerModel.getTopics();
 
@@ -263,7 +264,7 @@ class Designer extends Events {
       }
 
       if (targetTopic) {
-        topic.connectTo(targetTopic, this._workspace);
+        topic.connectTo(targetTopic, this._canvas);
       }
     }
 
@@ -332,12 +333,12 @@ class Designer extends Events {
       return;
     }
     this.getModel().setZoom(zoom);
-    this._workspace.setZoom(zoom);
+    this._canvas.setZoom(zoom);
   }
 
   zoomToFit(): void {
     this.getModel().setZoom(1);
-    this._workspace.setZoom(1, true);
+    this._canvas.setZoom(1, true);
   }
 
   zoomOut(factor = 1.2) {
@@ -345,7 +346,7 @@ class Designer extends Events {
     const scale = model.getZoom() * factor;
     if (scale <= 7.0) {
       model.setZoom(scale);
-      this._workspace.setZoom(scale);
+      this._canvas.setZoom(scale);
     } else {
       $notify($msg('ZOOM_ERROR'));
     }
@@ -357,7 +358,7 @@ class Designer extends Events {
 
     if (scale >= 0.3) {
       model.setZoom(scale);
-      this._workspace.setZoom(scale);
+      this._canvas.setZoom(scale);
     } else {
       $notify($msg('ZOOM_ERROR'));
     }
@@ -590,7 +591,7 @@ class Designer extends Events {
     }
 
     // Current mouse position ....
-    const screen = this._workspace.getScreenManager();
+    const screen = this._canvas.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
     // create a connection ...
@@ -605,7 +606,7 @@ class Designer extends Events {
   loadMap(mindmap: Mindmap): Promise<void> {
     this._mindmap = mindmap;
 
-    this._workspace.enableQueueRender(true);
+    this._canvas.enableQueueRender(true);
 
     // Init layout manager ...
     const size = { width: 25, height: 25 };
@@ -633,7 +634,7 @@ class Designer extends Events {
     const centralTopic = this.getModel().getCentralTopic();
     this.goToNode(centralTopic);
 
-    return this._workspace.enableQueueRender(false).then(() => {
+    return this._canvas.enableQueueRender(false).then(() => {
       // Connect relationships ...
       const relationships = mindmap.getRelationships();
       relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
@@ -642,7 +643,7 @@ class Designer extends Events {
       nodesGraph.forEach((topic) => topic.setVisibility(true));
 
       // Enable workspace drag events ...
-      this._workspace.registerEvents();
+      this._canvas.registerEvents();
       // Finally, sort the map ...
       EventBus.instance.fireEvent('forceLayout');
       this.fireEvent('loadSuccess');
@@ -666,20 +667,26 @@ class Designer extends Events {
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
-    $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder()! - b.getOrder()!);
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);
 
-    this._workspace.append(result);
+    this._canvas.append(result);
     children.forEach((child) => {
       if (child) {
         this.nodeModelToTopic(child);
       }
     });
     return result;
+  }
+
+  changeTheme(theme: ThemeType): void {
+    console.log(`theme:${theme}`);
+    this.getMindmap().setTheme(theme);
+    const centralTopic = this.getModel().getCentralTopic();
+    centralTopic.redraw(true);
   }
 
   /**
@@ -701,7 +708,7 @@ class Designer extends Events {
 
     result.setVisibility(sourceTopic.isVisible() && targetTopic.isVisible());
 
-    this._workspace.append(result);
+    this._canvas.append(result);
     return result;
   }
 
@@ -723,7 +730,7 @@ class Designer extends Events {
     targetTopic.deleteRelationship(rel);
 
     this.getModel().removeRelationship(rel);
-    this._workspace.removeChild(rel);
+    this._canvas.removeChild(rel);
 
     const mindmap = this.getMindmap();
     mindmap.deleteRelationship(rel.getModel());
@@ -771,14 +778,14 @@ class Designer extends Events {
   removeTopic(node: Topic): void {
     if (!node.isCentralTopic()) {
       const parent = node.getParent();
-      node.disconnect(this._workspace);
+      node.disconnect(this._canvas);
 
       // remove children
       while (node.getChildren().length > 0) {
         this.removeTopic(node.getChildren()[0]);
       }
 
-      this._workspace.removeChild(node);
+      this._canvas.removeChild(node);
       this.getModel().removeTopic(node);
 
       // Delete this node from the model...
@@ -792,7 +799,7 @@ class Designer extends Events {
   }
 
   private _resetEdition() {
-    const screenManager = this._workspace.getScreenManager();
+    const screenManager = this._canvas.getScreenManager();
     screenManager.fireEvent('update');
     screenManager.fireEvent('mouseup');
     this._relPivot.dispose();
@@ -946,7 +953,7 @@ class Designer extends Events {
   }
 
   getWorkSpace(): Canvas {
-    return this._workspace;
+    return this._canvas;
   }
 
   public get cleanScreen(): () => void {

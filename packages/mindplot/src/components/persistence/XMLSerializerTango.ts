@@ -28,6 +28,7 @@ import { LineType } from '../ConnectionLine';
 import { FontWeightType } from '../FontWeightType';
 import { FontStyleType } from '../FontStyleType';
 import { TopicShapeType } from '../model/INodeModel';
+import ThemeType from '../model/ThemeType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -49,6 +50,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (name) {
       mapElem.setAttribute('name', this._rmXmlInv(name));
     }
+
+    // Add theme ...
+    const theme = mindmap.getTheme();
+    if (theme && theme !== 'classic') {
+      mapElem.setAttribute('theme', theme);
+    }
+
     const version = mindmap.getVersion();
     if ($defined(version)) {
       mapElem.setAttribute('version', version);
@@ -256,6 +264,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Start the loading process ...
     const version = rootElem.getAttribute('version') || 'pela';
     const mindmap = new Mindmap(mapId, version);
+
+    const theme = rootElem.getAttribute('theme');
+    if (theme) {
+      mindmap.setTheme(theme as ThemeType);
+    }
 
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
