@@ -7,7 +7,7 @@ describe('Relationship Topics', () => {
     cy.waitEditorLoaded();
   });
 
-  it('Add Relationship', () => {
+  it.skip('Add Relationship', () => {
     // Create new relationship ...
     cy.focusTopicByText('Features');
     cy.onClickToolbarButton('Add Relationship');

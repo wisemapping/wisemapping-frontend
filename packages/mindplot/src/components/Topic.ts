@@ -987,10 +987,12 @@ abstract class Topic extends NodeGraph {
     return model.getOrder();
   }
 
-  /** */
   setOrder(value: number): void {
     const model = this.getModel();
     model.setOrder(value);
+
+    // In case of drag a node, color change based on the order ...
+    this.redraw();
   }
 
   connectTo(targetTopic: Topic, workspace: Canvas): void {
@@ -1026,8 +1028,6 @@ abstract class Topic extends NodeGraph {
         childNode: this.getModel(),
       });
     }
-
-    this.redraw(true);
   }
 
   private createConnectionLine(targetTopic: Topic): ConnectionLine {
