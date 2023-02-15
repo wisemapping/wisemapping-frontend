@@ -21,7 +21,7 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import Events from './Events';
 import Relationship from './Relationship';
 import Topic from './Topic';
-import { $notify } from './widget/ToolbarNotifier';
+import { $notify } from './model/ToolbarNotifier';
 
 class DesignerModel extends Events {
   private _zoom: number;

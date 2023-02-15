@@ -7,6 +7,7 @@ import Canvas from '../../../src/components/Canvas';
 import ScreenManager from '../../../src/components/ScreenManager';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
+import { TopicShapeType } from '../../../src/components/model/INodeModel';
 
 const registerRefreshHook = (topic: Topic) => {
   // Trigger a redraw after the node is added ...
@@ -28,7 +29,7 @@ export type TopicArgs = {
   borderColor?: string;
   fontSize?: number;
   fontColor?: string;
-  shapeType?: 'rectangle' | 'rounded rectangle' | 'elipse' | 'line';
+  shapeType?: TopicShapeType;
   text?: string;
   noteText?: string;
   linkText?: string;

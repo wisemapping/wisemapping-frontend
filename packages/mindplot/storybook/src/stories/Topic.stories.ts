@@ -14,7 +14,7 @@ export default {
     fontSize: { control: { type: 'number', min: 0, max: 20, step: 2 } },
     fontColor: { control: 'color' },
     shapeType: {
-      options: ['rectangle', 'rounded rectangle', 'elipse', 'line'],
+      options: ['none', 'rectangle', 'rounded rectangle', 'elipse', 'line'],
       control: { type: 'select' },
     },
     text: { control: 'text' },
@@ -76,4 +76,10 @@ ShapeEllipse.args = {
   text: 'Shape Ellipse',
   eicon: ['🌈'],
   shapeType: 'elipse',
+};
+export const ShapeNone = Template.bind({});
+ShapeNone.args = {
+  text: 'Shape None',
+  eicon: ['🌈'],
+  shapeType: 'none',
 };

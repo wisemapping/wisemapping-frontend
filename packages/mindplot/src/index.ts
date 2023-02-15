@@ -48,7 +48,7 @@ import WidgetManager from './components/WidgetManager';
 
 import { buildDesigner } from './components/DesignerBuilder';
 
-import { $notify } from './components/widget/ToolbarNotifier';
+import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 
 declare global {

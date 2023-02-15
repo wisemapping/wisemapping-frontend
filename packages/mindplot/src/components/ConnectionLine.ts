@@ -22,7 +22,7 @@ import PositionType from './PositionType';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
 import Canvas from './Canvas';
-import ArcLine from './widget/ArcLine';
+import ArcLine from './model/ArcLine';
 
 // eslint-disable-next-line no-shadow
 export enum LineType {

@@ -15,34 +15,27 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { StraightLine } from '@wisemapping/web2d';
+import { Rect } from '@wisemapping/web2d';
 import SizeType from '../SizeType';
+import DefaultTopicShape from './DefaultShape';
 
-class NoneTopicShape extends StraightLine {
-  private _size: SizeType | null;
-
-  constructor() {
-    super({});
-    this._size = null;
-    this.setVisibility(false);
+class RectTopicShape extends DefaultTopicShape<Rect> {
+  constructor(arc: number, type: 'rectangle' | 'rounded rectangle' | 'elipse') {
+    const shape = new Rect(arc, { strokeWidth: 2 });
+    super(shape, type);
   }
 
-  setSize(): void {
-    super.setFrom(0, 0);
-    super.setTo(0, 0);
+  setSize(width: number, height: number): void {
+    this.getShape().setSize(width, height);
   }
 
   getSize(): SizeType | null {
-    return this._size;
+    return this.getShape().getSize();
   }
 
-  setPosition() {
-    // Overwrite behaviour ...
-  }
-
-  setFill() {
-    // Overwrite behaviour ...
+  setPosition(x: number, y: number) {
+    this.getShape().setPosition(x, y);
   }
 }
 
-export default NoneTopicShape;
+export default RectTopicShape;

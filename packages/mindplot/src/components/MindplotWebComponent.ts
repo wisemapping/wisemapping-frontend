@@ -23,7 +23,7 @@ import EditorRenderMode from './EditorRenderMode';
 import PersistenceManager from './PersistenceManager';
 import WidgetManager from './WidgetManager';
 import mindplotStyles from './styles/mindplot-styles';
-import { $notify } from './widget/ToolbarNotifier';
+import { $notify } from './model/ToolbarNotifier';
 import { $msg } from './Messages';
 import DesignerKeyboard from './DesignerKeyboard';
 import LocalStorageManager from './LocalStorageManager';

@@ -23,11 +23,12 @@ import Shape from './util/Shape';
 import Canvas from './Canvas';
 import SizeType from './SizeType';
 import PositionType from './PositionType';
+import TopicShapeFactory from './shape/TopicShapeFactory';
 
 class MainTopic extends Topic {
   buildDragShape(): ElementClass<ElementPeer> {
     const shapeType = this.getShapeType();
-    const innerShape = this._buildShape(shapeType);
+    const innerShape = TopicShapeFactory.create(shapeType, this);
     const size = this.getSize();
     innerShape.setSize(size.width, size.height);
     innerShape.setPosition(0, 0);
@@ -36,10 +37,10 @@ class MainTopic extends Topic {
     innerShape.setVisibility(true);
 
     const brColor = this.getBorderColor();
-    innerShape.setAttribute('strokeColor', brColor);
+    innerShape.setStroke(null, null, brColor);
 
     const bgColor = this.getBackgroundColor();
-    innerShape.setAttribute('fillColor', bgColor);
+    innerShape.setFill(bgColor);
 
     //  Create group ...
     const groupAttributes = {
@@ -49,9 +50,9 @@ class MainTopic extends Topic {
       coordSizeHeight: 100,
     };
     const group = new Group(groupAttributes);
-    group.append(innerShape);
+    innerShape.appendTo(group);
 
-    const textShape = this._buildTextShape(true);
+    const textShape = this.buildTextShape(true);
     const text = this.getText();
     textShape.setText(text);
     textShape.setOpacity(0.5);
@@ -75,7 +76,7 @@ class MainTopic extends Topic {
     innerShape.setVisibility(true);
   }
 
-  _updatePositionOnChangeSize(oldSize: SizeType, newSize: SizeType) {
+  updatePositionOnChangeSize(oldSize: SizeType, newSize: SizeType) {
     const xOffset = Math.round((newSize.width - oldSize.width) / 2);
     const pos = this.getPosition();
     if ($defined(pos)) {

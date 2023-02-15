@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import { Rect, Text, Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
+import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
@@ -38,20 +38,18 @@ import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import PositionType from './PositionType';
-import LineTopicShape from './widget/LineTopicShape';
 import Icon from './Icon';
 import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
-import NoneTopicShape from './widget/NoneTopicShape';
+import TopicShape from './shape/TopicShape';
+import TopicShapeFactory from './shape/TopicShapeFactory';
 
 const ICON_SCALING_FACTOR = 1.3;
 
 abstract class Topic extends NodeGraph {
-  private _innerShape: LineTopicShape | Rect | LineTopicShape | NoneTopicShape | null;
-
-  private _innerShapeType: TopicShapeType | undefined;
+  private _innerShape: TopicShape | null;
 
   private _relationships: Relationship[];
 
@@ -63,7 +61,7 @@ abstract class Topic extends NodeGraph {
   // eslint-disable-next-line no-use-before-define
   private _parent: Topic | null;
 
-  private _outerShape: ElementClass<ElementPeer> | undefined;
+  private _outerShape: Rect | undefined;
 
   private _text: Text | undefined;
 
@@ -80,7 +78,7 @@ abstract class Topic extends NodeGraph {
     this._relationships = [];
     this._isInWorkspace = false;
     this._innerShape = null;
-    this._buildTopicShape();
+    this.buildTopicShape();
 
     // Position a topic ....
     const pos = model.getPosition();
@@ -120,7 +118,7 @@ abstract class Topic extends NodeGraph {
   }
 
   protected redrawShapeType() {
-    this._removeInnerShape();
+    this.removeInnerShape();
 
     // Create a new one ...
     const innerShape = this.getInnerShape();
@@ -130,7 +128,7 @@ abstract class Topic extends NodeGraph {
     this.setSize(size, true);
 
     const group = this.get2DElement();
-    group.append(innerShape);
+    innerShape.appendTo(group);
 
     // Move text to the front ...
     const text = this.getOrBuildTextShape();
@@ -167,19 +165,21 @@ abstract class Topic extends NodeGraph {
     return theme.getConnectionColor(this);
   }
 
-  private _removeInnerShape(): ElementClass<ElementPeer> {
+  private removeInnerShape(): TopicShape {
     const group = this.get2DElement();
     const innerShape = this.getInnerShape();
 
-    group.removeChild(innerShape);
+    innerShape.removeFrom(group);
     this._innerShape = null;
+
     return innerShape;
   }
 
-  getInnerShape(): LineTopicShape | Rect | LineTopicShape | NoneTopicShape {
+  getInnerShape(): TopicShape {
     if (!this._innerShape) {
       // Create inner box.
-      this._innerShape = this._buildShape(this.getShapeType());
+      const shapeType = this.getShapeType();
+      this._innerShape = TopicShapeFactory.create(shapeType, this);
 
       // Define the pointer ...
       if (!this.isCentralTopic() && !this.isReadOnly()) {
@@ -189,39 +189,6 @@ abstract class Topic extends NodeGraph {
       }
     }
     return this._innerShape;
-  }
-
-  protected _buildShape(
-    shapeType: TopicShapeType,
-  ): LineTopicShape | Rect | LineTopicShape | NoneTopicShape {
-    let result: LineTopicShape | Rect | LineTopicShape | NoneTopicShape;
-    switch (shapeType) {
-      case 'rectangle':
-        result = new Rect(0, { strokeWidth: 2 });
-        break;
-      case 'elipse':
-        result = new Rect(0.9, { strokeWidth: 2 });
-        break;
-      case 'rounded rectangle':
-        result = new Rect(0.6, { strokeWidth: 2 });
-        break;
-      case 'line':
-        result = new LineTopicShape(this, { strokeWidth: 2 });
-        break;
-      case 'none':
-        result = new NoneTopicShape();
-        break;
-      case 'image':
-        result = new LineTopicShape(this);
-        break;
-      default: {
-        const exhaustiveCheck: never = shapeType;
-        throw new Error(exhaustiveCheck);
-      }
-    }
-    this._innerShapeType = shapeType;
-    result.setPosition(0, 0);
-    return result;
   }
 
   setCursor(type: string): void {
@@ -235,9 +202,9 @@ abstract class Topic extends NodeGraph {
     textShape.setCursor(type);
   }
 
-  getOuterShape(): ElementClass<ElementPeer> {
+  getOuterShape(): Rect {
     if (!this._outerShape) {
-      const rect = this._buildShape('rounded rectangle');
+      const rect = new Rect(0.6);
 
       rect.setPosition(-3, -3);
       rect.setOpacity(0);
@@ -249,7 +216,7 @@ abstract class Topic extends NodeGraph {
 
   getOrBuildTextShape(): Text {
     if (!this._text) {
-      this._text = this._buildTextShape(false);
+      this._text = this.buildTextShape(false);
 
       // @todo: Review this. Get should not modify the state ....
       const text = this.getText();
@@ -261,7 +228,7 @@ abstract class Topic extends NodeGraph {
 
   private getOrBuildIconGroup(): IconGroup {
     if (!this._iconsGroup) {
-      const iconGroup = this._buildIconGroup();
+      const iconGroup = this.buildIconGroup();
       const group = this.get2DElement();
 
       iconGroup.appendTo(group);
@@ -274,7 +241,7 @@ abstract class Topic extends NodeGraph {
     return this._iconsGroup;
   }
 
-  private _buildIconGroup(): IconGroup {
+  private buildIconGroup(): IconGroup {
     const model = this.getModel();
     const theme = ThemeFactory.create(model);
 
@@ -319,7 +286,6 @@ abstract class Topic extends NodeGraph {
     return model.findFeatureById(id);
   }
 
-  /** */
   removeFeature(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel could not be null');
 
@@ -347,7 +313,7 @@ abstract class Topic extends NodeGraph {
     return this._relationships;
   }
 
-  protected _buildTextShape(readOnly: boolean): Text {
+  protected buildTextShape(readOnly: boolean): Text {
     const result = new Text();
     const family = this.getFontFamily();
     const size = this.getFontSize();
@@ -493,7 +459,7 @@ abstract class Topic extends NodeGraph {
     return theme.getBorderColor(this);
   }
 
-  _buildTopicShape(): void {
+  private buildTopicShape(): void {
     const groupAttributes = {
       width: 100,
       height: 100,
@@ -510,7 +476,7 @@ abstract class Topic extends NodeGraph {
 
     // Add to the group ...
     group.append(outerShape);
-    group.append(innerShape);
+    innerShape.appendTo(group);
     group.append(textShape);
 
     // Update figure size ...
@@ -525,13 +491,13 @@ abstract class Topic extends NodeGraph {
     }
 
     // Register listeners ...
-    this._registerDefaultListenersToElement(group, this);
+    this.registerDefaultListenersToElement(group, this);
 
     // Set test id
     group.setTestId(String(model.getId()));
   }
 
-  private _registerDefaultListenersToElement(elem: ElementClass<ElementPeer>, topic: Topic) {
+  private registerDefaultListenersToElement(elem: ElementClass<ElementPeer>, topic: Topic) {
     const mouseOver = function mouseOver() {
       if (topic.isMouseEventsEnabled()) {
         topic.handleMouseOver();
@@ -618,7 +584,7 @@ abstract class Topic extends NodeGraph {
     }
 
     // Do some fancy animation ....
-    const elements = this._flatten2DElements(this);
+    const elements = this.flatten2DElements(this);
     elements.forEach((elem) => {
       elem.setVisibility(!value, 250);
     });
@@ -935,7 +901,7 @@ abstract class Topic extends NodeGraph {
       innerShape.setSize(size.width, size.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this._updatePositionOnChangeSize(oldSize, size);
+      this.updatePositionOnChangeSize(oldSize, size);
 
       if (hasSizeChanged) {
         EventBus.instance.fireEvent('topicResize', {
@@ -945,8 +911,6 @@ abstract class Topic extends NodeGraph {
       }
     }
   }
-
-  protected abstract _updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
 
   disconnect(workspace: Canvas): void {
     const outgoingLine = this.getOutgoingLine();
@@ -1022,7 +986,7 @@ abstract class Topic extends NodeGraph {
     }
 
     // Fire connection event ...
-    if (this.isInWorkspace()) {
+    if (this._isInWorkspace) {
       EventBus.instance.fireEvent('topicConnected', {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
@@ -1070,7 +1034,7 @@ abstract class Topic extends NodeGraph {
   addToWorkspace(workspace: Canvas): void {
     const elem = this.get2DElement();
     workspace.append(elem);
-    if (!this.isInWorkspace()) {
+    if (!this._isInWorkspace) {
       if (!this.isCentralTopic()) {
         EventBus.instance.fireEvent('topicAdded', this.getModel());
       }
@@ -1085,10 +1049,6 @@ abstract class Topic extends NodeGraph {
     }
     this._isInWorkspace = true;
     this.redraw();
-  }
-
-  isInWorkspace(): boolean {
-    return this._isInWorkspace;
   }
 
   createDragNode(layoutManager: LayoutManager): DragTopic {
@@ -1143,7 +1103,7 @@ abstract class Topic extends NodeGraph {
 
       // Needs to update inner shape ...
       const shapeType = this.getShapeType();
-      if (shapeType !== this._innerShapeType) {
+      if (shapeType !== this._innerShape?.getShapeType()) {
         this.redrawShapeType();
       }
 
@@ -1222,7 +1182,7 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  private _flatten2DElements(topic: Topic): (Topic | Relationship | ConnectionLine)[] {
+  private flatten2DElements(topic: Topic): (Topic | Relationship | ConnectionLine)[] {
     const result: (Topic | Relationship | ConnectionLine)[] = [];
     const children = topic.getChildren();
     children.forEach((child) => {
@@ -1235,16 +1195,12 @@ abstract class Topic extends NodeGraph {
       result.push(...relationships);
 
       if (!child.areChildrenShrunken()) {
-        const innerChilds = this._flatten2DElements(child);
+        const innerChilds = this.flatten2DElements(child);
         result.push(...innerChilds);
       }
     });
     return result;
   }
-
-  abstract workoutOutgoingConnectionPoint(position: PositionType): PositionType;
-
-  abstract workoutIncomingConnectionPoint(position: PositionType): PositionType;
 
   isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();
@@ -1261,9 +1217,11 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  isCentralTopic(): boolean {
-    return this.getModel().getType() === 'CentralTopic';
-  }
+  abstract workoutOutgoingConnectionPoint(position: PositionType): PositionType;
+
+  abstract workoutIncomingConnectionPoint(position: PositionType): PositionType;
+
+  protected abstract updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
 }
 
 export default Topic;

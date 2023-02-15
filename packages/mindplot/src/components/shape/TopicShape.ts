@@ -15,36 +15,33 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { StraightLine, StyleAttributes } from '@wisemapping/web2d';
+
+import { Group } from '@wisemapping/web2d';
+import { TopicShapeType } from '../model/INodeModel';
 import SizeType from '../SizeType';
-import Topic from '../Topic';
 
-class LineTopicShape extends StraightLine {
-  private _size: SizeType | null;
+interface TopicShape {
+  setSize(width: number, height: number): void;
 
-  constructor(topic: Topic, attributes?: StyleAttributes) {
-    const stokeColor = topic.getBorderColor();
-    super({ ...attributes, strokeColor: stokeColor });
-    this._size = null;
-  }
+  getSize(): SizeType | null;
 
-  setSize(width: number, height: number): void {
-    this._size = { width, height };
-    super.setFrom(0, height);
-    super.setTo(width, height);
-  }
+  setPosition(x: number, y: number): void;
 
-  getSize(): SizeType | null {
-    return this._size;
-  }
+  setFill(value: string, opacity?: number): void;
 
-  setPosition() {
-    // Overwrite behaviour ...
-  }
+  setVisibility(value: boolean, fade?: number): void;
 
-  setFill() {
-    // Overwrite behaviour ...
-  }
+  setOpacity(value: number): void;
+
+  setCursor(value: string): void;
+
+  appendTo(group: Group): void;
+
+  removeFrom(group: Group): void;
+
+  setStroke(width: number | null, style: string | null, color: string): void;
+
+  getShapeType(): TopicShapeType;
 }
 
-export default LineTopicShape;
+export default TopicShape;

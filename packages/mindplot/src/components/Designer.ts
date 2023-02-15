@@ -45,7 +45,7 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
 
-import { $notify } from './widget/ToolbarNotifier';
+import { $notify } from './model/ToolbarNotifier';
 import RelationshipModel from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';

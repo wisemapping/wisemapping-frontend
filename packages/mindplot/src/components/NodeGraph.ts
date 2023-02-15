@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { ElementClass, ElementPeer, Group } from '@wisemapping/web2d';
+import { Group, Rect } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
 import NodeModel from './model/NodeModel';
 import Canvas from './Canvas';
@@ -140,7 +140,7 @@ abstract class NodeGraph implements CanvasElement {
 
   abstract setCursor(type: string): void;
 
-  abstract getOuterShape(): ElementClass<ElementPeer>;
+  abstract getOuterShape(): Rect;
 
   isOnFocus(): boolean {
     return this._onFocus;
@@ -162,6 +162,10 @@ abstract class NodeGraph implements CanvasElement {
   getPosition(): PositionType {
     const model = this.getModel();
     return model.getPosition();
+  }
+
+  isCentralTopic(): boolean {
+    return this.getModel().getType() === 'CentralTopic';
   }
 }
 

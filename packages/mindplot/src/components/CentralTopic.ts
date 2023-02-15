@@ -47,7 +47,7 @@ class CentralTopic extends Topic {
     // Overwite behaviour ...
   }
 
-  _updatePositionOnChangeSize(): void {
+  updatePositionOnChangeSize(): void {
     // Center main topic ...
     const zeroPoint = { x: 0, y: 0 };
     this.setPosition(zeroPoint);
