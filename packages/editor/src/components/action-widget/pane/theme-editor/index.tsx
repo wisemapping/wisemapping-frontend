@@ -39,6 +39,7 @@ const ThemeEditor = (props: {
       <RadioGroup row value={theme} onChange={handleOnChange}>
         <FormControlLabel value="classic" control={<Radio />} label="Classic" />
         <FormControlLabel value="prism" control={<Radio />} label="Summer" />
+        <FormControlLabel value="dark-prism" control={<Radio />} label="Dark" />
       </RadioGroup>
     </Box>
   );

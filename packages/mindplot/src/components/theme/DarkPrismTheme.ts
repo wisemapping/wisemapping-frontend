@@ -86,7 +86,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
       fontSize: 9,
       fontStyle: 'normal' as FontStyleType,
       fontWeight: 'normal' as FontWeightType,
-      fontColor: '#000000',
+      fontColor: '#FFFFFF',
       connectionStyle: LineType.ARC,
       shapeType: 'rounded rectangle' as TopicShapeType,
       outerBackgroundColor: '#F4B82D',
@@ -103,7 +103,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
       fontSize: 8,
       fontStyle: 'normal' as FontStyleType,
       fontWeight: 'normal' as FontWeightType,
-      fontColor: '#000000',
+      fontColor: '#FFFFFF',
       connectionStyle: LineType.ARC,
       connectionColor: '#345780',
       shapeType: 'none' as TopicShapeType,
@@ -131,7 +131,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
   ],
 ]);
 
-class PrismTheme extends DefaultTheme {
+class DarkPrismTheme extends DefaultTheme {
   constructor() {
     super(defaultStyles);
   }
@@ -144,10 +144,7 @@ class PrismTheme extends DefaultTheme {
       border: 0;
       overflow: hidden;
       opacity: 1;
-      background-color: #f2f2f2;
-      background-image: linear-gradient(#ebe9e7 1px, transparent 1px),
-      linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
-      background-size: 50px 50px;
+      background-color: #353B3F;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -197,4 +194,4 @@ class PrismTheme extends DefaultTheme {
   }
 }
 
-export default PrismTheme;
+export default DarkPrismTheme;

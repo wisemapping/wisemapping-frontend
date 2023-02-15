@@ -61,6 +61,7 @@ import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 import ImageExpoterFactory from './export/ImageExporterFactory';
 import PositionType from './PositionType';
 import ThemeType from './model/ThemeType';
+import ThemeFactory from './theme/ThemeFactory';
 
 class Designer extends Events {
   private _mindmap: Mindmap | null;
@@ -606,6 +607,13 @@ class Designer extends Events {
   loadMap(mindmap: Mindmap): Promise<void> {
     this._mindmap = mindmap;
 
+    // Update background style...
+    const themeId = mindmap.getTheme();
+    const theme = ThemeFactory.createById(themeId);
+    const style = theme.getCanvasCssStyle();
+    this._canvas.setBackgroundStyle(style);
+
+    // Delay render ...
     this._canvas.enableQueueRender(true);
 
     // Init layout manager ...
@@ -682,9 +690,16 @@ class Designer extends Events {
     return result;
   }
 
-  changeTheme(theme: ThemeType): void {
-    console.log(`theme:${theme}`);
-    this.getMindmap().setTheme(theme);
+  changeTheme(id: ThemeType): void {
+    const mindmap = this.getMindmap();
+    mindmap.setTheme(id);
+
+    // Update background color ...
+    const theme = ThemeFactory.createById(id);
+
+    const style = theme.getCanvasCssStyle();
+    this._canvas.setBackgroundStyle(style);
+
     const centralTopic = this.getModel().getCentralTopic();
     centralTopic.redraw(true);
   }

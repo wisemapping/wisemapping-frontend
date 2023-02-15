@@ -407,7 +407,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ),
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
   };
 
   /**

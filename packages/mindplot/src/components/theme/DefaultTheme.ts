@@ -171,7 +171,7 @@ abstract class DefaultTheme implements Theme {
       result = topic.getConnectionColor();
     }
 
-    if (result === undefined) {
+    if (!result) {
       const parent = topic.getParent();
       if (parent) {
         result = parent.getBorderColor();

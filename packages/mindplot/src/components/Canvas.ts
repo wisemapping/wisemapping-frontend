@@ -262,6 +262,11 @@ class Canvas {
     return this._workspace.getSVGElement();
   }
 
+  setBackgroundStyle(css: string): void {
+    const elem = this.getSVGElement().parentElement!.parentElement!;
+    elem.setAttribute('style', css);
+  }
+
   private _registerDragEvents() {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
