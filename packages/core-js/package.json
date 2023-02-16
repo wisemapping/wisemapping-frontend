@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/core-js",
-    "version": "0.4.1",
+    "version": "0.5.20",
     "description": "WiseMapping - Core Common Libraries",
     "homepage": "http://www.wisemapping.org/",
     "license": "MIT",
@@ -9,7 +9,7 @@
         "src"
     ],
     "publishConfig": {
-        "registry": "https://registry.yarnpkg.com"
+        "registry": "https://registry.npmjs.com"
     },
     "repository": {
         "type": "git",

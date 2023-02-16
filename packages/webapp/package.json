@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "5.0.19",
+    "version": "5.0.20",
     "main": "app.jsx",
     "scripts": {
         "bootstrap": "yalc publish;yalc add @wisemapping/editor",
@@ -19,6 +19,9 @@
         "src",
         "dist"
     ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com"
+    },
     "repository": "http://www.wisemapping.com",
     "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
     "license": "MIT",
@@ -36,7 +39,7 @@
         "@mui/lab": "^5.0.0-alpha.98",
         "@mui/material": "^5.10.11",
         "@reduxjs/toolkit": "^1.5.0",
-        "@wisemapping/editor": "^0.4.0",
+        "@wisemapping/editor": "^0.5.20",
         "axios": "^0.27.2",
         "dayjs": "^1.10.7",
         "react": "^18.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.4.2",
+  "version": "0.5.20",
   "main": "dist/editor.bundle.js",
   "scripts": {
     "bootstrap": "yalc publish;yalc add @wisemapping/mindplot",
@@ -28,7 +28,7 @@
     "react": "^18.2.0"
   },
   "dependencies": {
-    "@wisemapping/mindplot": "^5.0.15",
+    "@wisemapping/mindplot": "^5.0.20",
     "emoji-picker-react": "^4.4.7",
     "react-color": "^2.19.3",
     "react-loader-spinner": "^5.3.4"

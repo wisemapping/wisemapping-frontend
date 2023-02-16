@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/mindplot",
-  "version": "5.0.19",
+  "version": "5.0.20",
   "description": "WiseMapping - Mindplot Canvas Library",
   "homepage": "http://www.wisemapping.org/",
   "directories": {
@@ -13,7 +13,7 @@
     "assets"
   ],
   "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
+    "registry": "https://registry.npmjs.com"
   },
   "repository": {
     "type": "git",
@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@types/jquery": "^3.5.11",
-    "@wisemapping/core-js": "^0.4.0",
-    "@wisemapping/web2d": "^0.4.0",
+    "@wisemapping/core-js": "^0.5.20",
+    "@wisemapping/web2d": "^0.5.20",
     "emoji-picker-react": "^4.4.3",
     "jquery": "3.6.0",
     "lodash": "^4.17.21",
