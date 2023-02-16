@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import PersistenceManager from './PersistenceManager';
 
 class LocalStorageManager extends PersistenceManager {
@@ -47,36 +46,45 @@ class LocalStorageManager extends PersistenceManager {
     }
   }
 
-  loadMapDom(mapId: string) {
-    let xml;
-    if (!this.readOnly) {
-      xml = localStorage.getItem(`${mapId}-xml`);
+  private buildHeader() {
+    const csrfToken = this.getCSRFToken();
+    const result = {
+      'Content-Type': 'text/plain',
+      Accept: 'application/xml',
+    };
+    if (csrfToken) {
+      result['X-CSRF-Token'] = csrfToken;
     }
-    if (xml == null || this.forceLoad) {
-      $.ajax({
-        url: this.documentUrl.replace('{id}', mapId),
-        headers: {
-          'Content-Type': 'text/plain',
-          Accept: 'application/xml',
-          'X-CSRF-Token': this.getCSRFToken(),
-        },
-        type: 'get',
-        dataType: 'text',
-        async: false,
-        success(response) {
-          xml = response;
-        },
-        error(xhr, ajaxOptions, thrownError) {
-          console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
-        },
-      });
-      // If I could not load it from a file, hard code one.
-      if (xml == null) {
-        throw new Error(`Map could not be loaded with id:${mapId}`);
-      }
+    return result;
+  }
+
+  loadMapDom(mapId: string): Promise<Document> {
+    let result: Promise<Document>;
+    let localStorate: string | null = null;
+    if (!this.readOnly) {
+      localStorate = localStorage.getItem(`${mapId}-xml`);
     }
 
-    return $.parseXML(xml);
+    if (localStorate == null || this.forceLoad) {
+      const url = this.documentUrl.replace('{id}', mapId);
+
+      result = fetch(url, {
+        method: 'get',
+        headers: this.buildHeader(),
+      })
+        .then((response: Response) => {
+          if (!response.ok) {
+            console.error(`load error: ${response.status}`);
+            throw new Error(`load error: ${response.status}, ${response.statusText}`);
+          }
+          return response.text();
+        })
+        .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
+    } else {
+      const doc = new DOMParser().parseFromString(localStorate, 'text/xml');
+      result = Promise.resolve(doc);
+    }
+    return result;
   }
 
   unlockMap(): void {

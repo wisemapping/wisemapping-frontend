@@ -4,9 +4,15 @@ const common = require('./webpack.common');
 const prodConfig = {
   mode: 'production',
   devtool: 'source-map',
+  output: {
+    library: {
+      type: 'umd',
+    },
+  },
   optimization: {
     splitChunks: {
       chunks: 'all',
+      usedExports: true,
     },
   },
 };

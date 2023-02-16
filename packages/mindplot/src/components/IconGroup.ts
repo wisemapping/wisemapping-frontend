@@ -16,12 +16,14 @@
  *   limitations under the License.
  */
 
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Group, ElementClass, Point } from '@wisemapping/web2d';
+import { $assert } from '@wisemapping/core-js';
+import { Group } from '@wisemapping/web2d';
 import IconGroupRemoveTip from './IconGroupRemoveTip';
 import ImageIcon from './ImageIcon';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
+import Icon from './Icon';
+import PositionType from './PositionType';
 
 const ORDER_BY_TYPE = new Map<string, number>();
 ORDER_BY_TYPE.set('icon', 0);
@@ -29,20 +31,17 @@ ORDER_BY_TYPE.set('note', 1);
 ORDER_BY_TYPE.set('link', 2);
 
 class IconGroup {
-  private _icons: ImageIcon[];
+  private _icons: Icon[];
 
-  private _group: any;
+  private _group: Group;
 
   private _removeTip: IconGroupRemoveTip;
 
-  private _iconSize: SizeType;
+  private _iconSize: SizeType | null;
 
   private _topicId: number;
 
   constructor(topicId: number, iconSize: number) {
-    $assert($defined(topicId), 'topicId can not be null');
-    $assert($defined(iconSize), 'iconSize can not be null');
-
     this._topicId = topicId;
     this._icons = [];
     this._group = new Group({
@@ -56,18 +55,15 @@ class IconGroup {
     this._removeTip = new IconGroupRemoveTip(this._group);
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
+    this._iconSize = null;
   }
 
   setPosition(x: number, y: number): void {
     this._group.setPosition(x, y);
   }
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     return this._group.getPosition();
-  }
-
-  getNativeElement(): ElementClass {
-    return this._group;
   }
 
   /** */
@@ -84,9 +80,7 @@ class IconGroup {
     this._resize(this._icons.length);
   }
 
-  addIcon(icon: ImageIcon, remove: boolean) {
-    $defined(icon, 'icon is not defined');
-
+  addIcon(icon: Icon, remove: boolean): void {
     // Order could have change, need to re-add all.
     const icons = this._icons.slice();
     this._icons.forEach((i) => {
@@ -97,13 +91,13 @@ class IconGroup {
     icons.push(icon);
     this._icons = icons.sort(
       (a, b) =>
-        ORDER_BY_TYPE.get(a.getModel().getType()) - ORDER_BY_TYPE.get(b.getModel().getType()),
+        ORDER_BY_TYPE.get(a.getModel().getType())! - ORDER_BY_TYPE.get(b.getModel().getType())!,
     );
 
     // Add all the nodes back ...
     this._resize(this._icons.length);
     this._icons.forEach((i, index) => {
-      this._positionIcon(i, index);
+      this.positionIcon(i, index);
       const imageShape = i.getElement();
       this._group.append(imageShape);
     });
@@ -114,8 +108,8 @@ class IconGroup {
     }
   }
 
-  private _findIconFromModel(iconModel: FeatureModel) {
-    let result = null;
+  private _findIconFromModel(iconModel: FeatureModel): Icon {
+    let result: Icon | null = null;
 
     this._icons.forEach((icon) => {
       const elModel = icon.getModel();
@@ -133,16 +127,14 @@ class IconGroup {
   }
 
   /** */
-  removeIconByModel(featureModel: FeatureModel) {
+  removeIconByModel(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel can not be null');
 
     const icon = this._findIconFromModel(featureModel);
     this._removeIcon(icon);
   }
 
-  private _removeIcon(icon: ImageIcon) {
-    $assert(icon, 'icon can not be null');
-
+  private _removeIcon(icon: Icon): void {
     this._removeTip.close(0);
     this._group.removeChild(icon.getElement());
 
@@ -152,7 +144,7 @@ class IconGroup {
 
     // Add all again ...
     this._icons.forEach((elem, i) => {
-      me._positionIcon(elem, i);
+      me.positionIcon(elem, i);
     });
   }
 
@@ -172,21 +164,28 @@ class IconGroup {
     });
   }
 
-  private _resize(iconsLength: number) {
-    this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
+  private _resize(iconsLength: number): void {
+    if (this._iconSize) {
+      this._group.setSize(iconsLength * this._iconSize.width, this._iconSize.height);
 
-    const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
-    this._group.setCoordSize(iconsLength * iconSize, iconSize);
+      const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
+      this._group.setCoordSize(iconsLength * iconSize, iconSize);
+    }
   }
 
-  private _positionIcon(icon: ImageIcon, order: number) {
+  private positionIcon(icon: Icon, order: number): void {
     const iconSize = ImageIcon.SIZE + IconGroup.ICON_PADDING * 2;
     icon
       .getElement()
       .setPosition(iconSize * order + IconGroup.ICON_PADDING, IconGroup.ICON_PADDING);
   }
 
-  static ICON_PADDING = 5;
+  appendTo(group: Group): void {
+    group.append(this._group);
+    this._group.moveToFront();
+  }
+
+  static ICON_PADDING = 2;
 }
 
 export default IconGroup;

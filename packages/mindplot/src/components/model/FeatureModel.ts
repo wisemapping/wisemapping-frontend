@@ -76,7 +76,7 @@ class FeatureModel {
   }
 
   setId(id: number) {
-    $assert(Number.isFinite(id));
+    $assert(Number.isFinite(id), `id is not a number ${id}`);
     this._id = id;
   }
 

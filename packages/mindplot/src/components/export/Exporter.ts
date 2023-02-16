@@ -25,12 +25,10 @@ abstract class Exporter {
     this._contentType = contentType;
   }
 
-  exportAndEncode(): Promise<string> {
-    const exportValue = this.export();
-    return exportValue.then((value: string) => {
-      const blob = new Blob([value], { type: this._contentType });
-      return URL.createObjectURL(blob);
-    });
+  async exportAndEncode(): Promise<string> {
+    const exportValue = await this.export();
+    const blob = new Blob([exportValue], { type: this._contentType });
+    return URL.createObjectURL(blob);
   }
 
   abstract export(): Promise<string>;

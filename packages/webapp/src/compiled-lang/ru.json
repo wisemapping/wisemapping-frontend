@@ -371,6 +371,18 @@
       "value": "Email"
     }
   ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Вернуться на страницу авторизации"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "Вам не нужен пароль, пожалуйста, войдите с помощью Google"
+    }
+  ],
   "forgot.page-title": [
     {
       "type": 0,
@@ -555,6 +567,12 @@
       "value": "Войдите в свой аккаунт"
     }
   ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "или же"
+    }
+  ],
   "login.email": [
     {
       "type": 0,
@@ -571,6 +589,12 @@
     {
       "type": 0,
       "value": "Забыли пароль?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Войти через Google"
     }
   ],
   "login.hsqldbcofig": [
@@ -843,16 +867,64 @@
       "value": "Опубликовать"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Произошла ошибка при подтверждении вашей личности в Google. Повторите попытку со страницы входа."
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "Успешная регистрация | WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Вернуться на страницу авторизации"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "Учетная запись c таким же адресом электронной почты была ранее зарегистрирована. Вы хотите связать свою учетную запись Google с этой учетной записью WiseMapping?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Подтверждать"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Синхронизировать учетную запись"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Подождите, пока мы подтвердим вашу личность"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Отделка ..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "Регистрация бесплатна и займет всего минуту"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "или же"
     }
   ],
   "registration.email": [
@@ -865,6 +937,12 @@
     {
       "type": 0,
       "value": "Имя"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Зарегистрируйтесь в Google"
     }
   ],
   "registration.lastname": [

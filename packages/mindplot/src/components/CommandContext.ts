@@ -16,11 +16,11 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import { Designer } from '..';
 import EventBus from './layout/EventBus';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
+import PositionType from './PositionType';
 import Relationship from './Relationship';
 import Topic from './Topic';
 
@@ -55,51 +55,45 @@ class CommandContext {
   }
 
   /** */
-  deleteTopic(topic: Topic) {
+  deleteTopic(topic: Topic): void {
     this._designer.removeTopic(topic);
   }
 
   /** */
-  createTopic(model: NodeModel) {
+  createTopic(model: NodeModel): Topic {
     $assert(model, 'model can not be null');
     return this._designer.nodeModelToTopic(model);
   }
 
-  // /** */
-  // createModel() {
-  //   const mindmap = this._designer.getMindmap();
-  //   return mindmap.createNode('MainTopic');
-  // }
-
   /** */
-  addTopic(topic: Topic) {
+  addTopic(topic: Topic): void {
     const mindmap = this._designer.getMindmap();
-    return mindmap.addBranch(topic.getModel());
+    mindmap.addBranch(topic.getModel());
   }
 
   /** */
-  connect(childTopic: Topic, parentTopic: Topic) {
+  connect(childTopic: Topic, parentTopic: Topic): void {
     childTopic.connectTo(parentTopic, this._designer.getWorkSpace());
   }
 
   /** */
-  disconnect(topic: Topic) {
+  disconnect(topic: Topic): void {
     topic.disconnect(this._designer.getWorkSpace());
   }
 
   /** */
-  addRelationship(model: RelationshipModel) {
+  addRelationship(model: RelationshipModel): Relationship {
     $assert(model, 'model cannot be null');
     return this._designer.addRelationship(model);
   }
 
   /** */
-  deleteRelationship(relationship: Relationship) {
+  deleteRelationship(relationship: Relationship): void {
     this._designer.deleteRelationship(relationship);
   }
 
   /** */
-  findRelationships(relationshipIds: number[]) {
+  findRelationships(relationshipIds: number[]): Relationship[] {
     $assert($defined(relationshipIds), 'relId can not be null');
     const relIds = Array.isArray(relationshipIds) ? relationshipIds : [relationshipIds];
 
@@ -108,7 +102,7 @@ class CommandContext {
   }
 
   /** */
-  moveTopic(topic: Topic, position: Point) {
+  moveTopic(topic: Topic, position: PositionType): void {
     $assert(topic, 'topic cannot be null');
     $assert(position, 'position cannot be null');
     EventBus.instance.fireEvent('topicMoved', {

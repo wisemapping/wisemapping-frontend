@@ -11,6 +11,12 @@
       "value": "Abbrechen"
     }
   ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Löschen"
+    }
+  ],
   "action.share": [
     {
       "type": 0,
@@ -101,6 +107,24 @@
       "value": "Rückgängig"
     }
   ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Symbol"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Notiz"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -131,6 +155,48 @@
       "value": "Thema hinzufügen"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Farbe"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Standardfarbe"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Verbindungsstil"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "Weite Kurve"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Schlanke Kurve"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polylinie"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Gebogene Polylinie"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,
@@ -143,10 +209,22 @@
       "value": "Randfarbe"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Standardrandfarbe"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
       "value": "Füllfarbe"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Standardfüllfarbe"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -165,6 +243,12 @@
     {
       "type": 0,
       "value": "Farbe"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Farbe defekt"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
@@ -221,12 +305,6 @@
       "value": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     }
   ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Hinweis für Mobilgeräte."
-    }
-  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -251,6 +329,12 @@
       "value": "Diese Edition zeigt einige der Mindmap-Funktionen!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Bilder anzeigen"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -267,12 +351,6 @@
     {
       "type": 0,
       "value": "Anmeldung"
-    }
-  ],
-  "note.label": [
-    {
-      "type": 0,
-      "value": "Notiz"
     }
   ],
   "shortcut-help-pane.action": [
@@ -347,6 +425,12 @@
       "value": "Alle Themen auswählen"
     }
   ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Color de relleno por defekto"
+    }
+  ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
@@ -375,6 +459,18 @@
     {
       "type": 0,
       "value": "Pfeiltasten"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Thementext überschreiben"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Beginnen Sie mit dem Schreiben über das ausgewählte Thema"
     }
   ],
   "shortcut-help-pane.redo": [

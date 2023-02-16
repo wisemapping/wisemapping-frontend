@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import $ from 'jquery';
 import { $msg } from './Messages';
 import PersistenceManager, { PersistenceError } from './PersistenceManager';
 
@@ -40,6 +39,7 @@ class RESTPersistenceManager extends PersistenceManager {
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;
     this.lockUrl = options.lockUrl;
+    this.onSave = false;
   }
 
   saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
@@ -60,22 +60,28 @@ class RESTPersistenceManager extends PersistenceManager {
       }, 10000);
 
       const persistence = this;
+
+      const crfs = this.getCSRFToken();
+      const headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        Accept: 'application/json',
+      };
+      if (crfs) {
+        headers['X-CSRF-Token'] = crfs;
+      }
+
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
         // Blob helps to resuce the memory on large payload.
         body: new Blob([JSON.stringify(data)], { type: 'text/plain' }),
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          Accept: 'application/json',
-          'X-CSRF-Token': this.getCSRFToken(),
-        },
+        headers,
       })
         .then(async (response: Response) => {
           if (response.ok) {
             events.onSuccess();
           } else {
-            console.log(`Saving error: ${response.status}`);
-            let userMsg;
+            console.error(`Saving error: ${response.status}`);
+            let userMsg: PersistenceError | null = null;
             if (response.status === 405) {
               userMsg = {
                 severity: 'SEVERE',
@@ -86,18 +92,20 @@ class RESTPersistenceManager extends PersistenceManager {
               const responseText = await response.text();
               const contentType = response.headers['Content-Type'];
               if (contentType != null && contentType.indexOf('application/json') !== -1) {
-                let serverMsg = null;
+                let serverMsg: null | { globalSeverity: string } = null;
                 try {
                   serverMsg = JSON.parse(responseText);
-                  serverMsg = serverMsg.globalSeverity ? serverMsg : null;
+                  serverMsg = serverMsg && serverMsg.globalSeverity ? serverMsg : null;
                 } catch (e) {
                   // Message could not be decoded ...
                 }
                 userMsg = persistence._buildError(serverMsg);
               }
             }
-            this.triggerError(userMsg);
-            events.onError(userMsg);
+            if (userMsg) {
+              this.triggerError(userMsg);
+              events.onError(userMsg);
+            }
           }
 
           // Clear event timeout ...
@@ -124,21 +132,34 @@ class RESTPersistenceManager extends PersistenceManager {
     }
   }
 
-  discardChanges(mapId: string) {
+  discardChanges(mapId: string): void {
+    const crfs = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      Accept: 'application/json',
+    };
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
+    }
+
     fetch(this.revertUrl.replace('{id}', mapId), {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-        'X-CSRF-Token': this.getCSRFToken(),
-      },
+      headers,
     });
   }
 
   unlockMap(mapId: string): void {
+    const crfs = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'text/plain; charset=utf-8',
+    };
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
+    }
+
     fetch(this.lockUrl.replace('{id}', mapId), {
       method: 'PUT',
-      headers: { 'Content-Type': 'text/plain', 'X-CSRF-Token': this.getCSRFToken() },
+      headers,
       body: 'false',
     });
   }
@@ -157,31 +178,29 @@ class RESTPersistenceManager extends PersistenceManager {
     return { severity, message };
   }
 
-  loadMapDom(mapId: string): Document {
-    let xml: Document;
-    $.ajax({
-      url: `${this.documentUrl.replace('{id}', mapId)}/xml`,
-      method: 'get',
-      async: false,
-      headers: {
-        'Content-Type': 'text/plain',
-        Accept: 'application/xml',
-        'X-CSRF-Token': this.getCSRFToken(),
-      },
-      success(responseText) {
-        xml = responseText;
-      },
-      error(xhr, ajaxOptions, thrownError) {
-        console.error(`Request error => status:${xhr.status} ,thrownError: ${thrownError}`);
-      },
-    });
-
-    // If I could not load it from a file, hard code one.
-    if (xml == null) {
-      throw new Error(`Map with id ${mapId} could not be loaded`);
+  loadMapDom(mapId: string): Promise<Document> {
+    const url = `${this.documentUrl.replace('{id}', mapId)}/xml`;
+    const crfs = this.getCSRFToken();
+    const headers = {
+      'Content-Type': 'text/plain; charset=utf-8',
+      Accept: 'application/xml',
+    };
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
     }
 
-    return xml;
+    return fetch(url, {
+      method: 'get',
+      headers,
+    })
+      .then((response: Response) => {
+        if (!response.ok) {
+          console.error(`load error: ${response.status}`);
+          throw new Error(`load error: ${response.status}, ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
   }
 }
 

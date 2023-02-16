@@ -1,43 +1,43 @@
 export default class Arrowlink {
-  protected COLOR: string;
+  protected COLOR: string | undefined;
 
-  protected DESTINATION: string;
+  protected DESTINATION: string | undefined;
 
-  protected ENDARROW: string;
+  protected ENDARROW: string | undefined;
 
-  protected ENDINCLINATION: string;
+  protected ENDINCLINATION: string | undefined;
 
-  protected ID: string;
+  protected ID: string | undefined;
 
-  protected STARTARROW: string;
+  protected STARTARROW: string | undefined;
 
-  protected STARTINCLINATION: string;
+  protected STARTINCLINATION: string | undefined;
 
-  getColor(): string {
+  getColor(): string | undefined {
     return this.COLOR;
   }
 
-  getDestination(): string {
+  getDestination(): string | undefined {
     return this.DESTINATION;
   }
 
-  getEndarrow(): string {
+  getEndarrow(): string | undefined {
     return this.ENDARROW;
   }
 
-  getEndInclination(): string {
+  getEndInclination(): string | undefined {
     return this.ENDINCLINATION;
   }
 
-  getId(): string {
+  getId(): string | undefined {
     return this.ID;
   }
 
-  getStartarrow(): string {
+  getStartarrow(): string | undefined {
     return this.STARTARROW;
   }
 
-  getStartinclination(): string {
+  getStartinclination(): string | undefined {
     return this.STARTINCLINATION;
   }
 
@@ -72,8 +72,12 @@ export default class Arrowlink {
   toXml(document: Document): HTMLElement {
     const arrowlinkElem = document.createElement('arrowlink');
 
-    arrowlinkElem.setAttribute('DESTINATION', this.DESTINATION);
-    arrowlinkElem.setAttribute('STARTARROW', this.STARTARROW);
+    if (this.DESTINATION) {
+      arrowlinkElem.setAttribute('DESTINATION', this.DESTINATION);
+    }
+    if (this.STARTARROW) {
+      arrowlinkElem.setAttribute('STARTARROW', this.STARTARROW);
+    }
 
     if (this.COLOR) {
       arrowlinkElem.setAttribute('COLOR', this.COLOR);

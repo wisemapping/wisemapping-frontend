@@ -21,7 +21,7 @@ import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
 
-import initHotKeyPluggin from '../../../../libraries/jquery.hotkeys';
+import initHotKeyPluggin from '../../libraries/jquery.hotkeys';
 
 // Provides dispatcher of keyevents by key...
 initHotKeyPluggin($);
@@ -219,7 +219,7 @@ class DesignerKeyboard extends Keyboard {
     });
   }
 
-  private _goToBrother(designer: Designer, node: Topic, direction) {
+  private _goToBrother(designer: Designer, node: Topic, direction: 'UP' | 'DOWN') {
     const parent = node.getParent();
     if (parent) {
       const brothers = parent.getChildren();
@@ -227,19 +227,19 @@ class DesignerKeyboard extends Keyboard {
       let target = node;
       const { y } = node.getPosition();
       const { x } = node.getPosition();
-      let dist = null;
+      let dist: number | null = null;
       for (let i = 0; i < brothers.length; i++) {
         const sameSide = x * brothers[i].getPosition().x >= 0;
         if (brothers[i] !== node && sameSide) {
           const brother = brothers[i];
           const brotherY = brother.getPosition().y;
           if (direction === 'DOWN' && brotherY > y) {
-            let distancia = y - brotherY;
-            if (distancia < 0) {
-              distancia *= -1;
+            let distance = y - brotherY;
+            if (distance < 0) {
+              distance *= -1;
             }
-            if (dist == null || dist > distancia) {
-              dist = distancia;
+            if (dist == null || dist > distance) {
+              dist = distance;
               target = brothers[i];
             }
           } else if (direction === 'UP' && brotherY < y) {
@@ -258,11 +258,11 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT') {
+  private _goToSideChild(designer: Designer, node: Topic, side: 'LEFT' | 'RIGHT'): void {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
-      let top = null;
+      let top: number | null = null;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
         const childY = child.getPosition().y;
@@ -284,14 +284,14 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToParent(designer: Designer, node: Topic) {
+  private _goToParent(designer: Designer, node: Topic): void {
     const parent = node.getParent();
     if (parent) {
       this._goToNode(designer, parent);
     }
   }
 
-  private _goToChild(designer: Designer, node: Topic) {
+  private _goToChild(designer: Designer, node: Topic): void {
     const children = node.getChildren();
     if (children.length > 0) {
       let target = children[0];
@@ -307,7 +307,7 @@ class DesignerKeyboard extends Keyboard {
     }
   }
 
-  private _goToNode(designer: Designer, node: Topic) {
+  private _goToNode(designer: Designer, node: Topic): void {
     // First deselect all the nodes ...
     designer.deselectAll();
 
@@ -315,10 +315,10 @@ class DesignerKeyboard extends Keyboard {
     node.setOnFocus(true);
   }
 
-  static register = function register(designer: Designer) {
+  static register(designer: Designer) {
     this._instance = new DesignerKeyboard(designer);
     this._disabled = false;
-  };
+  }
 
   static pause() {
     this._disabled = true;

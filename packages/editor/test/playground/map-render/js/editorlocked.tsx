@@ -37,7 +37,7 @@ const options: EditorOptions = {
   enableKeyboardEvents: true,
 };
 
-const mapInfo = new MapInfoImpl('welcome', 'Develop WiseMapping', true);
+const mapInfo = new MapInfoImpl('welcome', 'Develop WiseMapping', true, "It's locked !");
 
 const container = document.getElementById('root');
 const root = createRoot(container!);

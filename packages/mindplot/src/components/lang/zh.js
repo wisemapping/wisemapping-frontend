@@ -14,11 +14,9 @@ const ZH = {
   ISOLATED_TOPIC: '独立主题',
   CENTRAL_TOPIC: '中心主题',
   ENTITIES_COULD_NOT_BE_DELETED: '无法删除主题或关系。至少选择一个脑图实体。',
-  AT_LEAST_ONE_TOPIC_MUST_BE_SELECTED: '至少要选择一个主题',
   CLIPBOARD_IS_EMPTY: '没有东西可以复制。剪贴板是空的。',
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: '无法删除中心主题。',
   RELATIONSHIP_COULD_NOT_BE_CREATED: '无法创建关系。必须先选择要建立关系的主题。',
-  SELECTION_COPIED_TO_CLIPBOARD: '主题已复制到剪贴板',
   SESSION_EXPIRED: '您的会话已过期，请重新登录。',
 };
 

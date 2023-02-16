@@ -2,8 +2,8 @@
   "action.accept": {
     "defaultMessage": "Accept"
   },
-  "action.cancel": {
-    "defaultMessage": "Cancel"
+  "action.delete": {
+    "defaultMessage": "Delete"
   },
   "appbar.back-to-map-list": {
     "defaultMessage": "Back to maps list"
@@ -47,6 +47,15 @@
   "appbar.tooltip-undo": {
     "defaultMessage": "Undo"
   },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Icon"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "Link"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "Note"
+  },
   "editor-panel.tooltip-add-icon": {
     "defaultMessage": "Add Icon"
   },
@@ -62,14 +71,41 @@
   "editor-panel.tooltip-add-topic": {
     "defaultMessage": "Add Topic"
   },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "Default color"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "Connection Style"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "Thick Curved"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "Thin Curved"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "Simple Polyline"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "Curved Polyline"
+  },
   "editor-panel.tooltip-delete-topic": {
     "defaultMessage": "Delete Topic"
   },
   "editor-panel.tooltip-topic-border-color": {
     "defaultMessage": "Border color"
   },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "Default border color"
+  },
   "editor-panel.tooltip-topic-fill-color": {
     "defaultMessage": "Fill color"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "Default fill color"
   },
   "editor-panel.tooltip-topic-font-bigger": {
     "defaultMessage": "Bigger"
@@ -79,6 +115,9 @@
   },
   "editor-panel.tooltip-topic-font-color": {
     "defaultMessage": "Color"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "Default color"
   },
   "editor-panel.tooltip-topic-font-italic": {
     "defaultMessage": "Italic"
@@ -107,9 +146,6 @@
   "editor.edit-description-mobile": {
     "defaultMessage": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
   },
-  "editor.edit-mobile": {
-    "defaultMessage": "Note for mobile devices."
-  },
   "editor.try-welcome": {
     "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
   },
@@ -122,14 +158,14 @@
   "editor.try-welcome-mobile": {
     "defaultMessage": "This edition space showcases some of the mindmap editor capabilities!"
   },
+  "icon-picker.show-images": {
+    "defaultMessage": "Show images"
+  },
   "link.help_text": {
     "defaultMessage": "Address is not valid"
   },
   "link.placeholder": {
     "defaultMessage": "https://www.example.com"
-  },
-  "note.label": {
-    "defaultMessage": "Note"
   },
   "shortcut-help-pane.action": {
     "defaultMessage": "Action"
@@ -159,13 +195,16 @@
     "defaultMessage": "Collpase children"
   },
   "shortcut-help-pane.copy-and-text": {
-    "defaultMessage": "Copy and paste topics"
+    "defaultMessage": "Copy and paste topics/Copy mindmap image to clipboard."
   },
   "shortcut-help-pane.delete-topic": {
     "defaultMessage": "Delete topic"
   },
   "shortcut-help-pane.deselect-all-topics": {
     "defaultMessage": "Deselect all topics"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "Disconnect topic"
   },
   "shortcut-help-pane.edit-multiline": {
     "defaultMessage": "Add multi-line topic text"
@@ -174,13 +213,19 @@
     "defaultMessage": "Edit topic text"
   },
   "shortcut-help-pane.edit-topic-key": {
-    "defaultMessage": "Just start typing"
+    "defaultMessage": "F2 or Double Click"
   },
   "shortcut-help-pane.navigation": {
     "defaultMessage": "Navigation"
   },
   "shortcut-help-pane.navigation-keys": {
     "defaultMessage": "Arrow keys"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "Overwrite topic text"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "Type on a selected topic"
   },
   "shortcut-help-pane.redo": {
     "defaultMessage": "Redo edition"

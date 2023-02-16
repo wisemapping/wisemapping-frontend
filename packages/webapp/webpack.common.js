@@ -1,20 +1,15 @@
-/* eslint-disable no-undef */
-const path = require('path');
-const webpack = require('webpack');
+/** @type {import('webpack').Configuration} */
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('../../webpack.common');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-webpack;
-
-module.exports = {
+const prodConfig = {
   entry: {
     app: path.join(__dirname, 'src', 'index.tsx'),
   },
   target: 'web',
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -22,26 +17,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: '/node_modules/',
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/,
-        type: 'asset/inline',
-      },
-      {
         test: /\.wxml$/i,
         type: 'asset/source',
-      },
-      {
-        test: /\.css$/,
-        loader: 'css-loader',
-      },
+      }
     ],
   },
   optimization: {
-    usedExports: true,
     chunkIds: 'named',
     splitChunks: {
       cacheGroups: {
@@ -54,10 +35,6 @@ module.exports = {
     },
   },
   plugins: [
-    new CleanWebpackPlugin({
-      dangerouslyAllowCleanPatternsOutsideProject: true,
-      dry: false,
-    }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -71,3 +48,5 @@ module.exports = {
     }),
   ],
 };
+
+module.exports = merge(common, prodConfig);

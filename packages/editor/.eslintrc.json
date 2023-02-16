@@ -7,8 +7,25 @@
         "eslint:recommended",
         "prettier",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:cypress/recommended"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts"
+                ]
+            },
+            "webpack": {
+                "config": "./webpack.common.js"
+            }
+        }
+    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
@@ -29,7 +46,16 @@
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/explicit-module-boundary-types": "error",
         "@typescript-eslint/no-unused-vars": "error",
-        "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-        "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+        "react-hooks/rules-of-hooks": "off", // Checks rules of Hooks
+        "react-hooks/exhaustive-deps": "off", // Checks effect dependencies
+        "no-restricted-imports": [
+            "error",
+            {
+                "patterns": [
+                    "@mui/*/*/*",
+                    "!@mui/material/test-utils/*"
+                ]
+            }
+        ]
     }
 }

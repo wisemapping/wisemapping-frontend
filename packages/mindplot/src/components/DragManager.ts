@@ -15,14 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import DragTopic from './DragTopic';
 import EventBusDispatcher from './layout/EventBusDispatcher';
 import Topic from './Topic';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 
 class DragManager {
-  private _workspace: Workspace;
+  private _workspace: Canvas;
 
   private _isDragInProcess: boolean;
 
@@ -34,7 +34,7 @@ class DragManager {
 
   private _mouseUpListener;
 
-  constructor(workspace: Workspace, eventDispatcher: EventBusDispatcher) {
+  constructor(workspace: Canvas, eventDispatcher: EventBusDispatcher) {
     this._workspace = workspace;
     this._listeners = {};
     this._isDragInProcess = false;
@@ -55,10 +55,10 @@ class DragManager {
 
         // Set initial position.
         const layoutManager = me._eventDispatcher.getLayoutManager();
-        const dragNode = topic.createDragNode(layoutManager);
+        const dragNode: DragTopic = topic.createDragNode(layoutManager);
 
         // Register mouse move listener ...
-        const mouseMoveListener = dragManager._buildMouseMoveListener(
+        const mouseMoveListener = dragManager.buildMouseMoveListener(
           workspace,
           dragNode,
           dragManager,
@@ -80,19 +80,21 @@ class DragManager {
     throw new Error('Not implemented: DragManager.prototype.remove');
   }
 
-  protected _buildMouseMoveListener(workspace: Workspace, dragNode, dragManager: DragManager) {
+  protected buildMouseMoveListener(
+    workspace: Canvas,
+    dragNode: DragTopic,
+    dragManager: DragManager,
+  ): (event: MouseEvent) => void {
     const screen = workspace.getScreenManager();
-    const me = this;
-    const result = (event) => {
-      if (!me._isDragInProcess) {
+    const result = (event: MouseEvent) => {
+      if (!this._isDragInProcess) {
         // Execute Listeners ..
         const startDragListener = dragManager._listeners.startdragging;
         startDragListener(event, dragNode);
 
         // Add shadow node to the workspace.
         workspace.append(dragNode);
-
-        me._isDragInProcess = true;
+        this._isDragInProcess = true;
       }
 
       const pos = screen.getWorkspaceMousePosition(event);
@@ -100,7 +102,7 @@ class DragManager {
 
       // Call mouse move listeners ...
       const dragListener = dragManager._listeners.dragging;
-      if ($defined(dragListener)) {
+      if (dragListener) {
         dragListener(event, dragNode);
       }
 
@@ -112,9 +114,12 @@ class DragManager {
     return result;
   }
 
-  protected _buildMouseUpListener(workspace: Workspace, dragNode, dragManager: DragManager) {
+  protected _buildMouseUpListener(
+    workspace: Canvas,
+    dragNode: DragTopic,
+    dragManager: DragManager,
+  ) {
     const screen = workspace.getScreenManager();
-    const me = this;
     const result = (event: Event) => {
       $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
@@ -131,7 +136,7 @@ class DragManager {
       // Change the cursor to the default.
       window.document.body.style.cursor = 'default';
 
-      if (me._isDragInProcess) {
+      if (this._isDragInProcess) {
         // Execute Listeners only if the node has been moved.
         const endDragListener = dragManager._listeners.enddragging;
         endDragListener(event, dragNode);
@@ -139,14 +144,17 @@ class DragManager {
         // Remove drag node from the workspace.
         dragNode.removeFromWorkspace(workspace);
 
-        me._isDragInProcess = false;
+        this._isDragInProcess = false;
       }
     };
     dragManager._mouseUpListener = result;
     return result;
   }
 
-  addEvent(type: 'startdragging' | 'dragging' | 'enddragging', listener) {
+  addEvent(
+    type: 'startdragging' | 'dragging' | 'enddragging',
+    listener: (event: MouseEvent, dragTopic: DragTopic) => void,
+  ) {
     this._listeners[type] = listener;
   }
 }

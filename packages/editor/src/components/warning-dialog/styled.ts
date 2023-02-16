@@ -47,3 +47,42 @@ export const Notifier = styled.div`
   bottom: 10px;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 `;
+
+export const CloseButton = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  button {
+    cursor: pointer;
+    border-style: hidden;
+    background-color: transparent;
+    padding: 0px;
+  }
+
+  button img {
+    width: 18px;
+    height: 18px;
+    filter: invert(73%) sepia(21%) saturate(4699%) hue-rotate(357deg) brightness(98%) contrast(108%);
+  }
+`;
+
+export const InfoDialog = styled.div`
+  position: absolute;
+  text-align: center;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: solid 2px #ffa800;
+  margin: auto;
+  border-radius: 9px;
+  width: 80%;
+`;
+
+export const InfoDialogContent = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+`;

@@ -11,7 +11,10 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import ReactGA from 'react-ga4';
-import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
+import Separator from '../common/separator';
+import GoogleButton from '../common/google-button';
+import AppConfig from '../../classes/app-config';
+import CSRFInput from '../common/csrf-input';
 
 const LoginError = () => {
   // @Todo: This must be reviewed to be based on navigation state.
@@ -32,7 +35,7 @@ const LoginError = () => {
       default:
         msg = intl.formatMessage({
           id: 'login.error',
-          defaultMessage: 'The email address or password you entered is  not valid.',
+          defaultMessage: 'The email address or password you entered is not valid.',
         });
     }
   }
@@ -54,7 +57,7 @@ const LoginPage = (): React.ReactElement => {
     <div>
       <Header type="only-signup" />
 
-      <FormContainer maxWidth="xs">
+      <FormContainer>
         <Typography variant="h4" component="h1">
           <FormattedMessage id="login.title" defaultMessage="Welcome" />
         </Typography>
@@ -67,7 +70,7 @@ const LoginPage = (): React.ReactElement => {
 
         <FormControl>
           <form action="/c/perform-login" method="POST">
-            <input type="hidden" value={getCsrfToken()} name={getCsrfTokenParameter()} />
+            <CSRFInput />
             <Input
               name="username"
               type="email"
@@ -102,10 +105,30 @@ const LoginPage = (): React.ReactElement => {
             />
           </form>
         </FormControl>
-
         <Link component={RouterLink} to="/c/forgot-password">
           <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
         </Link>
+        <Separator
+          responsive={false}
+          text={intl.formatMessage({
+            id: 'login.division',
+            defaultMessage: 'or',
+          })}
+        />
+        <GoogleButton
+          text={intl.formatMessage({
+            id: 'login.google.button',
+            defaultMessage: 'Sign in with Google',
+          })}
+          onClick={() => {
+            const authUrl = AppConfig.getGoogleOauth2Url();
+            if (authUrl) {
+              window.location.href = authUrl;
+            } else {
+              console.log('GoogleOauth2Url is not configured.');
+            }
+          }}
+        />
       </FormContainer>
 
       <Footer />

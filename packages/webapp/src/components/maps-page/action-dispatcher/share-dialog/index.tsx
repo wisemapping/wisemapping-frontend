@@ -24,6 +24,7 @@ import Typography from '@mui/material/Typography';
 import { useStyles } from './style';
 import RoleIcon from '../../role-icon';
 import Tooltip from '@mui/material/Tooltip';
+import { Interpolation, Theme } from '@emotion/react';
 
 type ShareModel = {
   emails: string;
@@ -138,15 +139,14 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
           defaultMessage:
             'Invite people to collaborate with you in the creation of your mindmap. They will be notified by email. ',
         })}
-        PaperProps={{ classes: { root: classes.paper } }}
+        paperCss={classes.paper}
         error={error}
       >
-        <div className={classes.actionContainer}>
+        <div css={classes.actionContainer as Interpolation<Theme>}>
           <TextField
             id="emails"
             name="emails"
             required={true}
-            style={{ width: '300px' }}
             size="small"
             type="email"
             variant="outlined"
@@ -154,6 +154,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             label="Emails"
             onChange={handleOnChange}
             value={model.emails}
+            css={[classes.fullWidthInMobile, classes.email]}
           />
 
           <Select
@@ -161,7 +162,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             onChange={handleOnChange}
             value={model.role}
             name="role"
-            style={{ margin: '0px 10px' }}
+            css={[classes.fullWidthInMobile, classes.role]}
           >
             <MenuItem value="editor">
               <FormattedMessage id="share.can-edit" defaultMessage="Can edit" />
@@ -202,7 +203,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               multiline
               rows={3}
               maxRows={3}
-              className={classes.textArea}
+              css={classes.textArea}
               variant="filled"
               name="message"
               onChange={handleOnChange}
@@ -216,13 +217,17 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
         </div>
 
         {!isLoading && (
-          <Paper elevation={1} className={classes.listPaper} variant="outlined">
+          <Paper elevation={1} css={classes.listPaper as Interpolation<Theme>} variant="outlined">
             <List>
               {permissions &&
                 permissions.map((permission) => {
                   return (
                     <ListItem key={permission.email} role={undefined} dense button>
-                      <ListItemText id={permission.email} primary={formatName(permission)} />
+                      <ListItemText
+                        css={classes.listItemText as Interpolation<Theme>}
+                        id={permission.email}
+                        primary={formatName(permission)}
+                      />
 
                       <RoleIcon role={permission.role} />
                       <ListItemSecondaryAction>

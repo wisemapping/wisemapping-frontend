@@ -16,15 +16,22 @@
  *   limitations under the License.
  */
 import React from 'react';
-import TopicLink from '../../components/action-widget/pane/topic-link';
-import TopicNote from '../../components/action-widget/pane/topic-note';
+import TopicLinkEditor from '../../components/action-widget/pane/topic-link-editor';
+import TopicNoteEditor from '../../components/action-widget/pane/topic-note-editor';
+import NodeProperty from '../model/node-property';
 
-const linkContent = (linkModel, closeModal): React.ReactElement => {
-  return <TopicLink closeModal={closeModal} urlModel={linkModel}></TopicLink>;
+const linkContent = (
+  linkModel: NodeProperty<string>,
+  closeModal: () => void,
+): React.ReactElement => {
+  return <TopicLinkEditor closeModal={closeModal} urlModel={linkModel}></TopicLinkEditor>;
 };
 
-const noteContent = (noteModel, closeModal): React.ReactElement => {
-  return <TopicNote closeModal={closeModal} noteModel={noteModel}></TopicNote>;
+const noteContent = (
+  noteModel: NodeProperty<string>,
+  closeModal: () => void,
+): React.ReactElement => {
+  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel}></TopicNoteEditor>;
 };
 
 export { linkContent, noteContent };

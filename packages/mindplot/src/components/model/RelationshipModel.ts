@@ -16,8 +16,8 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
-import ConnectionLine from '../ConnectionLine';
+import { LineType } from '../ConnectionLine';
+import PositionType from '../PositionType';
 
 class RelationshipModel {
   static _nextUuid = 0;
@@ -28,11 +28,11 @@ class RelationshipModel {
 
   private _targetTopicId: number;
 
-  private _lineType: number;
+  private _lineType: LineType;
 
-  private _srcCtrlPoint: Point;
+  private _srcCtrlPoint: PositionType | null;
 
-  private _destCtrlPoint: Point;
+  private _destCtrlPoint: PositionType | null;
 
   private _endArrow: boolean;
 
@@ -47,7 +47,7 @@ class RelationshipModel {
     this._id = RelationshipModel._nextUUID();
     this._sourceTargetId = sourceTopicId;
     this._targetTopicId = targetTopicId;
-    this._lineType = ConnectionLine.SIMPLE_CURVED;
+    this._lineType = LineType.THIN_CURVED;
     this._srcCtrlPoint = null;
     this._destCtrlPoint = null;
     this._endArrow = true;
@@ -67,27 +67,27 @@ class RelationshipModel {
     return this._id;
   }
 
-  getLineType(): number {
+  getLineType(): LineType {
     return this._lineType;
   }
 
-  setLineType(lineType: number) {
+  setLineType(lineType: LineType) {
     this._lineType = lineType;
   }
 
-  getSrcCtrlPoint(): Point {
+  getSrcCtrlPoint(): PositionType | null {
     return this._srcCtrlPoint;
   }
 
-  setSrcCtrlPoint(srcCtrlPoint: Point) {
+  setSrcCtrlPoint(srcCtrlPoint: PositionType): void {
     this._srcCtrlPoint = srcCtrlPoint;
   }
 
-  getDestCtrlPoint(): Point {
+  getDestCtrlPoint(): PositionType | null {
     return this._destCtrlPoint;
   }
 
-  setDestCtrlPoint(destCtrlPoint: Point): void {
+  setDestCtrlPoint(destCtrlPoint: PositionType): void {
     this._destCtrlPoint = destCtrlPoint;
   }
 

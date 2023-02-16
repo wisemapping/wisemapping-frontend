@@ -35,8 +35,6 @@ class NodeModel extends INodeModel {
   private _parent: NodeModel | null;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id?: number) {
-    $assert(type, 'Node type can not be null');
-    $assert(mindmap, 'mindmap can not be null');
     super(mindmap);
 
     this._properties = {};
@@ -46,6 +44,7 @@ class NodeModel extends INodeModel {
 
     this._children = [];
     this._features = [];
+    this._parent = null;
   }
 
   /**
@@ -108,8 +107,7 @@ class NodeModel extends INodeModel {
    * @param value
    * @throws will throw an error if key is null or undefined
    */
-  putProperty(key: string, value: string | number | boolean) {
-    $defined(key, 'key can not be null');
+  putProperty(key: string, value: string | number | boolean): void {
     this._properties[key] = value;
   }
 
@@ -117,8 +115,7 @@ class NodeModel extends INodeModel {
     return this._properties;
   }
 
-  getProperty(key: string): number | string | boolean {
-    $defined(key, 'key can not be null');
+  getProperty(key: string): number | string | boolean | undefined {
     return this._properties[key];
   }
 

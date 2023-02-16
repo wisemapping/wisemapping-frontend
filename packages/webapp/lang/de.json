@@ -512,5 +512,47 @@
     },
     "footer.team": {
         "defaultMessage": "Team"
-    }
+    },
+    "dialog.loading": {
+        "defaultMessage": "Wird geladen ..."
+    },
+	"registration.google.button": {
+		"defaultMessage": "Melden Sie sich bei Google an"
+	},
+	"login.google.button": {
+		"defaultMessage": "Anmeldung mit Google"
+	},
+	"registration.division": {
+		"defaultMessage": "oder"
+	},
+	"login.division": {
+		"defaultMessage": "oder"
+	},
+	"registration.callback.confirm.title": {
+	  "defaultMessage": "Bestätigen"
+	},
+	"registration.callback.waiting.title": {
+	  "defaultMessage": "Fertigstellung ..."
+	},
+	"registration.callback.confirm.description": {
+	  "defaultMessage": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchten Sie Ihr Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
+	},
+	"registration.callback.waiting.description": {
+	  "defaultMessage": "Bitte warten Sie, während wir Ihre Identität überprüfen"
+	},
+	"registation.callback.error.message": {
+	  "defaultMessage": "Beim Überprüfen Ihrer Identität bei Google ist ein Fehler aufgetreten. Sie können es auf der Anmeldeseite erneut versuchen"
+	},
+	"registration.callback.back": {
+	  "defaultMessage": "Zurück zur Anmeldung"
+	},
+	"registration.callback.sync": {
+	  "defaultMessage": "Konto synchronisieren"
+	},
+	"forgot.oauth.message": {
+	  "defaultMessage": "Sie benötigen kein Passwort, bitte melden Sie sich mit Google an"
+	},
+	"forgot.oauth.back": {
+	  "defaultMessage": "Zurück zur Anmeldung"
+	}
 }

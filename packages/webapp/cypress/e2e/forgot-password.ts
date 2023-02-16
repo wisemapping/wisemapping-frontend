@@ -1,8 +1,9 @@
-import MapsPage from '../pageObject/MapsPage';
+/// <reference types="cypress" />
 
-context('Forgot Password Page', () => {
+describe('Forgot Password Page', () => {
   beforeEach(() => {
     cy.visit('/c/forgot-password');
+    cy.waitForPageLoaded();
   });
 
   it('page loaded', () => {

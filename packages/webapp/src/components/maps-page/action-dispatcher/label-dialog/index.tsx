@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -11,6 +28,7 @@ import Client, { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
 import { LabelSelector } from '../../maps-list/label-selector';
 import { activeInstance } from '../../../../redux/clientSlice';
 import { ChangeLabelMutationFunctionParam, getChangeLabelMutationFunction } from '../../maps-list';
+import { Interpolation, Theme } from '@emotion/react';
 
 const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
@@ -18,13 +36,11 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
 
-  // TODO: pass down map data instead of using query?
   const { data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {
     return client.fetchAllMaps();
   });
   const [error, setError] = React.useState<ErrorInfo>();
-
-  const maps = data.filter((m) => mapsId.includes(m.id));
+  const maps = data?.filter((m) => mapsId.includes(m.id));
 
   const changeLabelMutation = useMutation<
     void,
@@ -43,11 +59,9 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
 
   const handleChangesInLabels = (label: Label, checked: boolean) => {
     setError(undefined);
-    changeLabelMutation.mutate({
-      maps,
-      label,
-      checked,
-    });
+    if (maps) {
+      changeLabelMutation.mutate({ maps, label, checked });
+    }
   };
 
   return (
@@ -62,24 +76,30 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
           id: 'label.description',
           defaultMessage: 'Use labels to organize your maps.',
         })}
-        PaperProps={{ classes: { root: classes.paper } }}
+        paperCss={classes.paper}
         error={error}
       >
-        <>
-          <Typography variant="body2" marginTop="10px">
-            <FormattedMessage id="label.add-for" defaultMessage="Editing labels for " />
-            {maps.length > 1 ? (
-              <FormattedMessage
-                id="label.maps-count"
-                defaultMessage="{count} maps"
-                values={{ count: maps.length }}
-              />
-            ) : (
-              maps.map((m) => m.title).join(', ')
-            )}
-          </Typography>
-          <LabelSelector onChange={handleChangesInLabels} maps={maps} />
-        </>
+        {maps && (
+          <>
+            <Typography
+              variant="body2"
+              marginTop="10px"
+              css={classes.title as Interpolation<Theme>}
+            >
+              <FormattedMessage id="label.add-for" defaultMessage="Editing labels for " />
+              {maps && maps.length > 1 ? (
+                <FormattedMessage
+                  id="label.maps-count"
+                  defaultMessage="{count} maps"
+                  values={{ count: maps.length }}
+                />
+              ) : (
+                maps.map((m) => m.title).join(', ')
+              )}
+            </Typography>
+            <LabelSelector onChange={handleChangesInLabels} maps={maps} />
+          </>
+        )}
       </BaseDialog>
     </div>
   );

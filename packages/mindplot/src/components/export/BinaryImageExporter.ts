@@ -44,7 +44,7 @@ class BinaryImageExporter extends Exporter {
   }
 
   export(): Promise<string> {
-    throw new Error('Images can not be exporeted');
+    throw new Error('Images can not be exported');
   }
 
   exportAndEncode(): Promise<string> {
@@ -77,7 +77,7 @@ class BinaryImageExporter extends Exporter {
       const img = new Image();
       const result = new Promise<string>((resolve) => {
         img.onload = () => {
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext('2d')!;
           // Scale for retina ...
           ctx.scale(dpr, dpr);
           ctx.drawImage(img, 0, 0);

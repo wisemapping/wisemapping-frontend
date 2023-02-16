@@ -13,12 +13,12 @@ const DE = {
   SUB_TOPIC: 'Unterthema',
   ISOLATED_TOPIC: 'Isoliertes Thema',
   CENTRAL_TOPIC: 'Zentrales Thema',
-  AT_LEAST_ONE_TOPIC_MUST_BE_SELECTED: 'Es muss mindestens ein Thema ausgewählt sein.',
   CLIPBOARD_IS_EMPTY: 'Es gibt nichts zu kopieren. Die Zwischenablage ist leer.',
   CENTRAL_TOPIC_CAN_NOT_BE_DELETED: 'Das zentrale Thema kann nicht gelöscht werden.',
   RELATIONSHIP_COULD_NOT_BE_CREATED: 'Die Beziehung konnte nicht angelegt werden. Es muss erst ein Vater-Thema ausgewählt werden, um die Beziehung herzustellen.',
-  SELECTION_COPIED_TO_CLIPBOARD: 'Themen in der Zwischenablage',
   SESSION_EXPIRED: 'Deine Sitzung ist abgelaufen, bitte melde dich erneut an.',
+  CENTRAL_TOPIC_CONNECTION_STYLE_CAN_NOT_BE_CHANGED: 'Le style de connexion ne peut pas être modifié pour le sujet central.',
+  CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED: 'Le sujet central ne peut pas être changé en style de ligne.',
 };
 
 export default DE;

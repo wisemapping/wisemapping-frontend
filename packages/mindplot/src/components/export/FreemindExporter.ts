@@ -1,6 +1,23 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import xmlFormatter from 'xml-formatter';
 import { Mindmap } from '../..';
-import INodeModel, { TopicShape } from '../model/INodeModel';
+import INodeModel, { TopicShapeType } from '../model/INodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import SvgIconModel from '../model/SvgIconModel';
 import FeatureModel from '../model/FeatureModel';
@@ -22,11 +39,11 @@ import Font from './freemind/Font';
 class FreemindExporter extends Exporter {
   private mindmap: Mindmap;
 
-  private nodeMap: Map<number, FreeminNode> = null;
+  private nodeMap!: Map<number, FreeminNode>;
 
   private version: VersionNumber = FreemindConstant.SUPPORTED_FREEMIND_VERSION;
 
-  private objectFactory: ObjectFactory;
+  private objectFactory!: ObjectFactory;
 
   private static wisweToFreeFontSize: Map<number, number> = new Map<number, number>();
 
@@ -87,13 +104,16 @@ class FreemindExporter extends Exporter {
 
     const relationships: Array<RelationshipModel> = this.mindmap.getRelationships();
     relationships.forEach((relationship: RelationshipModel) => {
-      const srcNode: FreeminNode = this.nodeMap.get(relationship.getFromNode());
-      const destNode: FreeminNode = this.nodeMap.get(relationship.getToNode());
+      const srcNode: FreeminNode | undefined = this.nodeMap.get(relationship.getFromNode());
+      const destNode: FreeminNode | undefined = this.nodeMap.get(relationship.getToNode());
 
       if (srcNode && destNode) {
         const arrowlink: Arrowlink = this.objectFactory.crateArrowlink();
 
-        arrowlink.setDestination(destNode.getId());
+        const idRel = destNode.getId();
+        if (idRel) {
+          arrowlink.setDestination(idRel);
+        }
 
         if (relationship.getEndArrow() && relationship.getEndArrow()) {
           arrowlink.setEndarrow('Default');
@@ -140,18 +160,21 @@ class FreemindExporter extends Exporter {
       }
     }
 
-    const wiseShape: string = mindmapTopic.getShapeType();
-    if (wiseShape && TopicShape.LINE !== wiseShape) {
-      freemindNode.setBackgorundColor(this.rgbToHex(mindmapTopic.getBackgroundColor()));
+    const wiseShape: TopicShapeType = mindmapTopic.getShapeType();
+    if (wiseShape && wiseShape !== 'line') {
+      const color = mindmapTopic.getBackgroundColor();
+      if (color) {
+        freemindNode.setBackgorundColor(this.rgbToHex(color));
+      }
     }
 
     if (wiseShape) {
-      const isRootRoundedRectangle = isRoot && TopicShape.ROUNDED_RECT !== wiseShape;
-      const notIsRootLine = !isRoot && TopicShape.LINE !== wiseShape;
+      const isRootRoundedRectangle = isRoot && wiseShape !== 'rounded rectangle';
+      const notIsRootLine = !isRoot && wiseShape !== 'line';
 
       if (isRootRoundedRectangle || notIsRootLine) {
         let style: string = wiseShape;
-        if (TopicShape.ROUNDED_RECT === style || TopicShape.ELLIPSE === style) {
+        if (style === 'rounded rectangle' || style === 'elipse') {
           style = 'bubble';
         }
         freemindNode.setStyle(style);
@@ -239,17 +262,20 @@ class FreemindExporter extends Exporter {
   private addEdgeNode(freemainMap: FreeminNode, mindmapTopic: INodeModel): void {
     if (mindmapTopic.getBorderColor()) {
       const edgeNode: Edge = this.objectFactory.createEdge();
-      edgeNode.setColor(this.rgbToHex(mindmapTopic.getBorderColor()));
+      const color = mindmapTopic.getBorderColor();
+      if (color) {
+        edgeNode.setColor(this.rgbToHex(color));
+      }
       freemainMap.setArrowlinkOrCloudOrEdge(edgeNode);
     }
   }
 
   private addFontNode(freemindNode: FreeminNode, mindmapTopic: INodeModel): void {
-    const fontFamily: string = mindmapTopic.getFontFamily();
-    const fontSize: number = mindmapTopic.getFontSize();
-    const fontColor: string = mindmapTopic.getFontColor();
-    const fontWeigth: string | number | boolean = mindmapTopic.getFontWeight();
-    const fontStyle: string = mindmapTopic.getFontStyle();
+    const fontFamily: string | undefined = mindmapTopic.getFontFamily();
+    const fontSize: number | undefined = mindmapTopic.getFontSize();
+    const fontColor: string | undefined = mindmapTopic.getFontColor();
+    const fontWeigth: string | number | boolean | undefined = mindmapTopic.getFontWeight();
+    const fontStyle: string | undefined = mindmapTopic.getFontStyle();
 
     if (fontFamily || fontSize || fontColor || fontWeigth || fontStyle) {
       const font: Font = this.objectFactory.createFont();
@@ -287,7 +313,10 @@ class FreemindExporter extends Exporter {
 
       if (fontNodeNeeded) {
         if (!font.getSize()) {
-          font.setSize(FreemindExporter.wisweToFreeFontSize.get(8).toString());
+          const size = FreemindExporter.wisweToFreeFontSize.get(8);
+          if (size) {
+            font.setSize(size.toString());
+          }
         }
         freemindNode.setArrowlinkOrCloudOrEdge(font);
       }

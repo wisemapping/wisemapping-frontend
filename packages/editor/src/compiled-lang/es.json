@@ -11,6 +11,12 @@
       "value": "Cancelar"
     }
   ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Borrar"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -95,6 +101,24 @@
       "value": "Deshacer"
     }
   ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Icono"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Enlace"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Nota"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -125,6 +149,48 @@
       "value": "Agregar tópico"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Color por defecto"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Estilo de conexión"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "Curva ancha"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Curva delgada"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polilinea"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Polilinea Curva"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,
@@ -137,10 +203,22 @@
       "value": "Color del border"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Color de border por defecto"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
-      "value": "Color del figura"
+      "value": "Color de relleno"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Color de relleno por defecto"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -159,6 +237,12 @@
     {
       "type": 0,
       "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Color por defecto"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
@@ -215,12 +299,6 @@
       "value": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     }
   ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Nota para dispositivos móbiles."
-    }
-  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -245,6 +323,12 @@
       "value": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Mostrar imagenes"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -255,12 +339,6 @@
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "note.label": [
-    {
-      "type": 0,
-      "value": "Nota"
     }
   ],
   "shortcut-help-pane.action": [
@@ -335,6 +413,12 @@
       "value": "Deseleccionar tópicos"
     }
   ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Desconectar tópico"
+    }
+  ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
@@ -363,6 +447,18 @@
     {
       "type": 0,
       "value": "Cursor"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Sobrescribir el texto del tópico"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Comenzar a escibribir en el tópico seleccionado"
     }
   ],
   "shortcut-help-pane.redo": [

@@ -15,11 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert } from '@wisemapping/core-js';
 import Events from './Events';
-import MultilineTextEditor from './MultilineTextEditor';
-import { TopicShape } from './model/INodeModel';
 import Topic from './Topic';
+import MultitTextEditor from './MultilineTextEditor';
 
 const TopicEvent = {
   EDIT: 'editnode',
@@ -29,55 +27,43 @@ const TopicEvent = {
 class TopicEventDispatcher extends Events {
   private _readOnly: boolean;
 
-  private _activeEditor: MultilineTextEditor;
-
-  private _multilineEditor: MultilineTextEditor;
-
   // eslint-disable-next-line no-use-before-define
   static _instance: TopicEventDispatcher;
 
   constructor(readOnly: boolean) {
     super();
     this._readOnly = readOnly;
-    this._activeEditor = null;
-    this._multilineEditor = new MultilineTextEditor();
   }
 
   close(update: boolean): void {
-    if (this.isVisible()) {
-      this._activeEditor.close(update);
-      this._activeEditor = null;
+    const editor = MultitTextEditor.getInstance();
+    if (editor.isActive()) {
+      editor.close(update);
     }
   }
 
-  show(topic: Topic, options?): void {
-    this.process(TopicEvent.EDIT, topic, options);
+  show(topic: Topic, textOverwrite?: string): void {
+    this.process(TopicEvent.EDIT, topic, textOverwrite);
   }
 
-  process(eventType: string, topic: Topic, options?): void {
-    $assert(eventType, 'eventType can not be null');
-
+  process(eventType: string, topic: Topic, textOverwrite?: string): void {
     // Close all previous open editor ....
-    if (this.isVisible()) {
+    const editor = MultitTextEditor.getInstance();
+    if (editor.isActive()) {
       this.close(false);
     }
 
     // Open the new editor ...
     const model = topic.getModel();
-    if (
-      model.getShapeType() !== TopicShape.IMAGE &&
-      !this._readOnly &&
-      eventType === TopicEvent.EDIT
-    ) {
-      this._multilineEditor.show(topic, options ? options.text : null);
-      this._activeEditor = this._multilineEditor;
+    if (!this._readOnly && eventType === TopicEvent.EDIT) {
+      editor.show(topic, textOverwrite);
     } else {
       this.fireEvent(eventType, { model, readOnly: this._readOnly });
     }
   }
 
   isVisible(): boolean {
-    return this._activeEditor != null && this._activeEditor.isVisible();
+    return MultitTextEditor.getInstance().isActive();
   }
 
   static configure(readOnly: boolean): void {
@@ -85,6 +71,9 @@ class TopicEventDispatcher extends Events {
   }
 
   static getInstance(): TopicEventDispatcher {
+    if (!this._instance) {
+      throw new Error('Event dispatched has not been initialized');
+    }
     return this._instance;
   }
 }

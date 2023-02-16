@@ -1,23 +1,4 @@
 const mindplotStyles = `
-
-  div#mindplot {
-    position: relative;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    overflow: hidden;
-    opacity: 1;
-    background-color: #f2f2f2;
-    background-image: linear-gradient(#ebe9e7 1px, transparent 1px),
-    linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
-    background-size: 50px 50px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
   .mindplot-svg-tooltip {
     display: none;
     color: rgb(51, 51, 51);

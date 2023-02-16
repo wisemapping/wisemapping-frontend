@@ -49,6 +49,7 @@ class Events {
 
     const args = Array.isArray(eventArgs) ? eventArgs : [eventArgs];
     events.forEach((fn) => {
+      // Execute our of the main thread...
       fn.apply(this, args);
     });
     return this;

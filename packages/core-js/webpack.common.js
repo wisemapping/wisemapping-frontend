@@ -1,35 +1,15 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { merge } = require('webpack-merge');
+const common = require('../../webpack.common');
 
-module.exports = {
+const prodConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'core.js',
-    publicPath: '',
+    filename: 'index.ts',
     library: {
       type: 'umd',
     },
-  },
-  target: 'web',
-  optimization: {
-    usedExports: true,
-  },
-  module: {
-    rules: [
-      {
-        use: 'babel-loader',
-        test: /.js$/,
-        exclude: [/node_modules/],
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.js'],
-  },
-  plugins: [
-    new CleanWebpackPlugin({
-      dangerouslyAllowCleanPatternsOutsideProject: true,
-      dry: false,
-    }),
-  ],
+  }
 };
+
+module.exports = merge(common, prodConfig);

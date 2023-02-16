@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
@@ -23,16 +23,18 @@ import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { FormattedMessage } from 'react-intl';
+import Box from '@mui/material/Box';
 
 type IconPickerProp = {
   triggerClose: () => void;
-  iconModel: NodeProperty;
+  iconModel: NodeProperty<string>;
 };
 
-const IconPicker = ({ triggerClose, iconModel }: IconPickerProp) => {
+const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
   const [checked, setChecked] = React.useState(true);
 
-  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheck = () => {
     setChecked(!checked);
   };
 
@@ -51,11 +53,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp) => {
   };
 
   return (
-    <div style={{ padding: '5px' }}>
-      <FormGroup>
-        <FormControlLabel label="Show Images" control={<Switch onChange={handleCheck} />} />
-      </FormGroup>
-
+    <Box style={{ padding: '5px' }}>
       {checked && (
         <EmojiPicker
           onEmojiClick={handleEmojiSelect}
@@ -64,9 +62,14 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp) => {
           previewConfig={{ showPreview: false }}
         />
       )}
-
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
-    </div>
+      <FormGroup sx={{ float: 'right' }}>
+        <FormControlLabel
+          label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}
+          control={<Switch onChange={handleCheck} />}
+        />
+      </FormGroup>
+    </Box>
   );
 };
 export default IconPicker;

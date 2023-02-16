@@ -21,27 +21,36 @@ import INodeModel, { NodeModelType } from './INodeModel';
 import NodeModel from './NodeModel';
 import RelationshipModel from './RelationshipModel';
 import ModelCodeName from '../persistence/ModelCodeName';
+import ThemeType from './ThemeType';
 
 class Mindmap extends IMindmap {
   private _description: string;
 
   private _version: string;
 
-  private _id: string;
+  private _id: string | undefined;
 
   private _branches: Array<NodeModel>;
 
   private _relationships: Array<RelationshipModel>;
 
-  constructor(id: string, version: string = ModelCodeName.TANGO) {
-    super();
-    $assert(id, 'Id can not be null');
+  private _theme: ThemeType | undefined;
 
+  constructor(id?: string, version: string = ModelCodeName.TANGO) {
+    super();
     this._branches = [];
     this._description = '';
     this._relationships = [];
     this._version = version;
     this._id = id;
+  }
+
+  getTheme(): ThemeType {
+    return this._theme ? this._theme : 'classic';
+  }
+
+  setTheme(value: ThemeType): void {
+    this._theme = value;
   }
 
   /** */
@@ -54,8 +63,7 @@ class Mindmap extends IMindmap {
     this._description = value;
   }
 
-  /** */
-  getId(): string {
+  getId(): string | undefined {
     return this._id;
   }
 

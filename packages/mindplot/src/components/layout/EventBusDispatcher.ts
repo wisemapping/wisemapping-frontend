@@ -22,10 +22,11 @@ import EventBus from './EventBus';
 import LayoutManager from './LayoutManager';
 
 class EventBusDispatcher {
-  private _layoutManager: LayoutManager;
+  private _layoutManager: LayoutManager | null;
 
   constructor() {
     this.registerBusEvents();
+    this._layoutManager = null;
   }
 
   setLayoutManager(layoutManager: LayoutManager) {
@@ -44,47 +45,47 @@ class EventBusDispatcher {
   }
 
   private _topicResizeEvent(args: { node: Topic; size: SizeType }) {
-    this._layoutManager.updateNodeSize(args.node.getId(), args.size);
+    this._layoutManager!.updateNodeSize(args.node.getId(), args.size);
   }
 
   private _topicMoved(args: { node: Topic; position: PositionType }) {
-    this._layoutManager.moveNode(args.node.getId(), args.position);
+    this._layoutManager!.moveNode(args.node.getId(), args.position);
   }
 
   private _topicDisconect(node: Topic) {
-    this._layoutManager.disconnectNode(node.getId());
+    this._layoutManager!.disconnectNode(node.getId());
   }
 
   private _topicConnected(args: { parentNode: Topic; childNode: Topic }) {
-    this._layoutManager.connectNode(
+    this._layoutManager!.connectNode(
       args.parentNode.getId(),
       args.childNode.getId(),
-      args.childNode.getOrder(),
+      args.childNode.getOrder()!, // @todo: This can be a issue ...
     );
   }
 
   private _childShrinked(node: Topic) {
-    this._layoutManager.updateShrinkState(node.getId(), node.areChildrenShrunken());
+    this._layoutManager!.updateShrinkState(node.getId(), node.areChildrenShrunken());
   }
 
   private _topicAdded(node: Topic) {
     // Central topic must not be added twice ...
     if (node.getId() !== 0) {
-      this._layoutManager.addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
-      this._layoutManager.updateShrinkState(node.getId(), node.areChildrenShrunken());
+      this._layoutManager!.addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
+      this._layoutManager!.updateShrinkState(node.getId(), node.areChildrenShrunken());
     }
   }
 
   private _topicRemoved(node: Topic) {
-    this._layoutManager.removeNode(node.getId());
+    this._layoutManager!.removeNode(node.getId());
   }
 
   private _forceLayout() {
-    this._layoutManager.layout(true);
+    this._layoutManager!.layout(true);
   }
 
-  getLayoutManager() {
-    return this._layoutManager;
+  getLayoutManager(): LayoutManager {
+    return this._layoutManager!;
   }
 }
 

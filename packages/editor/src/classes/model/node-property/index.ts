@@ -4,15 +4,15 @@ import { SwitchValueDirection } from '../../../components/toolbar/ToolbarValueMo
  * Interface to get and set a property of the mindplot selected node
  */
 
-interface NodeProperty {
+interface NodeProperty<Type> {
   /**
    * get the property value
    */
-  getValue: () => any;
+  getValue: () => Type;
   /**
    * set the property value
    */
-  setValue?: (value: any) => void;
+  setValue?: (value: Type) => void;
   /**
    * toogle boolean values or change for next/previous in reduced lists of values
    */

@@ -1,86 +1,86 @@
 <map name="coderToDeveloper" version="tango">
-    <topic central="true" text="CODER TO DEVELOPER" id="959288270" fontStyle=";;;;;;#000000;;;" bgColor="#ffff66">
-        <topic position="-200,-250" order="1" text="SOURCE" shape="rounded rectangle" id="1341324870" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
-            <topic position="200,-400" order="0" shape="rectangle" id="1657607465" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
+    <topic central="true" text="CODER TO DEVELOPER" id="959288270" bgColor="#ffff66">
+        <topic position="-200,-250" order="1" text="SOURCE" shape="rounded rectangle" id="1341324870" bgColor="#ffff66">
+            <topic position="200,-400" order="0" shape="rectangle" id="1657607465" bgColor="#99ff99">
                 <text><![CDATA[Coder To Developer: Tools and 
 Strategies for Delivering Your Software]]></text>
             </topic>
-            <topic position="290,-362" order="0" text="Mike Gunderloy" shape="rectangle" id="749024001" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99"/>
-            <topic position="380,-337" order="1" text="Sybex 2004" shape="rectangle" id="1525405344" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99"/>
-            <topic position="470,-312" order="2" text="ISBN: 0-7821-4327-X" shape="rectangle" id="1588889674" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99"/>
-            <topic position="560,-287" order="3" text="See" shape="rectangle" id="1232674158" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
-                <topic position="-560,-299" order="0" text="www.codertodeveloper.com" shape="rectangle" id="668549681" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff">
+            <topic position="290,-362" order="0" text="Mike Gunderloy" shape="rectangle" id="749024001" bgColor="#99ff99"/>
+            <topic position="380,-337" order="1" text="Sybex 2004" shape="rectangle" id="1525405344" bgColor="#99ff99"/>
+            <topic position="470,-312" order="2" text="ISBN: 0-7821-4327-X" shape="rectangle" id="1588889674" bgColor="#99ff99"/>
+            <topic position="560,-287" order="3" text="See" shape="rectangle" id="1232674158" bgColor="#99ff99">
+                <topic position="-560,-299" order="0" text="www.codertodeveloper.com" shape="rectangle" id="668549681" bgColor="#bbffff">
                     <link url="http://www.codertodeveloper.com/" urlType="url"/>
                 </topic>
             </topic>
-            <topic position="650,-262" order="4" text="Purchasing" shape="rectangle" id="1091969083" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
-                <topic position="-650,-274" order="0" text="www.sybex.com" shape="rectangle" id="1166338554" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff">
+            <topic position="650,-262" order="4" text="Purchasing" shape="rectangle" id="1091969083" bgColor="#99ff99">
+                <topic position="-650,-274" order="0" text="www.sybex.com" shape="rectangle" id="1166338554" bgColor="#bbffff">
                     <link url="http://www.sybex.com/WileyCDA/SybexTitle/productCd-078214327X,navId-290545.html" urlType="url"/>
                 </topic>
             </topic>
-            <topic position="740,-237" order="5" text="Sample App" shape="rectangle" id="917174317" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
-                <topic position="-740,-249" order="0" text="Code" shape="rectangle" id="1435167239" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff">
-                    <topic position="740,-274" order="0" text="www.codertodeveloper.com" shape="rounded rectangle" id="215997653" fontStyle=";;;;;;#000000;;;" bgColor="#ddddff"/>
-                    <topic position="830,-249" order="1" text="www.sybex.com" shape="rounded rectangle" id="1718130091" fontStyle=";;;;;;#000000;;;" bgColor="#ddddff">
+            <topic position="740,-237" order="5" text="Sample App" shape="rectangle" id="917174317" bgColor="#99ff99">
+                <topic position="-740,-249" order="0" text="Code" shape="rectangle" id="1435167239" bgColor="#bbffff">
+                    <topic position="740,-274" order="0" text="www.codertodeveloper.com" shape="rounded rectangle" id="215997653" bgColor="#ddddff"/>
+                    <topic position="830,-249" order="1" text="www.sybex.com" shape="rounded rectangle" id="1718130091" bgColor="#ddddff">
                         <link url="http://www.sybex.com/WileyCDA/SybexTitle/productCd-078214327X,navId-290545,pageCd-resources.html" urlType="url"/>
                     </topic>
                 </topic>
             </topic>
-            <topic position="830,-212" order="6" text="Links" shape="rectangle" id="597614255" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
-                <topic position="-830,-237" order="0" text="From Book" shape="rectangle" id="589116686" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff"/>
-                <topic position="-920,-212" order="1" text="www.codertodeveloper.com" shape="rectangle" id="1420184717" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff">
+            <topic position="830,-212" order="6" text="Links" shape="rectangle" id="597614255" bgColor="#99ff99">
+                <topic position="-830,-237" order="0" text="From Book" shape="rectangle" id="589116686" bgColor="#bbffff"/>
+                <topic position="-920,-212" order="1" text="www.codertodeveloper.com" shape="rectangle" id="1420184717" bgColor="#bbffff">
                     <link url="http://www.codertodeveloper.com/resource_list.htm" urlType="url"/>
                 </topic>
             </topic>
-            <topic position="920,-187" order="7" text="Tools" shape="rectangle" id="1905535002" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
-                <topic position="-920,-199" order="0" text="www.larkware.com" shape="rectangle" id="1613874812" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff">
+            <topic position="920,-187" order="7" text="Tools" shape="rectangle" id="1905535002" bgColor="#99ff99">
+                <topic position="-920,-199" order="0" text="www.larkware.com" shape="rectangle" id="1613874812" bgColor="#bbffff">
                     <link url="http://www.larkware.com/" urlType="url"/>
                 </topic>
             </topic>
         </topic>
-        <topic position="-290,-75" order="0" text="PLANNING" shape="rounded rectangle" id="1" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-290,-75" order="0" text="PLANNING" shape="rounded rectangle" id="1" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/9/92/CToD_Planning.mm&amp;mm_title=Coder%20To%20Developer%3A%20Planning" urlType="url"/>
         </topic>
-        <topic position="-380,-50" order="1" text="ORGANIZING" shape="rounded rectangle" id="1060251300" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-380,-50" order="1" text="ORGANIZING" shape="rounded rectangle" id="1060251300" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/4/48/CToD_Organizing.mm&amp;mm_title=Coder%20To%20Developer%3A%20Organizing" urlType="url"/>
         </topic>
-        <topic position="-470,-25" order="2" text="SOURCE CODE CONTROL" shape="rounded rectangle" id="1158389225" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-470,-25" order="2" text="SOURCE CODE CONTROL" shape="rounded rectangle" id="1158389225" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/a/a2/CToD_SourceCodeControl.mm&amp;mm_title=Coder%20To%20Developer%3A%20Source%20Code%20Control" urlType="url"/>
         </topic>
-        <topic position="-560,0" order="3" text="DEFENSIVE CODING" shape="rounded rectangle" id="1155248709" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-560,0" order="3" text="DEFENSIVE CODING" shape="rounded rectangle" id="1155248709" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/7/71/CToD_DefensiveCoding.mm&amp;mm_title=Coder%20To%20Developer%3A%20Defensive%20Coding" urlType="url"/>
         </topic>
-        <topic position="-650,25" order="4" text="UNIT TESTING" shape="rounded rectangle" id="1933919293" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-650,25" order="4" text="UNIT TESTING" shape="rounded rectangle" id="1933919293" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/4/4b/CToD_UnitTest.mm&amp;mm_title=Coder%20To%20Developer%3A%20Unit%20Testing" urlType="url"/>
         </topic>
-        <topic position="-740,0" order="5" text="CUSTOMIZING VISUAL STUDIO" shape="rounded rectangle" id="541948911" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-740,0" order="5" text="CUSTOMIZING VISUAL STUDIO" shape="rounded rectangle" id="541948911" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/5/54/CToD_CustomVisStudio.mm&amp;mm_title=Coder%20To%20Developer%3A%20Customising%20Visual%20Studio" urlType="url"/>
         </topic>
-        <topic position="-830,25" order="6" text="SOURCE CODE" shape="rounded rectangle" id="1350092286" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-830,25" order="6" text="SOURCE CODE" shape="rounded rectangle" id="1350092286" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/d/d6/CToD_SourceCode.mm&amp;mm_title=Coder%20To%20Developer%3A%20Source%20Code" urlType="url"/>
         </topic>
-        <topic position="-920,50" order="7" text="CODE GENERATION" shape="rounded rectangle" id="1754489817" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-920,50" order="7" text="CODE GENERATION" shape="rounded rectangle" id="1754489817" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/0/0c/CToD_CodeGeneration.mm&amp;mm_title=Coder%20To%20Developer%3A%20Code%20Generation" urlType="url"/>
         </topic>
-        <topic position="-1010,75" order="8" text="BUG TRACKING AND FIXING" shape="rounded rectangle" id="755597485" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1010,75" order="8" text="BUG TRACKING AND FIXING" shape="rounded rectangle" id="755597485" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/3/39/CToD_Bugs.mm&amp;mm_title=Coder%20To%20Developer%3A%20Bug%20Tracking%20and%20Fixing" urlType="url"/>
         </topic>
-        <topic position="-1100,100" order="9" text="LOGGING" shape="rounded rectangle" id="53404299" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1100,100" order="9" text="LOGGING" shape="rounded rectangle" id="53404299" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/f/ff/CToD_Logging.mm&amp;mm_title=Coder%20To%20Developer%3A%20Logging" urlType="url"/>
         </topic>
-        <topic position="-1190,125" order="10" text="WORKING IN SMALL TEAMS" shape="rounded rectangle" id="1441208135" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1190,125" order="10" text="WORKING IN SMALL TEAMS" shape="rounded rectangle" id="1441208135" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/7/78/CToD_SmallTeams.mm&amp;mm_title=Coder%20To%20Developer%3A%20Working%20in%20Small%20Teams" urlType="url"/>
         </topic>
-        <topic position="-1280,150" order="11" text="DOCUMENTATION" shape="rounded rectangle" id="1087671931" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1280,150" order="11" text="DOCUMENTATION" shape="rounded rectangle" id="1087671931" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/c/ca/CToD_Docs.mm&amp;mm_title=Coder%20To%20Developer%3A%20Documentation" urlType="url"/>
         </topic>
-        <topic position="-1370,175" order="12" text="BUILDING PROJECTS" shape="rounded rectangle" id="1197890915" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1370,175" order="12" text="BUILDING PROJECTS" shape="rounded rectangle" id="1197890915" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/0/05/CToD_Building.mm&amp;mm_title=Coder%20To%20Developer%3A%20Building%20Projects" urlType="url"/>
         </topic>
-        <topic position="-1460,200" order="13" text="INTELLECTUAL PROPERTY" shape="rounded rectangle" id="1185268713" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1460,200" order="13" text="INTELLECTUAL PROPERTY" shape="rounded rectangle" id="1185268713" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/0/01/CToD_IP.mm&amp;mm_title=Coder%20To%20Developer%3A%20Intellectual%20Property" urlType="url"/>
         </topic>
-        <topic position="-1550,225" order="14" text="DEPLOYING PROJECTS" shape="rounded rectangle" id="54793383" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1550,225" order="14" text="DEPLOYING PROJECTS" shape="rounded rectangle" id="54793383" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/a/a1/CToD_Deploying.mm&amp;mm_title=Coder%20To%20Developer%3A%20Deploying%20Projects" urlType="url"/>
         </topic>
     </topic>

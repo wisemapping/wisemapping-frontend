@@ -1,6 +1,9 @@
-context('Editor Page', () => {
+/// <reference types="cypress" />
+
+describe('Editor Page', () => {
   beforeEach(() => {
-    cy.visit('c/maps/11/edit');
+    cy.visit('/c/maps/11/edit');
+    cy.waitForEditorLoaded();
   });
 
   it('page loaded', () => {

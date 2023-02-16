@@ -7,20 +7,26 @@ import {
   fontSizes,
   getNextValue,
 } from '../../../components/toolbar/ToolbarValueModelBuilder';
+import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
+import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
+import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 
 class NodePropertyBuilder {
   designer: Designer;
 
-  fontSizeModel: NodeProperty;
-  selectedTopicColorModel: NodeProperty;
-  fontFamilyModel: NodeProperty;
-  fontStyleModel: NodeProperty;
-  borderColorModel: NodeProperty;
-  fontColorModel: NodeProperty;
-  topicShapeModel: NodeProperty;
-  topicIconModel: NodeProperty;
-  noteModel: NodeProperty;
-  linkModel: NodeProperty;
+  private fontSizeModel: NodeProperty<number>;
+  private selectedTopicColorModel: NodeProperty<string>;
+  private fontFamilyModel: NodeProperty<string>;
+  private fontStyleModel: NodeProperty<string>;
+  private borderColorModel: NodeProperty<string>;
+  private fontColorModel: NodeProperty<string>;
+  private topicShapeModel: NodeProperty<TopicShapeType>;
+  private topicIconModel: NodeProperty<string>;
+  private connetionStyleModel: NodeProperty<LineType>;
+  private connectionColoreModel: NodeProperty<string>;
+  private noteModel: NodeProperty<string>;
+  private linkModel: NodeProperty<string>;
+  private _themeModel: NodeProperty<ThemeType>;
 
   constructor(designer: Designer) {
     this.designer = designer;
@@ -34,7 +40,9 @@ class NodePropertyBuilder {
     return this.designer.getModel().selectedTopic()?.getFontSize();
   }
 
-  private uniqueOrNull(propertyGetter: (Topic: Topic) => any | null) {
+  private uniqueOrNull(
+    propertyGetter: (Topic: Topic) => string | number | null | LineType,
+  ): string {
     const nodes = this.designer.getModel().filterSelectedTopics();
     return getTheUniqueValueOrNull(nodes, propertyGetter);
   }
@@ -43,9 +51,9 @@ class NodePropertyBuilder {
    *
    * @returns model to and switch font weigth
    */
-  fontWeigthModel(): NodeProperty {
+  fontWeigthModel(): NodeProperty<string> {
     return {
-      getValue: () => this.designer.getModel().selectedTopic()?.getFontWeight(),
+      getValue: () => String(this.designer.getModel().selectedTopic()?.getFontWeight()),
       switchValue: () => this.designer.changeFontWeight(),
     };
   }
@@ -54,7 +62,7 @@ class NodePropertyBuilder {
    *
    * @returns model to and switch font size in both directions. Font sizes used to iterate: [6, 8, 10, 15]
    */
-  getFontSizeModel(): NodeProperty {
+  getFontSizeModel(): NodeProperty<number> {
     if (!this.fontSizeModel)
       this.fontSizeModel = {
         getValue: () => this.getFontSize(),
@@ -76,7 +84,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic color
    */
-  getSelectedTopicColorModel(): NodeProperty {
+  getSelectedTopicColorModel(): NodeProperty<string | undefined> {
     if (!this.selectedTopicColorModel)
       this.selectedTopicColorModel = {
         getValue: () => this.designer.getModel().selectedTopic()?.getBackgroundColor(),
@@ -86,11 +94,7 @@ class NodePropertyBuilder {
     return this.selectedTopicColorModel;
   }
 
-  /**
-   *
-   * @returns model to get and set the node link
-   */
-  getLinkModel(): NodeProperty {
+  getLinkModel(): NodeProperty<string> {
     // const selected = this.selectedTopic();
     if (!this.linkModel)
       this.linkModel = {
@@ -106,11 +110,23 @@ class NodePropertyBuilder {
     return this.linkModel;
   }
 
+  getThemeModel(): NodeProperty<ThemeType> {
+    // const selected = this.selectedTopic();
+    if (!this._themeModel)
+      this._themeModel = {
+        getValue: (): ThemeType => this.designer.getMindmap().getTheme(),
+        setValue: (value: ThemeType) => {
+          this.designer.changeTheme(value);
+        },
+      };
+    return this._themeModel;
+  }
+
   /**
    *
    * @returns model to get and set topic border color
    */
-  getColorBorderModel(): NodeProperty {
+  getColorBorderModel(): NodeProperty<string | undefined> {
     if (!this.borderColorModel)
       this.borderColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getBorderColor()),
@@ -123,7 +139,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic font color
    */
-  getFontColorModel(): NodeProperty {
+  getFontColorModel(): NodeProperty<string | undefined> {
     if (!this.fontColorModel)
       this.fontColorModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontColor()),
@@ -132,11 +148,7 @@ class NodePropertyBuilder {
     return this.fontColorModel;
   }
 
-  /**
-   *
-   * @returns model to get and set topic icon
-   */
-  getTopicIconModel(): NodeProperty {
+  getTopicIconModel(): NodeProperty<string> {
     if (!this.topicIconModel)
       this.topicIconModel = {
         getValue: () => null,
@@ -152,7 +164,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic note
    */
-  getNoteModel(): NodeProperty {
+  getNoteModel(): NodeProperty<string> {
     if (!this.noteModel)
       this.noteModel = {
         getValue: (): string => this.selectedTopic()?.getNoteValue(),
@@ -168,7 +180,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic font family
    */
-  getFontFamilyModel(): NodeProperty {
+  getFontFamilyModel(): NodeProperty<string> {
     if (!this.fontFamilyModel)
       this.fontFamilyModel = {
         getValue: () => this.uniqueOrNull((node) => node.getFontFamily()),
@@ -181,7 +193,7 @@ class NodePropertyBuilder {
    *
    * @returns model to get and switch topic style
    */
-  getFontStyleModel(): NodeProperty {
+  getFontStyleModel(): NodeProperty<string> {
     if (!this.fontStyleModel)
       this.fontStyleModel = {
         getValue: () => this.selectedTopic()?.getFontStyle(),
@@ -190,15 +202,29 @@ class NodePropertyBuilder {
     return this.fontStyleModel;
   }
 
-  /**
-   *
-   * @returns model to get and set topic shape
-   */
-  getTopicShapeModel(): NodeProperty {
+  getConnectionStyleModel(): NodeProperty<LineType> {
+    if (!this.connetionStyleModel)
+      this.connetionStyleModel = {
+        getValue: () => this.selectedTopic()?.getConnectionStyle(),
+        setValue: (value: LineType) => this.designer.changeConnectionStyle(value),
+      };
+    return this.connetionStyleModel;
+  }
+
+  getConnectionColorModel(): NodeProperty<string | undefined> {
+    if (!this.connectionColoreModel)
+      this.connectionColoreModel = {
+        getValue: () => this.selectedTopic()?.getConnectionColor(),
+        setValue: (value: string | undefined) => this.designer.changeConnectionColor(value),
+      };
+    return this.connectionColoreModel;
+  }
+
+  getTopicShapeModel(): NodeProperty<TopicShapeType> {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
-        getValue: () => this.uniqueOrNull((node) => node.getShapeType()),
-        setValue: (value: string) => this.designer.changeTopicShape(value),
+        getValue: () => this.uniqueOrNull((node) => node.getShapeType()) as TopicShapeType,
+        setValue: (value: TopicShapeType) => this.designer.changeTopicShape(value),
       };
     return this.topicShapeModel;
   }

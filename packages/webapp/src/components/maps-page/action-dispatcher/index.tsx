@@ -50,9 +50,11 @@ const ActionDispatcher = ({
   switch (action) {
     case 'open':
       window.location.href = `/c/maps/${mapsId}/edit`;
+      handleOnClose(true);
       break;
     case 'print':
       window.open(`/c/maps/${mapsId}/print`, 'print');
+      handleOnClose(true);
       break;
   }
 

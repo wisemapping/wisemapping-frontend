@@ -3,10 +3,11 @@ import { $assert } from '@wisemapping/core-js';
 import CentralTopic from './CentralTopic';
 import MainTopic from './MainTopic';
 import NodeModel from './model/NodeModel';
+import { NodeOption } from './NodeGraph';
 import Topic from './Topic';
 
 class TopicFactory {
-  static create(nodeModel: NodeModel, options: object): Topic {
+  static create(nodeModel: NodeModel, options: NodeOption): Topic {
     $assert(nodeModel, 'Model can not be null');
 
     const type = nodeModel.getType();
@@ -20,7 +21,7 @@ class TopicFactory {
     } else {
       $assert(false, `unsupported node type:${type}`);
     }
-    return result;
+    return result!;
   }
 }
 

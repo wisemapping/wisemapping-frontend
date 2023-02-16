@@ -1,28 +1,37 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { alpha, useTheme } from '@mui/material/styles';
 
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+import useClasses from '../../../theme/useStyles';
 
-export const useStyles = makeStyles(() =>
-  createStyles({
+export const useStyles = () => {
+  const theme = useTheme();
+  const smMediaQuery = theme.breakpoints.down('sm');
+
+  return useClasses({
     root: {
       width: '100%',
     },
     paper: {
       width: '100%',
-      marginBottom: useTheme().spacing(2),
+      marginBottom: theme.spacing(2),
+    },
+    cards: {
+      display: 'none',
+      [smMediaQuery]: {
+        display: 'block',
+      },
     },
     table: {
+      [smMediaQuery]: {
+        display: 'none',
+      },
       minWidth: 750,
-      '& tr:nth-child(even)': {
+      '& tr:nth-of-type(2n)': {
         background: 'white',
       },
-      '& tr:nth-child(odd)': {
+      '& tr:nth-of-type(2n+1)': {
         background: 'rgba(221, 221, 221, 0.35)',
       },
-      // '&:hover tr': {
-      //   backgroundColor: 'rgba(150, 150, 150, 0.7)',
-      // }
     },
     headerCell: {
       background: 'white',
@@ -61,22 +70,31 @@ export const useStyles = makeStyles(() =>
       flexGrow: 1,
       paddingLeft: '23px;',
     },
-    toolbarListActions: {
-      flexGrow: 1,
-    },
     search: {
       borderRadius: 9,
-      backgroundColor: alpha(useTheme().palette.common.white, 0.15),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
       '&:hover': {
-        backgroundColor: alpha(useTheme().palette.common.white, 0.25),
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
       },
       margin: '10px 0px',
       width: '100%',
-      [useTheme().breakpoints.up('sm')]: {
-        marginLeft: useTheme().spacing(1),
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
         width: 'auto',
       },
+      float: 'left',
+      [smMediaQuery]: {
+        width: '50%',
+      },
+    },
+    tablePagination: {
       float: 'right',
+      border: '0',
+      paddingBottom: '5px',
+      [smMediaQuery]: {
+        width: '50%',
+        overflow: 'hidden',
+      },
     },
     searchIcon: {
       padding: '6px 0 0 5px',
@@ -93,19 +111,25 @@ export const useStyles = makeStyles(() =>
       float: 'right',
     },
     searchInputInput: {
-      // padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      border: '1px solid #ffa800',
-      borderRadius: 4,
-      paddingLeft: `calc(1em + ${useTheme().spacing(4)})`,
-      transition: useTheme().transitions.create('width'),
-      width: '100%',
-      [useTheme().breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
+      '& .MuiInputBase-input': {
+        border: '1px solid #ffa800',
+        borderRadius: 4,
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          width: '12ch',
+          '&:focus': {
+            width: '20ch',
+          },
         },
       },
     },
-  }),
-);
+    cardHeader: {
+      padding: '4px',
+    },
+    cardTitle: {
+      maxWidth: '70vw',
+    },
+  });
+};

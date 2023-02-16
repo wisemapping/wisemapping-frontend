@@ -15,8 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Text, Group, ElementClass, Point } from '@wisemapping/web2d';
-import { $assert } from '@wisemapping/core-js';
+import { Text, Group } from '@wisemapping/web2d';
 
 import Icon from './Icon';
 import IconGroup from './IconGroup';
@@ -24,75 +23,73 @@ import SvgIconModel from './model/SvgIconModel';
 import SizeType from './SizeType';
 import Topic from './Topic';
 import ActionDispatcher from './ActionDispatcher';
+import PositionType from './PositionType';
 
 class EmojiCharIcon implements Icon {
-  private char: string;
+  private _group: Group;
 
-  private element: ElementClass;
+  private _iconGroup: IconGroup | null;
 
-  private group: IconGroup;
+  private _iconModel: SvgIconModel;
 
-  private iconModel: SvgIconModel;
-
-  private topic: Topic;
+  private _topic: Topic;
 
   constructor(topic: Topic, iconModel: SvgIconModel, readOnly: boolean) {
-    $assert(iconModel, 'iconModel can not be null');
-    $assert(topic, 'topic can not be null');
-    this.iconModel = iconModel;
-    this.topic = topic;
+    this._iconModel = iconModel;
+    this._topic = topic;
 
-    this.element = new Group({
-      width: 90,
-      height: 90,
+    this._group = new Group({
+      width: 70,
+      height: 70,
       x: 0,
       y: 0,
       coordSizeWidth: 15,
       coordSizeHeight: 15,
-      coordOriginY: 2,
+      coordOriginY: 0,
     });
     const iconText = new Text();
     iconText.setText(iconModel.getIconType());
-    this.element.append(iconText);
+    this._group.append(iconText);
 
     // Add events ...
     if (!readOnly) {
-      this.element.setCursor('pointer');
+      this._group.setCursor('pointer');
     }
+    this._iconGroup = null;
   }
 
-  getElement(): ElementClass {
-    return this.element;
+  getElement(): Group {
+    return this._group;
   }
 
   setGroup(group: IconGroup) {
-    this.group = group;
+    this._iconGroup = group;
   }
 
   getGroup(): IconGroup {
-    return this.group;
+    return this._iconGroup!;
   }
 
   getSize(): SizeType {
-    return this.group.getSize();
+    return this._iconGroup!.getSize();
   }
 
-  getPosition(): Point {
-    return this.group.getPosition();
+  getPosition(): PositionType {
+    return this._iconGroup!.getPosition();
   }
 
-  addEvent(type: string, fnc: any): void {
-    this.element.addEvent(type, fnc);
+  addEvent(type: string, fnc: (e: object) => void): void {
+    this._group.addEvent(type, fnc);
   }
 
   remove() {
     const actionDispatcher = ActionDispatcher.getInstance();
-    const featureId = this.iconModel.getId();
-    actionDispatcher.removeFeatureFromTopic(this.topic.getId(), featureId);
+    const featureId = this._iconModel.getId();
+    actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }
 
   getModel(): SvgIconModel {
-    return this.iconModel;
+    return this._iconModel;
   }
 }
 

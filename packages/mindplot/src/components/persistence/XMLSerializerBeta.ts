@@ -32,7 +32,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     // Store map attributes ...
     const mapElem = document.createElement('map');
     const name = mindmap.getId();
-    if ($defined(name)) {
+    if (name) {
       mapElem.setAttribute('name', name);
     }
     document.append(mapElem);
@@ -60,12 +60,14 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
       } else {
         const order = topic.getOrder();
-        parentTopic.setAttribute('order', order.toString());
+        if (order !== undefined) {
+          parentTopic.setAttribute('order', order.toString());
+        }
       }
     }
 
     const text = topic.getText();
-    if ($defined(text)) {
+    if (text) {
       parentTopic.setAttribute('text', text);
     }
 
@@ -107,12 +109,12 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     const bgColor = topic.getBackgroundColor();
-    if ($defined(bgColor)) {
+    if (bgColor) {
       parentTopic.setAttribute('bgColor', bgColor);
     }
 
     const brColor = topic.getBorderColor();
-    if ($defined(brColor)) {
+    if (brColor) {
       parentTopic.setAttribute('brColor', brColor);
     }
 
@@ -215,8 +217,10 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       topic.setOrder(parseInt(order, 10));
     }
 
-    const shape = domElem.getAttribute('shape');
+    let shape = domElem.getAttribute('shape');
     if ($defined(shape)) {
+      // Hack for legacy mapping loading ...
+      shape = shape === 'rectagle' ? 'rectangle' : shape;
       topic.setShapeType(shape);
     }
 
@@ -281,9 +285,6 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
         if (child.tagName === 'topic') {
           const childTopic = this._deserializeNode(child, mindmap);
           childTopic.connectTo(topic);
-        } else if (child.tagName === 'icon') {
-          const icon = this._deserializeIcon(child);
-          topic.addFeature(icon);
         } else if (child.tagName === 'link') {
           const link = this._deserializeLink(child);
           topic.addFeature(link);
@@ -295,12 +296,6 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     }
 
     return topic;
-  }
-
-  _deserializeIcon(domElem: Element) {
-    let icon = domElem.getAttribute('id');
-    icon = icon.replace('images/', 'icons/legacy/');
-    return FeatureModelFactory.createModel('icon', { id: icon });
   }
 
   _deserializeLink(domElem: Element) {

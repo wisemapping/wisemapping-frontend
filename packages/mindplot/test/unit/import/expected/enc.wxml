@@ -3,7 +3,7 @@
         <topic position="-200,-50" order="1" shape="rectangle" id="5" bgColor="#cccccc">
             <text><![CDATA[Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant
 communities]]></text>
-            <topic position="-200,-350" order="1" text="undefined" shape="line" id="6"/>
+            <topic position="-200,-350" order="1" shape="line" id="6"/>
             <topic position="290,-150" order="0" shape="line" id="7">
                 <text><![CDATA[However, the fast pace of
                             development of plant trait meta-analyses also suggests that
@@ -46,7 +46,6 @@ tb.]]></text>
                             failed to accurately estimate the variance of trait values. This
                             indicates that in situations where accurate estimation of plotlevel
                             variance is desired, complete censuses are essential.]]></text>
-                <note><![CDATA[undefined]]></note>
             </topic>
             <topic position="830,0" order="6" shape="line" id="15">
                 <text><![CDATA[We suggest that, in these studies,
@@ -55,7 +54,7 @@ tb.]]></text>
                 <note><![CDATA[Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.]]></note>
             </topic>
         </topic>
-        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" fontStyle=";;;;;;#000000;;;" bgColor="#cccccc">
+        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
             <topic position="290,-137" order="0" shape="line" id="22">
                 <text><![CDATA[Here, we develop a new approach that links functional attributes
                             of tree species with studies of forest recovery and regional
@@ -104,9 +103,9 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             colonization groups based on the timing of seedling, sapling, and
                             tree recruitment in secondary forests.]]></text>
             </topic>
-            <topic position="740,-12" order="5" text="undefined" shape="line" id="27"/>
-            <topic position="830,13" order="6" text="undefined" shape="line" id="28"/>
-            <topic position="920,38" order="7" text="undefined" shape="line" id="29"/>
+            <topic position="740,-12" order="5" shape="line" id="27"/>
+            <topic position="830,13" order="6" shape="line" id="28"/>
+            <topic position="920,38" order="7" shape="line" id="29"/>
             <topic position="1010,63" order="8" shape="line" id="30">
                 <text><![CDATA[Classifying functional types
                             based on functional traits with low plasticity, such as wood density
@@ -134,7 +133,7 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             J. Integr. Plant Biol. 50: 547–558.]]></text>
             </topic>
         </topic>
-        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" fontStyle=";;;;;;#000000;;;" bgColor="#cccccc">
+        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">
             <topic position="380,-12" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
                 <topic position="-380,-24" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
             </topic>

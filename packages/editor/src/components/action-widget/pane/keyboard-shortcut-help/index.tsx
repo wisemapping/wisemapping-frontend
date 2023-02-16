@@ -15,12 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { ShortcutsContainer } from './styled';
 
-const KeyboardShorcutsHelp = () => {
+const KeyboardShorcutsHelp = (): ReactElement => {
   return (
-    <div id="keyboardTable">
+    <ShortcutsContainer>
       <table>
         <colgroup>
           <col width="40%" />
@@ -87,13 +88,33 @@ const KeyboardShorcutsHelp = () => {
             <td>
               <FormattedMessage
                 id="shortcut-help-pane.edit-topic-key"
-                defaultMessage="Just start typing"
+                defaultMessage="F2 or Double Click"
               />
             </td>
             <td>
               <FormattedMessage
                 id="shortcut-help-pane.edit-topic-key"
-                defaultMessage="Just start typing"
+                defaultMessage="F2 or Double Click"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.overwrite-edit-topic"
+                defaultMessage="Overwrite topic text"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.overwrite-edit-topic-key"
+                defaultMessage="Type on a selected topic"
+              />
+            </td>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.overwrite-edit-topic-key"
+                defaultMessage="Type on a selected topic"
               />
             </td>
           </tr>
@@ -107,17 +128,27 @@ const KeyboardShorcutsHelp = () => {
             <td>Ctrl + Enter</td>
             <td>⌘ + Enter</td>
           </tr>
+
           <tr>
             <td>
               <FormattedMessage
                 id="shortcut-help-pane.copy-and-text"
-                defaultMessage="Copy and paste topics"
+                defaultMessage="Copy and paste topics/Copy mindmap image to clipboard."
               />
             </td>
             <td>Ctrl + C / Ctrl + V</td>
             <td>⌘ + C / ⌘ + V</td>
           </tr>
-
+          <tr>
+            <td>
+              <FormattedMessage
+                id="shortcut-help-pane.drag-disconnect"
+                defaultMessage="Disconnect topic"
+              />
+            </td>
+            <td>Ctrl + drag topic</td>
+            <td>⌘ + drag topic</td>
+          </tr>
           <tr>
             <td>
               <FormattedMessage
@@ -247,7 +278,7 @@ const KeyboardShorcutsHelp = () => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </ShortcutsContainer>
   );
 };
 export default KeyboardShorcutsHelp;

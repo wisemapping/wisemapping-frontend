@@ -29,7 +29,7 @@ class WiseXMLExporter extends Exporter {
 
   export(): Promise<string> {
     const { mindmap } = this;
-    const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
+    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
     const document: Document = serializer.toXML(mindmap);
 
     const xmlStr: string = new XMLSerializer().serializeToString(document);

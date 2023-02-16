@@ -36,8 +36,8 @@ class MockPersistenceManager extends PersistenceManager {
     // Ignore, no implementation required ...
   }
 
-  loadMapDom() {
-    return $.parseXML(this.exampleMap);
+  loadMapDom(): Promise<Document> {
+    return Promise.resolve($.parseXML(this.exampleMap));
   }
 
   unlockMap(): void {

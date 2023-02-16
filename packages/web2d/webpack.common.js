@@ -1,26 +1,14 @@
-const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+/** @type {import('webpack').Configuration} */
 
-module.exports = {
+const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('../../webpack.common');
+
+const prodConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'web2d.js',
-    publicPath: '',
-    library: {
-      type: 'umd',
-    },
+    filename: 'index.ts',
   },
-  optimization: {
-    usedExports: true,
-  },
-  module: {
-    rules: [
-      {
-        use: ['babel-loader'],
-        test: /.(js)$/,
-        exclude: [/node_modules/],
-      },
-    ],
-  },
-  plugins: [new CleanWebpackPlugin()],
 };
+
+module.exports = merge(common, prodConfig);

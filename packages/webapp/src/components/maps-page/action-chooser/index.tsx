@@ -52,7 +52,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
     };
   };
 
-  const role = mapId ? useFetchMapById(mapId)?.map?.role : undefined;
+  const role = mapId !== undefined ? useFetchMapById(mapId)?.map?.role : undefined;
   return (
     <Menu
       anchorEl={anchor}

@@ -1,25 +1,25 @@
 export default class Font {
-  protected BOLD?: string;
+  protected BOLD: string | undefined;
 
-  protected ITALIC?: string;
+  protected ITALIC: string | undefined;
 
-  protected NAME?: string;
+  protected NAME: string | undefined;
 
-  protected SIZE: string;
+  protected SIZE: string | undefined;
 
-  getBold(): string {
+  getBold(): string | undefined {
     return this.BOLD;
   }
 
-  getItalic(): string {
+  getItalic(): string | undefined {
     return this.ITALIC;
   }
 
-  getName(): string {
+  getName(): string | undefined {
     return this.NAME;
   }
 
-  getSize(): string {
+  getSize(): string | undefined {
     return this.SIZE;
   }
 

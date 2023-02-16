@@ -42,7 +42,7 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <Editor
-    mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
+    mapInfo={new MapInfoImpl(mapId, 'Develop Map Title', false)}
     options={options}
     persistenceManager={persistence}
     onAction={(action) => console.log('action called:', action)}

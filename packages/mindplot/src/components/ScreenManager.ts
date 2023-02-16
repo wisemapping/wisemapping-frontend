@@ -17,16 +17,16 @@
  */
 import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-import { Point } from '@wisemapping/web2d';
 // https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
 // https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
 // eslint-disable-next-line import/extensions
-import registerTouchHandler from '../../../../libraries/jquery.touchevent';
+import registerTouchHandler from '../../libraries/jquery.touchevent';
+import PositionType from './PositionType';
 
 registerTouchHandler($);
 
 class ScreenManager {
-  private _divContainer: JQuery;
+  private _divContainer: JQuery<HTMLDivElement>;
 
   private _padding: { x: number; y: number };
 
@@ -34,9 +34,9 @@ class ScreenManager {
 
   private _scale: number;
 
-  constructor(divElement: JQuery) {
+  constructor(divElement: HTMLElement) {
     $assert(divElement, 'can not be null');
-    this._divContainer = divElement;
+    this._divContainer = $(divElement) as JQuery<HTMLDivElement>;
     this._padding = { x: 0, y: 0 };
 
     // Ignore default click event propagation. Prevent 'click' event on drag.
@@ -52,20 +52,20 @@ class ScreenManager {
         event.preventDefault();
       },
     );
+    this._scale = 1;
   }
 
   /**
-   * Return the current visibile area in the browser.
+   * Return the current visible area in the browser.
    */
   getVisibleBrowserSize(): { width: number; height: number } {
     return {
       width: window.innerWidth,
-      height: window.innerHeight - Number.parseInt(this._divContainer.css('top'), 10),
+      height: window.innerHeight,
     };
   }
 
   setScale(scale: number) {
-    $assert(scale, 'Screen scale can not be null');
     this._scale = scale;
   }
 
@@ -85,7 +85,7 @@ class ScreenManager {
     }
   }
 
-  fireEvent(type: string, event: UIEvent = null) {
+  fireEvent(type: string, event?: UIEvent): void {
     if (type === 'click') {
       this._clickEvents.forEach((listener) => {
         listener(type, event);
@@ -99,26 +99,22 @@ class ScreenManager {
 
   private tocuchEvents = ['touchstart', 'touchend', 'touchmove'];
 
-  // the received type was changed from MouseEvent to "any", because we must support touch events
-  getWorkspaceMousePosition(event: any) {
-    let x;
-    let y;
+  getWorkspaceMousePosition(event: MouseEvent | TouchEvent): PositionType {
+    let x: number | null = null;
+    let y: number | null = null;
 
     if (this.mouseEvents.includes(event.type)) {
       // Retrieve current mouse position.
-      x = event.clientX;
-      y = event.clientY;
+      x = (event as MouseEvent).clientX;
+      y = (event as MouseEvent).clientY;
     } else if (this.tocuchEvents.includes(event.type)) {
-      x = event.touches[0].clientX;
-      y = event.touches[0].clientY;
+      x = (event as TouchEvent).touches[0].clientX;
+      y = (event as TouchEvent).touches[0].clientY;
     }
 
     // if value is zero assert throws error
-    if (x !== 0) {
-      $assert(x, `clientX can not be null, eventType= ${event.type}`);
-    }
-    if (y !== 0) {
-      $assert(y, `clientY can not be null, eventType= ${event.type}`);
+    if (x === null || y === null) {
+      throw new Error(`Coordinated can not be null, eventType= ${event.type}`);
     }
 
     // Adjust the deviation of the container positioning ...
@@ -135,14 +131,14 @@ class ScreenManager {
     y += this._padding.y;
 
     // Remove decimal part..
-    return new Point(x, y);
+    return { x, y };
   }
 
-  getContainer() {
+  getContainer(): JQuery<HTMLDivElement> {
     return this._divContainer;
   }
 
-  setOffset(x: number, y: number) {
+  setOffset(x: number, y: number): void {
     this._padding.x = x;
     this._padding.y = y;
   }

@@ -17,11 +17,23 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import { LineType } from '../ConnectionLine';
 import PositionType from '../PositionType';
+import { FontWeightType } from '../FontWeightType';
+import { FontStyleType } from '../FontStyleType';
 import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
+import SizeType from '../SizeType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
+
+export type TopicShapeType =
+  | 'rectangle'
+  | 'rounded rectangle'
+  | 'elipse'
+  | 'line'
+  | 'none'
+  | 'image';
 
 // regex taken from https://stackoverflow.com/a/34763398/58128
 const parseJsObject = (str: string) =>
@@ -46,12 +58,13 @@ abstract class INodeModel {
   abstract getFeatures(): FeatureModel[];
 
   setId(id?: number): void {
-    if (!$defined(id)) {
+    if (id === null || id === undefined) {
+      // Assign a new one ...
       const newId = INodeModel._nextUUID();
       this.putProperty('id', newId);
     } else {
       if (id > INodeModel._nextUuid) {
-        $assert(Number.isFinite(id));
+        $assert(Number.isFinite(id), `value is not a number ${id}`);
         INodeModel._nextUuid = id;
       }
       this.putProperty('id', id);
@@ -66,11 +79,11 @@ abstract class INodeModel {
     this.putProperty('type', type);
   }
 
-  setText(text: string): void {
+  setText(text: string | undefined): void {
     this.putProperty('text', text);
   }
 
-  getText(): string | undefined {
+  getText(): string | null {
     return this.getProperty('text') as string;
   }
 
@@ -87,14 +100,14 @@ abstract class INodeModel {
     return result;
   }
 
-  setImageSize(width: number, height: number) {
+  setImageSize(width: number, height: number): void {
     this.putProperty('imageSize', `{width:${width},height:${height}}`);
   }
 
-  getImageSize(): { width: number; height: number } {
+  getImageSize(): SizeType | undefined {
     const value = this.getProperty('imageSize') as string;
-    let result;
-    if (value != null) {
+    let result: SizeType | undefined;
+    if (value) {
       result = parseJsObject(value);
     }
     return result;
@@ -129,17 +142,16 @@ abstract class INodeModel {
     mindmap.disconnect(this);
   }
 
-  /** */
-  getShapeType(): string {
-    return this.getProperty('shapeType') as string;
+  getShapeType(): TopicShapeType {
+    const result = this.getProperty('shapeType') as TopicShapeType;
+    return result;
   }
 
-  /** */
-  setShapeType(type: string) {
+  setShapeType(type: TopicShapeType | undefined) {
     this.putProperty('shapeType', type);
   }
 
-  setOrder(value: number) {
+  setOrder(value: number): void {
     $assert(
       (typeof value === 'number' && Number.isFinite(value)) || value == null,
       'Order must be null or a number',
@@ -147,64 +159,63 @@ abstract class INodeModel {
     this.putProperty('order', value);
   }
 
-  getOrder(): number {
+  getOrder(): number | undefined {
     return this.getProperty('order') as number;
   }
 
-  setFontFamily(fontFamily: string): void {
+  setFontFamily(fontFamily: string | undefined): void {
     this.putProperty('fontFamily', fontFamily);
   }
 
-  getFontFamily(): string {
+  getFontFamily(): string | undefined {
     return this.getProperty('fontFamily') as string;
   }
 
-  /** */
-  setFontStyle(fontStyle: string) {
+  setFontStyle(fontStyle: FontStyleType | undefined) {
     this.putProperty('fontStyle', fontStyle);
   }
 
-  getFontStyle(): string {
-    return this.getProperty('fontStyle') as string;
+  getFontStyle(): FontStyleType | undefined {
+    return this.getProperty('fontStyle') as FontStyleType;
   }
 
-  setFontWeight(weight) {
+  setFontWeight(weight: FontWeightType): void {
     this.putProperty('fontWeight', weight);
   }
 
-  getFontWeight() {
-    return this.getProperty('fontWeight');
+  getFontWeight(): FontWeightType | undefined {
+    return this.getProperty('fontWeight') as FontWeightType;
   }
 
-  setFontColor(color: string) {
+  setFontColor(color: string | undefined): void {
     this.putProperty('fontColor', color);
   }
 
-  getFontColor(): string {
+  getFontColor(): string | undefined {
     return this.getProperty('fontColor') as string;
   }
 
-  setFontSize(size: number) {
+  setFontSize(size: number | undefined): void {
     this.putProperty('fontSize', size);
   }
 
-  getFontSize(): number {
+  getFontSize(): number | undefined {
     return this.getProperty('fontSize') as number;
   }
 
-  getBorderColor(): string {
+  getBorderColor(): string | undefined {
     return this.getProperty('borderColor') as string;
   }
 
-  setBorderColor(color: string): void {
+  setBorderColor(color: string | undefined): void {
     this.putProperty('borderColor', color);
   }
 
-  getBackgroundColor(): string {
+  getBackgroundColor(): string | undefined {
     return this.getProperty('backgroundColor') as string;
   }
 
-  setBackgroundColor(color: string) {
+  setBackgroundColor(color: string | undefined): void {
     this.putProperty('backgroundColor', color);
   }
 
@@ -216,8 +227,24 @@ abstract class INodeModel {
   /**
    * @return {Boolean} true if the children nodes are hidden by the shrink option
    */
-  setChildrenShrunken(value: boolean) {
+  setChildrenShrunken(value: boolean): void {
     this.putProperty('shrunken', value);
+  }
+
+  setConnectionStyle(type: LineType | undefined): void {
+    this.putProperty('connectionStyle', type);
+  }
+
+  getConnectionStyle(): LineType | undefined {
+    return this.getProperty('connectionStyle') as LineType;
+  }
+
+  setConnectionColor(value: string | undefined): void {
+    this.putProperty('connectionColor', value);
+  }
+
+  getConnectionColor(): string | undefined {
+    return this.getProperty('connectionColor') as string;
   }
 
   isNodeModel(): boolean {
@@ -231,7 +258,7 @@ abstract class INodeModel {
     return this.getParent() != null;
   }
 
-  abstract append(node): void;
+  abstract append(node: INodeModel): void;
 
   /**
    * lets the mindmap handle the connect node operation
@@ -290,7 +317,7 @@ abstract class INodeModel {
 
   abstract getProperty(key: string): number | string | boolean | undefined;
 
-  abstract putProperty(key: string, value: number | string | boolean): void;
+  abstract putProperty(key: string, value: number | string | boolean | undefined): void;
 
   abstract setParent(parent: INodeModel): void;
 
@@ -317,9 +344,8 @@ abstract class INodeModel {
     return result;
   }
 
-  findNodeById(id: number): INodeModel {
-    $assert(Number.isFinite(id));
-    let result;
+  findNodeById(id: number): INodeModel | undefined {
+    let result: INodeModel | undefined;
     if (this.getId() === id) {
       result = this;
     } else {
@@ -356,24 +382,11 @@ abstract class INodeModel {
     return result;
   }
 
-  abstract removeChild(child: INodeModel);
+  abstract removeChild(child: INodeModel): void;
 
   static _nextUUID(): number {
     INodeModel._nextUuid += 1;
     return INodeModel._nextUuid;
   }
 }
-
-const TopicShape = {
-  RECTANGLE: 'rectangle',
-  ROUNDED_RECT: 'rounded rectangle',
-  ELLIPSE: 'elipse',
-  LINE: 'line',
-  IMAGE: 'image',
-};
-
-/**
- * @todo: This method must be implemented. (unascribed)
- */
-export { TopicShape };
 export default INodeModel;

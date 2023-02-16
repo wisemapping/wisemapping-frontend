@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -16,19 +17,13 @@
  *   limitations under the License.
  */
 import React, { useRef, useState } from 'react';
-import {
-  WidgetManager,
-  Topic,
-  LinkModel,
-  LinkIcon,
-  NoteModel,
-  NoteIcon,
-} from '@wisemapping/mindplot';
+import { WidgetManager, Topic } from '@wisemapping/mindplot';
 import { linkContent, noteContent } from './react-component';
 
 export class DefaultWidgetManager extends WidgetManager {
   private editorOpen: boolean;
   private editorContent: React.ReactElement;
+  private editorTitle: string;
   private setPopoverOpen: (value: boolean) => void;
   private setPopoverTarget: (target: Element) => void;
 
@@ -41,14 +36,15 @@ export class DefaultWidgetManager extends WidgetManager {
     this.setPopoverTarget = setPopoverTarget;
   }
 
-  showEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
-    const model: any = {
+  showEditorForLink(topic: Topic): void {
+    const model = {
       getValue: () => topic.getLinkValue(),
       setValue: (value: string) => topic.setLinkValue(value),
     };
     this.editorContent = linkContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
+    this.editorTitle = 'editor-panel.link-panel-title';
     topic.closeEditors();
   }
 
@@ -60,13 +56,13 @@ export class DefaultWidgetManager extends WidgetManager {
     return this.editorContent;
   }
 
-  handleClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void = () => {
+  handleClose: (event, reason: 'backdropClick' | 'escapeKeyDown') => void = () => {
     this.setPopoverOpen(false);
     this.editorContent = undefined;
     this.setPopoverTarget(undefined);
   };
 
-  showEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon) {
+  showEditorForNote(topic: Topic): void {
     const model = {
       getValue(): string {
         return topic.getNoteValue();
@@ -79,15 +75,20 @@ export class DefaultWidgetManager extends WidgetManager {
     this.editorContent = noteContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
+    this.editorTitle = 'editor-panel.note-panel-title';
     topic.closeEditors();
   }
 
-  static create(): [boolean, Element | undefined, DefaultWidgetManager] {
+  static useCreate(): [boolean, (boolean) => void, Element | undefined, DefaultWidgetManager] {
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [popoverTarget, setPopoverTarget] = useState(undefined);
     const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
 
-    return [popoverOpen, popoverTarget, widgetManager.current];
+    return [popoverOpen, setPopoverOpen, popoverTarget, widgetManager.current];
+  }
+
+  getEditorTile(): string {
+    return this.editorTitle;
   }
 }
 

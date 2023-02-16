@@ -1,59 +1,59 @@
 <map name="SQLServer" version="tango">
-    <topic central="true" text="SQL Server 2000 Programming" id="1997664902" fontStyle=";;;;;;#000000;;;" bgColor="#ffff66">
-        <topic position="-200,-400" order="1" text="Source" shape="rounded rectangle" id="1594566921" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
-            <topic position="200,0" order="0" text="Microsoft Official Course 2073A Workbook" shape="rectangle" id="376713119" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#99ff99">
-                <topic position="200,0" order="0" text="Sep 2000" shape="rectangle" id="762876198" fontStyle=";;;;;;#000000;;;" bgColor="#bbffff"/>
+    <topic central="true" text="SQL Server 2000 Programming" id="1997664902" bgColor="#ffff66">
+        <topic position="-200,-400" order="1" text="Source" shape="rounded rectangle" id="1594566921" bgColor="#ffff66">
+            <topic position="200,0" order="0" text="Microsoft Official Course 2073A Workbook" shape="rectangle" id="376713119" bgColor="#99ff99">
+                <topic position="200,0" order="0" text="Sep 2000" shape="rectangle" id="762876198" bgColor="#bbffff"/>
             </topic>
         </topic>
-        <topic position="-290,-112" order="0" text="1. SQL Server Overview" shape="rounded rectangle" id="340496299" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-290,-112" order="0" text="1. SQL Server Overview" shape="rounded rectangle" id="340496299" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/a/a5/SQLServer2000_ServerOverview.mm&amp;mm_title=Overview%20of%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-380,-87" order="1" text="2. SQL Server Programming Overview" shape="rounded rectangle" id="1498687089" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-380,-87" order="1" text="2. SQL Server Programming Overview" shape="rounded rectangle" id="1498687089" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/5/55/SQLServer2000_ProgrammingOverview.mm&amp;mm_title=Overview%20of%20T-SQL%20for%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-470,-62" order="2" text="3. Databases" shape="rounded rectangle" id="1853206071" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-470,-62" order="2" text="3. Databases" shape="rounded rectangle" id="1853206071" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/3/36/SQLServer2000_Databases.mm&amp;mm_title=Creating%20and%20Managing%20SQL%20Server%202000%20Databases" urlType="url"/>
         </topic>
-        <topic position="-560,-37" order="3" text="4. Data Types &amp; Tables" shape="rounded rectangle" id="242712646" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-560,-37" order="3" text="4. Data Types &amp; Tables" shape="rounded rectangle" id="242712646" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/1/1f/SQLServer2000_DataTypesTables.mm&amp;mm_title=Data%20Types%20and%20Managing%20Tables%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-650,-12" order="4" text="5. Data Integrity" shape="rounded rectangle" id="720230444" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-650,-12" order="4" text="5. Data Integrity" shape="rounded rectangle" id="720230444" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/9/97/SQLServer2000_DataIntegrity.mm&amp;mm_title=Data%20Integrity%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-740,13" order="5" text="6. Indexes - Planning" shape="rounded rectangle" id="727690975" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-740,13" order="5" text="6. Indexes - Planning" shape="rounded rectangle" id="727690975" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/5/5c/SQLServer2000_IndexPlanning.mm&amp;mm_title=Overview%20of%20Indexes%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-830,38" order="6" text="7. Indexes - Creating / Maintaining" shape="rounded rectangle" id="1377138658" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-830,38" order="6" text="7. Indexes - Creating / Maintaining" shape="rounded rectangle" id="1377138658" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/0/04/SQLServer2000_IndexCreateMaintain.mm&amp;mm_title=Creating%20and%20Maintaining%20Indexes%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-920,63" order="7" text="8. Views" shape="rounded rectangle" id="1121244967" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-920,63" order="7" text="8. Views" shape="rounded rectangle" id="1121244967" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/4/4d/SQLServer2000_Views.mm&amp;mm_title=Views%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1010,88" order="8" text="9. Stored Procedures" shape="rounded rectangle" id="1174228446" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1010,88" order="8" text="9. Stored Procedures" shape="rounded rectangle" id="1174228446" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/c/c5/SQLServer2000_StoredProcs.mm&amp;mm_title=Stored%20Procedures%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1100,113" order="9" text="9.5 Error Handling" shape="rounded rectangle" id="1" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1100,113" order="9" text="9.5 Error Handling" shape="rounded rectangle" id="1" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/3/3a/SQLServer2000_ErrorHandling.mm&amp;mm_title=Error%20Handling%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1190,138" order="10" text="10. User-defined Functions" shape="rounded rectangle" id="307963497" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1190,138" order="10" text="10. User-defined Functions" shape="rounded rectangle" id="307963497" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/f/fb/SQLServer2000_UDFs.mm&amp;mm_title=User-defined%20Functions%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1280,163" order="11" text="11. Triggers" shape="rounded rectangle" id="1540213298" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1280,163" order="11" text="11. Triggers" shape="rounded rectangle" id="1540213298" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/c/cf/SQLServer2000_Triggers.mm&amp;mm_title=Triggers%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1370,188" order="12" text="12. Multiple Servers" shape="rounded rectangle" id="698724146" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1370,188" order="12" text="12. Multiple Servers" shape="rounded rectangle" id="698724146" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/7/77/SQLServer2000_MultipleServers.mm&amp;mm_title=Dealing%20with%20Multiple%20Servers%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1460,213" order="13" text="13. Optimizing Queries" shape="rounded rectangle" id="490181612" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1460,213" order="13" text="13. Optimizing Queries" shape="rounded rectangle" id="490181612" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/0/06/SQLServer2000_Optimising.mm&amp;mm_title=Optimizing%20Queries%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1550,238" order="14" text="14. Analyzing Queries" shape="rounded rectangle" id="205448863" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1550,238" order="14" text="14. Analyzing Queries" shape="rounded rectangle" id="205448863" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/c/c8/SQLServer2000_Analysing.mm&amp;mm_title=Analyzing%20Queries%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1640,263" order="15" text="15. Transactions and Locks" shape="rounded rectangle" id="547751796" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1640,263" order="15" text="15. Transactions and Locks" shape="rounded rectangle" id="547751796" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/6/60/SQLServer2000_TransLocks.mm&amp;mm_title=Transactions%20and%20Locking%20in%20SQL%20Server%202000" urlType="url"/>
         </topic>
-        <topic position="-1730,288" order="16" text="16. Topics in Exam 70-229 Not Covered in MOC2073" shape="rounded rectangle" id="1101701568" fontStyle=";;;;SansSerif;8;#000000;;;" bgColor="#ffff66">
+        <topic position="-1730,288" order="16" text="16. Topics in Exam 70-229 Not Covered in MOC2073" shape="rounded rectangle" id="1101701568" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/c/c5/SQLServer2000_OtherTopics.mm&amp;mm_title=SQL%20Server%202000%20-%20Topics%20in%20Exam%2070-229%20Not%20Covered%20in%20MOC%202073" urlType="url"/>
         </topic>
     </topic>

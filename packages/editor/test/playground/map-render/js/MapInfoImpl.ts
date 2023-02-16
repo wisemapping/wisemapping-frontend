@@ -22,11 +22,13 @@ class MapInfoImpl implements MapInfo {
   private title: string;
   private locked: boolean;
   private starred: boolean;
+  private lockedMsg: string | undefined;
 
-  constructor(id: string, title: string, locked: boolean) {
+  constructor(id: string, title: string, locked: boolean, lockedMsg?: string) {
     this.id = id;
     this.title = title;
     this.locked = locked;
+    this.lockedMsg = lockedMsg;
     this.starred = true;
   }
 
@@ -44,7 +46,7 @@ class MapInfoImpl implements MapInfo {
   }
 
   setTitle(value: string): void {
-    throw this.title;
+    throw (this.title = value);
   }
 
   isLocked(): boolean {

@@ -111,8 +111,7 @@ class LayoutManager extends Events {
     return this;
   }
 
-  removeNode(id: number) {
-    $assert($defined(id), 'id can not be null');
+  removeNode(id: number): LayoutManager {
     const node = this._treeSet.find(id);
 
     // Is It connected ?
@@ -128,11 +127,9 @@ class LayoutManager extends Events {
 
   predict(
     parentId: number,
-    nodeId: number,
-    position: PositionType,
+    nodeId: number | null,
+    position: PositionType | null,
   ): { order: number; position: PositionType } {
-    $assert($defined(parentId), 'parentId can not be null');
-
     const parent = this._treeSet.find(parentId);
     const node = nodeId ? this._treeSet.find(nodeId) : null;
     const sorter = parent.getSorter();
@@ -168,7 +165,7 @@ class LayoutManager extends Events {
     return canvas;
   }
 
-  layout(flush: boolean): LayoutManager {
+  layout(flush?: boolean): LayoutManager {
     // File repositioning ...
     this._layout.layout();
 
@@ -194,7 +191,7 @@ class LayoutManager extends Events {
       if (node.hasOrderChanged() || node.hasPositionChanged()) {
         // Find or create a event ...
         const id = node.getId();
-        let event: ChangeEvent = this._events.find((e) => e.getId() === id);
+        let event: ChangeEvent | undefined = this._events.find((e) => e.getId() === id);
         if (!event) {
           event = new ChangeEvent(id);
         }

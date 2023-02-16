@@ -8,6 +8,7 @@ export const StyledFooter = styled.footer`
   background-color: #f9a826;
   display: grid;
   grid-template-columns: 200px 1fr 1fr 1fr 3fr;
+  overflow: hidden;
 
   & a {
     font-size: 14px;

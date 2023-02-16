@@ -24,43 +24,43 @@ import RootedTreeSet from './RootedTreeSet';
 abstract class AbstractBasicSorter extends ChildrenSorterStrategy {
   private INTERNODE_VERTICAL_PADDING = 5;
 
-  computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node) {
-    const result = {};
+  computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node): Map<number, number> {
+    const result = new Map<number, number>();
     this._computeChildrenHeight(treeSet, node, result);
     return result;
   }
 
-  protected _getVerticalPadding() {
+  getVerticalPadding(): number {
     return this.INTERNODE_VERTICAL_PADDING;
   }
 
-  protected _computeChildrenHeight(treeSet: RootedTreeSet, node: Node, heightCache?) {
+  _computeChildrenHeight(
+    treeSet: RootedTreeSet,
+    node: Node,
+    heightCache?: Map<number, number>,
+  ): number {
     // 2* Top and down padding;
-    const height = node.getSize().height + this._getVerticalPadding() * 2;
+    const height = node.getSize().height + this.getVerticalPadding() * 2;
 
-    let result;
+    let result: number;
     const children = treeSet.getChildren(node);
     if (children.length === 0 || node.areChildrenShrunken()) {
       result = height;
     } else {
-      let childrenHeight = 0;
-
-      children.forEach((child) => {
-        childrenHeight += this._computeChildrenHeight(treeSet, child, heightCache);
-      });
-
+      const childrenHeight = children
+        .map((child) => this._computeChildrenHeight(treeSet, child, heightCache))
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       result = Math.max(height, childrenHeight);
     }
 
     if (heightCache) {
-      // eslint-disable-next-line no-param-reassign
-      heightCache[node.getId()] = result;
+      heightCache.set(node.getId(), result);
     }
 
     return result;
   }
 
-  protected _getSortedChildren(treeSet: RootedTreeSet, node: Node) {
+  protected _getSortedChildren(treeSet: RootedTreeSet, node: Node): Node[] {
     const result = treeSet.getChildren(node);
     result.sort((a, b) => a.getOrder() - b.getOrder());
     return result;

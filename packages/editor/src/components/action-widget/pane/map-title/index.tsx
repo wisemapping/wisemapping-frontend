@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import MapInfo from '../../../../classes/model/map-info';
@@ -28,7 +28,7 @@ type MapTitleProp = {
 
 type Status = 'disabled' | 'enabled' | 'active-edition';
 
-const MapTitle = ({ mapInfo }: MapTitleProp) => {
+const MapTitle = ({ mapInfo }: MapTitleProp): ReactElement => {
   const [state, setState] = useState<Status>('disabled');
   const [title, setTitle] = useState<string>(mapInfo.getTitle());
 

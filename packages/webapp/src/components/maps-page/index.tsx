@@ -1,5 +1,21 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import React, { ErrorInfo, ReactElement, useEffect } from 'react';
-import clsx from 'clsx';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +36,9 @@ import LanguageMenu from './language-menu';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuIcon from '@mui/icons-material/Menu';
+import ArrowRight from '@mui/icons-material/NavigateNext';
+import ArrowLeft from '@mui/icons-material/NavigateBefore';
 
 import AddCircleTwoTone from '@mui/icons-material/AddCircleTwoTone';
 import CloudUploadTwoTone from '@mui/icons-material/CloudUploadTwoTone';
@@ -41,7 +60,8 @@ import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 import ReactGA from 'react-ga4';
-import { withStyles } from '@mui/styles';
+import { CSSObject, Interpolation, Theme } from '@emotion/react';
+import withEmotionStyles from '../HOCs/withEmotionStyles';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -61,12 +81,26 @@ interface ToolbarButtonInfo {
 }
 
 const MapsPage = (): ReactElement => {
-  const classes = useStyles();
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
   const client: Client = useSelector(activeInstance);
   const queryClient = useQueryClient();
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
+  const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(
+    localStorage.getItem('desktopDrawerOpen') === 'true',
+  );
+  const classes = useStyles(desktopDrawerOpen);
+
+  const handleMobileDrawerToggle = () => {
+    setMobileDrawerOpen(!mobileDrawerOpen);
+  };
+
+  const handleDesktopDrawerToggle = () => {
+    if (!desktopDrawerOpen) localStorage.setItem('desktopDrawerOpen', 'true');
+    else localStorage.removeItem('desktopDrawerOpen');
+    setDesktopDrawerOpen(!desktopDrawerOpen);
+  };
   // Reload based on user preference ...
   const userLocale = AppI18n.getUserLocale();
 
@@ -85,6 +119,7 @@ const MapsPage = (): ReactElement => {
       id: 'maps.page-title',
       defaultMessage: 'My Maps | WiseMapping',
     });
+    window.scrollTo(0, 0);
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Maps List' });
   }, []);
 
@@ -101,6 +136,7 @@ const MapsPage = (): ReactElement => {
   const handleMenuClick = (filter: Filter) => {
     queryClient.invalidateQueries('maps');
     setFilter(filter);
+    mobileDrawerOpen && setMobileDrawerOpen(false);
   };
 
   const handleLabelDelete = (id: number) => {
@@ -148,22 +184,73 @@ const MapsPage = (): ReactElement => {
     }),
   );
 
+  const drawerItemsList = (
+    <>
+      <div style={{ padding: '20px 0 20px 16px' }} key="logo">
+        <img src={logoIcon} alt="logo" />
+      </div>
+      <List component="nav">
+        {filterButtons.map((buttonInfo) => {
+          return (
+            <StyleListItem
+              icon={buttonInfo.icon}
+              label={buttonInfo.label}
+              filter={buttonInfo.filter}
+              active={filter}
+              onClick={handleMenuClick}
+              onDelete={setLabelToDelete}
+              key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
+            />
+          );
+        })}
+      </List>
+      <div
+        className="poweredByIcon"
+        style={{ position: 'absolute', bottom: '10px', left: '20px' }}
+        key="power-by"
+      >
+        <Link href="http://www.wisemapping.org/">
+          <img src={poweredByIcon} alt="Powered By WiseMapping" />
+        </Link>
+      </div>
+    </>
+  );
+
+  const container = document !== undefined ? () => document.body : undefined;
+  const label = labels.find((l) => l.id === labelToDelete);
   return (
     <IntlProvider
       locale={userLocale.code}
       defaultLocale={Locales.EN.code}
       messages={userLocale.message}
     >
-      <div className={classes.root}>
+      <div css={classes.root}>
         <AppBar
           position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
+          css={[classes.appBar, classes.appBarShift]}
           variant="outlined"
           elevation={0}
         >
           <Toolbar>
+            <IconButton
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleMobileDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+              id="open-main-drawer"
+            >
+              <MenuIcon />
+            </IconButton>
+            <IconButton
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDesktopDrawerToggle}
+              sx={{ p: 0, mr: 2, display: { xs: 'none', sm: 'inherit' } }}
+              id="open-desktop-drawer"
+            >
+              {!desktopDrawerOpen && <ArrowRight />}
+              {desktopDrawerOpen && <ArrowLeft />}
+            </IconButton>
             <Tooltip
               arrow={true}
               title={intl.formatMessage({
@@ -179,10 +266,12 @@ const MapsPage = (): ReactElement => {
                 type="button"
                 disableElevation={true}
                 startIcon={<AddCircleTwoTone />}
-                className={classes.newMapButton}
+                css={classes.newMapButton}
                 onClick={() => setActiveDialog('create')}
               >
-                <FormattedMessage id="action.new" defaultMessage="New map" />
+                <span className="message">
+                  <FormattedMessage id="action.new" defaultMessage="New map" />
+                </span>
               </Button>
             </Tooltip>
 
@@ -200,10 +289,12 @@ const MapsPage = (): ReactElement => {
                 type="button"
                 disableElevation={true}
                 startIcon={<CloudUploadTwoTone />}
-                className={classes.importButton}
+                css={classes.importButton}
                 onClick={() => setActiveDialog('import')}
               >
-                <FormattedMessage id="action.import" defaultMessage="Import" />
+                <span className="message">
+                  <FormattedMessage id="action.import" defaultMessage="Import" />
+                </span>
               </Button>
             </Tooltip>
             <ActionDispatcher
@@ -213,7 +304,7 @@ const MapsPage = (): ReactElement => {
               fromEditor
             />
 
-            <div className={classes.rightButtonGroup}>
+            <div css={classes.rightButtonGroup as Interpolation<Theme>}>
               <LanguageMenu />
               <HelpMenu />
               <AccountMenu />
@@ -221,55 +312,40 @@ const MapsPage = (): ReactElement => {
           </Toolbar>
         </AppBar>
         <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-            }),
+          container={container}
+          variant={'temporary'}
+          open={mobileDrawerOpen}
+          onClose={handleMobileDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
           }}
+          css={[classes.mobileDrawer, { '& .MuiPaper-root': classes.drawerOpen }]}
         >
-          <div style={{ padding: '20px 0 20px 15px' }} key="logo">
-            <img src={logoIcon} alt="logo" />
-          </div>
-
-          <List component="nav">
-            {filterButtons.map((buttonInfo) => {
-              return (
-                <StyleListItem
-                  icon={buttonInfo.icon}
-                  label={buttonInfo.label}
-                  filter={buttonInfo.filter}
-                  active={filter}
-                  onClick={handleMenuClick}
-                  onDelete={setLabelToDelete}
-                  key={`${buttonInfo.filter.type}:${buttonInfo.label}`}
-                />
-              );
-            })}
-          </List>
-
-          <div style={{ position: 'absolute', bottom: '10px', left: '20px' }} key="power-by">
-            <Link href="http://www.wisemapping.org/">
-              <img src={poweredByIcon} alt="Powered By WiseMapping" />
-            </Link>
-          </div>
+          {drawerItemsList}
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
+        <Drawer
+          variant="permanent"
+          css={[
+            classes.drawer as CSSObject,
+            classes.drawerOpen,
+            { '& .MuiPaper-root': classes.drawerOpen },
+          ]}
+        >
+          {drawerItemsList}
+        </Drawer>
+        <main css={classes.content}>
+          <div css={classes.toolbar} />
           <MapsList filter={filter} />
         </main>
       </div>
-      {labelToDelete && (
+      {label && labelToDelete && (
         <LabelDeleteConfirm
           onClose={() => setLabelToDelete(null)}
           onConfirm={() => {
             handleLabelDelete(labelToDelete);
             setLabelToDelete(null);
           }}
-          label={labels.find((l) => l.id === labelToDelete)}
+          label={label}
         />
       )}
     </IntlProvider>
@@ -286,24 +362,21 @@ interface ListItemProps {
 }
 
 // https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
-const CustomListItem = withStyles({
-  root: {
-    '&$selected': {
-      backgroundColor: 'rgb(210, 140, 5)',
+const CustomListItem = withEmotionStyles({
+  '&.Mui-selected': {
+    backgroundColor: 'rgb(210, 140, 5)',
+    color: 'white',
+    '& .MuiListItemIcon-root': {
       color: 'white',
-      '& .MuiListItemIcon-root': {
-        color: 'white',
-      },
-    },
-    '&$selected:hover': {
-      backgroundColor: 'rgb(210, 140, 5)',
-      color: 'white',
-      '& .MuiListItemIcon-root': {
-        color: 'white',
-      },
     },
   },
-  selected: {},
+  '&.Mui-selected:hover': {
+    backgroundColor: 'rgb(210, 140, 5)',
+    color: 'white',
+    '& .MuiListItemIcon-root': {
+      color: 'white',
+    },
+  },
 })(ListItemButton);
 
 const StyleListItem = (props: ListItemProps) => {
@@ -336,7 +409,9 @@ const StyleListItem = (props: ListItemProps) => {
 
   return (
     <CustomListItem selected={isSelected} onClick={(e) => handleOnClick(e, filter)}>
-      <ListItemIcon>{icon}</ListItemIcon>
+      <Tooltip title={label} disableInteractive>
+        <ListItemIcon>{icon}</ListItemIcon>
+      </Tooltip>
       <ListItemText style={{ color: 'white' }} primary={label} />
       {filter.type == 'label' && (
         <ListItemSecondaryAction>

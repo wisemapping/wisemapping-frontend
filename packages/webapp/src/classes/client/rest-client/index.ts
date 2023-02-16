@@ -9,6 +9,8 @@ import Client, {
   AccountInfo,
   ImportMapInfo,
   Permission,
+  Oauth2CallbackResult,
+  ForgotPasswordResult,
 } from '..';
 import { getCsrfToken } from '../../../utils';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
@@ -262,6 +264,7 @@ export default class RestClient implements Client {
             firstname: account.firstname ? account.firstname : '',
             email: account.email,
             locale: locale ? localeFromStr(locale) : undefined,
+            authenticationType: account.authenticationType,
           });
         })
         .catch((error) => {
@@ -472,8 +475,11 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  resetPassword(email: string): Promise<void> {
-    const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+  resetPassword(email: string): Promise<ForgotPasswordResult> {
+    const handler = (
+      success: (result: ForgotPasswordResult) => void,
+      reject: (error: ErrorInfo) => void,
+    ) => {
       this.axios
         .put(
           `${this.baseUrl}/service/users/resetPassword?email=${encodeURIComponent(email)}`,
@@ -482,9 +488,9 @@ export default class RestClient implements Client {
             headers: { 'Content-Type': 'application/json' },
           },
         )
-        .then(() => {
-          // All was ok, let's sent to success page ...;
-          success();
+        .then((response) => {
+          // All was ok, lets return if an email was sent or the user should login with oauth
+          success({ action: response.data.action });
         })
         .catch((error) => {
           const response = error.response;
@@ -617,6 +623,47 @@ export default class RestClient implements Client {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .delete(`${this.baseUrl}/c/restful/maps/${mapId}/labels/${labelId}`)
+        .then(() => {
+          success();
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
+  processGoogleCallback(code: string): Promise<Oauth2CallbackResult> {
+    const handler = (
+      success: (result: Oauth2CallbackResult) => void,
+      reject: (error: ErrorInfo) => void,
+    ) => {
+      this.axios
+        .post(`${this.baseUrl}/service/oauth2/googlecallback?code=${code}`, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then((response) => {
+          success({
+            email: response.data.email,
+            googleSync: response.data.googleSync,
+            syncCode: response.data.syncCode,
+          });
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
+  confirmAccountSync(email: string, code: string): Promise<void> {
+    const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+      this.axios
+        .put(`${this.baseUrl}/service/oauth2/confirmaccountsync?email=${email}&code=${code}`, {
+          headers: { 'Content-Type': 'application/json' },
+        })
         .then(() => {
           success();
         })

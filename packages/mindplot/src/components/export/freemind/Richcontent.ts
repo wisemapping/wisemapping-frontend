@@ -1,13 +1,13 @@
 export default class Richcontent {
-  protected html: string;
+  protected html: string | undefined;
 
-  protected type: string;
+  protected type: string | undefined;
 
-  getHtml(): string {
+  getHtml(): string | undefined {
     return this.html;
   }
 
-  getType(): string {
+  getType(): string | undefined {
     return this.type;
   }
 
@@ -22,9 +22,9 @@ export default class Richcontent {
   toXml(document: Document): HTMLElement {
     // Set node attributes
     const richcontentElem = document.createElement('richcontent');
-
-    richcontentElem.setAttribute('TYPE', this.type);
-
+    if (this.type) {
+      richcontentElem.setAttribute('TYPE', this.type);
+    }
     if (this.html) {
       const htmlElement: DocumentFragment = document
         .createRange()

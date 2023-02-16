@@ -16,25 +16,19 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import { Point, Group, ElementClass } from '@wisemapping/web2d';
+import { Group, ElementClass, ElementPeer } from '@wisemapping/web2d';
 
 import Topic from './Topic';
-import { TopicShape } from './model/INodeModel';
 import Shape from './util/Shape';
-import NodeModel from './model/NodeModel';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import SizeType from './SizeType';
+import PositionType from './PositionType';
+import TopicShapeFactory from './shape/TopicShapeFactory';
 
 class MainTopic extends Topic {
-  private INNER_RECT_ATTRIBUTES: { stroke: string };
-
-  constructor(model: NodeModel, options) {
-    super(model, options);
-    this.INNER_RECT_ATTRIBUTES = { stroke: '0.5 solid #009900' };
-  }
-
-  _buildDragShape(): ElementClass {
-    const innerShape = this._buildShape(this.INNER_RECT_ATTRIBUTES, this.getShapeType());
+  buildDragShape(): ElementClass<ElementPeer> {
+    const shapeType = this.getShapeType();
+    const innerShape = TopicShapeFactory.create(shapeType, this);
     const size = this.getSize();
     innerShape.setSize(size.width, size.height);
     innerShape.setPosition(0, 0);
@@ -43,10 +37,10 @@ class MainTopic extends Topic {
     innerShape.setVisibility(true);
 
     const brColor = this.getBorderColor();
-    innerShape.setAttribute('strokeColor', brColor);
+    innerShape.setStroke(null, null, brColor);
 
     const bgColor = this.getBackgroundColor();
-    innerShape.setAttribute('fillColor', bgColor);
+    innerShape.setFill(bgColor);
 
     //  Create group ...
     const groupAttributes = {
@@ -56,51 +50,33 @@ class MainTopic extends Topic {
       coordSizeHeight: 100,
     };
     const group = new Group(groupAttributes);
-    group.append(innerShape);
+    innerShape.appendTo(group);
 
-    // Add Text ...
-    if (this.getShapeType() !== TopicShape.IMAGE) {
-      const textShape = this._buildTextShape(true);
-      const text = this.getText();
-      textShape.setText(text);
-      textShape.setOpacity(0.5);
+    const textShape = this.buildTextShape(true);
+    const text = this.getText();
+    textShape.setText(text);
+    textShape.setOpacity(0.5);
 
-      // Copy text position of the topic element ...
-      const textPosition = this.getTextShape().getPosition();
-      textShape.setPosition(textPosition.x, textPosition.y);
+    // Copy text position of the topic element ...
+    const textPosition = this.getOrBuildTextShape().getPosition();
+    textShape.setPosition(textPosition.x, textPosition.y);
 
-      group.append(textShape);
-    }
+    group.append(textShape);
     return group;
   }
 
-  updateTopicShape(targetTopic: Topic) {
-    // Change figure based on the connected topic ...
-    const model = this.getModel();
-    let shapeType = model.getShapeType();
-    if (!targetTopic.isCentralTopic()) {
-      if (!$defined(shapeType)) {
-        // Get the real shape type ...
-        shapeType = this.getShapeType();
-        this._setShapeType(shapeType, false);
-      }
-    }
+  updateTopicShape() {
+    this.redrawShapeType();
   }
 
-  disconnect(workspace: Workspace) {
-    super.disconnect(workspace);
-    const model = this.getModel();
-    let shapeType = model.getShapeType();
-    if (!$defined(shapeType)) {
-      // Change figure ...
-      shapeType = this.getShapeType();
-      this._setShapeType(TopicShape.ROUNDED_RECT, false);
-    }
+  disconnect(canvas: Canvas) {
+    super.disconnect(canvas);
+
     const innerShape = this.getInnerShape();
     innerShape.setVisibility(true);
   }
 
-  _updatePositionOnChangeSize(oldSize: SizeType, newSize: SizeType) {
+  updatePositionOnChangeSize(oldSize: SizeType, newSize: SizeType) {
     const xOffset = Math.round((newSize.width - oldSize.width) / 2);
     const pos = this.getPosition();
     if ($defined(pos)) {
@@ -113,19 +89,18 @@ class MainTopic extends Topic {
     }
   }
 
-  workoutIncomingConnectionPoint(sourcePosition: Point) {
+  workoutIncomingConnectionPoint(sourcePosition: PositionType): PositionType {
     return Shape.workoutIncomingConnectionPoint(this, sourcePosition);
   }
 
-  workoutOutgoingConnectionPoint(targetPosition: Point) {
+  workoutOutgoingConnectionPoint(targetPosition: PositionType): PositionType {
     $assert(targetPosition, 'targetPoint can not be null');
     const pos = this.getPosition();
     const isAtRight = Shape.isAtRight(targetPosition, pos);
     const size = this.getSize();
 
-    let result: Point;
-    if (this.getShapeType() === TopicShape.LINE) {
-      result = new Point();
+    let result: PositionType = { x: 0, y: 0 };
+    if (this.getShapeType() === 'line') {
       const groupPosition = this.get2DElement().getPosition();
       const innerShareSize = this.getInnerShape().getSize();
 
@@ -150,7 +125,7 @@ class MainTopic extends Topic {
     } else {
       result = Shape.calculateRectConnectionPoint(pos, size, isAtRight);
     }
-    return result;
+    return { ...result };
   }
 }
 

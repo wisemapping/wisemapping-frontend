@@ -28,7 +28,7 @@ class BalancedSorter extends AbstractBasicSorter {
 
   private static INTERNODE_HORIZONTAL_PADDING = 30;
 
-  predict(graph, parent, node: Node, position: PositionType) {
+  predict(graph, parent, node: Node, position: PositionType): [number, PositionType] {
     const rootNode = graph.getRootNode(parent);
 
     // If it is a dragged node...
@@ -44,19 +44,16 @@ class BalancedSorter extends AbstractBasicSorter {
       }
     }
 
-    let right;
-    let left;
+    // Find the order ...
+    let order: number;
     if (!position) {
-      right = this._getChildrenForOrder(parent, graph, 0);
-      left = this._getChildrenForOrder(parent, graph, 1);
-    }
-    // Filter nodes on one side..
-    let order;
-    if (position) {
-      order = position.x > rootNode.getPosition().x ? 0 : 1;
-    } else {
+      const right = this._getChildrenForOrder(parent, graph, 0);
+      const left = this._getChildrenForOrder(parent, graph, 1);
       order = right.length - left.length > 0 ? 1 : 0;
+    } else {
+      order = position.x > rootNode.getPosition().x ? 0 : 1;
     }
+
     const direction = order % 2 === 0 ? 1 : -1;
 
     // Exclude the dragged node (if set)
@@ -79,7 +76,7 @@ class BalancedSorter extends AbstractBasicSorter {
     }
 
     // Try to fit within ...
-    let result = null;
+    let result: [number, PositionType] | null = null;
     const last = children[children.length - 1];
     const newestPosition = position || { x: last.getPosition().x, y: last.getPosition().y + 1 };
     children.forEach((child, index) => {
@@ -138,18 +135,20 @@ class BalancedSorter extends AbstractBasicSorter {
 
   detach(treeSet: RootedTreeSet, node: Node): void {
     const parent = treeSet.getParent(node);
-    // Filter nodes on one side..
-    const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
+    if (parent) {
+      // Filter nodes on one side..
+      const children = this._getChildrenForOrder(parent, treeSet, node.getOrder());
 
-    children.forEach((child) => {
-      if (child.getOrder() > node.getOrder()) {
-        child.setOrder(child.getOrder() - 2);
-      }
-    });
-    node.setOrder(node.getOrder() % 2 === 0 ? 0 : 1);
+      children.forEach((child) => {
+        if (child.getOrder() > node.getOrder()) {
+          child.setOrder(child.getOrder() - 2);
+        }
+      });
+      node.setOrder(node.getOrder() % 2 === 0 ? 0 : 1);
+    }
   }
 
-  computeOffsets(treeSet: RootedTreeSet, node: Node) {
+  computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
 
@@ -181,7 +180,7 @@ class BalancedSorter extends AbstractBasicSorter {
     let ysum = 0;
 
     // Calculate the offsets ...
-    const result = {};
+    const result = new Map<number, PositionType>();
     for (let i = 0; i < heights.length; i++) {
       const direction = heights[i].order % 2 ? -1 : 1;
 
@@ -203,7 +202,7 @@ class BalancedSorter extends AbstractBasicSorter {
       $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
       $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
 
-      result[heights[i].id] = { x: xOffset, y: yOffset };
+      result.set(heights[i].id, { x: xOffset, y: yOffset });
     }
     return result;
   }
@@ -234,13 +233,13 @@ class BalancedSorter extends AbstractBasicSorter {
     return 'Balanced Sorter';
   }
 
-  protected _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number) {
+  _getChildrenForOrder(parent: Node, graph: RootedTreeSet, order: number): Node[] {
     return this._getSortedChildren(graph, parent).filter(
       (child) => child.getOrder() % 2 === order % 2,
     );
   }
 
-  protected _getVerticalPadding(): number {
+  getVerticalPadding(): number {
     return BalancedSorter.INTERNODE_VERTICAL_PADDING;
   }
 }

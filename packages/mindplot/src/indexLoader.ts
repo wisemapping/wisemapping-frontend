@@ -20,8 +20,6 @@ import PersistenceManager from './components/PersistenceManager';
 import LocalStorageManager from './components/LocalStorageManager';
 import MindplotWebComponent from './components/MindplotWebComponent';
 
-console.log('loading static mindmap in read-only');
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalAny: any = global;
 globalAny.jQuery = jquery;

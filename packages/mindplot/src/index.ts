@@ -30,14 +30,13 @@ import TextImporterFactory from './components/import/TextImporterFactory';
 import Exporter from './components/export/Exporter';
 import Importer from './components/import/Importer';
 import DesignerKeyboard from './components/DesignerKeyboard';
-import EditorRenderMode from './components/EditorRenderMode';
+import type EditorRenderMode from './components/EditorRenderMode';
 import DesignerModel from './components/DesignerModel';
 
 import SvgImageIcon from './components/SvgImageIcon';
 
-import MindplotWebComponent, {
-  MindplotWebComponentInterface,
-} from './components/MindplotWebComponent';
+import MindplotWebComponent from './components/MindplotWebComponent';
+import type MindplotWebComponentInterface from './components/MindplotWebComponentInterface';
 import LinkIcon from './components/LinkIcon';
 import NoteIcon from './components/NoteIcon';
 import Topic from './components/Topic';
@@ -49,7 +48,7 @@ import WidgetManager from './components/WidgetManager';
 
 import { buildDesigner } from './components/DesignerBuilder';
 
-import { $notify } from './components/widget/ToolbarNotifier';
+import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
 
 declare global {
@@ -58,6 +57,7 @@ declare global {
   var designer: Designer;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const globalAny: any = global;
 globalAny.jQuery = jquery;
 // WebComponent registration

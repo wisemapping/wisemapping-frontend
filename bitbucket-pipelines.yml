@@ -18,7 +18,6 @@ pipelines:
           script:
             - export CYPRESS_imageSnaphots="true"
             - yarn install
-            - yarn bootstrap
             - yarn build
             - yarn lint
             - yarn test:unit

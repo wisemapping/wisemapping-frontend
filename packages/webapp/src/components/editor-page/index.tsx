@@ -16,28 +16,86 @@
  *   limitations under the License.
  */
 import React, { useEffect } from 'react';
-import ActionDispatcher from '../maps-page/action-dispatcher';
-import { ActionType } from '../maps-page/action-chooser';
-import Editor from '@wisemapping/editor';
-import { EditorRenderMode, PersistenceManager } from '@wisemapping/editor';
+import Editor, { EditorOptions } from '@wisemapping/editor';
+import {
+  EditorRenderMode,
+  PersistenceManager,
+  RESTPersistenceManager,
+  LocalStorageManager,
+  MockPersistenceManager,
+} from '@wisemapping/editor';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga4';
-import { useFetchAccount, useFetchMapById } from '../../redux/clientSlice';
+import {
+  useFetchAccount,
+  useFetchMapById,
+  activeInstance,
+  sessionExpired,
+} from '../../redux/clientSlice';
 import EditorOptionsBuilder from './EditorOptionsBuilder';
-import { buildPersistenceManagerForEditor } from './PersistenceManagerUtils';
 import { useTheme } from '@mui/material/styles';
-import AccountMenu from '../maps-page/account-menu';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
-import { activeInstance } from '../../redux/clientSlice';
 import Client from '../../classes/client';
+import AppConfig from '../../classes/app-config';
+import exampleMap from '../../classes/client/mock-client/example-map.wxml';
+import ClientHealthSentinel from '../common/client-health-sentinel';
+
+const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
+  let persistenceManager: PersistenceManager;
+  if (AppConfig.isRestClient()) {
+    if (mode === 'edition-owner' || mode === 'edition-editor') {
+      persistenceManager = new RESTPersistenceManager({
+        documentUrl: '/c/restful/maps/{id}/document',
+        revertUrl: '/c/restful/maps/{id}/history/latest',
+        lockUrl: '/c/restful/maps/{id}/lock',
+      });
+    } else {
+      persistenceManager = new LocalStorageManager(
+        `/c/restful/maps/{id}/${
+          globalThis.historyId ? `${globalThis.historyId}/` : ''
+        }document/xml${mode === 'showcase' ? '-pub' : ''}`,
+        true,
+      );
+    }
+    persistenceManager.addErrorHandler((error) => {
+      if (error.errorType === 'session-expired') {
+        // TODO: this line was in RestPersistenceClient, do something similar here
+        //client.sessionExpired();
+      }
+    });
+  } else {
+    persistenceManager = new MockPersistenceManager(exampleMap);
+  }
+  return persistenceManager;
+};
 
 export type EditorPropsType = {
   isTryMode: boolean;
 };
+
+type ActionType =
+  | 'open'
+  | 'share'
+  | 'import'
+  | 'delete'
+  | 'info'
+  | 'create'
+  | 'duplicate'
+  | 'export'
+  | 'label'
+  | 'rename'
+  | 'print'
+  | 'info'
+  | 'publish'
+  | 'history'
+  | undefined;
+
+const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
+const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
 const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
@@ -45,6 +103,17 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
   const client: Client = useSelector(activeInstance);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (client) {
+      client.onSessionExpired(() => {
+        dispatch(sessionExpired());
+      });
+    } else {
+      console.warn('Session expiration wont be handled because could not find client');
+    }
+  }, []);
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
@@ -83,7 +152,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
   const isAccountLoaded = mode === 'showcase' || useFetchAccount;
   const loadCompleted = mode && isAccountLoaded;
 
-  let options, persistence: PersistenceManager;
+  let options: EditorOptions, persistence: PersistenceManager;
   let mapInfo: MapInfo;
   if (loadCompleted) {
     options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
@@ -92,7 +161,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
       mapId,
       client,
       options.mapTitle,
-      options.isLocked,
+      options.locked,
       options.lockedMsg,
       options.zoom,
     );
@@ -110,6 +179,7 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
       defaultLocale={Locales.EN.code}
       messages={userLocale.message as Record<string, string>}
     >
+      <ClientHealthSentinel />
       <Editor
         onAction={setActiveDialog}
         options={options}

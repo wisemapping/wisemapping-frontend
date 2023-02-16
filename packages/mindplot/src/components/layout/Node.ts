@@ -24,21 +24,21 @@ class Node {
   private _id: number;
 
   // eslint-disable-next-line no-use-before-define
-  _parent: Node;
+  _parent!: Node | null;
 
   private _sorter: ChildrenSorterStrategy;
 
   private _properties;
 
   // eslint-disable-next-line no-use-before-define
-  _children: Node[];
+  _children!: Node[];
+
+  _branchHeight: number;
+
+  _heightChanged: boolean;
 
   constructor(id: number, size: SizeType, position: PositionType, sorter: ChildrenSorterStrategy) {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
-    $assert(size, 'size can not be null');
-    $assert(position, 'position can not be null');
-    $assert(sorter, 'sorter can not be null');
-
     this._id = id;
     this._sorter = sorter;
     this._properties = {};
@@ -46,10 +46,12 @@ class Node {
     this.setSize(size);
     this.setPosition(position);
     this.setShrunken(false);
+    this._branchHeight = -1;
+    this._heightChanged = false;
   }
 
   /** */
-  getId() {
+  getId(): number {
     return this._id;
   }
 
@@ -74,7 +76,7 @@ class Node {
   }
 
   /** */
-  setShrunken(value) {
+  setShrunken(value: boolean) {
     this._setProperty('shrink', value);
   }
 
@@ -132,31 +134,26 @@ class Node {
   }
 
   /** */
-  hasSizeChanged() {
+  hasSizeChanged(): boolean {
     return this._isPropertyChanged('size');
   }
 
   /** */
-  getPosition() {
+  getPosition(): PositionType {
     return this._getProperty('position');
   }
 
   /** */
-  setSize(size) {
-    $assert($defined(size), 'Size can not be null');
+  setSize(size: SizeType) {
     this._setProperty('size', { ...size });
   }
 
   /** */
-  getSize() {
+  getSize(): SizeType {
     return this._getProperty('size');
   }
 
-  /** */
-  setFreeDisplacement(displacement) {
-    $assert($defined(displacement), 'Position can not be null');
-    $assert($defined(displacement.x), 'x can not be null');
-    $assert($defined(displacement.y), 'y can not be null');
+  setFreeDisplacement(displacement: PositionType) {
     const oldDisplacement = this.getFreeDisplacement();
     const newDisplacement = {
       x: oldDisplacement.x + displacement.x,
@@ -177,21 +174,9 @@ class Node {
     return freeDisplacement || { x: 0, y: 0 };
   }
 
-  /** */
   setPosition(position: PositionType) {
-    $assert($defined(position), 'Position can not be null');
-    $assert($defined(position.x), 'x can not be null');
-    $assert($defined(position.y), 'y can not be null');
-
     // This is a performance improvement to avoid movements that really could be avoided.
-    const currentPos = this.getPosition();
-    if (
-      currentPos == null ||
-      Math.abs(currentPos.x - position.x) > 2 ||
-      Math.abs(currentPos.y - position.y) > 2
-    ) {
-      this._setProperty('position', position);
-    }
+    this._setProperty('position', position);
   }
 
   _setProperty(key: string, value) {
@@ -213,7 +198,7 @@ class Node {
     this._properties[key] = prop;
   }
 
-  _getProperty(key) {
+  _getProperty(key: string) {
     const prop = this._properties[key];
     return $defined(prop) ? prop.value : null;
   }
@@ -229,7 +214,7 @@ class Node {
   }
 
   /** @return {String} returns id, order, position, size and shrink information */
-  toString() {
+  toString(): string {
     return `[id:${this.getId()}, order:${this.getOrder()}, position: {${this.getPosition().x},${
       this.getPosition().y
     }}, size: {${this.getSize().width},${

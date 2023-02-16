@@ -16,41 +16,43 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import { Image, Point, ElementClass } from '@wisemapping/web2d';
+import { Group, Image } from '@wisemapping/web2d';
 import IconGroup from './IconGroup';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
 import Icon from './Icon';
+import PositionType from './PositionType';
 
 abstract class ImageIcon implements Icon {
-  protected _image: Image;
+  private _image: Image;
 
-  protected _group: IconGroup;
+  private _group: IconGroup | null;
 
   constructor(url: string) {
     $assert(url, 'image url can not be null');
     this._image = new Image();
     this._image.setHref(url);
     this._image.setSize(ImageIcon.SIZE, ImageIcon.SIZE);
+    this._group = null;
   }
 
-  getElement(): ElementClass {
+  getElement(): Image | Group {
     return this._image;
   }
 
-  setGroup(group: IconGroup) {
+  setGroup(group: IconGroup): void {
     this._group = group;
   }
 
-  getGroup(): IconGroup {
+  getGroup(): IconGroup | null {
     return this._group;
   }
 
-  getSize(): SizeType {
+  getSize(): SizeType | undefined {
     return this._image.getSize();
   }
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     return this._image.getPosition();
   }
 

@@ -15,37 +15,41 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import { Rect, Image, Line, Text, Group, ElementClass, Point } from '@wisemapping/web2d';
+import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
 
-import NodeGraph from './NodeGraph';
-import TopicConfig from './TopicConfig';
-import TopicStyle from './TopicStyle';
+import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
-import ConnectionLine from './ConnectionLine';
+import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
 import EventBus from './layout/EventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
-import { TopicShape } from './model/INodeModel';
+import { TopicShapeType } from './model/INodeModel';
 import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import LayoutManager from './layout/LayoutManager';
 import NoteModel from './model/NoteModel';
 import LinkModel from './model/LinkModel';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
-import ImageIcon from './ImageIcon';
+import PositionType from './PositionType';
+import Icon from './Icon';
+import { FontStyleType } from './FontStyleType';
+import { FontWeightType } from './FontWeightType';
+import DragTopic from './DragTopic';
+import ThemeFactory from './theme/ThemeFactory';
+import TopicShape from './shape/TopicShape';
+import TopicShapeFactory from './shape/TopicShapeFactory';
 
 const ICON_SCALING_FACTOR = 1.3;
 
 abstract class Topic extends NodeGraph {
-  private _innerShape: ElementClass;
+  private _innerShape: TopicShape | null;
 
   private _relationships: Relationship[];
 
@@ -57,131 +61,125 @@ abstract class Topic extends NodeGraph {
   // eslint-disable-next-line no-use-before-define
   private _parent: Topic | null;
 
-  private _outerShape: ElementClass;
+  private _outerShape: Rect | undefined;
 
-  private _text: Text | null;
+  private _text: Text | undefined;
 
-  private _iconsGroup: IconGroup;
+  private _iconsGroup!: IconGroup;
 
-  private _connector: ShirinkConnector;
+  private _connector!: ShirinkConnector;
 
-  private _outgoingLine: Line;
+  private _outgoingLine!: ConnectionLine | null;
 
-  constructor(model: NodeModel, options) {
+  constructor(model: NodeModel, options: NodeOption) {
     super(model, options);
     this._children = [];
     this._parent = null;
     this._relationships = [];
     this._isInWorkspace = false;
-    this._buildTopicShape();
+    this._innerShape = null;
+    this.buildTopicShape();
 
     // Position a topic ....
     const pos = model.getPosition();
-    if (pos != null && this.isCentralTopic()) {
+    if (pos && this.isCentralTopic()) {
       this.setPosition(pos);
     }
 
     // Register events for the topic ...
     if (!this.isReadOnly()) {
-      this._registerEvents();
+      this.registerEvents();
     }
   }
 
-  protected _registerEvents(): void {
+  protected registerEvents(): void {
     this.setMouseEventsEnabled(true);
 
     // Prevent click on the topics being propagated ...
     this.addEvent('click', (event: Event) => {
       event.stopPropagation();
     });
-    const me = this;
+
     this.addEvent('dblclick', (event: Event) => {
-      me._getTopicEventDispatcher().show(me);
+      this._getTopicEventDispatcher().show(this);
       event.stopPropagation();
     });
   }
 
-  setShapeType(type: string): void {
-    this._setShapeType(type, true);
+  setShapeType(type: TopicShapeType): void {
+    const model = this.getModel();
+    model.setShapeType(type);
+
+    this.redraw();
   }
 
   getParent(): Topic | null {
     return this._parent;
   }
 
-  protected _setShapeType(type: string, updateModel: boolean) {
-    // Remove inner shape figure ...
-    const model = this.getModel();
-    if ($defined(updateModel) && updateModel) {
-      model.setShapeType(type);
+  protected redrawShapeType() {
+    this.removeInnerShape();
+
+    // Create a new one ...
+    const innerShape = this.getInnerShape();
+
+    // Update figure size ...
+    const size = this.getSize();
+    this.setSize(size, true);
+
+    const group = this.get2DElement();
+    innerShape.appendTo(group);
+
+    // Move text to the front ...
+    const text = this.getOrBuildTextShape();
+    text.moveToFront();
+
+    // Move iconGroup to front ...
+    const iconGroup = this.getIconGroup();
+    if (iconGroup) {
+      iconGroup.moveToFront();
     }
-    // If shape is line, reset background color to default.
-    if (type === TopicShape.LINE) {
-      const color = TopicStyle.defaultBackgroundColor(this);
-      this.setBackgroundColor(color);
-    }
 
-    const oldInnerShape = this.getInnerShape();
-    if (oldInnerShape != null) {
-      this._removeInnerShape();
-
-      // Create a new one ...
-      const innerShape = this.getInnerShape();
-
-      // Update figure size ...
-      const size = this.getSize();
-      this.setSize(size, true);
-
-      const group = this.get2DElement();
-      group.append(innerShape);
-
-      // Move text to the front ...
-      const text = this.getTextShape();
-      text.moveToFront();
-
-      // Move iconGroup to front ...
-      const iconGroup = this.getIconGroup();
-      if ($defined(iconGroup)) {
-        iconGroup.moveToFront();
-      }
-
-      // Move connector to front
-      const connector = this.getShrinkConnector();
-      if ($defined(connector)) {
-        connector.moveToFront();
-      }
+    // Move connector to front
+    const connector = this.getShrinkConnector();
+    if (connector) {
+      connector.moveToFront();
     }
   }
 
-  getShapeType(): string {
+  getShapeType(): TopicShapeType {
     const model = this.getModel();
-    let result = model.getShapeType();
-    if (!$defined(result)) {
-      result = TopicStyle.defaultShapeType(this);
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getShapeType(this);
   }
 
-  private _removeInnerShape(): ElementClass {
+  getConnectionStyle(): LineType {
+    const model = this.getModel();
+    const theme = ThemeFactory.create(model);
+    return theme.getConnectionType(this);
+  }
+
+  getConnectionColor(): string {
+    const model = this.getModel();
+    const theme = ThemeFactory.create(model);
+    return theme.getConnectionColor(this);
+  }
+
+  private removeInnerShape(): TopicShape {
     const group = this.get2DElement();
     const innerShape = this.getInnerShape();
-    group.removeChild(innerShape);
+
+    innerShape.removeFrom(group);
     this._innerShape = null;
+
     return innerShape;
   }
 
-  getInnerShape(): ElementClass {
-    if (!$defined(this._innerShape)) {
+  getInnerShape(): TopicShape {
+    if (!this._innerShape) {
       // Create inner box.
-      this._innerShape = this._buildShape(TopicConfig.INNER_RECT_ATTRIBUTES, this.getShapeType());
-
-      // Update bgcolor ...
-      const bgColor = this.getBackgroundColor();
-      this._setBackgroundColor(bgColor, false);
-
-      // Update border color ...
-      const brColor = this.getBorderColor();
-      this._setBorderColor(brColor, false);
+      const shapeType = this.getShapeType();
+      this._innerShape = TopicShapeFactory.create(shapeType, this);
 
       // Define the pointer ...
       if (!this.isCentralTopic() && !this.isReadOnly()) {
@@ -193,89 +191,22 @@ abstract class Topic extends NodeGraph {
     return this._innerShape;
   }
 
-  _buildShape(attributes, shapeType: string) {
-    $assert(attributes, 'attributes can not be null');
-    $assert(shapeType, 'shapeType can not be null');
-
-    let result;
-    if (shapeType === TopicShape.RECTANGLE) {
-      result = new Rect(0, attributes);
-    } else if (shapeType === TopicShape.IMAGE) {
-      const model = this.getModel();
-      const url = model.getImageUrl();
-      const size = model.getImageSize();
-
-      result = new Image();
-      result.setHref(url);
-      result.setSize(size.width, size.height);
-
-      result.getSize = function getSize() {
-        return model.getImageSize();
-      };
-
-      result.setPosition = function setPosition() {
-        // Ignore ...
-      };
-    } else if (shapeType === TopicShape.ELLIPSE) {
-      result = new Rect(0.9, attributes);
-    } else if (shapeType === TopicShape.ROUNDED_RECT) {
-      result = new Rect(0.3, attributes);
-    } else if (shapeType === TopicShape.LINE) {
-      result = new Line({
-        strokeColor: '#495879',
-        strokeWidth: 1,
-      });
-
-      result.setSize = function setSize(width: number, height: number) {
-        this.size = {
-          width,
-          height,
-        };
-        result.setFrom(0, height);
-        result.setTo(width, height);
-
-        // Lines will have the same color of the default connection lines...
-        const stokeColor = ConnectionLine.getStrokeColor();
-        result.setStroke(1, 'solid', stokeColor);
-      };
-
-      result.getSize = function getSize() {
-        return this.size;
-      };
-
-      result.setPosition = () => {
-        // Overwrite behaviour ...
-      };
-
-      result.setFill = () => {
-        // Overwrite behaviour ...
-      };
-
-      result.setStroke = () => {
-        // Overwrite behaviour ...
-      };
-    } else {
-      $assert(false, `Unsupported figure shapeType:${shapeType}`);
-    }
-    result.setPosition(0, 0);
-    return result;
-  }
-
-  setCursor(type: string) {
+  setCursor(type: string): void {
     const innerShape = this.getInnerShape();
     innerShape.setCursor(type);
 
     const outerShape = this.getOuterShape();
     outerShape.setCursor(type);
 
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
     textShape.setCursor(type);
   }
 
-  getOuterShape(): ElementClass {
-    if (!$defined(this._outerShape)) {
-      const rect = this._buildShape(TopicConfig.OUTER_SHAPE_ATTRIBUTES, TopicShape.ROUNDED_RECT);
-      rect.setPosition(-2, -3);
+  getOuterShape(): Rect {
+    if (!this._outerShape) {
+      const rect = new Rect(0.6);
+
+      rect.setPosition(-3, -3);
       rect.setOpacity(0);
       this._outerShape = rect;
     }
@@ -283,57 +214,58 @@ abstract class Topic extends NodeGraph {
     return this._outerShape;
   }
 
-  getTextShape(): Text {
-    if (!$defined(this._text)) {
-      this._text = this._buildTextShape(false);
+  getOrBuildTextShape(): Text {
+    if (!this._text) {
+      this._text = this.buildTextShape(false);
 
-      // Set Text ...
+      // @todo: Review this. Get should not modify the state ....
       const text = this.getText();
-      this._setText(text, false);
+      this._text.setText(text);
     }
 
     return this._text;
   }
 
-  getOrBuildIconGroup(): Group {
-    if (!$defined(this._iconsGroup)) {
-      this._iconsGroup = this._buildIconGroup();
+  private getOrBuildIconGroup(): IconGroup {
+    if (!this._iconsGroup) {
+      const iconGroup = this.buildIconGroup();
       const group = this.get2DElement();
-      group.append(this._iconsGroup.getNativeElement());
-      this._iconsGroup.moveToFront();
+
+      iconGroup.appendTo(group);
+      this._iconsGroup = iconGroup;
     }
     return this._iconsGroup;
   }
 
-  /** */
-  getIconGroup(): IconGroup {
+  private getIconGroup(): IconGroup | null {
     return this._iconsGroup;
   }
 
-  private _buildIconGroup(): Group {
-    const textHeight = this.getTextShape().getFontHeight();
+  private buildIconGroup(): IconGroup {
+    const model = this.getModel();
+    const theme = ThemeFactory.create(model);
+
+    const textHeight = this.getOrBuildTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
     const result = new IconGroup(this.getId(), iconSize);
-    const padding = TopicStyle.getInnerPadding(this);
+    const padding = theme.getInnerPadding(this);
     result.setPosition(padding, padding);
 
     // Load topic features ...
-    const model = this.getModel();
     const featuresModel = model.getFeatures();
+
     featuresModel.forEach((f) => {
       const icon = TopicFeatureFactory.createIcon(this, f, this.isReadOnly());
 
       const type = f.getType();
-      const addRemoveAction =
-        type === TopicFeatureFactory.SvgIcon.id || type === TopicFeatureFactory.EmojiIcon.id;
-
+      const addRemoveAction = type === 'eicon' || type === 'icon';
       result.addIcon(icon, addRemoveAction && !this.isReadOnly());
     });
 
     return result;
   }
 
-  addFeature(featureModel: FeatureModel): ImageIcon {
+  addFeature(featureModel: FeatureModel): Icon {
     const iconGroup = this.getOrBuildIconGroup();
     this.closeEditors();
 
@@ -341,13 +273,11 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.addFeature(featureModel);
 
-    const result: ImageIcon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
-    const isIcon =
-      featureModel.getType() === TopicFeatureFactory.SvgIcon.id ||
-      featureModel.getType() === TopicFeatureFactory.EmojiIcon.id;
+    const result: Icon = TopicFeatureFactory.createIcon(this, featureModel, this.isReadOnly());
+    const isIcon = featureModel.getType() === 'icon' || featureModel.getType() === 'eicon';
     iconGroup.addIcon(result, isIcon && !this.isReadOnly());
 
-    this.adjustShapes();
+    this.redraw();
     return result;
   }
 
@@ -356,7 +286,6 @@ abstract class Topic extends NodeGraph {
     return model.findFeatureById(id);
   }
 
-  /** */
   removeFeature(featureModel: FeatureModel): void {
     $assert(featureModel, 'featureModel could not be null');
 
@@ -366,17 +295,17 @@ abstract class Topic extends NodeGraph {
 
     // Removing the icon from UI
     const iconGroup = this.getIconGroup();
-    if ($defined(iconGroup)) {
+    if (iconGroup) {
       iconGroup.removeIconByModel(featureModel);
     }
-    this.adjustShapes();
+    this.redraw();
   }
 
   addRelationship(relationship: Relationship) {
     this._relationships.push(relationship);
   }
 
-  deleteRelationship(relationship: Rect) {
+  deleteRelationship(relationship: Relationship) {
     this._relationships = this._relationships.filter((r) => r !== relationship);
   }
 
@@ -384,7 +313,7 @@ abstract class Topic extends NodeGraph {
     return this._relationships;
   }
 
-  protected _buildTextShape(readOnly: boolean): Text {
+  protected buildTextShape(readOnly: boolean): Text {
     const result = new Text();
     const family = this.getFontFamily();
     const size = this.getFontSize();
@@ -407,195 +336,130 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  /** */
-  setFontFamily(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setFontName(value);
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setFontFamily(value);
-    }
-    this.adjustShapes();
-  }
-
-  setFontSize(value: number, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setSize(value);
-
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setFontSize(value);
-    }
-    this.adjustShapes();
-  }
-
-  setFontStyle(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setStyle(value);
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setFontStyle(value);
-    }
-    this.adjustShapes();
-  }
-
-  setFontWeight(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setWeight(value);
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setFontWeight(value);
-    }
-    this.adjustShapes();
-  }
-
-  getFontWeight() {
+  setFontFamily(value: string): void {
     const model = this.getModel();
-    let result = model.getFontWeight();
-    if (!$defined(result)) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.weight;
-    }
-    return result;
+    model.setFontFamily(value);
+
+    this.redraw(true);
+  }
+
+  setFontSize(value: number): void {
+    const model = this.getModel();
+    model.setFontSize(value);
+
+    this.redraw(true);
+  }
+
+  setFontStyle(value: FontStyleType): void {
+    const model = this.getModel();
+    model.setFontStyle(value);
+
+    this.redraw(true);
+  }
+
+  setFontWeight(value: FontWeightType): void {
+    const model = this.getModel();
+    model.setFontWeight(value);
+
+    this.redraw(true);
+  }
+
+  getFontWeight(): FontWeightType {
+    const model = this.getModel();
+    const theme = ThemeFactory.create(model);
+    return theme.getFontWeight(this);
   }
 
   getFontFamily(): string {
     const model = this.getModel();
-    let result = model.getFontFamily();
-    if (!$defined(result)) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.font;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontFamily(this);
   }
 
   getFontColor(): string {
     const model = this.getModel();
-    let result = model.getFontColor();
-    if (!$defined(result)) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.color;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontColor(this);
   }
 
-  getFontStyle(): string {
+  getFontStyle(): FontStyleType {
     const model = this.getModel();
-    let result = model.getFontStyle();
-    if (!$defined(result)) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.style;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontStyle(this);
   }
 
   getFontSize(): number {
     const model = this.getModel();
-    let result = model.getFontSize();
-    if (!$defined(result)) {
-      const font = TopicStyle.defaultFontStyle(this);
-      result = font.size;
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getFontSize(this);
   }
 
-  setFontColor(value: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setColor(value);
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setFontColor(value);
-    }
+  setFontColor(value: string | undefined) {
+    const model = this.getModel();
+    model.setFontColor(value);
+
+    this.redraw();
   }
 
-  private _setText(text: string, updateModel?: boolean) {
-    const textShape = this.getTextShape();
-    textShape.setText(text == null ? TopicStyle.defaultText(this) : text);
-
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setText(text);
-    }
-  }
-
-  setText(text: string) {
+  setText(text: string | undefined): void {
     // Avoid empty nodes ...
-    if (!text || $.trim(text).length === 0) {
-      this._setText(null, true);
-    } else {
-      this._setText(text, true);
-    }
+    const modelText = !text || text.trim().length === 0 ? undefined : text;
 
-    this.adjustShapes();
+    const model = this.getModel();
+    model.setText(modelText);
+
+    this.redraw(true);
   }
 
   getText(): string {
     const model = this.getModel();
-    let result = model.getText();
-    if (!$defined(result)) {
-      result = TopicStyle.defaultText(this);
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+
+    const text = model.getText();
+    return text || theme.getText(this);
   }
 
-  setBackgroundColor(color: string): void {
-    this._setBackgroundColor(color, true);
+  setBackgroundColor(color: string | undefined): void {
+    const model = this.getModel();
+    model.setBackgroundColor(color);
+
+    this.redraw(true);
   }
 
-  private _setBackgroundColor(color: string, updateModel: boolean) {
-    const innerShape = this.getInnerShape();
-    innerShape.setFill(color);
+  setConnectionStyle(type: LineType): void {
+    const model = this.getModel();
+    model.setConnectionStyle(type);
 
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.setFill(color);
-    }
+    this.redraw(true);
+  }
 
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setBackgroundColor(color);
-    }
+  setConnectionColor(value: string | undefined): void {
+    const model = this.getModel();
+    model.setConnectionColor(value);
+
+    this.redraw(true);
   }
 
   getBackgroundColor(): string {
     const model = this.getModel();
-    let result = model.getBackgroundColor();
-    if (!$defined(result)) {
-      result = TopicStyle.defaultBackgroundColor(this);
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getBackgroundColor(this);
   }
 
-  /** */
-  setBorderColor(color: string): void {
-    this._setBorderColor(color, true);
-  }
+  setBorderColor(color: string | undefined): void {
+    const model = this.getModel();
+    model.setBorderColor(color);
 
-  private _setBorderColor(color: string, updateModel: boolean): void {
-    const innerShape = this.getInnerShape();
-    innerShape.setAttribute('strokeColor', color);
-
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.setAttribute('strokeColor', color);
-    }
-
-    if ($defined(updateModel) && updateModel) {
-      const model = this.getModel();
-      model.setBorderColor(color);
-    }
+    this.redraw(true);
   }
 
   getBorderColor(): string {
     const model = this.getModel();
-    let result = model.getBorderColor();
-    if (!$defined(result)) {
-      result = TopicStyle.defaultBorderColor(this);
-    }
-    return result;
+    const theme = ThemeFactory.create(model);
+    return theme.getBorderColor(this);
   }
 
-  _buildTopicShape(): ElementClass {
+  private buildTopicShape(): void {
     const groupAttributes = {
       width: 100,
       height: 100,
@@ -608,11 +472,11 @@ abstract class Topic extends NodeGraph {
     // Shape must be build based on the model width ...
     const outerShape = this.getOuterShape();
     const innerShape = this.getInnerShape();
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
 
     // Add to the group ...
     group.append(outerShape);
-    group.append(innerShape);
+    innerShape.appendTo(group);
     group.append(textShape);
 
     // Update figure size ...
@@ -622,18 +486,18 @@ abstract class Topic extends NodeGraph {
     }
 
     const shrinkConnector = this.getShrinkConnector();
-    if ($defined(shrinkConnector)) {
+    if (shrinkConnector) {
       shrinkConnector.addToWorkspace(group);
     }
 
     // Register listeners ...
-    this._registerDefaultListenersToElement(group, this);
+    this.registerDefaultListenersToElement(group, this);
 
     // Set test id
-    group.setTestId(model.getId());
+    group.setTestId(String(model.getId()));
   }
 
-  _registerDefaultListenersToElement(elem: ElementClass, topic: Topic) {
+  private registerDefaultListenersToElement(elem: ElementClass<ElementPeer>, topic: Topic) {
     const mouseOver = function mouseOver() {
       if (topic.isMouseEventsEnabled()) {
         topic.handleMouseOver();
@@ -650,7 +514,7 @@ abstract class Topic extends NodeGraph {
 
     const me = this;
     // Focus events ...
-    elem.addEvent('mousedown', (event) => {
+    elem.addEvent('mousedown', (event: MouseEvent) => {
       const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
       if (!me.isReadOnly()) {
         // Disable topic selection of readOnly mode ...
@@ -669,7 +533,29 @@ abstract class Topic extends NodeGraph {
     });
   }
 
-  /** */
+  setOnFocus(focus: boolean) {
+    if (this.isOnFocus() !== focus) {
+      const theme = ThemeFactory.create(this.getModel());
+      this._onFocus = focus;
+      const outerShape = this.getOuterShape();
+
+      const fillColor = theme.getOuterBackgroundColor(this, focus);
+      const borderColor = theme.getOuterBorderColor(this);
+
+      outerShape.setFill(fillColor);
+      outerShape.setStroke(1, 'solid', borderColor);
+      outerShape.setOpacity(focus ? 1 : 0);
+
+      this.setCursor('move');
+
+      // In any case, always try to hide the editor ...
+      this.closeEditors();
+
+      // Fire event ...
+      this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
+    }
+  }
+
   areChildrenShrunken(): boolean {
     const model = this.getModel();
     return model.areChildrenShrunken() && !this.isCentralTopic();
@@ -686,7 +572,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setChildrenShrunken(value: boolean) {
+  setChildrenShrunken(value: boolean): void {
     // Update Model ...
     const model = this.getModel();
     model.setChildrenShrunken(value);
@@ -698,7 +584,7 @@ abstract class Topic extends NodeGraph {
     }
 
     // Do some fancy animation ....
-    const elements = this._flatten2DElements(this);
+    const elements = this.flatten2DElements(this);
     elements.forEach((elem) => {
       elem.setVisibility(!value, 250);
     });
@@ -706,7 +592,7 @@ abstract class Topic extends NodeGraph {
     EventBus.instance.fireEvent('childShrinked', model);
   }
 
-  getShrinkConnector(): ShirinkConnector | undefined {
+  getShrinkConnector(): ShirinkConnector | null {
     let result = this._connector;
     if (this._connector == null) {
       this._connector = new ShirinkConnector(this);
@@ -729,14 +615,12 @@ abstract class Topic extends NodeGraph {
   }
 
   showTextEditor(text: string) {
-    this._getTopicEventDispatcher().show(this, {
-      text,
-    });
+    this._getTopicEventDispatcher().show(this, text);
   }
 
   getNoteValue(): string {
     const model = this.getModel();
-    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    const notes = model.findFeatureByType('note');
     let result;
     if (notes.length > 0) {
       result = (notes[0] as NoteModel).getText();
@@ -745,11 +629,11 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setNoteValue(value: string) {
+  setNoteValue(value: string): void {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
-    const notes = model.findFeatureByType(TopicFeatureFactory.Note.id);
+    const notes = model.findFeatureByType('note');
 
     if (!$defined(value) && notes.length > 0) {
       const featureId = notes[0].getId();
@@ -759,7 +643,7 @@ abstract class Topic extends NodeGraph {
         text: value,
       });
     } else {
-      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Note.id, {
+      dispatcher.addFeatureToTopic([topicId], 'note', {
         text: value,
       });
     }
@@ -768,7 +652,7 @@ abstract class Topic extends NodeGraph {
   getLinkValue(): string {
     const model = this.getModel();
     // @param {mindplot.model.LinkModel[]} links
-    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    const links = model.findFeatureByType('link');
     let result;
     if (links.length > 0) {
       result = (links[0] as LinkModel).getUrl();
@@ -781,7 +665,7 @@ abstract class Topic extends NodeGraph {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
-    const links = model.findFeatureByType(TopicFeatureFactory.Link.id);
+    const links = model.findFeatureByType('link');
 
     if (!$defined(value)) {
       const featureId = links[0].getId();
@@ -791,7 +675,7 @@ abstract class Topic extends NodeGraph {
         url: value,
       });
     } else {
-      dispatcher.addFeatureToTopic(topicId, TopicFeatureFactory.Link.id, {
+      dispatcher.addFeatureToTopic([topicId], 'link', {
         url: value,
       });
     }
@@ -808,7 +692,7 @@ abstract class Topic extends NodeGraph {
   /**
    * Point: references the center of the rect shape.!!!
    */
-  setPosition(point: Point) {
+  setPosition(point: PositionType): void {
     $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
     // eslint-disable-next-line no-param-reassign
@@ -838,21 +722,21 @@ abstract class Topic extends NodeGraph {
   }
 
   /** */
-  getOutgoingLine(): Line {
+  getOutgoingLine(): ConnectionLine | null {
     return this._outgoingLine;
   }
 
-  getIncomingLines() {
+  getIncomingLines(): ConnectionLine[] {
     const children = this.getChildren();
     return children
       .filter((node) => $defined(node.getOutgoingLine()))
-      .map((node) => node.getOutgoingLine());
+      .map((node) => node.getOutgoingLine()!);
   }
 
-  getOutgoingConnectedTopic(): Topic {
-    let result = null;
+  getOutgoingConnectedTopic(): Topic | null {
+    let result: Topic | null = null;
     const line = this.getOutgoingLine();
-    if ($defined(line)) {
+    if (line) {
       result = line.getTargetTopic();
     }
     return result;
@@ -861,7 +745,7 @@ abstract class Topic extends NodeGraph {
   private _updateConnectionLines(): void {
     // Update this to parent line ...
     const outgoingLine = this.getOutgoingLine();
-    if ($defined(outgoingLine)) {
+    if (outgoingLine) {
       outgoingLine.redraw();
     }
 
@@ -875,8 +759,8 @@ abstract class Topic extends NodeGraph {
 
   setBranchVisibility(value: boolean): void {
     let current: Topic = this;
-    let parent: Topic = this;
-    while (parent != null && !parent.isCentralTopic()) {
+    let parent: Topic | null = this;
+    while (parent && !parent.isCentralTopic()) {
       current = parent;
       parent = current.getParent();
     }
@@ -884,13 +768,13 @@ abstract class Topic extends NodeGraph {
   }
 
   setVisibility(value: boolean, fade = 0): void {
-    this._setTopicVisibility(value, fade);
+    this.setTopicVisibility(value, fade);
 
     // Hide all children...
     this._setChildrenVisibility(value, fade);
 
     // If there there are connection to the node, topic must be hidden.
-    this._setRelationshipLinesVisibility(value, fade);
+    this.setRelationshipLinesVisibility(value, fade);
 
     // If it's connected, the connection must be rendered.
     const outgoingLine = this.getOutgoingLine();
@@ -899,37 +783,34 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  /** */
-  moveToBack(): void {
+  protected moveToBack(): void {
     // Update relationship lines
     this._relationships.forEach((r) => r.moveToBack());
 
     const connector = this.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.moveToBack();
     }
 
     this.get2DElement().moveToBack();
   }
 
-  /** */
-  moveToFront(): void {
+  protected moveToFront(): void {
     this.get2DElement().moveToFront();
     const connector = this.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.moveToFront();
     }
     // Update relationship lines
     this._relationships.forEach((r) => r.moveToFront());
   }
 
-  /** */
   isVisible(): boolean {
     const elem = this.get2DElement();
     return elem.isVisible();
   }
 
-  private _setRelationshipLinesVisibility(value: boolean, fade = 0): void {
+  private setRelationshipLinesVisibility(value: boolean, fade = 0): void {
     this._relationships.forEach((relationship) => {
       const sourceTopic = relationship.getSourceTopic();
       const targetTopic = relationship.getTargetTopic();
@@ -938,20 +819,20 @@ abstract class Topic extends NodeGraph {
       const sourceParent = sourceTopic.getModel().getParent();
       relationship.setVisibility(
         value &&
-          (targetParent == null || !targetParent.areChildrenShrunken()) &&
-          (sourceParent == null || !sourceParent.areChildrenShrunken()),
+          (!targetParent || !targetParent.areChildrenShrunken()) &&
+          (!sourceParent || !sourceParent.areChildrenShrunken()),
         fade,
       );
     });
   }
 
-  private _setTopicVisibility(value: boolean, fade = 0) {
+  private setTopicVisibility(value: boolean, fade = 0) {
     const elem = this.get2DElement();
     elem.setVisibility(value, fade);
 
     if (this.getIncomingLines().length > 0) {
       const connector = this.getShrinkConnector();
-      if ($defined(connector)) {
+      if (connector) {
         connector.setVisibility(value, fade);
       }
     }
@@ -960,20 +841,19 @@ abstract class Topic extends NodeGraph {
     this.getInnerShape().setVisibility(value, fade);
 
     // Hide text shape ...
-    const textShape = this.getTextShape();
-    textShape.setVisibility(this.getShapeType() !== TopicShape.IMAGE ? value : false, fade);
+    const textShape = this.getOrBuildTextShape();
+    textShape.setVisibility(this.getShapeType() !== 'image' ? value : false, fade);
   }
 
-  /** */
   setOpacity(opacity: number): void {
     const elem = this.get2DElement();
     elem.setOpacity(opacity);
 
     const connector = this.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.setOpacity(opacity);
     }
-    const textShape = this.getTextShape();
+    const textShape = this.getOrBuildTextShape();
     textShape.setOpacity(opacity);
   }
 
@@ -985,8 +865,9 @@ abstract class Topic extends NodeGraph {
     const visibility = value ? !model.areChildrenShrunken() : value;
     children.forEach((child) => {
       child.setVisibility(visibility, fade);
+
       const outgoingLine = child.getOutgoingLine();
-      outgoingLine.setVisibility(visibility);
+      outgoingLine?.setVisibility(visibility);
     });
   }
 
@@ -1003,8 +884,6 @@ abstract class Topic extends NodeGraph {
   }
 
   setSize(size: SizeType, force?: boolean): void {
-    $assert(size, 'size can not be null');
-    $assert($defined(size.width), 'size seem not to be a valid element');
     const roundedSize = {
       width: Math.ceil(size.width),
       height: Math.ceil(size.height),
@@ -1014,31 +893,28 @@ abstract class Topic extends NodeGraph {
     const hasSizeChanged =
       oldSize.width !== roundedSize.width || oldSize.height !== roundedSize.height;
     if (hasSizeChanged || force) {
-      NodeGraph.prototype.setSize.call(this, roundedSize);
+      super.setSize(size);
 
       const outerShape = this.getOuterShape();
       const innerShape = this.getInnerShape();
-
-      outerShape.setSize(roundedSize.width + 4, roundedSize.height + 6);
-      innerShape.setSize(roundedSize.width, roundedSize.height);
+      outerShape.setSize(size.width + 6, size.height + 6);
+      innerShape.setSize(size.width, size.height);
 
       // Update the figure position(ej: central topic must be centered) and children position.
-      this._updatePositionOnChangeSize(oldSize, roundedSize);
+      this.updatePositionOnChangeSize(oldSize, size);
 
       if (hasSizeChanged) {
         EventBus.instance.fireEvent('topicResize', {
           node: this.getModel(),
-          size: roundedSize,
+          size,
         });
       }
     }
   }
 
-  protected abstract _updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
-
-  disconnect(workspace: Workspace): void {
+  disconnect(workspace: Canvas): void {
     const outgoingLine = this.getOutgoingLine();
-    if ($defined(outgoingLine)) {
+    if (outgoingLine) {
       $assert(workspace, 'workspace can not be null');
 
       this._outgoingLine = null;
@@ -1050,55 +926,40 @@ abstract class Topic extends NodeGraph {
       // Update model ...
       const childModel = this.getModel();
       childModel.disconnect();
-
       this._parent = null;
 
       // Remove graphical element from the workspace...
       outgoingLine.removeFromWorkspace(workspace);
 
-      // Remove from workspace.
-      EventBus.instance.fireEvent('topicDisconect', this.getModel());
-
-      // Change text based on the current connection ...
-      const model = this.getModel();
-      if (!model.getText()) {
-        const text = this.getText();
-        this._setText(text, false);
-      }
-      if (!model.getFontSize()) {
-        const size = this.getFontSize();
-        this.setFontSize(size, false);
-      }
-
       // Hide connection line?.
       if (targetTopic.getChildren().length === 0) {
         const connector = targetTopic.getShrinkConnector();
-        if ($defined(connector)) {
+        if (connector) {
           connector.setVisibility(false);
-          targetTopic.isCollapsed(false);
         }
       }
+
+      // Remove from workspace.
+      EventBus.instance.fireEvent('topicDisconect', this.getModel());
+
+      this.redraw(true);
     }
   }
 
-  getOrder(): number {
+  getOrder(): number | undefined {
     const model = this.getModel();
     return model.getOrder();
   }
 
-  /** */
-  setOrder(value: number) {
+  setOrder(value: number): void {
     const model = this.getModel();
     model.setOrder(value);
+
+    // In case of drag a node, color change based on the order ...
+    this.redraw();
   }
 
-  /** */
-  connectTo(targetTopic: Topic, workspace: Workspace) {
-    $assert(!this._outgoingLine, 'Could not connect an already connected node');
-    $assert(targetTopic !== this, 'Circular connection are not allowed');
-    $assert(targetTopic, 'Parent Graph can not be null');
-    $assert(workspace, 'Workspace can not be null');
-
+  connectTo(targetTopic: Topic, workspace: Canvas): void {
     // Connect Graphical Nodes ...
     targetTopic.append(this);
     this._parent = targetTopic;
@@ -1109,7 +970,7 @@ abstract class Topic extends NodeGraph {
     childModel.connectTo(targetModel);
 
     // Create a connection line ...
-    const outgoingLine = new ConnectionLine(this, targetTopic);
+    const outgoingLine = this.createConnectionLine(targetTopic);
     outgoingLine.setVisibility(false);
 
     this._outgoingLine = outgoingLine;
@@ -1118,29 +979,14 @@ abstract class Topic extends NodeGraph {
     // Update figure is necessary.
     this.updateTopicShape(targetTopic);
 
-    // Change text based on the current connection ...
-    const model = this.getModel();
-    if (!model.getText()) {
-      const text = this.getText();
-      this._setText(text, false);
-    }
-    if (!model.getFontSize()) {
-      const size = this.getFontSize();
-      this.setFontSize(size, false);
-    }
-    this.getTextShape();
-
     // Display connection node...
     const connector = targetTopic.getShrinkConnector();
-    if ($defined(connector)) {
+    if (connector) {
       connector.setVisibility(true);
     }
 
-    // Redraw line ...
-    outgoingLine.redraw();
-
     // Fire connection event ...
-    if (this.isInWorkspace()) {
+    if (this._isInWorkspace) {
       EventBus.instance.fireEvent('topicConnected', {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
@@ -1148,20 +994,23 @@ abstract class Topic extends NodeGraph {
     }
   }
 
-  abstract updateTopicShape(targetTopic: Topic);
+  private createConnectionLine(targetTopic: Topic): ConnectionLine {
+    const type: LineType = targetTopic.getConnectionStyle();
+    return new ConnectionLine(this, targetTopic, type);
+  }
 
-  append(child: Topic) {
+  abstract updateTopicShape(targetTopic: Topic): void;
+
+  append(child: Topic): void {
     const children = this.getChildren();
     children.push(child);
   }
 
-  /** */
-  removeChild(child: Topic) {
+  removeChild(child: Topic): void {
     const children = this.getChildren();
     this._children = children.filter((c) => c !== child);
   }
 
-  /** */
   getChildren(): Topic[] {
     let result = this._children;
     if (!$defined(result)) {
@@ -1171,48 +1020,43 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  removeFromWorkspace(workspace: Workspace) {
+  removeFromWorkspace(workspace: Canvas): void {
     const elem2d = this.get2DElement();
     workspace.removeChild(elem2d);
     const line = this.getOutgoingLine();
-    if ($defined(line)) {
+    if (line) {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
     EventBus.instance.fireEvent('topicRemoved', this.getModel());
   }
 
-  addToWorkspace(workspace: Workspace) {
+  addToWorkspace(workspace: Canvas): void {
     const elem = this.get2DElement();
     workspace.append(elem);
-    if (!this.isInWorkspace()) {
+    if (!this._isInWorkspace) {
       if (!this.isCentralTopic()) {
         EventBus.instance.fireEvent('topicAdded', this.getModel());
       }
 
-      if (this.getModel().isConnected()) {
+      const outgoingTopic = this.getOutgoingConnectedTopic();
+      if (this.getModel().isConnected() && outgoingTopic) {
         EventBus.instance.fireEvent('topicConnected', {
-          parentNode: this.getOutgoingConnectedTopic().getModel(),
+          parentNode: outgoingTopic.getModel(),
           childNode: this.getModel(),
         });
       }
     }
     this._isInWorkspace = true;
-    this.adjustShapes();
+    this.redraw();
   }
 
-  /** */
-  isInWorkspace(): boolean {
-    return this._isInWorkspace;
-  }
-
-  /** */
-  createDragNode(layoutManager: LayoutManager) {
+  createDragNode(layoutManager: LayoutManager): DragTopic {
     const result = super.createDragNode(layoutManager);
 
     // Is the node already connected ?
     const targetTopic = this.getOutgoingConnectedTopic();
-    if ($defined(targetTopic)) {
+    if (targetTopic) {
       result.connectTo(targetTopic);
       result.setVisibility(false);
     }
@@ -1223,69 +1067,140 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  adjustShapes(): void {
+  private redrawConnection(): boolean {
+    let result = false;
     if (this._isInWorkspace) {
-      const textShape = this.getTextShape();
-      if (this.getShapeType() !== TopicShape.IMAGE) {
-        // Calculate topic size and adjust elements ...
-        const textWidth = textShape.getWidth();
-        const textHeight = textShape.getHeight();
-        const padding = TopicStyle.getInnerPadding(this);
+      // Adjust connection line if there is a change in the parent...
+      if (this._outgoingLine) {
+        // Has the style change ?
+        const connStyleChanged =
+          this._outgoingLine.getLineType() !== this.getParent()!.getConnectionStyle();
 
-        // Adjust icons group based on the font size ...
-        const iconGroup = this.getOrBuildIconGroup();
-        const fontHeight = this.getTextShape().getFontHeight();
-        const iconHeight = ICON_SCALING_FACTOR * fontHeight;
-        iconGroup.seIconSize(iconHeight, iconHeight);
+        if (connStyleChanged) {
+          // Todo: Review static reference  ...
+          const workspace = designer.getWorkSpace();
+          this._outgoingLine.removeFromWorkspace(workspace);
 
-        // Calculate size and adjust ...
-        const topicHeight = Math.max(iconHeight, textHeight) + padding * 2;
-        const textIconSpacing = Math.round(fontHeight / 4);
-        const iconGroupWith = iconGroup.getSize().width;
-        const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
+          const targetTopic = this.getOutgoingConnectedTopic()!;
+          this._outgoingLine = this.createConnectionLine(targetTopic);
+          this._outgoingLine.setVisibility(this.isVisible());
 
-        this.setSize(
-          {
-            width: topicWith,
-            height: topicHeight,
-          },
-          false,
-        );
+          workspace.append(this._outgoingLine);
+          result = true;
+        }
 
-        // Adjust all topic elements positions ...
-        const yPosition = Math.round((topicHeight - textHeight) / 2);
-        iconGroup.setPosition(padding, yPosition);
-        textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
-      } else {
-        // In case of images, the size is fixed ...
-        const size = this.getModel().getImageSize();
-        this.setSize(size, false);
+        this._outgoingLine.redraw();
+        result = true;
+      }
+    }
+    return result;
+  }
+
+  redraw(redrawChildren = false): void {
+    if (this._isInWorkspace) {
+      const theme = ThemeFactory.create(this.getModel());
+      const textShape = this.getOrBuildTextShape();
+
+      // Needs to update inner shape ...
+      const shapeType = this.getShapeType();
+      if (shapeType !== this._innerShape?.getShapeType()) {
+        this.redrawShapeType();
+      }
+
+      // Update font ...
+      const fontColor = this.getFontColor();
+      textShape.setColor(fontColor);
+
+      const fontSize = this.getFontSize();
+      textShape.setFontSize(fontSize);
+
+      const fontWeight = this.getFontWeight();
+      textShape.setWeight(fontWeight);
+
+      const fontStyle = this.getFontStyle();
+      textShape.setStyle(fontStyle);
+
+      const fontFamily = this.getFontFamily();
+      textShape.setFontName(fontFamily);
+
+      const text = this.getText();
+      textShape.setText(text);
+
+      // Update outer shape style ...
+      const outerShape = this.getOuterShape();
+      const outerFillColor = theme.getOuterBackgroundColor(this, this.isOnFocus());
+      const outerBorderColor = theme.getOuterBorderColor(this);
+
+      outerShape.setFill(outerFillColor);
+      outerShape.setStroke(1, 'solid', outerBorderColor);
+
+      // Calculate topic size and adjust elements ...
+      const textWidth = textShape.getShapeWidth();
+      const textHeight = textShape.getShapeHeight();
+      const padding = theme.getInnerPadding(this);
+
+      // Adjust icons group based on the font size ...
+      const iconGroup = this.getOrBuildIconGroup();
+      const fontHeight = textShape.getFontHeight();
+      const iconHeight = ICON_SCALING_FACTOR * fontHeight;
+      iconGroup.seIconSize(iconHeight, iconHeight);
+
+      // Calculate size and adjust ...
+      const topicHeight = textHeight + padding * 2;
+      const textIconSpacing = fontHeight / 50;
+      const iconGroupWith = iconGroup.getSize().width;
+      const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
+
+      // Update connections ...
+      const changed = this.redrawConnection();
+      this.setSize({ width: topicWith, height: topicHeight }, changed);
+
+      // Adjust all topic elements positions ...
+      const yPosition = (topicHeight - textHeight) / 2;
+      iconGroup.setPosition(padding, yPosition - yPosition / 4);
+      textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
+
+      // Update topic color ...
+      const borderColor = this.getBorderColor();
+      this.getInnerShape().setStroke(null, 'solid', borderColor);
+
+      const bgColor = this.getBackgroundColor();
+      this.getInnerShape().setFill(bgColor);
+
+      // Force the repaint in case that the main topic color has changed.
+      if (this.getParent()) {
+        this._connector!.setColor(borderColor);
+
+        if (this.getParent()?.isCentralTopic()) {
+          this._outgoingLine?.redraw();
+        }
+      }
+
+      if (redrawChildren) {
+        this.getChildren().forEach((t) => t.redraw(redrawChildren));
       }
     }
   }
 
-  private _flatten2DElements(topic: Topic): (Topic | Relationship)[] {
-    let result = [];
-
+  private flatten2DElements(topic: Topic): (Topic | Relationship | ConnectionLine)[] {
+    const result: (Topic | Relationship | ConnectionLine)[] = [];
     const children = topic.getChildren();
     children.forEach((child) => {
       result.push(child);
-      result.push(child.getOutgoingLine());
-
+      const line = child.getOutgoingLine();
+      if (line) {
+        result.push(line);
+      }
       const relationships = child.getRelationships();
-      result = result.concat(relationships);
+      result.push(...relationships);
 
       if (!child.areChildrenShrunken()) {
-        const innerChilds = this._flatten2DElements(child);
-        result = result.concat(innerChilds);
+        const innerChilds = this.flatten2DElements(child);
+        result.push(...innerChilds);
       }
     });
     return result;
   }
-
-  abstract workoutOutgoingConnectionPoint(position: Point): Point;
-
-  abstract workoutIncomingConnectionPoint(position: Point): Point;
 
   isChildTopic(childTopic: Topic): boolean {
     let result = this.getId() === childTopic.getId();
@@ -1302,9 +1217,11 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  isCentralTopic(): boolean {
-    return this.getModel().getType() === 'CentralTopic';
-  }
+  abstract workoutOutgoingConnectionPoint(position: PositionType): PositionType;
+
+  abstract workoutIncomingConnectionPoint(position: PositionType): PositionType;
+
+  protected abstract updatePositionOnChangeSize(oldSize: SizeType, roundedSize: SizeType): void;
 }
 
 export default Topic;

@@ -15,7 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
+import React, { ReactElement } from 'react';
+import { useIntl } from 'react-intl';
 import ActionConfig from '../../classes/action/action-config';
 import Capability from '../../classes/action/capability';
 import Model from '../../classes/model/editor';
@@ -27,11 +28,12 @@ type EditorToolbarProps = {
   capability: Capability;
 };
 
-const EditorToolbar = ({ model, capability }: EditorToolbarProps) => {
+const EditorToolbar = ({ model, capability }: EditorToolbarProps): ReactElement => {
   let config: ActionConfig[] | undefined;
+  const intl = useIntl();
 
   if (!capability.isHidden('edition-toolbar') && model?.isMapLoadded()) {
-    config = buildEditorPanelConfig(model);
+    config = buildEditorPanelConfig(model, intl);
   }
 
   return <span>{config ? <Toolbar configurations={config} /> : <></>}</span>;

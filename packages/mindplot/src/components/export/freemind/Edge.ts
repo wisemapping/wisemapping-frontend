@@ -1,19 +1,36 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 export default class Edge {
-  protected COLOR: string;
+  protected COLOR: string | undefined;
 
-  protected STYLE: string;
+  protected STYLE: string | undefined;
 
-  protected WIDTH: string;
+  protected WIDTH: string | undefined;
 
-  getColor(): string {
+  getColor(): string | undefined {
     return this.COLOR;
   }
 
-  getStyle(): string {
+  getStyle(): string | undefined {
     return this.STYLE;
   }
 
-  getWidth(): string {
+  getWidth(): string | undefined {
     return this.WIDTH;
   }
 
@@ -32,10 +49,15 @@ export default class Edge {
   toXml(document: Document): HTMLElement {
     // Set node attributes
     const edgeElem = document.createElement('edge');
-
-    edgeElem.setAttribute('COLOR', this.COLOR);
-    if (this.STYLE) edgeElem.setAttribute('STYLE', this.STYLE);
-    if (this.WIDTH) edgeElem.setAttribute('WIDTH', this.WIDTH);
+    if (this.COLOR) {
+      edgeElem.setAttribute('COLOR', this.COLOR);
+    }
+    if (this.STYLE) {
+      edgeElem.setAttribute('STYLE', this.STYLE);
+    }
+    if (this.WIDTH) {
+      edgeElem.setAttribute('WIDTH', this.WIDTH);
+    }
 
     return edgeElem;
   }

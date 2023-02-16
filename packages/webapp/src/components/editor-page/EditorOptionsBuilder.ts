@@ -12,10 +12,7 @@ class EditorOptionsBuilder {
 
     if (!AppConfig.isDevelopEnv()) {
       options = {
-        zoom:
-          globalThis.userOptions?.zoom != undefined
-            ? Number.parseFloat(globalThis?.userOptions?.zoom as string)
-            : 0.8,
+        zoom: globalThis.userOptions?.zoom ? globalThis?.userOptions?.zoom : 0.8,
         locked: globalThis.mindmapLocked,
         lockedMsg: globalThis.mindmapLockedMsg,
         mapTitle: globalThis.mapTitle,

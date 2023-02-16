@@ -24,14 +24,14 @@ class MapInfoImpl implements MapInfo {
   private title: string;
   private zoom: number;
   private locked: boolean;
-  private lockedMsg: string;
+  private lockedMsg: string | undefined;
 
   constructor(
     id: number,
     client: Client,
     title: string,
     locked: boolean,
-    lockedMsg: string,
+    lockedMsg: string | undefined,
     zoom: number,
   ) {
     this.id = id;
@@ -62,7 +62,7 @@ class MapInfoImpl implements MapInfo {
     return this.locked;
   }
 
-  getLockedMessage(): string {
+  getLockedMessage(): string | undefined {
     return this.lockedMsg;
   }
 

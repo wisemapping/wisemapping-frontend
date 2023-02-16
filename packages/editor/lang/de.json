@@ -11,9 +11,7 @@
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
-    "editor.edit-mobile": {
-        "defaultMessage": "Hinweis für Mobilgeräte."
-    },
+
     "editor.edit-description-mobile": {
         "defaultMessage": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
@@ -77,8 +75,14 @@
     "link.placeholder": {
         "defaultMessage": "https://www.example.com"
     },
-    "note.label": {
+    "editor-panel.note-panel-title": {
         "defaultMessage": "Notiz"
+    },
+    "editor-panel.icon-title": {
+        "defaultMessage": "Symbol"
+    },
+    "editor-panel.link-panel-title": {
+        "defaultMessage": "Link"
     },
     "zoom-panel.tooltip-keyboard": {
         "defaultMessage": "Tastatürkürzel"
@@ -93,7 +97,7 @@
         "defaultMessage": "Zoom zu passen"
     },
     "editor-panel.tooltip-add-icon": {
-        "defaultMessage":"Symbol hinzufügen"
+        "defaultMessage": "Symbol hinzufügen"
     },
     "editor-panel.tooltip-add-link": {
         "defaultMessage": "Link hinzufügen"
@@ -112,9 +116,6 @@
     },
     "editor-panel.tooltip-topic-border-color": {
         "defaultMessage": "Randfarbe"
-    },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Füllfarbe"
     },
     "editor-panel.tooltip-topic-font-bigger": {
         "defaultMessage": "Größer"
@@ -150,72 +151,120 @@
         "defaultMessage": "Themenstil"
     },
     "shortcut-help-pane.action": {
-      "defaultMessage": "Aktion"
+        "defaultMessage": "Aktion"
     },
     "shortcut-help-pane.add-child": {
-      "defaultMessage": "Kinderthema hinzufügen"
+        "defaultMessage": "Kinderthema hinzufügen"
     },
     "shortcut-help-pane.add-link": {
-      "defaultMessage": "Link hinzufügen"
+        "defaultMessage": "Link hinzufügen"
     },
     "shortcut-help-pane.add-note": {
-      "defaultMessage": "Notiz hinzufügen"
+        "defaultMessage": "Notiz hinzufügen"
     },
     "shortcut-help-pane.add-sibling": {
-      "defaultMessage": "Geschwisterthema hinzufügen"
+        "defaultMessage": "Geschwisterthema hinzufügen"
     },
     "shortcut-help-pane.cancel-text-changes": {
-      "defaultMessage": "Textänderungen abbrechen"
+        "defaultMessage": "Textänderungen abbrechen"
     },
     "shortcut-help-pane.change-font-bold": {
-      "defaultMessage": "Text in fett gedruckt"
+        "defaultMessage": "Text in fett gedruckt"
     },
     "shortcut-help-pane.change-font-italic": {
-      "defaultMessage": "Text in Kursivschrift ändern"
+        "defaultMessage": "Text in Kursivschrift ändern"
     },
     "shortcut-help-pane.collapse-children": {
-      "defaultMessage": "Kinder zusammenbrechen"
+        "defaultMessage": "Kinder zusammenbrechen"
     },
     "shortcut-help-pane.copy-and-text": {
-      "defaultMessage": "Themen kopieren und einfügen"
+        "defaultMessage": "Themen kopieren und einfügen"
     },
     "shortcut-help-pane.delete-topic": {
-      "defaultMessage":"Thema löschen"
+        "defaultMessage": "Thema löschen"
     },
     "shortcut-help-pane.deselect-all-topics": {
-      "defaultMessage": "Alle Themen auswählen"
+        "defaultMessage": "Alle Themen auswählen"
     },
     "shortcut-help-pane.edit-multiline": {
-      "defaultMessage": "Multi-Line-Thementext hinzufügen"
+        "defaultMessage": "Multi-Line-Thementext hinzufügen"
     },
     "shortcut-help-pane.edit-topic": {
-      "defaultMessage": "Thementext bearbeiten"
+        "defaultMessage": "Thementext bearbeiten"
     },
     "shortcut-help-pane.edit-topic-key": {
-      "defaultMessage": "Fang einfach an zu tippen"
+        "defaultMessage": "Fang einfach an zu tippen"
     },
     "shortcut-help-pane.navigation": {
-      "defaultMessage": "navigation"
+        "defaultMessage": "navigation"
     },
     "shortcut-help-pane.navigation-keys": {
-      "defaultMessage": "Pfeiltasten"
+        "defaultMessage": "Pfeiltasten"
     },
     "shortcut-help-pane.redo": {
-      "defaultMessage": "redoEdition"
+        "defaultMessage": "redoEdition"
     },
     "shortcut-help-pane.save-changes": {
-      "defaultMessage": "Änderungen speichern"
+        "defaultMessage": "Änderungen speichern"
     },
     "shortcut-help-pane.select-all-topics": {
-      "defaultMessage": "Wählen Sie alle Themen aus"
+        "defaultMessage": "Wählen Sie alle Themen aus"
     },
     "shortcut-help-pane.select-topics": {
-      "defaultMessage": "Wählen Sie mehrere Themen aus"
+        "defaultMessage": "Wählen Sie mehrere Themen aus"
     },
     "shortcut-help-pane.select-topics-keys": {
-      "defaultMessage": "Mausklick"
+        "defaultMessage": "Mausklick"
     },
     "shortcut-help-pane.undo": {
-      "defaultMessage": "Rückgängerausgabe"
+        "defaultMessage": "Rückgängerausgabe"
+    },
+    "icon-picker.show-images": {
+        "defaultMessage": "Bilder anzeigen"
+    },
+    "editor-panel.tooltip-connection-style-polyline": {
+        "defaultMessage": "Polylinie"
+    },
+    "editor-panel.tooltip-connection-style-polyline-curved": {
+        "defaultMessage": "Gebogene Polylinie"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Thementext überschreiben"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Beginnen Sie mit dem Schreiben über das ausgewählte Thema"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Farbe"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Standardfarbe"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Verbindungsstil"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Weite Kurve"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Schlanke Kurve"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Standardrandfarbe"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Füllfarbe"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Standardfüllfarbe"
+    },
+    "action.delete": {
+        "defaultMessage": "Löschen"
+    },
+    "editor-panel.tooltip-topic-font-color-default": {
+        "defaultMessage": "Farbe defekt"
+    },
+    "shortcut-help-pane.drag-disconnect": {
+        "defaultMessage": "Color de relleno por defekto"
     }
 }

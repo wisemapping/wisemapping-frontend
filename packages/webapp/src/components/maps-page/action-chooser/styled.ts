@@ -1,7 +1,7 @@
 import MenuItem from '@mui/material/MenuItem';
-import withStyles from '@mui/styles/withStyles';
+import withEmotionStyles from '../../HOCs/withEmotionStyles';
 
-export const StyledMenuItem = withStyles({
+export const StyledMenuItem = withEmotionStyles({
   root: {
     width: '300px',
   },

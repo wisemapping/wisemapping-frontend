@@ -3,7 +3,7 @@
     "src/**/*"
   ],
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": false,
@@ -13,6 +13,7 @@
     "target": "es6",
     "allowJs": true,
     "esModuleInterop": true,
+    "strictNullChecks": false,
     "declaration": true,
     "rootDirs": [
       "src",

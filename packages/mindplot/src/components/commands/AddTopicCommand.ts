@@ -23,14 +23,13 @@ import NodeModel from '../model/NodeModel';
 class AddTopicCommand extends Command {
   private _models: NodeModel[];
 
-  private _parentsIds: number[];
+  private _parentsIds: number[] | null;
 
   /**
    * @classdesc This command class handles do/undo of adding one or multiple topics to
    * the mindmap.
    */
-  constructor(models: NodeModel[], parentTopicsId: number[]) {
-    $assert(models, 'models can not be null');
+  constructor(models: NodeModel[], parentTopicsId: number[] | null) {
     $assert(
       parentTopicsId == null || parentTopicsId.length === models.length,
       'parents and models must have the same size',
@@ -42,14 +41,13 @@ class AddTopicCommand extends Command {
   }
 
   execute(commandContext: CommandContext) {
-    const me = this;
     this._models.forEach((model, index) => {
       // Add a new topic ...
       const topic = commandContext.createTopic(model);
 
       // Connect to topic ...
-      if (me._parentsIds) {
-        const parentId = me._parentsIds[index];
+      if (this._parentsIds) {
+        const parentId = this._parentsIds[index];
         if ($defined(parentId)) {
           const parentTopic = commandContext.findTopics([parentId])[0];
           commandContext.connect(topic, parentTopic);
@@ -70,7 +68,7 @@ class AddTopicCommand extends Command {
 
   undoExecute(commandContext: CommandContext) {
     // Delete disconnected the nodes. Create a copy of the topics ...
-    const clonedModel = [];
+    const clonedModel: NodeModel[] = [];
     this._models.forEach((model) => {
       clonedModel.push(model.clone());
     });

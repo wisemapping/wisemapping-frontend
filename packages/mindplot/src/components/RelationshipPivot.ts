@@ -15,16 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { CurvedLine, Arrow, Point } from '@wisemapping/web2d';
-import { $assert } from '@wisemapping/core-js';
+import { CurvedLine, Arrow } from '@wisemapping/web2d';
 import Relationship from './Relationship';
 import Shape from './util/Shape';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import { Designer } from '..';
 import Topic from './Topic';
+import PositionType from './PositionType';
 
 class RelationshipPivot {
-  private _workspace: Workspace;
+  private _canvas: Canvas;
 
   private _designer: Designer;
 
@@ -32,69 +32,63 @@ class RelationshipPivot {
 
   private _onClickEvent: (event: MouseEvent) => void;
 
-  private _onTopicClick: (event: MouseEvent) => void;
+  private _onTopicClick: (event: MouseEvent, targetTopic: Topic) => void;
 
-  private _sourceTopic: Topic;
+  private _sourceTopic: Topic | null;
 
-  private _pivot: CurvedLine;
+  private _pivot: CurvedLine | null;
 
-  private _startArrow: Arrow;
+  private _startArrow: Arrow | null;
 
-  constructor(workspace: Workspace, designer: Designer) {
-    $assert(workspace, 'workspace can not be null');
-    $assert(designer, 'designer can not be null');
-    this._workspace = workspace;
+  constructor(canvas: Canvas, designer: Designer) {
+    this._canvas = canvas;
     this._designer = designer;
 
-    this._mouseMoveEvent = this._mouseMove.bind(this);
-    this._onClickEvent = this._cleanOnMouseClick.bind(this);
+    this._mouseMoveEvent = this.mouseMoveHandler.bind(this);
+    this._onClickEvent = this.cleanOnMouseClick.bind(this);
     this._onTopicClick = this._connectOnFocus.bind(this);
+    this._sourceTopic = null;
+    this._pivot = null;
+    this._startArrow = null;
   }
 
-  start(sourceTopic: Topic, targetPos: Point) {
-    $assert(sourceTopic, 'sourceTopic can not be null');
-    $assert(targetPos, 'targetPos can not be null');
-
+  start(sourceTopic: Topic, targetPos: PositionType): void {
     this.dispose();
     this._sourceTopic = sourceTopic;
-    if (sourceTopic != null) {
-      this._workspace.enableWorkspaceEvents(false);
+    this._canvas.enableWorkspaceEvents(false);
 
-      const sourcePos = sourceTopic.getPosition();
-      const strokeColor = Relationship.getStrokeColor();
+    const sourcePos = sourceTopic.getPosition();
+    const strokeColor = Relationship.getStrokeColor();
 
-      this._pivot = new CurvedLine();
-      this._pivot.setStyle(CurvedLine.SIMPLE_LINE);
+    this._pivot = new CurvedLine();
+    const fromPos = this._calculateFromPosition(sourcePos);
+    this._pivot.setFrom(fromPos.x, fromPos.y);
 
-      const fromPos = this._calculateFromPosition(sourcePos);
-      this._pivot.setFrom(fromPos.x, fromPos.y);
+    this._pivot.setTo(targetPos.x, targetPos.y);
+    this._pivot.setStroke(2, 'solid', strokeColor);
+    this._pivot.setDashed(4, 2);
 
-      this._pivot.setTo(targetPos.x, targetPos.y);
-      this._pivot.setStroke(2, 'solid', strokeColor);
-      this._pivot.setDashed(4, 2);
+    this._startArrow = new Arrow();
+    this._startArrow.setStrokeColor(strokeColor);
+    this._startArrow.setStrokeWidth(2);
+    this._startArrow.setFrom(sourcePos.x, sourcePos.y);
 
-      this._startArrow = new Arrow();
-      this._startArrow.setStrokeColor(strokeColor);
-      this._startArrow.setStrokeWidth(2);
-      this._startArrow.setFrom(sourcePos.x, sourcePos.y);
+    this._canvas.append(this._pivot);
+    this._canvas.append(this._startArrow);
 
-      this._workspace.append(this._pivot);
-      this._workspace.append(this._startArrow);
+    this._canvas.addEvent('mousemove', this._mouseMoveEvent);
+    this._canvas.addEvent('click', this._onClickEvent);
 
-      this._workspace.addEvent('mousemove', this._mouseMoveEvent);
-      this._workspace.addEvent('click', this._onClickEvent);
-
-      // Register focus events on all topics ...
-      const model = this._designer.getModel();
-      const topics = model.getTopics();
-      topics.forEach((topic) => {
-        topic.addEvent('ontfocus', this._onTopicClick);
-      });
-    }
+    // Register focus events on all topics ...
+    const model = this._designer.getModel();
+    const topics = model.getTopics();
+    topics.forEach((topic) => {
+      topic.addEvent('ontfocus', this._onTopicClick);
+    });
   }
 
   dispose(): void {
-    const workspace = this._workspace;
+    const workspace = this._canvas;
 
     if (this._isActive()) {
       workspace.removeEvent('mousemove', this._mouseMoveEvent);
@@ -107,8 +101,12 @@ class RelationshipPivot {
         topic.removeEvent('ontfocus', this._onTopicClick);
       });
 
-      workspace.removeChild(this._pivot);
-      workspace.removeChild(this._startArrow);
+      if (this._pivot) {
+        workspace.removeChild(this._pivot);
+      }
+      if (this._startArrow) {
+        workspace.removeChild(this._startArrow);
+      }
       workspace.enableWorkspaceEvents(true);
 
       this._sourceTopic = null;
@@ -117,55 +115,56 @@ class RelationshipPivot {
     }
   }
 
-  _mouseMove(event: MouseEvent): boolean {
-    const screen = this._workspace.getScreenManager();
+  private mouseMoveHandler(event: MouseEvent): boolean {
+    const screen = this._canvas.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
     // Leave the arrow a couple of pixels away from the cursor.
-    const sourcePosition = this._sourceTopic.getPosition();
+    const sourcePosition = this._sourceTopic!.getPosition();
     const gapDistance = Math.sign(pos.x - sourcePosition.x) * 5;
 
     const sPos = this._calculateFromPosition(pos);
-    this._pivot.setFrom(sPos.x, sPos.y);
+    this._pivot!.setFrom(sPos.x, sPos.y);
 
     // Update target position ...
-    this._pivot.setTo(pos.x - gapDistance, pos.y);
+    this._pivot!.setTo(pos.x - gapDistance, pos.y);
 
-    const controlPoints = this._pivot.getControlPoints();
-    this._startArrow.setFrom(pos.x - gapDistance, pos.y);
-    this._startArrow.setControlPoint(controlPoints[1]);
+    const controlPoints = this._pivot!.getControlPoints();
+    this._startArrow!.setFrom(pos.x - gapDistance, pos.y);
+    this._startArrow!.setControlPoint(controlPoints[1]);
 
     event.stopPropagation();
     return false;
   }
 
-  _cleanOnMouseClick(event: MouseEvent): void {
+  private cleanOnMouseClick(event: MouseEvent): void {
     // The user clicks on a desktop on in other element that is not a node.
     this.dispose();
     event.stopPropagation();
   }
 
-  private _calculateFromPosition(toPosition: Point): Point {
+  private _calculateFromPosition(toPosition: PositionType): PositionType {
     // Calculate origin position ...
-    let sourcePosition = this._sourceTopic.getPosition();
-    if (this._sourceTopic.getType() === 'CentralTopic') {
-      sourcePosition = Shape.workoutIncomingConnectionPoint(this._sourceTopic, toPosition);
+    const sourceTopic = this._sourceTopic!;
+    let sourcePosition = this._sourceTopic!.getPosition();
+    if (sourceTopic!.getType() === 'CentralTopic') {
+      sourcePosition = Shape.workoutIncomingConnectionPoint(sourceTopic, toPosition);
     }
     const controlPoint = Shape.calculateDefaultControlPoints(sourcePosition, toPosition);
-
-    const spoint = new Point();
-    spoint.x = parseInt(controlPoint[0].x, 10) + sourcePosition.x;
-    spoint.y = parseInt(controlPoint[0].y, 10) + sourcePosition.y;
-    return Shape.calculateRelationShipPointCoordinates(this._sourceTopic, spoint);
+    const point = {
+      x: controlPoint[0].x + sourcePosition.x,
+      y: controlPoint[0].y + sourcePosition.y,
+    };
+    return Shape.calculateRelationShipPointCoordinates(sourceTopic, point);
   }
 
-  private _connectOnFocus(event: string, targetTopic: Topic): void {
+  private _connectOnFocus(event: MouseEvent, targetTopic: Topic): void {
     const sourceTopic = this._sourceTopic;
     const mindmap = this._designer.getMindmap();
 
     // Avoid circular connections ...
-    if (targetTopic.getId() !== sourceTopic.getId()) {
-      const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic.getId());
+    if (targetTopic.getId() !== sourceTopic!.getId()) {
+      const relModel = mindmap.createRelationship(targetTopic.getId(), sourceTopic!.getId());
       this._designer.getActionDispatcher().addRelationship(relModel);
     }
     this.dispose();

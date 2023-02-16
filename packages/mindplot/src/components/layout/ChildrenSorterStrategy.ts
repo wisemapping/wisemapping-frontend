@@ -20,21 +20,28 @@ import Node from './Node';
 import PositionType from '../PositionType';
 
 abstract class ChildrenSorterStrategy {
-  abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node);
+  abstract computeChildrenIdByHeights(treeSet: RootedTreeSet, node: Node): Map<number, number>;
 
-  abstract computeOffsets(treeSet: RootedTreeSet, node: Node);
+  abstract computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType>;
 
-  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order: number): void;
+  abstract insert(treeSet: RootedTreeSet, parent: Node, child: Node, order?: number): void;
 
   abstract detach(treeSet: RootedTreeSet, node: Node): void;
 
-  abstract predict(treeSet: RootedTreeSet, parent, node: Node, position: PositionType);
+  abstract predict(
+    treeSet: RootedTreeSet,
+    parent: Node,
+    node: Node | null,
+    position: PositionType | null,
+  ): void;
 
-  abstract verify(treeSet: RootedTreeSet, node: Node);
+  abstract verify(treeSet: RootedTreeSet, node: Node): void;
 
   abstract getChildDirection(treeSet: RootedTreeSet, node: Node): 1 | -1;
 
   abstract toString(): string;
+
+  abstract getVerticalPadding(): number;
 }
 
 export default ChildrenSorterStrategy;

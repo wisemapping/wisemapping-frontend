@@ -263,6 +263,33 @@
     "info.title": {
         "defaultMessage": "Información"
     },
+    "label.add-button": {
+        "defaultMessage": "Agregar etiqueta"
+    },
+    "label.add-for": {
+        "defaultMessage": "Editando etiquetas para el mapa:"
+    },
+    "label.add-placeholder": {
+        "defaultMessage": "Título"
+    },
+    "label.change-color": {
+        "defaultMessage": "Cambiar el color"
+    },
+    "label.delete-description": {
+        "defaultMessage": "será borrado de todos los mapas a los que se encuentra asociado. Desea continuar?"
+    },
+    "label.delete-title": {
+        "defaultMessage": "Confirmación"
+    },
+    "label.description": {
+        "defaultMessage": "Usa las etiquetas para organizar tus mapas."
+    },
+    "label.maps-count": {
+        "defaultMessage": "{count} mapas"
+    },
+    "label.title": {
+        "defaultMessage": "Agregar etiqueta"
+    },
     "language.change": {
         "defaultMessage": "Cambiar idioma"
     },
@@ -488,5 +515,47 @@
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Regístrese para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
-    }
+    },
+    "dialog.loading": {
+      "defaultMessage": "Cargando ..."
+    },
+	"registration.google.button": {
+		"defaultMessage": "Regístrate con Google"
+	},
+	"login.google.button": {
+		"defaultMessage": "Ingresar con Google"
+	},
+	"registration.division": {
+		"defaultMessage": "ó"
+	},
+	"login.division": {
+		"defaultMessage": "ó"
+	},
+	"registration.callback.confirm.title": {
+	  "defaultMessage": "Confirmación"
+	},
+	"registration.callback.waiting.title": {
+	  "defaultMessage": "Finalizando ..."
+	},
+	"registration.callback.confirm.description": {
+	  "defaultMessage": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de Google con esa cuenta de WiseMapping?"
+	},
+	"registration.callback.waiting.description": {
+	  "defaultMessage": "Por favor espera mientras validamos tu identidad"
+	},
+	"registation.callback.error.message": {
+	  "defaultMessage": "Ocurrió un error al validar tu identidad con Google, puedes volver a intentarlo desde la página de inicio de sesión"
+	},
+	"registration.callback.back": {
+	  "defaultMessage": "Volver"
+	},
+	"registration.callback.sync": {
+	  "defaultMessage": "Sincronizar cuenta"
+	},
+	"forgot.oauth.message": {
+	  "defaultMessage": "No necesitas contraseña, por favor ingresa usando Google"
+	},
+	"forgot.oauth.back": {
+	  "defaultMessage": "Volver"
+	}
 }

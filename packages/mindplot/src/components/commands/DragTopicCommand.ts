@@ -15,33 +15,25 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
+import { $defined } from '@wisemapping/core-js';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
+import PositionType from '../PositionType';
 import Topic from '../Topic';
 
 class DragTopicCommand extends Command {
   private _topicsId: number;
 
-  private _parentId: number;
+  private _parentId: number | null;
 
-  private _position: Point;
+  private _position: PositionType;
 
-  private _order: number;
+  private _order: number | undefined;
 
-  /**
-   * @classdesc This command class handles do/undo of dragging a topic to a new position.
-   * @constructs
-   */
-  constructor(topicId: number, position: Point, order: number, parentTopic: Topic) {
-    $assert(topicId, 'topicId must be defined');
+  constructor(topicId: number, position: PositionType, order: number, parentTopic: Topic) {
     super();
-
     this._topicsId = topicId;
-    if ($defined(parentTopic)) {
-      this._parentId = parentTopic.getId();
-    }
+    this._parentId = parentTopic ? parentTopic.getId() : null;
 
     this._position = position;
     this._order = order;
@@ -59,28 +51,28 @@ class DragTopicCommand extends Command {
     const origPosition = topic.getPosition();
 
     // Disconnect topic ..
-    if ($defined(origParentTopic)) {
+    if (origParentTopic) {
       commandContext.disconnect(topic);
     }
 
     // Set topic order ...
-    if (this._order != null) {
-      topic.setOrder(this._order);
+    if ($defined(this._order)) {
+      topic.setOrder(this._order!);
     } else if (this._position != null) {
       commandContext.moveTopic(topic, this._position);
     } else {
-      $assert('Illegal command state exception.');
+      throw new Error('Illegal command state exception.');
     }
 
     // Finally, connect topic ...
-    if ($defined(this._parentId)) {
+    if (this._parentId != null) {
       const parentTopic = commandContext.findTopics([this._parentId])[0];
       commandContext.connect(topic, parentTopic);
     }
 
     // Backup old parent id ...
     this._parentId = null;
-    if ($defined(origParentTopic)) {
+    if (origParentTopic != null) {
       this._parentId = origParentTopic.getId();
     }
     topic.setVisibility(true);

@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
+import flatten from 'lodash/flatten';
 import Command from '../Command';
 import CommandContext from '../CommandContext';
 import NodeModel from '../model/NodeModel';
@@ -73,11 +74,12 @@ class DeleteCommand extends Command {
         const clonedModel = model.clone();
         this._deletedTopicModels.push(clonedModel);
         const outTopic = topic.getOutgoingConnectedTopic();
-        let outTopicId = null;
+
+        let outTopicId: number | null = null;
         if (outTopic != null) {
           outTopicId = outTopic.getId();
+          this._parentTopicIds.push(outTopicId);
         }
-        this._parentTopicIds.push(outTopicId);
 
         // Finally, delete the topic from the workspace...
         commandContext.deleteTopic(topic);
@@ -137,10 +139,10 @@ class DeleteCommand extends Command {
     this._deletedRelModel = [];
   }
 
-  private _filterChildren(topicIds: number[], commandContext: CommandContext) {
+  private _filterChildren(topicIds: number[], commandContext: CommandContext): Topic[] {
     const topics = commandContext.findTopics(topicIds);
 
-    const result = [];
+    const result: Topic[] = [];
     topics.forEach((topic: Topic) => {
       let parent = topic.getParent();
       let found = false;
@@ -161,14 +163,14 @@ class DeleteCommand extends Command {
   }
 
   private _collectInDepthRelationships(topic: Topic): Relationship[] {
-    let result = [];
-    result = result.concat(topic.getRelationships());
+    let result: Relationship[] = [];
+    result.push(...topic.getRelationships());
 
     const children = topic.getChildren();
     const rels: Relationship[][] = children.map((t: Topic) => this._collectInDepthRelationships(t));
 
     // flatten and concact
-    result = result.concat([].concat(...rels));
+    result.push(...flatten(rels));
 
     if (result.length > 0) {
       // Filter for unique ...

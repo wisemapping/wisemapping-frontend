@@ -1,48 +1,48 @@
 <map name="freeMind_resources" version="tango">
-    <topic central="true" text="FreeMind Resources" id="1330730879" fontStyle=";;;;;;#000000;;;">
-        <topic position="200,-100" order="0" text="Application" shape="line" id="906353570" fontStyle=";;;;SansSerif;8;#0033ff;;;" bgColor="undefined">
-            <topic position="200,-50" order="0" text="What is it?" shape="line" id="293234618" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
-                <topic position="200,-50" order="0" text="A Freeware (as in free beer) Mindmapping tool coded in Java" shape="line" id="666230517" fontStyle=";;;;SansSerif;8;#990000;;;"/>
-                <topic position="-290,-75" order="0" text="Expects Java 1.4 or above on client machine" shape="line" id="339571721" fontStyle=";;;;SansSerif;8;#990000;;;"/>
+    <topic central="true" text="FreeMind Resources" id="1330730879">
+        <topic position="200,-100" order="0" text="Application" shape="line" id="906353570">
+            <topic position="200,-50" order="0" text="What is it?" shape="line" id="293234618">
+                <topic position="200,-50" order="0" text="A Freeware (as in free beer) Mindmapping tool coded in Java" shape="line" id="666230517"/>
+                <topic position="-290,-75" order="0" text="Expects Java 1.4 or above on client machine" shape="line" id="339571721"/>
             </topic>
-            <topic position="-290,-125" order="0" text="How to do?" shape="line" id="39960632" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
-                <topic position="290,-162" order="0" text="Install it" shape="line" id="904501221" fontStyle=";;;;SansSerif;8;#990000;italic;;">
-                    <topic position="-290,-212" order="0" text="Links" shape="line" id="1911559485" fontStyle=";;;;;;#111111;;;">
-                        <topic position="290,-237" order="0" text="Download the Java Runtime Environment (at least J2RE1.4)" shape="line" id="1031016126" fontStyle=";;;;SansSerif;8;#111111;;;" bgColor="undefined">
+            <topic position="-290,-125" order="0" text="How to do?" shape="line" id="39960632">
+                <topic position="290,-162" order="0" text="Install it" shape="line" id="904501221">
+                    <topic position="-290,-212" order="0" text="Links" shape="line" id="1911559485">
+                        <topic position="290,-237" order="0" text="Download the Java Runtime Environment (at least J2RE1.4)" shape="line" id="1031016126">
                             <link url="http://java.sun.com/j2se" urlType="url"/>
                         </topic>
-                        <topic position="380,-212" order="1" text="Download the Application" shape="line" id="1612101865" fontStyle=";;;;SansSerif;8;#111111;;;" bgColor="undefined">
+                        <topic position="380,-212" order="1" text="Download the Application" shape="line" id="1612101865">
                             <link url="http://freemind.sourceforge.net/wiki/index.php/Main_Page#Download_and_install" urlType="url"/>
                         </topic>
                     </topic>
-                    <topic position="-380,-187" order="1" shape="line" id="139664576" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-380,-187" order="1" shape="line" id="139664576">
                         <text><![CDATA[To install FreeMind on Microsoft Windows, install Java from Sun and install FreeMind using FreeMind
 installer.]]></text>
                     </topic>
-                    <topic position="-470,-162" order="2" shape="line" id="1380352758" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-470,-162" order="2" shape="line" id="1380352758">
                         <text><![CDATA[To install FreeMind on Linux, download Java Runtime Environment and FreeMind application itself.
 First install Java, then unpack FreeMind. To run FreeMind, execute
 freemind.sh.]]></text>
                     </topic>
-                    <topic position="-560,-137" order="3" shape="line" id="1808511462" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-560,-137" order="3" shape="line" id="1808511462">
                         <text><![CDATA[On Microsoft Windows and Mac OS X, you can also simply double click the file freemind.jar located at
 the folder lib to run
 FreeMind.]]></text>
                     </topic>
                 </topic>
-                <topic position="380,-137" order="1" text="Use it - tutorials" shape="line" id="1" fontStyle=";;;;SansSerif;8;#990000;italic;;">
-                    <topic position="-380,-174" order="0" text="Main Page for FreeMind" shape="line" id="135530020" fontStyle=";;;;;;#111111;;;">
+                <topic position="380,-137" order="1" text="Use it - tutorials" shape="line" id="1">
+                    <topic position="-380,-174" order="0" text="Main Page for FreeMind" shape="line" id="135530020">
                         <link url="http://freemind.sourceforge.net/wiki/index.php/Main_Page" urlType="url"/>
                     </topic>
-                    <topic position="-470,-149" order="1" text="Tutorial effort" shape="line" id="1407703455" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-470,-149" order="1" text="Tutorial effort" shape="line" id="1407703455">
                         <link url="http://freemind.sourceforge.net/wiki/index.php/Tutorial_effort" urlType="url"/>
                     </topic>
-                    <topic position="-560,-124" order="2" text="Download chm help file" shape="line" id="291899850" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-560,-124" order="2" text="Download chm help file" shape="line" id="291899850">
                         <link url="http://members.bellatlantic.net/~vze297k6/freemind/FreemindHelp.zip" urlType="url"/>
                     </topic>
                 </topic>
-                <topic position="470,-112" order="2" text="Got Questions - Forums" shape="line" id="918892336" fontStyle=";;;;SansSerif;8;#990000;italic;;">
-                    <topic position="-470,-149" order="0" text="FAQ" shape="line" id="757376175" fontStyle=";;;;;;#111111;;;">
+                <topic position="470,-112" order="2" text="Got Questions - Forums" shape="line" id="918892336">
+                    <topic position="-470,-149" order="0" text="FAQ" shape="line" id="757376175">
                         <link url="http://freemind.sourceforge.net/wiki/index.php/Asked_Questions" urlType="url"/>
                         <note><![CDATA[Here we collect a list of asked questions and answers 
 
@@ -54,45 +54,45 @@ an answer to your question, why don't you just press
 
 Ctrl + F in your browser?]]></note>
                     </topic>
-                    <topic position="-560,-124" order="1" text="Essays" shape="line" id="457044449" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-560,-124" order="1" text="Essays" shape="line" id="457044449">
                         <link url="http://freemind.sourceforge.net/wiki/index.php/Essays" urlType="url"/>
                     </topic>
-                    <topic position="-650,-99" order="2" text="Open Discussion" shape="line" id="1611374194" fontStyle=";;;;;;#111111;;;">
+                    <topic position="-650,-99" order="2" text="Open Discussion" shape="line" id="1611374194">
                         <link url="http://sourceforge.net/forum/forum.php?forum_id=22101" urlType="url"/>
                         <note><![CDATA[notes for ehqoei hoi poi joij  joi oi o oipc coimcojoij0dijo;i jd  di doi oid podidpoi podij aoi jpoij poij aoij oij oij oij oij doid jfoij oifj ofij fojf oifj oifjdofi f jfoidf jothe rain in spanin stays mainly]]></note>
                     </topic>
                 </topic>
             </topic>
         </topic>
-        <topic position="-290,-37" order="0" text="Applet Browser" shape="line" id="1647062097" fontStyle=";;;;SansSerif;8;#0033ff;;;" bgColor="undefined">
-            <topic position="290,-62" order="0" text="What is it?" shape="rounded rectangle" id="287577997" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
-                <topic position="-290,-87" order="0" text="A Java applet based browser " shape="line" id="1855944960" fontStyle=";;;;SansSerif;8;#990000;;;"/>
-                <topic position="-380,-62" order="1" text="Expects Java 1.4 or above on client machine" shape="line" id="300344325" fontStyle=";;;;SansSerif;8;#990000;;;"/>
+        <topic position="-290,-37" order="0" text="Applet Browser" shape="line" id="1647062097">
+            <topic position="290,-62" order="0" text="What is it?" shape="rounded rectangle" id="287577997">
+                <topic position="-290,-87" order="0" text="A Java applet based browser " shape="line" id="1855944960"/>
+                <topic position="-380,-62" order="1" text="Expects Java 1.4 or above on client machine" shape="line" id="300344325"/>
             </topic>
-            <topic position="380,-37" order="1" text="How to do?" shape="line" shrink="true" id="1254385465" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
-                <topic position="-380,-62" order="0" text="See examples" shape="line" id="1491154453" fontStyle=";;;;SansSerif;8;#990000;italic;;">
-                    <topic position="380,-87" order="0" text="Public Maps" shape="line" id="1082166644" fontStyle=";;;;;;#111111;;;">
+            <topic position="380,-37" order="1" text="How to do?" shape="line" shrink="true" id="1254385465">
+                <topic position="-380,-62" order="0" text="See examples" shape="line" id="1491154453">
+                    <topic position="380,-87" order="0" text="Public Maps" shape="line" id="1082166644">
                         <link url="http://freemind.sourceforge.net/PublicMaps.html" urlType="url"/>
                         <note><![CDATA[Early example of Map (from SF Site)]]></note>
                     </topic>
-                    <topic position="470,-62" order="1" text="Reagle's Map of Reading Materials" shape="line" id="738085540" fontStyle=";;;;;;#111111;;;">
+                    <topic position="470,-62" order="1" text="Reagle's Map of Reading Materials" shape="line" id="738085540">
                         <link url="http://reagle.org/joseph/2003/freemindbrowser.html" urlType="url"/>
                         <note><![CDATA[Multi level Mindmap set of personal reading material covering a variety of topics (useful in itself).]]></note>
                     </topic>
                 </topic>
-                <topic position="-470,-37" order="1" text="Use it" shape="line" id="1088353959" fontStyle=";;;;SansSerif;8;#990000;italic;;">
-                    <topic position="470,-49" order="0" text="Installing FreeMind applet at your web site" shape="line" shrink="true" id="1525986009" fontStyle=";;;;;;#111111;;;">
-                        <topic position="-470,-99" order="0" text="You can install the applet at your website so that other users can browse your mind maps." shape="line" id="1369857212" fontStyle=";;;;Dialog;8;#111111;;;"/>
-                        <topic position="-560,-74" order="1" text="Download the applet, that is freemind-browser." shape="line" id="372008388" fontStyle=";;;;;;#111111;;;">
+                <topic position="-470,-37" order="1" text="Use it" shape="line" id="1088353959">
+                    <topic position="470,-49" order="0" text="Installing FreeMind applet at your web site" shape="line" shrink="true" id="1525986009">
+                        <topic position="-470,-99" order="0" text="You can install the applet at your website so that other users can browse your mind maps." shape="line" id="1369857212"/>
+                        <topic position="-560,-74" order="1" text="Download the applet, that is freemind-browser." shape="line" id="372008388">
                             <link url="http://sourceforge.net/project/showfiles.php?group_id=7118" urlType="url"/>
                         </topic>
-                        <topic position="-650,-49" order="2" shape="line" id="1459732301" fontStyle=";;;;;;#111111;;;">
+                        <topic position="-650,-49" order="2" shape="line" id="1459732301">
                             <text><![CDATA[The downloaded archive contains freemindbrowser.jar and freemindbrowser.html. Create a link from
 your page to freemindbrowser.html. In freemindbrowser.html change the path inside so that it points
 to your mind
 map.]]></text>
                         </topic>
-                        <topic position="-740,-24" order="3" shape="line" id="240467473" fontStyle=";;;;;;#111111;;;">
+                        <topic position="-740,-24" order="3" shape="line" id="240467473">
                             <text><![CDATA[Applet's jar file must be located at the same server as the map itself, for java security reasons.
 You have to upload the FreeMind applet jar file and your mind map file to your web
 site.]]></text>
@@ -101,41 +101,41 @@ site.]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="-380,-12" order="1" text="Flash Browser" shape="line" id="866838286" fontStyle=";;;;SansSerif;8;#0033ff;;;" bgColor="undefined">
-            <topic position="380,-37" order="0" text="What is it?" shape="line" id="1079211058" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
-                <topic position="-380,-74" order="0" text="A browser which uses Shockwave Flash" shape="line" id="1719479201" fontStyle=";;;;SansSerif;8;#990000;;;"/>
-                <topic position="-470,-49" order="1" text="Does not require Java 1.4 or above on client machine" shape="line" id="838930706" fontStyle=";;;;SansSerif;8;#990000;;;"/>
-                <topic position="-560,-24" order="2" text="Expects Flash Player on client machine" shape="line" id="961870575" fontStyle=";;;;SansSerif;8;#990000;;;">
-                    <topic position="560,-49" order="0" text="Will work with Flash Player 7" shape="line" id="942059368" fontStyle=";;;;;;#111111;;;"/>
-                    <topic position="650,-24" order="1" text="Recommend Flash Player 8" shape="line" id="913615141" fontStyle=";;;;;;#111111;;;"/>
+        <topic position="-380,-12" order="1" text="Flash Browser" shape="line" id="866838286">
+            <topic position="380,-37" order="0" text="What is it?" shape="line" id="1079211058">
+                <topic position="-380,-74" order="0" text="A browser which uses Shockwave Flash" shape="line" id="1719479201"/>
+                <topic position="-470,-49" order="1" text="Does not require Java 1.4 or above on client machine" shape="line" id="838930706"/>
+                <topic position="-560,-24" order="2" text="Expects Flash Player on client machine" shape="line" id="961870575">
+                    <topic position="560,-49" order="0" text="Will work with Flash Player 7" shape="line" id="942059368"/>
+                    <topic position="650,-24" order="1" text="Recommend Flash Player 8" shape="line" id="913615141"/>
                 </topic>
             </topic>
-            <topic position="470,-12" order="1" text="How to do?" shape="line" id="1824115095" fontStyle=";;;;SansSerif;8;#00b439;italic;;" bgColor="undefined">
-                <topic position="-470,-37" order="0" text="See examples" shape="line" id="1242194014" fontStyle=";;;;SansSerif;8;#990000;;;">
-                    <topic position="470,-62" order="0" text="Hardware Support for Linux" shape="line" id="1249980290" fontStyle=";;;;;;#111111;;;">
+            <topic position="470,-12" order="1" text="How to do?" shape="line" id="1824115095">
+                <topic position="-470,-37" order="0" text="See examples" shape="line" id="1242194014">
+                    <topic position="470,-62" order="0" text="Hardware Support for Linux" shape="line" id="1249980290">
                         <link url="http://eric.lavar.de/comp/linux/hw/" urlType="url"/>
                     </topic>
-                    <topic position="560,-37" order="1" text="Discover" shape="line" id="1089287828" fontStyle=";;;;;;#111111;;;">
+                    <topic position="560,-37" order="1" text="Discover" shape="line" id="1089287828">
                         <link url="http://www.alaskagold.com/mindmap/mindmaps.html" urlType="url"/>
                         <note><![CDATA[Good example for "What is it?" 
 
 and "How to do?" structure.]]></note>
                     </topic>
                 </topic>
-                <topic position="-560,-12" order="1" text="Use it - tutorials" shape="line" id="605423288" fontStyle=";;;;SansSerif;8;#990000;;;">
-                    <topic position="560,-37" order="0" text="Installing FreeMind Flash Browser on you web site" shape="line" id="535820358" fontStyle=";;;;;;#111111;;;">
-                        <topic position="-560,-74" order="0" text="You can install the flash files at your website so that other users can browse your mind maps" shape="line" id="1790672015" fontStyle=";;;;;;#111111;;;"/>
-                        <topic position="-650,-49" order="1" text="Download the file pack via this link" shape="line" id="1737732360" fontStyle=";;;;;;#111111;;;">
+                <topic position="-560,-12" order="1" text="Use it - tutorials" shape="line" id="605423288">
+                    <topic position="560,-37" order="0" text="Installing FreeMind Flash Browser on you web site" shape="line" id="535820358">
+                        <topic position="-560,-74" order="0" text="You can install the flash files at your website so that other users can browse your mind maps" shape="line" id="1790672015"/>
+                        <topic position="-650,-49" order="1" text="Download the file pack via this link" shape="line" id="1737732360">
                             <link url="http://www.efectokiwano.net/mm/" urlType="url"/>
                         </topic>
-                        <topic position="-740,-24" order="2" shape="line" id="119084350" fontStyle=";;;;;;#111111;;;">
+                        <topic position="-740,-24" order="2" shape="line" id="119084350">
                             <text><![CDATA[The downloaded archive contains visorFreemind.swf, flashobject.js and mindmaps.html.
 Edit mindmap.html to point to your mm file and create a link from your page to this file. Flash
 enabled browsers will then open the file for
 browsing.]]></text>
                         </topic>
                     </topic>
-                    <topic position="650,-12" order="1" text="Include map in Powerpoint as Flash image" shape="line" id="753859789" fontStyle=";;;;;;#111111;;;">
+                    <topic position="650,-12" order="1" text="Include map in Powerpoint as Flash image" shape="line" id="753859789">
                         <link url="http://sourceforge.net/forum/forum.php?thread_id=1388840&amp;forum_id=22101" urlType="url"/>
                     </topic>
                 </topic>

@@ -11,6 +11,12 @@
       "value": "Annuler"
     }
   ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Supprimer"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -95,130 +101,202 @@
       "value": "Annuler édition"
     }
   ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Icône"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Lien"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Note"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
-      "value": "Agregar Icono"
+      "value": "Ajouter une icône"
     }
   ],
   "editor-panel.tooltip-add-link": [
     {
       "type": 0,
-      "value": "Agregar Enlace"
+      "value": "Ajouter un lien"
     }
   ],
   "editor-panel.tooltip-add-note": [
     {
       "type": 0,
-      "value": "Agregar Nota"
+      "value": "Ajouter une note"
     }
   ],
   "editor-panel.tooltip-add-relationship": [
     {
       "type": 0,
-      "value": "Agregar Relación"
+      "value": "Ajouter une relation"
     }
   ],
   "editor-panel.tooltip-add-topic": [
     {
       "type": 0,
-      "value": "Agregar Topico"
+      "value": "Ajouter un sujet"
     }
   ],
-  "editor-panel.tooltip-delete-topic": [
+  "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
-      "value": "Borrar Topico"
+      "value": "Couleur"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur par défaut"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Style de connexion"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "Courbe large"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Courbe mince"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Polyligne"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Courbe polyligne"
+    }
+  ],
+  "editor-panel.tooltip-delete-sujet": [
+    {
+      "type": 0,
+      "value": "Supprimer le sujet"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
     {
       "type": 0,
-      "value": "Color del borde"
+      "value": "Couleur de bordure"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur de bordure par défaut"
     }
   ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
-      "value": "Color del cotenido"
+      "value": "La couleur de remplissage"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur de relleno por defecto"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
     {
       "type": 0,
-      "value": "Grande"
+      "value": "Grand"
     }
   ],
   "editor-panel.tooltip-topic-font-bold": [
     {
       "type": 0,
-      "value": "Negrita"
+      "value": "Gras"
     }
   ],
   "editor-panel.tooltip-topic-font-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "Couleur"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Couleur par défaut"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
     {
       "type": 0,
-      "value": "Italica"
+      "value": "Italique"
     }
   ],
   "editor-panel.tooltip-topic-font-smaller": [
     {
       "type": 0,
-      "value": "Pequeña"
+      "value": "Petit"
     }
   ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
-      "value": "Estilo de Fuente"
+      "value": "Style de police"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-arrondi": [
+    {
+      "type": 0,
+      "value": "Forme ronde"
     }
   ],
   "editor-panel.tooltip-topic-share-ellipse": [
     {
       "type": 0,
-      "value": "Figura elipse"
+      "value": "Forme d'ellipse"
     }
   ],
   "editor-panel.tooltip-topic-share-line": [
     {
       "type": 0,
-      "value": "Figura linea"
+      "value": "Chiffre de ligne"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
-      "value": "Figura rectangulo"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-rounded": [
-    {
-      "type": 0,
-      "value": "Figura redonda"
+      "value": "Forme rectangulaire"
     }
   ],
   "editor-panel.tooltip-topic-style": [
     {
       "type": 0,
-      "value": "Estilo de Topico"
+      "value": "Style de sujet"
     }
   ],
   "editor.edit-description-mobile": [
     {
       "type": 0,
       "value": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
-    }
-  ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Remarque pour les appareils mobiles."
     }
   ],
   "editor.try-welcome": [
@@ -245,6 +323,12 @@
       "value": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Afficher les images"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -255,12 +339,6 @@
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "note.label": [
-    {
-      "type": 0,
-      "value": "Noter"
     }
   ],
   "shortcut-help-pane.action": [
@@ -335,6 +413,12 @@
       "value": "Désélectionner tous les sujets"
     }
   ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Déconnecter le sujet"
+    }
+  ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
@@ -363,6 +447,18 @@
     {
       "type": 0,
       "value": "Touches directionnelles"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Sobrescribir el texto del tópico"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Commencer à écrire sur le sujet sélectionné"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -401,28 +497,28 @@
       "value": "Annuler l'édition"
     }
   ],
-  "zoom-panel.tooltip-keyboard": [
+  "zoom-panel.tooltip-clavier": [
     {
       "type": 0,
-      "value": "Keyboard Shortcuts"
+      "value": "Raccourcis clavier"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [
     {
       "type": 0,
-      "value": "Acercar"
+      "value": "Zoom avant"
     }
   ],
   "zoom-panel.tooltip-zoom-out": [
     {
       "type": 0,
-      "value": "Alejarse"
+      "value": "S'éloigner"
     }
   ],
   "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
-      "value": "Centrar"
+      "value": "Centre"
     }
   ]
 }

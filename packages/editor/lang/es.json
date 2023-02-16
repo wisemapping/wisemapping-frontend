@@ -11,9 +11,7 @@
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Registrate para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita. En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     },
-    "editor.edit-mobile": {
-        "defaultMessage": "Nota para dispositivos móbiles."
-    },
+
     "editor.edit-description-mobile": {
         "defaultMessage": "En dispositivos móbiles las funciones son limitadas. Use la versión de escritorio para tener las funciones completas."
     },
@@ -71,8 +69,14 @@
     "link.placeholder": {
         "defaultMessage": "https://www.example.com"
     },
-    "note.label": {
+    "editor-panel.note-panel-title": {
         "defaultMessage": "Nota"
+    },
+    "editor-panel.icon-title": {
+        "defaultMessage": "Icono"
+    },
+    "editor-panel.link-panel-title": {
+        "defaultMessage": "Enlace"
     },
     "editor-panel.tooltip-add-icon": {
         "defaultMessage": "Agregar Icono"
@@ -94,9 +98,6 @@
     },
     "editor-panel.tooltip-topic-border-color": {
         "defaultMessage": "Color del border"
-    },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Color del figura"
     },
     "editor-panel.tooltip-topic-font-bigger": {
         "defaultMessage": "Incrementar"
@@ -211,5 +212,53 @@
     },
     "shortcut-help-pane.undo": {
         "defaultMessage": "Deshacer cambios"
+    },
+    "icon-picker.show-images": {
+        "defaultMessage": "Mostrar imagenes"
+    },
+    "editor-panel.tooltip-connection-style-polyline": {
+        "defaultMessage": "Polilinea"
+    },
+    "editor-panel.tooltip-connection-style-polyline-curved": {
+        "defaultMessage": "Polilinea Curva"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Sobrescribir el texto del tópico"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Comenzar a escibribir en el tópico seleccionado"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Color"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Color por defecto"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Estilo de conexión"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Curva ancha"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Curva delgada"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Color de border por defecto"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Color de relleno"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Color de relleno por defecto"
+    },
+    "action.delete": {
+        "defaultMessage": "Borrar"
+    },
+    "editor-panel.tooltip-topic-font-color-default": {
+        "defaultMessage": "Color por defecto"
+    },
+    "shortcut-help-pane.drag-disconnect": {
+        "defaultMessage": "Desconectar tópico"
     }
 }

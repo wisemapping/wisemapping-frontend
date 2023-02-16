@@ -17,7 +17,6 @@
  */
 
 import Client from '../client';
-import CacheDecoratorClient from '../client/cache-decorator-client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
 
@@ -27,6 +26,7 @@ interface Config {
   recaptcha2Enabled: boolean;
   recaptcha2SiteKey?: string;
   clientType: 'mock' | 'rest';
+  googleOauth2Url: string;
 }
 
 class _AppConfig {
@@ -35,6 +35,7 @@ class _AppConfig {
     clientType: 'mock',
     recaptcha2Enabled: true,
     recaptcha2SiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+    googleOauth2Url: '/c/registration-google?code=aFakeCode',
   };
 
   isDevelopEnv(): boolean {
@@ -73,6 +74,11 @@ class _AppConfig {
     return config.analyticsAccount;
   }
 
+  getGoogleOauth2Url(): string | undefined {
+    const config = this.getInstance();
+    return config.googleOauth2Url;
+  }
+
   buildClient(): Client {
     const config = this.getInstance();
     let result: Client;
@@ -84,8 +90,7 @@ class _AppConfig {
       result = new MockClient();
     }
 
-    // Wrap with a cache decorator ...
-    return new CacheDecoratorClient(result);
+    return result;
   }
 
   getBaseUrl(): string {

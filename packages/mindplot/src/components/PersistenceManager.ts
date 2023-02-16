@@ -38,10 +38,10 @@ abstract class PersistenceManager {
     $assert(mindmap, 'mindmap can not be null');
     $assert(editorProperties, 'editorProperties can not be null');
 
-    const mapId = mindmap.getId();
+    const mapId = mindmap.getId() || 'WiseMapping';
     $assert(mapId, 'mapId can not be null');
 
-    const serializer = XMLSerializerFactory.createInstanceFromMindmap(mindmap);
+    const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
     const domMap = serializer.toXML(mindmap);
     const pref = JSON.stringify(editorProperties);
     try {
@@ -54,17 +54,18 @@ abstract class PersistenceManager {
 
   protected getCSRFToken(): string | null {
     const meta = document.head.querySelector('meta[name="_csrf"]');
-    let result = null;
+    let result: string | null = null;
     if (meta) {
       result = meta.getAttribute('content');
     }
     return result;
   }
 
-  load(mapId: string) {
+  async load(mapId: string): Promise<Mindmap> {
     $assert(mapId, 'mapId can not be null');
-    const domDocument = this.loadMapDom(mapId);
-    return PersistenceManager.loadFromDom(mapId, domDocument);
+    // eslint-disable-next-line arrow-body-style
+    const document = await this.loadMapDom(mapId);
+    return PersistenceManager.loadFromDom(mapId, document);
   }
 
   triggerError(error: PersistenceError) {
@@ -75,7 +76,7 @@ abstract class PersistenceManager {
     this._errorHandlers.push(callback);
   }
 
-  removeErrorHandler(callback?: PersistenceErrorCallback) {
+  removeErrorHandler(callback?: PersistenceErrorCallback): void {
     if (!callback) {
       this._errorHandlers.length = 0;
     }
@@ -87,7 +88,7 @@ abstract class PersistenceManager {
 
   abstract discardChanges(mapId: string): void;
 
-  abstract loadMapDom(mapId: string): Document;
+  abstract loadMapDom(mapId: string): Promise<Document>;
 
   abstract saveMapXml(mapId: string, mapXml: Document, pref?, saveHistory?: boolean, events?);
 
@@ -105,7 +106,7 @@ abstract class PersistenceManager {
     $assert(mapId, 'mapId can not be null');
     $assert(mapDom, 'mapDom can not be null');
 
-    const serializer = XMLSerializerFactory.createInstanceFromDocument(mapDom);
+    const serializer = XMLSerializerFactory.createFromDocument(mapDom);
     return serializer.loadFromDom(mapDom, mapId);
   }
 }

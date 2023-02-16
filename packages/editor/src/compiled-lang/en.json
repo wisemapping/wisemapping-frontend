@@ -5,10 +5,10 @@
       "value": "Accept"
     }
   ],
-  "action.cancel": [
+  "action.delete": [
     {
       "type": 0,
-      "value": "Cancel"
+      "value": "Delete"
     }
   ],
   "appbar.back-to-map-list": [
@@ -95,6 +95,24 @@
       "value": "Undo"
     }
   ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Icon"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Note"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -125,6 +143,48 @@
       "value": "Add Topic"
     }
   ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Default color"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Connection Style"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "Thick Curved"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Thin Curved"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Simple Polyline"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Curved Polyline"
+    }
+  ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,
@@ -137,10 +197,22 @@
       "value": "Border color"
     }
   ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Default border color"
+    }
+  ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
       "value": "Fill color"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Default fill color"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -159,6 +231,12 @@
     {
       "type": 0,
       "value": "Color"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Default color"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
@@ -215,12 +293,6 @@
       "value": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
     }
   ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Note for mobile devices."
-    }
-  ],
   "editor.try-welcome": [
     {
       "type": 0,
@@ -245,6 +317,12 @@
       "value": "This edition space showcases some of the mindmap editor capabilities!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Show images"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -255,12 +333,6 @@
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "note.label": [
-    {
-      "type": 0,
-      "value": "Note"
     }
   ],
   "shortcut-help-pane.action": [
@@ -335,6 +407,12 @@
       "value": "Deselect all topics"
     }
   ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Disconnect topic"
+    }
+  ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
@@ -350,7 +428,7 @@
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Just start typing"
+      "value": "F2 or Double Click"
     }
   ],
   "shortcut-help-pane.navigation": [
@@ -363,6 +441,18 @@
     {
       "type": 0,
       "value": "Arrow keys"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Overwrite topic text"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Type on a selected topic"
     }
   ],
   "shortcut-help-pane.redo": [

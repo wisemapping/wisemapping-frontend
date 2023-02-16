@@ -227,6 +227,12 @@
       "value": "Todos los mapas seleccionados serán eliminados"
     }
   ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Cargando ..."
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -369,6 +375,18 @@
     {
       "type": 0,
       "value": "Correo electrónico"
+    }
+  ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Volver"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "No necesitas contraseña, por favor ingresa usando Google"
     }
   ],
   "forgot.page-title": [
@@ -537,6 +555,64 @@
       "value": "Información"
     }
   ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Agregar etiqueta"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Editando etiquetas para el mapa:"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Título"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Cambiar el color"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "será borrado de todos los mapas a los que se encuentra asociado. Desea continuar?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Confirmación"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Usa las etiquetas para organizar tus mapas."
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " mapas"
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Agregar etiqueta"
+    }
+  ],
   "language.change": [
     {
       "type": 0,
@@ -555,6 +631,12 @@
       "value": "Ingrese a su cuenta"
     }
   ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "ó"
+    }
+  ],
   "login.email": [
     {
       "type": 0,
@@ -571,6 +653,12 @@
     {
       "type": 0,
       "value": "Has olvidado tu contraseña ?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Ingresar con Google"
     }
   ],
   "login.hsqldbcofig": [
@@ -843,16 +931,64 @@
       "value": "Publicar"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Ocurrió un error al validar tu identidad con Google, puedes volver a intentarlo desde la página de inicio de sesión"
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "Éxito de registro | WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Volver"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "Una cuenta con el mismo email fue registrada previamente. ¿Quieres asociar tu cuenta de Google con esa cuenta de WiseMapping?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Confirmación"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Sincronizar cuenta"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Por favor espera mientras validamos tu identidad"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Finalizando ..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "Registrarse es gratis y solo tómese un momento"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "ó"
     }
   ],
   "registration.email": [
@@ -865,6 +1001,12 @@
     {
       "type": 0,
       "value": "Primer nombre"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Regístrate con Google"
     }
   ],
   "registration.lastname": [

@@ -515,5 +515,47 @@
     },
     "footer.team": {
         "defaultMessage": "Equipe"
-    }
+    },
+    "dialog.loading": {
+        "defaultMessage": "Chargement ..."
+    },
+	"registration.google.button": {
+		"defaultMessage": "S'inscrire avec Google"
+	},
+	"login.google.button": {
+		"defaultMessage": "Connectez-vous avec Google"
+	},
+	"registration.division": {
+		"defaultMessage": "ou"
+	},
+	"login.division": {
+		"defaultMessage": "ou"
+	},
+	"registration.callback.confirm.title": {
+	  "defaultMessage": "Confirmer"
+	},
+	"registration.callback.waiting.title": {
+	  "defaultMessage": "Finition ..."
+	},
+	"registration.callback.confirm.description": {
+	  "defaultMessage": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
+	},
+	"registration.callback.waiting.description": {
+	  "defaultMessage": "Veuillez patienter pendant que nous validons votre identité"
+	},
+	"registation.callback.error.message": {
+	  "defaultMessage": "Une erreur s'est produite lors de la validation de votre identité auprès de Google, vous pouvez réessayer depuis la page de connexion"
+	},
+	"registration.callback.back": {
+	  "defaultMessage": "Retour connexion"
+	},
+	"registration.callback.sync": {
+	  "defaultMessage": "Compte de synchronisation"
+	},
+	"forgot.oauth.message": {
+	  "defaultMessage": "Vous n'avez pas besoin de mot de passe, veuillez vous connecter en utilisant Google"
+	},
+	"forgot.oauth.back": {
+	  "defaultMessage": "Retour connexion"
+	}
 }

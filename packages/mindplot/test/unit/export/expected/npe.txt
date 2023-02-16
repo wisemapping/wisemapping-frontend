@@ -1,19 +1,19 @@
-1 NIF (NORMAS DE INFORMACIÓN FINANCIERA)
-2 NIF D
+1 ✏️ NIF (NORMAS DE INFORMACIÓN FINANCIERA)
+2 😎 NIF D
   [Note: Beneficios a los empleados,impuestos a la utilidad, arrendamientos y capitalización de resultado integral .]
 	2.1  Normas aplicables a problemas de determinación de resultados 
-3  CIRCULANTES
+3 ☎️  CIRCULANTES
   [Note: Tratamiento contable de los gastos de registro, colocación, unidades de inversión, aplicación supletoria etc.]
 	3.1 Adquisición temporal de acciones propias
-4  NIF A
+4 ⌛  NIF A
    [Link: http://www.youtube.com/watch?v=7YN-sOlkQp0]
 	4.1  Marco conceptual
-5  NIF C
+5 🐵  NIF C
    [Link: https://sites.google.com/site/contabilidadimcpnif/estructura-de-las-nif]
 	5.1 Normas aplicables a conceptos específicos de los estados financieros 
 6 NIF E
   [Note: Agricultura y donativos recibidos u otorgados con propósitos no lucrativos.]
 	6.1  Normas aplicables alas actividades especializadas de distintos sectores
-7  NIF B
+7 🏠  NIF B
    [Link: http://www.contaduria.uady.mx/files/cuerpo-acad/caef/aief/resumen_NIF_marco_conceptual.pdf]
 	7.1  Normas aplicables a los estados financieros en su conjunto

@@ -18,19 +18,26 @@
 import { $assert, $defined, createDocument } from '@wisemapping/core-js';
 import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
-import { TopicShape } from '../model/INodeModel';
-import ConnectionLine from '../ConnectionLine';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
 import emojiToIconMap from './iconToEmoji.json';
+import { LineType } from '../ConnectionLine';
+import { FontWeightType } from '../FontWeightType';
+import { FontStyleType } from '../FontStyleType';
+import { TopicShapeType } from '../model/INodeModel';
+import ThemeType from '../model/ThemeType';
 
 class XMLSerializerTango implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
 
   private _idsMap: Record<number, Element>;
+
+  constructor() {
+    this._idsMap = {};
+  }
 
   toXML(mindmap: Mindmap): Document {
     $assert(mindmap, 'Can not save a null mindmap');
@@ -40,9 +47,16 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     // Store map attributes ...
     const mapElem = document.createElement('map');
     const name = mindmap.getId();
-    if ($defined(name)) {
+    if (name) {
       mapElem.setAttribute('name', this._rmXmlInv(name));
     }
+
+    // Add theme ...
+    const theme = mindmap.getTheme();
+    if (theme && theme !== 'classic') {
+      mapElem.setAttribute('theme', theme);
+    }
+
     const version = mindmap.getVersion();
     if ($defined(version)) {
       mapElem.setAttribute('version', version);
@@ -90,16 +104,15 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const text = topic.getText();
-    if ($defined(text)) {
+    if (text) {
       this._noteTextToXML(document, parentTopic, text);
     }
 
     const shape = topic.getShapeType();
     if ($defined(shape)) {
       parentTopic.setAttribute('shape', shape);
-
-      if (shape === TopicShape.IMAGE) {
-        const size = topic.getImageSize();
+      const size = topic.getImageSize();
+      if (shape === 'image' && size) {
         parentTopic.setAttribute('image', `${size.width},${size.height}:${topic.getImageUrl()}`);
       }
     }
@@ -144,13 +157,23 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const bgColor = topic.getBackgroundColor();
-    if ($defined(bgColor)) {
+    if (bgColor) {
       parentTopic.setAttribute('bgColor', bgColor);
     }
 
     const brColor = topic.getBorderColor();
-    if ($defined(brColor)) {
+    if (brColor) {
       parentTopic.setAttribute('brColor', brColor);
+    }
+
+    const connectionStyle = topic.getConnectionStyle();
+    if ($defined(connectionStyle)) {
+      parentTopic.setAttribute('connStyle', `${connectionStyle}`);
+    }
+
+    const connectionColor = topic.getConnectionColor();
+    if (connectionColor) {
+      parentTopic.setAttribute('connColor', connectionColor);
     }
 
     const metadata = topic.getMetadata();
@@ -207,18 +230,19 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const lineType = relationship.getLineType();
     result.setAttribute('lineType', lineType.toString());
-    if (lineType === ConnectionLine.CURVED || lineType === ConnectionLine.SIMPLE_CURVED) {
-      if ($defined(relationship.getSrcCtrlPoint())) {
-        const srcPoint = relationship.getSrcCtrlPoint();
-        result.setAttribute('srcCtrlPoint', `${Math.round(srcPoint.x)},${Math.round(srcPoint.y)}`);
-      }
-      if ($defined(relationship.getDestCtrlPoint())) {
-        const destPoint = relationship.getDestCtrlPoint();
-        result.setAttribute(
-          'destCtrlPoint',
-          `${Math.round(destPoint.x)},${Math.round(destPoint.y)}`,
-        );
-      }
+    const strCtrlPoint = relationship.getSrcCtrlPoint();
+    if (strCtrlPoint) {
+      result.setAttribute(
+        'srcCtrlPoint',
+        `${Math.round(strCtrlPoint.x)},${Math.round(strCtrlPoint.y)}`,
+      );
+    }
+    const destCtrPoint = relationship.getDestCtrlPoint();
+    if (destCtrPoint) {
+      result.setAttribute(
+        'destCtrlPoint',
+        `${Math.round(destCtrPoint.x)},${Math.round(destCtrPoint.y)}`,
+      );
     }
     result.setAttribute('endArrow', String(relationship.getEndArrow()));
     result.setAttribute('startArrow', String(relationship.getStartArrow()));
@@ -237,10 +261,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       `This seem not to be a map document. Found tag: ${rootElem.tagName}`,
     );
 
-    this._idsMap = {};
     // Start the loading process ...
     const version = rootElem.getAttribute('version') || 'pela';
     const mindmap = new Mindmap(mapId, version);
+
+    const theme = rootElem.getAttribute('theme');
+    if (theme) {
+      mindmap.setTheme(theme as ThemeType);
+    }
 
     // Add all the topics nodes ...
     const childNodes = Array.from(rootElem.childNodes);
@@ -268,26 +296,28 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     });
 
     // Clean up from the recursion ...
-    this._idsMap = null;
+    this._idsMap = {};
     mindmap.setId(mapId);
     return mindmap;
   }
 
-  protected _deserializeNode(domElem: Element, mindmap: Mindmap) {
+  protected _deserializeNode(domElem: Element, mindmap: Mindmap): NodeModel {
     const type = domElem.getAttribute('central') != null ? 'CentralTopic' : 'MainTopic';
 
     // Load attributes...
-    let id: number | null = null;
-    if ($defined(domElem.getAttribute('id'))) {
-      id = Number.parseInt(domElem.getAttribute('id'), 10);
+    let id: number | undefined;
+    const idStr = domElem.getAttribute('id');
+    if (idStr) {
+      id = Number.parseInt(idStr, 10);
     }
 
-    if (this._idsMap[id]) {
-      id = null;
-    } else {
+    if (id !== undefined && !this._idsMap[id]) {
       this._idsMap[id] = domElem;
+    } else {
+      id = undefined;
     }
 
+    // Create element ...
     const topic = mindmap.createNode(type, id);
 
     // Set text property is it;s defined...
@@ -313,23 +343,23 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       }
 
       if (font[3]) {
-        topic.setFontWeight(font[3]);
+        topic.setFontWeight(font[3] as FontWeightType);
       }
 
       if (font[4]) {
-        topic.setFontStyle(font[4]);
+        topic.setFontStyle(font[4] as FontStyleType);
       }
     }
 
     let shape = domElem.getAttribute('shape');
-    if ($defined(shape)) {
+    if (shape) {
       // Fix typo on serialization....
       shape = shape.replace('rectagle', 'rectangle');
+      topic.setShapeType(shape as TopicShapeType);
 
-      topic.setShapeType(shape);
-
-      if (shape === TopicShape.IMAGE) {
-        const image = domElem.getAttribute('image');
+      // Is an image ?
+      const image = domElem.getAttribute('image');
+      if (image && shape === 'image') {
         const size = image.substring(0, image.indexOf(':'));
         const url = image.substring(image.indexOf(':') + 1, image.length);
         topic.setImageUrl(url);
@@ -340,17 +370,28 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const bgColor = domElem.getAttribute('bgColor');
-    if ($defined(bgColor)) {
+    if (bgColor) {
       topic.setBackgroundColor(bgColor);
     }
 
+    const connStyle = domElem.getAttribute('connStyle');
+    if ($defined(connStyle) && connStyle) {
+      const lineType = Number.parseInt(connStyle, 10) as LineType;
+      topic.setConnectionStyle(lineType);
+    }
+
+    const connColor = domElem.getAttribute('connColor');
+    if ($defined(connColor) && connColor) {
+      topic.setConnectionColor(connColor);
+    }
+
     const borderColor = domElem.getAttribute('brColor');
-    if ($defined(borderColor)) {
+    if (borderColor) {
       topic.setBorderColor(borderColor);
     }
 
     const order = domElem.getAttribute('order');
-    if ($defined(order) && order !== 'NaN') {
+    if (order !== null && order !== 'NaN') {
       // Hack for broken maps ...
       topic.setOrder(parseInt(order, 10));
     }
@@ -362,13 +403,13 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
 
     const position = domElem.getAttribute('position');
-    if ($defined(position)) {
+    if (position !== null) {
       const pos = position.split(',');
       topic.setPosition(Number.parseInt(pos[0], 10), Number.parseInt(pos[1], 10));
     }
 
     const metadata = domElem.getAttribute('metadata');
-    if ($defined(metadata)) {
+    if (metadata !== null) {
       topic.setMetadata(metadata);
     }
 
@@ -387,7 +428,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
           for (let j = 0; j < namedNodeMap.length; j++) {
             const attribute = namedNodeMap.item(j);
-            attributes[attribute.name] = attribute.value;
+            if (attribute !== null) {
+              attributes[attribute.name] = attribute.value;
+            }
           }
 
           // Has text node ?.
@@ -422,7 +465,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     if (topic.getType() !== 'CentralTopic') {
       topic
         .getChildren()
-        .sort((a, b) => a.getOrder() - b.getOrder())
+        .sort((a, b) => a.getOrder()! - b.getOrder()!)
         .forEach((child, index) => {
           if (child.getOrder() !== index) {
             child.setOrder(index);
@@ -435,7 +478,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
   static _deserializeTextAttr(domElem: Element): string {
     let value = domElem.getAttribute('text');
-    if (!$defined(value)) {
+    if (!value) {
       const children = domElem.childNodes;
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
@@ -446,11 +489,10 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     } else {
       // Notes must be decoded ...
       value = unescape(value);
-
-      // Hack for empty nodes ...
-      if (value === '') {
-        value = ' ';
-      }
+    }
+    // Hack for empty nodes ...
+    if (!value) {
+      value = ' ';
     }
 
     return value;
@@ -460,22 +502,25 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     return emojiToIconMap[icon];
   }
 
-  private static _deserializeNodeText(domElem: ChildNode) {
+  private static _deserializeNodeText(domElem: ChildNode): string {
     const children = domElem.childNodes;
-    let value = null;
+    let value: string | null = null;
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
       if (child.nodeType === Node.CDATA_SECTION_NODE) {
         value = child.nodeValue;
       }
     }
-    return value;
+    return value !== null ? value : '';
   }
 
-  static _deserializeRelationship(domElement: Element, mindmap: Mindmap): RelationshipModel {
-    const srcId = Number.parseInt(domElement.getAttribute('srcTopicId'), 10);
-    const destId = Number.parseInt(domElement.getAttribute('destTopicId'), 10);
-    const lineType = Number.parseInt(domElement.getAttribute('lineType'), 10);
+  private static _deserializeRelationship(
+    domElement: Element,
+    mindmap: Mindmap,
+  ): RelationshipModel {
+    const srcId = Number.parseInt(domElement.getAttribute('srcTopicId')!, 10);
+    const destId = Number.parseInt(domElement.getAttribute('destTopicId')!, 10);
+    const lineType = Number.parseInt(domElement.getAttribute('lineType')!, 10);
     const srcCtrlPoint = domElement.getAttribute('srcCtrlPoint');
     const destCtrlPoint = domElement.getAttribute('destCtrlPoint');
 
@@ -491,12 +536,24 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const model = mindmap.createRelationship(srcId, destId);
     model.setLineType(lineType);
-    if ($defined(srcCtrlPoint) && srcCtrlPoint !== '') {
-      model.setSrcCtrlPoint(Point.fromString(srcCtrlPoint));
+    if (srcCtrlPoint) {
+      try {
+        const spoint = Point.fromString(srcCtrlPoint);
+        model.setSrcCtrlPoint(spoint);
+      } catch (e) {
+        console.error(e);
+      }
     }
-    if ($defined(destCtrlPoint) && destCtrlPoint !== '') {
-      model.setDestCtrlPoint(Point.fromString(destCtrlPoint));
+
+    if (destCtrlPoint) {
+      try {
+        const dpoint = Point.fromString(destCtrlPoint);
+        model.setDestCtrlPoint(dpoint);
+      } catch (e) {
+        console.error(e);
+      }
     }
+
     model.setEndArrow(false);
     model.setStartArrow(true);
     return model;
@@ -513,9 +570,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
    * @param in The String whose non-valid characters we want to remove.
    * @return The in String, stripped of non-valid characters.
    */
-  protected _rmXmlInv(str: string) {
-    if (str == null || str === undefined) return null;
-
+  protected _rmXmlInv(str: string): string {
     let result = '';
     for (let i = 0; i < str.length; i++) {
       const c = str.charCodeAt(i);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
-import Client, { ErrorInfo } from '../../classes/client';
+import Client, { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
 
 import Header from '../layout/header';
 import Footer from '../layout/footer';
@@ -13,21 +12,28 @@ import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
 import ReactGA from 'react-ga4';
+import { Link as RouterLink } from 'react-router-dom';
 
 import Typography from '@mui/material/Typography';
-import { getCsrfToken, getCsrfTokenParameter } from '../../utils';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import CSRFInput from '../common/csrf-input';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<ErrorInfo>();
-  const history = useHistory();
+  const [showOauthMessage, setShowOauthMessage] = useState<boolean>(false);
+  const navigate = useNavigate();
   const intl = useIntl();
 
   const service: Client = useSelector(activeInstance);
-  const mutation = useMutation<void, ErrorInfo, string>(
+  const mutation = useMutation<ForgotPasswordResult, ErrorInfo, string>(
     (email: string) => service.resetPassword(email),
     {
-      onSuccess: () => history.push('/c/forgot-password-success'),
+      onSuccess: (result) => {
+        if (result.action === 'EMAIL_SENT') navigate('/c/forgot-password-success');
+        if (result.action === 'OAUTH2_USER') setShowOauthMessage(true);
+      },
       onError: (error) => {
         setError(error);
       },
@@ -39,8 +45,31 @@ const ForgotPassword = () => {
     mutation.mutate(email);
   };
 
+  if (showOauthMessage) {
+    return (
+      <FormContainer>
+        <Typography>
+          <FormattedMessage
+            id="forgot.oauth.message"
+            defaultMessage="You dont need password, please login using Google."
+          />
+        </Typography>
+        <Button
+          color="primary"
+          size="medium"
+          variant="contained"
+          component={RouterLink}
+          to="/c/login"
+          disableElevation={true}
+        >
+          <FormattedMessage id="forgot.oauth.back" defaultMessage="Back to login" />
+        </Button>
+      </FormContainer>
+    );
+  }
+
   return (
-    <FormContainer>
+    <FormContainer maxWidth="xs">
       <Typography variant="h4" component="h1">
         <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
       </Typography>
@@ -55,7 +84,7 @@ const ForgotPassword = () => {
       <GlobalError error={error} />
 
       <form onSubmit={handleOnSubmit}>
-        <input type="hidden" value={getCsrfToken()} name={getCsrfTokenParameter()} />
+        <CSRFInput />
         <Input
           type="email"
           name="email"

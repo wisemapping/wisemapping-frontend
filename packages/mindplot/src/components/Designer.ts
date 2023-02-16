@@ -15,8 +15,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import $ from 'jquery';
+
 import { $assert, $defined } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import Messages, { $msg } from './Messages';
 
 import Events from './Events';
@@ -29,7 +30,7 @@ import DesignerModel from './DesignerModel';
 import DesignerKeyboard from './DesignerKeyboard';
 
 import ScreenManager from './ScreenManager';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 
 import DragConnector from './DragConnector';
 import DragManager from './DragManager';
@@ -37,8 +38,6 @@ import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 
 import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
-import TopicFeatureFactory from './TopicFeature';
-
 import TopicFactory from './TopicFactory';
 
 import EventBus from './layout/EventBus';
@@ -46,8 +45,7 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
 
-import { TopicShape } from './model/INodeModel';
-import { $notify } from './widget/ToolbarNotifier';
+import { $notify } from './model/ToolbarNotifier';
 import RelationshipModel from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
@@ -57,9 +55,16 @@ import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
 import FeatureType from './model/FeatureType';
 import WidgetManager from './WidgetManager';
+import { TopicShapeType } from './model/INodeModel';
+import { LineType } from './ConnectionLine';
+import XMLSerializerFactory from './persistence/XMLSerializerFactory';
+import ImageExpoterFactory from './export/ImageExporterFactory';
+import PositionType from './PositionType';
+import ThemeType from './model/ThemeType';
+import ThemeFactory from './theme/ThemeFactory';
 
 class Designer extends Events {
-  private _mindmap: Mindmap;
+  private _mindmap: Mindmap | null;
 
   private _options: DesignerOptions;
 
@@ -67,34 +72,29 @@ class Designer extends Events {
 
   private _model: DesignerModel;
 
-  private _workspace: Workspace;
+  private _canvas: Canvas;
 
   _eventBussDispatcher: EventBusDispatcher;
 
-  private _dragManager: DragManager;
+  private _dragManager!: DragManager;
 
   private _relPivot: RelationshipPivot;
 
-  private _clipboard: NodeModel[];
+  private _cleanScreen!: () => void;
 
-  private _cleanScreen: () => void;
-
-  constructor(options: DesignerOptions, divElement: JQuery) {
+  constructor(options: DesignerOptions) {
     super();
-    $assert(options, 'options must be defined');
-    $assert(options.zoom, 'zoom must be defined');
-    $assert(divElement, 'divElement must be defined');
-
     // Set up i18n location ...
     console.log(`Editor location: ${options.locale}`);
-    Messages.init(options.locale);
+    Messages.init(options.locale ? options.locale : 'en');
+    const divElem = options.divContainer;
 
     this._options = options;
 
     // Set full div elem render area.The component must fill container size
     // container is responsible for location and size
-    divElement.css('width', '100%');
-    divElement.css('height', '100%');
+    $(divElem).css('width', '100%');
+    $(divElem).css('height', '100%');
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -109,8 +109,8 @@ class Designer extends Events {
     this._model = new DesignerModel(options);
 
     // Init Screen manager..
-    const screenManager = new ScreenManager(divElement);
-    this._workspace = new Workspace(screenManager, this._model.getZoom(), this.isReadOnly());
+    const screenManager = new ScreenManager(divElem);
+    this._canvas = new Canvas(screenManager, this._model.getZoom(), this.isReadOnly());
 
     // Init layout manager ...
     this._eventBussDispatcher = new EventBusDispatcher();
@@ -123,17 +123,17 @@ class Designer extends Events {
       // Register keyboard events ...
       DesignerKeyboard.register(this);
 
-      this._dragManager = this._buildDragManager(this._workspace);
+      this._dragManager = this._buildDragManager(this._canvas);
     }
     this._registerWheelEvents();
 
-    this._relPivot = new RelationshipPivot(this._workspace, this);
+    this._relPivot = new RelationshipPivot(this._canvas, this);
 
     TopicEventDispatcher.configure(this.isReadOnly());
-    this._clipboard = [];
 
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     globalThis.designer = this;
+    this._mindmap = null;
   }
 
   private _registerWheelEvents(): void {
@@ -170,7 +170,7 @@ class Designer extends Events {
   }
 
   private _registerMouseEvents() {
-    const workspace = this._workspace;
+    const workspace = this._canvas;
     const screenManager = workspace.getScreenManager();
     const me = this;
     // Initialize workspace event listeners.
@@ -202,9 +202,9 @@ class Designer extends Events {
     });
   }
 
-  private _buildDragManager(workspace: Workspace): DragManager {
+  private _buildDragManager(workspace: Canvas): DragManager {
     const designerModel = this.getModel();
-    const dragConnector = new DragConnector(designerModel, this._workspace);
+    const dragConnector = new DragConnector(designerModel, this._canvas);
     const dragManager = new DragManager(workspace, this._eventBussDispatcher);
     const topics = designerModel.getTopics();
 
@@ -215,7 +215,7 @@ class Designer extends Events {
 
     dragManager.addEvent('dragging', (event: MouseEvent, dragTopic: DragTopic) => {
       // The node is being drag. Is the connection still valid ?
-      dragConnector.checkConnection(dragTopic);
+      dragConnector.checkConnection(dragTopic, event.metaKey || event.ctrlKey);
 
       if (!dragTopic.isVisible() && dragTopic.isConnected()) {
         dragTopic.setVisibility(true);
@@ -263,7 +263,10 @@ class Designer extends Events {
       } else {
         $assert(targetTopic, 'Could not find a topic to connect');
       }
-      topic.connectTo(targetTopic, this._workspace);
+
+      if (targetTopic) {
+        topic.connectTo(targetTopic, this._canvas);
+      }
     }
 
     topic.addEvent('ontblur', () => {
@@ -331,12 +334,12 @@ class Designer extends Events {
       return;
     }
     this.getModel().setZoom(zoom);
-    this._workspace.setZoom(zoom);
+    this._canvas.setZoom(zoom);
   }
 
   zoomToFit(): void {
     this.getModel().setZoom(1);
-    this._workspace.setZoom(1, true);
+    this._canvas.setZoom(1, true);
   }
 
   zoomOut(factor = 1.2) {
@@ -344,7 +347,7 @@ class Designer extends Events {
     const scale = model.getZoom() * factor;
     if (scale <= 7.0) {
       model.setZoom(scale);
-      this._workspace.setZoom(scale);
+      this._canvas.setZoom(scale);
     } else {
       $notify($msg('ZOOM_ERROR'));
     }
@@ -356,7 +359,7 @@ class Designer extends Events {
 
     if (scale >= 0.3) {
       model.setZoom(scale);
-      this._workspace.setZoom(scale);
+      this._canvas.setZoom(scale);
     } else {
       $notify($msg('ZOOM_ERROR'));
     }
@@ -376,37 +379,105 @@ class Designer extends Events {
     }
   }
 
-  copyToClipboard(): void {
+  async copyToClipboard(): Promise<void> {
+    const enableImageSupport = false;
     let topics = this.getModel().filterSelectedTopics();
-    if (topics.length <= 0) {
-      // If there are more than one node selected,
-      $notify($msg('AT_LEAST_ONE_TOPIC_MUST_BE_SELECTED'));
-      return;
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore - Permissions is not defined on PermissionsName.
+    const permissions = await navigator.permissions.query({ name: 'clipboard-write' });
+    if (permissions.state === 'granted' || permissions.state === 'prompt') {
+      // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard
+      if (topics.length > 0) {
+        const blobs = {};
+        const mindmap = new Mindmap();
+        const central: NodeModel = new NodeModel('CentralTopic', mindmap);
+        mindmap.addBranch(central);
+
+        // Exclude central topic ..
+        topics = topics.filter((topic) => !topic.isCentralTopic());
+        topics.forEach((topic) => {
+          const nodeModel: NodeModel = topic.getModel().deepCopy();
+          nodeModel.connectTo(central);
+        });
+
+        // Create text blob ...
+        const serializer = XMLSerializerFactory.createFromMindmap(mindmap);
+        const document = serializer.toXML(mindmap);
+        const xmlStr: string = new XMLSerializer().serializeToString(document);
+        const textPlainBlob = new Blob([xmlStr], { type: 'text/plain' });
+        blobs[textPlainBlob.type] = textPlainBlob;
+
+        if (enableImageSupport) {
+          // Create image blob ...
+          const workspace = designer.getWorkSpace();
+          const svgElement = workspace.getSVGElement();
+          const size = { width: window.innerWidth, height: window.innerHeight };
+
+          const imageUrl = ImageExpoterFactory.create(
+            'png',
+            svgElement,
+            size.width,
+            size.height,
+            false,
+          );
+          let imgStr = await imageUrl.exportAndEncode();
+          imgStr = imgStr.replace('octet/stream', 'image/png');
+          const imgBlob = await (await fetch(imgStr)).blob();
+          blobs[imgBlob.type] = imgBlob;
+        }
+
+        // Finally, add to clipboard ...
+        const clipboard = new ClipboardItem(blobs);
+        navigator.clipboard.write([clipboard]).then(
+          () => console.log('Copy of node success'),
+          (e) => {
+            console.error('Unexpected error adding to clipboard');
+            console.error(e);
+          },
+        );
+      }
     }
-
-    // Exclude central topic ..
-    topics = topics.filter((topic) => !topic.isCentralTopic());
-
-    this._clipboard = topics.map((topic) => {
-      const nodeModel = topic.getModel().deepCopy();
-
-      // Change position to make the new topic evident...
-      const pos = nodeModel.getPosition();
-      nodeModel.setPosition(pos.x + 60 * Math.sign(pos.x), pos.y + 30);
-
-      return nodeModel;
-    });
-
-    $notify($msg('SELECTION_COPIED_TO_CLIPBOARD'));
   }
 
-  pasteClipboard(): void {
-    if (this._clipboard.length === 0) {
-      $notify($msg('CLIPBOARD_IS_EMPTY'));
-      return;
-    }
-    this._actionDispatcher.addTopics(this._clipboard);
-    this._clipboard = [];
+  async pasteClipboard(): Promise<void> {
+    const type = 'text/plain';
+    const clipboardItems = await navigator.clipboard.read();
+    clipboardItems.forEach(async (item) => {
+      if (item.types.includes(type)) {
+        const blob: Blob = await item.getType(type);
+        const text: string = await blob.text();
+
+        // Is a mindmap ?. Try to infer if it's a text or a map...
+        if (text.indexOf('</map>') !== -1) {
+          const dom = new DOMParser().parseFromString(text, 'application/xml');
+
+          const serializer = XMLSerializerFactory.createFromDocument(dom);
+          const mindmap = serializer.loadFromDom(dom, 'application/xml');
+
+          // Remove reference to the parent mindmap and clean up to support multiple copy of the nodes ...
+          const central = mindmap.getBranches()[0];
+          let children = central.getChildren();
+          children.forEach((c) => c.disconnect());
+          children = children.map((m: NodeModel) => m.deepCopy());
+
+          // Charge position to avoid overlap ...
+          children.forEach((m) => {
+            const pos = m.getPosition();
+            m.setPosition(pos.x + Math.random() * 60, pos.y + Math.random() * 30);
+          });
+
+          // Finally, add the node ...
+          this._actionDispatcher.addTopics(children, null);
+        } else {
+          const topics = this.getModel().filterSelectedTopics();
+          this._actionDispatcher.changeTextToTopic(
+            topics.map((t) => t.getId()),
+            text.trim(),
+          );
+        }
+      }
+    });
   }
 
   getModel(): DesignerModel {
@@ -435,66 +506,24 @@ class Designer extends Events {
     this._actionDispatcher.addTopics([childModel], [parentTopicId]);
   }
 
-  private _copyNodeProps(sourceModel: NodeModel, targetModel: NodeModel) {
-    // I don't copy the font size if the target is the source is the central topic.
-    if (sourceModel.getType() !== 'CentralTopic') {
-      const fontSize = sourceModel.getFontSize();
-      if (fontSize) {
-        targetModel.setFontSize(fontSize);
-      }
-    }
-
-    const fontFamily = sourceModel.getFontFamily();
-    if (fontFamily) {
-      targetModel.setFontFamily(fontFamily);
-    }
-
-    const fontColor = sourceModel.getFontColor();
-    if (fontColor) {
-      targetModel.setFontColor(fontColor);
-    }
-
-    const fontWeight = sourceModel.getFontWeight();
-    if (fontWeight) {
-      targetModel.setFontWeight(fontWeight);
-    }
-
-    const fontStyle = sourceModel.getFontStyle();
-    if (fontStyle) {
-      targetModel.setFontStyle(fontStyle);
-    }
-
-    const shape = sourceModel.getShapeType();
-    if (shape) {
-      targetModel.setShapeType(shape);
-    }
-
-    const borderColor = sourceModel.getBorderColor();
-    if (borderColor) {
-      targetModel.setBorderColor(borderColor);
-    }
-
-    const backgroundColor = sourceModel.getBackgroundColor();
-    if (backgroundColor) {
-      targetModel.setBackgroundColor(backgroundColor);
-    }
-  }
-
-  private _createChildModel(topic: Topic, mousePos: Point = null): NodeModel {
+  private _createChildModel(topic: Topic, mousePos?: PositionType): NodeModel {
     // Create a new node ...
     const parentModel = topic.getModel();
     const mindmap = parentModel.getMindmap();
     const childModel = mindmap.createNode();
 
+    // If node is shink, expand ...
+    if (topic.areChildrenShrunken()) {
+      topic.setChildrenShrunken(false);
+    }
+
     // Create a new node ...
     const layoutManager = this._eventBussDispatcher.getLayoutManager();
-    const result = layoutManager.predict(topic.getId(), null, mousePos);
+    const result = layoutManager.predict(topic.getId(), null, mousePos || null);
     childModel.setOrder(result.order);
 
     const { position } = result;
     childModel.setPosition(position.x, position.y);
-
-    this._copyNodeProps(parentModel, childModel);
 
     return childModel;
   }
@@ -521,11 +550,11 @@ class Designer extends Events {
       const parentTopic = topic.getOutgoingConnectedTopic();
       const siblingModel = this._createSiblingModel(topic);
 
-      if (siblingModel) {
+      if (siblingModel && parentTopic) {
         // Hack: if parent is central topic, add node below not on opposite side.
         // This should be done in the layout
         if (parentTopic.getType() === 'CentralTopic') {
-          siblingModel.setOrder(topic.getOrder() + 2);
+          siblingModel.setOrder(topic.getOrder()! + 2);
         }
 
         const parentTopicId = parentTopic.getId();
@@ -546,11 +575,9 @@ class Designer extends Events {
       result = mindmap.createNode();
 
       // Create a new node ...
-      const order = topic.getOrder() + 1;
+      const order = topic.getOrder()! + 1;
       result.setOrder(order);
       result.setPosition(10, 10); // Set a dummy position ...
-
-      this._copyNodeProps(model, result);
     }
 
     return result;
@@ -565,7 +592,7 @@ class Designer extends Events {
     }
 
     // Current mouse position ....
-    const screen = this._workspace.getScreenManager();
+    const screen = this._canvas.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
     // create a connection ...
@@ -577,21 +604,24 @@ class Designer extends Events {
     return { zoom: model.getZoom() };
   }
 
-  /**
-   * @param {mindplot.Mindmap} mindmap
-   * @throws will throw an error if mindmapModel is null or undefined
-   */
-  loadMap(mindmap: Mindmap): void {
-    $assert(mindmap, 'mindmapModel can not be null');
+  loadMap(mindmap: Mindmap): Promise<void> {
     this._mindmap = mindmap;
+
+    // Update background style...
+    const themeId = mindmap.getTheme();
+    const theme = ThemeFactory.createById(themeId);
+    const style = theme.getCanvasCssStyle();
+    this._canvas.setBackgroundStyle(style);
+
+    // Delay render ...
+    this._canvas.enableQueueRender(true);
 
     // Init layout manager ...
     const size = { width: 25, height: 25 };
     const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
-    const me = this;
     layoutManager.addEvent('change', (event) => {
       const id = event.getId();
-      const topic = me.getModel().findTopicById(id);
+      const topic = this.getModel().findTopicById(id);
       if (topic) {
         topic.setPosition(event.getPosition());
         topic.setOrder(event.getOrder());
@@ -601,27 +631,35 @@ class Designer extends Events {
 
     // Building node graph ...
     const branches = mindmap.getBranches();
+
+    const nodesGraph: Topic[] = [];
     branches.forEach((branch) => {
       const nodeGraph = this.nodeModelToTopic(branch);
-      nodeGraph.setBranchVisibility(true);
+      nodesGraph.push(nodeGraph);
     });
-
-    // Connect relationships ...
-    const relationships = mindmap.getRelationships();
-    relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
     // Place the focus on the Central Topic
     const centralTopic = this.getModel().getCentralTopic();
     this.goToNode(centralTopic);
 
-    // Finally, sort the map ...
-    EventBus.instance.fireEvent('forceLayout');
+    return this._canvas.enableQueueRender(false).then(() => {
+      // Connect relationships ...
+      const relationships = mindmap.getRelationships();
+      relationships.forEach((relationship) => this._relationshipModelToRelationship(relationship));
 
-    this.fireEvent('loadSuccess');
+      // Render nodes ...
+      nodesGraph.forEach((topic) => topic.setVisibility(true));
+
+      // Enable workspace drag events ...
+      this._canvas.registerEvents();
+      // Finally, sort the map ...
+      EventBus.instance.fireEvent('forceLayout');
+      this.fireEvent('loadSuccess');
+    });
   }
 
   getMindmap(): Mindmap {
-    return this._mindmap;
+    return this._mindmap!;
   }
 
   undo(): void {
@@ -637,20 +675,33 @@ class Designer extends Events {
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {
-    $assert(nodeModel, 'Node model can not be null');
     let children = nodeModel.getChildren().slice();
-    children = children.sort((a, b) => a.getOrder() - b.getOrder());
+    children = children.sort((a, b) => a.getOrder()! - b.getOrder()!);
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);
 
-    this._workspace.append(result);
+    this._canvas.append(result);
     children.forEach((child) => {
-      if ($defined(child)) {
+      if (child) {
         this.nodeModelToTopic(child);
       }
     });
     return result;
+  }
+
+  changeTheme(id: ThemeType): void {
+    const mindmap = this.getMindmap();
+    mindmap.setTheme(id);
+
+    // Update background color ...
+    const theme = ThemeFactory.createById(id);
+
+    const style = theme.getCanvasCssStyle();
+    this._canvas.setBackgroundStyle(style);
+
+    const centralTopic = this.getModel().getCentralTopic();
+    centralTopic.redraw(true);
   }
 
   /**
@@ -672,14 +723,10 @@ class Designer extends Events {
 
     result.setVisibility(sourceTopic.isVisible() && targetTopic.isVisible());
 
-    this._workspace.append(result);
+    this._canvas.append(result);
     return result;
   }
 
-  /**
-   * @param {mindplot.model.RelationshipModel} model
-   * @return {mindplot.Relationship} the relationship added to the mindmap
-   */
   addRelationship(model: RelationshipModel): Relationship {
     const mindmap = this.getMindmap();
     mindmap.addRelationship(model);
@@ -698,7 +745,7 @@ class Designer extends Events {
     targetTopic.deleteRelationship(rel);
 
     this.getModel().removeRelationship(rel);
-    this._workspace.removeChild(rel);
+    this._canvas.removeChild(rel);
 
     const mindmap = this.getMindmap();
     mindmap.deleteRelationship(rel.getModel());
@@ -718,24 +765,22 @@ class Designer extends Events {
     );
 
     // Build relationship line ....
-    const result = new Relationship(sourceTopic, targetTopic, model);
-    const me = this;
-
+    const result = new Relationship(sourceTopic!, targetTopic!, model);
     result.addEvent('ontblur', () => {
-      const topics = me.getModel().filterSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+      const topics = this.getModel().filterSelectedTopics();
+      const rels = this.getModel().filterSelectedRelationships();
 
       if (topics.length === 0 || rels.length === 0) {
-        me.fireEvent('onblur');
+        this.fireEvent('onblur');
       }
     });
 
     result.addEvent('ontfocus', () => {
-      const topics = me.getModel().filterSelectedTopics();
-      const rels = me.getModel().filterSelectedRelationships();
+      const topics = this.getModel().filterSelectedTopics();
+      const rels = this.getModel().filterSelectedRelationships();
 
       if (topics.length === 1 || rels.length === 1) {
-        me.fireEvent('onfocus');
+        this.fireEvent('onfocus');
       }
     });
 
@@ -748,28 +793,28 @@ class Designer extends Events {
   removeTopic(node: Topic): void {
     if (!node.isCentralTopic()) {
       const parent = node.getParent();
-      node.disconnect(this._workspace);
+      node.disconnect(this._canvas);
 
       // remove children
       while (node.getChildren().length > 0) {
         this.removeTopic(node.getChildren()[0]);
       }
 
-      this._workspace.removeChild(node);
+      this._canvas.removeChild(node);
       this.getModel().removeTopic(node);
 
       // Delete this node from the model...
       const model = node.getModel();
       model.deleteNode();
 
-      if ($defined(parent)) {
+      if (parent) {
         this.goToNode(parent);
       }
     }
   }
 
   private _resetEdition() {
-    const screenManager = this._workspace.getScreenManager();
+    const screenManager = this._canvas.getScreenManager();
     screenManager.fireEvent('update');
     screenManager.fireEvent('mouseup');
     this._relPivot.dispose();
@@ -818,9 +863,7 @@ class Designer extends Events {
     }
   }
 
-  changeFontColor(color: string) {
-    $assert(color, 'color can not be null');
-
+  changeFontColor(color: string | undefined): void {
     const topicsIds = this.getModel().filterTopicsIds();
 
     if (topicsIds.length > 0) {
@@ -828,9 +871,8 @@ class Designer extends Events {
     }
   }
 
-  /** */
-  changeBackgroundColor(color: string) {
-    const validateFunc = (topic: Topic) => topic.getShapeType() !== TopicShape.LINE;
+  changeBackgroundColor(color: string | undefined): void {
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
 
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
@@ -839,8 +881,8 @@ class Designer extends Events {
     }
   }
 
-  changeBorderColor(color: string) {
-    const validateFunc = (topic: Topic) => topic.getShapeType() !== TopicShape.LINE;
+  changeBorderColor(color: string | undefined) {
+    const validateFunc = (topic: Topic) => topic.getShapeType() !== 'line';
     const validateError = 'Color can not be set to line topics.';
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
@@ -855,14 +897,32 @@ class Designer extends Events {
     }
   }
 
-  changeTopicShape(shape: string) {
+  changeTopicShape(shape: TopicShapeType): void {
     const validateFunc = (topic: Topic) =>
-      !(topic.getType() === 'CentralTopic' && shape === TopicShape.LINE);
+      !(topic.getType() === 'CentralTopic' && (shape === 'line' || shape === 'none'));
 
-    const validateError = 'Central Topic shape can not be changed to line figure.';
+    const validateError = $msg('CENTRAL_TOPIC_STYLE_CAN_NOT_BE_CHANGED');
     const topicsIds = this.getModel().filterTopicsIds(validateFunc, validateError);
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeShapeTypeToTopic(topicsIds, shape);
+    }
+  }
+
+  changeConnectionStyle(type: LineType): void {
+    const topicsIds = this.getModel()
+      .filterSelectedTopics()
+      .map((t) => t.getId());
+    if (topicsIds.length > 0) {
+      this._actionDispatcher.changeConnectionStyleToTopic(topicsIds, type);
+    }
+  }
+
+  changeConnectionColor(value: string | undefined): void {
+    const topicsIds = this.getModel()
+      .filterSelectedTopics()
+      .map((t) => t.getId());
+    if (topicsIds.length > 0) {
+      this._actionDispatcher.changeConnectionColorToTopic(topicsIds, value);
     }
   }
 
@@ -875,15 +935,11 @@ class Designer extends Events {
 
   addIconType(type: 'image' | 'emoji', iconType: string): void {
     const topicsIds = this.getModel().filterTopicsIds();
+    const featureType: FeatureType = type === 'emoji' ? 'eicon' : 'icon';
 
-    const featureType: FeatureType = (
-      type === 'emoji' ? TopicFeatureFactory.EmojiIcon.id : TopicFeatureFactory.SvgIcon.id
-    ) as FeatureType;
-    if (topicsIds.length > 0) {
-      this._actionDispatcher.addFeatureToTopic(topicsIds[0], featureType, {
-        id: iconType,
-      });
-    }
+    this._actionDispatcher.addFeatureToTopic(topicsIds, featureType, {
+      id: iconType,
+    });
   }
 
   addLink(): void {
@@ -911,8 +967,8 @@ class Designer extends Events {
     this.onObjectFocusEvent(node);
   }
 
-  getWorkSpace(): Workspace {
-    return this._workspace;
+  getWorkSpace(): Canvas {
+    return this._canvas;
   }
 
   public get cleanScreen(): () => void {

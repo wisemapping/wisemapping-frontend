@@ -11,9 +11,6 @@
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
-    "editor.edit-mobile": {
-        "defaultMessage": "Remarque pour les appareils mobiles."
-    },
     "editor.edit-description-mobile": {
         "defaultMessage": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
     },
@@ -71,77 +68,80 @@
     "link.placeholder": {
         "defaultMessage": "https://www.example.com"
     },
-    "note.label": {
-        "defaultMessage": "Noter"
+    "editor-panel.note-panel-title": {
+        "defaultMessage": "Note"
+    },
+    "editor-panel.icon-title": {
+        "defaultMessage": "Icône"
+    },
+    "editor-panel.link-panel-title": {
+        "defaultMessage": "Lien"
     },
     "editor-panel.tooltip-add-icon": {
-        "defaultMessage": "Agregar Icono"
+        "defaultMessage": "Ajouter une icône"
     },
     "editor-panel.tooltip-add-link": {
-        "defaultMessage": "Agregar Enlace"
+        "defaultMessage": "Ajouter un lien"
     },
     "editor-panel.tooltip-add-note": {
-        "defaultMessage": "Agregar Nota"
+        "defaultMessage": "Ajouter une note"
     },
     "editor-panel.tooltip-add-relationship": {
-        "defaultMessage": "Agregar Relación"
+        "defaultMessage": "Ajouter une relation"
     },
     "editor-panel.tooltip-add-topic": {
-        "defaultMessage": "Agregar Topico"
+        "defaultMessage": "Ajouter un sujet"
     },
-    "editor-panel.tooltip-delete-topic": {
-        "defaultMessage": "Borrar Topico"
+    "editor-panel.tooltip-delete-sujet": {
+        "defaultMessage": "Supprimer le sujet"
     },
     "editor-panel.tooltip-topic-border-color": {
-        "defaultMessage": "Color del borde"
-    },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Color del cotenido"
+        "defaultMessage": "Couleur de bordure"
     },
     "editor-panel.tooltip-topic-font-bigger": {
-        "defaultMessage": "Grande"
+        "defaultMessage": "Grand"
     },
     "editor-panel.tooltip-topic-font-bold": {
-        "defaultMessage": "Negrita"
+        "defaultMessage": "Gras"
     },
     "editor-panel.tooltip-topic-font-color": {
-        "defaultMessage": "Color"
+        "defaultMessage": "Couleur"
     },
     "editor-panel.tooltip-topic-font-italic": {
-        "defaultMessage": "Italica"
+        "defaultMessage": "Italique"
     },
     "editor-panel.tooltip-topic-font-smaller": {
-        "defaultMessage": "Pequeña"
+        "defaultMessage": "Petit"
     },
     "editor-panel.tooltip-topic-font-style": {
-        "defaultMessage": "Estilo de Fuente"
+        "defaultMessage": "Style de police"
     },
     "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Figura elipse"
+        "defaultMessage": "Forme d'ellipse"
     },
     "editor-panel.tooltip-topic-share-line": {
-        "defaultMessage": "Figura linea"
+        "defaultMessage": "Chiffre de ligne"
     },
     "editor-panel.tooltip-topic-share-rectangle": {
-        "defaultMessage": "Figura rectangulo"
+        "defaultMessage": "Forme rectangulaire"
     },
-    "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Figura redonda"
+    "editor-panel.tooltip-topic-share-arrondi": {
+        "defaultMessage": "Forme ronde"
     },
     "editor-panel.tooltip-topic-style": {
-        "defaultMessage": "Estilo de Topico"
+        "defaultMessage": "Style de sujet"
     },
-    "zoom-panel.tooltip-keyboard": {
-        "defaultMessage": "Keyboard Shortcuts"
+    "zoom-panel.tooltip-clavier": {
+        "defaultMessage": "Raccourcis clavier"
     },
     "zoom-panel.tooltip-zoom-in": {
-        "defaultMessage": "Acercar"
+        "defaultMessage": "Zoom avant"
     },
     "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "Alejarse"
+        "defaultMessage": "S'éloigner"
     },
     "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Centrar"
+        "defaultMessage": "Centre"
     },
     "shortcut-help-pane.action": {
         "defaultMessage": "Action"
@@ -211,5 +211,53 @@
     },
     "shortcut-help-pane.undo": {
         "defaultMessage": "Annuler l'édition"
+    },
+    "icon-picker.show-images": {
+        "defaultMessage": "Afficher les images"
+    },
+    "editor-panel.tooltip-connection-style-polyline": {
+        "defaultMessage": "Polyligne"
+    },
+    "editor-panel.tooltip-connection-style-polyline-curved": {
+        "defaultMessage": "Courbe polyligne"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Sobrescribir el texto del tópico"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Commencer à écrire sur le sujet sélectionné"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Couleur"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Couleur par défaut"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Style de connexion"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Courbe large"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Courbe mince"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Couleur de bordure par défaut"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "La couleur de remplissage"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Couleur de relleno por defecto"
+    },
+    "action.delete": {
+        "defaultMessage": "Supprimer"
+    },
+    "editor-panel.tooltip-topic-font-color-default": {
+        "defaultMessage": "Couleur par défaut"
+    },
+    "shortcut-help-pane.drag-disconnect": {
+        "defaultMessage": "Déconnecter le sujet"
     }
 }

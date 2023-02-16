@@ -15,37 +15,46 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+import { Group, Rect } from '@wisemapping/web2d';
 import { $assert } from '@wisemapping/core-js';
-import { ElementClass, Point } from '@wisemapping/web2d';
-import TopicConfig from './TopicConfig';
 import NodeModel from './model/NodeModel';
-import Workspace from './Workspace';
+import Canvas from './Canvas';
 import DragTopic from './DragTopic';
 import LayoutManager from './layout/LayoutManager';
 import SizeType from './SizeType';
+import PositionType from './PositionType';
+import CanvasElement from './CanvasElement';
 
-abstract class NodeGraph {
+export type NodeOption = {
+  readOnly: boolean;
+};
+
+abstract class NodeGraph implements CanvasElement {
   private _mouseEvents: boolean;
 
-  private _options;
+  private _options: NodeOption;
 
-  private _onFocus: boolean;
+  protected _onFocus: boolean;
 
   private _size: SizeType;
 
   private _model: NodeModel;
 
-  private _elem2d: ElementClass;
+  private _elem2d: Group | undefined;
 
-  constructor(nodeModel: NodeModel, options) {
+  constructor(nodeModel: NodeModel, options: NodeOption) {
     $assert(nodeModel, 'model can not be null');
 
     this._options = options;
     this._mouseEvents = true;
-    this.setModel(nodeModel);
+    this._model = nodeModel;
     this._onFocus = false;
     this._size = { width: 50, height: 20 };
   }
+
+  abstract addToWorkspace(workspace: Canvas): void;
+
+  abstract removeFromWorkspace(workspace: Canvas): void;
 
   isReadOnly(): boolean {
     return this._options.readOnly;
@@ -61,16 +70,18 @@ abstract class NodeGraph {
     this.getModel().setId(id);
   }
 
-  protected _set2DElement(elem2d: ElementClass) {
+  protected _set2DElement(elem2d: Group) {
     this._elem2d = elem2d;
   }
 
-  get2DElement(): ElementClass {
-    $assert(this._elem2d, 'NodeGraph has not been initialized properly');
+  get2DElement(): Group {
+    if (!this._elem2d) {
+      throw new Error('Eleemnt has not been initialized.');
+    }
     return this._elem2d;
   }
 
-  abstract setPosition(point, fireEvent): void;
+  abstract setPosition(point: PositionType, fireEvent): void;
 
   /** */
   addEvent(type: string, listener) {
@@ -79,19 +90,19 @@ abstract class NodeGraph {
   }
 
   /** */
-  removeEvent(type, listener) {
+  removeEvent(type: string, listener) {
     const elem = this.get2DElement();
     elem.removeEvent(type, listener);
   }
 
   /** */
-  fireEvent(type, event) {
+  fireEvent(type: string, event) {
     const elem = this.get2DElement();
     elem.trigger(type, event);
   }
 
   /** */
-  setMouseEventsEnabled(isEnabled) {
+  setMouseEventsEnabled(isEnabled: boolean) {
     this._mouseEvents = isEnabled;
   }
 
@@ -114,7 +125,7 @@ abstract class NodeGraph {
     return this._model;
   }
 
-  setModel(model: NodeModel) {
+  setModel(model: NodeModel): void {
     $assert(model, 'Model can not be null');
     this._model = model;
   }
@@ -123,53 +134,38 @@ abstract class NodeGraph {
     return this._model.getId();
   }
 
-  setOnFocus(focus: boolean) {
-    if (this._onFocus !== focus) {
-      this._onFocus = focus;
-      const outerShape = this.getOuterShape();
-      if (focus) {
-        outerShape.setFill(TopicConfig.OUTER_SHAPE_ATTRIBUTES_FOCUS.fillColor);
-        outerShape.setOpacity(1);
-      } else {
-        outerShape.setFill(TopicConfig.OUTER_SHAPE_ATTRIBUTES.fillColor);
-        outerShape.setOpacity(0);
-      }
-      this.setCursor('move');
-
-      // In any case, always try to hide the editor ...
-      this.closeEditors();
-
-      // Fire event ...
-      this.fireEvent(focus ? 'ontfocus' : 'ontblur', this);
-    }
-  }
+  abstract setOnFocus(focus: boolean): void;
 
   abstract closeEditors(): void;
 
   abstract setCursor(type: string): void;
 
-  abstract getOuterShape(): ElementClass;
+  abstract getOuterShape(): Rect;
 
   isOnFocus(): boolean {
     return this._onFocus;
   }
 
-  dispose(workspace: Workspace) {
+  dispose(workspace: Canvas) {
     this.setOnFocus(false);
     workspace.removeChild(this);
   }
 
-  createDragNode(layoutManager: LayoutManager) {
-    const dragShape = this._buildDragShape();
+  createDragNode(layoutManager: LayoutManager): DragTopic {
+    const dragShape = this.buildDragShape();
 
     return new DragTopic(dragShape, this, layoutManager);
   }
 
-  abstract _buildDragShape();
+  abstract buildDragShape();
 
-  getPosition(): Point {
+  getPosition(): PositionType {
     const model = this.getModel();
     return model.getPosition();
+  }
+
+  isCentralTopic(): boolean {
+    return this.getModel().getType() === 'CentralTopic';
   }
 }
 

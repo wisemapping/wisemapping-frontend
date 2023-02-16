@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -15,25 +16,26 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { Elipse } from '@wisemapping/web2d';
+import { Ellipse, Group } from '@wisemapping/web2d';
 
 import TopicConfig from './TopicConfig';
 import ActionDispatcher from './ActionDispatcher';
 import Topic from './Topic';
+import ColorUtil from './theme/ColorUtil';
 
 class ShirinkConnector {
   private _isShrink: boolean;
 
-  private _ellipse: Elipse;
+  private _ellipse: Ellipse;
 
   constructor(topic: Topic) {
     this._isShrink = false;
-    const ellipse = new Elipse(TopicConfig.INNER_RECT_ATTRIBUTES);
+    const ellipse = new Ellipse({
+      width: TopicConfig.CONNECTOR_WIDTH,
+      height: TopicConfig.CONNECTOR_WIDTH,
+    });
     this._ellipse = ellipse;
 
-    ellipse.setFill('rgb(62,118,179)');
-
-    ellipse.setSize(TopicConfig.CONNECTOR_WIDTH, TopicConfig.CONNECTOR_WIDTH);
     ellipse.addEvent('click', (event: Event) => {
       const model = topic.getModel();
       const collapse = !model.areChildrenShrunken();
@@ -56,11 +58,11 @@ class ShirinkConnector {
     });
 
     ellipse.addEvent('mouseover', () => {
-      ellipse.setStroke(this._isShrink ? 1 : 2, 'solid');
+      ellipse.setStroke(this._isShrink ? 2 : 3, 'solid');
     });
 
     ellipse.addEvent('mouseout', () => {
-      ellipse.setStroke(this._isShrink ? 2 : 1, 'solid');
+      ellipse.setStroke(this._isShrink ? 3 : 2, 'solid');
     });
 
     ellipse.setCursor('default');
@@ -71,11 +73,16 @@ class ShirinkConnector {
   changeRender(isShrink: boolean) {
     const elipse = this._ellipse;
     if (isShrink) {
-      elipse.setStroke('2', 'solid');
+      elipse.setStroke(4, 'solid');
     } else {
-      elipse.setStroke('1', 'solid');
+      elipse.setStroke(3, 'solid');
     }
     this._isShrink = isShrink;
+  }
+
+  setColor(color: string) {
+    this._ellipse.setStroke(2, 'solid', color);
+    this._ellipse.setFill(ColorUtil.lightenColor(color, 100));
   }
 
   setVisibility(value: boolean, fade = 0): void {
@@ -86,20 +93,12 @@ class ShirinkConnector {
     this._ellipse.setOpacity(opacity);
   }
 
-  setFill(color: string): void {
-    this._ellipse.setFill(color);
-  }
-
-  setAttribute(name: string, value) {
-    this._ellipse.setAttribute(name, value);
-  }
-
-  addToWorkspace(group): void {
+  addToWorkspace(group: Group): void {
     group.append(this._ellipse);
   }
 
   setPosition(x: number, y: number): void {
-    this._ellipse.setPosition(x, y);
+    this._ellipse.setPosition(x + 3, y + 3);
   }
 
   moveToBack(): void {

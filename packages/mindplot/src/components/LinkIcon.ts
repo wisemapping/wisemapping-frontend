@@ -43,12 +43,14 @@ class LinkIcon extends ImageIcon {
   }
 
   private _registerEvents() {
-    this._image.setCursor('pointer');
+    this.getElement().setCursor('pointer');
 
-    const manager = WidgetManager.getInstance();
-    manager.createTooltipForLink(this._topic, this._linksModel as LinkModel, this);
-    if (!this._readOnly) {
-      manager.configureEditorForLink(this._topic, this._linksModel as LinkModel, this);
+    if (WidgetManager.isInitialized()) {
+      const manager = WidgetManager.getInstance();
+      manager.createTooltipForLink(this._topic, this._linksModel as LinkModel, this);
+      if (!this._readOnly) {
+        manager.configureEditorForLink(this._topic, this._linksModel as LinkModel, this);
+      }
     }
   }
 

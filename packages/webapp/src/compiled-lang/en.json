@@ -233,6 +233,12 @@
       "value": "All selected maps will be deleted"
     }
   ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Loading ..."
+    }
+  ],
   "duplicate.title": [
     {
       "type": 0,
@@ -371,6 +377,18 @@
       "value": "Email"
     }
   ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Back to login"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "You dont need password, please login using Google."
+    }
+  ],
   "forgot.page-title": [
     {
       "type": 0,
@@ -446,7 +464,7 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "Import failed: "
+      "value": "Import error "
     },
     {
       "type": 1,
@@ -613,6 +631,12 @@
       "value": "Log into your account"
     }
   ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "or"
+    }
+  ],
   "login.email": [
     {
       "type": 0,
@@ -631,10 +655,10 @@
       "value": "Forgot Password ?"
     }
   ],
-  "login.hsqldbcofig": [
+  "login.google.button": [
     {
       "type": 0,
-      "value": "Although HSQLDB is bundled with WiseMapping by default during the installation, we do not recommend this database for production use. Please consider using MySQL 5.7 instead. You can find more information how to configure MySQL"
+      "value": "Sign in with Google"
     }
   ],
   "login.page-title": [
@@ -901,16 +925,64 @@
       "value": "Publish"
     }
   ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "An error occurred validating your identity with Google, you can try again from the login page"
+    }
+  ],
   "registation.success-title": [
     {
       "type": 0,
       "value": "Registation Success | WiseMapping"
     }
   ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Back to login"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "An account with the same email was previously registered. Do you want to link your google account to that WiseMapping account?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Confirm"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Sync account"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Please wait while we validate your identity"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Finishing..."
+    }
+  ],
   "registration.desc": [
     {
       "type": 0,
       "value": "Signing up is free and just take a moment"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "or"
     }
   ],
   "registration.email": [
@@ -923,6 +995,12 @@
     {
       "type": 0,
       "value": "First Name"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Sign up with Google"
     }
   ],
   "registration.lastname": [

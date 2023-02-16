@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar';
@@ -43,7 +43,7 @@ import MapInfo from '../../classes/model/map-info';
 import { useIntl } from 'react-intl';
 
 interface AppBarProps {
-  model: Editor;
+  model: Editor | undefined;
   mapInfo: MapInfo;
   capability: Capability;
   onAction?: (type: ToolbarActionType) => void;
@@ -59,7 +59,21 @@ const keyTooltip = (msg: string, key: string): string => {
   return `${msg} (${isMac ? '⌘' : 'Ctrl'} + ${key})`;
 };
 
-const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarProps) => {
+const StarredOnStyle = {
+  color: '#FDDA0D',
+};
+
+const StarredOffStyle = {
+  color: 'gray',
+};
+
+const AppBar = ({
+  model,
+  mapInfo,
+  capability,
+  onAction,
+  accountConfig,
+}: AppBarProps): ReactElement => {
   const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
   const intl = useIntl();
 
@@ -86,10 +100,10 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
         id: 'appbar.back-to-map-list',
         defaultMessage: 'Back to maps list',
       }),
-      onClick: () => history.back(),
+      onClick: () => (window.location.href = '/c/maps/'),
     },
     {
-      render: () => <img src={LogoTextBlackSvg} />,
+      render: () => <img src={LogoTextBlackSvg} aria-label="WiseMappping" />,
       visible: !capability.isHidden('appbar-title'),
     },
     {
@@ -174,9 +188,7 @@ const AppBar = ({ model, mapInfo, capability, onAction, accountConfig }: AppBarP
           <IconButton size="small" onClick={handleStarredOnClick}>
             <StarRateRoundedIcon
               color="action"
-              style={{
-                color: isStarred ? 'yellow' : 'gray',
-              }}
+              style={isStarred ? StarredOnStyle : StarredOffStyle}
             />
           </IconButton>
         </Tooltip>

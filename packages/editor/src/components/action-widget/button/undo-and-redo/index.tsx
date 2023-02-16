@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import ActionConfig from '../../../../classes/action/action-config';
 import Editor from '../../../../classes/model/editor';
 import { ToolbarMenuItem } from '../../../toolbar';
@@ -26,12 +26,12 @@ type UndoAndRedo = {
   model: Editor;
 };
 
-const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo) => {
+const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): ReactElement => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     if (model?.isMapLoadded()) {
-      const handleUpdate: any = (event) => {
+      const handleUpdate = (event) => {
         const isDisabled = disabledCondition(event);
         setDisabled(!isDisabled);
 

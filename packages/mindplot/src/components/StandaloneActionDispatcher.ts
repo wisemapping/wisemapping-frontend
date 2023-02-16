@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 import { $defined, $assert } from '@wisemapping/core-js';
-import { Point } from '@wisemapping/web2d';
 import ActionDispatcher from './ActionDispatcher';
 import DesignerActionRunner from './DesignerActionRunner';
 import AddTopicCommand from './commands/AddTopicCommand';
@@ -35,6 +34,10 @@ import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import Command from './Command';
 import FeatureType from './model/FeatureType';
+import PositionType from './PositionType';
+import { PivotType } from './RelationshipControlPoints';
+import { TopicShapeType } from './model/INodeModel';
+import { LineType } from './ConnectionLine';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -52,7 +55,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this._actionRunner = new DesignerActionRunner(commandContext, this);
   }
 
-  addTopics(models: NodeModel[], parentTopicsId: number[] = undefined) {
+  addTopics(models: NodeModel[], parentTopicsId: number[] | null) {
     const command = new AddTopicCommand(models, parentTopicsId);
     this.execute(command);
   }
@@ -69,17 +72,17 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic) {
+  dragTopic(topicId: number, position: PositionType, order: number, parentTopic: Topic): void {
     const command = new DragTopicCommand(topicId, position, order, parentTopic);
     this.execute(command);
   }
 
   /** */
-  moveTopic(topicId: number, position: Point) {
+  moveTopic(topicId: number, position: PositionType): void {
     $assert($defined(topicId), 'topicsId can not be null');
     $assert($defined(position), 'position can not be null');
 
-    const commandFunc = (topic: Topic, pos: Point) => {
+    const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
       EventBus.instance.fireEvent('topicMoved', {
         node: topic.getModel(),
@@ -93,8 +96,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  moveControlPoint(ctrlPoint: Point, point: Point) {
-    const command = new MoveControlPointCommand(ctrlPoint, point);
+  moveControlPoint(model: RelationshipModel, ctrlPoint: PositionType, index: PivotType): void {
+    const command = new MoveControlPointCommand(model, ctrlPoint, index);
     this.execute(command);
   }
 
@@ -103,10 +106,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     const commandFunc = (topic: Topic) => {
       const result = topic.getFontStyle();
       const style = result === 'italic' ? 'normal' : 'italic';
-      topic.setFontStyle(style, true);
+      topic.setFontStyle(style);
       return result;
     };
-    const command = new GenericFunctionCommand(commandFunc, topicsIds);
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
     this.execute(command);
   }
 
@@ -131,9 +134,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, commandFontFamily: string) => {
       const result = topic.getFontFamily();
-      topic.setFontFamily(commandFontFamily, true);
+      topic.setFontFamily(commandFontFamily);
 
-      topic.adjustShapes();
+      topic.redraw();
       return result;
     };
 
@@ -141,51 +144,40 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
-  changeFontColorToTopic(topicsIds: number[], color: string) {
-    $assert(topicsIds, 'topicIds can not be null');
-    $assert(color, 'color can not be null');
-
-    const commandFunc = (topic: Topic, commandColor: string) => {
+  changeFontColorToTopic(topicsIds: number[], color: string | undefined) {
+    const commandFunc = (topic: Topic, commandColor: string | undefined) => {
       const result = topic.getFontColor();
-      topic.setFontColor(commandColor, true);
+      topic.setFontColor(commandColor);
       return result;
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-    command.discardDuplicated = 'fontColorCommandId';
+    command.setDiscardDuplicated('fontColorCommandId');
     this.execute(command);
   }
 
-  /** */
-  changeBackgroundColorToTopic(topicsIds: number[], color: string) {
-    $assert(topicsIds, 'topicIds can not be null');
-    $assert(color, 'color can not be null');
-
-    const commandFunc = (topic: Topic, commandColor: string) => {
+  changeBackgroundColorToTopic(topicsIds: number[], color: string | undefined) {
+    const commandFunc = (topic: Topic, value: string | undefined) => {
       const result = topic.getBackgroundColor();
-      topic.setBackgroundColor(commandColor);
+      topic.setBackgroundColor(value);
       return result;
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-    command.discardDuplicated = 'backColor';
+    command.setDiscardDuplicated('backColor');
     this.execute(command);
   }
 
   /** */
-  changeBorderColorToTopic(topicsIds: number[], color: string): void {
-    $assert(topicsIds, 'topicIds can not be null');
-    $assert(color, 'topicIds can not be null');
-
-    const commandFunc = (topic: Topic, commandColor: string) => {
+  changeBorderColorToTopic(topicsIds: number[], color: string | undefined): void {
+    const commandFunc = (topic: Topic, commandColor: string | undefined) => {
       const result = topic.getBorderColor();
       topic.setBorderColor(commandColor);
       return result;
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, color);
-    command.discardDuplicated = 'borderColorCommandId';
+    command.setDiscardDuplicated('borderColorCommandId');
     this.execute(command);
   }
 
@@ -196,9 +188,9 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, commandSize: number) => {
       const result = topic.getFontSize();
-      topic.setFontSize(commandSize, true);
+      topic.setFontSize(commandSize);
 
-      topic.adjustShapes();
+      topic.redraw();
       return result;
     };
 
@@ -206,12 +198,11 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
-  changeShapeTypeToTopic(topicsIds: number[], shapeType: string) {
+  changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
     $assert(topicsIds, 'topicsIds can not be null');
     $assert(shapeType, 'shapeType can not be null');
 
-    const commandFunc = (topic: Topic, commandShapeType: string) => {
+    const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
       const result = topic.getShapeType();
       topic.setShapeType(commandShapeType);
       return result;
@@ -221,20 +212,40 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
+  changeConnectionStyleToTopic(topicsIds: number[], lineType: LineType) {
+    const commandFunc = (topic: Topic, type: LineType) => {
+      const result = topic.getConnectionStyle();
+      topic.setConnectionStyle(type);
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, lineType);
+    this.execute(command);
+  }
+
+  changeConnectionColorToTopic(topicsIds: number[], value: string | undefined) {
+    const commandFunc = (topic: Topic, color: string | undefined) => {
+      const result: string = topic.getConnectionColor();
+      topic.setConnectionColor(color);
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, value);
+    this.execute(command);
+  }
+
   changeFontWeightToTopic(topicsIds: number[]) {
     $assert(topicsIds, 'topicsIds can not be null');
 
     const commandFunc = (topic: Topic) => {
       const result = topic.getFontWeight();
       const weight = result === 'bold' ? 'normal' : 'bold';
-      topic.setFontWeight(weight, true);
-
-      topic.adjustShapes();
+      topic.setFontWeight(weight);
+      topic.redraw();
       return result;
     };
 
-    const command = new GenericFunctionCommand(commandFunc, topicsIds);
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
     this.execute(command);
   }
 
@@ -251,7 +262,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  addFeatureToTopic(topicId: number, featureType: FeatureType, attributes) {
+  addFeatureToTopic(topicId: number[], featureType: FeatureType, attributes) {
     const command = new AddFeatureToTopicCommand(topicId, featureType, attributes);
     this.execute(command);
   }

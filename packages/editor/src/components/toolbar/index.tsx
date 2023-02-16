@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -25,13 +25,15 @@ import '../app-bar/styles.css';
 import Box from '@mui/material/Box';
 import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
 
 /**
  * Common button
  * @param props.configuration the configuration
  * @returns common button menu entry that uses the onClick of the configuration.
  */
-export const ToolbarButtonOption = (props: { configuration: ActionConfig }) => {
+export const ToolbarButtonOption = (props: { configuration: ActionConfig }): ReactElement => {
   const selected = props.configuration.selected && props.configuration.selected();
   return (
     <Tooltip
@@ -87,7 +89,7 @@ export const ToolbarSubmenu = (props: {
   configuration: ActionConfig;
   vertical?: boolean;
   elevation?: number;
-}) => {
+}): ReactElement => {
   const [open, setOpen] = useState(false);
   const itemRef = useRef(null);
 
@@ -106,7 +108,11 @@ export const ToolbarSubmenu = (props: {
       }}
     >
       <ToolbarButtonOption
-        configuration={{ ...props.configuration, onClick: () => setOpen(true) }}
+        configuration={{
+          ...props.configuration,
+          onClick: () => setOpen(true),
+          selected: () => open,
+        }}
       />
       <Popover
         role="submenu"
@@ -125,6 +131,29 @@ export const ToolbarSubmenu = (props: {
         }}
         elevation={props.elevation}
       >
+        {props.configuration.useClickToClose && (
+          <Box textAlign={'right'} ml={1}>
+            <Typography
+              variant="body1"
+              style={{
+                paddingTop: '15px',
+                paddingLeft: '5px',
+                float: 'left',
+                fontWeight: 'bold',
+                fontSize: '20px',
+              }}
+            >
+              {props.configuration.title}
+            </Typography>
+            <IconButton
+              onClick={() => setOpen(false)}
+              aria-label={'Close'}
+              sx={{ marginTop: '10px', marginRight: '5px' }}
+            >
+              <CloseIcon aria-label={'Close'} />
+            </IconButton>
+          </Box>
+        )}
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
           {props.configuration.options?.map((o, i) => {
             if (o?.visible === false) {
@@ -133,7 +162,7 @@ export const ToolbarSubmenu = (props: {
             if (!o?.render) {
               return (
                 <ToolbarMenuItem
-                  vertical={!!!props.vertical}
+                  vertical={!props.vertical}
                   key={i}
                   configuration={o as ActionConfig}
                   elevation={props.elevation + 3}
@@ -158,7 +187,7 @@ export const ToolbarMenuItem = (props: {
   configuration: ActionConfig | null;
   vertical?: boolean;
   elevation?: number;
-}) => {
+}): ReactElement => {
   if (props.configuration === null)
     return (
       <Divider
@@ -209,7 +238,7 @@ const Toolbar = (props: {
   configurations: ActionConfig[];
   position?: ToolbarPosition;
   rerender?: number;
-}) => {
+}): ReactElement => {
   const position = props.position || defaultPosition;
   return (
     <AppBar

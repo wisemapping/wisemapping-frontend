@@ -18,14 +18,14 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
-import Point from '@wisemapping/web2d';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
-import ControlPoint from './ControlPoint';
+import { PivotType } from './RelationshipControlPoints';
 import Events from './Events';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
+import PositionType from './PositionType';
 
 abstract class ActionDispatcher extends Events {
   private static _instance: ActionDispatcher;
@@ -48,11 +48,20 @@ abstract class ActionDispatcher extends Events {
 
   abstract deleteEntities(topicsIds: number[], relIds: number[]): void;
 
-  abstract dragTopic(topicId: number, position: Point, order: number, parentTopic: Topic): void;
+  abstract dragTopic(
+    topicId: number,
+    position: PositionType,
+    order: number | null,
+    parentTopic: Topic | null,
+  ): void;
 
-  abstract moveTopic(topicId: number, position: Point): void;
+  abstract moveTopic(topicId: number, position: PositionType): void;
 
-  abstract moveControlPoint(ctrlPoint: ControlPoint, point: Point): void;
+  abstract moveControlPoint(
+    model: RelationshipModel,
+    ctrlPoint: PositionType,
+    index: PivotType,
+  ): void;
 
   abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string): void;
 
@@ -74,7 +83,7 @@ abstract class ActionDispatcher extends Events {
 
   abstract shrinkBranch(topicsIds: number[], collapse: boolean): void;
 
-  abstract addFeatureToTopic(topicId: number, type: string, attributes: object): void;
+  abstract addFeatureToTopic(topicIds: number[], type: string, attributes: object): void;
 
   abstract changeFeatureToTopic(topicId: number, featureId: number, attributes: object): void;
 

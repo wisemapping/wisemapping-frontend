@@ -15,114 +15,60 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
-import { Line } from '@wisemapping/web2d';
 import Command from '../Command';
-import ControlPoint from '../ControlPoint';
+import { PivotType } from '../RelationshipControlPoints';
 import PositionType from '../PositionType';
+import RelationshipModel from '../model/RelationshipModel';
+import CommandContext from '../CommandContext';
 
 class MoveControlPointCommand extends Command {
-  private _ctrlPointControler: ControlPoint;
+  private _ctrIndex: PivotType;
 
-  private _line: Line;
+  private _controlPoint: PositionType | null;
 
-  private _controlPoint: Line;
+  private _modelId: number;
 
-  private _oldControlPoint: Line;
-
-  private _originalEndPoint: PositionType;
-
-  private _wasCustom: boolean;
-
-  private _endPoint: any;
-
-  private _point: number;
-
-  /**
-   * @classdesc This command handles do/undo of changing the control points of a relationship
-   * arrow. These are the two points that appear when the relationship is on focus. They
-   * influence how the arrow is drawn (not the source or the destination topic nor the arrow
-   * direction)
-   */
-  constructor(ctrlPointController: ControlPoint, point: number) {
-    $assert(ctrlPointController, 'line can not be null');
-    $assert($defined(point), 'point can not be null');
-
+  constructor(model: RelationshipModel, controlPoint: PositionType, ctrIndex: PivotType) {
     super();
-    this._ctrlPointControler = ctrlPointController;
-    this._line = ctrlPointController._line;
-    this._controlPoint = { ...this._ctrlPointControler.getControlPoint(point) };
-    this._oldControlPoint = { ...this._ctrlPointControler.getOriginalCtrlPoint(point) };
-    this._originalEndPoint = this._ctrlPointControler.getOriginalEndPoint(point);
-    switch (point) {
-      case 0:
-        this._wasCustom = this._line.getLine().isSrcControlPointCustom();
-        this._endPoint = { ...this._line.getLine().getFrom() };
-        break;
-      case 1:
-        this._wasCustom = this._line.getLine().isDestControlPointCustom();
-        this._endPoint = { ...this._line.getLine().getTo() };
-        break;
-      default:
-        break;
-    }
-    this._point = point;
+    // New control points ...
+    this._ctrIndex = ctrIndex;
+    this._controlPoint = controlPoint;
+    this._modelId = model.getId();
   }
 
-  execute() {
-    const model = this._line.getModel();
-    switch (this._point) {
-      case 0:
-        model.setSrcCtrlPoint({ ...this._controlPoint });
-        this._line.setFrom(this._endPoint.x, this._endPoint.y);
-        this._line.setIsSrcControlPointCustom(true);
-        this._line.setSrcControlPoint({ ...this._controlPoint });
-        break;
-      case 1:
-        model.setDestCtrlPoint({ ...this._controlPoint });
-        this._wasCustom = this._line.getLine().isDestControlPointCustom();
-        this._line.setTo(this._endPoint.x, this._endPoint.y);
-        this._line.setIsDestControlPointCustom(true);
-        this._line.setDestControlPoint({ ...this._controlPoint });
-        break;
-      default:
-        break;
-    }
-    if (this._line.isOnFocus()) {
-      this._line._refreshShape();
-      this._ctrlPointControler.setLine(this._line);
-    }
-    this._line.getLine().updateLine(this._point);
-  }
+  execute(commandContext: CommandContext): void {
+    const relationship = commandContext.findRelationships([this._modelId])[0];
+    const model = relationship.getModel();
 
-  undoExecute() {
-    const line = this._line;
-    const model = line.getModel();
-    switch (this._point) {
-      case 0:
-        if ($defined(this._oldControlPoint)) {
-          line.setFrom(this._originalEndPoint.x, this._originalEndPoint.y);
-          model.setSrcCtrlPoint({ ...this._oldControlPoint });
-          line.setSrcControlPoint({ ...this._oldControlPoint });
-          line.setIsSrcControlPointCustom(this._wasCustom);
+    let oldCtlPoint;
+    switch (this._ctrIndex) {
+      case PivotType.Start:
+        oldCtlPoint = model.getSrcCtrlPoint();
+        model.setSrcCtrlPoint(this._controlPoint!);
+        relationship.setIsSrcControlPointCustom(this._controlPoint != null);
+        if (this._controlPoint) {
+          relationship.setSrcControlPoint(this._controlPoint);
         }
         break;
-      case 1:
-        if ($defined(this._oldControlPoint)) {
-          line.setTo(this._originalEndPoint.x, this._originalEndPoint.y);
-          model.setDestCtrlPoint({ ...this._oldControlPoint });
-          line.setDestControlPoint({ ...this._oldControlPoint });
-          line.setIsDestControlPointCustom(this._wasCustom);
+      case PivotType.End:
+        oldCtlPoint = model.getDestCtrlPoint();
+        model.setDestCtrlPoint(this._controlPoint!);
+        relationship.setIsDestControlPointCustom(this._controlPoint != null);
+        if (this._controlPoint) {
+          relationship.setDestControlPoint(this._controlPoint);
         }
         break;
       default:
-        break;
+        throw new Error('Illegal state exception');
     }
-    this._line.getLine().updateLine(this._point);
-    if (this._line.isOnFocus()) {
-      this._ctrlPointControler.setLine(line);
-      line._refreshShape();
-    }
+    this._controlPoint = oldCtlPoint ? { ...oldCtlPoint } : null;
+
+    relationship.redraw();
+    relationship.setOnFocus(true);
+  }
+
+  undoExecute(commandContext: CommandContext): void {
+    this.execute(commandContext);
   }
 }
 
