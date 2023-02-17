@@ -8,6 +8,7 @@ import ScreenManager from '../../../src/components/ScreenManager';
 import EmojiIconModel from '../../../src/components/model/EmojiIconModel';
 import TopicEventDispatcher from '../../../src/components/TopicEventDispatcher';
 import { TopicShapeType } from '../../../src/components/model/INodeModel';
+import ThemeType from '../../../src/components/model/ThemeType';
 
 const registerRefreshHook = (topic: Topic) => {
   // Trigger a redraw after the node is added ...
@@ -34,6 +35,7 @@ export type TopicArgs = {
   noteText?: string;
   linkText?: string;
   eicon?: string[];
+  theme?: ThemeType;
 };
 
 const createTopic = ({
@@ -47,6 +49,7 @@ const createTopic = ({
   noteText = undefined,
   linkText = undefined,
   eicon = undefined,
+  theme = undefined,
   readOnly = true,
 }: TopicArgs) => {
   // Build basic container ...
@@ -90,6 +93,11 @@ const createTopic = ({
       const emodel = new EmojiIconModel({ id: icon });
       model.addFeature(emodel);
     });
+  }
+
+  // Theme ...
+  if (theme) {
+    mindmap.setTheme(theme);
   }
 
   // Create topic UI element ...

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -16,24 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import EventDispispatcher from '../EventDispatcher';
-import { EventBusType } from '../EventBusType';
+type LayoutEventType = 'change' | 'forceLayout';
 
-class EventBus extends EventDispispatcher<EventBusType> {
-  // eslint-disable-next-line no-use-before-define
-  static _instance: EventBus = new EventBus();
-
-  static get instance(): EventBus {
-    return this._instance;
-  }
-
-  fireEvent(type: EventBusType, arg?: any): void {
-    return super.fireEvent(type, arg);
-  }
-
-  addEvent(type: EventBusType, fn: (arg?: any) => void, internal?: boolean): void {
-    return super.addEvent(type, fn, internal);
-  }
-}
-
-export default EventBus;
+export default LayoutEventType;

@@ -1,10 +1,9 @@
 import NodeModel from '../model/NodeModel';
+import ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
 import DarkPrismTheme from './DarkPrismTheme';
 import PrismTheme from './PrismTheme';
 import Theme from './Theme';
-
-type ThemeId = 'prism' | 'classic' | 'dark-prism';
 
 class ThemeFactory {
   private static prismTheme = new PrismTheme();
@@ -13,7 +12,7 @@ class ThemeFactory {
 
   private static classicTheme = new ClassicTheme();
 
-  static createById(id: ThemeId): Theme {
+  static createById(id: ThemeType): Theme {
     let result: Theme;
     switch (id) {
       case 'classic':

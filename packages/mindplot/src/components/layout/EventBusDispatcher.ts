@@ -45,15 +45,15 @@ class EventBusDispatcher {
   }
 
   private _topicResizeEvent(args: { node: Topic; size: SizeType }) {
-    this._layoutManager!.updateNodeSize(args.node.getId(), args.size);
+    this.getLayoutManager().updateNodeSize(args.node.getId(), args.size);
   }
 
   private _topicMoved(args: { node: Topic; position: PositionType }) {
-    this._layoutManager!.moveNode(args.node.getId(), args.position);
+    this.getLayoutManager().moveNode(args.node.getId(), args.position);
   }
 
   private _topicDisconect(node: Topic) {
-    this._layoutManager!.disconnectNode(node.getId());
+    this.getLayoutManager().disconnectNode(node.getId());
   }
 
   private _topicConnected(args: { parentNode: Topic; childNode: Topic }) {
@@ -64,28 +64,31 @@ class EventBusDispatcher {
     );
   }
 
+  getLayoutManager(): LayoutManager {
+    if (!this._layoutManager) {
+      throw new Error('Layout not initialized');
+    }
+    return this._layoutManager;
+  }
+
   private _childShrinked(node: Topic) {
-    this._layoutManager!.updateShrinkState(node.getId(), node.areChildrenShrunken());
+    this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
   }
 
   private _topicAdded(node: Topic) {
     // Central topic must not be added twice ...
     if (node.getId() !== 0) {
-      this._layoutManager!.addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
-      this._layoutManager!.updateShrinkState(node.getId(), node.areChildrenShrunken());
+      this.getLayoutManager().addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
+      this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
     }
   }
 
   private _topicRemoved(node: Topic) {
-    this._layoutManager!.removeNode(node.getId());
+    this.getLayoutManager().removeNode(node.getId());
   }
 
-  private _forceLayout() {
-    this._layoutManager!.layout(true);
-  }
-
-  getLayoutManager(): LayoutManager {
-    return this._layoutManager!;
+  private _forceLayout(): void {
+    this.getLayoutManager().layout(true);
   }
 }
 

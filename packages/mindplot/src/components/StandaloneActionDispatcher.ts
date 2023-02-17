@@ -55,7 +55,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this._actionRunner = new DesignerActionRunner(commandContext, this);
   }
 
-  addTopics(models: NodeModel[], parentTopicsId: number[] | null) {
+  addTopics(models: NodeModel[], parentTopicsId: number[] | null): void {
     const command = new AddTopicCommand(models, parentTopicsId);
     this.execute(command);
   }

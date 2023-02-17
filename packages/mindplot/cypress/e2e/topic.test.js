@@ -33,4 +33,8 @@ context('Topic suite', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--shape-ellipse&viewMode=story');
     cy.matchImageSnapshot('topic-shape-ellipse');
   });
+  it('topic none line', () => {
+    cy.visit('/iframe.html?args=&id=mindplot-topic--shape-none&viewMode=story');
+    cy.matchImageSnapshot('topic-shape-none');
+  });
 });

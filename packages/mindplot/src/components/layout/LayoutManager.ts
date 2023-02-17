@@ -16,15 +16,16 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import Events from '../Events';
+import EventDispispatcher from '../EventDispatcher';
 import RootedTreeSet from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import ChangeEvent from './ChangeEvent';
 import SizeType from '../SizeType';
 import Node from './Node';
 import PositionType from '../PositionType';
+import LayoutEventType from './LayoutEventType';
 
-class LayoutManager extends Events {
+class LayoutManager extends EventDispispatcher<LayoutEventType> {
   private _treeSet: RootedTreeSet;
 
   private _layout: OriginalLayout;

@@ -27,7 +27,7 @@ import EventBus from './layout/EventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
-import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
+import TopicEventDispatcher from './TopicEventDispatcher';
 import { TopicShapeType } from './model/INodeModel';
 import NodeModel from './model/NodeModel';
 import Relationship from './Relationship';
@@ -528,7 +528,7 @@ abstract class Topic extends NodeGraph {
       }
 
       const eventDispatcher = me._getTopicEventDispatcher();
-      eventDispatcher.process(TopicEvent.CLICK, me);
+      eventDispatcher.process('clicknode', me);
       event.stopPropagation();
     });
   }
@@ -594,7 +594,7 @@ abstract class Topic extends NodeGraph {
 
   getShrinkConnector(): ShirinkConnector | null {
     let result = this._connector;
-    if (this._connector == null) {
+    if (!this._connector) {
       this._connector = new ShirinkConnector(this);
       this._connector.setVisibility(false);
       result = this._connector;
@@ -693,11 +693,8 @@ abstract class Topic extends NodeGraph {
    * Point: references the center of the rect shape.!!!
    */
   setPosition(point: PositionType): void {
-    $assert(point, 'position can not be null');
     // allowed param reassign to avoid risks of existing code relying in this side-effect
-    // eslint-disable-next-line no-param-reassign
     point.x = Math.ceil(point.x);
-    // eslint-disable-next-line no-param-reassign
     point.y = Math.ceil(point.y);
 
     // Update model's position ...
@@ -721,7 +718,6 @@ abstract class Topic extends NodeGraph {
     this.invariant();
   }
 
-  /** */
   getOutgoingLine(): ConnectionLine | null {
     return this._outgoingLine;
   }
@@ -959,7 +955,7 @@ abstract class Topic extends NodeGraph {
     this.redraw();
   }
 
-  connectTo(targetTopic: Topic, workspace: Canvas): void {
+  connectTo(targetTopic: Topic, canvas: Canvas): void {
     // Connect Graphical Nodes ...
     targetTopic.append(this);
     this._parent = targetTopic;
@@ -971,10 +967,10 @@ abstract class Topic extends NodeGraph {
 
     // Create a connection line ...
     const outgoingLine = this.createConnectionLine(targetTopic);
-    outgoingLine.setVisibility(false);
+    // outgoingLine.setVisibility(false);
 
     this._outgoingLine = outgoingLine;
-    workspace.append(outgoingLine);
+    canvas.append(outgoingLine);
 
     // Update figure is necessary.
     this.updateTopicShape(targetTopic);

@@ -20,11 +20,13 @@ import { FontStyle } from '@wisemapping/web2d/src/components/peer/svg/FontPeer';
 import $ from 'jquery';
 
 import ActionDispatcher from './ActionDispatcher';
-import Events from './Events';
+import EventDispatcher from './EventDispatcher';
 import EventBus from './layout/EventBus';
 import Topic from './Topic';
 
-class EditorComponent extends Events {
+type EditorEventType = 'input';
+
+class EditorComponent extends EventDispatcher<EditorEventType> {
   private _topic: Topic;
 
   private _oldText: string | undefined;
