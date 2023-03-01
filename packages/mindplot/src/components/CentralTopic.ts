@@ -43,8 +43,8 @@ class CentralTopic extends Topic {
     super.setCursor(type === 'move' ? 'default' : type);
   }
 
-  updateTopicShape(): void {
-    // Overwite behaviour ...
+  updateTopicShape(): boolean {
+    return true;
   }
 
   updatePositionOnChangeSize(): void {

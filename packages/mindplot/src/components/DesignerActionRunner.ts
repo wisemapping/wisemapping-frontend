@@ -41,6 +41,7 @@ class DesignerActionRunner {
     $assert(command, 'command can not be null');
     command.execute(this._context);
     this._undoManager.enqueue(command);
+
     this.fireChangeEvent();
     LayoutEventBus.fireEvent('forceLayout');
   }

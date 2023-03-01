@@ -117,34 +117,38 @@ abstract class Topic extends NodeGraph {
     return this._parent;
   }
 
-  protected redrawShapeType() {
-    this.removeInnerShape();
+  updateTopicShape(): boolean {
+    const result = this.getInnerShape().getShapeType() !== this.getShapeType();
+    if (result) {
+      this.removeInnerShape();
 
-    // Create a new one ...
-    const innerShape = this.getInnerShape();
+      // Create a new one ...
+      const innerShape = this.getInnerShape();
 
-    // Update figure size ...
-    const size = this.getSize();
-    this.setSize(size, true);
+      // Update figure size ...
+      const size = this.getSize();
+      this.setSize(size, true);
 
-    const group = this.get2DElement();
-    innerShape.appendTo(group);
+      const group = this.get2DElement();
+      innerShape.appendTo(group);
 
-    // Move text to the front ...
-    const text = this.getOrBuildTextShape();
-    text.moveToFront();
+      // Move text to the front ...
+      const text = this.getOrBuildTextShape();
+      text.moveToFront();
 
-    // Move iconGroup to front ...
-    const iconGroup = this.getIconGroup();
-    if (iconGroup) {
-      iconGroup.moveToFront();
+      // Move iconGroup to front ...
+      const iconGroup = this.getIconGroup();
+      if (iconGroup) {
+        iconGroup.moveToFront();
+      }
+
+      // Move connector to front
+      const connector = this.getShrinkConnector();
+      if (connector) {
+        connector.moveToFront();
+      }
     }
-
-    // Move connector to front
-    const connector = this.getShrinkConnector();
-    if (connector) {
-      connector.moveToFront();
-    }
+    return result;
   }
 
   getShapeType(): TopicShapeType {
@@ -709,7 +713,7 @@ abstract class Topic extends NodeGraph {
     this.get2DElement().setPosition(cx, cy);
 
     // Update connection lines ...
-    this._updateConnectionLines();
+    this.updateConnection();
 
     // Check object state.
     this.invariant();
@@ -733,21 +737,6 @@ abstract class Topic extends NodeGraph {
       result = line.getTargetTopic();
     }
     return result;
-  }
-
-  private _updateConnectionLines(): void {
-    // Update this to parent line ...
-    const outgoingLine = this.getOutgoingLine();
-    if (outgoingLine) {
-      outgoingLine.redraw();
-    }
-
-    // Update all the incoming lines ...
-    const incomingLines = this.getIncomingLines();
-    incomingLines.forEach((line) => line.redraw());
-
-    // Update relationship lines
-    this._relationships.forEach((r) => r.redraw());
   }
 
   setBranchVisibility(value: boolean): void {
@@ -948,7 +937,6 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setOrder(value);
 
-    // In case of drag a node, color change based on the order ...
     this.redraw();
   }
 
@@ -964,13 +952,9 @@ abstract class Topic extends NodeGraph {
 
     // Create a connection line ...
     const outgoingLine = this.createConnectionLine(targetTopic);
-    // outgoingLine.setVisibility(false);
 
     this._outgoingLine = outgoingLine;
     canvas.append(outgoingLine);
-
-    // Update figure is necessary.
-    this.updateTopicShape(targetTopic);
 
     // Display connection node...
     const connector = targetTopic.getShrinkConnector();
@@ -984,6 +968,10 @@ abstract class Topic extends NodeGraph {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
       });
+
+      // Hack for the case of first node created, it needs to review the positioning problem.
+      LayoutEventBus.fireEvent('forceLayout');
+      this.redraw();
     }
   }
 
@@ -991,8 +979,6 @@ abstract class Topic extends NodeGraph {
     const type: LineType = targetTopic.getConnectionStyle();
     return new ConnectionLine(this, targetTopic, type);
   }
-
-  abstract updateTopicShape(targetTopic: Topic): void;
 
   append(child: Topic): void {
     const children = this.getChildren();
@@ -1060,17 +1046,15 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  private redrawConnection(): boolean {
+  private updateConnection(): boolean {
     let result = false;
     if (this._isInWorkspace) {
-      // Adjust connection line if there is a change in the parent...
       if (this._outgoingLine) {
         // Has the style change ?
         const connStyleChanged =
           this._outgoingLine.getLineType() !== this.getParent()!.getConnectionStyle();
 
         if (connStyleChanged) {
-          // Todo: Review static reference  ...
           const workspace = designer.getWorkSpace();
           this._outgoingLine.removeFromWorkspace(workspace);
 
@@ -1079,11 +1063,18 @@ abstract class Topic extends NodeGraph {
           this._outgoingLine.setVisibility(this.isVisible());
 
           workspace.append(this._outgoingLine);
+
+          const incomingLines = this.getIncomingLines();
+          incomingLines.forEach((line) => line.redraw());
+
           result = true;
         }
 
+        // Force the repaint in case that the main topic color has changed.
+        const borderColor = this.getBorderColor();
+        this._connector!.setColor(borderColor);
+
         this._outgoingLine.redraw();
-        result = true;
       }
     }
     return result;
@@ -1094,11 +1085,8 @@ abstract class Topic extends NodeGraph {
       const theme = ThemeFactory.create(this.getModel());
       const textShape = this.getOrBuildTextShape();
 
-      // Needs to update inner shape ...
-      const shapeType = this.getShapeType();
-      if (shapeType !== this._innerShape?.getShapeType()) {
-        this.redrawShapeType();
-      }
+      // Update shape ...
+      const shapeChanged = this.updateTopicShape();
 
       // Update font ...
       const fontColor = this.getFontColor();
@@ -1145,32 +1133,27 @@ abstract class Topic extends NodeGraph {
       const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
       // Update connections ...
-      const changed = this.redrawConnection();
-      this.setSize({ width: topicWith, height: topicHeight }, changed);
+      const connectionChanged = this.updateConnection();
+      this.setSize({ width: topicWith, height: topicHeight }, connectionChanged);
 
       // Adjust all topic elements positions ...
       const yPosition = (topicHeight - textHeight) / 2;
       iconGroup.setPosition(padding, yPosition - yPosition / 4);
       textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
 
+      // Update relationship lines
+      this._relationships.forEach((r) => r.redraw());
+
       // Update topic color ...
+      const innerShape = this.getInnerShape();
       const borderColor = this.getBorderColor();
-      this.getInnerShape().setStroke(null, 'solid', borderColor);
+      innerShape.setStroke(null, 'solid', borderColor);
 
       const bgColor = this.getBackgroundColor();
-      this.getInnerShape().setFill(bgColor);
+      innerShape.setFill(bgColor);
 
-      // Force the repaint in case that the main topic color has changed.
-      if (this.getParent()) {
-        this._connector!.setColor(borderColor);
-
-        if (this.getParent()?.isCentralTopic()) {
-          this._outgoingLine?.redraw();
-        }
-      }
-
-      if (redrawChildren) {
-        this.getChildren().forEach((t) => t.redraw(redrawChildren));
+      if (redrawChildren || shapeChanged || connectionChanged) {
+        this.getChildren().forEach((t) => t.redraw(true));
       }
     }
   }

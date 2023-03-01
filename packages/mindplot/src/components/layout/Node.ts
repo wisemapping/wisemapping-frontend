@@ -56,42 +56,29 @@ class Node {
   }
 
   /** */
-  setFree(value) {
-    this._setProperty('free', value);
-  }
-
-  /** */
-  isFree() {
-    return this._getProperty('free');
-  }
-
-  /** */
-  hasFreeChanged() {
-    return this._isPropertyChanged('free');
-  }
-
-  /** */
   hasFreeDisplacementChanged() {
-    return this._isPropertyChanged('freeDisplacement');
+    return this.isPropertyChanged('freeDisplacement');
   }
 
   /** */
   setShrunken(value: boolean) {
-    this._setProperty('shrink', value);
+    this.setProperty('shrink', value);
   }
 
   /** */
   areChildrenShrunken() {
-    return this._getProperty('shrink');
+    return this.getProperty('shrink');
   }
 
-  /** */
   setOrder(order: number) {
     $assert(
       typeof order === 'number' && Number.isFinite(order),
       `Order can not be null. Value:${order}`,
     );
-    this._setProperty('order', order);
+
+    if (this.getOrder() !== order) {
+      this.setProperty('order', order);
+    }
   }
 
   /** */
@@ -118,68 +105,75 @@ class Node {
     }
   }
 
-  /** */
-  getOrder() {
-    return this._getProperty('order');
+  getOrder(): number {
+    return this.getProperty('order') as number;
   }
 
   /** */
   hasOrderChanged() {
-    return this._isPropertyChanged('order');
+    return this.isPropertyChanged('order');
   }
 
   /** */
   hasPositionChanged() {
-    return this._isPropertyChanged('position');
+    return this.isPropertyChanged('position');
   }
 
-  /** */
   hasSizeChanged(): boolean {
-    return this._isPropertyChanged('size');
+    return this.isPropertyChanged('size');
   }
 
-  /** */
   getPosition(): PositionType {
-    return this._getProperty('position');
+    return this.getProperty('position') as PositionType;
   }
 
   /** */
-  setSize(size: SizeType) {
-    this._setProperty('size', { ...size });
+  setSize(size: SizeType): void {
+    const currentSize = this.getSize();
+    if (
+      !currentSize ||
+      (currentSize &&
+        (Math.abs(currentSize.height - size.height) > 0.5 ||
+          Math.abs(currentSize.width - size.width) > 0.5))
+    ) {
+      this.setProperty('size', { ...size });
+    }
   }
 
   /** */
   getSize(): SizeType {
-    return this._getProperty('size');
+    return this.getProperty('size') as SizeType;
   }
 
-  setFreeDisplacement(displacement: PositionType) {
+  setFreeDisplacement(displacement: PositionType): void {
     const oldDisplacement = this.getFreeDisplacement();
     const newDisplacement = {
       x: oldDisplacement.x + displacement.x,
       y: oldDisplacement.y + displacement.y,
     };
 
-    this._setProperty('freeDisplacement', { ...newDisplacement });
+    this.setProperty('freeDisplacement', { ...newDisplacement });
   }
 
   /** */
-  resetFreeDisplacement() {
-    this._setProperty('freeDisplacement', { x: 0, y: 0 });
-  }
-
-  /** */
-  getFreeDisplacement() {
-    const freeDisplacement = this._getProperty('freeDisplacement');
+  getFreeDisplacement(): PositionType {
+    const freeDisplacement = this.getProperty('freeDisplacement') as PositionType;
     return freeDisplacement || { x: 0, y: 0 };
   }
 
-  setPosition(position: PositionType) {
+  setPosition(position: PositionType): void {
     // This is a performance improvement to avoid movements that really could be avoided.
-    this._setProperty('position', position);
+    const currentPos = this.getPosition();
+    if (
+      !currentPos ||
+      (currentPos &&
+        (Math.abs(currentPos.x - position.x) > 0.5 || Math.abs(currentPos.y - position.y) > 0.5))
+    ) {
+      this.setProperty('position', { ...position });
+    }
   }
 
-  _setProperty(key: string, value) {
+  setProperty(key: string, value) {
     let prop = this._properties[key];
     if (!prop) {
       prop = {
@@ -198,12 +192,12 @@ class Node {
     this._properties[key] = prop;
   }
 
-  _getProperty(key: string) {
+  private getProperty(key: string): null | number | PositionType | SizeType {
     const prop = this._properties[key];
     return $defined(prop) ? prop.value : null;
   }
 
-  _isPropertyChanged(key) {
+  isPropertyChanged(key: string) {
     const prop = this._properties[key];
     return prop ? prop.hasChanged : false;
   }

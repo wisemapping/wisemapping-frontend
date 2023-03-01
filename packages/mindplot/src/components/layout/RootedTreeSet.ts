@@ -288,7 +288,7 @@ class RootedTreeSet {
     if (this._rootNodes.includes(node)) {
       fillColor = '#000';
     } else {
-      fillColor = node.isFree() ? '#abc' : '#c00';
+      fillColor = '#c00';
     }
     rect.attr('fill', fillColor);
 

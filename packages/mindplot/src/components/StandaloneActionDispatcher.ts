@@ -199,12 +199,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
-    $assert(topicsIds, 'topicsIds can not be null');
-    $assert(shapeType, 'shapeType can not be null');
-
     const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
       const result = topic.getShapeType();
       topic.setShapeType(commandShapeType);
+
       return result;
     };
 

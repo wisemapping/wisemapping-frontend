@@ -898,7 +898,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  changeTopicShape(shape: TopicShapeType): void {
+  changeShapeType(shape: TopicShapeType): void {
     const validateFunc = (topic: Topic) =>
       !(topic.getType() === 'CentralTopic' && (shape === 'line' || shape === 'none'));
 
