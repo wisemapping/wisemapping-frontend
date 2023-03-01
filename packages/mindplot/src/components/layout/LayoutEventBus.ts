@@ -16,24 +16,20 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import EventDispispatcher from '../EventDispatcher';
-import { EventBusType } from '../EventBusType';
+import EventDispatcher from '../EventDispatcher';
+import { LayoutEventBusType } from '../LayoutEventBusType';
 
-class EventBus extends EventDispispatcher<EventBusType> {
-  // eslint-disable-next-line no-use-before-define
-  static _instance: EventBus = new EventBus();
+class LayoutEventBus {
+  private static _instance: EventDispatcher<LayoutEventBusType> =
+    new EventDispatcher<LayoutEventBusType>();
 
-  static get instance(): EventBus {
-    return this._instance;
+  static fireEvent(type: LayoutEventBusType, arg?: any): void {
+    return LayoutEventBus._instance.fireEvent(type, arg);
   }
 
-  fireEvent(type: EventBusType, arg?: any): void {
-    return super.fireEvent(type, arg);
-  }
-
-  addEvent(type: EventBusType, fn: (arg?: any) => void, internal?: boolean): void {
-    return super.addEvent(type, fn, internal);
+  static addEvent(type: LayoutEventBusType, fn: (arg?: any) => void, internal?: boolean): void {
+    return LayoutEventBus._instance.addEvent(type, fn, internal);
   }
 }
 
-export default EventBus;
+export default LayoutEventBus;

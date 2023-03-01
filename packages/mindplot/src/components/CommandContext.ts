@@ -17,7 +17,7 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 import { Designer } from '..';
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import PositionType from './PositionType';
@@ -105,7 +105,7 @@ class CommandContext {
   moveTopic(topic: Topic, position: PositionType): void {
     $assert(topic, 'topic cannot be null');
     $assert(position, 'position cannot be null');
-    EventBus.instance.fireEvent('topicMoved', {
+    LayoutEventBus.fireEvent('topicMoved', {
       node: topic.getModel(),
       position,
     });

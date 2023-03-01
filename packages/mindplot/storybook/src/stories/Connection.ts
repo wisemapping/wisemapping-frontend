@@ -11,7 +11,8 @@ import MainTopic from '../../../src/components/MainTopic';
 import EventBusDispatcher from '../../../src/components/layout/EventBusDispatcher';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 import ChangeEvent from '../../../src/components/layout/ChangeEvent';
-import EventBus from '../../../src/components/layout/EventBus';
+import LayoutEventBus from '../../../src/components/layout/LayoutEventBus';
+import { $assert } from '@wisemapping/core-js';
 
 const registerRefreshHook = (topics: Topic[]) => {
   // Trigger a redraw after the node is added ...
@@ -22,7 +23,7 @@ const registerRefreshHook = (topics: Topic[]) => {
   globalThis.observer = new MutationObserver(() => {
     // Relayout...
     topics.forEach((t) => t.redraw());
-    EventBus.instance.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
   });
   globalThis.observer.observe(document.getElementById('root')!, { childList: true });
 };
@@ -56,20 +57,23 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   // Add Children ...
   const child1 = new NodeModel('MainTopic', mindmap);
   child1.setOrder(0);
-  child1.setText('This is child one !\nwith other line');
+  child1.setText('Child1: This is child one !\nwith other line');
   child1.setPosition(100, 100);
 
   const child2 = new NodeModel('MainTopic', mindmap);
   child2.setOrder(1);
   child2.setPosition(100, -100);
+  child2.setText('Child2');
 
   const child3 = new NodeModel('MainTopic', mindmap);
-  child3.setOrder(0);
+  child3.setOrder(2);
   child3.setPosition(-100, 100);
+  child3.setText('Child3');
 
   const child4 = new NodeModel('MainTopic', mindmap);
-  child4.setOrder(1);
+  child4.setOrder(3);
   child4.setPosition(-100, -100);
+  child3.setText('Child4');
 
   const subchild1 = new NodeModel('MainTopic', mindmap);
   subchild1.setOrder(0);
@@ -93,6 +97,7 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   const child4Topic = new MainTopic(child4, { readOnly });
   const subchild1Topic = new MainTopic(subchild1, { readOnly });
   const subchild2Topic = new MainTopic(subchild2, { readOnly });
+
   const topics = [
     child1Topic,
     child2Topic,
@@ -108,24 +113,37 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   const size = { width: 25, height: 25 };
   const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
   dispatcher.setLayoutManager(layoutManager);
+
   layoutManager.addEvent('change', (event: ChangeEvent) => {
     const id = event.getId();
-    const topic = topics.filter((t) => t.getModel().getId() === id)[0];
+    const ids = topics.filter((t) => t.getModel().getId() === id);
+    $assert(ids.length === 1, `Unexpeted number of elements ${String(ids)} - ${id}`);
+    const topic = ids[0];
 
     topic.setPosition(event.getPosition());
     topic.setOrder(event.getOrder());
   });
 
-  // Add to canvas ...
-  topics.forEach((t) => canvas.append(t));
-
   // Connect nodes ...
+  canvas.append(centralTopic);
+
   child1Topic.connectTo(centralTopic, canvas);
+  canvas.append(child1Topic);
+
   child2Topic.connectTo(centralTopic, canvas);
+  canvas.append(child2Topic);
+
   child3Topic.connectTo(centralTopic, canvas);
+  canvas.append(child3Topic);
+
   child4Topic.connectTo(centralTopic, canvas);
+  canvas.append(child4Topic);
+
   subchild1Topic.connectTo(child1Topic, canvas);
+  canvas.append(subchild1Topic);
+
   subchild2Topic.connectTo(child1Topic, canvas);
+  canvas.append(subchild2Topic);
 
   // Register refresh hook ..
   registerRefreshHook(topics);

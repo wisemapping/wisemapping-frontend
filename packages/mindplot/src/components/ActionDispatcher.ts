@@ -26,9 +26,9 @@ import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import PositionType from './PositionType';
-import EventBusType from './EventBusType';
+import LayoutEventBusType from './LayoutEventBusType';
 
-abstract class ActionDispatcher extends EventDispispatcher<EventBusType> {
+abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
   private static _instance: ActionDispatcher;
 
   private _commandContext: CommandContext;

@@ -23,7 +23,7 @@ import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
 
@@ -589,7 +589,7 @@ abstract class Topic extends NodeGraph {
       elem.setVisibility(!value, 250);
     });
 
-    EventBus.instance.fireEvent('childShrinked', model);
+    LayoutEventBus.fireEvent('childShrinked', model);
   }
 
   getShrinkConnector(): ShirinkConnector | null {
@@ -618,10 +618,11 @@ abstract class Topic extends NodeGraph {
     this._getTopicEventDispatcher().show(this, text);
   }
 
-  getNoteValue(): string {
+  getNoteValue(): string | null {
     const model = this.getModel();
     const notes = model.findFeatureByType('note');
-    let result;
+
+    let result: string | null = null;
     if (notes.length > 0) {
       result = (notes[0] as NoteModel).getText();
     }
@@ -694,10 +695,6 @@ abstract class Topic extends NodeGraph {
    */
   setPosition(point: PositionType): void {
     // allowed param reassign to avoid risks of existing code relying in this side-effect
-    point.x = Math.ceil(point.x);
-    point.y = Math.ceil(point.y);
-
-    // Update model's position ...
     const model = this.getModel();
     model.setPosition(point.x, point.y);
 
@@ -900,7 +897,7 @@ abstract class Topic extends NodeGraph {
       this.updatePositionOnChangeSize(oldSize, size);
 
       if (hasSizeChanged) {
-        EventBus.instance.fireEvent('topicResize', {
+        LayoutEventBus.fireEvent('topicResize', {
           node: this.getModel(),
           size,
         });
@@ -936,7 +933,7 @@ abstract class Topic extends NodeGraph {
       }
 
       // Remove from workspace.
-      EventBus.instance.fireEvent('topicDisconect', this.getModel());
+      LayoutEventBus.fireEvent('topicDisconect', this.getModel());
 
       this.redraw(true);
     }
@@ -983,7 +980,7 @@ abstract class Topic extends NodeGraph {
 
     // Fire connection event ...
     if (this._isInWorkspace) {
-      EventBus.instance.fireEvent('topicConnected', {
+      LayoutEventBus.fireEvent('topicConnected', {
         parentNode: targetTopic.getModel(),
         childNode: this.getModel(),
       });
@@ -1024,7 +1021,7 @@ abstract class Topic extends NodeGraph {
       workspace.removeChild(line);
     }
     this._isInWorkspace = false;
-    EventBus.instance.fireEvent('topicRemoved', this.getModel());
+    LayoutEventBus.fireEvent('topicRemoved', this.getModel());
   }
 
   addToWorkspace(workspace: Canvas): void {
@@ -1032,12 +1029,12 @@ abstract class Topic extends NodeGraph {
     workspace.append(elem);
     if (!this._isInWorkspace) {
       if (!this.isCentralTopic()) {
-        EventBus.instance.fireEvent('topicAdded', this.getModel());
+        LayoutEventBus.fireEvent('topicAdded', this.getModel());
       }
 
       const outgoingTopic = this.getOutgoingConnectedTopic();
       if (this.getModel().isConnected() && outgoingTopic) {
-        EventBus.instance.fireEvent('topicConnected', {
+        LayoutEventBus.fireEvent('topicConnected', {
           parentNode: outgoingTopic.getModel(),
           childNode: this.getModel(),
         });

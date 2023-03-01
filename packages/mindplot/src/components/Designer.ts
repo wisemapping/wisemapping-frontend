@@ -40,7 +40,7 @@ import Relationship from './Relationship';
 import TopicEventDispatcher from './TopicEventDispatcher';
 import TopicFactory from './TopicFactory';
 
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
@@ -654,7 +654,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._canvas.registerEvents();
 
       // Finally, sort the map ...
-      EventBus.instance.fireEvent('forceLayout');
+      LayoutEventBus.fireEvent('forceLayout');
       this.fireEvent('loadSuccess');
     });
   }

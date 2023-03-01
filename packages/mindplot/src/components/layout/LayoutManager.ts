@@ -83,10 +83,6 @@ class LayoutManager extends EventDispispatcher<LayoutEventType> {
   }
 
   connectNode(parentId: number, childId: number, order: number) {
-    $assert($defined(parentId), 'parentId cannot be null');
-    $assert($defined(childId), 'childId cannot be null');
-    $assert($defined(order), 'order cannot be null');
-
     this._layout.connectNode(parentId, childId, order);
 
     return this;

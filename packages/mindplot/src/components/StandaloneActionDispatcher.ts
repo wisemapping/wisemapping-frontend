@@ -27,7 +27,7 @@ import DragTopicCommand from './commands/DragTopicCommand';
 import GenericFunctionCommand from './commands/GenericFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import CommandContext from './CommandContext';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
@@ -84,7 +84,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
-      EventBus.instance.fireEvent('topicMoved', {
+      LayoutEventBus.fireEvent('topicMoved', {
         node: topic.getModel(),
         position: pos,
       });

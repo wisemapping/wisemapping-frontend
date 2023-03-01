@@ -28,3 +28,8 @@ export const DarkPrism = Template.bind({});
 DarkPrism.args = {
   theme: 'dark-prism',
 };
+
+export const robot = Template.bind({});
+DarkPrism.args = {
+  theme: 'robot',
+};

@@ -21,7 +21,7 @@ import $ from 'jquery';
 
 import ActionDispatcher from './ActionDispatcher';
 import EventDispatcher from './EventDispatcher';
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import Topic from './Topic';
 
 type EditorEventType = 'input';
@@ -126,7 +126,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
   private resize(text?: string): void {
     // Force relayout ...
-    EventBus.instance.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
 
     // Adjust position ...
     const textShape = this._topic.getOrBuildTextShape();

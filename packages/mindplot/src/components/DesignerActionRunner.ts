@@ -20,7 +20,7 @@ import ActionDispatcher from './ActionDispatcher';
 import Command from './Command';
 import CommandContext from './CommandContext';
 import DesignerUndoManager from './DesignerUndoManager';
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 
 class DesignerActionRunner {
   private _undoManager: DesignerUndoManager;
@@ -42,19 +42,19 @@ class DesignerActionRunner {
     command.execute(this._context);
     this._undoManager.enqueue(command);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
   }
 
   undo(): void {
     this._undoManager.execUndo(this._context);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
   }
 
   redo(): void {
     this._undoManager.execRedo(this._context);
     this.fireChangeEvent();
-    EventBus.instance.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
   }
 
   fireChangeEvent(): void {

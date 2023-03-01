@@ -15,6 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-type ThemeType = 'classic' | 'prism' | 'dark-prism';
+type ThemeType = 'classic' | 'prism' | 'dark-prism' | 'robot';
 
 export default ThemeType;

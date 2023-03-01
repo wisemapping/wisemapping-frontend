@@ -18,7 +18,7 @@
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
 import Topic from '../Topic';
-import EventBus from './EventBus';
+import LayoutEventBus from './LayoutEventBus';
 import LayoutManager from './LayoutManager';
 
 class EventBusDispatcher {
@@ -34,14 +34,14 @@ class EventBusDispatcher {
   }
 
   registerBusEvents() {
-    EventBus.instance.addEvent('topicAdded', this._topicAdded.bind(this));
-    EventBus.instance.addEvent('topicRemoved', this._topicRemoved.bind(this));
-    EventBus.instance.addEvent('topicResize', this._topicResizeEvent.bind(this));
-    EventBus.instance.addEvent('topicMoved', this._topicMoved.bind(this));
-    EventBus.instance.addEvent('topicDisconect', this._topicDisconect.bind(this));
-    EventBus.instance.addEvent('topicConnected', this._topicConnected.bind(this));
-    EventBus.instance.addEvent('childShrinked', this._childShrinked.bind(this));
-    EventBus.instance.addEvent('forceLayout', this._forceLayout.bind(this));
+    LayoutEventBus.addEvent('topicAdded', this._topicAdded.bind(this));
+    LayoutEventBus.addEvent('topicRemoved', this._topicRemoved.bind(this));
+    LayoutEventBus.addEvent('topicResize', this._topicResizeEvent.bind(this));
+    LayoutEventBus.addEvent('topicMoved', this._topicMoved.bind(this));
+    LayoutEventBus.addEvent('topicDisconect', this._topicDisconect.bind(this));
+    LayoutEventBus.addEvent('topicConnected', this._topicConnected.bind(this));
+    LayoutEventBus.addEvent('childShrinked', this._childShrinked.bind(this));
+    LayoutEventBus.addEvent('forceLayout', this._forceLayout.bind(this));
   }
 
   private _topicResizeEvent(args: { node: Topic; size: SizeType }) {
@@ -62,6 +62,9 @@ class EventBusDispatcher {
       args.childNode.getId(),
       args.childNode.getOrder()!, // @todo: This can be a issue ...
     );
+
+    // Review this for of relayout, new node is not positioned properly with small gap. The problem seems to be related to some min
+    // this.getLayoutManager().layout(true);
   }
 
   getLayoutManager(): LayoutManager {

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-export type EventBusType =
+export type LayoutEventBusType =
   | 'topicResize'
   | 'topicMoved'
   | 'forceLayout'
@@ -27,4 +27,4 @@ export type EventBusType =
   | 'topicDisconect'
   | 'modelUpdate';
 
-export default EventBusType;
+export default LayoutEventBusType;
