@@ -11,7 +11,6 @@
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Melden Sie sich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen. Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
-
     "editor.edit-description-mobile": {
         "defaultMessage": "Eingeschränkte Funktionen der Mindmap-Edition werden auf Mobilgeräten unterstützt. Verwenden Sie den Desktop-Browser für vollständige Editorfunktionen."
     },
@@ -28,13 +27,13 @@
         "defaultMessage": "Abbrechen"
     },
     "appbar.back-to-map-list": {
-        "defaultMessage": "Zurück zur Mindmap Liste"
+        "defaultMessage": "Zurück zur Mindmap-Liste"
     },
     "appbar.button-signup": {
         "defaultMessage": "Anmelden"
     },
     "appbar.shared-button": {
-        "defaultMessage": "Mitbenutzen"
+        "defaultMessage": "Teilen"
     },
     "appbar.tooltip-export": {
         "defaultMessage": "Exportieren"
@@ -58,22 +57,22 @@
         "defaultMessage": "Speichern"
     },
     "appbar.tooltip-shared": {
-        "defaultMessage": "Mitbenutzen"
+        "defaultMessage": "Teilen mit anderen"
     },
     "appbar.tooltip-signup": {
         "defaultMessage": "Anmelden"
     },
     "appbar.tooltip-starred": {
-        "defaultMessage": "Losgelöst"
+        "defaultMessage": "Favoriten"
     },
     "appbar.tooltip-undo": {
         "defaultMessage": "Rückgängig"
     },
     "link.help_text": {
-        "defaultMessage": "Ingültige Adresse"
+        "defaultMessage": "Ungültige Adresse"
     },
     "link.placeholder": {
-        "defaultMessage": "https://www.example.com"
+        "defaultMessage": "https://www.beispiel.de"
     },
     "editor-panel.note-panel-title": {
         "defaultMessage": "Notiz"
@@ -82,25 +81,25 @@
         "defaultMessage": "Symbol"
     },
     "editor-panel.link-panel-title": {
-        "defaultMessage": "Link"
+        "defaultMessage": "Verknüpfung"
     },
     "zoom-panel.tooltip-keyboard": {
         "defaultMessage": "Tastatürkürzel"
     },
     "zoom-panel.tooltip-zoom-in": {
-        "defaultMessage": "Hineinzoomen"
+        "defaultMessage": "Vergrößern"
     },
     "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "Rauszoomen"
+        "defaultMessage": "Verkleinern"
     },
     "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Zoom zu passen"
+        "defaultMessage": "Einpassen"
     },
     "editor-panel.tooltip-add-icon": {
         "defaultMessage": "Symbol hinzufügen"
     },
     "editor-panel.tooltip-add-link": {
-        "defaultMessage": "Link hinzufügen"
+        "defaultMessage": "Verknüpfung hinzufügen"
     },
     "editor-panel.tooltip-add-note": {
         "defaultMessage": "Notiz hinzufügen"
@@ -121,7 +120,7 @@
         "defaultMessage": "Größer"
     },
     "editor-panel.tooltip-topic-font-bold": {
-        "defaultMessage": "Fett gedruckt"
+        "defaultMessage": "Fett"
     },
     "editor-panel.tooltip-topic-font-color": {
         "defaultMessage": "Farbe"
@@ -136,7 +135,7 @@
         "defaultMessage": "Schriftstil"
     },
     "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Ellipseform"
+        "defaultMessage": "Ellipsenform"
     },
     "editor-panel.tooltip-topic-share-line": {
         "defaultMessage": "Linienform"
@@ -145,7 +144,7 @@
         "defaultMessage": "Rechteckform"
     },
     "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Abgerundete Form"
+        "defaultMessage": "Rechteckform abgerundet"
     },
     "editor-panel.tooltip-topic-style": {
         "defaultMessage": "Themenstil"
@@ -157,7 +156,7 @@
         "defaultMessage": "Kinderthema hinzufügen"
     },
     "shortcut-help-pane.add-link": {
-        "defaultMessage": "Link hinzufügen"
+        "defaultMessage": "Verknüpfung hinzufügen"
     },
     "shortcut-help-pane.add-note": {
         "defaultMessage": "Notiz hinzufügen"
@@ -166,73 +165,73 @@
         "defaultMessage": "Geschwisterthema hinzufügen"
     },
     "shortcut-help-pane.cancel-text-changes": {
-        "defaultMessage": "Textänderungen abbrechen"
+        "defaultMessage": "Textänderungen verwerfen"
     },
     "shortcut-help-pane.change-font-bold": {
-        "defaultMessage": "Text in fett gedruckt"
+        "defaultMessage": "Text auf fett ändern"
     },
     "shortcut-help-pane.change-font-italic": {
-        "defaultMessage": "Text in Kursivschrift ändern"
+        "defaultMessage": "Text auf kursiv ändern"
     },
     "shortcut-help-pane.collapse-children": {
-        "defaultMessage": "Kinder zusammenbrechen"
+        "defaultMessage": "Kinder einfalten"
     },
     "shortcut-help-pane.copy-and-text": {
-        "defaultMessage": "Themen kopieren und einfügen"
+        "defaultMessage": "Themen kopieren und einfügen/Bild der Mindmap in Zwischenablage kopieren"
     },
     "shortcut-help-pane.delete-topic": {
         "defaultMessage": "Thema löschen"
     },
     "shortcut-help-pane.deselect-all-topics": {
-        "defaultMessage": "Alle Themen auswählen"
+        "defaultMessage": "Alle Themen abwählen"
     },
     "shortcut-help-pane.edit-multiline": {
-        "defaultMessage": "Multi-Line-Thementext hinzufügen"
+        "defaultMessage": "Thementext mehrzeilig hinzufügen"
     },
     "shortcut-help-pane.edit-topic": {
         "defaultMessage": "Thementext bearbeiten"
     },
     "shortcut-help-pane.edit-topic-key": {
-        "defaultMessage": "Fang einfach an zu tippen"
+        "defaultMessage": "F2 oder Doppelklick"
     },
     "shortcut-help-pane.navigation": {
-        "defaultMessage": "navigation"
+        "defaultMessage": "Navigation"
     },
     "shortcut-help-pane.navigation-keys": {
         "defaultMessage": "Pfeiltasten"
     },
     "shortcut-help-pane.redo": {
-        "defaultMessage": "redoEdition"
+        "defaultMessage": "Änderung wiederherstellen"
     },
     "shortcut-help-pane.save-changes": {
         "defaultMessage": "Änderungen speichern"
     },
     "shortcut-help-pane.select-all-topics": {
-        "defaultMessage": "Wählen Sie alle Themen aus"
+        "defaultMessage": "Alle Themen auswählen"
     },
     "shortcut-help-pane.select-topics": {
-        "defaultMessage": "Wählen Sie mehrere Themen aus"
+        "defaultMessage": "Mehrere Themen auswählen"
     },
     "shortcut-help-pane.select-topics-keys": {
         "defaultMessage": "Mausklick"
     },
     "shortcut-help-pane.undo": {
-        "defaultMessage": "Rückgängerausgabe"
+        "defaultMessage": "Änderung rückgängig machen"
     },
     "icon-picker.show-images": {
         "defaultMessage": "Bilder anzeigen"
     },
     "editor-panel.tooltip-connection-style-polyline": {
-        "defaultMessage": "Polylinie"
+        "defaultMessage": "Linie eckig"
     },
     "editor-panel.tooltip-connection-style-polyline-curved": {
-        "defaultMessage": "Gebogene Polylinie"
+        "defaultMessage": "Linie abgeschrägt"
     },
     "shortcut-help-pane.overwrite-edit-topic": {
         "defaultMessage": "Thementext überschreiben"
     },
     "shortcut-help-pane.overwrite-edit-topic-key": {
-        "defaultMessage": "Beginnen Sie mit dem Schreiben über das ausgewählte Thema"
+        "defaultMessage": "Ausgewähltes Thema durch tippen überschreiben"
     },
     "editor-panel.tooltip-connection-color": {
         "defaultMessage": "Farbe"
@@ -244,10 +243,10 @@
         "defaultMessage": "Verbindungsstil"
     },
     "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "Weite Kurve"
+        "defaultMessage": "Kurve breit"
     },
     "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "Schlanke Kurve"
+        "defaultMessage": "Kurve schmal"
     },
     "editor-panel.tooltip-topic-border-color-default": {
         "defaultMessage": "Standardrandfarbe"
@@ -262,9 +261,9 @@
         "defaultMessage": "Löschen"
     },
     "editor-panel.tooltip-topic-font-color-default": {
-        "defaultMessage": "Farbe defekt"
+        "defaultMessage": "Standardfarbe"
     },
     "shortcut-help-pane.drag-disconnect": {
-        "defaultMessage": "Color de relleno por defekto"
+        "defaultMessage": "Thema isolieren"
     }
 }

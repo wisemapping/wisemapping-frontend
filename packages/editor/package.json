@@ -13,12 +13,13 @@
     "test": "yarn test:unit && yarn test:integration",
     "test:unit": "jest ./test/unit/* --detectOpenHandles",
     "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
-    "i18n:compile": "for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done"
+    "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'"
   },
   "repository": "http://www.wisemapping.com",
   "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@formatjs/cli": "^6.0.4",
     "@testing-library/react": "^13.4.0",
     "@types/cypress-image-snapshot": "^3.1.6",
     "babel-polyfill": "^6.26.0",

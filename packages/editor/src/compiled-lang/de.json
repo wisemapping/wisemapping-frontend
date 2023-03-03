@@ -26,7 +26,7 @@
   "appbar.back-to-map-list": [
     {
       "type": 0,
-      "value": "Zurück zur Mindmap Liste"
+      "value": "Zurück zur Mindmap-Liste"
     }
   ],
   "appbar.button-signup": [
@@ -38,7 +38,7 @@
   "appbar.shared-button": [
     {
       "type": 0,
-      "value": "Mitbenutzen"
+      "value": "Teilen"
     }
   ],
   "appbar.tooltip-export": [
@@ -86,7 +86,7 @@
   "appbar.tooltip-shared": [
     {
       "type": 0,
-      "value": "Mitbenutzen"
+      "value": "Teilen mit anderen"
     }
   ],
   "appbar.tooltip-signup": [
@@ -98,7 +98,7 @@
   "appbar.tooltip-starred": [
     {
       "type": 0,
-      "value": "Losgelöst"
+      "value": "Favoriten"
     }
   ],
   "appbar.tooltip-undo": [
@@ -116,7 +116,7 @@
   "editor-panel.link-panel-title": [
     {
       "type": 0,
-      "value": "Link"
+      "value": "Verknüpfung"
     }
   ],
   "editor-panel.note-panel-title": [
@@ -134,7 +134,7 @@
   "editor-panel.tooltip-add-link": [
     {
       "type": 0,
-      "value": "Link hinzufügen"
+      "value": "Verknüpfung hinzufügen"
     }
   ],
   "editor-panel.tooltip-add-note": [
@@ -176,25 +176,25 @@
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Weite Kurve"
+      "value": "Kurve breit"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "Schlanke Kurve"
+      "value": "Kurve schmal"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
     {
       "type": 0,
-      "value": "Polylinie"
+      "value": "Linie eckig"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline-curved": [
     {
       "type": 0,
-      "value": "Gebogene Polylinie"
+      "value": "Linie abgeschrägt"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -236,7 +236,7 @@
   "editor-panel.tooltip-topic-font-bold": [
     {
       "type": 0,
-      "value": "Fett gedruckt"
+      "value": "Fett"
     }
   ],
   "editor-panel.tooltip-topic-font-color": [
@@ -248,7 +248,7 @@
   "editor-panel.tooltip-topic-font-color-default": [
     {
       "type": 0,
-      "value": "Farbe defekt"
+      "value": "Standardfarbe"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
@@ -272,7 +272,7 @@
   "editor-panel.tooltip-topic-share-ellipse": [
     {
       "type": 0,
-      "value": "Ellipseform"
+      "value": "Ellipsenform"
     }
   ],
   "editor-panel.tooltip-topic-share-line": [
@@ -290,7 +290,7 @@
   "editor-panel.tooltip-topic-share-rounded": [
     {
       "type": 0,
-      "value": "Abgerundete Form"
+      "value": "Rechteckform abgerundet"
     }
   ],
   "editor-panel.tooltip-topic-style": [
@@ -338,13 +338,13 @@
   "link.help_text": [
     {
       "type": 0,
-      "value": "Ingültige Adresse"
+      "value": "Ungültige Adresse"
     }
   ],
   "link.placeholder": [
     {
       "type": 0,
-      "value": "https://www.example.com"
+      "value": "https://www.beispiel.de"
     }
   ],
   "login.signup": [
@@ -368,7 +368,7 @@
   "shortcut-help-pane.add-link": [
     {
       "type": 0,
-      "value": "Link hinzufügen"
+      "value": "Verknüpfung hinzufügen"
     }
   ],
   "shortcut-help-pane.add-note": [
@@ -386,31 +386,31 @@
   "shortcut-help-pane.cancel-text-changes": [
     {
       "type": 0,
-      "value": "Textänderungen abbrechen"
+      "value": "Textänderungen verwerfen"
     }
   ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
-      "value": "Text in fett gedruckt"
+      "value": "Text auf fett ändern"
     }
   ],
   "shortcut-help-pane.change-font-italic": [
     {
       "type": 0,
-      "value": "Text in Kursivschrift ändern"
+      "value": "Text auf kursiv ändern"
     }
   ],
   "shortcut-help-pane.collapse-children": [
     {
       "type": 0,
-      "value": "Kinder zusammenbrechen"
+      "value": "Kinder einfalten"
     }
   ],
   "shortcut-help-pane.copy-and-text": [
     {
       "type": 0,
-      "value": "Themen kopieren und einfügen"
+      "value": "Themen kopieren und einfügen/Bild der Mindmap in Zwischenablage kopieren"
     }
   ],
   "shortcut-help-pane.delete-topic": [
@@ -422,19 +422,19 @@
   "shortcut-help-pane.deselect-all-topics": [
     {
       "type": 0,
-      "value": "Alle Themen auswählen"
+      "value": "Alle Themen abwählen"
     }
   ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
-      "value": "Color de relleno por defekto"
+      "value": "Thema isolieren"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
-      "value": "Multi-Line-Thementext hinzufügen"
+      "value": "Thementext mehrzeilig hinzufügen"
     }
   ],
   "shortcut-help-pane.edit-topic": [
@@ -446,13 +446,13 @@
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Fang einfach an zu tippen"
+      "value": "F2 oder Doppelklick"
     }
   ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
-      "value": "navigation"
+      "value": "Navigation"
     }
   ],
   "shortcut-help-pane.navigation-keys": [
@@ -470,13 +470,13 @@
   "shortcut-help-pane.overwrite-edit-topic-key": [
     {
       "type": 0,
-      "value": "Beginnen Sie mit dem Schreiben über das ausgewählte Thema"
+      "value": "Ausgewähltes Thema durch tippen überschreiben"
     }
   ],
   "shortcut-help-pane.redo": [
     {
       "type": 0,
-      "value": "redoEdition"
+      "value": "Änderung wiederherstellen"
     }
   ],
   "shortcut-help-pane.save-changes": [
@@ -488,13 +488,13 @@
   "shortcut-help-pane.select-all-topics": [
     {
       "type": 0,
-      "value": "Wählen Sie alle Themen aus"
+      "value": "Alle Themen auswählen"
     }
   ],
   "shortcut-help-pane.select-topics": [
     {
       "type": 0,
-      "value": "Wählen Sie mehrere Themen aus"
+      "value": "Mehrere Themen auswählen"
     }
   ],
   "shortcut-help-pane.select-topics-keys": [
@@ -506,7 +506,7 @@
   "shortcut-help-pane.undo": [
     {
       "type": 0,
-      "value": "Rückgängerausgabe"
+      "value": "Änderung rückgängig machen"
     }
   ],
   "zoom-panel.tooltip-keyboard": [
@@ -518,19 +518,19 @@
   "zoom-panel.tooltip-zoom-in": [
     {
       "type": 0,
-      "value": "Hineinzoomen"
+      "value": "Vergrößern"
     }
   ],
   "zoom-panel.tooltip-zoom-out": [
     {
       "type": 0,
-      "value": "Rauszoomen"
+      "value": "Verkleinern"
     }
   ],
   "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
-      "value": "Zoom zu passen"
+      "value": "Einpassen"
     }
   ]
 }
