@@ -934,10 +934,13 @@ abstract class Topic extends NodeGraph {
   }
 
   setOrder(value: number): void {
+    const changed = this.getModel().getOrder() !== value;
     const model = this.getModel();
     model.setOrder(value);
 
-    this.redraw();
+    if (changed) {
+      this.redraw();
+    }
   }
 
   connectTo(targetTopic: Topic, canvas: Canvas): void {
