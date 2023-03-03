@@ -15,10 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+
+type NodeValue = number | SizeType | PositionType | boolean;
+type MapValue = {
+  hasChanged: boolean;
+  value: NodeValue | undefined;
+  oldValue: NodeValue | undefined;
+};
+type NodeKey = 'order' | 'position' | 'size' | 'freeDisplacement' | 'shrink';
 
 class Node {
   private _id: number;
@@ -28,7 +36,7 @@ class Node {
 
   private _sorter: ChildrenSorterStrategy;
 
-  private _properties;
+  private _properties: Map<NodeKey, MapValue>;
 
   // eslint-disable-next-line no-use-before-define
   _children!: Node[];
@@ -41,7 +49,7 @@ class Node {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     this._id = id;
     this._sorter = sorter;
-    this._properties = {};
+    this._properties = new Map();
 
     this.setSize(size);
     this.setPosition(position);
@@ -50,27 +58,23 @@ class Node {
     this._heightChanged = false;
   }
 
-  /** */
   getId(): number {
     return this._id;
   }
 
-  /** */
-  hasFreeDisplacementChanged() {
+  hasFreeDisplacementChanged(): boolean {
     return this.isPropertyChanged('freeDisplacement');
   }
 
-  /** */
-  setShrunken(value: boolean) {
+  setShrunken(value: boolean): void {
     this.setProperty('shrink', value);
   }
 
-  /** */
-  areChildrenShrunken() {
-    return this.getProperty('shrink');
+  areChildrenShrunken(): boolean {
+    return Boolean(this.getProperty('shrink'));
   }
 
-  setOrder(order: number) {
+  setOrder(order: number): void {
     $assert(
       typeof order === 'number' && Number.isFinite(order),
       `Order can not be null. Value:${order}`,
@@ -81,25 +85,22 @@ class Node {
     }
   }
 
-  /** */
-  resetPositionState() {
-    const prop = this._properties.position;
+  resetPositionState(): void {
+    const prop = this._properties.get('position');
     if (prop) {
       prop.hasChanged = false;
     }
   }
 
-  /** */
-  resetOrderState() {
-    const prop = this._properties.order;
+  resetOrderState(): void {
+    const prop = this._properties.get('order');
     if (prop) {
       prop.hasChanged = false;
     }
   }
 
-  /** */
-  resetFreeState() {
-    const prop = this._properties.freeDisplacement;
+  resetFreeState(): void {
+    const prop = this._properties.get('freeDisplacement');
     if (prop) {
       prop.hasChanged = false;
     }
@@ -109,12 +110,10 @@ class Node {
     return this.getProperty('order') as number;
   }
 
-  /** */
-  hasOrderChanged() {
-    return this.isPropertyChanged('order');
+  hasOrderChanged(): boolean {
+    return Boolean(this.isPropertyChanged('order'));
   }
 
-  /** */
   hasPositionChanged() {
     return this.isPropertyChanged('position');
   }
@@ -127,7 +126,6 @@ class Node {
     return this.getProperty('position') as PositionType;
   }
 
-  /** */
   setSize(size: SizeType): void {
     const currentSize = this.getSize();
     if (
@@ -140,7 +138,6 @@ class Node {
     }
   }
 
-  /** */
   getSize(): SizeType {
     return this.getProperty('size') as SizeType;
   }
@@ -155,7 +152,6 @@ class Node {
     this.setProperty('freeDisplacement', { ...newDisplacement });
   }
 
-  /** */
   getFreeDisplacement(): PositionType {
     const freeDisplacement = this.getProperty('freeDisplacement') as PositionType;
     return freeDisplacement || { x: 0, y: 0 };
@@ -173,13 +169,13 @@ class Node {
     }
   }
 
-  setProperty(key: string, value) {
-    let prop = this._properties[key];
+  private setProperty(key: NodeKey, value: NodeValue): void {
+    let prop = this._properties.get(key);
     if (!prop) {
       prop = {
         hasChanged: false,
-        value: null,
-        oldValue: null,
+        value: undefined,
+        oldValue: undefined,
       };
     }
 
@@ -189,21 +185,19 @@ class Node {
       prop.value = value;
       prop.hasChanged = true;
     }
-    this._properties[key] = prop;
+    this._properties.set(key, prop);
   }
 
-  private getProperty(key: string): null | number | PositionType | SizeType {
-    const prop = this._properties[key];
-    return $defined(prop) ? prop.value : null;
+  private getProperty(key: NodeKey): NodeValue | undefined {
+    return this._properties.get(key)?.value;
   }
 
-  isPropertyChanged(key: string) {
-    const prop = this._properties[key];
+  isPropertyChanged(key: NodeKey): boolean {
+    const prop = this._properties.get(key);
     return prop ? prop.hasChanged : false;
   }
 
-  /** */
-  getSorter() {
+  getSorter(): ChildrenSorterStrategy {
     return this._sorter;
   }
 

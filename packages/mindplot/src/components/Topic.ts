@@ -1064,9 +1064,10 @@ abstract class Topic extends NodeGraph {
 
           workspace.append(this._outgoingLine);
 
-          const incomingLines = this.getIncomingLines();
-          incomingLines.forEach((line) => line.redraw());
-
+          if (!this.areChildrenShrunken()) {
+            const incomingLines = this.getIncomingLines();
+            incomingLines.forEach((line) => line.redraw());
+          }
           result = true;
         }
 
@@ -1152,7 +1153,7 @@ abstract class Topic extends NodeGraph {
       const bgColor = this.getBackgroundColor();
       innerShape.setFill(bgColor);
 
-      if (redrawChildren || shapeChanged || connectionChanged) {
+      if ((redrawChildren || shapeChanged || connectionChanged) && !this.areChildrenShrunken()) {
         this.getChildren().forEach((t) => t.redraw(true));
       }
     }
