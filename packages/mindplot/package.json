@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/mindplot",
-  "version": "5.0.21",
+  "version": "5.0.22",
   "description": "WiseMapping - Mindplot Canvas Library",
   "homepage": "http://www.wisemapping.org/",
   "directories": {
@@ -10,7 +10,8 @@
   "main": "src/index.ts",
   "files": [
     "src",
-    "assets"
+    "assets",
+    "dist" 
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.com"
