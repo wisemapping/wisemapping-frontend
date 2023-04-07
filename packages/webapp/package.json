@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "5.0.20",
+    "version": "5.0.21",
     "main": "app.jsx",
     "scripts": {
         "bootstrap": "yalc publish;yalc add @wisemapping/editor",
