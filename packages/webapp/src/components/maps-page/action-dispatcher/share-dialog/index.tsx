@@ -181,7 +181,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             control={<Checkbox color="primary" />}
             label={
               <Typography variant="subtitle2">
-                <FormattedMessage id="share.add-message" defaultMessage="Add message" />
+                <FormattedMessage id="share.add-message" defaultMessage="Customize share message" />
               </Typography>
             }
             labelPlacement="end"
@@ -195,7 +195,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
             onClick={handleOnAddClick}
             disabled={!isValid}
           >
-            <FormattedMessage id="share.add-button" defaultMessage="Add" />
+            <FormattedMessage id="share.add-button" defaultMessage="Share" />
           </Button>
 
           {showMessage && (
