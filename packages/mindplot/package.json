@@ -11,7 +11,7 @@
   "files": [
     "src",
     "assets",
-    "dist" 
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.com"
