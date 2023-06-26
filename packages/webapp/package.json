@@ -1,6 +1,6 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "5.0.21",
+    "version": "5.1.0",
     "repository": "http://www.wisemapping.com",
     "license": "MIT",
     "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
@@ -28,7 +28,7 @@
         "@mui/lab": "^5.0.0-alpha.129",
         "@mui/material": "^5.12.3",
         "@reduxjs/toolkit": "^1.5.0",
-        "@wisemapping/editor": "*",
+        "@wisemapping/editor": "^0.6.0",
         "axios": "^0.27.2",
         "dayjs": "^1.10.7",
         "react": "^18.2.0",

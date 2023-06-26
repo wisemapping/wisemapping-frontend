@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/web2d",
-  "version": "0.5.20",
+  "version": "0.6.0",
   "description": "WiseMapping - Web2D Render Library",
   "homepage": "http://www.wisemapping.org/",
   "repository": {
@@ -24,7 +24,7 @@
     "test:integration": "start-server-and-test storybook http-get://localhost:6006 cy:run"
   },
   "dependencies": {
-    "@wisemapping/core-js": "*",
+    "@wisemapping/core-js": "^0.6.0",
     "jquery": "^3.6.0"
   },
   "devDependencies": {

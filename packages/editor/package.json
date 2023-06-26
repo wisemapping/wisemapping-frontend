@@ -1,6 +1,6 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.5.20",
+  "version": "0.6.0",
   "repository": "http://www.wisemapping.com",
   "license": "MIT",
   "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
@@ -19,7 +19,7 @@
     "test:unit": "jest ./test/unit/* --detectOpenHandles"
   },
   "dependencies": {
-    "@wisemapping/mindplot": "*",
+    "@wisemapping/mindplot": "^5.1.0",
     "emoji-picker-react": "^4.4.7",
     "react-color": "^2.19.3",
     "react-loader-spinner": "^5.3.4"
