@@ -15,7 +15,8 @@
   "files": [
     "src",
     "assets",
-    "dist"
+    "dist",
+    "libraries"
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",

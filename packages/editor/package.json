@@ -5,8 +5,10 @@
   "license": "MIT",
   "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
   "main": "dist/editor.bundle.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "bootstrap": "yalc publish;yalc add @wisemapping/mindplot",
     "build": "webpack --config webpack.prod.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
@@ -33,6 +35,7 @@
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "start-server-and-test": "^2.0.0"
   },
   "peerDependencies": {

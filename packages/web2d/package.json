@@ -23,10 +23,6 @@
     "test": "yarn test:integration",
     "test:integration": "start-server-and-test storybook http-get://localhost:6006 cy:run"
   },
-  "dependencies": {
-    "@wisemapping/core-js": "^0.6.0",
-    "jquery": "^3.6.0"
-  },
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
     "@storybook/addon-actions": "^6.5.15",
@@ -43,7 +39,7 @@
     "start-server-and-test": "^1.15.2"
   },
   "peerDependencies": {
-    "@wisemapping/core-js": "*",
+    "@wisemapping/core-js": "^0.6.0",
     "jquery": "^3.6.0"
   },
   "publishConfig": {

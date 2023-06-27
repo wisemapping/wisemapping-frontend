@@ -1,6 +1,6 @@
 {
   "name": "wisemapping-front-end",
-  "version": "0.4.0",
+  "version": "0.0.0",
   "private": true,
   "homepage": "http://localhost:8080/react",
   "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
@@ -15,7 +15,6 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "lerna run bootstrap",
     "build": "lerna run build",
     "clean": "lerna clean && rm -rf node_modules",
     "lint": "lerna run lint --stream",
