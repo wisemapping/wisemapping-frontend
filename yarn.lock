@@ -5934,20 +5934,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wisemapping/core-js@*, @wisemapping/core-js@workspace:packages/core-js":
+"@wisemapping/core-js@^0.6.0, @wisemapping/core-js@workspace:packages/core-js":
   version: 0.0.0-use.local
   resolution: "@wisemapping/core-js@workspace:packages/core-js"
   languageName: unknown
   linkType: soft
 
-"@wisemapping/editor@*, @wisemapping/editor@workspace:packages/editor":
+"@wisemapping/editor@^0.6.0, @wisemapping/editor@workspace:packages/editor":
   version: 0.0.0-use.local
   resolution: "@wisemapping/editor@workspace:packages/editor"
   dependencies:
     "@formatjs/cli": ^6.0.4
     "@testing-library/react": ^13.4.0
     "@types/cypress-image-snapshot": ^3.1.6
-    "@wisemapping/mindplot": "*"
+    "@wisemapping/mindplot": ^5.1.0
     babel-polyfill: ^6.26.0
     cypress: ^12.3.0
     cypress-image-snapshot: ^4.0.1
@@ -5969,7 +5969,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@wisemapping/mindplot@*, @wisemapping/mindplot@workspace:packages/mindplot":
+"@wisemapping/mindplot@^5.1.0, @wisemapping/mindplot@workspace:packages/mindplot":
   version: 0.0.0-use.local
   resolution: "@wisemapping/mindplot@workspace:packages/mindplot"
   dependencies:
@@ -5985,8 +5985,8 @@ __metadata:
     "@storybook/manager-webpack4": ^6.5.16
     "@storybook/testing-library": ^0.0.13
     "@types/jquery": ^3.5.11
-    "@wisemapping/core-js": "*"
-    "@wisemapping/web2d": "*"
+    "@wisemapping/core-js": ^0.6.0
+    "@wisemapping/web2d": ^0.6.0
     babel-loader: ^8.3.0
     blob-polyfill: ^6.0.20211015
     cypress: ^12.3.0
@@ -6001,7 +6001,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@wisemapping/web2d@*, @wisemapping/web2d@workspace:packages/web2d":
+"@wisemapping/web2d@^0.6.0, @wisemapping/web2d@workspace:packages/web2d":
   version: 0.0.0-use.local
   resolution: "@wisemapping/web2d@workspace:packages/web2d"
   dependencies:
@@ -6015,7 +6015,7 @@ __metadata:
     "@storybook/html": ^6.5.15
     "@storybook/manager-webpack5": ^6.5.15
     "@storybook/testing-library": ^0.0.13
-    "@wisemapping/core-js": "*"
+    "@wisemapping/core-js": ^0.6.0
     cypress: 12.3.0
     cypress-image-snapshot: ^4.0.1
     jquery: ^3.6.0
@@ -6040,7 +6040,7 @@ __metadata:
     "@testing-library/cypress": ^8.0.3
     "@types/testing-library__cypress": ^5.0.8
     "@welldone-software/why-did-you-render": ^7.0.1
-    "@wisemapping/editor": "*"
+    "@wisemapping/editor": ^0.6.0
     axios: ^0.27.2
     cypress: ^12.3.0
     cypress-image-snapshot: ^4.0.1
