@@ -1,37 +1,25 @@
 {
     "name": "@wisemapping/webapp",
-    "version": "5.0.21",
+    "version": "5.1.0",
+    "repository": "http://www.wisemapping.com",
+    "license": "MIT",
+    "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
     "main": "app.jsx",
-    "scripts": {
-        "bootstrap": "yalc publish;yalc add @wisemapping/editor",
-        "start": "webpack serve --config webpack.dev.js ",
-        "build": "webpack --config webpack.prod.js",
-        "dev": "webpack --config webpack.dev.js",
-        "lint": "eslint src --ext js,ts,tsx",
-        "cy:run": "cypress run",
-        "cy:open": "cypress open",
-        "test:integration": "start-server-and-test start http-get://localhost:3000 cy:run",
-        "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
-        "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
-        "test": "yarn test:integration"
-    },
     "files": [
         "src",
         "dist"
     ],
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com"
-    },
-    "repository": "http://www.wisemapping.com",
-    "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
-    "license": "MIT",
-    "devDependencies": {
-        "@formatjs/cli": "^6.0.4",
-        "@testing-library/cypress": "^8.0.3",
-        "@types/testing-library__cypress": "^5.0.8",
-        "@welldone-software/why-did-you-render": "^7.0.1",
-        "cypress": "^12.3.0",
-        "cypress-image-snapshot": "^4.0.1"
+    "scripts": {
+        "build": "webpack --config webpack.prod.js",
+        "cy:open": "cypress open",
+        "cy:run": "cypress run",
+        "dev": "webpack --config webpack.dev.js",
+        "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
+        "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
+        "lint": "eslint src --ext js,ts,tsx",
+        "start": "webpack serve --config webpack.dev.js ",
+        "test": "yarn test:integration",
+        "test:integration": "start-server-and-test start http-get://localhost:3000 cy:run"
     },
     "dependencies": {
         "@emotion/react": "^11.10.4",
@@ -40,7 +28,7 @@
         "@mui/lab": "^5.0.0-alpha.129",
         "@mui/material": "^5.12.3",
         "@reduxjs/toolkit": "^1.5.0",
-        "@wisemapping/editor": "^0.5.20",
+        "@wisemapping/editor": "^0.6.0",
         "axios": "^0.27.2",
         "dayjs": "^1.10.7",
         "react": "^18.2.0",
@@ -52,5 +40,16 @@
         "react-redux": "^7.2.2",
         "react-router-dom": "^6.4.3",
         "styled-components": "^5.3.6"
+    },
+    "devDependencies": {
+        "@formatjs/cli": "^6.0.4",
+        "@testing-library/cypress": "^8.0.3",
+        "@types/testing-library__cypress": "^5.0.8",
+        "@welldone-software/why-did-you-render": "^7.0.1",
+        "cypress": "^12.3.0",
+        "cypress-image-snapshot": "^4.0.1"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com"
     }
 }

@@ -1,23 +1,22 @@
 {
     "name": "@wisemapping/core-js",
-    "version": "0.5.20",
+    "version": "0.6.0",
     "description": "WiseMapping - Core Common Libraries",
     "homepage": "http://www.wisemapping.org/",
+    "repository": {
+        "type": "git",
+        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+    },
     "license": "MIT",
     "main": "src/index.ts",
     "files": [
         "src"
     ],
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
-    },
     "scripts": {
         "build": "webpack --config webpack.prod.js",
-        "dev": "webpack --mode development --config webpack.dev.js",
-        "bootstrap": "yalc publish"
+        "dev": "webpack --mode development --config webpack.dev.js"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com"
     }
 }

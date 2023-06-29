@@ -1,100 +1,100 @@
 {
-    "name": "wisemapping-front-end",
-    "scripts": {
-        "bootstrap": "lerna run bootstrap",
-        "build": "lerna run build",
-        "clean": "lerna clean && rm -rf node_modules",
-        "lint": "lerna run lint --stream",
-        "playground": "lerna run playground --stream",
-        "test": "lerna run test --stream",
-        "test:unit": "lerna run test:unit --stream",
-        "test:integration": "lerna run test:integration --stream",
-        "prepare": "husky install"
-    },
-    "private": true,
-    "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "@babel/preset-env": "^7.14.7",
-        "@babel/preset-typescript": "^7.16.5",
-        "@babel/register": "^7.16.0",
-        "@formatjs/cli": "^6.0.4",
-        "@types/jest": "^29.0.5",
-        "@typescript-eslint/eslint-plugin": "^5.48.0        ",
-        "@typescript-eslint/parser": "^5.48.0",
-        "babel-loader": "^9.1.2",
-        "copy-webpack-plugin": "^10.2.4",
-        "css-loader": "^6.7.3",
-        "eslint": "^8.4.1",
-        "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-config-standard": "^17.0.0",
-        "eslint-nibble": "^8.0.0",
-        "eslint-plugin-cypress": "^2.12.1",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-react": "^7.31.10",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "html-webpack-plugin": "^5.3.2",
-        "husky": "^8.0.0",
-        "jest": "^29.3.1",
-        "jest-diff": "^29.3.1",
-        "jest-environment-jsdom": "^29.3.1",
-        "jest-webpack": "^0.5.1",
-        "lerna": "^3.16.4",
-        "lint-staged": "^10.5.4",
-        "prettier": "^2.7.1",
-        "start-server-and-test": "^1.14.0",
-        "style-loader": "^3.3.1",
-        "ts-jest": "^29.0.5",
-        "ts-loader": "^9.4.2",
-        "ts-node": "^10.9.1",
-        "typescript": "^4.8.4",
-        "webpack": "^5.75.0",
-        "webpack-bundle-analyzer": "^4.5.0",
-        "webpack-cli": "^5.0.1",
-        "webpack-dev-server": "^4.11.1"
-    },
-    "workspaces": [
-        "packages/*"
-    ],
-    "author": {
-        "name": "Paulo Veiga",
-        "login.email": "pveiga@wisemapping.com"
-    },
-    "contributors": [
-        "Ezequiel Bergamaschi"
-    ],
-    "engines": {
-        "node": "16.*"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "homepage": "http://localhost:8080/react",
-    "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
-    "version": "0.4.0",
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged",
-            "pre-push": "yarn lint && yarn test"
-        }
-    },
-    "lint-staged": {
-        "**/*.{ts,tsx}": [
-            "prettier --write"
-        ]
-    },
-    "eslintConfig": {
-        "rules": {
-            "implicit-arrow-linebreak": "off"
-        }
+  "name": "wisemapping-front-end",
+  "version": "0.4.0",
+  "private": true,
+  "homepage": "http://localhost:8080/react",
+  "license": "https://wisemapping.atlassian.net/wiki/spaces/WS/pages/524357/WiseMapping+Public+License+Version+1.0+WPL",
+  "author": {
+    "name": "Paulo Veiga",
+    "login.email": "pveiga@wisemapping.com"
+  },
+  "contributors": [
+    "Ezequiel Bergamaschi"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap": "lerna run bootstrap",
+    "build": "lerna run build",
+    "clean": "lerna clean && rm -rf node_modules",
+    "lint": "lerna run lint --stream",
+    "playground": "lerna run playground --stream",
+    "prepare": "husky install",
+    "test": "lerna run test --stream",
+    "test:integration": "lerna run test:integration --stream",
+    "test:unit": "lerna run test:unit --stream"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint && yarn test"
     }
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "rules": {
+      "implicit-arrow-linebreak": "off"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.16.5",
+    "@babel/register": "^7.16.0",
+    "@formatjs/cli": "^6.0.4",
+    "@types/jest": "^29.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "babel-loader": "^9.1.2",
+    "copy-webpack-plugin": "^10.2.4",
+    "css-loader": "^6.7.3",
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-nibble": "^8.0.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "html-webpack-plugin": "^5.3.2",
+    "husky": "^8.0.0",
+    "jest": "^29.3.1",
+    "jest-diff": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "jest-webpack": "^0.5.1",
+    "lerna": "^7.1.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.7.1",
+    "start-server-and-test": "^1.14.0",
+    "style-loader": "^3.3.1",
+    "ts-jest": "^29.0.5",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4",
+    "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
