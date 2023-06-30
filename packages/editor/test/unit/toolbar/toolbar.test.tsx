@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent, waitFor, screen, findByLabelText, act } from '@testing-library/react';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import Toolbar, {
   ToolbarButtonOption,
