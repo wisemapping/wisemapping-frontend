@@ -95,6 +95,18 @@
     "zoom-panel.tooltip-zoom-to-fit": {
         "defaultMessage": "Einpassen"
     },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "Thema"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "Thema"
+    },
+    "editor-panel.tooltip-connection-style-arc": {
+        "defaultMessage": "Bogen"
+    },
+    "editor-panel.tooltip-topic-share-none": {
+        "defaultMessage": "keine Form"
+    },
     "editor-panel.tooltip-add-icon": {
         "defaultMessage": "Symbol hinzufügen"
     },

@@ -92,6 +92,9 @@
     "editor-panel.tooltip-add-topic": {
         "defaultMessage": "Ajouter un sujet"
     },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Supprimer un sujet"
+    },
     "editor-panel.tooltip-delete-sujet": {
         "defaultMessage": "Supprimer le sujet"
     },
@@ -130,6 +133,9 @@
     },
     "editor-panel.tooltip-topic-style": {
         "defaultMessage": "Style de sujet"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Clavier"
     },
     "zoom-panel.tooltip-clavier": {
         "defaultMessage": "Raccourcis clavier"
@@ -222,10 +228,25 @@
         "defaultMessage": "Courbe polyligne"
     },
     "shortcut-help-pane.overwrite-edit-topic": {
-        "defaultMessage": "Sobrescribir el texto del tópico"
+        "defaultMessage": "Remplacer le texte du sujet"
     },
     "shortcut-help-pane.overwrite-edit-topic-key": {
         "defaultMessage": "Commencer à écrire sur le sujet sélectionné"
+    },
+    "editor-panel.tooltip-topic-share-none": {
+        "defaultMessage": "Aucune forme"
+    },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "Thème"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "Thème"
+    },
+    "editor-panel.tooltip-connection-style-arc": {
+        "defaultMessage": "Arc"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Forme ronde"
     },
     "editor-panel.tooltip-connection-color": {
         "defaultMessage": "Couleur"
@@ -249,7 +270,7 @@
         "defaultMessage": "La couleur de remplissage"
     },
     "editor-panel.tooltip-topic-fill-color-default": {
-        "defaultMessage": "Couleur de relleno por defecto"
+        "defaultMessage": "Couleur de remplissage par défaut"
     },
     "action.delete": {
         "defaultMessage": "Supprimer"

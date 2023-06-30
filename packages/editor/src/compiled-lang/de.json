@@ -125,6 +125,12 @@
       "value": "Notiz"
     }
   ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Thema"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -173,6 +179,12 @@
       "value": "Verbindungsstil"
     }
   ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Bogen"
+    }
+  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -201,6 +213,12 @@
     {
       "type": 0,
       "value": "Thema löschen"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Thema"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
@@ -279,6 +297,12 @@
     {
       "type": 0,
       "value": "Linienform"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "keine Form"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [

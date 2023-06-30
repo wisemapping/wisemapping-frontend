@@ -119,6 +119,12 @@
       "value": "Note"
     }
   ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Thème"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -167,6 +173,12 @@
       "value": "Style de connexion"
     }
   ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Arc"
+    }
+  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -197,6 +209,18 @@
       "value": "Supprimer le sujet"
     }
   ],
+  "editor-panel.tooltip-delete-topic": [
+    {
+      "type": 0,
+      "value": "Supprimer un sujet"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Thème"
+    }
+  ],
   "editor-panel.tooltip-topic-border-color": [
     {
       "type": 0,
@@ -218,7 +242,7 @@
   "editor-panel.tooltip-topic-fill-color-default": [
     {
       "type": 0,
-      "value": "Couleur de relleno por defecto"
+      "value": "Couleur de remplissage par défaut"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -281,10 +305,22 @@
       "value": "Chiffre de ligne"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Aucune forme"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
       "value": "Forme rectangulaire"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "Forme ronde"
     }
   ],
   "editor-panel.tooltip-topic-style": [
@@ -452,7 +488,7 @@
   "shortcut-help-pane.overwrite-edit-topic": [
     {
       "type": 0,
-      "value": "Sobrescribir el texto del tópico"
+      "value": "Remplacer le texte du sujet"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic-key": [
@@ -501,6 +537,12 @@
     {
       "type": 0,
       "value": "Raccourcis clavier"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Clavier"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [
