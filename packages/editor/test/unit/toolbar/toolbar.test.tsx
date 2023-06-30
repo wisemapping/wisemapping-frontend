@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent, waitFor, screen, findByLabelText } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen, findByLabelText, act } from '@testing-library/react';
 import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
 import Toolbar, {
   ToolbarButtonOption,
@@ -313,19 +313,20 @@ describe('Toolbar', () => {
 });
 
 describe('AppBar', () => {
-  it('When render it displays a menu', () => {
+  it('When render it displays a menu', async () => {
     const capacity = new Capability('edition-owner', false);
     const model = new Editor(null);
 
-    render(
-      <IntlProvider locale="en">
-        <AppBar
-          mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
-          capability={capacity}
-          model={model}
-        />
-        ,
-      </IntlProvider>,
+    await act(async () =>
+      render(
+        <IntlProvider locale="en">
+          <AppBar
+            mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
+            capability={capacity}
+            model={model}
+          />
+        </IntlProvider>,
+      ),
     );
     screen.getByRole('menubar');
   });
