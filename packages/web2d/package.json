@@ -19,9 +19,9 @@
     "cy:run": "cypress run",
     "dev": "webpack --config webpack.dev.js",
     "lint": "eslint src",
-    "storybook": "start-storybook -p 6006 --no-open",
+    "storybook": "npx start-storybook -p 6006 --no-open",
     "test": "yarn test:integration",
-    "test:integration": "start-server-and-test storybook http-get://localhost:6006 cy:run"
+    "test:integration": "npx start-server-and-test storybook http-get://localhost:6006 cy:run"
   },
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
@@ -35,8 +35,7 @@
     "@storybook/manager-webpack5": "^6.5.15",
     "@storybook/testing-library": "^0.0.13",
     "cypress": "12.3.0",
-    "cypress-image-snapshot": "^4.0.1",
-    "start-server-and-test": "^1.15.2"
+    "cypress-image-snapshot": "^4.0.1"
   },
   "peerDependencies": {
     "@wisemapping/core-js": "^0.6.0",
