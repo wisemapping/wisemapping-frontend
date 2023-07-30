@@ -156,6 +156,7 @@ const RegistrationForm = () => {
                 })}
                 autoComplete="new-password"
                 error={error}
+                maxLength={30}
               />
 
               {AppConfig.isRecaptcha2Enabled() && (
