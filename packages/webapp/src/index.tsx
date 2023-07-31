@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client';
 declare global {
   interface Window {
     newrelic: { noticeError: (Error) => void };
+    errorMvcView: string;
   }
 }
 

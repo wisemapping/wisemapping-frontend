@@ -6,15 +6,17 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
 import logo from './logo-small.svg';
+import { JSX } from '@emotion/react/jsx-runtime';
 
 interface HeaderProps {
   type: 'only-signup' | 'only-signin' | 'none';
 }
 
 export const Header = ({ type }: HeaderProps): React.ReactElement => {
-  let signUpButton;
-  let text;
-  let signInButton;
+  let signUpButton: string | JSX.Element | undefined;
+  let text: string | JSX.Element | undefined;
+  let signInButton: string | JSX.Element | undefined;
+
   if (type === 'only-signup') {
     text = (
       <span className="header-area-content-span">

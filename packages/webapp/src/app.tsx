@@ -34,6 +34,7 @@ import AppConfig from './classes/app-config';
 import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
+import ErrorPage from './components/error-page';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
@@ -67,7 +68,9 @@ function Redirect({ to }) {
 
 const App = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
+  const overwriteView = window.errorMvcView;
 
+  // This is a hack to move error handling on Spring MVC.
   return locale.message ? (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -80,62 +83,77 @@ const App = (): ReactElement => {
             <MuiThemeProvider theme={theme}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <Router>
-                  <Routes>
-                    <Route path="/" element={<Redirect to="/c/login" />} />
-                    <Route path="/c/login" element={<LoginPage />} />
-                    <Route path="/c/registration" element={<RegistationPage />} />
-                    <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
-                    <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
-                    <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
-                    <Route
-                      path="/c/forgot-password-success"
-                      element={<ForgotPasswordSuccessPage />}
-                    />
-                    <Route
-                      path="/c/maps/"
-                      element={
-                        <Suspense
-                          fallback={
-                            <div>
-                              <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                            </div>
-                          }
-                        >
-                          <MapsPage />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/c/maps/:id/edit"
-                      element={
-                        <Suspense
-                          fallback={
-                            <div>
-                              <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                            </div>
-                          }
-                        >
-                          <EditorPage isTryMode={false} />
-                        </Suspense>
-                      }
-                    />
-                    <Route
-                      path="/c/maps/:id/try"
-                      element={
-                        <Suspense
-                          fallback={
-                            <div>
-                              <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-                            </div>
-                          }
-                        >
-                          <EditorPage isTryMode={true} />
-                        </Suspense>
-                      }
-                    />
-                  </Routes>
-                </Router>
+                {!overwriteView ? (
+                  <Router>
+                    <Routes>
+                      <Route path="/" element={<Redirect to="/c/login" />} />
+                      <Route path="/c/login" element={<LoginPage />} />
+                      <Route path="/c/registration" element={<RegistationPage />} />
+                      <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
+                      <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
+                      <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
+                      <Route
+                        path="/c/forgot-password-success"
+                        element={<ForgotPasswordSuccessPage />}
+                      />
+                      <Route
+                        path="/c/maps/"
+                        element={
+                          <Suspense
+                            fallback={
+                              <div>
+                                <FormattedMessage
+                                  id="dialog.loading"
+                                  defaultMessage="Loading ..."
+                                />
+                              </div>
+                            }
+                          >
+                            <MapsPage />
+                          </Suspense>
+                        }
+                      />
+                      <Route
+                        path="/c/maps/:id/edit"
+                        element={
+                          <Suspense
+                            fallback={
+                              <div>
+                                <FormattedMessage
+                                  id="dialog.loading"
+                                  defaultMessage="Loading ..."
+                                />
+                              </div>
+                            }
+                          >
+                            <EditorPage isTryMode={false} />
+                          </Suspense>
+                        }
+                      />
+                      <Route
+                        path="/c/maps/:id/try"
+                        element={
+                          <Suspense
+                            fallback={
+                              <div>
+                                <FormattedMessage
+                                  id="dialog.loading"
+                                  defaultMessage="Loading ..."
+                                />
+                              </div>
+                            }
+                          >
+                            <EditorPage isTryMode={true} />
+                          </Suspense>
+                        }
+                      />
+                    </Routes>
+                  </Router>
+                ) : (
+                  <Router>
+                    <ErrorPage isSecurity={overwriteView === 'securityError'} />
+                  </Router>
+                )}
               </ThemeProvider>
             </MuiThemeProvider>
           </StyledEngineProvider>
