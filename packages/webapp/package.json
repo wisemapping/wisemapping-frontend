@@ -22,11 +22,11 @@
         "test:integration": "npx start-server-and-test start http-get://localhost:3000 cy:run"
     },
     "dependencies": {
-        "@emotion/react": "^11.10.4",
-        "@emotion/styled": "^11.10.5",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
         "@mui/icons-material": "^5.9.3",
-        "@mui/lab": "^5.0.0-alpha.129",
-        "@mui/material": "^5.12.3",
+        "@mui/lab": "^5.0.0-alpha.137",
+        "@mui/material": "^5.14.2",
         "@reduxjs/toolkit": "^1.5.0",
         "@wisemapping/editor": "^0.6.1",
         "axios": "^0.27.2",
