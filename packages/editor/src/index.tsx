@@ -37,8 +37,8 @@ import {
 } from '@wisemapping/mindplot';
 
 import Editor from './components';
-import { EditorOptions } from './components';
 import MapInfo from './classes/model/map-info';
+import { EditorOptions, useEditor } from './hooks/useEditor';
 
 declare global {
   // used in mindplot
@@ -76,6 +76,7 @@ export {
   EditorOptions,
   MapInfo,
   XMLSerializerFactory,
+  useEditor,
 };
 
 export default Editor;

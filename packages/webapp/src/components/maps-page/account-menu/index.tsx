@@ -28,7 +28,7 @@ const AccountMenu = (): React.ReactElement => {
     setAnchorEl(null);
   };
 
-  const handleLogout = (event: MouseEvent) => {
+  const handleLogout = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const elem = document.getElementById('logoutFrom') as HTMLFormElement;
     elem.submit();

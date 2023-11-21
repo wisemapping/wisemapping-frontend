@@ -21,10 +21,16 @@
     "test:unit": "jest ./test/unit/* --detectOpenHandles"
   },
   "dependencies": {
-    "@wisemapping/mindplot": "^5.1.1",
-    "emoji-picker-react": "^4.4.7",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.9.3",
+    "@mui/material": "^5.10.11",
+    "@wisemapping/mindplot": "workspace:*",
+    "emoji-picker-react": "4.5.2",
     "react-color": "^2.19.3",
-    "react-loader-spinner": "^5.3.4"
+    "react-intl": "^6.2.1",
+    "react-loader-spinner": "^5.3.4",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@formatjs/cli": "^6.0.4",
@@ -35,16 +41,11 @@
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "start-server-and-test": "^2.0.0"
   },
   "peerDependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.9.3",
-    "@mui/material": "^5.10.11",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-intl": "^6.2.1",
-    "styled-components": "^5.3.6"
+    "react-dom": "^18.2.0"
   }
 }

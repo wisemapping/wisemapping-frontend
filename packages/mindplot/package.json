@@ -32,8 +32,8 @@
   },
   "dependencies": {
     "@types/jquery": "^3.5.11",
-    "@wisemapping/core-js": "^0.6.0",
-    "@wisemapping/web2d": "^0.6.1",
+    "@wisemapping/core-js": "workspace:*",
+    "@wisemapping/web2d": "workspace:*",
     "emoji-picker-react": "^4.4.3",
     "jquery": "3.6.0",
     "lodash": "^4.17.21",
