@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React, { useEffect } from 'react';
-import Editor, { EditorOptions } from '@wisemapping/editor';
+import Editor, { useEditor, EditorOptions } from '@wisemapping/editor';
 import {
   EditorRenderMode,
   PersistenceManager,
@@ -173,6 +173,12 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     }
   }, [mapInfo?.getTitle()]);
 
+  const editor = useEditor({
+    mapInfo,
+    options,
+    persistenceManager: persistence,
+  });
+
   return loadCompleted ? (
     <IntlProvider
       locale={userLocale.code}
@@ -181,10 +187,8 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     >
       <ClientHealthSentinel />
       <Editor
+        editor={editor}
         onAction={setActiveDialog}
-        options={options}
-        persistenceManager={persistence}
-        mapInfo={mapInfo}
         theme={theme}
         accountConfiguration={
           // Prevent load on non-authenticated.
