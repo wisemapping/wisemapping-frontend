@@ -10,6 +10,18 @@ module.exports = merge(common, {
   devServer: {
     port: 3000,
     hot: true,
+    proxy: {
+      '/api': {
+        target: {
+          host: "0.0.0.0",
+          protocol: 'http:',
+          port: 8080
+        },
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+    },
     historyApiFallback: {
       rewrites: [{ from: /^\/c\//, to: '/index.html' }],
     },
@@ -19,6 +31,7 @@ module.exports = merge(common, {
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
         PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
+        CLIENT_TYPE: process.env.CLIENT_TYPE ? process.env.CLIENT_TYPE : 'mock'
       },
       base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
     }),

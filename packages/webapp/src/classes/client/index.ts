@@ -1,5 +1,10 @@
 import { Locale, LocaleCode } from '../app-i18n';
 
+export type JwtAuth = {
+  email: string;
+  password: string;
+};
+
 export type NewUser = {
   email: string;
   firstname: string;
@@ -85,6 +90,8 @@ export type ForgotPasswordResult = {
 };
 
 interface Client {
+  login(auth: JwtAuth): Promise<void>;
+
   deleteAccount(): Promise<void>;
   importMap(model: ImportMapInfo): Promise<number>;
   createMap(map: BasicMapInfo): Promise<number>;

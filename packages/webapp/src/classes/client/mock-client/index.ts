@@ -26,8 +26,10 @@ import Client, {
   Permission,
   Oauth2CallbackResult,
   ForgotPasswordResult,
+  JwtAuth,
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
+import Cookies from 'universal-cookie';
 
 const label1: Label = {
   id: 1,
@@ -125,6 +127,18 @@ class MockClient implements Client {
     ];
 
     this.labels = [label1, label2, label3];
+  }
+
+  login(auth: JwtAuth): Promise<void> {
+    const cookies = new Cookies();
+    cookies.set('jwt-token-mock', auth.email, { path: '/' });
+    return Promise.resolve();
+  }
+
+  private _jwtToken(): string | undefined {
+    // Set cookie on session ...
+    const cookies = new Cookies();
+    return cookies.get('jwt-token-mock');
   }
 
   fetchStarred(id: number): Promise<boolean> {
