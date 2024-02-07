@@ -25,7 +25,7 @@ export default class RestClient implements Client {
     response?: AxiosResponse<T>;
   }): Promise<{ response?: AxiosResponse<T> }> => {
     // TODO: Improve session timeout response and response handling
-    if (error.response && error.response.status === 405) {
+    if (error.response && (error.response.status === 405 || error.response.status === 403)) {
       this.sessionExpired();
     }
     return Promise.reject(error);
@@ -61,6 +61,14 @@ export default class RestClient implements Client {
       (response) => response,
       (respoonse) => this.checkResponseForSessionExpired(respoonse),
     );
+  }
+
+  logout(): Promise<void> {
+    // Set jwt token on cookie ...
+    const cookies = new Cookies();
+    cookies.remove('jwt-auth-token', { path: '/' });
+
+    return Promise.resolve();
   }
 
   login(model: JwtAuth): Promise<void> {

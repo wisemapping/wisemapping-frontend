@@ -4965,6 +4965,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 5edce7995775b0b196b142883e4d4f71fd93c294eaec973670f1fa2540b70ea7390408ed513ddefef5fcb12a578100c76596e8f2a714b0c2ae9f70ee773f4510
+  languageName: node
+  linkType: hard
+
 "@types/cypress-image-snapshot@npm:^3.1.6":
   version: 3.1.6
   resolution: "@types/cypress-image-snapshot@npm:3.1.6"
@@ -6247,6 +6254,7 @@ __metadata:
     react-redux: ^7.2.2
     react-router-dom: ^6.4.3
     styled-components: ^5.3.6
+    universal-cookie: ^7.0.2
   languageName: unknown
   linkType: soft
 
@@ -8880,6 +8888,13 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "cookie@npm:0.6.0"
+  checksum: f56a7d32a07db5458e79c726b77e3c2eff655c36792f2b6c58d351fb5f61531e5b1ab7f46987150136e366c65213cbe31729e02a3eaed630c3bf7334635fb410
   languageName: node
   linkType: hard
 
@@ -21901,6 +21916,16 @@ __metadata:
     unist-util-is: ^4.0.0
     unist-util-visit-parents: ^3.0.0
   checksum: 1fe19d500e212128f96d8c3cfa3312846e586b797748a1fd195fe6479f06bc90a6f6904deb08eefc00dd58e83a1c8a32fb8677252d2273ad7a5e624525b69b8f
+  languageName: node
+  linkType: hard
+
+"universal-cookie@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "universal-cookie@npm:7.0.2"
+  dependencies:
+    "@types/cookie": ^0.6.0
+    cookie: ^0.6.0
+  checksum: c2c20cc4918fae7c912e2e154e4bed33a8a150685fec737cfe62d89b95b19be1658c3224b9d523a9269a9c5571c5ad5eb702b9db04c0544ea1061925289d82d2
   languageName: node
   linkType: hard
 

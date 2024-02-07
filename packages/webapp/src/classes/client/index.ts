@@ -91,7 +91,7 @@ export type ForgotPasswordResult = {
 
 interface Client {
   login(auth: JwtAuth): Promise<void>;
-
+  logout(): Promise<void>;
   deleteAccount(): Promise<void>;
   importMap(model: ImportMapInfo): Promise<number>;
   createMap(map: BasicMapInfo): Promise<number>;

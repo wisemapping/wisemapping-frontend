@@ -128,6 +128,9 @@ class MockClient implements Client {
 
     this.labels = [label1, label2, label3];
   }
+  logout(): Promise<void> {
+    return Promise.resolve();
+  }
 
   login(auth: JwtAuth): Promise<void> {
     const cookies = new Cookies();

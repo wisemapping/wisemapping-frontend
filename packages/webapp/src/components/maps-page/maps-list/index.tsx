@@ -372,6 +372,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   );
 
   const handleStarred = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
+    event.stopPropagation();
     event.preventDefault();
     starredMultation.mutate(id);
   };

@@ -17,9 +17,6 @@ module.exports = merge(common, {
           protocol: 'http:',
           port: 8080
         },
-        pathRewrite: {
-          '^/api': ''
-        }
       },
     },
     historyApiFallback: {
