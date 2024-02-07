@@ -25,18 +25,19 @@ export type Model = {
   password: string;
 };
 
+export type LoginErrorProps = {
+  errorCode: number | undefined;
+};
+
 const defaultModel: Model = { email: '', password: '' };
 
-const LoginError = () => {
-  // @Todo: This must be reviewed to be based on navigation state.
-  // Login error example: http://localhost:8080/c/login?login.error=2
-  const errorCode = new URLSearchParams(window.location.search).get('login_error');
+const LoginError = ({ errorCode }: LoginErrorProps) => {
   const intl = useIntl();
 
   let msg: null | string = null;
   if (errorCode) {
     switch (errorCode) {
-      case '3':
+      case 3:
         msg = intl.formatMessage({
           id: 'login.userinactive',
           defaultMessage:
@@ -56,6 +57,8 @@ const LoginError = () => {
 const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
+  const [loginError, setLoginError] = useState<number | undefined>(undefined);
+
   const client: Client = useSelector(activeInstance);
   const navigate = useNavigate();
 
@@ -72,7 +75,9 @@ const LoginPage = (): React.ReactElement => {
     {
       onSuccess: () => navigate('/c/maps/'),
       onError: (error) => {
+        // Hardcode error code...
         console.log(error);
+        setLoginError(2);
       },
     },
   );
@@ -103,7 +108,7 @@ const LoginPage = (): React.ReactElement => {
           <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
         </Typography>
 
-        <LoginError />
+        <LoginError errorCode={loginError} />
 
         <FormControl>
           <form onSubmit={handleOnSubmit}>
