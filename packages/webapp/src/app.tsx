@@ -17,7 +17,7 @@
  */
 import React, { ReactElement, Suspense, useEffect } from 'react';
 import { FormattedMessage, IntlProvider } from 'react-intl';
-import { Route, Routes, BrowserRouter as Router, useNavigate } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router, useNavigate, useParams } from 'react-router-dom';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
@@ -65,6 +65,11 @@ function Redirect({ to }) {
   });
   return null;
 }
+
+const PageEditorWhapper = ({ isTryMode }: { isTryMode: boolean }) => {
+  const mapId: string = useParams().id!;
+  return <EditorPage isTryMode={isTryMode} mapId={Number.parseInt(mapId)} />;
+};
 
 const App = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
@@ -126,7 +131,7 @@ const App = (): ReactElement => {
                               </div>
                             }
                           >
-                            <EditorPage isTryMode={false} />
+                            <PageEditorWhapper isTryMode={false} />
                           </Suspense>
                         }
                       />
@@ -143,7 +148,7 @@ const App = (): ReactElement => {
                               </div>
                             }
                           >
-                            <EditorPage isTryMode={true} />
+                            <PageEditorWhapper isTryMode={true} />
                           </Suspense>
                         }
                       />

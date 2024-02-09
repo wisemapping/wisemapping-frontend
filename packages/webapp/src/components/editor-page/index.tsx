@@ -34,8 +34,8 @@ import {
   useFetchMapById,
   activeInstance,
   sessionExpired,
+  useFetchMapMetadata,
 } from '../../redux/clientSlice';
-import EditorOptionsBuilder from './EditorOptionsBuilder';
 import { useTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
@@ -43,24 +43,31 @@ import Client from '../../classes/client';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import ClientHealthSentinel from '../common/client-health-sentinel';
+import Cookies from 'universal-cookie';
 
 const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   let persistenceManager: PersistenceManager;
   if (AppConfig.isRestClient()) {
     if (mode === 'edition-owner' || mode === 'edition-editor') {
+      // Fetch JWT token ...
+      const cookies = new Cookies();
+      const token = cookies.get('jwt-auth-token');
+
       persistenceManager = new RESTPersistenceManager({
-        documentUrl: '/c/restful/maps/{id}/document',
-        revertUrl: '/c/restful/maps/{id}/history/latest',
-        lockUrl: '/c/restful/maps/{id}/lock',
+        documentUrl: '/api/restful/maps/{id}/document',
+        revertUrl: '/api/restful/maps/{id}/history/latest',
+        lockUrl: '/api/restful/maps/{id}/lock',
+        jwt: token,
       });
     } else {
       persistenceManager = new LocalStorageManager(
-        `/c/restful/maps/{id}/${
+        `/api/restful/maps/{id}/${
           globalThis.historyId ? `${globalThis.historyId}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
         true,
       );
     }
+
     persistenceManager.addErrorHandler((error) => {
       if (error.errorType === 'session-expired') {
         // TODO: this line was in RestPersistenceClient, do something similar here
@@ -75,6 +82,7 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
 
 export type EditorPropsType = {
   isTryMode: boolean;
+  mapId: number;
 };
 
 type ActionType =
@@ -97,7 +105,14 @@ type ActionType =
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
-const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
+type EditorMetadata = {
+  mode: EditorRenderMode;
+  title: string;
+  isLocked: boolean;
+  zoom: number;
+};
+
+const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
   const hotkey = useSelector(hotkeysEnabled);
   const userLocale = AppI18n.getUserLocale();
@@ -119,51 +134,79 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
   }, []);
 
-  const useFindEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {
-    let result: EditorRenderMode = null;
-    if (isTryMode) {
-      result = 'showcase';
-    } else if (globalThis.mindmapLocked) {
-      result = 'viewonly';
-    } else {
-      const fetchResult = useFetchMapById(mapId);
-      if (!fetchResult.isLoading) {
-        if (fetchResult.error) {
-          throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
-        }
+  const useFindEditorMode = (isTryMode: boolean, mapId: number): EditorMetadata | undefined => {
+    let mode: EditorRenderMode = null;
+    let title = '';
+    let isLocked = false;
 
-        if (!fetchResult.map) {
+    if (isTryMode) {
+      mode = 'showcase';
+      title = 'Try map';
+      isLocked = false;
+    } else {
+      const fetchMapInfoResult = useFetchMapById(mapId);
+      const fetchMetadataResult = useFetchMapMetadata(mapId);
+
+      if (!fetchMapInfoResult.isLoading && !fetchMetadataResult.isLoading) {
+        if (fetchMapInfoResult.error || fetchMetadataResult.error) {
           throw new Error(
-            `Map info could not be loaded. Info not present: ${JSON.stringify(fetchResult)}`,
+            `Map info could not be loaded: ${JSON.stringify(fetchMapInfoResult.error)}`,
           );
         }
-        result = `edition-${fetchResult.map.role}`;
+
+        if (!fetchMapInfoResult.data) {
+          throw new Error(
+            `Map info could not be loaded. Info not present: ${JSON.stringify(fetchMapInfoResult)}`,
+          );
+        }
+
+        if (!fetchMetadataResult.data) {
+          throw new Error(
+            `Map info could not be loaded. Info not present: ${JSON.stringify(
+              fetchMetadataResult,
+            )}`,
+          );
+        }
+
+        if (fetchMetadataResult.data?.isLocked) {
+          mode = 'viewonly';
+        } else {
+          mode = `edition-${fetchMapInfoResult.data.role}`;
+        }
+        isLocked = fetchMetadataResult.data.isLocked;
+        title = fetchMetadataResult.data.title;
       }
     }
-    return result;
+    return mode ? { mode: mode, isLocked: isLocked, title: title, zoom: 0.8 } : undefined;
   };
 
   // What is the role ?
-  const mapId = EditorOptionsBuilder.loadMapId();
-  const mode = useFindEditorMode(isTryMode, mapId);
+  const mapMetadata = useFindEditorMode(isTryMode, mapId);
 
   // Account settings can be null and editor cannot be initilized multiple times. This creates problems
   // at the i18n resource loading.
-  const isAccountLoaded = mode === 'showcase' || useFetchAccount;
-  const loadCompleted = mode && isAccountLoaded;
+  const isAccountLoaded = mapMetadata?.mode === 'showcase' || useFetchAccount;
+  const loadCompleted = mapMetadata && isAccountLoaded;
 
-  let options: EditorOptions, persistence: PersistenceManager;
+  let persistence: PersistenceManager;
   let mapInfo: MapInfo;
+  let options: EditorOptions;
   if (loadCompleted) {
-    options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
-    persistence = buildPersistenceManagerForEditor(mode);
+    // Configure de
+    options = {
+      enableKeyboardEvents: hotkey,
+      locale: userLocale.code,
+      mode: mapMetadata.mode,
+    };
+
+    persistence = buildPersistenceManagerForEditor(mapMetadata.mode);
     mapInfo = new MapInfoImpl(
       mapId,
       client,
-      options.mapTitle,
-      options.locked,
-      options.lockedMsg,
-      options.zoom,
+      mapMetadata.title,
+      mapMetadata.isLocked,
+      '',
+      mapMetadata.zoom,
     );
   }
 

@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Client, {
   ErrorInfo,
@@ -12,6 +29,7 @@ import Client, {
   Oauth2CallbackResult,
   ForgotPasswordResult,
   JwtAuth,
+  MapMetadata,
 } from '..';
 import { getCsrfToken } from '../../../utils';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
@@ -20,11 +38,11 @@ import Cookies from 'universal-cookie';
 export default class RestClient implements Client {
   private baseUrl: string;
   private axios: AxiosInstance;
+  private _onSessionExpired: () => void;
 
   private checkResponseForSessionExpired = <T>(error: {
     response?: AxiosResponse<T>;
   }): Promise<{ response?: AxiosResponse<T> }> => {
-    // TODO: Improve session timeout response and response handling
     if (error.response && (error.response.status === 405 || error.response.status === 403)) {
       this.sessionExpired();
     }
@@ -61,6 +79,28 @@ export default class RestClient implements Client {
       (response) => response,
       (respoonse) => this.checkResponseForSessionExpired(respoonse),
     );
+  }
+
+  fetchMapMetadata(id: number): Promise<MapMetadata> {
+    const handler = (
+      success: (mapMetadata: MapMetadata) => void,
+      reject: (error: ErrorInfo) => void,
+    ) => {
+      this.axios
+        .get(`${this.baseUrl}/api/restful/maps/${id}/metadata`, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then((response) => {
+          const data = response.data;
+          success(data);
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+
+    return new Promise(handler);
   }
 
   logout(): Promise<void> {
@@ -100,7 +140,6 @@ export default class RestClient implements Client {
     return token ? `Bearer ${token}` : null;
   }
 
-  private _onSessionExpired: () => void;
   onSessionExpired(callback?: () => void): () => void {
     if (callback) {
       this._onSessionExpired = callback;

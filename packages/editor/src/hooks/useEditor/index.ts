@@ -37,15 +37,18 @@ export const useEditor = ({
   const [model, setModel] = useState<Model | undefined>();
   // useEditor hook creates mindplotRef
   const mindplotRef = useRef(null);
-  // This is required to redraw in case of chansges in the canvas...
+  // This is required to redraw in case of changes in the canvas...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setCanvasUpdate] = useState<number>();
 
   const { widgetManager } = useWidgetManager();
-  const capability = new Capability(options.mode, mapInfo.isLocked());
+  let capability;
+  if (options && mapInfo) {
+    capability = new Capability(options.mode, mapInfo.isLocked());
+  }
 
   useEffect(() => {
-    if (!model) {
+    if (!model && options) {
       const model = new Model(mindplotRef.current);
       model
         .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
@@ -59,15 +62,17 @@ export const useEditor = ({
         });
       setModel(model);
     }
-  }, [mindplotRef]);
+  }, [mindplotRef, options]);
 
   useEffect(() => {
-    if (options.enableKeyboardEvents) {
-      DesignerKeyboard.resume();
-    } else {
-      DesignerKeyboard.pause();
+    if (options) {
+      if (options.enableKeyboardEvents) {
+        DesignerKeyboard.resume();
+      } else {
+        DesignerKeyboard.pause();
+      }
     }
-  }, [options.enableKeyboardEvents]);
+  }, [options, options?.enableKeyboardEvents]);
 
   return { model, mindplotRef, mapInfo, capability, options };
 };

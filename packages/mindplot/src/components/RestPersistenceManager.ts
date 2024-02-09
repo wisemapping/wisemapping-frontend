@@ -26,11 +26,13 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private lockUrl: string;
 
-  private onSave: boolean;
+  private jwt: string | undefined;
 
   private clearTimeout;
 
-  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string }) {
+  private onSave: boolean;
+
+  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string; jwt?: string }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
@@ -40,6 +42,7 @@ class RESTPersistenceManager extends PersistenceManager {
     this.revertUrl = options.revertUrl;
     this.lockUrl = options.lockUrl;
     this.onSave = false;
+    this.jwt = options.jwt;
   }
 
   saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
@@ -61,14 +64,7 @@ class RESTPersistenceManager extends PersistenceManager {
 
       const persistence = this;
 
-      const crfs = this.getCSRFToken();
-      const headers = {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      };
-      if (crfs) {
-        headers['X-CSRF-Token'] = crfs;
-      }
+      const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
 
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
@@ -133,15 +129,7 @@ class RESTPersistenceManager extends PersistenceManager {
   }
 
   discardChanges(mapId: string): void {
-    const crfs = this.getCSRFToken();
-    const headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-      Accept: 'application/json',
-    };
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
-
+    const headers = this._buildHttpHeader('application/json; charset=utf-8');
     fetch(this.revertUrl.replace('{id}', mapId), {
       method: 'POST',
       headers,
@@ -149,14 +137,7 @@ class RESTPersistenceManager extends PersistenceManager {
   }
 
   unlockMap(mapId: string): void {
-    const crfs = this.getCSRFToken();
-    const headers = {
-      'Content-Type': 'text/plain; charset=utf-8',
-    };
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
-
+    const headers = this._buildHttpHeader('text/plain; charset=utf-8');
     fetch(this.lockUrl.replace('{id}', mapId), {
       method: 'PUT',
       headers,
@@ -180,14 +161,7 @@ class RESTPersistenceManager extends PersistenceManager {
 
   loadMapDom(mapId: string): Promise<Document> {
     const url = `${this.documentUrl.replace('{id}', mapId)}/xml`;
-    const crfs = this.getCSRFToken();
-    const headers = {
-      'Content-Type': 'text/plain; charset=utf-8',
-      Accept: 'application/xml',
-    };
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
+    const headers = this._buildHttpHeader('text/plain; charset=utf-8', 'application/xml');
 
     return fetch(url, {
       method: 'get',
@@ -201,6 +175,28 @@ class RESTPersistenceManager extends PersistenceManager {
         return response.text();
       })
       .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
+  }
+
+  private _buildHttpHeader(contentType: string, accept?: string) {
+    const headers = {
+      'Content-Type': contentType,
+    };
+
+    if (accept) {
+      // eslint-disable-next-line dot-notation
+      headers['Accept'] = accept;
+    }
+
+    if (this.jwt) {
+      // eslint-disable-next-line dot-notation
+      headers['Authorization'] = `Bearer ${this.jwt} `;
+    }
+
+    const crfs = this.getCSRFToken();
+    if (crfs) {
+      headers['X-CSRF-Token'] = crfs;
+    }
+    return headers;
   }
 }
 

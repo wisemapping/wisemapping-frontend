@@ -21,7 +21,7 @@ import AppConfig from '../../../../classes/app-config';
 import Box from '@mui/material/Box';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
 
   const client: Client = useSelector(activeInstance);
   const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);

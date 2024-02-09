@@ -27,6 +27,7 @@ import Client, {
   Oauth2CallbackResult,
   ForgotPasswordResult,
   JwtAuth,
+  MapMetadata,
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
@@ -128,6 +129,15 @@ class MockClient implements Client {
 
     this.labels = [label1, label2, label3];
   }
+  fetchMapMetadata(id: number): Promise<MapMetadata> {
+    return Promise.resolve({
+      title: 'my map',
+      id: id,
+      isLocked: false,
+      zoom: 0.8,
+    });
+  }
+
   logout(): Promise<void> {
     return Promise.resolve();
   }

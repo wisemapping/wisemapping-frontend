@@ -38,7 +38,7 @@ class _AppConfig {
     googleOauth2Url: '/c/registration-google?code=aFakeCode',
   };
 
-  isDevelopEnv(): boolean {
+  isMockEnv(): boolean {
     const config = this.getInstance();
     return config.clientType === 'mock';
   }

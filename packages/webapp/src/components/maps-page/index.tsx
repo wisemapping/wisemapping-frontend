@@ -62,6 +62,7 @@ import LabelDeleteConfirm from './maps-list/label-delete-confirm';
 import ReactGA from 'react-ga4';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
+import { useNavigate } from 'react-router-dom';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -91,6 +92,7 @@ const MapsPage = (): ReactElement => {
     localStorage.getItem('desktopDrawerOpen') === 'true',
   );
   const classes = useStyles(desktopDrawerOpen);
+  const navigate = useNavigate();
 
   const handleMobileDrawerToggle = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -121,6 +123,16 @@ const MapsPage = (): ReactElement => {
     });
     window.scrollTo(0, 0);
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Maps List' });
+  }, []);
+
+  useEffect(() => {
+    if (client) {
+      client.onSessionExpired(() => {
+        navigate('/c/login');
+      });
+    } else {
+      console.warn('Session expiration wont be handled because could not find client');
+    }
   }, []);
 
   const mutation = useMutation((id: number) => client.deleteLabel(id), {

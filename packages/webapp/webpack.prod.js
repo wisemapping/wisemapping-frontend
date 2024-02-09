@@ -14,6 +14,7 @@ module.exports = merge(common, {
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
         PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'https://www.wisemapping.com',
+        CLIENT_TYPE: 'rest'
       },
       base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'https://www.wisemapping.com',
     }),
