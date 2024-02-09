@@ -64,7 +64,7 @@ export type MapMetadata = {
   title: string;
   isLocked: boolean;
   isLockedBy?: string;
-  zoom: number;
+  jsonProps: string;
 };
 
 export type ChangeHistory = {

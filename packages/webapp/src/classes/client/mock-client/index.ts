@@ -134,7 +134,7 @@ class MockClient implements Client {
       title: 'my map',
       id: id,
       isLocked: false,
-      zoom: 0.8,
+      jsonProps: '{ "zoom": 0.8 }',
     });
   }
 

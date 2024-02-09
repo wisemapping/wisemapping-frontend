@@ -109,6 +109,7 @@ type EditorMetadata = {
   mode: EditorRenderMode;
   title: string;
   isLocked: boolean;
+  isLockedBy?: string;
   zoom: number;
 };
 
@@ -138,6 +139,8 @@ const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement =
     let mode: EditorRenderMode = null;
     let title = '';
     let isLocked = false;
+    let zoom = 0.8;
+    let isLockedBy;
 
     if (isTryMode) {
       mode = 'showcase';
@@ -173,11 +176,14 @@ const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement =
         } else {
           mode = `edition-${fetchMapInfoResult.data.role}`;
         }
+
         isLocked = fetchMetadataResult.data.isLocked;
+        isLockedBy = fetchMetadataResult.data.isLockedBy;
         title = fetchMetadataResult.data.title;
+        zoom = JSON.parse(fetchMetadataResult.data.jsonProps).zoom;
       }
     }
-    return mode ? { mode: mode, isLocked: isLocked, title: title, zoom: 0.8 } : undefined;
+    return mode ? { mode, isLocked, isLockedBy, title, zoom } : undefined;
   };
 
   // What is the role ?
@@ -192,11 +198,12 @@ const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement =
   let mapInfo: MapInfo;
   let options: EditorOptions;
   if (loadCompleted) {
-    // Configure de
+    // Configure
     options = {
       enableKeyboardEvents: hotkey,
       locale: userLocale.code,
       mode: mapMetadata.mode,
+      enableAppBar: true,
     };
 
     persistence = buildPersistenceManagerForEditor(mapMetadata.mode);
