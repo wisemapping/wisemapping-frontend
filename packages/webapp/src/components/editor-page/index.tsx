@@ -204,6 +204,7 @@ const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement =
       locale: userLocale.code,
       mode: mapMetadata.mode,
       enableAppBar: true,
+      zoom: mapMetadata.zoom,
     };
 
     persistence = buildPersistenceManagerForEditor(mapMetadata.mode);
@@ -212,7 +213,7 @@ const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement =
       client,
       mapMetadata.title,
       mapMetadata.isLocked,
-      '',
+      mapMetadata.isLockedBy,
       mapMetadata.zoom,
     );
   }
