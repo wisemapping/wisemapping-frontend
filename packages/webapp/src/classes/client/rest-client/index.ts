@@ -32,7 +32,7 @@ import Client, {
   MapMetadata,
 } from '..';
 import { getCsrfToken } from '../../../utils';
-import { LocaleCode, localeFromStr } from '../../app-i18n';
+import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
 
 export default class RestClient implements Client {
@@ -61,6 +61,10 @@ export default class RestClient implements Client {
         if (jwtToken) {
           config.headers['Authorization'] = jwtToken;
         }
+
+        // Send browser locale ...
+        const locale = this.getDefaultLocale();
+        config.headers['Accept-Language'] = locale.code;
 
         // Add Csrf token ...
         const csrfToken = getCsrfToken();
@@ -451,6 +455,10 @@ export default class RestClient implements Client {
         });
     };
     return new Promise(handler);
+  }
+
+  protected getDefaultLocale(): Locale {
+    return AppI18n.getDefaultLocale();
   }
 
   renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
