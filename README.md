@@ -17,6 +17,10 @@ nvm use
 yarn install
 ```
 
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
+
 Please refer to each package's Readme.md for anything specific to the package.
 
 If you want to contribute, please check out [CONTRIBUTING.md](./CONTRIBUTING.md).

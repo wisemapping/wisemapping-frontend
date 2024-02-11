@@ -1617,6 +1617,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cypress/request@npm:2.88.12":
+  version: 2.88.12
+  resolution: "@cypress/request@npm:2.88.12"
+  dependencies:
+    aws-sign2: ~0.7.0
+    aws4: ^1.8.0
+    caseless: ~0.12.0
+    combined-stream: ~1.0.6
+    extend: ~3.0.2
+    forever-agent: ~0.6.1
+    form-data: ~2.3.2
+    http-signature: ~1.3.6
+    is-typedarray: ~1.0.0
+    isstream: ~0.1.2
+    json-stringify-safe: ~5.0.1
+    mime-types: ~2.1.19
+    performance-now: ^2.1.0
+    qs: ~6.10.3
+    safe-buffer: ^5.1.2
+    tough-cookie: ^4.1.3
+    tunnel-agent: ^0.6.0
+    uuid: ^8.3.2
+  checksum: 2c6fbf7f3127d41bffca8374beaa8cf95450495a8a077b00309ea9d94dd2a4da450a77fe038e8ad26c97cdd7c39b65c53c850f8338ce9bc2dbe23ce2e2b48329
+  languageName: node
+  linkType: hard
+
 "@cypress/request@npm:^2.88.10, @cypress/request@npm:^2.88.11":
   version: 2.88.11
   resolution: "@cypress/request@npm:2.88.11"
@@ -5492,6 +5518,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^16.18.39":
+  version: 16.18.80
+  resolution: "@types/node@npm:16.18.80"
+  checksum: 52c492c9b37d7f101c909bd5e032485f5aa651de7ab6f0233bf70467a3cf2189adcf281394ab06a5eb3aef29b2c8bbd7e14a5e42ff3b2871f9353c017c4a0cff
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -6390,7 +6423,7 @@ __metadata:
     "@types/cypress-image-snapshot": ^3.1.6
     "@wisemapping/mindplot": "workspace:*"
     babel-polyfill: ^6.26.0
-    cypress: ^12.3.0
+    cypress: ^13.6.4
     cypress-image-snapshot: ^4.0.1
     emoji-picker-react: 4.5.2
     jest-transform-stub: ^2.0.0
@@ -6476,7 +6509,6 @@ __metadata:
     "@welldone-software/why-did-you-render": ^8.0.1
     "@wisemapping/editor": "workspace:^"
     axios: ^1.6.7
-    caniuse-lite: ^1.0.30001585
     cypress: ^13.6.4
     cypress-image-snapshot: ^4.0.1
     dayjs: ^1.11.10
@@ -8319,13 +8351,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001585":
-  version: 1.0.30001585
-  resolution: "caniuse-lite@npm:1.0.30001585"
-  checksum: c5994f0b5de857349ae0c157a3c61883e800ed154bbeab339aecf01a0a0fd24f67d23ebb48bc995c4c9cde2a281a51b682d1b14bbf2f832f6b2261119f450af4
-  languageName: node
-  linkType: hard
-
 "capture-exit@npm:^2.0.0":
   version: 2.0.0
   resolution: "capture-exit@npm:2.0.0"
@@ -9600,7 +9625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:*, cypress@npm:^12.3.0":
+"cypress@npm:*":
   version: 12.5.1
   resolution: "cypress@npm:12.5.1"
   dependencies:
@@ -9701,6 +9726,59 @@ __metadata:
   bin:
     cypress: bin/cypress
   checksum: 19144db1fe02d92270de71f69ece324affd2f60bafa2f7018440c00907f837b1f8556926206df8b6e7b1c9890d250435730656ccb4a5a31e7872b24dd79c0af8
+  languageName: node
+  linkType: hard
+
+"cypress@npm:^12.3.0":
+  version: 12.17.4
+  resolution: "cypress@npm:12.17.4"
+  dependencies:
+    "@cypress/request": 2.88.12
+    "@cypress/xvfb": ^1.2.4
+    "@types/node": ^16.18.39
+    "@types/sinonjs__fake-timers": 8.1.1
+    "@types/sizzle": ^2.3.2
+    arch: ^2.2.0
+    blob-util: ^2.0.2
+    bluebird: ^3.7.2
+    buffer: ^5.6.0
+    cachedir: ^2.3.0
+    chalk: ^4.1.0
+    check-more-types: ^2.24.0
+    cli-cursor: ^3.1.0
+    cli-table3: ~0.6.1
+    commander: ^6.2.1
+    common-tags: ^1.8.0
+    dayjs: ^1.10.4
+    debug: ^4.3.4
+    enquirer: ^2.3.6
+    eventemitter2: 6.4.7
+    execa: 4.1.0
+    executable: ^4.1.1
+    extract-zip: 2.0.1
+    figures: ^3.2.0
+    fs-extra: ^9.1.0
+    getos: ^3.2.1
+    is-ci: ^3.0.0
+    is-installed-globally: ~0.4.0
+    lazy-ass: ^1.6.0
+    listr2: ^3.8.3
+    lodash: ^4.17.21
+    log-symbols: ^4.0.0
+    minimist: ^1.2.8
+    ospath: ^1.2.2
+    pretty-bytes: ^5.6.0
+    process: ^0.11.10
+    proxy-from-env: 1.0.0
+    request-progress: ^3.0.0
+    semver: ^7.5.3
+    supports-color: ^8.1.1
+    tmp: ~0.2.1
+    untildify: ^4.0.0
+    yauzl: ^2.10.0
+  bin:
+    cypress: bin/cypress
+  checksum: c9c79f5493b23e9c8cfb92d45d50ea9d0fae54210dde203bfa794a79436faf60108d826fe9007a7d67fddf7919802ad8f006b7ae56c5c198c75d5bc85bbc851b
   languageName: node
   linkType: hard
 
