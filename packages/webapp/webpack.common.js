@@ -39,7 +39,7 @@ const prodConfig = {
       patterns: [
         {
           from: 'public/*',
-          to: '[name].[ext]',
+          to: path.resolve(__dirname, 'dist'),
           globOptions: {
             ignore: ['**/index.html'],
           },
