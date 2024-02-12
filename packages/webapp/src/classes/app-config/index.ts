@@ -80,9 +80,9 @@ class _AppConfig {
   }
 
   buildClient(): Client {
-    const config = this.getInstance();
     let result: Client;
-    if (config.clientType == 'rest') {
+    if (this.isRestClient()) {
+      const config = this.getInstance();
       result = new RestClient(this.getBaseUrl());
       console.log('Service using rest client. ' + JSON.stringify(config));
     } else {
