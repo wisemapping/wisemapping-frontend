@@ -34,6 +34,10 @@ const commonConfig = {
       },
     },
   },
+  externals: {
+    'AppConfig': JSON.stringify(process.env.NODE_ENV === 'production' ? require('./config.prod.json') : require('./config.dev.json'))
+
+  },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [

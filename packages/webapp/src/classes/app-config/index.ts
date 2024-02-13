@@ -19,6 +19,8 @@
 import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ExtConfig = require('AppConfig');
 
 interface Config {
   apiBaseUrl: string;
@@ -45,8 +47,7 @@ class _AppConfig {
 
   private getInstance(): Config {
     // Config can be inserted in the html page to define the global properties ...
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let result = (window as any).serverconfig;
+    let result = ExtConfig;
     if (!result) {
       result = this.defaultInstance;
     }

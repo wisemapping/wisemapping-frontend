@@ -67,7 +67,12 @@ function Redirect({ to }) {
 }
 
 const PageEditorWhapper = ({ isTryMode }: { isTryMode: boolean }) => {
-  const mapId: string = useParams().id!;
+  const id = useParams().id;
+  if (!id) {
+    throw 'Map could not be loaded';
+  }
+
+  const mapId: string = id;
   return <EditorPage isTryMode={isTryMode} mapId={Number.parseInt(mapId)} />;
 };
 
