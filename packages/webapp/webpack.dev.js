@@ -3,7 +3,9 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
+const baseUrl = 'http://localhost:3000';
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'source-map',
@@ -27,10 +29,12 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
-        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
-        CLIENT_TYPE: process.env.CLIENT_TYPE ? process.env.CLIENT_TYPE : 'mock'
+        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : baseUrl,
       },
-      base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
+      base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : baseUrl,
+    }),
+    new webpack.DefinePlugin({
+      API_BASE_URL: process.env.API_BASE_URL ? process.env.API_BASE_URL : baseUrl,
     }),
   ],
 });
