@@ -27,10 +27,6 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
-      templateParameters: {
-        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : baseUrl,
-      },
-      base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : baseUrl,
     }),
   ]
 });
