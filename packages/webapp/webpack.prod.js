@@ -8,6 +8,10 @@ module.exports = merge(common, {
   devtool: 'source-map',
   optimization: {
     minimize: true,
+    splitChunks: {
+      minSize: 240000,
+      maxSize: 240000,
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
