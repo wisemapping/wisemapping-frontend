@@ -7,7 +7,7 @@
     ],
     "headers": [
         {
-            "source": "/c/(.*)",
+            "source": "/(.*)",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",
