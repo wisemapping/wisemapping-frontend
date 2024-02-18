@@ -47,14 +47,14 @@ class LocalStorageManager extends PersistenceManager {
   }
 
   private buildHeader() {
-    const csrfToken = this.getCSRFToken();
+    // const csrfToken = this.getCSRFToken();
     const result = {
       'Content-Type': 'text/plain',
       Accept: 'application/xml',
     };
-    if (csrfToken) {
-      result['X-CSRF-Token'] = csrfToken;
-    }
+    // if (csrfToken) {
+    //   result['X-CSRF-Token'] = csrfToken;
+    // }
     return result;
   }
 

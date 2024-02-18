@@ -14,7 +14,6 @@ import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import AppConfig from '../../classes/app-config';
-import CSRFInput from '../common/csrf-input';
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
 import Client, { ErrorInfo } from '../../classes/client';
@@ -112,7 +111,6 @@ const LoginPage = (): React.ReactElement => {
 
         <FormControl>
           <form onSubmit={handleOnSubmit}>
-            <CSRFInput />
             <Input
               onChange={handleOnChange}
               name="email"

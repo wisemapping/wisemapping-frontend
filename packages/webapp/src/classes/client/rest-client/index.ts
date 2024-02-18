@@ -31,7 +31,6 @@ import Client, {
   JwtAuth,
   MapMetadata,
 } from '..';
-import { getCsrfToken } from '../../../utils';
 import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
 
@@ -65,14 +64,6 @@ export default class RestClient implements Client {
         // Send browser locale ...
         const locale = this.getDefaultLocale();
         config.headers['Accept-Language'] = locale.code;
-
-        // Add Csrf token ...
-        const csrfToken = getCsrfToken();
-        if (csrfToken) {
-          config.headers['X-CSRF-TOKEN'] = csrfToken;
-        } else {
-          console.warn('csrf token not found in html head');
-        }
       }
 
       return config;

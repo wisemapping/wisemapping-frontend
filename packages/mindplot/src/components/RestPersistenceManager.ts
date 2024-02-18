@@ -192,10 +192,10 @@ class RESTPersistenceManager extends PersistenceManager {
       headers['Authorization'] = `Bearer ${this.jwt} `;
     }
 
-    const crfs = this.getCSRFToken();
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
+    // const crfs = this.getCSRFToken();
+    // if (crfs) {
+    //   headers['X-CSRF-Token'] = crfs;
+    // }
     return headers;
   }
 }

@@ -52,7 +52,7 @@ const TopicLinkEditor = (props: {
 
   const checkURL = (url: string): boolean => {
     const regex =
-      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,10}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/i;
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,10c}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/i;
     return regex.test(url);
   };
 

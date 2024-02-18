@@ -17,7 +17,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import CSRFInput from '../common/csrf-input';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -84,7 +83,6 @@ const ForgotPassword = () => {
       <GlobalError error={error} />
 
       <form onSubmit={handleOnSubmit}>
-        <CSRFInput />
         <Input
           type="email"
           name="email"
