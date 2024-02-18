@@ -229,7 +229,7 @@ const MapsPage = (): ReactElement => {
   );
 
   const container = document !== undefined ? () => document.body : undefined;
-  const label = labels.find((l) => l.id === labelToDelete);
+  const label: Label | undefined = labels.find((l) => l.id === labelToDelete);
   return (
     <IntlProvider
       locale={userLocale.code}
@@ -350,7 +350,7 @@ const MapsPage = (): ReactElement => {
           <MapsList filter={filter} />
         </main>
       </div>
-      {label && labelToDelete && (
+      {label && labelToDelete!=null && (
         <LabelDeleteConfirm
           onClose={() => setLabelToDelete(null)}
           onConfirm={() => {
