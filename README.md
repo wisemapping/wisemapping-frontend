@@ -15,7 +15,6 @@ Make sure you have NodeJs installed (version compatible with `package.json` engi
 ```
 nvm use
 yarn install
-yarn bootstrap
 ```
 
 Please refer to each package's Readme.md for anything specific to the package.
