@@ -65,7 +65,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     setActiveTab(newValue);
   };
 
-  const baseUrl = AppConfig.getBaseUrl();
+  const baseUrl = AppConfig.getApiBaseUrl();
   return (
     <div>
       <BaseDialog

@@ -84,7 +84,7 @@ class _AppConfig {
     let result: Client;
     if (this.isRestClient()) {
       const config = this.getInstance();
-      result = new RestClient(this.getBaseUrl());
+      result = new RestClient(this.getApiBaseUrl());
       console.log('Service using rest client. ' + JSON.stringify(config));
     } else {
       console.log('Warning:Service using mockservice client');
@@ -94,7 +94,7 @@ class _AppConfig {
     return result;
   }
 
-  getBaseUrl(): string {
+  getApiBaseUrl(): string {
     const config = this.getInstance();
     return config.apiBaseUrl;
   }

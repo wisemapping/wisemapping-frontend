@@ -48,21 +48,22 @@ import Cookies from 'universal-cookie';
 const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   let persistenceManager: PersistenceManager;
   if (AppConfig.isRestClient()) {
+    const baseUrl = AppConfig.getApiBaseUrl();
+
     if (mode === 'edition-owner' || mode === 'edition-editor') {
       // Fetch JWT token ...
       const cookies = new Cookies();
       const token = cookies.get('jwt-auth-token');
 
       persistenceManager = new RESTPersistenceManager({
-        documentUrl: '/api/restful/maps/{id}/document',
-        revertUrl: '/api/restful/maps/{id}/history/latest',
-        lockUrl: '/api/restful/maps/{id}/lock',
+        documentUrl: `${baseUrl}/api/restful/maps/{id}/document`,
+        revertUrl: `${baseUrl}/api/restful/maps/{id}/history/latest`,
+        lockUrl: `${baseUrl}/api/restful/maps/{id}/lock`,
         jwt: token,
       });
     } else {
       persistenceManager = new LocalStorageManager(
-        `/api/restful/maps/{id}/${
-          globalThis.historyId ? `${globalThis.historyId}/` : ''
+        `${baseUrl}/api/restful/maps/{id}/${globalThis.historyId ? `${globalThis.historyId}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
         true,
       );
