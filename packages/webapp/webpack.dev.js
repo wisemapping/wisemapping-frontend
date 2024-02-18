@@ -10,15 +10,15 @@ module.exports = merge(common, {
   devServer: {
     port: 3000,
     hot: true,
-    proxy: {
-      '/api': {
-        target: {
-          host: "0.0.0.0",
-          protocol: 'http:',
-          port: 8080
-        },
+    proxy: [{
+      context: ['/api'],
+      target: {
+        host: "0.0.0.0",
+        protocol: 'http:',
+        port: 8080
       },
     },
+    ],
     historyApiFallback: {
       rewrites: [{ from: /^\/c\//, to: '/index.html' }],
     },

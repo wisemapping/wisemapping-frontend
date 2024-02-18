@@ -1,13 +1,13 @@
 {
     "rewrites": [
         {
-            "source": "/c/(.*)",
+            "source": "/c/(?:.*/)*.*",
             "destination": "/index.html"
         }
     ],
     "headers": [
         {
-            "source": "/(.*)",
+            "source": "/(?:.*/)*.*",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Credentials",
