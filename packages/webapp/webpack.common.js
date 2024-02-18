@@ -5,7 +5,7 @@ const { merge } = require('webpack-merge');
 const common = require('../../webpack.common');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const prodConfig = {
+const commonConfig = {
   entry: {
     app: path.join(__dirname, 'src', 'index.tsx'),
   },
@@ -34,12 +34,16 @@ const prodConfig = {
       },
     },
   },
+  externals: {
+    'AppConfig': JSON.stringify(process.env.NODE_ENV === 'production' ? require('./config.prod.json') : require('./config.dev.json'))
+
+  },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
         {
           from: 'public/*',
-          to: '[name].[ext]',
+          to: '[name][ext]',
           globOptions: {
             ignore: ['**/index.html'],
           },
@@ -49,4 +53,4 @@ const prodConfig = {
   ],
 };
 
-module.exports = merge(common, prodConfig);
+module.exports = merge(common, commonConfig);

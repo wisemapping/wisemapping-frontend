@@ -19,7 +19,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { createSlice } from '@reduxjs/toolkit';
 import { useQuery } from 'react-query';
-import Client, { AccountInfo, ErrorInfo, MapInfo } from '../classes/client';
+import Client, { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../classes/client';
 import { useSelector } from 'react-redux';
 import AppConfig from '../classes/app-config';
 import { RootState } from './rootReducer';
@@ -55,7 +55,7 @@ export const clientSlice = createSlice({
 type MapLoadResult = {
   isLoading: boolean;
   error: ErrorInfo | null;
-  map: MapInfo | undefined;
+  data: MapInfo | undefined;
 };
 
 export const useFetchMapById = (id: number): MapLoadResult => {
@@ -82,7 +82,24 @@ export const useFetchMapById = (id: number): MapLoadResult => {
       };
     }
   }
-  return { isLoading: isLoading, error: errorMsg, map: map };
+  return { isLoading: isLoading, error: errorMsg, data: map };
+};
+
+type MapMetadataLoadResult = {
+  isLoading: boolean;
+  error: ErrorInfo | null;
+  data: MapMetadata | undefined;
+};
+
+export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
+  const client: Client = useSelector(activeInstance);
+  const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapMetadata>(
+    `maps-metadata-${id}`,
+    () => {
+      return client.fetchMapMetadata(id);
+    },
+  );
+  return { isLoading: isLoading, error: error, data: data };
 };
 
 export const useFetchAccount = (): AccountInfo | undefined => {

@@ -34,7 +34,7 @@
     "@storybook/html": "^6.5.15",
     "@storybook/manager-webpack5": "^6.5.15",
     "@storybook/testing-library": "^0.0.13",
-    "cypress": "12.17.2",
+    "cypress": "13.6.4",
     "cypress-image-snapshot": "^4.0.1"
   },
   "peerDependencies": {

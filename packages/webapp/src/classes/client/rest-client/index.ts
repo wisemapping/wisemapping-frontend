@@ -1,3 +1,20 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import Client, {
   ErrorInfo,
@@ -11,19 +28,22 @@ import Client, {
   Permission,
   Oauth2CallbackResult,
   ForgotPasswordResult,
+  JwtAuth,
+  MapMetadata,
 } from '..';
 import { getCsrfToken } from '../../../utils';
-import { LocaleCode, localeFromStr } from '../../app-i18n';
+import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
+import Cookies from 'universal-cookie';
 
 export default class RestClient implements Client {
   private baseUrl: string;
   private axios: AxiosInstance;
+  private _onSessionExpired: () => void;
 
   private checkResponseForSessionExpired = <T>(error: {
     response?: AxiosResponse<T>;
   }): Promise<{ response?: AxiosResponse<T> }> => {
-    // TODO: Improve session timeout response and response handling
-    if (error.response && error.response.status === 405) {
+    if (error.response && (error.response.status === 405 || error.response.status === 403)) {
       this.sessionExpired();
     }
     return Promise.reject(error);
@@ -32,19 +52,98 @@ export default class RestClient implements Client {
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
     this.axios = axios.create({ maxRedirects: 0 });
-    const csrfToken = getCsrfToken();
-    if (csrfToken) {
-      this.axios.defaults.headers['X-CSRF-TOKEN'] = csrfToken;
-    } else {
-      console.warn('csrf token not found in html head');
-    }
+
+    // Configure request interceptors ...
+    this.axios.interceptors.request.use((config) => {
+      if (config.headers) {
+        // JWT Token ...
+        const jwtToken = this._jwtToken();
+        if (jwtToken) {
+          config.headers['Authorization'] = jwtToken;
+        }
+
+        // Send browser locale ...
+        const locale = this.getDefaultLocale();
+        config.headers['Accept-Language'] = locale.code;
+
+        // Add Csrf token ...
+        const csrfToken = getCsrfToken();
+        if (csrfToken) {
+          config.headers['X-CSRF-TOKEN'] = csrfToken;
+        } else {
+          console.warn('csrf token not found in html head');
+        }
+      }
+
+      return config;
+    });
+
+    // Process response globally ...
     this.axios.interceptors.response.use(
-      (r) => r,
-      (r) => this.checkResponseForSessionExpired(r),
+      (response) => response,
+      (respoonse) => this.checkResponseForSessionExpired(respoonse),
     );
   }
 
-  private _onSessionExpired: () => void;
+  fetchMapMetadata(id: number): Promise<MapMetadata> {
+    const handler = (
+      success: (mapMetadata: MapMetadata) => void,
+      reject: (error: ErrorInfo) => void,
+    ) => {
+      this.axios
+        .get(`${this.baseUrl}/api/restful/maps/${id}/metadata`, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then((response) => {
+          const data = response.data;
+          success(data);
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+
+    return new Promise(handler);
+  }
+
+  logout(): Promise<void> {
+    // Set jwt token on cookie ...
+    const cookies = new Cookies();
+    cookies.remove('jwt-auth-token', { path: '/' });
+
+    return Promise.resolve();
+  }
+
+  login(model: JwtAuth): Promise<void> {
+    const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+      this.axios
+        .post(`${this.baseUrl}/api/restful/authenticate`, model, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then((response) => {
+          const token = response.data;
+          // Set jwt token on cookie ...
+          const cookies = new Cookies();
+          cookies.set('jwt-auth-token', token, { path: '/', maxAge: 604800 });
+
+          success();
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
+  private _jwtToken(): string | null {
+    // Set cookie on session ...
+    const cookies = new Cookies();
+    const token = cookies.get('jwt-auth-token');
+    return token ? `Bearer ${token}` : null;
+  }
+
   onSessionExpired(callback?: () => void): () => void {
     if (callback) {
       this._onSessionExpired = callback;
@@ -61,9 +160,12 @@ export default class RestClient implements Client {
   deleteMapPermission(id: number, email: string): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .delete(`${this.baseUrl}/c/restful/maps/${id}/collabs?email=${encodeURIComponent(email)}`, {
-          headers: { 'Content-Type': 'text/plain' },
-        })
+        .delete(
+          `${this.baseUrl}/api/restful/maps/${id}/collabs?email=${encodeURIComponent(email)}`,
+          {
+            headers: { 'Content-Type': 'text/plain' },
+          },
+        )
         .then(() => {
           success();
         })
@@ -78,7 +180,7 @@ export default class RestClient implements Client {
   fetchStarred(id: number): Promise<boolean> {
     const handler = (success: (starred: boolean) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .get(`${this.baseUrl}/c/restful/maps/${id}/starred`, {
+        .get(`${this.baseUrl}/api/restful/maps/${id}/starred`, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then((response) => {
@@ -98,7 +200,7 @@ export default class RestClient implements Client {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .put(
-          `${this.baseUrl}/c/restful/maps/${id}/collabs/`,
+          `${this.baseUrl}/api/restful/maps/${id}/collabs/`,
           {
             message: message,
             collaborations: permissions,
@@ -123,7 +225,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .get(`${this.baseUrl}/c/restful/maps/${id}/collabs`, {
+        .get(`${this.baseUrl}/api/restful/maps/${id}/collabs`, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then((response) => {
@@ -150,7 +252,7 @@ export default class RestClient implements Client {
   deleteAccount(): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .delete(`${this.baseUrl}/c/restful/account`, {
+        .delete(`${this.baseUrl}/api/restful/account`, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
@@ -167,11 +269,11 @@ export default class RestClient implements Client {
   updateAccountInfo(firstname: string, lastname: string): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/c/restful/account/firstname`, firstname, {
+        .put(`${this.baseUrl}/api/restful/account/firstname`, firstname, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
-          return this.axios.put(`${this.baseUrl}/c/restful/account/lastname`, lastname, {
+          return this.axios.put(`${this.baseUrl}/api/restful/account/lastname`, lastname, {
             headers: { 'Content-Type': 'text/plain' },
           });
         })
@@ -190,7 +292,7 @@ export default class RestClient implements Client {
   updateAccountPassword(pasword: string): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/c/restful/account/password`, pasword, {
+        .put(`${this.baseUrl}/api/restful/account/password`, pasword, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
@@ -207,7 +309,7 @@ export default class RestClient implements Client {
   updateAccountLanguage(locale: LocaleCode): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/c/restful/account/locale`, locale, {
+        .put(`${this.baseUrl}/api/restful/account/locale`, locale, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
@@ -229,7 +331,7 @@ export default class RestClient implements Client {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(
+          `${this.baseUrl}/api/restful/maps?title=${encodeURIComponent(
             model.title,
           )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
           model.content,
@@ -253,7 +355,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .get(`${this.baseUrl}/c/restful/account`, {
+        .get(`${this.baseUrl}/api/restful/account`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -278,7 +380,7 @@ export default class RestClient implements Client {
   deleteMaps(ids: number[]): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .delete(`${this.baseUrl}/c/restful/maps/batch?ids=${ids.join()}`, {
+        .delete(`${this.baseUrl}/api/restful/maps/batch?ids=${ids.join()}`, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
@@ -296,7 +398,7 @@ export default class RestClient implements Client {
   updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/c/restful/maps/${id}/publish`, isPublic.toString(), {
+        .put(`${this.baseUrl}/api/restful/maps/${id}/publish`, isPublic.toString(), {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
@@ -313,7 +415,7 @@ export default class RestClient implements Client {
   revertHistory(id: number, hid: number): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .post(`${this.baseUrl}/c/restful/maps/${id}/history/${hid}`, null, {
+        .post(`${this.baseUrl}/api/restful/maps/${id}/history/${hid}`, null, {
           headers: { 'Content-Type': 'text/pain' },
         })
         .then(() => {
@@ -333,7 +435,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .get(`${this.baseUrl}/c/restful/maps/${id}/history/`, {
+        .get(`${this.baseUrl}/api/restful/maps/${id}/history/`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -355,15 +457,19 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
+  protected getDefaultLocale(): Locale {
+    return AppI18n.getDefaultLocale();
+  }
+
   renameMap(id: number, basicInfo: BasicMapInfo): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/c/restful/maps/${id}/title`, basicInfo.title, {
+        .put(`${this.baseUrl}/api/restful/maps/${id}/title`, basicInfo.title, {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
           return this.axios.put(
-            `${this.baseUrl}/c/restful/maps/${id}/description`,
+            `${this.baseUrl}/api/restful/maps/${id}/description`,
             basicInfo.description || ' ',
             { headers: { 'Content-Type': 'text/plain' } },
           );
@@ -385,10 +491,10 @@ export default class RestClient implements Client {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/maps?title=${encodeURIComponent(
+          `${this.baseUrl}/api/restful/maps?title=${encodeURIComponent(
             model.title,
           )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
-          null,
+          undefined,
           { headers: { 'Content-Type': 'application/json' } },
         )
         .then((response) => {
@@ -409,7 +515,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .get(`${this.baseUrl}/c/restful/maps/`, {
+        .get(`${this.baseUrl}/api/restful/maps/`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -443,7 +549,7 @@ export default class RestClient implements Client {
   registerNewUser(user: NewUser): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .post(`${this.baseUrl}/service/users/`, JSON.stringify(user), {
+        .post(`${this.baseUrl}/api/restful/users/`, JSON.stringify(user), {
           headers: { 'Content-Type': 'application/json' },
         })
         .then(() => {
@@ -461,7 +567,7 @@ export default class RestClient implements Client {
   deleteMap(id: number): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .delete(`${this.baseUrl}/c/restful/maps/${id}`, {
+        .delete(`${this.baseUrl}/api/restful/maps/${id}`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then(() => {
@@ -482,7 +588,7 @@ export default class RestClient implements Client {
     ) => {
       this.axios
         .put(
-          `${this.baseUrl}/service/users/resetPassword?email=${encodeURIComponent(email)}`,
+          `${this.baseUrl}/api/restful/users/resetPassword?email=${encodeURIComponent(email)}`,
           null,
           {
             headers: { 'Content-Type': 'application/json' },
@@ -504,7 +610,7 @@ export default class RestClient implements Client {
   duplicateMap(id: number, basicInfo: BasicMapInfo): Promise<number> {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .post(`${this.baseUrl}/c/restful/maps/${id}`, JSON.stringify(basicInfo), {
+        .post(`${this.baseUrl}/api/restful/maps/${id}`, JSON.stringify(basicInfo), {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -523,7 +629,7 @@ export default class RestClient implements Client {
   updateStarred(id: number, starred: boolean): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/c/restful/maps/${id}/starred`, starred.toString(), {
+        .put(`${this.baseUrl}/api/restful/maps/${id}/starred`, starred.toString(), {
           headers: { 'Content-Type': 'text/plain' },
         })
         .then(() => {
@@ -541,7 +647,7 @@ export default class RestClient implements Client {
   fetchLabels(): Promise<Label[]> {
     const handler = (success: (labels: Label[]) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .get(`${this.baseUrl}/c/restful/labels/`, {
+        .get(`${this.baseUrl}/api/restful/labels/`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -569,7 +675,7 @@ export default class RestClient implements Client {
     const handler = (success: (labelId: number) => void, reject: (error: ErrorInfo) => void) => {
       this.axios
         .post(
-          `${this.baseUrl}/c/restful/labels`,
+          `${this.baseUrl}/api/restful/labels`,
           JSON.stringify({ title, color, iconName: 'smile' }),
           {
             headers: { 'Content-Type': 'application/json' },
@@ -590,7 +696,7 @@ export default class RestClient implements Client {
   deleteLabel(id: number): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .delete(`${this.baseUrl}/c/restful/labels/${id}`)
+        .delete(`${this.baseUrl}/api/restful/labels/${id}`)
         .then(() => {
           success();
         })
@@ -605,7 +711,7 @@ export default class RestClient implements Client {
   addLabelToMap(labelId: number, mapId: number): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .post(`${this.baseUrl}/c/restful/maps/${mapId}/labels`, JSON.stringify(labelId), {
+        .post(`${this.baseUrl}/api/restful/maps/${mapId}/labels`, JSON.stringify(labelId), {
           headers: { 'Content-Type': 'application/json' },
         })
         .then(() => {
@@ -622,7 +728,7 @@ export default class RestClient implements Client {
   deleteLabelFromMap(labelId: number, mapId: number): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .delete(`${this.baseUrl}/c/restful/maps/${mapId}/labels/${labelId}`)
+        .delete(`${this.baseUrl}/api/restful/maps/${mapId}/labels/${labelId}`)
         .then(() => {
           success();
         })
@@ -640,7 +746,7 @@ export default class RestClient implements Client {
       reject: (error: ErrorInfo) => void,
     ) => {
       this.axios
-        .post(`${this.baseUrl}/service/oauth2/googlecallback?code=${code}`, {
+        .post(`${this.baseUrl}/api/restful/oauth2/googlecallback?code=${code}`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
@@ -661,7 +767,7 @@ export default class RestClient implements Client {
   confirmAccountSync(email: string, code: string): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/service/oauth2/confirmaccountsync?email=${email}&code=${code}`, {
+        .put(`${this.baseUrl}/api/restful/oauth2/confirmaccountsync?email=${email}&code=${code}`, {
           headers: { 'Content-Type': 'application/json' },
         })
         .then(() => {

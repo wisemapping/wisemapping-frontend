@@ -30,7 +30,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     mutation.mutate(mapId);
   };
 
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
   const alertTitle = `${intl.formatMessage({
     id: 'action.delete-title',
     defaultMessage: 'Delete',

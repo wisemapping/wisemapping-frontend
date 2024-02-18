@@ -18,7 +18,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(LocalizedFormat);
 
 const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
   const [error, setError] = React.useState<ErrorInfo>();
 
   const intl = useIntl();

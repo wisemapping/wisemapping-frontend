@@ -45,6 +45,10 @@ class MapInfoImpl implements MapInfo {
     return this.title;
   }
 
+  getLockedMsg(): string | undefined {
+    return this.lockedMsg;
+  }
+
   setTitle(value: string): void {
     throw (this.title = value);
   }

@@ -1,4 +1,26 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 import { Locale, LocaleCode } from '../app-i18n';
+
+export type JwtAuth = {
+  email: string;
+  password: string;
+};
 
 export type NewUser = {
   email: string;
@@ -35,6 +57,14 @@ export type MapInfo = {
   description: string;
   isPublic: boolean;
   role: Role;
+};
+
+export type MapMetadata = {
+  id: number;
+  title: string;
+  isLocked: boolean;
+  isLockedBy?: string;
+  jsonProps: string;
 };
 
 export type ChangeHistory = {
@@ -85,6 +115,8 @@ export type ForgotPasswordResult = {
 };
 
 interface Client {
+  login(auth: JwtAuth): Promise<void>;
+  logout(): Promise<void>;
   deleteAccount(): Promise<void>;
   importMap(model: ImportMapInfo): Promise<number>;
   createMap(map: BasicMapInfo): Promise<number>;
@@ -92,6 +124,7 @@ interface Client {
   deleteMap(id: number): Promise<void>;
   renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
   fetchAllMaps(): Promise<MapInfo[]>;
+  fetchMapMetadata(id: number): Promise<MapMetadata>;
 
   fetchStarred(id: number): Promise<boolean>;
 

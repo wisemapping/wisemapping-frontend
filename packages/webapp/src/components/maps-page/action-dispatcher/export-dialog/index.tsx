@@ -39,7 +39,7 @@ const ExportDialog = ({
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
   const [submit, setSubmit] = React.useState<boolean>(false);
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
     enableImgExport ? 'image' : 'document',

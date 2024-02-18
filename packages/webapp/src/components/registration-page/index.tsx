@@ -41,9 +41,9 @@ const RegistrationForm = () => {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const Client: Client = useSelector(activeInstance);
+  const client: Client = useSelector(activeInstance);
   const mutation = useMutation<void, ErrorInfo, Model>(
-    (model: Model) => Client.registerNewUser({ ...model }),
+    (model: Model) => client.registerNewUser({ ...model }),
     {
       onSuccess: () => navigate('/c/registration-success'),
       onError: (error) => {

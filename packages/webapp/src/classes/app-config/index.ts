@@ -19,6 +19,8 @@
 import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ExtConfig = require('AppConfig');
 
 interface Config {
   apiBaseUrl: string;
@@ -38,15 +40,14 @@ class _AppConfig {
     googleOauth2Url: '/c/registration-google?code=aFakeCode',
   };
 
-  isDevelopEnv(): boolean {
+  isMockEnv(): boolean {
     const config = this.getInstance();
     return config.clientType === 'mock';
   }
 
   private getInstance(): Config {
     // Config can be inserted in the html page to define the global properties ...
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let result = (window as any).serverconfig;
+    let result = ExtConfig;
     if (!result) {
       result = this.defaultInstance;
     }
@@ -80,9 +81,9 @@ class _AppConfig {
   }
 
   buildClient(): Client {
-    const config = this.getInstance();
     let result: Client;
-    if (config.clientType == 'rest') {
+    if (this.isRestClient()) {
+      const config = this.getInstance();
       result = new RestClient(this.getBaseUrl());
       console.log('Service using rest client. ' + JSON.stringify(config));
     } else {

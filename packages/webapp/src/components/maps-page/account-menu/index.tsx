@@ -13,12 +13,18 @@ import ChangePasswordDialog from './change-password-dialog';
 import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import Link from '@mui/material/Link';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
+import { activeInstance } from '../../../redux/clientSlice';
+import { useSelector } from 'react-redux';
+import Client from '../../../classes/client';
+import { useNavigate } from 'react-router-dom';
 
 type ActionType = 'change-password' | 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [action, setAction] = React.useState<ActionType>(undefined);
+  const client: Client = useSelector(activeInstance);
+  const navigate = useNavigate();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,8 +36,9 @@ const AccountMenu = (): React.ReactElement => {
 
   const handleLogout = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const elem = document.getElementById('logoutFrom') as HTMLFormElement;
-    elem.submit();
+
+    client.logout();
+    navigate('/c/login');
   };
 
   const account = useFetchAccount();
@@ -85,7 +92,6 @@ const AccountMenu = (): React.ReactElement => {
         )}
 
         <MenuItem onClick={handleClose}>
-          <form action="/c/logout" method="POST" id="logoutFrom"></form>
           <Link color="textSecondary" href="/c/logout" onClick={(e) => handleLogout(e)}>
             <ListItemIcon>
               <ExitToAppOutlined fontSize="small" />

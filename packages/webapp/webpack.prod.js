@@ -8,14 +8,15 @@ module.exports = merge(common, {
   devtool: 'source-map',
   optimization: {
     minimize: true,
+    splitChunks: {
+      minSize: 240000,
+      maxSize: 240000,
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
-      templateParameters: {
-        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'https://www.wisemapping.com',
-      },
-      base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'https://www.wisemapping.com',
+      base: process.env.PUBLIC_URL,
     }),
   ],
 });

@@ -56,7 +56,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
     setModel({ ...model, [name as keyof BasicMapInfo]: value });
   };
 
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
   useEffect(() => {
     if (map) {
       setModel(map);

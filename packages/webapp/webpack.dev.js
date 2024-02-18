@@ -10,6 +10,15 @@ module.exports = merge(common, {
   devServer: {
     port: 3000,
     hot: true,
+    proxy: [{
+      context: ['/api'],
+      target: {
+        host: "0.0.0.0",
+        protocol: 'http:',
+        port: 8080
+      },
+    },
+    ],
     historyApiFallback: {
       rewrites: [{ from: /^\/c\//, to: '/index.html' }],
     },
@@ -17,10 +26,7 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
-      templateParameters: {
-        PUBLIC_URL: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
-      },
       base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
     }),
-  ],
+  ]
 });

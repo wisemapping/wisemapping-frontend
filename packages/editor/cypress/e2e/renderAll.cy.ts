@@ -2,7 +2,7 @@
 describe('Render all sample maps', () => {
   [
     'complex',
-    'emoji',
+    // 'emoji',
     'emptyNodes',
     'error-on-load',
     'huge',

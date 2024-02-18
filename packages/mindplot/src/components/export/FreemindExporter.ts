@@ -326,7 +326,7 @@ class FreemindExporter extends Exporter {
   private rgbToHex(color: string): string {
     let result: string = color;
     if (result) {
-      const isRgb = new RegExp('^rgb\\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}\\)$');
+      const isRgb = /^rgb\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}\)$/;
 
       if (isRgb.test(result)) {
         const rgb: string[] = color.substring(4, color.length - 1).split(',');
