@@ -1,6 +1,6 @@
 # WiseMapping Frond End
 
-WiseMapping Frond End is part of the [MindMap Open Source Project](http://www.wisemapping.org). The first release of WiseMapping was in 2010 and there was not mayor update on the architecture. In 2021, a major change started with the goal to provide a visual and technology refresh of the project.
+WiseMapping Frond End is part of the [MindMap Open Source Project]([https://www.wisemapping.com/](https://www.wisemapping.com/opensource/)). The first release of WiseMapping was in 2010 and there was not mayor update on the architecture. In 2021, a major change started with the goal to provide a visual and technology refresh of the project.
 
 WiseMapping Front extracts all the UI related aspects in this repository. You will find three major modules:
 
@@ -36,12 +36,6 @@ You can run these for all packages by running it from the root folder. Alternati
 
 `yarn build`
 
-## lint
-
-> run eslint
-
-`yarn lint`
-
 ## playground
 
 > start a devServer with some browsable examples
@@ -70,6 +64,8 @@ We use [cypress-image-snapshot](https://www.npmjs.com/package/cypress-image-snap
 When a test that contains a `matchImageSnapshot` call is run, it compares the snapshot to the corresponding one in the `snapshots` directory. If Any change is detected, the test will fail, and the diff can be found in the `cypress/snapshots/*/__diff_output__` folder. If the change is intentional, we should "accept" those changes by updating the snapshot and include it in the commit.
 
 There is a [caveat](https://github.com/jaredpalmer/cypress-image-snapshot/issues/98) where colors, fonts or ui may differ depending on the host machine running the tests.
+
+
 
 A workaround for this is to run the tests using docker. Make sure you have docker and docker-compose installed.
 
