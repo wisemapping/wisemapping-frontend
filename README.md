@@ -36,12 +36,6 @@ You can run these for all packages by running it from the root folder. Alternati
 
 `yarn build`
 
-## lint
-
-> run eslint
-
-`yarn lint`
-
 ## playground
 
 > start a devServer with some browsable examples
