@@ -65,6 +65,8 @@ When a test that contains a `matchImageSnapshot` call is run, it compares the sn
 
 There is a [caveat](https://github.com/jaredpalmer/cypress-image-snapshot/issues/98) where colors, fonts or ui may differ depending on the host machine running the tests.
 
+
+
 A workaround for this is to run the tests using docker. Make sure you have docker and docker-compose installed.
 
 Run snapshot tests: `docker-compose -f docker-compose.snapshots.yml up`  
