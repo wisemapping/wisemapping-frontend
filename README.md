@@ -1,6 +1,6 @@
 # WiseMapping Frond End
 
-WiseMapping Frond End is part of the [MindMap Open Source Project](http://www.wisemapping.org). The first release of WiseMapping was in 2010 and there was not mayor update on the architecture. In 2021, a major change started with the goal to provide a visual and technology refresh of the project.
+WiseMapping Frond End is part of the [MindMap Open Source Project]([https://www.wisemapping.com/](https://www.wisemapping.com/opensource/)). The first release of WiseMapping was in 2010 and there was not mayor update on the architecture. In 2021, a major change started with the goal to provide a visual and technology refresh of the project.
 
 WiseMapping Front extracts all the UI related aspects in this repository. You will find three major modules:
 
