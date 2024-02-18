@@ -26,11 +26,11 @@
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "@wisemapping/mindplot": "workspace:*",
-    "emoji-picker-react": "4.7.14",
+    "emoji-picker-react": "^4.7.18",
     "react-color": "^2.19.3",
     "react-intl": "^6.6.2",
     "react-loader-spinner": "^6.1.6",
-    "styled-components": "^5.3.6"
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@formatjs/cli": "^6.2.7",
