@@ -37,7 +37,7 @@
     "emoji-picker-react": "^4.7.18",
     "jquery": "3.7.1",
     "lodash": "^4.17.21",
-    "xml-formatter": "^2.6.1"
+    "xml-formatter": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

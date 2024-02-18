@@ -3360,9 +3360,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reduxjs/toolkit@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@reduxjs/toolkit@npm:2.1.0"
+"@reduxjs/toolkit@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@reduxjs/toolkit@npm:2.2.1"
   dependencies:
     immer: ^10.0.3
     redux: ^5.0.1
@@ -3376,7 +3376,7 @@ __metadata:
       optional: true
     react-redux:
       optional: true
-  checksum: 414da29177301ef13ad21a37214f4feaaa7c05f67fa9f003572a0d4eb2be336da3cad86c30edd9ebe42588c48401adca18ebf2f3d700e0370e5feabf2b50f9fe
+  checksum: e83eb749e3d84634798653ed8fdd3d47180ce1bc5a552e7d591b35eebd7e441fb0907c7891c1cb29cdebc299577407c1f5514a12049e70df96aff308a739d1b4
   languageName: node
   linkType: hard
 
@@ -4714,7 +4714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.3.0, @testing-library/dom@npm:^8.5.0":
+"@testing-library/dom@npm:^8.3.0":
   version: 8.20.0
   resolution: "@testing-library/dom@npm:8.20.0"
   dependencies:
@@ -4746,17 +4746,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^13.4.0":
-  version: 13.4.0
-  resolution: "@testing-library/react@npm:13.4.0"
+"@testing-library/react@npm:^14.2.1":
+  version: 14.2.1
+  resolution: "@testing-library/react@npm:14.2.1"
   dependencies:
     "@babel/runtime": ^7.12.5
-    "@testing-library/dom": ^8.5.0
+    "@testing-library/dom": ^9.0.0
     "@types/react-dom": ^18.0.0
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 51ec548c1fdb1271089a5c63e0908f0166f2c7fcd9cacd3108ebbe0ce64cb4351812d885892020dc37608418cfb15698514856502b3cab0e5cc58d6cc1bd4a3e
+  checksum: 7054ae69a0e06c0777da8105fa08fac7e8dac570476a065285d7b993947acda5c948598764a203ebaac759c161c562d6712f19f5bd08be3f09a07e23baee5426
   languageName: node
   linkType: hard
 
@@ -6241,7 +6241,7 @@ __metadata:
     "@formatjs/cli": ^6.2.7
     "@mui/icons-material": ^5.15.10
     "@mui/material": ^5.15.10
-    "@testing-library/react": ^13.4.0
+    "@testing-library/react": ^14.2.1
     "@types/cypress-image-snapshot": ^3.1.9
     "@wisemapping/mindplot": "workspace:*"
     babel-polyfill: ^6.26.0
@@ -6289,7 +6289,7 @@ __metadata:
     jquery: 3.7.1
     lodash: ^4.17.21
     mocha: ^10.3.0
-    xml-formatter: ^2.6.1
+    xml-formatter: ^3.6.2
   languageName: unknown
   linkType: soft
 
@@ -6325,7 +6325,7 @@ __metadata:
     "@mui/icons-material": ^5.15.10
     "@mui/lab": ^5.0.0-alpha.165
     "@mui/material": ^5.15.10
-    "@reduxjs/toolkit": ^2.1.0
+    "@reduxjs/toolkit": ^2.2.1
     "@testing-library/cypress": ^10.0.1
     "@types/testing-library__cypress": ^5.0.13
     "@welldone-software/why-did-you-render": ^8.0.1
@@ -10935,14 +10935,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.10.0":
-  version: 8.10.0
-  resolution: "eslint-config-prettier@npm:8.10.0"
+"eslint-config-prettier@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "eslint-config-prettier@npm:9.1.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: 153266badd477e49b0759816246b2132f1dbdb6c7f313ca60a9af5822fd1071c2bc5684a3720d78b725452bbac04bb130878b2513aea5e72b1b792de5a69fec8
+  checksum: 9229b768c879f500ee54ca05925f31b0c0bafff3d9f5521f98ff05127356de78c81deb9365c86a5ec4efa990cb72b74df8612ae15965b14136044c73e1f6a907
   languageName: node
   linkType: hard
 
@@ -19298,12 +19298,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.7.1":
-  version: 2.8.3
-  resolution: "prettier@npm:2.8.3"
+"prettier@npm:^3.2.5":
+  version: 3.2.5
+  resolution: "prettier@npm:3.2.5"
   bin:
-    prettier: bin-prettier.js
-  checksum: 92f2ceb522d454370e02082aa74ad27388672f7cee8975028b59517c069fe643bdc73e322675c8faf2ff173d7a626d1a6389f26b474000308e793aa25fff46e5
+    prettier: bin/prettier.cjs
+  checksum: 2ee4e1417572372afb7a13bb446b34f20f1bf1747db77cf6ccaf57a9be005f2f15c40f903d41a6b79eec3f57fff14d32a20fb6dee1f126da48908926fe43c311
   languageName: node
   linkType: hard
 
@@ -24501,7 +24501,7 @@ __metadata:
     css-loader: ^6.10.0
     eslint: ^8.56.0
     eslint-config-airbnb-base: ^15.0.0
-    eslint-config-prettier: ^8.10.0
+    eslint-config-prettier: ^9.1.0
     eslint-config-standard: ^17.1.0
     eslint-nibble: ^8.1.0
     eslint-plugin-cypress: ^2.15.1
@@ -24516,7 +24516,7 @@ __metadata:
     jest-webpack: ^0.5.1
     lerna: ^7.1.0
     lint-staged: ^15.2.2
-    prettier: ^2.7.1
+    prettier: ^3.2.5
     start-server-and-test: ^2.0.3
     style-loader: ^3.3.4
     ts-jest: ^29.1.2
@@ -24757,12 +24757,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-formatter@npm:^2.6.1":
-  version: 2.6.1
-  resolution: "xml-formatter@npm:2.6.1"
+"xml-formatter@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "xml-formatter@npm:3.6.2"
   dependencies:
-    xml-parser-xo: ^3.2.0
-  checksum: 0e22a6cb36d49efb019ef2881c4906eb4a06e31a412afbba49cb5f4958bb91c9b7c77dc8b1952b1a4847cc4cd696096dce2099df7acc349c390fa6b76c67c87d
+    xml-parser-xo: ^4.1.0
+  checksum: 6ca632b136d47f68b12be88e5543f859cdc754c9e1c1386c68b8c7803f9b894c8ec19f51bdcbfa957d782358aa19778b2ef46702f4120a78920661b683033290
   languageName: node
   linkType: hard
 
@@ -24773,10 +24773,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-parser-xo@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "xml-parser-xo@npm:3.2.0"
-  checksum: 156080671ce3cffe61301bf12bb6b5e47cf1e55ce0b985ce194d0b2fd11502293efbc9cb7e4bbadae824973993de56e085b0f15d61c53af5ae0d8fc44e39e4ba
+"xml-parser-xo@npm:^4.1.0":
+  version: 4.1.1
+  resolution: "xml-parser-xo@npm:4.1.1"
+  checksum: f726f4416d501eb9b197a7a34178aeaee9ba9a53babf61e78265240f8a6f44bd099a15c76d2610a9519c9d1dcc812bb773ae8a00df39019f911f24e1ecff0cdf
   languageName: node
   linkType: hard
 
