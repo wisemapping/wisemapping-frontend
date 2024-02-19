@@ -96,7 +96,7 @@ const LoginPage = (): React.ReactElement => {
 
   return (
     <div>
-      <Header type="only-signup" />
+      <Header type={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'} />
 
       <FormContainer>
         <Typography variant="h4" component="h1">
@@ -144,27 +144,31 @@ const LoginPage = (): React.ReactElement => {
         <Link component={RouterLink} to="/c/forgot-password">
           <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
         </Link>
-        <Separator
-          responsive={false}
-          text={intl.formatMessage({
-            id: 'login.division',
-            defaultMessage: 'or',
-          })}
-        />
-        <GoogleButton
-          text={intl.formatMessage({
-            id: 'login.google.button',
-            defaultMessage: 'Sign in with Google',
-          })}
-          onClick={() => {
-            const authUrl = AppConfig.getGoogleOauth2Url();
-            if (authUrl) {
-              window.location.href = authUrl;
-            } else {
-              console.log('GoogleOauth2Url is not configured.');
-            }
-          }}
-        />
+        {AppConfig.isRecaptcha2Enabled() && (
+          <>
+            <Separator
+              responsive={false}
+              text={intl.formatMessage({
+                id: 'login.division',
+                defaultMessage: 'or',
+              })}
+            />
+            <GoogleButton
+              text={intl.formatMessage({
+                id: 'login.google.button',
+                defaultMessage: 'Sign in with Google',
+              })}
+              onClick={() => {
+                const authUrl = AppConfig.getGoogleOauth2Url();
+                if (authUrl) {
+                  window.location.href = authUrl;
+                } else {
+                  console.log('GoogleOauth2Url is not configured.');
+                }
+              }}
+            />
+          </>
+        )}
       </FormContainer>
 
       <Footer />

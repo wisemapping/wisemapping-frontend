@@ -26,6 +26,7 @@ interface Config {
   apiBaseUrl: string;
   analyticsAccount?: string;
   recaptcha2Enabled: boolean;
+  registrationEnabled: boolean;
   recaptcha2SiteKey?: string;
   clientType: 'mock' | 'rest';
   googleOauth2Url: string;
@@ -36,6 +37,7 @@ class _AppConfig {
     apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:${window.location.port}`,
     clientType: 'mock',
     recaptcha2Enabled: true,
+    registrationEnabled: true,
     recaptcha2SiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
     googleOauth2Url: '/c/registration-google?code=aFakeCode',
   };
@@ -73,6 +75,11 @@ class _AppConfig {
   getGoogleAnalyticsAccount(): string | undefined {
     const config = this.getInstance();
     return config.analyticsAccount;
+  }
+
+  isRegistrationEnabled(): boolean {
+    const config = this.getInstance();
+    return config.registrationEnabled;
   }
 
   getGoogleOauth2Url(): string | undefined {
