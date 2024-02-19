@@ -164,7 +164,7 @@ class RESTPersistenceManager extends PersistenceManager {
     const headers = this._buildHttpHeader('text/plain; charset=utf-8', 'application/xml');
 
     return fetch(url, {
-      method: 'get',
+      method: 'GET',
       headers,
     })
       .then((response: Response) => {

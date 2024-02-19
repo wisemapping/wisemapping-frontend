@@ -22,6 +22,12 @@ import RestClient from '../client/rest-client';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ExtConfig = require('AppConfig');
 
+interface ConfigContainer {
+  type: 'remote' | 'static';
+  url?: string;
+  config: Config;
+}
+
 interface Config {
   apiBaseUrl: string;
   analyticsAccount?: string;
@@ -33,64 +39,76 @@ interface Config {
 }
 
 class _AppConfig {
-  private defaultInstance: Config = {
-    apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:${window.location.port}`,
-    clientType: 'mock',
-    recaptcha2Enabled: true,
-    registrationEnabled: true,
-    recaptcha2SiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
-    googleOauth2Url: '/c/registration-google?code=aFakeCode',
-  };
+  private static _config: Config;
 
   isMockEnv(): boolean {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.clientType === 'mock';
   }
 
-  private getInstance(): Config {
-    // Config can be inserted in the html page to define the global properties ...
-    let result = ExtConfig;
-    if (!result) {
-      result = this.defaultInstance;
+  private static getInstance(): Config {
+    if (!_AppConfig._config) {
+      let result: Config;
+      const extConfig: ConfigContainer = ExtConfig as ConfigContainer;
+      if (extConfig.type === 'static') {
+        // Configuration has been defined as part of webpack ...
+        result = extConfig.config;
+      } else {
+        // Configuration must be fetch externally ...
+        console.log(`Fetching remote config from ${extConfig.url}`);
+        if (!extConfig.url) {
+          throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', extConfig.url, false);
+        xhr.send(null);
+        if (xhr.status === 200) {
+          result = JSON.parse(xhr.responseText);
+        } else {
+          throw new Error('Request failed: ' + xhr.statusText);
+        }
+      }
+      _AppConfig._config = result;
     }
 
-    return result;
+    return _AppConfig._config;
   }
 
   isRestClient(): boolean {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.clientType === 'rest';
   }
 
   isRecaptcha2Enabled(): boolean {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.recaptcha2Enabled;
   }
 
   getRecaptcha2SiteKey(): string | undefined {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.recaptcha2SiteKey;
   }
 
   getGoogleAnalyticsAccount(): string | undefined {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.analyticsAccount;
   }
 
   isRegistrationEnabled(): boolean {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.registrationEnabled;
   }
 
   getGoogleOauth2Url(): string | undefined {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.googleOauth2Url;
   }
 
   buildClient(): Client {
     let result: Client;
     if (this.isRestClient()) {
-      const config = this.getInstance();
+      const config = _AppConfig.getInstance();
       result = new RestClient(this.getApiBaseUrl());
       console.log('Service using rest client. ' + JSON.stringify(config));
     } else {
@@ -102,7 +120,7 @@ class _AppConfig {
   }
 
   getApiBaseUrl(): string {
-    const config = this.getInstance();
+    const config = _AppConfig.getInstance();
     return config.apiBaseUrl;
   }
 }
