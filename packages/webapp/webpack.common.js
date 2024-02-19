@@ -38,7 +38,7 @@ const commonConfig = {
     'AppConfig': JSON.stringify(
       process.env.APP_CONFIG_TYPE === 'file:prod' ?
         require('./config.prod.json') : (
-          process.env.APP_CONFIG_TYPE === 'static' ? process.env.APP_CONFIG_JSON :
+          process.env.APP_CONFIG_TYPE === 'remote' ? process.env.APP_CONFIG_JSON :
             require('./config.dev.json'))
     )
 
