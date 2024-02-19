@@ -35,12 +35,11 @@ const commonConfig = {
     },
   },
   externals: {
-    'AppConfig': JSON.stringify(
+    'AppConfig':
       process.env.APP_CONFIG_TYPE === 'file:prod' ?
-        require('./config.prod.json') : (
+        JSON.stringify(require('./config.prod.json')) : (
           process.env.APP_CONFIG_TYPE === 'remote' ? process.env.APP_CONFIG_JSON :
-            require('./config.dev.json'))
-    )
+            JSON.stringify(require('./config.dev.json')))
 
   },
   plugins: [

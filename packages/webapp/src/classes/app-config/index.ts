@@ -55,7 +55,7 @@ class _AppConfig {
         result = extConfig.config;
       } else {
         // Configuration must be fetch externally ...
-        console.log(`Fetching remote config from ${extConfig.url}`);
+        console.log(`Fetching remote config from '${extConfig.url}'`);
         if (!extConfig.url) {
           throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
         }
