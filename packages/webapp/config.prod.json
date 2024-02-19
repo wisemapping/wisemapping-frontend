@@ -1,4 +1,4 @@
 {
     "type": "remote",
-    "url": "https://api.wisemapping.com/api/restful/app/config"
+    "url": "http://localhost:3000/api/restful/app/config"
 }

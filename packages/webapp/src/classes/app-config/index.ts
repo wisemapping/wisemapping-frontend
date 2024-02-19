@@ -69,6 +69,8 @@ class _AppConfig {
           throw new Error('Request failed: ' + xhr.statusText);
         }
       }
+
+      console.log(`App Config: ${JSON.stringify(result)}}`);
       _AppConfig._config = result;
     }
 
@@ -77,7 +79,7 @@ class _AppConfig {
 
   isRestClient(): boolean {
     const config = _AppConfig.getInstance();
-    return config.clientType === 'rest';
+    return config.clientType === 'rest' || !config.clientType;
   }
 
   isRecaptcha2Enabled(): boolean {
