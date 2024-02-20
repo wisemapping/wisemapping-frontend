@@ -321,7 +321,7 @@ describe('AppBar', () => {
       render(
         <IntlProvider locale="en">
           <AppBar
-            mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
+            mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false)}
             capability={capacity}
             model={model}
           />

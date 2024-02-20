@@ -129,6 +129,7 @@ class MockClient implements Client {
 
     this.labels = [label1, label2, label3];
   }
+
   fetchMapMetadata(id: number): Promise<MapMetadata> {
     return Promise.resolve({
       title: 'my map',
