@@ -63,13 +63,14 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
       });
     } else {
       persistenceManager = new LocalStorageManager(
-        `${baseUrl}/api/restful/maps/{id}/${globalThis.historyId ? `${globalThis.historyId}/` : ''
+        `${baseUrl}/api/restful/maps/{id}/${
+          globalThis.historyId ? `${globalThis.historyId}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
         true,
       );
     }
 
-    persistenceManager.addErrorHandler((error) => {
+    persistenceManager.addErrorHandler((error: { errorType: string }) => {
       if (error.errorType === 'session-expired') {
         // TODO: this line was in RestPersistenceClient, do something similar here
         //client.sessionExpired();
@@ -81,9 +82,11 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   return persistenceManager;
 };
 
+type PageModeType = 'view' | 'edit' | 'try';
+
 export type EditorPropsType = {
-  isTryMode: boolean;
   mapId: number;
+  pageMode: PageModeType;
 };
 
 type ActionType =
@@ -107,14 +110,14 @@ const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
 type EditorMetadata = {
-  mode: EditorRenderMode;
+  editorMode: EditorRenderMode;
   title: string;
   isLocked: boolean;
   isLockedBy?: string;
   zoom: number;
 };
 
-const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement => {
+const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
   const hotkey = useSelector(hotkeysEnabled);
   const userLocale = AppI18n.getUserLocale();
@@ -136,79 +139,87 @@ const EditorPage = ({ mapId, isTryMode }: EditorPropsType): React.ReactElement =
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
   }, []);
 
-  const useFindEditorMode = (isTryMode: boolean, mapId: number): EditorMetadata | undefined => {
-    let mode: EditorRenderMode = null;
+  const useFindEditorMode = (pageMode: PageModeType, mapId: number): EditorMetadata | undefined => {
+    let editorMode: EditorRenderMode = null;
     let title = '';
     let isLocked = false;
     let zoom = 0.8;
-    let isLockedBy;
+    let isLockedBy: string | undefined;
 
-    if (isTryMode) {
-      mode = 'showcase';
-      title = 'Try map';
-      isLocked = false;
-    } else {
-      const fetchMapInfoResult = useFetchMapById(mapId);
-      const fetchMetadataResult = useFetchMapMetadata(mapId);
+    switch (pageMode) {
+      case 'try': {
+        editorMode = 'showcase';
+        title = 'Try map';
+        isLocked = false;
+        break;
+      }
+      case 'edit':
+      case 'view': {
+        const fetchMapInfoResult = useFetchMapById(mapId);
+        const fetchMetadataResult = useFetchMapMetadata(mapId);
 
-      if (!fetchMapInfoResult.isLoading && !fetchMetadataResult.isLoading) {
-        if (fetchMapInfoResult.error || fetchMetadataResult.error) {
-          throw new Error(
-            `Map info could not be loaded: ${JSON.stringify(fetchMapInfoResult.error)}`,
-          );
+        if (!fetchMapInfoResult.isLoading && !fetchMetadataResult.isLoading) {
+          if (fetchMapInfoResult.error || fetchMetadataResult.error) {
+            throw new Error(
+              `Map info could not be loaded: ${JSON.stringify(fetchMapInfoResult.error)}`,
+            );
+          }
+
+          if (!fetchMapInfoResult.data) {
+            throw new Error(
+              `Map info could not be loaded. Info not present: ${JSON.stringify(fetchMapInfoResult)}`,
+            );
+          }
+
+          if (!fetchMetadataResult.data) {
+            throw new Error(
+              `Map info could not be loaded. Info not present: ${JSON.stringify(
+                fetchMetadataResult,
+              )}`,
+            );
+          }
+
+          if (fetchMetadataResult.data?.isLocked || pageMode === 'view') {
+            editorMode = 'viewonly';
+          } else {
+            editorMode = `edition-${fetchMapInfoResult.data.role}`;
+          }
+
+          isLocked = fetchMetadataResult.data.isLocked;
+          isLockedBy = fetchMetadataResult.data.isLockedBy;
+          title = fetchMetadataResult.data.title;
+          zoom = JSON.parse(fetchMetadataResult.data.jsonProps).zoom;
         }
-
-        if (!fetchMapInfoResult.data) {
-          throw new Error(
-            `Map info could not be loaded. Info not present: ${JSON.stringify(fetchMapInfoResult)}`,
-          );
-        }
-
-        if (!fetchMetadataResult.data) {
-          throw new Error(
-            `Map info could not be loaded. Info not present: ${JSON.stringify(
-              fetchMetadataResult,
-            )}`,
-          );
-        }
-
-        if (fetchMetadataResult.data?.isLocked) {
-          mode = 'viewonly';
-        } else {
-          mode = `edition-${fetchMapInfoResult.data.role}`;
-        }
-
-        isLocked = fetchMetadataResult.data.isLocked;
-        isLockedBy = fetchMetadataResult.data.isLockedBy;
-        title = fetchMetadataResult.data.title;
-        zoom = JSON.parse(fetchMetadataResult.data.jsonProps).zoom;
+        break;
       }
     }
-    return mode ? { mode, isLocked, isLockedBy, title, zoom } : undefined;
+    return editorMode ? { editorMode, isLocked, isLockedBy, title, zoom } : undefined;
   };
 
   // What is the role ?
-  const mapMetadata = useFindEditorMode(isTryMode, mapId);
+  const mapMetadata = useFindEditorMode(pageMode, mapId);
 
   // Account settings can be null and editor cannot be initilized multiple times. This creates problems
   // at the i18n resource loading.
-  const isAccountLoaded = mapMetadata?.mode === 'showcase' || useFetchAccount;
+  const isAccountLoaded = mapMetadata?.editorMode === 'showcase' || useFetchAccount;
   const loadCompleted = mapMetadata && isAccountLoaded;
 
   let persistence: PersistenceManager;
   let mapInfo: MapInfo;
   let options: EditorOptions;
+
+  const enableAppBar = pageMode !== 'view';
   if (loadCompleted) {
     // Configure
     options = {
       enableKeyboardEvents: hotkey,
       locale: userLocale.code,
-      mode: mapMetadata.mode,
-      enableAppBar: true,
+      mode: mapMetadata.editorMode,
+      enableAppBar: enableAppBar,
       zoom: mapMetadata.zoom,
     };
 
-    persistence = buildPersistenceManagerForEditor(mapMetadata.mode);
+    persistence = buildPersistenceManagerForEditor(mapMetadata.editorMode);
     mapInfo = new MapInfoImpl(
       mapId,
       client,

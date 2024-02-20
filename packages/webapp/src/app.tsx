@@ -66,14 +66,23 @@ function Redirect({ to }) {
   return null;
 }
 
-const PageEditorWhapper = ({ isTryMode }: { isTryMode: boolean }) => {
+const PageEditorWhapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
   const id = useParams().id;
-  if (!id) {
+  if (id === undefined) {
     throw 'Map could not be loaded';
   }
-
-  const mapId: string = id;
-  return <EditorPage isTryMode={isTryMode} mapId={Number.parseInt(mapId)} />;
+  const mapId: number = Number.parseInt(id);
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+        </div>
+      }
+    >
+      <EditorPage pageMode={mode} mapId={mapId} />
+    </Suspense>
+  );
 };
 
 const App = (): ReactElement => {
@@ -123,40 +132,14 @@ const App = (): ReactElement => {
                           </Suspense>
                         }
                       />
+                      <Route path="/c/maps/:id/edit" element={<PageEditorWhapper mode="edit" />} />
+                      <Route path="/c/maps/:id/print" element={<PageEditorWhapper mode="view" />} />
                       <Route
-                        path="/c/maps/:id/edit"
-                        element={
-                          <Suspense
-                            fallback={
-                              <div>
-                                <FormattedMessage
-                                  id="dialog.loading"
-                                  defaultMessage="Loading ..."
-                                />
-                              </div>
-                            }
-                          >
-                            <PageEditorWhapper isTryMode={false} />
-                          </Suspense>
-                        }
+                        path="/c/maps/:id/public"
+                        element={<PageEditorWhapper mode="view" />}
                       />
-                      <Route
-                        path="/c/maps/:id/try"
-                        element={
-                          <Suspense
-                            fallback={
-                              <div>
-                                <FormattedMessage
-                                  id="dialog.loading"
-                                  defaultMessage="Loading ..."
-                                />
-                              </div>
-                            }
-                          >
-                            <PageEditorWhapper isTryMode={true} />
-                          </Suspense>
-                        }
-                      />
+                      <Route path="/c/maps/:id/embed" element={<PageEditorWhapper mode="view" />} />
+                      <Route path="/c/maps/:id/try" element={<PageEditorWhapper mode="try" />} />
                     </Routes>
                   </Router>
                 ) : (

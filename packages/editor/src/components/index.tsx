@@ -38,6 +38,7 @@ import { SpinnerCentered } from './style';
 import Typography from '@mui/material/Typography';
 import { useWidgetManager } from '../hooks/useWidgetManager';
 import { EditorConfiguration } from '../hooks/useEditor';
+import CreatorInfoPane from './creator-info-pane';
 
 type EditorProps = {
   theme?: Theme;
@@ -107,6 +108,9 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
       />
 
       <Notifier id="headerNotifier" />
+
+      {!options.enableAppBar && <CreatorInfoPane mapInfo={mapInfo} />}
+
       <WarningDialog
         capability={capability}
         message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
