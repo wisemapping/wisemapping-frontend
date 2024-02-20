@@ -132,6 +132,7 @@ class MockClient implements Client {
   fetchMapMetadata(id: number): Promise<MapMetadata> {
     return Promise.resolve({
       title: 'my map',
+      creatorFullName: 'The Map Creator',
       id: id,
       isLocked: false,
       jsonProps: '{ "zoom": 0.8 }',

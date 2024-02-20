@@ -38,7 +38,13 @@ const options: EditorOptions = {
   enableAppBar: true,
 };
 
-const mapInfo = new MapInfoImpl('welcome', 'Develop WiseMapping', true, "It's locked !");
+const mapInfo = new MapInfoImpl(
+  'welcome',
+  'Develop WiseMapping',
+  'The Creator',
+  true,
+  "It's locked !",
+);
 
 const Playground = () => {
   const editor = useEditor({

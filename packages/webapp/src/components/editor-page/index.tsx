@@ -39,7 +39,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
-import Client from '../../classes/client';
+import Client, { MapMetadata } from '../../classes/client';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import ClientHealthSentinel from '../common/client-health-sentinel';
@@ -111,9 +111,7 @@ const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
 type EditorMetadata = {
   editorMode: EditorRenderMode;
-  title: string;
-  isLocked: boolean;
-  isLockedBy?: string;
+  mapMetadata: MapMetadata;
   zoom: number;
 };
 
@@ -140,21 +138,26 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   }, []);
 
   const useFindEditorMode = (pageMode: PageModeType, mapId: number): EditorMetadata | undefined => {
-    let editorMode: EditorRenderMode = null;
-    let title = '';
-    let isLocked = false;
-    let zoom = 0.8;
-    let isLockedBy: string | undefined;
-
+    let result: EditorMetadata | undefined = undefined;
     switch (pageMode) {
       case 'try': {
-        editorMode = 'showcase';
-        title = 'Try map';
-        isLocked = false;
+        result = {
+          editorMode: 'showcase',
+          mapMetadata: {
+            id: 3,
+            title: 'What is WiseMapping ?',
+            creatorFullName: 'Paulo Gustavo Veiga',
+            isLocked: false,
+            jsonProps: '{ "zoom": 0.8 }',
+          },
+          zoom: 0.8,
+        };
         break;
       }
       case 'edit':
       case 'view': {
+        let editorMode: EditorRenderMode = null;
+
         const fetchMapInfoResult = useFetchMapById(mapId);
         const fetchMetadataResult = useFetchMapMetadata(mapId);
 
@@ -185,24 +188,27 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
             editorMode = `edition-${fetchMapInfoResult.data.role}`;
           }
 
-          isLocked = fetchMetadataResult.data.isLocked;
-          isLockedBy = fetchMetadataResult.data.isLockedBy;
-          title = fetchMetadataResult.data.title;
-          zoom = JSON.parse(fetchMetadataResult.data.jsonProps).zoom;
+          // Build result ...
+          const zoom = JSON.parse(fetchMetadataResult.data.jsonProps).zoom;
+          result = {
+            editorMode: editorMode,
+            mapMetadata: fetchMetadataResult.data,
+            zoom: zoom,
+          };
         }
         break;
       }
     }
-    return editorMode ? { editorMode, isLocked, isLockedBy, title, zoom } : undefined;
+    return result;
   };
 
   // What is the role ?
-  const mapMetadata = useFindEditorMode(pageMode, mapId);
+  const editorMetadata = useFindEditorMode(pageMode, mapId);
 
   // Account settings can be null and editor cannot be initilized multiple times. This creates problems
   // at the i18n resource loading.
-  const isAccountLoaded = mapMetadata?.editorMode === 'showcase' || useFetchAccount;
-  const loadCompleted = mapMetadata && isAccountLoaded;
+  const isAccountLoaded = editorMetadata?.editorMode === 'showcase' || useFetchAccount;
+  const loadCompleted = editorMetadata && isAccountLoaded;
 
   let persistence: PersistenceManager;
   let mapInfo: MapInfo;
@@ -214,19 +220,20 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
     options = {
       enableKeyboardEvents: hotkey,
       locale: userLocale.code,
-      mode: mapMetadata.editorMode,
+      mode: editorMetadata.editorMode,
       enableAppBar: enableAppBar,
-      zoom: mapMetadata.zoom,
+      zoom: editorMetadata.zoom,
     };
 
-    persistence = buildPersistenceManagerForEditor(mapMetadata.editorMode);
+    persistence = buildPersistenceManagerForEditor(editorMetadata.editorMode);
     mapInfo = new MapInfoImpl(
       mapId,
       client,
-      mapMetadata.title,
-      mapMetadata.isLocked,
-      mapMetadata.isLockedBy,
-      mapMetadata.zoom,
+      editorMetadata.mapMetadata.title,
+      editorMetadata.mapMetadata.creatorFullName,
+      editorMetadata.mapMetadata.isLocked,
+      editorMetadata.mapMetadata.isLockedBy,
+      editorMetadata.zoom,
     );
   }
 

@@ -39,7 +39,7 @@ const options: EditorOptions = {
   enableAppBar: false,
 };
 
-const mapInfo = new MapInfoImpl(mapId, 'Develop Map Title', false);
+const mapInfo = new MapInfoImpl(mapId, 'Develop Map Title', 'Paulo Veiga', false);
 
 const Playground = () => {
   const editor = useEditor({

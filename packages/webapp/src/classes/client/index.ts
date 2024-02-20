@@ -62,6 +62,7 @@ export type MapInfo = {
 export type MapMetadata = {
   id: number;
   title: string;
+  creatorFullName: string;
   isLocked: boolean;
   isLockedBy?: string;
   jsonProps: string;

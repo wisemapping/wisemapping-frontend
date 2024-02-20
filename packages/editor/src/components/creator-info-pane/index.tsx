@@ -17,6 +17,7 @@
  */
 import React, { ReactElement } from 'react';
 import MapInfo from '../../classes/model/map-info';
+import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 // import { useIntl } from 'react-intl';
 
 type CreatorInfoPanel = {
@@ -26,9 +27,30 @@ const CreatorInfoPanel = ({ mapInfo }: CreatorInfoPanel): ReactElement => {
   // const intl = useIntl();
   console.log('CreatorInfoPanel');
   return (
-    <div>
-      SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-      {mapInfo.getId()}
+    <div
+      style={{
+        zIndex: 10000,
+        height: '100px',
+        position: 'fixed',
+        float: 'left',
+        top: '90%',
+        left: '2%',
+      }}
+    >
+      <a href="https://www.wisemapping.com/">
+        <img src={LogoTextBlackSvg} aria-label="WiseMappping" />
+      </a>
+      <span
+        style={{
+          lineHeight: '100px',
+          fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+          paddingLeft: '10px',
+          fontSize: '14px',
+          color: '#909090',
+        }}
+      >
+        <b>Description:</b> {mapInfo.getTitle()} <b>Creator:</b> {mapInfo.getCreatorFullName()}
+      </span>
     </div>
   );
 };

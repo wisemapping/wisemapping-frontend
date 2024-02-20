@@ -40,7 +40,7 @@ const options: EditorOptions = {
   saveOnLoad: false,
 };
 
-const mapInfo = new MapInfoImpl('welcome', 'Develop Map Title', false);
+const mapInfo = new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false);
 
 const Playground = () => {
   const editor = useEditor({
