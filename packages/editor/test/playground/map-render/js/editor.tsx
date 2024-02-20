@@ -30,7 +30,7 @@ const initialization = (designer: Designer) => {
   });
 };
 
-const persistence = new LocalStorageManager('samples/{id}.wxml', false, false);
+const persistence = new LocalStorageManager('samples/{id}.wxml', false, undefined, false);
 
 const options: EditorOptions = {
   mode: 'edition-owner',

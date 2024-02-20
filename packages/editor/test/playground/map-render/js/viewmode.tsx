@@ -31,7 +31,7 @@ const initialization = (designer: Designer) => {
 // Obtain map id from query param
 const params = new URLSearchParams(window.location.search.substring(1));
 const mapId = params.get('id') || 'welcome';
-const persistence = new LocalStorageManager('samples/{id}.wxml', false);
+const persistence = new LocalStorageManager('samples/{id}.wxml', false, undefined);
 const options: EditorOptions = {
   mode: 'viewonly',
   locale: 'en',

@@ -191,11 +191,6 @@ class RESTPersistenceManager extends PersistenceManager {
       // eslint-disable-next-line dot-notation
       headers['Authorization'] = `Bearer ${this.jwt} `;
     }
-
-    // const crfs = this.getCSRFToken();
-    // if (crfs) {
-    //   headers['X-CSRF-Token'] = crfs;
-    // }
     return headers;
   }
 }

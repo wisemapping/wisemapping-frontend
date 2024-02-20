@@ -81,7 +81,8 @@ class MindplotWebComponent extends HTMLElement {
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');
 
-    const persistenceManager = persistence || new LocalStorageManager('map.xml', false, false);
+    const persistenceManager =
+      persistence || new LocalStorageManager('map.xml', false, undefined, false);
     const mode = editorRenderMode || 'viewonly';
 
     const mindplodElem = this._shadowRoot.getElementById('mindplot-canvas');

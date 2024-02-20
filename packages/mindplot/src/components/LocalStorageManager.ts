@@ -24,11 +24,19 @@ class LocalStorageManager extends PersistenceManager {
 
   private readOnly: boolean;
 
-  constructor(documentUrl: string, forceLoad: boolean, readOnly = true) {
+  private jwtToken: string | undefined;
+
+  constructor(
+    documentUrl: string,
+    forceLoad: boolean,
+    jwtToken: string | undefined,
+    readOnly = true,
+  ) {
     super();
     this.documentUrl = documentUrl;
     this.forceLoad = forceLoad;
     this.readOnly = readOnly;
+    this.jwtToken = jwtToken;
   }
 
   saveMapXml(mapId: string, mapDoc: Document, _pref: string, _saveHistory: boolean, events): void {
@@ -52,9 +60,12 @@ class LocalStorageManager extends PersistenceManager {
       'Content-Type': 'text/plain',
       Accept: 'application/xml',
     };
-    // if (csrfToken) {
-    //   result['X-CSRF-Token'] = csrfToken;
-    // }
+
+    if (this.jwtToken) {
+      // eslint-disable-next-line dot-notation
+      result['Authorization'] = `Bearer ${this.jwtToken} `;
+    }
+
     return result;
   }
 

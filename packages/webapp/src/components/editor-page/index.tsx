@@ -50,10 +50,10 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   if (AppConfig.isRestClient()) {
     const baseUrl = AppConfig.getApiBaseUrl();
 
+    const cookies = new Cookies();
+    const token = cookies.get('jwt-auth-token');
     if (mode === 'edition-owner' || mode === 'edition-editor') {
       // Fetch JWT token ...
-      const cookies = new Cookies();
-      const token = cookies.get('jwt-auth-token');
 
       persistenceManager = new RESTPersistenceManager({
         documentUrl: `${baseUrl}/api/restful/maps/{id}/document`,
@@ -66,6 +66,7 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
         `${baseUrl}/api/restful/maps/{id}/${
           globalThis.historyId ? `${globalThis.historyId}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
+        token,
         true,
       );
     }
