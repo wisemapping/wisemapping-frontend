@@ -198,6 +198,10 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
         }
         break;
       }
+      default: {
+        const exhaustiveCheck: never = pageMode;
+        throw new Error(exhaustiveCheck);
+      }
     }
     return result;
   };
@@ -212,12 +216,12 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
 
   let persistence: PersistenceManager;
   let mapInfo: MapInfo;
-  let options: EditorOptions;
+  let editorConfig: EditorOptions;
 
   const enableAppBar = pageMode !== 'view';
   if (loadCompleted) {
     // Configure
-    options = {
+    editorConfig = {
       enableKeyboardEvents: hotkey,
       locale: userLocale.code,
       mode: editorMetadata.editorMode,
@@ -245,7 +249,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
 
   const editor = useEditor({
     mapInfo,
-    options,
+    options: editorConfig,
     persistenceManager: persistence,
   });
 
@@ -262,7 +266,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
         theme={theme}
         accountConfiguration={
           // Prevent load on non-authenticated.
-          options.mode !== 'showcase' ? (
+          editorConfig.mode !== 'showcase' ? (
             <IntlProvider
               locale={userLocale.code}
               messages={userLocale.message as Record<string, string>}
