@@ -36,9 +36,14 @@ interface Config {
   recaptcha2SiteKey?: string;
   clientType: 'mock' | 'rest';
   googleOauth2Url: string;
+  jwtExpirationMin: number;
 }
 
 class _AppConfig {
+  getJwtExpirationMin() {
+    const config = _AppConfig.getInstance();
+    return config.jwtExpirationMin;
+  }
   private static _config: Config;
 
   isMockEnv(): boolean {

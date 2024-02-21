@@ -32,7 +32,7 @@ import Client, {
   MapMetadata,
 } from '..';
 import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
-import Cookies from 'universal-cookie';
+import JwtTokenConfig from '../../jwt-token-config';
 
 export default class RestClient implements Client {
   private baseUrl: string;
@@ -56,7 +56,7 @@ export default class RestClient implements Client {
     this.axios.interceptors.request.use((config) => {
       if (config.headers) {
         // JWT Token ...
-        const jwtToken = this._jwtToken();
+        const jwtToken = this._jwtHeaderTokenValue();
         if (jwtToken) {
           config.headers['Authorization'] = jwtToken;
         }
@@ -99,9 +99,7 @@ export default class RestClient implements Client {
   }
 
   logout(): Promise<void> {
-    // Set jwt token on cookie ...
-    const cookies = new Cookies();
-    cookies.remove('jwt-auth-token', { path: '/' });
+    JwtTokenConfig.removeToken();
 
     return Promise.resolve();
   }
@@ -113,10 +111,9 @@ export default class RestClient implements Client {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((response) => {
+          // Story JWT token ...
           const token = response.data;
-          // Set jwt token on cookie ...
-          const cookies = new Cookies();
-          cookies.set('jwt-auth-token', token, { path: '/', maxAge: 604800 });
+          JwtTokenConfig.storeToken(token);
 
           success();
         })
@@ -128,10 +125,9 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  private _jwtToken(): string | null {
+  private _jwtHeaderTokenValue(): string | null {
     // Set cookie on session ...
-    const cookies = new Cookies();
-    const token = cookies.get('jwt-auth-token');
+    const token = JwtTokenConfig.retreiveToken();
     return token ? `Bearer ${token}` : null;
   }
 

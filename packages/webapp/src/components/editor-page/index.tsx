@@ -43,7 +43,7 @@ import Client, { MapMetadata } from '../../classes/client';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import ClientHealthSentinel from '../common/client-health-sentinel';
-import Cookies from 'universal-cookie';
+import JwtTokenConfig from '../../classes/jwt-token-config';
 
 const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   let persistenceManager: PersistenceManager;
@@ -51,8 +51,7 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
     const baseUrl = AppConfig.getApiBaseUrl();
 
     // Fetch Token ...
-    const cookies = new Cookies();
-    const token = cookies.get('jwt-auth-token');
+    const token = JwtTokenConfig.retreiveToken();
     if (mode === 'edition-owner' || mode === 'edition-editor') {
       // Fetch JWT token ...
 
