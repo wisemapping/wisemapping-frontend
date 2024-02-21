@@ -1,10 +1,15 @@
+import Cookies from 'universal-cookie';
 import AppConfig from '../../classes/app-config';
 import { LocalStorageManager, Mindmap, XMLSerializerFactory } from '@wisemapping/editor';
 
 export const fetchMindmap = async (mapId: number): Promise<Mindmap> => {
   let mindmap: Mindmap;
   if (AppConfig.isRestClient()) {
-    const persistence = new LocalStorageManager(`/api/restful/maps/{id}/document/xml`, true);
+    // Fetch Token ...
+    const cookies = new Cookies();
+    const token = cookies.get('jwt-auth-token');
+
+    const persistence = new LocalStorageManager(`/api/restful/maps/{id}/document/xml`, true, token);
     mindmap = await persistence.load(String(mapId));
   } else {
     const parser = new DOMParser();

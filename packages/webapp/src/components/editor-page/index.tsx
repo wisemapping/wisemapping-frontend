@@ -50,6 +50,7 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
   if (AppConfig.isRestClient()) {
     const baseUrl = AppConfig.getApiBaseUrl();
 
+    // Fetch Token ...
     const cookies = new Cookies();
     const token = cookies.get('jwt-auth-token');
     if (mode === 'edition-owner' || mode === 'edition-editor') {
