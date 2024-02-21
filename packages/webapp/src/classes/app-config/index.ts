@@ -40,16 +40,7 @@ interface Config {
 }
 
 class _AppConfig {
-  getJwtExpirationMin() {
-    const config = _AppConfig.getInstance();
-    return config.jwtExpirationMin;
-  }
   private static _config: Config;
-
-  isMockEnv(): boolean {
-    const config = _AppConfig.getInstance();
-    return config.clientType === 'mock';
-  }
 
   private static getInstance(): Config {
     if (!_AppConfig._config) {
@@ -80,6 +71,19 @@ class _AppConfig {
     }
 
     return _AppConfig._config;
+  }
+
+  isMockEnv(): boolean {
+    const config = _AppConfig.getInstance();
+    return config.clientType === 'mock';
+  }
+
+  getJwtExpirationMin(): number {
+    const config = _AppConfig.getInstance();
+    if (!config.jwtExpirationMin) {
+      throw new Error('jwtExpirationMin can not be null. Review wise-api configuration.');
+    }
+    return config.jwtExpirationMin;
   }
 
   isRestClient(): boolean {
