@@ -66,8 +66,8 @@ const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
         `${baseUrl}/api/restful/maps/{id}/${
           globalThis.historyId ? `${globalThis.historyId}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
-        token,
         true,
+        token,
       );
     }
 
