@@ -22,7 +22,7 @@ import JwtTokenConfig from '../../classes/jwt-token-config';
 export const fetchMindmap = async (mapId: number): Promise<Mindmap> => {
   let mindmap: Mindmap;
   if (AppConfig.isRestClient()) {
-    const token = JwtTokenConfig.removeToken();
+    const token = JwtTokenConfig.retreiveToken();
 
     const persistence = new LocalStorageManager(`/api/restful/maps/{id}/document/xml`, true, token);
     mindmap = await persistence.load(String(mapId));

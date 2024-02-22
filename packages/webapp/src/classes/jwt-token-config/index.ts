@@ -17,13 +17,13 @@
  */
 
 import Cookies from 'universal-cookie';
-import AppConfig from '../app-config';
 
 class JwtTokenConfig {
   private static COOKIE_NAME = 'jwt-auth-token';
 
   static storeToken(token: string): void {
-    const expMs = AppConfig.getJwtExpirationMin() * 1000;
+    // @todo: Hack. Can not call AppConfig due to an error. Temporally, harcoding value to 1 week.
+    const expMs = 100000 * 10080;
 
     const cookies = new Cookies();
     cookies.set(JwtTokenConfig.COOKIE_NAME, token, { path: '/', maxAge: expMs });

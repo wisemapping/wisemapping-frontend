@@ -31,6 +31,7 @@ import Client, {
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
 import Cookies from 'universal-cookie';
+import JwtTokenConfig from '../../jwt-token-config';
 
 const label1: Label = {
   id: 1,
@@ -145,8 +146,7 @@ class MockClient implements Client {
   }
 
   login(auth: JwtAuth): Promise<void> {
-    const cookies = new Cookies();
-    cookies.set('jwt-token-mock', auth.email, { path: '/' });
+    JwtTokenConfig.storeToken(auth.email);
     return Promise.resolve();
   }
 

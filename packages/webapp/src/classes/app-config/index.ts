@@ -19,8 +19,6 @@
 import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ExtConfig = require('AppConfig');
 
 interface ConfigContainer {
   type: 'remote' | 'static';
@@ -40,12 +38,14 @@ interface Config {
 }
 
 class _AppConfig {
-  private static _config: Config;
+  private _config: Config;
 
-  private static getInstance(): Config {
-    if (!_AppConfig._config) {
+  private getConfig(): Config {
+    if (!this._config) {
       let result: Config;
-      const extConfig: ConfigContainer = ExtConfig as ConfigContainer;
+
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const extConfig: ConfigContainer = require('BoostrapConfig') as ConfigContainer;
       if (extConfig.type === 'static') {
         // Configuration has been defined as part of webpack ...
         result = extConfig.config;
@@ -66,20 +66,20 @@ class _AppConfig {
         }
       }
 
-      console.log(`App Config: ${JSON.stringify(result)}}`);
-      _AppConfig._config = result;
+      this._config = result;
+      console.log(`App Config: ${JSON.stringify(this._config)}}`);
     }
 
-    return _AppConfig._config;
+    return this._config;
   }
 
   isMockEnv(): boolean {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.clientType === 'mock';
   }
 
   getJwtExpirationMin(): number {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     if (!config.jwtExpirationMin) {
       throw new Error('jwtExpirationMin can not be null. Review wise-api configuration.');
     }
@@ -87,39 +87,39 @@ class _AppConfig {
   }
 
   isRestClient(): boolean {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.clientType === 'rest' || !config.clientType;
   }
 
   isRecaptcha2Enabled(): boolean {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.recaptcha2Enabled;
   }
 
   getRecaptcha2SiteKey(): string | undefined {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.recaptcha2SiteKey;
   }
 
   getGoogleAnalyticsAccount(): string | undefined {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.analyticsAccount;
   }
 
   isRegistrationEnabled(): boolean {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.registrationEnabled;
   }
 
   getGoogleOauth2Url(): string | undefined {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.googleOauth2Url;
   }
 
   buildClient(): Client {
     let result: Client;
     if (this.isRestClient()) {
-      const config = _AppConfig.getInstance();
+      const config = this.getConfig();
       result = new RestClient(this.getApiBaseUrl());
       console.log('Service using rest client. ' + JSON.stringify(config));
     } else {
@@ -131,10 +131,9 @@ class _AppConfig {
   }
 
   getApiBaseUrl(): string {
-    const config = _AppConfig.getInstance();
+    const config = this.getConfig();
     return config.apiBaseUrl;
   }
 }
 const AppConfig = new _AppConfig();
-
 export default AppConfig;

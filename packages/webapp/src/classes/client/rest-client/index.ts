@@ -30,6 +30,7 @@ import Client, {
   ForgotPasswordResult,
   JwtAuth,
   MapMetadata,
+  LoginErrorInfo,
 } from '..';
 import AppI18n, { Locale, LocaleCode, localeFromStr } from '../../app-i18n';
 import JwtTokenConfig from '../../jwt-token-config';
@@ -105,7 +106,7 @@ export default class RestClient implements Client {
   }
 
   login(model: JwtAuth): Promise<void> {
-    const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
+    const handler = (success: () => void, reject: (error: LoginErrorInfo) => void) => {
       this.axios
         .post(`${this.baseUrl}/api/restful/authenticate`, model, {
           headers: { 'Content-Type': 'application/json' },
@@ -113,12 +114,16 @@ export default class RestClient implements Client {
         .then((response) => {
           // Story JWT token ...
           const token = response.data;
-          JwtTokenConfig.storeToken(token);
 
+          JwtTokenConfig.storeToken(token);
           success();
         })
         .catch((error) => {
-          const errorInfo = this.parseResponseOnError(error.response);
+          // Handle an expected error ...
+          console.error(error);
+          const errorInfo = this.parseResponseOnError(error.response) as LoginErrorInfo;
+          errorInfo.code = !error.response || error.response.status !== 403 ? 1 : 3;
+
           reject(errorInfo);
         });
     };

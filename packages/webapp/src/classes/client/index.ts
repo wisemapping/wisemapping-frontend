@@ -89,6 +89,10 @@ export type ErrorInfo = {
   fields?: Map<string, string>;
 };
 
+export type LoginErrorInfo = ErrorInfo & {
+  code: 1 | 2 | 3;
+};
+
 export type AuthenticationType = 'GOOGLE_OAUTH2' | 'DATABASE' | 'LDAP';
 
 export type AccountInfo = {

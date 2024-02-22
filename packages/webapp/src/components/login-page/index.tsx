@@ -16,7 +16,7 @@ import GoogleButton from '../common/google-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from 'react-query';
 import { useSelector } from 'react-redux';
-import Client, { ErrorInfo } from '../../classes/client';
+import Client, { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { activeInstance } from '../../redux/clientSlice';
 
 export type Model = {
@@ -36,7 +36,13 @@ const LoginError = ({ errorCode }: LoginErrorProps) => {
   let msg: null | string = null;
   if (errorCode) {
     switch (errorCode) {
-      case 3:
+      case 1:
+        msg = intl.formatMessage({
+          id: 'login.unexpected-error',
+          defaultMessage: 'Unexpected error during login. Please, try latter.',
+        });
+        break;
+      case 2:
         msg = intl.formatMessage({
           id: 'login.userinactive',
           defaultMessage:
@@ -73,10 +79,8 @@ const LoginPage = (): React.ReactElement => {
     (model: Model) => client.login({ ...model }),
     {
       onSuccess: () => navigate('/c/maps/'),
-      onError: (error) => {
-        // Hardcode error code...
-        console.log(error);
-        setLoginError(2);
+      onError: (error: LoginErrorInfo) => {
+        setLoginError(error.code);
       },
     },
   );
