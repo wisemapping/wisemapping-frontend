@@ -2076,9 +2076,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.11.3":
-  version: 11.11.3
-  resolution: "@emotion/react@npm:11.11.3"
+"@emotion/react@npm:^11.11.4":
+  version: 11.11.4
+  resolution: "@emotion/react@npm:11.11.4"
   dependencies:
     "@babel/runtime": ^7.18.3
     "@emotion/babel-plugin": ^11.11.0
@@ -2093,7 +2093,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 2e4b223591569f0a41686d5bd72dc8778629b7be33267e4a09582979e6faee4d7218de84e76294ed827058d4384d75557b5d71724756539c1f235e9a69e62b2e
+  checksum: 6abaa7a05c5e1db31bffca7ac79169f5456990022cbb3794e6903221536609a60420f2b4888dd3f84e9634a304e394130cb88dc32c243a1dedc263e50da329f8
   languageName: node
   linkType: hard
 
@@ -2222,10 +2222,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:8.56.0":
-  version: 8.56.0
-  resolution: "@eslint/js@npm:8.56.0"
-  checksum: 5804130574ef810207bdf321c265437814e7a26f4e6fac9b496de3206afd52f533e09ec002a3be06cd9adcc9da63e727f1883938e663c4e4751c007d5b58e539
+"@eslint/js@npm:8.57.0":
+  version: 8.57.0
+  resolution: "@eslint/js@npm:8.57.0"
+  checksum: 315dc65b0e9893e2bff139bddace7ea601ad77ed47b4550e73da8c9c2d2766c7a575c3cddf17ef85b8fd6a36ff34f91729d0dcca56e73ca887c10df91a41b0bb
   languageName: node
   linkType: hard
 
@@ -2395,7 +2395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@humanwhocodes/config-array@npm:^0.11.13":
+"@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
   dependencies:
@@ -3724,10 +3724,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.15.1":
-  version: 1.15.1
-  resolution: "@remix-run/router@npm:1.15.1"
-  checksum: 5c404e64a95da7d2a06811c15e8b213cd1079bca546d8a78a1626264ac0b71361b9ce93269bda7209a938e5a22c25993902841f81240c58eb7ed0934e1781197
+"@remix-run/router@npm:1.15.2":
+  version: 1.15.2
+  resolution: "@remix-run/router@npm:1.15.2"
+  checksum: aac403791316d7f3a32b20621138a34ec0ffc62b32617a42a4e1c5390221eec6da9756032032e22ec1b1f3756758666f5dd7f03c5babd9171d4696f894ee3012
   languageName: node
   linkType: hard
 
@@ -6633,7 +6633,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wisemapping/editor@workspace:packages/editor"
   dependencies:
-    "@emotion/react": ^11.11.3
+    "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.0
     "@formatjs/cli": ^6.2.7
     "@mui/icons-material": ^5.15.10
@@ -6642,9 +6642,9 @@ __metadata:
     "@types/cypress-image-snapshot": ^3.1.9
     "@wisemapping/mindplot": "workspace:*"
     babel-polyfill: ^6.26.0
-    cypress: ^13.6.4
+    cypress: ^13.6.6
     cypress-image-snapshot: ^4.0.1
-    emoji-picker-react: ^4.7.18
+    emoji-picker-react: ^4.8.0
     jest-transform-stub: ^2.0.0
     react: ^18.2.0
     react-color: ^2.19.3
@@ -6679,9 +6679,9 @@ __metadata:
     "@wisemapping/web2d": "workspace:*"
     babel-loader: ^9.1.3
     blob-polyfill: ^7.0.20220408
-    cypress: ^13.6.4
+    cypress: ^13.6.6
     cypress-image-snapshot: ^4.0.1
-    emoji-picker-react: ^4.7.18
+    emoji-picker-react: ^4.8.0
     jest: ^29.7.0
     jquery: 3.7.1
     lodash: ^4.17.21
@@ -6704,7 +6704,7 @@ __metadata:
     "@storybook/html": ^6.5.16
     "@storybook/manager-webpack5": ^6.5.16
     "@storybook/testing-library": ^0.2.2
-    cypress: 13.6.4
+    cypress: 13.6.6
     cypress-image-snapshot: ^4.0.1
   peerDependencies:
     "@wisemapping/core-js": "workspace:*"
@@ -6716,7 +6716,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wisemapping/webapp@workspace:packages/webapp"
   dependencies:
-    "@emotion/react": ^11.11.3
+    "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.0
     "@formatjs/cli": ^6.2.7
     "@mui/icons-material": ^5.15.10
@@ -6728,7 +6728,7 @@ __metadata:
     "@welldone-software/why-did-you-render": ^8.0.1
     "@wisemapping/editor": "workspace:^"
     axios: ^1.6.7
-    cypress: ^13.6.4
+    cypress: ^13.6.6
     cypress-image-snapshot: ^4.0.1
     dayjs: ^1.11.10
     react: ^18.2.0
@@ -6738,9 +6738,9 @@ __metadata:
     react-intl: ^6.6.2
     react-query: ^3.39.3
     react-redux: ^9.1.0
-    react-router-dom: ^6.22.1
+    react-router-dom: ^6.22.2
     styled-components: ^6.1.8
-    universal-cookie: ^7.0.2
+    universal-cookie: ^7.1.0
     update-browserslist-db: ^1.0.13
   languageName: unknown
   linkType: soft
@@ -8396,7 +8396,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.5.0, buffer@npm:^5.6.0":
+"buffer@npm:^5.5.0, buffer@npm:^5.6.0, buffer@npm:^5.7.1":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -10119,9 +10119,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.6.4, cypress@npm:^13.6.4":
-  version: 13.6.4
-  resolution: "cypress@npm:13.6.4"
+"cypress@npm:13.6.6, cypress@npm:^13.6.6":
+  version: 13.6.6
+  resolution: "cypress@npm:13.6.6"
   dependencies:
     "@cypress/request": ^3.0.0
     "@cypress/xvfb": ^1.2.4
@@ -10130,7 +10130,7 @@ __metadata:
     arch: ^2.2.0
     blob-util: ^2.0.2
     bluebird: ^3.7.2
-    buffer: ^5.6.0
+    buffer: ^5.7.1
     cachedir: ^2.3.0
     chalk: ^4.1.0
     check-more-types: ^2.24.0
@@ -10148,7 +10148,7 @@ __metadata:
     figures: ^3.2.0
     fs-extra: ^9.1.0
     getos: ^3.2.1
-    is-ci: ^3.0.0
+    is-ci: ^3.0.1
     is-installed-globally: ~0.4.0
     lazy-ass: ^1.6.0
     listr2: ^3.8.3
@@ -10167,7 +10167,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 39daef291ccd18d7d724d7f8c1f5a2ed2b3d24c5c1eab1e00642c5db232fcc4dbd3fd30db3a2dce4e8b737d510355d135eb43034d800198d2867ecde4cdd696a
+  checksum: 8a7db7d2941ea9fd698b9311b4f23fb6491038fe57e4c19b29a1ee58a25f9d98646674f876c1068a97428c2e81548bb0dd8701cd08e84c6b17ed75f9c2266908
   languageName: node
   linkType: hard
 
@@ -10902,14 +10902,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-picker-react@npm:^4.7.18":
-  version: 4.7.18
-  resolution: "emoji-picker-react@npm:4.7.18"
+"emoji-picker-react@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "emoji-picker-react@npm:4.8.0"
   dependencies:
     flairup: 0.0.38
   peerDependencies:
     react: ">=16"
-  checksum: 6f1050db601deaa13bff5dcb93a1437526ec6bfee206ceb0ef93a7f32ed59d0556ab6b473c1314c59ff55c64910fe42ab31f4239ad29bb7929180edf6ab2765a
+  checksum: edf39a95091115c92d0c7b287de17778f79a314f2320a6b7d6888d4da5a91e532156cbb8b71a144d62df0f400c956fa03825b8e34483520682ad53ffddd8b940
   languageName: node
   linkType: hard
 
@@ -11582,15 +11582,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.56.0":
-  version: 8.56.0
-  resolution: "eslint@npm:8.56.0"
+"eslint@npm:^8.57.0":
+  version: 8.57.0
+  resolution: "eslint@npm:8.57.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@eslint-community/regexpp": ^4.6.1
     "@eslint/eslintrc": ^2.1.4
-    "@eslint/js": 8.56.0
-    "@humanwhocodes/config-array": ^0.11.13
+    "@eslint/js": 8.57.0
+    "@humanwhocodes/config-array": ^0.11.14
     "@humanwhocodes/module-importer": ^1.0.1
     "@nodelib/fs.walk": ^1.2.8
     "@ungap/structured-clone": ^1.2.0
@@ -11626,7 +11626,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 883436d1e809b4a25d9eb03d42f584b84c408dbac28b0019f6ea07b5177940bf3cca86208f749a6a1e0039b63e085ee47aca1236c30721e91f0deef5cc5a5136
+  checksum: 3a48d7ff85ab420a8447e9810d8087aea5b1df9ef68c9151732b478de698389ee656fd895635b5f2871c89ee5a2652b3f343d11e9db6f8486880374ebc74a2d9
   languageName: node
   linkType: hard
 
@@ -14487,7 +14487,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-ci@npm:3.0.1, is-ci@npm:^3.0.0":
+"is-ci@npm:3.0.1, is-ci@npm:^3.0.0, is-ci@npm:^3.0.1":
   version: 3.0.1
   resolution: "is-ci@npm:3.0.1"
   dependencies:
@@ -20482,27 +20482,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.22.1":
-  version: 6.22.1
-  resolution: "react-router-dom@npm:6.22.1"
+"react-router-dom@npm:^6.22.2":
+  version: 6.22.2
+  resolution: "react-router-dom@npm:6.22.2"
   dependencies:
-    "@remix-run/router": 1.15.1
-    react-router: 6.22.1
+    "@remix-run/router": 1.15.2
+    react-router: 6.22.2
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 01a074518663db1b64d9ee7fa22eb628544b74316057aab0c39ef58ad665f012df081e8523eb62c4e060272a67c8d90cccedb6a6dac4e8f71290f9be8aaab1f6
+  checksum: b4226d7f2640de5598bc0c02266301f43b55966481634b9225adeab0360ec1ff56f4cdebe20c7112470cb33c4f4e5b7ef81fc8a42c54126e52111b63c5bace74
   languageName: node
   linkType: hard
 
-"react-router@npm:6.22.1":
-  version: 6.22.1
-  resolution: "react-router@npm:6.22.1"
+"react-router@npm:6.22.2":
+  version: 6.22.2
+  resolution: "react-router@npm:6.22.2"
   dependencies:
-    "@remix-run/router": 1.15.1
+    "@remix-run/router": 1.15.2
   peerDependencies:
     react: ">=16.8"
-  checksum: b53fab4c507eca8af03581387e37d9a1616f5cda0639abd84ba223c502528324171c4fee0ad8b86a92ba00eb3de4bd77c25c107e1754eb62988c874a059f3060
+  checksum: adbf6afdd568fa746e1c16a90efcdeecb34d311bd7d8b14eec8df7bc0f972362cbe56ea5efa65de2ed62325389038ddf6e5c65b4c0e32d99fa58dc9132f9416e
   languageName: node
   linkType: hard
 
@@ -24077,13 +24077,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"universal-cookie@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "universal-cookie@npm:7.0.2"
+"universal-cookie@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "universal-cookie@npm:7.1.0"
   dependencies:
     "@types/cookie": ^0.6.0
     cookie: ^0.6.0
-  checksum: c2c20cc4918fae7c912e2e154e4bed33a8a150685fec737cfe62d89b95b19be1658c3224b9d523a9269a9c5571c5ad5eb702b9db04c0544ea1061925289d82d2
+  checksum: bd0509937514592042fcb1c53b8dc5a2d177f2fc4819f684ef3388bef456f64f2cf2161e1d806da7442e4c3c8cc8dc1a0b6f2ee4c76ce6ddbab859c7ef9d8488
   languageName: node
   linkType: hard
 
@@ -24859,9 +24859,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.90.2":
-  version: 5.90.2
-  resolution: "webpack@npm:5.90.2"
+"webpack@npm:^5.90.3":
+  version: 5.90.3
+  resolution: "webpack@npm:5.90.3"
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^1.0.5
@@ -24892,7 +24892,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 4af55f314c3610e0b17afd01960c4cf9d8d90c87a58ef7d7dc7a0a019f48e2bba4eff63b02d9da56fc61df5b04af0d66b3fa4ec82937a780d37a64db84c643fe
+  checksum: de0c824ac220f41cc1153ac33e081d46260b104c4f2fda26f011cdf7a73f74cc091f288cb1fc16f88a36e35bac44e0aa85fc9922fdf3109dfb361f46b20f3fcc
   languageName: node
   linkType: hard
 
@@ -25102,7 +25102,7 @@ __metadata:
     babel-loader: ^9.1.3
     copy-webpack-plugin: ^12.0.2
     css-loader: ^6.10.0
-    eslint: ^8.56.0
+    eslint: ^8.57.0
     eslint-config-airbnb-base: ^15.0.0
     eslint-config-prettier: ^9.1.0
     eslint-config-standard: ^17.1.0
@@ -25126,7 +25126,7 @@ __metadata:
     ts-loader: ^9.5.1
     ts-node: ^10.9.2
     typescript: ^5.3.3
-    webpack: ^5.90.2
+    webpack: ^5.90.3
     webpack-bundle-analyzer: ^4.10.1
     webpack-cli: ^5.1.4
     webpack-dev-server: ^5.0.2

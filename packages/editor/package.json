@@ -21,12 +21,12 @@
     "test:unit": "jest ./test/unit/* --detectOpenHandles"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "@wisemapping/mindplot": "workspace:*",
-    "emoji-picker-react": "^4.7.18",
+    "emoji-picker-react": "^4.8.0",
     "react-color": "^2.19.3",
     "react-intl": "^6.6.2",
     "react-loader-spinner": "^6.1.6",
@@ -37,7 +37,7 @@
     "@testing-library/react": "^14.2.1",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",
-    "cypress": "^13.6.4",
+    "cypress": "^13.6.6",
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "react": "^18.2.0",
