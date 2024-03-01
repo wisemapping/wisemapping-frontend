@@ -35,7 +35,7 @@ export interface ClientState {
 }
 
 const initialState: ClientState = {
-  instance: AppConfig.buildClient(),
+  instance: AppConfig.getClient(),
   status: { state: 'healthy' },
 };
 

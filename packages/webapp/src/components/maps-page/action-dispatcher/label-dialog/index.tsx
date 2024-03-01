@@ -76,7 +76,7 @@ const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement 
           id: 'label.description',
           defaultMessage: 'Use labels to organize your maps.',
         })}
-        paperCss={classes.paper}
+        papercss={classes.paper}
         error={error}
       >
         {maps && (

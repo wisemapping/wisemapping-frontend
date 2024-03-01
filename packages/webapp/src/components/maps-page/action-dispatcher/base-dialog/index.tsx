@@ -21,7 +21,7 @@ export type DialogProps = {
   submitButton?: string;
   actionUrl?: string;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
-  paperCss?: CSSObject;
+  papercss?: CSSObject;
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
@@ -32,7 +32,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
       dispatch(enableHotkeys());
     };
   }, []);
-  const { onClose, onSubmit, maxWidth = 'sm', paperCss } = props;
+  const { onClose, onSubmit, maxWidth = 'sm', papercss } = props;
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         open={true}
         onClose={onClose}
         maxWidth={maxWidth}
-        paperCss={{ '& .MuiPaper-root.MuiDialog-paper': paperCss }}
+        papercss={{ '& .MuiPaper-root.MuiDialog-paper': papercss }}
         fullWidth={true}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>

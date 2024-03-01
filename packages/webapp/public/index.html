@@ -31,17 +31,19 @@
 
   <!-- Google Ads Sense Config. Lazy loading optimization -->
   <script type="text/javascript">
-    function downloadJsAtOnload() {
-      setTimeout(function downloadJs() {
-        var element = document.createElement("script");
-        element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
-        element.async = true;
-        element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-        document.body.appendChild(element);
-      }, 50);
-    };
+    if (<%= GOOGLE_ADDS_ENABLED %>) {
+      function downloadJsAtOnload() {
+        setTimeout(function downloadJs() {
+          var element = document.createElement("script");
+          element.setAttribute("data-ad-client", "ca-pub-4996113942657337");
+          element.async = true;
+          element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+          document.body.appendChild(element);
+        }, 50);
+      };
 
-    window.addEventListener("load", downloadJsAtOnload, false);
+      window.addEventListener("load", downloadJsAtOnload, false);
+    }
   </script>
 
   <!--
@@ -72,4 +74,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 </body>
+
 </html>

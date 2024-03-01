@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-describe('Editor Page', () => {
+describe('Public Page', () => {
   beforeEach(() => {
-    cy.visit('/c/maps/1/edit');
+    cy.visit('/c/maps/1/public');
     cy.waitForEditorLoaded();
   });
 
   it('page loaded', () => {
-    cy.matchImageSnapshot('editor-page');
+    cy.matchImageSnapshot('public-page');
   });
 });

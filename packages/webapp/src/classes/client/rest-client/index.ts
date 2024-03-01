@@ -501,6 +501,16 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
+  fetchMapInfo(id: number): Promise<MapInfo> {
+    return this.fetchAllMaps().then((mapsInfo: MapInfo[]) => {
+      const result = mapsInfo.find((m) => m.id == id);
+      if (!result) {
+        throw Error(`Map with id ${id} could not be found. Please, reflesh the page.`);
+      }
+      return result;
+    });
+  }
+
   fetchAllMaps(): Promise<MapInfo[]> {
     const handler = (
       success: (mapsInfo: MapInfo[]) => void,

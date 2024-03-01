@@ -40,7 +40,7 @@ interface Config {
 class _AppConfig {
   private _config: Config;
 
-  private getConfig(): Config {
+  fetchOrGetConfig(): Config {
     if (!this._config) {
       let result: Config;
 
@@ -74,12 +74,12 @@ class _AppConfig {
   }
 
   isMockEnv(): boolean {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.clientType === 'mock';
   }
 
   getJwtExpirationMin(): number {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     if (!config.jwtExpirationMin) {
       throw new Error('jwtExpirationMin can not be null. Review wise-api configuration.');
     }
@@ -87,41 +87,39 @@ class _AppConfig {
   }
 
   isRestClient(): boolean {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.clientType === 'rest' || !config.clientType;
   }
 
   isRecaptcha2Enabled(): boolean {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.recaptcha2Enabled;
   }
 
   getRecaptcha2SiteKey(): string | undefined {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.recaptcha2SiteKey;
   }
 
   getGoogleAnalyticsAccount(): string | undefined {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.analyticsAccount;
   }
 
   isRegistrationEnabled(): boolean {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.registrationEnabled;
   }
 
   getGoogleOauth2Url(): string | undefined {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.googleOauth2Url;
   }
 
-  buildClient(): Client {
+  getClient(): Client {
     let result: Client;
     if (this.isRestClient()) {
-      const config = this.getConfig();
       result = new RestClient(this.getApiBaseUrl());
-      console.log('Service using rest client. ' + JSON.stringify(config));
     } else {
       console.log('Warning:Service using mockservice client');
       result = new MockClient();
@@ -131,7 +129,7 @@ class _AppConfig {
   }
 
   getApiBaseUrl(): string {
-    const config = this.getConfig();
+    const config = this.fetchOrGetConfig();
     return config.apiBaseUrl;
   }
 }

@@ -139,7 +139,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
           defaultMessage:
             'Invite people to collaborate with you in the creation of your mindmap. They will be notified by email. ',
         })}
-        paperCss={classes.paper}
+        papercss={classes.paper}
         error={error}
       >
         <div css={classes.actionContainer as Interpolation<Theme>}>

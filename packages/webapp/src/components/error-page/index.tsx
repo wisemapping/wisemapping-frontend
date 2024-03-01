@@ -4,13 +4,23 @@ import Header from '../layout/header';
 import Typography from '@mui/material/Typography';
 import ReactGA from 'react-ga4';
 import { ErrorBody } from './styled';
+import { useRouteError } from 'react-router-dom';
+import { ErrorInfo } from '../../classes/client';
 
 export type ErrorPageType = {
   isSecurity: boolean;
 };
 
-const ErrorPage = ({ isSecurity }: ErrorPageType): React.ReactElement => {
+const ErrorPage = (): React.ReactElement => {
   const intl = useIntl();
+  const error = useRouteError();
+
+  // Error page handler ...
+  window.newrelic?.noticeError(error);
+  console.error(`Mindmap loading error: ${JSON.stringify(error)}`);
+
+  // Is a server error info ?
+  const errorInfo = error as ErrorInfo;
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -26,29 +36,16 @@ const ErrorPage = ({ isSecurity }: ErrorPageType): React.ReactElement => {
 
       <ErrorBody>
         <Typography variant="h3" component="h3">
-          {isSecurity ? (
-            <FormattedMessage
-              id="error.security-error"
-              defaultMessage="Mindmap cannot be opened."
-            />
-          ) : (
-            <FormattedMessage
-              id="error.undexpected-error"
-              defaultMessage="An unexpected error has occurred."
-            />
-          )}
+          <FormattedMessage id="error.security-error" defaultMessage="Mindmap cannot be opened." />
         </Typography>
 
         <Typography variant="h5" component="h6">
-          {isSecurity ? (
-            <FormattedMessage
-              id="error.security-error-msg"
-              defaultMessage="You do not have enough right access to see this map. This map has been changed to private or deleted."
-            />
+          {errorInfo.msg ? (
+            errorInfo.msg
           ) : (
             <FormattedMessage
               id="error.undexpected-error-msg"
-              defaultMessage="Unexpected error processing request"
+              defaultMessage="Unexpected error opening mindmap. Please, try latter."
             />
           )}
         </Typography>

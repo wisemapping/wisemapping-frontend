@@ -18,8 +18,13 @@ switch (process.env.APP_CONFIG_TYPE) {
   case 'file:dev': {
     config = JSON.stringify(require('./config.dev.json'));
     break;
-  } case 'remote': {
+  }
+  case 'remote': {
     config = process.env.APP_CONFIG_JSON;
+    break;
+  }
+  default: {
+    config = JSON.stringify(require('./config.mock.json'));
     break;
   }
 }

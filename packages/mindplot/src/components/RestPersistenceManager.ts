@@ -17,7 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { $msg } from './Messages';
-import PersistenceManager, { PersistenceError } from './PersistenceManager';
+import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -45,6 +45,17 @@ class RESTPersistenceManager extends PersistenceManager {
     this.jwt = options.jwt;
   }
 
+  private _handleError(error: PersistenceError, events): void {
+    this.triggerError(error);
+    events.onError(error);
+
+    // Clear event timeout ...
+    if (this.clearTimeout) {
+      clearTimeout(this.clearTimeout);
+    }
+    this.onSave = false;
+  }
+
   saveMapXml(mapId: string, mapXml: Document, pref: string, saveHistory: boolean, events): void {
     const data = {
       id: mapId,
@@ -53,7 +64,6 @@ class RESTPersistenceManager extends PersistenceManager {
     };
 
     const query = `minor=${!saveHistory}`;
-
     if (!this.onSave) {
       // Mark save in process and fire a event unlocking the save ...
       this.onSave = true;
@@ -62,10 +72,7 @@ class RESTPersistenceManager extends PersistenceManager {
         this.onSave = false;
       }, 10000);
 
-      const persistence = this;
-
       const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
-
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
         // Blob helps to resuce the memory on large payload.
@@ -77,53 +84,30 @@ class RESTPersistenceManager extends PersistenceManager {
             events.onSuccess();
           } else {
             console.error(`Saving error: ${response.status}`);
-            let userMsg: PersistenceError | null = null;
-            if (response.status === 405) {
-              userMsg = {
-                severity: 'SEVERE',
-                message: $msg('SESSION_EXPIRED'),
-                errorType: 'session-expired',
-              };
-            } else {
-              const responseText = await response.text();
-              const contentType = response.headers['Content-Type'];
-              if (contentType != null && contentType.indexOf('application/json') !== -1) {
-                let serverMsg: null | { globalSeverity: string } = null;
-                try {
-                  serverMsg = JSON.parse(responseText);
-                  serverMsg = serverMsg && serverMsg.globalSeverity ? serverMsg : null;
-                } catch (e) {
-                  // Message could not be decoded ...
-                }
-                userMsg = persistence._buildError(serverMsg);
+
+            let error: PersistenceError;
+            switch (response.status) {
+              case 401:
+                error = {
+                  severity: 'FATAL',
+                  errorType: 'auth',
+                  message: $msg('SESSION_EXPIRED'),
+                };
+                break;
+              default: {
+                error = await this._buildError(response);
               }
             }
-            if (userMsg) {
-              this.triggerError(userMsg);
-              events.onError(userMsg);
-            }
+            this._handleError(error, events);
           }
-
-          // Clear event timeout ...
-          if (persistence.clearTimeout) {
-            clearTimeout(persistence.clearTimeout);
-          }
-          persistence.onSave = false;
         })
         .catch(() => {
-          const userMsg: PersistenceError = {
+          const error: PersistenceError = {
             severity: 'SEVERE',
+            errorType: 'unexpected',
             message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
-            errorType: 'generic',
           };
-          this.triggerError(userMsg);
-          events.onError(userMsg);
-
-          // Clear event timeout ...
-          if (persistence.clearTimeout) {
-            clearTimeout(persistence.clearTimeout);
-          }
-          persistence.onSave = false;
+          this._handleError(error, events);
         });
     }
   }
@@ -145,18 +129,28 @@ class RESTPersistenceManager extends PersistenceManager {
     });
   }
 
-  private _buildError(jsonSeverResponse) {
-    let message = jsonSeverResponse ? jsonSeverResponse.globalErrors[0] : null;
-    let severity = jsonSeverResponse ? jsonSeverResponse.globalSeverity : null;
+  private async _buildError(response: Response): Promise<PersistenceError> {
+    let result: PersistenceError;
+    const responseText = await response.text();
+    const contentType = response.headers['Content-Type'];
 
-    if (!message) {
-      message = $msg('SAVE_COULD_NOT_BE_COMPLETED');
+    // This is a wise client server error ...
+    if (contentType?.indexOf('application/json') !== -1) {
+      const serverError: ServerError = JSON.parse(responseText);
+      result = {
+        severity: serverError.globalSeverity,
+        errorType: 'expected',
+        message: serverError.globalErrors[0],
+      };
+    } else {
+      // Unexpected error from the server ...
+      result = {
+        severity: 'FATAL',
+        errorType: 'expected',
+        message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+      };
     }
-
-    if (!severity) {
-      severity = 'INFO';
-    }
-    return { severity, message };
+    return result;
   }
 
   loadMapDom(mapId: string): Promise<Document> {

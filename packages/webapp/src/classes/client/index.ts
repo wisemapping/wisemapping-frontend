@@ -130,6 +130,7 @@ interface Client {
   renameMap(id: number, basicInfo: BasicMapInfo): Promise<void>;
   fetchAllMaps(): Promise<MapInfo[]>;
   fetchMapMetadata(id: number): Promise<MapMetadata>;
+  fetchMapInfo(id: number): Promise<MapInfo>;
 
   fetchStarred(id: number): Promise<boolean>;
 

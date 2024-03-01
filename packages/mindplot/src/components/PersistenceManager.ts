@@ -21,16 +21,21 @@ import { Mindmap } from '..';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
 
 export type PersistenceError = {
-  severity: string;
+  errorType: 'auth' | 'expected' | 'unexpected';
+  severity: 'INFO' | 'WARNING' | 'SEVERE' | 'FATAL';
   message: string;
-  errorType?: 'session-expired' | 'bad-request' | 'generic';
+};
+
+export type ServerError = {
+  globalSeverity: 'INFO' | 'WARNING' | 'SEVERE' | 'FATAL';
+  globalErrors: string[];
 };
 
 export type PersistenceErrorCallback = (error: PersistenceError) => void;
 
 abstract class PersistenceManager {
   // eslint-disable-next-line no-use-before-define
-  static _instance: PersistenceManager;
+  private static _instance: PersistenceManager;
 
   private _errorHandlers: PersistenceErrorCallback[] = [];
 

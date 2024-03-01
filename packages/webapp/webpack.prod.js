@@ -16,6 +16,9 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
+      templateParameters: {
+        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED ? GOOGLE_ADDS_ENABLED : false,
+    },
       base: process.env.PUBLIC_URL,
     }),
   ],

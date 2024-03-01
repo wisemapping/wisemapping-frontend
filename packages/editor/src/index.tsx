@@ -39,12 +39,7 @@ import {
 import Editor from './components';
 import MapInfo from './classes/model/map-info';
 import { EditorOptions, useEditor } from './hooks/useEditor';
-
-declare global {
-  // used in mindplot
-  // eslint-disable-next-line no-var
-  var accountEmail: string;
-}
+import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -68,6 +63,7 @@ export {
   MockPersistenceManager,
   LocalStorageManager,
   RESTPersistenceManager,
+  PersistenceError,
   TextExporterFactory,
   ImageExporterFactory,
   Exporter,

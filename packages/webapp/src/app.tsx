@@ -17,7 +17,14 @@
  */
 import React, { ReactElement, Suspense, useEffect } from 'react';
 import { FormattedMessage, IntlProvider } from 'react-intl';
-import { Route, Routes, BrowserRouter as Router, useNavigate, useParams } from 'react-router-dom';
+import {
+  Route,
+  RouterProvider,
+  useNavigate,
+  useParams,
+  createRoutesFromElements,
+  createBrowserRouter,
+} from 'react-router-dom';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
@@ -35,9 +42,87 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
+import { loader } from './components/editor-page/loader';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
+
+const PageEditorWhapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
+  const id = useParams().id;
+  if (id === undefined) {
+    throw 'Map could not be loaded';
+  }
+  const mapId: number = Number.parseInt(id);
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+        </div>
+      }
+    >
+      <EditorPage pageMode={mode} mapId={mapId} />
+    </Suspense>
+  );
+};
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<Redirect to="/c/login" />} />
+      <Route path="/c/login" element={<LoginPage />} />
+      <Route path="/c/registration" element={<RegistationPage />} />
+      <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
+      <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
+      <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
+      <Route
+        path="/c/maps/"
+        element={
+          <Suspense
+            fallback={
+              <div>
+                <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+              </div>
+            }
+          >
+            <MapsPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/c/maps/:id/edit"
+        element={<PageEditorWhapper mode="edit" />}
+        loader={loader('edit')}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/c/maps/:id/print"
+        element={<PageEditorWhapper mode="view" />}
+        loader={loader('view')}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/c/maps/:id/public"
+        loader={loader('view')}
+        element={<PageEditorWhapper mode="view" />}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/c/maps/:id/embed"
+        loader={loader('view')}
+        element={<PageEditorWhapper mode="view" />}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/c/maps/:id/try"
+        loader={loader('try')}
+        element={<PageEditorWhapper mode="try" />}
+        errorElement={<ErrorPage />}
+      />
+    </Route>,
+  ),
+);
 
 // Google Analytics Initialization.
 const trackingId = AppConfig.getGoogleAnalyticsAccount();
@@ -66,28 +151,8 @@ function Redirect({ to }) {
   return null;
 }
 
-const PageEditorWhapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
-  const id = useParams().id;
-  if (id === undefined) {
-    throw 'Map could not be loaded';
-  }
-  const mapId: number = Number.parseInt(id);
-  return (
-    <Suspense
-      fallback={
-        <div>
-          <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-        </div>
-      }
-    >
-      <EditorPage pageMode={mode} mapId={mapId} />
-    </Suspense>
-  );
-};
-
 const App = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
-  const overwriteView = window.errorMvcView;
 
   // This is a hack to move error handling on Spring MVC.
   return locale.message ? (
@@ -102,51 +167,7 @@ const App = (): ReactElement => {
             <MuiThemeProvider theme={theme}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
-                {!overwriteView ? (
-                  <Router>
-                    <Routes>
-                      <Route path="/" element={<Redirect to="/c/login" />} />
-                      <Route path="/c/login" element={<LoginPage />} />
-                      <Route path="/c/registration" element={<RegistationPage />} />
-                      <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
-                      <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
-                      <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
-                      <Route
-                        path="/c/forgot-password-success"
-                        element={<ForgotPasswordSuccessPage />}
-                      />
-                      <Route
-                        path="/c/maps/"
-                        element={
-                          <Suspense
-                            fallback={
-                              <div>
-                                <FormattedMessage
-                                  id="dialog.loading"
-                                  defaultMessage="Loading ..."
-                                />
-                              </div>
-                            }
-                          >
-                            <MapsPage />
-                          </Suspense>
-                        }
-                      />
-                      <Route path="/c/maps/:id/edit" element={<PageEditorWhapper mode="edit" />} />
-                      <Route path="/c/maps/:id/print" element={<PageEditorWhapper mode="view" />} />
-                      <Route
-                        path="/c/maps/:id/public"
-                        element={<PageEditorWhapper mode="view" />}
-                      />
-                      <Route path="/c/maps/:id/embed" element={<PageEditorWhapper mode="view" />} />
-                      <Route path="/c/maps/:id/try" element={<PageEditorWhapper mode="try" />} />
-                    </Routes>
-                  </Router>
-                ) : (
-                  <Router>
-                    <ErrorPage isSecurity={overwriteView === 'securityError'} />
-                  </Router>
-                )}
+                <RouterProvider router={router} />
               </ThemeProvider>
             </MuiThemeProvider>
           </StyledEngineProvider>

@@ -130,6 +130,12 @@ class MockClient implements Client {
 
     this.labels = [label1, label2, label3];
   }
+  fetchMapInfo(id: number): Promise<MapInfo> {
+    if (id > 2) {
+      throw new Error(`Map could not be found ${id}`);
+    }
+    return Promise.resolve(this.maps[id]);
+  }
 
   fetchMapMetadata(id: number): Promise<MapMetadata> {
     return Promise.resolve({
