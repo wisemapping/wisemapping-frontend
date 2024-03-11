@@ -1,12 +1,11 @@
 import FormControl from '@mui/material/FormControl';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
-import Client, { ErrorInfo } from '../../../../classes/client';
+import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../../action-dispatcher/base-dialog';
-import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 type ChangePasswordDialogProps = {
   onClose: () => void;
@@ -19,7 +18,7 @@ type ChangePasswordModel = {
 
 const defaultModel: ChangePasswordModel = { password: '', retryPassword: '' };
 const ChangePasswordDialog = ({ onClose }: ChangePasswordDialogProps): React.ReactElement => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [model, setModel] = React.useState<ChangePasswordModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const intl = useIntl();

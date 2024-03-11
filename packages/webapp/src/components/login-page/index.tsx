@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Header from '../layout/header';
@@ -15,9 +15,8 @@ import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ErrorInfo, LoginErrorInfo } from '../../classes/client';
-import { activeInstance } from '../../redux/clientSlice';
+import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
+import { ClientContext } from '../../classes/provider/client-context';
 
 export type Model = {
   email: string;
@@ -64,7 +63,7 @@ const LoginPage = (): React.ReactElement => {
   const [model, setModel] = useState<Model>(defaultModel);
   const [loginError, setLoginError] = useState<number | undefined>(undefined);
 
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const navigate = useNavigate();
 
   useEffect(() => {

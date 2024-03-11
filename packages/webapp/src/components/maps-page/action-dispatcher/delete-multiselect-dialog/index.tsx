@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
 import { handleOnMutationSuccess, MultiDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 const DeleteMultiselectDialog = ({ onClose, mapsId }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const queryClient = useQueryClient();
 
   const mutation = useMutation((ids: number[]) => client.deleteMaps(ids), {

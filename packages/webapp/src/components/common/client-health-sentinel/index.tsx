@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
 import React from 'react';
-import { activeInstanceStatus, ClientStatus } from '../../../redux/clientSlice';
 import { FormattedMessage } from 'react-intl';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,7 +9,7 @@ import Button from '@mui/material/Button';
 import AlertTitle from '@mui/material/AlertTitle';
 
 const ClientHealthSentinel = (): React.ReactElement => {
-  const status: ClientStatus = useSelector(activeInstanceStatus);
+  // const status: ClientStatus = useSelector(activeInstanceStatus);
 
   const handleOnClose = () => {
     window.location.href = '/c/login';
@@ -19,12 +17,7 @@ const ClientHealthSentinel = (): React.ReactElement => {
 
   return (
     <div>
-      <Dialog
-        open={status.state != 'healthy'}
-        onClose={handleOnClose}
-        maxWidth="sm"
-        fullWidth={true}
-      >
+      <Dialog open={false} onClose={handleOnClose} maxWidth="sm" fullWidth={true}>
         <DialogTitle>
           <FormattedMessage id="expired.title" defaultMessage="Your session has expired" />
         </DialogTitle>

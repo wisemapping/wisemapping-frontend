@@ -1,9 +1,6 @@
 import TranslateTwoTone from '@mui/icons-material/TranslateTwoTone';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import Client from '../../../classes/client';
-import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../redux/clientSlice';
 import { FormattedMessage, useIntl } from 'react-intl';
 import AppI18n, { LocaleCode, Locales } from '../../../classes/app-i18n';
 import Tooltip from '@mui/material/Tooltip';
@@ -18,10 +15,11 @@ import DialogActions from '@mui/material/DialogActions';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import { mobileAppbarButton } from '../style';
+import { ClientContext } from '../../../classes/provider/client-context';
 
 const LanguageMenu = (): React.ReactElement => {
   const queryClient = useQueryClient();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openHelpDialog, setHelpDialogOpen] = React.useState<boolean>(false);
 

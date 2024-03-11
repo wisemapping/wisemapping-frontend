@@ -1,17 +1,34 @@
-import React, { useEffect } from 'react';
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+import React, { useContext, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
-import Client, { ErrorInfo } from '../../../../classes/client';
+import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../../action-dispatcher/base-dialog';
-import { useSelector } from 'react-redux';
-import { activeInstance, useFetchAccount } from '../../../../redux/clientSlice';
-
 import Alert from '@mui/material/Alert';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
+import { useFetchAccount } from '../../../../classes/middleware';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 type AccountInfoDialogProps = {
   onClose: () => void;
@@ -25,7 +42,7 @@ type AccountInfoModel = {
 
 const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' };
 const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const queryClient = useQueryClient();
   const [remove, setRemove] = React.useState<boolean>(false);
 

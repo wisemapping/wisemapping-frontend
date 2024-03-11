@@ -18,7 +18,7 @@
 
 import { json } from 'react-router-dom';
 export type PageModeType = 'view' | 'edit' | 'try';
-import Client, { MapMetadata } from '../../classes/client';
+import { MapMetadata } from '../../classes/client';
 import { EditorRenderMode } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
 
@@ -31,7 +31,7 @@ export type EditorMetadata = {
 export const loader = (pageMode: PageModeType) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return async ({ params }): Promise<Response> => {
-    const client: Client = AppConfig.getClient();
+    const client = AppConfig.getClient();
     let result: Promise<EditorMetadata>;
     const mapId = Number.parseInt(params.id);
 

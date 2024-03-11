@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
 import GlobalError from '../../../form/global-error';
 import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
-import { disableHotkeys, enableHotkeys } from '../../../../redux/editorSlice';
 import { CSSObject } from '@emotion/react';
+import { KeyboardContext } from '../../../../classes/provider/keyboard-context';
 
 export type DialogProps = {
   onClose: () => void;
@@ -25,11 +24,11 @@ export type DialogProps = {
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-  const dispatch = useDispatch();
+  const ketboardConfig = useContext(KeyboardContext);
   useEffect(() => {
-    dispatch(disableHotkeys());
+    ketboardConfig.hotkeysEnabled = false;
     return () => {
-      dispatch(enableHotkeys());
+      ketboardConfig.hotkeysEnabled = true;
     };
   }, []);
   const { onClose, onSubmit, maxWidth = 'sm', papercss } = props;

@@ -5,25 +5,23 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import SettingsApplicationsOutlined from '@mui/icons-material/SettingsApplicationsOutlined';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useFetchAccount } from '../../../redux/clientSlice';
 import AccountInfoDialog from './account-info-dialog';
 import ChangePasswordDialog from './change-password-dialog';
 import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import Link from '@mui/material/Link';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
-import { activeInstance } from '../../../redux/clientSlice';
-import { useSelector } from 'react-redux';
-import Client from '../../../classes/client';
 import { useNavigate } from 'react-router-dom';
+import { useFetchAccount } from '../../../classes/middleware';
+import { ClientContext } from '../../../classes/provider/client-context';
 
 type ActionType = 'change-password' | 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [action, setAction] = React.useState<ActionType>(undefined);
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const navigate = useNavigate();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {

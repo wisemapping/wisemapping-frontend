@@ -16,41 +16,10 @@
  *   limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { createSlice } from '@reduxjs/toolkit';
 import { useQuery } from 'react-query';
-import Client, { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../classes/client';
-import { useSelector } from 'react-redux';
-import AppConfig from '../classes/app-config';
-import { RootState } from './rootReducer';
-
-export interface ClientStatus {
-  state: 'healthy' | 'session-expired';
-  msg?: string;
-}
-
-export interface ClientState {
-  instance: Client;
-  status: ClientStatus;
-}
-
-const initialState: ClientState = {
-  instance: AppConfig.getClient(),
-  status: { state: 'healthy' },
-};
-
-export const clientSlice = createSlice({
-  name: 'client',
-  initialState: initialState,
-  reducers: {
-    sessionExpired(state) {
-      state.status = {
-        state: 'session-expired',
-        msg: 'Sessions has expired. You need to login again',
-      };
-    },
-  },
-});
+import { AccountInfo, ErrorInfo, MapInfo, MapMetadata } from '../client';
+import { ClientContext } from '../provider/client-context';
+import { useContext } from 'react';
 
 type MapLoadResult = {
   isLoading: boolean;
@@ -59,7 +28,7 @@ type MapLoadResult = {
 };
 
 export const useFetchMapById = (id: number): MapLoadResult => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapInfo[]>(`maps-${id}`, () => {
     return client.fetchAllMaps();
   });
@@ -92,7 +61,7 @@ type MapMetadataLoadResult = {
 };
 
 export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const { isLoading, error, data } = useQuery<unknown, ErrorInfo, MapMetadata>(
     `maps-metadata-${id}`,
     () => {
@@ -103,20 +72,9 @@ export const useFetchMapMetadata = (id: number): MapMetadataLoadResult => {
 };
 
 export const useFetchAccount = (): AccountInfo | undefined => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const { data } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
     return client.fetchAccountInfo();
   });
   return data;
 };
-
-export const activeInstance = (state: RootState): Client => {
-  return state.client.instance;
-};
-
-export const activeInstanceStatus = (state: RootState): ClientStatus => {
-  return state.client.status;
-};
-
-export const { sessionExpired } = clientSlice.actions;
-export default clientSlice.reducer;

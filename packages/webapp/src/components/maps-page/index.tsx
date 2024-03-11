@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ErrorInfo, ReactElement, useEffect } from 'react';
+import React, { ErrorInfo, ReactElement, useContext, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -25,9 +25,7 @@ import { useStyles } from './style';
 import { MapsList } from './maps-list';
 import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { activeInstance } from '../../redux/clientSlice';
-import { useSelector } from 'react-redux';
-import Client, { Label } from '../../classes/client';
+import { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
 import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
@@ -63,6 +61,7 @@ import ReactGA from 'react-ga4';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { useNavigate } from 'react-router-dom';
+import { ClientContext } from '../../classes/provider/client-context';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -83,7 +82,7 @@ interface ToolbarButtonInfo {
 
 const MapsPage = (): ReactElement => {
   const [filter, setFilter] = React.useState<Filter>({ type: 'all' });
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const queryClient = useQueryClient();
   const [activeDialog, setActiveDialog] = React.useState<ActionType | undefined>(undefined);
   const [labelToDelete, setLabelToDelete] = React.useState<number | null>(null);
@@ -350,7 +349,7 @@ const MapsPage = (): ReactElement => {
           <MapsList filter={filter} />
         </main>
       </div>
-      {label && labelToDelete!=null && (
+      {label && labelToDelete != null && (
         <LabelDeleteConfirm
           onClose={() => setLabelToDelete(null)}
           onConfirm={() => {

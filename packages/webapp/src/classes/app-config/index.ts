@@ -37,48 +37,52 @@ interface Config {
   jwtExpirationMin: number;
 }
 
-class _AppConfig {
-  private _config: Config;
+class AppConfig {
+  private static _config: Config;
 
-  fetchOrGetConfig(): Config {
-    if (!this._config) {
-      let result: Config;
+  static fetchOrGetConfig(): Config {
+    try {
+      if (!this._config) {
+        let result: Config;
 
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const extConfig: ConfigContainer = require('BoostrapConfig') as ConfigContainer;
-      if (extConfig.type === 'static') {
-        // Configuration has been defined as part of webpack ...
-        result = extConfig.config;
-      } else {
-        // Configuration must be fetch externally ...
-        console.log(`Fetching remote config from '${extConfig.url}'`);
-        if (!extConfig.url) {
-          throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
-        }
-
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', extConfig.url, false);
-        xhr.send(null);
-        if (xhr.status === 200) {
-          result = JSON.parse(xhr.responseText);
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const extConfig: ConfigContainer = require('BoostrapConfig') as ConfigContainer;
+        if (extConfig.type === 'static') {
+          // Configuration has been defined as part of webpack ...
+          result = extConfig.config;
         } else {
-          throw new Error('Request failed: ' + xhr.statusText);
-        }
-      }
+          // Configuration must be fetch externally ...
+          console.log(`Fetching remote config from '${extConfig.url}'`);
+          if (!extConfig.url) {
+            throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
+          }
 
-      this._config = result;
-      console.log(`App Config: ${JSON.stringify(this._config)}}`);
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', extConfig.url, false);
+          xhr.send(null);
+          if (xhr.status === 200) {
+            result = JSON.parse(xhr.responseText);
+          } else {
+            throw new Error('Request failed: ' + xhr.statusText);
+          }
+        }
+
+        this._config = result;
+        console.log(`App Config: ${JSON.stringify(this._config)}}`);
+      }
+    } catch (e) {
+      console.error(e);
     }
 
     return this._config;
   }
 
-  isMockEnv(): boolean {
+  static isMockEnv(): boolean {
     const config = this.fetchOrGetConfig();
     return config.clientType === 'mock';
   }
 
-  getJwtExpirationMin(): number {
+  static getJwtExpirationMin(): number {
     const config = this.fetchOrGetConfig();
     if (!config.jwtExpirationMin) {
       throw new Error('jwtExpirationMin can not be null. Review wise-api configuration.');
@@ -86,37 +90,37 @@ class _AppConfig {
     return config.jwtExpirationMin;
   }
 
-  isRestClient(): boolean {
+  static isRestClient(): boolean {
     const config = this.fetchOrGetConfig();
     return config.clientType === 'rest' || !config.clientType;
   }
 
-  isRecaptcha2Enabled(): boolean {
+  static isRecaptcha2Enabled(): boolean {
     const config = this.fetchOrGetConfig();
     return config.recaptcha2Enabled;
   }
 
-  getRecaptcha2SiteKey(): string | undefined {
+  static getRecaptcha2SiteKey(): string | undefined {
     const config = this.fetchOrGetConfig();
     return config.recaptcha2SiteKey;
   }
 
-  getGoogleAnalyticsAccount(): string | undefined {
+  static getGoogleAnalyticsAccount(): string | undefined {
     const config = this.fetchOrGetConfig();
     return config.analyticsAccount;
   }
 
-  isRegistrationEnabled(): boolean {
+  static isRegistrationEnabled(): boolean {
     const config = this.fetchOrGetConfig();
     return config.registrationEnabled;
   }
 
-  getGoogleOauth2Url(): string | undefined {
+  static getGoogleOauth2Url(): string | undefined {
     const config = this.fetchOrGetConfig();
     return config.googleOauth2Url;
   }
 
-  getClient(): Client {
+  static getClient(): Client {
     let result: Client;
     if (this.isRestClient()) {
       result = new RestClient(this.getApiBaseUrl());
@@ -128,10 +132,10 @@ class _AppConfig {
     return result;
   }
 
-  getApiBaseUrl(): string {
+  static getApiBaseUrl(): string {
     const config = this.fetchOrGetConfig();
     return config.apiBaseUrl;
   }
 }
-const AppConfig = new _AppConfig();
+
 export default AppConfig;

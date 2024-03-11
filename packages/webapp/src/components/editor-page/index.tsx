@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Editor, { useEditor, EditorOptions } from '@wisemapping/editor';
 import {
   EditorRenderMode,
@@ -27,20 +27,18 @@ import {
 } from '@wisemapping/editor';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
-import { useDispatch, useSelector } from 'react-redux';
-import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga4';
-import { useFetchAccount, activeInstance, sessionExpired } from '../../redux/clientSlice';
 import { useTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
-import Client from '../../classes/client';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import ClientHealthSentinel from '../common/client-health-sentinel';
 import JwtTokenConfig from '../../classes/jwt-token-config';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import { EditorMetadata, PageModeType } from './loader';
+import { useFetchAccount } from '../../classes/middleware';
+import { ClientContext } from '../../classes/provider/client-context';
 
 const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceManager => {
   let persistenceManager: PersistenceManager;
@@ -106,11 +104,9 @@ const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
 const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
-  const hotkey = useSelector(hotkeysEnabled);
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
-  const client: Client = useSelector(activeInstance);
-  const dispatch = useDispatch();
+  const client = useContext(ClientContext);
   const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
   const navigation = useNavigation();
 
@@ -122,7 +118,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   useEffect(() => {
     if (client) {
       client.onSessionExpired(() => {
-        dispatch(sessionExpired());
+        // dispatch(sessionExpired());
       });
     } else {
       console.warn('Session expiration wont be handled because could not find client');
@@ -146,7 +142,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   if (loadCompleted) {
     // Configure
     editorConfig = {
-      enableKeyboardEvents: hotkey,
+      enableKeyboardEvents: false,
       locale: userLocale.code,
       mode: editorMetadata.editorMode,
       enableAppBar: enableAppBar,

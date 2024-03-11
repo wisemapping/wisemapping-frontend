@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
+import { ErrorInfo } from '../../../../classes/client';
 import BaseDialog from '../base-dialog';
 import { handleOnMutationSuccess, SimpleDialogProps } from '..';
 import { useStyles } from './style';
@@ -19,11 +17,13 @@ import Typography from '@mui/material/Typography';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import AppConfig from '../../../../classes/app-config';
 import Box from '@mui/material/Box';
+import { useFetchMapById } from '../../../../classes/middleware';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const { data: map } = useFetchMapById(mapId);
 
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
   const [error, setError] = React.useState<ErrorInfo>();
   const [activeTab, setActiveTab] = React.useState('1');

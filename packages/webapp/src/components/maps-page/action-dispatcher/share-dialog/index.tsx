@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ErrorInfo, Permission } from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { ErrorInfo, Permission } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import List from '@mui/material/List';
@@ -25,6 +23,7 @@ import { useStyles } from './style';
 import RoleIcon from '../../role-icon';
 import Tooltip from '@mui/material/Tooltip';
 import { Interpolation, Theme } from '@emotion/react';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 type ShareModel = {
   emails: string;
@@ -35,7 +34,7 @@ type ShareModel = {
 const defaultModel: ShareModel = { emails: '', role: 'editor', message: '' };
 const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const queryClient = useQueryClient();
   const classes = useStyles();
   const [showMessage, setShowMessage] = React.useState<boolean>(false);

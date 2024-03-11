@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate } from 'react-router-dom';
-import Client, { ErrorInfo } from '../../classes/client';
+import { ErrorInfo } from '../../classes/client';
 
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 
-import { useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
-import { activeInstance } from '../../redux/clientSlice';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
@@ -22,6 +20,7 @@ import GoogleButton from '../common/google-button';
 import { Grid, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { recaptchaContainerStyle } from './style';
+import { ClientContext } from '../../classes/provider/client-context';
 
 export type Model = {
   email: string;
@@ -41,7 +40,7 @@ const RegistrationForm = () => {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const mutation = useMutation<void, ErrorInfo, Model>(
     (model: Model) => client.registerNewUser({ ...model }),
     {

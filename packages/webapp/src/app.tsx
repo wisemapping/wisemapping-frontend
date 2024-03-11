@@ -28,9 +28,7 @@ import {
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
-import store from './redux/store';
 import { ForgotPasswordPage } from './components/forgot-password-page';
-import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { theme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
@@ -43,6 +41,8 @@ import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
 import { loader } from './components/editor-page/loader';
+import { ClientContext } from './classes/provider/client-context';
+import { KeyboardContext } from './classes/provider/keyboard-context';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
@@ -153,10 +153,8 @@ function Redirect({ to }) {
 
 const App = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
-
-  // This is a hack to move error handling on Spring MVC.
   return locale.message ? (
-    <Provider store={store}>
+    <ClientContext.Provider value={AppConfig.getClient()}>
       <QueryClientProvider client={queryClient}>
         <IntlProvider
           locale={locale.code}
@@ -167,13 +165,15 @@ const App = (): ReactElement => {
             <MuiThemeProvider theme={theme}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <RouterProvider router={router} />
+                <KeyboardContext.Provider value={{ hotkeysEnabled: true }}>
+                  <RouterProvider router={router} />
+                </KeyboardContext.Provider>
               </ThemeProvider>
             </MuiThemeProvider>
           </StyledEngineProvider>
         </IntlProvider>
       </QueryClientProvider>
-    </Provider>
+    </ClientContext.Provider>
   ) : (
     <div>
       <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />

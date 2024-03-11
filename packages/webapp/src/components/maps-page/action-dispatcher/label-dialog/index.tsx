@@ -15,8 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Typography from '@mui/material/Typography';
@@ -24,16 +23,16 @@ import Typography from '@mui/material/Typography';
 import { useStyles } from './style';
 import { MultiDialogProps } from '..';
 import BaseDialog from '../base-dialog';
-import Client, { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
+import { ErrorInfo, Label, MapInfo } from '../../../../classes/client';
 import { LabelSelector } from '../../maps-list/label-selector';
-import { activeInstance } from '../../../../redux/clientSlice';
 import { ChangeLabelMutationFunctionParam, getChangeLabelMutationFunction } from '../../maps-list';
 import { Interpolation, Theme } from '@emotion/react';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 const LabelDialog = ({ mapsId, onClose }: MultiDialogProps): React.ReactElement => {
   const intl = useIntl();
   const classes = useStyles();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const queryClient = useQueryClient();
 
   const { data } = useQuery<unknown, ErrorInfo, MapInfo[]>('maps', () => {

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
 import FormControl from '@mui/material/FormControl';
-import { useSelector } from 'react-redux';
 
-import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
-import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
+import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
+import { useFetchMapById } from '../../../../classes/middleware';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type DuplicateModel = {
   id: number;
@@ -18,7 +18,7 @@ export type DuplicateModel = {
 
 const defaultModel: DuplicateModel = { title: '', description: '', id: -1 };
 const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const service: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [model, setModel] = React.useState<DuplicateModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
 
@@ -27,7 +27,7 @@ const DuplicateDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElem
   const mutation = useMutation<number, ErrorInfo, DuplicateModel>(
     (model: DuplicateModel) => {
       const { id, ...rest } = model;
-      return service.duplicateMap(id, rest);
+      return client.duplicateMap(id, rest);
     },
     {
       onSuccess: (mapId) => {

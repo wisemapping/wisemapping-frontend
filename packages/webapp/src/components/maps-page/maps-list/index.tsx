@@ -1,8 +1,6 @@
-import React, { useEffect, CSSProperties } from 'react';
+import React, { useEffect, CSSProperties, useContext } from 'react';
 
 import { useStyles } from './styled';
-import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../redux/clientSlice';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Client, { ErrorInfo, Label, MapInfo } from '../../../classes/client';
 import ActionChooser, { ActionType } from '../action-chooser';
@@ -46,6 +44,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
+import { ClientContext } from '../../../classes/provider/client-context';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);
@@ -262,7 +261,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const intl = useIntl();
   const queryClient = useQueryClient();
 
