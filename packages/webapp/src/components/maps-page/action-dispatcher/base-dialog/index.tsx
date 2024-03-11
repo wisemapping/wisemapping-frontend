@@ -24,11 +24,11 @@ export type DialogProps = {
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-  const ketboardConfig = useContext(KeyboardContext);
+  const { setHotkeyEnabled } = useContext(KeyboardContext);
   useEffect(() => {
-    ketboardConfig.hotkeysEnabled = false;
+    setHotkeyEnabled(false);
     return () => {
-      ketboardConfig.hotkeysEnabled = true;
+      setHotkeyEnabled(true);
     };
   }, []);
   const { onClose, onSubmit, maxWidth = 'sm', papercss } = props;

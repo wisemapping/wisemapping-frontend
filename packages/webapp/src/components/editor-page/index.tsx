@@ -39,6 +39,7 @@ import { useLoaderData, useNavigation } from 'react-router-dom';
 import { EditorMetadata, PageModeType } from './loader';
 import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
+import { KeyboardContext } from '../../classes/provider/keyboard-context';
 
 const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceManager => {
   let persistenceManager: PersistenceManager;
@@ -107,6 +108,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
   const client = useContext(ClientContext);
+  const { hotkeyEnabled } = useContext(KeyboardContext);
   const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
   const navigation = useNavigation();
 
@@ -142,7 +144,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   if (loadCompleted) {
     // Configure
     editorConfig = {
-      enableKeyboardEvents: false,
+      enableKeyboardEvents: hotkeyEnabled,
       locale: userLocale.code,
       mode: editorMetadata.editorMode,
       enableAppBar: enableAppBar,

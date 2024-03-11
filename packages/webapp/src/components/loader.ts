@@ -15,19 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { createContext } from 'react';
 
-export type KetboardConfig = {
-  hotkeysEnabled: boolean;
+export type PageModeType = 'view' | 'edit' | 'try';
+import { json } from 'react-router-dom';
+
+export const loader = (): Promise<Response> => {
+  console.log('parent loader ..');
+  return Promise.resolve(json({}));
 };
-
-type KeyboardContextType = {
-  hotkeyEnabled: boolean;
-  setHotkeyEnabled: (value: boolean) => void;
-};
-
-// Hack to prevent error in the initialization. Needs more reseach ...
-export const KeyboardContext = createContext<KeyboardContextType>({
-  hotkeyEnabled: true,
-  setHotkeyEnabled: () => {},
-});

@@ -17,7 +17,6 @@
  */
 
 import { json } from 'react-router-dom';
-export type PageModeType = 'view' | 'edit' | 'try';
 import { MapMetadata } from '../../classes/client';
 import { EditorRenderMode } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
@@ -27,6 +26,8 @@ export type EditorMetadata = {
   mapMetadata: MapMetadata;
   zoom: number;
 };
+
+export type PageModeType = 'view' | 'edit' | 'try';
 
 export const loader = (pageMode: PageModeType) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

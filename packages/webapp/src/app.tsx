@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, Suspense, useEffect } from 'react';
+import React, { ReactElement, Suspense, useEffect, useState } from 'react';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import {
   Route,
@@ -40,9 +40,10 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
-import { loader } from './components/editor-page/loader';
+import { loader as mapLoader } from './components/editor-page/loader';
 import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext } from './classes/provider/keyboard-context';
+import { loader } from './components/loader';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
@@ -68,7 +69,7 @@ const PageEditorWhapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
+    <Route loader={loader} errorElement={<ErrorPage />}>
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
       <Route path="/c/registration" element={<RegistationPage />} />
@@ -93,30 +94,30 @@ const router = createBrowserRouter(
       <Route
         path="/c/maps/:id/edit"
         element={<PageEditorWhapper mode="edit" />}
-        loader={loader('edit')}
+        loader={mapLoader('edit')}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/print"
         element={<PageEditorWhapper mode="view" />}
-        loader={loader('view')}
+        loader={mapLoader('view')}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/public"
-        loader={loader('view')}
+        loader={mapLoader('view')}
         element={<PageEditorWhapper mode="view" />}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/embed"
-        loader={loader('view')}
+        loader={mapLoader('view')}
         element={<PageEditorWhapper mode="view" />}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/try"
-        loader={loader('try')}
+        loader={mapLoader('try')}
         element={<PageEditorWhapper mode="try" />}
         errorElement={<ErrorPage />}
       />
@@ -153,7 +154,9 @@ function Redirect({ to }) {
 
 const App = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
-  return locale.message ? (
+  const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
+
+  return (
     <ClientContext.Provider value={AppConfig.getClient()}>
       <QueryClientProvider client={queryClient}>
         <IntlProvider
@@ -165,7 +168,7 @@ const App = (): ReactElement => {
             <MuiThemeProvider theme={theme}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <KeyboardContext.Provider value={{ hotkeysEnabled: true }}>
+                <KeyboardContext.Provider value={{ hotkeyEnabled, setHotkeyEnabled }}>
                   <RouterProvider router={router} />
                 </KeyboardContext.Provider>
               </ThemeProvider>
@@ -174,10 +177,6 @@ const App = (): ReactElement => {
         </IntlProvider>
       </QueryClientProvider>
     </ClientContext.Provider>
-  ) : (
-    <div>
-      <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-    </div>
   );
 };
 
