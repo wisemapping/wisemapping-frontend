@@ -44,11 +44,12 @@ import { loader as mapLoader } from './components/editor-page/loader';
 import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext } from './classes/provider/keyboard-context';
 import { loader } from './components/loader';
+import CommonPage from './components/common-page';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
 
-const PageEditorWhapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
+const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
   const id = useParams().id;
   if (id === undefined) {
     throw 'Map could not be loaded';
@@ -69,7 +70,7 @@ const PageEditorWhapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route loader={loader} errorElement={<ErrorPage />}>
+    <Route loader={loader} errorElement={<ErrorPage />} element={<CommonPage />}>
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
       <Route path="/c/registration" element={<RegistationPage />} />
@@ -93,32 +94,32 @@ const router = createBrowserRouter(
       />
       <Route
         path="/c/maps/:id/edit"
-        element={<PageEditorWhapper mode="edit" />}
+        element={<PageEditorWrapper mode="edit" />}
         loader={mapLoader('edit')}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/print"
-        element={<PageEditorWhapper mode="view" />}
+        element={<PageEditorWrapper mode="view" />}
         loader={mapLoader('view')}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/public"
         loader={mapLoader('view')}
-        element={<PageEditorWhapper mode="view" />}
+        element={<PageEditorWrapper mode="view" />}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/embed"
         loader={mapLoader('view')}
-        element={<PageEditorWhapper mode="view" />}
+        element={<PageEditorWrapper mode="view" />}
         errorElement={<ErrorPage />}
       />
       <Route
         path="/c/maps/:id/try"
         loader={mapLoader('try')}
-        element={<PageEditorWhapper mode="try" />}
+        element={<PageEditorWrapper mode="try" />}
         errorElement={<ErrorPage />}
       />
     </Route>,

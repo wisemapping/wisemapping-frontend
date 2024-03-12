@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Editor, { useEditor, EditorOptions } from '@wisemapping/editor';
 import {
   EditorRenderMode,
@@ -33,7 +33,6 @@ import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
-import ClientHealthSentinel from '../common/client-health-sentinel';
 import JwtTokenConfig from '../../classes/jwt-token-config';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import { EditorMetadata, PageModeType } from './loader';
@@ -104,7 +103,7 @@ const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
 const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement => {
-  const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
+  const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
   const client = useContext(ClientContext);
@@ -112,20 +111,9 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
   const navigation = useNavigation();
 
-  console.log(`state: ${navigation.state}`);
   if (navigation.state === 'loading') {
     return <h1>Loading!</h1>;
   }
-
-  useEffect(() => {
-    if (client) {
-      client.onSessionExpired(() => {
-        // dispatch(sessionExpired());
-      });
-    } else {
-      console.warn('Session expiration wont be handled because could not find client');
-    }
-  }, []);
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
@@ -181,7 +169,6 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
       defaultLocale={Locales.EN.code}
       messages={userLocale.message as Record<string, string>}
     >
-      <ClientHealthSentinel />
       <Editor
         editor={editor}
         onAction={setActiveDialog}
