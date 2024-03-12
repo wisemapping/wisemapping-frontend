@@ -43,7 +43,6 @@ import ErrorPage from './components/error-page';
 import { loader as mapLoader } from './components/editor-page/loader';
 import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext } from './classes/provider/keyboard-context';
-import { loader } from './components/loader';
 import CommonPage from './components/common-page';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
@@ -70,7 +69,7 @@ const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route loader={loader} errorElement={<ErrorPage />} element={<CommonPage />}>
+    <Route>
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
       <Route path="/c/registration" element={<RegistationPage />} />
@@ -78,50 +77,53 @@ const router = createBrowserRouter(
       <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
       <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
-      <Route
-        path="/c/maps/"
-        element={
-          <Suspense
-            fallback={
-              <div>
-                <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
-              </div>
-            }
-          >
-            <MapsPage />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/c/maps/:id/edit"
-        element={<PageEditorWrapper mode="edit" />}
-        loader={mapLoader('edit')}
-        errorElement={<ErrorPage />}
-      />
-      <Route
-        path="/c/maps/:id/print"
-        element={<PageEditorWrapper mode="view" />}
-        loader={mapLoader('view')}
-        errorElement={<ErrorPage />}
-      />
-      <Route
-        path="/c/maps/:id/public"
-        loader={mapLoader('view')}
-        element={<PageEditorWrapper mode="view" />}
-        errorElement={<ErrorPage />}
-      />
-      <Route
-        path="/c/maps/:id/embed"
-        loader={mapLoader('view')}
-        element={<PageEditorWrapper mode="view" />}
-        errorElement={<ErrorPage />}
-      />
-      <Route
-        path="/c/maps/:id/try"
-        loader={mapLoader('try')}
-        element={<PageEditorWrapper mode="try" />}
-        errorElement={<ErrorPage />}
-      />
+
+      <Route element={<CommonPage />}>
+        <Route
+          path="/c/maps/"
+          element={
+            <Suspense
+              fallback={
+                <div>
+                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                </div>
+              }
+            >
+              <MapsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/c/maps/:id/edit"
+          element={<PageEditorWrapper mode="edit" />}
+          loader={mapLoader('edit')}
+          errorElement={<ErrorPage />}
+        />
+        <Route
+          path="/c/maps/:id/print"
+          element={<PageEditorWrapper mode="view" />}
+          loader={mapLoader('view')}
+          errorElement={<ErrorPage />}
+        />
+        <Route
+          path="/c/maps/:id/public"
+          loader={mapLoader('view')}
+          element={<PageEditorWrapper mode="view" />}
+          errorElement={<ErrorPage />}
+        />
+        <Route
+          path="/c/maps/:id/embed"
+          loader={mapLoader('view')}
+          element={<PageEditorWrapper mode="view" />}
+          errorElement={<ErrorPage />}
+        />
+        <Route
+          path="/c/maps/:id/try"
+          loader={mapLoader('try')}
+          element={<PageEditorWrapper mode="try" />}
+          errorElement={<ErrorPage />}
+        />
+      </Route>
     </Route>,
   ),
 );
