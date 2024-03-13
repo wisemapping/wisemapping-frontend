@@ -20,13 +20,13 @@ import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
 
-interface ConfigContainer {
+type ConfigContainer = {
   type: 'remote' | 'static';
   url?: string;
   config: Config;
-}
+};
 
-interface Config {
+type Config = {
   apiBaseUrl: string;
   analyticsAccount?: string;
   recaptcha2Enabled: boolean;
@@ -35,7 +35,7 @@ interface Config {
   clientType: 'mock' | 'rest';
   googleOauth2Url: string;
   jwtExpirationMin: number;
-}
+};
 
 class AppConfig {
   private static _config: Config;
@@ -68,10 +68,10 @@ class AppConfig {
         }
 
         this._config = result;
-        console.log(`App Config: ${JSON.stringify(this._config)}}`);
+        console.log(`App Config: ${JSON.stringify(this._config)}`);
       }
     } catch (e) {
-      console.error(e);
+      throw { msg: `Unexpected error application. Please, try latter. Detail: ${e.message}` };
     }
 
     return this._config;
@@ -121,14 +121,20 @@ class AppConfig {
   }
 
   static getClient(): Client {
-    let result: Client;
-    if (this.isRestClient()) {
-      result = new RestClient(this.getApiBaseUrl());
-    } else {
+    let result: Client | undefined;
+    try {
+      if (this.isRestClient()) {
+        result = new RestClient(this.getApiBaseUrl());
+      }
+    } catch (e) {
+      console.error('Client could not be initialized.');
+      console.error(e);
+    }
+
+    if (!result) {
       console.log('Warning:Service using mockservice client');
       result = new MockClient();
     }
-
     return result;
   }
 

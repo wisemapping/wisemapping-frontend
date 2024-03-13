@@ -34,16 +34,17 @@ import { theme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import ReactGA from 'react-ga4';
-import AppConfig from './classes/app-config';
 import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
 import { loader as mapLoader } from './components/editor-page/loader';
+import { loader as configLoader } from './loader';
+
 import { ClientContext } from './classes/provider/client-context';
 import { KeyboardContext } from './classes/provider/keyboard-context';
 import CommonPage from './components/common-page';
+import AppConfig from './classes/app-config';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
@@ -69,7 +70,7 @@ const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
+    <Route loader={configLoader} errorElement={<ErrorPage />}>
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
       <Route path="/c/registration" element={<RegistationPage />} />
@@ -128,15 +129,6 @@ const router = createBrowserRouter(
   ),
 );
 
-// Google Analytics Initialization.
-const trackingId = AppConfig.getGoogleAnalyticsAccount();
-if (trackingId) {
-  ReactGA.initialize([
-    {
-      trackingId: trackingId,
-    },
-  ]);
-}
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

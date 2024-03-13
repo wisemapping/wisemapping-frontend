@@ -41,7 +41,7 @@ import { ClientContext } from '../../classes/provider/client-context';
 import { KeyboardContext } from '../../classes/provider/keyboard-context';
 
 const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceManager => {
-  let persistenceManager: PersistenceManager;
+  let result: PersistenceManager;
   if (AppConfig.isRestClient()) {
     const baseUrl = AppConfig.getApiBaseUrl();
 
@@ -50,14 +50,14 @@ const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceMa
     if (mode === 'edition-owner' || mode === 'edition-editor') {
       // Fetch JWT token ...
 
-      persistenceManager = new RESTPersistenceManager({
+      result = new RESTPersistenceManager({
         documentUrl: `${baseUrl}/api/restful/maps/{id}/document`,
         revertUrl: `${baseUrl}/api/restful/maps/{id}/history/latest`,
         lockUrl: `${baseUrl}/api/restful/maps/{id}/lock`,
         jwt: token,
       });
     } else {
-      persistenceManager = new LocalStorageManager(
+      result = new LocalStorageManager(
         `${baseUrl}/api/restful/maps/{id}/${
           globalThis.historyId ? `${globalThis.historyId}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
@@ -65,16 +65,16 @@ const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceMa
         token,
       );
     }
-    persistenceManager.addErrorHandler((error: PersistenceError) => {
+    result.addErrorHandler((error: PersistenceError) => {
       if (mode === 'viewonly' && error.errorType === 'auth') {
         // Trying to access the map in view mode but there is no permossions. Redirect to error page...
         console.error('Handle auth error ...');
       }
     });
   } else {
-    persistenceManager = new MockPersistenceManager(exampleMap);
+    result = new MockPersistenceManager(exampleMap);
   }
-  return persistenceManager;
+  return result;
 };
 
 export type EditorPropsType = {
