@@ -39,8 +39,12 @@ import { EditorMetadata, PageModeType } from './loader';
 import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
 import { KeyboardContext } from '../../classes/provider/keyboard-context';
+import SessionExpiredDialog from '../common-page/session-expired-dialog';
 
-const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceManager => {
+const buildPersistenceManagerForEditor = (
+  mode: EditorRenderMode,
+  setSessionExpired: (value: boolean) => void,
+): PersistenceManager => {
   let result: PersistenceManager;
   if (AppConfig.isRestClient()) {
     const baseUrl = AppConfig.getApiBaseUrl();
@@ -65,10 +69,11 @@ const buildPersistenceManagerForEditor = (mode: EditorRenderMode): PersistenceMa
         token,
       );
     }
+
+    // Add session expiration handler ....
     result.addErrorHandler((error: PersistenceError) => {
-      if (mode === 'viewonly' && error.errorType === 'auth') {
-        // Trying to access the map in view mode but there is no permossions. Redirect to error page...
-        console.error('Handle auth error ...');
+      if (error.errorType === 'auth') {
+        setSessionExpired(true);
       }
     });
   } else {
@@ -104,6 +109,8 @@ const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
 const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
+  const [sessionExpired, setSessionExpired] = useState<boolean>(false);
+
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
   const client = useContext(ClientContext);
@@ -138,8 +145,8 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
       enableAppBar: enableAppBar,
       zoom: editorMetadata.zoom,
     };
+    persistence = buildPersistenceManagerForEditor(editorMetadata.editorMode, setSessionExpired);
 
-    persistence = buildPersistenceManagerForEditor(editorMetadata.editorMode);
     mapInfo = new MapInfoImpl(
       mapId,
       client,
@@ -169,6 +176,7 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
       defaultLocale={Locales.EN.code}
       messages={userLocale.message as Record<string, string>}
     >
+      <SessionExpiredDialog open={sessionExpired} />
       <Editor
         editor={editor}
         onAction={setActiveDialog}

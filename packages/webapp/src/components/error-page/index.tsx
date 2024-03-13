@@ -17,7 +17,7 @@ const ErrorPage = (): React.ReactElement => {
 
   // Error page handler ...
   window.newrelic?.noticeError(error);
-  console.error(`Mindmap loading error: ${JSON.stringify(error)}`);
+  console.error(`Error Page: ${JSON.stringify(error)}`);
 
   // Is a server error info ?
   const errorInfo = error as ErrorInfo;

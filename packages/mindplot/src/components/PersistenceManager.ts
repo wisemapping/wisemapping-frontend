@@ -57,15 +57,6 @@ abstract class PersistenceManager {
     }
   }
 
-  protected getCSRFToken(): string | null {
-    const meta = document.head.querySelector('meta[name="_csrf"]');
-    let result: string | null = null;
-    if (meta) {
-      result = meta.getAttribute('content');
-    }
-    return result;
-  }
-
   async load(mapId: string): Promise<Mindmap> {
     $assert(mapId, 'mapId can not be null');
     // eslint-disable-next-line arrow-body-style
