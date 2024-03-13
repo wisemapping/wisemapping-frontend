@@ -88,6 +88,7 @@ class RESTPersistenceManager extends PersistenceManager {
             let error: PersistenceError;
             switch (response.status) {
               case 401:
+              case 403:
                 error = {
                   severity: 'FATAL',
                   errorType: 'auth',
