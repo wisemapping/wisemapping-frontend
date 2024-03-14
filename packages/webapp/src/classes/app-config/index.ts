@@ -27,6 +27,7 @@ type ConfigContainer = {
 };
 
 type Config = {
+  uiBaseUrl: string;
   apiBaseUrl: string;
   analyticsAccount?: string;
   recaptcha2Enabled: boolean;
@@ -139,6 +140,11 @@ class AppConfig {
   }
 
   static getApiBaseUrl(): string {
+    const config = this.fetchOrGetConfig();
+    return config.apiBaseUrl;
+  }
+
+  static getUiBaseUrl(): string {
     const config = this.fetchOrGetConfig();
     return config.apiBaseUrl;
   }
