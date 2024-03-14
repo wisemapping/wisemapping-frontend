@@ -146,7 +146,7 @@ class AppConfig {
 
   static getUiBaseUrl(): string {
     const config = this.fetchOrGetConfig();
-    return config.apiBaseUrl;
+    return config.uiBaseUrl;
   }
 }
 
