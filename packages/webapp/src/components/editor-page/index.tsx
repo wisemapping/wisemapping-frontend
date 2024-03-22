@@ -44,6 +44,7 @@ import SessionExpiredDialog from '../common-page/session-expired-dialog';
 const buildPersistenceManagerForEditor = (
   mode: EditorRenderMode,
   setSessionExpired: (value: boolean) => void,
+  hid?: number,
 ): PersistenceManager => {
   let result: PersistenceManager;
   if (AppConfig.isRestClient()) {
@@ -63,7 +64,7 @@ const buildPersistenceManagerForEditor = (
     } else {
       result = new LocalStorageManager(
         `${baseUrl}/api/restful/maps/{id}/${
-          globalThis.historyId ? `${globalThis.historyId}/` : ''
+          hid ? `${hid}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
         true,
         token,
@@ -84,6 +85,7 @@ const buildPersistenceManagerForEditor = (
 
 export type EditorPropsType = {
   mapId: number;
+  hid?: number;
   pageMode: PageModeType;
   zoom?: number;
 };
@@ -108,7 +110,7 @@ type ActionType =
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
-const EditorPage = ({ mapId, pageMode, zoom }: EditorPropsType): React.ReactElement => {
+const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
 
@@ -151,7 +153,11 @@ const EditorPage = ({ mapId, pageMode, zoom }: EditorPropsType): React.ReactElem
       enableAppBar: enableAppBar,
       zoom: editorMetadata.zoom,
     };
-    persistence = buildPersistenceManagerForEditor(editorMetadata.editorMode, setSessionExpired);
+    persistence = buildPersistenceManagerForEditor(
+      editorMetadata.editorMode,
+      setSessionExpired,
+      hid,
+    );
 
     mapInfo = new MapInfoImpl(
       mapId,

@@ -56,10 +56,16 @@ const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
     throw 'Map could not be loaded';
   }
 
+  // Fetch zoom id from query param ...
   const [searchParams] = useSearchParams();
   const zoomStr = searchParams.get('zoom');
   const zoom = zoomStr ? Number.parseFloat(zoomStr) : undefined;
+
   const mapId: number = Number.parseInt(id);
+
+  // Is a history view ?
+  const hidStr = useParams().hid;
+  const hid = hidStr ? Number.parseInt(hidStr) : undefined;
 
   return (
     <Suspense
@@ -69,7 +75,7 @@ const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
         </div>
       }
     >
-      <EditorPage pageMode={mode} mapId={mapId} zoom={zoom} />
+      <EditorPage pageMode={mode} mapId={mapId} hid={hid} zoom={zoom} />
     </Suspense>
   );
 };
@@ -108,6 +114,12 @@ const router = createBrowserRouter(
         />
         <Route
           path="/c/maps/:id/print"
+          element={<PageEditorWrapper mode="view" />}
+          loader={mapLoader('view')}
+          errorElement={<ErrorPage />}
+        />
+        <Route
+          path="/c/maps/:id/:hid/view"
           element={<PageEditorWrapper mode="view" />}
           loader={mapLoader('view')}
           errorElement={<ErrorPage />}
