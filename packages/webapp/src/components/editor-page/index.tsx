@@ -85,6 +85,7 @@ const buildPersistenceManagerForEditor = (
 export type EditorPropsType = {
   mapId: number;
   pageMode: PageModeType;
+  zoom?: number;
 };
 
 type ActionType =
@@ -107,7 +108,7 @@ type ActionType =
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
-const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement => {
+const EditorPage = ({ mapId, pageMode, zoom }: EditorPropsType): React.ReactElement => {
   const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
 
@@ -116,8 +117,13 @@ const EditorPage = ({ mapId, pageMode }: EditorPropsType): React.ReactElement =>
   const client = useContext(ClientContext);
   const { hotkeyEnabled } = useContext(KeyboardContext);
   const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
-  const navigation = useNavigation();
 
+  // If zoom has been define, overwrite the stored value.
+  if (zoom) {
+    editorMetadata.zoom = zoom;
+  }
+
+  const navigation = useNavigation();
   if (navigation.state === 'loading') {
     return <h1>Loading!</h1>;
   }

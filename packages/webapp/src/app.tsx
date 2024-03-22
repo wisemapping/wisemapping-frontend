@@ -24,6 +24,7 @@ import {
   useParams,
   createRoutesFromElements,
   createBrowserRouter,
+  useSearchParams,
 } from 'react-router-dom';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
@@ -54,7 +55,12 @@ const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
   if (id === undefined) {
     throw 'Map could not be loaded';
   }
+
+  const [searchParams] = useSearchParams();
+  const zoomStr = searchParams.get('zoom');
+  const zoom = zoomStr ? Number.parseFloat(zoomStr) : undefined;
   const mapId: number = Number.parseInt(id);
+
   return (
     <Suspense
       fallback={
@@ -63,7 +69,7 @@ const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
         </div>
       }
     >
-      <EditorPage pageMode={mode} mapId={mapId} />
+      <EditorPage pageMode={mode} mapId={mapId} zoom={zoom} />
     </Suspense>
   );
 };
