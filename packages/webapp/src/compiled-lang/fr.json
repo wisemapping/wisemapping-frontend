@@ -2,7 +2,7 @@
   "account.delete-warning": [
     {
       "type": 0,
-      "value": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et elles ne pourront pas être restaurées."
+      "value": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et ne pourront pas être restaurées."
     }
   ],
   "accountinfo.button": [
@@ -62,7 +62,7 @@
   "action.delete-description": [
     {
       "type": 0,
-      "value": "La carte mentale supprimée ne peut pas être récupérée. Voulez-vous continuer ?."
+      "value": "La carte mentale supprimée ne peut pas être récupérée. Voulez-vous continuer ?"
     }
   ],
   "action.delete-title": [
@@ -80,19 +80,19 @@
   "action.export": [
     {
       "type": 0,
-      "value": "Exportation"
+      "value": "Exporter"
     }
   ],
   "action.history": [
     {
       "type": 0,
-      "value": "Histoire"
+      "value": "Historique"
     }
   ],
   "action.history-description": [
     {
       "type": 0,
-      "value": "Liste des modifications introduites au cours des 90 derniers jours."
+      "value": "Liste des modifications introduites au cours des 90 derniers jours."
     }
   ],
   "action.history-title": [
@@ -110,7 +110,7 @@
   "action.info": [
     {
       "type": 0,
-      "value": "Info"
+      "value": "Informations"
     }
   ],
   "action.label": [
@@ -128,7 +128,7 @@
   "action.open": [
     {
       "type": 0,
-      "value": "Ouvert"
+      "value": "Ouvrir"
     }
   ],
   "action.print": [
@@ -152,7 +152,7 @@
   "action.rename-description-placeholder": [
     {
       "type": 0,
-      "value": "La description"
+      "value": "Description"
     }
   ],
   "action.rename-name-placeholder": [
@@ -270,19 +270,19 @@
   "export.document": [
     {
       "type": 0,
-      "value": "Outils Mindmap : exportez votre carte mentale dans des formats d'outils de carte mentale tiers"
+      "value": "Outils Mindmap : exportez votre carte mentale dans des formats d'outils de carte mentale tiers"
     }
   ],
   "export.document-label": [
     {
       "type": 0,
-      "value": "Document : exportez votre carte mentale dans un document autonome prêt à être partagé"
+      "value": "Document : exportez votre carte mentale dans un document autonome prêt à être partagé"
     }
   ],
   "export.image": [
     {
       "type": 0,
-      "value": "Image : obtenez une représentation graphique de votre carte, y compris toutes les couleurs et toutes les formes."
+      "value": "Image : obtenez une représentation graphique de votre carte, y compris toutes les couleurs et toutes les formes."
     }
   ],
   "export.title": [
@@ -432,7 +432,7 @@
   "header.haveaccount": [
     {
       "type": 0,
-      "value": "Vous avez déjà un compte?"
+      "value": "Vous avez déjà un compte ?"
     }
   ],
   "help.support": [
@@ -456,13 +456,13 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Sie können WiseMapping- oder Freemind-Karten in Ihre Kartenliste importieren. Selectionnez le fichier que vous souhaitez Importeur."
+      "value": "Selectionnez le fichier que vous souhaitez importer."
     }
   ],
   "import.error-file": [
     {
       "type": 0,
-      "value": "Échec de l'importation : "
+      "value": "Échec de l'importation : "
     },
     {
       "type": 1,
@@ -502,7 +502,7 @@
   "info.description": [
     {
       "type": 0,
-      "value": "La description"
+      "value": "Description"
     }
   ],
   "info.description-msg": [
@@ -562,7 +562,7 @@
   "label.add-for": [
     {
       "type": 0,
-      "value": "Modification des étiquettes pour les cartes :"
+      "value": "Modification des étiquettes pour les cartes :"
     }
   ],
   "label.add-placeholder": [
@@ -580,7 +580,7 @@
   "label.delete-description": [
     {
       "type": 0,
-      "value": "sera supprimé, y compris ses associations à toutes les cartes existantes. Voulez-vous continuer?"
+      "value": "sera supprimé, y compris ses associations à toutes les cartes existantes. Voulez-vous continuer ?"
     }
   ],
   "label.delete-title": [
@@ -694,7 +694,7 @@
   "login.userinactive": [
     {
       "type": 0,
-      "value": "Désolé, votre compte n'a pas encore été activé. Vous recevrez un e-mail de notification lorsqu'il sera activé. Restez à l'écoute!."
+      "value": "Désolé, votre compte n'a pas encore été activé. Vous recevrez un e-mail de notification lorsqu'il sera activé. Restez à l'écoute !"
     }
   ],
   "map.creator": [
@@ -838,7 +838,7 @@
   "maps.tooltip-open": [
     {
       "type": 0,
-      "value": "Ouvert pour l'édition"
+      "value": "Ouvrir pour l'édition"
     }
   ],
   "maps.tooltip-starred": [
@@ -898,7 +898,7 @@
   "publish.embedded-msg": [
     {
       "type": 0,
-      "value": "Copiez cet extrait de code pour l'intégrer dans votre blog ou votre page :"
+      "value": "Copiez cet extrait de code pour l'intégrer dans votre blog ou votre page :"
     }
   ],
   "publish.public-url": [
@@ -910,7 +910,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Copiez et collez le lien ci-dessous pour partager votre carte avec vos collègues :"
+      "value": "Copiez et collez le lien ci-dessous pour partager votre carte avec vos collègues :"
     }
   ],
   "publish.title": [
@@ -940,7 +940,7 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
+      "value": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
     }
   ],
   "registration.callback.confirm.title": [
@@ -1030,7 +1030,7 @@
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Conditions d'utilisation : veuillez vérifier les informations de compte WiseMapping que vous avez saisies ci-dessus et consulter les conditions d'utilisation ici. En cliquant sur \"S'inscrire\" ci-dessous, vous acceptez les conditions d'utilisation ci-dessus et la politique de confidentialité"
+      "value": "Conditions d'utilisation : veuillez vérifier les informations de compte WiseMapping que vous avez saisies ci-dessus et consulter les conditions d'utilisation ici. En cliquant sur \"S'inscrire\" ci-dessous, vous acceptez les conditions d'utilisation ci-dessus et la politique de confidentialité"
     }
   ],
   "registration.title": [
