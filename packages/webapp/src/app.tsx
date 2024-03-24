@@ -131,7 +131,7 @@ const router = createBrowserRouter(
           errorElement={<ErrorPage />}
         />
         <Route
-          path="/c/maps/:id/:hid/public"
+          path="/c/maps/:id/:/public"
           loader={mapLoader('view')}
           element={<PageEditorWrapper mode="view" />}
           errorElement={<ErrorPage />}

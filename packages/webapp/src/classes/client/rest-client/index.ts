@@ -757,6 +757,12 @@ export default class RestClient implements Client {
             googleSync: response.data.googleSync,
             syncCode: response.data.syncCode,
           });
+
+          // Store jwt cookie ...
+          const token = response.data.jwtToken;
+          if (token) {
+            JwtTokenConfig.storeToken(token);
+          }
         })
         .catch((error) => {
           const errorInfo = this.parseResponseOnError(error.response);
