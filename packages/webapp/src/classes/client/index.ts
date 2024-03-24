@@ -157,7 +157,7 @@ interface Client {
   registerNewUser(user: NewUser): Promise<void>;
   resetPassword(email: string): Promise<ForgotPasswordResult>;
   processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
-  confirmAccountSync(email: string, code?: string): Promise<void>;
+  confirmAccountSync(email: string, code?: string): Promise<Oauth2CallbackResult>;
 
   fetchHistory(id: number): Promise<ChangeHistory[]>;
   revertHistory(id: number, cid: number): Promise<void>;

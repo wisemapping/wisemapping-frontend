@@ -463,8 +463,8 @@ class MockClient implements Client {
     return new Promise(handler);
   }
 
-  confirmAccountSync(): Promise<void> {
-    return Promise.resolve();
+  confirmAccountSync(): Promise<Oauth2CallbackResult> {
+    return this.processGoogleCallback();
   }
 }
 
