@@ -40,7 +40,9 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     event.preventDefault();
     client.revertHistory(mapId, vid).then(() => {
       handleOnClose();
+      window.location.reload();
     });
+    // Reload page after revert ...
   };
 
   return (
