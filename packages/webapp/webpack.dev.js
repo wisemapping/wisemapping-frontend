@@ -28,6 +28,7 @@ module.exports = merge(common, {
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
         GOOGLE_ADDS_ENABLED: false,
+        NEW_RELIC_ENABLED: false,
       },
       base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
     }),
