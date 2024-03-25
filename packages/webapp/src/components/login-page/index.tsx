@@ -147,7 +147,7 @@ const LoginPage = (): React.ReactElement => {
         <Link component={RouterLink} to="/c/forgot-password">
           <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
         </Link>
-        {AppConfig.isRecaptcha2Enabled() && (
+        {AppConfig.isRegistrationEnabled() && (
           <>
             <Separator
               responsive={false}
