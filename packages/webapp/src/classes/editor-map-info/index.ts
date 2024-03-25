@@ -25,11 +25,13 @@ class MapInfoImpl implements MapInfo {
   private zoom: number;
   private locked: boolean;
   private lockedMsg: string | undefined;
+  private creatorFullName: string;
 
   constructor(
     id: number,
     client: Client,
     title: string,
+    creatorFullName: string,
     locked: boolean,
     lockedMsg: string | undefined,
     zoom: number,
@@ -40,6 +42,7 @@ class MapInfoImpl implements MapInfo {
     this.zoom = zoom;
     this.locked = locked;
     this.lockedMsg = lockedMsg;
+    this.creatorFullName = creatorFullName;
   }
 
   isStarred(): Promise<boolean> {
@@ -48,6 +51,10 @@ class MapInfoImpl implements MapInfo {
 
   updateStarred(value: boolean): Promise<void> {
     return this.client.updateStarred(this.id, value);
+  }
+
+  getCreatorFullName(): string {
+    return this.creatorFullName;
   }
 
   getTitle(): string {

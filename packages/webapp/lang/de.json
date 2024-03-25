@@ -1,6 +1,6 @@
 {
     "account.delete-warning": {
-        "defaultMessage": "Denke daran, dass du keine von dir erstellten Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
+        "defaultMessage": "Denke daran, dass du keine von dir erstellte Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
     },
     "accountinfo.button": {
         "defaultMessage": "Akzeptieren"
@@ -33,10 +33,10 @@
         "defaultMessage": "Löschen"
     },
     "action.duplicate": {
-        "defaultMessage": "Duplikat"
+        "defaultMessage": "Kopieren"
     },
     "action.export": {
-        "defaultMessage": "Export"
+        "defaultMessage": "Exportieren"
     },
     "action.history": {
         "defaultMessage": "Historie"
@@ -45,13 +45,13 @@
         "defaultMessage": "Liste der in den letzten 90 Tagen eingeführten Änderungen."
     },
     "action.history-title": {
-        "defaultMessage": "Versionsgeschichte"
+        "defaultMessage": "Versionsverlauf"
     },
     "action.import": {
         "defaultMessage": "Importieren"
     },
     "action.info": {
-        "defaultMessage": "Die Info"
+        "defaultMessage": "Informationen"
     },
     "action.label": {
         "defaultMessage": "Label hinzufügen"
@@ -60,7 +60,7 @@
         "defaultMessage": "Neue Mindmap"
     },
     "action.open": {
-        "defaultMessage": "Offen"
+        "defaultMessage": "Öffnen"
     },
     "action.print": {
         "defaultMessage": "Drucken"
@@ -81,7 +81,7 @@
         "defaultMessage": "Teilen"
     },
     "changepwd.button": {
-        "defaultMessage": "Veränderung"
+        "defaultMessage": "Ändern"
     },
     "changepwd.confirm-password": {
         "defaultMessage": "Kennwort bestätigen"
@@ -135,7 +135,7 @@
         "defaultMessage": "Bild: Erhalte eine grafische Darstellung deiner Mindmap mit allen Farben und Formen."
     },
     "export.title": {
-        "defaultMessage": "Export"
+        "defaultMessage": "Exportieren"
     },
     "export.warning": {
         "defaultMessage": "Der Export in ein Bild (SVG, PNG, JPEG, PDF) ist nur in der Editor-Symbolleiste verfügbar."
@@ -201,7 +201,7 @@
         "defaultMessage": "Es sind keine Änderungen verfügbar"
     },
     "import.button": {
-        "defaultMessage": "Erstellen"
+        "defaultMessage": "Importieren"
     },
     "import.description": {
         "defaultMessage": "Du kannst Mindmaps von WiseMapping oder Freemind importieren. Wähle die Datei aus, die du importieren möchtest."
@@ -222,19 +222,19 @@
         "defaultMessage": "Erstellungsdatum"
     },
     "info.creator": {
-        "defaultMessage": "Besitzer"
+        "defaultMessage": "Ersteller"
     },
     "info.description": {
         "defaultMessage": "Beschreibung"
     },
     "info.description-msg": {
-        "defaultMessage": "Indem du die Mindmap veröffentlichen, machst du sie für jeden im Internet sichtbar."
+        "defaultMessage": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
     },
     "info.modified-time": {
-        "defaultMessage": "Zuletzt geändertes Datum"
+        "defaultMessage": "Zuletzt geändert am"
     },
     "info.modified-tny": {
-        "defaultMessage": "Zuletzt geändert durch"
+        "defaultMessage": "Zuletzt geändert von"
     },
     "info.name": {
         "defaultMessage": "Name"
@@ -295,13 +295,13 @@
         "defaultMessage": "Entschuldigung, dein Konto wurde noch nicht aktiviert. Du erhältst eine Benachrichtigungs-E-Mail, wenn es aktiv wird."
     },
     "map.creator": {
-        "defaultMessage": "Besitzer"
+        "defaultMessage": "Ersteller"
     },
     "map.delete-selected": {
         "defaultMessage": "Auswahl löschen"
     },
     "map.last-update": {
-        "defaultMessage": "Letztes Update"
+        "defaultMessage": "Letzte Änderung"
     },
     "map.more-actions": {
         "defaultMessage": "Mehr Aktionen"
@@ -352,13 +352,13 @@
         "defaultMessage": "Meine Mindmaps | WiseMapping"
     },
     "maps.revert": {
-        "defaultMessage": "Zurückkehren"
+        "defaultMessage": "Rückgängig machen"
     },
     "maps.search-action": {
         "defaultMessage": "Suche ..."
     },
     "maps.tooltip-open": {
-        "defaultMessage": "Zur Ausgabe geöffnet"
+        "defaultMessage": "Zum Bearbeiten öffnen"
     },
     "maps.tooltip-starred": {
         "defaultMessage": "Favoriten"
@@ -394,7 +394,7 @@
         "defaultMessage": "Öffentliche URL"
     },
     "publish.public-url-msg": {
-        "defaultMessage": "Kopiere den folgenden Link und gebe ihn weiter, um deine Mindmap mit Kollegen zu teilen:"
+        "defaultMessage": "Kopiere die folgende Verknüpfung und gebe sie weiter, um deine Mindmap mit Kollegen zu teilen:"
     },
     "publish.title": {
         "defaultMessage": "Veröffentlichen"
@@ -421,10 +421,10 @@
         "defaultMessage": "Registrieren"
     },
     "registration.success.desc": {
-        "defaultMessage": "Klicke unten auf die Schaltfläche „Anmelden“ und beginne mit der Erstellung von Mindmaps."
+        "defaultMessage": "Klicke unten auf die Schaltfläche Anmelden und beginne mit der Erstellung von Mindmaps."
     },
     "registration.termandconditions": {
-        "defaultMessage": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf „Registrieren“ klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
+        "defaultMessage": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf Registrieren klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
     },
     "registration.title": {
         "defaultMessage": "Mitglied werden"
@@ -448,7 +448,7 @@
         "defaultMessage": "Betrachter"
     },
     "share.add-button": {
-        "defaultMessage": "Hinzufügen"
+        "defaultMessage": "Geteilt"
     },
     "share.add-message": {
         "defaultMessage": "Nachricht hinzufügen"
@@ -517,7 +517,7 @@
         "defaultMessage": "Wird geladen ..."
     },
 	"registration.google.button": {
-		"defaultMessage": "Melden Sie sich bei Google an"
+		"defaultMessage": "Melde dich bei Google an"
 	},
 	"login.google.button": {
 		"defaultMessage": "Anmeldung mit Google"
@@ -535,13 +535,13 @@
 	  "defaultMessage": "Fertigstellung ..."
 	},
 	"registration.callback.confirm.description": {
-	  "defaultMessage": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchten Sie Ihr Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
+	  "defaultMessage": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchtest du dein Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
 	},
 	"registration.callback.waiting.description": {
-	  "defaultMessage": "Bitte warten Sie, während wir Ihre Identität überprüfen"
+	  "defaultMessage": "Bitte warte, während wir deine Identität überprüfen"
 	},
 	"registation.callback.error.message": {
-	  "defaultMessage": "Beim Überprüfen Ihrer Identität bei Google ist ein Fehler aufgetreten. Sie können es auf der Anmeldeseite erneut versuchen"
+	  "defaultMessage": "Beim Überprüfen deiner Identität bei Google ist ein Fehler aufgetreten. Du kannst es auf der Anmeldeseite erneut versuchen"
 	},
 	"registration.callback.back": {
 	  "defaultMessage": "Zurück zur Anmeldung"
@@ -550,7 +550,7 @@
 	  "defaultMessage": "Konto synchronisieren"
 	},
 	"forgot.oauth.message": {
-	  "defaultMessage": "Sie benötigen kein Passwort, bitte melden Sie sich mit Google an"
+	  "defaultMessage": "Du benötigst kein Passwort, bitte melde dich mit Google an"
 	},
 	"forgot.oauth.back": {
 	  "defaultMessage": "Zurück zur Anmeldung"

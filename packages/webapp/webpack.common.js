@@ -5,7 +5,31 @@ const { merge } = require('webpack-merge');
 const common = require('../../webpack.common');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const prodConfig = {
+let config;
+switch (process.env.APP_CONFIG_TYPE) {
+  case 'file:mock': {
+    config = JSON.stringify(require('./config.mock.json'));
+    break;
+  }
+  case 'file:prod': {
+    config = JSON.stringify(require('./config.prod.json'));
+    break;
+  }
+  case 'file:dev': {
+    config = JSON.stringify(require('./config.dev.json'));
+    break;
+  }
+  case 'remote': {
+    config = process.env.APP_CONFIG_JSON;
+    break;
+  }
+  default: {
+    config = JSON.stringify(require('./config.mock.json'));
+    break;
+  }
+}
+
+const commonConfig = {
   entry: {
     app: path.join(__dirname, 'src', 'index.tsx'),
   },
@@ -34,12 +58,15 @@ const prodConfig = {
       },
     },
   },
+  externals: {
+    'BoostrapConfig': config,
+  },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
         {
           from: 'public/*',
-          to: '[name].[ext]',
+          to: '[name][ext]',
           globOptions: {
             ignore: ['**/index.html'],
           },
@@ -49,4 +76,4 @@ const prodConfig = {
   ],
 };
 
-module.exports = merge(common, prodConfig);
+module.exports = merge(common, commonConfig);

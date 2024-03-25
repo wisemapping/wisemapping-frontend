@@ -95,7 +95,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       parentTopic.setAttribute('central', 'true');
     } else {
       const pos = topic.getPosition();
-      parentTopic.setAttribute('position', `${pos.x},${pos.y}`);
+      parentTopic.setAttribute('position', `${Math.ceil(pos.x)},${Math.ceil(pos.y)}`);
 
       const order = topic.getOrder();
       if (typeof order === 'number' && Number.isFinite(order)) {

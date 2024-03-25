@@ -40,6 +40,7 @@ const ThemeEditor = (props: {
         <FormControlLabel value="classic" control={<Radio />} label="Classic" />
         <FormControlLabel value="prism" control={<Radio />} label="Summer" />
         <FormControlLabel value="dark-prism" control={<Radio />} label="Dark" />
+        <FormControlLabel value="robot" control={<Radio />} label="Robot" />
       </RadioGroup>
     </Box>
   );

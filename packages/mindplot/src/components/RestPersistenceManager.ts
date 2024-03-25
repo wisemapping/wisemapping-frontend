@@ -17,7 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import { $msg } from './Messages';
-import PersistenceManager, { PersistenceError } from './PersistenceManager';
+import PersistenceManager, { PersistenceError, ServerError } from './PersistenceManager';
 
 class RESTPersistenceManager extends PersistenceManager {
   private documentUrl: string;
@@ -26,11 +26,13 @@ class RESTPersistenceManager extends PersistenceManager {
 
   private lockUrl: string;
 
-  private onSave: boolean;
+  private jwt: string | undefined;
 
   private clearTimeout;
 
-  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string }) {
+  private onSave: boolean;
+
+  constructor(options: { documentUrl: string; revertUrl: string; lockUrl: string; jwt?: string }) {
     $assert(options.documentUrl, 'documentUrl can not be null');
     $assert(options.revertUrl, 'revertUrl can not be null');
     $assert(options.lockUrl, 'lockUrl can not be null');
@@ -39,6 +41,18 @@ class RESTPersistenceManager extends PersistenceManager {
     this.documentUrl = options.documentUrl;
     this.revertUrl = options.revertUrl;
     this.lockUrl = options.lockUrl;
+    this.onSave = false;
+    this.jwt = options.jwt;
+  }
+
+  private _handleError(error: PersistenceError, events): void {
+    this.triggerError(error);
+    events.onError(error);
+
+    // Clear event timeout ...
+    if (this.clearTimeout) {
+      clearTimeout(this.clearTimeout);
+    }
     this.onSave = false;
   }
 
@@ -50,7 +64,6 @@ class RESTPersistenceManager extends PersistenceManager {
     };
 
     const query = `minor=${!saveHistory}`;
-
     if (!this.onSave) {
       // Mark save in process and fire a event unlocking the save ...
       this.onSave = true;
@@ -59,17 +72,7 @@ class RESTPersistenceManager extends PersistenceManager {
         this.onSave = false;
       }, 10000);
 
-      const persistence = this;
-
-      const crfs = this.getCSRFToken();
-      const headers = {
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      };
-      if (crfs) {
-        headers['X-CSRF-Token'] = crfs;
-      }
-
+      const headers = this._buildHttpHeader('application/json; charset=utf-8', 'application/json');
       fetch(`${this.documentUrl.replace('{id}', mapId)}?${query}`, {
         method: 'PUT',
         // Blob helps to resuce the memory on large payload.
@@ -81,67 +84,37 @@ class RESTPersistenceManager extends PersistenceManager {
             events.onSuccess();
           } else {
             console.error(`Saving error: ${response.status}`);
-            let userMsg: PersistenceError | null = null;
-            if (response.status === 405) {
-              userMsg = {
-                severity: 'SEVERE',
-                message: $msg('SESSION_EXPIRED'),
-                errorType: 'session-expired',
-              };
-            } else {
-              const responseText = await response.text();
-              const contentType = response.headers['Content-Type'];
-              if (contentType != null && contentType.indexOf('application/json') !== -1) {
-                let serverMsg: null | { globalSeverity: string } = null;
-                try {
-                  serverMsg = JSON.parse(responseText);
-                  serverMsg = serverMsg && serverMsg.globalSeverity ? serverMsg : null;
-                } catch (e) {
-                  // Message could not be decoded ...
-                }
-                userMsg = persistence._buildError(serverMsg);
+
+            let error: PersistenceError;
+            switch (response.status) {
+              case 401:
+              case 403:
+                error = {
+                  severity: 'FATAL',
+                  errorType: 'auth',
+                  message: $msg('SESSION_EXPIRED'),
+                };
+                break;
+              default: {
+                error = await this._buildError(response);
               }
             }
-            if (userMsg) {
-              this.triggerError(userMsg);
-              events.onError(userMsg);
-            }
+            this._handleError(error, events);
           }
-
-          // Clear event timeout ...
-          if (persistence.clearTimeout) {
-            clearTimeout(persistence.clearTimeout);
-          }
-          persistence.onSave = false;
         })
         .catch(() => {
-          const userMsg: PersistenceError = {
+          const error: PersistenceError = {
             severity: 'SEVERE',
+            errorType: 'unexpected',
             message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
-            errorType: 'generic',
           };
-          this.triggerError(userMsg);
-          events.onError(userMsg);
-
-          // Clear event timeout ...
-          if (persistence.clearTimeout) {
-            clearTimeout(persistence.clearTimeout);
-          }
-          persistence.onSave = false;
+          this._handleError(error, events);
         });
     }
   }
 
   discardChanges(mapId: string): void {
-    const crfs = this.getCSRFToken();
-    const headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-      Accept: 'application/json',
-    };
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
-
+    const headers = this._buildHttpHeader('application/json; charset=utf-8');
     fetch(this.revertUrl.replace('{id}', mapId), {
       method: 'POST',
       headers,
@@ -149,14 +122,7 @@ class RESTPersistenceManager extends PersistenceManager {
   }
 
   unlockMap(mapId: string): void {
-    const crfs = this.getCSRFToken();
-    const headers = {
-      'Content-Type': 'text/plain; charset=utf-8',
-    };
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
-
+    const headers = this._buildHttpHeader('text/plain; charset=utf-8');
     fetch(this.lockUrl.replace('{id}', mapId), {
       method: 'PUT',
       headers,
@@ -164,33 +130,36 @@ class RESTPersistenceManager extends PersistenceManager {
     });
   }
 
-  private _buildError(jsonSeverResponse) {
-    let message = jsonSeverResponse ? jsonSeverResponse.globalErrors[0] : null;
-    let severity = jsonSeverResponse ? jsonSeverResponse.globalSeverity : null;
+  private async _buildError(response: Response): Promise<PersistenceError> {
+    let result: PersistenceError;
+    const responseText = await response.text();
+    const contentType = response.headers['Content-Type'];
 
-    if (!message) {
-      message = $msg('SAVE_COULD_NOT_BE_COMPLETED');
+    // This is a wise client server error ...
+    if (contentType?.indexOf('application/json') !== -1) {
+      const serverError: ServerError = JSON.parse(responseText);
+      result = {
+        severity: serverError.globalSeverity,
+        errorType: 'expected',
+        message: serverError.globalErrors[0],
+      };
+    } else {
+      // Unexpected error from the server ...
+      result = {
+        severity: 'FATAL',
+        errorType: 'expected',
+        message: $msg('SAVE_COULD_NOT_BE_COMPLETED'),
+      };
     }
-
-    if (!severity) {
-      severity = 'INFO';
-    }
-    return { severity, message };
+    return result;
   }
 
   loadMapDom(mapId: string): Promise<Document> {
     const url = `${this.documentUrl.replace('{id}', mapId)}/xml`;
-    const crfs = this.getCSRFToken();
-    const headers = {
-      'Content-Type': 'text/plain; charset=utf-8',
-      Accept: 'application/xml',
-    };
-    if (crfs) {
-      headers['X-CSRF-Token'] = crfs;
-    }
+    const headers = this._buildHttpHeader('text/plain; charset=utf-8', 'application/xml');
 
     return fetch(url, {
-      method: 'get',
+      method: 'GET',
       headers,
     })
       .then((response: Response) => {
@@ -201,6 +170,23 @@ class RESTPersistenceManager extends PersistenceManager {
         return response.text();
       })
       .then((xmlStr) => new DOMParser().parseFromString(xmlStr, 'text/xml'));
+  }
+
+  private _buildHttpHeader(contentType: string, accept?: string) {
+    const headers = {
+      'Content-Type': contentType,
+    };
+
+    if (accept) {
+      // eslint-disable-next-line dot-notation
+      headers['Accept'] = accept;
+    }
+
+    if (this.jwt) {
+      // eslint-disable-next-line dot-notation
+      headers['Authorization'] = `Bearer ${this.jwt} `;
+    }
+    return headers;
   }
 }
 

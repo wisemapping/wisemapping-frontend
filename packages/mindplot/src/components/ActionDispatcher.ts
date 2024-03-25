@@ -21,13 +21,14 @@ import { $assert } from '@wisemapping/core-js';
 import { Mindmap } from '..';
 import CommandContext from './CommandContext';
 import { PivotType } from './RelationshipControlPoints';
-import Events from './Events';
+import EventDispispatcher from './EventDispatcher';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
 import Topic from './Topic';
 import PositionType from './PositionType';
+import LayoutEventBusType from './LayoutEventBusType';
 
-abstract class ActionDispatcher extends Events {
+abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
   private static _instance: ActionDispatcher;
 
   private _commandContext: CommandContext;

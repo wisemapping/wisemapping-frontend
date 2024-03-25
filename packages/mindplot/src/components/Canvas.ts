@@ -143,7 +143,9 @@ class Canvas {
   }
 
   private static delay(t: number) {
-    return new Promise((resolve) => setTimeout(resolve, t));
+    return new Promise((resolve) => {
+      setTimeout(resolve, t);
+    });
   }
 
   private processRenderQueue(

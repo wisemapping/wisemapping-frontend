@@ -23,13 +23,25 @@ class MapInfoImpl implements MapInfo {
   private locked: boolean;
   private starred: boolean;
   private lockedMsg: string | undefined;
+  private creatorFullName: string;
 
-  constructor(id: string, title: string, locked: boolean, lockedMsg?: string) {
+  constructor(
+    id: string,
+    title: string,
+    creatorFullName: string,
+    locked: boolean,
+    lockedMsg?: string,
+  ) {
     this.id = id;
     this.title = title;
     this.locked = locked;
     this.lockedMsg = lockedMsg;
     this.starred = true;
+    this.creatorFullName = creatorFullName;
+  }
+
+  getCreatorFullName(): string {
+    return this.creatorFullName;
   }
 
   isStarred(): Promise<boolean> {
@@ -43,6 +55,10 @@ class MapInfoImpl implements MapInfo {
 
   getTitle(): string {
     return this.title;
+  }
+
+  getLockedMsg(): string | undefined {
+    return this.lockedMsg;
   }
 
   setTitle(value: string): void {

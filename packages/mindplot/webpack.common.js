@@ -12,7 +12,6 @@ const prodConfig = {
   },
   entry: {
     mindplot: './src/index.ts',
-    loader: './src/indexLoader.ts',
   },
   mode: 'production',
 };

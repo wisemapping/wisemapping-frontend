@@ -15,32 +15,27 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Events from '../Events';
+import React, { useContext, useEffect, useState } from 'react';
+import { ClientContext } from '../../classes/provider/client-context';
+import SessionExpiredDialog from './session-expired-dialog';
+import { Outlet } from 'react-router-dom';
 
-export type EventType =
-  | 'topicResize'
-  | 'topicMoved'
-  | 'childShrinked'
-  | 'topicConnected'
-  | 'topicAdded'
-  | 'topicRemoved'
-  | 'forceLayout'
-  | 'topicDisconect';
-class EventBus extends Events {
-  // eslint-disable-next-line no-use-before-define
-  static _instance: EventBus = new EventBus();
+const CommonPage = (): React.ReactElement => {
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const client = useContext(ClientContext);
 
-  static get instance(): EventBus {
-    return this._instance;
-  }
+  useEffect(() => {
+    client.onSessionExpired(() => {
+      setSessionExpired(true);
+    });
+  }, [client]);
 
-  fireEvent(type: EventType, eventArgs?: unknown[] | unknown): Events {
-    return super.fireEvent(type, eventArgs);
-  }
+  return (
+    <>
+      <SessionExpiredDialog open={sessionExpired} />
+      <Outlet />
+    </>
+  );
+};
 
-  addEvent(type: EventType, fn?, internal?: boolean): Events {
-    return super.addEvent(type, fn, internal);
-  }
-}
-
-export default EventBus;
+export default CommonPage;

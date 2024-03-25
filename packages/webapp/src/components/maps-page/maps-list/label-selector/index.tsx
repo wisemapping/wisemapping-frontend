@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import LabelComponent from '../label';
-import Client, { Label, ErrorInfo, MapInfo } from '../../../../classes/client';
+import { Label, ErrorInfo, MapInfo } from '../../../../classes/client';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
-import { activeInstance } from '../../../../redux/clientSlice';
 import AddLabelDialog from '../../action-dispatcher/add-label-dialog';
 import { LabelListContainer } from './styled';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type LabelSelectorProps = {
   maps: MapInfo[];
@@ -17,7 +16,7 @@ export type LabelSelectorProps = {
 };
 
 export function LabelSelector({ onChange, maps }: LabelSelectorProps): React.ReactElement {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const { data: labels = [] } = useQuery<unknown, ErrorInfo, Label[]>('labels', async () =>
     client.fetchLabels(),
   );

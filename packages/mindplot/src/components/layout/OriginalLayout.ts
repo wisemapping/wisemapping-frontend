@@ -60,10 +60,6 @@ class OriginalLayout {
       throw new Error('Node already disconnected');
     }
 
-    // Make it fixed
-    node.setFree(false);
-    node.resetFreeDisplacement();
-
     // Remove from children list.
     const sorter = parent.getSorter();
     sorter.detach(this._treeSet, node);
@@ -174,9 +170,6 @@ class OriginalLayout {
   private fixOverlapping(node: Node, heightById: Map<number, number>): void {
     const children = this._treeSet.getChildren(node);
 
-    if (node.isFree()) {
-      this._shiftBranches(node, heightById);
-    }
     children.forEach((child) => {
       this.fixOverlapping(child, heightById);
     });
@@ -196,7 +189,7 @@ class OriginalLayout {
         OriginalLayout._branchesOverlap(shiftedBranch, sibling, heightById),
       );
       /* eslint-enable */
-      if (!sibling.isFree() || overlappingOccurs) {
+      if (overlappingOccurs) {
         const sAmount = node.getFreeDisplacement().y;
         this._treeSet.shiftBranchPosition(sibling, 0, sAmount);
         shiftedBranches.push(sibling);

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import Client, { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
+import { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
 
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 import FormContainer from '../layout/form-container';
-import { useSelector } from 'react-redux';
 import { useMutation } from 'react-query';
-import { activeInstance } from '../../redux/clientSlice';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
@@ -17,7 +15,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import CSRFInput from '../common/csrf-input';
+import { ClientContext } from '../../classes/provider/client-context';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -26,9 +24,9 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const service: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const mutation = useMutation<ForgotPasswordResult, ErrorInfo, string>(
-    (email: string) => service.resetPassword(email),
+    (email: string) => client.resetPassword(email),
     {
       onSuccess: (result) => {
         if (result.action === 'EMAIL_SENT') navigate('/c/forgot-password-success');
@@ -84,7 +82,6 @@ const ForgotPassword = () => {
       <GlobalError error={error} />
 
       <form onSubmit={handleOnSubmit}>
-        <CSRFInput />
         <Input
           type="email"
           name="email"

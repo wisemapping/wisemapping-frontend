@@ -5,6 +5,84 @@
       "value": "Поделиться"
     }
   ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Тема"
+    }
+  ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Цвет"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Цвет по умолчанию"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Стиль подключения"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "дуга"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "широкая кривая"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "тонкая кривая"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Тема"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Цвет границы по умолчанию"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color": [
+    {
+      "type": 0,
+      "value": "Цвет заливки"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Цвет заливки по умолчанию"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "нет формы"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "Круглый"
+    }
+  ],
   "editor.edit-description-mobile": [
     {
       "type": 0,
@@ -45,6 +123,12 @@
     {
       "type": 0,
       "value": "Регистрация"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Клавиатура"
     }
   ]
 }

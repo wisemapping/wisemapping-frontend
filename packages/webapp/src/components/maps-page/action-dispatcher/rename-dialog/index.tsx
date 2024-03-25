@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
-import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
+import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
 import FormControl from '@mui/material/FormControl';
+import { useFetchMapById } from '../../../../classes/middleware';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type RenameModel = {
   id: number;
@@ -17,7 +17,7 @@ export type RenameModel = {
 
 const defaultModel: RenameModel = { title: '', description: '', id: -1 };
 const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
-  const service: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [model, setModel] = React.useState<RenameModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
 
@@ -27,7 +27,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
   const mutation = useMutation<RenameModel, ErrorInfo, RenameModel>(
     (model: RenameModel) => {
       const { id, ...rest } = model;
-      return service.renameMap(id, rest).then(() => model);
+      return client.renameMap(id, rest).then(() => model);
     },
     {
       onSuccess: () => {
@@ -58,7 +58,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     setModel({ ...model, [name as keyof BasicMapInfo]: value });
   };
 
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
   useEffect(() => {
     if (map) {
       setModel(map);

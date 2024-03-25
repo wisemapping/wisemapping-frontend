@@ -3,7 +3,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import BaseDialog from '../base-dialog';
 import { useStyles } from './style';
 import Alert from '@mui/material/Alert';
-import { useFetchMapById } from '../../../../redux/clientSlice';
 import FormControl from '@mui/material/FormControl';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -21,6 +20,7 @@ import {
 import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 
 import Checkbox from '@mui/material/Checkbox';
+import { useFetchMapById } from '../../../../classes/middleware';
 
 type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
@@ -39,7 +39,7 @@ const ExportDialog = ({
 }: ExportDialogProps): React.ReactElement => {
   const intl = useIntl();
   const [submit, setSubmit] = React.useState<boolean>(false);
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
 
   const [exportGroup, setExportGroup] = React.useState<ExportGroup>(
     enableImgExport ? 'image' : 'document',

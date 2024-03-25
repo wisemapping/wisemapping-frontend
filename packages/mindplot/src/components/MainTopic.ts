@@ -65,10 +65,6 @@ class MainTopic extends Topic {
     return group;
   }
 
-  updateTopicShape() {
-    this.redrawShapeType();
-  }
-
   disconnect(canvas: Canvas) {
     super.disconnect(canvas);
 

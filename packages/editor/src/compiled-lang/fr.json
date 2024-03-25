@@ -119,6 +119,12 @@
       "value": "Note"
     }
   ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Thème"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -146,7 +152,7 @@
   "editor-panel.tooltip-add-topic": [
     {
       "type": 0,
-      "value": "Ajouter un sujet"
+      "value": "Ajouter un noeud"
     }
   ],
   "editor-panel.tooltip-connection-color": [
@@ -165,6 +171,12 @@
     {
       "type": 0,
       "value": "Style de connexion"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Arc"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
@@ -194,7 +206,19 @@
   "editor-panel.tooltip-delete-sujet": [
     {
       "type": 0,
-      "value": "Supprimer le sujet"
+      "value": "Supprimer le noeud"
+    }
+  ],
+  "editor-panel.tooltip-delete-topic": [
+    {
+      "type": 0,
+      "value": "Supprimer un noeud"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Thème"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
@@ -218,7 +242,7 @@
   "editor-panel.tooltip-topic-fill-color-default": [
     {
       "type": 0,
-      "value": "Couleur de relleno por defecto"
+      "value": "Couleur de remplissage par défaut"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
@@ -281,22 +305,34 @@
       "value": "Chiffre de ligne"
     }
   ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Aucune forme"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
       "value": "Forme rectangulaire"
     }
   ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "Forme ronde"
+    }
+  ],
   "editor-panel.tooltip-topic-style": [
     {
       "type": 0,
-      "value": "Style de sujet"
+      "value": "Style de noeud"
     }
   ],
   "editor.edit-description-mobile": [
     {
       "type": 0,
-      "value": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+      "value": "La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
     }
   ],
   "editor.try-welcome": [
@@ -314,7 +350,7 @@
   "editor.try-welcome-description-mobile": [
     {
       "type": 0,
-      "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+      "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
     }
   ],
   "editor.try-welcome-mobile": [
@@ -350,7 +386,7 @@
   "shortcut-help-pane.add-child": [
     {
       "type": 0,
-      "value": "Ajouter le sujet de l'enfant"
+      "value": "Ajouter un noeud enfant"
     }
   ],
   "shortcut-help-pane.add-link": [
@@ -368,7 +404,7 @@
   "shortcut-help-pane.add-sibling": [
     {
       "type": 0,
-      "value": "Ajouter un sujet de frère"
+      "value": "Ajouter un noeud frère"
     }
   ],
   "shortcut-help-pane.cancel-text-changes": [
@@ -380,67 +416,67 @@
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
-      "value": "Changer de texte en gras"
+      "value": "Passer le texte en gras"
     }
   ],
   "shortcut-help-pane.change-font-italic": [
     {
       "type": 0,
-      "value": "Changer le texte en italique"
+      "value": "Passer le texte en italique"
     }
   ],
   "shortcut-help-pane.collapse-children": [
     {
       "type": 0,
-      "value": "Effondrer les enfants"
+      "value": "Masquer les noeuds enfants"
     }
   ],
   "shortcut-help-pane.copy-and-text": [
     {
       "type": 0,
-      "value": "Copier et coller des sujets"
+      "value": "Copier et coller des noeuds"
     }
   ],
   "shortcut-help-pane.delete-topic": [
     {
       "type": 0,
-      "value": "Supprimer le sujet"
+      "value": "Supprimer le noeud"
     }
   ],
   "shortcut-help-pane.deselect-all-topics": [
     {
       "type": 0,
-      "value": "Désélectionner tous les sujets"
+      "value": "Désélectionner tous les noeuds"
     }
   ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
-      "value": "Déconnecter le sujet"
+      "value": "Déconnecter le noeud"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
-      "value": "Ajouter le texte du sujet multi-ligne"
+      "value": "Ajouter une ligne au noeud"
     }
   ],
   "shortcut-help-pane.edit-topic": [
     {
       "type": 0,
-      "value": "Modifier le texte du sujet"
+      "value": "Modifier le texte du noeud"
     }
   ],
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "Commencez juste à taper"
+      "value": "Double-clic"
     }
   ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
-      "value": "La navigation"
+      "value": "Naviguer"
     }
   ],
   "shortcut-help-pane.navigation-keys": [
@@ -452,13 +488,13 @@
   "shortcut-help-pane.overwrite-edit-topic": [
     {
       "type": 0,
-      "value": "Sobrescribir el texto del tópico"
+      "value": "Remplacer le texte du noeud"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic-key": [
     {
       "type": 0,
-      "value": "Commencer à écrire sur le sujet sélectionné"
+      "value": "Ecrire dans le noeud sélectionné"
     }
   ],
   "shortcut-help-pane.redo": [
@@ -476,13 +512,13 @@
   "shortcut-help-pane.select-all-topics": [
     {
       "type": 0,
-      "value": "Sélectionnez tous les sujets"
+      "value": "Sélectionner tous les noeuds"
     }
   ],
   "shortcut-help-pane.select-topics": [
     {
       "type": 0,
-      "value": "Sélectionnez plusieurs sujets"
+      "value": "Sélectionner plusieurs noeuds"
     }
   ],
   "shortcut-help-pane.select-topics-keys": [
@@ -501,6 +537,12 @@
     {
       "type": 0,
       "value": "Raccourcis clavier"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Clavier"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [

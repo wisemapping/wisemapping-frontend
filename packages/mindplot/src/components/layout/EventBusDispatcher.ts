@@ -18,7 +18,7 @@
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
 import Topic from '../Topic';
-import EventBus from './EventBus';
+import LayoutEventBus from './LayoutEventBus';
 import LayoutManager from './LayoutManager';
 
 class EventBusDispatcher {
@@ -34,26 +34,26 @@ class EventBusDispatcher {
   }
 
   registerBusEvents() {
-    EventBus.instance.addEvent('topicAdded', this._topicAdded.bind(this));
-    EventBus.instance.addEvent('topicRemoved', this._topicRemoved.bind(this));
-    EventBus.instance.addEvent('topicResize', this._topicResizeEvent.bind(this));
-    EventBus.instance.addEvent('topicMoved', this._topicMoved.bind(this));
-    EventBus.instance.addEvent('topicDisconect', this._topicDisconect.bind(this));
-    EventBus.instance.addEvent('topicConnected', this._topicConnected.bind(this));
-    EventBus.instance.addEvent('childShrinked', this._childShrinked.bind(this));
-    EventBus.instance.addEvent('forceLayout', this._forceLayout.bind(this));
+    LayoutEventBus.addEvent('topicAdded', this._topicAdded.bind(this));
+    LayoutEventBus.addEvent('topicRemoved', this._topicRemoved.bind(this));
+    LayoutEventBus.addEvent('topicResize', this._topicResizeEvent.bind(this));
+    LayoutEventBus.addEvent('topicMoved', this._topicMoved.bind(this));
+    LayoutEventBus.addEvent('topicDisconect', this._topicDisconect.bind(this));
+    LayoutEventBus.addEvent('topicConnected', this._topicConnected.bind(this));
+    LayoutEventBus.addEvent('childShrinked', this._childShrinked.bind(this));
+    LayoutEventBus.addEvent('forceLayout', this._forceLayout.bind(this));
   }
 
   private _topicResizeEvent(args: { node: Topic; size: SizeType }) {
-    this._layoutManager!.updateNodeSize(args.node.getId(), args.size);
+    this.getLayoutManager().updateNodeSize(args.node.getId(), args.size);
   }
 
   private _topicMoved(args: { node: Topic; position: PositionType }) {
-    this._layoutManager!.moveNode(args.node.getId(), args.position);
+    this.getLayoutManager().moveNode(args.node.getId(), args.position);
   }
 
   private _topicDisconect(node: Topic) {
-    this._layoutManager!.disconnectNode(node.getId());
+    this.getLayoutManager().disconnectNode(node.getId());
   }
 
   private _topicConnected(args: { parentNode: Topic; childNode: Topic }) {
@@ -62,30 +62,36 @@ class EventBusDispatcher {
       args.childNode.getId(),
       args.childNode.getOrder()!, // @todo: This can be a issue ...
     );
+
+    // Review this for of relayout, new node is not positioned properly with small gap. The problem seems to be related to some min
+    // this.getLayoutManager().layout(true);
+  }
+
+  getLayoutManager(): LayoutManager {
+    if (!this._layoutManager) {
+      throw new Error('Layout not initialized');
+    }
+    return this._layoutManager;
   }
 
   private _childShrinked(node: Topic) {
-    this._layoutManager!.updateShrinkState(node.getId(), node.areChildrenShrunken());
+    this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
   }
 
   private _topicAdded(node: Topic) {
     // Central topic must not be added twice ...
     if (node.getId() !== 0) {
-      this._layoutManager!.addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
-      this._layoutManager!.updateShrinkState(node.getId(), node.areChildrenShrunken());
+      this.getLayoutManager().addNode(node.getId(), { width: 10, height: 10 }, node.getPosition());
+      this.getLayoutManager().updateShrinkState(node.getId(), node.areChildrenShrunken());
     }
   }
 
   private _topicRemoved(node: Topic) {
-    this._layoutManager!.removeNode(node.getId());
+    this.getLayoutManager().removeNode(node.getId());
   }
 
-  private _forceLayout() {
-    this._layoutManager!.layout(true);
-  }
-
-  getLayoutManager(): LayoutManager {
-    return this._layoutManager!;
+  private _forceLayout(): void {
+    this.getLayoutManager().layout(true);
   }
 }
 

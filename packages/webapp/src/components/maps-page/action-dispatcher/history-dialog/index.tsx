@@ -1,9 +1,7 @@
-import React, { ErrorInfo } from 'react';
+import React, { ErrorInfo, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ChangeHistory } from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { ChangeHistory } from '../../../../classes/client';
 import { SimpleDialogProps } from '..';
 import BaseDialog from '../base-dialog';
 import dayjs from 'dayjs';
@@ -17,10 +15,11 @@ import TableBody from '@mui/material/TableBody';
 import Tooltip from '@mui/material/Tooltip';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const { data } = useQuery<unknown, ErrorInfo, ChangeHistory[]>(
     `history-${mapId}`,
     () => {
@@ -41,7 +40,9 @@ const HistoryDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
     event.preventDefault();
     client.revertHistory(mapId, vid).then(() => {
       handleOnClose();
+      window.location.reload();
     });
+    // Reload page after revert ...
   };
 
   return (

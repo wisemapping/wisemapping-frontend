@@ -17,10 +17,52 @@
     "editor.edit-description-mobile": {
         "defaultMessage": "Возможности ограниченной версии Mindmap поддерживаются на мобильных устройствах. Используйте настольный браузер для полных возможностей редактора."
     },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "Тема"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "Тема"
+    },
+    "editor-panel.tooltip-connection-style-arc": {
+        "defaultMessage": "дуга"
+    },
+    "editor-panel.tooltip-topic-share-none": {
+        "defaultMessage": "нет формы"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Цвет"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Цвет по умолчанию"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Стиль подключения"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "широкая кривая"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "тонкая кривая"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Цвет границы по умолчанию"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Цвет заливки"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Цвет заливки по умолчанию"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Круглый"
+    },
     "login.signup": {
         "defaultMessage": "Регистрация"
     },
     "action.share": {
         "defaultMessage": "Поделиться"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Клавиатура"
     }
 }

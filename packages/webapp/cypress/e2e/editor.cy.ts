@@ -2,7 +2,7 @@
 
 describe('Editor Page', () => {
   beforeEach(() => {
-    cy.visit('/c/maps/11/edit');
+    cy.visit('/c/maps/1/edit');
     cy.waitForEditorLoaded();
   });
 

@@ -22,5 +22,47 @@
 	},
 	"action.share": {
 		"defaultMessage": "分享"
-	}
+	},
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "键盘"
+    },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "主题"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "主题"
+    },
+    "editor-panel.tooltip-connection-style-arc": {
+        "defaultMessage": "弧"
+    },
+    "editor-panel.tooltip-topic-share-none": {
+        "defaultMessage": "没有形状"
+    },
+	"editor-panel.tooltip-connection-color": {
+        "defaultMessage": "颜色"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "默认颜色"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "连接方式"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "宽曲线"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "细曲线"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "默认边框颜色"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "填充颜​​色"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "默认填充颜色"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "圆形"
+    }
 }

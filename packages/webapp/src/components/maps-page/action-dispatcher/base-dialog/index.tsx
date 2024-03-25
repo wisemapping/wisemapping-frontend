@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ErrorInfo } from '../../../../classes/client';
 import { StyledDialog, StyledDialogActions, StyledDialogContent, StyledDialogTitle } from './style';
 import GlobalError from '../../../form/global-error';
 import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
-import { disableHotkeys, enableHotkeys } from '../../../../redux/editorSlice';
 import { CSSObject } from '@emotion/react';
+import { KeyboardContext } from '../../../../classes/provider/keyboard-context';
 
 export type DialogProps = {
   onClose: () => void;
@@ -21,18 +20,18 @@ export type DialogProps = {
   submitButton?: string;
   actionUrl?: string;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
-  paperCss?: CSSObject;
+  papercss?: CSSObject;
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
-  const dispatch = useDispatch();
+  const { setHotkeyEnabled } = useContext(KeyboardContext);
   useEffect(() => {
-    dispatch(disableHotkeys());
+    setHotkeyEnabled(false);
     return () => {
-      dispatch(enableHotkeys());
+      setHotkeyEnabled(true);
     };
   }, []);
-  const { onClose, onSubmit, maxWidth = 'sm', paperCss } = props;
+  const { onClose, onSubmit, maxWidth = 'sm', papercss } = props;
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +49,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         open={true}
         onClose={onClose}
         maxWidth={maxWidth}
-        paperCss={{ '& .MuiPaper-root.MuiDialog-paper': paperCss }}
+        papercss={{ '& .MuiPaper-root.MuiDialog-paper': papercss }}
         fullWidth={true}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>

@@ -17,12 +17,15 @@
  */
 interface MapInfo {
   isStarred(): Promise<boolean>;
+
   updateStarred(value: boolean): Promise<void>;
 
   getTitle(): string;
-  setTitle(value: string): void;
+
+  getCreatorFullName(): string;
 
   isLocked(): boolean;
+
   getLockedMessage(): string;
 
   getZoom(): number;

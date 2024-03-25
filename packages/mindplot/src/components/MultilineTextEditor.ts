@@ -20,11 +20,13 @@ import { FontStyle } from '@wisemapping/web2d/src/components/peer/svg/FontPeer';
 import $ from 'jquery';
 
 import ActionDispatcher from './ActionDispatcher';
-import Events from './Events';
-import EventBus from './layout/EventBus';
+import EventDispatcher from './EventDispatcher';
+import LayoutEventBus from './layout/LayoutEventBus';
 import Topic from './Topic';
 
-class EditorComponent extends Events {
+type EditorEventType = 'input';
+
+class EditorComponent extends EventDispatcher<EditorEventType> {
   private _topic: Topic;
 
   private _oldText: string | undefined;
@@ -124,7 +126,7 @@ class EditorComponent extends Events {
 
   private resize(text?: string): void {
     // Force relayout ...
-    EventBus.instance.fireEvent('forceLayout');
+    LayoutEventBus.fireEvent('forceLayout');
 
     // Adjust position ...
     const textShape = this._topic.getOrBuildTextShape();

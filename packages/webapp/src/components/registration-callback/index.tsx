@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
@@ -7,17 +7,16 @@ import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ReactGA from 'react-ga4';
-import Client, { Oauth2CallbackResult } from '../../classes/client';
-import { useSelector } from 'react-redux';
-import { activeInstance } from '../../redux/clientSlice';
+import { Oauth2CallbackResult } from '../../classes/client';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import GlobalError from '../form/global-error';
 import { buttonsStyle } from './style';
+import { ClientContext } from '../../classes/provider/client-context';
 
 const RegistrationCallbackPage = (): React.ReactElement => {
   const intl = useIntl();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
 
   const [showError, setShowError] = useState(false);
   const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();

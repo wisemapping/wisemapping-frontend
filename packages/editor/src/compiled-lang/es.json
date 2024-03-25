@@ -119,6 +119,12 @@
       "value": "Nota"
     }
   ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Tema"
+    }
+  ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
@@ -167,6 +173,12 @@
       "value": "Estilo de conexión"
     }
   ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "Arco"
+    }
+  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -195,6 +207,12 @@
     {
       "type": 0,
       "value": "Borrar tópico"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Tema"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
@@ -273,6 +291,12 @@
     {
       "type": 0,
       "value": "Forma de linea"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "Sin forma"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [

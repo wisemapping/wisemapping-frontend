@@ -5,6 +5,84 @@
       "value": "分享"
     }
   ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "主题"
+    }
+  ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "颜色"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "默认颜色"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "连接方式"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-arc": [
+    {
+      "type": 0,
+      "value": "弧"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "宽曲线"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "细曲线"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "主题"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "默认边框颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color": [
+    {
+      "type": 0,
+      "value": "填充颜​​色"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "默认填充颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-none": [
+    {
+      "type": 0,
+      "value": "没有形状"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "圆形"
+    }
+  ],
   "editor.edit-description-mobile": [
     {
       "type": 0,
@@ -45,6 +123,12 @@
     {
       "type": 0,
       "value": "注册"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "键盘"
     }
   ]
 }

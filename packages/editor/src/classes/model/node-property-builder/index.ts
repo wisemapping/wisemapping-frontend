@@ -224,7 +224,7 @@ class NodePropertyBuilder {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
         getValue: () => this.uniqueOrNull((node) => node.getShapeType()) as TopicShapeType,
-        setValue: (value: TopicShapeType) => this.designer.changeTopicShape(value),
+        setValue: (value: TopicShapeType) => this.designer.changeShapeType(value),
       };
     return this.topicShapeModel;
   }

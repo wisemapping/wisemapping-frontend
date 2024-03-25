@@ -15,20 +15,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Events from './Events';
+import EventDispispatcher from './EventDispatcher';
 import Topic from './Topic';
 import MultitTextEditor from './MultilineTextEditor';
 
-const TopicEvent = {
-  EDIT: 'editnode',
-  CLICK: 'clicknode',
-};
+type TopicEventType = 'editnode' | 'clicknode';
 
-class TopicEventDispatcher extends Events {
+class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
   private _readOnly: boolean;
 
   // eslint-disable-next-line no-use-before-define
-  static _instance: TopicEventDispatcher;
+  private static _instance: TopicEventDispatcher;
 
   constructor(readOnly: boolean) {
     super();
@@ -43,10 +40,10 @@ class TopicEventDispatcher extends Events {
   }
 
   show(topic: Topic, textOverwrite?: string): void {
-    this.process(TopicEvent.EDIT, topic, textOverwrite);
+    this.process('editnode', topic, textOverwrite);
   }
 
-  process(eventType: string, topic: Topic, textOverwrite?: string): void {
+  process(eventType: TopicEventType, topic: Topic, textOverwrite?: string): void {
     // Close all previous open editor ....
     const editor = MultitTextEditor.getInstance();
     if (editor.isActive()) {
@@ -55,7 +52,7 @@ class TopicEventDispatcher extends Events {
 
     // Open the new editor ...
     const model = topic.getModel();
-    if (!this._readOnly && eventType === TopicEvent.EDIT) {
+    if (!this._readOnly && eventType === 'editnode') {
       editor.show(topic, textOverwrite);
     } else {
       this.fireEvent(eventType, { model, readOnly: this._readOnly });
@@ -66,8 +63,13 @@ class TopicEventDispatcher extends Events {
     return MultitTextEditor.getInstance().isActive();
   }
 
-  static configure(readOnly: boolean): void {
+  static configure(readOnly: boolean): TopicEventDispatcher {
+    if (this._instance) {
+      throw new Error('events already initialized');
+    }
+
     this._instance = new TopicEventDispatcher(readOnly);
+    return this._instance;
   }
 
   static getInstance(): TopicEventDispatcher {
@@ -77,6 +79,4 @@ class TopicEventDispatcher extends Events {
     return this._instance;
   }
 }
-
-export { TopicEvent };
 export default TopicEventDispatcher;

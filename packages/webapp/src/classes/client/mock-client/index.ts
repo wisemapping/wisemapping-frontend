@@ -26,8 +26,12 @@ import Client, {
   Permission,
   Oauth2CallbackResult,
   ForgotPasswordResult,
+  JwtAuth,
+  MapMetadata,
 } from '..';
 import { LocaleCode, localeFromStr } from '../../app-i18n';
+import Cookies from 'universal-cookie';
+import JwtTokenConfig from '../../jwt-token-config';
 
 const label1: Label = {
   id: 1,
@@ -125,6 +129,37 @@ class MockClient implements Client {
     ];
 
     this.labels = [label1, label2, label3];
+  }
+  fetchMapInfo(id: number): Promise<MapInfo> {
+    if (id > 2) {
+      throw new Error(`Map could not be found ${id}`);
+    }
+    return Promise.resolve(this.maps[id]);
+  }
+
+  fetchMapMetadata(id: number): Promise<MapMetadata> {
+    return Promise.resolve({
+      title: 'my map',
+      creatorFullName: 'The Map Creator',
+      id: id,
+      isLocked: false,
+      jsonProps: '{ "zoom": 0.8 }',
+    });
+  }
+
+  logout(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  login(auth: JwtAuth): Promise<void> {
+    JwtTokenConfig.storeToken(auth.email);
+    return Promise.resolve();
+  }
+
+  private _jwtToken(): string | undefined {
+    // Set cookie on session ...
+    const cookies = new Cookies();
+    return cookies.get('jwt-token-mock');
   }
 
   fetchStarred(id: number): Promise<boolean> {
@@ -428,8 +463,8 @@ class MockClient implements Client {
     return new Promise(handler);
   }
 
-  confirmAccountSync(): Promise<void> {
-    return Promise.resolve();
+  confirmAccountSync(): Promise<Oauth2CallbackResult> {
+    return this.processGoogleCallback();
   }
 }
 

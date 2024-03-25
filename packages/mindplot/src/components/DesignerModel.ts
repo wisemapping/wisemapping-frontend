@@ -18,12 +18,11 @@
 import { $assert } from '@wisemapping/core-js';
 import CentralTopic from './CentralTopic';
 import { DesignerOptions } from './DesignerOptionsBuilder';
-import Events from './Events';
 import Relationship from './Relationship';
 import Topic from './Topic';
 import { $notify } from './model/ToolbarNotifier';
 
-class DesignerModel extends Events {
+class DesignerModel {
   private _zoom: number;
 
   private _topics: Topic[];
@@ -31,7 +30,6 @@ class DesignerModel extends Events {
   private _relationships: Relationship[];
 
   constructor(options: DesignerOptions) {
-    super();
     this._zoom = options.zoom;
     this._topics = [];
     this._relationships = [];

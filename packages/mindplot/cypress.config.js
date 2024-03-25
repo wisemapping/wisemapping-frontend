@@ -2,7 +2,6 @@ const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   video: false,
-  videoUploadOnPasses: false,
   projectId: 'it9g7s',
   e2e: {
     // We've imported your old cypress plugins here.

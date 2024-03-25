@@ -21,6 +21,7 @@ export default {
     noteText: { control: 'text' },
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
+    theme: { control: 'select', options: ['classic', 'prism', 'dark-prism'] },
   },
 } as Meta;
 
@@ -82,4 +83,20 @@ ShapeNone.args = {
   text: 'Shape None',
   eicon: ['🌈'],
   shapeType: 'none',
+};
+
+export const ThemeClassic = Template.bind({});
+ThemeClassic.args = {
+  text: 'Theme Classic',
+  eicon: ['🌈'],
+  shapeType: 'none',
+  theme: 'classic',
+};
+
+export const ThemePrime = Template.bind({});
+ThemePrime.args = {
+  text: 'Theme Prime',
+  eicon: ['🌈'],
+  shapeType: 'none',
+  theme: 'prism',
 };

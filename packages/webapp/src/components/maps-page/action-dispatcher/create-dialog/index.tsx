@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
 import FormControl from '@mui/material/FormControl';
 
-import Client, { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { BasicMapInfo, ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type CreateModel = {
   title: string;
@@ -20,7 +19,7 @@ export type CreateProps = {
 
 const defaultModel: CreateModel = { title: '', description: '' };
 const CreateDialog = ({ onClose }: CreateProps): React.ReactElement => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [model, setModel] = React.useState<CreateModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const intl = useIntl();

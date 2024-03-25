@@ -20,84 +20,134 @@ import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
 
-interface Config {
+type ConfigContainer = {
+  type: 'remote' | 'static';
+  url?: string;
+  config: Config;
+};
+
+type Config = {
+  uiBaseUrl: string;
   apiBaseUrl: string;
   analyticsAccount?: string;
   recaptcha2Enabled: boolean;
+  registrationEnabled: boolean;
   recaptcha2SiteKey?: string;
   clientType: 'mock' | 'rest';
   googleOauth2Url: string;
-}
+  jwtExpirationMin: number;
+};
 
-class _AppConfig {
-  private defaultInstance: Config = {
-    apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:${window.location.port}`,
-    clientType: 'mock',
-    recaptcha2Enabled: true,
-    recaptcha2SiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
-    googleOauth2Url: '/c/registration-google?code=aFakeCode',
-  };
+class AppConfig {
+  private static _config: Config;
 
-  isDevelopEnv(): boolean {
-    const config = this.getInstance();
+  static fetchOrGetConfig(): Config {
+    try {
+      if (!this._config) {
+        let result: Config;
+
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const extConfig: ConfigContainer = require('BoostrapConfig') as ConfigContainer;
+        if (extConfig.type === 'static') {
+          // Configuration has been defined as part of webpack ...
+          result = extConfig.config;
+        } else {
+          // Configuration must be fetch externally ...
+          console.log(`Fetching remote config from '${extConfig.url}'`);
+          if (!extConfig.url) {
+            throw new Error(`Fetching remote config from ${extConfig.url} can not be empty`);
+          }
+
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', extConfig.url, false);
+          xhr.send(null);
+          if (xhr.status === 200) {
+            result = JSON.parse(xhr.responseText);
+          } else {
+            throw new Error('Request failed: ' + xhr.statusText);
+          }
+        }
+
+        this._config = result;
+        console.log(`App Config: ${JSON.stringify(this._config)}`);
+      }
+    } catch (e) {
+      throw { msg: `Unexpected error application. Please, try latter. Detail: ${e.message}` };
+    }
+
+    return this._config;
+  }
+
+  static isMockEnv(): boolean {
+    const config = this.fetchOrGetConfig();
     return config.clientType === 'mock';
   }
 
-  private getInstance(): Config {
-    // Config can be inserted in the html page to define the global properties ...
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let result = (window as any).serverconfig;
-    if (!result) {
-      result = this.defaultInstance;
+  static getJwtExpirationMin(): number {
+    const config = this.fetchOrGetConfig();
+    if (!config.jwtExpirationMin) {
+      throw new Error('jwtExpirationMin can not be null. Review wise-api configuration.');
     }
-
-    return result;
+    return config.jwtExpirationMin;
   }
 
-  isRestClient(): boolean {
-    const config = this.getInstance();
-    return config.clientType === 'rest';
+  static isRestClient(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.clientType === 'rest' || !config.clientType;
   }
 
-  isRecaptcha2Enabled(): boolean {
-    const config = this.getInstance();
+  static isRecaptcha2Enabled(): boolean {
+    const config = this.fetchOrGetConfig();
     return config.recaptcha2Enabled;
   }
 
-  getRecaptcha2SiteKey(): string | undefined {
-    const config = this.getInstance();
+  static getRecaptcha2SiteKey(): string | undefined {
+    const config = this.fetchOrGetConfig();
     return config.recaptcha2SiteKey;
   }
 
-  getGoogleAnalyticsAccount(): string | undefined {
-    const config = this.getInstance();
+  static getGoogleAnalyticsAccount(): string | undefined {
+    const config = this.fetchOrGetConfig();
     return config.analyticsAccount;
   }
 
-  getGoogleOauth2Url(): string | undefined {
-    const config = this.getInstance();
+  static isRegistrationEnabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.registrationEnabled;
+  }
+
+  static getGoogleOauth2Url(): string | undefined {
+    const config = this.fetchOrGetConfig();
     return config.googleOauth2Url;
   }
 
-  buildClient(): Client {
-    const config = this.getInstance();
-    let result: Client;
-    if (config.clientType == 'rest') {
-      result = new RestClient(this.getBaseUrl());
-      console.log('Service using rest client. ' + JSON.stringify(config));
-    } else {
+  static getClient(): Client {
+    let result: Client | undefined;
+    try {
+      if (this.isRestClient()) {
+        result = new RestClient(this.getApiBaseUrl());
+      }
+    } catch (e) {
+      console.error('Client could not be initialized.');
+      console.error(e);
+    }
+
+    if (!result) {
       console.log('Warning:Service using mockservice client');
       result = new MockClient();
     }
-
     return result;
   }
 
-  getBaseUrl(): string {
-    const config = this.getInstance();
+  static getApiBaseUrl(): string {
+    const config = this.fetchOrGetConfig();
     return config.apiBaseUrl;
   }
+
+  static getUiBaseUrl(): string {
+    const config = this.fetchOrGetConfig();
+    return config.uiBaseUrl;
+  }
 }
-const AppConfig = new _AppConfig();
 
 export default AppConfig;

@@ -1,10 +1,10 @@
 import NodeModel from '../model/NodeModel';
+import ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
 import DarkPrismTheme from './DarkPrismTheme';
 import PrismTheme from './PrismTheme';
+import RobotTheme from './RobotTheme';
 import Theme from './Theme';
-
-type ThemeId = 'prism' | 'classic' | 'dark-prism';
 
 class ThemeFactory {
   private static prismTheme = new PrismTheme();
@@ -13,7 +13,9 @@ class ThemeFactory {
 
   private static classicTheme = new ClassicTheme();
 
-  static createById(id: ThemeId): Theme {
+  private static robotTheme = new RobotTheme();
+
+  static createById(id: ThemeType): Theme {
     let result: Theme;
     switch (id) {
       case 'classic':
@@ -24,6 +26,9 @@ class ThemeFactory {
         break;
       case 'prism':
         result = ThemeFactory.prismTheme;
+        break;
+      case 'robot':
+        result = ThemeFactory.robotTheme;
         break;
       default: {
         const exhaustiveCheck: never = id;

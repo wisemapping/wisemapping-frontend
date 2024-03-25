@@ -1,9 +1,9 @@
 import '../css/viewmode.css';
 import React from 'react';
-import Editor, { EditorOptions } from '../../../../src/index';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 import MapInfoImpl from './MapInfoImpl';
 import { createRoot } from 'react-dom/client';
+import Editor, { EditorOptions, useEditor } from '../../../../src';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
@@ -31,21 +31,32 @@ const initialization = (designer: Designer) => {
 // Obtain map id from query param
 const params = new URLSearchParams(window.location.search.substring(1));
 const mapId = params.get('id') || 'welcome';
-const persistence = new LocalStorageManager('samples/{id}.wxml', false);
+const persistence = new LocalStorageManager('samples/{id}.wxml', false, undefined);
 const options: EditorOptions = {
   mode: 'viewonly',
   locale: 'en',
   enableKeyboardEvents: true,
+  enableAppBar: false,
+};
+
+const mapInfo = new MapInfoImpl(mapId, 'Develop Map Title', 'Paulo Veiga', false);
+
+const Playground = () => {
+  const editor = useEditor({
+    mapInfo,
+    options,
+    persistenceManager: persistence,
+  });
+  return (
+    <Editor
+      editor={editor}
+      onAction={(action) => console.log('action called:', action)}
+      onLoad={initialization}
+    />
+  );
 };
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
-root.render(
-  <Editor
-    mapInfo={new MapInfoImpl(mapId, 'Develop Map Title', false)}
-    options={options}
-    persistenceManager={persistence}
-    onAction={(action) => console.log('action called:', action)}
-    onLoad={initialization}
-  />,
-);
+
+root.render(<Playground />);

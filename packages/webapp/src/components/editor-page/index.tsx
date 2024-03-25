@@ -15,66 +15,79 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { useEffect } from 'react';
-import Editor, { EditorOptions } from '@wisemapping/editor';
+import React, { useContext, useEffect, useState } from 'react';
+import Editor, { useEditor, EditorOptions } from '@wisemapping/editor';
 import {
   EditorRenderMode,
   PersistenceManager,
   RESTPersistenceManager,
   LocalStorageManager,
   MockPersistenceManager,
+  PersistenceError,
 } from '@wisemapping/editor';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
-import { useDispatch, useSelector } from 'react-redux';
-import { hotkeysEnabled } from '../../redux/editorSlice';
 import ReactGA from 'react-ga4';
-import {
-  useFetchAccount,
-  useFetchMapById,
-  activeInstance,
-  sessionExpired,
-} from '../../redux/clientSlice';
-import EditorOptionsBuilder from './EditorOptionsBuilder';
 import { useTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
-import Client from '../../classes/client';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
-import ClientHealthSentinel from '../common/client-health-sentinel';
+import JwtTokenConfig from '../../classes/jwt-token-config';
+import { useLoaderData, useNavigation } from 'react-router-dom';
+import { EditorMetadata, PageModeType } from './loader';
+import { useFetchAccount } from '../../classes/middleware';
+import { ClientContext } from '../../classes/provider/client-context';
+import { KeyboardContext } from '../../classes/provider/keyboard-context';
+import SessionExpiredDialog from '../common-page/session-expired-dialog';
 
-const buildPersistenceManagerForEditor = (mode: string): PersistenceManager => {
-  let persistenceManager: PersistenceManager;
+const buildPersistenceManagerForEditor = (
+  mode: EditorRenderMode,
+  setSessionExpired: (value: boolean) => void,
+  hid?: number,
+): PersistenceManager => {
+  let result: PersistenceManager;
   if (AppConfig.isRestClient()) {
+    const baseUrl = AppConfig.getApiBaseUrl();
+
+    // Fetch Token ...
+    const token = JwtTokenConfig.retreiveToken();
     if (mode === 'edition-owner' || mode === 'edition-editor') {
-      persistenceManager = new RESTPersistenceManager({
-        documentUrl: '/c/restful/maps/{id}/document',
-        revertUrl: '/c/restful/maps/{id}/history/latest',
-        lockUrl: '/c/restful/maps/{id}/lock',
+      // Fetch JWT token ...
+
+      result = new RESTPersistenceManager({
+        documentUrl: `${baseUrl}/api/restful/maps/{id}/document`,
+        revertUrl: `${baseUrl}/api/restful/maps/{id}/history/latest`,
+        lockUrl: `${baseUrl}/api/restful/maps/{id}/lock`,
+        jwt: token,
       });
     } else {
-      persistenceManager = new LocalStorageManager(
-        `/c/restful/maps/{id}/${
-          globalThis.historyId ? `${globalThis.historyId}/` : ''
+      result = new LocalStorageManager(
+        `${baseUrl}/api/restful/maps/{id}/${
+          hid ? `${hid}/` : ''
         }document/xml${mode === 'showcase' ? '-pub' : ''}`,
         true,
+        token,
       );
     }
-    persistenceManager.addErrorHandler((error) => {
-      if (error.errorType === 'session-expired') {
-        // TODO: this line was in RestPersistenceClient, do something similar here
-        //client.sessionExpired();
+
+    // Add session expiration handler ....
+    result.addErrorHandler((error: PersistenceError) => {
+      if (error.errorType === 'auth') {
+        setSessionExpired(true);
       }
     });
   } else {
-    persistenceManager = new MockPersistenceManager(exampleMap);
+    result = new MockPersistenceManager(exampleMap);
   }
-  return persistenceManager;
+  return result;
 };
 
 export type EditorPropsType = {
-  isTryMode: boolean;
+  mapId: number;
+  hid?: number;
+  pageMode: PageModeType;
+  zoom?: number;
 };
 
 type ActionType =
@@ -97,73 +110,63 @@ type ActionType =
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));
 const AccountMenu = React.lazy(() => import('../maps-page/account-menu'));
 
-const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
-  const [activeDialog, setActiveDialog] = React.useState<ActionType | null>(null);
-  const hotkey = useSelector(hotkeysEnabled);
+const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.ReactElement => {
+  const [activeDialog, setActiveDialog] = useState<ActionType | null>(null);
+  const [sessionExpired, setSessionExpired] = useState<boolean>(false);
+
   const userLocale = AppI18n.getUserLocale();
   const theme = useTheme();
-  const client: Client = useSelector(activeInstance);
-  const dispatch = useDispatch();
+  const client = useContext(ClientContext);
+  const { hotkeyEnabled } = useContext(KeyboardContext);
+  const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
 
-  useEffect(() => {
-    if (client) {
-      client.onSessionExpired(() => {
-        dispatch(sessionExpired());
-      });
-    } else {
-      console.warn('Session expiration wont be handled because could not find client');
-    }
-  }, []);
+  // If zoom has been define, overwrite the stored value.
+  if (zoom) {
+    editorMetadata.zoom = zoom;
+  }
+
+  const navigation = useNavigation();
+  if (navigation.state === 'loading') {
+    return <h1>Loading!</h1>;
+  }
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
   }, []);
 
-  const useFindEditorMode = (isTryMode: boolean, mapId: number): EditorRenderMode | null => {
-    let result: EditorRenderMode = null;
-    if (isTryMode) {
-      result = 'showcase';
-    } else if (globalThis.mindmapLocked) {
-      result = 'viewonly';
-    } else {
-      const fetchResult = useFetchMapById(mapId);
-      if (!fetchResult.isLoading) {
-        if (fetchResult.error) {
-          throw new Error(`Map info could not be loaded: ${JSON.stringify(fetchResult.error)}`);
-        }
-
-        if (!fetchResult.map) {
-          throw new Error(
-            `Map info could not be loaded. Info not present: ${JSON.stringify(fetchResult)}`,
-          );
-        }
-        result = `edition-${fetchResult.map.role}`;
-      }
-    }
-    return result;
-  };
-
-  // What is the role ?
-  const mapId = EditorOptionsBuilder.loadMapId();
-  const mode = useFindEditorMode(isTryMode, mapId);
-
   // Account settings can be null and editor cannot be initilized multiple times. This creates problems
   // at the i18n resource loading.
-  const isAccountLoaded = mode === 'showcase' || useFetchAccount;
-  const loadCompleted = mode && isAccountLoaded;
+  const isAccountLoaded = editorMetadata?.editorMode === 'showcase' || useFetchAccount;
+  const loadCompleted = editorMetadata && isAccountLoaded;
 
-  let options: EditorOptions, persistence: PersistenceManager;
+  let persistence: PersistenceManager;
   let mapInfo: MapInfo;
+  let editorConfig: EditorOptions;
+
+  const enableAppBar = pageMode !== 'view';
   if (loadCompleted) {
-    options = EditorOptionsBuilder.build(userLocale.code, mode, hotkey);
-    persistence = buildPersistenceManagerForEditor(mode);
+    // Configure
+    editorConfig = {
+      enableKeyboardEvents: hotkeyEnabled,
+      locale: userLocale.code,
+      mode: editorMetadata.editorMode,
+      enableAppBar: enableAppBar,
+      zoom: editorMetadata.zoom,
+    };
+    persistence = buildPersistenceManagerForEditor(
+      editorMetadata.editorMode,
+      setSessionExpired,
+      hid,
+    );
+
     mapInfo = new MapInfoImpl(
       mapId,
       client,
-      options.mapTitle,
-      options.locked,
-      options.lockedMsg,
-      options.zoom,
+      editorMetadata.mapMetadata.title,
+      editorMetadata.mapMetadata.creatorFullName,
+      editorMetadata.mapMetadata.isLocked,
+      editorMetadata.mapMetadata.isLockedBy,
+      editorMetadata.zoom,
     );
   }
 
@@ -173,22 +176,26 @@ const EditorPage = ({ isTryMode }: EditorPropsType): React.ReactElement => {
     }
   }, [mapInfo?.getTitle()]);
 
+  const editor = useEditor({
+    mapInfo,
+    options: editorConfig,
+    persistenceManager: persistence,
+  });
+
   return loadCompleted ? (
     <IntlProvider
       locale={userLocale.code}
       defaultLocale={Locales.EN.code}
       messages={userLocale.message as Record<string, string>}
     >
-      <ClientHealthSentinel />
+      <SessionExpiredDialog open={sessionExpired} />
       <Editor
+        editor={editor}
         onAction={setActiveDialog}
-        options={options}
-        persistenceManager={persistence}
-        mapInfo={mapInfo}
         theme={theme}
         accountConfiguration={
           // Prevent load on non-authenticated.
-          options.mode !== 'showcase' ? (
+          editorConfig.mode !== 'showcase' ? (
             <IntlProvider
               locale={userLocale.code}
               messages={userLocale.message as Record<string, string>}

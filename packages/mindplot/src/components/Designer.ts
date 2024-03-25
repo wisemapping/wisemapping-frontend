@@ -20,7 +20,7 @@ import $ from 'jquery';
 import { $assert, $defined } from '@wisemapping/core-js';
 import Messages, { $msg } from './Messages';
 
-import Events from './Events';
+import EventDispispatcher from './EventDispatcher';
 import StandaloneActionDispatcher from './StandaloneActionDispatcher';
 
 import CommandContext from './CommandContext';
@@ -37,10 +37,10 @@ import DragManager from './DragManager';
 import RelationshipPivot from './RelationshipPivot';
 import Relationship from './Relationship';
 
-import TopicEventDispatcher, { TopicEvent } from './TopicEventDispatcher';
+import TopicEventDispatcher from './TopicEventDispatcher';
 import TopicFactory from './TopicFactory';
 
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import EventBusDispatcher from './layout/EventBusDispatcher';
 
 import LayoutManager from './layout/LayoutManager';
@@ -62,8 +62,11 @@ import ImageExpoterFactory from './export/ImageExporterFactory';
 import PositionType from './PositionType';
 import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
+import ChangeEvent from './layout/ChangeEvent';
 
-class Designer extends Events {
+type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess';
+
+class Designer extends EventDispispatcher<DesignerEventType> {
   private _mindmap: Mindmap | null;
 
   private _options: DesignerOptions;
@@ -159,14 +162,9 @@ class Designer extends Events {
     return this._actionDispatcher;
   }
 
-  addEvent(type: string, listener): Events {
-    if (type === TopicEvent.EDIT || type === TopicEvent.CLICK) {
-      const editor = TopicEventDispatcher.getInstance();
-      editor.addEvent(type, listener);
-    } else {
-      super.addEvent(type, listener);
-    }
-    return this;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  addEvent(type: DesignerEventType, listener: (event: (args?: any) => void) => void): void {
+    super.addEvent(type, listener);
   }
 
   private _registerMouseEvents() {
@@ -619,7 +617,8 @@ class Designer extends Events {
     // Init layout manager ...
     const size = { width: 25, height: 25 };
     const layoutManager = new LayoutManager(mindmap.getCentralTopic().getId(), size);
-    layoutManager.addEvent('change', (event) => {
+
+    layoutManager.addEvent('change', (event: ChangeEvent) => {
       const id = event.getId();
       const topic = this.getModel().findTopicById(id);
       if (topic) {
@@ -627,6 +626,7 @@ class Designer extends Events {
         topic.setOrder(event.getOrder());
       }
     });
+
     this._eventBussDispatcher.setLayoutManager(layoutManager);
 
     // Building node graph ...
@@ -652,8 +652,9 @@ class Designer extends Events {
 
       // Enable workspace drag events ...
       this._canvas.registerEvents();
+
       // Finally, sort the map ...
-      EventBus.instance.fireEvent('forceLayout');
+      LayoutEventBus.fireEvent('forceLayout');
       this.fireEvent('loadSuccess');
     });
   }
@@ -897,7 +898,7 @@ class Designer extends Events {
     }
   }
 
-  changeTopicShape(shape: TopicShapeType): void {
+  changeShapeType(shape: TopicShapeType): void {
     const validateFunc = (topic: Topic) =>
       !(topic.getType() === 'CentralTopic' && (shape === 'line' || shape === 'none'));
 

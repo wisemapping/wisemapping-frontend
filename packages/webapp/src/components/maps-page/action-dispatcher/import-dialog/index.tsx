@@ -2,15 +2,14 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import { Importer, TextImporterFactory } from '@wisemapping/editor';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance } from '../../../../redux/clientSlice';
+import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../base-dialog';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 export type ImportModel = {
   title: string;
@@ -30,7 +29,7 @@ type ErrorFile = {
 
 const defaultModel: ImportModel = { title: '' };
 const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const [model, setModel] = React.useState<ImportModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
   const [errorFile, setErrorFile] = React.useState<ErrorFile>({ error: false, message: '' });

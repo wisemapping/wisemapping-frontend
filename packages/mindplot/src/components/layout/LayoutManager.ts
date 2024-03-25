@@ -16,15 +16,16 @@
  *   limitations under the License.
  */
 import { $assert, $defined } from '@wisemapping/core-js';
-import Events from '../Events';
+import EventDispispatcher from '../EventDispatcher';
 import RootedTreeSet from './RootedTreeSet';
 import OriginalLayout from './OriginalLayout';
 import ChangeEvent from './ChangeEvent';
 import SizeType from '../SizeType';
 import Node from './Node';
 import PositionType from '../PositionType';
+import LayoutEventType from './LayoutEventType';
 
-class LayoutManager extends Events {
+class LayoutManager extends EventDispispatcher<LayoutEventType> {
   private _treeSet: RootedTreeSet;
 
   private _layout: OriginalLayout;
@@ -82,10 +83,6 @@ class LayoutManager extends Events {
   }
 
   connectNode(parentId: number, childId: number, order: number) {
-    $assert($defined(parentId), 'parentId cannot be null');
-    $assert($defined(childId), 'childId cannot be null');
-    $assert($defined(order), 'order cannot be null');
-
     this._layout.connectNode(parentId, childId, order);
 
     return this;
@@ -202,7 +199,6 @@ class LayoutManager extends Events {
 
         node.resetPositionState();
         node.resetOrderState();
-        node.resetFreeState();
         this._events.push(event);
       }
       this._collectChanges(this._treeSet.getChildren(node));

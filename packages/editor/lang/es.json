@@ -78,6 +78,18 @@
     "editor-panel.link-panel-title": {
         "defaultMessage": "Enlace"
     },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "Tema"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "Tema"
+    },
+    "editor-panel.tooltip-connection-style-arc": {
+        "defaultMessage": "Arco"
+    },
+    "editor-panel.tooltip-topic-share-none": {
+        "defaultMessage": "Sin forma"
+    },
     "editor-panel.tooltip-add-icon": {
         "defaultMessage": "Agregar Icono"
     },

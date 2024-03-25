@@ -12,11 +12,11 @@ import LabelOutlined from '@mui/icons-material/LabelOutlined';
 import HistoryOutlined from '@mui/icons-material/HistoryOutlined';
 
 import { FormattedMessage } from 'react-intl';
-import { useFetchMapById } from '../../../redux/clientSlice';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
+import { useFetchMapById } from '../../../classes/middleware';
 export type ActionType =
   | 'open'
   | 'share'
@@ -52,7 +52,7 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
     };
   };
 
-  const role = mapId !== undefined ? useFetchMapById(mapId)?.map?.role : undefined;
+  const role = mapId !== undefined ? useFetchMapById(mapId)?.data?.role : undefined;
   return (
     <Menu
       anchorEl={anchor}

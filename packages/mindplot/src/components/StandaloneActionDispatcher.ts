@@ -27,7 +27,7 @@ import DragTopicCommand from './commands/DragTopicCommand';
 import GenericFunctionCommand from './commands/GenericFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
-import EventBus from './layout/EventBus';
+import LayoutEventBus from './layout/LayoutEventBus';
 import CommandContext from './CommandContext';
 import NodeModel from './model/NodeModel';
 import RelationshipModel from './model/RelationshipModel';
@@ -55,7 +55,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this._actionRunner = new DesignerActionRunner(commandContext, this);
   }
 
-  addTopics(models: NodeModel[], parentTopicsId: number[] | null) {
+  addTopics(models: NodeModel[], parentTopicsId: number[] | null): void {
     const command = new AddTopicCommand(models, parentTopicsId);
     this.execute(command);
   }
@@ -84,7 +84,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic, pos: PositionType) => {
       const result = topic.getPosition();
-      EventBus.instance.fireEvent('topicMoved', {
+      LayoutEventBus.fireEvent('topicMoved', {
         node: topic.getModel(),
         position: pos,
       });
@@ -199,12 +199,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
-    $assert(topicsIds, 'topicsIds can not be null');
-    $assert(shapeType, 'shapeType can not be null');
-
     const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
       const result = topic.getShapeType();
       topic.setShapeType(commandShapeType);
+
       return result;
     };
 

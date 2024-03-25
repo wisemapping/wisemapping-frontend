@@ -9,10 +9,10 @@
         "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
     },
     "editor.try-welcome-description-mobile": {
-        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
     },
     "editor.edit-description-mobile": {
-        "defaultMessage": "Les capacités d'édition limitées de mindmap sont prises en charge dans les appareils mobiles. Utilisez le navigateur de bureau pour bénéficier de toutes les fonctionnalités de l'éditeur."
+        "defaultMessage": "La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
     },
     "action.accept": {
         "defaultMessage": "Accepter"
@@ -90,10 +90,13 @@
         "defaultMessage": "Ajouter une relation"
     },
     "editor-panel.tooltip-add-topic": {
-        "defaultMessage": "Ajouter un sujet"
+        "defaultMessage": "Ajouter un noeud"
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Supprimer un noeud"
     },
     "editor-panel.tooltip-delete-sujet": {
-        "defaultMessage": "Supprimer le sujet"
+        "defaultMessage": "Supprimer le noeud"
     },
     "editor-panel.tooltip-topic-border-color": {
         "defaultMessage": "Couleur de bordure"
@@ -129,7 +132,10 @@
         "defaultMessage": "Forme ronde"
     },
     "editor-panel.tooltip-topic-style": {
-        "defaultMessage": "Style de sujet"
+        "defaultMessage": "Style de noeud"
+    },
+    "zoom-panel.tooltip-keyboard": {
+        "defaultMessage": "Clavier"
     },
     "zoom-panel.tooltip-clavier": {
         "defaultMessage": "Raccourcis clavier"
@@ -147,7 +153,7 @@
         "defaultMessage": "Action"
     },
     "shortcut-help-pane.add-child": {
-        "defaultMessage": "Ajouter le sujet de l'enfant"
+        "defaultMessage": "Ajouter un noeud enfant"
     },
     "shortcut-help-pane.add-link": {
         "defaultMessage": "Ajouter un lien"
@@ -156,40 +162,40 @@
         "defaultMessage": "Ajouter une note"
     },
     "shortcut-help-pane.add-sibling": {
-        "defaultMessage": "Ajouter un sujet de frère"
+        "defaultMessage": "Ajouter un noeud frère"
     },
     "shortcut-help-pane.cancel-text-changes": {
         "defaultMessage": "Annuler les modifications du texte"
     },
     "shortcut-help-pane.change-font-bold": {
-        "defaultMessage": "Changer de texte en gras"
+        "defaultMessage": "Passer le texte en gras"
     },
     "shortcut-help-pane.change-font-italic": {
-        "defaultMessage": "Changer le texte en italique"
+        "defaultMessage": "Passer le texte en italique"
     },
     "shortcut-help-pane.collapse-children": {
-        "defaultMessage": "Effondrer les enfants"
+        "defaultMessage": "Masquer les noeuds enfants"
     },
     "shortcut-help-pane.copy-and-text": {
-        "defaultMessage": "Copier et coller des sujets"
+        "defaultMessage": "Copier et coller des noeuds"
     },
     "shortcut-help-pane.delete-topic": {
-        "defaultMessage": "Supprimer le sujet"
+        "defaultMessage": "Supprimer le noeud"
     },
     "shortcut-help-pane.deselect-all-topics": {
-        "defaultMessage": "Désélectionner tous les sujets"
+        "defaultMessage": "Désélectionner tous les noeuds"
     },
     "shortcut-help-pane.edit-multiline": {
-        "defaultMessage": "Ajouter le texte du sujet multi-ligne"
+        "defaultMessage": "Ajouter une ligne au noeud"
     },
     "shortcut-help-pane.edit-topic": {
-        "defaultMessage": "Modifier le texte du sujet"
+        "defaultMessage": "Modifier le texte du noeud"
     },
     "shortcut-help-pane.edit-topic-key": {
-        "defaultMessage": "Commencez juste à taper"
+        "defaultMessage": "Double-clic"
     },
     "shortcut-help-pane.navigation": {
-        "defaultMessage": "La navigation"
+        "defaultMessage": "Naviguer"
     },
     "shortcut-help-pane.navigation-keys": {
         "defaultMessage": "Touches directionnelles"
@@ -201,10 +207,10 @@
         "defaultMessage": "Sauvegarder les modifications"
     },
     "shortcut-help-pane.select-all-topics": {
-        "defaultMessage": "Sélectionnez tous les sujets"
+        "defaultMessage": "Sélectionner tous les noeuds"
     },
     "shortcut-help-pane.select-topics": {
-        "defaultMessage": "Sélectionnez plusieurs sujets"
+        "defaultMessage": "Sélectionner plusieurs noeuds"
     },
     "shortcut-help-pane.select-topics-keys": {
         "defaultMessage": "Clic de souris"
@@ -222,10 +228,25 @@
         "defaultMessage": "Courbe polyligne"
     },
     "shortcut-help-pane.overwrite-edit-topic": {
-        "defaultMessage": "Sobrescribir el texto del tópico"
+        "defaultMessage": "Remplacer le texte du noeud"
     },
     "shortcut-help-pane.overwrite-edit-topic-key": {
-        "defaultMessage": "Commencer à écrire sur le sujet sélectionné"
+        "defaultMessage": "Ecrire dans le noeud sélectionné"
+    },
+    "editor-panel.tooltip-topic-share-none": {
+        "defaultMessage": "Aucune forme"
+    },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "Thème"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "Thème"
+    },
+    "editor-panel.tooltip-connection-style-arc": {
+        "defaultMessage": "Arc"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Forme ronde"
     },
     "editor-panel.tooltip-connection-color": {
         "defaultMessage": "Couleur"
@@ -249,7 +270,7 @@
         "defaultMessage": "La couleur de remplissage"
     },
     "editor-panel.tooltip-topic-fill-color-default": {
-        "defaultMessage": "Couleur de relleno por defecto"
+        "defaultMessage": "Couleur de remplissage par défaut"
     },
     "action.delete": {
         "defaultMessage": "Supprimer"
@@ -258,6 +279,6 @@
         "defaultMessage": "Couleur par défaut"
     },
     "shortcut-help-pane.drag-disconnect": {
-        "defaultMessage": "Déconnecter le sujet"
+        "defaultMessage": "Déconnecter le noeud"
     }
 }

@@ -1,53 +1,47 @@
 {
   "name": "@wisemapping/web2d",
-  "version": "0.4.6",
+  "version": "0.6.1",
   "description": "WiseMapping - Web2D Render Library",
   "homepage": "http://www.wisemapping.org/",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+  },
   "license": "MIT",
   "main": "src/index.ts",
   "files": [
     "src"
   ],
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
-  },
   "scripts": {
-    "bootstrap": "yalc publish;yalc add @wisemapping/core-js",
-    "dev": "webpack --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "lint": "eslint src",
-    "cy:run": "cypress run",
+    "build-storybook": "build-storybook",
     "cy:open": "cypress open",
-    "test:integration": "start-server-and-test storybook http-get://localhost:6006 cy:run",
+    "cy:run": "cypress run",
+    "dev": "webpack --config webpack.dev.js",
+    "lint": "eslint src",
+    "storybook": "npx start-storybook -p 6006 --no-open",
     "test": "yarn test:integration",
-    "storybook": "start-storybook -p 6006 --no-open",
-    "build-storybook": "build-storybook"
+    "test:integration": "npx start-server-and-test storybook http-get://localhost:6006 cy:run"
   },
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
-    "@storybook/addon-actions": "^6.5.15",
-    "@storybook/addon-docs": "^6.5.15",
-    "@storybook/addon-essentials": "^6.5.15",
-    "@storybook/addon-interactions": "^6.5.15",
-    "@storybook/addon-links": "^6.5.15",
-    "@storybook/builder-webpack5": "^6.5.15",
-    "@storybook/html": "^6.5.15",
-    "@storybook/manager-webpack5": "^6.5.15",
-    "@storybook/testing-library": "^0.0.13",
-    "cypress": "12.3.0",
-    "cypress-image-snapshot": "^4.0.1",
-    "start-server-and-test": "^1.15.2"
-  },
-  "dependencies": {
-    "@wisemapping/core-js": "^0.4.0",
-    "jquery": "^3.6.0"
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-docs": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/html": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/testing-library": "^0.2.2",
+    "cypress": "13.6.6",
+    "cypress-image-snapshot": "^4.0.1"
   },
   "peerDependencies": {
-    "@wisemapping/core-js": "^0.4.0",
+    "@wisemapping/core-js": "workspace:*",
     "jquery": "^3.6.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com"
   }
 }

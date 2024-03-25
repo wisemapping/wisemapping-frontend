@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import Client, { ErrorInfo } from '../../../../classes/client';
-import { activeInstance, useFetchMapById } from '../../../../redux/clientSlice';
+import { ErrorInfo } from '../../../../classes/client';
 import { SimpleDialogProps, handleOnMutationSuccess } from '..';
 import BaseDialog from '../base-dialog';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { useFetchMapById } from '../../../../classes/middleware';
+import { ClientContext } from '../../../../classes/provider/client-context';
 
 const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement => {
   const intl = useIntl();
-  const client: Client = useSelector(activeInstance);
+  const client = useContext(ClientContext);
   const queryClient = useQueryClient();
   const [error, setError] = React.useState<ErrorInfo>();
 
@@ -30,7 +30,7 @@ const DeleteDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
     mutation.mutate(mapId);
   };
 
-  const { map } = useFetchMapById(mapId);
+  const { data: map } = useFetchMapById(mapId);
   const alertTitle = `${intl.formatMessage({
     id: 'action.delete-title',
     defaultMessage: 'Delete',

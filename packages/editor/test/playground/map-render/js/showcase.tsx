@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React from 'react';
-import Editor, { EditorOptions } from '../../../../src/index';
+import Editor, { EditorOptions, useEditor } from '../../../../src/index';
 import { createRoot } from 'react-dom/client';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 import MapInfoImpl from './MapInfoImpl';
@@ -30,21 +30,32 @@ const initialization = (designer: Designer) => {
   });
 };
 
-const persistence = new LocalStorageManager('samples/{id}.wxml', false, false);
+const persistence = new LocalStorageManager('samples/{id}.wxml', false, undefined, false);
 const options: EditorOptions = {
   mode: 'showcase',
   locale: 'en',
   enableKeyboardEvents: true,
+  enableAppBar: true,
+};
+
+const mapInfo = new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false);
+
+const Playground = () => {
+  const editor = useEditor({
+    mapInfo,
+    options,
+    persistenceManager: persistence,
+  });
+  return (
+    <Editor
+      editor={editor}
+      onAction={(action) => console.log('action called:', action)}
+      onLoad={initialization}
+    />
+  );
 };
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
-root.render(
-  <Editor
-    mapInfo={new MapInfoImpl('welcome', 'Develop Map Title', false)}
-    options={options}
-    persistenceManager={persistence}
-    onAction={(action) => console.log('action called:', action)}
-    onLoad={initialization}
-  />,
-);
+
+root.render(<Playground />);

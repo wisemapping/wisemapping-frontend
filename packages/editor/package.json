@@ -1,46 +1,51 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.4.2",
-  "main": "dist/editor.bundle.js",
-  "scripts": {
-    "bootstrap": "yalc publish;yalc add @wisemapping/mindplot",
-    "build": "webpack --config webpack.prod.js",
-    "playground": "webpack serve --config webpack.playground.js",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
-    "lint": "eslint src --ext js,ts,tsx",
-    "test:integration": "start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
-    "test": "yarn test:unit && yarn test:integration",
-    "test:unit": "jest ./test/unit/* --detectOpenHandles",
-    "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
-    "i18n:compile": "for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done"
-  },
+  "version": "0.6.1",
   "repository": "http://www.wisemapping.com",
-  "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "@testing-library/react": "^13.4.0",
-    "@types/cypress-image-snapshot": "^3.1.6",
-    "babel-polyfill": "^6.26.0",
-    "cypress": "^12.3.0",
-    "cypress-image-snapshot": "^4.0.1",
-    "jest-transform-stub": "^2.0.0",
-    "react": "^18.2.0"
+  "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
+  "main": "dist/editor.bundle.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
+    "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
+    "lint": "eslint src --ext js,ts,tsx",
+    "playground": "webpack serve --config webpack.playground.js",
+    "test": "yarn test:unit && yarn test:integration",
+    "test:integration": "npx start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",
+    "test:unit": "jest ./test/unit/* --detectOpenHandles"
   },
   "dependencies": {
-    "@wisemapping/mindplot": "^5.0.15",
-    "emoji-picker-react": "^4.4.7",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
+    "@wisemapping/mindplot": "workspace:*",
+    "emoji-picker-react": "^4.8.0",
     "react-color": "^2.19.3",
-    "react-loader-spinner": "^5.3.4"
+    "react-intl": "^6.6.2",
+    "react-loader-spinner": "^6.1.6",
+    "styled-components": "^6.1.8"
   },
-  "peerDependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.9.3",
-    "@mui/material": "^5.10.11",
+  "devDependencies": {
+    "@formatjs/cli": "^6.2.7",
+    "@testing-library/react": "^14.2.1",
+    "@types/cypress-image-snapshot": "^3.1.9",
+    "babel-polyfill": "^6.26.0",
+    "cypress": "^13.6.6",
+    "cypress-image-snapshot": "^4.0.1",
+    "jest-transform-stub": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-intl": "^6.2.1",
-    "styled-components": "^5.3.6"
+    "start-server-and-test": "^2.0.3"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

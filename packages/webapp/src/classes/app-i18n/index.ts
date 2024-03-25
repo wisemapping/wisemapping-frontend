@@ -15,13 +15,13 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { useFetchAccount } from './../../redux/clientSlice';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/en';
 import 'dayjs/locale/es';
 import 'dayjs/locale/de';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
+import { useFetchAccount } from '../middleware';
 
 export class Locale {
   code: LocaleCode;

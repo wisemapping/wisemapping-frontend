@@ -2,7 +2,7 @@
   "account.delete-warning": [
     {
       "type": 0,
-      "value": "Denke daran, dass du keine von dir erstellten Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
+      "value": "Denke daran, dass du keine von dir erstellte Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
     }
   ],
   "accountinfo.button": [
@@ -74,13 +74,13 @@
   "action.duplicate": [
     {
       "type": 0,
-      "value": "Duplikat"
+      "value": "Kopieren"
     }
   ],
   "action.export": [
     {
       "type": 0,
-      "value": "Export"
+      "value": "Exportieren"
     }
   ],
   "action.history": [
@@ -98,7 +98,7 @@
   "action.history-title": [
     {
       "type": 0,
-      "value": "Versionsgeschichte"
+      "value": "Versionsverlauf"
     }
   ],
   "action.import": [
@@ -110,7 +110,7 @@
   "action.info": [
     {
       "type": 0,
-      "value": "Die Info"
+      "value": "Informationen"
     }
   ],
   "action.label": [
@@ -128,7 +128,7 @@
   "action.open": [
     {
       "type": 0,
-      "value": "Offen"
+      "value": "Öffnen"
     }
   ],
   "action.print": [
@@ -170,7 +170,7 @@
   "changepwd.button": [
     {
       "type": 0,
-      "value": "Veränderung"
+      "value": "Ändern"
     }
   ],
   "changepwd.confirm-password": [
@@ -296,7 +296,7 @@
   "export.title": [
     {
       "type": 0,
-      "value": "Export"
+      "value": "Exportieren"
     }
   ],
   "export.warning": [
@@ -392,7 +392,7 @@
   "forgot.oauth.message": [
     {
       "type": 0,
-      "value": "Sie benötigen kein Passwort, bitte melden Sie sich mit Google an"
+      "value": "Du benötigst kein Passwort, bitte melde dich mit Google an"
     }
   ],
   "forgot.page-title": [
@@ -458,7 +458,7 @@
   "import.button": [
     {
       "type": 0,
-      "value": "Erstellen"
+      "value": "Importieren"
     }
   ],
   "import.description": [
@@ -504,7 +504,7 @@
   "info.creator": [
     {
       "type": 0,
-      "value": "Besitzer"
+      "value": "Ersteller"
     }
   ],
   "info.description": [
@@ -516,19 +516,19 @@
   "info.description-msg": [
     {
       "type": 0,
-      "value": "Indem du die Mindmap veröffentlichen, machst du sie für jeden im Internet sichtbar."
+      "value": "Indem du die Mindmap veröffentlichst, machst du sie für jeden im Internet sichtbar."
     }
   ],
   "info.modified-time": [
     {
       "type": 0,
-      "value": "Zuletzt geändertes Datum"
+      "value": "Zuletzt geändert am"
     }
   ],
   "info.modified-tny": [
     {
       "type": 0,
-      "value": "Zuletzt geändert durch"
+      "value": "Zuletzt geändert von"
     }
   ],
   "info.name": [
@@ -708,7 +708,7 @@
   "map.creator": [
     {
       "type": 0,
-      "value": "Besitzer"
+      "value": "Ersteller"
     }
   ],
   "map.delete-selected": [
@@ -720,7 +720,7 @@
   "map.last-update": [
     {
       "type": 0,
-      "value": "Letztes Update"
+      "value": "Letzte Änderung"
     }
   ],
   "map.more-actions": [
@@ -834,7 +834,7 @@
   "maps.revert": [
     {
       "type": 0,
-      "value": "Zurückkehren"
+      "value": "Rückgängig machen"
     }
   ],
   "maps.search-action": [
@@ -846,7 +846,7 @@
   "maps.tooltip-open": [
     {
       "type": 0,
-      "value": "Zur Ausgabe geöffnet"
+      "value": "Zum Bearbeiten öffnen"
     }
   ],
   "maps.tooltip-starred": [
@@ -918,7 +918,7 @@
   "publish.public-url-msg": [
     {
       "type": 0,
-      "value": "Kopiere den folgenden Link und gebe ihn weiter, um deine Mindmap mit Kollegen zu teilen:"
+      "value": "Kopiere die folgende Verknüpfung und gebe sie weiter, um deine Mindmap mit Kollegen zu teilen:"
     }
   ],
   "publish.title": [
@@ -930,7 +930,7 @@
   "registation.callback.error.message": [
     {
       "type": 0,
-      "value": "Beim Überprüfen Ihrer Identität bei Google ist ein Fehler aufgetreten. Sie können es auf der Anmeldeseite erneut versuchen"
+      "value": "Beim Überprüfen deiner Identität bei Google ist ein Fehler aufgetreten. Du kannst es auf der Anmeldeseite erneut versuchen"
     }
   ],
   "registation.success-title": [
@@ -948,7 +948,7 @@
   "registration.callback.confirm.description": [
     {
       "type": 0,
-      "value": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchten Sie Ihr Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
+      "value": "Ein Konto mit derselben E-Mail-Adresse wurde zuvor registriert. Möchtest du dein Google-Konto mit diesem WiseMapping-Konto verknüpfen?"
     }
   ],
   "registration.callback.confirm.title": [
@@ -966,7 +966,7 @@
   "registration.callback.waiting.description": [
     {
       "type": 0,
-      "value": "Bitte warten Sie, während wir Ihre Identität überprüfen"
+      "value": "Bitte warte, während wir deine Identität überprüfen"
     }
   ],
   "registration.callback.waiting.title": [
@@ -1002,7 +1002,7 @@
   "registration.google.button": [
     {
       "type": 0,
-      "value": "Melden Sie sich bei Google an"
+      "value": "Melde dich bei Google an"
     }
   ],
   "registration.lastname": [
@@ -1026,13 +1026,13 @@
   "registration.success.desc": [
     {
       "type": 0,
-      "value": "Klicke unten auf die Schaltfläche „Anmelden“ und beginne mit der Erstellung von Mindmaps."
+      "value": "Klicke unten auf die Schaltfläche Anmelden und beginne mit der Erstellung von Mindmaps."
     }
   ],
   "registration.termandconditions": [
     {
       "type": 0,
-      "value": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf „Registrieren“ klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
+      "value": "Kundenbedingungen: Bitte überprüfe die WiseMapping-Kontoinformationen, die du oben eingegeben hast und lese dir die Kundenbedingungen hier durch. Indem du unten auf Registrieren klickst, stimmst du den obigen Kundenbedingungen und der Datenschutzrichtlinie zu."
     }
   ],
   "registration.title": [
@@ -1080,7 +1080,7 @@
   "share.add-button": [
     {
       "type": 0,
-      "value": "Hinzufügen"
+      "value": "Geteilt"
     }
   ],
   "share.add-message": [

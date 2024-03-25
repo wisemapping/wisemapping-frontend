@@ -15,10 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { $assert, $defined } from '@wisemapping/core-js';
+import { $assert } from '@wisemapping/core-js';
 import PositionType from '../PositionType';
 import SizeType from '../SizeType';
 import ChildrenSorterStrategy from './ChildrenSorterStrategy';
+
+type NodeValue = number | SizeType | PositionType | boolean;
+type MapValue = {
+  hasChanged: boolean;
+  value: NodeValue | undefined;
+  oldValue: NodeValue | undefined;
+};
+type NodeKey = 'order' | 'position' | 'size' | 'freeDisplacement' | 'shrink';
 
 class Node {
   private _id: number;
@@ -28,7 +36,7 @@ class Node {
 
   private _sorter: ChildrenSorterStrategy;
 
-  private _properties;
+  private _properties: Map<NodeKey, MapValue>;
 
   // eslint-disable-next-line no-use-before-define
   _children!: Node[];
@@ -41,7 +49,7 @@ class Node {
     $assert(typeof id === 'number' && Number.isFinite(id), 'id can not be null');
     this._id = id;
     this._sorter = sorter;
-    this._properties = {};
+    this._properties = new Map();
 
     this.setSize(size);
     this.setPosition(position);
@@ -50,142 +58,124 @@ class Node {
     this._heightChanged = false;
   }
 
-  /** */
   getId(): number {
     return this._id;
   }
 
-  /** */
-  setFree(value) {
-    this._setProperty('free', value);
+  hasFreeDisplacementChanged(): boolean {
+    return this.isPropertyChanged('freeDisplacement');
   }
 
-  /** */
-  isFree() {
-    return this._getProperty('free');
+  setShrunken(value: boolean): void {
+    this.setProperty('shrink', value);
   }
 
-  /** */
-  hasFreeChanged() {
-    return this._isPropertyChanged('free');
+  areChildrenShrunken(): boolean {
+    return Boolean(this.getProperty('shrink'));
   }
 
-  /** */
-  hasFreeDisplacementChanged() {
-    return this._isPropertyChanged('freeDisplacement');
-  }
-
-  /** */
-  setShrunken(value: boolean) {
-    this._setProperty('shrink', value);
-  }
-
-  /** */
-  areChildrenShrunken() {
-    return this._getProperty('shrink');
-  }
-
-  /** */
-  setOrder(order: number) {
+  setOrder(order: number): void {
     $assert(
       typeof order === 'number' && Number.isFinite(order),
       `Order can not be null. Value:${order}`,
     );
-    this._setProperty('order', order);
+
+    if (this.getOrder() !== order) {
+      this.setProperty('order', order);
+    }
   }
 
-  /** */
-  resetPositionState() {
-    const prop = this._properties.position;
+  resetPositionState(): void {
+    const prop = this._properties.get('position');
     if (prop) {
       prop.hasChanged = false;
     }
   }
 
-  /** */
-  resetOrderState() {
-    const prop = this._properties.order;
+  resetOrderState(): void {
+    const prop = this._properties.get('order');
     if (prop) {
       prop.hasChanged = false;
     }
   }
 
-  /** */
-  resetFreeState() {
-    const prop = this._properties.freeDisplacement;
+  resetFreeState(): void {
+    const prop = this._properties.get('freeDisplacement');
     if (prop) {
       prop.hasChanged = false;
     }
   }
 
-  /** */
-  getOrder() {
-    return this._getProperty('order');
+  getOrder(): number {
+    return this.getProperty('order') as number;
   }
 
-  /** */
-  hasOrderChanged() {
-    return this._isPropertyChanged('order');
+  hasOrderChanged(): boolean {
+    return Boolean(this.isPropertyChanged('order'));
   }
 
-  /** */
   hasPositionChanged() {
-    return this._isPropertyChanged('position');
+    return this.isPropertyChanged('position');
   }
 
-  /** */
   hasSizeChanged(): boolean {
-    return this._isPropertyChanged('size');
+    return this.isPropertyChanged('size');
   }
 
-  /** */
   getPosition(): PositionType {
-    return this._getProperty('position');
+    return this.getProperty('position') as PositionType;
   }
 
-  /** */
-  setSize(size: SizeType) {
-    this._setProperty('size', { ...size });
+  setSize(size: SizeType): void {
+    const currentSize = this.getSize();
+    if (
+      !currentSize ||
+      (currentSize &&
+        (Math.abs(currentSize.height - size.height) > 0.5 ||
+          Math.abs(currentSize.width - size.width) > 0.5))
+    ) {
+      this.setProperty('size', { ...size });
+    }
   }
 
-  /** */
   getSize(): SizeType {
-    return this._getProperty('size');
+    return this.getProperty('size') as SizeType;
   }
 
-  setFreeDisplacement(displacement: PositionType) {
+  setFreeDisplacement(displacement: PositionType): void {
     const oldDisplacement = this.getFreeDisplacement();
     const newDisplacement = {
       x: oldDisplacement.x + displacement.x,
       y: oldDisplacement.y + displacement.y,
     };
 
-    this._setProperty('freeDisplacement', { ...newDisplacement });
+    this.setProperty('freeDisplacement', { ...newDisplacement });
   }
 
-  /** */
-  resetFreeDisplacement() {
-    this._setProperty('freeDisplacement', { x: 0, y: 0 });
-  }
-
-  /** */
-  getFreeDisplacement() {
-    const freeDisplacement = this._getProperty('freeDisplacement');
+  getFreeDisplacement(): PositionType {
+    const freeDisplacement = this.getProperty('freeDisplacement') as PositionType;
     return freeDisplacement || { x: 0, y: 0 };
   }
 
-  setPosition(position: PositionType) {
+  setPosition(position: PositionType): void {
     // This is a performance improvement to avoid movements that really could be avoided.
-    this._setProperty('position', position);
+    const currentPos = this.getPosition();
+    if (
+      !currentPos ||
+      (currentPos &&
+        (Math.abs(currentPos.x - position.x) > 0.5 || Math.abs(currentPos.y - position.y) > 0.5))
+    ) {
+      this.setProperty('position', { ...position });
+    }
   }
 
-  _setProperty(key: string, value) {
-    let prop = this._properties[key];
+  private setProperty(key: NodeKey, value: NodeValue): void {
+    let prop = this._properties.get(key);
     if (!prop) {
       prop = {
         hasChanged: false,
-        value: null,
-        oldValue: null,
+        value: undefined,
+        oldValue: undefined,
       };
     }
 
@@ -195,21 +185,19 @@ class Node {
       prop.value = value;
       prop.hasChanged = true;
     }
-    this._properties[key] = prop;
+    this._properties.set(key, prop);
   }
 
-  _getProperty(key: string) {
-    const prop = this._properties[key];
-    return $defined(prop) ? prop.value : null;
+  private getProperty(key: NodeKey): NodeValue | undefined {
+    return this._properties.get(key)?.value;
   }
 
-  _isPropertyChanged(key) {
-    const prop = this._properties[key];
+  isPropertyChanged(key: NodeKey): boolean {
+    const prop = this._properties.get(key);
     return prop ? prop.hasChanged : false;
   }
 
-  /** */
-  getSorter() {
+  getSorter(): ChildrenSorterStrategy {
     return this._sorter;
   }
 
