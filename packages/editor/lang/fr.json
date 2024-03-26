@@ -1,12 +1,12 @@
 {
     "editor.try-welcome": {
-        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales!"
+        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
     },
     "editor.try-welcome-description": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
     },
     "editor.try-welcome-mobile": {
-        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
+        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales !"
     },
     "editor.try-welcome-description-mobile": {
         "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
@@ -21,7 +21,7 @@
         "defaultMessage": "Annuler"
     },
     "appbar.back-to-map-list": {
-        "defaultMessage": "Retour à la liste des cartes"
+        "defaultMessage": "Retourner à la liste des cartes"
     },
     "appbar.button-signup": {
         "defaultMessage": "S'inscrire"
@@ -45,7 +45,7 @@
         "defaultMessage": "Publier"
     },
     "appbar.tooltip-redo": {
-        "defaultMessage": "Refaire édition"
+        "defaultMessage": "Rétablir"
     },
     "appbar.tooltip-save": {
         "defaultMessage": "Enregistrer"
@@ -57,10 +57,10 @@
         "defaultMessage": "S'inscrire"
     },
     "appbar.tooltip-starred": {
-        "defaultMessage": "Exceptionnel"
+        "defaultMessage": "Favoris"
     },
     "appbar.tooltip-undo": {
-        "defaultMessage": "Annuler édition"
+        "defaultMessage": "Annuler"
     },
     "link.help_text": {
         "defaultMessage": "Adresse invalide"
@@ -102,7 +102,7 @@
         "defaultMessage": "Couleur de bordure"
     },
     "editor-panel.tooltip-topic-font-bigger": {
-        "defaultMessage": "Grand"
+        "defaultMessage": "Agrandir"
     },
     "editor-panel.tooltip-topic-font-bold": {
         "defaultMessage": "Gras"
@@ -114,22 +114,22 @@
         "defaultMessage": "Italique"
     },
     "editor-panel.tooltip-topic-font-smaller": {
-        "defaultMessage": "Petit"
+        "defaultMessage": "Réduire"
     },
     "editor-panel.tooltip-topic-font-style": {
         "defaultMessage": "Style de police"
     },
     "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Forme d'ellipse"
+        "defaultMessage": "Ellipse"
     },
     "editor-panel.tooltip-topic-share-line": {
-        "defaultMessage": "Chiffre de ligne"
+        "defaultMessage": "Ligne"
     },
     "editor-panel.tooltip-topic-share-rectangle": {
-        "defaultMessage": "Forme rectangulaire"
+        "defaultMessage": "Rectangulaire"
     },
     "editor-panel.tooltip-topic-share-arrondi": {
-        "defaultMessage": "Forme ronde"
+        "defaultMessage": "Arrondi"
     },
     "editor-panel.tooltip-topic-style": {
         "defaultMessage": "Style de noeud"
@@ -144,10 +144,10 @@
         "defaultMessage": "Zoom avant"
     },
     "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "S'éloigner"
+        "defaultMessage": "Zoom arrière"
     },
     "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Centre"
+        "defaultMessage": "Ajuster au contenu"
     },
     "shortcut-help-pane.action": {
         "defaultMessage": "Action"
@@ -222,10 +222,10 @@
         "defaultMessage": "Afficher les images"
     },
     "editor-panel.tooltip-connection-style-polyline": {
-        "defaultMessage": "Polyligne"
+        "defaultMessage": "Polygonale"
     },
     "editor-panel.tooltip-connection-style-polyline-curved": {
-        "defaultMessage": "Courbe polyligne"
+        "defaultMessage": "Polygonale courbée"
     },
     "shortcut-help-pane.overwrite-edit-topic": {
         "defaultMessage": "Remplacer le texte du noeud"
@@ -246,7 +246,7 @@
         "defaultMessage": "Arc"
     },
     "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Forme ronde"
+        "defaultMessage": "Arrondi"
     },
     "editor-panel.tooltip-connection-color": {
         "defaultMessage": "Couleur"

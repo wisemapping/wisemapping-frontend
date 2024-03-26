@@ -20,7 +20,7 @@
   "appbar.back-to-map-list": [
     {
       "type": 0,
-      "value": "Retour à la liste des cartes"
+      "value": "Retourner à la liste des cartes"
     }
   ],
   "appbar.button-signup": [
@@ -68,7 +68,7 @@
   "appbar.tooltip-redo": [
     {
       "type": 0,
-      "value": "Refaire édition"
+      "value": "Rétablir"
     }
   ],
   "appbar.tooltip-save": [
@@ -92,13 +92,13 @@
   "appbar.tooltip-starred": [
     {
       "type": 0,
-      "value": "Exceptionnel"
+      "value": "Favoris"
     }
   ],
   "appbar.tooltip-undo": [
     {
       "type": 0,
-      "value": "Annuler édition"
+      "value": "Annuler"
     }
   ],
   "editor-panel.icon-title": [
@@ -194,13 +194,13 @@
   "editor-panel.tooltip-connection-style-polyline": [
     {
       "type": 0,
-      "value": "Polyligne"
+      "value": "Polygonale"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline-curved": [
     {
       "type": 0,
-      "value": "Courbe polyligne"
+      "value": "Polygonale courbée"
     }
   ],
   "editor-panel.tooltip-delete-sujet": [
@@ -248,7 +248,7 @@
   "editor-panel.tooltip-topic-font-bigger": [
     {
       "type": 0,
-      "value": "Grand"
+      "value": "Agrandir"
     }
   ],
   "editor-panel.tooltip-topic-font-bold": [
@@ -278,7 +278,7 @@
   "editor-panel.tooltip-topic-font-smaller": [
     {
       "type": 0,
-      "value": "Petit"
+      "value": "Réduire"
     }
   ],
   "editor-panel.tooltip-topic-font-style": [
@@ -290,19 +290,19 @@
   "editor-panel.tooltip-topic-share-arrondi": [
     {
       "type": 0,
-      "value": "Forme ronde"
+      "value": "Arrondi"
     }
   ],
   "editor-panel.tooltip-topic-share-ellipse": [
     {
       "type": 0,
-      "value": "Forme d'ellipse"
+      "value": "Ellipse"
     }
   ],
   "editor-panel.tooltip-topic-share-line": [
     {
       "type": 0,
-      "value": "Chiffre de ligne"
+      "value": "Ligne"
     }
   ],
   "editor-panel.tooltip-topic-share-none": [
@@ -314,13 +314,13 @@
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
-      "value": "Forme rectangulaire"
+      "value": "Rectangulaire"
     }
   ],
   "editor-panel.tooltip-topic-share-rounded": [
     {
       "type": 0,
-      "value": "Forme ronde"
+      "value": "Arrondi"
     }
   ],
   "editor-panel.tooltip-topic-style": [
@@ -338,7 +338,7 @@
   "editor.try-welcome": [
     {
       "type": 0,
-      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales!"
+      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
     }
   ],
   "editor.try-welcome-description": [
@@ -356,7 +356,7 @@
   "editor.try-welcome-mobile": [
     {
       "type": 0,
-      "value": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales!"
+      "value": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales !"
     }
   ],
   "icon-picker.show-images": [
@@ -554,13 +554,13 @@
   "zoom-panel.tooltip-zoom-out": [
     {
       "type": 0,
-      "value": "S'éloigner"
+      "value": "Zoom arrière"
     }
   ],
   "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
-      "value": "Centre"
+      "value": "Ajuster au contenu"
     }
   ]
 }
