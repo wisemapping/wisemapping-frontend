@@ -1,6 +1,6 @@
 {
     "account.delete-warning": {
-        "defaultMessage": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et elles ne pourront pas être restaurées."
+        "defaultMessage": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et ne pourront pas être restaurées."
     },
     "accountinfo.button": {
         "defaultMessage": "J'accepte"
@@ -30,7 +30,7 @@
         "defaultMessage": "Supprimer"
     },
     "action.delete-description": {
-        "defaultMessage": "La carte mentale supprimée ne peut pas être récupérée. Voulez-vous continuer ?."
+        "defaultMessage": "La carte mentale supprimée ne peut pas être récupérée. Voulez-vous continuer ?"
     },
     "action.delete-title": {
         "defaultMessage": "Supprimer"
@@ -39,13 +39,13 @@
         "defaultMessage": "Dupliquer"
     },
     "action.export": {
-        "defaultMessage": "Exportation"
+        "defaultMessage": "Exporter"
     },
     "action.history": {
-        "defaultMessage": "Histoire"
+        "defaultMessage": "Historique"
     },
     "action.history-description": {
-        "defaultMessage": "Liste des modifications introduites au cours des 90 derniers jours."
+        "defaultMessage": "Liste des modifications introduites au cours des 90 derniers jours."
     },
     "action.history-title": {
         "defaultMessage": "Historique des versions"
@@ -54,7 +54,7 @@
         "defaultMessage": "Importer"
     },
     "action.info": {
-        "defaultMessage": "Info"
+        "defaultMessage": "Informations"
     },
     "action.label": {
         "defaultMessage": "Ajouter une étiquette"
@@ -63,7 +63,7 @@
         "defaultMessage": "Nouvelle carte"
     },
     "action.open": {
-        "defaultMessage": "Ouvert"
+        "defaultMessage": "Ouvrir"
     },
     "action.print": {
         "defaultMessage": "Imprimer"
@@ -75,7 +75,7 @@
         "defaultMessage": "Renommer"
     },
     "action.rename-description-placeholder": {
-        "defaultMessage": "La description"
+        "defaultMessage": "Description"
     },
     "action.rename-name-placeholder": {
         "defaultMessage": "Nom"
@@ -129,13 +129,13 @@
         "defaultMessage": "Exportez cette carte dans le format que vous souhaitez et commencez à l'utiliser dans vos présentations ou à partager par e-mail"
     },
     "export.document": {
-        "defaultMessage": "Outils Mindmap : exportez votre carte mentale dans des formats d'outils de carte mentale tiers"
+        "defaultMessage": "Outils Mindmap : exportez votre carte mentale dans des formats d'outils de carte mentale tiers"
     },
     "export.document-label": {
-        "defaultMessage": "Document : exportez votre carte mentale dans un document autonome prêt à être partagé"
+        "defaultMessage": "Document : exportez votre carte mentale dans un document autonome prêt à être partagé"
     },
     "export.image": {
-        "defaultMessage": "Image : obtenez une représentation graphique de votre carte, y compris toutes les couleurs et toutes les formes."
+        "defaultMessage": "Image : obtenez une représentation graphique de votre carte, y compris toutes les couleurs et toutes les formes."
     },
     "export.title": {
         "defaultMessage": "Exportation"
@@ -195,7 +195,7 @@
         "defaultMessage": "Vous n'avez pas de compte ?"
     },
     "header.haveaccount": {
-        "defaultMessage": "Vous avez déjà un compte?"
+        "defaultMessage": "Vous avez déjà un compte ?"
     },
     "help.support": {
         "defaultMessage": "Soutien"
@@ -207,13 +207,13 @@
         "defaultMessage": "Créer"
     },
     "import.description": {
-        "defaultMessage": "Sie können WiseMapping- oder Freemind-Karten in Ihre Kartenliste importieren. Selectionnez le fichier que vous souhaitez Importeur."
+        "defaultMessage": "Selectionnez le fichier que vous souhaitez importer."
     },
     "import.title": {
         "defaultMessage": "Importer une carte mentale existante"
     },
     "import.error-file": {
-        "defaultMessage": "Échec de l'importation : {error}"
+        "defaultMessage": "Échec de l'importation : {error}"
     },
     "info.basic-info": {
         "defaultMessage": "Informations de base"
@@ -228,7 +228,7 @@
         "defaultMessage": "Créateur"
     },
     "info.description": {
-        "defaultMessage": "La description"
+        "defaultMessage": "Description"
     },
     "info.description-msg": {
         "defaultMessage": "En publiant la carte, vous la rendez visible par tous sur Internet."
@@ -295,7 +295,7 @@
         "defaultMessage": "Bienvenue"
     },
     "login.userinactive": {
-        "defaultMessage": "Désolé, votre compte n'a pas encore été activé. Vous recevrez un e-mail de notification lorsqu'il sera activé. Restez à l'écoute!."
+        "defaultMessage": "Désolé, votre compte n'a pas encore été activé. Vous recevrez un e-mail de notification lorsqu'il sera activé. Restez à l'écoute !"
     },
     "map.creator": {
         "defaultMessage": "Créateur"
@@ -361,7 +361,7 @@
         "defaultMessage": "Chercher ..."
     },
     "maps.tooltip-open": {
-        "defaultMessage": "Ouvert pour l'édition"
+        "defaultMessage": "Ouvrir pour l'édition"
     },
     "maps.tooltip-starred": {
         "defaultMessage": "Favoris"
@@ -391,13 +391,13 @@
         "defaultMessage": "Embarqué"
     },
     "publish.embedded-msg": {
-        "defaultMessage": "Copiez cet extrait de code pour l'intégrer dans votre blog ou votre page :"
+        "defaultMessage": "Copiez cet extrait de code pour l'intégrer dans votre blog ou votre page :"
     },
     "publish.public-url": {
         "defaultMessage": "URL publique"
     },
     "publish.public-url-msg": {
-        "defaultMessage": "Copiez et collez le lien ci-dessous pour partager votre carte avec vos collègues :"
+        "defaultMessage": "Copiez et collez le lien ci-dessous pour partager votre carte avec vos collègues :"
     },
     "publish.title": {
         "defaultMessage": "Publier"
@@ -427,7 +427,7 @@
         "defaultMessage": "Cliquez sur le bouton \"Connexion\" ci-dessous et commencez à créer des cartes mentales."
     },
     "registration.termandconditions": {
-        "defaultMessage": "Conditions d'utilisation : veuillez vérifier les informations de compte WiseMapping que vous avez saisies ci-dessus et consulter les conditions d'utilisation ici. En cliquant sur \"S'inscrire\" ci-dessous, vous acceptez les conditions d'utilisation ci-dessus et la politique de confidentialité"
+        "defaultMessage": "Conditions d'utilisation : veuillez vérifier les informations de compte WiseMapping que vous avez saisies ci-dessus et consulter les conditions d'utilisation ici. En cliquant sur \"S'inscrire\" ci-dessous, vous acceptez les conditions d'utilisation ci-dessus et la politique de confidentialité"
     },
     "registration.title": {
         "defaultMessage": "Devenir membre"
@@ -487,7 +487,7 @@
         "defaultMessage": "Ajouter une étiquette"
     },
     "label.add-for": {
-        "defaultMessage": "Modification des étiquettes pour les cartes :"
+        "defaultMessage": "Modification des étiquettes pour les cartes :"
     },
     "label.add-placeholder": {
         "defaultMessage": "Titre de l'étiquette"
@@ -496,7 +496,7 @@
         "defaultMessage": "Changer la couleur de l'étiquette"
     },
     "label.delete-description": {
-        "defaultMessage": "sera supprimé, y compris ses associations à toutes les cartes existantes. Voulez-vous continuer?"
+        "defaultMessage": "sera supprimé, y compris ses associations à toutes les cartes existantes. Voulez-vous continuer ?"
     },
     "label.delete-title": {
         "defaultMessage": "Confirmer la suppression de l'étiquette"
@@ -538,7 +538,7 @@
 	  "defaultMessage": "Finition ..."
 	},
 	"registration.callback.confirm.description": {
-	  "defaultMessage": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
+	  "defaultMessage": "Un compte avec le même e-mail a déjà été enregistré. Voulez-vous lier votre compte Google à ce compte WiseMapping ?"
 	},
 	"registration.callback.waiting.description": {
 	  "defaultMessage": "Veuillez patienter pendant que nous validons votre identité"
