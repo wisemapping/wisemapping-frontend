@@ -39,10 +39,11 @@ export default abstract class AppI18n {
   private static LOCAL_STORAGE_KEY = 'user.locale';
 
   public static getUserLocale(): Locale {
+    const path = window.location.pathname;
     // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
-    const isTryPage = window.location.pathname.endsWith('/try');
+    const isPublicPage = path.endsWith('/try') || path.endsWith('/public') || path.endsWith('/embed') ;
     let result: Locale;
-    if (!isTryPage) {
+    if (!isPublicPage) {
       const account = useFetchAccount();
       result = account?.locale ? account.locale : this.getDefaultLocale();
 
