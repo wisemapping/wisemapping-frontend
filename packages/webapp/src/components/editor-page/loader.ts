@@ -27,7 +27,7 @@ export type EditorMetadata = {
   zoom: number;
 };
 
-export type PageModeType = 'view' | 'edit' | 'try';
+export type PageModeType = 'view' | 'edit' | 'try' | 'public';
 
 export const loader = (pageMode: PageModeType) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -73,6 +73,19 @@ export const loader = (pageMode: PageModeType) => {
             };
           },
         );
+        break;
+      }
+      case 'public': {
+        result = client.fetchMapMetadata(mapId)
+          .then(
+            (mapMedata) => {
+              return {
+                editorMode: 'viewonly',
+                mapMetadata: mapMedata,
+                zoom: 0.8,
+              };
+            },
+          );
         break;
       }
       default: {

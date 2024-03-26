@@ -126,19 +126,19 @@ const router = createBrowserRouter(
         />
         <Route
           path="/c/maps/:id/public"
-          loader={mapLoader('view')}
+          loader={mapLoader('public')}
           element={<PageEditorWrapper mode="view" />}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/:/public"
-          loader={mapLoader('view')}
+          loader={mapLoader('public')}
           element={<PageEditorWrapper mode="view" />}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/embed"
-          loader={mapLoader('view')}
+          loader={mapLoader('public')}
           element={<PageEditorWrapper mode="view" />}
           errorElement={<ErrorPage />}
         />
