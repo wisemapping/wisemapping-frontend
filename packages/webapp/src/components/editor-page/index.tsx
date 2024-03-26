@@ -63,9 +63,8 @@ const buildPersistenceManagerForEditor = (
       });
     } else {
       result = new LocalStorageManager(
-        `${baseUrl}/api/restful/maps/{id}/${
-          hid ? `${hid}/` : ''
-        }document/xml${mode === 'showcase' ? '-pub' : ''}`,
+        `${baseUrl}/api/restful/maps/{id}/${hid ? `${hid}/` : ''
+        }document/xml${(mode === 'showcase' || mode === 'viewonly') ? '-pub' : ''}`,
         true,
         token,
       );
