@@ -18,6 +18,10 @@
                     "value": "https://api.wisemapping.com"
                 },
                 {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "https://pagead2.googlesyndication.com"
+                },
+                {
                     "key": "Access-Control-Allow-Methods",
                     "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
                 },
@@ -53,6 +57,10 @@
                 {
                     "key": "Access-Control-Allow-Origin",
                     "value": "https://api.wisemapping.com"
+                },
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "https://pagead2.googlesyndication.com"
                 },
                 {
                     "key": "Access-Control-Allow-Methods",
