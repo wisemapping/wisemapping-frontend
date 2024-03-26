@@ -152,6 +152,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       enableAppBar: enableAppBar,
       zoom: editorMetadata.zoom,
     };
+   
     persistence = buildPersistenceManagerForEditor(
       editorMetadata.editorMode,
       setSessionExpired,
