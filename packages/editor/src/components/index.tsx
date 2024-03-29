@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import Popover from '@mui/material/Popover';
 import { Vortex } from 'react-loader-spinner';
 
@@ -52,7 +52,8 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = editor;
 
-  const { popoverOpen, setPopoverOpen, popoverTarget, widgetManager } = useWidgetManager();
+  const widgetRef = useRef(useWidgetManager());
+  const { popoverOpen, setPopoverOpen, popoverTarget, widgetManager } = widgetRef.current;
 
   // Initialize locale ...
   const locale = options.locale;
@@ -109,7 +110,9 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
 
       <Notifier id="headerNotifier" />
 
-      {!options.enableAppBar && <CreatorInfoPane mapInfo={mapInfo} />}
+      {!options.enableAppBar &&
+        <CreatorInfoPane mapInfo={mapInfo} />
+      }
 
       <WarningDialog
         capability={capability}
@@ -131,3 +134,4 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
   );
 };
 export default Editor;
+

@@ -50,10 +50,13 @@ export const useEditor = ({
   options,
   persistenceManager,
 }: UseEditorProps): EditorConfiguration => {
+  
   // We create model inside useEditor hook to instantiate everything outside Editor Component
   const [model, setModel] = useState<Model | undefined>();
+ 
   // useEditor hook creates mindplotRef
   const mindplotRef = useRef(null);
+  
   // This is required to redraw in case of changes in the canvas...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setCanvasUpdate] = useState<number>();

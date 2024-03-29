@@ -79,22 +79,22 @@ export class DefaultWidgetManager extends WidgetManager {
     topic.closeEditors();
   }
 
-  static useCreate(): [
-    boolean,
-    (arg0: boolean) => void,
-    Element | undefined,
-    DefaultWidgetManager,
-  ] {
-    const [popoverOpen, setPopoverOpen] = useState(false);
-    const [popoverTarget, setPopoverTarget] = useState(undefined);
-    const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
-
-    return [popoverOpen, setPopoverOpen, popoverTarget, widgetManager.current];
-  }
-
   getEditorTile(): string {
     return this.editorTitle;
   }
+}
+
+export const useCreate = (): [
+  boolean,
+  (arg0: boolean) => void,
+  Element | undefined,
+  DefaultWidgetManager,
+] => {
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [popoverTarget, setPopoverTarget] = useState(undefined);
+  const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
+
+  return [popoverOpen, setPopoverOpen, popoverTarget, widgetManager.current];
 }
 
 export default DefaultWidgetManager;

@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import DefaultWidgetManager from '../../classes/default-widget-manager';
+import DefaultWidgetManager, { useCreate } from '../../classes/default-widget-manager';
 
 export const useWidgetManager = (): {
   popoverOpen: boolean;
@@ -23,8 +23,7 @@ export const useWidgetManager = (): {
   popoverTarget: Element;
   widgetManager: DefaultWidgetManager;
 } => {
-  const [popoverOpen, setPopoverOpen, popoverTarget, widgetManager] =
-    DefaultWidgetManager.useCreate();
+  const [popoverOpen, setPopoverOpen, popoverTarget, widgetManager] = useCreate();
 
   return { popoverOpen, setPopoverOpen, popoverTarget, widgetManager };
 };
