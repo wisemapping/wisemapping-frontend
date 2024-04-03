@@ -101,6 +101,18 @@
       "value": "Annuler"
     }
   ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Créateur"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
   "editor-panel.icon-title": [
     {
       "type": 0,

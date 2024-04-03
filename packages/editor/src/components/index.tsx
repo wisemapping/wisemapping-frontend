@@ -59,7 +59,7 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
   const msg = I18nMsg.loadLocaleData(locale);
   return (
     <IntlProvider locale={locale} messages={msg}>
-      {options.enableAppBar ? (
+      {options.enableAppBar && (
         <AppBar
           model={model}
           mapInfo={mapInfo}
@@ -67,7 +67,7 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
           onAction={onAction}
           accountConfig={accountConfiguration}
         />
-      ) : null}
+      )}
 
       <Popover
         id="popover"
@@ -81,10 +81,7 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
       >
         <Box textAlign={'right'} ml={1}>
           <Typography variant="body1" style={{ paddingTop: '10px', float: 'left' }}>
-            <FormattedMessage
-              id={widgetManager.getEditorTile()}
-              defaultMessage=""
-            ></FormattedMessage>
+            <FormattedMessage id={widgetManager.getEditorTile()} defaultMessage="" />
           </Typography>
 
           <IconButton onClick={() => setPopoverOpen(false)} aria-label={'Close'}>

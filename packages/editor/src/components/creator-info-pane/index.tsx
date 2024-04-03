@@ -19,17 +19,15 @@ import React, { ReactElement } from 'react';
 import MapInfo from '../../classes/model/map-info';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
 import { CreatorInfoContainer, CreatorInfoText } from './styled';
-// import { useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 type CreatorInfoPanel = {
   mapInfo: MapInfo;
 };
 const CreatorInfoPanel = ({ mapInfo }: CreatorInfoPanel): ReactElement => {
-  // const intl = useIntl();
-  console.log('CreatorInfoPanel');
   return (
     <CreatorInfoContainer>
-      <a href="https://www.wisemapping.com/">
+      <a href="https://www.wisemapping.com/" target="_blanc">
         <img
           src={LogoTextBlackSvg}
           aria-label="WiseMappping"
@@ -37,9 +35,23 @@ const CreatorInfoPanel = ({ mapInfo }: CreatorInfoPanel): ReactElement => {
         />
       </a>
       <CreatorInfoText>
-        <b>Description:</b> {mapInfo.getTitle()}
+        {mapInfo.getTitle().trim() != '' && (
+          <>
+            <b>
+              <FormattedMessage id="creator-info-pane.description" defaultMessage="Description" />:{' '}
+            </b>
+            {mapInfo.getTitle()}
+          </>
+        )}
         <br />
-        <b>Creator:</b> {mapInfo.getCreatorFullName()}
+        {mapInfo.getCreatorFullName() != '' && (
+          <>
+            <b>
+              <FormattedMessage id="creator-info-pane.creator" defaultMessage="Creator" />:{' '}
+            </b>
+            {mapInfo.getCreatorFullName()}
+          </>
+        )}
       </CreatorInfoText>
     </CreatorInfoContainer>
   );
