@@ -17,7 +17,7 @@
  */
 import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
-import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
 import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
@@ -63,6 +63,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
           lazyLoadEmojis={true}
           autoFocusSearch={true}
           previewConfig={{ showPreview: false }}
+          emojiStyle={EmojiStyle.NATIVE}
         />
       )}
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
