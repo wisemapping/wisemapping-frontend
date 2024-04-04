@@ -64,6 +64,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
           autoFocusSearch={true}
           previewConfig={{ showPreview: false }}
           emojiStyle={EmojiStyle.NATIVE}
+          skinTonesDisabled
         />
       )}
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
