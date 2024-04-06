@@ -67,11 +67,24 @@ When a test that contains a `matchImageSnapshot` call is run, it compares the sn
 
 There is a [caveat](https://github.com/jaredpalmer/cypress-image-snapshot/issues/98) where colors, fonts or ui may differ depending on the host machine running the tests.
 
-
-
 A workaround for this is to run the tests using docker. Make sure you have docker and docker-compose installed.
 
 Run snapshot tests: `docker-compose -f docker-compose.snapshots.yml up`  
 If anything changed, and the change was intentional, update the snapshots and then commit the new images to source control.  
 Update snapshots: `docker-compose -f docker-compose.snapshots.update.yml up`
 
+
+# Members
+
+## Founder
+
+   * Paulo Veiga <pveiga@wisemapping.com>
+
+## Past Individual Contributors
+
+   * Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>
+   
+## License
+
+The source code is Licensed under the WiseMapping Open License, Version 1.0 (the “License”);
+You may obtain a copy of the License at: [https://github.com/wisemapping/wisemapping-open-source/blob/develop/LICENSE.md](https://github.com/wisemapping/wisemapping-open-source/blob/develop/LICENSE.md)
