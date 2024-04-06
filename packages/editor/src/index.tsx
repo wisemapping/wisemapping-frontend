@@ -48,9 +48,6 @@ declare global {
       ['mindplot-component']: MindplotWebComponentInterface;
     }
   }
-  interface Window {
-    newrelic: { noticeError: (Error) => void };
-  }
 }
 
 export {

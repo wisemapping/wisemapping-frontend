@@ -16,6 +16,12 @@
  *   limitations under the License.
  */
 
+declare global {
+  interface Window {
+    newrelic: { noticeError: (error: string) => void };
+  }
+}
+
 export const createDocument = (): Document => {
   var doc: Document | null = null;
   if (window.document.implementation?.createDocument) {
@@ -42,4 +48,11 @@ export const $assert = (assert, message: string): void => {
 
 export const sign = (value: number): 1 | -1 => {
   return value >= 0 ? 1 : -1;
+};
+
+export const logCriticalError = (msg: string, exception: Error) => {
+  window.newrelic?.noticeError(`${msg}. Exception: ${exception}`);
+
+  console.error(`${msg}. Exception: ${exception}`);
+  console.error(exception);
 };

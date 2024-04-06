@@ -21,6 +21,7 @@ import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
 import { useWidgetManager } from '../useWidgetManager';
 import Model from '../../classes/model/editor';
+import { logCriticalError } from '@wisemapping/core-js';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -74,9 +75,7 @@ export const useEditor = ({
           model.registerEvents(setCanvasUpdate, capability);
         })
         .catch((e) => {
-          console.error(`Unexpected error loading mindmap with id ${mapInfo.getId()}: ${e}`);
-          console.error(e);
-          window.newrelic?.noticeError(`Unexpected error loading mindmap with id ${mapInfo.getId()}: ${e}`);
+          logCriticalError(`Unexpected error loading mindmap with id ${mapInfo.getId()}`, e);
         });
       setModel(model);
     }
