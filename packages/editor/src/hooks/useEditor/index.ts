@@ -74,8 +74,9 @@ export const useEditor = ({
           model.registerEvents(setCanvasUpdate, capability);
         })
         .catch((e) => {
+          console.error(`Unexpected error loading mindmap with id ${mapInfo.getId()}: ${e}`);
           console.error(e);
-          window.newrelic?.noticeError(e);
+          window.newrelic?.noticeError(`Unexpected error loading mindmap with id ${mapInfo.getId()}: ${e}`);
         });
       setModel(model);
     }
