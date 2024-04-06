@@ -320,7 +320,6 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const topic = mindmap.createNode(type, id);
     this._idsMap[topic.getId()] = domElem;
 
-
     // Set text property is it;s defined...
     const text = domElem.getAttribute('text');
     if ($defined(text) && text) {
