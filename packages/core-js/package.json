@@ -1,11 +1,12 @@
 {
     "name": "@wisemapping/core-js",
-    "version": "0.6.0",
+    "version": "6.0.0",
     "description": "WiseMapping - Core Common Libraries",
-    "homepage": "http://www.wisemapping.org/",
+    "author": "Paulo Veiga <pveiga@wisemapping.com>",
+    "homepage": "https://www.wisemapping.com/opensource/",
     "repository": {
         "type": "git",
-        "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+        "url": "git@github.com:wisemapping/wisemapping-frontend.git"
     },
     "license": "MIT",
     "main": "src/index.ts",

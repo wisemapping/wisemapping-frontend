@@ -1,9 +1,13 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.6.1",
-  "repository": "http://www.wisemapping.com",
+  "version": "6.0.0",
+  "homepage": "https://www.wisemapping.com/opensource/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wisemapping/wisemapping-frontend.git"
+  },
   "license": "MIT",
-  "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
+  "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "main": "dist/editor.bundle.js",
   "files": [
     "dist"

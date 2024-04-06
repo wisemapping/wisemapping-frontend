@@ -1,17 +1,18 @@
 {
   "name": "@wisemapping/mindplot",
-  "version": "5.1.1",
+  "version": "6.0.0",
   "description": "WiseMapping - Mindplot Canvas Library",
-  "homepage": "http://www.wisemapping.org/",
+  "homepage": "https://www.wisemapping.com/opensource/",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+    "url": "git@github.com:wisemapping/wisemapping-frontend.git"
   },
   "main": "src/index.ts",
   "directories": {
     "lib": "src",
     "test": "__tests__"
   },
+  "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "files": [
     "src",
     "assets",

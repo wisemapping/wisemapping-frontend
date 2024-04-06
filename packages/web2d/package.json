@@ -1,12 +1,13 @@
 {
   "name": "@wisemapping/web2d",
-  "version": "0.6.1",
+  "version": "6.0.0",
   "description": "WiseMapping - Web2D Render Library",
-  "homepage": "http://www.wisemapping.org/",
+  "homepage": "https://www.wisemapping.com/opensource/",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:wisemapping/wisemapping-frontend.git"
+    "url": "git@github.com:wisemapping/wisemapping-frontend.git"
   },
+  "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [
