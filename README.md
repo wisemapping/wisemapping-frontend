@@ -1,14 +1,15 @@
 # WiseMapping Frond End 
 
-WiseMapping Frond End is part of the [MindMap Open Source Project](https://www.wisemapping.com/opensource/). The first release of WiseMapping was in 2010 and there was not mayor update on the architecture. In 2021, a major change started with the goal to provide a visual and technology refresh of the project. 
+WiseMapping Front End constitutes an integral component of the MindMap Open Source Project, which commenced its journey in 2010. However, until 2021, substantial architectural updates were sparse. In 2021, a pivotal initiative was undertaken to instigate significant transformations, aimed at revitalizing both the visual aesthetics and underlying technological framework of the project.
 
-WiseMapping Front extracts all the UI related aspects in this repository. You will find three major modules:
+Within this repository, WiseMapping Front End encapsulates all user interface-related elements, comprising three principal modules:
 
-- Web2D: Lighway abstraction over SVG for chart renderding.
-- Mindplot: Pure vanilla ES6 classes responsible for providing mindmap rendering and edition capabilities.
-- Webapp: REACT application that encompass the whole midnmap edition experience.
+* Web2D: A lightweight abstraction layer over SVG, facilitating chart rendering with elegance and efficiency.
+* Mindplot: Comprising pure vanilla ES6 classes, this module assumes responsibility for rendering mind maps and facilitating seamless editing functionalities.
+* Editor: REACT component wrapper on mindplot
+* Webapp: A REACT application that serves as the cornerstone of the entire mind map editing experience, orchestrating a fluid and intuitive user interaction paradigm.
 
-Backed implementation is [https://github.com/wisemapping/wisemapping-open-source](https://github.com/wisemapping/wisemapping-open-source)
+For those interested in delving deeper into the implementation details, the corresponding backend repository can be accessed at https://github.com/wisemapping/wisemapping-open-source.
 
 ## Getting started
 
@@ -29,8 +30,7 @@ If you want to contribute, please check out [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Useful scripts
 
-Each package might provide the following scripts.  
-You can run these for all packages by running it from the root folder. Alternatively you can run it for a specific package by passing the `--scope` option.
+Each package might provide the following scripts. You can run these for all packages by running it from the root folder. Alternatively you can run it for a specific package by passing the `--scope` option.
 
 ### build
 
