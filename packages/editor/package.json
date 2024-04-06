@@ -1,9 +1,13 @@
 {
   "name": "@wisemapping/editor",
-  "version": "0.6.1",
-  "repository": "http://www.wisemapping.com",
+  "version": "6.0.0",
+  "homepage": "https://www.wisemapping.com/opensource/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wisemapping/wisemapping-frontend.git"
+  },
   "license": "MIT",
-  "author": "Paulo Veiga <pveiga@gmail.com>, Ezequiel Bergamaschi <ezequielbergamaschi@gmail.com>",
+  "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "main": "dist/editor.bundle.js",
   "files": [
     "dist"
@@ -22,22 +26,22 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.12",
-    "@mui/material": "^5.15.12",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/material": "^5.15.15",
     "@wisemapping/mindplot": "workspace:*",
-    "emoji-picker-react": "^4.8.0",
+    "emoji-picker-react": "^4.9.2",
     "react-color": "^2.19.3",
-    "react-intl": "^6.6.2",
+    "react-intl": "^6.6.5",
     "react-loader-spinner": "^6.1.6",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
-    "@formatjs/cli": "^6.2.7",
-    "@testing-library/react": "^14.2.1",
+    "@formatjs/cli": "^6.2.9",
+    "@testing-library/react": "^14.2.2",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",
-    "cypress": "^13.6.6",
+    "cypress": "^13.7.2",
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "react": "^18.2.0",
