@@ -1,7 +1,7 @@
 {
   "include": [
     "src/**/*"
-, "public/config.js"  ],
+  ],
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist/",
