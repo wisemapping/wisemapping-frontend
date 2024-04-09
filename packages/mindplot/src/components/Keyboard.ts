@@ -22,15 +22,31 @@ import initHotKeyPluggin from '../../libraries/jquery.hotkeys';
 initHotKeyPluggin($);
 
 class Keyboard {
+  private _disabled = false;
+
   addShortcut(shortcuts: string[] | string, callback: () => void) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
     shortcutsArray.forEach((shortcut) => {
       $(document).bind('keydown', shortcut, (e) => {
+        if (this.isDisabled()) return;
+
         e.stopPropagation();
         e.preventDefault();
         callback();
       });
     });
+  }
+
+  pause() {
+    this._disabled = true;
+  }
+
+  resume() {
+    this._disabled = false;
+  }
+
+  isDisabled() {
+    return this._disabled;
   }
 }
 
