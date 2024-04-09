@@ -25,14 +25,14 @@ import {
 import Capability from '../../action/capability';
 
 class Editor {
-  private component: MindplotWebComponent | null;
+  private component: MindplotWebComponent;
 
-  constructor(mindplotComponent: MindplotWebComponent | null) {
-    this.component = mindplotComponent;
+  constructor(component: MindplotWebComponent) {
+    this.component = component;
   }
 
   isMapLoadded(): boolean {
-    return this.component?.isLoaded();
+    return this.component.isLoaded();
   }
 
   save(minor: boolean): void {
@@ -42,15 +42,15 @@ class Editor {
     this.component.save(minor);
   }
 
-  getDesigner(): Designer | undefined {
+  getDesigner(): Designer {
     if (!this.component) {
       throw new Error('Designer object has not been initialized.');
     }
-    return this.component?.getDesigner();
+    return this.component.getDesigner();
   }
 
   getDesignerModel(): DesignerModel | undefined {
-    return this.getDesigner().getModel();
+    return this.getDesigner()!.getModel();
   }
 
   loadMindmap(
@@ -63,35 +63,39 @@ class Editor {
   }
 
   registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability): void {
-    const designer = this.component.getDesigner();
-    const onNodeBlurHandler = () => {
-      if (!designer.getModel().selectedTopic()) {
+    const component = this.component;
+    const designer = component!.getDesigner();
+
+    if (designer) {
+      const onNodeBlurHandler = () => {
+        if (!designer.getModel().selectedTopic()) {
+          canvasUpdate(Date.now());
+        }
+      };
+
+      const onNodeFocusHandler = () => {
         canvasUpdate(Date.now());
+      };
+
+      // Register events ...
+      designer.addEvent('onblur', onNodeBlurHandler);
+      designer.addEvent('onfocus', onNodeFocusHandler);
+      designer.addEvent('modelUpdate', onNodeFocusHandler);
+      designer.getWorkSpace().getScreenManager().addEvent('update', onNodeFocusHandler);
+
+      // Is the save action enabled ... ?
+      if (!capability.isHidden('save')) {
+        // Register unload save ...
+        window.addEventListener('beforeunload', () => {
+          component.save(false);
+          component.unlockMap();
+        });
+
+        // Autosave on a fixed period of time ...
+        setInterval(() => {
+          component.save(false);
+        }, 5000);
       }
-    };
-
-    const onNodeFocusHandler = () => {
-      canvasUpdate(Date.now());
-    };
-
-    // Register events ...
-    designer.addEvent('onblur', onNodeBlurHandler);
-    designer.addEvent('onfocus', onNodeFocusHandler);
-    designer.addEvent('modelUpdate', onNodeFocusHandler);
-    designer.getWorkSpace().getScreenManager().addEvent('update', onNodeFocusHandler);
-
-    // Is the save action enabled ... ?
-    if (!capability.isHidden('save')) {
-      // Register unload save ...
-      window.addEventListener('beforeunload', () => {
-        this.component.save(false);
-        this.component.unlockMap();
-      });
-
-      // Autosave on a fixed period of time ...
-      setInterval(() => {
-        this.component.save(false);
-      }, 5000);
     }
   }
 }

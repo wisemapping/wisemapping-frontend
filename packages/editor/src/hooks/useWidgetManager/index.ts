@@ -20,7 +20,7 @@ import DefaultWidgetManager from '../../classes/default-widget-manager';
 export const useWidgetManager = (): {
   popoverOpen: boolean;
   setPopoverOpen: (arg: boolean) => void;
-  popoverTarget: Element;
+  popoverTarget: Element | undefined;
   widgetManager: DefaultWidgetManager;
 } => {
   const [popoverOpen, setPopoverOpen, popoverTarget, widgetManager] =

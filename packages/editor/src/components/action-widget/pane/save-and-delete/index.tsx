@@ -21,18 +21,20 @@ import React, { ReactElement } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import { FormattedMessage } from 'react-intl';
 
-const SaveAndDelete = (props: {
-  model: NodeProperty<string>;
+type SaveAndDeleteProps = {
+  model: NodeProperty<string | undefined>;
   closeModal: () => void;
   submitHandler: () => void;
-}): ReactElement => {
-  const value = props.model.getValue();
+};
+
+const SaveAndDelete = ({ model, closeModal, submitHandler }: SaveAndDeleteProps): ReactElement => {
+  const value = model.getValue();
   return (
     <Box component="span" justifyContent="flex-end" display="flex" sx={{ pt: 1 }}>
       <Button
         color="primary"
         variant="outlined"
-        onClick={props.submitHandler}
+        onClick={submitHandler}
         sx={{ mr: 1 }}
         size="small"
       >
@@ -44,8 +46,10 @@ const SaveAndDelete = (props: {
           color="secondary"
           variant="outlined"
           onClick={() => {
-            props.closeModal();
-            props.model.setValue(undefined);
+            closeModal();
+            if (model.setValue) {
+              model.setValue('');
+            }
           }}
           size="small"
         >

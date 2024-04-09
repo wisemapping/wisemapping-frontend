@@ -80,20 +80,26 @@ const horizontalAligment: { anchorOrigin: PopoverOrigin; transformOrigin: Popove
   },
 };
 
+type ToolbarSubmenuProps = {
+  configuration: ActionConfig;
+  vertical?: boolean;
+  elevation?: number;
+};
+
 /**
  * Submenu button and popover
  * @param props.configuration the configuration
  * @returns submenu entry that contains one ToolbarMenuItem for each option. Inserts a divider for null options.
  */
-export const ToolbarSubmenu = (props: {
-  configuration: ActionConfig;
-  vertical?: boolean;
-  elevation?: number;
-}): ReactElement => {
+export const ToolbarSubmenu = ({
+  configuration,
+  vertical,
+  elevation,
+}: ToolbarSubmenuProps): ReactElement => {
   const [open, setOpen] = useState(false);
   const itemRef = useRef(null);
 
-  const orientationProps = props.vertical ? verticalAligment : horizontalAligment;
+  const orientationProps = vertical ? verticalAligment : horizontalAligment;
 
   return (
     <Box
@@ -101,15 +107,15 @@ export const ToolbarSubmenu = (props: {
       display="inline-flex"
       role="menuitem"
       ref={itemRef}
-      onMouseLeave={() => !props.configuration.useClickToClose && setOpen(false)}
+      onMouseLeave={() => !configuration.useClickToClose && setOpen(false)}
       onMouseEnter={() => {
-        if (props.configuration.disabled && props.configuration.disabled()) return;
-        if (!props.configuration.useClickToClose) setOpen(true);
+        if (configuration.disabled && configuration.disabled()) return;
+        if (!configuration.useClickToClose) setOpen(true);
       }}
     >
       <ToolbarButtonOption
         configuration={{
-          ...props.configuration,
+          ...configuration,
           onClick: () => setOpen(true),
           selected: () => open,
         }}
@@ -123,15 +129,15 @@ export const ToolbarSubmenu = (props: {
         anchorOrigin={orientationProps.anchorOrigin}
         transformOrigin={orientationProps.transformOrigin}
         PaperProps={{
-          onMouseLeave: () => !props.configuration.useClickToClose && setOpen(false),
+          onMouseLeave: () => !configuration.useClickToClose && setOpen(false),
           square: true,
         }}
         sx={{
-          zIndex: props.configuration.useClickToClose ? '1' : '-1',
+          zIndex: configuration.useClickToClose ? '1' : '-1',
         }}
-        elevation={props.elevation}
+        elevation={elevation}
       >
-        {props.configuration.useClickToClose && (
+        {configuration.useClickToClose && (
           <Box textAlign={'right'} ml={1}>
             <Typography
               variant="body1"
@@ -143,7 +149,7 @@ export const ToolbarSubmenu = (props: {
                 fontSize: '20px',
               }}
             >
-              {props.configuration.title}
+              {configuration.title}
             </Typography>
             <IconButton
               onClick={() => setOpen(false)}
@@ -155,17 +161,17 @@ export const ToolbarSubmenu = (props: {
           </Box>
         )}
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
-          {props.configuration.options?.map((o, i) => {
+          {configuration.options?.map((o, i) => {
             if (o?.visible === false) {
               return null;
             }
             if (!o?.render) {
               return (
                 <ToolbarMenuItem
-                  vertical={!props.vertical}
+                  vertical={!vertical}
                   key={i}
                   configuration={o as ActionConfig}
-                  elevation={props.elevation + 3}
+                  elevation={elevation ? elevation + 3 : 0}
                 />
               );
             } else {
@@ -178,45 +184,54 @@ export const ToolbarSubmenu = (props: {
   );
 };
 
+type ToolbarMenuItemProps = {
+  configuration: ActionConfig | undefined;
+  vertical?: boolean;
+  elevation?: number;
+};
+
 /**
  * Wrapper for all menu entries
  * @param props.configuration the configuration
  * @returns menu item wich contains a submenu if options is set or a button if onClick is set or null otherwise.
  */
-export const ToolbarMenuItem = (props: {
-  configuration: ActionConfig | null;
-  vertical?: boolean;
-  elevation?: number;
-}): ReactElement => {
-  if (props.configuration === null)
+export const ToolbarMenuItem = ({
+  configuration,
+  vertical,
+  elevation,
+}: ToolbarMenuItemProps): ReactElement => {
+  if (!configuration)
     return (
       <Divider
         data-testid="divider"
-        orientation={!props.vertical ? 'vertical' : 'horizontal'}
+        orientation={!vertical ? 'vertical' : 'horizontal'}
         flexItem
         sx={{
           borderLeftWidth: 1,
         }}
       />
     );
-  if (props.configuration.visible === false) {
-    return null;
+
+  if (configuration.visible === false) {
+    return <></>;
   }
-  if (props.configuration.render) {
-    return <>{props.configuration.render(null)}</>;
+
+  if (configuration.render) {
+    return <>{configuration.render(() => {})}</>;
   }
-  if (!props.configuration.options && props.configuration.onClick)
-    return <ToolbarButtonOption configuration={props.configuration}></ToolbarButtonOption>;
+
+  if (!configuration.options && configuration.onClick)
+    return <ToolbarButtonOption configuration={configuration} />;
   else {
-    if (props.configuration.options)
+    if (configuration.options)
       return (
         <ToolbarSubmenu
-          configuration={props.configuration}
-          vertical={props.vertical}
-          elevation={props.elevation || 0}
+          configuration={configuration}
+          vertical={vertical}
+          elevation={elevation || 0}
         />
       );
-    else return null;
+    else return <></>;
   }
 };
 
@@ -228,35 +243,34 @@ const defaultPosition: ToolbarPosition = {
   },
 };
 
+type ToolbarProps = {
+  configurations: ActionConfig[];
+  position?: ToolbarPosition;
+  rerender?: number;
+};
 // const getOrientationProps = (orientation: 'horizontal' | 'vertical'): [top:number, number, ]
 /**
  * The entry point for create a Toolbar
  * @param props.configurations the configurations array
  * @returns toolbar wich contains a button/submenu for each configuration in the array
  */
-const Toolbar = (props: {
-  configurations: ActionConfig[];
-  position?: ToolbarPosition;
-  rerender?: number;
-}): ReactElement => {
-  const position = props.position || defaultPosition;
+const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
+  const pos: ToolbarPosition = position || defaultPosition;
   return (
     <AppBar
       position="fixed"
       sx={{
-        flexDirection: position.vertical ? 'column' : 'row',
-        width: position.vertical ? '40px' : 'unset',
-        right: position.position.right,
-        top: position.position.top,
+        flexDirection: pos.vertical ? 'column' : 'row',
+        width: pos.vertical ? '40px' : 'unset',
+        right: pos.position?.right,
+        top: pos.position?.top,
         backgroundColor: 'white',
       }}
       role="menu"
-      aria-orientation={position.vertical ? 'vertical' : 'horizontal'}
+      aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}
     >
-      {props.configurations.map((c, i) => {
-        return (
-          <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!position.vertical} />
-        );
+      {configurations.map((c, i) => {
+        return <ToolbarMenuItem key={i} configuration={c} elevation={2} vertical={!pos.vertical} />;
       })}
     </AppBar>
   );

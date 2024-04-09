@@ -6,9 +6,9 @@
     "type": "git",
     "url": "git@github.com:wisemapping/wisemapping-frontend.git"
   },
+  "main": "src/index.ts",
   "license": "MIT",
   "author": "Paulo Veiga <pveiga@wisemapping.com>",
-  "main": "dist/editor.bundle.js",
   "files": [
     "dist"
   ],

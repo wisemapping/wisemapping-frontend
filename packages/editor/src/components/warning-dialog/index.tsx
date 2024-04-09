@@ -30,9 +30,9 @@ export type FooterPropsType = {
 const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactElement => {
   const intl = useIntl();
 
-  let msgExt, msg: string;
+  let msgExt: string = '';
+  let msg: string = '';
   if (capability.mode !== 'viewonly' && capability.mode !== 'showcase' && capability.isMobile) {
-    msg = '';
     msgExt = intl.formatMessage({
       id: 'editor.edit-description-mobile',
       defaultMessage:
@@ -64,7 +64,7 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
     });
   }
 
-  const [open, setOpen] = useState(msgExt || message);
+  const [open, setOpen] = useState<boolean>(Boolean(msgExt || message).valueOf());
   return (
     <>
       <Notifier id="headerNotifier"></Notifier>

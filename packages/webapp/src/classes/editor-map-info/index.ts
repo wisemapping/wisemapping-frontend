@@ -69,8 +69,8 @@ class MapInfoImpl implements MapInfo {
     return this.locked;
   }
 
-  getLockedMessage(): string | undefined {
-    return this.lockedMsg;
+  getLockedMessage(): string {
+    return this.lockedMsg ? this.lockedMsg : '';
   }
 
   getZoom(): number {

@@ -14,7 +14,9 @@ const prodConfig = {
   stats: {
     errorDetails: true,
   },
-  mode: 'development',
+  entry: {
+    editor: './src/index.ts',
+  }
 };
 
 module.exports = merge(common, prodConfig);

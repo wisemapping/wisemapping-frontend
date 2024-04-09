@@ -27,12 +27,17 @@ import NodeProperty from '../../../../classes/model/node-property';
 /**
  * Font family selector for editor toolbar
  */
-const FontFamilySelect = (props: { fontFamilyModel: NodeProperty<string> }): ReactElement => {
+const FontFamilySelect = (props: {
+  fontFamilyModel: NodeProperty<string | undefined>;
+}): ReactElement => {
   const [font, setFont] = React.useState(props.fontFamilyModel.getValue());
 
   const handleChange = (event: SelectChangeEvent) => {
     setFont(event.target.value as string);
-    props.fontFamilyModel.setValue(event.target.value);
+    const setValue = props.fontFamilyModel.setValue;
+    if (setValue) {
+      setValue(event.target.value);
+    }
   };
 
   return (

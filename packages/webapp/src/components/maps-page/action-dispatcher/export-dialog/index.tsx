@@ -88,21 +88,21 @@ const ExportDialog = ({
   };
 
   const exporter = async (formatType: ExportFormat): Promise<string> => {
-    let svgElement: Element | null = null;
+    let svgElement: Element | undefined;
     let size: SizeType;
     let mindmap: Mindmap;
 
     const designer: Designer = globalThis.designer;
     // exporting from editor toolbar action
+
     if (designer != null) {
       // Depending on the type of export. It will require differt POST.
       const workspace = designer.getWorkSpace();
       svgElement = workspace.getSVGElement();
       size = { width: window.innerWidth, height: window.innerHeight };
       mindmap = designer.getMindmap();
-    }
-    // exporting from map list
-    else {
+    } else {
+      // exporting from map list
       mindmap = await fetchMindmap(mapId);
     }
 
@@ -113,9 +113,9 @@ const ExportDialog = ({
       case 'svg': {
         exporter = ImageExporterFactory.create(
           formatType,
-          svgElement,
-          size.width,
-          size.height,
+          svgElement!,
+          size!.width,
+          size!.height,
           zoomToFit,
         );
         break;

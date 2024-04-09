@@ -1,7 +1,6 @@
 import { Designer, Topic } from '@wisemapping/mindplot';
 import NodeProperty from '../node-property';
 import {
-  getTheUniqueValueOrNull,
   SwitchValueDirection,
   getPreviousValue,
   fontSizes,
@@ -14,44 +13,46 @@ import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 class NodePropertyBuilder {
   designer: Designer;
 
-  private fontSizeModel: NodeProperty<number>;
-  private selectedTopicColorModel: NodeProperty<string>;
-  private fontFamilyModel: NodeProperty<string>;
-  private fontStyleModel: NodeProperty<string>;
-  private borderColorModel: NodeProperty<string>;
-  private fontColorModel: NodeProperty<string>;
-  private topicShapeModel: NodeProperty<TopicShapeType>;
-  private topicIconModel: NodeProperty<string>;
-  private connetionStyleModel: NodeProperty<LineType>;
-  private connectionColoreModel: NodeProperty<string>;
-  private noteModel: NodeProperty<string>;
-  private linkModel: NodeProperty<string>;
-  private _themeModel: NodeProperty<ThemeType>;
+  private fontSizeModel: NodeProperty<number> | undefined;
+  private selectedTopicColorModel: NodeProperty<string | undefined> | undefined;
+  private fontFamilyModel: NodeProperty<string | undefined> | undefined;
+  private fontStyleModel: NodeProperty<string> | undefined;
+  private borderColorModel: NodeProperty<string | undefined> | undefined;
+  private fontColorModel: NodeProperty<string | undefined> | undefined;
+  private topicShapeModel: NodeProperty<TopicShapeType> | undefined;
+  private topicIconModel: NodeProperty<string | undefined> | undefined;
+  private connetionStyleModel: NodeProperty<LineType> | undefined;
+  private connectionColoreModel: NodeProperty<string | undefined> | undefined;
+  private noteModel: NodeProperty<string | undefined> | undefined;
+  private linkModel: NodeProperty<string> | undefined;
+  private _themeModel: NodeProperty<ThemeType> | undefined;
 
   constructor(designer: Designer) {
     this.designer = designer;
   }
 
-  private selectedTopic() {
-    return this.designer.getModel().selectedTopic();
+  private selectedTopic(): Topic {
+    const topic = this.designer.getModel().selectedTopic();
+    if (!topic) {
+      throw new Error('No selected topic');
+    }
+    return topic;
   }
 
-  private getFontSize() {
-    return this.designer.getModel().selectedTopic()?.getFontSize();
+  private getFontSize(): number {
+    return this.selectedTopic().getFontSize();
   }
 
-  private uniqueOrNull(
-    propertyGetter: (Topic: Topic) => string | number | null | LineType,
-  ): string {
+  private uniqueOrUndefined<T>(propertyGetter: (Topic: Topic) => T | undefined): T | undefined {
     const nodes = this.designer.getModel().filterSelectedTopics();
-    return getTheUniqueValueOrNull(nodes, propertyGetter);
+    return nodes.every((n) => propertyGetter(n) == nodes[0]) ? propertyGetter(nodes[0]) : undefined;
   }
 
   /**
    *
    * @returns model to and switch font weigth
    */
-  fontWeigthModel(): NodeProperty<string> {
+  fontWeigthModel(): NodeProperty<string | undefined> {
     return {
       getValue: () => String(this.designer.getModel().selectedTopic()?.getFontWeight()),
       switchValue: () => this.designer.changeFontWeight(),
@@ -67,7 +68,7 @@ class NodePropertyBuilder {
       this.fontSizeModel = {
         getValue: () => this.getFontSize(),
         switchValue: (direction?) => {
-          let newValue = undefined;
+          let newValue;
           if (direction === SwitchValueDirection.down) {
             newValue = getPreviousValue(fontSizes, this.getFontSize());
           }
@@ -85,13 +86,15 @@ class NodePropertyBuilder {
    * @returns model to get and set topic color
    */
   getSelectedTopicColorModel(): NodeProperty<string | undefined> {
-    if (!this.selectedTopicColorModel)
-      this.selectedTopicColorModel = {
-        getValue: () => this.designer.getModel().selectedTopic()?.getBackgroundColor(),
-        setValue: (color) => this.designer.changeBackgroundColor(color),
+    let result: NodeProperty<string | undefined> | undefined = this.selectedTopicColorModel;
+    if (!result) {
+      result = {
+        getValue: (): string | undefined => this.selectedTopic().getBackgroundColor(),
+        setValue: (color: string | undefined) => this.designer.changeBackgroundColor(color),
       };
-
-    return this.selectedTopicColorModel;
+      this.selectedTopicColorModel = result;
+    }
+    return result;
   }
 
   getLinkModel(): NodeProperty<string> {
@@ -127,12 +130,15 @@ class NodePropertyBuilder {
    * @returns model to get and set topic border color
    */
   getColorBorderModel(): NodeProperty<string | undefined> {
-    if (!this.borderColorModel)
-      this.borderColorModel = {
-        getValue: () => this.uniqueOrNull((node) => node.getBorderColor()),
-        setValue: (hex: string) => this.designer.changeBorderColor(hex),
+    let result = this.borderColorModel;
+    if (!result) {
+      result = this.borderColorModel = {
+        getValue: () => this.uniqueOrUndefined((node) => node.getBorderColor()),
+        setValue: (hex: string | undefined) => this.designer.changeBorderColor(hex),
       };
-    return this.borderColorModel;
+      this.borderColorModel = result;
+    }
+    return result;
   }
 
   /**
@@ -142,19 +148,21 @@ class NodePropertyBuilder {
   getFontColorModel(): NodeProperty<string | undefined> {
     if (!this.fontColorModel)
       this.fontColorModel = {
-        getValue: () => this.uniqueOrNull((node) => node.getFontColor()),
-        setValue: (hex: string) => this.designer.changeFontColor(hex),
+        getValue: () => this.uniqueOrUndefined((node) => node.getFontColor()),
+        setValue: (hex: string | undefined) => this.designer.changeFontColor(hex),
       };
     return this.fontColorModel;
   }
 
-  getTopicIconModel(): NodeProperty<string> {
+  getTopicIconModel(): NodeProperty<string | undefined> {
     if (!this.topicIconModel)
       this.topicIconModel = {
-        getValue: () => null,
-        setValue: (value: string) => {
-          const values = value.split(':');
-          this.designer.addIconType(values[0] as 'image' | 'emoji', values[1]);
+        getValue: () => undefined,
+        setValue: (value: string | undefined) => {
+          if (value) {
+            const values = value.split(':');
+            this.designer.addIconType(values[0] as 'image' | 'emoji', values[1]);
+          }
         },
       };
     return this.topicIconModel;
@@ -164,13 +172,16 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic note
    */
-  getNoteModel(): NodeProperty<string> {
+  getNoteModel(): NodeProperty<string | undefined> {
     if (!this.noteModel)
       this.noteModel = {
-        getValue: (): string => this.selectedTopic()?.getNoteValue(),
-        setValue: (value: string) => {
+        getValue: (): string | undefined => {
+          const value = this.selectedTopic().getNoteValue();
+          return value ? value : undefined;
+        },
+        setValue: (value: string | undefined) => {
           const note = value && value.trim() !== '' ? value : undefined;
-          this.selectedTopic()?.setNoteValue(note);
+          this.selectedTopic().setNoteValue(note);
         },
       };
     return this.noteModel;
@@ -180,11 +191,15 @@ class NodePropertyBuilder {
    *
    * @returns model to get and set topic font family
    */
-  getFontFamilyModel(): NodeProperty<string> {
+  getFontFamilyModel(): NodeProperty<string | undefined> {
     if (!this.fontFamilyModel)
       this.fontFamilyModel = {
-        getValue: () => this.uniqueOrNull((node) => node.getFontFamily()),
-        setValue: (value: string) => this.designer.changeFontFamily(value),
+        getValue: () => this.uniqueOrUndefined((node) => node.getFontFamily()),
+        setValue: (value: string | undefined) => {
+          if (value) {
+            this.designer.changeFontFamily(value);
+          }
+        },
       };
     return this.fontFamilyModel;
   }
@@ -223,7 +238,7 @@ class NodePropertyBuilder {
   getTopicShapeModel(): NodeProperty<TopicShapeType> {
     if (!this.topicShapeModel)
       this.topicShapeModel = {
-        getValue: () => this.uniqueOrNull((node) => node.getShapeType()) as TopicShapeType,
+        getValue: () => this.uniqueOrUndefined((node) => node.getShapeType()) as TopicShapeType,
         setValue: (value: TopicShapeType) => this.designer.changeShapeType(value),
       };
     return this.topicShapeModel;

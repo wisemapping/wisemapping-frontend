@@ -43,7 +43,7 @@ import CreatorInfoPane from './creator-info-pane';
 type EditorProps = {
   theme?: Theme;
   onAction: (action: ToolbarActionType) => void;
-  onLoad: (designer: Designer) => void;
+  onLoad?: (designer: Designer) => void;
   editor: EditorConfiguration;
   accountConfiguration?: React.ReactElement;
 };
@@ -94,10 +94,12 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
         {widgetManager.getEditorContent()}
       </Popover>
 
-      <div className="no-print">
-        <EditorToolbar model={model} capability={capability} />
-        <ZoomPanel model={model} capability={capability} />
-      </div>
+      {model && (
+        <div className="no-print">
+          <EditorToolbar model={model} capability={capability} />
+          <ZoomPanel model={model} capability={capability} />
+        </div>
+      )}
 
       <mindplot-component
         ref={mindplotRef}
