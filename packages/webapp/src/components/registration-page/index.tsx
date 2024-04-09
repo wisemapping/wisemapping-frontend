@@ -17,10 +17,11 @@ import AppConfig from '../../classes/app-config';
 import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
-import { Grid, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 
 export type Model = {
   email: string;

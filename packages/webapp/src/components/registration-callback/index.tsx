@@ -9,11 +9,11 @@ import Button from '@mui/material/Button';
 import ReactGA from 'react-ga4';
 import { Oauth2CallbackResult } from '../../classes/client';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
 import GlobalError from '../form/global-error';
 import { buttonsStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '@wisemapping/core-js';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const RegistrationCallbackPage = (): React.ReactElement => {
   const intl = useIntl();
