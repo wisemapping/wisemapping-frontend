@@ -3,7 +3,7 @@ import FreemindImporter from './FreemindImporter';
 import Importer from './Importer';
 
 export default class TextImporterFactory {
-  static create(type: string, map: string): Importer {
+  static create(type: string | undefined, map: string): Importer {
     let result: Importer;
     switch (type) {
       case 'wxml':

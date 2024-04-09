@@ -17,6 +17,7 @@
  */
 import React, { useContext, useEffect, useState } from 'react';
 import Editor, { useEditor, EditorOptions } from '@wisemapping/editor';
+
 import {
   EditorRenderMode,
   PersistenceManager,
@@ -40,6 +41,7 @@ import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
 import { KeyboardContext } from '../../classes/provider/keyboard-context';
 import SessionExpiredDialog from '../common-page/session-expired-dialog';
+import { EditorConfiguration } from '@wisemapping/editor/src/hooks/useEditor';
 
 const buildPersistenceManagerForEditor = (
   mode: EditorRenderMode,
@@ -63,8 +65,9 @@ const buildPersistenceManagerForEditor = (
       });
     } else {
       result = new LocalStorageManager(
-        `${baseUrl}/api/restful/maps/{id}/${hid ? `${hid}/` : ''
-        }document/xml${(mode === 'showcase' || mode === 'viewonly') ? '-pub' : ''}`,
+        `${baseUrl}/api/restful/maps/{id}/${
+          hid ? `${hid}/` : ''
+        }document/xml${mode === 'showcase' || mode === 'viewonly' ? '-pub' : ''}`,
         true,
         token,
       );
@@ -139,20 +142,21 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const loadCompleted = editorMetadata && isAccountLoaded;
 
   let persistence: PersistenceManager;
-  let mapInfo: MapInfo;
-  let editorConfig: EditorOptions;
+  let mapInfo: MapInfo | undefined;
+  let editorOptions: EditorOptions | undefined;
+  let editorConfig: EditorConfiguration | undefined;
 
   const enableAppBar = pageMode !== 'view';
   if (loadCompleted) {
     // Configure
-    editorConfig = {
+    editorOptions = {
       enableKeyboardEvents: hotkeyEnabled,
       locale: userLocale.code,
       mode: editorMetadata.editorMode,
       enableAppBar: enableAppBar,
       zoom: editorMetadata.zoom,
     };
-   
+
     persistence = buildPersistenceManagerForEditor(
       editorMetadata.editorMode,
       setSessionExpired,
@@ -168,6 +172,12 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       editorMetadata.mapMetadata.isLockedBy,
       editorMetadata.zoom,
     );
+
+    editorConfig = useEditor({
+      mapInfo,
+      options: editorOptions,
+      persistenceManager: persistence,
+    });
   }
 
   useEffect(() => {
@@ -176,13 +186,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
     }
   }, [mapInfo?.getTitle()]);
 
-  const editor = useEditor({
-    mapInfo,
-    options: editorConfig,
-    persistenceManager: persistence,
-  });
-
-  return loadCompleted ? (
+  return loadCompleted && editorConfig !== undefined && editorOptions !== undefined ? (
     <IntlProvider
       locale={userLocale.code}
       defaultLocale={Locales.EN.code}
@@ -190,12 +194,12 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
     >
       <SessionExpiredDialog open={sessionExpired} />
       <Editor
-        editor={editor}
+        editor={editorConfig}
         onAction={setActiveDialog}
         theme={theme}
         accountConfiguration={
           // Prevent load on non-authenticated.
-          editorConfig.mode !== 'showcase' ? (
+          editorOptions.mode !== 'showcase' ? (
             <IntlProvider
               locale={userLocale.code}
               messages={userLocale.message as Record<string, string>}

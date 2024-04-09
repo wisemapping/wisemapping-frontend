@@ -40,6 +40,7 @@ import Editor from './components';
 import MapInfo from './classes/model/map-info';
 import { EditorOptions, useEditor } from './hooks/useEditor';
 import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
+import SizeType from '@wisemapping/mindplot/src/components/SizeType';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -47,9 +48,6 @@ declare global {
     interface IntrinsicElements {
       ['mindplot-component']: MindplotWebComponentInterface;
     }
-  }
-  interface Window {
-    newrelic: { noticeError: (Error) => void };
   }
 }
 
@@ -72,6 +70,7 @@ export {
   EditorOptions,
   MapInfo,
   XMLSerializerFactory,
+  SizeType,
   useEditor,
 };
 

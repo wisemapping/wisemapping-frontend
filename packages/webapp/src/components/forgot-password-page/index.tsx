@@ -14,8 +14,8 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
 import { ClientContext } from '../../classes/provider/client-context';
+import Button from '@mui/material/Button';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');

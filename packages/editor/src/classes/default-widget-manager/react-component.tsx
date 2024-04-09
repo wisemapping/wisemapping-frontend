@@ -28,10 +28,10 @@ const linkContent = (
 };
 
 const noteContent = (
-  noteModel: NodeProperty<string>,
+  noteModel: NodeProperty<string | undefined>,
   closeModal: () => void,
 ): React.ReactElement => {
-  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel}></TopicNoteEditor>;
+  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel} />;
 };
 
 export { linkContent, noteContent };

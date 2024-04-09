@@ -17,8 +17,8 @@
  */
 import React from 'react';
 import { css } from '@emotion/react';
-import { Button } from '@mui/material';
 import GoogleIcon from '../google-icon';
+import Button from '@mui/material/Button';
 
 const googleButtonStyle = css({
   color: '#000000',

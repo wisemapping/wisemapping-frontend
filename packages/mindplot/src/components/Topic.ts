@@ -634,7 +634,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setNoteValue(value: string): void {
+  setNoteValue(value: string | undefined): void {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();
@@ -666,7 +666,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setLinkValue(value: string) {
+  setLinkValue(value: string | undefined) {
     const topicId = this.getId();
     const model = this.getModel();
     const dispatcher = ActionDispatcher.getInstance();

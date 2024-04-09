@@ -26,14 +26,17 @@ import colors from './colors.json';
  */
 const ColorPicker = (props: {
   closeModal: () => void;
-  colorModel: NodeProperty<string>;
+  colorModel: NodeProperty<string | undefined>;
 }): ReactElement => {
   return (
     <Box component="div" sx={{ m: 2 }}>
       <ReactColorPicker
         color={props.colorModel.getValue() || '#fff'}
         onChangeComplete={(color: { hex: string }) => {
-          props.colorModel.setValue(color.hex);
+          const setValue = props.colorModel.setValue;
+          if (setValue) {
+            setValue(color.hex);
+          }
           props.closeModal();
         }}
         colors={colors}

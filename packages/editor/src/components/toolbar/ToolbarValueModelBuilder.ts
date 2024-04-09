@@ -35,22 +35,3 @@ export function getPreviousValue(
   if (currentIndex === -1) return values[values.length - 1];
   return values[currentIndex - 1];
 }
-
-/**
- * the unique property value of object in the array or null if more than one exits
- */
-export function getTheUniqueValueOrNull(
-  objectsArray: object[],
-  propertyValueGetter: (object: object) => string | number,
-): string {
-  let result;
-  for (let i = 0; i < objectsArray.length; i++) {
-    const value = propertyValueGetter(objectsArray[i]);
-    if (result != null && result !== value) {
-      result = null;
-      break;
-    }
-    result = value;
-  }
-  return result;
-}

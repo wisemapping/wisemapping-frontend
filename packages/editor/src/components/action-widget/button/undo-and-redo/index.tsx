@@ -23,7 +23,7 @@ import { ToolbarMenuItem } from '../../../toolbar';
 type UndoAndRedo = {
   configuration: ActionConfig;
   disabledCondition: (event) => boolean;
-  model: Editor;
+  model: Editor | undefined;
 };
 
 const UndoAndRedo = ({ configuration, disabledCondition, model }: UndoAndRedo): ReactElement => {

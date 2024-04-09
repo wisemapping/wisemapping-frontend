@@ -38,7 +38,7 @@ export const fetchMindmap = async (mapId: number): Promise<Mindmap> => {
     );
 
     const serializer = XMLSerializerFactory.getSerializer('tango');
-    mindmap = Promise.resolve(serializer.loadFromDom(xmlDoc, String(mapId)));
+    mindmap = await Promise.resolve(serializer.loadFromDom(xmlDoc, String(mapId)));
   }
   return mindmap;
 };

@@ -63,6 +63,7 @@ const keyTooltip = (msg: string, key: string): string => {
 
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <FormatPaintIconOutlineIcon />,
@@ -77,7 +78,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-rectangle',
           defaultMessage: 'Rectangle shape',
         }),
-        onClick: () => modelBuilder.getTopicShapeModel().setValue('rectangle'),
+        onClick: () => {
+          const setValue = modelBuilder.getTopicShapeModel().setValue;
+          if (setValue) {
+            setValue('rectangle');
+          }
+        },
         selected: () => modelBuilder.getTopicShapeModel().getValue() === 'rectangle',
       },
       {
@@ -86,7 +92,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-rounded',
           defaultMessage: 'Rounded shape',
         }),
-        onClick: () => modelBuilder.getTopicShapeModel().setValue('rounded rectangle'),
+        onClick: () => {
+          const setValue = modelBuilder.getTopicShapeModel().setValue;
+          if (setValue) {
+            setValue('rounded rectangle');
+          }
+        },
         selected: () => modelBuilder.getTopicShapeModel().getValue() === 'rounded rectangle',
       },
       {
@@ -95,7 +106,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-line',
           defaultMessage: 'Line shape',
         }),
-        onClick: () => modelBuilder.getTopicShapeModel().setValue('line'),
+        onClick: () => {
+          const setValue = modelBuilder.getTopicShapeModel().setValue;
+          if (setValue) {
+            setValue('line');
+          }
+        },
         selected: () => modelBuilder.getTopicShapeModel().getValue() === 'line',
       },
       {
@@ -104,7 +120,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-ellipse',
           defaultMessage: 'Ellipse shape',
         }),
-        onClick: () => modelBuilder.getTopicShapeModel().setValue('elipse'),
+        onClick: () => {
+          const setValue = modelBuilder.getTopicShapeModel().setValue;
+          if (setValue) {
+            setValue('elipse');
+          }
+        },
         selected: () => modelBuilder.getTopicShapeModel().getValue() === 'elipse',
       },
       {
@@ -113,7 +134,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-share-none',
           defaultMessage: 'None shape',
         }),
-        onClick: () => modelBuilder.getTopicShapeModel().setValue('none'),
+        onClick: () => {
+          const setValue = modelBuilder.getTopicShapeModel().setValue;
+          if (setValue) {
+            setValue('none');
+          }
+        },
         selected: () => modelBuilder.getTopicShapeModel().getValue() === 'none',
       },
       null,
@@ -142,7 +168,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-border-color-default',
           defaultMessage: 'Default border color',
         }),
-        onClick: () => modelBuilder.getColorBorderModel().setValue(undefined),
+        onClick: () => {
+          const setValue = modelBuilder.getColorBorderModel().setValue;
+          if (setValue) {
+            setValue(undefined);
+          }
+        },
         selected: () => modelBuilder.getColorBorderModel().getValue() === undefined,
       },
       null,
@@ -171,11 +202,16 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-fill-color-default',
           defaultMessage: 'Default fill color',
         }),
-        onClick: () => modelBuilder.getSelectedTopicColorModel().setValue(undefined),
+        onClick: () => {
+          const setValue = modelBuilder.getSelectedTopicColorModel().setValue;
+          if (setValue) {
+            setValue(undefined);
+          }
+        },
         selected: () => modelBuilder.getSelectedTopicColorModel().getValue() === undefined,
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   const connectionStyleConfiguration: ActionConfig = {
@@ -191,7 +227,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-curved-thick',
           defaultMessage: 'Thick Curved',
         }),
-        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.THICK_CURVED),
+        onClick: () => {
+          const setValue = modelBuilder.getConnectionStyleModel().setValue;
+          if (setValue) {
+            setValue(LineType.THICK_CURVED);
+          }
+        },
         selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
       },
       {
@@ -200,7 +241,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-arc',
           defaultMessage: 'Arc',
         }),
-        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.ARC),
+        onClick: () => {
+          const setValue = modelBuilder.getConnectionStyleModel().setValue;
+          if (setValue) {
+            setValue(LineType.ARC);
+          }
+        },
         selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.ARC,
       },
       {
@@ -209,7 +255,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-curved-thin',
           defaultMessage: 'Thin Curved',
         }),
-        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.THIN_CURVED),
+        onClick: () => {
+          const setValue = modelBuilder.getConnectionStyleModel().setValue;
+          if (setValue) {
+            setValue(LineType.THIN_CURVED);
+          }
+        },
         selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THIN_CURVED,
       },
       {
@@ -218,7 +269,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-polyline',
           defaultMessage: 'Simple Polyline',
         }),
-        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.POLYLINE_MIDDLE),
+        onClick: () => {
+          const setValue = modelBuilder.getConnectionStyleModel().setValue;
+          if (setValue) {
+            setValue(LineType.POLYLINE_MIDDLE);
+          }
+        },
         selected: () =>
           modelBuilder.getConnectionStyleModel().getValue() === LineType.POLYLINE_MIDDLE,
       },
@@ -228,7 +284,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-style-polyline-curved',
           defaultMessage: 'Curved Polyline',
         }),
-        onClick: () => modelBuilder.getConnectionStyleModel().setValue(LineType.POLYLINE_CURVED),
+        onClick: () => {
+          const setValue = modelBuilder.getConnectionStyleModel().setValue;
+          if (setValue) {
+            setValue(LineType.POLYLINE_CURVED);
+          }
+        },
         selected: () =>
           modelBuilder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
       },
@@ -258,12 +319,17 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-connection-color-default',
           defaultMessage: 'Default color',
         }),
-        onClick: () => modelBuilder.getConnectionColorModel().setValue(undefined),
+        onClick: () => {
+          const serValue = modelBuilder.getConnectionColorModel().setValue;
+          if (serValue) {
+            serValue(undefined);
+          }
+        },
         selected: () => modelBuilder.getConnectionColorModel().getValue() === undefined,
       },
     ],
     disabled: () => {
-      const selected = model.getDesignerModel().filterSelectedTopics();
+      const selected = model.getDesignerModel()!.filterSelectedTopics();
       return selected.length === 0;
     },
   };
@@ -288,7 +354,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-bigger',
           defaultMessage: 'Bigger',
         }),
-        onClick: () => modelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.up),
+        onClick: () => {
+          const switchValue = modelBuilder.getFontSizeModel().switchValue;
+          if (switchValue) {
+            switchValue(SwitchValueDirection.up);
+          }
+        },
       },
       {
         icon: <TextDecreaseOutlinedIcon />,
@@ -296,7 +367,12 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-smaller',
           defaultMessage: 'Smaller',
         }),
-        onClick: () => modelBuilder.getFontSizeModel().switchValue(SwitchValueDirection.down),
+        onClick: () => {
+          const switchValue = modelBuilder.getFontSizeModel().switchValue;
+          if (switchValue) {
+            switchValue(SwitchValueDirection.down);
+          }
+        },
       },
       null,
       {
@@ -349,11 +425,16 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           id: 'editor-panel.tooltip-topic-font-color-default',
           defaultMessage: 'Default color',
         }),
-        onClick: () => modelBuilder.getFontColorModel().setValue(undefined),
+        onClick: () => {
+          const setValue = modelBuilder.getFontColorModel().setValue;
+          if (setValue) {
+            setValue(undefined);
+          }
+        },
         selected: () => modelBuilder.getFontColorModel().getValue() === undefined,
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   /**
@@ -368,7 +449,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     onClick: (e) => {
       model.getDesigner().showRelPivot(e);
     },
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   /**
@@ -389,7 +470,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ),
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   /**
@@ -431,7 +512,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ),
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   /**
@@ -456,7 +537,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         ),
       },
     ],
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   const addNodeToolbarConfiguration = {
@@ -465,7 +546,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       intl.formatMessage({ id: 'editor-panel.tooltip-add-topic', defaultMessage: 'Add Topic' }) +
       ' (Enter)',
     onClick: () => model.getDesigner().createSiblingForSelectedNode(),
-    disabled: () => model.getDesignerModel().filterSelectedTopics().length === 0,
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
   const deleteNodeToolbarConfiguration = {

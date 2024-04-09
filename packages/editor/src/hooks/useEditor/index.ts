@@ -21,6 +21,7 @@ import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
 import { useWidgetManager } from '../useWidgetManager';
 import Model from '../../classes/model/editor';
+import { logCriticalError } from '@wisemapping/core-js';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -38,7 +39,7 @@ type UseEditorProps = {
 };
 
 export interface EditorConfiguration {
-  model;
+  model?: Model;
   mindplotRef: React.MutableRefObject<unknown>;
   mapInfo: MapInfo;
   capability: Capability;
@@ -50,13 +51,12 @@ export const useEditor = ({
   options,
   persistenceManager,
 }: UseEditorProps): EditorConfiguration => {
-  
   // We create model inside useEditor hook to instantiate everything outside Editor Component
   const [model, setModel] = useState<Model | undefined>();
- 
+
   // useEditor hook creates mindplotRef
   const mindplotRef = useRef(null);
-  
+
   // This is required to redraw in case of changes in the canvas...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setCanvasUpdate] = useState<number>();
@@ -68,7 +68,7 @@ export const useEditor = ({
   }
 
   useEffect(() => {
-    if (!model && options) {
+    if (!model && options && mindplotRef.current) {
       const model = new Model(mindplotRef.current);
       model
         .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
@@ -77,8 +77,7 @@ export const useEditor = ({
           model.registerEvents(setCanvasUpdate, capability);
         })
         .catch((e) => {
-          console.error(e);
-          window.newrelic?.noticeError(e);
+          logCriticalError(`Unexpected error loading mindmap with id ${mapInfo.getId()}`, e);
         });
       setModel(model);
     }

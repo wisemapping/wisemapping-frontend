@@ -46,7 +46,7 @@ interface AppBarProps {
   model: Editor | undefined;
   mapInfo: MapInfo;
   capability: Capability;
-  onAction?: (type: ToolbarActionType) => void;
+  onAction: (type: ToolbarActionType) => void;
   accountConfig?;
 }
 
@@ -93,7 +93,7 @@ const AppBar = ({
     }
   }, []);
 
-  const config: ActionConfig[] = [
+  const config: (ActionConfig | undefined)[] = [
     {
       icon: <ArrowBackIosNewOutlinedIcon />,
       tooltip: intl.formatMessage({
@@ -120,7 +120,7 @@ const AppBar = ({
         </Tooltip>
       ),
     },
-    null,
+    undefined,
     {
       render: () => (
         <UndoAndRedo
@@ -130,7 +130,7 @@ const AppBar = ({
               intl.formatMessage({ id: 'appbar.tooltip-undo', defaultMessage: 'Undo' }),
               'Z',
             ),
-            onClick: () => model.getDesigner().undo(),
+            onClick: () => model!.getDesigner().undo(),
           }}
           disabledCondition={(event) => event.undoSteps > 0}
           model={model}
@@ -148,7 +148,7 @@ const AppBar = ({
               intl.formatMessage({ id: 'appbar.tooltip-redo', defaultMessage: 'Redo' }),
               'Shift + Z',
             ),
-            onClick: () => model.getDesigner().redo(),
+            onClick: () => model!.getDesigner().redo(),
           }}
           disabledCondition={(event) => event.redoSteps > 0}
           model={model}
@@ -157,11 +157,11 @@ const AppBar = ({
       visible: !capability.isHidden('redo-changes'),
       disabled: () => !model?.isMapLoadded(),
     },
-    null,
+    undefined,
     {
       icon: <SaveOutlinedIcon />,
       onClick: () => {
-        model.save(true);
+        model!.save(true);
       },
       tooltip: keyTooltip(
         intl.formatMessage({ id: 'appbar.tooltip-save', defaultMessage: 'Save' }),

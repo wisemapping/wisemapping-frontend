@@ -311,14 +311,14 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       id = Number.parseInt(idStr, 10);
     }
 
-    if (id !== undefined && !this._idsMap[id]) {
-      this._idsMap[id] = domElem;
-    } else {
+    // Is a duplicated node ?. Force the generation of a new id ...
+    if (id === undefined || this._idsMap[id] !== undefined) {
       id = undefined;
     }
 
     // Create element ...
     const topic = mindmap.createNode(type, id);
+    this._idsMap[topic.getId()] = domElem;
 
     // Set text property is it;s defined...
     const text = domElem.getAttribute('text');

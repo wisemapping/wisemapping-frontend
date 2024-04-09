@@ -20,17 +20,24 @@ import React, { ReactElement, useState } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import Input from '../../input';
 import SaveAndDelete from '../save-and-delete';
+
+type TexttNodeEditorProps = {
+  closeModal: () => void;
+  noteModel: NodeProperty<string | undefined>;
+};
+
 /**
  * Note form for toolbar and node contextual editor
  */
-const TopicNoteEditor = (props: {
-  closeModal: () => void;
-  noteModel: NodeProperty<string> | null;
-}): ReactElement => {
-  const [note, setNote] = useState(props.noteModel.getValue());
+const TopicNoteEditor = ({ closeModal, noteModel }: TexttNodeEditorProps): ReactElement => {
+  const value = noteModel.getValue();
+  const [note, setNote] = useState(value);
+
   const submitHandler = () => {
-    props.closeModal();
-    props.noteModel.setValue(note);
+    closeModal();
+    if (noteModel.setValue) {
+      noteModel.setValue(note);
+    }
   };
 
   return (
@@ -46,11 +53,7 @@ const TopicNoteEditor = (props: {
         onChange={(event) => setNote(event.target.value)}
       />
       <br />
-      <SaveAndDelete
-        model={props.noteModel}
-        closeModal={props.closeModal}
-        submitHandler={submitHandler}
-      />
+      <SaveAndDelete model={noteModel} closeModal={closeModal} submitHandler={submitHandler} />
     </Box>
   );
 };

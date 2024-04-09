@@ -1,12 +1,11 @@
 {
   "include": [
     "src/**/*"
-, "public/config.js"  ],
+  ],
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist/",
     "sourceMap": true,
-    "noImplicitAny": false,
     "module": "amd",
     "moduleResolution": "node",
     "strict": false,
@@ -14,10 +13,13 @@
     "allowJs": true,
     "esModuleInterop": true,
     "declaration": true,
-    "strictNullChecks": true,
     "rootDirs": [
       "src",
     ],
+
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+
     "jsxImportSource": "@emotion/react",
     "resolveJsonModule": true
   },

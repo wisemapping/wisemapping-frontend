@@ -13,6 +13,5 @@ const prodConfig = {
   entry: {
     mindplot: './src/index.ts',
   },
-  mode: 'production',
 };
 module.exports = merge(common, prodConfig);

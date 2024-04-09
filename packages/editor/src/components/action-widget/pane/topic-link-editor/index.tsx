@@ -39,7 +39,10 @@ const TopicLinkEditor = (props: {
   const submitHandler = () => {
     if (checkURL(url)) {
       props.closeModal();
-      props.urlModel.setValue(url);
+      const setValue = props.urlModel.setValue;
+      if (setValue) {
+        setValue(url);
+      }
     }
   };
 
@@ -52,6 +55,7 @@ const TopicLinkEditor = (props: {
 
   const checkURL = (url: string): boolean => {
     const regex =
+      // eslint-disable-next-line no-useless-escape
       /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
     return regex.test(url);
   };
@@ -92,7 +96,7 @@ const TopicLinkEditor = (props: {
         }}
       />
       <SaveAndDelete
-        model={props.urlModel}
+        model={props.urlModel as NodeProperty<string | undefined>}
         closeModal={props.closeModal}
         submitHandler={submitHandler}
       />
