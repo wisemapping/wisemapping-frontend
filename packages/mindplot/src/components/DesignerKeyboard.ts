@@ -195,6 +195,16 @@ class DesignerKeyboard extends Keyboard {
       }
     });
 
+    designer.getContainer().addEventListener('mouseenter', () => {
+      super.resume();
+      DesignerKeyboard.resume();
+    });
+
+    designer.getContainer().addEventListener('mouseleave', () => {
+      super.pause();
+      DesignerKeyboard.pause();
+    });
+
     $(document).on('keypress', (event) => {
       // Needs to be ignored ?
       if (

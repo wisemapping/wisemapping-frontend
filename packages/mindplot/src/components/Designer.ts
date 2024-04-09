@@ -144,9 +144,13 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._widgetManager = options.widgetManager;
   }
 
+  getContainer(): HTMLDivElement {
+    return this._canvas.getScreenManager().getContainer()[0];
+  }
+
   private _registerWheelEvents(): void {
     const zoomFactor = 1.02;
-    document.addEventListener(
+    this.getContainer().addEventListener(
       'wheel',
       (event: WheelEvent) => {
         // TODO re-do this better. This line avoid manage zoom with mouse wheel if mindplot kb shortcuts are disabled.
