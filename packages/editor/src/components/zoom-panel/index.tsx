@@ -52,10 +52,10 @@ export function buildZoomToolbarConfig(
       render: () => (
         <Box sx={{ p: 0.5 }}>
           <Typography variant="overline" color="gray">
-            %
             {!model?.isMapLoadded()
               ? 100
               : Math.floor((1 / model.getDesigner().getWorkSpace()?.getZoom()) * 100)}
+            %
           </Typography>
         </Box>
       ),
