@@ -111,6 +111,12 @@ abstract class WidgetManager {
     });
   }
 
+  abstract handleClose(event, reason: 'backdropClick' | 'escapeKeyDown'): void;
+
+  abstract getEditorContent(): React.ReactElement | undefined;
+
+  abstract getEditorTile(): string;
+
   abstract showEditorForLink(
     topic: Topic,
     linkModel: LinkModel | null,

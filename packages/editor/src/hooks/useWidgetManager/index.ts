@@ -15,13 +15,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import DefaultWidgetManager, { useCreate } from '../../classes/default-widget-manager';
+import { WidgetManager } from '@wisemapping/mindplot';
+import { useCreate } from '../../classes/default-widget-manager';
 
 export const useWidgetManager = (): {
   popoverOpen: boolean;
   setPopoverOpen: (arg: boolean) => void;
   popoverTarget: Element | undefined;
-  widgetManager: DefaultWidgetManager;
+  widgetManager: WidgetManager;
 } => {
   const [popoverOpen, setPopoverOpen, popoverTarget, widgetManager] = useCreate();
 

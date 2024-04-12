@@ -92,7 +92,7 @@ export const useCreate = (): [
   boolean,
   (arg0: boolean) => void,
   Element | undefined,
-  DefaultWidgetManager,
+  WidgetManager,
 ] => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverTarget, setPopoverTarget] = useState<Element | undefined>(undefined);
