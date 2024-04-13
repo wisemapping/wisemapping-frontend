@@ -19,14 +19,14 @@ import {
   DesignerKeyboard,
   EditorRenderMode,
   PersistenceManager,
-  WidgetManager,
+  WidgetBuilder,
 } from '@wisemapping/mindplot';
 import { useState, useRef, useEffect } from 'react';
 import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
 import Model from '../../classes/model/editor';
 import { logCriticalError } from '@wisemapping/core-js';
-import DefaultWidgetManager from '../../classes/default-widget-manager';
+import ReactWidgetBuilder from '../../classes/react-widget-manager';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -64,7 +64,7 @@ export const useEditor = ({
 
   // This is required to redraw in case of changes in the canvas...
   const [, setCanvasUpdate] = useState<number>();
-  const widgetManagerRef = useRef<WidgetManager>(new DefaultWidgetManager());
+  const widgetBuilderRef = useRef<WidgetBuilder>(new ReactWidgetBuilder());
 
   let capability;
   if (options && mapInfo) {
@@ -75,10 +75,10 @@ export const useEditor = ({
     if (!model && options && mindplotRef.current) {
       const model = new Model(mindplotRef.current);
       model
-        .loadMindmap(mapInfo.getId(), persistenceManager, widgetManagerRef.current)
+        .loadMindmap(mapInfo.getId(), persistenceManager, widgetBuilderRef.current)
         .then(() => {
           setCanvasUpdate(Date.now());
-          model.registerEvents(setCanvasUpdate, capability, widgetManagerRef.current);
+          model.registerEvents(setCanvasUpdate, capability, widgetBuilderRef.current);
         })
         .catch((e) => {
           logCriticalError(`Unexpected error loading mindmap with id ${mapInfo.getId()}`, e);

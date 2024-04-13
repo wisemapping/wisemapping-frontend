@@ -43,14 +43,10 @@ import Topic from './components/Topic';
 
 import LinkModel from './components/model/LinkModel';
 import NoteModel from './components/model/NoteModel';
-
-import WidgetManager from './components/WidgetManager';
-
+import WidgetBuilder, { WidgetEventType } from './components/WidgetBuilder';
 import { buildDesigner } from './components/DesignerBuilder';
-
 import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
-import ReadOnlyWidgetManager from './components/ReadOnlyWidgetManager';
 
 declare global {
   // Todo: There are some global references that needs to be removed inside mindplot.
@@ -93,8 +89,8 @@ export {
   LinkModel,
   NoteIcon,
   NoteModel,
-  WidgetManager,
+  WidgetBuilder,
+  WidgetEventType,
   Topic,
   XMLSerializerFactory,
-  ReadOnlyWidgetManager,
 };

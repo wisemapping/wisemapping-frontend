@@ -54,7 +54,7 @@ import { DesignerOptions } from './DesignerOptionsBuilder';
 import DragTopic from './DragTopic';
 import CentralTopic from './CentralTopic';
 import FeatureType from './model/FeatureType';
-import WidgetManager from './WidgetManager';
+import WidgetBulder from './WidgetBuilder';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
 import XMLSerializerFactory from './persistence/XMLSerializerFactory';
@@ -85,7 +85,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _cleanScreen!: () => void;
 
-  private _widgetManager: WidgetManager;
+  private _widgetManager: WidgetBulder;
 
   constructor(options: DesignerOptions) {
     super();
@@ -204,7 +204,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     });
   }
 
-  getWidgeManager(): WidgetManager {
+  getWidgeManager(): WidgetBulder {
     return this._widgetManager;
   }
 

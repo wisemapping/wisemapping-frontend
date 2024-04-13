@@ -20,7 +20,7 @@ import {
   MindplotWebComponent,
   PersistenceManager,
   DesignerModel,
-  WidgetManager,
+  WidgetBuilder,
   Topic,
 } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
@@ -57,16 +57,16 @@ class Editor {
   loadMindmap(
     mapId: string,
     persistenceManager: PersistenceManager,
-    widgetManager: WidgetManager,
+    widgetBuilder: WidgetBuilder,
   ): Promise<void> {
-    this.component.buildDesigner(persistenceManager, widgetManager);
+    this.component.buildDesigner(persistenceManager, widgetBuilder);
     return this.component.loadMap(mapId);
   }
 
   registerEvents(
     canvasUpdate: (timestamp: number) => void,
     capability: Capability,
-    wm: WidgetManager,
+    widgetBuilder: WidgetBuilder,
   ): void {
     const component = this.component;
     const designer = component!.getDesigner();
@@ -84,15 +84,13 @@ class Editor {
 
       const featureEdition = (value: { event: 'note' | 'link' | 'close'; topic: Topic }): void => {
         const { event, topic } = value;
-        console.error('event:' + event);
-
         switch (event) {
           case 'note': {
-            wm.showEditorForNote(topic);
+            widgetBuilder.fireEvent('edit-note', topic);
             break;
           }
           case 'link': {
-            wm.showEditorForLink(topic);
+            widgetBuilder.fireEvent('edit-link', topic);
             break;
           }
         }

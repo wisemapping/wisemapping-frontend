@@ -34,7 +34,7 @@ const ErrorPage = (): React.ReactElement => {
   const error = useRouteError();
 
   // Error page handler ...
-  logCriticalError(`Handling ErrorPage redirect error`, error as Error);
+  logCriticalError(`Handling ErrorPage redirect error`, JSON.stringify(error));
 
   // Is a server error info ?
   const errorInfo = error as ErrorInfo;

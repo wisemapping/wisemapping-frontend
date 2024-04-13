@@ -50,7 +50,7 @@ export const sign = (value: number): 1 | -1 => {
   return value >= 0 ? 1 : -1;
 };
 
-export const logCriticalError = (msg: string, exception: Error) => {
+export const logCriticalError = (msg: string, exception: unknown) => {
   window.newrelic?.noticeError(`${msg}. Exception: ${exception}`);
 
   console.error(`${msg}. Exception: ${exception}`);

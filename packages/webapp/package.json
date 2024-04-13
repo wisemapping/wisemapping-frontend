@@ -10,8 +10,7 @@
     "author": "Paulo Veiga <pveiga@wisemapping.com>",
     "main": "app.jsx",
     "files": [
-        "src",
-        "dist"
+        "src"
     ],
     "scripts": {
         "build": "webpack --config webpack.prod.js",
@@ -23,7 +22,8 @@
         "lint": "eslint src --ext js,ts,tsx",
         "start": "webpack serve --config webpack.dev.js ",
         "test": "yarn test:integration",
-        "test:integration": "npx start-server-and-test start http-get://localhost:3000 cy:run"
+        "test:integration": "npx start-server-and-test start http-get://localhost:3000 cy:run",
+        "start:dev": "APP_CONFIG_TYPE='file:dev'&& webpack serve --config webpack.dev.js "
     },
     "dependencies": {
         "@emotion/react": "^11.11.4",
