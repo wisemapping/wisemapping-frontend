@@ -50,6 +50,7 @@ import { buildDesigner } from './components/DesignerBuilder';
 
 import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
+import ReadOnlyWidgetManager from './components/ReadOnlyWidgetManager';
 
 declare global {
   // Todo: There are some global references that needs to be removed inside mindplot.
@@ -95,4 +96,5 @@ export {
   WidgetManager,
   Topic,
   XMLSerializerFactory,
+  ReadOnlyWidgetManager,
 };

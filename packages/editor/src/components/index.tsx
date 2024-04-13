@@ -15,12 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useRef } from 'react';
-import Popover from '@mui/material/Popover';
+import React, { ReactElement } from 'react';
 import { Vortex } from 'react-loader-spinner';
 
-import { FormattedMessage, IntlProvider } from 'react-intl';
-import { Designer } from '@wisemapping/mindplot';
+import { IntlProvider } from 'react-intl';
+import { Designer, ReadOnlyWidgetManager } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
 // eslint-disable-next-line no-restricted-imports
@@ -31,29 +30,25 @@ import AppBar from './app-bar';
 import { ToolbarActionType } from './toolbar/ToolbarActionType';
 import EditorToolbar from './editor-toolbar';
 import ZoomPanel from './zoom-panel';
-import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
-import CloseIcon from '@mui/icons-material/Close';
 import { SpinnerCentered } from './style';
-import Typography from '@mui/material/Typography';
-import { useWidgetManager } from '../hooks/useWidgetManager';
 import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
+import WidgetPopover from './widgetPopover';
 
 type EditorProps = {
   theme?: Theme;
   onAction: (action: ToolbarActionType) => void;
   onLoad?: (designer: Designer) => void;
-  editor: EditorConfiguration;
+  config: EditorConfiguration;
   accountConfiguration?: React.ReactElement;
 };
 
-const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactElement => {
+const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
   // We can access editor instance and other configuration from editor props
-  const { model, mindplotRef, mapInfo, capability, options } = editor;
+  const { model, mindplotRef, mapInfo, capability, options } = config;
+  const designer = model?.getDesigner();
 
-  const widgetRef = useRef(useWidgetManager());
-  const { popoverOpen, setPopoverOpen, popoverTarget, widgetManager } = widgetRef.current;
+  const widgetManager = designer ? designer.getWidgeManager() : new ReadOnlyWidgetManager();
 
   // Initialize locale ...
   const locale = options.locale;
@@ -70,30 +65,7 @@ const Editor = ({ editor, onAction, accountConfiguration }: EditorProps): ReactE
         />
       ) : null}
 
-      <Popover
-        id="popover"
-        open={popoverOpen}
-        anchorEl={popoverTarget}
-        onClose={widgetManager.handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Box textAlign={'right'} ml={1}>
-          <Typography variant="body1" style={{ paddingTop: '10px', float: 'left' }}>
-            <FormattedMessage
-              id={widgetManager.getEditorTile()}
-              defaultMessage=""
-            ></FormattedMessage>
-          </Typography>
-
-          <IconButton onClick={() => setPopoverOpen(false)} aria-label={'Close'}>
-            <CloseIcon />
-          </IconButton>
-        </Box>
-        {widgetManager.getEditorContent()}
-      </Popover>
+      <WidgetPopover widgetManager={widgetManager} />
 
       {model && (
         <div className="no-print">

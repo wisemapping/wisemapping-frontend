@@ -21,6 +21,7 @@ import {
   PersistenceManager,
   DesignerModel,
   WidgetManager,
+  Topic,
 } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
 
@@ -62,7 +63,11 @@ class Editor {
     return this.component.loadMap(mapId);
   }
 
-  registerEvents(canvasUpdate: (timestamp: number) => void, capability: Capability): void {
+  registerEvents(
+    canvasUpdate: (timestamp: number) => void,
+    capability: Capability,
+    wm: WidgetManager,
+  ): void {
     const component = this.component;
     const designer = component!.getDesigner();
 
@@ -77,11 +82,30 @@ class Editor {
         canvasUpdate(Date.now());
       };
 
+      const featureEdition = (value: { event: 'note' | 'link' | 'close'; topic: Topic }): void => {
+        const { event, topic } = value;
+        switch (event) {
+          case 'note': {
+            wm.showEditorForNote(topic);
+            break;
+          }
+          case 'link': {
+            wm.showEditorForLink(topic);
+            break;
+          }
+        }
+        canvasUpdate(Date.now());
+      };
+
       // Register events ...
       designer.addEvent('onblur', onNodeBlurHandler);
       designer.addEvent('onfocus', onNodeFocusHandler);
       designer.addEvent('modelUpdate', onNodeFocusHandler);
       designer.getWorkSpace().getScreenManager().addEvent('update', onNodeFocusHandler);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      designer.addEvent('featureEdit', featureEdition);
 
       // Is the save action enabled ... ?
       if (!capability.isHidden('save')) {

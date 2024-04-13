@@ -49,7 +49,7 @@ const Playground = () => {
   });
   return (
     <Editor
-      editor={editor}
+      config={editor}
       onAction={(action) => console.log('action called:', action)}
       onLoad={initialization}
     />

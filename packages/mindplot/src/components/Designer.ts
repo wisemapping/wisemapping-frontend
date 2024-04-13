@@ -64,7 +64,7 @@ import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
 import ChangeEvent from './layout/ChangeEvent';
 
-type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess';
+type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
 
 class Designer extends EventDispispatcher<DesignerEventType> {
   private _mindmap: Mindmap | null;
@@ -84,6 +84,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _relPivot: RelationshipPivot;
 
   private _cleanScreen!: () => void;
+
+  private _widgetManager: WidgetManager;
 
   constructor(options: DesignerOptions) {
     super();
@@ -137,6 +139,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // Hack: There are static reference to designer variable. Needs to be reviewed.
     globalThis.designer = this;
     this._mindmap = null;
+
+    // If not manager was specifed, use the readonly one.
+    this._widgetManager = options.widgetManager;
   }
 
   private _registerWheelEvents(): void {
@@ -162,8 +167,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     return this._actionDispatcher;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  addEvent(type: DesignerEventType, listener: (event: (args?: any) => void) => void): void {
+  addEvent(type: DesignerEventType, listener: (event?: unknown) => void): void {
     super.addEvent(type, listener);
   }
 
@@ -198,6 +202,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
         this._actionDispatcher.addTopics([model], [centralTopic.getId()]);
       }
     });
+  }
+
+  getWidgeManager(): WidgetManager {
+    return this._widgetManager;
   }
 
   private _buildDragManager(workspace: Canvas): DragManager {
@@ -947,8 +955,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
-      const manager = WidgetManager.getInstance();
-      manager.showEditorForLink(topic, null, null);
+      this.fireEvent('featureEdit', { event: 'link', topic });
       this.closeNodeEditors();
     }
   }
@@ -957,8 +964,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const model = this.getModel();
     const topic = model.selectedTopic();
     if (topic) {
-      const manager = WidgetManager.getInstance();
-      manager.showEditorForNote(topic, null, null);
+      this.fireEvent('featureEdit', { event: 'note', topic });
       this.closeNodeEditors();
     }
   }

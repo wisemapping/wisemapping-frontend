@@ -43,17 +43,15 @@ const options: EditorOptions = {
 const mapInfo = new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false);
 
 const Playground = () => {
-
   const editor = useEditor({
     mapInfo,
     options,
     persistenceManager: persistence,
   });
 
-  console.log("Playground render ...");
   return (
     <Editor
-      editor={editor}
+      config={editor}
       onAction={(action) => console.log('action called:', action)}
       onLoad={initialization}
     />

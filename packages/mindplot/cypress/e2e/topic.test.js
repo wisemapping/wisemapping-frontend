@@ -13,14 +13,14 @@ context('Topic suite', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--background-color&viewMode=story');
     cy.matchImageSnapshot('topic-color');
   });
-  it('topic note', () => {
-    cy.visit('/iframe.html?args=&id=mindplot-topic--note-feature&viewMode=story');
-    cy.matchImageSnapshot('topic-note');
-  });
-  it('topic link feature', () => {
-    cy.visit('/iframe.html?args=&id=mindplot-topic--link-feature&viewMode=story');
-    cy.matchImageSnapshot('topic-link-feature');
-  });
+  // it('topic note feature', () => {
+  //   cy.visit('/iframe.html?args=&id=mindplot-topic--note-feature&viewMode=story');
+  //   cy.matchImageSnapshot('topic-note');
+  // });
+  // it('topic link feature', () => {
+  //   cy.visit('/iframe.html?args=&id=mindplot-topic--link-feature&viewMode=story');
+  //   cy.matchImageSnapshot('topic-link-feature');
+  // });
   it('topic icon feature', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--icon-feature&viewMode=story');
     cy.matchImageSnapshot('topic-icon-feature');

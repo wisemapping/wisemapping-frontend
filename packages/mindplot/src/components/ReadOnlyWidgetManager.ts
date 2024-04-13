@@ -18,9 +18,17 @@
 import WidgetManager from './WidgetManager';
 
 class ReadOnlyWidgetManager extends WidgetManager {
-  handleClose(_event: any, _reason: 'backdropClick' | 'escapeKeyDown'): void {}
+  isEditorOpen(): boolean {
+    return false;
+  }
+
+  handleClose(): void {}
 
   getEditorContent(): React.ReactElement | undefined {
+    return undefined;
+  }
+
+  getAnchorElement(): Element | undefined {
     return undefined;
   }
 
