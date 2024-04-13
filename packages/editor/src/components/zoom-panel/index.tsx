@@ -97,7 +97,7 @@ export function buildZoomToolbarConfig(
 }
 
 type ZoomPanelProps = {
-  model: Model | undefined;
+  model: Model;
   capability: Capability;
 };
 

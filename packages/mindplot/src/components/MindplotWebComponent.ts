@@ -37,7 +37,7 @@ import ThemeFactory from './theme/ThemeFactory';
 class MindplotWebComponent extends HTMLElement {
   private _shadowRoot: ShadowRoot;
 
-  private _designer: Designer | null;
+  private _designer: Designer | undefined;
 
   private _saveRequired: boolean;
 
@@ -61,13 +61,15 @@ class MindplotWebComponent extends HTMLElement {
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;
     this._saveRequired = false;
-    this._designer = null;
   }
 
   /**
    * @returns the designer
    */
-  getDesigner(): Designer | null {
+  getDesigner(): Designer {
+    if (!this._designer) {
+      throw Error('Designer has not been initialized');
+    }
     return this._designer;
   }
 
@@ -76,7 +78,7 @@ class MindplotWebComponent extends HTMLElement {
    * @param {PersistenceManager} persistence the persistence manager to be used. By default a LocalStorageManager is created
    * @param {UIManager} widgetManager an UI Manager to override default Designer option.
    */
-  buildDesigner(persistence?: PersistenceManager, widgetManager?: WidgetManager) {
+  buildDesigner(persistence: PersistenceManager, widgetManager: WidgetManager) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');

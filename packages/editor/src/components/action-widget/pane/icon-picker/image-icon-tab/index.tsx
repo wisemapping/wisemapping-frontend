@@ -6,7 +6,7 @@ import NodeProperty from '../../../../../classes/model/node-property';
 import { SvgIcon } from './styled';
 
 type IconImageTab = {
-  iconModel: NodeProperty<string>;
+  iconModel: NodeProperty<string | undefined>;
   triggerClose: () => void;
 };
 const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement => {
@@ -19,7 +19,10 @@ const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement =
               key={icon}
               src={SvgImageIcon.getImageUrl(icon)}
               onClick={() => {
-                iconModel.setValue(`image:${icon}`);
+                const setValue = iconModel.setValue;
+                if (setValue) {
+                  setValue(`image:${icon}`);
+                }
                 triggerClose();
               }}
             />

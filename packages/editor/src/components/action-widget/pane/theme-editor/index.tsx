@@ -22,15 +22,19 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { SelectChangeEvent } from '@mui/material/Select';
 import React, { ReactElement, useState } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
+import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 
 const ThemeEditor = (props: {
   closeModal: () => void;
-  themeModel: NodeProperty<string> | null;
+  themeModel: NodeProperty<ThemeType>;
 }): ReactElement => {
   const [theme, setTheme] = useState(props.themeModel.getValue());
   const handleOnChange = (event: SelectChangeEvent) => {
-    setTheme(event.target.value);
-    props.themeModel.setValue(event.target.value);
+    setTheme(event.target.value as ThemeType);
+    const setValue = props.themeModel.setValue;
+    if (setValue) {
+      setValue(event.target.value as ThemeType);
+    }
     props.closeModal();
   };
 

@@ -46,13 +46,13 @@ class Capability {
     let result = false;
     if (mapping) {
       // Has been marked in desktop ...
-      const desktopCapability: EditorRenderMode[] = mapping.desktop?.hidden;
-      result = desktopCapability?.includes(this.mode);
+      const desktopCapability: EditorRenderMode[] | undefined = mapping.desktop?.hidden;
+      result = Boolean(desktopCapability?.includes(this.mode)).valueOf();
 
       // Had been overwrited for mobile ...
       if (!result && this.isMobile) {
-        const mobileCapability: EditorRenderMode[] = mapping.mobile?.hidden;
-        result = mobileCapability?.includes(this.mode);
+        const mobileCapability: EditorRenderMode[] | undefined = mapping.mobile?.hidden;
+        result = Boolean(mobileCapability?.includes(this.mode)).valueOf();
       }
     }
 
@@ -78,15 +78,15 @@ class Capability {
     if (!result) {
       const mapping = ActionConfigByRenderMode[action];
 
-      if (!mapping) {
+      if (mapping) {
         // Has been marked in desktop ...
-        const desktopCapability: EditorRenderMode[] = mapping.desktop?.hidden;
-        result = desktopCapability?.includes(this.mode);
+        const desktopCapability: EditorRenderMode[] | undefined = mapping.desktop?.hidden;
+        result = Boolean(desktopCapability?.includes(this.mode)).valueOf();
 
         // Had been overwrited for mobile ...
         if (!result && this.isMobile) {
-          const mobileCapability: EditorRenderMode[] = mapping.mobile?.hidden;
-          result = mobileCapability?.includes(this.mode);
+          const mobileCapability: EditorRenderMode[] | undefined = mapping.mobile?.hidden;
+          result = Boolean(mobileCapability?.includes(this.mode)).valueOf();
         }
       }
     }

@@ -19,19 +19,21 @@
 import React, { useRef, useState } from 'react';
 import { WidgetManager, Topic } from '@wisemapping/mindplot';
 import { linkContent, noteContent } from './react-component';
+import NodeProperty from '../model/node-property';
 
 export class DefaultWidgetManager extends WidgetManager {
   private editorOpen: boolean;
-  private editorContent: React.ReactElement;
-  private editorTitle: string;
+  private editorContent: React.ReactElement | undefined;
+  private editorTitle: string | undefined;
   private setPopoverOpen: (value: boolean) => void;
-  private setPopoverTarget: (target: Element) => void;
+  private setPopoverTarget: (target: Element | undefined) => void | undefined;
 
   constructor(
     setPopoverOpen: (open: boolean) => void,
-    setPopoverTarget: (target: Element) => void,
+    setPopoverTarget: (target: Element | undefined) => void,
   ) {
     super();
+    this.editorOpen = false;
     this.setPopoverOpen = setPopoverOpen;
     this.setPopoverTarget = setPopoverTarget;
   }
@@ -52,7 +54,7 @@ export class DefaultWidgetManager extends WidgetManager {
     return this.editorOpen;
   }
 
-  getEditorContent(): React.ReactElement {
+  getEditorContent(): React.ReactElement | undefined {
     return this.editorContent;
   }
 
@@ -63,15 +65,17 @@ export class DefaultWidgetManager extends WidgetManager {
   };
 
   showEditorForNote(topic: Topic): void {
-    const model = {
-      getValue(): string {
-        return topic.getNoteValue();
+    const model: NodeProperty<string | undefined> = {
+      getValue(): string | undefined {
+        const result = topic.getNoteValue();
+        return result ? result : undefined;
       },
-      setValue(value: string) {
+      setValue(value: string | undefined) {
         const note = value && value.trim() !== '' ? value : undefined;
         topic.setNoteValue(note);
       },
     };
+
     this.editorContent = noteContent(model, () => this.setPopoverOpen(false));
     this.setPopoverTarget(topic.getOuterShape().peer._native);
     this.setPopoverOpen(true);
@@ -86,14 +90,23 @@ export class DefaultWidgetManager extends WidgetManager {
     DefaultWidgetManager,
   ] {
     const [popoverOpen, setPopoverOpen] = useState(false);
-    const [popoverTarget, setPopoverTarget] = useState(undefined);
-    const widgetManager = useRef(new DefaultWidgetManager(setPopoverOpen, setPopoverTarget));
+    const [popoverTarget, setPopoverTarget] = useState<Element | undefined>(undefined);
+
+    const WidgetManager = new DefaultWidgetManager(
+      setPopoverOpen,
+      (target: Element | undefined) => {
+        if (setPopoverTarget) {
+          setPopoverTarget(target);
+        }
+      },
+    );
+    const widgetManager = useRef(WidgetManager);
 
     return [popoverOpen, setPopoverOpen, popoverTarget, widgetManager.current];
   }
 
   getEditorTile(): string {
-    return this.editorTitle;
+    return this.editorTitle ? this.editorTitle : '';
   }
 }
 

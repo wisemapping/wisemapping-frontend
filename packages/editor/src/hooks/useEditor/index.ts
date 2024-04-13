@@ -39,7 +39,7 @@ type UseEditorProps = {
 };
 
 export interface EditorConfiguration {
-  model;
+  model?: Model;
   mindplotRef: React.MutableRefObject<unknown>;
   mapInfo: MapInfo;
   capability: Capability;
@@ -53,8 +53,10 @@ export const useEditor = ({
 }: UseEditorProps): EditorConfiguration => {
   // We create model inside useEditor hook to instantiate everything outside Editor Component
   const [model, setModel] = useState<Model | undefined>();
+
   // useEditor hook creates mindplotRef
   const mindplotRef = useRef(null);
+
   // This is required to redraw in case of changes in the canvas...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setCanvasUpdate] = useState<number>();
@@ -66,7 +68,7 @@ export const useEditor = ({
   }
 
   useEffect(() => {
-    if (!model && options) {
+    if (!model && options && mindplotRef.current) {
       const model = new Model(mindplotRef.current);
       model
         .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)

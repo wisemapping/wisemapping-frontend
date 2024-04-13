@@ -3,6 +3,7 @@ const common = require('./webpack.common');
 // const pkg = require('./package.json');
 
 const prodConfig = {
+  mode: 'production',
   optimization: {
     usedExports: true,
     minimize: true,

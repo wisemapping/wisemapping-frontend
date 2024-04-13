@@ -39,7 +39,10 @@ const TopicLinkEditor = (props: {
   const submitHandler = () => {
     if (checkURL(url)) {
       props.closeModal();
-      props.urlModel.setValue(url);
+      const setValue = props.urlModel.setValue;
+      if (setValue) {
+        setValue(url);
+      }
     }
   };
 
@@ -93,7 +96,7 @@ const TopicLinkEditor = (props: {
         }}
       />
       <SaveAndDelete
-        model={props.urlModel}
+        model={props.urlModel as NodeProperty<string | undefined>}
         closeModal={props.closeModal}
         submitHandler={submitHandler}
       />

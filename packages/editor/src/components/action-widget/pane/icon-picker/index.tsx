@@ -28,7 +28,7 @@ import Box from '@mui/material/Box';
 
 type IconPickerProp = {
   triggerClose: () => void;
-  iconModel: NodeProperty<string>;
+  iconModel: NodeProperty<string | undefined>;
 };
 
 const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
@@ -48,7 +48,10 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
 
   const handleEmojiSelect = (emoji: EmojiClickData) => {
     const emojiChar = emoji.emoji;
-    iconModel.setValue(`emoji:${emojiChar}`);
+    const setValue = iconModel.setValue;
+    if (setValue) {
+      setValue(`emoji:${emojiChar}`);
+    }
     triggerClose();
   };
 

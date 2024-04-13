@@ -111,7 +111,10 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
           typeof fileContent === 'string' ? fileContent : fileContent?.toString();
 
         try {
-          const importer: Importer = TextImporterFactory.create(extensionFile, mapConent);
+          const importer: Importer = TextImporterFactory.create(
+            extensionFile,
+            mapConent ? mapConent : '',
+          );
 
           importer.import(model.title, model.description).then((res) => {
             model.content = res;
