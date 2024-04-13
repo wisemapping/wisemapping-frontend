@@ -21,7 +21,6 @@ import LinksImage from '../../assets/icons/links.svg';
 import LinkModel from './model/LinkModel';
 import Topic from './Topic';
 import FeatureModel from './model/FeatureModel';
-import WidgetManager from './WidgetManager';
 
 class LinkIcon extends ImageIcon {
   private _linksModel: FeatureModel;
@@ -44,13 +43,13 @@ class LinkIcon extends ImageIcon {
 
   private _registerEvents() {
     this.getElement().setCursor('pointer');
+    const topic = this._topic;
 
-    if (WidgetManager.isInitialized()) {
-      const manager = WidgetManager.getInstance();
-      manager.createTooltipForLink(this._topic, this._linksModel as LinkModel, this);
-      if (!this._readOnly) {
-        manager.configureEditorForLink(this._topic, this._linksModel as LinkModel, this);
-      }
+    if (!this._readOnly) {
+      this.getElement().addEvent('click', (evt) => {
+        designer.fireEvent('featureEdit', { event: 'link', topic });
+        evt.stopPropagation();
+      });
     }
   }
 

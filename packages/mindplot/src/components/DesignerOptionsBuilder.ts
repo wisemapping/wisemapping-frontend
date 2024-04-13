@@ -26,7 +26,7 @@ export type DesignerOptions = {
   mapId?: string;
   divContainer: HTMLElement;
   persistenceManager?: PersistenceManager;
-  widgetManager?: WidgetManager;
+  widgetManager: WidgetManager;
   saveOnLoad?: boolean;
   locale?: string;
 };

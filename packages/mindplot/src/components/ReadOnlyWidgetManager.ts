@@ -18,6 +18,24 @@
 import WidgetManager from './WidgetManager';
 
 class ReadOnlyWidgetManager extends WidgetManager {
+  isEditorOpen(): boolean {
+    return false;
+  }
+
+  handleClose(): void {}
+
+  getEditorContent(): React.ReactElement | undefined {
+    return undefined;
+  }
+
+  getAnchorElement(): Element | undefined {
+    return undefined;
+  }
+
+  getEditorTile(): string {
+    return '';
+  }
+
   showEditorForLink(): void {
     throw new Error('ReadOnly widget manager does not support edition');
   }

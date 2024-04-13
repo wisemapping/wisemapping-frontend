@@ -20,7 +20,6 @@ import NotesImage from '../../assets/icons/notes.svg';
 import Topic from './Topic';
 import NoteModel from './model/NoteModel';
 import FeatureModel from './model/FeatureModel';
-import WidgetManager from './WidgetManager';
 import ImageIcon from './ImageIcon';
 
 class NoteIcon extends ImageIcon {
@@ -43,13 +42,18 @@ class NoteIcon extends ImageIcon {
 
   private _registerEvents(): void {
     this.getElement().setCursor('pointer');
+    const topic = this._topic;
 
-    if (WidgetManager.isInitialized()) {
-      const manager = WidgetManager.getInstance();
-      manager.createTooltipForNote(this._topic, this._linksModel as NoteModel, this);
-      if (!this._readOnly) {
-        manager.configureEditorForNote(this._topic, this._linksModel as NoteModel, this);
-      }
+    // Hover tooltip ...
+    const wm = designer.getWidgeManager();
+    wm.configureTooltipForNode(this._topic, this._linksModel as NoteModel, this);
+
+    // Register edition popup ...
+    if (!this._readOnly) {
+      this.getElement().addEvent('click', (evt) => {
+        designer.fireEvent('featureEdit', { event: 'note', topic });
+        evt.stopPropagation();
+      });
     }
   }
 

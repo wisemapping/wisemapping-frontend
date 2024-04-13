@@ -194,7 +194,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
     >
       <SessionExpiredDialog open={sessionExpired} />
       <Editor
-        editor={editorConfig}
+        config={editorConfig}
         onAction={setActiveDialog}
         theme={theme}
         accountConfiguration={

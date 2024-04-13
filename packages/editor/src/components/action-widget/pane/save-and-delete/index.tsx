@@ -48,7 +48,7 @@ const SaveAndDelete = ({ model, closeModal, submitHandler }: SaveAndDeleteProps)
           onClick={() => {
             closeModal();
             if (model.setValue) {
-              model.setValue('');
+              model.setValue(undefined);
             }
           }}
           size="small"

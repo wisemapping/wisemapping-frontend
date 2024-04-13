@@ -48,9 +48,10 @@ const Playground = () => {
     options,
     persistenceManager: persistence,
   });
+
   return (
     <Editor
-      editor={editor}
+      config={editor}
       onAction={(action) => console.log('action called:', action)}
       onLoad={initialization}
     />

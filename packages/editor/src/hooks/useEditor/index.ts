@@ -15,13 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { DesignerKeyboard, EditorRenderMode, PersistenceManager } from '@wisemapping/mindplot';
+import {
+  DesignerKeyboard,
+  EditorRenderMode,
+  PersistenceManager,
+  WidgetManager,
+} from '@wisemapping/mindplot';
 import { useState, useRef, useEffect } from 'react';
 import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
-import { useWidgetManager } from '../useWidgetManager';
 import Model from '../../classes/model/editor';
 import { logCriticalError } from '@wisemapping/core-js';
+import DefaultWidgetManager from '../../classes/default-widget-manager';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -58,10 +63,9 @@ export const useEditor = ({
   const mindplotRef = useRef(null);
 
   // This is required to redraw in case of changes in the canvas...
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setCanvasUpdate] = useState<number>();
+  const widgetManagerRef = useRef<WidgetManager>(new DefaultWidgetManager());
 
-  const { widgetManager } = useWidgetManager();
   let capability;
   if (options && mapInfo) {
     capability = new Capability(options.mode, mapInfo.isLocked());
@@ -71,10 +75,10 @@ export const useEditor = ({
     if (!model && options && mindplotRef.current) {
       const model = new Model(mindplotRef.current);
       model
-        .loadMindmap(mapInfo.getId(), persistenceManager, widgetManager)
+        .loadMindmap(mapInfo.getId(), persistenceManager, widgetManagerRef.current)
         .then(() => {
           setCanvasUpdate(Date.now());
-          model.registerEvents(setCanvasUpdate, capability);
+          model.registerEvents(setCanvasUpdate, capability, widgetManagerRef.current);
         })
         .catch((e) => {
           logCriticalError(`Unexpected error loading mindmap with id ${mapInfo.getId()}`, e);
