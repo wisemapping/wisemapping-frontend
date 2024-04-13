@@ -10,7 +10,7 @@
   "license": "MIT",
   "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "files": [
-    "dist"
+    "src"
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",

@@ -13,14 +13,15 @@ context('Topic suite', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--background-color&viewMode=story');
     cy.matchImageSnapshot('topic-color');
   });
-  // it('topic note feature', () => {
-  //   cy.visit('/iframe.html?args=&id=mindplot-topic--note-feature&viewMode=story');
-  //   cy.matchImageSnapshot('topic-note');
-  // });
-  // it('topic link feature', () => {
-  //   cy.visit('/iframe.html?args=&id=mindplot-topic--link-feature&viewMode=story');
-  //   cy.matchImageSnapshot('topic-link-feature');
-  // });
+  // Review topic use of designer ...
+  it.skip('topic note feature', () => {
+    cy.visit('/iframe.html?args=&id=mindplot-topic--note-feature&viewMode=story');
+    cy.matchImageSnapshot('topic-note');
+  });
+  it.skip('topic link feature', () => {
+    cy.visit('/iframe.html?args=&id=mindplot-topic--link-feature&viewMode=story');
+    cy.matchImageSnapshot('topic-link-feature');
+  });
   it('topic icon feature', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--icon-feature&viewMode=story');
     cy.matchImageSnapshot('topic-icon-feature');

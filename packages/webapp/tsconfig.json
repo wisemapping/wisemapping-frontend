@@ -16,14 +16,12 @@
     "rootDirs": [
       "src",
     ],
-
     "noImplicitAny": false,
     "strictNullChecks": true,
-
     "jsxImportSource": "@emotion/react",
     "resolveJsonModule": true
   },
   "exclude": [
-    "node_modules"
+    "./node_modules","./dist"
   ]
 }

@@ -11,21 +11,21 @@
     "resolveJsonModule": true,
     "declaration": true,
     "strictNullChecks": true,
-
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-
     "rootDirs": [
       "src",
     ]
   },
   "include": [
-    "src/**/*", "storybook/src/stories",
+    "src/**/*",
+    "storybook/src/stories",
   ],
   "exclude": [
-    "node_modules"
+    "./node_modules",
+    "./dist"
   ]
 }
