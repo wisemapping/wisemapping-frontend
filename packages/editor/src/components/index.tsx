@@ -19,7 +19,7 @@ import React, { ReactElement } from 'react';
 import { Vortex } from 'react-loader-spinner';
 
 import { IntlProvider } from 'react-intl';
-import { Designer, ReadOnlyWidgetManager } from '@wisemapping/mindplot';
+import { Designer } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
 // eslint-disable-next-line no-restricted-imports
@@ -33,7 +33,8 @@ import ZoomPanel from './zoom-panel';
 import { SpinnerCentered } from './style';
 import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
-import WidgetPopover from './widgetPopover';
+import { WidgetPopover } from './widgetPopover';
+import DefaultWidgetBuilder from '../classes/default-widget-manager';
 
 type EditorProps = {
   theme?: Theme;
@@ -47,8 +48,7 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
-
-  const widgetManager = designer ? designer.getWidgeManager() : new ReadOnlyWidgetManager();
+  const widgetBulder = designer ? designer.getWidgeManager() : new DefaultWidgetBuilder();
 
   // Initialize locale ...
   const locale = options.locale;
@@ -65,7 +65,7 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
         />
       ) : null}
 
-      <WidgetPopover widgetManager={widgetManager} />
+      <WidgetPopover widgetManager={widgetBulder} />
 
       {model && (
         <div className="no-print">

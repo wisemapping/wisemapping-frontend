@@ -15,38 +15,27 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { WidgetManager, Topic } from '@wisemapping/mindplot';
+import { WidgetBuilder, Topic } from '@wisemapping/mindplot';
 import { linkContent, noteContent } from './react-component';
 import NodeProperty from '../model/node-property';
 
-export class DefaultWidgetManager extends WidgetManager {
-  private editorContent: React.ReactElement | undefined;
-  private editorTitle: string | undefined;
-  private anchorEL: Element | undefined;
-
+export class DefaultWidgetBuilder extends WidgetBuilder {
   constructor() {
     super();
   }
 
-  showEditorForLink(topic: Topic): void {
+  buildEditorForLink(topic: Topic): React.ReactElement {
     const model = {
       getValue: () => topic.getLinkValue(),
       setValue: (value: string) => topic.setLinkValue(value),
     };
 
-    this.editorContent = linkContent(model, () => {
-      this.editorContent = undefined;
+    return linkContent(model, () => {
+      this._listener('none');
     });
-    this.anchorEL = topic.getOuterShape().peer._native;
-    this.editorTitle = 'editor-panel.link-panel-title';
-    topic.closeEditors();
   }
 
-  getAnchorElement(): Element | undefined {
-    return this.anchorEL;
-  }
-
-  showEditorForNote(topic: Topic): void {
+  buidEditorForNote(topic: Topic): React.ReactElement {
     const model: NodeProperty<string | undefined> = {
       getValue(): string | undefined {
         const result = topic.getNoteValue();
@@ -58,29 +47,10 @@ export class DefaultWidgetManager extends WidgetManager {
       },
     };
 
-    this.editorContent = noteContent(model, () => {
-      this.editorContent = undefined;
+    return noteContent(model, () => {
+      this._listener('none');
     });
-    this.anchorEL = topic.getOuterShape().peer._native;
-    this.editorTitle = 'editor-panel.note-panel-title';
-    topic.closeEditors();
-  }
-
-  isEditorOpen(): boolean {
-    return this.editorContent != null;
-  }
-
-  getEditorContent(): React.ReactElement | undefined {
-    return this.editorContent;
-  }
-
-  handleClose(): void {
-    this.editorContent = undefined;
-  }
-
-  getEditorTile(): string {
-    return this.editorTitle ? this.editorTitle : '';
   }
 }
 
-export default DefaultWidgetManager;
+export default DefaultWidgetBuilder;

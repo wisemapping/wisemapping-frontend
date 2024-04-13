@@ -27,6 +27,7 @@
     "src/**/*", "storybook/src/stories", "libraries",
   ],
   "exclude": [
-    "node_modules"
+    "./node_modules",
+    "./dist"
   ]
 }

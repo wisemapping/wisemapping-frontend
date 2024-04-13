@@ -24,7 +24,15 @@ import NoteIcon from './NoteIcon';
 import Topic from './Topic';
 import { $msg } from './Messages';
 
-abstract class WidgetManager {
+export type WidgetEventType = 'none' | 'link' | 'note';
+
+abstract class WidgetBulder {
+  protected _listener: (event: WidgetEventType, topic?: Topic) => void;
+
+  constructor() {
+    this._listener = () => {};
+  }
+
   private createTooltip(
     mindmapElement,
     title: string,
@@ -87,6 +95,14 @@ abstract class WidgetManager {
     });
   }
 
+  addHander(listener: (event: WidgetEventType, topic?: Topic) => void): void {
+    this._listener = listener;
+  }
+
+  fireEvent(event: WidgetEventType, topic?: Topic): void {
+    this._listener(event, topic);
+  }
+
   createTooltipForLink(_topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon) {
     this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
   }
@@ -95,19 +111,9 @@ abstract class WidgetManager {
     this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
   }
 
-  abstract handleClose(): void;
+  abstract buildEditorForLink(topic: Topic): React.ReactElement;
 
-  abstract getEditorContent(): React.ReactElement | undefined;
-
-  abstract getEditorTile(): string;
-
-  abstract isEditorOpen(): boolean;
-
-  abstract getAnchorElement(): Element | undefined;
-
-  abstract showEditorForLink(topic: Topic): void;
-
-  abstract showEditorForNote(topic: Topic): void;
+  abstract buidEditorForNote(topic: Topic): React.ReactElement;
 }
 
-export default WidgetManager;
+export default WidgetBulder;

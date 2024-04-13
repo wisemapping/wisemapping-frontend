@@ -1,1 +1,0 @@
-../packages/webapp/dist/vendors.bundle.js

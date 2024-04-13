@@ -14,10 +14,7 @@
   },
   "author": "Paulo Veiga <pveiga@wisemapping.com>",
   "files": [
-    "src",
-    "assets",
-    "dist",
-    "libraries"
+    "src"
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
