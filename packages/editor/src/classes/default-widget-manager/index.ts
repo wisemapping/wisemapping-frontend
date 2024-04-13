@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /*
  *    Copyright [2021] [wisemapping]
  *

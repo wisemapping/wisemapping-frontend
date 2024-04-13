@@ -84,6 +84,8 @@ class Editor {
 
       const featureEdition = (value: { event: 'note' | 'link' | 'close'; topic: Topic }): void => {
         const { event, topic } = value;
+        console.error('event:' + event);
+
         switch (event) {
           case 'note': {
             wm.showEditorForNote(topic);

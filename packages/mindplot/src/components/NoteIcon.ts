@@ -44,12 +44,14 @@ class NoteIcon extends ImageIcon {
     this.getElement().setCursor('pointer');
     const topic = this._topic;
 
+    // Hover tooltip ...
     const wm = designer.getWidgeManager();
     wm.configureTooltipForNode(this._topic, this._linksModel as NoteModel, this);
 
+    // Register edition popup ...
     if (!this._readOnly) {
       this.getElement().addEvent('click', (evt) => {
-        topic.fireEvent('featureEdit', { event: 'note', topic });
+        designer.fireEvent('featureEdit', { event: 'note', topic });
         evt.stopPropagation();
       });
     }
