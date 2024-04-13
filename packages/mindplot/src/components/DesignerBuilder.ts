@@ -19,8 +19,6 @@ import { $assert } from '@wisemapping/core-js';
 import PersistenceManager from './PersistenceManager';
 import Designer from './Designer';
 import { DesignerOptions } from './DesignerOptionsBuilder';
-import WidgetManager from './WidgetManager';
-import ReadOnlyWidgetManager from './ReadOnlyWidgetManager';
 
 let designer: Designer;
 
@@ -37,10 +35,6 @@ export function buildDesigner(options: DesignerOptions): Designer {
   // Configure default persistence manager ...
   const persistence = options.persistenceManager;
   PersistenceManager.init(persistence!);
-
-  // If not manager was specifed, use the readonly one.
-  const widgetManager = options.widgetManager ? options.widgetManager : new ReadOnlyWidgetManager();
-  WidgetManager.init(widgetManager);
 
   return designer;
 }

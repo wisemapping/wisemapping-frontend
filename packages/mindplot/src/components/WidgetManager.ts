@@ -1,3 +1,21 @@
+/*
+ *    Copyright [2021] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       http://www.wisemapping.org/license
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 import $ from 'jquery';
 import LinkIcon from './LinkIcon';
 import LinkModel from './model/LinkModel';
@@ -7,24 +25,6 @@ import Topic from './Topic';
 import { $msg } from './Messages';
 
 abstract class WidgetManager {
-  // eslint-disable-next-line no-use-before-define
-  private static _instance: WidgetManager;
-
-  static init = (instance: WidgetManager) => {
-    this._instance = instance;
-  };
-
-  static getInstance(): WidgetManager {
-    if (!this._instance) {
-      throw new Error('WidgetManager has not been initialized');
-    }
-    return this._instance;
-  }
-
-  static isInitialized() {
-    return this._instance !== undefined;
-  }
-
   private createTooltip(
     mindmapElement,
     title: string,
@@ -91,37 +91,23 @@ abstract class WidgetManager {
     this.createTooltip(linkIcon.getElement().peer, $msg('LINK'), linkModel, undefined);
   }
 
-  createTooltipForNote(_topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
+  configureTooltipForNode(_topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
     this.createTooltip(noteIcon.getElement().peer, $msg('NOTE'), undefined, noteModel);
   }
 
-  configureEditorForLink(topic: Topic, linkModel: LinkModel, linkIcon: LinkIcon): void {
-    const htmlImage = linkIcon.getElement().peer;
-    htmlImage.addEvent('click', (evt) => {
-      this.showEditorForLink(topic, linkModel, linkIcon);
-      evt.stopPropagation();
-    });
-  }
+  abstract handleClose(): void;
 
-  configureEditorForNote(topic: Topic, noteModel: NoteModel, noteIcon: NoteIcon): void {
-    const htmlImage = noteIcon.getElement().peer;
-    htmlImage.addEvent('click', (evt) => {
-      this.showEditorForNote(topic, noteModel, noteIcon);
-      evt.stopPropagation();
-    });
-  }
+  abstract getEditorContent(): React.ReactElement | undefined;
 
-  abstract showEditorForLink(
-    topic: Topic,
-    linkModel: LinkModel | null,
-    linkIcon: LinkIcon | null,
-  ): void;
+  abstract getEditorTile(): string;
 
-  abstract showEditorForNote(
-    topic: Topic,
-    noteModel: NoteModel | null,
-    noteIcon: NoteIcon | null,
-  ): void;
+  abstract isEditorOpen(): boolean;
+
+  abstract getAnchorElement(): Element | undefined;
+
+  abstract showEditorForLink(topic: Topic): void;
+
+  abstract showEditorForNote(topic: Topic): void;
 }
 
 export default WidgetManager;

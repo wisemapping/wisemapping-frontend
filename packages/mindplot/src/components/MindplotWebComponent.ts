@@ -98,6 +98,7 @@ class MindplotWebComponent extends HTMLElement {
       zoom: zoom ? Number.parseFloat(zoom) : 1,
       locale: locale || 'en',
     });
+
     this._designer = buildDesigner(options);
     this._designer.addEvent('modelUpdate', () => {
       this.setSaveRequired(true);
