@@ -15,7 +15,7 @@ For those interested in delving deeper into the implementation details, the corr
 
 Make sure you have NodeJs installed (version compatible with `package.json` engine), and yarn installed (`npm i -g yarn`).
 
-```
+```sh
 nvm use
 yarn install
 export NODE_OPTIONS=--openssl-legacy-provider 
