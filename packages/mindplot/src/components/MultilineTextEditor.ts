@@ -41,7 +41,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
     // Create editor ui
     this._containerElem = EditorComponent.buildEditor();
-    $('body').append(this._containerElem);
+    $('#mindmap-comp').parent().append(this._containerElem);
     this.registerEvents(this._containerElem);
     this._oldText = topic.getText();
     this._onClose = onClose;
@@ -62,6 +62,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       overflow: 'hidden',
       padding: '0px 0px 0px 0px',
       lineHeight: '100%',
+      width: '100%',
     });
 
     result.append(textareaElem);
@@ -133,6 +134,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     const { top, left } = textShape.getNativePosition();
     this._containerElem.offset({ top, left });
 
+    const mindmapCompData = document.getElementById('mindmap-comp')?.getBoundingClientRect();
+    const maxWidth = mindmapCompData ? mindmapCompData.width - left : 0;
+
     const textValue = text || this.getTextAreaText();
     const textElem = this.getTextareaElem();
 
@@ -143,8 +147,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     textElem.attr('rows', rows);
 
     this._containerElem.css({
+      maxWidth,
       width: `${maxLineLength + 2}em`,
-      height: textElem?.height() || 0,
+      height: 0,
     });
   }
 
