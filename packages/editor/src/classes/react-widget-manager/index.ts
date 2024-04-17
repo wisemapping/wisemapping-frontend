@@ -18,7 +18,6 @@
 import { WidgetBuilder, Topic } from '@wisemapping/mindplot';
 import { linkContent, noteContent } from './react-component';
 import NodeProperty from '../model/node-property';
-import { ReactElement } from 'react';
 
 export class DefaultWidgetBuilder extends WidgetBuilder {
   constructor() {
