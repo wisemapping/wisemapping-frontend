@@ -23,7 +23,7 @@ import Topic from './Topic';
 import FeatureModel from './model/FeatureModel';
 
 class LinkIcon extends ImageIcon {
-  private _linksModel: FeatureModel;
+  private _linksModel: LinkModel;
 
   private _topic: Topic;
 
@@ -44,6 +44,10 @@ class LinkIcon extends ImageIcon {
   private _registerEvents() {
     this.getElement().setCursor('pointer');
     const topic = this._topic;
+
+    // Hover tooltip ...
+    const wm = designer.getWidgeManager();
+    wm.createTooltipForLink(this._topic, this._linksModel, this);
 
     if (!this._readOnly) {
       this.getElement().addEvent('click', (evt) => {

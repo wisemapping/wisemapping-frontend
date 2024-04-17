@@ -23,7 +23,7 @@ import FeatureModel from './model/FeatureModel';
 import ImageIcon from './ImageIcon';
 
 class NoteIcon extends ImageIcon {
-  private _linksModel: NoteModel;
+  private _noteModel: NoteModel;
 
   private _topic: Topic;
 
@@ -33,7 +33,7 @@ class NoteIcon extends ImageIcon {
     $assert(topic, 'topic can not be null');
 
     super(NoteIcon.IMAGE_URL);
-    this._linksModel = noteModel;
+    this._noteModel = noteModel;
     this._topic = topic;
     this._readOnly = readOnly;
 
@@ -46,7 +46,7 @@ class NoteIcon extends ImageIcon {
 
     // Hover tooltip ...
     const wm = designer.getWidgeManager();
-    wm.configureTooltipForNode(this._topic, this._linksModel as NoteModel, this);
+    wm.configureTooltipForNode(this._topic, this._noteModel, this);
 
     // Register edition popup ...
     if (!this._readOnly) {
@@ -58,7 +58,7 @@ class NoteIcon extends ImageIcon {
   }
 
   getModel(): FeatureModel {
-    return this._linksModel;
+    return this._noteModel;
   }
 
   static IMAGE_URL = NotesImage;
