@@ -256,5 +256,11 @@
   },
   "zoom-panel.tooltip-zoom-to-fit": {
     "defaultMessage": "Zoom to Fit"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "Description"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "Creator"
   }
 }

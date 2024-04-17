@@ -55,7 +55,7 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
   const msg = I18nMsg.loadLocaleData(locale);
   return (
     <IntlProvider locale={locale} messages={msg}>
-      {options.enableAppBar ? (
+      {options.enableAppBar && (
         <AppBar
           model={model}
           mapInfo={mapInfo}
@@ -63,7 +63,7 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
           onAction={onAction}
           accountConfig={accountConfiguration}
         />
-      ) : null}
+      )}
 
       <WidgetPopover widgetManager={widgetBulder} />
 

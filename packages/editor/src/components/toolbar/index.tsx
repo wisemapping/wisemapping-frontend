@@ -258,7 +258,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   return (
     <AppBar
-      position="fixed"
+      position="absolute"
       sx={{
         flexDirection: pos.vertical ? 'column' : 'row',
         width: pos.vertical ? '40px' : 'unset',

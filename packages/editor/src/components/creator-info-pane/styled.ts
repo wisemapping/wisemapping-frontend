@@ -18,12 +18,13 @@
 import styled from 'styled-components';
 
 export const CreatorInfoContainer = styled.div`
-  width: 100%;
-  height: 81px;
-  position: fixed;
+  display: flex;
+  align-items: end;
+  position: absolute;
   float: left;
-  top: 94%;
-  left: 1%;
+  top: calc(100% - 47px);
+  left: 7px;
+  height: 40px;
 `;
 
 export const CreatorInfoText = styled.div`
