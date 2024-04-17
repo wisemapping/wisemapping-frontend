@@ -86,11 +86,11 @@ class Editor {
         const { event, topic } = value;
         switch (event) {
           case 'note': {
-            widgetBuilder.fireEvent('edit-note', topic);
+            widgetBuilder.fireEvent('note', topic);
             break;
           }
           case 'link': {
-            widgetBuilder.fireEvent('edit-link', topic);
+            widgetBuilder.fireEvent('link', topic);
             break;
           }
         }

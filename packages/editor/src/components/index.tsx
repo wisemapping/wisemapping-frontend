@@ -34,7 +34,7 @@ import { SpinnerCentered } from './style';
 import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
 import { WidgetPopover } from './widgetPopover';
-import ReactWidgetBuilder from '../classes/react-widget-manager';
+import DefaultWidgetBuilder from '../classes/default-widget-manager';
 
 type EditorProps = {
   theme?: Theme;
@@ -48,14 +48,14 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
-  const widgetBulder = designer ? designer.getWidgeManager() : new ReactWidgetBuilder();
+  const widgetBulder = designer ? designer.getWidgeManager() : new DefaultWidgetBuilder();
 
   // Initialize locale ...
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
   return (
     <IntlProvider locale={locale} messages={msg}>
-      {options.enableAppBar ? (
+      {options.enableAppBar && (
         <AppBar
           model={model}
           mapInfo={mapInfo}
@@ -63,7 +63,7 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
           onAction={onAction}
           accountConfig={accountConfiguration}
         />
-      ) : null}
+      )}
 
       <WidgetPopover widgetManager={widgetBulder} />
 

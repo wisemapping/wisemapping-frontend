@@ -24,7 +24,7 @@ import NoteIcon from './NoteIcon';
 import Topic from './Topic';
 import { $msg } from './Messages';
 
-export type WidgetEventType = 'edit-note' | 'edit-link' | 'none';
+export type WidgetEventType = 'none' | 'link' | 'note';
 
 abstract class WidgetBulder {
   protected _listener: (event: WidgetEventType, topic?: Topic) => void;
@@ -114,8 +114,6 @@ abstract class WidgetBulder {
   abstract buildEditorForLink(topic: Topic): React.ReactElement;
 
   abstract buidEditorForNote(topic: Topic): React.ReactElement;
-
-  abstract buildTooltipForLink(topic: Topic): React.ReactElement;
 }
 
 export default WidgetBulder;

@@ -52,10 +52,10 @@ export function buildZoomToolbarConfig(
       render: () => (
         <Box sx={{ p: 0.5 }}>
           <Typography variant="overline" color="gray">
-            %
             {!model?.isMapLoadded()
               ? 100
               : Math.floor((1 / model.getDesigner().getWorkSpace()?.getZoom()) * 100)}
+            %
           </Typography>
         </Box>
       ),
@@ -110,7 +110,7 @@ const ZoomPanel = ({ model, capability }: ZoomPanelProps): ReactElement => {
       position={{
         position: {
           right: '7px',
-          top: '93%',
+          top: 'calc(100% - 47px)',
         },
         vertical: false,
       }}

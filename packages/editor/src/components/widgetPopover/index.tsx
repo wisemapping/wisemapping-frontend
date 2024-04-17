@@ -48,12 +48,12 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
     let component: React.ReactElement = <></>;
 
     switch (event) {
-      case 'edit-note': {
+      case 'note': {
         title = 'editor-panel.note-panel-title';
         component = widgetManager.buidEditorForNote(topic!);
         break;
       }
-      case 'edit-link':
+      case 'link':
         title = 'editor-panel.link-panel-title';
         component = widgetManager.buildEditorForLink(topic!);
         break;

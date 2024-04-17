@@ -26,7 +26,7 @@ import Capability from '../../classes/action/capability';
 import MapInfo from '../../classes/model/map-info';
 import Model from '../../classes/model/editor';
 import { logCriticalError } from '@wisemapping/core-js';
-import ReactWidgetBuilder from '../../classes/react-widget-manager';
+import DefaultWidgetBuilder from '../../classes/default-widget-manager';
 
 export type EditorOptions = {
   mode: EditorRenderMode;
@@ -64,7 +64,7 @@ export const useEditor = ({
 
   // This is required to redraw in case of changes in the canvas...
   const [, setCanvasUpdate] = useState<number>();
-  const widgetBuilderRef = useRef<WidgetBuilder>(new ReactWidgetBuilder());
+  const widgetBuilderRef = useRef<WidgetBuilder>(new DefaultWidgetBuilder());
 
   let capability;
   if (options && mapInfo) {

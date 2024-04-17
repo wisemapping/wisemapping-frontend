@@ -15,20 +15,23 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import styled from 'styled-components';
+import React from 'react';
+import TopicLinkEditor from '../../components/action-widget/pane/topic-link-editor';
+import TopicNoteEditor from '../../components/action-widget/pane/topic-note-editor';
+import NodeProperty from '../model/node-property';
 
-export const CreatorInfoContainer = styled.div`
-  display: flex;
-  align-items: end;
-  position: absolute;
-  float: left;
-  top: calc(100% - 47px);
-  left: 7px;
-  height: 40px;
-`;
+const linkContent = (
+  linkModel: NodeProperty<string>,
+  closeModal: () => void,
+): React.ReactElement => {
+  return <TopicLinkEditor closeModal={closeModal} urlModel={linkModel}></TopicLinkEditor>;
+};
 
-export const CreatorInfoText = styled.div`
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size: 14px;
-  color: #444546;
-`;
+const noteContent = (
+  noteModel: NodeProperty<string | undefined>,
+  closeModal: () => void,
+): React.ReactElement => {
+  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel} />;
+};
+
+export { linkContent, noteContent };
