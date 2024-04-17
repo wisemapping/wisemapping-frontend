@@ -1,284 +1,290 @@
 {
-    "editor.try-welcome": {
-        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
-    },
-    "editor.try-welcome-description": {
-        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
-    },
-    "editor.try-welcome-mobile": {
-        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales !"
-    },
-    "editor.try-welcome-description-mobile": {
-        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
-    },
-    "editor.edit-description-mobile": {
-        "defaultMessage": "La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
-    },
-    "action.accept": {
-        "defaultMessage": "Accepter"
-    },
-    "action.cancel": {
-        "defaultMessage": "Annuler"
-    },
-    "appbar.back-to-map-list": {
-        "defaultMessage": "Retourner à la liste des cartes"
-    },
-    "appbar.button-signup": {
-        "defaultMessage": "S'inscrire"
-    },
-    "appbar.shared-button": {
-        "defaultMessage": "Partager"
-    },
-    "appbar.tooltip-export": {
-        "defaultMessage": "Exporter"
-    },
-    "appbar.tooltip-history": {
-        "defaultMessage": "Historique"
-    },
-    "appbar.tooltip-info": {
-        "defaultMessage": "Informations"
-    },
-    "appbar.tooltip-print": {
-        "defaultMessage": "Imprimer"
-    },
-    "appbar.tooltip-publish": {
-        "defaultMessage": "Publier"
-    },
-    "appbar.tooltip-redo": {
-        "defaultMessage": "Rétablir"
-    },
-    "appbar.tooltip-save": {
-        "defaultMessage": "Enregistrer"
-    },
-    "appbar.tooltip-shared": {
-        "defaultMessage": "Partager"
-    },
-    "appbar.tooltip-signup": {
-        "defaultMessage": "S'inscrire"
-    },
-    "appbar.tooltip-starred": {
-        "defaultMessage": "Favoris"
-    },
-    "appbar.tooltip-undo": {
-        "defaultMessage": "Annuler"
-    },
-    "link.help_text": {
-        "defaultMessage": "Adresse invalide"
-    },
-    "link.placeholder": {
-        "defaultMessage": "https://www.example.com"
-    },
-    "editor-panel.note-panel-title": {
-        "defaultMessage": "Note"
-    },
-    "editor-panel.icon-title": {
-        "defaultMessage": "Icône"
-    },
-    "editor-panel.link-panel-title": {
-        "defaultMessage": "Lien"
-    },
-    "editor-panel.tooltip-add-icon": {
-        "defaultMessage": "Ajouter une icône"
-    },
-    "editor-panel.tooltip-add-link": {
-        "defaultMessage": "Ajouter un lien"
-    },
-    "editor-panel.tooltip-add-note": {
-        "defaultMessage": "Ajouter une note"
-    },
-    "editor-panel.tooltip-add-relationship": {
-        "defaultMessage": "Ajouter une relation"
-    },
-    "editor-panel.tooltip-add-topic": {
-        "defaultMessage": "Ajouter un noeud"
-    },
-    "editor-panel.tooltip-delete-topic": {
-        "defaultMessage": "Supprimer un noeud"
-    },
-    "editor-panel.tooltip-delete-sujet": {
-        "defaultMessage": "Supprimer le noeud"
-    },
-    "editor-panel.tooltip-topic-border-color": {
-        "defaultMessage": "Couleur de bordure"
-    },
-    "editor-panel.tooltip-topic-font-bigger": {
-        "defaultMessage": "Agrandir"
-    },
-    "editor-panel.tooltip-topic-font-bold": {
-        "defaultMessage": "Gras"
-    },
-    "editor-panel.tooltip-topic-font-color": {
-        "defaultMessage": "Couleur"
-    },
-    "editor-panel.tooltip-topic-font-italic": {
-        "defaultMessage": "Italique"
-    },
-    "editor-panel.tooltip-topic-font-smaller": {
-        "defaultMessage": "Réduire"
-    },
-    "editor-panel.tooltip-topic-font-style": {
-        "defaultMessage": "Style de police"
-    },
-    "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Ellipse"
-    },
-    "editor-panel.tooltip-topic-share-line": {
-        "defaultMessage": "Ligne"
-    },
-    "editor-panel.tooltip-topic-share-rectangle": {
-        "defaultMessage": "Rectangulaire"
-    },
-    "editor-panel.tooltip-topic-share-arrondi": {
-        "defaultMessage": "Arrondi"
-    },
-    "editor-panel.tooltip-topic-style": {
-        "defaultMessage": "Style de noeud"
-    },
-    "zoom-panel.tooltip-keyboard": {
-        "defaultMessage": "Clavier"
-    },
-    "zoom-panel.tooltip-clavier": {
-        "defaultMessage": "Raccourcis clavier"
-    },
-    "zoom-panel.tooltip-zoom-in": {
-        "defaultMessage": "Zoom avant"
-    },
-    "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "Zoom arrière"
-    },
-    "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Ajuster au contenu"
-    },
-    "shortcut-help-pane.action": {
-        "defaultMessage": "Action"
-    },
-    "shortcut-help-pane.add-child": {
-        "defaultMessage": "Ajouter un noeud enfant"
-    },
-    "shortcut-help-pane.add-link": {
-        "defaultMessage": "Ajouter un lien"
-    },
-    "shortcut-help-pane.add-note": {
-        "defaultMessage": "Ajouter une note"
-    },
-    "shortcut-help-pane.add-sibling": {
-        "defaultMessage": "Ajouter un noeud frère"
-    },
-    "shortcut-help-pane.cancel-text-changes": {
-        "defaultMessage": "Annuler les modifications du texte"
-    },
-    "shortcut-help-pane.change-font-bold": {
-        "defaultMessage": "Passer le texte en gras"
-    },
-    "shortcut-help-pane.change-font-italic": {
-        "defaultMessage": "Passer le texte en italique"
-    },
-    "shortcut-help-pane.collapse-children": {
-        "defaultMessage": "Masquer les noeuds enfants"
-    },
-    "shortcut-help-pane.copy-and-text": {
-        "defaultMessage": "Copier et coller des noeuds"
-    },
-    "shortcut-help-pane.delete-topic": {
-        "defaultMessage": "Supprimer le noeud"
-    },
-    "shortcut-help-pane.deselect-all-topics": {
-        "defaultMessage": "Désélectionner tous les noeuds"
-    },
-    "shortcut-help-pane.edit-multiline": {
-        "defaultMessage": "Ajouter une ligne au noeud"
-    },
-    "shortcut-help-pane.edit-topic": {
-        "defaultMessage": "Modifier le texte du noeud"
-    },
-    "shortcut-help-pane.edit-topic-key": {
-        "defaultMessage": "Double-clic"
-    },
-    "shortcut-help-pane.navigation": {
-        "defaultMessage": "Naviguer"
-    },
-    "shortcut-help-pane.navigation-keys": {
-        "defaultMessage": "Touches directionnelles"
-    },
-    "shortcut-help-pane.redo": {
-        "defaultMessage": "Réduire l'édition"
-    },
-    "shortcut-help-pane.save-changes": {
-        "defaultMessage": "Sauvegarder les modifications"
-    },
-    "shortcut-help-pane.select-all-topics": {
-        "defaultMessage": "Sélectionner tous les noeuds"
-    },
-    "shortcut-help-pane.select-topics": {
-        "defaultMessage": "Sélectionner plusieurs noeuds"
-    },
-    "shortcut-help-pane.select-topics-keys": {
-        "defaultMessage": "Clic de souris"
-    },
-    "shortcut-help-pane.undo": {
-        "defaultMessage": "Annuler l'édition"
-    },
-    "icon-picker.show-images": {
-        "defaultMessage": "Afficher les images"
-    },
-    "editor-panel.tooltip-connection-style-polyline": {
-        "defaultMessage": "Polygonale"
-    },
-    "editor-panel.tooltip-connection-style-polyline-curved": {
-        "defaultMessage": "Polygonale courbée"
-    },
-    "shortcut-help-pane.overwrite-edit-topic": {
-        "defaultMessage": "Remplacer le texte du noeud"
-    },
-    "shortcut-help-pane.overwrite-edit-topic-key": {
-        "defaultMessage": "Ecrire dans le noeud sélectionné"
-    },
-    "editor-panel.tooltip-topic-share-none": {
-        "defaultMessage": "Aucune forme"
-    },
-    "editor-panel.tooltip-theme": {
-        "defaultMessage": "Thème"
-    },
-    "editor-panel.theme-title": {
-        "defaultMessage": "Thème"
-    },
-    "editor-panel.tooltip-connection-style-arc": {
-        "defaultMessage": "Arc"
-    },
-    "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Arrondi"
-    },
-    "editor-panel.tooltip-connection-color": {
-        "defaultMessage": "Couleur"
-    },
-    "editor-panel.tooltip-connection-color-default": {
-        "defaultMessage": "Couleur par défaut"
-    },
-    "editor-panel.tooltip-connection-style": {
-        "defaultMessage": "Style de connexion"
-    },
-    "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "Courbe large"
-    },
-    "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "Courbe mince"
-    },
-    "editor-panel.tooltip-topic-border-color-default": {
-        "defaultMessage": "Couleur de bordure par défaut"
-    },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "La couleur de remplissage"
-    },
-    "editor-panel.tooltip-topic-fill-color-default": {
-        "defaultMessage": "Couleur de remplissage par défaut"
-    },
-    "action.delete": {
-        "defaultMessage": "Supprimer"
-    },
-    "editor-panel.tooltip-topic-font-color-default": {
-        "defaultMessage": "Couleur par défaut"
-    },
-    "shortcut-help-pane.drag-disconnect": {
-        "defaultMessage": "Déconnecter le noeud"
-    }
+  "editor.try-welcome": {
+    "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales !"
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales. La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "La carte mentale est optimisée pour une utilisation sur un ordinateur de bureau. Changez de support pour plus de confort et de fonctionnalités."
+  },
+  "action.accept": {
+    "defaultMessage": "Accepter"
+  },
+  "action.cancel": {
+    "defaultMessage": "Annuler"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "Retourner à la liste des cartes"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "S'inscrire"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "Partager"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "Exporter"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "Historique"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "Informations"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "Imprimer"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "Publier"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "Rétablir"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "Enregistrer"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "Partager"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "S'inscrire"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "Favoris"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "Annuler"
+  },
+  "link.help_text": {
+    "defaultMessage": "Adresse invalide"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "Note"
+  },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Icône"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "Lien"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "Ajouter une icône"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "Ajouter un lien"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "Ajouter une note"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "Ajouter une relation"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "Ajouter un noeud"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "Supprimer un noeud"
+  },
+  "editor-panel.tooltip-delete-sujet": {
+    "defaultMessage": "Supprimer le noeud"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "Couleur de bordure"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "Agrandir"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "Gras"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "Couleur"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "Italique"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "Réduire"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Style de police"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "Ellipse"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "Ligne"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "Rectangulaire"
+  },
+  "editor-panel.tooltip-topic-share-arrondi": {
+    "defaultMessage": "Arrondi"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "Style de noeud"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "Clavier"
+  },
+  "zoom-panel.tooltip-clavier": {
+    "defaultMessage": "Raccourcis clavier"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "Zoom avant"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "Zoom arrière"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "Ajuster au contenu"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "Action"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "Ajouter un noeud enfant"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "Ajouter un lien"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "Ajouter une note"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "Ajouter un noeud frère"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "Annuler les modifications du texte"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "Passer le texte en gras"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "Passer le texte en italique"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "Masquer les noeuds enfants"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "Copier et coller des noeuds"
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "Supprimer le noeud"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "Désélectionner tous les noeuds"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "Ajouter une ligne au noeud"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "Modifier le texte du noeud"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "Double-clic"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "Naviguer"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "Touches directionnelles"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "Réduire l'édition"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "Sauvegarder les modifications"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "Sélectionner tous les noeuds"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "Sélectionner plusieurs noeuds"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "Clic de souris"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "Annuler l'édition"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "Afficher les images"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "Polygonale"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "Polygonale courbée"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "Remplacer le texte du noeud"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "Ecrire dans le noeud sélectionné"
+  },
+  "editor-panel.tooltip-topic-share-none": {
+    "defaultMessage": "Aucune forme"
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "Thème"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "Thème"
+  },
+  "editor-panel.tooltip-connection-style-arc": {
+    "defaultMessage": "Arc"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "Arrondi"
+  },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "Couleur"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "Couleur par défaut"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "Style de connexion"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "Courbe large"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "Courbe mince"
+  },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "Couleur de bordure par défaut"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "La couleur de remplissage"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "Couleur de remplissage par défaut"
+  },
+  "action.delete": {
+    "defaultMessage": "Supprimer"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "Couleur par défaut"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "Déconnecter le noeud"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "Description"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "Créateur"
+  }
 }

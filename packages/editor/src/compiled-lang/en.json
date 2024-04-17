@@ -95,6 +95,18 @@
       "value": "Undo"
     }
   ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Creator"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
   "editor-panel.icon-title": [
     {
       "type": 0,
