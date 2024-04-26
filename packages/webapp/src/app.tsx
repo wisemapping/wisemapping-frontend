@@ -39,7 +39,7 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
-import { loader as mapLoader } from './components/editor-page/loader';
+import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
 
 import { ClientContext } from './classes/provider/client-context';
@@ -50,7 +50,7 @@ import AppConfig from './classes/app-config';
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
 
-const PageEditorWrapper = ({ mode }: { mode: 'try' | 'edit' | 'view' }) => {
+const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   const id = useParams().id;
   if (id === undefined) {
     throw 'Map could not be loaded';
@@ -114,32 +114,26 @@ const router = createBrowserRouter(
         />
         <Route
           path="/c/maps/:id/print"
-          element={<PageEditorWrapper mode="view" />}
-          loader={mapLoader('view')}
+          element={<PageEditorWrapper mode="view-private" />}
+          loader={mapLoader('view-private')}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/:hid/view"
-          element={<PageEditorWrapper mode="view" />}
-          loader={mapLoader('view')}
+          element={<PageEditorWrapper mode="view-private" />}
+          loader={mapLoader('view-private')}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/public"
-          loader={mapLoader('public')}
-          element={<PageEditorWrapper mode="view" />}
-          errorElement={<ErrorPage />}
-        />
-        <Route
-          path="/c/maps/:id/:/public"
-          loader={mapLoader('public')}
-          element={<PageEditorWrapper mode="view" />}
+          loader={mapLoader('view-public')}
+          element={<PageEditorWrapper mode="view-public" />}
           errorElement={<ErrorPage />}
         />
         <Route
           path="/c/maps/:id/embed"
-          loader={mapLoader('public')}
-          element={<PageEditorWrapper mode="view" />}
+          loader={mapLoader('view-public')}
+          element={<PageEditorWrapper mode="view-public" />}
           errorElement={<ErrorPage />}
         />
         <Route

@@ -27,7 +27,7 @@ export type EditorMetadata = {
   zoom: number;
 };
 
-export type PageModeType = 'view' | 'edit' | 'try' | 'public';
+export type PageModeType = 'edit' | 'try' | 'view-public' | 'view-private';
 
 export const loader = (pageMode: PageModeType) => {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -52,14 +52,14 @@ export const loader = (pageMode: PageModeType) => {
         break;
       }
       case 'edit':
-      case 'view': {
+      case 'view-private': {
         result = Promise.all([client.fetchMapMetadata(mapId), client.fetchMapInfo(mapId)]).then(
           (values) => {
             const [mapMedata, mapInfo] = values;
 
             let editorMode: EditorRenderMode;
-            if (mapMedata.isLocked || pageMode === 'view') {
-              editorMode = 'viewonly';
+            if (mapMedata.isLocked || pageMode === 'view-private') {
+              editorMode = 'viewonly-private';
             } else {
               editorMode = `edition-${mapInfo.role}`;
             }
@@ -75,17 +75,14 @@ export const loader = (pageMode: PageModeType) => {
         );
         break;
       }
-      case 'public': {
-        result = client.fetchMapMetadata(mapId)
-          .then(
-            (mapMedata) => {
-              return {
-                editorMode: 'viewonly',
-                mapMetadata: mapMedata,
-                zoom: 0.8,
-              };
-            },
-          );
+      case 'view-public': {
+        result = client.fetchMapMetadata(mapId).then((mapMedata) => {
+          return {
+            editorMode: 'viewonly-public',
+            mapMetadata: mapMedata,
+            zoom: 0.8,
+          };
+        });
         break;
       }
       default: {

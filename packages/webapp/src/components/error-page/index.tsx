@@ -33,8 +33,13 @@ const ErrorPage = (): React.ReactElement => {
   const intl = useIntl();
   const error = useRouteError();
 
-  // Error page handler ...
-  logCriticalError(`Handling ErrorPage redirect error`, JSON.stringify(error));
+  //@ts-expect-error 404 error have a status with the error code.
+  if (error!.status == 404) {
+    logCriticalError('Page not found error.', '404');
+  } else {
+    // Error page handler ...
+    logCriticalError(`Handling ErrorPage redirect error`, JSON.stringify(error));
+  }
 
   // Is a server error info ?
   const errorInfo = error as ErrorInfo;

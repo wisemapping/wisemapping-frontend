@@ -680,7 +680,11 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   isReadOnly(): boolean {
-    return this._options.mode === 'viewonly' || this._options.mode === 'edition-viewer';
+    return (
+      this._options.mode === 'viewonly-private' ||
+      this._options.mode === 'viewonly-public' ||
+      this._options.mode === 'edition-viewer'
+    );
   }
 
   nodeModelToTopic(nodeModel: NodeModel): Topic {

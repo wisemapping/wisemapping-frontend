@@ -32,7 +32,12 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
 
   let msgExt: string = '';
   let msg: string = '';
-  if (capability.mode !== 'viewonly' && capability.mode !== 'showcase' && capability.isMobile) {
+  if (
+    capability.mode !== 'viewonly-private' &&
+    capability.mode !== 'viewonly-public' &&
+    capability.mode !== 'showcase' &&
+    capability.isMobile
+  ) {
     msgExt = intl.formatMessage({
       id: 'editor.edit-description-mobile',
       defaultMessage:

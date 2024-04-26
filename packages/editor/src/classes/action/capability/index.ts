@@ -109,17 +109,17 @@ interface CapabilitySupport {
 const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   'redo-changes': {
     desktop: {
-      hidden: ['viewonly', 'edition-viewer'],
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
     },
   },
   'undo-changes': {
     desktop: {
-      hidden: ['viewonly', 'edition-viewer'],
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
     },
   },
   save: {
     desktop: {
-      hidden: ['showcase', 'viewonly', 'edition-viewer'],
+      hidden: ['showcase', 'viewonly-public', 'viewonly-private', 'edition-viewer'],
     },
   },
   print: {
@@ -127,23 +127,56 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       hidden: ['showcase'],
     },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   publish: {
     desktop: {
-      hidden: ['showcase', 'viewonly', 'edition-viewer', 'edition-editor'],
+      hidden: [
+        'showcase',
+        'viewonly-public',
+        'viewonly-private',
+        'edition-viewer',
+        'edition-editor',
+      ],
     },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   share: {
     desktop: {
-      hidden: ['showcase', 'viewonly', 'edition-viewer', 'edition-editor'],
+      hidden: [
+        'showcase',
+        'viewonly-public',
+        'viewonly-private',
+        'edition-viewer',
+        'edition-editor',
+      ],
     },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   info: {
@@ -151,7 +184,14 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       hidden: ['showcase'],
     },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   account: {
@@ -161,12 +201,12 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   },
   'edition-toolbar': {
     desktop: {
-      hidden: ['viewonly', 'edition-viewer'],
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
     },
   },
   'keyboard-shortcuts': {
     desktop: {
-      hidden: ['viewonly', 'edition-viewer'],
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
     },
     mobile: {
       hidden: ['edition-editor', 'edition-owner', 'showcase'],
@@ -174,33 +214,67 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
   },
   history: {
     desktop: {
-      hidden: ['viewonly', 'edition-viewer', 'showcase'],
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer', 'showcase'],
     },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   export: {
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   'appbar-title': {
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   'sign-up': {
     desktop: {
-      hidden: ['viewonly', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
   starred: {
     desktop: {
-      hidden: ['showcase', 'viewonly'],
+      hidden: ['showcase', 'viewonly-private', 'viewonly-public'],
     },
     mobile: {
-      hidden: ['viewonly', 'showcase', 'edition-viewer', 'edition-editor', 'edition-owner'],
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
     },
   },
 };
