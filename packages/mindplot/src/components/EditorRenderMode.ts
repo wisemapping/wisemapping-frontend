@@ -17,10 +17,11 @@
  */
 
 type EditorRenderMode =
-  | 'viewonly'
   | 'edition-owner'
   | 'edition-editor'
   | 'edition-viewer'
+  | 'viewonly-public'
+  | 'viewonly-private'
   | 'showcase'
   | 'edition-locked';
 export default EditorRenderMode;

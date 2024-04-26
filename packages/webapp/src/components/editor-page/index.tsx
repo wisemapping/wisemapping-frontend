@@ -67,7 +67,7 @@ const buildPersistenceManagerForEditor = (
       result = new LocalStorageManager(
         `${baseUrl}/api/restful/maps/{id}/${
           hid ? `${hid}/` : ''
-        }document/xml${mode === 'showcase' || mode === 'viewonly' ? '-pub' : ''}`,
+        }document/xml${mode === 'showcase' || mode === 'viewonly-public' ? '-pub' : ''}`,
         true,
         token,
       );
@@ -146,7 +146,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   let editorOptions: EditorOptions | undefined;
   let editorConfig: EditorConfiguration | undefined;
 
-  const enableAppBar = pageMode !== 'view';
+  const enableAppBar = pageMode !== 'view-private' && pageMode !== 'view-public';
   if (loadCompleted) {
     // Configure
     editorOptions = {
