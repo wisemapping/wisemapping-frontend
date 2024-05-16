@@ -31,7 +31,6 @@
         "@mui/icons-material": "^5.15.15",
         "@mui/lab": "^5.0.0-alpha.170",
         "@mui/material": "^5.15.15",
-        "@reduxjs/toolkit": "^2.2.1",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.6.8",
         "dayjs": "^1.11.10",

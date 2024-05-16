@@ -85,6 +85,7 @@ export type FieldError = {
 };
 
 export type ErrorInfo = {
+  isAuth?: boolean;
   msg?: string;
   fields?: Map<string, string>;
 };

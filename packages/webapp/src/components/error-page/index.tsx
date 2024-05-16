@@ -43,7 +43,6 @@ const ErrorPage = (): React.ReactElement => {
 
   // Is a server error info ?
   const errorInfo = error as ErrorInfo;
-
   useEffect(() => {
     document.title = intl.formatMessage({
       id: 'error.page-title',
