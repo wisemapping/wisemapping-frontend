@@ -819,6 +819,7 @@ export default class RestClient implements Client {
         case 302:
           this.sessionExpired();
           result = {
+            isAuth: true,
             msg: 'Your current session has expired. Please, sign in and try again.',
           };
           break;
@@ -842,6 +843,9 @@ export default class RestClient implements Client {
           } else {
             result = { msg: response.statusText };
           }
+
+          // No access to the operation and not seession token, assuming that the issue is related ot missing auth.
+          result.isAuth = status === 403 && JwtTokenConfig.retreiveToken() === undefined;
       }
     }
 

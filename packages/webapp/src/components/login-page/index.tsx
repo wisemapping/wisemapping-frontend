@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 import SubmitButton from '../form/submit-button';
@@ -65,6 +65,7 @@ const LoginPage = (): React.ReactElement => {
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -77,7 +78,13 @@ const LoginPage = (): React.ReactElement => {
   const mutation = useMutation<void, ErrorInfo, Model>(
     (model: Model) => client.login({ ...model }),
     {
-      onSuccess: () => navigate('/c/maps/'),
+      onSuccess: () => {
+        // If the url has been defined, redirect to the original url.
+        let redirectUrl = new URLSearchParams(location.search).get('redirect');
+        redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';
+        console.log(`redirectUrl: ${redirectUrl}`);
+        navigate(redirectUrl);
+      },
       onError: (error: LoginErrorInfo) => {
         setLoginError(error.code);
       },
