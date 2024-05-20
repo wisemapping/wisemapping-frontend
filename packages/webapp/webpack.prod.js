@@ -5,10 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Add support for versel URL.
 let configUrl = '';
-if (process.env.VERCEL_BRANCH_URL) {
-  configUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
-} else if (process.env.PUBLIC_URL) {
+if (process.env.PUBLIC_URL) {
   configUrl = process.env.PUBLIC_URL;
+} else if (process.env.VERCEL_BRANCH_URL) {
+  configUrl = `https://${process.env.VERCEL_BRANCH_URL}/`;
 }
 
 module.exports = merge(common, {
