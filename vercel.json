@@ -15,7 +15,7 @@
                 },
                 {
                     "key": "Access-Control-Allow-Origin",
-                    "value": "https://api.wisemapping.com"
+                    "value": "https://api2.wisemapping.com"
                 },
                 {
                     "key": "Access-Control-Allow-Methods",
