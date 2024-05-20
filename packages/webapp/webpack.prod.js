@@ -20,8 +20,7 @@ module.exports = merge(common, {
         GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED ? process.env.GOOGLE_ADDS_ENABLED : false,
         NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED ? process.env.NEW_RELIC_ENABLED : false,
 
-    },
-      base: process.env.PUBLIC_URL,
+      }
     }),
   ],
 });
