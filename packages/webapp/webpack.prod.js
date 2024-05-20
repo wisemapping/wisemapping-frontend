@@ -3,6 +3,14 @@ const common = require('./webpack.common.js');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// Add support for versel URL.
+let configUrl = '';
+if (process.env.VERCEL_BRANCH_URL) {
+  configUrl = process.env.VERCEL_BRANCH_URL;
+} else if (process.env.PUBLIC_URL) {
+  configUrl = process.env.PUBLIC_URL;
+}
+
 module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
@@ -20,7 +28,8 @@ module.exports = merge(common, {
         GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED ? process.env.GOOGLE_ADDS_ENABLED : false,
         NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED ? process.env.NEW_RELIC_ENABLED : false,
 
-      }
+      },
+      base: configUrl,
     }),
   ],
 });
