@@ -3082,16 +3082,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/core-downloads-tracker@npm:^5.15.15":
-  version: 5.15.15
-  resolution: "@mui/core-downloads-tracker@npm:5.15.15"
-  checksum: 3e99a04e03f66d5fa5f0c23cdce0f9fa2331ba08c99a75dc2347ccaa1c6ed520153e04aaeb0d613c9dca099a3e6242558a6284c33d93f95cc65e3243b17860bc
+"@mui/core-downloads-tracker@npm:^5.15.18":
+  version: 5.15.18
+  resolution: "@mui/core-downloads-tracker@npm:5.15.18"
+  checksum: d6f5d5bc70b7ace16b1fa86adf5f5bc175840fd21d69f230b8b2348fab4863940df030ace0c6b76beb57bd8bfa6a460788cbd86be90772c13684d87d409d8d32
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^5.15.15":
-  version: 5.15.15
-  resolution: "@mui/icons-material@npm:5.15.15"
+"@mui/icons-material@npm:^5.15.18":
+  version: 5.15.18
+  resolution: "@mui/icons-material@npm:5.15.18"
   dependencies:
     "@babel/runtime": ^7.23.9
   peerDependencies:
@@ -3101,7 +3101,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 42d62fc94be25a361034a8974b1860608e866c155ff2eea7dc18f10a4acc71dbe2f48af3f0309a345ff6fb16be30c6fbc1d8a0a447c828aa1380a49e176a8803
+  checksum: ab8a494ad20a35a43487976c43787443ca4ac1897c9985fe822f52eb57b2d000e8bc6718693a4b22d02f78f7ad8badb1d1a39b0eb679cdd5afafa2b8e2c987bd
   languageName: node
   linkType: hard
 
@@ -3134,13 +3134,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:^5.15.15":
-  version: 5.15.15
-  resolution: "@mui/material@npm:5.15.15"
+"@mui/material@npm:^5.15.18":
+  version: 5.15.18
+  resolution: "@mui/material@npm:5.15.18"
   dependencies:
     "@babel/runtime": ^7.23.9
     "@mui/base": 5.0.0-beta.40
-    "@mui/core-downloads-tracker": ^5.15.15
+    "@mui/core-downloads-tracker": ^5.15.18
     "@mui/system": ^5.15.15
     "@mui/types": ^7.2.14
     "@mui/utils": ^5.15.14
@@ -3163,7 +3163,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: ee0dc22fc4d617f7cf69f2451b6d5139978e6c5319e3056e7719159aff786ee3b80abd07691e230371811d9b5b574aef4559d7855bfe2f8493d596d960a91ab7
+  checksum: 4d2005166282f8bdce2f4c989c9c86d90d40e6193dae0a2729e6f50906504f8c52d86080c3f53d12147732cd725049464828136cc89308db13d2d13f5fab8dfa
   languageName: node
   linkType: hard
 
@@ -6631,8 +6631,8 @@ __metadata:
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
     "@formatjs/cli": ^6.2.9
-    "@mui/icons-material": ^5.15.15
-    "@mui/material": ^5.15.15
+    "@mui/icons-material": ^5.15.18
+    "@mui/material": ^5.15.18
     "@testing-library/react": ^14.2.2
     "@types/cypress-image-snapshot": ^3.1.9
     "@wisemapping/mindplot": "workspace:*"
@@ -6713,14 +6713,14 @@ __metadata:
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
     "@formatjs/cli": ^6.2.9
-    "@mui/icons-material": ^5.15.15
+    "@mui/icons-material": ^5.15.18
     "@mui/lab": ^5.0.0-alpha.170
-    "@mui/material": ^5.15.15
+    "@mui/material": ^5.15.18
     "@testing-library/cypress": ^10.0.1
     "@types/testing-library__cypress": ^5.0.13
     "@welldone-software/why-did-you-render": ^8.0.1
     "@wisemapping/editor": "workspace:^"
-    axios: ^1.6.8
+    axios: ^1.7.0
     cypress: ^13.7.2
     cypress-image-snapshot: ^4.0.1
     dayjs: ^1.11.10
@@ -7754,14 +7754,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.8":
-  version: 1.6.8
-  resolution: "axios@npm:1.6.8"
+"axios@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "axios@npm:1.7.0"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: bf007fa4b207d102459300698620b3b0873503c6d47bf5a8f6e43c0c64c90035a4f698b55027ca1958f61ab43723df2781c38a99711848d232cad7accbcdfcdd
+  checksum: f6caa42d52ac4e18acf3db2361c92c83efcfc81eac8647dcfaa8ef04ee4f91f3d3b2e8c09a497a10b7669384f398436e88554f76db12a67518d996c0cdc3c2a1
   languageName: node
   linkType: hard
 
