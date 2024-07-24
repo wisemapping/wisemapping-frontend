@@ -5,4 +5,4 @@ Allow: /
 Disallow: /c/restful/maps/*/document/xml-pub
 Disallow: /c/maps/*/edit
 Disallow: /c/maps/*/try
-
+Disallow: /c/maps/*/public
