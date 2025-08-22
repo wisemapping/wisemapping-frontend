@@ -23,6 +23,10 @@ Cypress.on('window:before:load', (win) => {
 afterEach(() => {
   cy.window().then((win) => {
     expect(win.console.error).to.have.callCount(0);
-    expect(win.console.warn).to.have.callCount(0);
+    // Ignore React Router v7 preparation warning
+    const warns = (win.console.warn as any)
+      .getCalls()
+      .filter((call: any) => !call.args[0].includes('React Router Future Flag Warning'));
+    expect(warns.length).to.equal(0);
   });
 });

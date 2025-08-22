@@ -45,7 +45,7 @@
     "@testing-library/react": "^14.2.2",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",
-    "cypress": "^13.7.2",
+    "cypress": "^15.0.0",
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "react": "^19.0.0",

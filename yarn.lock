@@ -6324,7 +6324,7 @@ __metadata:
     "@types/cypress-image-snapshot": ^3.1.9
     "@wisemapping/mindplot": "workspace:*"
     babel-polyfill: ^6.26.0
-    cypress: ^13.7.2
+    cypress: ^15.0.0
     cypress-image-snapshot: ^4.0.1
     emoji-picker-react: ^4.9.2
     jest-transform-stub: ^2.0.0
@@ -6408,7 +6408,7 @@ __metadata:
     "@welldone-software/why-did-you-render": ^8.0.1
     "@wisemapping/editor": "workspace:^"
     axios: ^1.7.0
-    cypress: ^13.7.2
+    cypress: ^15.0.0
     cypress-image-snapshot: ^4.0.1
     dayjs: ^1.11.10
     react: ^19.0.0
@@ -9638,7 +9638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:*":
+"cypress@npm:*, cypress@npm:^15.0.0":
   version: 15.0.0
   resolution: "cypress@npm:15.0.0"
   dependencies:
