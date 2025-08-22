@@ -36,6 +36,10 @@
     "react-loader-spinner": "^6.1.6",
     "styled-components": "^6.1.8"
   },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "@formatjs/cli": "^6.2.9",
     "@testing-library/react": "^14.2.2",
@@ -44,12 +48,8 @@
     "cypress": "^13.7.2",
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "start-server-and-test": "^2.0.3"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   }
 }
