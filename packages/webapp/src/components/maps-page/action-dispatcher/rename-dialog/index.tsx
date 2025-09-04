@@ -47,6 +47,7 @@ const RenameDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    setError(undefined);
     mutation.mutate(model);
   };
 
