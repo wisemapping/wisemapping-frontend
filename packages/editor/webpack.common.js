@@ -16,7 +16,12 @@ const prodConfig = {
   },
   entry: {
     editor: './src/index.ts',
-  }
+  },
+  resolve: {
+    alias: {
+      '@wisemapping/core-js': path.resolve(__dirname, '../../packages/core-js/src'),
+    },
+  },
 };
 
 module.exports = merge(common, prodConfig);

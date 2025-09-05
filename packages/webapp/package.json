@@ -31,6 +31,7 @@
         "@mui/icons-material": "^5.15.18",
         "@mui/lab": "^5.0.0-alpha.170",
         "@mui/material": "^5.15.18",
+        "@wisemapping/core-js": "workspace:*",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.7.0",
         "dayjs": "^1.11.10",

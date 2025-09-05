@@ -6322,6 +6322,7 @@ __metadata:
     "@mui/material": ^5.15.18
     "@testing-library/react": ^14.2.2
     "@types/cypress-image-snapshot": ^3.1.9
+    "@wisemapping/core-js": "workspace:*"
     "@wisemapping/mindplot": "workspace:*"
     babel-polyfill: ^6.26.0
     cypress: ^15.0.0
@@ -6406,6 +6407,7 @@ __metadata:
     "@testing-library/cypress": ^10.0.1
     "@types/testing-library__cypress": ^5.0.13
     "@welldone-software/why-did-you-render": ^8.0.1
+    "@wisemapping/core-js": "workspace:*"
     "@wisemapping/editor": "workspace:^"
     axios: ^1.7.0
     cypress: ^15.0.0
