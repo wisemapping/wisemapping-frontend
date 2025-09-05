@@ -78,7 +78,8 @@ const PT = {
   'editor.edit-description-mobile': 'Funcionalidades limitadas de edição de mapa mental são suportadas em dispositivos móveis. Use um navegador desktop para funcionalidades completas do editor.',
   'editor.try-welcome': 'Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!',
   'editor.try-welcome-description': 'Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente.',
-  'editor.try-welcome-description-mobile': 'Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente. Funcionalidades limitadas de edição de mapa mental são suportadas em dispositivos móveis. Use um navegador desktop para funcionalidades completas do editor.',
+  'editor.try-welcome-description-mobile': 'Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente. ' +
+    'Funcionalidades limitadas de edição de mapa mental são suportadas em dispositivos móveis. Use um navegador desktop para funcionalidades completas do editor.',
   'editor.try-welcome-mobile': 'Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!',
   'icon-picker.show-images': 'Mostrar imagens',
   'link.help_text': 'Endereço inválido',
@@ -114,7 +115,7 @@ const PT = {
   'zoom-panel.tooltip-zoom-out': 'Diminuir zoom',
   'zoom-panel.tooltip-zoom-to-fit': 'Ajustar ao tamanho',
   'creator-info-pane.description': 'Descrição',
-  'creator-info-pane.creator': 'Criador'
+  'creator-info-pane.creator': 'Criador',
 };
 
 export default PT;

@@ -114,7 +114,7 @@ const JA = {
   'zoom-panel.tooltip-zoom-out': 'ズームアウト',
   'zoom-panel.tooltip-zoom-to-fit': 'フィット',
   'creator-info-pane.description': '説明',
-  'creator-info-pane.creator': '作成者'
+  'creator-info-pane.creator': '作成者',
 };
 
 export default JA;

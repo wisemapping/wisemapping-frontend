@@ -978,7 +978,7 @@
   "registration.title": [
     {
       "type": 0,
-      "value": "Become a member"
+      "value": "Стать участником"
     }
   ],
   "rename.description": [
@@ -990,7 +990,7 @@
   "rename.title": [
     {
       "type": 0,
-      "value": "Rename"
+      "value": "Переименовать"
     }
   ],
   "resetpassword.success.title": [

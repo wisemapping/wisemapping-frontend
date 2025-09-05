@@ -2,343 +2,343 @@
   "action.accept": [
     {
       "type": 0,
-      "value": "Accept"
+      "value": "受け入れる"
     }
   ],
   "action.delete": [
     {
       "type": 0,
-      "value": "Delete"
+      "value": "削除"
     }
   ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
-      "value": "Back to maps list"
+      "value": "マップリストに戻る"
     }
   ],
   "appbar.button-signup": [
     {
       "type": 0,
-      "value": "Sign Up"
+      "value": "サインアップ"
     }
   ],
   "appbar.shared-button": [
     {
       "type": 0,
-      "value": "Share"
+      "value": "共有"
     }
   ],
   "appbar.tooltip-export": [
     {
       "type": 0,
-      "value": "Export"
+      "value": "エクスポート"
     }
   ],
   "appbar.tooltip-history": [
     {
       "type": 0,
-      "value": "Changes History"
+      "value": "変更履歴"
     }
   ],
   "appbar.tooltip-info": [
     {
       "type": 0,
-      "value": "Information"
+      "value": "情報"
     }
   ],
   "appbar.tooltip-print": [
     {
       "type": 0,
-      "value": "Print"
+      "value": "印刷"
     }
   ],
   "appbar.tooltip-publish": [
     {
       "type": 0,
-      "value": "Publish"
+      "value": "公開"
     }
   ],
   "appbar.tooltip-redo": [
     {
       "type": 0,
-      "value": "Redo"
+      "value": "やり直し"
     }
   ],
   "appbar.tooltip-save": [
     {
       "type": 0,
-      "value": "Save"
+      "value": "保存"
     }
   ],
   "appbar.tooltip-shared": [
     {
       "type": 0,
-      "value": "Share for Collaboration"
+      "value": "コラボレーション用に共有"
     }
   ],
   "appbar.tooltip-signup": [
     {
       "type": 0,
-      "value": "Sign Up"
+      "value": "サインアップ"
     }
   ],
   "appbar.tooltip-starred": [
     {
       "type": 0,
-      "value": "Starred"
+      "value": "お気に入り"
     }
   ],
   "appbar.tooltip-undo": [
     {
       "type": 0,
-      "value": "Undo"
+      "value": "元に戻す"
     }
   ],
   "creator-info-pane.creator": [
     {
       "type": 0,
-      "value": "Creator"
+      "value": "作成者"
     }
   ],
   "creator-info-pane.description": [
     {
       "type": 0,
-      "value": "Description"
+      "value": "説明"
     }
   ],
   "editor-panel.icon-title": [
     {
       "type": 0,
-      "value": "Icon"
+      "value": "アイコン"
     }
   ],
   "editor-panel.link-panel-title": [
     {
       "type": 0,
-      "value": "Link"
+      "value": "リンク"
     }
   ],
   "editor-panel.note-panel-title": [
     {
       "type": 0,
-      "value": "Note"
+      "value": "ノート"
     }
   ],
   "editor-panel.tooltip-add-icon": [
     {
       "type": 0,
-      "value": "Add Icon"
+      "value": "アイコンを追加"
     }
   ],
   "editor-panel.tooltip-add-link": [
     {
       "type": 0,
-      "value": "Add Link"
+      "value": "リンクを追加"
     }
   ],
   "editor-panel.tooltip-add-note": [
     {
       "type": 0,
-      "value": "Add Note"
+      "value": "ノートを追加"
     }
   ],
   "editor-panel.tooltip-add-relationship": [
     {
       "type": 0,
-      "value": "Add Relationship"
+      "value": "関係を追加"
     }
   ],
   "editor-panel.tooltip-add-topic": [
     {
       "type": 0,
-      "value": "Add Topic"
+      "value": "トピックを追加"
     }
   ],
   "editor-panel.tooltip-connection-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "色"
     }
   ],
   "editor-panel.tooltip-connection-color-default": [
     {
       "type": 0,
-      "value": "Default color"
+      "value": "デフォルト色"
     }
   ],
   "editor-panel.tooltip-connection-style": [
     {
       "type": 0,
-      "value": "Connection Style"
+      "value": "接続スタイル"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "Thick Curved"
+      "value": "太い曲線"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "Thin Curved"
+      "value": "細い曲線"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline": [
     {
       "type": 0,
-      "value": "Simple Polyline"
+      "value": "シンプルなポリライン"
     }
   ],
   "editor-panel.tooltip-connection-style-polyline-curved": [
     {
       "type": 0,
-      "value": "Curved Polyline"
+      "value": "曲線ポリライン"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
     {
       "type": 0,
-      "value": "Delete Topic"
+      "value": "トピックを削除"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
     {
       "type": 0,
-      "value": "Border color"
+      "value": "境界線の色"
     }
   ],
   "editor-panel.tooltip-topic-border-color-default": [
     {
       "type": 0,
-      "value": "Default border color"
+      "value": "デフォルト境界線色"
     }
   ],
   "editor-panel.tooltip-topic-fill-color": [
     {
       "type": 0,
-      "value": "Fill color"
+      "value": "塗りつぶし色"
     }
   ],
   "editor-panel.tooltip-topic-fill-color-default": [
     {
       "type": 0,
-      "value": "Default fill color"
+      "value": "デフォルト塗りつぶし色"
     }
   ],
   "editor-panel.tooltip-topic-font-bigger": [
     {
       "type": 0,
-      "value": "Bigger"
+      "value": "大きく"
     }
   ],
   "editor-panel.tooltip-topic-font-bold": [
     {
       "type": 0,
-      "value": "Bold"
+      "value": "太字"
     }
   ],
   "editor-panel.tooltip-topic-font-color": [
     {
       "type": 0,
-      "value": "Color"
+      "value": "色"
     }
   ],
   "editor-panel.tooltip-topic-font-color-default": [
     {
       "type": 0,
-      "value": "Default color"
+      "value": "デフォルト色"
     }
   ],
   "editor-panel.tooltip-topic-font-italic": [
     {
       "type": 0,
-      "value": "Italic"
+      "value": "斜体"
     }
   ],
   "editor-panel.tooltip-topic-font-smaller": [
     {
       "type": 0,
-      "value": "Smaller"
+      "value": "小さく"
     }
   ],
   "editor-panel.tooltip-topic-font-style": [
     {
       "type": 0,
-      "value": "Font Style"
+      "value": "フォントスタイル"
     }
   ],
   "editor-panel.tooltip-topic-share-ellipse": [
     {
       "type": 0,
-      "value": "Ellipse shape"
+      "value": "楕円形"
     }
   ],
   "editor-panel.tooltip-topic-share-line": [
     {
       "type": 0,
-      "value": "Line shape"
+      "value": "線形"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
-      "value": "Rectangle shape"
+      "value": "矩形"
     }
   ],
   "editor-panel.tooltip-topic-share-rounded": [
     {
       "type": 0,
-      "value": "Rounded shape"
+      "value": "角丸形"
     }
   ],
   "editor-panel.tooltip-topic-style": [
     {
       "type": 0,
-      "value": "Topic Style"
+      "value": "トピックスタイル"
     }
   ],
   "editor.edit-description-mobile": [
     {
       "type": 0,
-      "value": "Limited mindmap edition capabilities are supported in Mobile devices. Use Desktop browser for full editor capabilities."
+      "value": "モバイルデバイスでは限定的なマインドマップ編集機能がサポートされています。完全なエディター機能にはデスクトップブラウザを使用してください。"
     }
   ],
   "editor.try-welcome": [
     {
       "type": 0,
-      "value": "This edition space showcases some of the mindmap editor capabilities!"
+      "value": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
     }
   ],
   "editor.try-welcome-description": [
     {
       "type": 0,
-      "value": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free."
+      "value": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。"
     }
   ],
   "editor.try-welcome-description-mobile": [
     {
       "type": 0,
-      "value": "Sign Up to start creating, sharing and publishing unlimited number of mindmaps for free. Limited mindmap edition capabilties are supported in Mobile devices. Use Desktop browser for full editor capabilies."
+      "value": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。モバイルデバイスでは限定的なマインドマップ編集機能がサポートされています。完全なエディター機能にはデスクトップブラウザを使用してください。"
     }
   ],
   "editor.try-welcome-mobile": [
     {
       "type": 0,
-      "value": "This edition space showcases some of the mindmap editor capabilities!"
+      "value": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
     }
   ],
   "icon-picker.show-images": [
     {
       "type": 0,
-      "value": "Show images"
+      "value": "画像を表示"
     }
   ],
   "link.help_text": [
     {
       "type": 0,
-      "value": "Address is not valid"
+      "value": "アドレスが無効です"
     }
   ],
   "link.placeholder": [
@@ -350,181 +350,181 @@
   "shortcut-help-pane.action": [
     {
       "type": 0,
-      "value": "Action"
+      "value": "アクション"
     }
   ],
   "shortcut-help-pane.add-child": [
     {
       "type": 0,
-      "value": "Add child topic"
+      "value": "子トピックを追加"
     }
   ],
   "shortcut-help-pane.add-link": [
     {
       "type": 0,
-      "value": "Add link"
+      "value": "リンクを追加"
     }
   ],
   "shortcut-help-pane.add-note": [
     {
       "type": 0,
-      "value": "Add note"
+      "value": "ノートを追加"
     }
   ],
   "shortcut-help-pane.add-sibling": [
     {
       "type": 0,
-      "value": "Add sibling topic"
+      "value": "兄弟トピックを追加"
     }
   ],
   "shortcut-help-pane.cancel-text-changes": [
     {
       "type": 0,
-      "value": "Cancel text changes"
+      "value": "テキスト変更をキャンセル"
     }
   ],
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
-      "value": "Change text to bold"
+      "value": "テキストを太字に変更"
     }
   ],
   "shortcut-help-pane.change-font-italic": [
     {
       "type": 0,
-      "value": "Change text to italic"
+      "value": "テキストを斜体に変更"
     }
   ],
   "shortcut-help-pane.collapse-children": [
     {
       "type": 0,
-      "value": "Collpase children"
+      "value": "子要素を折りたたむ"
     }
   ],
   "shortcut-help-pane.copy-and-text": [
     {
       "type": 0,
-      "value": "Copy and paste topics/Copy mindmap image to clipboard."
+      "value": "トピックをコピー＆ペースト/マインドマップ画像をクリップボードにコピー。"
     }
   ],
   "shortcut-help-pane.delete-topic": [
     {
       "type": 0,
-      "value": "Delete topic"
+      "value": "トピックを削除"
     }
   ],
   "shortcut-help-pane.deselect-all-topics": [
     {
       "type": 0,
-      "value": "Deselect all topics"
+      "value": "すべてのトピックの選択を解除"
     }
   ],
   "shortcut-help-pane.drag-disconnect": [
     {
       "type": 0,
-      "value": "Disconnect topic"
+      "value": "トピックを切断"
     }
   ],
   "shortcut-help-pane.edit-multiline": [
     {
       "type": 0,
-      "value": "Add multi-line topic text"
+      "value": "複数行トピックテキストを追加"
     }
   ],
   "shortcut-help-pane.edit-topic": [
     {
       "type": 0,
-      "value": "Edit topic text"
+      "value": "トピックテキストを編集"
     }
   ],
   "shortcut-help-pane.edit-topic-key": [
     {
       "type": 0,
-      "value": "F2 or Double Click"
+      "value": "F2またはダブルクリック"
     }
   ],
   "shortcut-help-pane.navigation": [
     {
       "type": 0,
-      "value": "Navigation"
+      "value": "ナビゲーション"
     }
   ],
   "shortcut-help-pane.navigation-keys": [
     {
       "type": 0,
-      "value": "Arrow keys"
+      "value": "矢印キー"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic": [
     {
       "type": 0,
-      "value": "Overwrite topic text"
+      "value": "トピックテキストを上書き"
     }
   ],
   "shortcut-help-pane.overwrite-edit-topic-key": [
     {
       "type": 0,
-      "value": "Type on a selected topic"
+      "value": "選択されたトピックで入力"
     }
   ],
   "shortcut-help-pane.redo": [
     {
       "type": 0,
-      "value": "Redo edition"
+      "value": "編集をやり直し"
     }
   ],
   "shortcut-help-pane.save-changes": [
     {
       "type": 0,
-      "value": "Save changes"
+      "value": "変更を保存"
     }
   ],
   "shortcut-help-pane.select-all-topics": [
     {
       "type": 0,
-      "value": "Select all topics"
+      "value": "すべてのトピックを選択"
     }
   ],
   "shortcut-help-pane.select-topics": [
     {
       "type": 0,
-      "value": "Select multiple topics"
+      "value": "複数のトピックを選択"
     }
   ],
   "shortcut-help-pane.select-topics-keys": [
     {
       "type": 0,
-      "value": "Mouse click"
+      "value": "マウスクリック"
     }
   ],
   "shortcut-help-pane.undo": [
     {
       "type": 0,
-      "value": "Undo edition"
+      "value": "編集を元に戻す"
     }
   ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,
-      "value": "Keyboard Shortcuts"
+      "value": "キーボードショートカット"
     }
   ],
   "zoom-panel.tooltip-zoom-in": [
     {
       "type": 0,
-      "value": "Zoom In"
+      "value": "ズームイン"
     }
   ],
   "zoom-panel.tooltip-zoom-out": [
     {
       "type": 0,
-      "value": "Zoom Out"
+      "value": "ズームアウト"
     }
   ],
   "zoom-panel.tooltip-zoom-to-fit": [
     {
       "type": 0,
-      "value": "Zoom to Fit"
+      "value": "フィット"
     }
   ]
 }

@@ -16,7 +16,7 @@
     "build": "webpack --config webpack.prod.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
+            "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru','ja','pt'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
     "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
     "lint": "eslint src --ext js,ts,tsx",
     "playground": "webpack serve --config webpack.playground.js",
