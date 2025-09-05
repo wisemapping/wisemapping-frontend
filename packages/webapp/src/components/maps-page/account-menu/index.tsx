@@ -67,7 +67,8 @@ const AccountMenu = (): React.ReactElement => {
       >
         <MenuItem
           onClick={() => {
-            handleClose(), setAction('account-info');
+            handleClose();
+            setAction('account-info');
           }}
         >
           <ListItemIcon>
@@ -79,7 +80,8 @@ const AccountMenu = (): React.ReactElement => {
         {account?.authenticationType !== 'GOOGLE_OAUTH2' && (
           <MenuItem
             onClick={() => {
-              handleClose(), setAction('change-password');
+              handleClose();
+              setAction('change-password');
             }}
           >
             <ListItemIcon>

@@ -46,8 +46,10 @@ class AppConfig {
       if (!this._config) {
         let result: Config;
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const extConfig: ConfigContainer = require('BoostrapConfig') as ConfigContainer;
+        // Dynamic import for BootstrapConfig
+        const extConfig: ConfigContainer = (
+          window as unknown as { BoostrapConfig: ConfigContainer }
+        ).BoostrapConfig;
         if (extConfig.type === 'static') {
           // Configuration has been defined as part of webpack ...
           result = extConfig.config;

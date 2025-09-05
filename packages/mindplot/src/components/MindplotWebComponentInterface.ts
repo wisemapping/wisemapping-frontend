@@ -1,7 +1,7 @@
 type MindplotWebComponentInterface = {
   id: string;
   mode: string;
-  ref: object;
+  ref?: React.Ref<unknown>;
   locale?: string;
   zoom?: number;
 };

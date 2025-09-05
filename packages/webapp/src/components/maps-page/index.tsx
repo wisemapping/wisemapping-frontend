@@ -135,7 +135,9 @@ const MapsPage = (): ReactElement => {
   const handleMenuClick = (filter: Filter) => {
     queryClient.invalidateQueries('maps');
     setFilter(filter);
-    mobileDrawerOpen && setMobileDrawerOpen(false);
+    if (mobileDrawerOpen) {
+      setMobileDrawerOpen(false);
+    }
   };
 
   const handleLabelDelete = (id: number) => {

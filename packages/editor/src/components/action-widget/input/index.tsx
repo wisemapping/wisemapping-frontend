@@ -33,11 +33,11 @@ const Input = (props: TextFieldProps): ReactElement => {
       {...props}
       onFocus={(e) => {
         DesignerKeyboard.pause();
-        props.onFocus && props.onFocus(e);
+        props.onFocus?.(e);
       }}
       onBlur={(e) => {
         DesignerKeyboard.resume();
-        props.onBlur && props.onBlur(e);
+        props.onBlur?.(e);
       }}
     ></TextField>
   );

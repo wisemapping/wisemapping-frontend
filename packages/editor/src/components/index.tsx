@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
 import React, { ReactElement } from 'react';
 import { Vortex } from 'react-loader-spinner';
 
@@ -74,13 +75,13 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
         </div>
       )}
 
-      <mindplot-component
-        ref={mindplotRef}
-        id="mindmap-comp"
-        mode={options.mode}
-        locale={locale}
-        zoom={options.zoom}
-      />
+      {React.createElement('mindplot-component', {
+        ref: mindplotRef,
+        id: 'mindmap-comp',
+        mode: options.mode,
+        locale: locale,
+        zoom: options.zoom,
+      })}
 
       <Notifier id="headerNotifier" />
 

@@ -33,7 +33,7 @@
     "@wisemapping/mindplot": "workspace:*",
     "emoji-picker-react": "^4.13.3",
     "react-color": "^2.19.3",
-    "react-intl": "^6.6.5",
+    "react-intl": "^7.1.11",
     "react-loader-spinner": "^6.1.6",
     "styled-components": "^6.1.8"
   },
@@ -50,7 +50,7 @@
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.1.1",
     "start-server-and-test": "^2.1.0"
   }
 }

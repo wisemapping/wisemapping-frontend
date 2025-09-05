@@ -28,7 +28,7 @@ export default class VersionNumber {
       try {
         ownNumber = parseInt(ownTokinizer[i], 10);
         ohterNumber = parseInt(otherTokinizer[i], 10);
-      } catch (e) {
+      } catch {
         return 1;
       }
 
