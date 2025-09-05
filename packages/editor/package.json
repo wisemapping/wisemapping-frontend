@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@formatjs/cli": "^6.2.9",
-    "@testing-library/react": "^14.2.2",
+    "@testing-library/react": "^16.3.0",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",
     "cypress": "^15.1.0",
