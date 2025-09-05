@@ -28,9 +28,9 @@
     "dependencies": {
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.5",
-        "@mui/icons-material": "^5.15.18",
-        "@mui/lab": "^5.0.0-alpha.170",
-        "@mui/material": "^5.15.18",
+        "@mui/icons-material": "^7.3.2",
+        "@mui/lab": "^7.0.0-beta.17",
+        "@mui/material": "^7.3.2",
         "@wisemapping/core-js": "workspace:*",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.7.0",

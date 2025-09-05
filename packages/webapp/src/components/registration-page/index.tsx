@@ -80,7 +80,7 @@ const RegistrationForm = () => {
   return (
     <Grid container justifyContent="center">
       <Grid container spacing={0} justifyContent="center" alignItems="scretch" textAlign="center">
-        <Grid item md={5} xs={12} justifyContent="center">
+        <Grid size={{ md: 5, xs: 12 }} justifyContent="center">
           <Typography variant="h4" component="h1">
             <FormattedMessage id="registration.title" defaultMessage="Become a member" />
           </Typography>
@@ -99,7 +99,7 @@ const RegistrationForm = () => {
             onClick={handleRegisterWithGoogleClick}
           />
         </Grid>
-        <Grid item md={2} xs={12}>
+        <Grid size={{ md: 2, xs: 12 }}>
           <Separator
             responsive={true}
             maxWidth={maxFormWidth}
@@ -109,7 +109,7 @@ const RegistrationForm = () => {
             })}
           />
         </Grid>
-        <Grid item md={5} xs={12}>
+        <Grid size={{ md: 5, xs: 12 }}>
           <FormControl css={{ maxWidth: maxFormWidth }}>
             <form onSubmit={handleOnSubmit}>
               <GlobalError error={error} />
@@ -190,7 +190,7 @@ const RegistrationForm = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid>
         <Link component={RouterLink} to="/c/login">
           <FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" />
         </Link>
