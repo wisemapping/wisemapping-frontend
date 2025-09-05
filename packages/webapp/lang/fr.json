@@ -445,10 +445,10 @@
         "defaultMessage": "Éditeur"
     },
     "role.owner": {
-        "defaultMessage": "Onwer"
+        "defaultMessage": "Propriétaire"
     },
     "role.viewer": {
-        "defaultMessage": "Téléspectateur"
+        "defaultMessage": "Visualiseur"
     },
     "share.add-button": {
         "defaultMessage": "Partager"
@@ -466,7 +466,7 @@
         "defaultMessage": "Supprimer un collaborateur"
     },
     "share.delete-description": {
-        "defaultMessage": "Invitez des personnes à collaborer avec vous dans la création de votre midnmap. Ils seront prévenus par email."
+        "defaultMessage": "Invitez des personnes à collaborer avec vous dans la création de votre carte mentale. Ils seront prévenus par email."
     },
     "share.delete-title": {
         "defaultMessage": "Partager avec les gens"
@@ -475,10 +475,10 @@
         "defaultMessage": "Message"
     },
     "editor.try-welcome": {
-        "defaultMessage": ""
+        "defaultMessage": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
     },
     "editor.try-welcome-description": {
-        "defaultMessage": ""
+        "defaultMessage": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
     },
     "accountinfo.deleteaccount": {
         "defaultMessage": "Supprimer le compte"

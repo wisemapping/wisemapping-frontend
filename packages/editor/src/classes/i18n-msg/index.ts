@@ -30,6 +30,10 @@ class I18nMsg {
         return require('./../../compiled-lang/ru.json');
       case 'zh':
         return require('./../../compiled-lang/zh.json');
+      case 'ja':
+        return require('./../../compiled-lang/ja.json');
+      case 'pt':
+        return require('./../../compiled-lang/pt.json');
       default:
         return require('./../../compiled-lang/en.json');
     }
