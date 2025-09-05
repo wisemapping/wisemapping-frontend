@@ -1,0 +1,557 @@
+    {  
+      "account.delete-warning": {  
+        "defaultMessage": "Tieni presente che non potrai recuperare nessuna mappa mentale che hai aggiunto. Tutte le tue informazioni saranno eliminate e non potranno essere ripristinate."  
+      },  
+      "accountinfo.button": {  
+        "defaultMessage": "Accetta"  
+      },  
+      "accountinfo.deleteaccount": {  
+        "defaultMessage": "Elimina Account"  
+      },  
+      "accountinfo.email": {  
+        "defaultMessage": "Email"  
+      },  
+      "accountinfo.firstname": {  
+        "defaultMessage": "Nome"  
+      },  
+      "accountinfo.lastname": {  
+        "defaultMessage": "Cognome"  
+      },  
+      "accountinfo.title": {  
+        "defaultMessage": "Informazioni account"  
+      },  
+      "action.cancel-button": {  
+        "defaultMessage": "Annulla"  
+      },  
+      "action.close-button": {  
+        "defaultMessage": "Chiudi"  
+      },  
+      "action.delete": {  
+        "defaultMessage": "Elimina"  
+      },  
+      "action.delete-description": {  
+        "defaultMessage": "La mappa mentale eliminata non può essere recuperata. Vuoi continuare?"  
+      },  
+      "action.delete-title": {  
+        "defaultMessage": "Elimina"  
+      },  
+      "action.duplicate": {  
+        "defaultMessage": "Duplica"  
+      },  
+      "action.export": {  
+        "defaultMessage": "Esporta"  
+      },  
+      "action.history": {  
+        "defaultMessage": "Cronologia"  
+      },  
+      "action.history-description": {  
+        "defaultMessage": "Elenco delle modifiche apportate negli ultimi 90 giorni."  
+      },  
+      "action.history-title": {  
+        "defaultMessage": "Cronologia versioni"  
+      },  
+      "action.import": {  
+        "defaultMessage": "Importa"  
+      },  
+      "action.info": {  
+        "defaultMessage": "Info"  
+      },  
+      "action.label": {  
+        "defaultMessage": "Aggiungi Etichetta"  
+      },  
+      "action.new": {  
+        "defaultMessage": "Nuova mappa"  
+      },  
+      "action.open": {  
+        "defaultMessage": "Apri"  
+      },  
+      "action.print": {  
+        "defaultMessage": "Stampa"  
+      },  
+      "action.publish": {  
+        "defaultMessage": "Pubblica"  
+      },  
+      "action.rename": {  
+        "defaultMessage": "Rinomina"  
+      },  
+      "action.rename-description-placeholder": {  
+        "defaultMessage": "Descrizione"  
+      },  
+      "action.rename-name-placeholder": {  
+        "defaultMessage": "Nome"  
+      },  
+      "action.share": {  
+        "defaultMessage": "Condividi"  
+      },  
+      "changepwd.button": {  
+        "defaultMessage": "Cambia"  
+      },  
+      "changepwd.confirm-password": {  
+        "defaultMessage": "Conferma Password"  
+      },  
+      "changepwd.description": {  
+        "defaultMessage": "Per favore, fornisci la nuova password per il tuo account."  
+      },  
+      "changepwd.password": {  
+        "defaultMessage": "Password"  
+      },  
+      "changepwd.password-match": {  
+        "defaultMessage": "Le password non corrispondono. Riprova."  
+      },  
+      "changepwd.title": {  
+        "defaultMessage": "Cambia Password"  
+      },  
+      "common.wait": {  
+        "defaultMessage": "Attendere prego..."  
+      },  
+      "create.button": {  
+        "defaultMessage": "Crea"  
+      },  
+      "create.description": {  
+        "defaultMessage": "Si prega di inserire il nome e la descrizione della nuova mappa."  
+      },  
+      "create.title": {  
+        "defaultMessage": "Crea una nuova mappa mentale"  
+      },  
+      "deletem.title": {  
+        "defaultMessage": "Tutte le mappe selezionate verranno eliminate"  
+      },  
+      "dialog.loading": {  
+        "defaultMessage": "Caricamento..."  
+      },  
+      "duplicate.title": {  
+        "defaultMessage": "Duplica"  
+      },  
+      "expired.description": {  
+        "defaultMessage": "La tua sessione è scaduta. Accedi e riprova."  
+      },  
+      "expired.title": {  
+        "defaultMessage": "La tua sessione è scaduta"  
+      },  
+      "export.desc": {  
+        "defaultMessage": "Esporta questa mappa nel formato che desideri e inizia a utilizzarla nelle tue presentazioni o a condividerla via email"  
+      },  
+      "export.document": {  
+        "defaultMessage": "Strumenti Mappa Mentale: Esporta la tua mappa mentale in formati di strumenti per mappe mentali di terze parti"  
+      },  
+      "export.document-label": {  
+        "defaultMessage": "Documento: Esporta la tua mappa mentale in un documento autonomo pronto per essere condiviso"  
+      },  
+      "export.image": {  
+        "defaultMessage": "Immagine: Ottieni una rappresentazione grafica della tua mappa, inclusi tutti i colori e le forme."  
+      },  
+      "export.img-center": {  
+        "defaultMessage": "Centra e zooma per adattare"  
+      },  
+      "export.title": {  
+        "defaultMessage": "Esporta"  
+      },  
+      "export.warning": {  
+        "defaultMessage": "L'esportazione in immagine (SVG, PNG, JPEG, PDF) è disponibile solo nella barra degli strumenti dell'editor."  
+      },  
+      "footer.aboutus": {  
+        "defaultMessage": "Chi Siamo"  
+      },  
+      "footer.contactus": {  
+        "defaultMessage": "Contattaci"  
+      },  
+      "footer.donations": {  
+        "defaultMessage": "Donazioni"  
+      },  
+      "footer.faq": {  
+        "defaultMessage": "F.A.Q."  
+      },  
+      "footer.faqandhelp": {  
+        "defaultMessage": "Aiuto & FAQ"  
+      },  
+      "footer.feedback": {  
+        "defaultMessage": "Feedback"  
+      },  
+      "footer.opensource": {  
+        "defaultMessage": "Open Source"  
+      },  
+      "footer.others": {  
+        "defaultMessage": "Altro"  
+      },  
+      "footer.support": {  
+        "defaultMessage": "Supporto"  
+      },  
+      "footer.team": {  
+        "defaultMessage": "Il Nostro Team"  
+      },  
+      "footer.termsandconditions": {  
+        "defaultMessage": "Termini e Condizioni"  
+      },  
+      "forgot.desc": {  
+        "defaultMessage": "Ti invieremo una email per reimpostare la tua password."  
+      },  
+      "forgot.email": {  
+        "defaultMessage": "Email"  
+      },  
+      "forgot.oauth.back": {  
+        "defaultMessage": "Torna al login"  
+      },  
+      "forgot.oauth.message": {  
+        "defaultMessage": "Non hai bisogno di una password, accedi con Google."  
+      },  
+      "forgot.page-title": {  
+        "defaultMessage": "Password Dimenticata | WiseMapping"  
+      },  
+      "forgot.register": {  
+        "defaultMessage": "Invia link di recupero"  
+      },  
+      "forgot.success.desc": {  
+        "defaultMessage": "Ti abbiamo inviato una email che ti permetterà di reimpostare la tua password. Dovresti riceverla nei prossimi minuti."  
+      },  
+      "forgot.success.title": {  
+        "defaultMessage": "La tua password temporanea è stata inviata."  
+      },  
+      "forgot.title": {  
+        "defaultMessage": "Reimposta la tua password"  
+      },  
+      "forgotsuccess.page-title": {  
+        "defaultMessage": "Password Recuperata | WiseMapping"  
+      },  
+      "header.donthaveaccount": {  
+        "defaultMessage": "Non hai un account?"  
+      },  
+      "header.haveaccount": {  
+        "defaultMessage": "Hai già un account?"  
+      },  
+      "help.support": {  
+        "defaultMessage": "Supporto"  
+      },  
+      "history.no-changes": {  
+        "defaultMessage": "Non ci sono modifiche disponibili"  
+      },  
+      "import.button": {  
+        "defaultMessage": "Crea"  
+      },  
+      "import.description": {  
+        "defaultMessage": "Puoi importare mappe WiseMapping e Freemind nella tua lista di mappe. Seleziona il file che vuoi importare."  
+      },  
+      "import.error-file": {  
+        "defaultMessage": "Errore di importazione {error}"  
+      },  
+      "import.title": {  
+        "defaultMessage": "Importa mappa mentale esistente"  
+      },  
+      "info.basic-info": {  
+        "defaultMessage": "Informazioni di base"  
+      },  
+      "info.button": {  
+        "defaultMessage": "Accetta"  
+      },  
+      "info.creation-time": {  
+        "defaultMessage": "Data di creazione"  
+      },  
+      "info.creator": {  
+        "defaultMessage": "Creatore"  
+      },  
+      "info.description": {  
+        "defaultMessage": "Descrizione"  
+      },  
+      "info.description-msg": {  
+        "defaultMessage": "Pubblicando la mappa, la rendi visibile a tutti su Internet."  
+      },  
+      "info.modified-time": {  
+        "defaultMessage": "Data ultima modifica"  
+      },  
+      "info.modified-tny": {  
+        "defaultMessage": "Ultima modifica di"  
+      },  
+      "info.name": {  
+        "defaultMessage": "Nome"  
+      },  
+      "info.public-visibility": {  
+        "defaultMessage": "Visibilità pubblica"  
+      },  
+      "info.sharing": {  
+        "defaultMessage": "Condivisione"  
+      },  
+      "info.starred": {  
+        "defaultMessage": "Preferita"  
+      },  
+      "info.title": {  
+        "defaultMessage": "Info"  
+      },  
+      "label.add-button": {  
+        "defaultMessage": "Aggiungi etichetta"  
+      },  
+      "label.add-for": {  
+        "defaultMessage": "Modifica etichette per"  
+      },  
+      "label.add-placeholder": {  
+        "defaultMessage": "Titolo etichetta"  
+      },  
+      "label.change-color": {  
+        "defaultMessage": "Cambia colore etichetta"  
+      },  
+      "label.delete-description": {  
+        "defaultMessage": "verrà eliminata, incluse le sue associazioni a tutte le mappe esistenti. Vuoi continuare?"  
+      },  
+      "label.delete-title": {  
+        "defaultMessage": "Conferma eliminazione etichetta"  
+      },  
+      "label.description": {  
+        "defaultMessage": "Usa le etichette per organizzare le tue mappe."  
+      },  
+      "label.maps-count": {  
+        "defaultMessage": "{count} mappe"  
+      },  
+      "label.title": {  
+        "defaultMessage": "Aggiungi un'etichetta"  
+      },  
+      "language.change": {  
+        "defaultMessage": "Cambia lingua"  
+      },  
+      "language.help": {  
+        "defaultMessage": "Aiuta a tradurre"  
+      },  
+      "login.desc": {  
+        "defaultMessage": "Accedi al tuo account"  
+      },  
+      "login.division": {  
+        "defaultMessage": "oppure"  
+      },  
+      "login.email": {  
+        "defaultMessage": "Email"  
+      },  
+      "login.error": {  
+        "defaultMessage": "L'indirizzo email o la password inseriti non sono validi."  
+      },  
+      "login.forgotpwd": {  
+        "defaultMessage": "Password dimenticata?"  
+      },  
+      "login.google.button": {  
+        "defaultMessage": "Accedi con Google"  
+      },  
+      "login.page-title": {  
+        "defaultMessage": "Login | WiseMapping"  
+      },  
+      "login.password": {  
+        "defaultMessage": "Password"  
+      },  
+      "login.remberme": {  
+        "defaultMessage": "Ricordami"  
+      },  
+      "login.signin": {  
+        "defaultMessage": "Accedi"  
+      },  
+      "login.signup": {  
+        "defaultMessage": "Registrati"  
+      },  
+      "login.title": {  
+        "defaultMessage": "Benvenuto"  
+      },  
+      "login.userinactive": {  
+        "defaultMessage": "Siamo spiacenti, il tuo account non è stato ancora attivato. Riceverai una email di notifica quando sarà attivo. Resta sintonizzato!."  
+      },  
+      "map.creator": {  
+        "defaultMessage": "Creatore"  
+      },  
+      "map.delete-selected": {  
+        "defaultMessage": "Elimina selezionati"  
+      },  
+      "map.last-update": {  
+        "defaultMessage": "Ultimo aggiornamento"  
+      },  
+      "map.more-actions": {  
+        "defaultMessage": "Altre azioni"  
+      },  
+      "map.name": {  
+        "defaultMessage": "Nome"  
+      },  
+      "map.tooltip-add": {  
+        "defaultMessage": "Aggiungi etichetta ai selezionati"  
+      },  
+      "maps.choose-file": {  
+        "defaultMessage": "Scegli un file"  
+      },  
+      "maps.create-tooltip": {  
+        "defaultMessage": "Crea una nuova mappa mentale"  
+      },  
+      "maps.empty-result": {  
+        "defaultMessage": "Nessuna mappa mentale corrispondente trovata con i criteri di filtro correnti."  
+      },  
+      "maps.import-desc": {  
+        "defaultMessage": "Importa da altri strumenti"  
+      },  
+      "maps.modified": {  
+        "defaultMessage": "Modificato"  
+      },  
+      "maps.modified-by": {  
+        "defaultMessage": "Modificato da"  
+      },  
+      "maps.modified-by-desc": {  
+        "defaultMessage": "Modificato da {by} il {on}"  
+      },  
+      "maps.nav-all": {  
+        "defaultMessage": "Tutte"  
+      },  
+      "maps.nav-onwned": {  
+        "defaultMessage": "Di proprietà"  
+      },  
+      "maps.nav-public": {  
+        "defaultMessage": "Pubbliche"  
+      },  
+      "maps.nav-shared": {  
+        "defaultMessage": "Condivise con me"  
+      },  
+      "maps.nav-starred": {  
+        "defaultMessage": "Preferite"  
+      },  
+      "maps.page-title": {  
+        "defaultMessage": "Le Mie Mappe | WiseMapping"  
+      },  
+      "maps.revert": {  
+        "defaultMessage": "Ripristina"  
+      },  
+      "maps.search-action": {  
+        "defaultMessage": "Cerca..."  
+      },  
+      "maps.tooltip-open": {  
+        "defaultMessage": "Apri per la modifica"  
+      },  
+      "maps.tooltip-starred": {  
+        "defaultMessage": "Preferita"  
+      },  
+      "maps.view": {  
+        "defaultMessage": "Visualizza"  
+      },  
+      "menu.account": {  
+        "defaultMessage": "Account"  
+      },  
+      "menu.change-password": {  
+        "defaultMessage": "Cambia password"  
+      },  
+      "menu.signout": {  
+        "defaultMessage": "Esci"  
+      },  
+      "publish.button": {  
+        "defaultMessage": "Accetta"  
+      },  
+      "publish.checkbox": {  
+        "defaultMessage": "Abilita condivisione pubblica"  
+      },  
+      "publish.description": {  
+        "defaultMessage": "Pubblicando la mappa, la rendi visibile a tutti su Internet."  
+      },  
+      "publish.embedded": {  
+        "defaultMessage": "Integrato"  
+      },  
+      "publish.embedded-msg": {  
+        "defaultMessage": "Copia questo frammento di codice per integrarlo nel tuo blog o nella tua pagina:"  
+      },  
+      "publish.public-url": {  
+        "defaultMessage": "URL pubblico"  
+      },  
+      "publish.public-url-msg": {  
+        "defaultMessage": "Copia e incolla il link qui sotto per condividere la tua mappa con i colleghi:"  
+      },  
+      "publish.title": {  
+        "defaultMessage": "Pubblica"  
+      },  
+      "registation.callback.error.message": {  
+        "defaultMessage": "Si è verificato un errore durante la validazione della tua identità con Google, puoi riprovare dalla pagina di login"  
+      },  
+      "registation.success-title": {  
+        "defaultMessage": "Registrazione completata | WiseMapping"  
+      },  
+      "registration.callback.back": {  
+        "defaultMessage": "Torna al login"  
+      },  
+      "registration.callback.confirm.description": {  
+        "defaultMessage": "Un account con la stessa email era stato precedentemente registrato. Vuoi collegare il tuo account Google a quell'account WiseMapping?"  
+      },  
+      "registration.callback.confirm.title": {  
+        "defaultMessage": "Conferma"  
+      },  
+      "registration.callback.sync": {  
+        "defaultMessage": "Sincronizza account"  
+      },  
+      "registration.callback.waiting.description": {  
+        "defaultMessage": "Attendere mentre validiamo la tua identità"  
+      },  
+      "registration.callback.waiting.title": {  
+        "defaultMessage": "Completamento..."  
+      },  
+      "registration.desc": {  
+        "defaultMessage": "Registrarsi è gratuito e richiede solo un momento"  
+      },  
+      "registration.division": {  
+        "defaultMessage": "oppure"  
+      },  
+      "registration.email": {  
+        "defaultMessage": "Email"  
+      },  
+      "registration.firstname": {  
+        "defaultMessage": "Nome"  
+      },  
+      "registration.google.button": {  
+        "defaultMessage": "Registrati con Google"  
+      },  
+      "registration.lastname": {  
+        "defaultMessage": "Cognome"  
+      },  
+      "registration.page-title": {  
+        "defaultMessage": "Registrazione | WiseMapping"  
+      },  
+      "registration.password": {  
+        "defaultMessage": "Password"  
+      },  
+      "registration.register": {  
+        "defaultMessage": "Registrati"  
+      },  
+      "registration.success.desc": {  
+        "defaultMessage": "Clicca sul pulsante 'Accedi' qui sotto e inizia a creare mappe mentali."  
+      },  
+      "registration.termandconditions": {  
+        "defaultMessage": "Termini di servizio: controlla le informazioni dell'account WiseMapping inserite sopra e leggi i Termini di servizio qui. Cliccando su "Iscriviti" qui sotto, accetti i Termini di servizio e l'Informativa sulla privacy sopra indicati."
+      },  
+      "registration.title": {  
+        "defaultMessage": "Diventa un membro"  
+      },  
+      "rename.description": {  
+        "defaultMessage": "Si prega di inserire il nuovo nome e la descrizione della mappa."  
+      },  
+      "rename.title": {  
+        "defaultMessage": "Rinomina"  
+      },  
+      "resetpassword.success.title": {  
+        "defaultMessage": "Il tuo account è stato creato con successo"  
+      },  
+      "role.editor": {  
+        "defaultMessage": "Editor"  
+      },  
+      "role.owner": {  
+        "defaultMessage": "Proprietario"  
+      },  
+      "role.viewer": {  
+        "defaultMessage": "Visualizzatore"  
+      },  
+      "share.add-button": {  
+        "defaultMessage": "Condividi"  
+      },  
+      "share.add-message": {  
+        "defaultMessage": "Aggiungi messaggio"  
+      },  
+      "share.can-edit": {  
+        "defaultMessage": "Può modificare"  
+      },  
+      "share.can-view": {  
+        "defaultMessage": "Può visualizzare"  
+      },  
+      "share.delete": {  
+        "defaultMessage": "Elimina collaboratore"  
+      },  
+      "share.delete-description": {  
+        "defaultMessage": "Invita persone a collaborare con te alla creazione della tua mappa mentale. Saranno avvisate via email."  
+      },  
+      "share.delete-title": {  
+        "defaultMessage": "Condividi con persone"  
+      },  
+      "share.message": {  
+        "defaultMessage": "Messaggio"  
+      }  
+    }
