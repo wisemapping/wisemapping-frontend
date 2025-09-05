@@ -34,7 +34,7 @@
         "@wisemapping/core-js": "workspace:*",
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.7.0",
-        "dayjs": "^1.11.10",
+        "dayjs": "^1.11.18",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-ga4": "^2.1.0",
@@ -48,7 +48,7 @@
     },
     "devDependencies": {
         "@formatjs/cli": "^6.2.9",
-        "@testing-library/cypress": "^10.0.1",
+        "@testing-library/cypress": "^10.1.0",
         "@types/testing-library__cypress": "^5.0.13",
         "@welldone-software/why-did-you-render": "^8.0.1",
         "cypress": "^15.0.0",

@@ -66,7 +66,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.1.0, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.10, @babel/core@npm:^7.12.3, @babel/core@npm:^7.20.12, @babel/core@npm:^7.23.9":
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.10, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.9":
   version: 7.28.3
   resolution: "@babel/core@npm:7.28.3"
   dependencies:
@@ -86,6 +86,29 @@ __metadata:
     json5: ^2.2.3
     semver: ^6.3.1
   checksum: d09132cd752730d219bdd29dbd65cb647151105bef6e615cfb6d57249f71a3d1aaf8a5beaa1c7ec54ad927962e4913ebc660f7f0c3e65c39bc171bc386285e50
+  languageName: node
+  linkType: hard
+
+"@babel/core@npm:^7.28.4":
+  version: 7.28.4
+  resolution: "@babel/core@npm:7.28.4"
+  dependencies:
+    "@babel/code-frame": ^7.27.1
+    "@babel/generator": ^7.28.3
+    "@babel/helper-compilation-targets": ^7.27.2
+    "@babel/helper-module-transforms": ^7.28.3
+    "@babel/helpers": ^7.28.4
+    "@babel/parser": ^7.28.4
+    "@babel/template": ^7.27.2
+    "@babel/traverse": ^7.28.4
+    "@babel/types": ^7.28.4
+    "@jridgewell/remapping": ^2.3.5
+    convert-source-map: ^2.0.0
+    debug: ^4.1.0
+    gensync: ^1.0.0-beta.2
+    json5: ^2.2.3
+    semver: ^6.3.1
+  checksum: f55b90b2c61a6461f5c0ccab74d32af9c67448c43c629529ba7ec3c61d87fa8c408cc9305bfb1f5b09e671d25436d44eaf75c48dee5dc0a5c5e21c01290f5134
   languageName: node
   linkType: hard
 
@@ -328,6 +351,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helpers@npm:^7.28.4":
+  version: 7.28.4
+  resolution: "@babel/helpers@npm:7.28.4"
+  dependencies:
+    "@babel/template": ^7.27.2
+    "@babel/types": ^7.28.4
+  checksum: a8706219e0bd60c18bbb8e010aa122e9b14e7e7e67c21cc101e6f1b5e79dcb9a18d674f655997f85daaf421aa138cf284710bb04371a2255a0a3137f097430b4
+  languageName: node
+  linkType: hard
+
 "@babel/highlight@npm:^7.0.0":
   version: 7.25.9
   resolution: "@babel/highlight@npm:7.25.9"
@@ -348,6 +381,17 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 5aa5ea0683a4056f98cd9cd61650870d5d44ec1654da14f72a8a06fabe7b2a35bf6cef9605f3740b5ded1e68f64ec45ce1aabf7691047a13a1ff2babe126acf9
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.28.4":
+  version: 7.28.4
+  resolution: "@babel/parser@npm:7.28.4"
+  dependencies:
+    "@babel/types": ^7.28.4
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: d95e283fe1153039b396926ef567ca1ab114afb5c732a23bbcbbd0465ac59971aeb6a63f37593ce7671a52d34ec52b23008c999d68241b42d26928c540464063
   languageName: node
   linkType: hard
 
@@ -1641,6 +1685,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/traverse@npm:^7.28.4":
+  version: 7.28.4
+  resolution: "@babel/traverse@npm:7.28.4"
+  dependencies:
+    "@babel/code-frame": ^7.27.1
+    "@babel/generator": ^7.28.3
+    "@babel/helper-globals": ^7.28.0
+    "@babel/parser": ^7.28.4
+    "@babel/template": ^7.27.2
+    "@babel/types": ^7.28.4
+    debug: ^4.3.1
+  checksum: d603b8ce4e55ba4fc7b28d3362cc2b1b20bc887e471c8a59fe87b2578c26803c9ef8fcd118081dd8283ea78e0e9a6df9d88c8520033c6aaf81eec30d2a669151
+  languageName: node
+  linkType: hard
+
 "@babel/types@npm:^7.0.0, @babel/types@npm:^7.12.11, @babel/types@npm:^7.12.7, @babel/types@npm:^7.20.7, @babel/types@npm:^7.27.1, @babel/types@npm:^7.27.3, @babel/types@npm:^7.28.2, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4":
   version: 7.28.2
   resolution: "@babel/types@npm:7.28.2"
@@ -1648,6 +1707,16 @@ __metadata:
     "@babel/helper-string-parser": ^7.27.1
     "@babel/helper-validator-identifier": ^7.27.1
   checksum: 2218f0996d5fbadc4e3428c4c38f4ed403f0e2634e3089beba2c89783268c0c1d796a23e65f9f1ff8547b9061ae1a67691c76dc27d0b457e5fa9f2dd4e022e49
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.28.4":
+  version: 7.28.4
+  resolution: "@babel/types@npm:7.28.4"
+  dependencies:
+    "@babel/helper-string-parser": ^7.27.1
+    "@babel/helper-validator-identifier": ^7.27.1
+  checksum: a369b4fb73415a2ed902a15576b49696ae9777ddee394a7a904c62e6fbb31f43906b0147ae0b8f03ac17f20c248eac093df349e33c65c94617b12e524b759694
   languageName: node
   linkType: hard
 
@@ -2621,6 +2690,16 @@ __metadata:
     "@jridgewell/sourcemap-codec": ^1.5.0
     "@jridgewell/trace-mapping": ^0.3.24
   checksum: f2105acefc433337145caa3c84bba286de954f61c0bc46279bbd85a9e6a02871089717fa060413cfb6a9d44189fe8313b2d1cabf3a2eb3284d208fd5f75c54ff
+  languageName: node
+  linkType: hard
+
+"@jridgewell/remapping@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "@jridgewell/remapping@npm:2.3.5"
+  dependencies:
+    "@jridgewell/gen-mapping": ^0.3.5
+    "@jridgewell/trace-mapping": ^0.3.24
+  checksum: 4a66a7397c3dc9c6b5c14a0024b1f98c5e1d90a0dbc1e5955b5038f2db339904df2a0ee8a66559fafb4fc23ff33700a2639fd40bbdd2e9e82b58b3bdf83738e3
   languageName: node
   linkType: hard
 
@@ -4954,15 +5033,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/cypress@npm:^10.0.1":
-  version: 10.0.3
-  resolution: "@testing-library/cypress@npm:10.0.3"
+"@testing-library/cypress@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "@testing-library/cypress@npm:10.1.0"
   dependencies:
     "@babel/runtime": ^7.14.6
     "@testing-library/dom": ^10.1.0
   peerDependencies:
-    cypress: ^12.0.0 || ^13.0.0 || ^14.0.0
-  checksum: fb1c1fa35a4fb41f2da719a040b5e20e2841474fe015be2382307c0f9fc352ec251e778118b935e95b5fca96ac6211282478c9bd7077769d774bbaa974e5a0e1
+    cypress: ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
+  checksum: 0a5a433fff11c35244d87f2a1d5974d5ef4478212a94245062b4dce5459bc367b26faa9f436cf11f2cb956927658b9849506735a93f64247fffc8690fc603fcb
   languageName: node
   linkType: hard
 
@@ -6334,7 +6413,7 @@ __metadata:
     react-dom: ^19.0.0
     react-intl: ^6.6.5
     react-loader-spinner: ^6.1.6
-    start-server-and-test: ^2.0.3
+    start-server-and-test: ^2.1.0
     styled-components: ^6.1.8
   peerDependencies:
     react: ^19.0.0
@@ -6346,7 +6425,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wisemapping/mindplot@workspace:packages/mindplot"
   dependencies:
-    "@babel/core": ^7.20.12
+    "@babel/core": ^7.28.4
     "@mdx-js/react": ^1.6.22
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
@@ -6404,7 +6483,7 @@ __metadata:
     "@mui/icons-material": ^5.15.18
     "@mui/lab": ^5.0.0-alpha.170
     "@mui/material": ^5.15.18
-    "@testing-library/cypress": ^10.0.1
+    "@testing-library/cypress": ^10.1.0
     "@types/testing-library__cypress": ^5.0.13
     "@welldone-software/why-did-you-render": ^8.0.1
     "@wisemapping/core-js": "workspace:*"
@@ -6412,7 +6491,7 @@ __metadata:
     axios: ^1.7.0
     cypress: ^15.0.0
     cypress-image-snapshot: ^4.0.1
-    dayjs: ^1.11.10
+    dayjs: ^1.11.18
     react: ^19.0.0
     react-dom: ^19.0.0
     react-ga4: ^2.1.0
@@ -9866,10 +9945,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.10.4, dayjs@npm:^1.11.10":
+"dayjs@npm:^1.10.4":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.18":
+  version: 1.11.18
+  resolution: "dayjs@npm:1.11.18"
+  checksum: cc90054bad30ab011417a7a474b2ffa70e7a28ca6f834d7e86fe53a408a40a14c174f26155072628670e9eda4c48c4ed0d847d2edf83d47c0bfb78be15bbf2dd
   languageName: node
   linkType: hard
 
@@ -21294,9 +21380,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:^2.0.3":
-  version: 2.0.13
-  resolution: "start-server-and-test@npm:2.0.13"
+"start-server-and-test@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "start-server-and-test@npm:2.1.0"
   dependencies:
     arg: ^5.0.2
     bluebird: 3.7.2
@@ -21310,7 +21396,7 @@ __metadata:
     server-test: src/bin/start.js
     start-server-and-test: src/bin/start.js
     start-test: src/bin/start.js
-  checksum: d8f1a73b907d9258fab1319d52adc8573afc681bda870605543b97e8fb2239c79a84deb4d4d950b824c2cdff145303adad4d1f2059539210c2a6ff7b61b7a2b6
+  checksum: 2b521df343d8e5858406ede25bd1ebd596faa7886b5741734b3ca1816dbc9fc0105a5f48e9f8edf297f52f450362e4de10beb9cc07f1a038126a9f489bd91481
   languageName: node
   linkType: hard
 
@@ -22389,9 +22475,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:^9.5.1":
-  version: 9.5.2
-  resolution: "ts-loader@npm:9.5.2"
+"ts-loader@npm:^9.5.4":
+  version: 9.5.4
+  resolution: "ts-loader@npm:9.5.4"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^5.0.0
@@ -22401,7 +22487,7 @@ __metadata:
   peerDependencies:
     typescript: "*"
     webpack: ^5.0.0
-  checksum: f4c117042e25434e733c4b70873adaa9a79b14c2b3d8e5db53bbfd42060289f8a3eb97cfff64c83123b735d954f0eaa0f60f093afb0682cd2d1d7fa17f81e223
+  checksum: ee8a6883d0f8c0db0ea254fe4e9247ab0f6747cbbbee987af80e69822b840bdc2b67cee267ed3a93af803aeed47790d64dbaf07c001322b9091671f51cbf12b2
   languageName: node
   linkType: hard
 
@@ -23884,7 +23970,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "wisemapping-front-end@workspace:."
   dependencies:
-    "@babel/core": ^7.20.12
+    "@babel/core": ^7.28.4
     "@babel/preset-env": ^7.14.7
     "@babel/preset-typescript": ^7.23.3
     "@babel/register": ^7.16.0
@@ -23913,10 +23999,10 @@ __metadata:
     lerna: ^8.1.2
     lint-staged: ^15.2.2
     prettier: ^3.2.5
-    start-server-and-test: ^2.0.3
+    start-server-and-test: ^2.1.0
     style-loader: ^3.3.4
     ts-jest: ^29.1.2
-    ts-loader: ^9.5.1
+    ts-loader: ^9.5.4
     ts-node: ^10.9.2
     typescript: ^5.4.4
     update-browserslist-db: ^1.0.13
