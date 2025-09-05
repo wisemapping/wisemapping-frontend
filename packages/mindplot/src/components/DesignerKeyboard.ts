@@ -28,7 +28,6 @@ initHotKeyPluggin($);
 
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
-  // eslint-disable-next-line no-use-before-define
   private static _instance: DesignerKeyboard;
 
   private static _disabled: boolean;

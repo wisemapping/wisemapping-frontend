@@ -187,7 +187,6 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios

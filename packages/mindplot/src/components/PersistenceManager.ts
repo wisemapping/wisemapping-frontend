@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -34,7 +33,6 @@ export type ServerError = {
 export type PersistenceErrorCallback = (error: PersistenceError) => void;
 
 abstract class PersistenceManager {
-  // eslint-disable-next-line no-use-before-define
   private static _instance: PersistenceManager;
 
   private _errorHandlers: PersistenceErrorCallback[] = [];
@@ -59,7 +57,7 @@ abstract class PersistenceManager {
 
   async load(mapId: string): Promise<Mindmap> {
     $assert(mapId, 'mapId can not be null');
-    // eslint-disable-next-line arrow-body-style
+
     const document = await this.loadMapDom(mapId);
     return PersistenceManager.loadFromDom(mapId, document);
   }

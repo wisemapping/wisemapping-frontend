@@ -161,7 +161,7 @@ const RegistrationForm = () => {
 
               {AppConfig.isRecaptcha2Enabled() && (
                 <>
-                  {/* eslint-disable-next-line react/no-unknown-property */}
+                  {}
                   <div css={recaptchaContainerStyle}>
                     <ReCAPTCHA
                       ref={(el) => setCaptcha(el)}

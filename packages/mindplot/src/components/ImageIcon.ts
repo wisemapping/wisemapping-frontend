@@ -60,7 +60,6 @@ abstract class ImageIcon implements Icon {
     this._image.addEvent(type, fnc);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   remove() {
     throw new Error('Unsupported operation');
   }

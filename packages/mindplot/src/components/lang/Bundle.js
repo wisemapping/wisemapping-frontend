@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /*
  *    Copyright [2021] [wisemapping]
  *

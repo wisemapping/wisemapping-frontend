@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { StyledFooter } from './styled';
 import poweredByIcon from './pwrdby-white.svg';
 
-// eslint-disable-next-line
 const Footer = (): React.ReactElement => {
   return (
     <StyledFooter>

@@ -50,7 +50,7 @@ import XMLSerializerFactory from './components/persistence/XMLSerializerFactory'
 
 declare global {
   // Todo: There are some global references that needs to be removed inside mindplot.
-  // eslint-disable-next-line vars-on-top, no-var
+  // eslint-disable-next-line vars-on-top
   var designer: Designer;
 }
 

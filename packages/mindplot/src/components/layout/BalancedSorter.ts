@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable max-len */
 /*
  *    Copyright [2021] [wisemapping]
  *

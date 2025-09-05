@@ -23,7 +23,7 @@ import { IntlProvider } from 'react-intl';
 import { Designer } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
-// eslint-disable-next-line no-restricted-imports
+
 import { Theme } from '@mui/material/styles';
 import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';

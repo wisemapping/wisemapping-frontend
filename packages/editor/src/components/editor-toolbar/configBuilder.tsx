@@ -64,7 +64,6 @@ const keyTooltip = (msg: string, key: string): string => {
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const colorAndShapeToolbarConfiguration: ActionConfig = {
     icon: <FormatPaintIconOutlineIcon />,
     tooltip: intl.formatMessage({
