@@ -34,7 +34,7 @@
     "@wisemapping/web2d": "workspace:*",
     "jquery": "3.7.1",
     "lodash": "^4.17.21",
-    "xml-formatter": "^3.6.2"
+    "xml-formatter": "^3.6.6"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
