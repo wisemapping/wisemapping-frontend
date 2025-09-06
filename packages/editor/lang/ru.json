@@ -64,5 +64,251 @@
     },
     "zoom-panel.tooltip-keyboard": {
         "defaultMessage": "Клавиатура"
+    },
+    "action.accept": {
+        "defaultMessage": "Принять"
+    },
+    "action.delete": {
+        "defaultMessage": "Удалить"
+    },
+    "appbar.back-to-map-list": {
+        "defaultMessage": "Назад к списку карт"
+    },
+    "appbar.button-signup": {
+        "defaultMessage": "Регистрация"
+    },
+    "appbar.shared-button": {
+        "defaultMessage": "Поделиться"
+    },
+    "appbar.tooltip-export": {
+        "defaultMessage": "Экспорт"
+    },
+    "appbar.tooltip-history": {
+        "defaultMessage": "История изменений"
+    },
+    "appbar.tooltip-info": {
+        "defaultMessage": "Информация"
+    },
+    "appbar.tooltip-print": {
+        "defaultMessage": "Печать"
+    },
+    "appbar.tooltip-publish": {
+        "defaultMessage": "Опубликовать"
+    },
+    "appbar.tooltip-redo": {
+        "defaultMessage": "Повторить"
+    },
+    "appbar.tooltip-save": {
+        "defaultMessage": "Сохранить"
+    },
+    "appbar.tooltip-shared": {
+        "defaultMessage": "Поделиться для сотрудничества"
+    },
+    "appbar.tooltip-signup": {
+        "defaultMessage": "Регистрация"
+    },
+    "appbar.tooltip-starred": {
+        "defaultMessage": "Избранное"
+    },
+    "appbar.tooltip-undo": {
+        "defaultMessage": "Отменить"
+    },
+    "editor-panel.icon-title": {
+        "defaultMessage": "Иконка"
+    },
+    "editor-panel.link-panel-title": {
+        "defaultMessage": "Ссылка"
+    },
+    "editor-panel.note-panel-title": {
+        "defaultMessage": "Заметка"
+    },
+    "editor-panel.tooltip-add-icon": {
+        "defaultMessage": "Добавить иконку"
+    },
+    "editor-panel.tooltip-add-link": {
+        "defaultMessage": "Добавить ссылку"
+    },
+    "editor-panel.tooltip-add-note": {
+        "defaultMessage": "Добавить заметку"
+    },
+    "editor-panel.tooltip-add-relationship": {
+        "defaultMessage": "Добавить связь"
+    },
+    "editor-panel.tooltip-add-topic": {
+        "defaultMessage": "Добавить тему"
+    },
+    "editor-panel.tooltip-connection-color": {
+        "defaultMessage": "Цвет"
+    },
+    "editor-panel.tooltip-connection-color-default": {
+        "defaultMessage": "Цвет по умолчанию"
+    },
+    "editor-panel.tooltip-connection-style": {
+        "defaultMessage": "Стиль подключения"
+    },
+    "editor-panel.tooltip-connection-style-curved-thick": {
+        "defaultMessage": "Толстая кривая"
+    },
+    "editor-panel.tooltip-connection-style-curved-thin": {
+        "defaultMessage": "Тонкая кривая"
+    },
+    "editor-panel.tooltip-connection-style-polyline": {
+        "defaultMessage": "Простая полилиния"
+    },
+    "editor-panel.tooltip-connection-style-polyline-curved": {
+        "defaultMessage": "Изогнутая полилиния"
+    },
+    "editor-panel.tooltip-delete-topic": {
+        "defaultMessage": "Удалить тему"
+    },
+    "editor-panel.tooltip-topic-border-color": {
+        "defaultMessage": "Цвет границы"
+    },
+    "editor-panel.tooltip-topic-border-color-default": {
+        "defaultMessage": "Цвет границы по умолчанию"
+    },
+    "editor-panel.tooltip-topic-fill-color": {
+        "defaultMessage": "Цвет заливки"
+    },
+    "editor-panel.tooltip-topic-fill-color-default": {
+        "defaultMessage": "Цвет заливки по умолчанию"
+    },
+    "editor-panel.tooltip-topic-font-bigger": {
+        "defaultMessage": "Увеличить"
+    },
+    "editor-panel.tooltip-topic-font-bold": {
+        "defaultMessage": "Жирный"
+    },
+    "editor-panel.tooltip-topic-font-color": {
+        "defaultMessage": "Цвет"
+    },
+    "editor-panel.tooltip-topic-font-color-default": {
+        "defaultMessage": "Цвет по умолчанию"
+    },
+    "editor-panel.tooltip-topic-font-italic": {
+        "defaultMessage": "Курсив"
+    },
+    "editor-panel.tooltip-topic-font-smaller": {
+        "defaultMessage": "Уменьшить"
+    },
+    "editor-panel.tooltip-topic-font-style": {
+        "defaultMessage": "Стиль шрифта"
+    },
+    "editor-panel.tooltip-topic-share-ellipse": {
+        "defaultMessage": "Форма эллипса"
+    },
+    "editor-panel.tooltip-topic-share-line": {
+        "defaultMessage": "Форма линии"
+    },
+    "editor-panel.tooltip-topic-share-rectangle": {
+        "defaultMessage": "Прямоугольная форма"
+    },
+    "editor-panel.tooltip-topic-share-rounded": {
+        "defaultMessage": "Круглая форма"
+    },
+    "editor-panel.tooltip-topic-style": {
+        "defaultMessage": "Стиль темы"
+    },
+    "icon-picker.show-images": {
+        "defaultMessage": "Показать изображения"
+    },
+    "link.help_text": {
+        "defaultMessage": "Адрес недействителен"
+    },
+    "link.placeholder": {
+        "defaultMessage": "https://www.example.com"
+    },
+    "shortcut-help-pane.action": {
+        "defaultMessage": "Действие"
+    },
+    "shortcut-help-pane.add-child": {
+        "defaultMessage": "Добавить дочернюю тему"
+    },
+    "shortcut-help-pane.add-link": {
+        "defaultMessage": "Добавить ссылку"
+    },
+    "shortcut-help-pane.add-note": {
+        "defaultMessage": "Добавить заметку"
+    },
+    "shortcut-help-pane.add-sibling": {
+        "defaultMessage": "Добавить родственную тему"
+    },
+    "shortcut-help-pane.cancel-text-changes": {
+        "defaultMessage": "Отменить изменения текста"
+    },
+    "shortcut-help-pane.change-font-bold": {
+        "defaultMessage": "Изменить текст на жирный"
+    },
+    "shortcut-help-pane.change-font-italic": {
+        "defaultMessage": "Изменить текст на курсив"
+    },
+    "shortcut-help-pane.collapse-children": {
+        "defaultMessage": "Свернуть дочерние элементы"
+    },
+    "shortcut-help-pane.copy-and-text": {
+        "defaultMessage": "Копировать и вставлять темы/Копировать изображение карты в буфер обмена."
+    },
+    "shortcut-help-pane.delete-topic": {
+        "defaultMessage": "Удалить тему"
+    },
+    "shortcut-help-pane.deselect-all-topics": {
+        "defaultMessage": "Отменить выбор всех тем"
+    },
+    "shortcut-help-pane.drag-disconnect": {
+        "defaultMessage": "Отключить тему"
+    },
+    "shortcut-help-pane.edit-multiline": {
+        "defaultMessage": "Добавить многострочный текст темы"
+    },
+    "shortcut-help-pane.edit-topic": {
+        "defaultMessage": "Редактировать текст темы"
+    },
+    "shortcut-help-pane.edit-topic-key": {
+        "defaultMessage": "F2 или двойной клик"
+    },
+    "shortcut-help-pane.navigation": {
+        "defaultMessage": "Навигация"
+    },
+    "shortcut-help-pane.navigation-keys": {
+        "defaultMessage": "Клавиши со стрелками"
+    },
+    "shortcut-help-pane.overwrite-edit-topic": {
+        "defaultMessage": "Перезаписать текст темы"
+    },
+    "shortcut-help-pane.overwrite-edit-topic-key": {
+        "defaultMessage": "Печатать на выбранной теме"
+    },
+    "shortcut-help-pane.redo": {
+        "defaultMessage": "Повторить редактирование"
+    },
+    "shortcut-help-pane.save-changes": {
+        "defaultMessage": "Сохранить изменения"
+    },
+    "shortcut-help-pane.select-all-topics": {
+        "defaultMessage": "Выбрать все темы"
+    },
+    "shortcut-help-pane.select-topics": {
+        "defaultMessage": "Выбрать несколько тем"
+    },
+    "shortcut-help-pane.select-topics-keys": {
+        "defaultMessage": "Клик мыши"
+    },
+    "shortcut-help-pane.undo": {
+        "defaultMessage": "Отменить редактирование"
+    },
+    "zoom-panel.tooltip-zoom-in": {
+        "defaultMessage": "Увеличить"
+    },
+    "zoom-panel.tooltip-zoom-out": {
+        "defaultMessage": "Уменьшить"
+    },
+    "zoom-panel.tooltip-zoom-to-fit": {
+        "defaultMessage": "Подогнать по размеру"
+    },
+    "creator-info-pane.description": {
+        "defaultMessage": "Описание"
+    },
+    "creator-info-pane.creator": {
+        "defaultMessage": "Создатель"
     }
 }

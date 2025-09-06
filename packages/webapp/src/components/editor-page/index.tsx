@@ -40,6 +40,8 @@ import { EditorMetadata, PageModeType } from './loader';
 import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
 import { KeyboardContext } from '../../classes/provider/keyboard-context';
+import { SEOHead } from '../seo';
+import PublicMapSEO from '../seo/PublicMapSEO';
 import SessionExpiredDialog from '../common-page/session-expired-dialog';
 import { EditorConfiguration } from '@wisemapping/editor/src/hooks/useEditor';
 
@@ -192,6 +194,21 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
       defaultLocale={Locales.EN.code}
       messages={userLocale.message as Record<string, string>}
     >
+      {pageMode === 'view-public' ? (
+        <PublicMapSEO
+          mapTitle={mapInfo?.getTitle() || 'Mind Map'}
+          mapCreator={mapInfo?.getCreatorFullName()}
+          mapId={mapId.toString()}
+        />
+      ) : (
+        <SEOHead
+          title={`${mapInfo?.getTitle() || 'Mind Map'} | WiseMapping`}
+          description={`Edit and collaborate on "${mapInfo?.getTitle() || 'Mind Map'}" using WiseMapping's powerful mind mapping editor.`}
+          keywords={`mind map, ${mapInfo?.getTitle() || 'mind map'}, editing, collaboration, visual thinking`}
+          canonicalUrl={`/c/maps/${mapId}/edit`}
+          noindex={pageMode === 'view-private'}
+        />
+      )}
       <SessionExpiredDialog open={sessionExpired} />
       <Editor
         config={editorConfig}

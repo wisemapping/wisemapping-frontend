@@ -19,18 +19,31 @@ class I18nMsg {
   static loadLocaleData(locale: string): Record<string, string> {
     switch (locale) {
       case 'fr':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/fr.json');
       case 'en':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/en.json');
       case 'es':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/es.json');
       case 'de':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/de.json');
       case 'ru':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/ru.json');
       case 'zh':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/zh.json');
+      case 'ja':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('./../../compiled-lang/ja.json');
+      case 'pt':
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('./../../compiled-lang/pt.json');
       default:
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./../../compiled-lang/en.json');
     }
   }

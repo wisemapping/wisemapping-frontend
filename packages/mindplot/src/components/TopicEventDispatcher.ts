@@ -24,7 +24,6 @@ type TopicEventType = 'editnode' | 'clicknode';
 class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
   private _readOnly: boolean;
 
-  // eslint-disable-next-line no-use-before-define
   private static _instance: TopicEventDispatcher;
 
   constructor(readOnly: boolean) {

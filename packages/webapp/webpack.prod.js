@@ -3,6 +3,31 @@ const common = require('./webpack.common.js');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// Load configuration for production - use same logic as common and dev
+let config;
+switch (process.env.APP_CONFIG_TYPE) {
+  case 'file:mock': {
+    config = JSON.stringify(require('./config.mock.json'));
+    break;
+  }
+  case 'file:prod': {
+    config = JSON.stringify(require('./config.prod.json'));
+    break;
+  }
+  case 'file:dev': {
+    config = JSON.stringify(require('./config.dev.json'));
+    break;
+  }
+  case 'remote': {
+    config = process.env.APP_CONFIG_JSON;
+    break;
+  }
+  default: {
+    config = JSON.stringify(require('./config.prod.json'));
+    break;
+  }
+}
+
 // Add support for versel URL.
 let configUrl = '';
 if (process.env.PUBLIC_URL) {
@@ -30,6 +55,9 @@ module.exports = merge(common, {
 
       },
       base: configUrl,
+    }),
+    new (require('webpack')).DefinePlugin({
+      'window.BoostrapConfig': config,
     }),
   ],
 });

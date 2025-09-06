@@ -1,5 +1,5 @@
 {
-	"account.delete-warning警告": {
+	"account.delete-warning": {
 		"defaultMessage": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
 	},
 	"accountinfo.button": {
@@ -9,7 +9,7 @@
 		"defaultMessage": "删除账号"
 	},
 	"accountinfo.email": {
-		"defaultMessage": "Email电子邮件"
+		"defaultMessage": "电子邮件"
 	},
 	"accountinfo.firstname": {
 		"defaultMessage": "名字"
@@ -421,7 +421,7 @@
 		"defaultMessage": "复制这段代码以嵌入到您的博客或页面中："
 	},
 	"publish.public-url": {
-		"defaultMessage": "公共UPL"
+		"defaultMessage": "公共URL"
 	},
 	"publish.public-url-msg": {
 		"defaultMessage": "复制并粘贴下面的链接，与同事分享您的脑图："
@@ -508,16 +508,16 @@
 		"defaultMessage": "支持"
 	},
 	"footer.team": {
-		"defaultMessage": "学期"
+		"defaultMessage": "团队"
 	},
 	"footer.donations": {
 		"defaultMessage": "捐款"
 	},
 	"registration.google.button": {
-		"defaultMessage": "註冊谷歌"
+		"defaultMessage": "使用谷歌注册"
 	},
 	"login.google.button": {
-		"defaultMessage": "使用 Google 登錄"
+		"defaultMessage": "使用 Google 登录"
 	},
 	"registration.division": {
 		"defaultMessage": "或者"
@@ -541,7 +541,7 @@
 	  "defaultMessage": "使用 Google 验证您的身份时出错，您可以从登录页面重试"
 	},
 	"registration.callback.back": {
-	  "defaultMessage": "回到登入"
+	  "defaultMessage": "回到登录"
 	},
 	"registration.callback.sync": {
 	  "defaultMessage": "同步账户"
@@ -550,6 +550,6 @@
 	  "defaultMessage": "您不需要密码，请使用谷歌登录"
 	},
 	"forgot.oauth.back": {
-	  "defaultMessage": "回到登入"
+	  "defaultMessage": "回到登录"
 	}
 }

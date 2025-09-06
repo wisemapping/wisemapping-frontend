@@ -368,7 +368,7 @@
   "shortcut-help-pane.action": [
     {
       "type": 0,
-      "value": "Action"
+      "value": "Acción"
     }
   ],
   "shortcut-help-pane.add-child": [
@@ -404,13 +404,13 @@
   "shortcut-help-pane.change-font-bold": [
     {
       "type": 0,
-      "value": "Cambiar texto to negrita"
+      "value": "Cambiar texto a negrita"
     }
   ],
   "shortcut-help-pane.change-font-italic": [
     {
       "type": 0,
-      "value": "Cambiar texto a italica"
+      "value": "Cambiar texto a itálica"
     }
   ],
   "shortcut-help-pane.collapse-children": [
@@ -482,7 +482,7 @@
   "shortcut-help-pane.overwrite-edit-topic-key": [
     {
       "type": 0,
-      "value": "Comenzar a escibribir en el tópico seleccionado"
+      "value": "Comenzar a escribir en el tópico seleccionado"
     }
   ],
   "shortcut-help-pane.redo": [

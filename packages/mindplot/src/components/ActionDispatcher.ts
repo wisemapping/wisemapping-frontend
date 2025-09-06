@@ -1,5 +1,3 @@
-/* eslint-disable  import/no-cycle */
-/* eslint-disable  no-use-before-define */
 /*
  *    Copyright [2021] [wisemapping]
  *

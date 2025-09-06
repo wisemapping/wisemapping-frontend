@@ -149,7 +149,7 @@ class IconGroupRemoveTip {
       icon.addEvent('mouseout', () => {
         this.hide();
       });
-      // eslint-disable-next-line no-param-reassign
+
       icon.__remove = true;
     }
   }

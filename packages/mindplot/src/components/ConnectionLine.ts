@@ -24,7 +24,6 @@ import TopicConfig from './TopicConfig';
 import Canvas from './Canvas';
 import ArcLine from './model/ArcLine';
 
-// eslint-disable-next-line no-shadow
 export enum LineType {
   THIN_CURVED,
   POLYLINE_MIDDLE,

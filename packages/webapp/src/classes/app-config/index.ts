@@ -46,8 +46,14 @@ class AppConfig {
       if (!this._config) {
         let result: Config;
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const extConfig: ConfigContainer = require('BoostrapConfig') as ConfigContainer;
+        // Dynamic import for BootstrapConfig
+        const windowWithConfig = window as unknown as { BoostrapConfig?: ConfigContainer };
+        if (!windowWithConfig.BoostrapConfig) {
+          throw new Error(
+            'BoostrapConfig is not available on window object. Make sure the configuration is properly loaded.',
+          );
+        }
+        const extConfig: ConfigContainer = windowWithConfig.BoostrapConfig;
         if (extConfig.type === 'static') {
           // Configuration has been defined as part of webpack ...
           result = extConfig.config;
@@ -125,7 +131,11 @@ class AppConfig {
     let result: Client | undefined;
     try {
       if (this.isRestClient()) {
-        result = new RestClient(this.getApiBaseUrl());
+        const apiBaseUrl = this.getApiBaseUrl();
+        if (!apiBaseUrl) {
+          throw new Error('API base URL is not configured');
+        }
+        result = new RestClient(apiBaseUrl);
       }
     } catch (e) {
       console.error('Client could not be initialized.');
@@ -133,7 +143,7 @@ class AppConfig {
     }
 
     if (!result) {
-      console.log('Warning:Service using mockservice client');
+      console.log('Warning: Service using mock service client');
       result = new MockClient();
     }
     return result;
@@ -141,6 +151,9 @@ class AppConfig {
 
   static getApiBaseUrl(): string {
     const config = this.fetchOrGetConfig();
+    if (!config.apiBaseUrl) {
+      throw new Error('API base URL is not configured in the application configuration');
+    }
     return config.apiBaseUrl;
   }
 

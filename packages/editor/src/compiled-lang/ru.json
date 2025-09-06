@@ -1,14 +1,170 @@
 {
+  "action.accept": [
+    {
+      "type": 0,
+      "value": "Принять"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Удалить"
+    }
+  ],
   "action.share": [
     {
       "type": 0,
       "value": "Поделиться"
     }
   ],
+  "appbar.back-to-map-list": [
+    {
+      "type": 0,
+      "value": "Назад к списку карт"
+    }
+  ],
+  "appbar.button-signup": [
+    {
+      "type": 0,
+      "value": "Регистрация"
+    }
+  ],
+  "appbar.shared-button": [
+    {
+      "type": 0,
+      "value": "Поделиться"
+    }
+  ],
+  "appbar.tooltip-export": [
+    {
+      "type": 0,
+      "value": "Экспорт"
+    }
+  ],
+  "appbar.tooltip-history": [
+    {
+      "type": 0,
+      "value": "История изменений"
+    }
+  ],
+  "appbar.tooltip-info": [
+    {
+      "type": 0,
+      "value": "Информация"
+    }
+  ],
+  "appbar.tooltip-print": [
+    {
+      "type": 0,
+      "value": "Печать"
+    }
+  ],
+  "appbar.tooltip-publish": [
+    {
+      "type": 0,
+      "value": "Опубликовать"
+    }
+  ],
+  "appbar.tooltip-redo": [
+    {
+      "type": 0,
+      "value": "Повторить"
+    }
+  ],
+  "appbar.tooltip-save": [
+    {
+      "type": 0,
+      "value": "Сохранить"
+    }
+  ],
+  "appbar.tooltip-shared": [
+    {
+      "type": 0,
+      "value": "Поделиться для сотрудничества"
+    }
+  ],
+  "appbar.tooltip-signup": [
+    {
+      "type": 0,
+      "value": "Регистрация"
+    }
+  ],
+  "appbar.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Избранное"
+    }
+  ],
+  "appbar.tooltip-undo": [
+    {
+      "type": 0,
+      "value": "Отменить"
+    }
+  ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Создатель"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Описание"
+    }
+  ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Иконка"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Ссылка"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Заметка"
+    }
+  ],
   "editor-panel.theme-title": [
     {
       "type": 0,
       "value": "Тема"
+    }
+  ],
+  "editor-panel.tooltip-add-icon": [
+    {
+      "type": 0,
+      "value": "Добавить иконку"
+    }
+  ],
+  "editor-panel.tooltip-add-link": [
+    {
+      "type": 0,
+      "value": "Добавить ссылку"
+    }
+  ],
+  "editor-panel.tooltip-add-note": [
+    {
+      "type": 0,
+      "value": "Добавить заметку"
+    }
+  ],
+  "editor-panel.tooltip-add-relationship": [
+    {
+      "type": 0,
+      "value": "Добавить связь"
+    }
+  ],
+  "editor-panel.tooltip-add-topic": [
+    {
+      "type": 0,
+      "value": "Добавить тему"
     }
   ],
   "editor-panel.tooltip-connection-color": [
@@ -38,19 +194,43 @@
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
-      "value": "широкая кривая"
+      "value": "Толстая кривая"
     }
   ],
   "editor-panel.tooltip-connection-style-curved-thin": [
     {
       "type": 0,
-      "value": "тонкая кривая"
+      "value": "Тонкая кривая"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Простая полилиния"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Изогнутая полилиния"
+    }
+  ],
+  "editor-panel.tooltip-delete-topic": [
+    {
+      "type": 0,
+      "value": "Удалить тему"
     }
   ],
   "editor-panel.tooltip-theme": [
     {
       "type": 0,
       "value": "Тема"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color": [
+    {
+      "type": 0,
+      "value": "Цвет границы"
     }
   ],
   "editor-panel.tooltip-topic-border-color-default": [
@@ -71,16 +251,82 @@
       "value": "Цвет заливки по умолчанию"
     }
   ],
+  "editor-panel.tooltip-topic-font-bigger": [
+    {
+      "type": 0,
+      "value": "Увеличить"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bold": [
+    {
+      "type": 0,
+      "value": "Жирный"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color": [
+    {
+      "type": 0,
+      "value": "Цвет"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Цвет по умолчанию"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-italic": [
+    {
+      "type": 0,
+      "value": "Курсив"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-smaller": [
+    {
+      "type": 0,
+      "value": "Уменьшить"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-style": [
+    {
+      "type": 0,
+      "value": "Стиль шрифта"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-ellipse": [
+    {
+      "type": 0,
+      "value": "Форма эллипса"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-line": [
+    {
+      "type": 0,
+      "value": "Форма линии"
+    }
+  ],
   "editor-panel.tooltip-topic-share-none": [
     {
       "type": 0,
       "value": "нет формы"
     }
   ],
+  "editor-panel.tooltip-topic-share-rectangle": [
+    {
+      "type": 0,
+      "value": "Прямоугольная форма"
+    }
+  ],
   "editor-panel.tooltip-topic-share-rounded": [
     {
       "type": 0,
-      "value": "Круглый"
+      "value": "Круглая форма"
+    }
+  ],
+  "editor-panel.tooltip-topic-style": [
+    {
+      "type": 0,
+      "value": "Стиль темы"
     }
   ],
   "editor.edit-description-mobile": [
@@ -119,16 +365,208 @@
       "value": "В этом издании демонстрируются некоторые возможности ментальных карт!"
     }
   ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Показать изображения"
+    }
+  ],
+  "link.help_text": [
+    {
+      "type": 0,
+      "value": "Адрес недействителен"
+    }
+  ],
+  "link.placeholder": [
+    {
+      "type": 0,
+      "value": "https://www.example.com"
+    }
+  ],
   "login.signup": [
     {
       "type": 0,
       "value": "Регистрация"
     }
   ],
+  "shortcut-help-pane.action": [
+    {
+      "type": 0,
+      "value": "Действие"
+    }
+  ],
+  "shortcut-help-pane.add-child": [
+    {
+      "type": 0,
+      "value": "Добавить дочернюю тему"
+    }
+  ],
+  "shortcut-help-pane.add-link": [
+    {
+      "type": 0,
+      "value": "Добавить ссылку"
+    }
+  ],
+  "shortcut-help-pane.add-note": [
+    {
+      "type": 0,
+      "value": "Добавить заметку"
+    }
+  ],
+  "shortcut-help-pane.add-sibling": [
+    {
+      "type": 0,
+      "value": "Добавить родственную тему"
+    }
+  ],
+  "shortcut-help-pane.cancel-text-changes": [
+    {
+      "type": 0,
+      "value": "Отменить изменения текста"
+    }
+  ],
+  "shortcut-help-pane.change-font-bold": [
+    {
+      "type": 0,
+      "value": "Изменить текст на жирный"
+    }
+  ],
+  "shortcut-help-pane.change-font-italic": [
+    {
+      "type": 0,
+      "value": "Изменить текст на курсив"
+    }
+  ],
+  "shortcut-help-pane.collapse-children": [
+    {
+      "type": 0,
+      "value": "Свернуть дочерние элементы"
+    }
+  ],
+  "shortcut-help-pane.copy-and-text": [
+    {
+      "type": 0,
+      "value": "Копировать и вставлять темы/Копировать изображение карты в буфер обмена."
+    }
+  ],
+  "shortcut-help-pane.delete-topic": [
+    {
+      "type": 0,
+      "value": "Удалить тему"
+    }
+  ],
+  "shortcut-help-pane.deselect-all-topics": [
+    {
+      "type": 0,
+      "value": "Отменить выбор всех тем"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Отключить тему"
+    }
+  ],
+  "shortcut-help-pane.edit-multiline": [
+    {
+      "type": 0,
+      "value": "Добавить многострочный текст темы"
+    }
+  ],
+  "shortcut-help-pane.edit-topic": [
+    {
+      "type": 0,
+      "value": "Редактировать текст темы"
+    }
+  ],
+  "shortcut-help-pane.edit-topic-key": [
+    {
+      "type": 0,
+      "value": "F2 или двойной клик"
+    }
+  ],
+  "shortcut-help-pane.navigation": [
+    {
+      "type": 0,
+      "value": "Навигация"
+    }
+  ],
+  "shortcut-help-pane.navigation-keys": [
+    {
+      "type": 0,
+      "value": "Клавиши со стрелками"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Перезаписать текст темы"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Печатать на выбранной теме"
+    }
+  ],
+  "shortcut-help-pane.redo": [
+    {
+      "type": 0,
+      "value": "Повторить редактирование"
+    }
+  ],
+  "shortcut-help-pane.save-changes": [
+    {
+      "type": 0,
+      "value": "Сохранить изменения"
+    }
+  ],
+  "shortcut-help-pane.select-all-topics": [
+    {
+      "type": 0,
+      "value": "Выбрать все темы"
+    }
+  ],
+  "shortcut-help-pane.select-topics": [
+    {
+      "type": 0,
+      "value": "Выбрать несколько тем"
+    }
+  ],
+  "shortcut-help-pane.select-topics-keys": [
+    {
+      "type": 0,
+      "value": "Клик мыши"
+    }
+  ],
+  "shortcut-help-pane.undo": [
+    {
+      "type": 0,
+      "value": "Отменить редактирование"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,
       "value": "Клавиатура"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Увеличить"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Уменьшить"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Подогнать по размеру"
     }
   ]
 }

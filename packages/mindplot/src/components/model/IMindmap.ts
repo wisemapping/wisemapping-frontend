@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *

@@ -35,8 +35,8 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
       return client.updateMapToPublic(mapId, model);
     },
     {
-      onSuccess: () => {
-        setModel(model);
+      onSuccess: (_, updatedModel) => {
+        setModel(updatedModel);
         handleOnMutationSuccess(onClose, queryClient);
         queryClient.invalidateQueries(`maps-${mapId}`);
       },
@@ -53,6 +53,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    setError(undefined);
     mutation.mutate(model);
   };
 

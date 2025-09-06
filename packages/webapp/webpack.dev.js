@@ -4,6 +4,31 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// Get the config from the common file
+let config;
+switch (process.env.APP_CONFIG_TYPE) {
+  case 'file:mock': {
+    config = JSON.stringify(require('./config.mock.json'));
+    break;
+  }
+  case 'file:prod': {
+    config = JSON.stringify(require('./config.prod.json'));
+    break;
+  }
+  case 'file:dev': {
+    config = JSON.stringify(require('./config.dev.json'));
+    break;
+  }
+  case 'remote': {
+    config = process.env.APP_CONFIG_JSON;
+    break;
+  }
+  default: {
+    config = JSON.stringify(require('./config.mock.json'));
+    break;
+  }
+}
+
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'source-map',
@@ -31,6 +56,9 @@ module.exports = merge(common, {
         NEW_RELIC_ENABLED: false,
       },
       base: process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:3000',
+    }),
+    new (require('webpack')).DefinePlugin({
+      'window.BoostrapConfig': config,
     }),
   ]
 });

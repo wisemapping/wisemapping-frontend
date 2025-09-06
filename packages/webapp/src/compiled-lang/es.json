@@ -56,7 +56,7 @@
   "action.delete-description": [
     {
       "type": 0,
-      "value": "El mapa mental eliminado no se podrá recuperar. Quieres continuar ?."
+      "value": "El mapa mental eliminado no se podrá recuperar. ¿Quieres continuar?"
     }
   ],
   "action.delete-title": [
@@ -428,7 +428,7 @@
   "header.donthaveaccount": [
     {
       "type": 0,
-      "value": "¿No tenes una cuenta?"
+      "value": "¿No tienes una cuenta?"
     }
   ],
   "header.haveaccount": [
@@ -844,7 +844,7 @@
   "maps.search-action": [
     {
       "type": 0,
-      "value": "Búscar ..."
+      "value": "Buscar ..."
     }
   ],
   "maps.tooltip-open": [

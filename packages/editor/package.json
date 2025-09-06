@@ -16,7 +16,7 @@
     "build": "webpack --config webpack.prod.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
+    "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','ru','ja','pt'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
     "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
     "lint": "eslint src --ext js,ts,tsx",
     "playground": "webpack serve --config webpack.playground.js",
@@ -27,29 +27,30 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.18",
-    "@mui/material": "^5.15.18",
+    "@mui/icons-material": "^7.3.2",
+    "@mui/material": "^7.3.2",
+    "@wisemapping/core-js": "workspace:*",
     "@wisemapping/mindplot": "workspace:*",
-    "emoji-picker-react": "^4.9.2",
+    "emoji-picker-react": "^4.13.3",
     "react-color": "^2.19.3",
-    "react-intl": "^6.6.5",
+    "react-intl": "^7.1.11",
     "react-loader-spinner": "^6.1.6",
     "styled-components": "^6.1.8"
   },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "@formatjs/cli": "^6.2.9",
-    "@testing-library/react": "^14.2.2",
+    "@testing-library/react": "^16.3.0",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",
-    "cypress": "^13.7.2",
+    "cypress": "^15.1.0",
     "cypress-image-snapshot": "^4.0.1",
     "jest-transform-stub": "^2.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "start-server-and-test": "^2.0.3"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.1.1",
+    "start-server-and-test": "^2.1.0"
   }
 }

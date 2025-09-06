@@ -23,7 +23,6 @@ import Canvas from './Canvas';
 import PositionType from './PositionType';
 import Relationship from './Relationship';
 
-// eslint-disable-next-line no-shadow
 export enum PivotType {
   Start = 0,
   End = 1,

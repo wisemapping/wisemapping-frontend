@@ -1,0 +1,266 @@
+{
+  "action.accept": {
+    "defaultMessage": "受け入れる"
+  },
+  "action.delete": {
+    "defaultMessage": "削除"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "マップリストに戻る"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "サインアップ"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "共有"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "エクスポート"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "変更履歴"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "情報"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "印刷"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "公開"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "やり直し"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "保存"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "コラボレーション用に共有"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "サインアップ"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "お気に入り"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "元に戻す"
+  },
+  "editor-panel.icon-title": {
+    "defaultMessage": "アイコン"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "リンク"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "ノート"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "アイコンを追加"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "リンクを追加"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "ノートを追加"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "関係を追加"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "トピックを追加"
+  },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "色"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "デフォルト色"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "接続スタイル"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "太い曲線"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "細い曲線"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "シンプルなポリライン"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "曲線ポリライン"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "トピックを削除"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "境界線の色"
+  },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "デフォルト境界線色"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "塗りつぶし色"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "デフォルト塗りつぶし色"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "大きく"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "太字"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "色"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "デフォルト色"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "斜体"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "小さく"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "フォントスタイル"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "楕円形"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "線形"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "矩形"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "角丸形"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "トピックスタイル"
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "モバイルデバイスでは限定的なマインドマップ編集機能がサポートされています。完全なエディター機能にはデスクトップブラウザを使用してください。"
+  },
+  "editor.try-welcome": {
+    "defaultMessage": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。"
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。モバイルデバイスでは限定的なマインドマップ編集機能がサポートされています。完全なエディター機能にはデスクトップブラウザを使用してください。"
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "画像を表示"
+  },
+  "link.help_text": {
+    "defaultMessage": "アドレスが無効です"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "アクション"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "子トピックを追加"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "リンクを追加"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "ノートを追加"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "兄弟トピックを追加"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "テキスト変更をキャンセル"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "テキストを太字に変更"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "テキストを斜体に変更"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "子要素を折りたたむ"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "トピックをコピー＆ペースト/マインドマップ画像をクリップボードにコピー。"
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "トピックを削除"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "すべてのトピックの選択を解除"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "トピックを切断"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "複数行トピックテキストを追加"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "トピックテキストを編集"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "F2またはダブルクリック"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "ナビゲーション"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "矢印キー"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "トピックテキストを上書き"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "選択されたトピックで入力"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "編集をやり直し"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "変更を保存"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "すべてのトピックを選択"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "複数のトピックを選択"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "マウスクリック"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "編集を元に戻す"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "キーボードショートカット"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "ズームイン"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "ズームアウト"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "フィット"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "説明"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "作成者"
+  }
+}

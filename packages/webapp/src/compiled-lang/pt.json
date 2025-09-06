@@ -1,0 +1,1150 @@
+{
+  "account.delete-warning": [
+    {
+      "type": 0,
+      "value": "Tenha em mente que você não poderá recuperar nenhum mapa mental que tenha criado. Todas as suas informações serão excluídas e não poderão ser restauradas."
+    }
+  ],
+  "accountinfo.button": [
+    {
+      "type": 0,
+      "value": "Aceitar"
+    }
+  ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "Excluir conta"
+    }
+  ],
+  "accountinfo.email": [
+    {
+      "type": 0,
+      "value": "E-mail"
+    }
+  ],
+  "accountinfo.firstname": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "accountinfo.lastname": [
+    {
+      "type": 0,
+      "value": "Sobrenome"
+    }
+  ],
+  "accountinfo.title": [
+    {
+      "type": 0,
+      "value": "Informações da conta"
+    }
+  ],
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "Cancelar"
+    }
+  ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "Fechar"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Excluir"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "O mapa mental excluído não poderá ser recuperado. Deseja continuar?"
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "Excluir"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "Duplicar"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "Exportar"
+    }
+  ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "Histórico"
+    }
+  ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "Lista de alterações introduzidas nos últimos 90 dias."
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "Histórico de versões"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "Importar"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "Informações"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "Adicionar rótulo"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "Novo mapa"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "Abrir"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "Imprimir"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "Publicar"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "Renomear"
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "Descrição"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Compartilhar"
+    }
+  ],
+  "changepwd.button": [
+    {
+      "type": 0,
+      "value": "Alterar"
+    }
+  ],
+  "changepwd.confirm-password": [
+    {
+      "type": 0,
+      "value": "Confirmar senha"
+    }
+  ],
+  "changepwd.description": [
+    {
+      "type": 0,
+      "value": "Por favor, forneça a nova senha para sua conta."
+    }
+  ],
+  "changepwd.password": [
+    {
+      "type": 0,
+      "value": "Senha"
+    }
+  ],
+  "changepwd.password-match": [
+    {
+      "type": 0,
+      "value": "As senhas não coincidem. Tente novamente."
+    }
+  ],
+  "changepwd.title": [
+    {
+      "type": 0,
+      "value": "Alterar senha"
+    }
+  ],
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "Aguarde..."
+    }
+  ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "Criar"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "Por favor, preencha o nome e descrição do novo mapa."
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "Criar um novo mapa mental"
+    }
+  ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "Todos os mapas selecionados serão excluídos"
+    }
+  ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Carregando..."
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "Duplicar"
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente."
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "Sua sessão atual expirou. Faça login e tente novamente."
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "Sua sessão expirou"
+    }
+  ],
+  "export.desc": [
+    {
+      "type": 0,
+      "value": "Exporte este mapa no formato desejado e comece a usá-lo em suas apresentações ou compartilhando por e-mail"
+    }
+  ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "Ferramentas de mapa mental: exporte seu mapa mental em formatos de ferramentas de mapa mental de terceiros"
+    }
+  ],
+  "export.document-label": [
+    {
+      "type": 0,
+      "value": "Documento: exporte seu mapa mental em um documento independente pronto para compartilhar"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "Imagem: obtenha uma representação gráfica do seu mapa, incluindo todas as cores e formas."
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "Centralizar e ajustar"
+    }
+  ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "Exportar"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "A exportação para imagem (SVG, PNG, JPEG, PDF) está disponível apenas na barra de ferramentas do editor."
+    }
+  ],
+  "footer.aboutus": [
+    {
+      "type": 0,
+      "value": "Sobre nós"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "Entre em contato"
+    }
+  ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Doações"
+    }
+  ],
+  "footer.faq": [
+    {
+      "type": 0,
+      "value": "Perguntas frequentes"
+    }
+  ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "Ajuda e perguntas frequentes"
+    }
+  ],
+  "footer.feedback": [
+    {
+      "type": 0,
+      "value": "Feedback"
+    }
+  ],
+  "footer.opensource": [
+    {
+      "type": 0,
+      "value": "Código aberto"
+    }
+  ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "Outros"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Suporte"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Equipe"
+    }
+  ],
+  "footer.termsandconditions": [
+    {
+      "type": 0,
+      "value": "Termos e condições"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "Enviaremos um e-mail para redefinir sua senha."
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "E-mail"
+    }
+  ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Voltar ao login"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "Você não precisa de senha, faça login usando o Google"
+    }
+  ],
+  "forgot.page-title": [
+    {
+      "type": 0,
+      "value": "Esqueci minha senha | WiseMapping"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "Enviar link de recuperação"
+    }
+  ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "Enviamos um e-mail que permitirá redefinir sua senha. Você deve recebê-lo nos próximos minutos."
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "Sua senha temporária foi enviada."
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "Redefinir sua senha"
+    }
+  ],
+  "forgotsuccess.page-title": [
+    {
+      "type": 0,
+      "value": "Senha recuperada | WiseMapping"
+    }
+  ],
+  "header.donthaveaccount": [
+    {
+      "type": 0,
+      "value": "Não tem uma conta?"
+    }
+  ],
+  "header.haveaccount": [
+    {
+      "type": 0,
+      "value": "Já tem uma conta?"
+    }
+  ],
+  "help.support": [
+    {
+      "type": 0,
+      "value": "Suporte"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "Não há alterações disponíveis"
+    }
+  ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "Criar"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "Você pode importar mapas do WiseMapping e Freemind para sua lista de mapas. Selecione o arquivo que deseja importar."
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "Erro de importação "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "Importar mapa mental existente"
+    }
+  ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "Informações básicas"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "Aceitar"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "Data de criação"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "Criador"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "Descrição"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "Ao publicar o mapa, você o torna visível para todos na Internet."
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "Data da última modificação"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "Última modificação por"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "Visível publicamente"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "Compartilhamento"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "Favoritos"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "Informações"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Adicionar rótulo"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Editando rótulos para o mapa:"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Título do rótulo"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Alterar cor do rótulo"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "será excluído, incluindo suas associações com todos os mapas existentes. Deseja continuar?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Confirmar exclusão do rótulo"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Use rótulos para organizar seus mapas."
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " mapas"
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Adicionar um rótulo"
+    }
+  ],
+  "language.change": [
+    {
+      "type": 0,
+      "value": "Alterar idioma"
+    }
+  ],
+  "language.help": [
+    {
+      "type": 0,
+      "value": "Ajudar a traduzir"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "Faça login em sua conta"
+    }
+  ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "ou"
+    }
+  ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "E-mail"
+    }
+  ],
+  "login.error": [
+    {
+      "type": 0,
+      "value": "O endereço de e-mail ou senha inseridos não são válidos."
+    }
+  ],
+  "login.forgotpwd": [
+    {
+      "type": 0,
+      "value": "Esqueci minha senha?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Entrar com Google"
+    }
+  ],
+  "login.hsqldbcofig": [
+    {
+      "type": 0,
+      "value": "Embora o HSQLDB seja incluído com o WiseMapping por padrão durante a instalação, não recomendamos este banco de dados para uso em produção. Considere usar o MySQL 5.7. Você pode encontrar mais informações sobre como configurar o MySQL"
+    }
+  ],
+  "login.page-title": [
+    {
+      "type": 0,
+      "value": "Login | WiseMapping"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "Senha"
+    }
+  ],
+  "login.remberme": [
+    {
+      "type": 0,
+      "value": "Lembrar de mim"
+    }
+  ],
+  "login.signin": [
+    {
+      "type": 0,
+      "value": "Entrar"
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "Cadastrar"
+    }
+  ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "Bem-vindo"
+    }
+  ],
+  "login.userinactive": [
+    {
+      "type": 0,
+      "value": "Desculpe, sua conta ainda não foi ativada. Você receberá um e-mail de notificação quando ela for ativada. Fique atento!"
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "Criador"
+    }
+  ],
+  "map.delete-selected": [
+    {
+      "type": 0,
+      "value": "Excluir selecionado"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "Última atualização"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "Mais ações"
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "map.tooltip-add": [
+    {
+      "type": 0,
+      "value": "Adicionar rótulo ao selecionado"
+    }
+  ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "Escolher um arquivo"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "Criar um novo mapa mental"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "Nenhum mapa mental correspondente encontrado com os critérios de filtro atuais."
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "Importar de outras ferramentas"
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "Modificado"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "Modificado por"
+    }
+  ],
+  "maps.modified-by-desc": [
+    {
+      "type": 0,
+      "value": "Modificado por "
+    },
+    {
+      "type": 1,
+      "value": "by"
+    },
+    {
+      "type": 0,
+      "value": " em "
+    },
+    {
+      "type": 1,
+      "value": "on"
+    }
+  ],
+  "maps.nav-all": [
+    {
+      "type": 0,
+      "value": "Todos"
+    }
+  ],
+  "maps.nav-onwned": [
+    {
+      "type": 0,
+      "value": "Próprios"
+    }
+  ],
+  "maps.nav-public": [
+    {
+      "type": 0,
+      "value": "Públicos"
+    }
+  ],
+  "maps.nav-shared": [
+    {
+      "type": 0,
+      "value": "Compartilhados comigo"
+    }
+  ],
+  "maps.nav-starred": [
+    {
+      "type": 0,
+      "value": "Favoritos"
+    }
+  ],
+  "maps.page-title": [
+    {
+      "type": 0,
+      "value": "Meus mapas | WiseMapping"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "Reverter"
+    }
+  ],
+  "maps.search-action": [
+    {
+      "type": 0,
+      "value": "Pesquisar..."
+    }
+  ],
+  "maps.tooltip-open": [
+    {
+      "type": 0,
+      "value": "Abrir para edição"
+    }
+  ],
+  "maps.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Favoritos"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "Visualizar"
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "Conta"
+    }
+  ],
+  "menu.change-password": [
+    {
+      "type": 0,
+      "value": "Alterar senha"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "Sair"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "Aceitar"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "Habilitar compartilhamento público"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "Ao publicar o mapa, você o torna visível para todos na Internet."
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "Incorporado"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "Copie este trecho de código para incorporar em seu blog ou página:"
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "URL pública"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "Copie e cole o link abaixo para compartilhar seu mapa com colegas:"
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "Publicar"
+    }
+  ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Ocorreu um erro ao validar sua identidade com o Google, você pode tentar novamente na página de login"
+    }
+  ],
+  "registation.success-title": [
+    {
+      "type": 0,
+      "value": "Cadastro bem-sucedido | WiseMapping"
+    }
+  ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Voltar ao login"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "Uma conta com o mesmo e-mail foi registrada anteriormente. Deseja vincular sua conta do Google a essa conta do WiseMapping?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Confirmar"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Sincronizar conta"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Aguarde enquanto validamos sua identidade"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Finalizando..."
+    }
+  ],
+  "registration.desc": [
+    {
+      "type": 0,
+      "value": "O cadastro é gratuito e leva apenas um momento"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "ou"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "E-mail"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "Nome"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Cadastrar com Google"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "Sobrenome"
+    }
+  ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "Cadastro | WiseMapping"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "Senha"
+    }
+  ],
+  "registration.register": [
+    {
+      "type": 0,
+      "value": "Cadastrar"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "Clique no botão 'Entrar' abaixo e comece a criar mapas mentais."
+    }
+  ],
+  "registration.termandconditions": [
+    {
+      "type": 0,
+      "value": "Termos do cliente: verifique as informações da conta WiseMapping inseridas acima e revise os Termos do cliente aqui. Ao clicar em 'Cadastrar' abaixo, você concorda com os Termos do cliente acima e a Política de Privacidade"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "Tornar-se membro"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "Por favor, preencha o nome e descrição do novo mapa."
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "Renomear"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "Sua conta foi criada com sucesso"
+    }
+  ],
+  "role.editor": [
+    {
+      "type": 0,
+      "value": "Editor"
+    }
+  ],
+  "role.owner": [
+    {
+      "type": 0,
+      "value": "Proprietário"
+    }
+  ],
+  "role.viewer": [
+    {
+      "type": 0,
+      "value": "Visualizador"
+    }
+  ],
+  "share.add-button": [
+    {
+      "type": 0,
+      "value": "Compartilhar"
+    }
+  ],
+  "share.add-message": [
+    {
+      "type": 0,
+      "value": "Adicionar mensagem"
+    }
+  ],
+  "share.can-edit": [
+    {
+      "type": 0,
+      "value": "Pode editar"
+    }
+  ],
+  "share.can-view": [
+    {
+      "type": 0,
+      "value": "Pode visualizar"
+    }
+  ],
+  "share.delete": [
+    {
+      "type": 0,
+      "value": "Excluir colaborador"
+    }
+  ],
+  "share.delete-description": [
+    {
+      "type": 0,
+      "value": "Convide pessoas para colaborar com você na criação do seu mapa mental. Elas serão notificadas por e-mail."
+    }
+  ],
+  "share.delete-title": [
+    {
+      "type": 0,
+      "value": "Compartilhar com pessoas"
+    }
+  ],
+  "share.message": [
+    {
+      "type": 0,
+      "value": "Mensagem"
+    }
+  ]
+}

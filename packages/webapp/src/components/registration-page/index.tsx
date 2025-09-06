@@ -22,6 +22,7 @@ import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import { SEOHead } from '../seo';
 
 export type Model = {
   email: string;
@@ -80,17 +81,19 @@ const RegistrationForm = () => {
   return (
     <Grid container justifyContent="center">
       <Grid container spacing={0} justifyContent="center" alignItems="scretch" textAlign="center">
-        <Grid item md={5} xs={12} justifyContent="center">
-          <Typography variant="h4" component="h1">
-            <FormattedMessage id="registration.title" defaultMessage="Become a member" />
-          </Typography>
+        <Grid size={{ md: 5, xs: 12 }} justifyContent="center">
+          <header>
+            <Typography variant="h4" component="h1">
+              <FormattedMessage id="registration.title" defaultMessage="Become a member" />
+            </Typography>
 
-          <Typography paragraph>
-            <FormattedMessage
-              id="registration.desc"
-              defaultMessage="Signing up is free and just take a moment "
-            />
-          </Typography>
+            <Typography paragraph>
+              <FormattedMessage
+                id="registration.desc"
+                defaultMessage="Signing up is free and just take a moment "
+              />
+            </Typography>
+          </header>
           <GoogleButton
             text={intl.formatMessage({
               id: 'registration.google.button',
@@ -99,7 +102,7 @@ const RegistrationForm = () => {
             onClick={handleRegisterWithGoogleClick}
           />
         </Grid>
-        <Grid item md={2} xs={12}>
+        <Grid size={{ md: 2, xs: 12 }}>
           <Separator
             responsive={true}
             maxWidth={maxFormWidth}
@@ -109,88 +112,98 @@ const RegistrationForm = () => {
             })}
           />
         </Grid>
-        <Grid item md={5} xs={12}>
-          <FormControl css={{ maxWidth: maxFormWidth }}>
-            <form onSubmit={handleOnSubmit}>
-              <GlobalError error={error} />
-              <Input
-                name="email"
-                type="email"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.email',
-                  defaultMessage: 'Email',
-                })}
-                autoComplete="email"
-                error={error}
-              />
-              <Input
-                name="firstname"
-                type="text"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.firstname',
-                  defaultMessage: 'First Name',
-                })}
-                autoComplete="given-name"
-                error={error}
-              />
-              <Input
-                name="lastname"
-                type="text"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.lastname',
-                  defaultMessage: 'Last Name',
-                })}
-                autoComplete="family-name"
-                error={error}
-              />
-              <Input
-                name="password"
-                type="password"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.password',
-                  defaultMessage: 'Password',
-                })}
-                autoComplete="new-password"
-                error={error}
-                maxLength={30}
-              />
+        <Grid size={{ md: 5, xs: 12 }}>
+          <main>
+            <FormControl css={{ maxWidth: maxFormWidth }}>
+              <form onSubmit={handleOnSubmit} role="form" aria-label="Registration form">
+                <GlobalError error={error} />
+                <fieldset>
+                  <legend>
+                    <FormattedMessage
+                      id="registration.form-legend"
+                      defaultMessage="Account Information"
+                    />
+                  </legend>
+                  <Input
+                    name="email"
+                    type="email"
+                    onChange={handleOnChange}
+                    label={intl.formatMessage({
+                      id: 'registration.email',
+                      defaultMessage: 'Email',
+                    })}
+                    autoComplete="email"
+                    error={error}
+                  />
+                  <Input
+                    name="firstname"
+                    type="text"
+                    onChange={handleOnChange}
+                    label={intl.formatMessage({
+                      id: 'registration.firstname',
+                      defaultMessage: 'First Name',
+                    })}
+                    autoComplete="given-name"
+                    error={error}
+                  />
+                  <Input
+                    name="lastname"
+                    type="text"
+                    onChange={handleOnChange}
+                    label={intl.formatMessage({
+                      id: 'registration.lastname',
+                      defaultMessage: 'Last Name',
+                    })}
+                    autoComplete="family-name"
+                    error={error}
+                  />
+                  <Input
+                    name="password"
+                    type="password"
+                    onChange={handleOnChange}
+                    label={intl.formatMessage({
+                      id: 'registration.password',
+                      defaultMessage: 'Password',
+                    })}
+                    autoComplete="new-password"
+                    error={error}
+                    maxLength={30}
+                  />
 
-              {AppConfig.isRecaptcha2Enabled() && (
-                <>
-                  {/* eslint-disable-next-line react/no-unknown-property */}
-                  <div css={recaptchaContainerStyle}>
-                    <ReCAPTCHA
-                      ref={(el) => setCaptcha(el)}
-                      sitekey={AppConfig.getRecaptcha2SiteKey()}
-                      onChange={(value: string) => {
-                        model.recaptcha = value;
-                        setModel(model);
-                      }}
+                  {AppConfig.isRecaptcha2Enabled() && (
+                    <>
+                      {}
+                      <div css={recaptchaContainerStyle}>
+                        <ReCAPTCHA
+                          ref={(el) => setCaptcha(el)}
+                          sitekey={AppConfig.getRecaptcha2SiteKey()}
+                          onChange={(value: string) => {
+                            model.recaptcha = value;
+                            setModel(model);
+                          }}
+                        />
+                      </div>
+                    </>
+                  )}
+                  <div style={{ fontSize: '12px', padding: '10px 0px' }}>
+                    <FormattedMessage
+                      id="registration.termandconditions"
+                      defaultMessage="Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
                     />
                   </div>
-                </>
-              )}
-              <div style={{ fontSize: '12px', padding: '10px 0px' }}>
-                <FormattedMessage
-                  id="registration.termandconditions"
-                  defaultMessage="Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
-                />
-              </div>
-              <SubmitButton
-                value={intl.formatMessage({
-                  id: 'registration.register',
-                  defaultMessage: 'Register',
-                })}
-              />
-            </form>
-          </FormControl>
+                  <SubmitButton
+                    value={intl.formatMessage({
+                      id: 'registration.register',
+                      defaultMessage: 'Register',
+                    })}
+                  />
+                </fieldset>
+              </form>
+            </FormControl>
+          </main>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid>
         <Link component={RouterLink} to="/c/login">
           <FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" />
         </Link>
@@ -216,6 +229,32 @@ const RegistationPage = (): React.ReactElement => {
 
   return (
     <div>
+      <SEOHead
+        title="Sign Up | WiseMapping"
+        description="Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others. Join thousands of users worldwide."
+        keywords="sign up, register, create account, mind mapping, free account, collaboration, brainstorming"
+        canonicalUrl="/c/registration"
+        ogType="website"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Sign Up - WiseMapping',
+          description:
+            'Create your free WiseMapping account to start creating mind maps, organizing ideas, and collaborating with others.',
+          url: 'https://www.wisemapping.com/c/registration',
+          mainEntity: {
+            '@type': 'WebApplication',
+            name: 'WiseMapping',
+            applicationCategory: 'ProductivityApplication',
+            operatingSystem: 'Web Browser',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
+            },
+          },
+        }}
+      />
       <Header type="only-signin" />
       <RegistrationForm />
       <Footer />

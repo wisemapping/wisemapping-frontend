@@ -39,6 +39,7 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
+import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
 import { loader as configLoader } from './loader';
 
@@ -170,26 +171,28 @@ const App = (): ReactElement => {
   const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
 
   return (
-    <ClientContext.Provider value={AppConfig.getClient()}>
-      <QueryClientProvider client={queryClient}>
-        <IntlProvider
-          locale={locale.code}
-          defaultLocale={Locales.EN.code}
-          messages={locale.message as Record<string, string>}
-        >
-          <StyledEngineProvider injectFirst>
-            <MuiThemeProvider theme={theme}>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <KeyboardContext.Provider value={{ hotkeyEnabled, setHotkeyEnabled }}>
-                  <RouterProvider router={router} />
-                </KeyboardContext.Provider>
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </StyledEngineProvider>
-        </IntlProvider>
-      </QueryClientProvider>
-    </ClientContext.Provider>
+    <HelmetProvider>
+      <ClientContext.Provider value={AppConfig.getClient()}>
+        <QueryClientProvider client={queryClient}>
+          <IntlProvider
+            locale={locale.code}
+            defaultLocale={Locales.EN.code}
+            messages={locale.message as Record<string, string>}
+          >
+            <StyledEngineProvider injectFirst>
+              <MuiThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <KeyboardContext.Provider value={{ hotkeyEnabled, setHotkeyEnabled }}>
+                    <RouterProvider router={router} />
+                  </KeyboardContext.Provider>
+                </ThemeProvider>
+              </MuiThemeProvider>
+            </StyledEngineProvider>
+          </IntlProvider>
+        </QueryClientProvider>
+      </ClientContext.Provider>
+    </HelmetProvider>
   );
 };
 

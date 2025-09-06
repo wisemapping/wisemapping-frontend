@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -22,6 +21,8 @@ import DE from './de';
 import FR from './fr';
 import RU from './ru';
 import ZH from './zh';
+import JA from './ja';
+import PT from './pt';
 
 const Bundle = {
   es: ES,
@@ -30,6 +31,8 @@ const Bundle = {
   fr: FR,
   ru: RU,
   zh: ZH,
+  ja: JA,
+  pt: PT,
 };
 
 export default Bundle;

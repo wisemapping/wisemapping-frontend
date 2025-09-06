@@ -55,10 +55,8 @@ abstract class Topic extends NodeGraph {
 
   private _isInWorkspace: boolean;
 
-  // eslint-disable-next-line no-use-before-define
   private _children: Topic[];
 
-  // eslint-disable-next-line no-use-before-define
   private _parent: Topic | null;
 
   private _outerShape: Rect | undefined;

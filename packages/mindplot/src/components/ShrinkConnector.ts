@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 /*
  *    Copyright [2021] [wisemapping]
  *

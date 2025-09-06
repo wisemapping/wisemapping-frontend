@@ -19,7 +19,7 @@ import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
 // https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
 // https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
-// eslint-disable-next-line import/extensions
+
 import registerTouchHandler from '../../libraries/jquery.touchevent';
 import PositionType from './PositionType';
 

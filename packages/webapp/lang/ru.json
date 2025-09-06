@@ -427,13 +427,13 @@
 		"defaultMessage": "Правила: Пожалуйста, проверьте информацию учетной записи WiseMapping, которую вы указали, и ознакомьтесь с Правилами. По нажатию на кнопку 'Регистрация' вы соглашаетесь с Правилами и Политикой Конфиденциальности"
 	},
 	"registration.title": {
-		"defaultMessage": "Become a member"
+		"defaultMessage": "Стать участником"
 	},
 	"rename.description": {
 		"defaultMessage": "Пожалуйста, укажите новое имя и описание."
 	},
 	"rename.title": {
-		"defaultMessage": "Rename"
+		"defaultMessage": "Переименовать"
 	},
 	"resetpassword.success.title": {
 		"defaultMessage": "Аккаунт был успешно создан!"

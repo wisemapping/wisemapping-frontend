@@ -23,7 +23,6 @@ import {
   Designer,
   DesignerKeyboard,
   EditorRenderMode,
-  MindplotWebComponentInterface,
   Mindmap,
   MockPersistenceManager,
   LocalStorageManager,
@@ -41,15 +40,6 @@ import MapInfo from './classes/model/map-info';
 import { EditorOptions, useEditor } from './hooks/useEditor';
 import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
 import SizeType from '@wisemapping/mindplot/src/components/SizeType';
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      ['mindplot-component']: MindplotWebComponentInterface;
-    }
-  }
-}
 
 export {
   PersistenceManager,

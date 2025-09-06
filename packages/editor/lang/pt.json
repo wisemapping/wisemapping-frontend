@@ -1,0 +1,266 @@
+{
+  "action.accept": {
+    "defaultMessage": "Aceitar"
+  },
+  "action.delete": {
+    "defaultMessage": "Excluir"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "Voltar à lista de mapas"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "Cadastrar"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "Compartilhar"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "Exportar"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "Histórico de alterações"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "Informações"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "Imprimir"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "Publicar"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "Refazer"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "Salvar"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "Compartilhar para colaboração"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "Cadastrar"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "Favoritos"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "Desfazer"
+  },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Ícone"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "Link"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "Nota"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "Adicionar ícone"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "Adicionar link"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "Adicionar nota"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "Adicionar relacionamento"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "Adicionar tópico"
+  },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "Cor"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "Cor padrão"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "Estilo de conexão"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "Curva grossa"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "Curva fina"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "Polilinha simples"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "Polilinha curva"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "Excluir tópico"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "Cor da borda"
+  },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "Cor da borda padrão"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "Cor de preenchimento"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "Cor de preenchimento padrão"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "Maior"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "Negrito"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "Cor"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "Cor padrão"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "Itálico"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "Menor"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Estilo da fonte"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "Forma elíptica"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "Forma de linha"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "Forma retangular"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "Forma arredondada"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "Estilo do tópico"
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "Funcionalidades limitadas de edição de mapa mental são suportadas em dispositivos móveis. Use um navegador desktop para funcionalidades completas do editor."
+  },
+  "editor.try-welcome": {
+    "defaultMessage": "Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente."
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente. Funcionalidades limitadas de edição de mapa mental são suportadas em dispositivos móveis. Use um navegador desktop para funcionalidades completas do editor."
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "Mostrar imagens"
+  },
+  "link.help_text": {
+    "defaultMessage": "Endereço inválido"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "Ação"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "Adicionar tópico filho"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "Adicionar link"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "Adicionar nota"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "Adicionar tópico irmão"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "Cancelar alterações de texto"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "Alterar texto para negrito"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "Alterar texto para itálico"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "Recolher filhos"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "Copiar e colar tópicos/Copiar imagem do mapa mental para a área de transferência."
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "Excluir tópico"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "Desmarcar todos os tópicos"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "Desconectar tópico"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "Adicionar texto de tópico multilinha"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "Editar texto do tópico"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "F2 ou duplo clique"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "Navegação"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "Teclas de seta"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "Sobrescrever texto do tópico"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "Digitar em um tópico selecionado"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "Refazer edição"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "Salvar alterações"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "Selecionar todos os tópicos"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "Selecionar múltiplos tópicos"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "Clique do mouse"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "Desfazer edição"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "Atalhos do teclado"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "Aumentar zoom"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "Diminuir zoom"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "Ajustar ao tamanho"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "Descrição"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "Criador"
+  }
+}

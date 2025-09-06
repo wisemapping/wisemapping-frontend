@@ -130,7 +130,6 @@ class Mindmap extends IMindmap {
     return result;
   }
 
-  // eslint-disable-next-line default-param-last
   createNode(type: NodeModelType = 'MainTopic', id?: number): NodeModel {
     return new NodeModel(type, this, id);
   }

@@ -1,5 +1,5 @@
 {
-  "account.delete-warning警告": [
+  "account.delete-warning": [
     {
       "type": 0,
       "value": "请记住，您将无法访问您添加的任何思维导图。您的所有信息都将被删除，并且无法恢复。"
@@ -20,7 +20,7 @@
   "accountinfo.email": [
     {
       "type": 0,
-      "value": "Email电子邮件"
+      "value": "电子邮件"
     }
   ],
   "accountinfo.firstname": [
@@ -350,7 +350,7 @@
   "footer.team": [
     {
       "type": 0,
-      "value": "学期"
+      "value": "团队"
     }
   ],
   "footer.termsandconditions": [
@@ -374,7 +374,7 @@
   "forgot.oauth.back": [
     {
       "type": 0,
-      "value": "回到登入"
+      "value": "回到登录"
     }
   ],
   "forgot.oauth.message": [
@@ -642,7 +642,7 @@
   "login.google.button": [
     {
       "type": 0,
-      "value": "使用 Google 登錄"
+      "value": "使用 Google 登录"
     }
   ],
   "login.hsqldbcofig": [
@@ -900,7 +900,7 @@
   "publish.public-url": [
     {
       "type": 0,
-      "value": "公共UPL"
+      "value": "公共URL"
     }
   ],
   "publish.public-url-msg": [
@@ -930,7 +930,7 @@
   "registration.callback.back": [
     {
       "type": 0,
-      "value": "回到登入"
+      "value": "回到登录"
     }
   ],
   "registration.callback.confirm.description": [
@@ -990,7 +990,7 @@
   "registration.google.button": [
     {
       "type": 0,
-      "value": "註冊谷歌"
+      "value": "使用谷歌注册"
     }
   ],
   "registration.lastname": [

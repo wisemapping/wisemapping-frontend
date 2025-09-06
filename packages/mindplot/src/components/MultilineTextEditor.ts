@@ -212,7 +212,6 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       fontStyle.weight = 'normal';
     }
 
-    /* eslint-enable no-param-reassign */
     const cssStyle = {
       'font-size': `${fontStyle.size}px`,
       'font-family': fontStyle.fontFamily,
@@ -269,7 +268,6 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 }
 
 class MultitTextEditor {
-  // eslint-disable-next-line no-use-before-define
   private static instance: MultitTextEditor = new MultitTextEditor();
 
   private _component: EditorComponent | null;

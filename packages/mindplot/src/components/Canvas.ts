@@ -121,7 +121,7 @@ class Canvas {
   }
 
   private appendInternal(shape: CanvasElement | ElementClass<ElementPeer>): void {
-    // eslint-disable-next-line no-prototype-builtins, dot-notation
+    // eslint-disable-next-line dot-notation
     if (typeof shape['addToWorkspace'] === 'function') {
       (shape as CanvasElement).addToWorkspace(this);
     } else {

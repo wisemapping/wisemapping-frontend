@@ -1,0 +1,1150 @@
+{
+  "account.delete-warning": [
+    {
+      "type": 0,
+      "value": "作成したマインドマップは復元できません。すべての情報が削除され、復元することはできません。"
+    }
+  ],
+  "accountinfo.button": [
+    {
+      "type": 0,
+      "value": "受け入れる"
+    }
+  ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "アカウントを削除"
+    }
+  ],
+  "accountinfo.email": [
+    {
+      "type": 0,
+      "value": "メールアドレス"
+    }
+  ],
+  "accountinfo.firstname": [
+    {
+      "type": 0,
+      "value": "名"
+    }
+  ],
+  "accountinfo.lastname": [
+    {
+      "type": 0,
+      "value": "姓"
+    }
+  ],
+  "accountinfo.title": [
+    {
+      "type": 0,
+      "value": "アカウント情報"
+    }
+  ],
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "キャンセル"
+    }
+  ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "閉じる"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "削除"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "削除されたマインドマップは復元できません。続行しますか？"
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "削除"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "複製"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "エクスポート"
+    }
+  ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "履歴"
+    }
+  ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "過去90日間の変更履歴。"
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "バージョン履歴"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "インポート"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "情報"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "ラベルを追加"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "新しいマップ"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "開く"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "印刷"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "公開"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "名前を変更"
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "説明"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "名前"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "共有"
+    }
+  ],
+  "changepwd.button": [
+    {
+      "type": 0,
+      "value": "変更"
+    }
+  ],
+  "changepwd.confirm-password": [
+    {
+      "type": 0,
+      "value": "パスワードを確認"
+    }
+  ],
+  "changepwd.description": [
+    {
+      "type": 0,
+      "value": "アカウントの新しいパスワードを入力してください。"
+    }
+  ],
+  "changepwd.password": [
+    {
+      "type": 0,
+      "value": "パスワード"
+    }
+  ],
+  "changepwd.password-match": [
+    {
+      "type": 0,
+      "value": "パスワードが一致しません。もう一度お試しください。"
+    }
+  ],
+  "changepwd.title": [
+    {
+      "type": 0,
+      "value": "パスワードを変更"
+    }
+  ],
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "お待ちください..."
+    }
+  ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "作成"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "新しいマップの名前と説明を入力してください。"
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "新しいマインドマップを作成"
+    }
+  ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "選択されたすべてのマップが削除されます"
+    }
+  ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "読み込み中..."
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "複製"
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。"
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "現在のセッションが期限切れです。ログインして再試行してください。"
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "セッションが期限切れです"
+    }
+  ],
+  "export.desc": [
+    {
+      "type": 0,
+      "value": "このマップを希望の形式でエクスポートし、プレゼンテーションで使用したり、メールで共有したりできます"
+    }
+  ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "マインドマップツール：マインドマップをサードパーティのマインドマップツール形式でエクスポート"
+    }
+  ],
+  "export.document-label": [
+    {
+      "type": 0,
+      "value": "ドキュメント：マインドマップを共有準備完了の独立したドキュメントとしてエクスポート"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "画像：すべての色と形状を含むマップのグラフィック表現を取得"
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "中央揃えしてフィット"
+    }
+  ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "エクスポート"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "画像（SVG、PNG、JPEG、PDF）へのエクスポートは、エディターツールバーでのみ利用可能です。"
+    }
+  ],
+  "footer.aboutus": [
+    {
+      "type": 0,
+      "value": "私たちについて"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "お問い合わせ"
+    }
+  ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "寄付"
+    }
+  ],
+  "footer.faq": [
+    {
+      "type": 0,
+      "value": "よくある質問"
+    }
+  ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "ヘルプとよくある質問"
+    }
+  ],
+  "footer.feedback": [
+    {
+      "type": 0,
+      "value": "フィードバック"
+    }
+  ],
+  "footer.opensource": [
+    {
+      "type": 0,
+      "value": "オープンソース"
+    }
+  ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "その他"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "サポート"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "チーム"
+    }
+  ],
+  "footer.termsandconditions": [
+    {
+      "type": 0,
+      "value": "利用規約"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "パスワードをリセットするためのメールをお送りします。"
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "メールアドレス"
+    }
+  ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "ログインに戻る"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "パスワードは不要です。Googleでログインしてください。"
+    }
+  ],
+  "forgot.page-title": [
+    {
+      "type": 0,
+      "value": "パスワードを忘れた場合 | WiseMapping"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "復旧リンクを送信"
+    }
+  ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "パスワードをリセットできるメールをお送りしました。数分以内に受信されるはずです。"
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "一時パスワードが送信されました。"
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "パスワードをリセット"
+    }
+  ],
+  "forgotsuccess.page-title": [
+    {
+      "type": 0,
+      "value": "パスワード復旧 | WiseMapping"
+    }
+  ],
+  "header.donthaveaccount": [
+    {
+      "type": 0,
+      "value": "アカウントをお持ちでないですか？"
+    }
+  ],
+  "header.haveaccount": [
+    {
+      "type": 0,
+      "value": "すでにアカウントをお持ちですか？"
+    }
+  ],
+  "help.support": [
+    {
+      "type": 0,
+      "value": "サポート"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "利用可能な変更はありません"
+    }
+  ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "作成"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "WiseMappingとFreemindのマップをマップリストにインポートできます。インポートするファイルを選択してください。"
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "インポートエラー "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "既存のマインドマップをインポート"
+    }
+  ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "基本情報"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "受け入れる"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "作成日"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "作成者"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "説明"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "マップを公開することで、インターネット上のすべての人に表示されます。"
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "最終更新日"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "最終更新者"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "名前"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "公開表示"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "共有"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "お気に入り"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "情報"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "ラベルを追加"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "マップのラベルを編集："
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "ラベルタイトル"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "ラベルの色を変更"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "が削除され、既存のすべてのマップとの関連付けも含まれます。続行しますか？"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "ラベル削除を確認"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "ラベルを使用してマップを整理します。"
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " マップ"
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "ラベルを追加"
+    }
+  ],
+  "language.change": [
+    {
+      "type": 0,
+      "value": "言語を変更"
+    }
+  ],
+  "language.help": [
+    {
+      "type": 0,
+      "value": "翻訳を支援"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "アカウントにログイン"
+    }
+  ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "または"
+    }
+  ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "メールアドレス"
+    }
+  ],
+  "login.error": [
+    {
+      "type": 0,
+      "value": "入力されたメールアドレスまたはパスワードが無効です。"
+    }
+  ],
+  "login.forgotpwd": [
+    {
+      "type": 0,
+      "value": "パスワードを忘れましたか？"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Googleでサインイン"
+    }
+  ],
+  "login.hsqldbcofig": [
+    {
+      "type": 0,
+      "value": "HSQLDBはインストール時にデフォルトでWiseMappingにバンドルされていますが、本番環境での使用は推奨しません。代わりにMySQL 5.7の使用を検討してください。MySQLの設定方法の詳細はこちら"
+    }
+  ],
+  "login.page-title": [
+    {
+      "type": 0,
+      "value": "ログイン | WiseMapping"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "パスワード"
+    }
+  ],
+  "login.remberme": [
+    {
+      "type": 0,
+      "value": "ログイン状態を保持"
+    }
+  ],
+  "login.signin": [
+    {
+      "type": 0,
+      "value": "サインイン"
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "サインアップ"
+    }
+  ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "ようこそ"
+    }
+  ],
+  "login.userinactive": [
+    {
+      "type": 0,
+      "value": "申し訳ございませんが、アカウントはまだアクティベートされていません。アクティベートされると通知メールが送信されます。お待ちください。"
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "作成者"
+    }
+  ],
+  "map.delete-selected": [
+    {
+      "type": 0,
+      "value": "選択したものを削除"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "最終更新"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "その他のアクション"
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "名前"
+    }
+  ],
+  "map.tooltip-add": [
+    {
+      "type": 0,
+      "value": "選択したものにラベルを追加"
+    }
+  ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "ファイルを選択"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "新しいマインドマップを作成"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "現在のフィルター条件に一致するマインドマップが見つかりません。"
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "他のツールからインポート"
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "変更"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "変更者"
+    }
+  ],
+  "maps.modified-by-desc": [
+    {
+      "type": 1,
+      "value": "on"
+    },
+    {
+      "type": 0,
+      "value": "に"
+    },
+    {
+      "type": 1,
+      "value": "by"
+    },
+    {
+      "type": 0,
+      "value": "が変更"
+    }
+  ],
+  "maps.nav-all": [
+    {
+      "type": 0,
+      "value": "すべて"
+    }
+  ],
+  "maps.nav-onwned": [
+    {
+      "type": 0,
+      "value": "所有"
+    }
+  ],
+  "maps.nav-public": [
+    {
+      "type": 0,
+      "value": "公開"
+    }
+  ],
+  "maps.nav-shared": [
+    {
+      "type": 0,
+      "value": "共有"
+    }
+  ],
+  "maps.nav-starred": [
+    {
+      "type": 0,
+      "value": "お気に入り"
+    }
+  ],
+  "maps.page-title": [
+    {
+      "type": 0,
+      "value": "マイマップ | WiseMapping"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "元に戻す"
+    }
+  ],
+  "maps.search-action": [
+    {
+      "type": 0,
+      "value": "検索..."
+    }
+  ],
+  "maps.tooltip-open": [
+    {
+      "type": 0,
+      "value": "編集用に開く"
+    }
+  ],
+  "maps.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "お気に入り"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "表示"
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "アカウント"
+    }
+  ],
+  "menu.change-password": [
+    {
+      "type": 0,
+      "value": "パスワードを変更"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "サインアウト"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "受け入れる"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "公開共有を有効にする"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "マップを公開することで、インターネット上のすべての人に表示されます。"
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "埋め込み"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "このコードスニペットをコピーして、ブログやページに埋め込みます："
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "公開URL"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "以下のリンクをコピーして貼り付け、同僚とマップを共有します："
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "公開"
+    }
+  ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Googleでの身元確認中にエラーが発生しました。ログインページから再試行できます"
+    }
+  ],
+  "registation.success-title": [
+    {
+      "type": 0,
+      "value": "登録成功 | WiseMapping"
+    }
+  ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "ログインに戻る"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "同じメールアドレスのアカウントが以前に登録されています。GoogleアカウントをそのWiseMappingアカウントにリンクしますか？"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "確認"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "アカウントを同期"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "身元を確認中です。お待ちください"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "完了中..."
+    }
+  ],
+  "registration.desc": [
+    {
+      "type": 0,
+      "value": "登録は無料で、すぐに完了します"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "または"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "メールアドレス"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "名"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Googleでサインアップ"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "姓"
+    }
+  ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "登録 | WiseMapping"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "パスワード"
+    }
+  ],
+  "registration.register": [
+    {
+      "type": 0,
+      "value": "登録"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "下の「サインイン」ボタンをクリックして、マインドマップの作成を開始してください。"
+    }
+  ],
+  "registration.termandconditions": [
+    {
+      "type": 0,
+      "value": "クライアント条件：上記で入力したWiseMappingアカウント情報を確認し、こちらでクライアント条件を確認してください。下の「登録」をクリックすることで、上記のクライアント条件とプライバシーポリシーに同意したことになります"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "メンバーになる"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "新しいマップの名前と説明を入力してください。"
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "名前を変更"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "アカウントが正常に作成されました"
+    }
+  ],
+  "role.editor": [
+    {
+      "type": 0,
+      "value": "編集者"
+    }
+  ],
+  "role.owner": [
+    {
+      "type": 0,
+      "value": "所有者"
+    }
+  ],
+  "role.viewer": [
+    {
+      "type": 0,
+      "value": "閲覧者"
+    }
+  ],
+  "share.add-button": [
+    {
+      "type": 0,
+      "value": "共有"
+    }
+  ],
+  "share.add-message": [
+    {
+      "type": 0,
+      "value": "メッセージを追加"
+    }
+  ],
+  "share.can-edit": [
+    {
+      "type": 0,
+      "value": "編集可能"
+    }
+  ],
+  "share.can-view": [
+    {
+      "type": 0,
+      "value": "閲覧可能"
+    }
+  ],
+  "share.delete": [
+    {
+      "type": 0,
+      "value": "共同編集者を削除"
+    }
+  ],
+  "share.delete-description": [
+    {
+      "type": 0,
+      "value": "マインドマップの作成に協力する人を招待します。メールで通知されます。"
+    }
+  ],
+  "share.delete-title": [
+    {
+      "type": 0,
+      "value": "人と共有"
+    }
+  ],
+  "share.message": [
+    {
+      "type": 0,
+      "value": "メッセージ"
+    }
+  ]
+}

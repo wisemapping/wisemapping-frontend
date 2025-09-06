@@ -33,11 +33,10 @@ const Separator: React.FunctionComponent<SeparatorProps> = ({
   const theme = useTheme();
 
   return (
-    // eslint-disable-next-line react/no-unknown-property
     <div css={containerStyle(responsive, maxWidth, theme.breakpoints.down('md'))}>
-      {/* eslint-disable-next-line react/no-unknown-property */}
+      {}
       <div css={lineStyle(responsive, theme.breakpoints.up('md'))}></div>
-      {/* eslint-disable-next-line react/no-unknown-property */}
+      {}
       <div css={textStyle(responsive, theme.breakpoints.up('md'))}>{text}</div>
     </div>
   );

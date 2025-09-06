@@ -31,14 +31,12 @@ type NodeKey = 'order' | 'position' | 'size' | 'freeDisplacement' | 'shrink';
 class Node {
   private _id: number;
 
-  // eslint-disable-next-line no-use-before-define
   _parent!: Node | null;
 
   private _sorter: ChildrenSorterStrategy;
 
   private _properties: Map<NodeKey, MapValue>;
 
-  // eslint-disable-next-line no-use-before-define
   _children!: Node[];
 
   _branchHeight: number;

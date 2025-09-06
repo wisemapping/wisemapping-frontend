@@ -221,7 +221,7 @@ const ShareDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement 
               {permissions &&
                 permissions.map((permission) => {
                   return (
-                    <ListItem key={permission.email} role={undefined} dense button>
+                    <ListItem key={permission.email} role={undefined} dense component="button">
                       <ListItemText
                         css={classes.listItemText as Interpolation<Theme>}
                         id={permission.email}

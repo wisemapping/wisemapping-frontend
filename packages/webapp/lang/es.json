@@ -30,7 +30,7 @@
         "defaultMessage": "Borrar"
     },
     "action.delete-description": {
-        "defaultMessage": "El mapa mental eliminado no se podrá recuperar. Quieres continuar ?."
+        "defaultMessage": "El mapa mental eliminado no se podrá recuperar. ¿Quieres continuar?"
     },
     "action.delete-title": {
         "defaultMessage": "Borrar"
@@ -201,7 +201,7 @@
         "defaultMessage": "Contraseña recuperada | WiseMapping"
     },
     "header.donthaveaccount": {
-        "defaultMessage": "¿No tenes una cuenta?"
+        "defaultMessage": "¿No tienes una cuenta?"
     },
     "header.haveaccount": {
         "defaultMessage": "¿Ya tienes una cuenta?"
@@ -394,7 +394,7 @@
         "defaultMessage": "Revertir"
     },
     "maps.search-action": {
-        "defaultMessage": "Búscar ..."
+        "defaultMessage": "Buscar ..."
     },
     "maps.tooltip-open": {
         "defaultMessage": "Abrir para edición"

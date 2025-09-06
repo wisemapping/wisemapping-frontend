@@ -1,8 +1,16 @@
-Sitemap: https://www.wisemapping.com/sitemap.xml
-
 User-agent: *
 Allow: /
-Disallow: /c/restful/maps/*/document/xml-pub
+Allow: /c/login
+Allow: /c/registration
+Allow: /c/maps/*/public
 Disallow: /c/maps/*/edit
+Disallow: /c/maps/*/view
+Disallow: /c/maps/*/print
+Disallow: /c/maps/*/embed
 Disallow: /c/maps/*/try
-Disallow: /c/maps/*/public
+
+# Sitemap
+Sitemap: https://www.wisemapping.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

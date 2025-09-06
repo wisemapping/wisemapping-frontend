@@ -157,7 +157,7 @@
         "defaultMessage": "Centrar"
     },
     "shortcut-help-pane.action": {
-        "defaultMessage": "Action"
+        "defaultMessage": "Acción"
     },
     "shortcut-help-pane.add-child": {
         "defaultMessage": "Agregar tópico hijo"
@@ -175,10 +175,10 @@
         "defaultMessage": "Cancelar cambio de texto"
     },
     "shortcut-help-pane.change-font-bold": {
-        "defaultMessage": "Cambiar texto to negrita"
+        "defaultMessage": "Cambiar texto a negrita"
     },
     "shortcut-help-pane.change-font-italic": {
-        "defaultMessage": "Cambiar texto a italica"
+        "defaultMessage": "Cambiar texto a itálica"
     },
     "shortcut-help-pane.collapse-children": {
         "defaultMessage": "Colapsar hijos"
@@ -238,7 +238,7 @@
         "defaultMessage": "Sobrescribir el texto del tópico"
     },
     "shortcut-help-pane.overwrite-edit-topic-key": {
-        "defaultMessage": "Comenzar a escibribir en el tópico seleccionado"
+        "defaultMessage": "Comenzar a escribir en el tópico seleccionado"
     },
     "editor-panel.tooltip-connection-color": {
         "defaultMessage": "Color"

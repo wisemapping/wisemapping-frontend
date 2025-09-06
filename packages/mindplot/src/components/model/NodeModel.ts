@@ -26,12 +26,10 @@ import FeatureType from './FeatureType';
 class NodeModel extends INodeModel {
   private _properties: Record<string, string | number | boolean>;
 
-  // eslint-disable-next-line no-use-before-define
   private _children: NodeModel[];
 
   private _features: FeatureModel[];
 
-  // eslint-disable-next-line no-use-before-define
   private _parent: NodeModel | null;
 
   constructor(type: NodeModelType, mindmap: Mindmap, id?: number) {

@@ -15,6 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
 import React, { ReactElement } from 'react';
 import { Vortex } from 'react-loader-spinner';
 
@@ -22,7 +23,7 @@ import { IntlProvider } from 'react-intl';
 import { Designer } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
-// eslint-disable-next-line no-restricted-imports
+
 import { Theme } from '@mui/material/styles';
 import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';
@@ -74,13 +75,13 @@ const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactE
         </div>
       )}
 
-      <mindplot-component
-        ref={mindplotRef}
-        id="mindmap-comp"
-        mode={options.mode}
-        locale={locale}
-        zoom={options.zoom}
-      />
+      {React.createElement('mindplot-component', {
+        ref: mindplotRef,
+        id: 'mindmap-comp',
+        mode: options.mode,
+        locale: locale,
+        zoom: options.zoom,
+      })}
 
       <Notifier id="headerNotifier" />
 

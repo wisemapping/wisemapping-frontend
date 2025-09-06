@@ -187,7 +187,6 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addMapPermissions(id: number, message: string, permissions: Permission[]): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
@@ -390,9 +389,13 @@ export default class RestClient implements Client {
   updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
     const handler = (success: () => void, reject: (error: ErrorInfo) => void) => {
       this.axios
-        .put(`${this.baseUrl}/api/restful/maps/${id}/publish`, isPublic.toString(), {
-          headers: { 'Content-Type': 'text/plain' },
-        })
+        .put(
+          `${this.baseUrl}/api/restful/maps/${id}/publish`,
+          { isPublic },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          },
+        )
         .then(() => {
           success();
         })

@@ -21,6 +21,8 @@ import 'dayjs/locale/es';
 import 'dayjs/locale/de';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
+import 'dayjs/locale/ja';
+import 'dayjs/locale/pt';
 import { useFetchAccount } from '../middleware';
 
 export class Locale {
@@ -41,7 +43,8 @@ export default abstract class AppI18n {
   public static getUserLocale(): Locale {
     const path = window.location.pathname;
     // @Todo Hack: Try page must not account info. Add this to avoid 403 errors.
-    const isPublicPage = path.endsWith('/try') || path.endsWith('/public') || path.endsWith('/embed') ;
+    const isPublicPage =
+      path.endsWith('/try') || path.endsWith('/public') || path.endsWith('/embed');
     let result: Locale;
     if (!isPublicPage) {
       const account = useFetchAccount();
@@ -89,15 +92,17 @@ export default abstract class AppI18n {
   }
 }
 
-export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh';
+export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh' | 'ja' | 'pt';
 
 export const Locales = {
   EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
   ES: new Locale('es', 'Español', require('./../../compiled-lang/es.json')), // eslint-disable-line
-  DE: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
-  FR: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
+  DE: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
+  FR: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
   RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
   ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
+  JA: new Locale('ja', '日本語', require('./../../compiled-lang/ja.json')), // eslint-disable-line
+  PT: new Locale('pt', 'Português', require('./../../compiled-lang/pt.json')), // eslint-disable-line
 };
 
 export const localeFromStr = (code: string): Locale => {
