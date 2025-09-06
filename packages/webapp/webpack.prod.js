@@ -35,7 +35,7 @@ module.exports = merge(common, {
       base: configUrl,
     }),
     new (require('webpack')).DefinePlugin({
-      'window.BoostrapConfig': config,
+      'window.BoostrapConfig': JSON.stringify(config),
     }),
   ],
 });
