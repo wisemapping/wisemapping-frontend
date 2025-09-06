@@ -33,7 +33,7 @@
         "@mui/material": "^7.3.2",
         "@wisemapping/core-js": "workspace:*",
         "@wisemapping/editor": "workspace:^",
-        "axios": "^1.7.0",
+        "axios": "^1.11.0",
         "dayjs": "^1.11.18",
         "react": "^19.0.0",
         "react-dom": "^19.1.1",
@@ -42,7 +42,7 @@
         "react-helmet-async": "^2.0.5",
         "react-intl": "^7.1.11",
         "react-query": "^3.39.3",
-        "react-router-dom": "^6.22.3",
+        "react-router-dom": "^6.30.1",
         "styled-components": "^6.1.8",
         "universal-cookie": "^8.0.1",
         "update-browserslist-db": "^1.0.13"
@@ -50,7 +50,6 @@
     "devDependencies": {
         "@formatjs/cli": "^6.2.9",
         "@testing-library/cypress": "^10.1.0",
-        "@types/testing-library__cypress": "^5.0.13",
         "@welldone-software/why-did-you-render": "^10.0.1",
         "cypress": "^15.1.0",
         "cypress-image-snapshot": "^4.0.1"

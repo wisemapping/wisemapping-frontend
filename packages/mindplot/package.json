@@ -29,7 +29,7 @@
     "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts --verbose --silent --detectOpenHandles"
   },
   "dependencies": {
-    "@types/jquery": "^3.5.29",
+    "@types/jquery": "^3.5.33",
     "@wisemapping/core-js": "workspace:*",
     "@wisemapping/web2d": "workspace:*",
     "jquery": "3.7.1",
