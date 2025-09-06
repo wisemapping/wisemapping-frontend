@@ -61,6 +61,7 @@ import ReactGA from 'react-ga4';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
+import { SEOHead } from '../seo';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -225,14 +226,36 @@ const MapsPage = (): ReactElement => {
       defaultLocale={Locales.EN.code}
       messages={userLocale.message}
     >
+      <SEOHead
+        title="My Maps | WiseMapping"
+        description="Access and manage your mind maps in WiseMapping. Create, edit, share, and collaborate on your visual thinking projects. Organize your ideas with our powerful mind mapping tool."
+        keywords="my maps, mind maps, visual thinking, collaboration, organize ideas, brainstorming, project management"
+        canonicalUrl="/c/maps/"
+        ogType="website"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'My Maps - WiseMapping',
+          description:
+            'Access and manage your mind maps in WiseMapping. Create, edit, share, and collaborate on your visual thinking projects.',
+          url: 'https://www.wisemapping.com/c/maps/',
+          mainEntity: {
+            '@type': 'WebApplication',
+            name: 'WiseMapping',
+            applicationCategory: 'ProductivityApplication',
+            operatingSystem: 'Web Browser',
+          },
+        }}
+      />
       <div css={classes.root}>
         <AppBar
           position="fixed"
           css={[classes.appBar, classes.appBarShift]}
           variant="outlined"
           elevation={0}
+          component="header"
         >
-          <Toolbar>
+          <Toolbar role="banner">
             <IconButton
               aria-label="open drawer"
               edge="start"
@@ -334,9 +357,11 @@ const MapsPage = (): ReactElement => {
         >
           {drawerItemsList}
         </Drawer>
-        <main css={classes.content}>
+        <main css={classes.content} role="main">
           <div css={classes.toolbar} />
-          <MapsList filter={filter} />
+          <section aria-label="Maps list">
+            <MapsList filter={filter} />
+          </section>
         </main>
       </div>
       {label && labelToDelete != null && (

@@ -17,6 +17,7 @@ import AppConfig from '../../classes/app-config';
 import { useMutation } from 'react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
+import { SEOHead } from '../seo';
 
 export type Model = {
   email: string;
@@ -106,51 +107,81 @@ const LoginPage = (): React.ReactElement => {
 
   return (
     <div>
+      <SEOHead
+        title="Login | WiseMapping"
+        description="Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others. Free online mind mapping tool."
+        keywords="login, sign in, mind mapping, wise mapping, account access, collaboration"
+        canonicalUrl="/c/login"
+        ogType="website"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Login - WiseMapping',
+          description:
+            'Sign in to your WiseMapping account to access your mind maps, create new ones, and collaborate with others.',
+          url: 'https://www.wisemapping.com/c/login',
+          mainEntity: {
+            '@type': 'WebApplication',
+            name: 'WiseMapping',
+            applicationCategory: 'ProductivityApplication',
+            operatingSystem: 'Web Browser',
+          },
+        }}
+      />
       <Header type={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'} />
 
       <FormContainer>
-        <Typography variant="h4" component="h1">
-          <FormattedMessage id="login.title" defaultMessage="Welcome" />
-        </Typography>
+        <header>
+          <Typography variant="h4" component="h1">
+            <FormattedMessage id="login.title" defaultMessage="Welcome" />
+          </Typography>
 
-        <Typography paragraph>
-          <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
-        </Typography>
+          <Typography paragraph>
+            <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
+          </Typography>
+        </header>
 
         <LoginError errorCode={loginError} />
 
-        <FormControl>
-          <form onSubmit={handleOnSubmit}>
-            <Input
-              onChange={handleOnChange}
-              name="email"
-              type="email"
-              label={intl.formatMessage({
-                id: 'login.email',
-                defaultMessage: 'Email',
-              })}
-              required
-              autoComplete="email"
-            />
-            <Input
-              onChange={handleOnChange}
-              name="password"
-              type="password"
-              label={intl.formatMessage({
-                id: 'login.password',
-                defaultMessage: 'Password',
-              })}
-              required
-              autoComplete="current-password"
-            />
-            <SubmitButton
-              value={intl.formatMessage({
-                id: 'login.signin',
-                defaultMessage: 'Sign In',
-              })}
-            />
-          </form>
-        </FormControl>
+        <main>
+          <FormControl>
+            <form onSubmit={handleOnSubmit} role="form" aria-label="Login form">
+              <fieldset>
+                <legend>
+                  <FormattedMessage id="login.form-legend" defaultMessage="Login Information" />
+                </legend>
+                <Input
+                  onChange={handleOnChange}
+                  name="email"
+                  type="email"
+                  label={intl.formatMessage({
+                    id: 'login.email',
+                    defaultMessage: 'Email',
+                  })}
+                  required
+                  autoComplete="email"
+                />
+                <Input
+                  onChange={handleOnChange}
+                  name="password"
+                  type="password"
+                  label={intl.formatMessage({
+                    id: 'login.password',
+                    defaultMessage: 'Password',
+                  })}
+                  required
+                  autoComplete="current-password"
+                />
+                <SubmitButton
+                  value={intl.formatMessage({
+                    id: 'login.signin',
+                    defaultMessage: 'Sign In',
+                  })}
+                />
+              </fieldset>
+            </form>
+          </FormControl>
+        </main>
         <Link component={RouterLink} to="/c/forgot-password">
           <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
         </Link>
