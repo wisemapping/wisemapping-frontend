@@ -147,9 +147,6 @@ const LoginPage = (): React.ReactElement => {
           <FormControl>
             <form onSubmit={handleOnSubmit} role="form" aria-label="Login form">
               <fieldset>
-                <legend>
-                  <FormattedMessage id="login.form-legend" defaultMessage="Login Information" />
-                </legend>
                 <Input
                   onChange={handleOnChange}
                   name="email"
