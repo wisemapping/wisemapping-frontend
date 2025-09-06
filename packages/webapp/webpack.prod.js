@@ -3,6 +3,9 @@ const common = require('./webpack.common.js');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// Load configuration for production
+const config = require('./config.prod.json');
+
 // Add support for versel URL.
 let configUrl = '';
 if (process.env.PUBLIC_URL) {
@@ -30,6 +33,9 @@ module.exports = merge(common, {
 
       },
       base: configUrl,
+    }),
+    new (require('webpack')).DefinePlugin({
+      'window.BoostrapConfig': config,
     }),
   ],
 });

@@ -63,9 +63,7 @@ const commonConfig = {
       },
     },
   },
-  externals: {
-    'BoostrapConfig': config,
-  },
+  externals: {},
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
