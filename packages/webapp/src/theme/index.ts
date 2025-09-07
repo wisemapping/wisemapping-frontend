@@ -2,6 +2,15 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   components: {
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          '& fieldset': {
+            border: 'none',
+          },
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
