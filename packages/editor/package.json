@@ -25,8 +25,8 @@
     "test:unit": "jest ./test/unit/* --detectOpenHandles"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
     "@wisemapping/core-js": "workspace:*",
@@ -42,7 +42,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@formatjs/cli": "^6.2.9",
+    "@formatjs/cli": "^6.7.2",
     "@testing-library/react": "^16.3.0",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",

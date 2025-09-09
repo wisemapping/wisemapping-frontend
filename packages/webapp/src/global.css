@@ -1,0 +1,8 @@
+/* Global styles for webapp */
+
+/* Remove borders from all fieldset elements globally */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
