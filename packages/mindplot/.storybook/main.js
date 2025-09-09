@@ -12,7 +12,7 @@ module.exports = {
     options: {}
   },
   docs: {
-    autodocs: "tag"
+    defaultName: "Documentation"
   },
   babel: async (options) => ({
     ...options,
