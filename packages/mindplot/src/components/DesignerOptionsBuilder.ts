@@ -17,7 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import EditorRenderMode from './EditorRenderMode';
-import WidgetBulder from './WidgetBuilder';
+import WidgetBuilder from './WidgetBuilder';
 import PersistenceManager from './PersistenceManager';
 
 export type DesignerOptions = {
@@ -26,7 +26,7 @@ export type DesignerOptions = {
   mapId?: string;
   divContainer: HTMLElement;
   persistenceManager?: PersistenceManager;
-  widgetManager: WidgetBulder;
+  widgetManager: WidgetBuilder;
   saveOnLoad?: boolean;
   locale?: string;
 };

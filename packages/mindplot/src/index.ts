@@ -43,7 +43,7 @@ import Topic from './components/Topic';
 
 import LinkModel from './components/model/LinkModel';
 import NoteModel from './components/model/NoteModel';
-import WidgetBuilder, { WidgetEventType } from './components/WidgetBuilder';
+import WidgetBuilder, { type WidgetEventType } from './components/WidgetBuilder';
 import { buildDesigner } from './components/DesignerBuilder';
 import { $notify } from './components/model/ToolbarNotifier';
 import XMLSerializerFactory from './components/persistence/XMLSerializerFactory';
@@ -90,7 +90,7 @@ export {
   NoteIcon,
   NoteModel,
   WidgetBuilder,
-  WidgetEventType,
+  type WidgetEventType,
   Topic,
   XMLSerializerFactory,
 };

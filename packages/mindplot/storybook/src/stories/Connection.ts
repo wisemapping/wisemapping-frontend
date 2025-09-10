@@ -25,7 +25,8 @@ const registerRefreshHook = (topics: Topic[]) => {
     topics.forEach((t) => t.redraw());
     LayoutEventBus.fireEvent('forceLayout');
   });
-  globalThis.observer.observe(document.getElementById('root')!, { childList: true });
+  const rootElement = document.getElementById('root') || document.body;
+  globalThis.observer.observe(rootElement, { childList: true });
 };
 
 export type TopicArgs = {

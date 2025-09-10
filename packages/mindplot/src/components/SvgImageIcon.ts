@@ -24,17 +24,15 @@ import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 
-function importAll(r) {
-  const images = {};
-  r.keys().forEach((item) => {
-    images[item.replace('./', '')] = r(item);
-  });
-  return images;
-}
+// Import all icon assets using Vite's import.meta.glob
+const iconModules = import.meta.glob('../../assets/icons/*.{png,svg}', { eager: true });
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const images = importAll(require.context('../../assets/icons', false, /\.(png|svg)$/));
+// Transform the modules into the expected format
+const images = {};
+Object.entries(iconModules).forEach(([path, module]) => {
+  const fileName = path.replace('../../assets/icons/', '');
+  images[fileName] = (module as any).default;
+});
 
 class SvgImageIcon extends ImageIcon {
   private _topicId: number;
