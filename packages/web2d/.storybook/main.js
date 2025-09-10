@@ -1,42 +1,25 @@
+const {
+  dirname,
+  join
+} = require("node:path");
+
 module.exports = {
   stories: [
     "../storybook/src/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
-  ],
+  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
   framework: {
-    name: "@storybook/html-webpack5",
+    name: getAbsolutePath("@storybook/html-vite"),
     options: {}
   },
   docs: {
     defaultName: "Documentation"
   },
-  babel: async (options) => ({
-    ...options,
-    presets: [
-      ...(options.presets || []),
-      ["@babel/preset-typescript", { allowDeclareFields: true }]
-    ]
-  }),
-  webpackFinal: async (config) => {
-    config.module.rules.push({
-      test: /\.tsx?$/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              ['@babel/preset-typescript', { allowDeclareFields: true }]
-            ]
-          }
-        }
-      ]
-    });
-    config.resolve.extensions.push('.ts', '.tsx');
+  viteFinal: async (config) => {
     return config;
   }
+}
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, "package.json")));
 }

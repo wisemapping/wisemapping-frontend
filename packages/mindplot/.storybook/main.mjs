@@ -1,15 +1,10 @@
-const {
-  dirname,
-  join
-} = require("node:path");
-
-module.exports = {
+export default {
   stories: [
     "../storybook/src/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ],
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
+  addons: ["@storybook/addon-links", "@storybook/addon-docs"],
   framework: {
-    name: getAbsolutePath("@storybook/html-vite"),
+    name: "@storybook/html-vite",
     options: {}
   },
   docs: {
@@ -28,7 +23,3 @@ module.exports = {
     },
   },
 };
-
-function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, "package.json")));
-}

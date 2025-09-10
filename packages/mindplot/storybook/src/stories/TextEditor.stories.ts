@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/html';
+import { StoryFn, Meta } from '@storybook/html';
 import createTopic, { TopicArgs } from './Topic';
 
 export default {
@@ -24,7 +24,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<TopicArgs> = (args: TopicArgs) => createTopic(args);
+const Template: StoryFn<TopicArgs> = (args: TopicArgs) => createTopic(args);
 
 export const MultilineEditor = Template.bind({});
 MultilineEditor.args = {

@@ -27,16 +27,15 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
     "@mdx-js/react": "^3.1.1",
-    "@storybook/addon-actions": "^8.4.7",
-    "@storybook/addon-docs": "^8.4.7",
-    "@storybook/addon-essentials": "^8.4.7",
-    "@storybook/addon-interactions": "^8.4.7",
-    "@storybook/addon-links": "^8.4.7",
-    "@storybook/html-webpack5": "^8.4.7",
+    "@storybook/addon-docs": "^9.1.5",
+    "@storybook/addon-links": "^9.1.5",
+    "@storybook/html-vite": "^9.1.5",
     "@storybook/testing-library": "^0.2.2",
     "cypress": "^15.1.0",
     "cypress-image-snapshot": "^4.0.1",
-    "storybook": "^8.4.7"
+    "eslint-plugin-storybook": "9.1.5",
+    "storybook": "^9.1.5",
+    "vite": "^7.1.5"
   },
   "peerDependencies": {
     "@wisemapping/core-js": "workspace:*",

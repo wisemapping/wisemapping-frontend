@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/html';
+import { StoryFn, Meta } from '@storybook/html';
 import createConnection, { TopicArgs } from './Connection';
 
 export default {
@@ -12,7 +12,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<TopicArgs> = (args: TopicArgs) => createConnection(args);
+const Template: StoryFn<TopicArgs> = (args: TopicArgs) => createConnection(args);
 
 export const Classic = Template.bind({});
 Classic.args = {

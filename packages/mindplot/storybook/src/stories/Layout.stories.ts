@@ -1,5 +1,5 @@
 /* eslint-disable no-new */
-import { Story, Meta } from '@storybook/html';
+import { StoryFn, Meta } from '@storybook/html';
 import BalancedTestSuite from './layout/BalancedTestSuite';
 
 import Raphael from './layout/lib/raphael-min';
@@ -170,5 +170,5 @@ const fullSuite = () => {
   return divElem;
 };
 
-const Template: Story<void> = () => fullSuite();
+const Template: StoryFn = () => fullSuite();
 export const BasicSuite = Template.bind({});
