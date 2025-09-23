@@ -1,13 +1,12 @@
 import { describe, it, expect } from '@jest/globals';
-import Mindmap from '../../src/components/model/Mindmap';
-import NodeModel from '../../src/components/model/NodeModel';
-import TxtExporter from '../../src/components/export/TxtExporter';
-import MDExporter from '../../src/components/export/MDExporter';
-import FreemindExporter from '../../src/components/export/FreemindExporter';
+import Mindmap from '../../../src/components/model/Mindmap';
+import TxtExporter from '../../../src/components/export/TxtExporter';
+import MDExporter from '../../../src/components/export/MDExporter';
+import FreemindExporter from '../../../src/components/export/FreemindExporter';
 
 describe('ContentType Attribute Tests', () => {
   it('should handle rich text content with contentType="html" in TxtExporter', async () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     // Set rich text content with HTML
@@ -25,7 +24,7 @@ describe('ContentType Attribute Tests', () => {
   });
 
   it('should handle plain text content without contentType in TxtExporter', async () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     // Set plain text content
@@ -41,7 +40,7 @@ describe('ContentType Attribute Tests', () => {
   });
 
   it('should handle rich text content with contentType="html" in MDExporter', async () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     // Set rich text content with HTML
@@ -59,7 +58,7 @@ describe('ContentType Attribute Tests', () => {
   });
 
   it('should handle rich text content with contentType="html" in FreemindExporter', async () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     // Set rich text content with HTML
@@ -77,7 +76,7 @@ describe('ContentType Attribute Tests', () => {
   });
 
   it('should correctly identify rich text with isRichText() method', () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     // Test with contentType="html"
@@ -94,7 +93,7 @@ describe('ContentType Attribute Tests', () => {
   });
 
   it('should correctly strip HTML with getPlainText() method', () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     const richText = '<b>Bold text</b> and <i>italic text</i>';
@@ -108,7 +107,7 @@ describe('ContentType Attribute Tests', () => {
   });
 
   it('should return original text with getPlainText() for non-rich content', () => {
-    const mindmap = new Mindmap('Test Map');
+    const mindmap = Mindmap.buildEmpty('Test Map');
     const centralTopic = mindmap.getCentralTopic();
 
     const plainText = 'Plain text content';
