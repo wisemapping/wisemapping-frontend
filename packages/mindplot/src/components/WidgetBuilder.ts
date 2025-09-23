@@ -117,4 +117,3 @@ abstract class WidgetBuilder {
 }
 
 export default WidgetBuilder;
-export { WidgetEventType };

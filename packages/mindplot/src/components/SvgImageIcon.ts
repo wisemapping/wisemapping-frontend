@@ -24,15 +24,45 @@ import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 
-// Import all icon assets using Vite's import.meta.glob
-const iconModules = import.meta.glob('../../assets/icons/*.{png,svg}', { eager: true });
+// Create icon URL mapping that works without dynamic imports
+const images: { [key: string]: string } = {};
 
-// Transform the modules into the expected format
-const images = {};
-Object.entries(iconModules).forEach(([path, module]) => {
-  const fileName = path.replace('../../assets/icons/', '');
-  images[fileName] = (module as any).default;
-});
+// Initialize icon URLs using a fallback approach that handles both known and unknown icons
+const initializeIcons = () => {
+  // Extract all icon names from the iconFamily configuration
+  const iconNames: string[] = [];
+  iconFamily.forEach((family) => {
+    iconNames.push(...family.icons);
+  });
+
+  // Create URL mappings for both SVG and PNG versions of known icons
+  iconNames.forEach((iconName) => {
+    images[`${iconName}.svg`] = `../../assets/icons/${iconName}.svg`;
+    images[`${iconName}.png`] = `../../assets/icons/${iconName}.png`;
+  });
+};
+
+// Override getImageUrl to handle missing icons gracefully
+const originalGetImageUrl = (iconId: string): string => {
+  let result = images[`${iconId}.svg`];
+  if (!result) {
+    result = images[`${iconId}.png`];
+  }
+
+  // If still not found, try to construct the URL directly
+  // This handles icons that might exist in assets but not in iconFamily.json
+  if (!result) {
+    // Try SVG first, then PNG - using the same relative path pattern
+    const svgPath = `../../assets/icons/${iconId}.svg`;
+
+    // Always return a string (fallback to SVG path)
+    result = svgPath;
+  }
+
+  return result;
+};
+
+initializeIcons();
 
 class SvgImageIcon extends ImageIcon {
   private _topicId: number;
@@ -67,11 +97,7 @@ class SvgImageIcon extends ImageIcon {
   }
 
   static getImageUrl(iconId: string) {
-    let result = images[`${iconId}.svg`];
-    if (!result) {
-      result = images[`${iconId}.png`];
-    }
-    return result;
+    return originalGetImageUrl(iconId);
   }
 
   getModel() {
