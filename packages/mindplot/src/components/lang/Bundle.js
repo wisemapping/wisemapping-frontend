@@ -23,6 +23,7 @@ import RU from './ru';
 import ZH from './zh';
 import JA from './ja';
 import PT from './pt';
+import IT from './it';
 
 const Bundle = {
   es: ES,
@@ -33,6 +34,7 @@ const Bundle = {
   zh: ZH,
   ja: JA,
   pt: PT,
+  it: IT,
 };
 
 export default Bundle;

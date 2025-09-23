@@ -1,4 +1,30 @@
 context('Topic suite', () => {
+  // Test to ensure all topic stories load without import/export errors
+  it('all topic stories load successfully without errors', () => {
+    const stories = [
+      'border-style',
+      'font-style', 
+      'background-color',
+      'icon-feature',
+      'shape-none',
+      'shape-ellipse',
+      'shape-line'
+    ];
+    
+    stories.forEach((story) => {
+      cy.visit(`/iframe.html?args=&id=mindplot-topic--${story}&viewMode=story`);
+      
+      // Wait for story to load
+      cy.get('body', { timeout: 10000 }).should('be.visible');
+      
+      // Ensure the story content is rendered (should contain SVG elements from mindplot)
+      cy.get('body').should('contain.html', '<svg');
+      cy.get('svg').should('exist').and('be.visible');
+      
+      // Main validation: story should render successfully with SVG content
+    });
+  });
+
   it('topic border', () => {
     cy.visit('/iframe.html?args=&id=mindplot-topic--border-style&viewMode=story');
     cy.matchImageSnapshot('topic-border');

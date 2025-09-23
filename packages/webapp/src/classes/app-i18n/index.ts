@@ -23,6 +23,7 @@ import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
 import 'dayjs/locale/ja';
 import 'dayjs/locale/pt';
+import 'dayjs/locale/it';
 import { useFetchAccount } from '../middleware';
 
 export class Locale {
@@ -92,7 +93,7 @@ export default abstract class AppI18n {
   }
 }
 
-export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh' | 'ja' | 'pt';
+export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh' | 'ja' | 'pt' | 'it';
 
 export const Locales = {
   EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
@@ -103,6 +104,7 @@ export const Locales = {
   ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
   JA: new Locale('ja', '日本語', require('./../../compiled-lang/ja.json')), // eslint-disable-line
   PT: new Locale('pt', 'Português', require('./../../compiled-lang/pt.json')), // eslint-disable-line
+  IT: new Locale('it', 'Italiano', require('./../../compiled-lang/it.json')), // eslint-disable-line
 };
 
 export const localeFromStr = (code: string): Locale => {
