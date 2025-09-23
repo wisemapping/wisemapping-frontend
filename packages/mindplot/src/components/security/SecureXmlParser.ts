@@ -117,16 +117,15 @@ class SecureXmlParser {
 
     // Check for extremely long attribute values
     const allElements = doc.querySelectorAll('*');
-    for (const element of allElements) {
-      const attributes = element.attributes;
-      for (let i = 0; i < attributes.length; i++) {
-        const attr = attributes[i];
+    allElements.forEach((element) => {
+      const { attributes } = element;
+      Array.from(attributes).forEach((attr) => {
         if (attr.value && attr.value.length > 10000) {
           // 10KB limit per attribute
           throw new Error('Attribute value too long');
         }
-      }
-    }
+      });
+    });
   }
 
   /**
@@ -140,10 +139,10 @@ class SecureXmlParser {
     const calculateDepth = (el: Element, currentDepth: number): void => {
       maxDepth = Math.max(maxDepth, currentDepth);
 
-      const children = el.children;
-      for (let i = 0; i < children.length; i++) {
-        calculateDepth(children[i], currentDepth + 1);
-      }
+      const { children } = el;
+      Array.from(children).forEach((child) => {
+        calculateDepth(child, currentDepth + 1);
+      });
     };
 
     calculateDepth(element, 0);
@@ -220,10 +219,9 @@ class SecureXmlParser {
       /<embed[^>]*>/gi,
     ];
 
-    for (const pattern of dangerousPatterns) {
-      if (pattern.test(xmlContent)) {
-        return false;
-      }
+    const hasDangerousPattern = dangerousPatterns.some((pattern) => pattern.test(xmlContent));
+    if (hasDangerousPattern) {
+      return false;
     }
 
     // Check for XML bomb patterns
@@ -232,16 +230,16 @@ class SecureXmlParser {
       /<!\[CDATA\[[\s\S]*?\]\]>/g, // CDATA sections (using [\s\S] instead of . with s flag)
     ];
 
-    for (const pattern of bombPatterns) {
+    const hasBombPattern = bombPatterns.some((pattern) => {
       const matches = xmlContent.match(pattern);
       if (matches) {
-        for (const match of matches) {
-          if (match.length > 10000) {
-            // 10KB limit per section
-            return false;
-          }
-        }
+        return matches.some((match) => match.length > 10000);
       }
+      return false;
+    });
+
+    if (hasBombPattern) {
+      return false;
     }
 
     return true;
