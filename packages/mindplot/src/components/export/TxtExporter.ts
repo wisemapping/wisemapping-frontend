@@ -57,7 +57,7 @@ class TxtExporter extends Exporter {
           result = `${result}\n ${indent}  [Link: ${(f as LinkModel).getUrl()}]`;
         }
         if (type === 'note') {
-          result = `${result}\n${indent}  [Note: ${(f as NoteModel).getText()}]`;
+          result = `${result}\n${indent}  [Note: ${(f as NoteModel).getPlainText()}]`;
         }
       });
       result = `${result}\n`;

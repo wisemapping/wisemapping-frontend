@@ -85,7 +85,7 @@ class MDExporter extends Exporter {
 
           if (type === 'note') {
             const note = f as NoteModel;
-            this.footNotes.push(note.getText());
+            this.footNotes.push(note.getPlainText());
             result = `${result}[^${this.footNotes.length}] `;
           }
         });
