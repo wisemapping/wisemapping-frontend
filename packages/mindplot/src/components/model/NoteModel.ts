@@ -24,6 +24,11 @@ class NoteModel extends FeatureModel {
     super('note');
     const noteText = attributes.text ? attributes.text : ' ';
     this.setText(noteText);
+
+    // Set contentType if provided (for rich text notes)
+    if (attributes.contentType) {
+      this.setContentType(attributes.contentType);
+    }
   }
 
   /** */

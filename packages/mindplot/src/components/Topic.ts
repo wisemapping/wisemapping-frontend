@@ -644,10 +644,12 @@ abstract class Topic extends NodeGraph {
     } else if (notes.length > 0) {
       dispatcher.changeFeatureToTopic(topicId, notes[0].getId(), {
         text: value,
+        contentType: 'html', // Rich text editor always saves HTML
       });
     } else {
       dispatcher.addFeatureToTopic([topicId], 'note', {
         text: value,
+        contentType: 'html', // Rich text editor always saves HTML
       });
     }
   }
