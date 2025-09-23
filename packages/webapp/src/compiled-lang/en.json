@@ -458,7 +458,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import."
+      "value": "You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import."
     }
   ],
   "import.error-file": [

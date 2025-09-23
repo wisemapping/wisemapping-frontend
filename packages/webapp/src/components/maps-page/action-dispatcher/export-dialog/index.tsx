@@ -22,7 +22,7 @@ import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 import Checkbox from '@mui/material/Checkbox';
 import { useFetchMapById } from '../../../../classes/middleware';
 
-type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'md';
+type ExportFormat = 'svg' | 'jpg' | 'png' | 'pdf' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -110,7 +110,8 @@ const ExportDialog = ({
     switch (formatType) {
       case 'png':
       case 'jpg':
-      case 'svg': {
+      case 'svg':
+      case 'pdf': {
         exporter = ImageExporterFactory.create(
           formatType,
           svgElement!,
@@ -122,6 +123,7 @@ const ExportDialog = ({
       }
       case 'wxml':
       case 'mm':
+      case 'mmx':
       case 'md':
       case 'txt': {
         exporter = TextExporterFactory.create(formatType, mindmap);
@@ -216,6 +218,9 @@ const ExportDialog = ({
                     <MenuItem value="jpg" css={classes.menu}>
                       JPEG Image (JPEG)
                     </MenuItem>
+                    <MenuItem value="pdf" css={classes.menu}>
+                      Portable Document Format (PDF)
+                    </MenuItem>
                   </Select>
                   <FormControlLabel
                     css={classes.select}
@@ -285,6 +290,9 @@ const ExportDialog = ({
                   </MenuItem>
                   <MenuItem css={classes.select} value="mm">
                     Freemind 1.0.1 (MM)
+                  </MenuItem>
+                  <MenuItem css={classes.select} value="mmx">
+                    Freeplane (MMX)
                   </MenuItem>
                   {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)

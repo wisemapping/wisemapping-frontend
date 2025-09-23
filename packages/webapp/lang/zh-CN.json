@@ -228,7 +228,7 @@
     "defaultMessage": "创建"
   },
   "import.description": {
-    "defaultMessage": "您可以将WiseMapping和Freemind地图导入到您的地图列表中。选择您要导入的文件。"
+    "defaultMessage": "您可以将WiseMapping、FreeMind、Freeplane、XMind、MindManager和OPML地图导入到您的地图列表中。选择您要导入的文件。"
   },
   "import.error-file": {
     "defaultMessage": "导入错误 {error}"

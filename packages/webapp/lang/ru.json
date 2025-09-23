@@ -204,7 +204,7 @@
 		"defaultMessage": "Создать"
 	},
 	"import.description": {
-		"defaultMessage": "Можно импортировать FreeMind 1.0.1 и WiseMapping файлы. Выберите файл, который хотите импортировать."
+		"defaultMessage": "Можно импортировать файлы WiseMapping, FreeMind, Freeplane, XMind, MindManager и OPML. Выберите файл, который хотите импортировать."
 	},
 	"import.title": {
 		"defaultMessage": "Загрузить майнд-карту с компьютера"

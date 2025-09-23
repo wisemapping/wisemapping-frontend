@@ -207,7 +207,7 @@
         "defaultMessage": "Créer"
     },
     "import.description": {
-        "defaultMessage": "Selectionnez le fichier que vous souhaitez importer."
+        "defaultMessage": "Vous pouvez importer des cartes WiseMapping, FreeMind, Freeplane, XMind, MindManager et OPML dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
     },
     "import.title": {
         "defaultMessage": "Importer une carte mentale existante"

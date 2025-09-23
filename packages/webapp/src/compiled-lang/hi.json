@@ -458,7 +458,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "आप WiseMapping और Freemind मानचित्रों को अपनी मानचित्र सूची में आयात कर सकते हैं। उस फ़ाइल का चयन करें जिसे आप आयात करना चाहते हैं।"
+      "value": "आप WiseMapping, FreeMind, Freeplane, XMind, MindManager और OPML मानचित्रों को अपनी मानचित्र सूची में आयात कर सकते हैं। उस फ़ाइल का चयन करें जिसे आप आयात करना चाहते हैं।"
     }
   ],
   "import.error-file": [
