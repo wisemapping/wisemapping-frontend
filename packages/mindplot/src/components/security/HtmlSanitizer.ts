@@ -16,6 +16,8 @@
  *   limitations under the License.
  */
 
+/* eslint-disable function-paren-newline */
+
 /**
  * HTML Sanitizer for preventing XSS attacks and other security vulnerabilities
  * in rich text content imported from external sources.
@@ -307,9 +309,8 @@ class HtmlSanitizer {
 
     // Check for dangerous protocols
     const lowerUrl = url.toLowerCase().trim();
-    const isDangerous = Array.from(this.DANGEROUS_PROTOCOLS).some((protocol) =>
-      lowerUrl.startsWith(protocol),
-    );
+    const dangerousProtocols = Array.from(this.DANGEROUS_PROTOCOLS);
+    const isDangerous = dangerousProtocols.some((protocol) => lowerUrl.startsWith(protocol));
     if (isDangerous) {
       return null;
     }
