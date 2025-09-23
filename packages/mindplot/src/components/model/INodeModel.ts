@@ -86,6 +86,14 @@ abstract class INodeModel {
     return this.getProperty('text') as string;
   }
 
+  setContentType(contentType: string | undefined): void {
+    this.putProperty('contentType', contentType);
+  }
+
+  getContentType(): string | null {
+    return this.getProperty('contentType') as string;
+  }
+
   setPosition(x: number, y: number): void {
     this.putProperty('position', `{x:${x},y:${y}}`);
   }

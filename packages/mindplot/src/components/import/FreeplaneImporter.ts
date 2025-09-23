@@ -81,6 +81,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
+        node.setContentType('html');
       }
     }
 
@@ -117,6 +118,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
+        node.setContentType('html');
       }
     }
 

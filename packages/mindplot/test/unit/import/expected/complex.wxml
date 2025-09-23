@@ -10,8 +10,8 @@
         <topic position="-650,13" order="4" text="Finance" shape="line" id="5"/>
         <topic position="-740,38" order="5" text="Administration" shape="line" id="3"/>
         <topic position="-830,63" order="6" text="Human Resources" shape="line" id="154">
-            <note><![CDATA[HR Vision: Freeform Solutions is successful at its mission, sustainable as an organization AND is a great place to work.
-                        HR Mission: To provide a positive HR service experience for applicants and employees, and  collaborate with departments to recruit, develop, support, and retain diverse and talented employees who are the key to Freeform’s  reputation and success.]]></note>
+            <note><![CDATA[<p>HR Vision: Freeform Solutions is successful at its mission, sustainable as an organization AND is a great place to work.</p>
+                        <p>HR Mission: To provide a positive HR service experience for applicants and employees, and  collaborate with departments to recruit, develop, support, and retain diverse and talented employees who are the key to Freeform’s  reputation and success.</p>]]></note>
         </topic>
         <topic position="-920,113" order="7" text="Freeform Hosting" shape="line" id="16"/>
         <topic position="-1010,113" order="8" text="Community Outreach" shape="line" id="247"/>

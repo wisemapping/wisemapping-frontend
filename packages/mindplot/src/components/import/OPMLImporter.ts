@@ -83,6 +83,11 @@ class OPMLImporter extends Importer {
       node.addFeature(noteModel);
     }
 
+    // Check if the main text contains HTML and set contentType accordingly
+    if (text && this.containsHtml(text)) {
+      node.setContentType('html');
+    }
+
     // Handle child outlines
     const childOutlines = outlineElement.querySelectorAll(':scope > outline');
     childOutlines.forEach((childOutline) => {
@@ -107,6 +112,12 @@ class OPMLImporter extends Importer {
 
     // Return the cleaned HTML content
     return temporalDivElement.innerHTML.trim() || '';
+  }
+
+  private containsHtml(text: string): boolean {
+    // Simple check for HTML tags
+    const htmlTagRegex = /<[^>]+>/;
+    return htmlTagRegex.test(text);
   }
 }
 

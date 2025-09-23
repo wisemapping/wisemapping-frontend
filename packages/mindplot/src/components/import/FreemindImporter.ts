@@ -307,6 +307,7 @@ export default class FreemindImporter extends Importer {
 
             case 'NODE': {
               currentWiseTopic.setText(cleanHtml);
+              currentWiseTopic.setContentType('html');
               break;
             }
 

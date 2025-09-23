@@ -28,12 +28,12 @@
         <topic position="-1190,150" order="10" text="Actividades centradas en el contexto cercano" shape="line" id="37"/>
         <topic position="-1280,175" order="11" text="Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)" shape="line" id="22"/>
         <topic position="-1370,200" order="12" text="Complementamos el trabajo de la escuela" shape="rounded rectangle" id="27">
-            <note><![CDATA[Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.
-                        A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña,
-                        ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea.
-                        
-                        Por ese motivo, SaberMás proyecta estar al lado de los niños que necesitan una motivación extra para entender la escuela y fluir en ella,
-                        y también al lado de aquellos a quienes la curiosidad y las ganas de saber les lleva más allá.]]></note>
+            <note><![CDATA[<p>Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.</p>
+                        <p>A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña,</p>
+                        <p>ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea.</p>
+                        <p></p>
+                        <p>Por ese motivo, SaberMás proyecta estar al lado de los niños que necesitan una motivación extra para entender la escuela y fluir en ella,</p>
+                        <p>y también al lado de aquellos a quienes la curiosidad y las ganas de saber les lleva más allá.</p>]]></note>
             <topic position="1370,138" order="0" text="Cada uno va a su ritmo, y cada cual pone sus límites" shape="line" id="30"/>
             <topic position="1460,163" order="1" text="Aprendemos todos de todos" shape="line" id="31"/>
             <topic position="1550,188" order="2" text="Valoramos lo que hemos aprendido" shape="line" id="33"/>
