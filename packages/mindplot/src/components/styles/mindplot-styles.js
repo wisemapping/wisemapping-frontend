@@ -59,7 +59,7 @@ const mindplotStyles = `
 
 .mindplot-svg-tooltip-content {
     background-color: rgb(255, 255, 255);
-    padding: 12px 8px;
+    padding: 20px 20px;
     max-width: 600px;
     word-wrap: break-word;
     text-align: left;
