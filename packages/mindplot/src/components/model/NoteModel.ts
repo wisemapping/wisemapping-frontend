@@ -17,12 +17,18 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
+import ContentType from '../ContentType';
 
 class NoteModel extends FeatureModel {
   constructor(attributes) {
     super('note');
     const noteText = attributes.text ? attributes.text : ' ';
     this.setText(noteText);
+
+    // Set contentType if provided (for rich text notes)
+    if (attributes.contentType) {
+      this.setContentType(attributes.contentType);
+    }
   }
 
   /** */
@@ -46,10 +52,13 @@ class NoteModel extends FeatureModel {
   }
 
   /** */
-  isRichText(): boolean {
-    const text = this.getText();
-    // Check if the text contains HTML tags
-    return /<[^>]*>/g.test(text);
+  setContentType(contentType: ContentType | undefined): void {
+    this.setAttribute('contentType', contentType);
+  }
+
+  /** */
+  getContentType(): ContentType {
+    return (this.getAttribute('contentType') as ContentType) || ContentType.PLAIN;
   }
 }
 

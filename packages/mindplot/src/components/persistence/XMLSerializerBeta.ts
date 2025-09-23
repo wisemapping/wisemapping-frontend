@@ -71,6 +71,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       parentTopic.setAttribute('text', text);
     }
 
+    // Topic text is always plain, no contentType needed
+
     const shape = topic.getShapeType();
     if ($defined(shape)) {
       parentTopic.setAttribute('shape', shape);
@@ -211,6 +213,8 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
     if ($defined(text)) {
       topic.setText(text);
     }
+
+    // Topic text is always plain, no contentType needed
 
     const order = domElem.getAttribute('order');
     if ($defined(order)) {

@@ -21,6 +21,7 @@ import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
+import ContentType from '../ContentType';
 
 class TxtExporter extends Exporter {
   private mindmap: Mindmap;
@@ -48,9 +49,15 @@ class TxtExporter extends Exporter {
         iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
       }
 
-      result = `${result}${indent}${prefix}${index + 1}${iconStr}${
-        node.getText() !== undefined ? node.getText() : ''
-      }`;
+      let nodeText = '';
+      if (node.getText() !== undefined) {
+        if (node.getContentType() === ContentType.HTML) {
+          nodeText = node.getPlainText();
+        } else {
+          nodeText = node.getText() || '';
+        }
+      }
+      result = `${result}${indent}${prefix}${index + 1}${iconStr}${nodeText}`;
       node.getFeatures().forEach((f) => {
         const type = f.getType();
         if (type === 'link') {
@@ -58,7 +65,10 @@ class TxtExporter extends Exporter {
         }
         if (type === 'note') {
           const noteModel = f as NoteModel;
-          const noteText = noteModel.isRichText() ? noteModel.getText() : noteModel.getPlainText();
+          const noteText =
+            noteModel.getContentType() === ContentType.HTML
+              ? noteModel.getText()
+              : noteModel.getPlainText();
           result = `${result}\n${indent}  [Note: ${noteText}]`;
         }
       });

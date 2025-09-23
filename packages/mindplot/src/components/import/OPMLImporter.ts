@@ -20,6 +20,7 @@ import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import ContentType from '../ContentType';
 
 class OPMLImporter extends Importer {
   private opmlInput: string;
@@ -80,8 +81,12 @@ class OPMLImporter extends Importer {
     if (htmlContent) {
       const cleanHtml = this.cleanHtml(htmlContent);
       const noteModel = new NoteModel({ text: cleanHtml });
+      // Set contentType for rich text notes
+      noteModel.setContentType(ContentType.HTML);
       node.addFeature(noteModel);
     }
+
+    // Topic text is always plain, no contentType needed
 
     // Handle child outlines
     const childOutlines = outlineElement.querySelectorAll(':scope > outline');

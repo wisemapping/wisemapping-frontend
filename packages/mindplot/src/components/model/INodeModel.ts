@@ -23,6 +23,7 @@ import { FontStyleType } from '../FontStyleType';
 import FeatureModel from './FeatureModel';
 import Mindmap from './Mindmap';
 import SizeType from '../SizeType';
+import ContentType from '../ContentType';
 
 export type NodeModelType = 'CentralTopic' | 'MainTopic';
 
@@ -84,6 +85,28 @@ abstract class INodeModel {
 
   getText(): string | null {
     return this.getProperty('text') as string;
+  }
+
+  setContentType(contentType: ContentType | undefined): void {
+    this.putProperty('contentType', contentType);
+  }
+
+  getContentType(): ContentType {
+    return (this.getProperty('contentType') as ContentType) || ContentType.PLAIN;
+  }
+
+  getPlainText(): string {
+    const text = this.getText();
+    if (!text) return '';
+
+    if (this.getContentType() === ContentType.HTML) {
+      // Create a temporary DOM element to strip HTML tags
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = text;
+      return tempDiv.textContent || tempDiv.innerText || '';
+    }
+
+    return text;
   }
 
   setPosition(x: number, y: number): void {

@@ -17,6 +17,7 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
+import ContentType from '../ContentType';
 
 export default class FreemindImporter extends Importer {
   private mindmap!: Mindmap;
@@ -301,12 +302,17 @@ export default class FreemindImporter extends Importer {
               const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
+              // Set contentType for rich text notes
+              if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
+                (noteModel as NoteModel).setContentType(ContentType.HTML);
+              }
               currentWiseTopic.addFeature(noteModel);
               break;
             }
 
             case 'NODE': {
               currentWiseTopic.setText(cleanHtml);
+              // Topic text is always plain, no contentType needed
               break;
             }
 
@@ -314,6 +320,10 @@ export default class FreemindImporter extends Importer {
               const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
+              // Set contentType for rich text notes
+              if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
+                (noteModel as NoteModel).setContentType(ContentType.HTML);
+              }
               currentWiseTopic.addFeature(noteModel);
             }
           }

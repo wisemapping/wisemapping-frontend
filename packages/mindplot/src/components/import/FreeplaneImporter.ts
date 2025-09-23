@@ -20,6 +20,7 @@ import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import ContentType from '../ContentType';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
@@ -81,6 +82,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
+        // Topic text is always plain, no contentType needed
       }
     }
 
@@ -91,6 +93,8 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         const noteModel = new NoteModel({ text: cleanHtml });
+        // Set contentType for rich text notes
+        noteModel.setContentType(ContentType.HTML);
         node.addFeature(noteModel);
       }
     });
@@ -117,6 +121,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
+        // Topic text is always plain, no contentType needed
       }
     }
 
@@ -127,6 +132,8 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         const noteModel = new NoteModel({ text: cleanHtml });
+        // Set contentType for rich text notes
+        noteModel.setContentType(ContentType.HTML);
         node.addFeature(noteModel);
       }
     });
