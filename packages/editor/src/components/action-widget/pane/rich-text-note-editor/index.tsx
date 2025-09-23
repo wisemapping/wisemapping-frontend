@@ -154,14 +154,64 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.innerHTML = initialValue || '';
+      // Auto-focus the editor when it opens
+      setTimeout(() => {
+        if (editorRef.current) {
+          editorRef.current.focus();
+        }
+      }, 100);
     }
   }, [initialValue]);
 
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        if (editorRef.current) {
+          editorRef.current.focus();
+        }
+      }
+    };
+
+    // Add event listener to the document
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup function to remove event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
-    <Box sx={{ px: 2, pb: 2, width: '500px', height: '520px' }}>
+    <Box
+      sx={{
+        pl: 3,
+        pr: 2.5,
+        pb: 0.375,
+        width: '500px',
+        height: '505px',
+        backgroundColor: '#fafafa',
+        borderRadius: 2,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      }}
+    >
       {/* Toolbar */}
       <Box
-        sx={{ mb: 1, p: 1, border: '1px solid #ccc', borderRadius: 1, backgroundColor: '#f5f5f5' }}
+        sx={{
+          m: 0,
+          p: 0,
+          minHeight: '60px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '1px solid #e0e0e0',
+          borderBottom: 'none',
+          borderRadius: '8px 8px 0 0',
+          backgroundColor: '#ffffff',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+        }}
       >
         {/* Single Row - All Options */}
         <Box
@@ -178,50 +228,175 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               defaultValue="normal"
               onChange={(e) => setHeader(e.target.value)}
               displayEmpty
-              sx={{ fontSize: '12px' }}
+              sx={{
+                fontSize: '14px',
+                backgroundColor: '#ffffff',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                },
+                '&.Mui-focused': {
+                  borderColor: '#d0d0d0',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#d0d0d0',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#999999',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#d0d0d0',
+                },
+              }}
             >
-              <MenuItem value="normal">Normal</MenuItem>
-              <MenuItem value="h1">Heading 1</MenuItem>
-              <MenuItem value="h2">Heading 2</MenuItem>
-              <MenuItem value="h3">Heading 3</MenuItem>
-              <MenuItem value="h4">Heading 4</MenuItem>
-              <MenuItem value="h5">Heading 5</MenuItem>
-              <MenuItem value="h6">Heading 6</MenuItem>
-              <MenuItem value="blockquote">Quote</MenuItem>
-              <MenuItem value="pre">Code Block</MenuItem>
+              <MenuItem value="normal" sx={{ fontSize: '12px' }}>
+                Normal
+              </MenuItem>
+              <MenuItem value="h1" sx={{ fontSize: '18px', fontWeight: 'bold' }}>
+                Heading 1
+              </MenuItem>
+              <MenuItem value="h2" sx={{ fontSize: '16px', fontWeight: 'bold' }}>
+                Heading 2
+              </MenuItem>
+              <MenuItem value="h3" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+                Heading 3
+              </MenuItem>
+              <MenuItem value="h4" sx={{ fontSize: '14px', fontWeight: 'bold' }}>
+                Heading 4
+              </MenuItem>
+              <MenuItem value="h5" sx={{ fontSize: '13px', fontWeight: 'bold' }}>
+                Heading 5
+              </MenuItem>
+              <MenuItem value="h6" sx={{ fontSize: '12px', fontWeight: 'bold' }}>
+                Heading 6
+              </MenuItem>
+              <MenuItem value="blockquote" sx={{ fontSize: '12px', fontStyle: 'italic' }}>
+                Quote
+              </MenuItem>
+              <MenuItem value="pre" sx={{ fontSize: '10px', fontFamily: 'monospace' }}>
+                Code Block
+              </MenuItem>
             </Select>
           </FormControl>
 
           <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button onClick={() => execCommand('bold')} title="Bold">
+            <Button
+              onClick={insertLink}
+              title="Insert Link"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
+              🔗
+            </Button>
+            <Button
+              onClick={handleIconPickerOpen}
+              title="Insert Icon"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
+              😀
+            </Button>
+          </ButtonGroup>
+
+          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
+            <Button
+              onClick={() => execCommand('bold')}
+              title="Bold"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
               <strong>B</strong>
             </Button>
-            <Button onClick={() => execCommand('italic')} title="Italic">
+            <Button
+              onClick={() => execCommand('italic')}
+              title="Italic"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
               <em>I</em>
             </Button>
-            <Button onClick={() => execCommand('underline')} title="Underline">
+            <Button
+              onClick={() => execCommand('underline')}
+              title="Underline"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
               <u>U</u>
             </Button>
-            <Button onClick={() => execCommand('strikeThrough')} title="Strikethrough">
+            <Button
+              onClick={() => execCommand('strikeThrough')}
+              title="Strikethrough"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
               <s>S</s>
             </Button>
           </ButtonGroup>
 
           <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button onClick={() => execCommand('insertUnorderedList')} title="Bullet List">
+            <Button
+              onClick={() => execCommand('insertUnorderedList')}
+              title="Bullet List"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
               •
             </Button>
-            <Button onClick={() => execCommand('insertOrderedList')} title="Numbered List">
+            <Button
+              onClick={() => execCommand('insertOrderedList')}
+              title="Numbered List"
+              sx={{
+                minWidth: '36px',
+                borderColor: '#d0d0d0',
+                '&:hover': {
+                  borderColor: '#999999',
+                  backgroundColor: '#f5f5f5',
+                },
+              }}
+            >
               1.
-            </Button>
-          </ButtonGroup>
-
-          <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
-            <Button onClick={insertLink} title="Insert Link">
-              🔗
-            </Button>
-            <Button onClick={handleIconPickerOpen} title="Insert Icon">
-              😀
             </Button>
           </ButtonGroup>
         </Box>
@@ -236,20 +411,39 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         suppressContentEditableWarning={true}
         sx={{
           height: '350px',
-          border: '1px solid #ccc',
-          borderRadius: 1,
-          p: 2,
+          border: '1px solid #e0e0e0',
+          borderTop: 'none',
+          borderRadius: '0 0 8px 8px',
+          p: 2.5,
           overflow: 'auto',
-          backgroundColor: 'white',
+          backgroundColor: '#ffffff',
           fontFamily: 'Arial, sans-serif',
+          fontSize: '14px',
+          lineHeight: 1.5,
+          color: '#333333',
+          boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
           '&:focus': {
-            outline: '2px solid #1976d2',
-            outlineOffset: '2px',
+            outline: 'none',
+            borderColor: '#e0e0e0',
+            boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
+          },
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#f1f1f1',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#c1c1c1',
+            borderRadius: '4px',
+            '&:hover': {
+              backgroundColor: '#a8a8a8',
+            },
           },
         }}
       />
 
-      <br />
       <SaveAndDelete model={noteModel} closeModal={closeModal} submitHandler={submitHandler} />
 
       {/* Emoji Picker Popover */}
