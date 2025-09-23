@@ -24,39 +24,37 @@ import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 
-// Create icon URL mapping that works without dynamic imports
+// Use webpack's require.context to dynamically import all icons
 const images: { [key: string]: string } = {};
 
-// Initialize icon URLs using a fallback approach that handles both known and unknown icons
+// Initialize icon URLs using webpack's require.context
 const initializeIcons = () => {
-  // Extract all icon names from the iconFamily configuration
-  const iconNames: string[] = [];
-  iconFamily.forEach((family) => {
-    iconNames.push(...family.icons);
-  });
+  const iconContext = require.context('../../assets/icons', false, /\.(svg|png)$/);
 
-  // Create URL mappings for both SVG and PNG versions of known icons
-  iconNames.forEach((iconName) => {
-    images[`${iconName}.svg`] = `../../assets/icons/${iconName}.svg`;
-    images[`${iconName}.png`] = `../../assets/icons/${iconName}.png`;
+  iconContext.keys().forEach((iconPath) => {
+    // Extract filename without extension
+    const filename = iconPath.replace('./', '').replace(/\.(svg|png)$/, '');
+    const extension = iconPath.match(/\.(svg|png)$/)?.[1];
+
+    if (extension) {
+      // Use webpack's processed URL
+      images[`${filename}.${extension}`] = iconContext(iconPath);
+    }
   });
 };
 
-// Override getImageUrl to handle missing icons gracefully
+// Get image URL using webpack-processed assets
 const originalGetImageUrl = (iconId: string): string => {
+  // Try SVG first, then PNG
   let result = images[`${iconId}.svg`];
   if (!result) {
     result = images[`${iconId}.png`];
   }
 
-  // If still not found, try to construct the URL directly
-  // This handles icons that might exist in assets but not in iconFamily.json
+  // If not found in mapping, log warning and return empty string
   if (!result) {
-    // Try SVG first, then PNG - using the same relative path pattern
-    const svgPath = `../../assets/icons/${iconId}.svg`;
-
-    // Always return a string (fallback to SVG path)
-    result = svgPath;
+    console.warn(`Icon not found: ${iconId}`);
+    result = '';
   }
 
   return result;

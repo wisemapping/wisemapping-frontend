@@ -2,12 +2,9 @@
 import { StoryFn, Meta } from '@storybook/html';
 import BalancedTestSuite from './layout/BalancedTestSuite';
 
-import Raphael from './layout/lib/raphael-min';
-import { drawGrid } from './layout/lib/raphael-plugins';
 import TestSuite from './layout/TestSuite';
 
-global.Raphael = Raphael;
-global.Raphael.fn.drawGrid = drawGrid;
+// Raphael is preloaded in preview.js
 
 export default {
   title: 'Mindplot/Layout',
