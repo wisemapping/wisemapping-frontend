@@ -20,7 +20,8 @@ const registerRefreshHook = (topic: Topic) => {
     topic.redraw();
     console.log('Refresh triggered...');
   });
-  globalThis.observer.observe(document.getElementById('root')!, { childList: true });
+  const rootElement = document.getElementById('root') || document.body;
+  globalThis.observer.observe(rootElement, { childList: true });
 };
 
 export type TopicArgs = {

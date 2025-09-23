@@ -21,7 +21,7 @@ import buildDesigner from './DesignerBuilder';
 import DesignerOptionsBuilder from './DesignerOptionsBuilder';
 import EditorRenderMode from './EditorRenderMode';
 import PersistenceManager from './PersistenceManager';
-import WidgetBulder from './WidgetBuilder';
+import WidgetBuilder from './WidgetBuilder';
 import mindplotStyles from './styles/mindplot-styles';
 import { $notify } from './model/ToolbarNotifier';
 import { $msg } from './Messages';
@@ -78,7 +78,7 @@ class MindplotWebComponent extends HTMLElement {
    * @param {PersistenceManager} persistence the persistence manager to be used. By default a LocalStorageManager is created
    * @param {UIManager} widgetManager an UI Manager to override default Designer option.
    */
-  buildDesigner(persistence: PersistenceManager, widgetManager: WidgetBulder) {
+  buildDesigner(persistence: PersistenceManager, widgetManager: WidgetBuilder) {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');

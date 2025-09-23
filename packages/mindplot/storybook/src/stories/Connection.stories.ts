@@ -30,6 +30,6 @@ DarkPrism.args = {
 };
 
 export const robot = Template.bind({});
-DarkPrism.args = {
+robot.args = {
   theme: 'robot',
 };

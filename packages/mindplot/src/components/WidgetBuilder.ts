@@ -26,7 +26,7 @@ import { $msg } from './Messages';
 
 export type WidgetEventType = 'none' | 'link' | 'note';
 
-abstract class WidgetBulder {
+abstract class WidgetBuilder {
   protected _listener: (event: WidgetEventType, topic?: Topic) => void;
 
   constructor() {
@@ -116,4 +116,4 @@ abstract class WidgetBulder {
   abstract buidEditorForNote(topic: Topic): React.ReactElement;
 }
 
-export default WidgetBulder;
+export default WidgetBuilder;
