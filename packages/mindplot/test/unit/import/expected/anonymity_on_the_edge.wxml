@@ -80,9 +80,9 @@ to problem that Tor officials have already warned about
 previously.]]></text>
                 </topic>
                 <topic position="-650,-37" order="1" shape="line" id="38126740">
-                    <text><![CDATA[withheld details on how he came into possession of the passwords, instead writing that "there is no
+                    <text><![CDATA[withheld details on how he came into possession of the passwords, instead writing that there is no
 exploit to publish, no vendor to
-contact".]]></text>
+contact.]]></text>
                 </topic>
             </topic>
             <topic position="650,-12" order="4" text="response" shape="line" shrink="true" id="1493808593">
@@ -96,8 +96,8 @@ papers]]></text>
                 <topic position="-830,-12" order="2" shape="line" id="1645583680">
                     <text><![CDATA[Egerstad hasn't been charged with anything but is under suspicion for breaking into computers, which
 he says he never did. Egerstad said the agents told him they were investigating him because he had
-"pissed off some foreign
-countries."]]></text>
+pissed off some foreign
+countries.]]></text>
                 </topic>
                 <topic position="-920,13" order="3" shape="line" id="671508443">
                     <text><![CDATA[The posting of 100 official embassy passwords has made Egerstad a pariah in many circles. Publishing
@@ -123,7 +123,7 @@ measure.]]></text>
                 <topic position="-920,13" order="2" shape="line" id="1627594721">
                     <text><![CDATA[It's not a written law but it is a guideline in having a responsible disclosure. I think he did a
 responsible disclosure. Was it legal? He did intercept traffic that was not destined for him. So
-probably "no" depending on Swedish law. Is our society a safer place after the disclosure. Yes, I
+probably no depending on Swedish law. Is our society a safer place after the disclosure. Yes, I
 think it is. Instead of arresting him, the government should have offered him a
 job.]]></text>
                 </topic>
@@ -177,16 +177,16 @@ result, they aren't taking the precautions they need to take to protect their we
 activity.]]></text>
                 </topic>
                 <topic position="-1010,26" order="1" shape="line" id="793585356">
-                    <text><![CDATA["I am absolutely positive that I am not the only one to figure this out," Egerstad says. "I'm pretty
+                    <text><![CDATA[I am absolutely positive that I am not the only one to figure this out, Egerstad says. I'm pretty
 sure there are governments doing the exact same thing. There's probably a reason why people are
 volunteering to set up a
-node."]]></text>
+node.]]></text>
                     <topic position="1010,14" order="0" shape="line" id="1624606525">
                         <text><![CDATA[For example, several Tor nodes in the Washington, D.C., area can handle up to 10T bytes of data a
 month, a flow of data that would cost at least US$5,000 a month to run, and is likely way out the
 range of volunteers who run a node on their own money, Egerstad said.  
 
-"Who would pay for that?" Egerstad
+Who would pay for that? Egerstad
 said]]></text>
                     </topic>
                 </topic>
@@ -210,9 +210,9 @@ exacerbates the risk of packet
 sniffing.]]></text>
                     </topic>
                     <topic position="1370,101" order="1" shape="line" id="1030401667">
-                        <text><![CDATA[The fact Onion routing was used is the only way this "researcher" (that leaves a bad taste) could
-get access to those packets in the first place - with regular routing he'd need to have access to
-the embassy's ISP's network, or their upstream networks, to sniff those
+                        <text><![CDATA[The fact Onion routing was used is the only way this researcher (that leaves a bad taste) could get
+access to those packets in the first place - with regular routing he'd need to have access to the
+embassy's ISP's network, or their upstream networks, to sniff those
 packets.]]></text>
                     </topic>
                 </topic>
@@ -228,9 +228,9 @@ packets.]]></text>
                     <text><![CDATA[Under Tor's architecture, administrators at the entry point can identify the user's IP address, but
 can't read the content of the user's correspondence or know its final destination. Each node in the
 network thereafter only knows the node from which it received the traffic, and it peels off a layer
-of encryption to reveal the next node to which it must forward the connection. (Tor stands for "The
+of encryption to reveal the next node to which it must forward the connection. (Tor stands for The
 Onion
-Router.")]]></text>
+Router.)]]></text>
                 </topic>
                 <topic position="-650,-49" order="2" shape="line" id="207380926">
                     <text><![CDATA[Tor works by using servers donated by volunteers around the world to bounce traffic around en route
@@ -250,10 +250,10 @@ pursuers.]]></text>
             <topic position="560,-12" order="2" text="exit node caveat" shape="line" shrink="true" id="1922326141">
                 <topic position="-560,-37" order="0" shape="line" id="1458310176">
                     <text><![CDATA[Tor has taken pains to warn its users that people running so-called exit nodes - which are the last
-Tor servers to touch a packet before sending it on its way - "can read the bytes that come in and
-out there." They go on to say: "This is why you should always use end-to-end encryption such as SSL
-for sensitive Internet
-connections."]]></text>
+Tor servers to touch a packet before sending it on its way - can read the bytes that come in and out
+there. They go on to say: This is why you should always use end-to-end encryption such as SSL for
+sensitive Internet
+connections.]]></text>
                 </topic>
                 <topic position="-650,-12" order="1" shape="line" shrink="true" id="253769006">
                     <text><![CDATA[Unless they're surfing to a website protected with SSL encryption, or use encryption software like

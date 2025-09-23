@@ -1,74 +1,74 @@
 <map name="python" version="tango">
     <topic central="true" text="Python Language" id="839220195" bgColor="#ffff66">
         <topic position="200,-900" order="0" text="Operators" shape="rounded rectangle" id="1297750582" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1&amp;initLoadFile=/wiki/images/5/5a/Python_Operators.mm&amp;mm_title=Python%20Operators" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1initLoadFile=/wiki/images/5/5a/Python_Operators.mmmm_title=Python%20Operators" urlType="url"/>
         </topic>
         <topic position="-290,-237" order="0" text="Control Flow" shape="rounded rectangle" id="925623560" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/d/d3/Python_ControlFlow2.mm&amp;mm_title=Control%20Flow%20in%20Python" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/d/d3/Python_ControlFlow2.mmmm_title=Control%20Flow%20in%20Python" urlType="url"/>
         </topic>
         <topic position="-380,-212" order="1" text="Functions" shape="rounded rectangle" id="43284047" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/3/36/Python_Functions2.mm&amp;mm_title=Python%20Functions" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/3/36/Python_Functions2.mmmm_title=Python%20Functions" urlType="url"/>
         </topic>
         <topic position="-470,-187" order="2" text="Modules" shape="rounded rectangle" id="941305946" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/9/9f/Python_Modules_WebLinks.mm&amp;mm_title=Python%20Modules" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/9/9f/Python_Modules_WebLinks.mmmm_title=Python%20Modules" urlType="url"/>
             <topic position="470,-199" order="0" text="Importing" shape="rectangle" id="33365258" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/a/a7/Python_Modules_Importing.mm&amp;mm_title=Importing%20Python%20Modules" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/a/a7/Python_Modules_Importing.mmmm_title=Importing%20Python%20Modules" urlType="url"/>
             </topic>
         </topic>
         <topic position="-560,-162" order="3" text="sys.path" shape="rounded rectangle" id="870573867" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/e/e3/Python_Path2.mm&amp;mm_title=Python%20sys.path" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/e/e3/Python_Path2.mmmm_title=Python%20sys.path" urlType="url"/>
         </topic>
         <topic position="-650,-137" order="4" text="Packages" shape="rounded rectangle" id="373733403" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/e/e9/Python_Packages2.mm&amp;mm_title=Python%20Packages" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/e/e9/Python_Packages2.mmmm_title=Python%20Packages" urlType="url"/>
         </topic>
         <topic position="-740,-112" order="5" text="Classes" shape="rounded rectangle" id="42563653" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/6/67/Python_Classes_WebLinks.mm&amp;mm_title=Python%20Classes" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/6/67/Python_Classes_WebLinks.mmmm_title=Python%20Classes" urlType="url"/>
             <topic position="740,-162" order="0" text="Methods" shape="rounded rectangle" id="248209168" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/8/89/Python_Classes_Methods.mm&amp;mm_title=Python%20Methods" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/8/89/Python_Classes_Methods.mmmm_title=Python%20Methods" urlType="url"/>
             </topic>
             <topic position="830,-137" order="1" text="Inheritance" shape="rounded rectangle" id="162137343" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/4/46/Python_Classes_Inheritance.mm&amp;mm_title=Inheritance%20in%20Python" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/4/46/Python_Classes_Inheritance.mmmm_title=Inheritance%20in%20Python" urlType="url"/>
             </topic>
             <topic position="920,-112" order="2" text="Attribute Inheritance Search" shape="rounded rectangle" id="314760601" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/4/46/Python_Classes_Inheritance.mm&amp;mm_title=Inheritance%20in%20Python" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/4/46/Python_Classes_Inheritance.mmmm_title=Inheritance%20in%20Python" urlType="url"/>
             </topic>
             <topic position="1010,-87" order="3" text="New-style Classes" shape="rectangle" id="1014089682" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/e/ef/Python_Classes_Newstyle.mm&amp;mm_title=Python%20New-style%20Classes" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/e/ef/Python_Classes_Newstyle.mmmm_title=Python%20New-style%20Classes" urlType="url"/>
             </topic>
         </topic>
         <topic position="-830,-87" order="6" text="Scoping, Namespaces" shape="rounded rectangle" id="137608830" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/7/74/Python_Scoping_And_Namespaces2.mm&amp;mm_title=Python%20Scoping%20and%20Namespaces" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/7/74/Python_Scoping_And_Namespaces2.mmmm_title=Python%20Scoping%20and%20Namespaces" urlType="url"/>
         </topic>
         <topic position="-920,-62" order="7" text="Exceptions" shape="rounded rectangle" id="50696333" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1&amp;initLoadFile=/wiki/images/1/1a/Python_Exceptions2.mm&amp;mm_title=Python%20Exceptions%20and%20Exception%20Handling" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1initLoadFile=/wiki/images/1/1a/Python_Exceptions2.mmmm_title=Python%20Exceptions%20and%20Exception%20Handling" urlType="url"/>
         </topic>
         <topic position="-1010,-37" order="8" text="Iterators and Generators" shape="rounded rectangle" id="1500711771" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/8/8f/Python_Iterators.mm&amp;mm_title=Python%20Iterators%2C%20Generators%20and%20Generator%20Expressions" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/8/8f/Python_Iterators.mmmm_title=Python%20Iterators%2C%20Generators%20and%20Generator%20Expressions" urlType="url"/>
         </topic>
         <topic position="-1100,-12" order="9" text="Special Method Attributes" shape="rounded rectangle" id="1259199925" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/5/5c/Python_SpecialAttributes_WebLinks.mm&amp;mm_title=Special%20Attributes%20in%20Python" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/5/5c/Python_SpecialAttributes_WebLinks.mmmm_title=Special%20Attributes%20in%20Python" urlType="url"/>
         </topic>
         <topic position="-1190,13" order="10" text="File System Useful Functions" shape="rounded rectangle" id="1694945670" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/a/a8/Python_FileSystem.mm&amp;mm_title=Useful%20Python%20Functions%20for%20Operating%20on%20the%20File%20System" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/a/a8/Python_FileSystem.mmmm_title=Useful%20Python%20Functions%20for%20Operating%20on%20the%20File%20System" urlType="url"/>
         </topic>
         <topic position="-1280,38" order="11" text="File I/O" shape="rounded rectangle" id="1195661090" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/2/24/Python_FileIO2.mm&amp;mm_title=Python%20File%20IO" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/2/24/Python_FileIO2.mmmm_title=Python%20File%20IO" urlType="url"/>
         </topic>
         <topic position="-1370,63" order="12" text="Data Serialization" shape="rounded rectangle" id="602160149" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/1/17/Python_DataSerialization2.mm&amp;mm_title=Python%20Data%20Serialization" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/1/17/Python_DataSerialization2.mmmm_title=Python%20Data%20Serialization" urlType="url"/>
         </topic>
         <topic position="-1460,88" order="13" text="Delegation, Callbacks and Decorators" shape="rounded rectangle" id="1935675521" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/1/10/Python_Delegation.mm&amp;mm_title=Python%20Delegation%2C%20Callbacks%20and%20Decorators" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/1/10/Python_Delegation.mmmm_title=Python%20Delegation%2C%20Callbacks%20and%20Decorators" urlType="url"/>
         </topic>
         <topic position="-1550,113" order="14" text="Regular Expressions" shape="rounded rectangle" id="710876781" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/7/7f/Python_RegularExpressions.mm&amp;mm_title=Python%20Regular%20Expressions" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/7/7f/Python_RegularExpressions.mmmm_title=Python%20Regular%20Expressions" urlType="url"/>
         </topic>
         <topic position="-1640,138" order="15" text="Windows, COM" shape="rounded rectangle" id="950644393" bgColor="#ffff66">
             <topic position="1640,113" order="0" text="Python COM Server" shape="rectangle" id="611860677" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/4/45/Python_COMServer.mm&amp;mm_title=Python%20COM%20Server%20%28Windows%20Only%29" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/4/45/Python_COMServer.mmmm_title=Python%20COM%20Server%20%28Windows%20Only%29" urlType="url"/>
             </topic>
             <topic position="1730,138" order="1" text="Python Client-side COM" shape="rectangle" id="1212768514" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/f/f3/Python_COMClientSide.mm&amp;mm_title=Python%20Client-side%20COM%20%28Windows%20Only%29" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/f/f3/Python_COMClientSide.mmmm_title=Python%20Client-side%20COM%20%28Windows%20Only%29" urlType="url"/>
             </topic>
         </topic>
         <topic position="-1730,163" order="16" text="Miscellaneous" shape="rounded rectangle" id="410804486" bgColor="#ffff66">
@@ -76,7 +76,7 @@
                 <topic position="-1730,101" order="0" text="pass" shape="rectangle" shrink="true" id="960362756" bgColor="#bbffff">
                     <topic position="1730,76" order="0" text="EG" shape="rectangle" shrink="true" id="1413300827" bgColor="#ddddff">
                         <topic position="-1730,64" order="0" shape="line" id="343426327">
-                            <text><![CDATA[while x < a:
+                            <text><![CDATA[while x  a:
     pass]]></text>
                         </topic>
                     </topic>
@@ -98,17 +98,17 @@
                         </topic>
                     </topic>
                 </topic>
-                <topic position="-2000,151" order="2" text="from __future__ import &lt;feature name&gt;" shape="rectangle" id="1192405210" bgColor="#bbffff"/>
+                <topic position="-2000,151" order="2" text="from __future__ import feature name" shape="rectangle" id="1192405210" bgColor="#bbffff"/>
             </topic>
             <topic position="1910,163" order="2" text="Executing Code Strings" shape="rounded rectangle" shrink="true" id="171652609" bgColor="#99ff99">
                 <topic position="-1910,151" order="0" text="exec" shape="rectangle" id="493710140" bgColor="#bbffff"/>
             </topic>
             <topic position="2000,188" order="3" text="Printing" shape="rectangle" id="1061642683" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/7/78/Python_Print.mm&amp;mm_title=Printing%20in%20Python" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/7/78/Python_Print.mmmm_title=Printing%20in%20Python" urlType="url"/>
             </topic>
         </topic>
         <topic position="-1820,188" order="17" text="Tools" shape="rounded rectangle" id="339808348" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/5/58/Python_Tools.mm&amp;mm_title=Useful%20Tools%20for%20Python%20Developers" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/5/58/Python_Tools.mmmm_title=Useful%20Tools%20for%20Python%20Developers" urlType="url"/>
         </topic>
         <topic position="-1910,300" order="18" text="Sources" shape="rounded rectangle" id="1418013461" bgColor="#ffff66">
             <topic position="1910,263" order="0" text="The Quick Python Book" shape="rectangle" shrink="true" id="826312042" bgColor="#99ff99">
@@ -223,62 +223,62 @@
             </topic>
         </topic>
         <topic position="-2270,400" order="22" text="Python Implemenations" shape="rounded rectangle" id="278508781" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/e/ef/Python_Implementations.mm&amp;mm_title=Different%20Implementations%20of%20Python" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/e/ef/Python_Implementations.mmmm_title=Different%20Implementations%20of%20Python" urlType="url"/>
         </topic>
         <topic position="-2360,425" order="23" text="Syntax" shape="rounded rectangle" id="1136447695" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/4/4f/Python_Syntax.mm&amp;mm_title=Python%20Syntax" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/4/4f/Python_Syntax.mmmm_title=Python%20Syntax" urlType="url"/>
         </topic>
         <topic position="-2450,450" order="24" text="Executing Python" shape="rounded rectangle" id="332530597" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/1/1b/Python_Execution.mm&amp;mm_title=Different%20Ways%20of%20Running%20Python%20Programs" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/1/1b/Python_Execution.mmmm_title=Different%20Ways%20of%20Running%20Python%20Programs" urlType="url"/>
         </topic>
         <topic position="-2540,475" order="25" text="Getting Informaton" shape="rounded rectangle" id="10" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/4/4b/Python_Information.mm&amp;mm_title=How%20to%20Get%20Information%20in%20Python" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/4/4b/Python_Information.mmmm_title=How%20to%20Get%20Information%20in%20Python" urlType="url"/>
         </topic>
         <topic position="-2630,500" order="26" text="Naming Conventions" shape="rounded rectangle" id="1594651750" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/2/2f/Python_NamingConventions2.mm&amp;mm_title=Python%20Naming%20Conventions" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/2/2f/Python_NamingConventions2.mmmm_title=Python%20Naming%20Conventions" urlType="url"/>
         </topic>
         <topic position="-2720,525" order="27" text="Type System" shape="rounded rectangle" id="1547162624" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/9/95/Python_TypeSystem.mm&amp;mm_title=The%20CPython%20Type%20System" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/9/95/Python_TypeSystem.mmmm_title=The%20CPython%20Type%20System" urlType="url"/>
             <topic position="2720,513" order="0" text="CPython" shape="rectangle" id="190569951" bgColor="#99ff99"/>
         </topic>
         <topic position="-2810,550" order="28" text="Built-in Data Types" shape="rounded rectangle" id="559844936" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/b/b0/Python_DataTypes_WebLinks.mm&amp;mm_title=Python%20Data%20Types" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/b/b0/Python_DataTypes_WebLinks.mmmm_title=Python%20Data%20Types" urlType="url"/>
             <topic position="2810,475" order="0" text="Numeric Types" shape="rounded rectangle" id="154102391" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/f/fd/Python_DataTypes_Numeric2.mm&amp;mm_title=Python%20Numeric%20Data%20Types" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/f/fd/Python_DataTypes_Numeric2.mmmm_title=Python%20Numeric%20Data%20Types" urlType="url"/>
             </topic>
             <topic position="2900,500" order="1" text="Sequence Types" shape="rounded rectangle" id="918145730" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/f/f0/Python_DataTypes_Sequence_WebLinks.mm&amp;mm_title=Python%20Sequence%20Data%20Types" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/f/f0/Python_DataTypes_Sequence_WebLinks.mmmm_title=Python%20Sequence%20Data%20Types" urlType="url"/>
                 <topic position="-2900,475" order="0" text="Mutable" shape="rectangle" id="1578736339" bgColor="#bbffff">
                     <topic position="2900,463" order="0" text="Lists" shape="rounded rectangle" id="1776894225" bgColor="#ddddff">
-                        <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/f/f1/Python_DataTypes_Sequence_Lists.mm&amp;mm_title=Python%20List%20Data%20Type" urlType="url"/>
+                        <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/f/f1/Python_DataTypes_Sequence_Lists.mmmm_title=Python%20List%20Data%20Type" urlType="url"/>
                     </topic>
                 </topic>
                 <topic position="-2990,500" order="1" text="Immutable" shape="rectangle" id="1799786939" bgColor="#bbffff">
                     <topic position="2990,475" order="0" text="Tuples" shape="rectangle" id="1329146055" bgColor="#ddddff">
-                        <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/1/14/Python_DataTypes_Sequence_Tuples.mm&amp;mm_title=Python%20Tuple%20Data%20Type" urlType="url"/>
+                        <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/1/14/Python_DataTypes_Sequence_Tuples.mmmm_title=Python%20Tuple%20Data%20Type" urlType="url"/>
                     </topic>
                     <topic position="3080,500" order="1" text="Strings" shape="rounded rectangle" id="315458704" bgColor="#ddddff">
-                        <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4&amp;initLoadFile=/wiki/images/3/35/Python_DataTypes_Sequence_Strings.mm&amp;mm_title=Python%20String%20Data%20Type" urlType="url"/>
+                        <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/3/35/Python_DataTypes_Sequence_Strings.mmmm_title=Python%20String%20Data%20Type" urlType="url"/>
                     </topic>
                 </topic>
             </topic>
             <topic position="2990,525" order="2" text="Mapping Types" shape="rounded rectangle" id="674126003" bgColor="#99ff99">
                 <topic position="-2990,513" order="0" text="Dictionary" shape="rounded rectangle" id="1822985067" bgColor="#bbffff">
-                    <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/7/73/Python_DataTypes_Dictionary2.mm&amp;mm_title=Python%20Dictionary%20Data%20Type" urlType="url"/>
+                    <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/7/73/Python_DataTypes_Dictionary2.mmmm_title=Python%20Dictionary%20Data%20Type" urlType="url"/>
                 </topic>
             </topic>
             <topic position="3080,550" order="3" text="Set" shape="rounded rectangle" id="617132681" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/a/a9/Python_DataTypes_Sets.mm&amp;mm_title=Python%20Set%20Data%20Type" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/a/a9/Python_DataTypes_Sets.mmmm_title=Python%20Set%20Data%20Type" urlType="url"/>
             </topic>
             <topic position="3170,575" order="4" text="Bool" shape="rounded rectangle" id="985221708" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/1/16/Python_DataTypes_Bool2.mm&amp;mm_title=Python%20Boolean%20Data%20Type" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/1/16/Python_DataTypes_Bool2.mmmm_title=Python%20Boolean%20Data%20Type" urlType="url"/>
             </topic>
             <topic position="3260,600" order="5" text="Checking" shape="rounded rectangle" id="854059184" bgColor="#99ff99">
-                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3&amp;initLoadFile=/wiki/images/5/5a/Python_DataTypes_Checking2.mm&amp;mm_title=Checking%20Python%20Data%20Types" urlType="url"/>
+                <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/5/5a/Python_DataTypes_Checking2.mmmm_title=Checking%20Python%20Data%20Types" urlType="url"/>
             </topic>
         </topic>
         <topic position="-2900,575" order="29" text="Statements" shape="rounded rectangle" id="464774508" bgColor="#ffff66">
-            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2&amp;initLoadFile=/wiki/images/5/56/Python_Statements.mm&amp;mm_title=Python%20Statements" urlType="url"/>
+            <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/5/56/Python_Statements.mmmm_title=Python%20Statements" urlType="url"/>
         </topic>
     </topic>
 </map>

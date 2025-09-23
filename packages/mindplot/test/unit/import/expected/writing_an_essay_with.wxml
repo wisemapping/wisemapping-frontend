@@ -4,7 +4,7 @@
 With FreeMind]]></text>
         <topic position="200,-200" order="0" text="Getting Started" shape="line" shrink="true" id="60307947">
             <topic position="200,-150" order="0" shape="line" id="484974719">
-                <text><![CDATA[The first thing you'll want to do is to create a new FreeMind file for your essay. Select File->New
+                <text><![CDATA[The first thing you'll want to do is to create a new FreeMind file for your essay. Select File-New
 on the menu, and a blank file will appear.
 ]]></text>
             </topic>
@@ -15,12 +15,20 @@ immediately see how your ideas relate to
 it.]]></text>
             </topic>
             <topic position="-380,-225" order="1" shape="line" id="1631286703">
-                <text><![CDATA[<p>
+                <text><![CDATA[
+  
+    
+    
+  
+  
+    <p>
       <b>When you're working on your essay, you'll find it helpful to switch between this map, and the one you're creating. To switch between maps, go to the Maps menu, and select the name of the map you want. </b>
     </p>
     <p>
       <b>(When you're a bit more familiar with FreeMind, you'll find it quicker to use the Shortcut Keys -- you can also use Alt + Shift + Left, or Alt + Shift + Right to move between maps.)</b>
-    </p>]]></text>
+    </p>
+  
+]]></text>
             </topic>
             <topic position="-470,-200" order="2" text="You're now ready to start work on the essay." shape="line" id="538231078"/>
         </topic>
@@ -90,11 +98,11 @@ short version of the article title.
                 </topic>
                 <topic position="-650,-74" order="2" shape="line" shrink="true" id="1470413282">
                     <text><![CDATA[Then add your notes on the article as a node note. To insert a note,  go to the View menu, and
-select "Show Note Window". You can then add your notes
+select Show Note Window. You can then add your notes
 below.]]></text>
                     <topic position="650,-86" order="0" shape="line" id="81630074">
                         <text><![CDATA[The Notes WIndow can get in the way (particularly if you have a small screen). So you may find it
-helpful to hide it after you've added your note, by selecting "Show Note Window" again from the
+helpful to hide it after you've added your note, by selecting Show Note Window again from the
 menu.]]></text>
                     </topic>
                 </topic>
@@ -105,20 +113,20 @@ menu.]]></text>
 you're writing about.
 ]]></text>
                     </topic>
-                    <topic position="920,-61" order="1" text="Make your note, then select -&gt;Insert-&gt;Hyperlink (Text Field) from the menu. " shape="line" id="1374825576"/>
+                    <topic position="920,-61" order="1" text="Make your note, then select -Insert-Hyperlink (Text Field) from the menu. " shape="line" id="1374825576"/>
                     <topic position="1010,-36" order="2" text="A dialog box will appear. Type (or cut and paste) the web address ino the box, and select OK." shape="line" id="1842548545">
                         <topic position="-1010,-48" order="0" text="Here's an example hyperlink!" shape="line" id="201175194">
                             <link url="http://members.tripod.com/~lklivingston/essay/" urlType="url"/>
                         </topic>
                     </topic>
                     <topic position="1100,-11" order="3" shape="line" id="1508333448">
-                        <text><![CDATA[You can also make links to files on your own computer. To do this select ->Insert->Hyperlink (File
+                        <text><![CDATA[You can also make links to files on your own computer. To do this select -Insert-Hyperlink (File
 Chooser) from the
 menu.]]></text>
                     </topic>
                     <topic position="1190,14" order="4" shape="line" id="899556633">
-                        <text><![CDATA[To link a node to an email address, select ->Insert->Hyperink (Text Field) from the menu. Type
-"mailto: " plus the person's email
+                        <text><![CDATA[To link a node to an email address, select -Insert-Hyperink (Text Field) from the menu. Type mailto:
+ plus the person's email
 address.]]></text>
                         <topic position="-1190,2" order="0" text="Here's an example email address!" shape="line" id="433629028">
                             <link url="http://mailto:%20president@whitehouse.gov" urlType="mail"/>
@@ -152,21 +160,28 @@ move an idea up or down; CTRL LEFT and CTRL RIGHT move it left or right)
                     <text><![CDATA[The first think to do is to move all the ideas together that seem to belong together. Are there
 duplications? Could some ideas usefully be combined? Could some ideas be usefully
 split?]]></text>
-                    <topic position="920,-36" order="0" text="To split an idea, select it, type backspace (the editor appears), then select &quot;split&quot; and then okay." shape="line" id="72639222"/>
+                    <topic position="920,-36" order="0" text="To split an idea, select it, type backspace (the editor appears), then select split and then okay." shape="line" id="72639222"/>
                 </topic>
                 <topic position="-1010,1" order="5" shape="line" id="337591176">
                     <text><![CDATA[You should carry on sifting and organising till you feel that you know what the main point is that
 you want to make in the
 essay.]]></text>
-                    <note contentType="html"><![CDATA[<p>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p>
       You should also make sure that the main point you're making in the essay provides a full answer to the question you have been asked, or you will probably be marked down for irrelevance.
-    </p>]]></note>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1100,26" order="6" shape="line" id="506089558">
                     <text><![CDATA[When you've done this, save a NEW copy of your map. We'll use this to make the outline of the
 argument for your essay. (It's a good idea to save a copy under a different name before you make
 major changes -- this way you can always go back.) To do this, go to File, and then Save As on the
-menu, and call the new one it something like "Essay_Outline v1".
+menu, and call the new one it something like Essay_Outline v1.
 ]]></text>
                 </topic>
             </topic>
@@ -192,9 +207,16 @@ categories.]]></text>
                     </topic>
                     <topic position="1190,13" order="3" text="Things which are irrelevant to whether or not the main claim is true." shape="line" shrink="true" id="76447184">
                         <topic position="-1190,1" order="0" text="You should cut these to a separate file." shape="line" id="672473407">
-                            <note contentType="html"><![CDATA[<p>
+                            <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p>
       I usually keep a separate mind map for this. It's psychologically easier to put your discarded ideas somewhere else, rather than to delete them entirely. And if you've saved them elsewhere, you can easily reincorporate them if you decide that they were relevant after all.
-    </p>]]></note>
+    </p>
+  
+]]></note>
                         </topic>
                     </topic>
                 </topic>
@@ -289,8 +311,7 @@ Presentation.]]></text>
                 </topic>
                 <topic position="-1100,26" order="4" text="This automatically creates a PowerPoint presentation from your outline." shape="line" id="23655519"/>
                 <topic position="-1190,51" order="5" shape="line" id="1027338237">
-                    <text><![CDATA[I've found that setting "Included Outline Levels" to 2, and "Subpoints per level" to 5 gives the
-best
+                    <text><![CDATA[I've found that setting Included Outline Levels to 2, and Subpoints per level to 5 gives the best
 results.]]></text>
                 </topic>
             </topic>
@@ -301,54 +322,124 @@ mark in your
 essay!)]]></text>
                 </topic>
                 <topic position="-920,-86" order="1" text="Does my essay have a main claim?" shape="line" id="1803078302">
-                    <note contentType="html"><![CDATA[<p class="western" style="margin-bottom: 0cm">
-      <font size="4" color="#000000">Another way of asking this question is can you sum up in a sentence what the main point is that your essay is making?) If you <i>don't </i>have a main claim (or don't know what your main claim is!), then your essay <i>will not </i>get a good mark. You are assessed on the quality of the argument you put forward for your main claim, and in order to be able to do this we (and you) need to know what your main claim is.</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-bottom: 0cm">
+      <span>Another way of asking this question is can you sum up in a sentence what the main point is that your essay is making?) If you <i>don't </i>have a main claim (or don't know what your main claim is!), then your essay <i>will not </i>get a good mark. You are assessed on the quality of the argument you put forward for your main claim, and in order to be able to do this we (and you) need to know what your main claim is.</span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1010,-61" order="2" text="Does my main claim provide a full answer the question that I have been asked?" shape="line" id="107276913">
-                    <note contentType="html"><![CDATA[<p class="western" style="margin-left: 1.27cm">
-      <font size="4" color="#000000">You must be honest with yourself at this point: if you suspect that you haven't fully answered the question, then you must either (a) revise your answer so that you <i>do </i>have a full answer to the question, or (b) provide an argument for why it is that the angle you want to bring to the question is legitimate (for example, explain why it is legitimate to focus on just one aspect of the question).</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm">
+      <span>You must be honest with yourself at this point: if you suspect that you haven't fully answered the question, then you must either (a) revise your answer so that you <i>do </i>have a full answer to the question, or (b) provide an argument for why it is that the angle you want to bring to the question is legitimate (for example, explain why it is legitimate to focus on just one aspect of the question).</span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1100,-36" order="3" text="Have I made it obvious what my main claim is?" shape="line" id="1628680821">
-                    <note contentType="html"><![CDATA[<p class="western" lang="en-GB" style="margin-left: 1.27cm; font-style: normal">
-      <font size="4" color="#000000">You should state what your main claim is in at least two places, first in the introduction, and second in the conclusion. (The bits in between should be devoted to arguing for your main claim). </font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm; font-style: normal">
+      <span>You should state what your main claim is in at least two places, first in the introduction, and second in the conclusion. (The bits in between should be devoted to arguing for your main claim). </span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1190,-11" order="4" text="Do I have an argument for my main claim?" shape="line" id="927542090">
-                    <note contentType="html"><![CDATA[<p class="western" style="margin-left: 1.27cm">
-      <font size="4" color="#000000">What reasons have you put forward as to why a reasonable (but sceptical) person should accept that your main claim is <i>true</i>? If you don't have any reasons (but merely a gut intuition) then you need to go back and revise, and find some arguments.</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm">
+      <span>What reasons have you put forward as to why a reasonable (but sceptical) person should accept that your main claim is <i>true</i>? If you don't have any reasons (but merely a gut intuition) then you need to go back and revise, and find some arguments.</span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1280,14" order="5" text="Is my argument for my main claim sound?" shape="line" id="337592890">
-                    <note contentType="html"><![CDATA[<p class="western" lang="en-GB" style="margin-left: 1.27cm; font-style: normal">
-      <font size="4" color="#000000">Does your main claim follow logically from the supporting reasons you put forward? And are those supporting reasons themselves true (or at least plausibly true)?</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm; font-style: normal">
+      <span>Does your main claim follow logically from the supporting reasons you put forward? And are those supporting reasons themselves true (or at least plausibly true)?</span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1370,39" order="6" text="Do I have an introduction which provides an overview of the structure of my argument?" shape="line" id="1338320981">
-                    <note contentType="html"><![CDATA[<p class="western" style="margin-left: 1.27cm">
-      <font size="4" color="#000000">It is not enough e.g. to <i>say </i>that “I will be looking at arguments on both sides of this issue and coming to a conclusion”. You should tell us <i>which </i>arguments you will be looking at, <i>what</i>your evaluation of each of these arguments will be, and <i>how</i>this analysis justifies the overall main claim you will be making. There are two reasons to give an overview of the structure of your argument: (a) it makes it much easier for the reader to grasp what you are saying, and why; (b) writing a summary of the structure of your argument is a good way of testing that <i>you do in fact </i>have a coherent argument. </font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm">
+      <span>It is not enough e.g. to <i>say </i>that “I will be looking at arguments on both sides of this issue and coming to a conclusion”. You should tell us <i>which </i>arguments you will be looking at, <i>what</i>your evaluation of each of these arguments will be, and <i>how</i>this analysis justifies the overall main claim you will be making. There are two reasons to give an overview of the structure of your argument: (a) it makes it much easier for the reader to grasp what you are saying, and why; (b) writing a summary of the structure of your argument is a good way of testing that <i>you do in fact </i>have a coherent argument. </span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1460,64" order="7" text="What reasons might a reasonable person have for doubting my main claim?" shape="line" id="1521390030">
-                    <note contentType="html"><![CDATA[<p class="western" style="margin-left: 1.27cm">
-      <font size="4" color="#000000">Remember that in any academic debate, anything worth saying will be disputed. If you can't think of any reasons why someone might doubt your main claim, it's likely that you are in the grip of a dogmatic certainty that you are right. This is not good: your essay will come across as a rant, which is the last thing you want. </font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm">
+      <span>Remember that in any academic debate, anything worth saying will be disputed. If you can't think of any reasons why someone might doubt your main claim, it's likely that you are in the grip of a dogmatic certainty that you are right. This is not good: your essay will come across as a rant, which is the last thing you want. </span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1550,89" order="8" text="Have I responded to these reasons for doubting my main claim in a convincing way?" shape="line" id="1843933327">
-                    <note contentType="html"><![CDATA[<p class="western" lang="en-GB" style="margin-left: 1.27cm; font-style: normal">
-      <font size="4" color="#000000">To be convincing, you might show that the doubts, while reasonable, are not well founded; or you could make your main claim more specific or nuanced in deference to them.</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm; font-style: normal">
+      <span>To be convincing, you might show that the doubts, while reasonable, are not well founded; or you could make your main claim more specific or nuanced in deference to them.</span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1640,114" order="9" text="Is there any material in my essay which might seem irrelevant to establishing my main point?" shape="line" id="982795475">
-                    <note contentType="html"><![CDATA[<p class="western" style="margin-left: 1.27cm">
-      <font size="4" color="#000000">If there is, then either delete this material, or explain <i>why </i>this material is after all relevant.</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western" style="margin-left: 1.27cm">
+      <span>If there is, then either delete this material, or explain <i>why </i>this material is after all relevant.</span>
+    </p>
+  
+]]></note>
                 </topic>
                 <topic position="-1730,139" order="10" text="Have I fully acknowledged all my sources, and marked all quotations as quotations?" shape="line" id="606334721">
-                    <note contentType="html"><![CDATA[<p class="western">
-      <font color="#000000" size="4">If not then you are guilty of <i>plagiarism. </i>This is a serious offence, and you are likely to fail your course..</font>
-    </p>]]></note>
+                    <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p class="western">
+      <span>If not then you are guilty of <i>plagiarism. </i>This is a serious offence, and you are likely to fail your course..</span>
+    </p>
+  
+]]></note>
                 </topic>
             </topic>
         </topic>
@@ -358,7 +449,12 @@ essay!)]]></text>
                 <link url="http://mailto:j.g.wilson@peak.keele.ac.uk" urlType="mail"/>
             </topic>
             <topic position="740,26" order="2" text="Notes on this map" shape="line" id="1843583599">
-                <note contentType="html"><![CDATA[<p>
+                <note contentType="html"><![CDATA[
+  
+    
+  
+  
+    <p>
       This map is intended to help someone who has to write an argumentative essay in a subject such as history or philosophy to write better essays with the help of FreeMind. Copyright for this map resides with the author. Released under the Creative Commons Attribution-ShareAlike licence v.2.00. http://creativecommons.org/licenses/by-sa/2.0/uk/
     </p>
     <p>
@@ -390,7 +486,9 @@ essay!)]]></text>
     </p>
     <p>
       Nothing in this license impairs or restricts the author's moral rights.
-    </p>]]></note>
+    </p>
+  
+]]></note>
             </topic>
         </topic>
     </topic>

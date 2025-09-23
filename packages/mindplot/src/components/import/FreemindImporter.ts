@@ -18,6 +18,8 @@ import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
 import ContentType from '../ContentType';
+import HtmlSanitizer from '../security/HtmlSanitizer';
+import SecureXmlParser from '../security/SecureXmlParser';
 
 export default class FreemindImporter extends Importer {
   private mindmap!: Mindmap;
@@ -39,8 +41,11 @@ export default class FreemindImporter extends Importer {
     this.mindmap = new Mindmap(nameMap);
     this.nodesmap = new Map<string, NodeModel>();
 
-    const parser = new DOMParser();
-    const freemindDoc = parser.parseFromString(this.freemindInput, 'application/xml');
+    // Use secure XML parser to prevent XXE attacks
+    const freemindDoc = SecureXmlParser.parseSecureXml(this.freemindInput);
+    if (!freemindDoc) {
+      throw new Error('Failed to parse FreeMind XML - content may be unsafe');
+    }
     this.freemindMap = new FreemindMap().loadFromDom(freemindDoc);
 
     const version: string | undefined = this.freemindMap.getVersion();
@@ -513,18 +518,7 @@ export default class FreemindImporter extends Importer {
   }
 
   private cleanHtml(content: string): string {
-    // Create a temporary DOM element to clean the HTML
-    const temporalDivElement = document.createElement('div');
-    temporalDivElement.innerHTML = content;
-
-    // Remove potentially problematic tags while preserving formatting
-    const tagsToRemove = ['script', 'style', 'iframe', 'object', 'embed', 'link', 'meta'];
-    tagsToRemove.forEach((tag) => {
-      const elements = temporalDivElement.querySelectorAll(tag);
-      elements.forEach((el) => el.remove());
-    });
-
-    // Return the cleaned HTML content
-    return temporalDivElement.innerHTML.trim() || '';
+    // Use secure HTML sanitizer to prevent XSS and other injection attacks
+    return HtmlSanitizer.sanitize(content);
   }
 }

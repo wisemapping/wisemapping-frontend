@@ -21,6 +21,8 @@ import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import ContentType from '../ContentType';
+import HtmlSanitizer from '../security/HtmlSanitizer';
+import SecureXmlParser from '../security/SecureXmlParser';
 
 class OPMLImporter extends Importer {
   private opmlInput: string;
@@ -34,13 +36,10 @@ class OPMLImporter extends Importer {
 
   import(nameMap: string, description?: string): Promise<string> {
     try {
-      const parser = new DOMParser();
-      const opmlDoc = parser.parseFromString(this.opmlInput, 'application/xml');
-
-      // Check for parsing errors
-      const parserError = opmlDoc.querySelector('parsererror');
-      if (parserError) {
-        throw new Error('Invalid OPML XML format');
+      // Use secure XML parser to prevent XXE attacks
+      const opmlDoc = SecureXmlParser.parseSecureXml(this.opmlInput);
+      if (!opmlDoc) {
+        throw new Error('Failed to parse OPML XML - content may be unsafe');
       }
 
       this.mindmap = new Mindmap(nameMap);
@@ -99,19 +98,8 @@ class OPMLImporter extends Importer {
   }
 
   private cleanHtml(content: string): string {
-    // Create a temporary DOM element to clean the HTML
-    const temporalDivElement = document.createElement('div');
-    temporalDivElement.innerHTML = content;
-
-    // Remove potentially problematic tags while preserving formatting
-    const tagsToRemove = ['script', 'style', 'iframe', 'object', 'embed', 'link', 'meta'];
-    tagsToRemove.forEach((tag) => {
-      const elements = temporalDivElement.querySelectorAll(tag);
-      elements.forEach((el) => el.remove());
-    });
-
-    // Return the cleaned HTML content
-    return temporalDivElement.innerHTML.trim() || '';
+    // Use secure HTML sanitizer to prevent XSS and other injection attacks
+    return HtmlSanitizer.sanitize(content);
   }
 }
 
