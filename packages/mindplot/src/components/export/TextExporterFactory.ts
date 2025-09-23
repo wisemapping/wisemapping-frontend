@@ -21,8 +21,9 @@ import MDExporter from './MDExporter';
 import TxtExporter from './TxtExporter';
 import WiseXMLExporter from './WiseXMLExporter';
 import FreemindExporter from './FreemindExporter';
+import FreeplaneExporter from './FreeplaneExporter';
 
-type textType = 'wxml' | 'txt' | 'mm' | 'csv' | 'md' | 'mmap';
+type textType = 'wxml' | 'txt' | 'mm' | 'mmx' | 'csv' | 'md' | 'mmap';
 
 class TextExporterFactory {
   static create(type: textType, mindmap: Mindmap): Exporter {
@@ -39,6 +40,9 @@ class TextExporterFactory {
         break;
       case 'mm':
         result = new FreemindExporter(mindmap);
+        break;
+      case 'mmx':
+        result = new FreeplaneExporter();
         break;
       default:
         throw new Error(`Unsupported type ${type}`);

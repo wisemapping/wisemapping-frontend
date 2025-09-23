@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.0">
+  <sheet id="sheet1">
+    <topic id="topic1">
+      <title>Central Topic</title>
+      <children>
+        <topics type="attached">
+          <topic id="topic2">
+            <title>Child 1</title>
+            <children>
+              <topics type="attached">
+                <topic id="topic3">
+                  <title>Grandchild 1</title>
+                </topic>
+                <topic id="topic4">
+                  <title>Grandchild 2</title>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic5">
+            <title>Child 2</title>
+            <notes>
+              <plain>This is a note for Child 2</plain>
+            </notes>
+          </topic>
+          <topic id="topic6">
+            <title>Child 3</title>
+            <markers>
+              <marker marker-id="priority-1"/>
+            </markers>
+            <children>
+              <topics type="attached">
+                <topic id="topic7">
+                  <title>Subchild</title>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>

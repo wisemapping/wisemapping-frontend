@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Map xmlns="http://www.mindjet.com/MindManager/MindMapXML/1.0">
+  <Topic ID="1" Text="Central Topic">
+    <Topic ID="2" Text="Child 1">
+      <Topic ID="3" Text="Grandchild 1"/>
+      <Topic ID="4" Text="Grandchild 2"/>
+    </Topic>
+    <Topic ID="5" Text="Child 2">
+      <Notes>This is a note for Child 2</Notes>
+    </Topic>
+    <Topic ID="6" Text="Child 3">
+      <Hyperlink URL="https://example.com"/>
+      <Topic ID="7" Text="Subchild"/>
+    </Topic>
+  </Topic>
+</Map>

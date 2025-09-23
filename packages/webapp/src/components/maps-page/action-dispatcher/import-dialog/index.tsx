@@ -87,7 +87,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         }
 
         const extensionFile = file.name.split('.').pop();
-        const extensionAccept = ['wxml', 'mm'];
+        const extensionAccept = ['wxml', 'mm', 'mmx', 'xmind', 'mmap', 'opml'];
 
         if (!extensionFile || !extensionAccept.includes(extensionFile)) {
           setErrorFile({
@@ -99,7 +99,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
               },
               {
                 error:
-                  'You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import.',
+                  'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
               },
             ),
           });

@@ -12,16 +12,33 @@ const testNames = fs
 
 describe('package/', () => {
   test.each(testNames)('Importing %p suite', async (testName: string) => {
-    // load freemap...
     const freemapPath = path.resolve(__dirname, `./input/${testName}.mm`);
-    const mapDocument = parseXMLFile(freemapPath, 'text/xml');
+    const mapContent = fs.readFileSync(freemapPath, { encoding: 'utf-8' }).toString();
 
-    const freemap: FreemindMap = new FreemindMap().loadFromDom(mapDocument);
-    const freemapXml = freemap.toXml();
-    const freemapStr = new XMLSerializer().serializeToString(freemapXml);
+    // Determine the file type based on content
+    let fileType = 'mm';
+    if (mapContent.includes('freeplane')) {
+      fileType = 'mm'; // Freeplane uses .mm extension
+    } else if (mapContent.includes('xmap-content')) {
+      fileType = 'xmind';
+    } else if (mapContent.includes('opml')) {
+      fileType = 'opml';
+    } else if (mapContent.includes('mindjet.com/MindManager')) {
+      fileType = 'mmap';
+    }
 
-    const importer = TextImporterFactory.create('mm', freemapStr);
-
-    await exporterAssert(testName, importer);
+    // For FreeMind/Freeplane files, use the existing logic
+    if (fileType === 'mm') {
+      const mapDocument = parseXMLFile(freemapPath, 'text/xml');
+      const freemap: FreemindMap = new FreemindMap().loadFromDom(mapDocument);
+      const freemapXml = freemap.toXml();
+      const freemapStr = new XMLSerializer().serializeToString(freemapXml);
+      const importer = TextImporterFactory.create('mm', freemapStr);
+      await exporterAssert(testName, importer);
+    } else {
+      // For other formats, use the raw content
+      const importer = TextImporterFactory.create(fileType, mapContent);
+      await exporterAssert(testName, importer);
+    }
   });
 });
