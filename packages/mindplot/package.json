@@ -24,8 +24,9 @@
     "dev": "webpack serve --config webpack.dev.js",
     "lint": "eslint src --ext js,ts",
     "storybook": "storybook dev -p 6006",
+    "storybook:test": "storybook dev -p 6006 --no-open",
     "test": "yarn test:unit && yarn test:integration",
-    "test:integration": "npx start-server-and-test storybook http-get://localhost:6006 cy:run",
+    "test:integration": "npx start-server-and-test storybook:test http-get://localhost:6006 cy:run",
     "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts --verbose --silent --detectOpenHandles"
   },
   "dependencies": {

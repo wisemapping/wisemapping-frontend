@@ -21,8 +21,9 @@
     "dev": "webpack --config webpack.dev.js",
     "lint": "eslint src",
     "storybook": "storybook dev -p 6006",
+    "storybook:test": "storybook dev -p 6006 --no-open",
     "test": "yarn test:integration",
-    "test:integration": "npx start-server-and-test storybook http-get://localhost:6006 cy:run"
+    "test:integration": "npx start-server-and-test storybook:test http-get://localhost:6006 cy:run"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
