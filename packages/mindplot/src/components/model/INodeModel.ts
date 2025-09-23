@@ -94,6 +94,25 @@ abstract class INodeModel {
     return this.getProperty('contentType') as string;
   }
 
+  isRichText(): boolean {
+    const contentType = this.getContentType();
+    return contentType === 'html';
+  }
+
+  getPlainText(): string {
+    const text = this.getText();
+    if (!text) return '';
+
+    if (this.isRichText()) {
+      // Create a temporary DOM element to strip HTML tags
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = text;
+      return tempDiv.textContent || tempDiv.innerText || '';
+    }
+
+    return text;
+  }
+
   setPosition(x: number, y: number): void {
     this.putProperty('position', `{x:${x},y:${y}}`);
   }

@@ -45,7 +45,9 @@ class MDExporter extends Exporter {
     const centralTopicText = centralTopic.getText();
     let result = '';
     if (centralTopicText) {
-      const centralText = this.normalizeText(centralTopicText);
+      const centralText = centralTopic.isRichText()
+        ? this.normalizeText(centralTopic.getPlainText())
+        : this.normalizeText(centralTopicText);
 
       // Traverse all the branches ...
       result = `# ${centralText}\n\n`;
@@ -75,7 +77,8 @@ class MDExporter extends Exporter {
           iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
         }
 
-        result = `${result}${prefix}-${iconStr}${node.getText()}`;
+        const nodeText = node.isRichText() ? node.getPlainText() : node.getText();
+        result = `${result}${prefix}-${iconStr}${nodeText}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();
           // Dump all features ...

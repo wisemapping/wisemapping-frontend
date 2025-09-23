@@ -20,33 +20,33 @@
             <topic position="380,-37" order="1" text="Diagnostics" shape="rounded rectangle" id="80" bgColor="#feffff">
                 <topic position="-380,-62" order="0" text="Internal business innovation factors" shape="line" id="81"/>
                 <topic position="-470,-37" order="1" text="Return on investment to innovation" shape="line" id="359">
-                    <topic position="470,-212" order="0" shape="line" id="360">
+                    <topic position="470,-212" order="0" contentType="html" shape="line" id="360">
                         <text><![CDATA[<p>Firms turnover from (new to firm)</p>
                                     <p>product innovation (as a pecentage of total turnover)</p>]]></text>
                     </topic>
-                    <topic position="560,-187" order="1" shape="line" id="361">
+                    <topic position="560,-187" order="1" contentType="html" shape="line" id="361">
                         <text><![CDATA[<p>Increase in the probability to innovate linked to ICT use</p>
                                     <p>(in product innovation, process innovation, organisational innovaton, marketing innovation)</p>]]></text>
                     </topic>
-                    <topic position="650,-162" order="2" shape="line" id="362">
+                    <topic position="650,-162" order="2" contentType="html" shape="line" id="362">
                         <text><![CDATA[<p>Scientific articles by type of collaboration (per capita)</p>
                                     <p>(international co-authoriship, domestic co-authoriship, single author)</p>]]></text>
                     </topic>
-                    <topic position="740,-137" order="3" shape="line" id="363">
+                    <topic position="740,-137" order="3" contentType="html" shape="line" id="363">
                         <text><![CDATA[<p>Increase in a share of expenditures on technological</p>
                                     <p>innovations in the total amount of regional firms’ expenditures, %</p>]]></text>
                     </topic>
                     <topic position="830,-112" order="4" text="Increase in the number of innovative companies with in-house R&amp;D" shape="line" id="364"/>
                     <topic position="920,-87" order="5" text="Increase in th number of innovative companies without in-house R&amp;D" shape="line" id="365"/>
-                    <topic position="1010,-62" order="6" shape="line" id="366">
+                    <topic position="1010,-62" order="6" contentType="html" shape="line" id="366">
                         <text><![CDATA[<p>Increase in th number of firms with</p>
                                     <p>international/national collaboration on innovation</p>]]></text>
                     </topic>
-                    <topic position="1100,-37" order="7" shape="line" id="367">
+                    <topic position="1100,-37" order="7" contentType="html" shape="line" id="367">
                         <text><![CDATA[<p>Highly cited scientific articles (as a percentage of</p>
                                     <p>highly cited scientific article in the whole Federation)</p>]]></text>
                     </topic>
-                    <topic position="1190,-12" order="8" shape="line" id="368">
+                    <topic position="1190,-12" order="8" contentType="html" shape="line" id="368">
                         <text><![CDATA[<p>Patents filed by public research organisations</p>
                                     <p>(as a percentafe of patent application filed under PCT)</p>]]></text>
                     </topic>
@@ -103,11 +103,11 @@
                                 <note><![CDATA[<p>per 100 population aged 25-64</p>]]></note>
                             </topic>
                             <topic position="920,-136" order="1" text="Increase in literarecy " shape="line" id="333"/>
-                            <topic position="1010,-111" order="2" shape="line" id="188">
+                            <topic position="1010,-111" order="2" contentType="html" shape="line" id="188">
                                 <text><![CDATA[<p>Amount of university and colleague</p>
                                             <p>students per 10 thousands population</p>]]></text>
                             </topic>
-                            <topic position="1100,-86" order="3" shape="line" id="276">
+                            <topic position="1100,-86" order="3" contentType="html" shape="line" id="276">
                                 <text><![CDATA[<p>Share of employees with higher education in</p>
                                             <p>the total amount of population at the working age</p>]]></text>
                             </topic>
@@ -166,11 +166,11 @@
                             <topic position="740,-161" order="0" text="Export intensity in manufacturing and services" shape="line" id="169">
                                 <note><![CDATA[<p>: exports as a share of total output in manufacturing and services [%].</p>]]></note>
                             </topic>
-                            <topic position="830,-136" order="1" shape="line" id="375">
+                            <topic position="830,-136" order="1" contentType="html" shape="line" id="375">
                                 <text><![CDATA[<p>Share of high-technology export in the total volume</p>
                                             <p>of production of goods, works and services</p>]]></text>
                             </topic>
-                            <topic position="920,-111" order="2" shape="line" id="377">
+                            <topic position="920,-111" order="2" contentType="html" shape="line" id="377">
                                 <text><![CDATA[<p>Share of innovation production/serivces that goes for export,</p>
                                             <p>by zones (EU, US, CIS, other countries</p>]]></text>
                             </topic>
@@ -196,11 +196,11 @@
                         <topic position="-1010,-87" order="2" text="Firms collaborating on innovation with organizations in other countries" shape="line" id="165">
                             <note><![CDATA[<p>CIS</p>]]></note>
                         </topic>
-                        <topic position="-1100,-62" order="3" shape="line" id="173">
+                        <topic position="-1100,-62" order="3" contentType="html" shape="line" id="173">
                             <text><![CDATA[<p>Share of Innovative companies collaborating</p>
                                         <p>with research institutions on innovation</p>]]></text>
                         </topic>
-                        <topic position="-1190,-37" order="4" shape="line" id="174">
+                        <topic position="-1190,-37" order="4" contentType="html" shape="line" id="174">
                             <text><![CDATA[<p>Number of joint projects conducted by the local comapnies</p>
                                         <p>and local consulting/intermediary agencies</p>]]></text>
                         </topic>
@@ -210,18 +210,18 @@
                         <topic position="-920,-137" order="0" text="Local supplier quality" shape="line" id="116">
                             <note><![CDATA[<p>GCR</p>]]></note>
                         </topic>
-                        <topic position="-1010,-112" order="1" shape="line" id="127">
+                        <topic position="-1010,-112" order="1" contentType="html" shape="line" id="127">
                             <text><![CDATA[<p>Share of expenditures on technological innovations</p>
                                         <p>in the amount of sales</p>]]></text>
                         </topic>
                         <topic position="-1100,-87" order="2" text="Number of purchased new technologies" shape="line" id="129"/>
-                        <topic position="-1190,-62" order="3" shape="line" id="354">
+                        <topic position="-1190,-62" order="3" contentType="html" shape="line" id="354">
                             <text><![CDATA[<p>Investments in ICT by asset (IT equipment,</p>
                                         <p>communication equipment, software)</p>]]></text>
                         </topic>
                         <topic position="-1280,-37" order="4" text="Machinery and equipment" shape="line" id="355"/>
                         <topic position="-1370,-12" order="5" text="Software and databases" shape="line" id="356"/>
-                        <topic position="-1460,13" order="6" shape="line" id="373">
+                        <topic position="-1460,13" order="6" contentType="html" shape="line" id="373">
                             <text><![CDATA[<p>Level of energy efficiency of the regional economy</p>
                                         <p>(can be measured by sectors and for the whole region)</p>]]></text>
                         </topic>
@@ -254,13 +254,13 @@
                     </topic>
                     <topic position="1190,38" order="6" text="R&amp;D production" shape="line" id="277">
                         <topic position="-1190,13" order="0" text="Outputs" shape="line" id="280">
-                            <topic position="1190,-49" order="0" shape="line" id="279">
+                            <topic position="1190,-49" order="0" contentType="html" shape="line" id="279">
                                 <text><![CDATA[<p>Amount of domestically protected intellectual</p>
                                             <p>property per 1 mln. population</p>]]></text>
                             </topic>
                             <topic position="1280,-24" order="1" text="Amount of PCT-applications per 1 mln. population" shape="line" id="278"/>
                             <topic position="1370,1" order="2" text="Number of domestic patent applications per R&amp;D expenditures" shape="line" id="281"/>
-                            <topic position="1460,26" order="3" shape="line" id="282">
+                            <topic position="1460,26" order="3" contentType="html" shape="line" id="282">
                                 <text><![CDATA[<p>Number of intellectual property exploited by regional</p>
                                             <p>enterprises per 1 mln. population</p>]]></text>
                             </topic>
@@ -272,12 +272,12 @@
                         </topic>
                     </topic>
                     <topic position="1280,63" order="7" text="Public sector innovation" shape="line" id="415">
-                        <topic position="-1280,26" order="0" shape="line" id="416">
+                        <topic position="-1280,26" order="0" contentType="html" shape="line" id="416">
                             <text><![CDATA[<p>Number of advanced ICT introduced in the budgetary organizations</p>
                                         <p>(regional power, municipal bodies, social and educational organizations)</p>]]></text>
                         </topic>
                         <topic position="-1370,51" order="1" text="E-government index" shape="line" id="418"/>
-                        <topic position="-1460,76" order="2" shape="line" id="419">
+                        <topic position="-1460,76" order="2" contentType="html" shape="line" id="419">
                             <text><![CDATA[<p>Number of management innovations introduced in the budgetary organizations</p>
                                         <p>(regional power, municipal bodies, social and educational organizations)</p>]]></text>
                         </topic>
@@ -286,7 +286,7 @@
                 <topic position="-740,13" order="3" text="Supporting organizations" shape="line" id="113">
                     <topic position="740,-24" order="0" text="Research institutions" shape="line" id="51">
                         <topic position="-740,-86" order="0" text="Collaboration" shape="line" id="171">
-                            <topic position="740,-98" order="0" shape="line" id="172">
+                            <topic position="740,-98" order="0" contentType="html" shape="line" id="172">
                                 <text><![CDATA[<p>Number of interactions between universities</p>
                                             <p>and large companies  by university size</p>]]></text>
                             </topic>
@@ -300,7 +300,7 @@
                             <topic position="920,-61" order="0" text="Publications" shape="line" id="306">
                                 <topic position="-920,-98" order="0" text="Impact of publications in the ISI database (h-index)" shape="line" id="304"/>
                                 <topic position="-1010,-73" order="1" text="Number of publications in international journals per worker per year" shape="line" id="186"/>
-                                <topic position="-1100,-48" order="2" shape="line" id="303">
+                                <topic position="-1100,-48" order="2" contentType="html" shape="line" id="303">
                                     <text><![CDATA[<p>Publications: Academic articles in international peer-reviewed</p>
                                                 <p>journals per 1,000 researchers [articles/1,000 researchers].</p>]]></text>
                                 </topic>
@@ -314,7 +314,7 @@
                         </topic>
                         <topic position="-1100,14" order="4" text="Commercialization" shape="line" id="299">
                             <topic position="1100,-23" order="0" text="Licensing" shape="line" id="308">
-                                <topic position="-1100,-35" order="0" shape="line" id="298">
+                                <topic position="-1100,-35" order="0" contentType="html" shape="line" id="298">
                                     <text><![CDATA[<p>Academic licenses: Number of licenses</p>
                                                 <p>per 1,000 researchers.[licenses/researcher]</p>]]></text>
                                 </topic>
@@ -324,7 +324,7 @@
                             </topic>
                             <topic position="1280,27" order="2" text="Industry contracts" shape="line" id="310">
                                 <topic position="-1280,-35" order="0" text="Industry revenue per staff " shape="line" id="297"/>
-                                <topic position="-1370,-10" order="1" shape="line" id="305">
+                                <topic position="-1370,-10" order="1" contentType="html" shape="line" id="305">
                                     <text><![CDATA[<p>Foreign contracts: Number of contracts with foreign industria</p>
                                                 <p>l companies at scientific and educational organizations</p>
                                                 <p>per 1,000 researchers [contracts/researchers]</p>]]></text>
@@ -369,12 +369,12 @@
                                     <p>EUROPEAN TECHNOLOGY INCUBATORS</p>]]></note>
                     </topic>
                     <topic position="740,-87" order="3" text="Share of tenants with innovation activities" shape="line" id="326"/>
-                    <topic position="830,-62" order="4" shape="line" id="329">
+                    <topic position="830,-62" order="4" contentType="html" shape="line" id="329">
                         <text><![CDATA[<p>Gazelle tenant: Share of tenants with</p>
                                     <p>annual revenue growth of more than 20%</p>
                                     <p>for each of the past four years or since formation [%]</p>]]></text>
                     </topic>
-                    <topic position="920,-37" order="5" shape="line" id="330">
+                    <topic position="920,-37" order="5" contentType="html" shape="line" id="330">
                         <text><![CDATA[<p>Globalization of tenants: Median share of tenant</p>
                                     <p>revenues obtained from exports [%]</p>]]></text>
                     </topic>
@@ -391,18 +391,18 @@ international)
                 </topic>
                 <topic position="-650,-37" order="2" text="Degree of access" shape="line" id="182">
                     <topic position="650,-74" order="0" text="Level of awareness" shape="line" id="52">
-                        <topic position="-650,-86" order="0" shape="line" id="181">
+                        <topic position="-650,-86" order="0" contentType="html" shape="line" id="181">
                             <text><![CDATA[<p>Perception (opinion poll) of business managers</p>
                                         <p>regarding public support programmes</p>]]></text>
                         </topic>
                     </topic>
                     <topic position="740,-49" order="1" text="Transparency" shape="line" id="53">
-                        <topic position="-740,-61" order="0" shape="line" id="175">
+                        <topic position="-740,-61" order="0" contentType="html" shape="line" id="175">
                             <text><![CDATA[<p>Perception of business managers in terms</p>
                                         <p>of level of transparency of support measures in the region</p>]]></text>
                         </topic>
                     </topic>
-                    <topic position="830,-24" order="2" shape="line" id="183">
+                    <topic position="830,-24" order="2" contentType="html" shape="line" id="183">
                         <text><![CDATA[<p>Description by regional business managers of the way the</p>
                                     <p>select and apply for regional and federal support schemes</p>]]></text>
                     </topic>
@@ -449,11 +449,11 @@ international)
                     <topic position="1190,39" order="4" text="Number of new products/projects at the companies that received support " shape="line" id="406"/>
                 </topic>
                 <topic position="-920,26" order="2" text="Impact assessment " shape="line" id="290"/>
-                <topic position="-1010,51" order="3" shape="line" id="291">
+                <topic position="-1010,51" order="3" contentType="html" shape="line" id="291">
                     <text><![CDATA[<p>Average leverage of 1rub (there would be</p>
                                 <p>several programs with different leverage)</p>]]></text>
                 </topic>
-                <topic position="-1100,76" order="4" shape="line" id="296">
+                <topic position="-1100,76" order="4" contentType="html" shape="line" id="296">
                     <text><![CDATA[<p>Volume of attracted money per one ruble</p>
                                 <p>of regional budget expenditures on innovation projects</p>]]></text>
                 </topic>
@@ -468,7 +468,7 @@ international)
                     <topic position="740,-99" order="2" text="Share of cluster products in the relevant world market segment " shape="line" id="320"/>
                     <topic position="830,-74" order="3" text="Share of export in cluster total volume of sales" shape="line" id="321"/>
                     <topic position="920,-49" order="4" text="Growth of the volume of production in the cluster companies" shape="line" id="379"/>
-                    <topic position="1010,-24" order="5" shape="line" id="380">
+                    <topic position="1010,-24" order="5" contentType="html" shape="line" id="380">
                         <text><![CDATA[<p>Growth of the volume of production in the cluster companies</p>
                                     <p>to the volume of state support for the cluster</p>]]></text>
                     </topic>
@@ -496,7 +496,7 @@ international)
                     <topic position="920,26" order="1" text="Venture investment map" shape="line" id="74"/>
                     <topic position="1010,51" order="2" text="Attractiveness to public competitive funding" shape="line" id="317">
                         <topic position="-1010,26" order="0" text="Fed and regional seed fund investments" shape="line" id="316"/>
-                        <topic position="-1100,51" order="1" shape="line" id="314">
+                        <topic position="-1100,51" order="1" contentType="html" shape="line" id="314">
                             <text><![CDATA[<p>FASIE projects: Number of projects supported</p>
                                         <p>by the FASIE per 1,000 workers [awards/worker]</p>]]></text>
                         </topic>

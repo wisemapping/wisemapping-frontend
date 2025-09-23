@@ -152,7 +152,11 @@ class FreemindExporter extends Exporter {
     const text = mindmapTopic.getText();
 
     if (text) {
-      if (!text.includes('\n')) {
+      if (mindmapTopic.isRichText()) {
+        // For rich text, always use richcontent to preserve HTML
+        const richcontent: Richcontent = this.buildRichcontent(text, 'NODE');
+        freemindNode.setArrowlinkOrCloudOrEdge(richcontent);
+      } else if (!text.includes('\n')) {
         freemindNode.setText(text);
       } else {
         const richcontent: Richcontent = this.buildRichcontent(text, 'NODE');

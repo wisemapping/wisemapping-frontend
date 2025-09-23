@@ -48,9 +48,13 @@ class TxtExporter extends Exporter {
         iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
       }
 
-      result = `${result}${indent}${prefix}${index + 1}${iconStr}${
-        node.getText() !== undefined ? node.getText() : ''
-      }`;
+      const nodeText =
+        node.getText() !== undefined
+          ? node.isRichText()
+            ? node.getPlainText()
+            : node.getText()
+          : '';
+      result = `${result}${indent}${prefix}${index + 1}${iconStr}${nodeText}`;
       node.getFeatures().forEach((f) => {
         const type = f.getType();
         if (type === 'link') {

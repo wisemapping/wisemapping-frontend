@@ -1,41 +1,41 @@
 <map name="issue" version="tango">
     <topic central="true" text="La computadora" id="1" bgColor="#cc0000">
-        <topic position="200,0" order="0" shape="rounded rectangle" id="21" bgColor="#4c1130">
+        <topic position="200,0" order="0" contentType="html" shape="rounded rectangle" id="21" bgColor="#4c1130">
             <text><![CDATA[<p>Hardware</p>
                         <p>(componentes físicos)</p>]]></text>
-            <topic position="200,-100" order="0" shape="rounded rectangle" id="25" bgColor="#4c1130">
+            <topic position="200,-100" order="0" contentType="html" shape="rounded rectangle" id="25" bgColor="#4c1130">
                 <text><![CDATA[<p>Entrada de datos</p>
                             <p></p>]]></text>
-                <topic position="200,0" order="0" shape="rounded rectangle" id="28" bgColor="#4c1130">
+                <topic position="200,0" order="0" contentType="html" shape="rounded rectangle" id="28" bgColor="#4c1130">
                     <text><![CDATA[<p>Ratón, Teclado, Joystick,</p>
                                 <p>Cámara digital, Micrófono, Escáner.</p>]]></text>
                 </topic>
             </topic>
             <topic position="-290,-37" order="0" text="Salida de datos" shape="rounded rectangle" id="29" bgColor="#4c1130">
-                <topic position="290,-49" order="0" shape="rounded rectangle" id="30" bgColor="#4c1130">
+                <topic position="290,-49" order="0" contentType="html" shape="rounded rectangle" id="30" bgColor="#4c1130">
                     <text><![CDATA[<p>Monitor, Impresora, Bocinas, Plóter.</p>
                                 <p></p>]]></text>
                 </topic>
             </topic>
             <topic position="-380,-12" order="1" text="Almacenamiento" shape="rounded rectangle" id="31" bgColor="#4c1130">
-                <topic position="380,-24" order="0" shape="rounded rectangle" id="32" bgColor="#4c1130">
+                <topic position="380,-24" order="0" contentType="html" shape="rounded rectangle" id="32" bgColor="#4c1130">
                     <text><![CDATA[<p>Disquete, Disco compacto, DVD,</p>
                                 <p>BD, Disco duro, Memoria flash.</p>]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="-290,-25" order="0" shape="rectangle" id="59" bgColor="#7f6000">
+        <topic position="-290,-25" order="0" contentType="html" shape="rectangle" id="59" bgColor="#7f6000">
             <text><![CDATA[<p>Software</p>
                         <p>(Programas y datos con los que funciona la computadora)</p>
                         <p></p>]]></text>
-            <topic position="290,-62" order="0" shape="rectangle" id="92" bgColor="#7f6000">
+            <topic position="290,-62" order="0" contentType="html" shape="rectangle" id="92" bgColor="#7f6000">
                 <text><![CDATA[<p>Software de Sistema:Permite el entendimiento</p>
                             <p>entre el usuario y la maquina.</p>]]></text>
                 <topic position="-290,-99" order="0" text="Microsoft Windows" shape="rectangle" id="101" bgColor="#7f6000"/>
                 <topic position="-380,-74" order="1" text="GNU/LINUX" shape="rectangle" id="106" bgColor="#7f6000"/>
                 <topic position="-470,-49" order="2" text="MAC " shape="rectangle" id="107" bgColor="#7f6000"/>
             </topic>
-            <topic position="380,-37" order="1" shape="rectangle" id="93" bgColor="#7f6000">
+            <topic position="380,-37" order="1" contentType="html" shape="rectangle" id="93" bgColor="#7f6000">
                 <text><![CDATA[<p>Software de Aplicación: Permite hacer hojas de</p>
                             <p>calculo navegar en internet, base de datos, etc.</p>]]></text>
                 <topic position="-380,-87" order="0" text="Office" shape="rectangle" id="108" bgColor="#783f04"/>
@@ -43,14 +43,14 @@
                 <topic position="-560,-37" order="2" text="Navegadores" shape="rectangle" id="110" bgColor="#7f6000"/>
                 <topic position="-650,-12" order="3" text="Msn" shape="rectangle" id="111" bgColor="#783f04"/>
             </topic>
-            <topic position="470,-12" order="2" shape="rectangle" id="94" bgColor="#7f6000">
+            <topic position="470,-12" order="2" contentType="html" shape="rectangle" id="94" bgColor="#7f6000">
                 <text><![CDATA[<p>Software de Desarrollo</p>
                             <p></p>]]></text>
             </topic>
         </topic>
         <topic position="-380,0" order="1" text="Tipos de computadora" shape="rounded rectangle" id="3">
             <topic position="380,-62" order="0" text="Computadora personal de escritorio o Desktop" shape="rounded rectangle" id="8"/>
-            <topic position="470,-37" order="1" shape="rounded rectangle" id="10">
+            <topic position="470,-37" order="1" contentType="html" shape="rounded rectangle" id="10">
                 <text><![CDATA[<p>PDA</p>
                             <p></p>]]></text>
             </topic>
