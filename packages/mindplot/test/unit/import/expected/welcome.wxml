@@ -1,15 +1,25 @@
 <map name="welcome" version="tango">
     <topic central="true" text="Welcome To WiseMapping" id="1">
         <topic position="200,-100" order="0" shape="line" id="30">
-            <text><![CDATA[<p>5 min tutorial video ?</p>
-                        <p>Follow the link !</p>]]></text>
+            <text><![CDATA[
+                    
+                    
+                        <p>5 min tutorial video ?</p>
+                        <p>Follow the link !</p>
+                    
+                ]]></text>
             <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
         </topic>
         <topic position="-290,-50" order="0" text="Try it Now!" shape="line" id="11" bgColor="#080559">
             <topic position="290,-87" order="0" text="Double Click" shape="line" id="12"/>
             <topic position="380,-62" order="1" shape="line" id="13">
-                <text><![CDATA[<p>Press "enter" to add a</p>
-                            <p>Sibling</p>]]></text>
+                <text><![CDATA[
+                        
+                        
+                            <p>Press "enter" to add a</p>
+                            <p>Sibling</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="470,-37" order="2" text="Drag map to move" shape="line" id="14"/>
         </topic>

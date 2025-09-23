@@ -5,13 +5,21 @@
 communities]]></text>
             <topic position="-200,-350" order="1" shape="line" id="6"/>
             <topic position="290,-150" order="0" shape="line" id="7">
-                <text><![CDATA[<p>However, the fast pace of</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>However, the fast pace of</p>
                             <p>development of plant trait meta-analyses also suggests that</p>
                             <p>trait acquisition in the field is a factor limiting the growth of</p>
-                            <p>plant trait data bases.</p>]]></text>
+                            <p>plant trait data bases.</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="380,-125" order="1" shape="line" id="8">
-                <text><![CDATA[<p>We measured</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>We measured</p>
                             <p>traits for every individual tree in nine 1-ha plots in tropical</p>
                             <p>lowland rainforest (N = 4709). Each plant was sampled for</p>
                             <p>10 functional traits related to wood and leaf morphology and</p>
@@ -23,7 +31,9 @@ communities]]></text>
                             <p>among design types and sampling intensities. We then contrast</p>
                             <p>the relative costs of these designs and discuss the appropriateness</p>
                             <p>of different sampling designs and intensities for</p>
-                            <p>different questions and systems.</p>]]></text>
+                            <p>different questions and systems.</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="470,-100" order="2" shape="line" id="9">
                 <text><![CDATA[Falar que a escolha das categorias de sucessão e dos parâmetros ou característica dos indivíduos que
@@ -40,37 +50,62 @@ dinheiro]]></text>
 tb.]]></text>
             </topic>
             <topic position="740,-25" order="5" shape="line" id="14">
-                <text><![CDATA[<p>With regard to estimating mean trait values, strategies</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>With regard to estimating mean trait values, strategies</p>
                             <p>alternative to BRIDGE were consistently cost-effective. On</p>
                             <p>the other hand, strategies alternative to BRIDGE clearly</p>
                             <p>failed to accurately estimate the variance of trait values. This</p>
                             <p>indicates that in situations where accurate estimation of plotlevel</p>
-                            <p>variance is desired, complete censuses are essential.</p>]]></text>
+                            <p>variance is desired, complete censuses are essential.</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="830,0" order="6" shape="line" id="15">
-                <text><![CDATA[<p>We suggest that, in these studies,</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>We suggest that, in these studies,</p>
                             <p>the investment in complete sampling may be worthwhile</p>
-                            <p>for at least some traits.</p>]]></text>
-                <note contentType="html"><![CDATA[<p>Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.</p>]]></note>
+                            <p>for at least some traits.</p>
+                        
+                    ]]></text>
+                <note contentType="html"><![CDATA[
+                        
+                        
+                            <p>Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.</p>
+                        
+                    ]]></note>
             </topic>
         </topic>
         <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
             <topic position="290,-137" order="0" shape="line" id="22">
-                <text><![CDATA[<p>Here, we develop a new approach that links functional attributes</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>Here, we develop a new approach that links functional attributes</p>
                             <p>of tree species with studies of forest recovery and regional</p>
                             <p>land-use transitions (Chazdon et al. 2007). Grouping species according</p>
                             <p>to their functional attributes or demographic rates provides</p>
                             <p>insight into both applied and theoretical questions, such as selecting</p>
                             <p>species for reforestation programs, assessing ecosystem services, and</p>
                             <p>understanding community assembly processes in tropical forests</p>
-                            <p>(Diaz et al. 2007, Kraft et al. 2008).</p>]]></text>
+                            <p>(Diaz et al. 2007, Kraft et al. 2008).</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="380,-112" order="1" shape="line" id="23">
-                <text><![CDATA[<p>Since we have data on leaf</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>Since we have data on leaf</p>
                             <p>and wood functional traits for only a subset of the species in our</p>
                             <p>study sites, we based our functional type classification on information</p>
                             <p>for a large number of tree species obtained through vegetation</p>
-                            <p>monitoring studies.</p>]]></text>
+                            <p>monitoring studies.</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="470,-87" order="2" shape="line" id="24">
                 <text><![CDATA[Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira
@@ -87,7 +122,10 @@ construir classificações mais detalhadas e com mais dados confiáveis.
 ]]></text>
             </topic>
             <topic position="560,-62" order="3" shape="line" id="25">
-                <text><![CDATA[<p>Our approach avoided preconceived notions of successional</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>Our approach avoided preconceived notions of successional</p>
                             <p>behavior or shade tolerance of tree species by developing an objective</p>
                             <p>and independent classification of functional types based on vegetation</p>
                             <p>monitoring data from permanent sample plots in mature and</p>
@@ -95,25 +133,40 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             <p>Chazdon et al. 2007).We apply an independent, prior classification</p>
                             <p>of 293 tree species from our study region into five functional types, based on two species attributes: canopy strata and diameter growth</p>
                             <p>rates for individuals Z10 cm dbh (Finegan et al. 1999, Salgado-</p>
-                            <p>Negret 2007).</p>]]></text>
+                            <p>Negret 2007).</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="650,-37" order="4" shape="line" id="26">
-                <text><![CDATA[<p>Our results demonstrate strong linkages between functional</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>Our results demonstrate strong linkages between functional</p>
                             <p>types defined by adult height and growth rates of large trees and</p>
                             <p>colonization groups based on the timing of seedling, sapling, and</p>
-                            <p>tree recruitment in secondary forests.</p>]]></text>
+                            <p>tree recruitment in secondary forests.</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="740,-12" order="5" shape="line" id="27"/>
             <topic position="830,13" order="6" shape="line" id="28"/>
             <topic position="920,38" order="7" shape="line" id="29"/>
             <topic position="1010,63" order="8" shape="line" id="30">
-                <text><![CDATA[<p>Classifying functional types</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>Classifying functional types</p>
                             <p>based on functional traits with low plasticity, such as wood density</p>
                             <p>and seed size, could potentially serve as robust proxies for demographic</p>
-                            <p>variables (Poorter et al. 2008, Zhang et al. 2008).</p>]]></text>
+                            <p>variables (Poorter et al. 2008, Zhang et al. 2008).</p>
+                        
+                    ]]></text>
             </topic>
             <topic position="1100,88" order="9" shape="line" id="31">
-                <text><![CDATA[<p>CONDIT, R., S. P. HUBBELL, AND R. B. FOSTER. 1996. Assessing the response of</p>
+                <text><![CDATA[
+                        
+                        
+                            <p>CONDIT, R., S. P. HUBBELL, AND R. B. FOSTER. 1996. Assessing the response of</p>
                             <p>plant functional types in tropical forests to climatic change. J. Veg. Sci.</p>
                             <p>7: 405–416.</p>
                             <p>DALLING, J. S., AND S. P. HUBBELL. 2002. Seed size, growth rate and gap microsite</p>
@@ -131,7 +184,9 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             <p>dynamics of species richness and abundance of woody plant functional</p>
                             <p>groups in a tropical forest landscape of Hainan Island, South China.</p>
                             <p>J. Integr. Plant Biol. 50: 547–558.</p>
-                            <p></p>]]></text>
+                            <p></p>
+                        
+                    ]]></text>
             </topic>
         </topic>
         <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">

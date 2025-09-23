@@ -107,7 +107,7 @@
                             <topic position="830,-111" order="0" text="Caching" shape="line" id="68"/>
                         </topic>
                         <topic position="-920,-74" order="3" text="Push" shape="line" id="69"/>
-                        <topic position="-1010,-49" order="4" text="Pull &amp; Poll" shape="line" id="70"/>
+                        <topic position="-1010,-49" order="4" text="Pull  Poll" shape="line" id="70"/>
                         <topic position="-1100,-24" order="5" text="Mobility" shape="line" id="71"/>
                         <topic position="-1190,1" order="6" text="Reliability" shape="line" id="72">
                             <topic position="1190,-11" order="0" text="Event Client connected to mulitple local brokers" shape="line" id="73"/>
@@ -198,7 +198,7 @@
         </topic>
         <topic position="-650,63" order="4" text="Security Model" shape="rounded rectangle" id="227090963">
             <topic position="650,-37" order="0" text="General" shape="line" id="1890338517">
-                <topic position="-650,-87" order="0" text="Require &quot;many-to-many &quot; semantic through many parties" shape="line" id="125"/>
+                <topic position="-650,-87" order="0" text="Require many-to-many  semantic through many parties" shape="line" id="125"/>
                 <topic position="-740,-62" order="1" text="Security for pub-pub application" shape="line" id="126">
                     <topic position="740,-74" order="0" text="who has access to what?" shape="line" id="127"/>
                 </topic>

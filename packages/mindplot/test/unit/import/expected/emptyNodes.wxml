@@ -1,7 +1,7 @@
 <map name="emptyNodes" version="tango">
     <topic central="true" id="0" bgColor="#ffcc33">
         <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectangle" id="1" bgColor="#808080">
-            <topic position="200,-100" order="0" text="&quot;business plan&quot; associatif ?" shape="rounded rectangle" id="2" bgColor="#808080"/>
+            <topic position="200,-100" order="0" text="business plan associatif ?" shape="rounded rectangle" id="2" bgColor="#808080"/>
             <topic position="-290,-87" order="0" text="modèle / activités responsabilités" shape="rounded rectangle" id="3" bgColor="#808080"/>
             <topic position="-380,-62" order="1" text="articulations / LOG" shape="rounded rectangle" id="4" bgColor="#808080"/>
         </topic>
@@ -13,9 +13,9 @@
                     <topic position="470,-424" order="2" text="forte chance de réussite" shape="line" id="10"/>
                 </topic>
                 <topic position="-380,-412" order="1" text="apporter des idées et propsitions à des questions sociétales" shape="line" id="11"/>
-                <topic position="-470,-387" order="2" text="notre manière d&quot;y répondre avec notamment les technlogies" shape="line" id="12"/>
-                <topic position="-560,-362" order="3" text="l'opportunité et la demande sont fortes aujourd'hui, avec peu de &quot;concurrence&quot;" shape="line" id="13"/>
-                <topic position="-650,-337" order="4" text="ensemble de ressources &quot;rares&quot;" shape="line" id="14"/>
+                <topic position="-470,-387" order="2" text="notre manière dy répondre avec notamment les technlogies" shape="line" id="12"/>
+                <topic position="-560,-362" order="3" text="l'opportunité et la demande sont fortes aujourd'hui, avec peu de concurrence" shape="line" id="13"/>
+                <topic position="-650,-337" order="4" text="ensemble de ressources rares" shape="line" id="14"/>
                 <topic position="-740,-312" order="5" text="capacités de recherche et innovation" shape="line" id="15"/>
                 <topic position="-830,-287" order="6" text="motivation du groupe et sens partagé entre membres" shape="line" id="16"/>
                 <topic position="-920,-262" order="7" text="professionnellement : expérience collective et partage d'outils en pratique" shape="line" id="17"/>
@@ -44,7 +44,7 @@
                 <topic position="-2360,138" order="23" text="reconnaissance et référence exemplaires" shape="line" id="38"/>
                 <topic position="-2450,163" order="24" text="financeements suffisants pour bien exister" shape="line" id="39"/>
                 <topic position="-2540,188" order="25" text="notre organisation est claire" shape="line" id="40"/>
-                <topic position="-2630,213" order="26" text="prendre des &quot;marchés émergent&quot;" shape="line" id="41"/>
+                <topic position="-2630,213" order="26" text="prendre des marchés émergent" shape="line" id="41"/>
                 <topic position="-2720,238" order="27" text="double stratup avec succes-story" shape="line" id="42"/>
                 <topic position="-2810,263" order="28" text="engageons une activité présentielle forte, conviviale et exemplaire" shape="line" id="43"/>
                 <topic position="-2900,288" order="29" text="attirer de nouveaux membres locomotives" shape="line" id="44"/>
@@ -77,7 +77,7 @@
                 </topic>
                 <topic position="-1730,63" order="15" text="pas efficaces en com" shape="line" id="67"/>
                 <topic position="-1820,88" order="16" text="trop lent, rater l'opportunité actuelle" shape="line" id="68"/>
-                <topic position="-1910,113" order="17" text="débordés par &quot;concurrences&quot;" shape="line" id="69"/>
+                <topic position="-1910,113" order="17" text="débordés par concurrences" shape="line" id="69"/>
                 <topic position="-2000,138" order="18" text="départs de didier, micvhel, rené, corinne MCD etc" shape="line" id="70"/>
                 <topic position="-2090,163" order="19" text="conclits de personnes et schisme entre 2 groupes ennemis" shape="line" id="71"/>
                 <topic position="-2180,188" order="20" text="groupe amicale mais très merdique" shape="line" id="72"/>
