@@ -294,24 +294,25 @@ export default class FreemindImporter extends Importer {
         const type = child.getType();
         const html = child.getHtml();
         if (html) {
-          const text = this.html2Text(html);
+          // Preserve HTML content instead of converting to plain text
+          const cleanHtml = this.cleanHtml(html);
           switch (type) {
             case 'NOTE': {
               const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
-                text: text || FreemindConstant.EMPTY_NOTE,
+                text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
               currentWiseTopic.addFeature(noteModel);
               break;
             }
 
             case 'NODE': {
-              currentWiseTopic.setText(text);
+              currentWiseTopic.setText(cleanHtml);
               break;
             }
 
             default: {
               const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
-                text: text || FreemindConstant.EMPTY_NOTE,
+                text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
               currentWiseTopic.addFeature(noteModel);
             }
@@ -501,9 +502,19 @@ export default class FreemindImporter extends Importer {
     };
   }
 
-  private html2Text(content: string): string {
+  private cleanHtml(content: string): string {
+    // Create a temporary DOM element to clean the HTML
     const temporalDivElement = document.createElement('div');
     temporalDivElement.innerHTML = content;
-    return temporalDivElement.textContent?.trim() || temporalDivElement.innerText.trim() || '';
+
+    // Remove potentially problematic tags while preserving formatting
+    const tagsToRemove = ['script', 'style', 'iframe', 'object', 'embed', 'link', 'meta'];
+    tagsToRemove.forEach((tag) => {
+      const elements = temporalDivElement.querySelectorAll(tag);
+      elements.forEach((el) => el.remove());
+    });
+
+    // Return the cleaned HTML content
+    return temporalDivElement.innerHTML.trim() || '';
   }
 }
