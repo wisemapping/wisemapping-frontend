@@ -166,7 +166,7 @@ class HtmlSanitizer {
 
   // Dangerous URL schemes
   private static readonly DANGEROUS_PROTOCOLS = new Set([
-    'javascript:',
+    'javascript:', // eslint-disable-line no-script-url
     'vbscript:',
     'data:',
     'file:',
@@ -246,7 +246,6 @@ class HtmlSanitizer {
       children.forEach((child) => this.sanitizeNode(child));
     } else if (node.nodeType === Node.TEXT_NODE) {
       // Text nodes are safe, but we could add additional validation here
-      return;
     } else {
       // Remove other node types (comments, CDATA, etc.)
       node.parentNode?.removeChild(node);
@@ -308,10 +307,11 @@ class HtmlSanitizer {
 
     // Check for dangerous protocols
     const lowerUrl = url.toLowerCase().trim();
-    for (const protocol of this.DANGEROUS_PROTOCOLS) {
-      if (lowerUrl.startsWith(protocol)) {
-        return null;
-      }
+    const isDangerous = Array.from(this.DANGEROUS_PROTOCOLS).some((protocol) =>
+      lowerUrl.startsWith(protocol),
+    );
+    if (isDangerous) {
+      return null;
     }
 
     // Allow relative URLs and safe protocols
@@ -351,10 +351,9 @@ class HtmlSanitizer {
       /binding\s*:/gi,
     ];
 
-    for (const pattern of dangerousPatterns) {
-      if (pattern.test(style)) {
-        return null;
-      }
+    const hasDangerousPattern = dangerousPatterns.some((pattern) => pattern.test(style));
+    if (hasDangerousPattern) {
+      return null;
     }
 
     return style;
