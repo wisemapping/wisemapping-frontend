@@ -12,8 +12,10 @@ declare global {
       focusTopicByText(value: string): void;
       focusTopicById(id: number): void;
 
-      onMouseOverToolbarButton(value: 'Topic Style' | 'Font Style'): void;
-      onClickToolbarButton(value: 'Add Relationship' | 'Add Icon'): void;
+      onMouseOverToolbarButton(value: 'Topic Style' | 'Font Style' | 'Connection Style'): void;
+      onClickToolbarButton(
+        value: 'Add Relationship' | 'Add Icon' | 'Theme' | 'Connection Style',
+      ): void;
 
       triggerUndo(): void;
       triggerRedo(): void;
@@ -60,13 +62,27 @@ Cypress.Commands.add('focusTopicByText', (text: string) => {
   cy.contains(text).click({ force: true });
 });
 
-Cypress.Commands.add('onMouseOverToolbarButton', (button: 'Topic Style' | 'Font Style') => {
-  cy.get(`[aria-label="${button}"]`).first().trigger('mouseover');
-});
+Cypress.Commands.add(
+  'onMouseOverToolbarButton',
+  (button: 'Topic Style' | 'Font Style' | 'Connection Style') => {
+    cy.get(`[aria-label="${button}"]`).first().trigger('mouseover');
+  },
+);
 
-Cypress.Commands.add('onClickToolbarButton', (button: 'Add Relationship' | 'Add Icon') => {
-  cy.get(`[aria-label="${button}"]`).click({ multiple: true, force: true });
-});
+Cypress.Commands.add(
+  'onClickToolbarButton',
+  (
+    button:
+      | 'Add Relationship'
+      | 'Add Icon'
+      | 'Add Link'
+      | 'Add Note'
+      | 'Theme'
+      | 'Connection Style',
+  ) => {
+    cy.get(`[aria-label="${button}"]`).click({ multiple: true, force: true });
+  },
+);
 
 Cypress.Commands.add('triggerUndo', () => {
   cy.get('[aria-label^="Undo ').eq(1).click();

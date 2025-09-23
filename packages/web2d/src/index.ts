@@ -29,7 +29,7 @@ import Point from './components/Point';
 import Image from './components/Image';
 import ArcLine from './components/ArcLine';
 import WorkspaceElement from './components/WorkspaceElement';
-import Line from './components/Line';
+import type Line from './components/Line';
 import ElementPeer from './components/peer/svg/ElementPeer';
 import type StyleAttributes from './components/StyleAttributes';
 
@@ -47,7 +47,7 @@ export {
   Rect,
   Text,
   Workspace,
-  Line,
   ElementPeer,
-  StyleAttributes,
 };
+
+export type { Line, StyleAttributes };

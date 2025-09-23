@@ -24,7 +24,7 @@
     ]
   },
   "include": [
-    "src/**/*", "storybook/src/stories", "libraries",
+    "src/**/*", "storybook/src/stories", "libraries", "src/@types/**/*"
   ],
   "exclude": [
     "./node_modules",

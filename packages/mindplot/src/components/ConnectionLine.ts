@@ -17,7 +17,8 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import { CurvedLine, Line, PolyLine } from '@wisemapping/web2d';
+import { CurvedLine, PolyLine } from '@wisemapping/web2d';
+import type { Line } from '@wisemapping/web2d';
 import PositionType from './PositionType';
 import Topic from './Topic';
 import TopicConfig from './TopicConfig';
