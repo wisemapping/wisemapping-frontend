@@ -35,6 +35,8 @@
         "@wisemapping/editor": "workspace:^",
         "axios": "^1.12.2",
         "dayjs": "^1.11.18",
+        "html2canvas": "^1.4.1",
+        "jspdf": "^3.0.3",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "react-ga4": "^2.1.0",

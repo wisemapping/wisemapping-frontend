@@ -18,8 +18,9 @@
 import BinaryImageExporter from './BinaryImageExporter';
 import Exporter from './Exporter';
 import SVGExporter from './SVGExporter';
+import PDFExporter from './PDFExporter';
 
-type imageType = 'svg' | 'png' | 'jpg';
+type imageType = 'svg' | 'png' | 'jpg' | 'pdf';
 class ImageExpoterFactory {
   static create(
     type: imageType,
@@ -40,6 +41,10 @@ class ImageExpoterFactory {
       }
       case 'jpg': {
         result = new BinaryImageExporter(svgElement, width, height, 'image/jpeg', adjustToFit);
+        break;
+      }
+      case 'pdf': {
+        result = new PDFExporter(svgElement, adjustToFit);
         break;
       }
       default:

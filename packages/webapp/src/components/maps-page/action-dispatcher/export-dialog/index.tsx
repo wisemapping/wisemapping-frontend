@@ -22,7 +22,7 @@ import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 import Checkbox from '@mui/material/Checkbox';
 import { useFetchMapById } from '../../../../classes/middleware';
 
-type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
+type ExportFormat = 'svg' | 'jpg' | 'png' | 'pdf' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -110,7 +110,8 @@ const ExportDialog = ({
     switch (formatType) {
       case 'png':
       case 'jpg':
-      case 'svg': {
+      case 'svg':
+      case 'pdf': {
         exporter = ImageExporterFactory.create(
           formatType,
           svgElement!,
@@ -216,6 +217,9 @@ const ExportDialog = ({
                     </MenuItem>
                     <MenuItem value="jpg" css={classes.menu}>
                       JPEG Image (JPEG)
+                    </MenuItem>
+                    <MenuItem value="pdf" css={classes.menu}>
+                      Portable Document Format (PDF)
                     </MenuItem>
                   </Select>
                   <FormControlLabel
