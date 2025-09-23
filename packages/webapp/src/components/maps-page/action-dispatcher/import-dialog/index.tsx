@@ -157,7 +157,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         description={intl.formatMessage({
           id: 'import.description',
           defaultMessage:
-            'You can import WiseMapping and Freemind maps to your list of maps. Select the file you want to import.',
+            'You can import WiseMapping, FreeMind, Freeplane, XMind, MindManager, and OPML maps to your list of maps. Select the file you want to import.',
         })}
         submitButton={intl.formatMessage({ id: 'import.button', defaultMessage: 'Create' })}
       >
@@ -168,7 +168,7 @@ const ImportDialog = ({ onClose }: CreateProps): React.ReactElement => {
         )}
         <FormControl fullWidth={true}>
           <input
-            accept=".wxml,.mm"
+            accept=".wxml,.mm,.mmx,.xmind,.mmap,.opml"
             id="contained-button-file"
             type="file"
             required={true}
