@@ -1,0 +1,1132 @@
+{
+  "account.delete-warning": [
+    {
+      "type": 0,
+      "value": "ध्यान रखें कि आप जो भी माइंडमैप जोड़े हैं, उन्हें पुनर्प्राप्त नहीं कर सकेंगे। आपकी सभी जानकारी हटा दी जाएगी और इसे पुनर्स्थापित नहीं किया जा सकता।"
+    }
+  ],
+  "accountinfo.button": [
+    {
+      "type": 0,
+      "value": "स्वीकार करें"
+    }
+  ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "खाता हटाएं"
+    }
+  ],
+  "accountinfo.email": [
+    {
+      "type": 0,
+      "value": "ईमेल"
+    }
+  ],
+  "accountinfo.firstname": [
+    {
+      "type": 0,
+      "value": "पहला नाम"
+    }
+  ],
+  "accountinfo.lastname": [
+    {
+      "type": 0,
+      "value": "अंतिम नाम"
+    }
+  ],
+  "accountinfo.title": [
+    {
+      "type": 0,
+      "value": "खाता जानकारी"
+    }
+  ],
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "रद्द करें"
+    }
+  ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "बंद करें"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "हटाएं"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "हटाए गए माइंडमैप को पुनर्प्राप्त नहीं किया जा सकता। क्या आप जारी रखना चाहते हैं?"
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "हटाएं"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "डुप्लिकेट"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "निर्यात"
+    }
+  ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "इतिहास"
+    }
+  ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "पिछले 90 दिनों में किए गए परिवर्तनों की सूची।"
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "संस्करण इतिहास"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "आयात"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "जानकारी"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "लेबल जोड़ें"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "नया मानचित्र"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "खोलें"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "प्रिंट"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "प्रकाशित करें"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "नाम बदलें"
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "विवरण"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "नाम"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "साझा करें"
+    }
+  ],
+  "changepwd.button": [
+    {
+      "type": 0,
+      "value": "बदलें"
+    }
+  ],
+  "changepwd.confirm-password": [
+    {
+      "type": 0,
+      "value": "पासवर्ड की पुष्टि करें"
+    }
+  ],
+  "changepwd.description": [
+    {
+      "type": 0,
+      "value": "कृपया अपने खाते के लिए नया पासवर्ड प्रदान करें।"
+    }
+  ],
+  "changepwd.password": [
+    {
+      "type": 0,
+      "value": "पासवर्ड"
+    }
+  ],
+  "changepwd.password-match": [
+    {
+      "type": 0,
+      "value": "पासवर्ड मेल नहीं खाते। कृपया फिर से कोशिश करें।"
+    }
+  ],
+  "changepwd.title": [
+    {
+      "type": 0,
+      "value": "पासवर्ड बदलें"
+    }
+  ],
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "कृपया प्रतीक्षा करें..."
+    }
+  ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "बनाएं"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "कृपया नया मानचित्र नाम और विवरण भरें।"
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "एक नया माइंडमैप बनाएं"
+    }
+  ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "सभी चयनित मानचित्र हटा दिए जाएंगे"
+    }
+  ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "लोड हो रहा है..."
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "डुप्लिकेट"
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "आपका वर्तमान सत्र समाप्त हो गया है। कृपया साइन इन करें और फिर से कोशिश करें।"
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "आपका सत्र समाप्त हो गया है"
+    }
+  ],
+  "export.desc": [
+    {
+      "type": 0,
+      "value": "इस मानचित्र को उस प्रारूप में निर्यात करें जो आप चाहते हैं और इसे अपनी प्रस्तुतियों में उपयोग करना शुरू करें या ईमेल द्वारा साझा करें"
+    }
+  ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "माइंडमैप टूल्स: अपने माइंडमैप को तृतीय-पक्ष माइंडमैप टूल प्रारूपों में निर्यात करें"
+    }
+  ],
+  "export.document-label": [
+    {
+      "type": 0,
+      "value": "दस्तावेज़: अपने माइंडमैप को एक स्व-निहित दस्तावेज़ में निर्यात करें जो साझा करने के लिए तैयार हो"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "छवि: सभी रंगों और आकृतियों सहित अपने मानचित्र का ग्राफिक प्रतिनिधित्व प्राप्त करें।"
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "केंद्र और फिट करने के लिए ज़ूम करें"
+    }
+  ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "निर्यात"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "छवि (SVG,PNG,JPEG,PDF) में निर्यात केवल संपादक टूलबार में उपलब्ध है।"
+    }
+  ],
+  "footer.aboutus": [
+    {
+      "type": 0,
+      "value": "हमारे बारे में"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "हमसे संपर्क करें"
+    }
+  ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "दान"
+    }
+  ],
+  "footer.faq": [
+    {
+      "type": 0,
+      "value": "अक्सर पूछे जाने वाले प्रश्न"
+    }
+  ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "सहायता और अक्सर पूछे जाने वाले प्रश्न"
+    }
+  ],
+  "footer.feedback": [
+    {
+      "type": 0,
+      "value": "प्रतिक्रिया"
+    }
+  ],
+  "footer.opensource": [
+    {
+      "type": 0,
+      "value": "ओपन सोर्स"
+    }
+  ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "अन्य"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "सहायता"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "हमारी टीम"
+    }
+  ],
+  "footer.termsandconditions": [
+    {
+      "type": 0,
+      "value": "नियम और शर्तें"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "हम आपको आपका पासवर्ड रीसेट करने के लिए एक ईमेल भेजेंगे।"
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "ईमेल"
+    }
+  ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "लॉगिन पर वापस जाएं"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "आपको पासवर्ड की आवश्यकता नहीं है, कृपया Google का उपयोग करके लॉगिन करें।"
+    }
+  ],
+  "forgot.page-title": [
+    {
+      "type": 0,
+      "value": "पासवर्ड भूल गए | WiseMapping"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "पुनर्प्राप्ति लिंक भेजें"
+    }
+  ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "हमने आपको एक ईमेल भेजा है जो आपको अपना पासवर्ड रीसेट करने की अनुमति देगा। आपको इसे अगले कुछ मिनटों में प्राप्त होना चाहिए।"
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "आपका अस्थायी पासवर्ड भेज दिया गया है।"
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "अपना पासवर्ड रीसेट करें"
+    }
+  ],
+  "forgotsuccess.page-title": [
+    {
+      "type": 0,
+      "value": "पासवर्ड पुनर्प्राप्त | WiseMapping"
+    }
+  ],
+  "header.donthaveaccount": [
+    {
+      "type": 0,
+      "value": "खाता नहीं है?"
+    }
+  ],
+  "header.haveaccount": [
+    {
+      "type": 0,
+      "value": "पहले से खाता है?"
+    }
+  ],
+  "help.support": [
+    {
+      "type": 0,
+      "value": "सहायता"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "कोई परिवर्तन उपलब्ध नहीं है"
+    }
+  ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "बनाएं"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "आप WiseMapping और Freemind मानचित्रों को अपनी मानचित्र सूची में आयात कर सकते हैं। उस फ़ाइल का चयन करें जिसे आप आयात करना चाहते हैं।"
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "आयात त्रुटि "
+    },
+    {
+      "type": 1,
+      "value": "error"
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "मौजूदा माइंडमैप आयात करें"
+    }
+  ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "मूल जानकारी"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "स्वीकार करें"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "निर्माण तिथि"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "निर्माता"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "विवरण"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "अंतिम संशोधन तिथि"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "अंतिम संशोधन द्वारा"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "नाम"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "सार्वजनिक रूप से दृश्यमान"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "साझाकरण"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "पसंदीदा"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "जानकारी"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "लेबल जोड़ें"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "के लिए लेबल संपादित करना"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "लेबल शीर्षक"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "लेबल रंग बदलें"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "हटा दिया जाएगा, सभी मौजूदा मानचित्रों के साथ इसके संघों सहित। क्या आप जारी रखना चाहते हैं?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "लेबल हटाने की पुष्टि करें"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "अपने मानचित्रों को व्यवस्थित करने के लिए लेबल का उपयोग करें।"
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 1,
+      "value": "count"
+    },
+    {
+      "type": 0,
+      "value": " मानचित्र"
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "एक लेबल जोड़ें"
+    }
+  ],
+  "language.change": [
+    {
+      "type": 0,
+      "value": "भाषा बदलें"
+    }
+  ],
+  "language.help": [
+    {
+      "type": 0,
+      "value": "अनुवाद में सहायता करें"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "अपने खाते में लॉग इन करें"
+    }
+  ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "या"
+    }
+  ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "ईमेल"
+    }
+  ],
+  "login.error": [
+    {
+      "type": 0,
+      "value": "आपके द्वारा दर्ज किया गया ईमेल पता या पासवर्ड मान्य नहीं है।"
+    }
+  ],
+  "login.forgotpwd": [
+    {
+      "type": 0,
+      "value": "पासवर्ड भूल गए?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Google के साथ साइन इन करें"
+    }
+  ],
+  "login.page-title": [
+    {
+      "type": 0,
+      "value": "लॉगिन | WiseMapping"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "पासवर्ड"
+    }
+  ],
+  "login.remberme": [
+    {
+      "type": 0,
+      "value": "मुझे याद रखें"
+    }
+  ],
+  "login.signin": [
+    {
+      "type": 0,
+      "value": "साइन इन करें"
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "साइन अप करें"
+    }
+  ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "स्वागत है"
+    }
+  ],
+  "login.userinactive": [
+    {
+      "type": 0,
+      "value": "क्षमा करें, आपका खाता अभी तक सक्रिय नहीं हुआ है। जब यह सक्रिय हो जाएगा तो आपको एक सूचना ईमेल प्राप्त होगा। बने रहें!"
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "निर्माता"
+    }
+  ],
+  "map.delete-selected": [
+    {
+      "type": 0,
+      "value": "चयनित हटाएं"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "अंतिम अपडेट"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "अधिक क्रियाएं"
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "नाम"
+    }
+  ],
+  "map.tooltip-add": [
+    {
+      "type": 0,
+      "value": "चयनित में लेबल जोड़ें"
+    }
+  ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "एक फ़ाइल चुनें"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "एक नया माइंडमैप बनाएं"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "वर्तमान फ़िल्टर मानदंड के साथ कोई मिलता-जुलता माइंडमैप नहीं मिला।"
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "अन्य टूल्स से आयात करें"
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "संशोधित"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "द्वारा संशोधित"
+    }
+  ],
+  "maps.modified-by-desc": [
+    {
+      "type": 1,
+      "value": "by"
+    },
+    {
+      "type": 0,
+      "value": " द्वारा "
+    },
+    {
+      "type": 1,
+      "value": "on"
+    },
+    {
+      "type": 0,
+      "value": " पर संशोधित"
+    }
+  ],
+  "maps.nav-all": [
+    {
+      "type": 0,
+      "value": "सभी"
+    }
+  ],
+  "maps.nav-onwned": [
+    {
+      "type": 0,
+      "value": "स्वामित्व"
+    }
+  ],
+  "maps.nav-public": [
+    {
+      "type": 0,
+      "value": "सार्वजनिक"
+    }
+  ],
+  "maps.nav-shared": [
+    {
+      "type": 0,
+      "value": "मेरे साथ साझा"
+    }
+  ],
+  "maps.nav-starred": [
+    {
+      "type": 0,
+      "value": "पसंदीदा"
+    }
+  ],
+  "maps.page-title": [
+    {
+      "type": 0,
+      "value": "मेरे मानचित्र | WiseMapping"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "पूर्ववत करें"
+    }
+  ],
+  "maps.search-action": [
+    {
+      "type": 0,
+      "value": "खोजें..."
+    }
+  ],
+  "maps.tooltip-open": [
+    {
+      "type": 0,
+      "value": "संपादन के लिए खोलें"
+    }
+  ],
+  "maps.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "पसंदीदा"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "देखें"
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "खाता"
+    }
+  ],
+  "menu.change-password": [
+    {
+      "type": 0,
+      "value": "पासवर्ड बदलें"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "साइन आउट करें"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "स्वीकार करें"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "सार्वजनिक साझाकरण सक्षम करें"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "मानचित्र प्रकाशित करके आप इसे इंटरनेट पर सभी के लिए दृश्यमान बनाते हैं।"
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "एम्बेडेड"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "अपने ब्लॉग या पेज में एम्बेड करने के लिए इस कोड स्निपेट को कॉपी करें:"
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "सार्वजनिक URL"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "अपने सहयोगियों के साथ अपना मानचित्र साझा करने के लिए नीचे दिए गए लिंक को कॉपी और पेस्ट करें:"
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "प्रकाशित करें"
+    }
+  ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Google के साथ आपकी पहचान सत्यापित करते समय एक त्रुटि हुई, आप लॉगिन पेज से फिर से कोशिश कर सकते हैं"
+    }
+  ],
+  "registation.success-title": [
+    {
+      "type": 0,
+      "value": "पंजीकरण सफल | WiseMapping"
+    }
+  ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "लॉगिन पर वापस जाएं"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "उसी ईमेल के साथ एक खाता पहले पंजीकृत था। क्या आप अपने Google खाते को उस WiseMapping खाते से लिंक करना चाहते हैं?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "पुष्टि करें"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "खाता सिंक करें"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "कृपया प्रतीक्षा करें जब तक हम आपकी पहचान सत्यापित करते हैं"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "समाप्त हो रहा है..."
+    }
+  ],
+  "registration.desc": [
+    {
+      "type": 0,
+      "value": "साइन अप करना मुफ्त है और बस एक पल लगता है"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "या"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "ईमेल"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "पहला नाम"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Google के साथ साइन अप करें"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "अंतिम नाम"
+    }
+  ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "पंजीकरण | WiseMapping"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "पासवर्ड"
+    }
+  ],
+  "registration.register": [
+    {
+      "type": 0,
+      "value": "पंजीकरण करें"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "नीचे 'साइन इन' बटन पर क्लिक करें और माइंड मैप बनाना शुरू करें।"
+    }
+  ],
+  "registration.termandconditions": [
+    {
+      "type": 0,
+      "value": "क्लाइंट की शर्तें: कृपया ऊपर दर्ज की गई WiseMapping खाता जानकारी की जांच करें, और यहां क्लाइंट की शर्तों की समीक्षा करें। नीचे 'पंजीकरण' पर क्लिक करके आप ऊपर की क्लाइंट शर्तों और गोपनीयता नीति से सहमत हो रहे हैं"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "सदस्य बनें"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "कृपया नया मानचित्र नाम और विवरण भरें।"
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "नाम बदलें"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "आपका खाता सफलतापूर्वक बनाया गया है"
+    }
+  ],
+  "role.editor": [
+    {
+      "type": 0,
+      "value": "संपादक"
+    }
+  ],
+  "role.owner": [
+    {
+      "type": 0,
+      "value": "स्वामी"
+    }
+  ],
+  "role.viewer": [
+    {
+      "type": 0,
+      "value": "दर्शक"
+    }
+  ],
+  "share.add-button": [
+    {
+      "type": 0,
+      "value": "साझा करें"
+    }
+  ],
+  "share.add-message": [
+    {
+      "type": 0,
+      "value": "संदेश जोड़ें"
+    }
+  ],
+  "share.can-edit": [
+    {
+      "type": 0,
+      "value": "संपादित कर सकते हैं"
+    }
+  ],
+  "share.can-view": [
+    {
+      "type": 0,
+      "value": "देख सकते हैं"
+    }
+  ],
+  "share.delete": [
+    {
+      "type": 0,
+      "value": "सहयोगी हटाएं"
+    }
+  ],
+  "share.delete-description": [
+    {
+      "type": 0,
+      "value": "अपने माइंडमैप के निर्माण में आपके साथ सहयोग करने के लिए लोगों को आमंत्रित करें। उन्हें ईमेल द्वारा सूचित किया जाएगा।"
+    }
+  ],
+  "share.delete-title": [
+    {
+      "type": 0,
+      "value": "लोगों के साथ साझा करें"
+    }
+  ],
+  "share.message": [
+    {
+      "type": 0,
+      "value": "संदेश"
+    }
+  ]
+}

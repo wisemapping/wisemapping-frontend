@@ -1,0 +1,530 @@
+{
+  "action.accept": [
+    {
+      "type": 0,
+      "value": "接受"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "删除"
+    }
+  ],
+  "appbar.back-to-map-list": [
+    {
+      "type": 0,
+      "value": "返回地图列表"
+    }
+  ],
+  "appbar.button-signup": [
+    {
+      "type": 0,
+      "value": "注册"
+    }
+  ],
+  "appbar.shared-button": [
+    {
+      "type": 0,
+      "value": "分享"
+    }
+  ],
+  "appbar.tooltip-export": [
+    {
+      "type": 0,
+      "value": "导出"
+    }
+  ],
+  "appbar.tooltip-history": [
+    {
+      "type": 0,
+      "value": "更改历史"
+    }
+  ],
+  "appbar.tooltip-info": [
+    {
+      "type": 0,
+      "value": "信息"
+    }
+  ],
+  "appbar.tooltip-print": [
+    {
+      "type": 0,
+      "value": "打印"
+    }
+  ],
+  "appbar.tooltip-publish": [
+    {
+      "type": 0,
+      "value": "发布"
+    }
+  ],
+  "appbar.tooltip-redo": [
+    {
+      "type": 0,
+      "value": "重做"
+    }
+  ],
+  "appbar.tooltip-save": [
+    {
+      "type": 0,
+      "value": "保存"
+    }
+  ],
+  "appbar.tooltip-shared": [
+    {
+      "type": 0,
+      "value": "协作分享"
+    }
+  ],
+  "appbar.tooltip-signup": [
+    {
+      "type": 0,
+      "value": "注册"
+    }
+  ],
+  "appbar.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "收藏"
+    }
+  ],
+  "appbar.tooltip-undo": [
+    {
+      "type": 0,
+      "value": "撤销"
+    }
+  ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "创建者"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "描述"
+    }
+  ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "图标"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "链接"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "备注"
+    }
+  ],
+  "editor-panel.tooltip-add-icon": [
+    {
+      "type": 0,
+      "value": "添加图标"
+    }
+  ],
+  "editor-panel.tooltip-add-link": [
+    {
+      "type": 0,
+      "value": "添加链接"
+    }
+  ],
+  "editor-panel.tooltip-add-note": [
+    {
+      "type": 0,
+      "value": "添加备注"
+    }
+  ],
+  "editor-panel.tooltip-add-relationship": [
+    {
+      "type": 0,
+      "value": "添加关系"
+    }
+  ],
+  "editor-panel.tooltip-add-topic": [
+    {
+      "type": 0,
+      "value": "添加主题"
+    }
+  ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "颜色"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "默认颜色"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "连接样式"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "粗曲线"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "细曲线"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "简单折线"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "曲线折线"
+    }
+  ],
+  "editor-panel.tooltip-delete-topic": [
+    {
+      "type": 0,
+      "value": "删除主题"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color": [
+    {
+      "type": 0,
+      "value": "边框颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "默认边框颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color": [
+    {
+      "type": 0,
+      "value": "填充颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "默认填充颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bigger": [
+    {
+      "type": 0,
+      "value": "更大"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bold": [
+    {
+      "type": 0,
+      "value": "粗体"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color": [
+    {
+      "type": 0,
+      "value": "颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "默认颜色"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-italic": [
+    {
+      "type": 0,
+      "value": "斜体"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-smaller": [
+    {
+      "type": 0,
+      "value": "更小"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-style": [
+    {
+      "type": 0,
+      "value": "字体样式"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-ellipse": [
+    {
+      "type": 0,
+      "value": "椭圆形状"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-line": [
+    {
+      "type": 0,
+      "value": "线条形状"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rectangle": [
+    {
+      "type": 0,
+      "value": "矩形形状"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "圆角形状"
+    }
+  ],
+  "editor-panel.tooltip-topic-style": [
+    {
+      "type": 0,
+      "value": "主题样式"
+    }
+  ],
+  "editor.edit-description-mobile": [
+    {
+      "type": 0,
+      "value": "移动设备支持有限的思维导图编辑功能。请使用桌面浏览器获得完整的编辑器功能。"
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "这个编辑空间展示了思维导图编辑器的一些功能！"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "注册开始免费创建、分享和发布无限数量的思维导图。"
+    }
+  ],
+  "editor.try-welcome-description-mobile": [
+    {
+      "type": 0,
+      "value": "注册开始免费创建、分享和发布无限数量的思维导图。移动设备支持有限的思维导图编辑功能。请使用桌面浏览器获得完整的编辑器功能。"
+    }
+  ],
+  "editor.try-welcome-mobile": [
+    {
+      "type": 0,
+      "value": "这个编辑空间展示了思维导图编辑器的一些功能！"
+    }
+  ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "显示图像"
+    }
+  ],
+  "link.help_text": [
+    {
+      "type": 0,
+      "value": "地址无效"
+    }
+  ],
+  "link.placeholder": [
+    {
+      "type": 0,
+      "value": "https://www.example.com"
+    }
+  ],
+  "shortcut-help-pane.action": [
+    {
+      "type": 0,
+      "value": "操作"
+    }
+  ],
+  "shortcut-help-pane.add-child": [
+    {
+      "type": 0,
+      "value": "添加子主题"
+    }
+  ],
+  "shortcut-help-pane.add-link": [
+    {
+      "type": 0,
+      "value": "添加链接"
+    }
+  ],
+  "shortcut-help-pane.add-note": [
+    {
+      "type": 0,
+      "value": "添加备注"
+    }
+  ],
+  "shortcut-help-pane.add-sibling": [
+    {
+      "type": 0,
+      "value": "添加同级主题"
+    }
+  ],
+  "shortcut-help-pane.cancel-text-changes": [
+    {
+      "type": 0,
+      "value": "取消文本更改"
+    }
+  ],
+  "shortcut-help-pane.change-font-bold": [
+    {
+      "type": 0,
+      "value": "将文本改为粗体"
+    }
+  ],
+  "shortcut-help-pane.change-font-italic": [
+    {
+      "type": 0,
+      "value": "将文本改为斜体"
+    }
+  ],
+  "shortcut-help-pane.collapse-children": [
+    {
+      "type": 0,
+      "value": "折叠子项"
+    }
+  ],
+  "shortcut-help-pane.copy-and-text": [
+    {
+      "type": 0,
+      "value": "复制和粘贴主题/将思维导图图像复制到剪贴板。"
+    }
+  ],
+  "shortcut-help-pane.delete-topic": [
+    {
+      "type": 0,
+      "value": "删除主题"
+    }
+  ],
+  "shortcut-help-pane.deselect-all-topics": [
+    {
+      "type": 0,
+      "value": "取消选择所有主题"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "断开主题连接"
+    }
+  ],
+  "shortcut-help-pane.edit-multiline": [
+    {
+      "type": 0,
+      "value": "添加多行主题文本"
+    }
+  ],
+  "shortcut-help-pane.edit-topic": [
+    {
+      "type": 0,
+      "value": "编辑主题文本"
+    }
+  ],
+  "shortcut-help-pane.edit-topic-key": [
+    {
+      "type": 0,
+      "value": "F2 或双击"
+    }
+  ],
+  "shortcut-help-pane.navigation": [
+    {
+      "type": 0,
+      "value": "导航"
+    }
+  ],
+  "shortcut-help-pane.navigation-keys": [
+    {
+      "type": 0,
+      "value": "箭头键"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "覆盖主题文本"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "在选定的主题上输入"
+    }
+  ],
+  "shortcut-help-pane.redo": [
+    {
+      "type": 0,
+      "value": "重做编辑"
+    }
+  ],
+  "shortcut-help-pane.save-changes": [
+    {
+      "type": 0,
+      "value": "保存更改"
+    }
+  ],
+  "shortcut-help-pane.select-all-topics": [
+    {
+      "type": 0,
+      "value": "选择所有主题"
+    }
+  ],
+  "shortcut-help-pane.select-topics": [
+    {
+      "type": 0,
+      "value": "选择多个主题"
+    }
+  ],
+  "shortcut-help-pane.select-topics-keys": [
+    {
+      "type": 0,
+      "value": "鼠标点击"
+    }
+  ],
+  "shortcut-help-pane.undo": [
+    {
+      "type": 0,
+      "value": "撤销编辑"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "键盘快捷键"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "放大"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "缩小"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "适合窗口"
+    }
+  ]
+}

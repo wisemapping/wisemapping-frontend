@@ -34,8 +34,6 @@ class Canvas {
 
   private _eventsEnabled: boolean;
 
-  private _visibleAreaSize!: SizeType;
-
   private _renderQueue: (ElementClass<ElementPeer> | CanvasElement)[];
 
   private _queueRenderEnabled: boolean;
@@ -195,7 +193,6 @@ class Canvas {
   }
 
   setZoom(zoom: number, center = false): void {
-    this._zoom = zoom;
     const workspace = this._workspace;
 
     const divContainer = this._screenManager.getContainer();
@@ -208,8 +205,8 @@ class Canvas {
     svgElement.attr('width', containerWidth);
     svgElement.attr('height', containerHeight);
     // - svg viewPort must fit container size with zoom adjustment
-    const newCoordWidth = containerWidth * this._zoom;
-    const newCoordHeight = containerHeight * this._zoom;
+    const newCoordWidth = containerWidth * zoom;
+    const newCoordHeight = containerHeight * zoom;
 
     let coordOriginX: number;
     let coordOriginY: number;
@@ -218,27 +215,24 @@ class Canvas {
       coordOriginX = -(newVisibleAreaSize.width / 2) * zoom;
       coordOriginY = -(newVisibleAreaSize.height / 2) * zoom;
     } else {
+      // Default behavior: Calculate the center of what the user actually sees in the workspace
       const oldCoordOrigin = workspace.getCoordOrigin();
+      const oldCoordSize = workspace.getCoordSize();
 
-      // Next coordSize is always centered in the middle of the visible area ...
-      const newCoordOriginX = -(newVisibleAreaSize.width / 2) * zoom;
-      const newCoordOriginY = -(newVisibleAreaSize.height / 2) * zoom;
+      // The center of the visible area in workspace coordinates is:
+      // The coordinate origin plus half the coordinate size (which represents the visible area)
+      const visibleCenterX = oldCoordOrigin.x + oldCoordSize.width / 2;
+      const visibleCenterY = oldCoordOrigin.y + oldCoordSize.height / 2;
 
-      // Calculate the offset with the original center to ...
-      const oldCenterOriginX = -(this._visibleAreaSize.width / 2) * zoom;
-      const oldCenterOriginY = -(this._visibleAreaSize.height / 2) * zoom;
-
-      const offsetX = oldCoordOrigin.x - oldCenterOriginX;
-      const offsetY = oldCoordOrigin.y - oldCenterOriginY;
-
-      // Update to new coordinate ...
-      coordOriginX = Math.round(newCoordOriginX + offsetX);
-      coordOriginY = Math.round(newCoordOriginY + offsetY);
+      // Calculate new coordinate origin to keep this center point in the same place
+      // after zoom change
+      coordOriginX = visibleCenterX - newCoordWidth / 2;
+      coordOriginY = visibleCenterY - newCoordHeight / 2;
     }
 
+    this._zoom = zoom;
     workspace.setCoordOrigin(coordOriginX, coordOriginY);
     workspace.setCoordSize(newCoordWidth, newCoordHeight);
-    this._visibleAreaSize = newVisibleAreaSize;
 
     // Update screen.
     this._screenManager.setOffset(coordOriginX, coordOriginY);

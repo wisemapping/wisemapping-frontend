@@ -21,9 +21,11 @@ import 'dayjs/locale/es';
 import 'dayjs/locale/de';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
+import 'dayjs/locale/zh-cn';
 import 'dayjs/locale/ja';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/it';
+import 'dayjs/locale/hi';
 import { useFetchAccount } from '../middleware';
 
 export class Locale {
@@ -93,7 +95,18 @@ export default abstract class AppI18n {
   }
 }
 
-export type LocaleCode = 'en' | 'es' | 'fr' | 'de' | 'ru' | 'zh' | 'ja' | 'pt' | 'it';
+export type LocaleCode =
+  | 'en'
+  | 'es'
+  | 'fr'
+  | 'de'
+  | 'ru'
+  | 'zh'
+  | 'zh-CN'
+  | 'ja'
+  | 'pt'
+  | 'it'
+  | 'hi';
 
 export const Locales = {
   EN: new Locale('en', 'English', require('./../../compiled-lang/en.json')), // eslint-disable-line
@@ -102,9 +115,11 @@ export const Locales = {
   FR: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
   RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
   ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
+  ZH_CN: new Locale('zh-CN', '中文 (普通话)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
   JA: new Locale('ja', '日本語', require('./../../compiled-lang/ja.json')), // eslint-disable-line
   PT: new Locale('pt', 'Português', require('./../../compiled-lang/pt.json')), // eslint-disable-line
   IT: new Locale('it', 'Italiano', require('./../../compiled-lang/it.json')), // eslint-disable-line
+  HI: new Locale('hi', 'हिन्दी', require('./../../compiled-lang/hi.json')), // eslint-disable-line
 };
 
 export const localeFromStr = (code: string): Locale => {

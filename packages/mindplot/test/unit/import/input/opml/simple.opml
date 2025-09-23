@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+  <head>
+    <title>Simple OPML Test</title>
+    <dateCreated>Mon, 01 Jan 2024 00:00:00 GMT</dateCreated>
+  </head>
+  <body>
+    <outline text="Central Topic">
+      <outline text="Child 1">
+        <outline text="Grandchild 1"/>
+        <outline text="Grandchild 2"/>
+      </outline>
+      <outline text="Child 2" _note="This is a note for Child 2"/>
+      <outline text="Child 3" url="https://example.com" category="important">
+        <outline text="Subchild" status="pending"/>
+      </outline>
+    </outline>
+  </body>
+</opml>
