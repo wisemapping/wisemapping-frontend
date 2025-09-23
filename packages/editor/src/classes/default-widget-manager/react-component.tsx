@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import TopicLinkEditor from '../../components/action-widget/pane/topic-link-editor';
-import TopicNoteEditor from '../../components/action-widget/pane/topic-note-editor';
+import RichTextNoteEditor from '../../components/action-widget/pane/rich-text-note-editor';
 import NodeProperty from '../model/node-property';
 
 const linkContent = (
@@ -31,7 +31,7 @@ const noteContent = (
   noteModel: NodeProperty<string | undefined>,
   closeModal: () => void,
 ): React.ReactElement => {
-  return <TopicNoteEditor closeModal={closeModal} noteModel={noteModel} />;
+  return <RichTextNoteEditor closeModal={closeModal} noteModel={noteModel} />;
 };
 
 export { linkContent, noteContent };

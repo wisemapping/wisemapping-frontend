@@ -49,18 +49,18 @@ const mindplotStyles = `
     font-size: small;
     font-family: sans;
     text-transform: uppercase;
-    padding: 8px 14px;
+    padding: 16px 28px;
     text-align: left;
     font-family: sans-serif;
     font-weight: bold;
-    min-width: 200px;
+    min-width: 400px;
     background-color: rgba(0, 0, 0, 0.04);
 }
 
 .mindplot-svg-tooltip-content {
     background-color: rgb(255, 255, 255);
-    padding: 6px 4px;
-    max-width: 300px;
+    padding: 12px 8px;
+    max-width: 600px;
     word-wrap: break-word;
     text-align: left;
     font-size: small;

@@ -83,7 +83,10 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
           }}
         >
           <Box textAlign={'right'} ml={1}>
-            <Typography variant="body1" style={{ paddingTop: '10px', float: 'left' }}>
+            <Typography
+              variant="body1"
+              style={{ paddingTop: '10px', paddingLeft: '24px', float: 'left' }}
+            >
               <FormattedMessage id={panelTitle} defaultMessage="" />
             </Typography>
 

@@ -35,6 +35,22 @@ class NoteModel extends FeatureModel {
     $assert(text, 'text can not be null');
     this.setAttribute('text', text);
   }
+
+  /** */
+  getPlainText(): string {
+    const htmlContent = this.getText();
+    // Create a temporary DOM element to strip HTML tags
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    return tempDiv.textContent || tempDiv.innerText || '';
+  }
+
+  /** */
+  isRichText(): boolean {
+    const text = this.getText();
+    // Check if the text contains HTML tags
+    return /<[^>]*>/g.test(text);
+  }
 }
 
 export default NoteModel;

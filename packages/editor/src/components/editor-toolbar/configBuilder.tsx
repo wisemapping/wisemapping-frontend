@@ -48,7 +48,7 @@ import { SwitchValueDirection } from '../toolbar/ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import ColorPicker from '../action-widget/pane/color-picker';
 import TopicLinkEditor from '../action-widget/pane/topic-link-editor';
-import TopicNoteEditor from '../action-widget/pane/topic-note-editor';
+import RichTextNoteEditor from '../action-widget/pane/rich-text-note-editor';
 import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
@@ -507,7 +507,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Note',
         }),
         render: (closeModal) => (
-          <TopicNoteEditor closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
+          <RichTextNoteEditor closeModal={closeModal} noteModel={modelBuilder.getNoteModel()} />
         ),
       },
     ],
