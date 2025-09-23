@@ -16,9 +16,15 @@
  *   limitations under the License.
  */
 import Importer from './Importer';
+import Mindmap from '../model/Mindmap';
+import NodeModel from '../model/NodeModel';
+import NoteModel from '../model/NoteModel';
+import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
+
+  private mindmap!: Mindmap;
 
   constructor(map: string) {
     super();
@@ -26,10 +32,129 @@ class FreeplaneImporter extends Importer {
   }
 
   import(nameMap: string, description?: string): Promise<string> {
-    // TODO: Implement Freeplane import logic
-    console.log(`Importing Freeplane map: ${nameMap}, description: ${description}`);
-    console.log('Map content:', this.freeplaneInput);
-    return Promise.resolve(`<map name="${nameMap}"><node TEXT="Freeplane Map"></node></map>`);
+    try {
+      const parser = new DOMParser();
+      const freeplaneDoc = parser.parseFromString(this.freeplaneInput, 'application/xml');
+
+      // Check for parsing errors
+      const parserError = freeplaneDoc.querySelector('parsererror');
+      if (parserError) {
+        throw new Error('Invalid Freeplane XML format');
+      }
+
+      this.mindmap = new Mindmap(nameMap);
+      if (description) {
+        this.mindmap.setDescription(description);
+      }
+
+      // Find the root node
+      const rootNode = freeplaneDoc.querySelector('node');
+      if (rootNode) {
+        const centralTopic = this.convertNode(rootNode, this.mindmap);
+        this.mindmap.addBranch(centralTopic);
+      }
+
+      // Serialize to WiseMapping format
+      const serializer = XMLSerializerFactory.createFromDocument(freeplaneDoc);
+      const mindmapToXml = serializer.toXML(this.mindmap);
+      const xmlStr = new XMLSerializer().serializeToString(mindmapToXml);
+
+      return Promise.resolve(xmlStr);
+    } catch (error) {
+      console.error('Error importing Freeplane map:', error);
+      // Fallback to basic map
+      return Promise.resolve(
+        `<map name="${nameMap}"><node TEXT="Freeplane Map Import Error"></node></map>`,
+      );
+    }
+  }
+
+  private convertNode(freeplaneNode: Element, mindmap: Mindmap): NodeModel {
+    const text = freeplaneNode.getAttribute('TEXT') || '';
+    const node = new NodeModel('CentralTopic', mindmap);
+    node.setText(text);
+
+    // Handle rich content
+    const richContent = freeplaneNode.querySelector('richcontent');
+    if (richContent) {
+      const htmlContent = richContent.innerHTML;
+      if (htmlContent) {
+        const cleanHtml = this.cleanHtml(htmlContent);
+        node.setText(cleanHtml);
+      }
+    }
+
+    // Handle notes
+    const noteElements = freeplaneNode.querySelectorAll('richcontent[TYPE="NOTE"]');
+    noteElements.forEach((noteElement) => {
+      const htmlContent = noteElement.innerHTML;
+      if (htmlContent) {
+        const cleanHtml = this.cleanHtml(htmlContent);
+        const noteModel = new NoteModel({ text: cleanHtml });
+        node.addFeature(noteModel);
+      }
+    });
+
+    // Handle child nodes
+    const childNodes = freeplaneNode.querySelectorAll(':scope > node');
+    childNodes.forEach((childNode) => {
+      const childWiseNode = this.convertChildNode(childNode as Element, mindmap);
+      node.append(childWiseNode);
+    });
+
+    return node;
+  }
+
+  private convertChildNode(freeplaneNode: Element, mindmap: Mindmap): NodeModel {
+    const text = freeplaneNode.getAttribute('TEXT') || '';
+    const node = new NodeModel('MainTopic', mindmap);
+    node.setText(text);
+
+    // Handle rich content
+    const richContent = freeplaneNode.querySelector('richcontent');
+    if (richContent) {
+      const htmlContent = richContent.innerHTML;
+      if (htmlContent) {
+        const cleanHtml = this.cleanHtml(htmlContent);
+        node.setText(cleanHtml);
+      }
+    }
+
+    // Handle notes
+    const noteElements = freeplaneNode.querySelectorAll('richcontent[TYPE="NOTE"]');
+    noteElements.forEach((noteElement) => {
+      const htmlContent = noteElement.innerHTML;
+      if (htmlContent) {
+        const cleanHtml = this.cleanHtml(htmlContent);
+        const noteModel = new NoteModel({ text: cleanHtml });
+        node.addFeature(noteModel);
+      }
+    });
+
+    // Handle child nodes recursively
+    const childNodes = freeplaneNode.querySelectorAll(':scope > node');
+    childNodes.forEach((childNode) => {
+      const childWiseNode = this.convertChildNode(childNode as Element, mindmap);
+      node.append(childWiseNode);
+    });
+
+    return node;
+  }
+
+  private cleanHtml(content: string): string {
+    // Create a temporary DOM element to clean the HTML
+    const temporalDivElement = document.createElement('div');
+    temporalDivElement.innerHTML = content;
+
+    // Remove potentially problematic tags while preserving formatting
+    const tagsToRemove = ['script', 'style', 'iframe', 'object', 'embed', 'link', 'meta'];
+    tagsToRemove.forEach((tag) => {
+      const elements = temporalDivElement.querySelectorAll(tag);
+      elements.forEach((el) => el.remove());
+    });
+
+    // Return the cleaned HTML content
+    return temporalDivElement.innerHTML.trim() || '';
   }
 }
 
