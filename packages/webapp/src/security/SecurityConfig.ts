@@ -268,7 +268,7 @@ export class SecurityConfig {
     // Check for XML bomb patterns
     const bombPatterns = [
       /<[^>]{1000,}>/g, // Very long tags
-      /<!\[CDATA\[.*?\]\]>/gs, // CDATA sections
+      /<!\[CDATA\[[\s\S]*?\]\]>/g, // CDATA sections (using [\s\S] instead of . with s flag)
     ];
 
     for (const pattern of bombPatterns) {
