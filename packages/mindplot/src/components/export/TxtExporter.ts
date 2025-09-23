@@ -21,6 +21,7 @@ import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
+import ContentType from '../ContentType';
 
 class TxtExporter extends Exporter {
   private mindmap: Mindmap;
@@ -50,7 +51,7 @@ class TxtExporter extends Exporter {
 
       const nodeText =
         node.getText() !== undefined
-          ? node.isRichText()
+          ? node.getContentType() === ContentType.HTML
             ? node.getPlainText()
             : node.getText()
           : '';

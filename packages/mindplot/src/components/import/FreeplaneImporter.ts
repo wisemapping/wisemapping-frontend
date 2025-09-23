@@ -82,7 +82,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
-        node.setContentType(ContentType.HTML);
+        // Topic text is always plain, no contentType needed
       }
     }
 
@@ -93,6 +93,8 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         const noteModel = new NoteModel({ text: cleanHtml });
+        // Set contentType for rich text notes
+        noteModel.setContentType(ContentType.HTML);
         node.addFeature(noteModel);
       }
     });
@@ -119,7 +121,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
-        node.setContentType(ContentType.HTML);
+        // Topic text is always plain, no contentType needed
       }
     }
 
@@ -130,6 +132,8 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         const noteModel = new NoteModel({ text: cleanHtml });
+        // Set contentType for rich text notes
+        noteModel.setContentType(ContentType.HTML);
         node.addFeature(noteModel);
       }
     });

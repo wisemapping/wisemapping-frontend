@@ -95,15 +95,11 @@ abstract class INodeModel {
     return (this.getProperty('contentType') as ContentType) || ContentType.PLAIN;
   }
 
-  isRichText(): boolean {
-    return this.getContentType() === ContentType.HTML;
-  }
-
   getPlainText(): string {
     const text = this.getText();
     if (!text) return '';
 
-    if (this.isRichText()) {
+    if (this.getContentType() === ContentType.HTML) {
       // Create a temporary DOM element to strip HTML tags
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = text;

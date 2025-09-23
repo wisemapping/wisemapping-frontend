@@ -23,6 +23,7 @@ import SvgIconModel from '../model/SvgIconModel';
 import FeatureModel from '../model/FeatureModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
+import ContentType from '../ContentType';
 import PositionNodeType from '../PositionType';
 import Exporter from './Exporter';
 import FreemindConstant from './freemind/FreemindConstant';
@@ -152,7 +153,7 @@ class FreemindExporter extends Exporter {
     const text = mindmapTopic.getText();
 
     if (text) {
-      if (mindmapTopic.isRichText()) {
+      if (mindmapTopic.getContentType() === ContentType.HTML) {
         // For rich text, always use richcontent to preserve HTML
         const richcontent: Richcontent = this.buildRichcontent(text, 'NODE');
         freemindNode.setArrowlinkOrCloudOrEdge(richcontent);

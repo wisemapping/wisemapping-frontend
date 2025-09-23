@@ -21,6 +21,7 @@ import INodeModel from '../model/INodeModel';
 import LinkModel from '../model/LinkModel';
 import NoteModel from '../model/NoteModel';
 import Exporter from './Exporter';
+import ContentType from '../ContentType';
 
 class MDExporter extends Exporter {
   private mindmap: Mindmap;
@@ -45,9 +46,10 @@ class MDExporter extends Exporter {
     const centralTopicText = centralTopic.getText();
     let result = '';
     if (centralTopicText) {
-      const centralText = centralTopic.isRichText()
-        ? this.normalizeText(centralTopic.getPlainText())
-        : this.normalizeText(centralTopicText);
+      const centralText =
+        centralTopic.getContentType() === ContentType.HTML
+          ? this.normalizeText(centralTopic.getPlainText())
+          : this.normalizeText(centralTopicText);
 
       // Traverse all the branches ...
       result = `# ${centralText}\n\n`;
@@ -77,7 +79,8 @@ class MDExporter extends Exporter {
           iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
         }
 
-        const nodeText = node.isRichText() ? node.getPlainText() : node.getText();
+        const nodeText =
+          node.getContentType() === ContentType.HTML ? node.getPlainText() : node.getText();
         result = `${result}${prefix}-${iconStr}${nodeText}`;
         node.getFeatures().forEach((f) => {
           const type = f.getType();
@@ -88,7 +91,8 @@ class MDExporter extends Exporter {
 
           if (type === 'note') {
             const note = f as NoteModel;
-            const noteText = note.isRichText() ? note.getText() : note.getPlainText();
+            const noteText =
+              note.getContentType() === ContentType.HTML ? note.getText() : note.getPlainText();
             this.footNotes.push(noteText);
             result = `${result}[^${this.footNotes.length}] `;
           }

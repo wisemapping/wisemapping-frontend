@@ -20,7 +20,6 @@ import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
-import ContentType from '../ContentType';
 
 class XMLSerializerBeta implements XMLMindmapSerializer {
   private static MAP_ROOT_NODE = 'map';
@@ -72,10 +71,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       parentTopic.setAttribute('text', text);
     }
 
-    const contentType = topic.getContentType();
-    if (contentType) {
-      parentTopic.setAttribute('contentType', contentType);
-    }
+    // Topic text is always plain, no contentType needed
 
     const shape = topic.getShapeType();
     if ($defined(shape)) {
@@ -218,12 +214,7 @@ class XMLSerializerBeta implements XMLMindmapSerializer {
       topic.setText(text);
     }
 
-    const contentType = domElem.getAttribute('contentType');
-    if ($defined(contentType)) {
-      // Convert string to ContentType enum
-      const contentTypeEnum = contentType === 'html' ? ContentType.HTML : ContentType.PLAIN;
-      topic.setContentType(contentTypeEnum);
-    }
+    // Topic text is always plain, no contentType needed
 
     const order = domElem.getAttribute('order');
     if ($defined(order)) {

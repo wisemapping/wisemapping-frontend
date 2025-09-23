@@ -1,9 +1,9 @@
 <map name="i18n2" version="tango">
-    <topic central="true" text="أَبْجَدِيَّة عَرَبِيَّة" contentType="plain" id="0">
-        <topic position="200,0" order="0" text="أَبْجَدِيَّة عَرَبِ" contentType="plain" shape="line" id="1">
-            <note><![CDATA[<p>This is a not in languange أَبْجَدِيَّة عَرَبِ</p>]]></note>
+    <topic central="true" text="أَبْجَدِيَّة عَرَبِيَّة" id="0">
+        <topic position="200,0" order="0" text="أَبْجَدِيَّة عَرَبِ" shape="line" id="1">
+            <note contentType="html"><![CDATA[<p>This is a not in languange أَبْجَدِيَّة عَرَبِ</p>]]></note>
         </topic>
-        <topic position="-290,-12" order="0" contentType="html" shape="line" id="2">
+        <topic position="-290,-12" order="0" shape="line" id="2">
             <text><![CDATA[<p>Long text node:</p>
                         <p>أَبْجَدِيَّة عَرَب</p>]]></text>
         </topic>

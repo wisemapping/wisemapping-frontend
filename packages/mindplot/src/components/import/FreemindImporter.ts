@@ -302,13 +302,17 @@ export default class FreemindImporter extends Importer {
               const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
+              // Set contentType for rich text notes
+              if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
+                (noteModel as any).setContentType(ContentType.HTML);
+              }
               currentWiseTopic.addFeature(noteModel);
               break;
             }
 
             case 'NODE': {
               currentWiseTopic.setText(cleanHtml);
-              currentWiseTopic.setContentType(ContentType.HTML);
+              // Topic text is always plain, no contentType needed
               break;
             }
 
@@ -316,6 +320,10 @@ export default class FreemindImporter extends Importer {
               const noteModel: FeatureModel = FeatureModelFactory.createModel('note', {
                 text: cleanHtml || FreemindConstant.EMPTY_NOTE,
               });
+              // Set contentType for rich text notes
+              if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
+                (noteModel as any).setContentType(ContentType.HTML);
+              }
               currentWiseTopic.addFeature(noteModel);
             }
           }

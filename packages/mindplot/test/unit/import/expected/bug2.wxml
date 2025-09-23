@@ -1,44 +1,44 @@
 <map name="bug2" version="tango">
-    <topic central="true" text="SaberMás" contentType="plain" id="1">
-        <topic position="200,-350" order="0" text="Utilización de medios de expresión artística, digitales y analógicos" contentType="plain" shape="line" id="5"/>
-        <topic position="-290,-75" order="0" text="Precio también limitado: 100-120?" contentType="plain" shape="line" id="9"/>
-        <topic position="-380,-75" order="1" text="Talleres temáticos" contentType="plain" shape="line" id="2">
-            <topic position="380,-187" order="0" text="Naturaleza" contentType="plain" shape="line" id="13">
-                <topic position="-380,-199" order="0" text="Animales, Plantas, Piedras" contentType="plain" shape="line" id="17"/>
+    <topic central="true" text="SaberMás" id="1">
+        <topic position="200,-350" order="0" text="Utilización de medios de expresión artística, digitales y analógicos" shape="line" id="5"/>
+        <topic position="-290,-75" order="0" text="Precio también limitado: 100-120?" shape="line" id="9"/>
+        <topic position="-380,-75" order="1" text="Talleres temáticos" shape="line" id="2">
+            <topic position="380,-187" order="0" text="Naturaleza" shape="line" id="13">
+                <topic position="-380,-199" order="0" text="Animales, Plantas, Piedras" shape="line" id="17"/>
             </topic>
-            <topic position="470,-162" order="1" text="Arqueología" contentType="plain" shape="line" id="21"/>
-            <topic position="560,-137" order="2" text="Energía" contentType="plain" shape="line" id="18"/>
-            <topic position="650,-112" order="3" text="Astronomía" contentType="plain" shape="line" id="16"/>
-            <topic position="740,-87" order="4" text="Arquitectura" contentType="plain" shape="line" id="20"/>
-            <topic position="830,-62" order="5" text="Cocina" contentType="plain" shape="line" id="11"/>
-            <topic position="920,-37" order="6" text="Poesía" contentType="plain" shape="line" id="24"/>
-            <topic position="1010,-12" order="7" text="Culturas Antiguas" contentType="plain" shape="line" id="25">
-                <topic position="-1010,-24" order="0" text="Egipto, Grecia, China..." contentType="plain" shape="line" id="26"/>
+            <topic position="470,-162" order="1" text="Arqueología" shape="line" id="21"/>
+            <topic position="560,-137" order="2" text="Energía" shape="line" id="18"/>
+            <topic position="650,-112" order="3" text="Astronomía" shape="line" id="16"/>
+            <topic position="740,-87" order="4" text="Arquitectura" shape="line" id="20"/>
+            <topic position="830,-62" order="5" text="Cocina" shape="line" id="11"/>
+            <topic position="920,-37" order="6" text="Poesía" shape="line" id="24"/>
+            <topic position="1010,-12" order="7" text="Culturas Antiguas" shape="line" id="25">
+                <topic position="-1010,-24" order="0" text="Egipto, Grecia, China..." shape="line" id="26"/>
             </topic>
-            <topic position="1100,13" order="8" text="Paleontología" contentType="plain" shape="line" id="38"/>
+            <topic position="1100,13" order="8" text="Paleontología" shape="line" id="38"/>
         </topic>
-        <topic position="-470,-25" order="2" text="Duración limitada: 5-6 semanas" contentType="plain" shape="line" id="6"/>
-        <topic position="-560,0" order="3" text="Niños y niñas que quieren saber más" contentType="plain" shape="line" id="7"/>
-        <topic position="-650,25" order="4" text="Alternativa a otras actividades de ocio" contentType="plain" shape="line" id="8"/>
-        <topic position="-740,25" order="5" text="Uso de la tecnología durante todo el proceso de aprendizaje" contentType="plain" shape="line" id="23"/>
-        <topic position="-830,50" order="6" text="Estructura PBL: aprendemos cuando buscamos respuestas a nuestras propias preguntas " contentType="plain" shape="line" id="3"/>
-        <topic position="-920,75" order="7" text="Trabajo basado en la experimentación y en la investigación" contentType="plain" shape="line" id="4"/>
-        <topic position="-1010,125" order="8" text="De 8 a 12 años, sin separación por edades" contentType="plain" shape="line" id="10"/>
-        <topic position="-1100,150" order="9" text="Máximo 10/1 por taller" contentType="plain" shape="line" id="19"/>
-        <topic position="-1190,150" order="10" text="Actividades centradas en el contexto cercano" contentType="plain" shape="line" id="37"/>
-        <topic position="-1280,175" order="11" text="Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)" contentType="plain" shape="line" id="22"/>
-        <topic position="-1370,200" order="12" text="Complementamos el trabajo de la escuela" contentType="plain" shape="rounded rectangle" id="27">
-            <note><![CDATA[<p>Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.</p>
+        <topic position="-470,-25" order="2" text="Duración limitada: 5-6 semanas" shape="line" id="6"/>
+        <topic position="-560,0" order="3" text="Niños y niñas que quieren saber más" shape="line" id="7"/>
+        <topic position="-650,25" order="4" text="Alternativa a otras actividades de ocio" shape="line" id="8"/>
+        <topic position="-740,25" order="5" text="Uso de la tecnología durante todo el proceso de aprendizaje" shape="line" id="23"/>
+        <topic position="-830,50" order="6" text="Estructura PBL: aprendemos cuando buscamos respuestas a nuestras propias preguntas " shape="line" id="3"/>
+        <topic position="-920,75" order="7" text="Trabajo basado en la experimentación y en la investigación" shape="line" id="4"/>
+        <topic position="-1010,125" order="8" text="De 8 a 12 años, sin separación por edades" shape="line" id="10"/>
+        <topic position="-1100,150" order="9" text="Máximo 10/1 por taller" shape="line" id="19"/>
+        <topic position="-1190,150" order="10" text="Actividades centradas en el contexto cercano" shape="line" id="37"/>
+        <topic position="-1280,175" order="11" text="Flexibilidad en el uso de las lenguas de trabajo (inglés, castellano, esukara?)" shape="line" id="22"/>
+        <topic position="-1370,200" order="12" text="Complementamos el trabajo de la escuela" shape="rounded rectangle" id="27">
+            <note contentType="html"><![CDATA[<p>Todos los contenidos de los talleres están relacionados con el currículo de la enseñanza básica.</p>
                         <p>A diferencia de la práctica tradicional, pretendemos ahondar en el conocimiento partiendo de lo que realmente interesa al niño o niña,</p>
                         <p>ayudándole a que encuentre respuesta a las preguntas que él o ella se plantea.</p>
                         <p></p>
                         <p>Por ese motivo, SaberMás proyecta estar al lado de los niños que necesitan una motivación extra para entender la escuela y fluir en ella,</p>
                         <p>y también al lado de aquellos a quienes la curiosidad y las ganas de saber les lleva más allá.</p>]]></note>
-            <topic position="1370,138" order="0" text="Cada uno va a su ritmo, y cada cual pone sus límites" contentType="plain" shape="line" id="30"/>
-            <topic position="1460,163" order="1" text="Aprendemos todos de todos" contentType="plain" shape="line" id="31"/>
-            <topic position="1550,188" order="2" text="Valoramos lo que hemos aprendido" contentType="plain" shape="line" id="33"/>
-            <topic position="1640,213" order="3" text="SaberMás trabaja con, desde y para la motivación" contentType="plain" shape="line" id="28"/>
-            <topic position="1730,238" order="4" text="Trabajamos en equipo en nuestros proyectos " contentType="plain" shape="line" id="32"/>
+            <topic position="1370,138" order="0" text="Cada uno va a su ritmo, y cada cual pone sus límites" shape="line" id="30"/>
+            <topic position="1460,163" order="1" text="Aprendemos todos de todos" shape="line" id="31"/>
+            <topic position="1550,188" order="2" text="Valoramos lo que hemos aprendido" shape="line" id="33"/>
+            <topic position="1640,213" order="3" text="SaberMás trabaja con, desde y para la motivación" shape="line" id="28"/>
+            <topic position="1730,238" order="4" text="Trabajamos en equipo en nuestros proyectos " shape="line" id="32"/>
         </topic>
     </topic>
 </map>

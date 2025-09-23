@@ -81,13 +81,12 @@ class OPMLImporter extends Importer {
     if (htmlContent) {
       const cleanHtml = this.cleanHtml(htmlContent);
       const noteModel = new NoteModel({ text: cleanHtml });
+      // Set contentType for rich text notes
+      noteModel.setContentType(ContentType.HTML);
       node.addFeature(noteModel);
     }
 
-    // Check if the main text contains HTML and set contentType accordingly
-    if (text && this.containsHtml(text)) {
-      node.setContentType(ContentType.HTML);
-    }
+    // Topic text is always plain, no contentType needed
 
     // Handle child outlines
     const childOutlines = outlineElement.querySelectorAll(':scope > outline');
@@ -113,12 +112,6 @@ class OPMLImporter extends Importer {
 
     // Return the cleaned HTML content
     return temporalDivElement.innerHTML.trim() || '';
-  }
-
-  private containsHtml(text: string): boolean {
-    // Simple check for HTML tags
-    const htmlTagRegex = /<[^>]+>/;
-    return htmlTagRegex.test(text);
   }
 }
 

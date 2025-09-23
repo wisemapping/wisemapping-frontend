@@ -1,84 +1,84 @@
 <map name="Cs2" version="tango">
-    <topic central="true" text="customer service" contentType="plain" id="1592995925">
-        <topic position="200,-150" order="0" text="Knowlegebase" contentType="plain" shape="line" id="98093912">
-            <topic position="200,-200" order="0" text="Known Issues" contentType="plain" shape="line" id="1309124106"/>
-            <topic position="-290,-212" order="0" text="FAQ" contentType="plain" shape="line" id="1368109230"/>
-            <topic position="-380,-187" order="1" text="Forums" contentType="plain" shape="line" id="657347836"/>
-            <topic position="-470,-162" order="2" text="Wiki" contentType="plain" shape="line" id="1938926329"/>
-            <topic position="-560,-137" order="3" text="Unknown Issues" contentType="plain" shape="line" id="1637511280">
-                <topic position="560,-149" order="0" text="Research" contentType="plain" shape="line" id="1385825879"/>
+    <topic central="true" text="customer service" id="1592995925">
+        <topic position="200,-150" order="0" text="Knowlegebase" shape="line" id="98093912">
+            <topic position="200,-200" order="0" text="Known Issues" shape="line" id="1309124106"/>
+            <topic position="-290,-212" order="0" text="FAQ" shape="line" id="1368109230"/>
+            <topic position="-380,-187" order="1" text="Forums" shape="line" id="657347836"/>
+            <topic position="-470,-162" order="2" text="Wiki" shape="line" id="1938926329"/>
+            <topic position="-560,-137" order="3" text="Unknown Issues" shape="line" id="1637511280">
+                <topic position="560,-149" order="0" text="Research" shape="line" id="1385825879"/>
             </topic>
         </topic>
-        <topic position="-290,-50" order="0" text="Ticket" contentType="plain" shape="line" id="1463054385">
-            <topic position="290,-175" order="0" text="Ticket ID" contentType="plain" shape="line" id="1335624277"/>
-            <topic position="380,-150" order="1" text="Private Notes" contentType="plain" shape="line" id="819549333"/>
-            <topic position="470,-125" order="2" text="Department" contentType="plain" shape="line" id="171911120"/>
-            <topic position="560,-100" order="3" text="Status" contentType="plain" shape="line" id="1777345701">
-                <topic position="-560,-150" order="0" text="Open" contentType="plain" shape="line" id="1313226689"/>
-                <topic position="-650,-125" order="1" text="Hold" contentType="plain" shape="line" id="716802687"/>
-                <topic position="-740,-100" order="2" text="Closed" contentType="plain" shape="line" id="818898364">
-                    <topic position="740,-125" order="0" text="Feedback" contentType="plain" shape="line" id="887636560"/>
-                    <topic position="830,-100" order="1" text="Resolution" contentType="plain" shape="line" id="1620504932"/>
+        <topic position="-290,-50" order="0" text="Ticket" shape="line" id="1463054385">
+            <topic position="290,-175" order="0" text="Ticket ID" shape="line" id="1335624277"/>
+            <topic position="380,-150" order="1" text="Private Notes" shape="line" id="819549333"/>
+            <topic position="470,-125" order="2" text="Department" shape="line" id="171911120"/>
+            <topic position="560,-100" order="3" text="Status" shape="line" id="1777345701">
+                <topic position="-560,-150" order="0" text="Open" shape="line" id="1313226689"/>
+                <topic position="-650,-125" order="1" text="Hold" shape="line" id="716802687"/>
+                <topic position="-740,-100" order="2" text="Closed" shape="line" id="818898364">
+                    <topic position="740,-125" order="0" text="Feedback" shape="line" id="887636560"/>
+                    <topic position="830,-100" order="1" text="Resolution" shape="line" id="1620504932"/>
                 </topic>
-                <topic position="-830,-75" order="3" text="Escallation" contentType="plain" shape="line" id="242930354"/>
+                <topic position="-830,-75" order="3" text="Escallation" shape="line" id="242930354"/>
             </topic>
-            <topic position="650,-75" order="4" text="Mass Actions" contentType="plain" shape="line" id="828213838"/>
-            <topic position="740,-50" order="5" text="Alerts" contentType="plain" shape="line" id="892025191"/>
-            <topic position="830,-25" order="6" text="Rules" contentType="plain" shape="line" id="595242884"/>
-            <topic position="920,0" order="7" text="Symptom" contentType="plain" shape="line" id="747330411"/>
-            <topic position="1010,25" order="8" text="Regarding" contentType="plain" shape="line" id="1142541362"/>
-            <topic position="1100,50" order="9" text="Histories" contentType="plain" shape="line" id="1142545310">
-                <topic position="-1100,-12" order="0" text="Product" contentType="plain" shape="line" id="288380550"/>
-                <topic position="-1190,13" order="1" text="Customer" contentType="plain" shape="line" id="1766807738"/>
-                <topic position="-1280,38" order="2" text="Actions" contentType="plain" shape="line" id="351457877">
-                    <topic position="1280,13" order="0" text="Timelog" contentType="plain" shape="line" id="1500843355"/>
-                    <topic position="1370,38" order="1" text="Audit Log" contentType="plain" shape="line" id="346207313"/>
+            <topic position="650,-75" order="4" text="Mass Actions" shape="line" id="828213838"/>
+            <topic position="740,-50" order="5" text="Alerts" shape="line" id="892025191"/>
+            <topic position="830,-25" order="6" text="Rules" shape="line" id="595242884"/>
+            <topic position="920,0" order="7" text="Symptom" shape="line" id="747330411"/>
+            <topic position="1010,25" order="8" text="Regarding" shape="line" id="1142541362"/>
+            <topic position="1100,50" order="9" text="Histories" shape="line" id="1142545310">
+                <topic position="-1100,-12" order="0" text="Product" shape="line" id="288380550"/>
+                <topic position="-1190,13" order="1" text="Customer" shape="line" id="1766807738"/>
+                <topic position="-1280,38" order="2" text="Actions" shape="line" id="351457877">
+                    <topic position="1280,13" order="0" text="Timelog" shape="line" id="1500843355"/>
+                    <topic position="1370,38" order="1" text="Audit Log" shape="line" id="346207313"/>
                 </topic>
-                <topic position="-1370,63" order="3" text="Discussion" contentType="plain" shape="line" id="1605414970"/>
-                <topic position="-1460,88" order="4" text="Ticket" contentType="plain" shape="line" id="787829538"/>
-            </topic>
-        </topic>
-        <topic position="-380,-25" order="1" text="Customer" contentType="plain" shape="line" shrink="true" id="647492376">
-            <topic position="380,-87" order="0" text="Phone" contentType="plain" shape="line" id="757452852"/>
-            <topic position="470,-62" order="1" text="Fax" contentType="plain" shape="line" id="959016540"/>
-            <topic position="560,-37" order="2" text="Email" contentType="plain" shape="line" id="696163716"/>
-            <topic position="650,-12" order="3" text="Internet" contentType="plain" shape="line" id="1828588028"/>
-            <topic position="740,13" order="4" text="Walk-in" contentType="plain" shape="line" id="1907652799"/>
-        </topic>
-        <topic position="-470,0" order="2" text="staff" contentType="plain" shape="line" shrink="true" id="924788080">
-            <topic position="470,-50" order="0" text="Department" contentType="plain" shape="line" id="165314555"/>
-            <topic position="560,-25" order="1" text="Permissions" contentType="plain" shape="line" id="825890103"/>
-            <topic position="650,0" order="2" text="SLA" contentType="plain" shape="line" id="1049659060"/>
-            <topic position="740,25" order="3" text="Administration" contentType="plain" shape="line" id="270823606">
-                <topic position="-740,0" order="0" text="Reporting" contentType="plain" shape="line" id="1748699058">
-                    <topic position="740,-37" order="0" text="Ticket Status" contentType="plain" shape="line" id="427049954"/>
-                    <topic position="830,-12" order="1" text="Time to Close" contentType="plain" shape="line" id="62650907"/>
-                    <topic position="920,13" order="2" text="Feedback" contentType="plain" shape="line" id="838838797"/>
-                </topic>
-                <topic position="-830,25" order="1" text="Editing" contentType="plain" shape="line" id="1560932006">
-                    <topic position="830,-37" order="0" text="Knowledgebase" contentType="plain" shape="line" id="632792741"/>
-                    <topic position="920,-12" order="1" text="Tickets" contentType="plain" shape="line" id="1883517493"/>
-                    <topic position="1010,13" order="2" text="Customers" contentType="plain" shape="line" id="561204510"/>
-                    <topic position="1100,38" order="3" text="Staff " contentType="plain" shape="line" id="541677486"/>
-                    <topic position="1190,63" order="4" text="Rules" contentType="plain" shape="line" id="813907534"/>
-                </topic>
+                <topic position="-1370,63" order="3" text="Discussion" shape="line" id="1605414970"/>
+                <topic position="-1460,88" order="4" text="Ticket" shape="line" id="787829538"/>
             </topic>
         </topic>
-        <topic position="-560,25" order="3" text="product" contentType="plain" shape="line" id="1">
-            <topic position="560,-12" order="0" text="features" contentType="plain" shape="line" id="1667549384"/>
-            <topic position="650,13" order="1" text="compoents" contentType="plain" shape="line" id="1175119973"/>
-            <topic position="740,38" order="2" text="available warantees" contentType="plain" shape="line" id="1511030328"/>
+        <topic position="-380,-25" order="1" text="Customer" shape="line" shrink="true" id="647492376">
+            <topic position="380,-87" order="0" text="Phone" shape="line" id="757452852"/>
+            <topic position="470,-62" order="1" text="Fax" shape="line" id="959016540"/>
+            <topic position="560,-37" order="2" text="Email" shape="line" id="696163716"/>
+            <topic position="650,-12" order="3" text="Internet" shape="line" id="1828588028"/>
+            <topic position="740,13" order="4" text="Walk-in" shape="line" id="1907652799"/>
         </topic>
-        <topic position="-650,50" order="4" text="SLA" contentType="plain" shape="line" shrink="true" id="1543393034">
-            <topic position="650,0" order="0" text="Priority" contentType="plain" shape="line" id="1905544545"/>
-            <topic position="740,25" order="1" text="Escallation" contentType="plain" shape="line" id="652194297"/>
-            <topic position="830,50" order="2" text="Payment" contentType="plain" shape="line" id="857048464"/>
-            <topic position="920,75" order="3" text="Paid" contentType="plain" shape="line" id="990199362"/>
+        <topic position="-470,0" order="2" text="staff" shape="line" shrink="true" id="924788080">
+            <topic position="470,-50" order="0" text="Department" shape="line" id="165314555"/>
+            <topic position="560,-25" order="1" text="Permissions" shape="line" id="825890103"/>
+            <topic position="650,0" order="2" text="SLA" shape="line" id="1049659060"/>
+            <topic position="740,25" order="3" text="Administration" shape="line" id="270823606">
+                <topic position="-740,0" order="0" text="Reporting" shape="line" id="1748699058">
+                    <topic position="740,-37" order="0" text="Ticket Status" shape="line" id="427049954"/>
+                    <topic position="830,-12" order="1" text="Time to Close" shape="line" id="62650907"/>
+                    <topic position="920,13" order="2" text="Feedback" shape="line" id="838838797"/>
+                </topic>
+                <topic position="-830,25" order="1" text="Editing" shape="line" id="1560932006">
+                    <topic position="830,-37" order="0" text="Knowledgebase" shape="line" id="632792741"/>
+                    <topic position="920,-12" order="1" text="Tickets" shape="line" id="1883517493"/>
+                    <topic position="1010,13" order="2" text="Customers" shape="line" id="561204510"/>
+                    <topic position="1100,38" order="3" text="Staff " shape="line" id="541677486"/>
+                    <topic position="1190,63" order="4" text="Rules" shape="line" id="813907534"/>
+                </topic>
+            </topic>
         </topic>
-        <topic position="-740,75" order="5" text="Customer Contact/Maintenance (Marketing!)" contentType="plain" shape="line" id="145254142"/>
-        <topic position="-830,100" order="6" text="Resources" contentType="plain" shape="line" id="917538358">
-            <topic position="830,75" order="0" text="http://www.joelonsoftware.com/articles/customerservice.html" contentType="plain" shape="line" id="588824168"/>
-            <topic position="920,100" order="1" text="Peder Halseide, Customer Service Consultant. " contentType="plain" shape="line" id="1123816913">
+        <topic position="-560,25" order="3" text="product" shape="line" id="1">
+            <topic position="560,-12" order="0" text="features" shape="line" id="1667549384"/>
+            <topic position="650,13" order="1" text="compoents" shape="line" id="1175119973"/>
+            <topic position="740,38" order="2" text="available warantees" shape="line" id="1511030328"/>
+        </topic>
+        <topic position="-650,50" order="4" text="SLA" shape="line" shrink="true" id="1543393034">
+            <topic position="650,0" order="0" text="Priority" shape="line" id="1905544545"/>
+            <topic position="740,25" order="1" text="Escallation" shape="line" id="652194297"/>
+            <topic position="830,50" order="2" text="Payment" shape="line" id="857048464"/>
+            <topic position="920,75" order="3" text="Paid" shape="line" id="990199362"/>
+        </topic>
+        <topic position="-740,75" order="5" text="Customer Contact/Maintenance (Marketing!)" shape="line" id="145254142"/>
+        <topic position="-830,100" order="6" text="Resources" shape="line" id="917538358">
+            <topic position="830,75" order="0" text="http://www.joelonsoftware.com/articles/customerservice.html" shape="line" id="588824168"/>
+            <topic position="920,100" order="1" text="Peder Halseide, Customer Service Consultant. " shape="line" id="1123816913">
                 <link url="http://www.adeft.com" urlType="url"/>
             </topic>
         </topic>

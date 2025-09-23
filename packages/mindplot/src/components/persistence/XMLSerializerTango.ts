@@ -23,7 +23,6 @@ import NodeModel from '../model/NodeModel';
 import RelationshipModel from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
-import ContentType from '../ContentType';
 import emojiToIconMap from './iconToEmoji.json';
 import { LineType } from '../ConnectionLine';
 import { FontWeightType } from '../FontWeightType';
@@ -109,10 +108,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       this._noteTextToXML(document, parentTopic, text);
     }
 
-    const contentType = topic.getContentType();
-    if (contentType) {
-      parentTopic.setAttribute('contentType', contentType);
-    }
+    // Topic text is always plain, no contentType needed
 
     const shape = topic.getShapeType();
     if ($defined(shape)) {
@@ -332,12 +328,7 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       topic.setText(text);
     }
 
-    const contentType = domElem.getAttribute('contentType');
-    if ($defined(contentType) && contentType) {
-      // Convert string to ContentType enum
-      const contentTypeEnum = contentType === 'html' ? ContentType.HTML : ContentType.PLAIN;
-      topic.setContentType(contentTypeEnum);
-    }
+    // Topic text is always plain, no contentType needed
 
     const fontStyle = domElem.getAttribute('fontStyle');
     if ($defined(fontStyle) && fontStyle) {

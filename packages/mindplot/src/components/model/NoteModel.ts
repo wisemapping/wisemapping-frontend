@@ -17,6 +17,7 @@
  */
 import { $assert } from '@wisemapping/core-js';
 import FeatureModel from './FeatureModel';
+import ContentType from '../ContentType';
 
 class NoteModel extends FeatureModel {
   constructor(attributes) {
@@ -46,10 +47,18 @@ class NoteModel extends FeatureModel {
   }
 
   /** */
+  setContentType(contentType: ContentType | undefined): void {
+    this.setAttribute('contentType', contentType);
+  }
+
+  /** */
+  getContentType(): ContentType {
+    return (this.getAttribute('contentType') as ContentType) || ContentType.PLAIN;
+  }
+
+  /** */
   isRichText(): boolean {
-    const text = this.getText();
-    // Check if the text contains HTML tags
-    return /<[^>]*>/g.test(text);
+    return this.getContentType() === ContentType.HTML;
   }
 }
 
