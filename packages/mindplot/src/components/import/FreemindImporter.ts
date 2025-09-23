@@ -17,6 +17,7 @@ import FeatureModelFactory from '../model/FeatureModelFactory';
 import FeatureModel from '../model/FeatureModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 import { TopicShapeType } from '../model/INodeModel';
+import ContentType from '../ContentType';
 
 export default class FreemindImporter extends Importer {
   private mindmap!: Mindmap;
@@ -307,7 +308,7 @@ export default class FreemindImporter extends Importer {
 
             case 'NODE': {
               currentWiseTopic.setText(cleanHtml);
-              currentWiseTopic.setContentType('html');
+              currentWiseTopic.setContentType(ContentType.HTML);
               break;
             }
 

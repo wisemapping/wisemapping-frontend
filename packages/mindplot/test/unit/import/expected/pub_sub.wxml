@@ -1,413 +1,413 @@
 <map name="pub_sub" version="tango">
-    <topic central="true" text="Publish-Subscribe" id="1778785299">
-        <topic position="200,-100" order="0" text="Paradigm" shape="rounded rectangle" id="1019693507">
-            <topic position="200,-100" order="0" text="Publish-Subscribe Messaging" shape="line" id="175305277">
-                <topic position="200,-100" order="0" text="Supports Complex Interaction Models" shape="line" id="1"/>
-                <topic position="-290,-137" order="0" text="Application-to-Application" shape="line" id="2"/>
-                <topic position="-380,-112" order="1" text="Human-to-Application" shape="line" id="3"/>
+    <topic central="true" text="Publish-Subscribe" contentType="plain" id="1778785299">
+        <topic position="200,-100" order="0" text="Paradigm" contentType="plain" shape="rounded rectangle" id="1019693507">
+            <topic position="200,-100" order="0" text="Publish-Subscribe Messaging" contentType="plain" shape="line" id="175305277">
+                <topic position="200,-100" order="0" text="Supports Complex Interaction Models" contentType="plain" shape="line" id="1"/>
+                <topic position="-290,-137" order="0" text="Application-to-Application" contentType="plain" shape="line" id="2"/>
+                <topic position="-380,-112" order="1" text="Human-to-Application" contentType="plain" shape="line" id="3"/>
             </topic>
-            <topic position="-290,-137" order="0" text="Information-Centric Applications" shape="line" id="1316156675">
-                <topic position="290,-212" order="0" text="Software and anti-virus updates" shape="line" id="4"/>
-                <topic position="380,-187" order="1" text="Consumer alerts" shape="line" id="5"/>
-                <topic position="470,-162" order="2" text="Distributed sensor networks" shape="line" id="6"/>
-                <topic position="560,-137" order="3" text="Web Search engines" shape="line" id="7"/>
-                <topic position="650,-112" order="4" text="Supply chain management" shape="line" id="8"/>
-                <topic position="740,-87" order="5" text="Event Notification" shape="line" id="9"/>
+            <topic position="-290,-137" order="0" text="Information-Centric Applications" contentType="plain" shape="line" id="1316156675">
+                <topic position="290,-212" order="0" text="Software and anti-virus updates" contentType="plain" shape="line" id="4"/>
+                <topic position="380,-187" order="1" text="Consumer alerts" contentType="plain" shape="line" id="5"/>
+                <topic position="470,-162" order="2" text="Distributed sensor networks" contentType="plain" shape="line" id="6"/>
+                <topic position="560,-137" order="3" text="Web Search engines" contentType="plain" shape="line" id="7"/>
+                <topic position="650,-112" order="4" text="Supply chain management" contentType="plain" shape="line" id="8"/>
+                <topic position="740,-87" order="5" text="Event Notification" contentType="plain" shape="line" id="9"/>
             </topic>
-            <topic position="-380,-112" order="1" text="Net-Centric Architecture" shape="line" id="10"/>
+            <topic position="-380,-112" order="1" text="Net-Centric Architecture" contentType="plain" shape="line" id="10"/>
         </topic>
-        <topic position="-290,-37" order="0" text="Environment" shape="rounded rectangle" id="886974979">
-            <topic position="290,-87" order="0" text="System Architceture" shape="rounded rectangle" id="1585705589">
-                <topic position="-290,-137" order="0" text="Enterprise Middleware" shape="line" id="11"/>
-                <topic position="-380,-112" order="1" text="Peer-to-Peer" shape="line" id="12"/>
-                <topic position="-470,-87" order="2" text="Web Services" shape="line" id="13"/>
-                <topic position="-560,-62" order="3" text="Grid" shape="line" id="14"/>
+        <topic position="-290,-37" order="0" text="Environment" contentType="plain" shape="rounded rectangle" id="886974979">
+            <topic position="290,-87" order="0" text="System Architceture" contentType="plain" shape="rounded rectangle" id="1585705589">
+                <topic position="-290,-137" order="0" text="Enterprise Middleware" contentType="plain" shape="line" id="11"/>
+                <topic position="-380,-112" order="1" text="Peer-to-Peer" contentType="plain" shape="line" id="12"/>
+                <topic position="-470,-87" order="2" text="Web Services" contentType="plain" shape="line" id="13"/>
+                <topic position="-560,-62" order="3" text="Grid" contentType="plain" shape="line" id="14"/>
             </topic>
-            <topic position="380,-62" order="1" text="Network Entities" shape="line" id="1417055877">
-                <topic position="-380,-124" order="0" text="Numerous" shape="line" id="15"/>
-                <topic position="-470,-99" order="1" text="Dynamic" shape="line" id="16"/>
-                <topic position="-560,-74" order="2" text="Distributed" shape="line" id="17">
-                    <topic position="560,-99" order="0" text="Wide area" shape="line" id="18"/>
-                    <topic position="650,-74" order="1" text="Traverse" shape="line" id="19">
-                        <topic position="-650,-111" order="0" text="Firewalls" shape="line" id="20"/>
-                        <topic position="-740,-86" order="1" text="Proxies" shape="line" id="21"/>
-                        <topic position="-830,-61" order="2" text="NAT boundaries" shape="line" id="22"/>
+            <topic position="380,-62" order="1" text="Network Entities" contentType="plain" shape="line" id="1417055877">
+                <topic position="-380,-124" order="0" text="Numerous" contentType="plain" shape="line" id="15"/>
+                <topic position="-470,-99" order="1" text="Dynamic" contentType="plain" shape="line" id="16"/>
+                <topic position="-560,-74" order="2" text="Distributed" contentType="plain" shape="line" id="17">
+                    <topic position="560,-99" order="0" text="Wide area" contentType="plain" shape="line" id="18"/>
+                    <topic position="650,-74" order="1" text="Traverse" contentType="plain" shape="line" id="19">
+                        <topic position="-650,-111" order="0" text="Firewalls" contentType="plain" shape="line" id="20"/>
+                        <topic position="-740,-86" order="1" text="Proxies" contentType="plain" shape="line" id="21"/>
+                        <topic position="-830,-61" order="2" text="NAT boundaries" contentType="plain" shape="line" id="22"/>
                     </topic>
                 </topic>
-                <topic position="-650,-49" order="3" text="Heterogeneous" shape="line" id="23"/>
-                <topic position="-740,-24" order="4" text="Distinct Authority Domains" shape="line" id="24">
-                    <topic position="740,-36" order="0" text="Federation" shape="line" id="25"/>
+                <topic position="-650,-49" order="3" text="Heterogeneous" contentType="plain" shape="line" id="23"/>
+                <topic position="-740,-24" order="4" text="Distinct Authority Domains" contentType="plain" shape="line" id="24">
+                    <topic position="740,-36" order="0" text="Federation" contentType="plain" shape="line" id="25"/>
                 </topic>
             </topic>
-            <topic position="470,-37" order="2" text="Traditional Focus" shape="line" id="73120986">
-                <topic position="-470,-87" order="0" text="Performance " shape="line" id="26"/>
-                <topic position="-560,-62" order="1" text="Scalabilty" shape="line" id="27"/>
-                <topic position="-650,-37" order="2" text="Expressibility" shape="line" id="28">
-                    <topic position="650,-49" order="0" text="Event" shape="line" id="29">
-                        <topic position="-650,-86" order="0" text="Flitering" shape="line" id="30"/>
-                        <topic position="-740,-61" order="1" text="Routing" shape="line" id="31"/>
-                        <topic position="-830,-36" order="2" text="Composition/Fusion" shape="line" id="32"/>
+            <topic position="470,-37" order="2" text="Traditional Focus" contentType="plain" shape="line" id="73120986">
+                <topic position="-470,-87" order="0" text="Performance " contentType="plain" shape="line" id="26"/>
+                <topic position="-560,-62" order="1" text="Scalabilty" contentType="plain" shape="line" id="27"/>
+                <topic position="-650,-37" order="2" text="Expressibility" contentType="plain" shape="line" id="28">
+                    <topic position="650,-49" order="0" text="Event" contentType="plain" shape="line" id="29">
+                        <topic position="-650,-86" order="0" text="Flitering" contentType="plain" shape="line" id="30"/>
+                        <topic position="-740,-61" order="1" text="Routing" contentType="plain" shape="line" id="31"/>
+                        <topic position="-830,-36" order="2" text="Composition/Fusion" contentType="plain" shape="line" id="32"/>
                     </topic>
                 </topic>
-                <topic position="-740,-12" order="3" text="Delivery Semantics" shape="line" id="33"/>
+                <topic position="-740,-12" order="3" text="Delivery Semantics" contentType="plain" shape="line" id="33"/>
             </topic>
-            <topic position="560,-12" order="3" text="Loosely-coupled" shape="line" id="428494104">
-                <topic position="-560,-37" order="0" text="Subscribers keep little state" shape="line" id="34"/>
-                <topic position="-650,-12" order="1" text="Security induces state" shape="line" id="35"/>
+            <topic position="560,-12" order="3" text="Loosely-coupled" contentType="plain" shape="line" id="428494104">
+                <topic position="-560,-37" order="0" text="Subscribers keep little state" contentType="plain" shape="line" id="34"/>
+                <topic position="-650,-12" order="1" text="Security induces state" contentType="plain" shape="line" id="35"/>
             </topic>
         </topic>
-        <topic position="-380,-12" order="1" text="Implementation" shape="rounded rectangle" id="244172068">
-            <topic position="380,-62" order="0" text="General" shape="rounded rectangle" id="1588169997">
-                <topic position="-380,-137" order="0" text="Reliability, Availability" shape="line" id="36"/>
-                <topic position="-470,-112" order="1" text="Scalability" shape="line" id="37">
-                    <topic position="470,-124" order="0" text="Hierarchical Dissemination" shape="line" id="38">
-                        <topic position="-470,-136" order="0" text="Narada" shape="line" id="39"/>
+        <topic position="-380,-12" order="1" text="Implementation" contentType="plain" shape="rounded rectangle" id="244172068">
+            <topic position="380,-62" order="0" text="General" contentType="plain" shape="rounded rectangle" id="1588169997">
+                <topic position="-380,-137" order="0" text="Reliability, Availability" contentType="plain" shape="line" id="36"/>
+                <topic position="-470,-112" order="1" text="Scalability" contentType="plain" shape="line" id="37">
+                    <topic position="470,-124" order="0" text="Hierarchical Dissemination" contentType="plain" shape="line" id="38">
+                        <topic position="-470,-136" order="0" text="Narada" contentType="plain" shape="line" id="39"/>
                     </topic>
                 </topic>
-                <topic position="-560,-87" order="2" text="Integrity" shape="line" id="40"/>
-                <topic position="-650,-62" order="3" text="Confidentiality" shape="line" id="41"/>
-                <topic position="-740,-37" order="4" text="Privacy" shape="line" id="42"/>
-                <topic position="-830,-12" order="5" text="Alignment Constraints" shape="line" id="43">
-                    <topic position="830,-37" order="0" text="Network Topology" shape="line" id="44"/>
-                    <topic position="920,-12" order="1" text="Information Topology" shape="line" id="45">
-                        <topic position="-920,-37" order="0" text="Zones" shape="line" id="46"/>
-                        <topic position="-1010,-12" order="1" text="Labelling" shape="line" id="47"/>
+                <topic position="-560,-87" order="2" text="Integrity" contentType="plain" shape="line" id="40"/>
+                <topic position="-650,-62" order="3" text="Confidentiality" contentType="plain" shape="line" id="41"/>
+                <topic position="-740,-37" order="4" text="Privacy" contentType="plain" shape="line" id="42"/>
+                <topic position="-830,-12" order="5" text="Alignment Constraints" contentType="plain" shape="line" id="43">
+                    <topic position="830,-37" order="0" text="Network Topology" contentType="plain" shape="line" id="44"/>
+                    <topic position="920,-12" order="1" text="Information Topology" contentType="plain" shape="line" id="45">
+                        <topic position="-920,-37" order="0" text="Zones" contentType="plain" shape="line" id="46"/>
+                        <topic position="-1010,-12" order="1" text="Labelling" contentType="plain" shape="line" id="47"/>
                     </topic>
                 </topic>
             </topic>
-            <topic position="470,-37" order="1" text="Publish-Subscribe Networking" shape="line" id="389121793">
-                <topic position="-470,-124" order="0" text="Messaging Infrastructure" shape="line" id="48">
-                    <topic position="470,-136" order="0" text="Quantizes publisher data into messages/events/datagrams" shape="line" id="49"/>
+            <topic position="470,-37" order="1" text="Publish-Subscribe Networking" contentType="plain" shape="line" id="389121793">
+                <topic position="-470,-124" order="0" text="Messaging Infrastructure" contentType="plain" shape="line" id="48">
+                    <topic position="470,-136" order="0" text="Quantizes publisher data into messages/events/datagrams" contentType="plain" shape="line" id="49"/>
                 </topic>
-                <topic position="-560,-99" order="1" text="Cooperating Messaging Nodes" shape="line" id="50">
-                    <topic position="560,-136" order="0" text="(Broker) Overlay Network" shape="line" id="51"/>
-                    <topic position="650,-111" order="1" text="Connecting Publishers and Subscribers" shape="line" id="52"/>
-                    <topic position="740,-86" order="2" text="Event Clients and Event Brokers" shape="line" id="53"/>
+                <topic position="-560,-99" order="1" text="Cooperating Messaging Nodes" contentType="plain" shape="line" id="50">
+                    <topic position="560,-136" order="0" text="(Broker) Overlay Network" contentType="plain" shape="line" id="51"/>
+                    <topic position="650,-111" order="1" text="Connecting Publishers and Subscribers" contentType="plain" shape="line" id="52"/>
+                    <topic position="740,-86" order="2" text="Event Clients and Event Brokers" contentType="plain" shape="line" id="53"/>
                 </topic>
-                <topic position="-650,-74" order="2" text="Inherently multi-party, many-to-many" shape="line" id="54"/>
-                <topic position="-740,-49" order="3" text="Centralised" shape="line" id="55"/>
-                <topic position="-830,-24" order="4" text="Peer-to-Peer" shape="line" id="56"/>
-                <topic position="-920,1" order="5" text="Middleware" shape="line" id="57"/>
-                <topic position="-1010,26" order="6" text="Simulation at Application Layer" shape="line" id="58"/>
+                <topic position="-650,-74" order="2" text="Inherently multi-party, many-to-many" contentType="plain" shape="line" id="54"/>
+                <topic position="-740,-49" order="3" text="Centralised" contentType="plain" shape="line" id="55"/>
+                <topic position="-830,-24" order="4" text="Peer-to-Peer" contentType="plain" shape="line" id="56"/>
+                <topic position="-920,1" order="5" text="Middleware" contentType="plain" shape="line" id="57"/>
+                <topic position="-1010,26" order="6" text="Simulation at Application Layer" contentType="plain" shape="line" id="58"/>
             </topic>
-            <topic position="560,-12" order="2" text="Dedicated Distributed Router Network" shape="line" id="1864494656">
-                <topic position="-560,-37" order="0" text="Edge server" shape="line" id="59">
-                    <topic position="560,-87" order="0" text="General" shape="line" id="60">
-                        <topic position="-560,-112" order="0" text="Local Event Broker" shape="line" id="61"/>
-                        <topic position="-650,-87" order="1" text="Entry point" shape="line" id="62"/>
+            <topic position="560,-12" order="2" text="Dedicated Distributed Router Network" contentType="plain" shape="line" id="1864494656">
+                <topic position="-560,-37" order="0" text="Edge server" contentType="plain" shape="line" id="59">
+                    <topic position="560,-87" order="0" text="General" contentType="plain" shape="line" id="60">
+                        <topic position="-560,-112" order="0" text="Local Event Broker" contentType="plain" shape="line" id="61"/>
+                        <topic position="-650,-87" order="1" text="Entry point" contentType="plain" shape="line" id="62"/>
                     </topic>
-                    <topic position="650,-62" order="1" text="Subscriber Connectivity" shape="line" id="63">
-                        <topic position="-650,-149" order="0" text="Perimeter Access" shape="line" id="1831575474">
-                            <topic position="650,-161" order="0" text="Firewalls" shape="line" id="64">
-                                <topic position="-650,-173" order="0" text="HTTP Encapsulation for Port 80" shape="line" id="65"/>
+                    <topic position="650,-62" order="1" text="Subscriber Connectivity" contentType="plain" shape="line" id="63">
+                        <topic position="-650,-149" order="0" text="Perimeter Access" contentType="plain" shape="line" id="1831575474">
+                            <topic position="650,-161" order="0" text="Firewalls" contentType="plain" shape="line" id="64">
+                                <topic position="-650,-173" order="0" text="HTTP Encapsulation for Port 80" contentType="plain" shape="line" id="65"/>
                             </topic>
                         </topic>
-                        <topic position="-740,-124" order="1" text="Constant" shape="line" id="66"/>
-                        <topic position="-830,-99" order="2" text="Intermittent" shape="line" id="67">
-                            <topic position="830,-111" order="0" text="Caching" shape="line" id="68"/>
+                        <topic position="-740,-124" order="1" text="Constant" contentType="plain" shape="line" id="66"/>
+                        <topic position="-830,-99" order="2" text="Intermittent" contentType="plain" shape="line" id="67">
+                            <topic position="830,-111" order="0" text="Caching" contentType="plain" shape="line" id="68"/>
                         </topic>
-                        <topic position="-920,-74" order="3" text="Push" shape="line" id="69"/>
-                        <topic position="-1010,-49" order="4" text="Pull &amp; Poll" shape="line" id="70"/>
-                        <topic position="-1100,-24" order="5" text="Mobility" shape="line" id="71"/>
-                        <topic position="-1190,1" order="6" text="Reliability" shape="line" id="72">
-                            <topic position="1190,-11" order="0" text="Event Client connected to mulitple local brokers" shape="line" id="73"/>
+                        <topic position="-920,-74" order="3" text="Push" contentType="plain" shape="line" id="69"/>
+                        <topic position="-1010,-49" order="4" text="Pull &amp; Poll" contentType="plain" shape="line" id="70"/>
+                        <topic position="-1100,-24" order="5" text="Mobility" contentType="plain" shape="line" id="71"/>
+                        <topic position="-1190,1" order="6" text="Reliability" contentType="plain" shape="line" id="72">
+                            <topic position="1190,-11" order="0" text="Event Client connected to mulitple local brokers" contentType="plain" shape="line" id="73"/>
                         </topic>
                     </topic>
-                    <topic position="740,-37" order="2" text="Exact Matching" shape="line" id="74"/>
-                    <topic position="830,-12" order="3" text="Content Delivery" shape="line" id="75">
-                        <topic position="-830,-37" order="0" text="SLA" shape="line" id="76"/>
-                        <topic position="-920,-12" order="1" text="Unicast" shape="line" id="77">
-                            <topic position="920,-24" order="0" text="Feasibility" shape="line" id="78"/>
+                    <topic position="740,-37" order="2" text="Exact Matching" contentType="plain" shape="line" id="74"/>
+                    <topic position="830,-12" order="3" text="Content Delivery" contentType="plain" shape="line" id="75">
+                        <topic position="-830,-37" order="0" text="SLA" contentType="plain" shape="line" id="76"/>
+                        <topic position="-920,-12" order="1" text="Unicast" contentType="plain" shape="line" id="77">
+                            <topic position="920,-24" order="0" text="Feasibility" contentType="plain" shape="line" id="78"/>
                         </topic>
                     </topic>
                 </topic>
-                <topic position="-650,-12" order="1" text="Backbone routers" shape="line" id="79">
-                    <topic position="650,-62" order="0" text="General" shape="line" id="80">
-                        <topic position="-650,-87" order="0" text="Intermediate Event Brokers" shape="line" id="81"/>
-                        <topic position="-740,-62" order="1" text="Can use peer-to-peer communication" shape="line" id="82"/>
+                <topic position="-650,-12" order="1" text="Backbone routers" contentType="plain" shape="line" id="79">
+                    <topic position="650,-62" order="0" text="General" contentType="plain" shape="line" id="80">
+                        <topic position="-650,-87" order="0" text="Intermediate Event Brokers" contentType="plain" shape="line" id="81"/>
+                        <topic position="-740,-62" order="1" text="Can use peer-to-peer communication" contentType="plain" shape="line" id="82"/>
                     </topic>
-                    <topic position="740,-37" order="1" text="Management" shape="line" id="83">
-                        <topic position="-740,-74" order="0" text="Load balancing" shape="line" id="84"/>
-                        <topic position="-830,-49" order="1" text="Fault tolerance" shape="line" id="85">
-                            <topic position="830,-61" order="0" text="SINTRA" shape="line" id="86"/>
+                    <topic position="740,-37" order="1" text="Management" contentType="plain" shape="line" id="83">
+                        <topic position="-740,-74" order="0" text="Load balancing" contentType="plain" shape="line" id="84"/>
+                        <topic position="-830,-49" order="1" text="Fault tolerance" contentType="plain" shape="line" id="85">
+                            <topic position="830,-61" order="0" text="SINTRA" contentType="plain" shape="line" id="86"/>
                         </topic>
-                        <topic position="-920,-24" order="2" text="Traffic variations" shape="line" id="87"/>
+                        <topic position="-920,-24" order="2" text="Traffic variations" contentType="plain" shape="line" id="87"/>
                     </topic>
-                    <topic position="830,-12" order="2" text="Optimizations" shape="line" id="88">
-                        <topic position="-830,-62" order="0" text="Simulations" shape="line" id="89"/>
-                        <topic position="-920,-37" order="1" text="Approximate Matching" shape="line" id="90"/>
-                        <topic position="-1010,-12" order="2" text="Subscription Merging" shape="line" id="91"/>
-                        <topic position="-1100,13" order="3" text="Suppress message replication" shape="line" id="92"/>
+                    <topic position="830,-12" order="2" text="Optimizations" contentType="plain" shape="line" id="88">
+                        <topic position="-830,-62" order="0" text="Simulations" contentType="plain" shape="line" id="89"/>
+                        <topic position="-920,-37" order="1" text="Approximate Matching" contentType="plain" shape="line" id="90"/>
+                        <topic position="-1010,-12" order="2" text="Subscription Merging" contentType="plain" shape="line" id="91"/>
+                        <topic position="-1100,13" order="3" text="Suppress message replication" contentType="plain" shape="line" id="92"/>
                     </topic>
-                    <topic position="920,13" order="3" text="Routing" shape="line" id="93">
-                        <topic position="-920,1" order="0" text="Traverse" shape="line" id="94">
-                            <topic position="920,-36" order="0" text="Firewalls" shape="line" id="95"/>
-                            <topic position="1010,-11" order="1" text="Proxies" shape="line" id="96"/>
-                            <topic position="1100,14" order="2" text="NAT boundaries" shape="line" id="97"/>
+                    <topic position="920,13" order="3" text="Routing" contentType="plain" shape="line" id="93">
+                        <topic position="-920,1" order="0" text="Traverse" contentType="plain" shape="line" id="94">
+                            <topic position="920,-36" order="0" text="Firewalls" contentType="plain" shape="line" id="95"/>
+                            <topic position="1010,-11" order="1" text="Proxies" contentType="plain" shape="line" id="96"/>
+                            <topic position="1100,14" order="2" text="NAT boundaries" contentType="plain" shape="line" id="97"/>
                         </topic>
                     </topic>
                 </topic>
             </topic>
-            <topic position="650,13" order="3" text="Subscription Database" shape="line" id="98">
-                <topic position="-650,-24" order="0" text="Critcal Resource" shape="line" id="1422222203">
-                    <topic position="650,-49" order="0" text="Determines Content delivery" shape="line" id="99"/>
-                    <topic position="740,-24" order="1" text="Determines Routing " shape="line" id="100"/>
+            <topic position="650,13" order="3" text="Subscription Database" contentType="plain" shape="line" id="98">
+                <topic position="-650,-24" order="0" text="Critcal Resource" contentType="plain" shape="line" id="1422222203">
+                    <topic position="650,-49" order="0" text="Determines Content delivery" contentType="plain" shape="line" id="99"/>
+                    <topic position="740,-24" order="1" text="Determines Routing " contentType="plain" shape="line" id="100"/>
                 </topic>
-                <topic position="-740,1" order="1" text="Central" shape="line" id="1740783315">
-                    <topic position="740,-24" order="0" text="Availability" shape="line" id="101"/>
-                    <topic position="830,1" order="1" text="Routing implications" shape="line" id="102"/>
+                <topic position="-740,1" order="1" text="Central" contentType="plain" shape="line" id="1740783315">
+                    <topic position="740,-24" order="0" text="Availability" contentType="plain" shape="line" id="101"/>
+                    <topic position="830,1" order="1" text="Routing implications" contentType="plain" shape="line" id="102"/>
                 </topic>
-                <topic position="-830,26" order="2" text="Distributed" shape="line" id="571050304">
-                    <topic position="830,1" order="0" text="Updates" shape="line" id="103"/>
-                    <topic position="920,26" order="1" text="Integrity" shape="line" id="104">
-                        <topic position="-920,14" order="0" text="SINTRA" shape="line" id="105"/>
+                <topic position="-830,26" order="2" text="Distributed" contentType="plain" shape="line" id="571050304">
+                    <topic position="830,1" order="0" text="Updates" contentType="plain" shape="line" id="103"/>
+                    <topic position="920,26" order="1" text="Integrity" contentType="plain" shape="line" id="104">
+                        <topic position="-920,14" order="0" text="SINTRA" contentType="plain" shape="line" id="105"/>
                     </topic>
                 </topic>
             </topic>
         </topic>
-        <topic position="-470,13" order="2" text="Open Issues" shape="rounded rectangle" shrink="true" id="17419879">
-            <topic position="470,-12" order="0" text="Deep technical problems vs. pragmatic issues" shape="line" id="106"/>
-            <topic position="560,13" order="1" text="Mobility" shape="line" id="107">
-                <topic position="-560,-12" order="0" text="Freedom of movement" shape="line" id="108"/>
-                <topic position="-650,13" order="1" text="Reconfiguration of services" shape="line" id="109"/>
+        <topic position="-470,13" order="2" text="Open Issues" contentType="plain" shape="rounded rectangle" shrink="true" id="17419879">
+            <topic position="470,-12" order="0" text="Deep technical problems vs. pragmatic issues" contentType="plain" shape="line" id="106"/>
+            <topic position="560,13" order="1" text="Mobility" contentType="plain" shape="line" id="107">
+                <topic position="-560,-12" order="0" text="Freedom of movement" contentType="plain" shape="line" id="108"/>
+                <topic position="-650,13" order="1" text="Reconfiguration of services" contentType="plain" shape="line" id="109"/>
             </topic>
         </topic>
-        <topic position="-560,38" order="3" text="Data Model" shape="rounded rectangle" id="1570911201">
-            <topic position="560,1" order="0" text="Taxonomy" shape="line" shrink="true" id="1041132637">
-                <topic position="-560,-49" order="0" text="Atomic" shape="line" id="110"/>
-                <topic position="-650,-24" order="1" text="Structured" shape="line" id="111"/>
-                <topic position="-740,1" order="2" text="Topics" shape="line" id="112"/>
-                <topic position="-830,26" order="3" text="Hermes" shape="line" id="1467810054">
-                    <topic position="830,14" order="0" text="Events" shape="line" id="113">
-                        <topic position="-830,-36" order="0" text="Type" shape="line" id="114">
-                            <topic position="830,-61" order="0" text="Type Checking" shape="line" id="115"/>
-                            <topic position="920,-36" order="1" text="Heirarchy" shape="line" id="116"/>
+        <topic position="-560,38" order="3" text="Data Model" contentType="plain" shape="rounded rectangle" id="1570911201">
+            <topic position="560,1" order="0" text="Taxonomy" contentType="plain" shape="line" shrink="true" id="1041132637">
+                <topic position="-560,-49" order="0" text="Atomic" contentType="plain" shape="line" id="110"/>
+                <topic position="-650,-24" order="1" text="Structured" contentType="plain" shape="line" id="111"/>
+                <topic position="-740,1" order="2" text="Topics" contentType="plain" shape="line" id="112"/>
+                <topic position="-830,26" order="3" text="Hermes" contentType="plain" shape="line" id="1467810054">
+                    <topic position="830,14" order="0" text="Events" contentType="plain" shape="line" id="113">
+                        <topic position="-830,-36" order="0" text="Type" contentType="plain" shape="line" id="114">
+                            <topic position="830,-61" order="0" text="Type Checking" contentType="plain" shape="line" id="115"/>
+                            <topic position="920,-36" order="1" text="Heirarchy" contentType="plain" shape="line" id="116"/>
                         </topic>
-                        <topic position="-920,-11" order="1" text="Attributes" shape="line" id="117"/>
-                        <topic position="-1010,14" order="2" text="Event Repository" shape="line" id="118"/>
-                        <topic position="-1100,39" order="3" text="Event Owner" shape="line" id="119"/>
+                        <topic position="-920,-11" order="1" text="Attributes" contentType="plain" shape="line" id="117"/>
+                        <topic position="-1010,14" order="2" text="Event Repository" contentType="plain" shape="line" id="118"/>
+                        <topic position="-1100,39" order="3" text="Event Owner" contentType="plain" shape="line" id="119"/>
                     </topic>
                 </topic>
             </topic>
-            <topic position="650,26" order="1" text="Meta Data" shape="line" id="120"/>
-            <topic position="740,51" order="2" text="Language" shape="line" id="121">
-                <topic position="-740,14" order="0" text="Subscriptions" shape="line" id="122"/>
-                <topic position="-830,39" order="1" text="Publishing" shape="line" id="123"/>
-                <topic position="-920,64" order="2" text="Matching" shape="line" id="124"/>
+            <topic position="650,26" order="1" text="Meta Data" contentType="plain" shape="line" id="120"/>
+            <topic position="740,51" order="2" text="Language" contentType="plain" shape="line" id="121">
+                <topic position="-740,14" order="0" text="Subscriptions" contentType="plain" shape="line" id="122"/>
+                <topic position="-830,39" order="1" text="Publishing" contentType="plain" shape="line" id="123"/>
+                <topic position="-920,64" order="2" text="Matching" contentType="plain" shape="line" id="124"/>
             </topic>
         </topic>
-        <topic position="-650,63" order="4" text="Security Model" shape="rounded rectangle" id="227090963">
-            <topic position="650,-37" order="0" text="General" shape="line" id="1890338517">
-                <topic position="-650,-87" order="0" text="Require &quot;many-to-many &quot; semantic through many parties" shape="line" id="125"/>
-                <topic position="-740,-62" order="1" text="Security for pub-pub application" shape="line" id="126">
-                    <topic position="740,-74" order="0" text="who has access to what?" shape="line" id="127"/>
+        <topic position="-650,63" order="4" text="Security Model" contentType="plain" shape="rounded rectangle" id="227090963">
+            <topic position="650,-37" order="0" text="General" contentType="plain" shape="line" id="1890338517">
+                <topic position="-650,-87" order="0" text="Require &quot;many-to-many &quot; semantic through many parties" contentType="plain" shape="line" id="125"/>
+                <topic position="-740,-62" order="1" text="Security for pub-pub application" contentType="plain" shape="line" id="126">
+                    <topic position="740,-74" order="0" text="who has access to what?" contentType="plain" shape="line" id="127"/>
                 </topic>
-                <topic position="-830,-37" order="2" text="Security for pub-sub infrastructure" shape="line" id="128">
-                    <topic position="830,-49" order="0" text="who can change the data model?" shape="line" id="129"/>
+                <topic position="-830,-37" order="2" text="Security for pub-sub infrastructure" contentType="plain" shape="line" id="128">
+                    <topic position="830,-49" order="0" text="who can change the data model?" contentType="plain" shape="line" id="129"/>
                 </topic>
-                <topic position="-920,-12" order="3" text="Applications use pub-sub as service" shape="line" id="130">
-                    <topic position="920,-24" order="0" text="flexible security policy, not dictated, in the infrastructure" shape="line" id="131"/>
-                </topic>
-            </topic>
-            <topic position="740,-12" order="1" text="Traditional" shape="line" id="1119529450">
-                <topic position="-740,-49" order="0" text="Address-based" shape="line" id="132"/>
-                <topic position="-830,-24" order="1" text="Identity-based" shape="line" id="133"/>
-                <topic position="-920,1" order="2" text="Role-based" shape="line" id="134"/>
-            </topic>
-            <topic position="830,13" order="2" text="Content-based" shape="line" id="966829867">
-                <topic position="-830,-37" order="0" text="Integrity of Information" shape="line" id="135"/>
-                <topic position="-920,-12" order="1" text="No explicit address or identities" shape="line" id="136"/>
-                <topic position="-1010,13" order="2" text="Infrastructure determines routing/delivery addresses" shape="line" id="137"/>
-                <topic position="-1100,38" order="3" text="End-to-End" shape="line" id="138">
-                    <topic position="1100,1" order="0" text="Cross Security Domains" shape="line" id="139"/>
-                    <topic position="1190,26" order="1" text="Content-based Adressing" shape="line" id="140"/>
-                    <topic position="1280,51" order="2" text="Dynamic computation of Receiver Set" shape="line" id="141"/>
+                <topic position="-920,-12" order="3" text="Applications use pub-sub as service" contentType="plain" shape="line" id="130">
+                    <topic position="920,-24" order="0" text="flexible security policy, not dictated, in the infrastructure" contentType="plain" shape="line" id="131"/>
                 </topic>
             </topic>
-            <topic position="920,38" order="3" text="Message Level Framework" shape="line" id="1055672692">
-                <topic position="-920,-49" order="0" text="Confidentiality" shape="line" id="142">
-                    <topic position="920,-86" order="0" text="Information" shape="line" id="143">
-                        <topic position="-920,-123" order="0" text="Transport Independent" shape="line" id="1669124377">
-                            <topic position="920,-173" order="0" text="End-to-end" shape="line" id="144"/>
-                            <topic position="1010,-148" order="1" text="Information Centric Security" shape="line" id="1535961474">
-                                <topic position="-1010,-198" order="0" text="MAC" shape="line" id="145"/>
-                                <topic position="-1100,-173" order="1" text="Content-defined keys" shape="line" id="146"/>
-                                <topic position="-1190,-148" order="2" text="Multi-part encryption" shape="line" id="147"/>
-                                <topic position="-1280,-123" order="3" text="Supports content-based addressing" shape="line" id="148"/>
+            <topic position="740,-12" order="1" text="Traditional" contentType="plain" shape="line" id="1119529450">
+                <topic position="-740,-49" order="0" text="Address-based" contentType="plain" shape="line" id="132"/>
+                <topic position="-830,-24" order="1" text="Identity-based" contentType="plain" shape="line" id="133"/>
+                <topic position="-920,1" order="2" text="Role-based" contentType="plain" shape="line" id="134"/>
+            </topic>
+            <topic position="830,13" order="2" text="Content-based" contentType="plain" shape="line" id="966829867">
+                <topic position="-830,-37" order="0" text="Integrity of Information" contentType="plain" shape="line" id="135"/>
+                <topic position="-920,-12" order="1" text="No explicit address or identities" contentType="plain" shape="line" id="136"/>
+                <topic position="-1010,13" order="2" text="Infrastructure determines routing/delivery addresses" contentType="plain" shape="line" id="137"/>
+                <topic position="-1100,38" order="3" text="End-to-End" contentType="plain" shape="line" id="138">
+                    <topic position="1100,1" order="0" text="Cross Security Domains" contentType="plain" shape="line" id="139"/>
+                    <topic position="1190,26" order="1" text="Content-based Adressing" contentType="plain" shape="line" id="140"/>
+                    <topic position="1280,51" order="2" text="Dynamic computation of Receiver Set" contentType="plain" shape="line" id="141"/>
+                </topic>
+            </topic>
+            <topic position="920,38" order="3" text="Message Level Framework" contentType="plain" shape="line" id="1055672692">
+                <topic position="-920,-49" order="0" text="Confidentiality" contentType="plain" shape="line" id="142">
+                    <topic position="920,-86" order="0" text="Information" contentType="plain" shape="line" id="143">
+                        <topic position="-920,-123" order="0" text="Transport Independent" contentType="plain" shape="line" id="1669124377">
+                            <topic position="920,-173" order="0" text="End-to-end" contentType="plain" shape="line" id="144"/>
+                            <topic position="1010,-148" order="1" text="Information Centric Security" contentType="plain" shape="line" id="1535961474">
+                                <topic position="-1010,-198" order="0" text="MAC" contentType="plain" shape="line" id="145"/>
+                                <topic position="-1100,-173" order="1" text="Content-defined keys" contentType="plain" shape="line" id="146"/>
+                                <topic position="-1190,-148" order="2" text="Multi-part encryption" contentType="plain" shape="line" id="147"/>
+                                <topic position="-1280,-123" order="3" text="Supports content-based addressing" contentType="plain" shape="line" id="148"/>
                             </topic>
-                            <topic position="1100,-123" order="2" text="Routing Encrypted Data" shape="line" id="1155826003">
-                                <topic position="-1100,-135" order="0" text="Meta Data" shape="line" id="149"/>
+                            <topic position="1100,-123" order="2" text="Routing Encrypted Data" contentType="plain" shape="line" id="1155826003">
+                                <topic position="-1100,-135" order="0" text="Meta Data" contentType="plain" shape="line" id="149"/>
                             </topic>
-                            <topic position="1190,-98" order="3" text="Examples" shape="line" id="150">
-                                <topic position="-1190,-123" order="0" text="CBIS" shape="line" id="151"/>
-                                <topic position="-1280,-98" order="1" text="Narada" shape="line" id="536782739">
-                                    <topic position="1280,-135" order="0" text="Topic Keys" shape="line" id="152">
-                                        <topic position="-1280,-172" order="0" text="Personal Certificate" shape="line" id="153">
-                                            <topic position="1280,-197" order="0" text="Sign" shape="line" id="154"/>
-                                            <topic position="1370,-172" order="1" text="ACL-based routing" shape="line" id="155"/>
+                            <topic position="1190,-98" order="3" text="Examples" contentType="plain" shape="line" id="150">
+                                <topic position="-1190,-123" order="0" text="CBIS" contentType="plain" shape="line" id="151"/>
+                                <topic position="-1280,-98" order="1" text="Narada" contentType="plain" shape="line" id="536782739">
+                                    <topic position="1280,-135" order="0" text="Topic Keys" contentType="plain" shape="line" id="152">
+                                        <topic position="-1280,-172" order="0" text="Personal Certificate" contentType="plain" shape="line" id="153">
+                                            <topic position="1280,-197" order="0" text="Sign" contentType="plain" shape="line" id="154"/>
+                                            <topic position="1370,-172" order="1" text="ACL-based routing" contentType="plain" shape="line" id="155"/>
                                         </topic>
-                                        <topic position="-1370,-147" order="1" text="Topic Certificate" shape="line" id="156">
-                                            <topic position="1370,-184" order="0" text="Distribute Key Pair" shape="line" id="157"/>
-                                            <topic position="1460,-159" order="1" text="Publishers Encrypt" shape="line" id="158"/>
-                                            <topic position="1550,-134" order="2" text="Subscribers Decrypt" shape="line" id="159"/>
+                                        <topic position="-1370,-147" order="1" text="Topic Certificate" contentType="plain" shape="line" id="156">
+                                            <topic position="1370,-184" order="0" text="Distribute Key Pair" contentType="plain" shape="line" id="157"/>
+                                            <topic position="1460,-159" order="1" text="Publishers Encrypt" contentType="plain" shape="line" id="158"/>
+                                            <topic position="1550,-134" order="2" text="Subscribers Decrypt" contentType="plain" shape="line" id="159"/>
                                         </topic>
-                                        <topic position="-1460,-122" order="2" text="Topic Secret Key" shape="line" id="160">
-                                            <topic position="1460,-134" order="0" text="Multicast Group Keys" shape="line" id="161"/>
+                                        <topic position="-1460,-122" order="2" text="Topic Secret Key" contentType="plain" shape="line" id="160">
+                                            <topic position="1460,-134" order="0" text="Multicast Group Keys" contentType="plain" shape="line" id="161"/>
                                         </topic>
                                     </topic>
-                                    <topic position="1370,-110" order="1" text="Sign at Source" shape="line" id="162"/>
-                                    <topic position="1460,-85" order="2" text="Routing" shape="line" id="163">
-                                        <topic position="-1460,-110" order="0" text="Content-based" shape="line" id="164">
-                                            <topic position="1460,-135" order="0" text="Topic Headers" shape="line" id="165"/>
-                                            <topic position="1550,-110" order="1" text="Meta Data" shape="line" id="166"/>
+                                    <topic position="1370,-110" order="1" text="Sign at Source" contentType="plain" shape="line" id="162"/>
+                                    <topic position="1460,-85" order="2" text="Routing" contentType="plain" shape="line" id="163">
+                                        <topic position="-1460,-110" order="0" text="Content-based" contentType="plain" shape="line" id="164">
+                                            <topic position="1460,-135" order="0" text="Topic Headers" contentType="plain" shape="line" id="165"/>
+                                            <topic position="1550,-110" order="1" text="Meta Data" contentType="plain" shape="line" id="166"/>
                                         </topic>
-                                        <topic position="-1550,-85" order="1" text="ACL-based" shape="line" id="167"/>
+                                        <topic position="-1550,-85" order="1" text="ACL-based" contentType="plain" shape="line" id="167"/>
                                     </topic>
                                 </topic>
                             </topic>
                         </topic>
-                        <topic position="-1010,-98" order="1" text="Transport Dependent" shape="line" id="1044269581">
-                            <topic position="1010,-135" order="0" text="Point-to-point" shape="line" id="168"/>
-                            <topic position="1100,-110" order="1" text="Broker-to-Broker" shape="line" id="169"/>
-                            <topic position="1190,-85" order="2" text="Edge Server to Clients" shape="line" id="170"/>
+                        <topic position="-1010,-98" order="1" text="Transport Dependent" contentType="plain" shape="line" id="1044269581">
+                            <topic position="1010,-135" order="0" text="Point-to-point" contentType="plain" shape="line" id="168"/>
+                            <topic position="1100,-110" order="1" text="Broker-to-Broker" contentType="plain" shape="line" id="169"/>
+                            <topic position="1190,-85" order="2" text="Edge Server to Clients" contentType="plain" shape="line" id="170"/>
                         </topic>
-                        <topic position="-1100,-73" order="2" text="Infrastructure Independent" shape="line" id="171">
-                            <topic position="1100,-98" order="0" text="Fundamental conflict with pub-sub paradigm" shape="line" id="172">
-                                <topic position="-1100,-123" order="0" text="inhibits evaluation of content against subscription" shape="line" id="173"/>
-                                <topic position="-1190,-98" order="1" text="reduces scope of optimizations" shape="line" id="174"/>
+                        <topic position="-1100,-73" order="2" text="Infrastructure Independent" contentType="plain" shape="line" id="171">
+                            <topic position="1100,-98" order="0" text="Fundamental conflict with pub-sub paradigm" contentType="plain" shape="line" id="172">
+                                <topic position="-1100,-123" order="0" text="inhibits evaluation of content against subscription" contentType="plain" shape="line" id="173"/>
+                                <topic position="-1190,-98" order="1" text="reduces scope of optimizations" contentType="plain" shape="line" id="174"/>
                             </topic>
-                            <topic position="1190,-73" order="1" text="Out-of-band key management" shape="line" id="175"/>
+                            <topic position="1190,-73" order="1" text="Out-of-band key management" contentType="plain" shape="line" id="175"/>
                         </topic>
                     </topic>
-                    <topic position="1010,-61" order="1" text="Subscriptions" shape="line" id="176">
-                        <topic position="-1010,-73" order="0" text="PIR" shape="line" id="177"/>
+                    <topic position="1010,-61" order="1" text="Subscriptions" contentType="plain" shape="line" id="176">
+                        <topic position="-1010,-73" order="0" text="PIR" contentType="plain" shape="line" id="177"/>
                     </topic>
-                    <topic position="1100,-36" order="2" text="Published Content" shape="line" id="178">
-                        <topic position="-1100,-73" order="0" text="form of group authorization" shape="line" id="179"/>
-                        <topic position="-1190,-48" order="1" text="Could be handled by local broker" shape="line" id="180">
-                            <topic position="1190,-60" order="0" text="Publishers trusts local brokers" shape="line" id="181"/>
+                    <topic position="1100,-36" order="2" text="Published Content" contentType="plain" shape="line" id="178">
+                        <topic position="-1100,-73" order="0" text="form of group authorization" contentType="plain" shape="line" id="179"/>
+                        <topic position="-1190,-48" order="1" text="Could be handled by local broker" contentType="plain" shape="line" id="180">
+                            <topic position="1190,-60" order="0" text="Publishers trusts local brokers" contentType="plain" shape="line" id="181"/>
                         </topic>
-                        <topic position="-1280,-23" order="2" text="Publisher could form group based on subscribers" shape="line" id="182"/>
+                        <topic position="-1280,-23" order="2" text="Publisher could form group based on subscribers" contentType="plain" shape="line" id="182"/>
                     </topic>
                 </topic>
-                <topic position="-1010,-24" order="1" text="Authentication" shape="line" id="1949551410">
-                    <topic position="1010,-49" order="0" text="To Register a Subscription" shape="line" id="183"/>
-                    <topic position="1100,-24" order="1" text="To Publish Content" shape="line" id="184">
-                        <topic position="-1100,-61" order="0" text="end-to-end" shape="line" id="185">
-                            <topic position="1100,-111" order="0" text="eg. PKI" shape="line" id="186"/>
-                            <topic position="1190,-86" order="1" text="external to pub-sub" shape="line" id="187"/>
-                            <topic position="1280,-61" order="2" text="independent adminstration" shape="line" id="188"/>
-                            <topic position="1370,-36" order="3" text="efficiency" shape="line" id="189">
-                                <topic position="-1370,-61" order="0" text="only checked at delivery?" shape="line" id="190"/>
-                                <topic position="-1460,-36" order="1" text="overhead on short messages" shape="line" id="191">
-                                    <topic position="1460,-61" order="0" text="stream signatures" shape="line" id="192"/>
-                                    <topic position="1550,-36" order="1" text="amortized" shape="line" id="193"/>
+                <topic position="-1010,-24" order="1" text="Authentication" contentType="plain" shape="line" id="1949551410">
+                    <topic position="1010,-49" order="0" text="To Register a Subscription" contentType="plain" shape="line" id="183"/>
+                    <topic position="1100,-24" order="1" text="To Publish Content" contentType="plain" shape="line" id="184">
+                        <topic position="-1100,-61" order="0" text="end-to-end" contentType="plain" shape="line" id="185">
+                            <topic position="1100,-111" order="0" text="eg. PKI" contentType="plain" shape="line" id="186"/>
+                            <topic position="1190,-86" order="1" text="external to pub-sub" contentType="plain" shape="line" id="187"/>
+                            <topic position="1280,-61" order="2" text="independent adminstration" contentType="plain" shape="line" id="188"/>
+                            <topic position="1370,-36" order="3" text="efficiency" contentType="plain" shape="line" id="189">
+                                <topic position="-1370,-61" order="0" text="only checked at delivery?" contentType="plain" shape="line" id="190"/>
+                                <topic position="-1460,-36" order="1" text="overhead on short messages" contentType="plain" shape="line" id="191">
+                                    <topic position="1460,-61" order="0" text="stream signatures" contentType="plain" shape="line" id="192"/>
+                                    <topic position="1550,-36" order="1" text="amortized" contentType="plain" shape="line" id="193"/>
                                 </topic>
                             </topic>
                         </topic>
-                        <topic position="-1190,-36" order="1" text="point-to-point" shape="line" id="194">
-                            <topic position="1190,-73" order="0" text="infrastructure is trusted" shape="line" id="195"/>
-                            <topic position="1280,-48" order="1" text="built on DCE for example" shape="line" id="196"/>
-                            <topic position="1370,-23" order="2" text="security solution must scale" shape="line" id="197"/>
+                        <topic position="-1190,-36" order="1" text="point-to-point" contentType="plain" shape="line" id="194">
+                            <topic position="1190,-73" order="0" text="infrastructure is trusted" contentType="plain" shape="line" id="195"/>
+                            <topic position="1280,-48" order="1" text="built on DCE for example" contentType="plain" shape="line" id="196"/>
+                            <topic position="1370,-23" order="2" text="security solution must scale" contentType="plain" shape="line" id="197"/>
                         </topic>
-                        <topic position="-1280,-11" order="2" text="hybrid" shape="line" id="198">
-                            <topic position="1280,-36" order="0" text="client-to-local host" shape="line" id="199"/>
-                            <topic position="1370,-11" order="1" text="broker routing" shape="line" id="200"/>
+                        <topic position="-1280,-11" order="2" text="hybrid" contentType="plain" shape="line" id="198">
+                            <topic position="1280,-36" order="0" text="client-to-local host" contentType="plain" shape="line" id="199"/>
+                            <topic position="1370,-11" order="1" text="broker routing" contentType="plain" shape="line" id="200"/>
                         </topic>
                     </topic>
                 </topic>
-                <topic position="-1100,1" order="2" text="Authorization" shape="line" id="1187183415">
-                    <topic position="1100,-49" order="0" text="Granularity" shape="line" id="201">
-                        <topic position="-1100,-86" order="0" text="To Receive Content" shape="line" id="202"/>
-                        <topic position="-1190,-61" order="1" text="To Publish Content" shape="line" id="203"/>
-                        <topic position="-1280,-36" order="2" text="Content" shape="line" id="204">
-                            <topic position="1280,-73" order="0" text="Atomic" shape="line" id="205"/>
-                            <topic position="1370,-48" order="1" text="Topics" shape="line" id="206"/>
-                            <topic position="1460,-23" order="2" text="Structured" shape="line" id="207"/>
+                <topic position="-1100,1" order="2" text="Authorization" contentType="plain" shape="line" id="1187183415">
+                    <topic position="1100,-49" order="0" text="Granularity" contentType="plain" shape="line" id="201">
+                        <topic position="-1100,-86" order="0" text="To Receive Content" contentType="plain" shape="line" id="202"/>
+                        <topic position="-1190,-61" order="1" text="To Publish Content" contentType="plain" shape="line" id="203"/>
+                        <topic position="-1280,-36" order="2" text="Content" contentType="plain" shape="line" id="204">
+                            <topic position="1280,-73" order="0" text="Atomic" contentType="plain" shape="line" id="205"/>
+                            <topic position="1370,-48" order="1" text="Topics" contentType="plain" shape="line" id="206"/>
+                            <topic position="1460,-23" order="2" text="Structured" contentType="plain" shape="line" id="207"/>
                         </topic>
                     </topic>
-                    <topic position="1190,-24" order="1" text="ACL" shape="line" id="208">
-                        <topic position="-1190,-49" order="0" text="Central" shape="line" id="209"/>
-                        <topic position="-1280,-24" order="1" text="Distributed" shape="line" id="210">
-                            <topic position="1280,-61" order="0" text="Check at edge (once)" shape="line" id="211">
-                                <topic position="-1280,-73" order="0" text="(local) Broker to client" shape="line" id="212"/>
+                    <topic position="1190,-24" order="1" text="ACL" contentType="plain" shape="line" id="208">
+                        <topic position="-1190,-49" order="0" text="Central" contentType="plain" shape="line" id="209"/>
+                        <topic position="-1280,-24" order="1" text="Distributed" contentType="plain" shape="line" id="210">
+                            <topic position="1280,-61" order="0" text="Check at edge (once)" contentType="plain" shape="line" id="211">
+                                <topic position="-1280,-73" order="0" text="(local) Broker to client" contentType="plain" shape="line" id="212"/>
                             </topic>
-                            <topic position="1370,-36" order="1" text="Check in infrastructure" shape="line" id="213"/>
-                            <topic position="1460,-11" order="2" text="Managed by infrastructure itself" shape="line" id="214">
-                                <topic position="-1460,-23" order="0" text="pub-sub amongst brokers" shape="line" id="215"/>
+                            <topic position="1370,-36" order="1" text="Check in infrastructure" contentType="plain" shape="line" id="213"/>
+                            <topic position="1460,-11" order="2" text="Managed by infrastructure itself" contentType="plain" shape="line" id="214">
+                                <topic position="-1460,-23" order="0" text="pub-sub amongst brokers" contentType="plain" shape="line" id="215"/>
                             </topic>
                         </topic>
                     </topic>
-                    <topic position="1280,1" order="2" text="Role-based" shape="line" id="216"/>
-                    <topic position="1370,26" order="3" text="Attribute-based" shape="line" id="217"/>
+                    <topic position="1280,1" order="2" text="Role-based" contentType="plain" shape="line" id="216"/>
+                    <topic position="1370,26" order="3" text="Attribute-based" contentType="plain" shape="line" id="217"/>
                 </topic>
-                <topic position="-1190,26" order="3" text="Non-repudiation" shape="line" id="218">
-                    <topic position="1190,1" order="0" text="Publisher info propagate to subscribers" shape="line" id="219"/>
-                    <topic position="1280,26" order="1" text="end-to-end vs. point-to-point" shape="line" id="220"/>
+                <topic position="-1190,26" order="3" text="Non-repudiation" contentType="plain" shape="line" id="218">
+                    <topic position="1190,1" order="0" text="Publisher info propagate to subscribers" contentType="plain" shape="line" id="219"/>
+                    <topic position="1280,26" order="1" text="end-to-end vs. point-to-point" contentType="plain" shape="line" id="220"/>
                 </topic>
-                <topic position="-1280,51" order="4" text="Key Management" shape="line" id="221"/>
-                <topic position="-1370,76" order="5" text="Privacy" shape="line" id="222">
-                    <topic position="1370,51" order="0" text="of Subscription" shape="line" id="223"/>
-                    <topic position="1460,76" order="1" text="of Delivery" shape="line" id="224"/>
+                <topic position="-1280,51" order="4" text="Key Management" contentType="plain" shape="line" id="221"/>
+                <topic position="-1370,76" order="5" text="Privacy" contentType="plain" shape="line" id="222">
+                    <topic position="1370,51" order="0" text="of Subscription" contentType="plain" shape="line" id="223"/>
+                    <topic position="1460,76" order="1" text="of Delivery" contentType="plain" shape="line" id="224"/>
                 </topic>
-                <topic position="-1460,101" order="6" text="General" shape="line" id="225">
-                    <topic position="1460,76" order="0" text="Supports Payment for Service" shape="line" id="226"/>
-                    <topic position="1550,101" order="1" text="Minimal impact on infrastructure" shape="line" id="227"/>
+                <topic position="-1460,101" order="6" text="General" contentType="plain" shape="line" id="225">
+                    <topic position="1460,76" order="0" text="Supports Payment for Service" contentType="plain" shape="line" id="226"/>
+                    <topic position="1550,101" order="1" text="Minimal impact on infrastructure" contentType="plain" shape="line" id="227"/>
                 </topic>
             </topic>
-            <topic position="1010,63" order="4" text="Trust Model" shape="line" id="846405117">
-                <topic position="-1010,-12" order="0" text="Entities not all the same" shape="line" id="228"/>
-                <topic position="-1100,13" order="1" text="Can we trust Brokers?" shape="line" id="229">
-                    <topic position="1100,-12" order="0" text="local brokers must be trusted" shape="line" id="230"/>
-                    <topic position="1190,13" order="1" text="which brokers can serve/route which content?" shape="line" id="231">
-                        <topic position="-1190,-24" order="0" text="transport" shape="line" id="232"/>
-                        <topic position="-1280,1" order="1" text="delivery" shape="line" id="233"/>
-                        <topic position="-1370,26" order="2" text="effect content-based routing" shape="line" id="234"/>
+            <topic position="1010,63" order="4" text="Trust Model" contentType="plain" shape="line" id="846405117">
+                <topic position="-1010,-12" order="0" text="Entities not all the same" contentType="plain" shape="line" id="228"/>
+                <topic position="-1100,13" order="1" text="Can we trust Brokers?" contentType="plain" shape="line" id="229">
+                    <topic position="1100,-12" order="0" text="local brokers must be trusted" contentType="plain" shape="line" id="230"/>
+                    <topic position="1190,13" order="1" text="which brokers can serve/route which content?" contentType="plain" shape="line" id="231">
+                        <topic position="-1190,-24" order="0" text="transport" contentType="plain" shape="line" id="232"/>
+                        <topic position="-1280,1" order="1" text="delivery" contentType="plain" shape="line" id="233"/>
+                        <topic position="-1370,26" order="2" text="effect content-based routing" contentType="plain" shape="line" id="234"/>
                     </topic>
                 </topic>
-                <topic position="-1190,38" order="2" text="Can we trust paths between Brokers?" shape="line" id="235"/>
-                <topic position="-1280,63" order="3" text="Brokers may not trust event clents" shape="line" id="236"/>
-                <topic position="-1370,88" order="4" text="Event clients may not trust brokers" shape="line" id="237">
-                    <topic position="1370,51" order="0" text="must trust subscription functions" shape="line" id="238"/>
-                    <topic position="1460,76" order="1" text="end-to-end, point-to-point, hybrid" shape="line" id="239"/>
-                    <topic position="1550,101" order="2" text="is CBR possible without access to content?" shape="line" id="240"/>
+                <topic position="-1190,38" order="2" text="Can we trust paths between Brokers?" contentType="plain" shape="line" id="235"/>
+                <topic position="-1280,63" order="3" text="Brokers may not trust event clents" contentType="plain" shape="line" id="236"/>
+                <topic position="-1370,88" order="4" text="Event clients may not trust brokers" contentType="plain" shape="line" id="237">
+                    <topic position="1370,51" order="0" text="must trust subscription functions" contentType="plain" shape="line" id="238"/>
+                    <topic position="1460,76" order="1" text="end-to-end, point-to-point, hybrid" contentType="plain" shape="line" id="239"/>
+                    <topic position="1550,101" order="2" text="is CBR possible without access to content?" contentType="plain" shape="line" id="240"/>
                 </topic>
-                <topic position="-1460,113" order="5" text="Chris Daly Framework" shape="line" id="241"/>
+                <topic position="-1460,113" order="5" text="Chris Daly Framework" contentType="plain" shape="line" id="241"/>
             </topic>
-            <topic position="1100,88" order="5" text="Anonymity" shape="line" id="1989662149">
-                <topic position="-1100,51" order="0" text="Anonymous subscriptions" shape="line" id="242">
-                    <topic position="1100,39" order="0" text="IDEMIX" shape="line" id="243"/>
+            <topic position="1100,88" order="5" text="Anonymity" contentType="plain" shape="line" id="1989662149">
+                <topic position="-1100,51" order="0" text="Anonymous subscriptions" contentType="plain" shape="line" id="242">
+                    <topic position="1100,39" order="0" text="IDEMIX" contentType="plain" shape="line" id="243"/>
                 </topic>
-                <topic position="-1190,76" order="1" text="Private Information Retrieval" shape="line" id="244"/>
-                <topic position="-1280,101" order="2" text="routing may inducer sender/receiver anonymity" shape="line" id="245">
-                    <topic position="1280,89" order="0" text="eg. SIENNA" shape="line" id="246"/>
-                </topic>
-            </topic>
-            <topic position="1190,113" order="6" text="Group Metaphor" shape="line" id="1909335580">
-                <topic position="-1190,88" order="0" text="Multicast Group" shape="line" id="247">
-                    <topic position="1190,38" order="0" text="Known (semi-static) addressing" shape="line" id="248"/>
-                    <topic position="1280,63" order="1" text="Central Manager-(ment)" shape="line" id="249"/>
-                    <topic position="1370,88" order="2" text="Possible at Local Broker" shape="line" id="250"/>
-                    <topic position="1460,113" order="3" text="Possible in Broker Overlay Network" shape="line" id="251"/>
-                </topic>
-                <topic position="-1280,113" order="1" text="Pub-Sub" shape="line" id="252">
-                    <topic position="1280,76" order="0" text="Local/dynamic membership" shape="line" id="253"/>
-                    <topic position="1370,101" order="1" text="Destination addresses need not be specified by publisher" shape="line" id="254"/>
-                    <topic position="1460,126" order="2" text="May require key management to support contrained distribution" shape="line" id="255"/>
+                <topic position="-1190,76" order="1" text="Private Information Retrieval" contentType="plain" shape="line" id="244"/>
+                <topic position="-1280,101" order="2" text="routing may inducer sender/receiver anonymity" contentType="plain" shape="line" id="245">
+                    <topic position="1280,89" order="0" text="eg. SIENNA" contentType="plain" shape="line" id="246"/>
                 </topic>
             </topic>
-            <topic position="1280,138" order="7" text="Threats" shape="line" id="1278504781">
-                <topic position="-1280,113" order="0" text="DOS" shape="line" id="256">
-                    <topic position="1280,88" order="0" text="Subscription matching determines traffic patterns" shape="line" id="257"/>
-                    <topic position="1370,113" order="1" text="Distinguish malicous vs. high volume subscribers" shape="line" id="258"/>
+            <topic position="1190,113" order="6" text="Group Metaphor" contentType="plain" shape="line" id="1909335580">
+                <topic position="-1190,88" order="0" text="Multicast Group" contentType="plain" shape="line" id="247">
+                    <topic position="1190,38" order="0" text="Known (semi-static) addressing" contentType="plain" shape="line" id="248"/>
+                    <topic position="1280,63" order="1" text="Central Manager-(ment)" contentType="plain" shape="line" id="249"/>
+                    <topic position="1370,88" order="2" text="Possible at Local Broker" contentType="plain" shape="line" id="250"/>
+                    <topic position="1460,113" order="3" text="Possible in Broker Overlay Network" contentType="plain" shape="line" id="251"/>
                 </topic>
-                <topic position="-1370,138" order="1" text="Malicous Brokers" shape="line" id="259">
-                    <topic position="1370,113" order="0" text="consequences" shape="line" id="260">
-                        <topic position="-1370,101" order="0" text="malicious faults" shape="line" id="261">
-                            <topic position="1370,89" order="0" text="SINTRA" shape="line" id="262"/>
+                <topic position="-1280,113" order="1" text="Pub-Sub" contentType="plain" shape="line" id="252">
+                    <topic position="1280,76" order="0" text="Local/dynamic membership" contentType="plain" shape="line" id="253"/>
+                    <topic position="1370,101" order="1" text="Destination addresses need not be specified by publisher" contentType="plain" shape="line" id="254"/>
+                    <topic position="1460,126" order="2" text="May require key management to support contrained distribution" contentType="plain" shape="line" id="255"/>
+                </topic>
+            </topic>
+            <topic position="1280,138" order="7" text="Threats" contentType="plain" shape="line" id="1278504781">
+                <topic position="-1280,113" order="0" text="DOS" contentType="plain" shape="line" id="256">
+                    <topic position="1280,88" order="0" text="Subscription matching determines traffic patterns" contentType="plain" shape="line" id="257"/>
+                    <topic position="1370,113" order="1" text="Distinguish malicous vs. high volume subscribers" contentType="plain" shape="line" id="258"/>
+                </topic>
+                <topic position="-1370,138" order="1" text="Malicous Brokers" contentType="plain" shape="line" id="259">
+                    <topic position="1370,113" order="0" text="consequences" contentType="plain" shape="line" id="260">
+                        <topic position="-1370,101" order="0" text="malicious faults" contentType="plain" shape="line" id="261">
+                            <topic position="1370,89" order="0" text="SINTRA" contentType="plain" shape="line" id="262"/>
                         </topic>
                     </topic>
-                    <topic position="1460,138" order="1" text="intrusion detection" shape="line" id="263"/>
+                    <topic position="1460,138" order="1" text="intrusion detection" contentType="plain" shape="line" id="263"/>
                 </topic>
             </topic>
         </topic>

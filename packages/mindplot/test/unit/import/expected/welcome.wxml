@@ -1,53 +1,53 @@
 <map name="welcome" version="tango">
-    <topic central="true" text="Welcome To WiseMapping" id="1">
+    <topic central="true" text="Welcome To WiseMapping" contentType="plain" id="1">
         <topic position="200,-100" order="0" contentType="html" shape="line" id="30">
             <text><![CDATA[<p>5 min tutorial video ?</p>
                         <p>Follow the link !</p>]]></text>
             <link url="https://www.youtube.com/tv?vq=medium#/watch?v=rKxZwNKs9cE" urlType="url"/>
         </topic>
-        <topic position="-290,-50" order="0" text="Try it Now!" shape="line" id="11" bgColor="#080559">
-            <topic position="290,-87" order="0" text="Double Click" shape="line" id="12"/>
+        <topic position="-290,-50" order="0" text="Try it Now!" contentType="plain" shape="line" id="11" bgColor="#080559">
+            <topic position="290,-87" order="0" text="Double Click" contentType="plain" shape="line" id="12"/>
             <topic position="380,-62" order="1" contentType="html" shape="line" id="13">
                 <text><![CDATA[<p>Press "enter" to add a</p>
                             <p>Sibling</p>]]></text>
             </topic>
-            <topic position="470,-37" order="2" text="Drag map to move" shape="line" id="14"/>
+            <topic position="470,-37" order="2" text="Drag map to move" contentType="plain" shape="line" id="14"/>
         </topic>
-        <topic position="-380,-12" order="1" text="Features" shape="line" id="15">
-            <topic position="380,-62" order="0" text="Links to Sites" shape="line" id="16">
+        <topic position="-380,-12" order="1" text="Features" contentType="plain" shape="line" id="15">
+            <topic position="380,-62" order="0" text="Links to Sites" contentType="plain" shape="line" id="16">
                 <link url="http://www.digg.com" urlType="url"/>
             </topic>
-            <topic position="470,-37" order="1" text="Styles" shape="line" id="31">
-                <topic position="-470,-74" order="0" text="Fonts" shape="line" id="17"/>
-                <topic position="-560,-49" order="1" text="Topic Shapes" shape="line" id="19"/>
-                <topic position="-650,-24" order="2" text="Topic Color" shape="line" id="18"/>
+            <topic position="470,-37" order="1" text="Styles" contentType="plain" shape="line" id="31">
+                <topic position="-470,-74" order="0" text="Fonts" contentType="plain" shape="line" id="17"/>
+                <topic position="-560,-49" order="1" text="Topic Shapes" contentType="plain" shape="line" id="19"/>
+                <topic position="-650,-24" order="2" text="Topic Color" contentType="plain" shape="line" id="18"/>
             </topic>
-            <topic position="560,-12" order="2" text="Icons" shape="line" id="20"/>
-            <topic position="650,13" order="3" text="History Changes" shape="line" id="21"/>
+            <topic position="560,-12" order="2" text="Icons" contentType="plain" shape="line" id="20"/>
+            <topic position="650,13" order="3" text="History Changes" contentType="plain" shape="line" id="21"/>
         </topic>
-        <topic position="-470,0" order="2" text="Mind Mapping" shape="line" id="6">
-            <topic position="470,-50" order="0" text="Share with Collegues" shape="line" id="7"/>
-            <topic position="560,-25" order="1" text="Online" shape="line" id="8"/>
-            <topic position="650,0" order="2" text="Anyplace, Anytime" shape="line" id="9"/>
-            <topic position="740,25" order="3" text="Free!!!" shape="line" id="10"/>
+        <topic position="-470,0" order="2" text="Mind Mapping" contentType="plain" shape="line" id="6">
+            <topic position="470,-50" order="0" text="Share with Collegues" contentType="plain" shape="line" id="7"/>
+            <topic position="560,-25" order="1" text="Online" contentType="plain" shape="line" id="8"/>
+            <topic position="650,0" order="2" text="Anyplace, Anytime" contentType="plain" shape="line" id="9"/>
+            <topic position="740,25" order="3" text="Free!!!" contentType="plain" shape="line" id="10"/>
         </topic>
-        <topic position="-560,38" order="3" text="Productivity" shape="line" id="2">
-            <topic position="560,1" order="0" text="Share your ideas" shape="line" id="3"/>
-            <topic position="650,26" order="1" text="Brainstorming" shape="line" id="4"/>
-            <topic position="740,51" order="2" text="Visual " shape="line" id="5"/>
+        <topic position="-560,38" order="3" text="Productivity" contentType="plain" shape="line" id="2">
+            <topic position="560,1" order="0" text="Share your ideas" contentType="plain" shape="line" id="3"/>
+            <topic position="650,26" order="1" text="Brainstorming" contentType="plain" shape="line" id="4"/>
+            <topic position="740,51" order="2" text="Visual " contentType="plain" shape="line" id="5"/>
         </topic>
-        <topic position="-650,50" order="4" text="Install In Your Server" shape="line" id="27">
-            <topic position="650,25" order="0" text="Open Source" shape="line" id="29">
+        <topic position="-650,50" order="4" text="Install In Your Server" contentType="plain" shape="line" id="27">
+            <topic position="650,25" order="0" text="Open Source" contentType="plain" shape="line" id="29">
                 <link url="http://www.wisemapping.org/" urlType="url"/>
             </topic>
-            <topic position="740,50" order="1" text="Download" shape="line" id="28">
+            <topic position="740,50" order="1" text="Download" contentType="plain" shape="line" id="28">
                 <link url="http://www.wisemapping.com/inyourserver.html" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-740,75" order="5" text="Collaborate" shape="line" id="32">
-            <topic position="740,38" order="0" text="Embed" shape="line" id="33"/>
-            <topic position="830,63" order="1" text="Publish" shape="line" id="34"/>
-            <topic position="920,88" order="2" text="Share for Edition" shape="line" id="35"/>
+        <topic position="-740,75" order="5" text="Collaborate" contentType="plain" shape="line" id="32">
+            <topic position="740,38" order="0" text="Embed" contentType="plain" shape="line" id="33"/>
+            <topic position="830,63" order="1" text="Publish" contentType="plain" shape="line" id="34"/>
+            <topic position="920,88" order="2" text="Share for Edition" contentType="plain" shape="line" id="35"/>
         </topic>
     </topic>
 </map>

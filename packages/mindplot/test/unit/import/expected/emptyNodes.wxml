@@ -1,88 +1,88 @@
 <map name="emptyNodes" version="tango">
-    <topic central="true" id="0" bgColor="#ffcc33">
-        <topic position="200,-50" order="0" text="objectifs journée" shape="rounded rectangle" id="1" bgColor="#808080">
-            <topic position="200,-100" order="0" text="&quot;business plan&quot; associatif ?" shape="rounded rectangle" id="2" bgColor="#808080"/>
-            <topic position="-290,-87" order="0" text="modèle / activités responsabilités" shape="rounded rectangle" id="3" bgColor="#808080"/>
-            <topic position="-380,-62" order="1" text="articulations / LOG" shape="rounded rectangle" id="4" bgColor="#808080"/>
+    <topic central="true" contentType="plain" id="0" bgColor="#ffcc33">
+        <topic position="200,-50" order="0" text="objectifs journée" contentType="plain" shape="rounded rectangle" id="1" bgColor="#808080">
+            <topic position="200,-100" order="0" text="&quot;business plan&quot; associatif ?" contentType="plain" shape="rounded rectangle" id="2" bgColor="#808080"/>
+            <topic position="-290,-87" order="0" text="modèle / activités responsabilités" contentType="plain" shape="rounded rectangle" id="3" bgColor="#808080"/>
+            <topic position="-380,-62" order="1" text="articulations / LOG" contentType="plain" shape="rounded rectangle" id="4" bgColor="#808080"/>
         </topic>
-        <topic position="-290,-25" order="0" text="SWOT" shape="rounded rectangle" id="5" bgColor="#808080">
-            <topic position="290,-50" order="0" shape="rounded rectangle" id="6" bgColor="#808080">
-                <topic position="-290,-437" order="0" text="l'entreprise a aujourd'hui un potentiel important" shape="line" id="7">
-                    <topic position="290,-474" order="0" text="compétences professionnel" shape="line" id="8"/>
-                    <topic position="380,-449" order="1" text="citoyen" shape="line" id="9"/>
-                    <topic position="470,-424" order="2" text="forte chance de réussite" shape="line" id="10"/>
+        <topic position="-290,-25" order="0" text="SWOT" contentType="plain" shape="rounded rectangle" id="5" bgColor="#808080">
+            <topic position="290,-50" order="0" contentType="plain" shape="rounded rectangle" id="6" bgColor="#808080">
+                <topic position="-290,-437" order="0" text="l'entreprise a aujourd'hui un potentiel important" contentType="plain" shape="line" id="7">
+                    <topic position="290,-474" order="0" text="compétences professionnel" contentType="plain" shape="line" id="8"/>
+                    <topic position="380,-449" order="1" text="citoyen" contentType="plain" shape="line" id="9"/>
+                    <topic position="470,-424" order="2" text="forte chance de réussite" contentType="plain" shape="line" id="10"/>
                 </topic>
-                <topic position="-380,-412" order="1" text="apporter des idées et propsitions à des questions sociétales" shape="line" id="11"/>
-                <topic position="-470,-387" order="2" text="notre manière d&quot;y répondre avec notamment les technlogies" shape="line" id="12"/>
-                <topic position="-560,-362" order="3" text="l'opportunité et la demande sont fortes aujourd'hui, avec peu de &quot;concurrence&quot;" shape="line" id="13"/>
-                <topic position="-650,-337" order="4" text="ensemble de ressources &quot;rares&quot;" shape="line" id="14"/>
-                <topic position="-740,-312" order="5" text="capacités de recherche et innovation" shape="line" id="15"/>
-                <topic position="-830,-287" order="6" text="motivation du groupe et sens partagé entre membres" shape="line" id="16"/>
-                <topic position="-920,-262" order="7" text="professionnellement : expérience collective et partage d'outils en pratique" shape="line" id="17"/>
-                <topic position="-1010,-237" order="8" text="ouverture vers mode de vie attractif perso / pro" shape="line" id="18"/>
-                <topic position="-1100,-212" order="9" text="potentiel humain, humaniste et citoyen" shape="line" id="19"/>
-                <topic position="-1190,-187" order="10" text="assemblage entre atelier et outillage" shape="line" id="20"/>
-                <topic position="-1280,-162" order="11" text="capacité de réponder en local et en global" shape="line" id="21"/>
-                <topic position="-1370,-137" order="12" text="associatif : contxte de crise multimorphologique / positionne référence en réflexion et usages" shape="line" id="22"/>
-                <topic position="-1460,-112" order="13" text="réseau régional et mondial de l'économie de la ,connaisance" shape="line" id="23"/>
-                <topic position="-1550,-87" order="14" text="asso prend pied dans le monde de la recherche" shape="line" id="24"/>
-                <topic position="-1640,-62" order="15" text="labo de l'innovation sociopolitique" shape="line" id="25"/>
-                <topic position="-1730,-37" order="16" text="acteur valable avec pouvoirs et acteurs en place" shape="line" id="26"/>
-                <topic position="-1820,-12" order="17" text="autonomie par prestations et services" shape="line" id="27"/>
-                <topic position="-1910,13" order="18" text="triptique" shape="line" id="28">
-                    <topic position="1910,-24" order="0" text="éthique de la discussion" shape="line" id="29"/>
-                    <topic position="2000,1" order="1" text="pari de la délégation" shape="line" id="30"/>
-                    <topic position="2090,26" order="2" text="art de la décision" shape="line" id="31"/>
+                <topic position="-380,-412" order="1" text="apporter des idées et propsitions à des questions sociétales" contentType="plain" shape="line" id="11"/>
+                <topic position="-470,-387" order="2" text="notre manière d&quot;y répondre avec notamment les technlogies" contentType="plain" shape="line" id="12"/>
+                <topic position="-560,-362" order="3" text="l'opportunité et la demande sont fortes aujourd'hui, avec peu de &quot;concurrence&quot;" contentType="plain" shape="line" id="13"/>
+                <topic position="-650,-337" order="4" text="ensemble de ressources &quot;rares&quot;" contentType="plain" shape="line" id="14"/>
+                <topic position="-740,-312" order="5" text="capacités de recherche et innovation" contentType="plain" shape="line" id="15"/>
+                <topic position="-830,-287" order="6" text="motivation du groupe et sens partagé entre membres" contentType="plain" shape="line" id="16"/>
+                <topic position="-920,-262" order="7" text="professionnellement : expérience collective et partage d'outils en pratique" contentType="plain" shape="line" id="17"/>
+                <topic position="-1010,-237" order="8" text="ouverture vers mode de vie attractif perso / pro" contentType="plain" shape="line" id="18"/>
+                <topic position="-1100,-212" order="9" text="potentiel humain, humaniste et citoyen" contentType="plain" shape="line" id="19"/>
+                <topic position="-1190,-187" order="10" text="assemblage entre atelier et outillage" contentType="plain" shape="line" id="20"/>
+                <topic position="-1280,-162" order="11" text="capacité de réponder en local et en global" contentType="plain" shape="line" id="21"/>
+                <topic position="-1370,-137" order="12" text="associatif : contxte de crise multimorphologique / positionne référence en réflexion et usages" contentType="plain" shape="line" id="22"/>
+                <topic position="-1460,-112" order="13" text="réseau régional et mondial de l'économie de la ,connaisance" contentType="plain" shape="line" id="23"/>
+                <topic position="-1550,-87" order="14" text="asso prend pied dans le monde de la recherche" contentType="plain" shape="line" id="24"/>
+                <topic position="-1640,-62" order="15" text="labo de l'innovation sociopolitique" contentType="plain" shape="line" id="25"/>
+                <topic position="-1730,-37" order="16" text="acteur valable avec pouvoirs et acteurs en place" contentType="plain" shape="line" id="26"/>
+                <topic position="-1820,-12" order="17" text="autonomie par prestations et services" contentType="plain" shape="line" id="27"/>
+                <topic position="-1910,13" order="18" text="triptique" contentType="plain" shape="line" id="28">
+                    <topic position="1910,-24" order="0" text="éthique de la discussion" contentType="plain" shape="line" id="29"/>
+                    <topic position="2000,1" order="1" text="pari de la délégation" contentType="plain" shape="line" id="30"/>
+                    <topic position="2090,26" order="2" text="art de la décision" contentType="plain" shape="line" id="31"/>
                 </topic>
-                <topic position="-2000,38" order="19" text="réussir à caler leprojet en adéquation avec le contexte actuel" shape="line" id="32"/>
-                <topic position="-2090,63" order="20" text="assoc : grouper des personnes qui développent le concept" shape="line" id="33"/>
-                <topic position="-2180,88" order="21" text="traduire les belles pensées au niveau du citoyen" shape="line" id="34">
-                    <topic position="2180,63" order="0" text="compréhension" shape="line" id="35"/>
-                    <topic position="2270,88" order="1" text="adhésion" shape="line" id="36"/>
+                <topic position="-2000,38" order="19" text="réussir à caler leprojet en adéquation avec le contexte actuel" contentType="plain" shape="line" id="32"/>
+                <topic position="-2090,63" order="20" text="assoc : grouper des personnes qui développent le concept" contentType="plain" shape="line" id="33"/>
+                <topic position="-2180,88" order="21" text="traduire les belles pensées au niveau du citoyen" contentType="plain" shape="line" id="34">
+                    <topic position="2180,63" order="0" text="compréhension" contentType="plain" shape="line" id="35"/>
+                    <topic position="2270,88" order="1" text="adhésion" contentType="plain" shape="line" id="36"/>
                 </topic>
-                <topic position="-2270,113" order="22" text="ressources contributeurs réfréents" shape="line" id="37"/>
-                <topic position="-2360,138" order="23" text="reconnaissance et référence exemplaires" shape="line" id="38"/>
-                <topic position="-2450,163" order="24" text="financeements suffisants pour bien exister" shape="line" id="39"/>
-                <topic position="-2540,188" order="25" text="notre organisation est claire" shape="line" id="40"/>
-                <topic position="-2630,213" order="26" text="prendre des &quot;marchés émergent&quot;" shape="line" id="41"/>
-                <topic position="-2720,238" order="27" text="double stratup avec succes-story" shape="line" id="42"/>
-                <topic position="-2810,263" order="28" text="engageons une activité présentielle forte, conviviale et exemplaire" shape="line" id="43"/>
-                <topic position="-2900,288" order="29" text="attirer de nouveaux membres locomotives" shape="line" id="44"/>
-                <topic position="-2990,313" order="30" text="pratiquons en interne et externe une gouvernance explaire etune citoyennté de rêve" shape="line" id="45"/>
+                <topic position="-2270,113" order="22" text="ressources contributeurs réfréents" contentType="plain" shape="line" id="37"/>
+                <topic position="-2360,138" order="23" text="reconnaissance et référence exemplaires" contentType="plain" shape="line" id="38"/>
+                <topic position="-2450,163" order="24" text="financeements suffisants pour bien exister" contentType="plain" shape="line" id="39"/>
+                <topic position="-2540,188" order="25" text="notre organisation est claire" contentType="plain" shape="line" id="40"/>
+                <topic position="-2630,213" order="26" text="prendre des &quot;marchés émergent&quot;" contentType="plain" shape="line" id="41"/>
+                <topic position="-2720,238" order="27" text="double stratup avec succes-story" contentType="plain" shape="line" id="42"/>
+                <topic position="-2810,263" order="28" text="engageons une activité présentielle forte, conviviale et exemplaire" contentType="plain" shape="line" id="43"/>
+                <topic position="-2900,288" order="29" text="attirer de nouveaux membres locomotives" contentType="plain" shape="line" id="44"/>
+                <topic position="-2990,313" order="30" text="pratiquons en interne et externe une gouvernance explaire etune citoyennté de rêve" contentType="plain" shape="line" id="45"/>
             </topic>
-            <topic position="380,-25" order="1" text="Risques : cauchemars, dangers" shape="rounded rectangle" id="46" bgColor="#808080">
-                <topic position="-380,-312" order="0" text="disparition des forces vives, départ de membres actuels" shape="line" id="47"/>
-                <topic position="-470,-287" order="1" text="opportunités atteignables mais difficile" shape="line" id="48"/>
-                <topic position="-560,-262" order="2" text="difficultés de travailler ensemble dans la durée" shape="line" id="49"/>
-                <topic position="-650,-237" order="3" text="risque de rater le train" shape="line" id="50"/>
-                <topic position="-740,-212" order="4" text="sauter dans le dernier wagon et rester à la traîne" shape="line" id="51"/>
-                <topic position="-830,-187" order="5" text="manquer de professionnalisme" shape="line" id="52">
-                    <topic position="830,-199" order="0" text="perte de crédibilité" shape="line" id="53"/>
+            <topic position="380,-25" order="1" text="Risques : cauchemars, dangers" contentType="plain" shape="rounded rectangle" id="46" bgColor="#808080">
+                <topic position="-380,-312" order="0" text="disparition des forces vives, départ de membres actuels" contentType="plain" shape="line" id="47"/>
+                <topic position="-470,-287" order="1" text="opportunités atteignables mais difficile" contentType="plain" shape="line" id="48"/>
+                <topic position="-560,-262" order="2" text="difficultés de travailler ensemble dans la durée" contentType="plain" shape="line" id="49"/>
+                <topic position="-650,-237" order="3" text="risque de rater le train" contentType="plain" shape="line" id="50"/>
+                <topic position="-740,-212" order="4" text="sauter dans le dernier wagon et rester à la traîne" contentType="plain" shape="line" id="51"/>
+                <topic position="-830,-187" order="5" text="manquer de professionnalisme" contentType="plain" shape="line" id="52">
+                    <topic position="830,-199" order="0" text="perte de crédibilité" contentType="plain" shape="line" id="53"/>
                 </topic>
-                <topic position="-920,-162" order="6" text="s'isoler entre nous et perdre le contact avec les autres acteurs" shape="line" id="54"/>
-                <topic position="-1010,-137" order="7" text="perdre la capacité de réponse au global" shape="line" id="55"/>
-                <topic position="-1100,-112" order="8" text="manque de concret, surdimension des reflexions" shape="line" id="56"/>
-                <topic position="-1190,-87" order="9" text="manque d'utilité socioplolitique" shape="line" id="57"/>
-                <topic position="-1280,-62" order="10" text="manque de nouveaux membres actifs, fidéliser" shape="line" id="58"/>
-                <topic position="-1370,-37" order="11" text="faire du surplace et" shape="line" id="59">
-                    <topic position="1370,-62" order="0" text="manque innovation" shape="line" id="60"/>
-                    <topic position="1460,-37" order="1" shape="line" id="61"/>
+                <topic position="-920,-162" order="6" text="s'isoler entre nous et perdre le contact avec les autres acteurs" contentType="plain" shape="line" id="54"/>
+                <topic position="-1010,-137" order="7" text="perdre la capacité de réponse au global" contentType="plain" shape="line" id="55"/>
+                <topic position="-1100,-112" order="8" text="manque de concret, surdimension des reflexions" contentType="plain" shape="line" id="56"/>
+                <topic position="-1190,-87" order="9" text="manque d'utilité socioplolitique" contentType="plain" shape="line" id="57"/>
+                <topic position="-1280,-62" order="10" text="manque de nouveaux membres actifs, fidéliser" contentType="plain" shape="line" id="58"/>
+                <topic position="-1370,-37" order="11" text="faire du surplace et" contentType="plain" shape="line" id="59">
+                    <topic position="1370,-62" order="0" text="manque innovation" contentType="plain" shape="line" id="60"/>
+                    <topic position="1460,-37" order="1" contentType="plain" shape="line" id="61"/>
                 </topic>
-                <topic position="-1460,-12" order="12" text="ne pas vivre ce que nous affirmons" shape="line" id="62">
-                    <topic position="1460,-24" order="0" text="cohérence entre  langage gouvernance et la pratique" shape="line" id="63"/>
+                <topic position="-1460,-12" order="12" text="ne pas vivre ce que nous affirmons" contentType="plain" shape="line" id="62">
+                    <topic position="1460,-24" order="0" text="cohérence entre  langage gouvernance et la pratique" contentType="plain" shape="line" id="63"/>
                 </topic>
-                <topic position="-1550,13" order="13" text="groupe de base insuffisant" shape="line" id="64"/>
-                <topic position="-1640,38" order="14" text="non attractifs / nouveaux" shape="line" id="65">
-                    <topic position="1640,26" order="0" text="pas ennuyants" shape="line" id="66"/>
+                <topic position="-1550,13" order="13" text="groupe de base insuffisant" contentType="plain" shape="line" id="64"/>
+                <topic position="-1640,38" order="14" text="non attractifs / nouveaux" contentType="plain" shape="line" id="65">
+                    <topic position="1640,26" order="0" text="pas ennuyants" contentType="plain" shape="line" id="66"/>
                 </topic>
-                <topic position="-1730,63" order="15" text="pas efficaces en com" shape="line" id="67"/>
-                <topic position="-1820,88" order="16" text="trop lent, rater l'opportunité actuelle" shape="line" id="68"/>
-                <topic position="-1910,113" order="17" text="débordés par &quot;concurrences&quot;" shape="line" id="69"/>
-                <topic position="-2000,138" order="18" text="départs de didier, micvhel, rené, corinne MCD etc" shape="line" id="70"/>
-                <topic position="-2090,163" order="19" text="conclits de personnes et schisme entre 2 groupes ennemis" shape="line" id="71"/>
-                <topic position="-2180,188" order="20" text="groupe amicale mais très merdique" shape="line" id="72"/>
-                <topic position="-2270,213" order="21" text="système autocratique despotique ou sectaire" shape="line" id="73"/>
-                <topic position="-2360,238" order="22" shape="line" id="74"/>
+                <topic position="-1730,63" order="15" text="pas efficaces en com" contentType="plain" shape="line" id="67"/>
+                <topic position="-1820,88" order="16" text="trop lent, rater l'opportunité actuelle" contentType="plain" shape="line" id="68"/>
+                <topic position="-1910,113" order="17" text="débordés par &quot;concurrences&quot;" contentType="plain" shape="line" id="69"/>
+                <topic position="-2000,138" order="18" text="départs de didier, micvhel, rené, corinne MCD etc" contentType="plain" shape="line" id="70"/>
+                <topic position="-2090,163" order="19" text="conclits de personnes et schisme entre 2 groupes ennemis" contentType="plain" shape="line" id="71"/>
+                <topic position="-2180,188" order="20" text="groupe amicale mais très merdique" contentType="plain" shape="line" id="72"/>
+                <topic position="-2270,213" order="21" text="système autocratique despotique ou sectaire" contentType="plain" shape="line" id="73"/>
+                <topic position="-2360,238" order="22" contentType="plain" shape="line" id="74"/>
             </topic>
         </topic>
     </topic>

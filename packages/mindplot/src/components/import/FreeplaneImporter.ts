@@ -20,6 +20,7 @@ import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import ContentType from '../ContentType';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
@@ -81,7 +82,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
-        node.setContentType('html');
+        node.setContentType(ContentType.HTML);
       }
     }
 
@@ -118,7 +119,7 @@ class FreeplaneImporter extends Importer {
       if (htmlContent) {
         const cleanHtml = this.cleanHtml(htmlContent);
         node.setText(cleanHtml);
-        node.setContentType('html');
+        node.setContentType(ContentType.HTML);
       }
     }
 

@@ -1,9 +1,9 @@
 <map name="enc" version="tango">
-    <topic central="true" text="Artigos GF comentários interessantes" id="1">
-        <topic position="-200,-50" order="1" shape="rectangle" id="5" bgColor="#cccccc">
+    <topic central="true" text="Artigos GF comentários interessantes" contentType="plain" id="1">
+        <topic position="-200,-50" order="1" contentType="plain" shape="rectangle" id="5" bgColor="#cccccc">
             <text><![CDATA[Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant
 communities]]></text>
-            <topic position="-200,-350" order="1" shape="line" id="6"/>
+            <topic position="-200,-350" order="1" contentType="plain" shape="line" id="6"/>
             <topic position="290,-150" order="0" contentType="html" shape="line" id="7">
                 <text><![CDATA[<p>However, the fast pace of</p>
                             <p>development of plant trait meta-analyses also suggests that</p>
@@ -25,17 +25,17 @@ communities]]></text>
                             <p>of different sampling designs and intensities for</p>
                             <p>different questions and systems.</p>]]></text>
             </topic>
-            <topic position="470,-100" order="2" shape="line" id="9">
+            <topic position="470,-100" order="2" contentType="plain" shape="line" id="9">
                 <text><![CDATA[Falar que a escolha das categorias de sucessão e dos parâmetros ou característica dos indivíduos que
 serão utilizadas dependera da facilidade de coleta dos dados e do custo monetário e
 temporal.]]></text>
             </topic>
-            <topic position="560,-75" order="3" shape="line" id="12">
+            <topic position="560,-75" order="3" contentType="plain" shape="line" id="12">
                 <text><![CDATA[Ver se classifica sucessão por densidade de tronco para citar no artigo como exemplo de outros
 atributos além de germinação e ver se e custoso no tempo e em
 dinheiro]]></text>
             </topic>
-            <topic position="650,-50" order="4" shape="line" id="13">
+            <topic position="650,-50" order="4" contentType="plain" shape="line" id="13">
                 <text><![CDATA[Intensas amostragens de experimentos simples  tem maior retorno em acurácia de estimativa e de custo
 tb.]]></text>
             </topic>
@@ -54,7 +54,7 @@ tb.]]></text>
                 <note><![CDATA[<p>Falar que isso corrobora nossa sugestão de utilizar poucas medidas, mas que elas sejam confiáveis.</p>]]></note>
             </topic>
         </topic>
-        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
+        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" contentType="plain" shape="rectangle" id="17" bgColor="#cccccc">
             <topic position="290,-137" order="0" contentType="html" shape="line" id="22">
                 <text><![CDATA[<p>Here, we develop a new approach that links functional attributes</p>
                             <p>of tree species with studies of forest recovery and regional</p>
@@ -72,7 +72,7 @@ tb.]]></text>
                             <p>for a large number of tree species obtained through vegetation</p>
                             <p>monitoring studies.</p>]]></text>
             </topic>
-            <topic position="470,-87" order="2" shape="line" id="24">
+            <topic position="470,-87" order="2" contentType="plain" shape="line" id="24">
                 <text><![CDATA[Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira
 devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a
 resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação
@@ -103,9 +103,9 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             <p>colonization groups based on the timing of seedling, sapling, and</p>
                             <p>tree recruitment in secondary forests.</p>]]></text>
             </topic>
-            <topic position="740,-12" order="5" shape="line" id="27"/>
-            <topic position="830,13" order="6" shape="line" id="28"/>
-            <topic position="920,38" order="7" shape="line" id="29"/>
+            <topic position="740,-12" order="5" contentType="plain" shape="line" id="27"/>
+            <topic position="830,13" order="6" contentType="plain" shape="line" id="28"/>
+            <topic position="920,38" order="7" contentType="plain" shape="line" id="29"/>
             <topic position="1010,63" order="8" contentType="html" shape="line" id="30">
                 <text><![CDATA[<p>Classifying functional types</p>
                             <p>based on functional traits with low plasticity, such as wood density</p>
@@ -134,9 +134,9 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                             <p></p>]]></text>
             </topic>
         </topic>
-        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">
-            <topic position="380,-12" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
-                <topic position="-380,-24" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
+        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" contentType="plain" shape="rectangle" id="2" bgColor="#cccccc">
+            <topic position="380,-12" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" contentType="plain" shape="line" id="3">
+                <topic position="-380,-24" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" contentType="plain" shape="line" id="4"/>
             </topic>
         </topic>
     </topic>

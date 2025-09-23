@@ -20,6 +20,7 @@ import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
 import NoteModel from '../model/NoteModel';
 import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
+import ContentType from '../ContentType';
 
 class OPMLImporter extends Importer {
   private opmlInput: string;
@@ -85,7 +86,7 @@ class OPMLImporter extends Importer {
 
     // Check if the main text contains HTML and set contentType accordingly
     if (text && this.containsHtml(text)) {
-      node.setContentType('html');
+      node.setContentType(ContentType.HTML);
     }
 
     // Handle child outlines
