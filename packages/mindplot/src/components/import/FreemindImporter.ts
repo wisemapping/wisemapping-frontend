@@ -304,7 +304,7 @@ export default class FreemindImporter extends Importer {
               });
               // Set contentType for rich text notes
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
-                (noteModel as any).setContentType(ContentType.HTML);
+                (noteModel as NoteModel).setContentType(ContentType.HTML);
               }
               currentWiseTopic.addFeature(noteModel);
               break;
@@ -322,7 +322,7 @@ export default class FreemindImporter extends Importer {
               });
               // Set contentType for rich text notes
               if (cleanHtml && cleanHtml !== FreemindConstant.EMPTY_NOTE) {
-                (noteModel as any).setContentType(ContentType.HTML);
+                (noteModel as NoteModel).setContentType(ContentType.HTML);
               }
               currentWiseTopic.addFeature(noteModel);
             }

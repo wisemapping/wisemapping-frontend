@@ -49,12 +49,14 @@ class TxtExporter extends Exporter {
         iconStr = ` ${icons.map((icon) => (icon as EmojiIconModel).getIconType()).toString()} `;
       }
 
-      const nodeText =
-        node.getText() !== undefined
-          ? node.getContentType() === ContentType.HTML
-            ? node.getPlainText()
-            : node.getText()
-          : '';
+      let nodeText = '';
+      if (node.getText() !== undefined) {
+        if (node.getContentType() === ContentType.HTML) {
+          nodeText = node.getPlainText();
+        } else {
+          nodeText = node.getText() || '';
+        }
+      }
       result = `${result}${indent}${prefix}${index + 1}${iconStr}${nodeText}`;
       node.getFeatures().forEach((f) => {
         const type = f.getType();
@@ -63,7 +65,10 @@ class TxtExporter extends Exporter {
         }
         if (type === 'note') {
           const noteModel = f as NoteModel;
-          const noteText = noteModel.isRichText() ? noteModel.getText() : noteModel.getPlainText();
+          const noteText =
+            noteModel.getContentType() === ContentType.HTML
+              ? noteModel.getText()
+              : noteModel.getPlainText();
           result = `${result}\n${indent}  [Note: ${noteText}]`;
         }
       });

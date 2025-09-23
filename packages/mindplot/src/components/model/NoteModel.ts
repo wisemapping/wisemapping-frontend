@@ -55,11 +55,6 @@ class NoteModel extends FeatureModel {
   getContentType(): ContentType {
     return (this.getAttribute('contentType') as ContentType) || ContentType.PLAIN;
   }
-
-  /** */
-  isRichText(): boolean {
-    return this.getContentType() === ContentType.HTML;
-  }
 }
 
 export default NoteModel;
