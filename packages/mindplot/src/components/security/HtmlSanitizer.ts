@@ -307,6 +307,7 @@ class HtmlSanitizer {
 
     // Check for dangerous protocols
     const lowerUrl = url.toLowerCase().trim();
+    // eslint-disable-next-line function-paren-newline
     const isDangerous = Array.from(this.DANGEROUS_PROTOCOLS).some((protocol) =>
       lowerUrl.startsWith(protocol),
     );
