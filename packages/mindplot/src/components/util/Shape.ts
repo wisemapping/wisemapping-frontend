@@ -93,26 +93,83 @@ class Shape {
     srcPos: PositionType,
     tarPos: PositionType,
   ): [PositionType, PositionType] {
-    const y = srcPos.y - tarPos.y;
-    const x = srcPos.x - tarPos.x;
-    const div = Math.abs(x) > 0.1 ? x : 0.1; // Prevent division by 0.
+    const deltaX = tarPos.x - srcPos.x;
+    const deltaY = tarPos.y - srcPos.y;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-    const m = y / div;
-    const l = Math.sqrt(y * y + x * x) / 3;
-    let fix = 1;
-    if (srcPos.x > tarPos.x) {
-      fix = -1;
+    // Calculate the middle point of the imaginary line between nodes
+    const midX = (srcPos.x + tarPos.x) / 2;
+    const midY = (srcPos.y + tarPos.y) / 2;
+
+    // Determine curve direction based on position relative to center (0,0)
+    const avgX = (srcPos.x + tarPos.x) / 2;
+    const avgY = (srcPos.y + tarPos.y) / 2;
+
+    // Gap between control points (1/4 of line distance)
+    const gapDistance = distance / 4;
+    // Distance below/away from the line (1/4 of line distance)
+    const curveDistance = distance / 4;
+
+    let controlOffset1: PositionType;
+    let controlOffset2: PositionType;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Horizontal connections (like bottom nodes)
+      // Control points below the imaginary line, same Y, X positions around middle with gap
+      const curveDirection = avgY >= 0 ? 1 : -1; // Positive Y = curve down, Negative Y = curve up
+
+      // Determine which direction the line goes (left to right or right to left)
+      if (deltaX >= 0) {
+        // Line goes left to right: src control point left of middle, target control point right of middle
+        controlOffset1 = {
+          x: midX - gapDistance / 2 - srcPos.x, // Left of middle, relative to source
+          y: curveDistance * curveDirection, // Below/above the line
+        };
+        controlOffset2 = {
+          x: midX + gapDistance / 2 - tarPos.x, // Right of middle, relative to target
+          y: curveDistance * curveDirection, // Below/above the line (same Y as control point 1)
+        };
+      } else {
+        // Line goes right to left: src control point right of middle, target control point left of middle
+        controlOffset1 = {
+          x: midX + gapDistance / 2 - srcPos.x, // Right of middle, relative to source
+          y: curveDistance * curveDirection, // Below/above the line
+        };
+        controlOffset2 = {
+          x: midX - gapDistance / 2 - tarPos.x, // Left of middle, relative to target
+          y: curveDistance * curveDirection, // Below/above the line (same Y as control point 1)
+        };
+      }
+    } else {
+      // Vertical connections (like left/right nodes)
+      // Control points to the side of the imaginary line, same X, Y positions around middle with gap
+      const curveDirection = avgX >= 0 ? 1 : -1; // Positive X = curve right, Negative X = curve left
+
+      // Determine which direction the line goes (top to bottom or bottom to top)
+      if (deltaY >= 0) {
+        // Line goes top to bottom: src control point above middle, target control point below middle
+        controlOffset1 = {
+          x: curveDistance * curveDirection, // To the side of the line
+          y: midY - gapDistance / 2 - srcPos.y, // Above middle, relative to source
+        };
+        controlOffset2 = {
+          x: curveDistance * curveDirection, // To the side of the line (same X as control point 1)
+          y: midY + gapDistance / 2 - tarPos.y, // Below middle, relative to target
+        };
+      } else {
+        // Line goes bottom to top: src control point below middle, target control point above middle
+        controlOffset1 = {
+          x: curveDistance * curveDirection, // To the side of the line
+          y: midY + gapDistance / 2 - srcPos.y, // Below middle, relative to source
+        };
+        controlOffset2 = {
+          x: curveDistance * curveDirection, // To the side of the line (same X as control point 1)
+          y: midY - gapDistance / 2 - tarPos.y, // Above middle, relative to target
+        };
+      }
     }
 
-    const x1 = srcPos.x + Math.sqrt((l * l) / (1 + m * m)) * fix;
-    const y1 = m * (x1 - srcPos.x) + srcPos.y;
-    const x2 = tarPos.x + Math.sqrt((l * l) / (1 + m * m)) * fix * -1;
-    const y2 = m * (x2 - tarPos.x) + tarPos.y;
-
-    return [
-      { x: -srcPos.x + x1, y: -srcPos.y + y1 },
-      { x: -tarPos.x + x2, y: -tarPos.y + y2 },
-    ];
+    return [controlOffset1, controlOffset2];
   }
 
   static workoutIncomingConnectionPoint(targetNode: Topic, sourcePosition: PositionType) {
