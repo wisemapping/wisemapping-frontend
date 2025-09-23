@@ -225,7 +225,7 @@
     "defaultMessage": "Criar"
   },
   "import.description": {
-    "defaultMessage": "Você pode importar mapas do WiseMapping e Freemind para sua lista de mapas. Selecione o arquivo que deseja importar."
+    "defaultMessage": "Você pode importar mapas do WiseMapping, FreeMind, Freeplane, XMind, MindManager e OPML para sua lista de mapas. Selecione o arquivo que deseja importar."
   },
   "import.error-file": {
     "defaultMessage": "Erro de importação {error}"

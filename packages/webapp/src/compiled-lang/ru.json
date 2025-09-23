@@ -452,7 +452,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Можно импортировать FreeMind 1.0.1 и WiseMapping файлы. Выберите файл, который хотите импортировать."
+      "value": "Можно импортировать файлы WiseMapping, FreeMind, Freeplane, XMind, MindManager и OPML. Выберите файл, который хотите импортировать."
     }
   ],
   "import.error-file": [

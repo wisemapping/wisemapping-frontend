@@ -464,7 +464,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Du kannst Mindmaps von WiseMapping oder Freemind importieren. Wähle die Datei aus, die du importieren möchtest."
+      "value": "Du kannst Mindmaps von WiseMapping, FreeMind, Freeplane, XMind, MindManager und OPML importieren. Wähle die Datei aus, die du importieren möchtest."
     }
   ],
   "import.error-file": [

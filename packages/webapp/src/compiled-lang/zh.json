@@ -452,7 +452,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "您可以将脑图从 WiseMapping 和 Freemind 导入到您的脑图列表中。选择要导入的文件。"
+      "value": "您可以将脑图从 WiseMapping、FreeMind、Freeplane、XMind、MindManager 和 OPML 导入到您的脑图列表中。选择要导入的文件。"
     }
   ],
   "import.error-file": [

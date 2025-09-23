@@ -22,7 +22,7 @@ import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 import Checkbox from '@mui/material/Checkbox';
 import { useFetchMapById } from '../../../../classes/middleware';
 
-type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'wxml' | 'md';
+type ExportFormat = 'svg' | 'jpg' | 'png' | 'txt' | 'mm' | 'mmx' | 'wxml' | 'md';
 type ExportGroup = 'image' | 'document' | 'mindmap-tool';
 
 type ExportDialogProps = {
@@ -122,6 +122,7 @@ const ExportDialog = ({
       }
       case 'wxml':
       case 'mm':
+      case 'mmx':
       case 'md':
       case 'txt': {
         exporter = TextExporterFactory.create(formatType, mindmap);
@@ -285,6 +286,9 @@ const ExportDialog = ({
                   </MenuItem>
                   <MenuItem css={classes.select} value="mm">
                     Freemind 1.0.1 (MM)
+                  </MenuItem>
+                  <MenuItem css={classes.select} value="mmx">
+                    Freeplane (MMX)
                   </MenuItem>
                   {/* <MenuItem className={classes.select} value="mmap">
                                         MindManager (MMAP)

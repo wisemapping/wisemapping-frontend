@@ -464,7 +464,7 @@
   "import.description": [
     {
       "type": 0,
-      "value": "Selectionnez le fichier que vous souhaitez importer."
+      "value": "Vous pouvez importer des cartes WiseMapping, FreeMind, Freeplane, XMind, MindManager et OPML dans votre liste de cartes. Sélectionnez le fichier que vous souhaitez importer."
     }
   ],
   "import.error-file": [
