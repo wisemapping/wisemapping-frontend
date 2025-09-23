@@ -24,26 +24,44 @@ import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
 
-// Use webpack's require.context to dynamically import all icons
+// Create icon URL mapping that works in both development and production
 const images: { [key: string]: string } = {};
 
-// Initialize icon URLs using webpack's require.context
+// Initialize icon URLs using a hybrid approach
 const initializeIcons = () => {
-  const iconContext = require.context('../../assets/icons', false, /\.(svg|png)$/);
+  try {
+    // Try to use webpack's require.context (works in development)
+    const iconContext = require.context('../../assets/icons', false, /\.(svg|png)$/);
 
-  iconContext.keys().forEach((iconPath) => {
-    // Extract filename without extension
-    const filename = iconPath.replace('./', '').replace(/\.(svg|png)$/, '');
-    const extension = iconPath.match(/\.(svg|png)$/)?.[1];
+    iconContext.keys().forEach((iconPath) => {
+      // Extract filename without extension
+      const filename = iconPath.replace('./', '').replace(/\.(svg|png)$/, '');
+      const extension = iconPath.match(/\.(svg|png)$/)?.[1];
 
-    if (extension) {
-      // Use webpack's processed URL
-      images[`${filename}.${extension}`] = iconContext(iconPath);
-    }
-  });
+      if (extension) {
+        // Use webpack's processed URL (data URL in dev, file URL in prod)
+        images[`${filename}.${extension}`] = iconContext(iconPath);
+      }
+    });
+  } catch {
+    // Fallback to static paths (works in production)
+    console.warn('require.context not available, using static paths');
+
+    // Extract all icon names from the iconFamily configuration
+    const iconNames: string[] = [];
+    iconFamily.forEach((family) => {
+      iconNames.push(...family.icons);
+    });
+
+    // Create URL mappings for both SVG and PNG versions of known icons
+    iconNames.forEach((iconName) => {
+      images[`${iconName}.svg`] = `../../assets/icons/${iconName}.svg`;
+      images[`${iconName}.png`] = `../../assets/icons/${iconName}.png`;
+    });
+  }
 };
 
-// Get image URL using webpack-processed assets
+// Get image URL with fallback handling
 const originalGetImageUrl = (iconId: string): string => {
   // Try SVG first, then PNG
   let result = images[`${iconId}.svg`];
@@ -51,10 +69,14 @@ const originalGetImageUrl = (iconId: string): string => {
     result = images[`${iconId}.png`];
   }
 
-  // If not found in mapping, log warning and return empty string
+  // If still not found, try to construct the URL directly
+  // This handles icons that might exist in assets but not in iconFamily.json
   if (!result) {
-    console.warn(`Icon not found: ${iconId}`);
-    result = '';
+    // Try SVG first, then PNG - using the same relative path pattern
+    const svgPath = `../../assets/icons/${iconId}.svg`;
+
+    // Always return a string (fallback to SVG path)
+    result = svgPath;
   }
 
   return result;
