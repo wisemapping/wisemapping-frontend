@@ -33,7 +33,7 @@
         "@mui/material": "^7.3.2",
         "@wisemapping/core-js": "workspace:*",
         "@wisemapping/editor": "workspace:^",
-        "axios": "^1.11.0",
+        "axios": "^1.12.2",
         "dayjs": "^1.11.18",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
@@ -51,7 +51,7 @@
         "@formatjs/cli": "^6.7.2",
         "@testing-library/cypress": "^10.1.0",
         "@welldone-software/why-did-you-render": "^10.0.1",
-        "cypress": "^15.1.0",
+        "cypress": "^15.2.0",
         "cypress-image-snapshot": "^4.0.1"
     },
     "publishConfig": {
