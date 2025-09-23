@@ -1,0 +1,266 @@
+{
+  "action.accept": {
+    "defaultMessage": "Accetta"
+  },
+  "action.delete": {
+    "defaultMessage": "Elimina"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "Torna alla lista delle mappe"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "Registrati"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "Condividi"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "Esporta"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "Cronologia delle modifiche"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "Informazioni"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "Stampa"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "Pubblica"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "Ripeti"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "Salva"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "Condividi per collaborazione"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "Registrati"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "Preferiti"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "Annulla"
+  },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Icona"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "Collegamento"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "Nota"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "Aggiungi icona"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "Aggiungi collegamento"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "Aggiungi nota"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "Aggiungi relazione"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "Aggiungi argomento"
+  },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "Colore"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "Colore predefinito"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "Stile di connessione"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "Curva spessa"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "Curva sottile"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "Polilinea semplice"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "Polilinea curva"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "Elimina argomento"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "Colore del bordo"
+  },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "Colore del bordo predefinito"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "Colore di riempimento"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "Colore di riempimento predefinito"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "Più grande"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "Grassetto"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "Colore"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "Colore predefinito"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "Corsivo"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "Più piccolo"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Stile del carattere"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "Forma ellittica"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "Forma linea"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "Forma rettangolare"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "Forma arrotondata"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "Stile dell'argomento"
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "Le capacità di modifica delle mappe mentali sono limitate sui dispositivi mobili. Usa un browser desktop per le funzionalità complete dell'editor."
+  },
+  "editor.try-welcome": {
+    "defaultMessage": "Questo spazio di modifica mostra alcune delle capacità dell'editor di mappe mentali!"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "Registrati per iniziare a creare, condividere e pubblicare un numero illimitato di mappe mentali gratuitamente."
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "Registrati per iniziare a creare, condividere e pubblicare un numero illimitato di mappe mentali gratuitamente. Le capacità di modifica delle mappe mentali sono limitate sui dispositivi mobili. Usa un browser desktop per le funzionalità complete dell'editor."
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "Questo spazio di modifica mostra alcune delle capacità dell'editor di mappe mentali!"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "Mostra immagini"
+  },
+  "link.help_text": {
+    "defaultMessage": "L'indirizzo non è valido"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "Azione"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "Aggiungi argomento figlio"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "Aggiungi collegamento"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "Aggiungi nota"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "Aggiungi argomento fratello"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "Annulla modifiche al testo"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "Cambia testo in grassetto"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "Cambia testo in corsivo"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "Comprimi figli"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "Copia e incolla argomenti/Copia immagine della mappa mentale negli appunti."
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "Elimina argomento"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "Deseleziona tutti gli argomenti"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "Disconnetti argomento"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "Aggiungi testo argomento multi-riga"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "Modifica testo argomento"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "F2 o Doppio clic"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "Navigazione"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "Tasti freccia"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "Sovrascrivi testo argomento"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "Digita su un argomento selezionato"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "Ripeti modifica"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "Salva modifiche"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "Seleziona tutti gli argomenti"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "Seleziona più argomenti"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "Clic del mouse"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "Annulla modifica"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "Scorciatoie da tastiera"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "Ingrandisci"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "Riduci"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "Adatta alla finestra"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "Descrizione"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "Creatore"
+  }
+}
