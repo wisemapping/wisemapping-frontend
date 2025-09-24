@@ -43,7 +43,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
   const savedRangeRef = useRef<Range | null>(null);
   const [characterCount, setCharacterCount] = useState(initialValue.length);
-  const MAX_CHARACTERS = 5000;
+  const MAX_CHARACTERS = 10000;
 
   const submitHandler = useCallback(() => {
     closeModal();
