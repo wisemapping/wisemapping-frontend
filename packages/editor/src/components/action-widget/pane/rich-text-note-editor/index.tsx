@@ -23,6 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
 import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import SaveAndDelete from '../save-and-delete';
 import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
@@ -41,6 +42,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const editorRef = useRef<HTMLDivElement>(null);
   const [iconPickerAnchor, setIconPickerAnchor] = useState<HTMLButtonElement | null>(null);
   const savedRangeRef = useRef<Range | null>(null);
+  const [characterCount, setCharacterCount] = useState(initialValue.length);
+  const MAX_CHARACTERS = 5000;
 
   const submitHandler = useCallback(() => {
     closeModal();
@@ -52,7 +55,38 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const handleContentChange = useCallback(() => {
     if (editorRef.current) {
       const newContent = editorRef.current.innerHTML;
-      setContent(newContent);
+
+      // Get plain text length for character count validation
+      const textContent = editorRef.current.textContent || '';
+
+      // Update character count
+      setCharacterCount(textContent.length);
+
+      // Prevent exceeding character limit
+      if (textContent.length > MAX_CHARACTERS) {
+        // Truncate content to stay within limit
+        const truncatedText = textContent.substring(0, MAX_CHARACTERS);
+
+        // Create a temporary element to convert plain text back to HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.textContent = truncatedText;
+        const truncatedHtml = tempDiv.innerHTML;
+
+        // Update the editor content
+        editorRef.current.innerHTML = truncatedHtml;
+        setContent(truncatedHtml);
+        setCharacterCount(MAX_CHARACTERS);
+
+        // Position cursor at the end
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.selectNodeContents(editorRef.current);
+        range.collapse(false);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      } else {
+        setContent(newContent);
+      }
     }
   }, []);
 
@@ -60,6 +94,8 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
     document.execCommand(command, false, value);
     if (editorRef.current) {
       setContent(editorRef.current.innerHTML);
+      const textContent = editorRef.current.textContent || '';
+      setCharacterCount(textContent.length);
     }
   }, []);
 
@@ -404,47 +440,91 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
 
       {/* Editor */}
       <Box
-        ref={editorRef}
-        contentEditable
-        onInput={handleContentChange}
-        onBlur={handleContentChange}
-        suppressContentEditableWarning={true}
         sx={{
+          position: 'relative',
           height: '350px',
           border: '1px solid #e0e0e0',
           borderTop: 'none',
           borderRadius: '0 0 8px 8px',
-          p: 2.5,
-          overflow: 'auto',
           backgroundColor: '#ffffff',
-          fontFamily: 'Arial, sans-serif',
-          fontSize: '14px',
-          lineHeight: 1.5,
-          color: '#333333',
           boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
-          '&:focus': {
-            outline: 'none',
-            borderColor: '#e0e0e0',
-            boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
-          },
-          '&::-webkit-scrollbar': {
-            width: '8px',
-          },
-          '&::-webkit-scrollbar-track': {
-            backgroundColor: '#f1f1f1',
-            borderRadius: '4px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#c1c1c1',
-            borderRadius: '4px',
-            '&:hover': {
-              backgroundColor: '#a8a8a8',
-            },
-          },
         }}
-      />
+      >
+        <Box
+          ref={editorRef}
+          contentEditable
+          onInput={handleContentChange}
+          onBlur={handleContentChange}
+          suppressContentEditableWarning={true}
+          sx={{
+            height: '100%',
+            p: 2.5,
+            overflow: 'auto',
+            fontFamily: 'Arial, sans-serif',
+            fontSize: '14px',
+            lineHeight: 1.5,
+            color: '#333333',
+            '&:focus': {
+              outline: 'none',
+            },
+            '&::-webkit-scrollbar': {
+              width: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: '#f1f1f1',
+              borderRadius: '4px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#c1c1c1',
+              borderRadius: '4px',
+              '&:hover': {
+                backgroundColor: '#a8a8a8',
+              },
+            },
+          }}
+        />
+      </Box>
 
-      <SaveAndDelete model={noteModel} closeModal={closeModal} submitHandler={submitHandler} />
+      {/* Character Counter and Save/Delete Buttons */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 2.5,
+          py: 1,
+          backgroundColor: '#fafafa',
+          borderTop: '1px solid #e0e0e0',
+        }}
+      >
+        {/* Character Counter */}
+        <Box
+          sx={{
+            fontSize: '12px',
+            color: characterCount > MAX_CHARACTERS * 0.9 ? '#ff5722' : '#666666',
+            fontWeight: characterCount > MAX_CHARACTERS * 0.9 ? 'bold' : 'normal',
+          }}
+        >
+          <FormattedMessage
+            id="note.character.count"
+            defaultMessage="{remaining} left"
+            values={{
+              remaining: MAX_CHARACTERS - characterCount,
+            }}
+          />
+          {characterCount > MAX_CHARACTERS * 0.9 && (
+            <Box component="span" sx={{ ml: 1, fontSize: '11px' }}>
+              <FormattedMessage
+                id="note.character.limit.warning"
+                defaultMessage="(Approaching limit)"
+              />
+            </Box>
+          )}
+        </Box>
+
+        {/* Save and Delete Buttons */}
+        <SaveAndDelete model={noteModel} closeModal={closeModal} submitHandler={submitHandler} />
+      </Box>
 
       {/* Emoji Picker Popover */}
       <Popover
