@@ -914,6 +914,20 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
+  changeImageEmojiChar(imageEmojiChar: string | undefined): void {
+    console.log('Designer.changeImageEmojiChar called with:', imageEmojiChar);
+    const topicsIds = this.getModel()
+      .filterSelectedTopics()
+      .map((topic) => topic.getId());
+    console.log('Selected topic IDs for image emoji change:', topicsIds);
+    if (topicsIds.length > 0) {
+      console.log('Calling changeImageEmojiCharToTopic with:', topicsIds, imageEmojiChar);
+      this._actionDispatcher.changeImageEmojiCharToTopic(topicsIds, imageEmojiChar);
+    } else {
+      console.log('No topics selected for image emoji change');
+    }
+  }
+
   changeShapeType(shape: TopicShapeType): void {
     const validateFunc = (topic: Topic) =>
       !(topic.getType() === 'CentralTopic' && (shape === 'line' || shape === 'none'));

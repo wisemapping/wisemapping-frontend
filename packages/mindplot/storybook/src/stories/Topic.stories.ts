@@ -21,6 +21,7 @@ export default {
     noteText: { control: 'text' },
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
+    imageEmojiChar: { control: 'text' },
     theme: { control: 'select', options: ['classic', 'prism', 'dark-prism'] },
   },
 } as Meta;
@@ -99,4 +100,11 @@ ThemePrime.args = {
   eicon: ['🌈'],
   shapeType: 'none',
   theme: 'prism',
+};
+
+export const ImageEmojiFeature = Template.bind({});
+ImageEmojiFeature.args = {
+  text: 'Image Emoji Feature',
+  shapeType: 'rectangle',
+  imageEmojiChar: '😀',
 };

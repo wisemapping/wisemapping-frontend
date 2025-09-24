@@ -70,6 +70,11 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
 
   abstract changeFontSizeToTopic(topicsIds: number[], size: number): void;
 
+  abstract changeImageEmojiCharToTopic(
+    topicsIds: number[],
+    imageEmojiChar: string | undefined,
+  ): void;
+
   abstract changeBackgroundColorToTopic(topicsIds: number[], color: string): void;
 
   abstract changeBorderColorToTopic(topicsIds: number[], color: string): void;

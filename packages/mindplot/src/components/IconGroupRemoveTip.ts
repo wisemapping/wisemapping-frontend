@@ -97,43 +97,65 @@ class IconGroupRemoveTip {
       coordSizeHeight: 10,
     });
 
-    const outerRect = new Rect(0, {
-      x: 0,
-      y: 0,
-      width: 10,
-      height: 10,
-      stroke: '0',
-      fillColor: 'black',
-    });
-    result.append(outerRect);
-    outerRect.setCursor('pointer');
-
-    const innerRect = new Rect(0, {
-      x: 1,
-      y: 1,
-      width: 8,
-      height: 8,
-      stroke: '1 solid white',
+    // Trash can body (main rectangle)
+    const trashBody = new Rect(0, {
+      x: 2,
+      y: 3,
+      width: 6,
+      height: 5,
+      stroke: '0.5 solid white',
       fillColor: 'gray',
     });
-    result.append(innerRect);
+    result.append(trashBody);
 
-    const line = new StraightLine({ stroke: '1 solid white' });
-    line.setFrom(1, 1);
-    line.setTo(9, 9);
-    result.append(line);
+    // Trash can lid (top rectangle)
+    const trashLid = new Rect(0, {
+      x: 1.5,
+      y: 2.5,
+      width: 7,
+      height: 1,
+      stroke: '0.5 solid white',
+      fillColor: 'gray',
+    });
+    result.append(trashLid);
 
-    const line2 = new StraightLine({ stroke: '1 solid white' });
-    line2.setFrom(1, 9);
-    line2.setTo(9, 1);
+    // Trash can handle (small rectangle on top)
+    const trashHandle = new Rect(0, {
+      x: 3.5,
+      y: 1.5,
+      width: 3,
+      height: 1,
+      stroke: '0.5 solid white',
+      fillColor: 'gray',
+    });
+    result.append(trashHandle);
+
+    // Vertical lines inside trash can (to show it's a trash can)
+    const line1 = new StraightLine({ stroke: '0.5 solid white' });
+    line1.setFrom(3.5, 3.5);
+    line1.setTo(3.5, 7.5);
+    result.append(line1);
+
+    const line2 = new StraightLine({ stroke: '0.5 solid white' });
+    line2.setFrom(5, 3.5);
+    line2.setTo(5, 7.5);
     result.append(line2);
 
-    // Some events ...
+    const line3 = new StraightLine({ stroke: '0.5 solid white' });
+    line3.setFrom(6.5, 3.5);
+    line3.setTo(6.5, 7.5);
+    result.append(line3);
+
+    // Hover effects
     result.addEvent('mouseover', () => {
-      innerRect.setFill('#CC0033');
+      trashBody.setFill('#CC0033');
+      trashLid.setFill('#CC0033');
+      trashHandle.setFill('#CC0033');
     });
     result.addEvent('mouseout', () => {
-      innerRect.setFill('gray');
+      trashBody.setFill('gray');
+      trashLid.setFill('gray');
+      trashHandle.setFill('gray');
     });
 
     result.setSize(50, 50);

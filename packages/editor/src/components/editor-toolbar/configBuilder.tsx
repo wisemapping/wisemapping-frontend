@@ -40,6 +40,9 @@ import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
 import ColorLensOutlined from '@mui/icons-material/ColorLensOutlined';
+import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 
 import Palette from '@mui/icons-material/Square';
 import SquareOutlined from '@mui/icons-material/SquareOutlined';
@@ -517,6 +520,49 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   /**
    * tool for emoji selection
    */
+  const emojiToolbarConfiguration: ActionConfig = {
+    icon: <ImageOutlinedIcon style={{ color: '#666666' }} />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-topic-emoji',
+      defaultMessage: 'Add Imagine',
+    }),
+    onClick: () => {
+      // This will be handled by the emoji picker modal
+    },
+    selected: () => modelBuilder.getImageEmojiCharModel().getValue() !== undefined,
+    options: [
+      {
+        render: (closeModal) => {
+          return (
+            <EmojiPicker
+              onEmojiClick={(emoji: EmojiClickData) => {
+                console.log('Emoji picker selection:', emoji.emoji);
+
+                // Set the image emoji character
+                const setImageEmojiValue = modelBuilder.getImageEmojiCharModel().setValue;
+                if (setImageEmojiValue) {
+                  console.log('Setting image emoji character to:', emoji.emoji);
+                  setImageEmojiValue(emoji.emoji);
+                }
+
+                closeModal();
+              }}
+              lazyLoadEmojis={true}
+              autoFocusSearch={true}
+              previewConfig={{ showPreview: false }}
+              emojiStyle={EmojiStyle.NATIVE}
+              skinTonesDisabled
+            />
+          );
+        },
+      },
+    ],
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+  };
+
+  /**
+   * tool for emoji selection
+   */
   const editIconConfiguration: ActionConfig = {
     icon: <SentimentSatisfiedAltIcon />,
     tooltip: intl.formatMessage({
@@ -567,6 +613,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     connectionStyleConfiguration,
     editIconConfiguration,
     editNoteConfiguration,
+    emojiToolbarConfiguration,
     editLinkUrlConfiguration,
     addRelationConfiguration,
     editThemeConfiguration,

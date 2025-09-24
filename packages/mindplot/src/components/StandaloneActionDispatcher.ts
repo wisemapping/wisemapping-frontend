@@ -198,6 +198,31 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
+  changeImageEmojiCharToTopic(topicsIds: number[], imageEmojiChar: string | undefined) {
+    console.log(
+      'StandaloneActionDispatcher.changeImageEmojiCharToTopic called with:',
+      topicsIds,
+      imageEmojiChar,
+    );
+    const commandFunc = (topic: Topic, commandImageEmojiChar: string | undefined) => {
+      console.log(
+        'Command function executing for topic:',
+        topic.getId(),
+        'setting image emoji to:',
+        commandImageEmojiChar,
+      );
+      const result = topic.getImageEmojiChar();
+      console.log('Previous image emoji char:', result);
+      topic.setImageEmojiChar(commandImageEmojiChar);
+      console.log('New image emoji char:', topic.getImageEmojiChar());
+
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, imageEmojiChar);
+    this.execute(command);
+  }
+
   changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
     const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
       const result = topic.getShapeType();

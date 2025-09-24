@@ -118,6 +118,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         parentTopic.setAttribute('image', `${size.width},${size.height}:${topic.getImageUrl()}`);
       }
     }
+    // Serialize image emoji as a separate attribute (feature)
+    const imageEmojiChar = topic.getImageEmojiChar();
+    if (imageEmojiChar) {
+      parentTopic.setAttribute('imageEmoji', imageEmojiChar);
+    }
 
     if (
       topic.areChildrenShrunken() &&
@@ -371,6 +376,11 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         const split = size.split(',');
         topic.setImageSize(Number.parseInt(split[0], 10), Number.parseInt(split[1], 10));
       }
+    }
+    // Deserialize image emoji as a separate attribute (feature)
+    const imageEmoji = domElem.getAttribute('imageEmoji');
+    if (imageEmoji) {
+      topic.setImageEmojiChar(imageEmoji);
     }
 
     const bgColor = domElem.getAttribute('bgColor');

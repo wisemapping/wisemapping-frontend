@@ -269,6 +269,14 @@ abstract class INodeModel {
     return this.getProperty('connectionColor') as string;
   }
 
+  setImageEmojiChar(imageEmojiChar: string | undefined) {
+    this.putProperty('imageEmojiChar', imageEmojiChar);
+  }
+
+  getImageEmojiChar(): string | undefined {
+    return this.getProperty('imageEmojiChar') as string | undefined;
+  }
+
   isNodeModel(): boolean {
     return true;
   }

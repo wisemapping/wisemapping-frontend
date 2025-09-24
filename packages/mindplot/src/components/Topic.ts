@@ -17,12 +17,13 @@
  */
 import { $assert, $defined } from '@wisemapping/core-js';
 
-import { Text, Group, ElementClass, ElementPeer, Rect } from '@wisemapping/web2d';
+import { Text, Group, ElementClass, ElementPeer, Rect, StraightLine } from '@wisemapping/web2d';
 
 import NodeGraph, { NodeOption } from './NodeGraph';
 import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
+import IconGroupRemoveTip from './IconGroupRemoveTip';
 import LayoutEventBus from './layout/LayoutEventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
@@ -62,6 +63,10 @@ abstract class Topic extends NodeGraph {
   private _outerShape: Rect | undefined;
 
   private _text: Text | undefined;
+
+  private _imageEmojiText: Text | undefined;
+
+  private _emojiRemoveTip: IconGroupRemoveTip | undefined;
 
   private _iconsGroup!: IconGroup;
 
@@ -226,6 +231,29 @@ abstract class Topic extends NodeGraph {
     }
 
     return this._text;
+  }
+
+  getOrBuildImageEmojiTextShape(): Text | undefined {
+    const imageEmojiChar = this.getImageEmojiChar();
+    if (imageEmojiChar && !this._imageEmojiText) {
+      const emojiText = new Text();
+      emojiText.setFontSize(this.getFontSize() * 3); // 3x font size for emoji
+      emojiText.setFontName(
+        '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", sans-serif',
+      );
+      emojiText.setText(imageEmojiChar);
+
+      this._imageEmojiText = emojiText;
+    } else if (!imageEmojiChar && this._imageEmojiText) {
+      // Remove emoji text if no emoji character
+      this._imageEmojiText = undefined;
+    } else if (imageEmojiChar && this._imageEmojiText) {
+      // Update emoji text if emoji character changed
+      this._imageEmojiText.setText(imageEmojiChar);
+      // Always update font size to reflect current font size changes
+      this._imageEmojiText.setFontSize(this.getFontSize() * 3);
+    }
+    return this._imageEmojiText;
   }
 
   private getOrBuildIconGroup(): IconGroup {
@@ -396,6 +424,67 @@ abstract class Topic extends NodeGraph {
     return theme.getFontSize(this);
   }
 
+  getImageEmojiChar(): string | undefined {
+    const model = this.getModel();
+    return model.getImageEmojiChar();
+  }
+
+  setImageEmojiChar(imageEmojiChar: string | undefined): void {
+    const model = this.getModel();
+    model.setImageEmojiChar(imageEmojiChar);
+
+    // If removing emoji, properly clean up the visual elements
+    if (!imageEmojiChar && this._imageEmojiText) {
+      // Remove emoji text from DOM
+      const group = this.get2DElement();
+      group.removeChild(this._imageEmojiText);
+      this._imageEmojiText = undefined;
+    } else {
+      this._imageEmojiText = undefined; // Clear to force rebuild
+    }
+
+    this._emojiRemoveTip = undefined; // Clear remove tip
+    this.redraw();
+  }
+
+  // Simple emoji icon class to work with IconGroupRemoveTip
+  private _createEmojiIcon(): Icon {
+    const emojiTextShape = this._imageEmojiText!;
+    const topic = this;
+
+    return {
+      getElement(): Group {
+        return topic.get2DElement(); // Return the topic's main group
+      },
+      setGroup(group: IconGroup): void {
+        // Not needed for emoji
+      },
+      getGroup(): IconGroup | null {
+        return null;
+      },
+      getSize(): SizeType | undefined {
+        return {
+          width: emojiTextShape.getShapeWidth(),
+          height: emojiTextShape.getShapeHeight(),
+        };
+      },
+      getPosition(): PositionType {
+        return emojiTextShape.getPosition();
+      },
+      addEvent(type: string, fnc: () => void): void {
+        emojiTextShape.addEvent(type, fnc);
+      },
+      remove(): void {
+        const actionDispatcher = ActionDispatcher.getInstance();
+        actionDispatcher.changeImageEmojiCharToTopic([topic.getId()], undefined);
+      },
+      getModel(): FeatureModel {
+        // Return a dummy model for compatibility
+        return {} as FeatureModel;
+      },
+    };
+  }
+
   setFontColor(value: string | undefined) {
     const model = this.getModel();
     model.setFontColor(value);
@@ -475,11 +564,15 @@ abstract class Topic extends NodeGraph {
     const outerShape = this.getOuterShape();
     const innerShape = this.getInnerShape();
     const textShape = this.getOrBuildTextShape();
+    const emojiTextShape = this.getOrBuildImageEmojiTextShape();
 
     // Add to the group ...
     group.append(outerShape);
     innerShape.appendTo(group);
     group.append(textShape);
+    if (emojiTextShape) {
+      group.append(emojiTextShape);
+    }
 
     // Update figure size ...
     const model = this.getModel();
@@ -825,6 +918,11 @@ abstract class Topic extends NodeGraph {
     // Hide text shape ...
     const textShape = this.getOrBuildTextShape();
     textShape.setVisibility(this.getShapeType() !== 'image' ? value : false, fade);
+
+    // Hide emoji text shape ...
+    if (this._imageEmojiText) {
+      this._imageEmojiText.setVisibility(value, fade);
+    }
   }
 
   setOpacity(opacity: number): void {
@@ -837,6 +935,10 @@ abstract class Topic extends NodeGraph {
     }
     const textShape = this.getOrBuildTextShape();
     textShape.setOpacity(opacity);
+
+    if (this._imageEmojiText) {
+      this._imageEmojiText.setOpacity(opacity);
+    }
   }
 
   private _setChildrenVisibility(value: boolean, fade = 0) {
@@ -1131,19 +1233,99 @@ abstract class Topic extends NodeGraph {
       iconGroup.seIconSize(iconHeight, iconHeight);
 
       // Calculate size and adjust ...
-      const topicHeight = textHeight + padding * 2;
-      const textIconSpacing = fontHeight / 50;
-      const iconGroupWith = iconGroup.getSize().width;
-      const topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
+      let topicHeight = textHeight + padding * 2;
+      let topicWith = textWidth + padding * 2;
+      let iconGroupWith = 0;
+      let textIconSpacing = 0;
+
+      // Default horizontal layout
+      textIconSpacing = fontHeight / 50;
+      iconGroupWith = iconGroup.getSize().width;
+      topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
+
+      // Handle emoji feature - emoji appears on top of any shape
+      const emojiTextShape = this.getOrBuildImageEmojiTextShape();
+      const hasEmoji = emojiTextShape !== undefined;
+      let emojiHeight = 0;
+
+      // Ensure emoji text is added to the group if it exists
+      if (hasEmoji && emojiTextShape) {
+        const group = this.get2DElement();
+        // Add emoji text to group (append is safe to call multiple times)
+        group.append(emojiTextShape);
+      }
+
+      if (hasEmoji) {
+        // Calculate emoji dimensions
+        const emojiFontSize = this.getFontSize() * 3;
+        emojiHeight = emojiFontSize;
+        const emojiWidth = emojiTextShape.getShapeWidth();
+
+        // Adjust topic height to accommodate emoji
+        const emojiPadding = 2;
+        const spacing = 5; // Reduced spacing to bring emoji closer to text
+        // Reduce bottom padding to bring text closer to bottom
+        const bottomPadding = padding / 2; // Reduce bottom padding by half
+        topicHeight = emojiPadding + emojiHeight + spacing + textHeight + padding + bottomPadding;
+
+        // Adjust topic width if emoji is wider than current width
+        const emojiRequiredWidth = emojiWidth + padding * 2;
+        if (emojiRequiredWidth > topicWith) {
+          topicWith = emojiRequiredWidth;
+        }
+      }
 
       // Update connections ...
       const connectionChanged = this.updateConnection();
       this.setSize({ width: topicWith, height: topicHeight }, connectionChanged);
 
       // Adjust all topic elements positions ...
-      const yPosition = (topicHeight - textHeight) / 2;
-      iconGroup.setPosition(padding, yPosition - yPosition / 4);
-      textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
+
+      if (hasEmoji) {
+        // Center emoji horizontally in the middle of the topic for all topics
+        const emojiX = (topicWith - emojiTextShape!.getShapeWidth()) / 2;
+
+        // Position text and icons below the emoji, closer to bottom of shape
+        // Special spacing for central topic - increase gap between emoji and text
+        const spacing = this.isCentralTopic() ? 8 : 5; // More pixels for central topic, normal spacing for main topics
+        const bottomOffset = padding / 2; // Reduce space between text and bottom of shape
+        const textY = bottomOffset + emojiHeight + spacing; // Position text below emoji
+        const emojiY = 1; // Keep emoji close to top of shape
+
+        // Position emoji at top
+        emojiTextShape!.setPosition(emojiX, emojiY);
+
+        // Add hover functionality for emoji removal using IconGroupRemoveTip
+        if (!this.isReadOnly() && !this._emojiRemoveTip) {
+          // Create remove tip for emoji
+          this._emojiRemoveTip = new IconGroupRemoveTip(this.get2DElement());
+
+          // Create emoji icon and decorate it
+          const emojiIcon = this._createEmojiIcon();
+          this._emojiRemoveTip.decorate(this.getId(), emojiIcon);
+        }
+
+        // For line shapes, adjust text positioning to be more centered
+        const shapeType = this.getShapeType();
+        const adjustedTextY = shapeType === 'line' ? textY + textHeight / 2 : textY;
+
+        // Ensure text and icons are properly aligned vertically
+        const iconY = adjustedTextY - (iconHeight - textHeight) / 2;
+
+        // Position text to align with the left edge properly
+        textShape.setPosition(padding + iconGroupWith + textIconSpacing, adjustedTextY);
+        iconGroup.setPosition(padding, iconY);
+
+        // Show both emoji and text
+        emojiTextShape!.setVisibility(true);
+        textShape.setVisibility(true);
+      } else {
+        // Default positioning for shapes without emoji
+        const yPosition = (topicHeight - textHeight) / 2;
+        textShape.setVisibility(true);
+        iconGroup.setPosition(padding, yPosition - yPosition / 4);
+        textShape.setPosition(padding + iconGroupWith + textIconSpacing, yPosition);
+      }
 
       // Update relationship lines
       this._relationships.forEach((r) => r.redraw());

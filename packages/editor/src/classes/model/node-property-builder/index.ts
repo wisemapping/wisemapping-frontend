@@ -25,6 +25,7 @@ class NodePropertyBuilder {
   private connectionColoreModel: NodeProperty<string | undefined> | undefined;
   private noteModel: NodeProperty<string | undefined> | undefined;
   private linkModel: NodeProperty<string> | undefined;
+  private imageEmojiCharModel: NodeProperty<string | undefined> | undefined;
   private _themeModel: NodeProperty<ThemeType> | undefined;
 
   constructor(designer: Designer) {
@@ -111,6 +112,15 @@ class NodePropertyBuilder {
         },
       };
     return this.linkModel;
+  }
+
+  getImageEmojiCharModel(): NodeProperty<string | undefined> {
+    if (!this.imageEmojiCharModel)
+      this.imageEmojiCharModel = {
+        getValue: () => this.uniqueOrUndefined((node) => node.getImageEmojiChar()),
+        setValue: (value: string | undefined) => this.designer.changeImageEmojiChar(value),
+      };
+    return this.imageEmojiCharModel;
   }
 
   getThemeModel(): NodeProperty<ThemeType> {

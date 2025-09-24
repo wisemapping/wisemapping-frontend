@@ -36,6 +36,7 @@ export type TopicArgs = {
   noteText?: string;
   linkText?: string;
   eicon?: string[];
+  imageEmojiChar?: string;
   theme?: ThemeType;
 };
 
@@ -50,6 +51,7 @@ const createTopic = ({
   noteText = undefined,
   linkText = undefined,
   eicon = undefined,
+  imageEmojiChar = undefined,
   theme = undefined,
   readOnly = true,
 }: TopicArgs) => {
@@ -78,6 +80,10 @@ const createTopic = ({
   model.setFontFamily(fontFamily);
   model.setFontSize(fontSize);
   model.setShapeType(shapeType);
+
+  if (imageEmojiChar) {
+    model.setImageEmojiChar(imageEmojiChar);
+  }
 
   if (noteText) {
     const note = new NoteModel({ text: noteText });
