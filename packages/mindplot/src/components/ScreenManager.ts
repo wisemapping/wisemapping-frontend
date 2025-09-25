@@ -69,7 +69,7 @@ class ScreenManager {
     this._scale = scale;
   }
 
-  addEvent(eventType: string, listener) {
+  addEvent(eventType: string, listener: any) {
     if (eventType === 'click') {
       this._clickEvents.push(listener);
     } else {
@@ -77,9 +77,12 @@ class ScreenManager {
     }
   }
 
-  removeEvent(event: string, listener) {
+  removeEvent(event: string, listener: any) {
     if (event === 'click') {
-      this._clickEvents.remove(listener);
+      const index = this._clickEvents.indexOf(listener);
+      if (index > -1) {
+        this._clickEvents.splice(index, 1);
+      }
     } else {
       this._divContainer.unbind(event, listener);
     }
