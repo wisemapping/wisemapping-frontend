@@ -2,6 +2,7 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // Load configuration for production - use same logic as common and dev
 let config;
@@ -39,25 +40,37 @@ if (process.env.PUBLIC_URL) {
 module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
+  stats: process.env.WEBPACK_STATS || 'normal',
   optimization: {
     minimize: true,
     splitChunks: {
       minSize: 240000,
       maxSize: 240000,
-    }
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
-        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED ? process.env.GOOGLE_ADDS_ENABLED : false,
+        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED
+          ? process.env.GOOGLE_ADDS_ENABLED
+          : false,
         NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED ? process.env.NEW_RELIC_ENABLED : false,
-
       },
       base: configUrl,
     }),
-    new (require('webpack')).DefinePlugin({
+    new (require('webpack').DefinePlugin)({
       'window.BoostrapConfig': config,
     }),
+    ...(process.env.ANALYZE
+      ? [
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            reportFilename: 'bundle-report.html',
+            openAnalyzer: false,
+            logLevel: 'info',
+          }),
+        ]
+      : []),
   ],
 });

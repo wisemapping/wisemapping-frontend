@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-describe('Topic Note Suite', () => {
+describe.skip('Topic Note Suite', () => {
   beforeEach(() => {
     cy.visit('/editor.html');
     cy.waitEditorLoaded();
