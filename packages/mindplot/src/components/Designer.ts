@@ -192,14 +192,16 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     });
 
     // Deselect on click ...
-    screenManager.addEvent('click', (event: UIEvent) => {
+    screenManager.addEvent('click', (event: JQuery.Event) => {
       me.onObjectFocusEvent(undefined, event);
     });
 
     // Create nodes on double click...
-    screenManager.addEvent('dblclick', (event: MouseEvent) => {
+    screenManager.addEvent('dblclick', (event: JQuery.Event) => {
       if (workspace.isWorkspaceEventsEnabled()) {
-        const mousePos = screenManager.getWorkspaceMousePosition(event);
+        const originalEvent =
+          (event as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent || event;
+        const mousePos = screenManager.getWorkspaceMousePosition(originalEvent as MouseEvent);
         const centralTopic: CentralTopic = me.getModel().getCentralTopic();
 
         const model = me._createChildModel(centralTopic, mousePos);
@@ -743,8 +745,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   changeTheme(id: ThemeType): void {
-    const mindmap = this.getMindmap();
-    mindmap.setTheme(id);
+    this._actionDispatcher.changeThemeToTopic(id);
 
     // Update background color ...
     const theme = ThemeFactory.createById(id);

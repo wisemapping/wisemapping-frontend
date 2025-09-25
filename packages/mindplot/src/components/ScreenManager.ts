@@ -30,7 +30,7 @@ class ScreenManager {
 
   private _padding: { x: number; y: number };
 
-  private _clickEvents;
+  private _clickEvents: JQuery.EventHandler<HTMLElement, unknown>[];
 
   private _scale: number;
 
@@ -69,7 +69,7 @@ class ScreenManager {
     this._scale = scale;
   }
 
-  addEvent(eventType: string, listener: any) {
+  addEvent(eventType: string, listener: JQuery.EventHandler<HTMLElement, unknown>) {
     if (eventType === 'click') {
       this._clickEvents.push(listener);
     } else {
@@ -77,7 +77,7 @@ class ScreenManager {
     }
   }
 
-  removeEvent(event: string, listener: any) {
+  removeEvent(event: string, listener: JQuery.EventHandler<HTMLElement, unknown>) {
     if (event === 'click') {
       const index = this._clickEvents.indexOf(listener);
       if (index > -1) {
@@ -91,7 +91,16 @@ class ScreenManager {
   fireEvent(type: string, event?: UIEvent): void {
     if (type === 'click') {
       this._clickEvents.forEach((listener) => {
-        listener(type, event);
+        const syntheticEvent = {
+          type,
+          preventDefault: () => {},
+          stopPropagation: () => {},
+          currentTarget: this._divContainer[0],
+          target: this._divContainer[0],
+          data: undefined,
+          delegateTarget: this._divContainer[0],
+        } as unknown as JQuery.TriggeredEvent<HTMLElement, unknown, unknown, unknown>;
+        listener.call(this._divContainer[0], syntheticEvent);
       });
     } else {
       this._divContainer.trigger(type, event);

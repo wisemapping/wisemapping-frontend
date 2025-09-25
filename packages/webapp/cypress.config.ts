@@ -9,5 +9,12 @@ export default defineConfig({
       return require('./cypress/plugins/index.ts')(on, config);
     },
     baseUrl: 'http://localhost:3000',
+    // Add macOS compatibility options
+    chromeWebSecurity: false,
+    experimentalStudio: false,
   },
+  // Add browser launch options for macOS compatibility
+  chrome: {
+    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']
+  }
 });

@@ -267,17 +267,26 @@ class Canvas {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
     const mWorkspace = this;
-    const mouseDownListener = (event: MouseEvent) => {
+    const mouseDownListener = (event: JQuery.Event) => {
       if (!this._mouseMoveListener) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
 
-          const mouseDownPosition = screenManager.getWorkspaceMousePosition(event);
+          const originalEvent =
+            (event as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent || event;
+          const mouseDownPosition = screenManager.getWorkspaceMousePosition(
+            originalEvent as MouseEvent,
+          );
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
-          this._mouseMoveListener = (mouseMoveEvent: MouseEvent) => {
-            const currentMousePosition = screenManager.getWorkspaceMousePosition(mouseMoveEvent);
+          this._mouseMoveListener = (mouseMoveEvent: JQuery.Event) => {
+            const originalMoveEvent =
+              (mouseMoveEvent as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent ||
+              mouseMoveEvent;
+            const currentMousePosition = screenManager.getWorkspaceMousePosition(
+              originalMoveEvent as MouseEvent,
+            );
 
             const offsetX = currentMousePosition.x - mouseDownPosition.x;
             const coordOriginX = -offsetX + originalCoordOrigin.x;

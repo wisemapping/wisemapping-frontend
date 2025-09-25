@@ -26,6 +26,10 @@ import PositionType from '../PositionType';
  * @extends mindplot.layout.AbstractBasicSorter
  */
 class GridSorter extends AbstractBasicSorter {
+  static readonly GRID_HORIZONTAR_SIZE = 20;
+
+  static readonly INTER_NODE_VERTICAL_DISTANCE = 50;
+
   computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
@@ -53,7 +57,7 @@ class GridSorter extends AbstractBasicSorter {
       const finalHeight = i === 0 ? 0 : (heights[i].height / 2) * even;
 
       const yOffset = zeroHeight + middleHeight + finalHeight;
-      const xOffset = node.getSize().width + (GridSorter as any).GRID_HORIZONTAR_SIZE;
+      const xOffset = node.getSize().width + GridSorter.GRID_HORIZONTAR_SIZE;
 
       $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
       $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
@@ -71,48 +75,30 @@ class GridSorter extends AbstractBasicSorter {
   }
 
   // Abstract methods from ChildrenSorterStrategy
-  insert(treeSet: RootedTreeSet, parent: Node, child: Node, order?: number): void {
+  insert(): void {
     // Implementation needed
     throw new Error('Method not implemented.');
   }
 
-  detach(treeSet: RootedTreeSet, node: Node): void {
+  detach(): void {
     // Implementation needed
     throw new Error('Method not implemented.');
   }
 
-  predict(
-    treeSet: RootedTreeSet,
-    parent: Node,
-    node: Node | null,
-    position: PositionType | null,
-  ): void {
+  predict(): void {
     // Implementation needed
     throw new Error('Method not implemented.');
   }
 
-  verify(treeSet: RootedTreeSet, node: Node): void {
+  verify(): void {
     // Implementation needed
     throw new Error('Method not implemented.');
   }
 
-  getChildDirection(treeSet: RootedTreeSet, node: Node): 1 | -1 {
+  getChildDirection(): 1 | -1 {
     // Implementation needed
     throw new Error('Method not implemented.');
   }
 }
-
-/**
- * @constant
- * @type {Number}
- * @default
- */
-(GridSorter as any).GRID_HORIZONTAR_SIZE = 20;
-/**
- * @constant
- * @type {Number}
- * @default
- */
-(GridSorter as any).INTER_NODE_VERTICAL_DISTANCE = 50;
 
 export default GridSorter;

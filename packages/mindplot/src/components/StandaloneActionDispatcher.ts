@@ -38,6 +38,7 @@ import PositionType from './PositionType';
 import { PivotType } from './RelationshipControlPoints';
 import { TopicShapeType } from './model/INodeModel';
 import { LineType } from './ConnectionLine';
+import ThemeType from './model/ThemeType';
 
 class StandaloneActionDispatcher extends ActionDispatcher {
   private _actionRunner: DesignerActionRunner;
@@ -269,6 +270,17 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, undefined);
+    this.execute(command);
+  }
+
+  /** */
+  changeThemeToTopic(themeType: ThemeType) {
+    $assert(themeType, 'themeType can not be null');
+
+    const commandFunc = () => null; // TODO: Theme functionality not implemented yet
+
+    const command = new GenericFunctionCommand(commandFunc, [], undefined);
+    command.setDiscardDuplicated('theme');
     this.execute(command);
   }
 

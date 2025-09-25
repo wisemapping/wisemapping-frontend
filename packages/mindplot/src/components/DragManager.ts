@@ -84,9 +84,9 @@ class DragManager {
     workspace: Canvas,
     dragNode: DragTopic,
     dragManager: DragManager,
-  ): (event: MouseEvent) => void {
+  ): (event: JQuery.Event) => void {
     const screen = workspace.getScreenManager();
-    const result = (event: MouseEvent) => {
+    const result = (event: JQuery.Event) => {
       if (!this._isDragInProcess) {
         // Execute Listeners ..
         const startDragListener = dragManager._listeners.startdragging;
@@ -97,7 +97,9 @@ class DragManager {
         this._isDragInProcess = true;
       }
 
-      const pos = screen.getWorkspaceMousePosition(event);
+      const originalEvent =
+        (event as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent || event;
+      const pos = screen.getWorkspaceMousePosition(originalEvent as MouseEvent);
       dragNode.setPosition(pos.x, pos.y);
 
       // Call mouse move listeners ...
@@ -120,7 +122,7 @@ class DragManager {
     dragManager: DragManager,
   ) {
     const screen = workspace.getScreenManager();
-    const result = (event: Event) => {
+    const result = (event: JQuery.Event) => {
       $assert(dragNode.isDragTopic, 'dragNode must be an DragTopic');
 
       // Remove all the events.

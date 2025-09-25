@@ -18,6 +18,7 @@
     "build": "lerna run build",
     "clean": "lerna clean && rm -rf node_modules",
     "lint": "lerna run lint --stream",
+    "lint:fix": "lerna run lint:fix --stream",
     "playground": "lerna run playground --stream",
     "prepare": "husky install",
     "test": "lerna run test --stream",
@@ -31,7 +32,26 @@
     }
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": [
+    "packages/mindplot/src/**/*.{ts,tsx}": [
+      "cd packages/mindplot && eslint --fix",
+      "prettier --write"
+    ],
+    "packages/editor/src/**/*.{ts,tsx}": [
+      "cd packages/editor && eslint --fix",
+      "prettier --write"
+    ],
+    "packages/webapp/src/**/*.{ts,tsx}": [
+      "cd packages/webapp && eslint --fix",
+      "prettier --write"
+    ],
+    "packages/web2d/src/**/*.{ts,tsx}": [
+      "cd packages/web2d && eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{js,jsx}": [
+      "prettier --write"
+    ],
+    "**/*.{json,md,yml,yaml}": [
       "prettier --write"
     ]
   },
@@ -46,11 +66,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "eslintConfig": {
-    "rules": {
-      "implicit-arrow-linebreak": "off"
-    }
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",

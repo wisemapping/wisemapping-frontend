@@ -45,11 +45,11 @@ class ControlPivotLine {
 
   private _isVisible: boolean;
 
-  private _mouseMoveHandler: (e: MouseEvent) => void;
+  private _mouseMoveHandler: (e: JQuery.Event) => void;
 
   private _mouseUpHandler: () => void;
 
-  private _mouseDownHandler: (event: MouseEvent) => void;
+  private _mouseDownHandler: (event: JQuery.Event) => void;
 
   constructor(
     pivotType: PivotType,
@@ -80,7 +80,7 @@ class ControlPivotLine {
     // Build line ...
     this._line = new StraightLine({ strokeColor: '#6589de', strokeWidth: 1, opacity: 0.3 });
 
-    const mouseClick = (event: MouseEvent): boolean => {
+    const mouseClick = (event: JQuery.Event): boolean => {
       event.preventDefault();
       event.stopPropagation();
       return false;
@@ -89,15 +89,18 @@ class ControlPivotLine {
     this._dot.addEvent('dblclick', mouseClick);
 
     // Register handled ...
-    this._mouseMoveHandler = (e: MouseEvent) => this.mouseMoveHandler(e);
+    this._mouseMoveHandler = (e: JQuery.Event) => {
+      const originalEvent = (e as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent || e;
+      return this.mouseMoveHandler(originalEvent as MouseEvent);
+    };
     this._mouseUpHandler = () => this.mouseUpHandler();
-    this._mouseDownHandler = (event: MouseEvent) => this.mouseDownHandler(event);
+    this._mouseDownHandler = (event: JQuery.Event) => this.mouseDownHandler(event);
 
     this._isVisible = false;
     this._canvas = null;
   }
 
-  private mouseDownHandler(event: MouseEvent) {
+  private mouseDownHandler(event: JQuery.Event) {
     const screenManager = this.getWorkspace().getScreenManager();
     screenManager.addEvent('mousemove', this._mouseMoveHandler);
     screenManager.addEvent('mouseup', this._mouseUpHandler);

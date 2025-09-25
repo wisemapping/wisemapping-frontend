@@ -19,7 +19,9 @@ import { $assert } from '@wisemapping/core-js';
 
 class ChangeEvent {
   private _id: number;
+
   private _position: { x: number; y: number } | null;
+
   private _order: number | null;
 
   constructor(id: number) {
