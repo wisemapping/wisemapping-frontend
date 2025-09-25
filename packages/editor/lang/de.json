@@ -277,5 +277,71 @@
     },
     "shortcut-help-pane.drag-disconnect": {
         "defaultMessage": "Thema isolieren"
+    },
+    "zoom-panel.tooltip-collapse-all": {
+        "defaultMessage": "Alle Knoten reduzieren"
+    },
+    "zoom-panel.tooltip-expand-all": {
+        "defaultMessage": "Alle Knoten erweitern"
+    },
+    "editor-panel.tooltip-canvas-style": {
+        "defaultMessage": "Hintergrund"
+    },
+    "editor-panel.canvas-style-title": {
+        "defaultMessage": "Hintergrund"
+    },
+    "canvas-style.title": {
+        "defaultMessage": "Hintergrund"
+    },
+    "canvas-style.colors": {
+        "defaultMessage": "Farben"
+    },
+    "canvas-style.background-color": {
+        "defaultMessage": "Hintergrundfarbe"
+    },
+    "canvas-style.background-pattern": {
+        "defaultMessage": "Hintergrundmuster"
+    },
+    "canvas-style.pattern-solid": {
+        "defaultMessage": "Einfarbig"
+    },
+    "canvas-style.pattern-grid": {
+        "defaultMessage": "Rasterlinien"
+    },
+    "canvas-style.pattern-dots": {
+        "defaultMessage": "Punkte"
+    },
+    "canvas-style.pattern-none": {
+        "defaultMessage": "Keine"
+    },
+    "canvas-style.grid-style": {
+        "defaultMessage": "Rasterstil"
+    },
+    "canvas-style.grid-size-xs": {
+        "defaultMessage": "XS"
+    },
+    "canvas-style.grid-size-s": {
+        "defaultMessage": "S"
+    },
+    "canvas-style.grid-size-m": {
+        "defaultMessage": "M"
+    },
+    "canvas-style.grid-size-l": {
+        "defaultMessage": "L"
+    },
+    "canvas-style.grid-size-xl": {
+        "defaultMessage": "XL"
+    },
+    "canvas-style.grid-color": {
+        "defaultMessage": "Rasterfarbe"
+    },
+    "canvas-style.preview": {
+        "defaultMessage": "Vorschau"
+    },
+    "canvas-style.reset": {
+        "defaultMessage": "Zurücksetzen"
+    },
+    "canvas-style.apply": {
+        "defaultMessage": "Anwenden"
     }
 }

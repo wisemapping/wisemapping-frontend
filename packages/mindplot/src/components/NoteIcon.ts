@@ -21,6 +21,7 @@ import Topic from './Topic';
 import NoteModel from './model/NoteModel';
 import FeatureModel from './model/FeatureModel';
 import ImageIcon from './ImageIcon';
+import ActionDispatcher from './ActionDispatcher';
 
 class NoteIcon extends ImageIcon {
   private _noteModel: NoteModel;
@@ -59,6 +60,12 @@ class NoteIcon extends ImageIcon {
 
   getModel(): FeatureModel {
     return this._noteModel;
+  }
+
+  remove() {
+    const actionDispatcher = ActionDispatcher.getInstance();
+    const featureId = this._noteModel.getId();
+    actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }
 
   static IMAGE_URL = NotesImage;

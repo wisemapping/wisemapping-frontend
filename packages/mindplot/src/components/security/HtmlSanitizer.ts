@@ -16,8 +16,6 @@
  *   limitations under the License.
  */
 
-/* eslint-disable function-paren-newline */
-
 /**
  * HTML Sanitizer for preventing XSS attacks and other security vulnerabilities
  * in rich text content imported from external sources.

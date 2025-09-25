@@ -36,6 +36,15 @@ class Mindmap extends IMindmap {
 
   private _theme: ThemeType | undefined;
 
+  private _canvasStyle:
+    | {
+        backgroundColor: string;
+        backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+        gridSize: number;
+        gridColor: string;
+      }
+    | undefined;
+
   constructor(id?: string, version: string = ModelCodeName.TANGO) {
     super();
     this._branches = [];
@@ -51,6 +60,26 @@ class Mindmap extends IMindmap {
 
   setTheme(value: ThemeType): void {
     this._theme = value;
+  }
+
+  getCanvasStyle():
+    | {
+        backgroundColor: string;
+        backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+        gridSize: number;
+        gridColor: string;
+      }
+    | undefined {
+    return this._canvasStyle;
+  }
+
+  setCanvasStyle(value: {
+    backgroundColor: string;
+    backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+    gridSize: number;
+    gridColor: string;
+  }): void {
+    this._canvasStyle = value;
   }
 
   /** */

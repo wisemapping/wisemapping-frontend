@@ -389,6 +389,28 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
+  collapseAllNodes(): void {
+    const allTopics = this.getModel().getTopics();
+    const topicIds = allTopics
+      .filter((topic) => topic.getType() !== 'CentralTopic')
+      .map((topic) => topic.getId());
+
+    if (topicIds.length > 0) {
+      this._actionDispatcher.shrinkBranch(topicIds, true);
+    }
+  }
+
+  expandAllNodes(): void {
+    const allTopics = this.getModel().getTopics();
+    const topicIds = allTopics
+      .filter((topic) => topic.getType() !== 'CentralTopic')
+      .map((topic) => topic.getId());
+
+    if (topicIds.length > 0) {
+      this._actionDispatcher.shrinkBranch(topicIds, false);
+    }
+  }
+
   async copyToClipboard(): Promise<void> {
     const enableImageSupport = false;
     let topics = this.getModel().filterSelectedTopics();
@@ -618,10 +640,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._mindmap = mindmap;
 
     // Update background style...
-    const themeId = mindmap.getTheme();
-    const theme = ThemeFactory.createById(themeId);
-    const style = theme.getCanvasCssStyle();
-    this._canvas.setBackgroundStyle(style);
+    const customCanvasStyle = mindmap.getCanvasStyle();
+    if (customCanvasStyle) {
+      // Apply custom canvas style if it exists
+      this.setCanvasStyle(customCanvasStyle);
+    } else {
+      // Apply theme-based style if no custom style
+      const themeId = mindmap.getTheme();
+      const theme = ThemeFactory.createById(themeId);
+      const style = theme.getCanvasCssStyle();
+      this._canvas.setBackgroundStyle(style);
+    }
 
     // Delay render ...
     this._canvas.enableQueueRender(true);
@@ -719,6 +748,55 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     const centralTopic = this.getModel().getCentralTopic();
     centralTopic.redraw(true);
+  }
+
+  /**
+   * Set custom canvas style
+   * @param style - Canvas style configuration
+   */
+  setCanvasStyle(style: {
+    backgroundColor: string;
+    backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+    gridSize: number;
+    gridColor: string;
+  }): void {
+    // Save canvas style to mindmap for persistence
+    const mindmap = this.getMindmap();
+    mindmap.setCanvasStyle(style);
+
+    let cssStyle = `position: relative;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      overflow: hidden;
+      opacity: 1;
+      background-color: ${style.backgroundColor};
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;`;
+
+    switch (style.backgroundPattern) {
+      case 'grid':
+        cssStyle += `
+          background-image: linear-gradient(${style.gridColor} 1px, transparent 1px),
+            linear-gradient(to right, ${style.gridColor} 1px, ${style.backgroundColor} 1px);
+          background-size: ${style.gridSize}px ${style.gridSize}px;`;
+        break;
+      case 'dots':
+        cssStyle += `
+          background-image: radial-gradient(circle, ${style.gridColor} 1px, transparent 1px);
+          background-size: ${style.gridSize}px ${style.gridSize}px;`;
+        break;
+      case 'solid':
+      case 'none':
+      default:
+        // Just solid background color, no additional styling needed
+        break;
+    }
+
+    this._canvas.setBackgroundStyle(cssStyle);
   }
 
   /**

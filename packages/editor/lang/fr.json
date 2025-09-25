@@ -286,5 +286,65 @@
   },
   "creator-info-pane.creator": {
     "defaultMessage": "Créateur"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "Arrière-plan"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "Arrière-plan"
+  },
+  "canvas-style.title": {
+    "defaultMessage": "Arrière-plan"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "Couleurs"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "Couleur d'arrière-plan"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "Motif d'arrière-plan"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "Couleur unie"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "Lignes de grille"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "Points"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "Aucun"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "Style de grille"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "Couleur de grille"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "Aperçu"
+  },
+  "canvas-style.reset": {
+    "defaultMessage": "Réinitialiser"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "Appliquer"
   }
 }

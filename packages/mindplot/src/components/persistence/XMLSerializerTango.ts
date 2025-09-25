@@ -57,6 +57,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       mapElem.setAttribute('theme', theme);
     }
 
+    // Add canvas style ...
+    const canvasStyle = mindmap.getCanvasStyle();
+    if (canvasStyle) {
+      mapElem.setAttribute('canvasStyle', JSON.stringify(canvasStyle));
+    }
+
     const version = mindmap.getVersion();
     if ($defined(version)) {
       mapElem.setAttribute('version', version);
@@ -275,6 +281,17 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const theme = rootElem.getAttribute('theme');
     if (theme) {
       mindmap.setTheme(theme as ThemeType);
+    }
+
+    // Load canvas style ...
+    const canvasStyleAttr = rootElem.getAttribute('canvasStyle');
+    if (canvasStyleAttr) {
+      try {
+        const canvasStyle = JSON.parse(canvasStyleAttr);
+        mindmap.setCanvasStyle(canvasStyle);
+      } catch (e) {
+        console.warn('Failed to parse canvas style:', e);
+      }
     }
 
     // Add all the topics nodes ...

@@ -42,7 +42,6 @@ class ElementDeleteWidget {
       const iconGroup = icon.getGroup();
       let iconPosition: PositionType;
       let actualIconWidth: number;
-      let actualIconHeight: number;
 
       if (iconGroup) {
         // Icon is in an IconGroup: need to handle coordinate system scaling
@@ -64,13 +63,12 @@ class ElementDeleteWidget {
 
         // Calculate individual icon size (90 coordinate units scaled)
         actualIconWidth = 90 * scaleX; // ImageIcon.SIZE
-        actualIconHeight = 90 * scaleY; // ImageIcon.SIZE
+        // actualIconHeight = 90 * scaleY; // ImageIcon.SIZE - not used
       } else {
         // Direct positioned icon: use position and size as-is
         iconPosition = icon.getPosition();
         const iconSize = icon.getSize();
         actualIconWidth = iconSize?.width || 0;
-        actualIconHeight = iconSize?.height || 0;
       }
 
       // Register events ...

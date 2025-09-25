@@ -21,6 +21,7 @@ import LinksImage from '../../assets/icons/links.svg';
 import LinkModel from './model/LinkModel';
 import Topic from './Topic';
 import FeatureModel from './model/FeatureModel';
+import ActionDispatcher from './ActionDispatcher';
 
 class LinkIcon extends ImageIcon {
   private _linksModel: LinkModel;
@@ -59,6 +60,12 @@ class LinkIcon extends ImageIcon {
 
   getModel(): FeatureModel {
     return this._linksModel;
+  }
+
+  remove() {
+    const actionDispatcher = ActionDispatcher.getInstance();
+    const featureId = this._linksModel.getId();
+    actionDispatcher.removeFeatureFromTopic(this._topic.getId(), featureId);
   }
 
   static IMAGE_URL = LinksImage;

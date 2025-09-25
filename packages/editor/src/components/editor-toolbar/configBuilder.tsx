@@ -39,9 +39,9 @@ import ShareOutlined from '@mui/icons-material/ShareOutlined';
 import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
 import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
-import ColorLensOutlined from '@mui/icons-material/ColorLensOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import TextureIcon from '@mui/icons-material/Texture';
+import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 
 import Palette from '@mui/icons-material/Square';
@@ -58,6 +58,7 @@ import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 import ThemeEditor from '../action-widget/pane/theme-editor';
+import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
 
 const keyTooltip = (msg: string, key: string): string => {
   const isMac = window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -479,7 +480,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    * tool for node link edition
    */
   const editThemeConfiguration: ActionConfig = {
-    icon: <ColorLensOutlined />,
+    icon: <PaletteOutlinedIcon />,
     tooltip: intl.formatMessage({ id: 'editor-panel.tooltip-theme', defaultMessage: 'Theme' }),
     useClickToClose: true,
     title: intl.formatMessage({ id: 'editor-panel.theme-title', defaultMessage: 'Theme' }),
@@ -487,6 +488,35 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       {
         render: (closeModal) => (
           <ThemeEditor closeModal={closeModal} themeModel={modelBuilder.getThemeModel()} />
+        ),
+      },
+    ],
+  };
+
+  /**
+   * tool for background customization
+   */
+  const editCanvasStyleConfiguration: ActionConfig = {
+    icon: <TextureIcon />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-canvas-style',
+      defaultMessage: 'Background',
+    }),
+    useClickToClose: true,
+    title: intl.formatMessage({
+      id: 'editor-panel.canvas-style-title',
+      defaultMessage: 'Background',
+    }),
+    options: [
+      {
+        render: (closeModal) => (
+          <CanvasStyleEditor
+            closeModal={closeModal}
+            initialStyle={model.getDesigner().getMindmap()?.getCanvasStyle()}
+            onStyleChange={(style: CanvasStyle) => {
+              model.getDesigner().setCanvasStyle(style);
+            }}
+          />
         ),
       },
     ],
@@ -617,5 +647,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     editLinkUrlConfiguration,
     addRelationConfiguration,
     editThemeConfiguration,
+    editCanvasStyleConfiguration,
   ];
 }

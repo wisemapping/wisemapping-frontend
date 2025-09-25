@@ -30,7 +30,9 @@ import ThemeFactory from './theme/ThemeFactory';
 
 class ImageEmojiFeature {
   private _topic: Topic;
+
   private _emojiText: Text | undefined;
+
   private _emojiRemoveTip: ElementDeleteWidget | undefined;
 
   constructor(topic: Topic) {
@@ -148,7 +150,7 @@ class ImageEmojiFeature {
       getElement(): Group {
         return topic.get2DElement(); // Return the topic's main group
       },
-      setGroup(group: IconGroup): void {
+      setGroup(): void {
         // Not needed for emoji
       },
       getGroup(): IconGroup | null {
@@ -234,8 +236,6 @@ class ImageEmojiFeature {
     emojiHeight: number,
     textHeight: number,
     padding: number,
-    iconGroupWidth: number,
-    textIconSpacing: number,
   ): { textY: number; iconY: number } {
     if (!this.hasEmoji()) {
       // Default positioning for shapes without emoji

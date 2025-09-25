@@ -257,10 +257,82 @@
   "zoom-panel.tooltip-zoom-to-fit": {
     "defaultMessage": "Zoom to Fit"
   },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "Collapse All Nodes"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "Expand All Nodes"
+  },
   "creator-info-pane.description": {
     "defaultMessage": "Description"
   },
   "creator-info-pane.creator": {
     "defaultMessage": "Creator"
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "Theme"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "Theme"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "Background"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "Background"
+  },
+  "canvas-style.title": {
+    "defaultMessage": "Background"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "Colors"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "Background Color"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "Background Pattern"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "Solid Color"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "Grid Lines"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "Dots"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "None"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "Grid Style"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "Grid Color"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "Preview"
+  },
+  "canvas-style.reset": {
+    "defaultMessage": "Reset"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "Apply"
   }
 }

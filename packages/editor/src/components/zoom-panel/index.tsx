@@ -28,7 +28,18 @@ import Toolbar from '../toolbar';
 import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined';
+import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import Box from '@mui/material/Box';
+
+// Helper function to check if any nodes are currently collapsed
+const areNodesCollapsed = (model: Editor): boolean => {
+  if (!model?.isMapLoadded()) return false;
+  const allTopics = model.getDesigner().getModel().getTopics();
+  return allTopics.some(
+    (topic) => topic.getType() !== 'CentralTopic' && topic.areChildrenShrunken(),
+  );
+};
 
 export function buildZoomToolbarConfig(
   model: Editor,
@@ -77,6 +88,26 @@ export function buildZoomToolbarConfig(
       }),
       onClick: () => {
         model.getDesigner().zoomOut();
+      },
+      disabled: () => !model?.isMapLoadded(),
+    },
+    {
+      icon: areNodesCollapsed(model) ? <UnfoldMoreIcon /> : <UnfoldLessIcon />,
+      tooltip: areNodesCollapsed(model)
+        ? intl.formatMessage({
+            id: 'zoom-panel.tooltip-expand-all',
+            defaultMessage: 'Expand All Nodes',
+          })
+        : intl.formatMessage({
+            id: 'zoom-panel.tooltip-collapse-all',
+            defaultMessage: 'Collapse All Nodes',
+          }),
+      onClick: () => {
+        if (areNodesCollapsed(model)) {
+          model.getDesigner().expandAllNodes();
+        } else {
+          model.getDesigner().collapseAllNodes();
+        }
       },
       disabled: () => !model?.isMapLoadded(),
     },
