@@ -19,6 +19,7 @@
     "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','zh-CN','ru','ja','pt','it','hi'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
     "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
     "lint": "eslint src --ext js,ts,tsx",
+    "lint:fix": "eslint src --ext js,ts,tsx --fix",
     "playground": "webpack serve --config webpack.playground.js",
     "test": "yarn test:unit && yarn test:integration",
     "test:integration": "npx start-server-and-test 'yarn playground' http-get://localhost:8081 'yarn cy:run'",

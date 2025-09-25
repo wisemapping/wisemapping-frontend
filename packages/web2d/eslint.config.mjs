@@ -18,6 +18,7 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([{
+    files: ["src/**/*.js"],
     extends: compat.extends("airbnb-base"),
     
     plugins: {
@@ -27,6 +28,10 @@ export default defineConfig([{
     languageOptions: {
         globals: {
             ...globals.browser,
+        },
+        parserOptions: {
+            ecmaVersion: 2020,
+            sourceType: "module",
         },
     },
 

@@ -101,6 +101,114 @@
       "value": "Annuler"
     }
   ],
+  "canvas-style.apply": [
+    {
+      "type": 0,
+      "value": "Appliquer"
+    }
+  ],
+  "canvas-style.background-color": [
+    {
+      "type": 0,
+      "value": "Couleur d'arrière-plan"
+    }
+  ],
+  "canvas-style.background-pattern": [
+    {
+      "type": 0,
+      "value": "Motif d'arrière-plan"
+    }
+  ],
+  "canvas-style.colors": [
+    {
+      "type": 0,
+      "value": "Couleurs"
+    }
+  ],
+  "canvas-style.grid-color": [
+    {
+      "type": 0,
+      "value": "Couleur de grille"
+    }
+  ],
+  "canvas-style.grid-size-l": [
+    {
+      "type": 0,
+      "value": "L"
+    }
+  ],
+  "canvas-style.grid-size-m": [
+    {
+      "type": 0,
+      "value": "M"
+    }
+  ],
+  "canvas-style.grid-size-s": [
+    {
+      "type": 0,
+      "value": "S"
+    }
+  ],
+  "canvas-style.grid-size-xl": [
+    {
+      "type": 0,
+      "value": "XL"
+    }
+  ],
+  "canvas-style.grid-size-xs": [
+    {
+      "type": 0,
+      "value": "XS"
+    }
+  ],
+  "canvas-style.grid-style": [
+    {
+      "type": 0,
+      "value": "Style de grille"
+    }
+  ],
+  "canvas-style.pattern-dots": [
+    {
+      "type": 0,
+      "value": "Points"
+    }
+  ],
+  "canvas-style.pattern-grid": [
+    {
+      "type": 0,
+      "value": "Lignes de grille"
+    }
+  ],
+  "canvas-style.pattern-none": [
+    {
+      "type": 0,
+      "value": "Aucun"
+    }
+  ],
+  "canvas-style.pattern-solid": [
+    {
+      "type": 0,
+      "value": "Couleur unie"
+    }
+  ],
+  "canvas-style.preview": [
+    {
+      "type": 0,
+      "value": "Aperçu"
+    }
+  ],
+  "canvas-style.reset": [
+    {
+      "type": 0,
+      "value": "Réinitialiser"
+    }
+  ],
+  "canvas-style.title": [
+    {
+      "type": 0,
+      "value": "Arrière-plan"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,
@@ -111,6 +219,12 @@
     {
       "type": 0,
       "value": "Description"
+    }
+  ],
+  "editor-panel.canvas-style-title": [
+    {
+      "type": 0,
+      "value": "Arrière-plan"
     }
   ],
   "editor-panel.icon-title": [
@@ -165,6 +279,12 @@
     {
       "type": 0,
       "value": "Ajouter un noeud"
+    }
+  ],
+  "editor-panel.tooltip-canvas-style": [
+    {
+      "type": 0,
+      "value": "Arrière-plan"
     }
   ],
   "editor-panel.tooltip-connection-color": [

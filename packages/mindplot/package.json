@@ -23,6 +23,7 @@
     "cy:run": "cypress run",
     "dev": "webpack serve --config webpack.dev.js",
     "lint": "eslint src --ext js,ts",
+    "lint:fix": "eslint src --ext js,ts --fix",
     "storybook": "storybook dev -p 6006",
     "storybook:test": "storybook dev -p 6006 --no-open",
     "test": "yarn test:unit && yarn test:integration",

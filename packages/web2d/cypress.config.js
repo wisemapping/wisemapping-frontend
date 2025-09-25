@@ -1,4 +1,4 @@
-const { defineConfig } = require('cypress')
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   video: true,
@@ -9,5 +9,12 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config);
     },
     baseUrl: 'http://localhost:6006',
+    // Add macOS compatibility options
+    chromeWebSecurity: false,
+    experimentalStudio: false,
+  },
+  // Add browser launch options for macOS compatibility
+  chrome: {
+    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor'],
   },
 });
