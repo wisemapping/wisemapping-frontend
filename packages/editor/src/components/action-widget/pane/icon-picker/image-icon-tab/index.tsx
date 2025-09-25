@@ -11,7 +11,7 @@ type IconImageTab = {
 };
 const IconImageTab = ({ iconModel, triggerClose }: IconImageTab): ReactElement => {
   return (
-    <Box sx={{ width: '350px' }}>
+    <Box sx={{ width: '450px' }}>
       {iconGroups.map((family, i) => (
         <span key={i}>
           {family.icons.map((icon: string) => (
