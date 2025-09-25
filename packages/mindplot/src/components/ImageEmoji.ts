@@ -136,7 +136,13 @@ class ImageEmojiFeature {
 
   removeFromGroup(group: Group): void {
     if (this._emojiText) {
-      group.removeChild(this._emojiText);
+      // Check if the element is actually in the group before trying to remove it
+      const children = group.peer.getChildren();
+      const isInGroup = children.includes(this._emojiText.peer);
+
+      if (isInGroup) {
+        group.removeChild(this._emojiText);
+      }
     }
   }
 
