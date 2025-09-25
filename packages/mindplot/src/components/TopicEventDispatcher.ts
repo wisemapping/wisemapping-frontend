@@ -62,6 +62,11 @@ class TopicEventDispatcher extends EventDispispatcher<TopicEventType> {
     return MultitTextEditor.getInstance().isActive();
   }
 
+  isEditingTopic(topic: Topic): boolean {
+    const activeTopic = MultitTextEditor.getInstance().getActiveTopic();
+    return activeTopic === topic;
+  }
+
   static configure(readOnly: boolean): TopicEventDispatcher {
     if (this._instance) {
       throw new Error('events already initialized');

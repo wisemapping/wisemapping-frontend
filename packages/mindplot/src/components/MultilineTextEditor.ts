@@ -47,6 +47,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     this._onClose = onClose;
   }
 
+  getTopic(): Topic {
+    return this._topic;
+  }
+
   private static buildEditor(): JQuery<HTMLElement> {
     const result = $('<div></div>').attr('id', 'textContainer').css({
       display: 'none',
@@ -282,6 +286,10 @@ class MultitTextEditor {
 
   isActive(): boolean {
     return this._component !== null;
+  }
+
+  getActiveTopic(): Topic | null {
+    return this._component ? this._component.getTopic() : null;
   }
 
   show(topic: Topic, textOverwrite?: string): void {

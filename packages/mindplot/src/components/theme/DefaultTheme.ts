@@ -245,5 +245,11 @@ abstract class DefaultTheme implements Theme {
     }
     return result!;
   }
+
+  getEmojiSpacing(topic: Topic): number {
+    // Default spacing: central topics get more spacing than main topics
+    const fontHeight = topic.getOrBuildTextShape().getFontHeight();
+    return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
+  }
 }
 export default DefaultTheme;

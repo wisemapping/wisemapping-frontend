@@ -1,25 +1,36 @@
 import { $assert } from '@wisemapping/core-js';
 import { Group, Rect, StraightLine } from '@wisemapping/web2d';
-import ImageIcon from './ImageIcon';
+import Icon from './Icon';
+import PositionType from './PositionType';
+import SizeType from './SizeType';
 
 class IconGroupRemoveTip {
-  private _group: Group;
+  private static _instance: IconGroupRemoveTip | null = null;
 
-  private _activeIcon: ImageIcon | null;
+  private _activeIcon: Icon | null;
 
   private _widget: Group | null;
 
+  private _widgetGroup: Group | null;
+
   private _closeTimeoutId;
 
-  constructor(group: Group) {
-    $assert(group, 'group can not be null');
-    this._group = group;
+  private constructor() {
     this._activeIcon = null;
     this._widget = null;
+    this._widgetGroup = null;
   }
 
-  show(topicId: number, icon: ImageIcon) {
+  static getInstance(): IconGroupRemoveTip {
+    if (!IconGroupRemoveTip._instance) {
+      IconGroupRemoveTip._instance = new IconGroupRemoveTip();
+    }
+    return IconGroupRemoveTip._instance;
+  }
+
+  show(topicId: number, icon: Icon, group: Group) {
     $assert(icon, 'icon can not be null');
+    $assert(group, 'group can not be null');
 
     // Nothing to do ...
     if (this._activeIcon !== icon) {
@@ -30,6 +41,7 @@ class IconGroupRemoveTip {
 
       // Now, let move the position the icon...
       const pos = icon.getPosition();
+      const size = icon.getSize();
 
       // Register events ...
       const widget = this._buildWeb2d();
@@ -40,19 +52,22 @@ class IconGroupRemoveTip {
       const me = this;
 
       widget.addEvent('mouseover', () => {
-        me.show(topicId, icon);
+        me.show(topicId, icon, group);
       });
 
       widget.addEvent('mouseout', () => {
         me.hide();
       });
 
-      widget.setPosition(pos.x + 80, pos.y - 50);
-      this._group.append(widget);
+      // Calculate dynamic positioning based on target element size
+      const widgetPosition = this._calculateWidgetPosition(pos, size);
+      widget.setPosition(widgetPosition.x, widgetPosition.y);
+      group.append(widget);
 
       // Setup current element ...
       this._activeIcon = icon;
       this._widget = widget;
+      this._widgetGroup = group;
     } else if (this._closeTimeoutId) {
       clearTimeout(this._closeTimeoutId);
     }
@@ -69,13 +84,20 @@ class IconGroupRemoveTip {
 
     if (this._activeIcon) {
       const widget = this._widget;
+      const widgetGroup = this._widgetGroup;
 
       const close = () => {
         this._activeIcon = null;
-        if (widget) {
-          this._group.removeChild(widget);
+        if (widget && widgetGroup) {
+          try {
+            widgetGroup.removeChild(widget);
+          } catch (error) {
+            // Widget might have already been removed or is not a valid child, ignore the error
+            console.warn('Widget could not be removed:', error);
+          }
         }
         this._widget = null;
+        this._widgetGroup = null;
         this._closeTimeoutId = null;
       };
 
@@ -85,6 +107,27 @@ class IconGroupRemoveTip {
         close();
       }
     }
+  }
+
+  private _calculateWidgetPosition(pos: PositionType, size: SizeType | undefined): PositionType {
+    // Default widget size (50x50)
+    const widgetSize = 50;
+
+    // Default offsets
+    let offsetX = 10;
+    let offsetY = -widgetSize - 5;
+
+    if (size) {
+      // Calculate offset based on target element size
+      // Position widget to the right and above the target element
+      offsetX = Math.max(10, size.width * 0.1); // At least 10px, or 10% of target width
+      offsetY = -widgetSize - Math.max(5, size.height * 0.1); // Above target, with spacing
+    }
+
+    return {
+      x: pos.x + offsetX,
+      y: pos.y + offsetY,
+    };
   }
 
   private _buildWeb2d(): Group {
@@ -162,17 +205,18 @@ class IconGroupRemoveTip {
     return result;
   }
 
-  decorate(topicId: number, icon) {
-    if (!icon.__remove) {
+  decorate(topicId: number, icon: Icon, group: Group) {
+    const iconWithRemove = icon as Icon & { __remove?: boolean };
+    if (!iconWithRemove.__remove) {
       icon.addEvent('mouseover', () => {
-        this.show(topicId, icon);
+        this.show(topicId, icon, group);
       });
 
       icon.addEvent('mouseout', () => {
         this.hide();
       });
 
-      icon.__remove = true;
+      iconWithRemove.__remove = true;
     }
   }
 }

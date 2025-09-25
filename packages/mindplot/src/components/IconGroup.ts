@@ -18,7 +18,7 @@
 
 import { $assert } from '@wisemapping/core-js';
 import { Group } from '@wisemapping/web2d';
-import IconGroupRemoveTip from './IconGroupRemoveTip';
+import ElementDeleteWidget from './ElementDeleteWidget';
 import ImageIcon from './ImageIcon';
 import SizeType from './SizeType';
 import FeatureModel from './model/FeatureModel';
@@ -35,11 +35,13 @@ class IconGroup {
 
   private _group: Group;
 
-  private _removeTip: IconGroupRemoveTip;
+  private _removeTip: ElementDeleteWidget;
 
   private _iconSize: SizeType | null;
 
   private _topicId: number;
+
+  private _topicGroup: Group | null = null;
 
   constructor(topicId: number, iconSize: number) {
     this._topicId = topicId;
@@ -52,7 +54,7 @@ class IconGroup {
       coordSizeWidth: 0,
       coordSizeHeight: 100,
     });
-    this._removeTip = new IconGroupRemoveTip(this._group);
+    this._removeTip = ElementDeleteWidget.getInstance();
     this.seIconSize(iconSize, iconSize);
     this._registerListeners();
     this._iconSize = null;
@@ -69,6 +71,11 @@ class IconGroup {
   /** */
   getSize(): SizeType {
     return this._group.getSize();
+  }
+
+  /** */
+  getGroup(): Group {
+    return this._group;
   }
 
   /** */
@@ -104,7 +111,13 @@ class IconGroup {
 
     // Register event for the group ..
     if (remove) {
-      this._removeTip.decorate(this._topicId, icon);
+      // Always use topic group for consistent coordinate system and sizing
+      const targetGroup = this._topicGroup;
+
+      if (targetGroup) {
+        this._removeTip.decorate(this._topicId, icon, targetGroup);
+      }
+      // Note: If topic group is not available, delete widget will be set up later in _setupDeleteWidgetsForExistingIcons
     }
   }
 
@@ -181,8 +194,23 @@ class IconGroup {
   }
 
   appendTo(group: Group): void {
+    this._topicGroup = group; // Store reference to topic group
     group.append(this._group);
     this._group.moveToFront();
+
+    // Set up delete widgets for all existing icons now that we have the topic group
+    this._setupDeleteWidgetsForExistingIcons();
+  }
+
+  private _setupDeleteWidgetsForExistingIcons(): void {
+    // Set up delete widgets for all icons that were added before the topic group was available
+    this._icons.forEach((icon) => {
+      const iconWithRemove = icon as Icon & { __remove?: boolean };
+      if (!iconWithRemove.__remove) {
+        // Only set up if not already set up
+        this._removeTip.decorate(this._topicId, icon, this._topicGroup!);
+      }
+    });
   }
 
   static ICON_PADDING = 2;

@@ -53,5 +53,7 @@ interface Theme {
   getConnectionType(topic: Topic): LineType;
 
   getConnectionColor(topic: Topic): string;
+
+  getEmojiSpacing(topic: Topic): number;
 }
 export default Theme;
