@@ -1,4 +1,5 @@
 interface LanguageStrings {
+  [key: string]: string;
   LOADING: string;
   SAVING: string;
   SAVE_COMPLETE: string;

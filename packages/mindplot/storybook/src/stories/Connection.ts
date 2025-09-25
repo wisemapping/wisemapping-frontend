@@ -121,8 +121,14 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
     $assert(ids.length === 1, `Unexpeted number of elements ${String(ids)} - ${id}`);
     const topic = ids[0];
 
-    topic.setPosition(event.getPosition());
-    topic.setOrder(event.getOrder());
+    const position = event.getPosition();
+    const order = event.getOrder();
+    if (position) {
+      topic.setPosition(position);
+    }
+    if (order !== null) {
+      topic.setOrder(order);
+    }
   });
 
   // Connect nodes ...

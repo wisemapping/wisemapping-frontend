@@ -39,7 +39,7 @@ export const getPosition = (elem: Element): { top: number; left: number } => {
     // Account for the *real* offset parent, which can be the document or its root element
     // when a statically positioned element is identified
     doc = elem.ownerDocument;
-    offsetParent = elem.offsetParent as Element || doc.documentElement;
+    offsetParent = ((elem as any).offsetParent as Element) || doc.documentElement;
     while (
       offsetParent &&
       (offsetParent === doc.body || offsetParent === doc.documentElement) &&

@@ -663,8 +663,14 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const id = event.getId();
       const topic = this.getModel().findTopicById(id);
       if (topic) {
-        topic.setPosition(event.getPosition());
-        topic.setOrder(event.getOrder());
+        const position = event.getPosition();
+        const order = event.getOrder();
+        if (position) {
+          topic.setPosition(position);
+        }
+        if (order !== null) {
+          topic.setOrder(order);
+        }
       }
     });
 

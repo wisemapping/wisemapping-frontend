@@ -29,7 +29,7 @@ class GridSorter extends AbstractBasicSorter {
   computeOffsets(treeSet: RootedTreeSet, node: Node): Map<number, PositionType> {
     $assert(treeSet, 'treeSet can no be null.');
     $assert(node, 'node can no be null.');
-    $assert('order can no be null.');
+    // $assert('order can no be null.'); // This assertion seems incorrect, removing it
 
     const children = this._getSortedChildren(treeSet, node);
 
@@ -53,7 +53,7 @@ class GridSorter extends AbstractBasicSorter {
       const finalHeight = i === 0 ? 0 : (heights[i].height / 2) * even;
 
       const yOffset = zeroHeight + middleHeight + finalHeight;
-      const xOffset = node.getSize().width + GridSorter.GRID_HORIZONTAR_SIZE;
+      const xOffset = node.getSize().width + (GridSorter as any).GRID_HORIZONTAR_SIZE;
 
       $assert(!Number.isNaN(xOffset), 'xOffset can not be null');
       $assert(!Number.isNaN(yOffset), 'yOffset can not be null');
@@ -107,12 +107,12 @@ class GridSorter extends AbstractBasicSorter {
  * @type {Number}
  * @default
  */
-GridSorter.GRID_HORIZONTAR_SIZE = 20;
+(GridSorter as any).GRID_HORIZONTAR_SIZE = 20;
 /**
  * @constant
  * @type {Number}
  * @default
  */
-GridSorter.INTER_NODE_VERTICAL_DISTANCE = 50;
+(GridSorter as any).INTER_NODE_VERTICAL_DISTANCE = 50;
 
 export default GridSorter;
