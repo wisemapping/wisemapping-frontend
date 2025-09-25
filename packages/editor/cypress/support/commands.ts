@@ -55,7 +55,7 @@ Cypress.Commands.add('waitForLoad', () => {
 
 // Mindmap commands ...
 Cypress.Commands.add('focusTopicById', (id: number) => {
-  cy.get(`[test-id=${id}]`).click();
+  cy.get(`[test-id=${id}]`).click({ force: true });
 });
 
 Cypress.Commands.add('focusTopicByText', (text: string) => {

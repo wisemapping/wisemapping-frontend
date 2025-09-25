@@ -7,7 +7,7 @@ jest.mock('../../src/components/ActionDispatcher');
 jest.mock('../../src/components/DesignerModel');
 
 // Mock jQuery
-global.$ = jest.fn(() => ({
+(global as any).$ = jest.fn(() => ({
   css: jest.fn().mockReturnValue('1000'),
   width: jest.fn().mockReturnValue(1000),
   height: jest.fn().mockReturnValue(800),
@@ -18,7 +18,7 @@ global.$ = jest.fn(() => ({
 }));
 
 // Mock ActionDispatcher
-const MockedActionDispatcher = ActionDispatcher as jest.MockedClass<typeof ActionDispatcher>;
+const MockedActionDispatcher = ActionDispatcher as any;
 
 // Mock DesignerModel
 const MockedDesignerModel = DesignerModel as jest.MockedClass<typeof DesignerModel>;
@@ -38,12 +38,14 @@ describe('Collapse/Expand All Nodes Tests', () => {
 
     // Mock DesignerModel
     mockModel = {
-      getTopics: jest.fn().mockReturnValue([
-        { getId: () => 1, getType: () => 'CentralTopic' },
-        { getId: () => 2, getType: () => 'MainTopic' },
-        { getId: () => 3, getType: () => 'MainTopic' },
-        { getId: () => 4, getType: () => 'MainTopic' },
-      ]),
+      getTopics: jest
+        .fn()
+        .mockReturnValue([
+          { getId: () => 1, getType: () => 'CentralTopic' } as any,
+          { getId: () => 2, getType: () => 'MainTopic' } as any,
+          { getId: () => 3, getType: () => 'MainTopic' } as any,
+          { getId: () => 4, getType: () => 'MainTopic' } as any,
+        ]),
       filterSelectedTopics: jest.fn().mockReturnValue([]),
       getZoom: jest.fn().mockReturnValue(1),
     } as any;
@@ -85,7 +87,7 @@ describe('Collapse/Expand All Nodes Tests', () => {
   });
 
   test('should handle only central topic gracefully', () => {
-    mockModel.getTopics.mockReturnValue([{ getId: () => 1, getType: () => 'CentralTopic' }]);
+    mockModel.getTopics.mockReturnValue([{ getId: () => 1, getType: () => 'CentralTopic' } as any]);
 
     designer.collapseAllNodes();
     designer.expandAllNodes();
@@ -95,11 +97,11 @@ describe('Collapse/Expand All Nodes Tests', () => {
 
   test('should filter out central topic correctly', () => {
     mockModel.getTopics.mockReturnValue([
-      { getId: () => 1, getType: () => 'CentralTopic' },
-      { getId: () => 2, getType: () => 'MainTopic' },
-      { getId: () => 3, getType: () => 'CentralTopic' }, // Another central topic
-      { getId: () => 4, getType: () => 'MainTopic' },
-      { getId: () => 5, getType: () => 'SubTopic' },
+      { getId: () => 1, getType: () => 'CentralTopic' } as any,
+      { getId: () => 2, getType: () => 'MainTopic' } as any,
+      { getId: () => 3, getType: () => 'CentralTopic' } as any, // Another central topic
+      { getId: () => 4, getType: () => 'MainTopic' } as any,
+      { getId: () => 5, getType: () => 'SubTopic' } as any,
     ]);
 
     designer.collapseAllNodes();
@@ -109,11 +111,11 @@ describe('Collapse/Expand All Nodes Tests', () => {
 
   test('should handle mixed topic types correctly', () => {
     mockModel.getTopics.mockReturnValue([
-      { getId: () => 1, getType: () => 'CentralTopic' },
-      { getId: () => 2, getType: () => 'MainTopic' },
-      { getId: () => 3, getType: () => 'SubTopic' },
-      { getId: () => 4, getType: () => 'FreeTopic' },
-      { getId: () => 5, getType: () => 'CentralTopic' },
+      { getId: () => 1, getType: () => 'CentralTopic' } as any,
+      { getId: () => 2, getType: () => 'MainTopic' } as any,
+      { getId: () => 3, getType: () => 'SubTopic' } as any,
+      { getId: () => 4, getType: () => 'FreeTopic' } as any,
+      { getId: () => 5, getType: () => 'CentralTopic' } as any,
     ]);
 
     designer.expandAllNodes();

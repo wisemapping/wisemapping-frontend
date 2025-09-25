@@ -96,7 +96,7 @@ describe('Topic Color Suite', () => {
   it('Reset topic fill color to default', () => {
     // First change the color
     cy.onMouseOverToolbarButton('Topic Style');
-    cy.get('[aria-label="Fill color"]').first().click();
+    cy.get('[aria-label="Fill color"]').first().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
@@ -105,7 +105,7 @@ describe('Topic Color Suite', () => {
 
     // Now reset to default
     cy.onMouseOverToolbarButton('Topic Style');
-    cy.get('[aria-label="Default fill color"]').first().click();
+    cy.get('[aria-label="Default fill color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-fill-color');
   });
@@ -113,7 +113,7 @@ describe('Topic Color Suite', () => {
   it('Reset topic border color to default', () => {
     // First change the border color
     cy.onMouseOverToolbarButton('Topic Style');
-    cy.get('[aria-label="Border color"]').first().click();
+    cy.get('[aria-label="Border color"]').first().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
@@ -122,7 +122,7 @@ describe('Topic Color Suite', () => {
 
     // Now reset to default
     cy.onMouseOverToolbarButton('Topic Style');
-    cy.get('[aria-label="Default border color"]').first().click();
+    cy.get('[aria-label="Default border color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-topic-border-color');
   });

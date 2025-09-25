@@ -1203,8 +1203,6 @@ abstract class Topic extends NodeGraph {
         emojiHeight,
         textHeight,
         padding,
-        iconGroupWith,
-        textIconSpacing,
       );
 
       if (hasEmoji) {

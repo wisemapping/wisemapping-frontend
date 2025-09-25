@@ -125,36 +125,17 @@ export const ToolbarSubmenu = ({
         open={open}
         onClose={() => setOpen(false)}
         anchorEl={itemRef.current}
-        container={document.body}
-        anchorOrigin={
-          configuration.useClickToClose
-            ? { vertical: 'bottom', horizontal: 'center' }
-            : orientationProps.anchorOrigin
-        }
-        transformOrigin={
-          configuration.useClickToClose
-            ? { vertical: 'top', horizontal: 'center' }
-            : orientationProps.transformOrigin
-        }
+        container={itemRef.current}
+        anchorOrigin={orientationProps.anchorOrigin}
+        transformOrigin={orientationProps.transformOrigin}
         disableScrollLock={false}
         disablePortal={false}
         PaperProps={{
           onMouseLeave: () => !configuration.useClickToClose && setOpen(false),
           square: true,
-          sx: configuration.useClickToClose
-            ? {
-                maxHeight: '70vh',
-                maxWidth: '90vw',
-                overflow: 'auto',
-                position: 'fixed !important',
-                top: '50% !important',
-                left: '50% !important',
-                transform: 'translate(-50%, -50%) !important',
-              }
-            : {},
         }}
         sx={{
-          zIndex: configuration.useClickToClose ? '1300' : '-1',
+          zIndex: configuration.useClickToClose ? '1' : '-1',
         }}
         elevation={elevation}
       >

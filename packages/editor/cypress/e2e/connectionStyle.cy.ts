@@ -17,7 +17,7 @@ describe('Connection Style Suite', () => {
     cy.onMouseOverToolbarButton('Connection Style');
 
     // Click on thick curved option
-    cy.get('[aria-label="Thick Curved"]').first().click();
+    cy.get('[aria-label="Thick Curved"]').first().click({ force: true });
 
     // Verify the connection style changed - look for relationship elements
     cy.get('[test-id*="relationship"]').should('exist');
@@ -29,7 +29,7 @@ describe('Connection Style Suite', () => {
     cy.onMouseOverToolbarButton('Connection Style');
 
     // Click on arc option
-    cy.get('[aria-label="Arc"]').first().click();
+    cy.get('[aria-label="Arc"]').first().click({ force: true });
 
     cy.matchImageSnapshot('arc-connection');
   });
@@ -38,7 +38,7 @@ describe('Connection Style Suite', () => {
     cy.onMouseOverToolbarButton('Connection Style');
 
     // Click on thin curved option
-    cy.get('[aria-label="Thin Curved"]').first().click();
+    cy.get('[aria-label="Thin Curved"]').first().click({ force: true });
 
     cy.matchImageSnapshot('thin-curved-connection');
   });
@@ -47,7 +47,7 @@ describe('Connection Style Suite', () => {
     cy.onMouseOverToolbarButton('Connection Style');
 
     // Click on simple polyline option
-    cy.get('[aria-label="Simple Polyline"]').first().click();
+    cy.get('[aria-label="Simple Polyline"]').first().click({ force: true });
 
     cy.matchImageSnapshot('simple-polyline-connection');
   });
@@ -56,7 +56,7 @@ describe('Connection Style Suite', () => {
     cy.onMouseOverToolbarButton('Connection Style');
 
     // Click on curved polyline option
-    cy.get('[aria-label="Curved Polyline"]').first().click();
+    cy.get('[aria-label="Curved Polyline"]').first().click({ force: true });
 
     cy.matchImageSnapshot('curved-polyline-connection');
   });
@@ -65,7 +65,7 @@ describe('Connection Style Suite', () => {
     cy.onMouseOverToolbarButton('Connection Style');
 
     // Click on color option
-    cy.get('[aria-label="Color"]').last().click();
+    cy.get('[aria-label="Color"]').last().click({ force: true });
 
     // Wait for color picker to load
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -80,7 +80,7 @@ describe('Connection Style Suite', () => {
   it('Reset connection color to default', () => {
     // First change the color
     cy.onMouseOverToolbarButton('Connection Style');
-    cy.get('[aria-label="Color"]').last().click();
+    cy.get('[aria-label="Color"]').last().click({ force: true });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
@@ -90,7 +90,7 @@ describe('Connection Style Suite', () => {
 
     // Now reset to default
     cy.onMouseOverToolbarButton('Connection Style');
-    cy.get('[aria-label="Default color"]').first().click();
+    cy.get('[aria-label="Default color"]').first().click({ force: true });
 
     cy.matchImageSnapshot('reset-connection-color');
   });

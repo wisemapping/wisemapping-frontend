@@ -73,6 +73,8 @@ class ImageEmojiFeature {
       emojiText.setFontName(
         '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", sans-serif',
       );
+      // Ensure emoji text inherits the same font style as the main text
+      emojiText.setStyle(this._topic.getFontStyle());
       emojiText.setText(emojiChar);
 
       this._emojiText = emojiText;
@@ -82,8 +84,9 @@ class ImageEmojiFeature {
     } else if (emojiChar && this._emojiText) {
       // Update emoji text if emoji character changed
       this._emojiText.setText(emojiChar);
-      // Always update font size to reflect current font size changes
+      // Always update font size and style to reflect current font changes
       this._emojiText.setFontSize(this._topic.getFontSize() * 3);
+      this._emojiText.setStyle(this._topic.getFontStyle());
     }
     return this._emojiText;
   }
@@ -131,7 +134,11 @@ class ImageEmojiFeature {
   addToGroup(group: Group): void {
     const emojiTextShape = this.getOrBuildEmojiTextShape();
     if (emojiTextShape) {
+      // Remove from group first to avoid duplicates
+      this.removeFromGroup(group);
       group.append(emojiTextShape);
+      // Move emoji text to front to ensure it appears above other elements
+      emojiTextShape.moveToFront();
     }
   }
 

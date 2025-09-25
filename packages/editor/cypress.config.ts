@@ -13,5 +13,8 @@ export default defineConfig({
       return require('./cypress/plugins/index.ts')(on, config);
     },
     baseUrl: 'http://localhost:8081',
+    // Add configuration to help with macOS compatibility
+    chromeWebSecurity: false,
+    experimentalStudio: false,
   },
 });

@@ -1,7 +1,5 @@
 import Mindmap from '../../src/components/model/Mindmap';
 import Designer from '../../src/components/Designer';
-import Canvas from '../../src/components/Canvas';
-import ScreenManager from '../../src/components/ScreenManager';
 import XMLSerializerTango from '../../src/components/persistence/XMLSerializerTango';
 
 // Mock dependencies
@@ -25,7 +23,7 @@ jest.mock('@wisemapping/web2d', () => ({
 }));
 
 // Mock jQuery
-global.$ = jest.fn(() => ({
+(global as any).$ = jest.fn(() => ({
   css: jest.fn().mockReturnValue('1000'),
   width: jest.fn().mockReturnValue(1000),
   height: jest.fn().mockReturnValue(800),
@@ -101,37 +99,8 @@ describe('Canvas Style Persistence Tests', () => {
 
   describe('Designer Canvas Style Methods', () => {
     let designer: Designer;
-    let mockScreenManager: jest.Mocked<ScreenManager>;
-    let mockCanvas: jest.Mocked<Canvas>;
 
     beforeEach(() => {
-      // Mock ScreenManager
-      mockScreenManager = {
-        getContainer: jest.fn().mockReturnValue({
-          css: jest.fn().mockReturnValue('1000'),
-          width: jest.fn().mockReturnValue(1000),
-          height: jest.fn().mockReturnValue(800),
-        }),
-        getVisibleBrowserSize: jest.fn().mockReturnValue({ width: 1000, height: 800 }),
-        setOffset: jest.fn(),
-        setScale: jest.fn(),
-        fireEvent: jest.fn(),
-        addEvent: jest.fn(),
-        removeEvent: jest.fn(),
-      } as any;
-
-      // Mock Canvas
-      mockCanvas = {
-        setBackgroundStyle: jest.fn(),
-        getSVGElement: jest.fn().mockReturnValue({
-          parentElement: {
-            parentElement: {
-              setAttribute: jest.fn(),
-            },
-          },
-        }),
-      } as any;
-
       // Mock Designer with minimal setup
       designer = {
         getMindmap: jest.fn().mockReturnValue({
