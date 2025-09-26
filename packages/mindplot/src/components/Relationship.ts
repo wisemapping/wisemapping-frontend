@@ -19,7 +19,7 @@ import { Arrow, CurvedLine } from '@wisemapping/web2d';
 import type { Line } from '@wisemapping/web2d';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import RelationshipControlPoints from './RelationshipControlPoints';
-import RelationshipModel from './model/RelationshipModel';
+import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import PositionType from './PositionType';
 import Topic from './Topic';
 import Shape from './util/Shape';
@@ -50,18 +50,18 @@ class Relationship extends ConnectionLine {
     super(sourceNode, targetNode, LineType.THIN_CURVED);
     this._model = model;
 
-    const strokeColor = Relationship.getStrokeColor();
+    const strokeColor = model.getStrokeColor() || Relationship.getStrokeColor();
 
     // Build line with thick stroke for event handling and dashed pattern
     this._line.setIsSrcControlPointCustom(false);
     this._line.setIsDestControlPointCustom(false);
     this._line.setCursor('pointer');
-    // Set width to 1 to enable proper curved path rendering
-    (this._line as CurvedLine).setWidth(1);
-    // Use normal stroke width (2px) for visual appearance
+    // Set width to 0 to avoid closed path that creates double line effect
+    (this._line as CurvedLine).setWidth(0);
+    // Use stroke width (2px) for relationships
     this._line.setStroke(2, 'solid', strokeColor);
     this._line.setFill('none', 1);
-    this._line.setDashed(8, 1); // 8px dots, 1px gaps
+    // Stroke style will be applied in redraw()
     this._line.setTestId(`${model.getFromNode()}-${model.getToNode()}-relationship`);
 
     // Build focus shape ...
@@ -77,21 +77,18 @@ class Relationship extends ConnectionLine {
     this._focusShape.setFill('none', 1);
     // Ensure focus shape uses solid stroke rendering for continuous hit area
     (this._focusShape as CurvedLine).setWidth(0); // Force simple stroke rendering
-    this._showStartArrow = false;
-    this._showEndArrow = false;
-
-    // Build arrow ...
+    // Always create both arrows, but show them based on model
     this._startArrow = new Arrow();
     this._startArrow.setStrokeColor(strokeColor);
     this._startArrow.setStrokeWidth(2);
-    this.setShowStartArrow(true);
 
-    // Share style is disable ...
-    if (this._showEndArrow) {
-      this._endArrow = new Arrow();
-      this._endArrow.setStrokeColor(strokeColor);
-      this._endArrow.setStrokeWidth(2);
-    }
+    this._endArrow = new Arrow();
+    this._endArrow.setStrokeColor(strokeColor);
+    this._endArrow.setStrokeWidth(2);
+
+    // Set arrow visibility based on model
+    this._showStartArrow = model.getStartArrow();
+    this._showEndArrow = model.getEndArrow();
     this._onFocus = false;
     this._isInWorkspace = false;
     this._controlPointsController = new RelationshipControlPoints(this);
@@ -115,11 +112,11 @@ class Relationship extends ConnectionLine {
   }
 
   setStroke(color: string, style: string, opacity: number): void {
-    // Always keep relationship lines dotted, regardless of style parameter
-    super.setStroke(color, 'solid', opacity);
+    this._line.setStroke(2, 'solid', color);
     this._startArrow?.setStrokeColor(color);
-    // Ensure custom dash pattern is maintained: 8px dots, 1px gaps
-    this._line.setDashed(8, 1);
+    this._endArrow?.setStrokeColor(color);
+    // Apply the stroke style from the model
+    this._applyStrokeStyle(this._model.getStrokeStyle());
   }
 
   getModel(): RelationshipModel {
@@ -135,8 +132,17 @@ class Relationship extends ConnectionLine {
     tPos = this.calculateRelationshipConnectionPoint(targetTopic);
     const sPos = this.calculateRelationshipConnectionPoint(sourceTopic);
 
-    this._line.setStroke(2, 'solid', Relationship.getStrokeColor());
-    this._line.setDashed(8, 1);
+    // Debug: Check if source and target are the same
+    console.log(
+      `Relationship ${this.getId()}: sPos(${sPos.x}, ${sPos.y}) -> tPos(${tPos.x}, ${tPos.y})`,
+    );
+    if (sPos.x === tPos.x && sPos.y === tPos.y) {
+      console.warn(`Relationship ${this.getId()}: Source and target positions are identical!`);
+    }
+
+    // Only set stroke once - remove redundant stroke calls
+    const strokeColor = this._model.getStrokeColor() || Relationship.getStrokeColor();
+    this._line.setStroke(2, 'solid', strokeColor);
     let ctrlPoints: [PositionType, PositionType];
 
     // Position line ...
@@ -183,6 +189,28 @@ class Relationship extends ConnectionLine {
     line2d.setSrcControlPoint(ctrlPoints[0]);
     line2d.setDestControlPoint(ctrlPoints[1]);
 
+    // Debug: Check final line coordinates and control points
+    const finalFrom = line2d.getFrom();
+    const finalTo = line2d.getTo();
+    console.log(
+      `Relationship ${this.getId()}: Final line from(${finalFrom.x}, ${finalFrom.y}) to(${finalTo.x}, ${finalTo.y})`,
+    );
+    console.log(
+      `Relationship ${this.getId()}: Control points src(${ctrlPoints[0].x}, ${ctrlPoints[0].y}) dest(${ctrlPoints[1].x}, ${ctrlPoints[1].y})`,
+    );
+
+    // Check if this creates a degenerate path (no actual curve)
+    if (
+      Math.abs(ctrlPoints[0].x) < 0.1 &&
+      Math.abs(ctrlPoints[0].y) < 0.1 &&
+      Math.abs(ctrlPoints[1].x) < 0.1 &&
+      Math.abs(ctrlPoints[1].y) < 0.1
+    ) {
+      console.warn(
+        `Relationship ${this.getId()}: Control points are near zero - might create degenerate curve!`,
+      );
+    }
+
     // Positionate Arrows
     this.positionArrows();
 
@@ -194,17 +222,17 @@ class Relationship extends ConnectionLine {
   }
 
   redraw(): void {
+    console.log(`Relationship ${this.getId()}: redraw() called`);
     this.updatePositions();
+
+    // Apply stroke style only once at the end of redraw
+    this._applyStrokeStyle(this._model.getStrokeStyle());
 
     this._line.moveToFront();
     this._startArrow.moveToBack();
-    if (this._endArrow) {
-      this._endArrow.moveToBack();
-    }
+    this._endArrow.moveToBack();
 
-    if (this._showEndArrow) {
-      this._endArrow.setVisibility(this.isVisible());
-    }
+    this._endArrow.setVisibility(this.isVisible() && this._showEndArrow);
     this._startArrow.setVisibility(this.isVisible() && this._showStartArrow);
 
     this._focusShape.moveToFront();
@@ -216,21 +244,15 @@ class Relationship extends ConnectionLine {
     const spos = this._line.getFrom();
 
     this._startArrow.setFrom(spos.x, spos.y);
-    if (this._endArrow) {
-      this._endArrow.setFrom(tpos.x, tpos.y);
-    }
+    this._endArrow.setFrom(tpos.x, tpos.y);
 
     if (this._line.getType() === 'CurvedLine') {
       const controlPoints = this._line.getControlPoints();
       this._startArrow.setControlPoint(controlPoints[0]);
-      if (this._endArrow) {
-        this._endArrow.setControlPoint(controlPoints[1]);
-      }
+      this._endArrow.setControlPoint(controlPoints[1]);
     } else {
       this._startArrow.setControlPoint(this._line.getTo());
-      if (this._endArrow) {
-        this._endArrow.setControlPoint(this._line.getFrom());
-      }
+      this._endArrow.setControlPoint(this._line.getFrom());
     }
   }
 
@@ -250,7 +272,7 @@ class Relationship extends ConnectionLine {
     this._isInWorkspace = true;
 
     workspace.append(this._startArrow);
-    if (this._endArrow) workspace.append(this._endArrow);
+    workspace.append(this._endArrow);
 
     super.addToWorkspace(workspace);
     this.positionArrows();
@@ -258,17 +280,12 @@ class Relationship extends ConnectionLine {
   }
 
   removeFromWorkspace(workspace: Canvas): void {
-    // Remove focus shape
-    workspace.removeChild(this._focusShape.getElementClass());
     workspace.removeChild(this._controlPointsController);
 
     this._line.removeEvent('click', this._onFocusHandler);
-    this._focusShape.removeEvent('click', this._onFocusHandler);
     this._isInWorkspace = false;
     workspace.removeChild(this._startArrow);
-    if (this._endArrow) {
-      workspace.removeChild(this._endArrow);
-    }
+    workspace.removeChild(this._endArrow);
 
     super.removeFromWorkspace(workspace);
   }
@@ -364,12 +381,13 @@ class Relationship extends ConnectionLine {
     if (this.isOnFocus() !== focus) {
       if (focus) {
         // Show focus shape when focusing
+        this._focusShape.setVisibility(true);
         this._focusShape.setOpacity(1);
         this._focusShape.setStroke(3, 'solid', '#3f96ff');
       } else {
-        // Hide focus shape when unfocusing (but keep barely visible for event handling)
-        this._focusShape.setOpacity(0.01);
-        this._focusShape.setStroke(12, 'solid', '#3f96ff');
+        // Completely hide focus shape when unfocusing
+        this._focusShape.setVisibility(false);
+        this._focusShape.setOpacity(0);
       }
 
       this._controlPointsController.setVisibility(focus);
@@ -416,9 +434,7 @@ class Relationship extends ConnectionLine {
     this.setOnFocus(false);
 
     // Hide on focus shade when relationship is hidden
-    if (this._showEndArrow) {
-      this._endArrow.setVisibility(this._showEndArrow && value);
-    }
+    this._endArrow.setVisibility(this._showEndArrow && value);
     this._startArrow.setVisibility(this._showStartArrow && value, fade);
     // Focus shape should only be visible when focused AND relationship is visible
     this._focusShape.setVisibility(false);
@@ -426,12 +442,8 @@ class Relationship extends ConnectionLine {
 
   setOpacity(opacity: number): void {
     super.setOpacity(opacity);
-    if (this._showEndArrow) {
-      this._endArrow.setOpacity(opacity);
-    }
-    if (this._showStartArrow) {
-      this._startArrow.setOpacity(opacity);
-    }
+    this._endArrow.setOpacity(opacity);
+    this._startArrow.setOpacity(opacity);
   }
 
   setShowEndArrow(visible: boolean) {
@@ -453,7 +465,7 @@ class Relationship extends ConnectionLine {
 
   setTo(x: number, y: number) {
     this._line.setTo(x, y);
-    if (this._endArrow) this._endArrow.setFrom(x, y);
+    this._endArrow.setFrom(x, y);
   }
 
   setSrcControlPoint(control: PositionType): void {
@@ -465,9 +477,7 @@ class Relationship extends ConnectionLine {
   setDestControlPoint(control: PositionType) {
     this._line.setDestControlPoint(control);
     this._focusShape.setSrcControlPoint(control);
-    if (this._showEndArrow) {
-      this._endArrow?.setControlPoint(control);
-    }
+    this._endArrow?.setControlPoint(control);
   }
 
   getControlPoints(): [PositionType, PositionType] {
@@ -497,6 +507,28 @@ class Relationship extends ConnectionLine {
   fireEvent(type: string, event: unknown): void {
     const elem = this._line;
     elem.trigger(type, event);
+  }
+
+  private _applyStrokeStyle(strokeStyle: StrokeStyle): void {
+    console.log(`Relationship ${this.getId()}: Applying stroke style: ${strokeStyle}`);
+    switch (strokeStyle) {
+      case StrokeStyle.SOLID:
+        // Remove any dashed pattern for solid lines
+        this._line.setDashed(0, 0);
+        break;
+      case StrokeStyle.DASHED:
+        // 8px dashes, 4px gaps
+        this._line.setDashed(8, 4);
+        break;
+      case StrokeStyle.DOTTED:
+        // 1px dots, 3px gaps for proper dotted appearance
+        this._line.setDashed(1, 3);
+        break;
+      default:
+        // Default to dashed
+        this._line.setDashed(8, 4);
+        break;
+    }
   }
 
   static getStrokeColor() {

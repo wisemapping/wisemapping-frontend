@@ -41,6 +41,12 @@ import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import TextureIcon from '@mui/icons-material/Texture';
+import RemoveIcon from '@mui/icons-material/Remove';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 
@@ -57,6 +63,7 @@ import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
+import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import ThemeEditor from '../action-widget/pane/theme-editor';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
 
@@ -337,6 +344,128 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     },
   };
 
+  const relationshipStyleConfiguration: ActionConfig = {
+    icon: <RelationshipStyleIcon />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-relationship-style',
+      defaultMessage: 'Relationship Style',
+    }),
+    options: [
+      {
+        icon: <RemoveIcon />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-stroke-solid',
+          defaultMessage: 'Solid Line',
+        }),
+        onClick: () => {
+          const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
+          if (setValue) {
+            setValue(StrokeStyle.SOLID);
+          }
+        },
+        selected: () =>
+          modelBuilder.getRelationshipStrokeStyleModel().getValue() === StrokeStyle.SOLID,
+      },
+      {
+        icon: <MoreHorizIcon />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-stroke-dashed',
+          defaultMessage: 'Dashed Line',
+        }),
+        onClick: () => {
+          const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
+          if (setValue) {
+            setValue(StrokeStyle.DASHED);
+          }
+        },
+        selected: () =>
+          modelBuilder.getRelationshipStrokeStyleModel().getValue() === StrokeStyle.DASHED,
+      },
+      {
+        icon: <FiberManualRecordIcon />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-stroke-dotted',
+          defaultMessage: 'Dotted Line',
+        }),
+        onClick: () => {
+          const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
+          if (setValue) {
+            setValue(StrokeStyle.DOTTED);
+          }
+        },
+        selected: () =>
+          modelBuilder.getRelationshipStrokeStyleModel().getValue() === StrokeStyle.DOTTED,
+      },
+      null,
+      {
+        icon: <ArrowLeftIcon />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-arrow-end',
+          defaultMessage: 'End Arrow',
+        }),
+        onClick: () => {
+          const setValue = modelBuilder.getRelationshipEndArrowModel().setValue;
+          if (setValue) {
+            setValue(!modelBuilder.getRelationshipEndArrowModel().getValue());
+          }
+        },
+        selected: () => modelBuilder.getRelationshipEndArrowModel().getValue(),
+      },
+      {
+        icon: <ArrowRightIcon />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-arrow-start',
+          defaultMessage: 'Start Arrow',
+        }),
+        onClick: () => {
+          const setValue = modelBuilder.getRelationshipStartArrowModel().setValue;
+          if (setValue) {
+            setValue(!modelBuilder.getRelationshipStartArrowModel().getValue());
+          }
+        },
+        selected: () => modelBuilder.getRelationshipStartArrowModel().getValue(),
+      },
+      null,
+      {
+        icon: () => <Palette htmlColor={modelBuilder.getRelationshipColorModel().getValue()} />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-color',
+          defaultMessage: 'Color',
+        }),
+        options: [
+          {
+            render: (closeModal) => {
+              return (
+                <ColorPicker
+                  closeModal={closeModal}
+                  colorModel={modelBuilder.getRelationshipColorModel()}
+                />
+              );
+            },
+          },
+        ],
+      },
+      {
+        icon: <NotInterestedOutlined />,
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-relationship-color-default',
+          defaultMessage: 'Default color',
+        }),
+        onClick: () => {
+          const setValue = modelBuilder.getRelationshipColorModel().setValue;
+          if (setValue) {
+            setValue(undefined);
+          }
+        },
+        selected: () => modelBuilder.getRelationshipColorModel().getValue() === undefined,
+      },
+    ],
+    disabled: () => {
+      const selected = model.getDesignerModel()!.filterSelectedRelationships();
+      return selected.length === 0;
+    },
+  };
+
   /**
    * submenu to manipulate node font
    */
@@ -551,7 +680,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    * tool for emoji selection
    */
   const emojiToolbarConfiguration: ActionConfig = {
-    icon: <ImageOutlinedIcon style={{ color: '#666666' }} />,
+    icon: <ImageOutlinedIcon />,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-topic-emoji',
       defaultMessage: 'Add Imagine',
@@ -646,7 +775,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     emojiToolbarConfiguration,
     editLinkUrlConfiguration,
     addRelationConfiguration,
-    editThemeConfiguration,
+    relationshipStyleConfiguration,
     editCanvasStyleConfiguration,
+    editThemeConfiguration,
   ];
 }

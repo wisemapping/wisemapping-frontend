@@ -25,6 +25,7 @@ import DeleteCommand from './commands/DeleteCommand';
 import RemoveFeatureFromTopicCommand from './commands/RemoveFeatureFromTopicCommand';
 import DragTopicCommand from './commands/DragTopicCommand';
 import GenericFunctionCommand from './commands/GenericFunctionCommand';
+import GenericRelationshipFunctionCommand from './commands/GenericRelationshipFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
 import ChangeCanvasStyleCommand from './commands/ChangeCanvasStyleCommand';
@@ -32,8 +33,9 @@ import ChangeThemeCommand from './commands/ChangeThemeCommand';
 import LayoutEventBus from './layout/LayoutEventBus';
 import CommandContext from './CommandContext';
 import NodeModel from './model/NodeModel';
-import RelationshipModel from './model/RelationshipModel';
+import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import Topic from './Topic';
+import Relationship from './Relationship';
 import Command from './Command';
 import FeatureType from './model/FeatureType';
 import PositionType from './PositionType';
@@ -257,6 +259,69 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     };
 
     const command = new GenericFunctionCommand(commandFunc, topicsIds, value);
+    this.execute(command);
+  }
+
+  changeRelationshipStyle(relationships: Relationship[], lineType: LineType) {
+    const commandFunc = (relationship: Relationship, type: LineType) => {
+      const result: LineType = relationship.getModel().getLineType();
+      relationship.getModel().setLineType(type);
+      relationship.redraw();
+      return result;
+    };
+
+    const command = new GenericRelationshipFunctionCommand(commandFunc, relationships, lineType);
+    this.execute(command);
+  }
+
+  changeRelationshipColor(relationships: Relationship[], value: string | undefined) {
+    const commandFunc = (relationship: Relationship, color: string | undefined) => {
+      const result: string | undefined = relationship.getModel().getStrokeColor();
+      relationship.getModel().setStrokeColor(color);
+      if (color) {
+        relationship.setStroke(color, 'solid', 1);
+      } else {
+        // Use default color when color is undefined
+        const defaultColor = Relationship.getStrokeColor();
+        relationship.setStroke(defaultColor, 'solid', 1);
+      }
+      return result;
+    };
+
+    const command = new GenericRelationshipFunctionCommand(commandFunc, relationships, value);
+    this.execute(command);
+  }
+
+  changeRelationshipStrokeStyle(relationships: Relationship[], strokeStyle: StrokeStyle) {
+    const commandFunc = (relationship: Relationship, style: StrokeStyle) => {
+      const result: StrokeStyle = relationship.getModel().getStrokeStyle();
+      relationship.getModel().setStrokeStyle(style);
+      relationship.redraw();
+      return result;
+    };
+    const command = new GenericRelationshipFunctionCommand(commandFunc, relationships, strokeStyle);
+    this.execute(command);
+  }
+
+  changeRelationshipEndArrow(relationships: Relationship[], value: boolean) {
+    const commandFunc = (relationship: Relationship, endArrow: boolean) => {
+      const result: boolean = relationship.getModel().getEndArrow();
+      relationship.getModel().setEndArrow(endArrow);
+      relationship.setShowEndArrow(endArrow);
+      return result;
+    };
+    const command = new GenericRelationshipFunctionCommand(commandFunc, relationships, value);
+    this.execute(command);
+  }
+
+  changeRelationshipStartArrow(relationships: Relationship[], value: boolean) {
+    const commandFunc = (relationship: Relationship, startArrow: boolean) => {
+      const result: boolean = relationship.getModel().getStartArrow();
+      relationship.getModel().setStartArrow(startArrow);
+      relationship.setShowStartArrow(startArrow);
+      return result;
+    };
+    const command = new GenericRelationshipFunctionCommand(commandFunc, relationships, value);
     this.execute(command);
   }
 

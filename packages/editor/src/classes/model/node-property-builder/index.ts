@@ -1,4 +1,6 @@
 import { Designer, Topic } from '@wisemapping/mindplot';
+import Relationship from '@wisemapping/mindplot/src/components/Relationship';
+import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import NodeProperty from '../node-property';
 import {
   SwitchValueDirection,
@@ -23,6 +25,11 @@ class NodePropertyBuilder {
   private topicIconModel: NodeProperty<string | undefined> | undefined;
   private connetionStyleModel: NodeProperty<LineType> | undefined;
   private connectionColoreModel: NodeProperty<string | undefined> | undefined;
+  private relationshipStyleModel: NodeProperty<LineType> | undefined;
+  private relationshipColorModel: NodeProperty<string | undefined> | undefined;
+  private relationshipStrokeStyleModel: NodeProperty<StrokeStyle> | undefined;
+  private relationshipEndArrowModel: NodeProperty<boolean> | undefined;
+  private relationshipStartArrowModel: NodeProperty<boolean> | undefined;
   private noteModel: NodeProperty<string | undefined> | undefined;
   private linkModel: NodeProperty<string> | undefined;
   private imageEmojiCharModel: NodeProperty<string | undefined> | undefined;
@@ -38,6 +45,14 @@ class NodePropertyBuilder {
       throw new Error('No selected topic');
     }
     return topic;
+  }
+
+  private selectedRelationship(): Relationship {
+    const relationship = this.designer.getModel().selectedRelationship();
+    if (!relationship) {
+      throw new Error('No selected relationship');
+    }
+    return relationship;
   }
 
   private getFontSize(): number {
@@ -243,6 +258,71 @@ class NodePropertyBuilder {
         setValue: (value: string | undefined) => this.designer.changeConnectionColor(value),
       };
     return this.connectionColoreModel;
+  }
+
+  /**
+   *
+   * @returns model to get and set relationship line style
+   */
+  getRelationshipStyleModel(): NodeProperty<LineType> {
+    if (!this.relationshipStyleModel)
+      this.relationshipStyleModel = {
+        getValue: () => this.selectedRelationship()?.getModel().getLineType(),
+        setValue: (value: LineType) => this.designer.changeRelationshipStyle(value),
+      };
+    return this.relationshipStyleModel;
+  }
+
+  /**
+   *
+   * @returns model to get and set relationship color
+   */
+  getRelationshipColorModel(): NodeProperty<string | undefined> {
+    if (!this.relationshipColorModel)
+      this.relationshipColorModel = {
+        getValue: () => this.selectedRelationship()?.getModel().getStrokeColor(),
+        setValue: (value: string | undefined) => this.designer.changeRelationshipColor(value),
+      };
+    return this.relationshipColorModel;
+  }
+
+  /**
+   *
+   * @returns model to get and set relationship stroke style
+   */
+  getRelationshipStrokeStyleModel(): NodeProperty<StrokeStyle> {
+    if (!this.relationshipStrokeStyleModel)
+      this.relationshipStrokeStyleModel = {
+        getValue: () => this.selectedRelationship()?.getModel().getStrokeStyle(),
+        setValue: (value: StrokeStyle) => this.designer.changeRelationshipStrokeStyle(value),
+      };
+    return this.relationshipStrokeStyleModel;
+  }
+
+  /**
+   *
+   * @returns model to get and set relationship end arrow
+   */
+  getRelationshipEndArrowModel(): NodeProperty<boolean> {
+    if (!this.relationshipEndArrowModel)
+      this.relationshipEndArrowModel = {
+        getValue: () => this.selectedRelationship()?.getModel().getEndArrow() || false,
+        setValue: (value: boolean) => this.designer.changeRelationshipEndArrow(value),
+      };
+    return this.relationshipEndArrowModel;
+  }
+
+  /**
+   *
+   * @returns model to get and set relationship start arrow
+   */
+  getRelationshipStartArrowModel(): NodeProperty<boolean> {
+    if (!this.relationshipStartArrowModel)
+      this.relationshipStartArrowModel = {
+        getValue: () => this.selectedRelationship()?.getModel().getStartArrow() || false,
+        setValue: (value: boolean) => this.designer.changeRelationshipStartArrow(value),
+      };
+    return this.relationshipStartArrowModel;
   }
 
   getTopicShapeModel(): NodeProperty<TopicShapeType> {

@@ -48,6 +48,11 @@ class KeyboardManager {
    * Handle keydown events
    */
   private static handleKeyDown(event: KeyboardEvent): void {
+    // Skip keyboard shortcuts if user is typing in an input field or contentEditable element
+    if (this.isTypingInInputField()) {
+      return;
+    }
+
     const pressedShortcut = this.getEventShortcut(event);
     const callback = this.shortcuts.get(pressedShortcut);
 
@@ -56,6 +61,35 @@ class KeyboardManager {
       event.stopPropagation();
       callback();
     }
+  }
+
+  /**
+   * Check if the user is currently typing in an input field or contentEditable element
+   */
+  private static isTypingInInputField(): boolean {
+    const activeElement = document.activeElement;
+
+    if (!activeElement) {
+      return false;
+    }
+
+    // Check if it's an input field
+    if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
+      return true;
+    }
+
+    // Check if it's a contentEditable element
+    if (activeElement.getAttribute('contentEditable') === 'true') {
+      return true;
+    }
+
+    // Check if it's inside a contentEditable element
+    const contentEditableParent = activeElement.closest('[contentEditable="true"]');
+    if (contentEditableParent) {
+      return true;
+    }
+
+    return false;
   }
 
   /**

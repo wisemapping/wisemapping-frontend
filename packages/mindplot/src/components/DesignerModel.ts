@@ -118,6 +118,11 @@ class DesignerModel {
     return topics.length > 0 ? topics[0] : undefined;
   }
 
+  selectedRelationship(): Relationship | undefined {
+    const relationships = this.filterSelectedRelationships();
+    return relationships.length > 0 ? relationships[0] : undefined;
+  }
+
   findTopicById(id: number): Topic | undefined {
     return this._topics.find((t) => t.getId() === id);
   }

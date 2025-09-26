@@ -20,7 +20,7 @@ import { Point } from '@wisemapping/web2d';
 import Mindmap from '../model/Mindmap';
 import FeatureModelFactory from '../model/FeatureModelFactory';
 import NodeModel from '../model/NodeModel';
-import RelationshipModel from '../model/RelationshipModel';
+import RelationshipModel, { StrokeStyle } from '../model/RelationshipModel';
 import XMLMindmapSerializer from './XMLMindmapSerializer';
 import FeatureType from '../model/FeatureType';
 import emojiToIconMap from './iconToEmoji.json';
@@ -259,6 +259,16 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     }
     result.setAttribute('endArrow', String(relationship.getEndArrow()));
     result.setAttribute('startArrow', String(relationship.getStartArrow()));
+
+    // Add stroke color if custom
+    const strokeColor = relationship.getStrokeColor();
+    if (strokeColor) {
+      result.setAttribute('strokeColor', strokeColor);
+    }
+
+    // Add stroke style
+    result.setAttribute('strokeStyle', relationship.getStrokeStyle());
+
     return result;
   }
 
@@ -587,6 +597,22 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     model.setEndArrow(false);
     model.setStartArrow(true);
+
+    // Load stroke color if present
+    const strokeColor = domElement.getAttribute('strokeColor');
+    if (strokeColor) {
+      model.setStrokeColor(strokeColor);
+    }
+
+    // Load stroke style if present
+    const strokeStyle = domElement.getAttribute('strokeStyle');
+    if (strokeStyle && Object.values(StrokeStyle).includes(strokeStyle as StrokeStyle)) {
+      model.setStrokeStyle(strokeStyle as StrokeStyle);
+    } else {
+      // Default to dashed for backwards compatibility
+      model.setStrokeStyle(StrokeStyle.DASHED);
+    }
+
     return model;
   }
 
