@@ -61,8 +61,9 @@ class MapInfoImpl implements MapInfo {
     return this.lockedMsg;
   }
 
-  setTitle(value: string): void {
-    throw (this.title = value);
+  updateTitle(title: string): Promise<void> {
+    this.title = title;
+    return Promise.resolve();
   }
 
   isLocked(): boolean {

@@ -93,6 +93,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
         node: topic.getModel(),
         position: pos,
       });
+
+      // Ensure relationships are redrawn when topic moves
+      topic.redraw();
+
       return result;
     };
 

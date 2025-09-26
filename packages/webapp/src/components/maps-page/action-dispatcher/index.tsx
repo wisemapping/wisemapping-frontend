@@ -56,6 +56,10 @@ const ActionDispatcher = ({
       window.open(`/c/maps/${mapsId}/print`, 'print');
       handleOnClose(true);
       break;
+    case 'theme':
+      // Theme is handled within the editor, just close the dialog
+      handleOnClose(true);
+      break;
   }
 
   return (

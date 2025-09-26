@@ -603,6 +603,9 @@ abstract class Topic extends NodeGraph {
       shrinkConnector.changeRender(value);
     }
 
+    // Update relationship positions when collapsing/expanding
+    this._relationships.forEach((r) => r.redraw());
+
     // Do some fancy animation ....
     const elements = this.flatten2DElements(this);
     elements.forEach((elem) => {

@@ -865,6 +865,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     result.setVisibility(sourceTopic.isVisible() && targetTopic.isVisible());
 
     this._canvas.append(result);
+    // Ensure relationships are rendered below topics
+    result.moveToBack();
     return result;
   }
 
@@ -886,7 +888,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     targetTopic.deleteRelationship(rel);
 
     this.getModel().removeRelationship(rel);
-    this._canvas.removeChild(rel);
+
+    // Properly remove all relationship components from workspace
+    rel.removeFromWorkspace(this._canvas);
 
     const mindmap = this.getMindmap();
     mindmap.deleteRelationship(rel.getModel());
@@ -1094,18 +1098,21 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._actionDispatcher.changeRelationshipColor(relationships, value);
     }
   }
+
   changeRelationshipStrokeStyle(strokeStyle: StrokeStyle): void {
     const relationships = this.getModel().filterSelectedRelationships();
     if (relationships.length > 0) {
       this._actionDispatcher.changeRelationshipStrokeStyle(relationships, strokeStyle);
     }
   }
+
   changeRelationshipEndArrow(value: boolean): void {
     const relationships = this.getModel().filterSelectedRelationships();
     if (relationships.length > 0) {
       this._actionDispatcher.changeRelationshipEndArrow(relationships, value);
     }
   }
+
   changeRelationshipStartArrow(value: boolean): void {
     const relationships = this.getModel().filterSelectedRelationships();
     if (relationships.length > 0) {

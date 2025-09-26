@@ -31,6 +31,8 @@ type ActionType =
   | 'sign-up'
   | 'starred'
   | 'appbar-title'
-  | 'keyboard-shortcuts';
+  | 'keyboard-shortcuts'
+  | 'theme'
+  | 'rename';
 
 export default ActionType;
