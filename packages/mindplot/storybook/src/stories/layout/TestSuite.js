@@ -16,7 +16,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
+// jQuery removed - using native DOM APIs
 import { $assert } from '@wisemapping/core-js';
 import LayoutManager from '../../../../src/components/layout/LayoutManager';
 import ChildrenSorterStrategy from '../../../../src/components/layout/ChildrenSorterStrategy';
@@ -24,7 +24,7 @@ import ChildrenSorterStrategy from '../../../../src/components/layout/ChildrenSo
 class TestSuite extends ChildrenSorterStrategy {
   constructor() {
     super();
-    $('#basicTest').css('display', 'block');
+    document.getElementById('basicTest').style.display = 'block';
     //        this.testAligned();
     this.testBaselineAligned1();
     this.testBaselineAligned2();

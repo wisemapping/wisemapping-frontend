@@ -1,10 +1,10 @@
 // quick hand-made version of $.css()
 export const getStyle = (elem: Element, prop: string): string | number => {
-  const result = window.getComputedStyle(elem)[prop as any];
+  const result = window.getComputedStyle(elem)[prop as keyof CSSStyleDeclaration];
   if (typeof result === 'string' && /px$/.test(result)) {
     return parseFloat(result);
   }
-  return result;
+  return String(result || '');
 };
 
 // offset and position utils extracted and adapted from jquery source
@@ -39,7 +39,7 @@ export const getPosition = (elem: Element): { top: number; left: number } => {
     // Account for the *real* offset parent, which can be the document or its root element
     // when a statically positioned element is identified
     doc = elem.ownerDocument;
-    offsetParent = ((elem as any).offsetParent as Element) || doc.documentElement;
+    offsetParent = ((elem as HTMLElement).offsetParent as Element) || doc.documentElement;
     while (
       offsetParent &&
       (offsetParent === doc.body || offsetParent === doc.documentElement) &&

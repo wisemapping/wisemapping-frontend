@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import $ from 'jquery';
+import DOMUtils from './util/DOMUtils';
 import LinkIcon from './LinkIcon';
 import LinkModel from './model/LinkModel';
 import NoteModel from './model/NoteModel';
@@ -39,58 +39,82 @@ abstract class WidgetBuilder {
     linkModel?: LinkModel,
     noteModel?: NoteModel,
   ) {
-    const { shadowRoot } = $('#mindmap-comp')[0];
-    const webcomponentShadowRoot = $(shadowRoot!);
+    const mindmapComp = document.getElementById('mindmap-comp') as HTMLElement & {
+      shadowRoot: ShadowRoot;
+    };
+    const webcomponentShadowRoot = mindmapComp.shadowRoot!;
 
-    let tooltip = webcomponentShadowRoot.find('#mindplot-svg-tooltip');
-    if (!tooltip.length || !tooltip) {
-      webcomponentShadowRoot.append(
+    let tooltip = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip');
+    if (!tooltip) {
+      const tooltipHTML =
         '<div id="mindplot-svg-tooltip" class="mindplot-svg-tooltip">' +
-          '<div id="mindplot-svg-tooltip-title" class="mindplot-svg-tooltip-title"></div>' +
-          '<div id="mindplot-svg-tooltip-content" class="mindplot-svg-tooltip-content">' +
-          '<a id="mindplot-svg-tooltip-content-link" alt="Open in new window ..." class="mindplot-svg-tooltip-content-link" target="_blank"></a>' +
-          '<p id="mindplot-svg-tooltip-content-note" class="mindplot-svg-tooltip-content-note"></p>' +
-          '</div>' +
-          '</div>',
-      );
-      tooltip = webcomponentShadowRoot.find('#mindplot-svg-tooltip');
+        '<div id="mindplot-svg-tooltip-title" class="mindplot-svg-tooltip-title"></div>' +
+        '<div id="mindplot-svg-tooltip-content" class="mindplot-svg-tooltip-content">' +
+        '<a id="mindplot-svg-tooltip-content-link" alt="Open in new window ..." class="mindplot-svg-tooltip-content-link" target="_blank"></a>' +
+        '<p id="mindplot-svg-tooltip-content-note" class="mindplot-svg-tooltip-content-note"></p>' +
+        '</div>' +
+        '</div>';
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = tooltipHTML;
+      webcomponentShadowRoot.appendChild(tempDiv.firstChild as HTMLElement);
+      tooltip = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip')!;
 
-      tooltip.on('mouseover', (evt) => {
-        tooltip.css({ display: 'block' });
-        evt.stopPropagation();
-      });
-      tooltip.on('mouseleave', (evt) => {
-        tooltip.css({ display: 'none' });
-        evt.stopPropagation();
-      });
+      if (tooltip) {
+        tooltip.addEventListener('mouseover', (evt) => {
+          if (tooltip) DOMUtils.css(tooltip, 'display', 'block');
+          evt.stopPropagation();
+        });
+        tooltip.addEventListener('mouseleave', (evt) => {
+          if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
+          evt.stopPropagation();
+        });
+      }
     }
 
     mindmapElement.addEvent('mouseenter', (evt: MouseEvent) => {
-      webcomponentShadowRoot.find('#mindplot-svg-tooltip-title').html(title);
+      const tooltipTitle = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip-title')!;
+      DOMUtils.html(tooltipTitle, title);
+
       if (linkModel) {
-        webcomponentShadowRoot
-          .find('#mindplot-svg-tooltip-content-link')
-          .attr('href', linkModel.getUrl());
-        webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-link').html(linkModel.getUrl());
-        webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-link').css({ display: 'block' });
-        webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-note').css({ display: 'none' });
+        const tooltipLink = webcomponentShadowRoot.getElementById(
+          'mindplot-svg-tooltip-content-link',
+        )! as HTMLAnchorElement;
+        DOMUtils.attr(tooltipLink, 'href', linkModel.getUrl());
+        DOMUtils.html(tooltipLink, linkModel.getUrl());
+        DOMUtils.css(tooltipLink, 'display', 'block');
+
+        const tooltipNote = webcomponentShadowRoot.getElementById(
+          'mindplot-svg-tooltip-content-note',
+        )!;
+        DOMUtils.css(tooltipNote, 'display', 'none');
       }
       if (noteModel) {
-        webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-note').html(noteModel.getText());
-        webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-note').css({ display: 'block' });
-        webcomponentShadowRoot.find('#mindplot-svg-tooltip-content-link').css({ display: 'none' });
+        const tooltipNote = webcomponentShadowRoot.getElementById(
+          'mindplot-svg-tooltip-content-note',
+        )!;
+        DOMUtils.html(tooltipNote, noteModel.getText());
+        DOMUtils.css(tooltipNote, 'display', 'block');
+
+        const tooltipLink = webcomponentShadowRoot.getElementById(
+          'mindplot-svg-tooltip-content-link',
+        )!;
+        DOMUtils.css(tooltipLink, 'display', 'none');
       }
       const targetRect = (evt.target as Element).getBoundingClientRect();
-      const width = tooltip.width() || 0;
+      const width = tooltip ? DOMUtils.width(tooltip) || 0 : 0;
       const newX = Math.max(0, targetRect.left + targetRect.width / 2 - width / 2);
       const newY = Math.max(0, targetRect.bottom);
-      tooltip.css({ top: newY, left: newX, position: 'absolute' });
-      tooltip.css({ display: 'block' });
+      if (tooltip) {
+        DOMUtils.css(tooltip, 'top', `${newY}px`);
+        DOMUtils.css(tooltip, 'left', `${newX}px`);
+        DOMUtils.css(tooltip, 'position', 'absolute');
+        DOMUtils.css(tooltip, 'display', 'block');
+      }
       evt.stopPropagation();
     });
 
     mindmapElement.addEvent('mouseleave', (evt: MouseEvent) => {
-      tooltip.css({ display: 'none' });
+      if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
       evt.stopPropagation();
     });
   }

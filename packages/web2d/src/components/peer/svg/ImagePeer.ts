@@ -20,6 +20,7 @@ import ElementPeer from './ElementPeer';
 
 class ImagePeer extends ElementPeer {
   private _position: PositionType;
+
   private _href: string;
 
   constructor() {

@@ -28,8 +28,11 @@ export type FontStyle = {
 
 class FontPeer {
   private _size: number;
+
   private _style: string;
+
   private _weight: string;
+
   private _fontName: string;
 
   constructor(fontName: string) {

@@ -20,7 +20,7 @@ import ElementPeer from '../svg/ElementPeer';
 
 class EventUtils {
   static broadcastChangeEvent(elementPeer: ElementPeer, type: string) {
-    const listeners = elementPeer.getChangeEventListeners(type);
+    const listeners = elementPeer.getChangeEventListeners(type) as ((arg: unknown) => void)[];
     if ($defined(listeners)) {
       for (let i = 0; i < listeners.length; i++) {
         const listener = listeners[i];

@@ -1,0 +1,121 @@
+/**
+ * Utility class to replace jQuery event handling with native DOM APIs
+ */
+class EventManager {
+  /**
+   * Add event listener
+   * Replaces: $(element).bind(event, handler) or $(element).on(event, handler)
+   */
+  static bind(
+    element: HTMLElement | Document | Window,
+    event: string,
+    handler: EventListener,
+  ): void {
+    element.addEventListener(event, handler);
+  }
+
+  /**
+   * Remove event listener
+   * Replaces: $(element).unbind(event, handler) or $(element).off(event, handler)
+   */
+  static unbind(
+    element: HTMLElement | Document | Window,
+    event: string,
+    handler: EventListener,
+  ): void {
+    element.removeEventListener(event, handler);
+  }
+
+  /**
+   * Trigger event
+   * Replaces: $(element).trigger(event)
+   */
+  static trigger(element: HTMLElement, eventName: string, data?: unknown): void {
+    let event: Event;
+
+    if (data) {
+      event = new CustomEvent(eventName, { detail: data });
+    } else {
+      // For standard events
+      switch (eventName) {
+        case 'click':
+          event = new MouseEvent('click', { bubbles: true, cancelable: true });
+          break;
+        case 'keydown':
+        case 'keyup':
+        case 'keypress':
+          event = new KeyboardEvent(eventName, { bubbles: true, cancelable: true });
+          break;
+        case 'mousedown':
+        case 'mouseup':
+        case 'mousemove':
+        case 'mouseover':
+        case 'mouseout':
+          event = new MouseEvent(eventName, { bubbles: true, cancelable: true });
+          break;
+        default:
+          event = new Event(eventName, { bubbles: true, cancelable: true });
+      }
+    }
+
+    element.dispatchEvent(event);
+  }
+
+  /**
+   * Add event listener with delegation (for dynamically added elements)
+   * Replaces: $(parent).on(event, selector, handler)
+   */
+  static delegate(
+    parent: HTMLElement,
+    event: string,
+    selector: string,
+    handler: EventListener,
+  ): void {
+    parent.addEventListener(event, (e) => {
+      const target = e.target as HTMLElement;
+      if (target && target.matches && target.matches(selector)) {
+        handler.call(target, e);
+      }
+    });
+  }
+
+  /**
+   * Add event listener that fires only once
+   * Replaces: $(element).one(event, handler)
+   */
+  static once(
+    element: HTMLElement | Document | Window,
+    event: string,
+    handler: EventListener,
+  ): void {
+    const onceHandler = (e: Event) => {
+      handler(e);
+      element.removeEventListener(event, onceHandler);
+    };
+    element.addEventListener(event, onceHandler);
+  }
+
+  /**
+   * Prevent default action and stop propagation
+   * Replaces: e.preventDefault(); e.stopPropagation();
+   */
+  static stopEvent(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  /**
+   * DOM ready event handler
+   * Replaces: $(document).ready(handler)
+   */
+  static ready(handler: () => void): void {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handler);
+    } else {
+      // Document is already ready
+      handler();
+    }
+  }
+}
+
+export default EventManager;

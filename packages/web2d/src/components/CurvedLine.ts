@@ -37,7 +37,6 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
     super(peer, mergedAttr);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'CurvedLine';
   }
@@ -93,7 +92,6 @@ class CurvedLine extends WorkspaceElement<CurvedLinePeer> implements Line {
   }
 
   getControlPoints(): [PositionType, PositionType] {
-    // @ts-ignore
     return this.peer.getControlPoints();
   }
 

@@ -31,11 +31,9 @@
     "test:unit": "jest ./test/unit/export/*.ts ./test/unit/import/*.ts --verbose --silent --detectOpenHandles"
   },
   "dependencies": {
-    "@types/jquery": "^3.5.33",
     "@wisemapping/core-js": "workspace:*",
     "@wisemapping/web2d": "workspace:*",
     "html2canvas": "^1.4.1",
-    "jquery": "3.7.1",
     "jspdf": "^3.0.3",
     "lodash": "^4.17.21",
     "xml-formatter": "^3.6.7"

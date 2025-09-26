@@ -24,6 +24,7 @@ import ElementPeer from './ElementPeer';
  */
 class RectPeer extends ElementPeer {
   private _arc: number;
+
   constructor(arc: number) {
     const svgElement = window.document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     super(svgElement);

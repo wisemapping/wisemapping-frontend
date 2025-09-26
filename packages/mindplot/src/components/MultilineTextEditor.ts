@@ -17,8 +17,9 @@
  *   limitations under the License.
  */
 import { FontStyle } from '@wisemapping/web2d/src/components/peer/svg/FontPeer';
-import $ from 'jquery';
 
+import DOMUtils from './util/DOMUtils';
+import EventManager from './util/EventManager';
 import ActionDispatcher from './ActionDispatcher';
 import EventDispatcher from './EventDispatcher';
 import LayoutEventBus from './layout/LayoutEventBus';
@@ -31,7 +32,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
   private _oldText: string | undefined;
 
-  private _containerElem: JQuery<HTMLElement>;
+  private _containerElem: HTMLElement;
 
   private _onClose: () => void;
 
@@ -41,7 +42,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
     // Create editor ui
     this._containerElem = EditorComponent.buildEditor();
-    $('#mindmap-comp').parent().append(this._containerElem);
+    const mindmapComp = document.getElementById('mindmap-comp');
+    if (mindmapComp && mindmapComp.parentElement) {
+      mindmapComp.parentElement.appendChild(this._containerElem);
+    }
     this.registerEvents(this._containerElem);
     this._oldText = topic.getText();
     this._onClose = onClose;
@@ -51,38 +55,41 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     return this._topic;
   }
 
-  private static buildEditor(): JQuery<HTMLElement> {
-    const result = $('<div></div>').attr('id', 'textContainer').css({
-      display: 'none',
-      zIndex: '8',
-      border: '0 none',
-    });
+  private static buildEditor(): HTMLElement {
+    const result = DOMUtils.createElement('div');
+    DOMUtils.attr(result, 'id', 'textContainer');
+    DOMUtils.css(result, 'display', 'none');
+    DOMUtils.css(result, 'zIndex', '8');
+    DOMUtils.css(result, 'border', '0 none');
 
-    const textareaElem = $('<textarea tabindex="-1" value="" wrap="off" ></textarea>').css({
-      border: '0px',
-      background: 'rgba(0, 0, 0, 0)',
-      outline: '0 none',
-      resize: 'none',
-      overflow: 'hidden',
-      padding: '0px 0px 0px 0px',
-      lineHeight: '100%',
-      width: '100%',
-    });
+    const textareaElem = DOMUtils.createElement('textarea');
+    DOMUtils.attr(textareaElem, 'tabindex', '-1');
+    DOMUtils.attr(textareaElem, 'value', '');
+    DOMUtils.attr(textareaElem, 'wrap', 'off');
+    DOMUtils.css(textareaElem, 'border', '0px');
+    DOMUtils.css(textareaElem, 'background', 'rgba(0, 0, 0, 0)');
+    DOMUtils.css(textareaElem, 'outline', '0 none');
+    DOMUtils.css(textareaElem, 'resize', 'none');
+    DOMUtils.css(textareaElem, 'overflow', 'hidden');
+    DOMUtils.css(textareaElem, 'padding', '0px 0px 0px 0px');
+    DOMUtils.css(textareaElem, 'lineHeight', '100%');
+    DOMUtils.css(textareaElem, 'width', '100%');
 
-    result.append(textareaElem);
+    DOMUtils.append(result, textareaElem);
     return result;
   }
 
-  private registerEvents(containerElem: JQuery): void {
+  private registerEvents(containerElem: HTMLElement): void {
     const textareaElem = this.getTextareaElem();
-    textareaElem.on('keydown', (event: JQuery.KeyDownEvent) => {
-      switch (event.code) {
+    EventManager.bind(textareaElem, 'keydown', (event: Event) => {
+      switch ((event as KeyboardEvent).code) {
         case 'Escape':
           // Revert to previous text ...
           this.close(false);
           break;
         case 'Enter': {
-          if (event.metaKey || event.ctrlKey) {
+          const keyboardEvent = event as KeyboardEvent;
+          if (keyboardEvent.metaKey || keyboardEvent.ctrlKey) {
             // Add return ...
             const text = this.getTextAreaText();
             const cursorPosition = text.length;
@@ -91,10 +98,10 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
             if (cursorPosition < text.length) {
               tail = text.substring(cursorPosition, text.length);
             }
-            textareaElem.val(`${head}\n${tail}`);
+            DOMUtils.val(textareaElem, `${head}\n${tail}`);
 
-            textareaElem.trigger('focus');
-            textareaElem[0].setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+            textareaElem.focus();
+            textareaElem.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
           } else {
             this.close(true);
           }
@@ -107,24 +114,34 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       event.stopPropagation();
     });
 
-    textareaElem.on('keypress', (event: JQuery.KeyPressEvent) => {
-      const c = String.fromCharCode(event.which!);
-      const text = this.getTextareaElem().val() + c;
-      this._topic.setText(text);
-      this.resize(text);
+    EventManager.bind(textareaElem, 'keypress', (event: Event) => {
+      const keyboardEvent = event as KeyboardEvent;
+      const c = keyboardEvent.key;
 
-      this.fireEvent('input', [event, text]);
+      // Skip special keys that shouldn't be added to text
+      if (
+        c.length === 1 &&
+        !keyboardEvent.ctrlKey &&
+        !keyboardEvent.metaKey &&
+        !keyboardEvent.altKey
+      ) {
+        const text = DOMUtils.val(this.getTextareaElem()) + c;
+        this._topic.setText(text);
+        this.resize(text);
+
+        this.fireEvent('input', [event, text]);
+      }
       event.stopPropagation();
     });
 
     // If the user clicks on the input, all event must be ignored ...
-    containerElem.on('click', (event: JQuery.Event) => {
+    EventManager.bind(containerElem, 'click', (event: Event) => {
       event.stopPropagation();
     });
-    containerElem.on('dblclick', (event: JQuery.Event) => {
+    EventManager.bind(containerElem, 'dblclick', (event: Event) => {
       event.stopPropagation();
     });
-    containerElem.on('mousedown', (event: JQuery.Event) => {
+    EventManager.bind(containerElem, 'mousedown', (event: Event) => {
       event.stopPropagation();
     });
   }
@@ -136,7 +153,9 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     // Adjust position ...
     const textShape = this._topic.getOrBuildTextShape();
     const { top, left } = textShape.getNativePosition();
-    this._containerElem.offset({ top, left });
+    this._containerElem.style.position = 'absolute';
+    this._containerElem.style.top = `${top}px`;
+    this._containerElem.style.left = `${left}px`;
 
     const mindmapCompData = document.getElementById('mindmap-comp')?.getBoundingClientRect();
     const maxWidth = mindmapCompData ? mindmapCompData.width - left : 0;
@@ -147,14 +166,12 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     const rows = [...textValue].filter((x) => x === '\n').length + 1;
     const maxLineLength = Math.max(...textValue.split('\n').map((l) => l.length));
 
-    textElem.attr('cols', maxLineLength);
-    textElem.attr('rows', rows);
+    DOMUtils.attr(textElem, 'cols', maxLineLength.toString());
+    DOMUtils.attr(textElem, 'rows', rows.toString());
 
-    this._containerElem.css({
-      maxWidth,
-      width: `${maxLineLength + 2}em`,
-      height: 0,
-    });
+    DOMUtils.css(this._containerElem, 'maxWidth', `${maxWidth}px`);
+    DOMUtils.css(this._containerElem, 'width', `${maxLineLength + 2}em`);
+    DOMUtils.css(this._containerElem, 'height', '0');
   }
 
   private updateModel() {
@@ -188,7 +205,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
 
     // Set editor's initial size
     // Position the editor and set the size...
-    this._containerElem.css('display', 'block');
+    DOMUtils.css(this._containerElem, 'display', 'block');
 
     // Set editor's initial text. If the text has not been specifed, it will be empty
     const modelText = topic.getModel().getText();
@@ -200,7 +217,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     if (textAreaElem) {
       this.positionCursor(textAreaElem, textOverwrite === undefined);
     }
-    textAreaElem.trigger('focus');
+    textAreaElem.focus();
   }
 
   private setStyle(fontStyle: FontStyle) {
@@ -223,13 +240,15 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       'font-weight': fontStyle.weight,
       color: fontStyle.color!,
     };
-    inputField.css(cssStyle);
-    this._containerElem.css(cssStyle);
+    Object.keys(cssStyle).forEach((prop) => {
+      DOMUtils.css(inputField, prop, cssStyle[prop]);
+      DOMUtils.css(this._containerElem, prop, cssStyle[prop]);
+    });
   }
 
   private setText(text: string): void {
     const textareaElem = this.getTextareaElem();
-    textareaElem.val(text);
+    DOMUtils.val(textareaElem, text);
 
     this._topic.setText(text);
 
@@ -237,18 +256,18 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
   }
 
   private getTextAreaText(): string {
-    return this.getTextareaElem().val() as string;
+    return DOMUtils.val(this.getTextareaElem()) as string;
   }
 
-  private getTextareaElem(): JQuery<HTMLTextAreaElement> {
-    return this._containerElem.find('textarea');
+  private getTextareaElem(): HTMLTextAreaElement {
+    return DOMUtils.find(this._containerElem, 'textarea')[0] as HTMLTextAreaElement;
   }
 
-  private positionCursor(textareaElem: JQuery<HTMLTextAreaElement>, selectText: boolean) {
+  private positionCursor(textareaElem: HTMLTextAreaElement, selectText: boolean) {
     const { length } = this.getTextAreaText();
     const start = selectText ? 0 : length;
-    textareaElem.trigger('focus');
-    textareaElem[0].setSelectionRange(start, length);
+    textareaElem.focus();
+    textareaElem.setSelectionRange(start, length);
   }
 
   close(update: boolean): void {
@@ -259,7 +278,7 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
       this.updateModel();
     }
     // Remove it form the screen ...
-    this._containerElem.remove();
+    DOMUtils.remove(this._containerElem);
 
     // Restore topoc share visibility ...
     this._topic.getOrBuildTextShape().setVisibility(true);

@@ -28,7 +28,6 @@ class Image extends WorkspaceElement<ImagePeer> {
     super(peer, attributes || {});
   }
 
-  // eslint-disable-next-line class-methods-use-this
   getType(): string {
     return 'Image';
   }

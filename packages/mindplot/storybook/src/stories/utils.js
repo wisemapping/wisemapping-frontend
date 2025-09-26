@@ -21,18 +21,16 @@ Grid = function (parent, colums, rows) {
   const cellSize = '10px';
   this._parent = parent;
   this._container = this._createContainer();
-  const tbody = $(this._container.firstChild.firstChild);
+  const tbody = this._container.firstChild.firstChild;
   for (let i = 0; i < rows; i++) {
-    const trElement = $('<tr></tr>');
+    const trElement = document.createElement('tr');
     for (let j = 0; j < colums; j++) {
-      const tdElement = $('<td></td>');
-      tdElement.css({
-        width: cellSize,
-        height: cellSize,
-        borderWidth: '1px',
-        borderStyle: 'dashed',
-        borderColor: 'lightsteelblue',
-      });
+      const tdElement = document.createElement('td');
+      tdElement.style.width = cellSize;
+      tdElement.style.height = cellSize;
+      tdElement.style.borderWidth = '1px';
+      tdElement.style.borderStyle = 'dashed';
+      tdElement.style.borderColor = 'lightsteelblue';
       trElement.append(tdElement);
     }
     tbody.append(trElement);
@@ -45,7 +43,7 @@ Grid.prototype.setPosition = function (x, y) {
 };
 
 Grid.prototype.render = function () {
-  $(this._parent).append(this._container);
+  this._parent.appendChild(this._container);
 };
 
 Grid.prototype._createContainer = function () {

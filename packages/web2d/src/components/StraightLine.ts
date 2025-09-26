@@ -36,27 +36,34 @@ class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
     return this;
   }
 
-  setIsSrcControlPointCustom(value: boolean): void {
+  setIsSrcControlPointCustom(): void {
     throw new Error('Method not implemented.');
   }
-  setIsDestControlPointCustom(value: boolean): void {
+
+  setIsDestControlPointCustom(): void {
     throw new Error('Method not implemented.');
   }
-  setDashed(v: number, v2: number): void {
+
+  setDashed(): void {
     throw new Error('Method not implemented.');
   }
-  setSrcControlPoint(value: PositionType): void {
+
+  setSrcControlPoint(): void {
     throw new Error('Method not implemented.');
   }
-  setDestControlPoint(value: PositionType): void {
+
+  setDestControlPoint(): void {
     throw new Error('Method not implemented.');
   }
+
   isDestControlPointCustom(): boolean {
     throw new Error('Method not implemented.');
   }
+
   isSrcControlPointCustom(): boolean {
     throw new Error('Method not implemented.');
   }
+
   getControlPoints(): [PositionType, PositionType] {
     throw new Error('Method not implemented.');
   }
@@ -81,15 +88,15 @@ class StraightLine extends WorkspaceElement<StraightLinePeer> implements Line {
     return this.peer.getTo();
   }
 
-  setPosition() {
+  static setPosition() {
     throw new Error('Unsupported operation');
   }
 
-  setSize(x: number, y: number) {
+  static setSize() {
     throw new Error('Unsupported operation');
   }
 
-  setFill(color: string, opacity: number) {
+  static setFill() {
     throw new Error('Unsupported operation');
   }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -22,11 +21,17 @@ import EventUtils from '../utils/EventUtils';
 
 class ElementPeer {
   _native: SVGElement;
+
   private _parent: ElementPeer | null;
+
   protected _size: SizeType;
-  private _changeListeners: {};
-  private __handlers: Map<string, any>;
+
+  private _changeListeners: Record<string, unknown>;
+
+  private __handlers: Map<string, unknown>;
+
   private _children: ElementPeer[];
+
   private _stokeStyle: string | null;
 
   constructor(svgElement: SVGElement) {
@@ -104,9 +109,12 @@ class ElementPeer {
     this._native.dispatchEvent(new CustomEvent(type, { detail: event }));
   }
 
-  removeEvent(type: string, listener) {
-    this._native.removeEventListener(type, this.__handlers.get(listener));
-    this.__handlers.delete(listener);
+  removeEvent(type: string, listener: unknown) {
+    const eventListener = this.__handlers.get(listener as string) as EventListener;
+    if (eventListener) {
+      this._native.removeEventListener(type, eventListener);
+    }
+    this.__handlers.delete(listener as string);
   }
 
   setSize(width: number, height: number): void {
@@ -220,7 +228,7 @@ class ElementPeer {
   }
 
   attachChangeEventListener(type, listener) {
-    const listeners = this.getChangeEventListeners(type);
+    const listeners = this.getChangeEventListeners(type) as ((arg: unknown) => void)[];
     if (!$defined(listener)) {
       throw new Error('Listener can not be null');
     }
@@ -269,7 +277,9 @@ class ElementPeer {
       dashdot: [5, 3, 1, 3],
     };
   }
+
   protected static svgNamespace = 'http://www.w3.org/2000/svg';
+
   protected static linkNamespace = 'http://www.w3.org/1999/xlink';
 }
 

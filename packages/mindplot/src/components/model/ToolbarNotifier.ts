@@ -17,35 +17,88 @@
  */
 
 import { $assert } from '@wisemapping/core-js';
-import $ from 'jquery';
+import DOMUtils from '../util/DOMUtils';
 
 class ToolbarNotifier {
-  static get container() {
-    return $('#headerNotifier');
+  private static currentTimeout: NodeJS.Timeout | null = null;
+
+  static get container(): HTMLElement | null {
+    return document.getElementById('headerNotifier');
   }
 
   static hide() {
-    this.container.hide();
+    const { container } = this;
+    if (container) {
+      DOMUtils.hide(container);
+    }
   }
 
   static show(msg: string, fade: boolean) {
     $assert(msg, 'msg can not be null');
 
-    // In case of print,embedded no message is displayed ....
-    if (this.container && this.container.length && !this.container.data('transitioning')) {
-      this.container.data('transitioning', true);
-      this.container.text(msg);
-      this.container.css({
-        left: ($(window).width()! - this.container.width()!) / 2 - 9,
-      });
+    // Cancel any existing timeout
+    if (this.currentTimeout) {
+      clearTimeout(this.currentTimeout);
+      this.currentTimeout = null;
+    }
+
+    // Reset the container state before showing new notification
+    const { container } = this;
+    if (container) {
+      // Reset any ongoing animations
+      DOMUtils.css(container, 'opacity', '');
+      DOMUtils.css(container, 'transition', '');
+    }
+
+    // Display the new notification
+    this.displayNotification(msg, fade);
+  }
+
+  private static displayNotification(msg: string, fade: boolean) {
+    const { container } = this;
+
+    if (container) {
+      DOMUtils.text(container, msg);
+
+      // Calculate center position
+      const windowWidth = DOMUtils.windowWidth();
+      const elementWidth = DOMUtils.width(container);
+      const leftPosition = Math.max(0, (windowWidth - elementWidth) / 2 - 9);
+
+      // Override styled component positioning for proper centering
+      DOMUtils.css(container, 'left', `${leftPosition}px`);
+      DOMUtils.css(container, 'transform', 'none'); // Override the translateX(-50%)
 
       if (fade) {
-        this.container.show().fadeOut(5000);
+        DOMUtils.show(container);
+        // Set initial opacity to 1 (fully visible)
+        DOMUtils.css(container, 'opacity', '1');
+        DOMUtils.css(container, 'transition', 'opacity 3000ms');
+
+        // Start fade out after a brief delay to ensure visibility
+        setTimeout(() => {
+          DOMUtils.css(container, 'opacity', '0');
+        }, 100);
+
+        // Hide after fade completes
+        this.currentTimeout = setTimeout(() => {
+          DOMUtils.hide(container);
+          DOMUtils.css(container, 'opacity', '');
+          DOMUtils.css(container, 'transition', '');
+          this.currentTimeout = null;
+        }, 3100); // 100ms delay + 3000ms fade
       } else {
-        this.container.show();
+        DOMUtils.show(container);
+        DOMUtils.css(container, 'opacity', '1');
+
+        // Hide after a short time
+        this.currentTimeout = setTimeout(() => {
+          DOMUtils.hide(container);
+          DOMUtils.css(container, 'opacity', '');
+          this.currentTimeout = null;
+        }, 2000);
       }
     }
-    this.container.data('transitioning', false);
   }
 }
 

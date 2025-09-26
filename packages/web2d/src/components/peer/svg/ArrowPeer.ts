@@ -22,6 +22,7 @@ import ElementPeer from './ElementPeer';
 
 class ArrowPeer extends ElementPeer {
   private _fromPoint: PositionType;
+
   private _controlPoint: PositionType | null;
 
   constructor() {
@@ -74,13 +75,11 @@ class ArrowPeer extends ElementPeer {
       const m = y2 / x2;
       const mp = y3 / x3;
       const l = 6;
-      // eslint-disable-next-line no-restricted-properties
-      const { pow } = Math;
 
-      x = x2 === 0 ? 0 : Math.sqrt(pow(l, 2) / (1 + pow(m, 2)));
+      x = x2 === 0 ? 0 : Math.sqrt(l ** 2 / (1 + m ** 2));
       x *= Math.sign(x2);
       y = x2 === 0 ? l * Math.sign(y2) : m * x;
-      xp = x3 === 0 ? 0 : Math.sqrt(pow(l, 2) / (1 + pow(mp, 2)));
+      xp = x3 === 0 ? 0 : Math.sqrt(l ** 2 / (1 + mp ** 2));
       xp *= Math.sign(x3);
       yp = x3 === 0 ? l * Math.sign(y3) : mp * xp;
 

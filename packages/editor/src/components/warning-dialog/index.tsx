@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React, { useState } from 'react';
-import { CloseButton, InfoDialog, InfoDialogContent, Notifier } from './styled';
+import { CloseButton, InfoDialog, InfoDialogContent } from './styled';
 import { useIntl } from 'react-intl';
 
 import CloseDialogSvg from '../../../images/close-dialog-icon.svg';
@@ -72,7 +72,6 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
   const [open, setOpen] = useState<boolean>(Boolean(msgExt || message).valueOf());
   return (
     <>
-      <Notifier id="headerNotifier"></Notifier>
       {open && (
         <InfoDialog>
           <InfoDialogContent>

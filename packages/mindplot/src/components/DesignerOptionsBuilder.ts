@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 import { $assert } from '@wisemapping/core-js';
+import { AjaxUtils } from './util/AjaxUtils';
 import EditorRenderMode from './EditorRenderMode';
 import WidgetBuilder from './WidgetBuilder';
 import PersistenceManager from './PersistenceManager';
@@ -46,13 +47,13 @@ class OptionsBuilder {
   }
 
   static async loadOptions(jsonConf: string, options: DesignerOptions): Promise<DesignerOptions> {
-    const result = await $.ajax({
+    const result = await AjaxUtils.ajax({
       url: jsonConf,
       dataType: 'json',
-      method: 'get',
+      method: 'GET',
     });
 
-    return { ...result, ...OptionsBuilder.buildOptions(options) };
+    return { ...(result as DesignerOptions), ...OptionsBuilder.buildOptions(options) };
   }
 }
 export default OptionsBuilder;

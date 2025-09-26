@@ -40,11 +40,14 @@ export const Notifier = styled.div`
   border-radius: 3px;
   position: fixed;
   padding: 5px 9px;
-  color: back;
+  color: black;
   white-space: nowrap;
   margin-top: 5px;
   display: none;
   bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 `;
 

@@ -15,9 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
-
 import { $assert, $defined } from '@wisemapping/core-js';
+import DOMUtils from './util/DOMUtils';
 import Messages, { $msg } from './Messages';
 
 import EventDispispatcher from './EventDispatcher';
@@ -98,8 +97,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Set full div elem render area.The component must fill container size
     // container is responsible for location and size
-    $(divElem).css('width', '100%');
-    $(divElem).css('height', '100%');
+    DOMUtils.css(divElem, 'width', '100%');
+    DOMUtils.css(divElem, 'height', '100%');
 
     // Dispatcher manager ...
     const commandContext = new CommandContext(this);
@@ -145,7 +144,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   getContainer(): HTMLDivElement {
-    return this._canvas.getScreenManager().getContainer()[0];
+    return this._canvas.getScreenManager().getContainer();
   }
 
   private _registerWheelEvents(): void {
@@ -192,15 +191,14 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     });
 
     // Deselect on click ...
-    screenManager.addEvent('click', (event: JQuery.Event) => {
+    screenManager.addEvent('click', (event: Event) => {
       me.onObjectFocusEvent(undefined, event);
     });
 
     // Create nodes on double click...
-    screenManager.addEvent('dblclick', (event: JQuery.Event) => {
+    screenManager.addEvent('dblclick', (event: Event) => {
       if (workspace.isWorkspaceEventsEnabled()) {
-        const originalEvent =
-          (event as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent || event;
+        const originalEvent = event;
         const mousePos = screenManager.getWorkspaceMousePosition(originalEvent as MouseEvent);
         const centralTopic: CentralTopic = me.getModel().getCentralTopic();
 
@@ -645,7 +643,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const customCanvasStyle = mindmap.getCanvasStyle();
     if (customCanvasStyle) {
       // Apply custom canvas style if it exists
-      this.setCanvasStyle(customCanvasStyle);
+      this.applyCanvasStyle(customCanvasStyle);
     } else {
       // Apply theme-based style if no custom style
       const themeId = mindmap.getTheme();
@@ -745,11 +743,21 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   changeTheme(id: ThemeType): void {
-    this._actionDispatcher.changeThemeToTopic(id);
+    this._actionDispatcher.changeTheme(id);
+  }
+
+  /**
+   * Apply theme directly (internal use - no undo history)
+   * @param id - Theme ID
+   * @internal
+   */
+  applyTheme(id: ThemeType): void {
+    // Save theme to mindmap for persistence
+    const mindmap = this.getMindmap();
+    mindmap.setTheme(id);
 
     // Update background color ...
     const theme = ThemeFactory.createById(id);
-
     const style = theme.getCanvasCssStyle();
     this._canvas.setBackgroundStyle(style);
 
@@ -758,18 +766,49 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   }
 
   /**
-   * Set custom canvas style
+   * Set canvas style through action dispatcher (undoable)
    * @param style - Canvas style configuration
    */
-  setCanvasStyle(style: {
-    backgroundColor: string;
-    backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-    gridSize: number;
-    gridColor: string;
-  }): void {
+  setCanvasStyle(
+    style:
+      | {
+          backgroundColor: string;
+          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize: number;
+          gridColor: string;
+        }
+      | undefined,
+  ): void {
+    this._actionDispatcher.changeCanvasStyle(style);
+  }
+
+  /**
+   * Apply canvas style directly (internal use - no undo history)
+   * @param style - Canvas style configuration
+   * @internal
+   */
+  applyCanvasStyle(
+    style:
+      | {
+          backgroundColor: string;
+          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize: number;
+          gridColor: string;
+        }
+      | undefined,
+  ): void {
     // Save canvas style to mindmap for persistence
     const mindmap = this.getMindmap();
     mindmap.setCanvasStyle(style);
+
+    // If no style provided, apply theme default
+    if (!style) {
+      const themeId = mindmap.getTheme();
+      const theme = ThemeFactory.createById(themeId);
+      const themeStyle = theme.getCanvasCssStyle();
+      this._canvas.setBackgroundStyle(themeStyle);
+      return;
+    }
 
     let cssStyle = `position: relative;
       left: 0;

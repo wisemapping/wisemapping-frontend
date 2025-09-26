@@ -47,7 +47,6 @@ class Rect extends WorkspaceElement<RectPeer> {
     super(peer, mergedAttr);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   getType() {
     return 'Rect';
   }

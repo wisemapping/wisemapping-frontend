@@ -27,6 +27,8 @@ import DragTopicCommand from './commands/DragTopicCommand';
 import GenericFunctionCommand from './commands/GenericFunctionCommand';
 import MoveControlPointCommand from './commands/MoveControlPointCommand';
 import ChangeFeatureToTopicCommand from './commands/ChangeFeatureToTopicCommand';
+import ChangeCanvasStyleCommand from './commands/ChangeCanvasStyleCommand';
+import ChangeThemeCommand from './commands/ChangeThemeCommand';
 import LayoutEventBus from './layout/LayoutEventBus';
 import CommandContext from './CommandContext';
 import NodeModel from './model/NodeModel';
@@ -273,15 +275,12 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
-  /** */
-  changeThemeToTopic(themeType: ThemeType) {
-    $assert(themeType, 'themeType can not be null');
-
-    const commandFunc = () => null; // TODO: Theme functionality not implemented yet
-
-    const command = new GenericFunctionCommand(commandFunc, [], undefined);
-    command.setDiscardDuplicated('theme');
+  changeTheme(themeType: ThemeType): void {
+    console.log('StandaloneActionDispatcher.changeTheme called with:', themeType);
+    const command = new ChangeThemeCommand(themeType);
+    console.log('About to execute ChangeThemeCommand:', command);
     this.execute(command);
+    console.log('ChangeThemeCommand executed');
   }
 
   /** */
@@ -314,8 +313,29 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
+  changeCanvasStyle(
+    style:
+      | {
+          backgroundColor: string;
+          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize: number;
+          gridColor: string;
+        }
+      | undefined,
+  ): void {
+    console.log('StandaloneActionDispatcher.changeCanvasStyle called with:', style);
+    const command = new ChangeCanvasStyleCommand(style);
+    console.log('About to execute ChangeCanvasStyleCommand:', command);
+    this.execute(command);
+    console.log('ChangeCanvasStyleCommand executed');
+  }
+
   /** */
   execute(command: Command) {
+    console.log(
+      'StandaloneActionDispatcher.execute called with command:',
+      command.constructor.name,
+    );
     this._actionRunner.execute(command);
   }
 }
