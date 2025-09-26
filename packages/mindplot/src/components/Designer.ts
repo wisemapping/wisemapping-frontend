@@ -45,7 +45,7 @@ import EventBusDispatcher from './layout/EventBusDispatcher';
 import LayoutManager from './layout/LayoutManager';
 
 import { $notify } from './model/ToolbarNotifier';
-import RelationshipModel from './model/RelationshipModel';
+import RelationshipModel, { StrokeStyle } from './model/RelationshipModel';
 import Mindmap from './model/Mindmap';
 import NodeModel from './model/NodeModel';
 import Topic from './Topic';
@@ -1078,6 +1078,38 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       .map((t) => t.getId());
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeConnectionColorToTopic(topicsIds, value);
+    }
+  }
+
+  changeRelationshipStyle(type: LineType): void {
+    const relationships = this.getModel().filterSelectedRelationships();
+    if (relationships.length > 0) {
+      this._actionDispatcher.changeRelationshipStyle(relationships, type);
+    }
+  }
+
+  changeRelationshipColor(value: string | undefined): void {
+    const relationships = this.getModel().filterSelectedRelationships();
+    if (relationships.length > 0) {
+      this._actionDispatcher.changeRelationshipColor(relationships, value);
+    }
+  }
+  changeRelationshipStrokeStyle(strokeStyle: StrokeStyle): void {
+    const relationships = this.getModel().filterSelectedRelationships();
+    if (relationships.length > 0) {
+      this._actionDispatcher.changeRelationshipStrokeStyle(relationships, strokeStyle);
+    }
+  }
+  changeRelationshipEndArrow(value: boolean): void {
+    const relationships = this.getModel().filterSelectedRelationships();
+    if (relationships.length > 0) {
+      this._actionDispatcher.changeRelationshipEndArrow(relationships, value);
+    }
+  }
+  changeRelationshipStartArrow(value: boolean): void {
+    const relationships = this.getModel().filterSelectedRelationships();
+    if (relationships.length > 0) {
+      this._actionDispatcher.changeRelationshipStartArrow(relationships, value);
     }
   }
 

@@ -19,6 +19,12 @@ import { $assert, $defined } from '@wisemapping/core-js';
 import { LineType } from '../ConnectionLine';
 import PositionType from '../PositionType';
 
+export enum StrokeStyle {
+  SOLID = 'solid',
+  DASHED = 'dashed',
+  DOTTED = 'dotted',
+}
+
 class RelationshipModel {
   static _nextUuid = 0;
 
@@ -38,6 +44,10 @@ class RelationshipModel {
 
   private _startArrow: boolean;
 
+  private _strokeColor: string | undefined;
+
+  private _strokeStyle: StrokeStyle;
+
   constructor(sourceTopicId: number, targetTopicId: number) {
     $assert($defined(sourceTopicId), 'from node type can not be null');
     $assert($defined(targetTopicId), 'to node type can not be null');
@@ -52,6 +62,8 @@ class RelationshipModel {
     this._destCtrlPoint = null;
     this._endArrow = true;
     this._startArrow = false;
+    this._strokeColor = undefined;
+    this._strokeStyle = StrokeStyle.DASHED;
   }
 
   getFromNode(): number {
@@ -107,6 +119,22 @@ class RelationshipModel {
     this._startArrow = startArrow;
   }
 
+  getStrokeColor(): string | undefined {
+    return this._strokeColor;
+  }
+
+  setStrokeColor(strokeColor: string | undefined): void {
+    this._strokeColor = strokeColor;
+  }
+
+  getStrokeStyle(): StrokeStyle {
+    return this._strokeStyle;
+  }
+
+  setStrokeStyle(strokeStyle: StrokeStyle): void {
+    this._strokeStyle = strokeStyle;
+  }
+
   /**
    * @return a clone of the relationship model
    */
@@ -118,6 +146,8 @@ class RelationshipModel {
     result._destCtrlPoint = this._destCtrlPoint;
     result._endArrow = this._endArrow;
     result._startArrow = this._startArrow;
+    result._strokeColor = this._strokeColor;
+    result._strokeStyle = this._strokeStyle;
     return result;
   }
 
