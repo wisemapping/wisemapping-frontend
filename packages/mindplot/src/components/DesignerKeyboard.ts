@@ -15,16 +15,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
+import EventManager from './util/EventManager';
 import Keyboard from './Keyboard';
 import { Designer } from '..';
 import Topic from './Topic';
-
-import initHotKeyPluggin from '../../libraries/jquery.hotkeys';
-
-// Provides dispatcher of keyevents by key...
-initHotKeyPluggin($);
 
 export type EventCallback = (event?: Event) => void;
 class DesignerKeyboard extends Keyboard {
@@ -204,17 +199,18 @@ class DesignerKeyboard extends Keyboard {
       DesignerKeyboard.pause();
     });
 
-    $(document).on('keypress', (event) => {
+    EventManager.bind(document, 'keypress', (event: Event) => {
       // Needs to be ignored ?
       if (
         DesignerKeyboard.isDisabled() ||
-        DesignerKeyboard.excludeFromEditor.includes(event.code)
+        DesignerKeyboard.excludeFromEditor.includes((event as KeyboardEvent).code)
       ) {
         return;
       }
 
       // Is a modifier ?
-      if (event.ctrlKey || event.altKey || event.metaKey) {
+      const keyboardEvent = event as KeyboardEvent;
+      if (keyboardEvent.ctrlKey || keyboardEvent.altKey || keyboardEvent.metaKey) {
         return;
       }
 
@@ -223,7 +219,7 @@ class DesignerKeyboard extends Keyboard {
       if (topic) {
         event.stopPropagation();
         event.preventDefault();
-        topic.showTextEditor(event.key);
+        topic.showTextEditor(keyboardEvent.key);
       }
     });
   }

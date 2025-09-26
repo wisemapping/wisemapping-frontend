@@ -21,15 +21,25 @@ import ElementPeer from './ElementPeer';
 
 class CurvedLinePeer extends ElementPeer {
   private _customControlPoint_1: boolean;
+
   private _customControlPoint_2: boolean;
+
   private _control1: PositionType;
+
   private _control2: PositionType;
+
   private _x1: number;
+
   private _y1: number;
+
   private _x2: number;
+
   private _y2: number;
+
   private _showEndArrow: boolean;
+
   private _showStartArrow: boolean;
+
   private _width: number;
 
   constructor() {

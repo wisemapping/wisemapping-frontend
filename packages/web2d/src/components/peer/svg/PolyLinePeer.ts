@@ -21,10 +21,15 @@ import ElementPeer from './ElementPeer';
 
 class PolyLinePeer extends ElementPeer {
   private _breakDistance: number;
+
   private _x1: number;
+
   private _y1: number;
+
   private _x2: number;
+
   private _y2: number;
+
   private _style: string;
 
   constructor() {

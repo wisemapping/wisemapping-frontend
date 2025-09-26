@@ -19,7 +19,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "webpack --config webpack.dev.js",
-    "lint": "echo 'Linting skipped - TypeScript files require typescript-eslint configuration'",
+    "lint": "npx eslint src --ext js,ts",
     "storybook": "storybook dev -p 6006",
     "storybook:test": "storybook dev -p 6006 --no-open",
     "test": "yarn test:integration",
@@ -41,8 +41,7 @@
     "vite": "^7.1.7"
   },
   "peerDependencies": {
-    "@wisemapping/core-js": "workspace:*",
-    "jquery": "^3.6.0"
+    "@wisemapping/core-js": "workspace:*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com"

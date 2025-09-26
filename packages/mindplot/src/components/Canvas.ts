@@ -53,15 +53,15 @@ class Canvas {
 
     const divContainer = screenManager.getContainer();
     this._containerSize = {
-      width: Number.parseInt(divContainer.css('width'), 10),
-      height: Number.parseInt(divContainer.css('height'), 10),
+      width: screenManager.getContainerWidth(),
+      height: screenManager.getContainerHeight(),
     };
     // Initialize web2d workspace.
     const workspace = this._createWorkspace();
     this._workspace = workspace;
 
     // Append to the workspace...
-    workspace.addItAsChildTo(divContainer);
+    workspace.addItAsChildTo(divContainer as HTMLDivElement);
 
     this.setZoom(zoom, true);
     this._renderQueue = [];
@@ -195,15 +195,16 @@ class Canvas {
   setZoom(zoom: number, center = false): void {
     const workspace = this._workspace;
 
-    const divContainer = this._screenManager.getContainer();
-    const containerWidth = divContainer.width()!;
-    const containerHeight = divContainer.height()!;
+    const containerWidth = this._screenManager.getContainerWidth();
+    const containerHeight = this._screenManager.getContainerHeight();
     const newVisibleAreaSize = { width: containerWidth, height: containerHeight };
 
     // - svg must fit container size
-    const svgElement = divContainer.find('svg');
-    svgElement.attr('width', containerWidth);
-    svgElement.attr('height', containerHeight);
+    const svgElement = this._screenManager.findInContainer('svg');
+    if (svgElement) {
+      svgElement.setAttribute('width', containerWidth.toString());
+      svgElement.setAttribute('height', containerHeight.toString());
+    }
     // - svg viewPort must fit container size with zoom adjustment
     const newCoordWidth = containerWidth * zoom;
     const newCoordHeight = containerHeight * zoom;
@@ -267,23 +268,20 @@ class Canvas {
     const workspace = this._workspace;
     const screenManager = this._screenManager;
     const mWorkspace = this;
-    const mouseDownListener = (event: JQuery.Event) => {
+    const mouseDownListener = (event: Event) => {
       if (!this._mouseMoveListener) {
         if (mWorkspace.isWorkspaceEventsEnabled()) {
           mWorkspace.enableWorkspaceEvents(false);
 
-          const originalEvent =
-            (event as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent || event;
+          const originalEvent = event;
           const mouseDownPosition = screenManager.getWorkspaceMousePosition(
             originalEvent as MouseEvent,
           );
           const originalCoordOrigin = workspace.getCoordOrigin();
 
           let wasDragged = false;
-          this._mouseMoveListener = (mouseMoveEvent: JQuery.Event) => {
-            const originalMoveEvent =
-              (mouseMoveEvent as JQuery.Event & { originalEvent?: MouseEvent }).originalEvent ||
-              mouseMoveEvent;
+          this._mouseMoveListener = (mouseMoveEvent: Event) => {
+            const originalMoveEvent = mouseMoveEvent;
             const currentMousePosition = screenManager.getWorkspaceMousePosition(
               originalMoveEvent as MouseEvent,
             );

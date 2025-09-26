@@ -84,7 +84,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
   };
 
   return (
-    <Box sx={{ px: 2, py: 1.5, width: '360px', maxHeight: '60vh', overflowY: 'auto' }}>
+    <Box sx={{ px: 2, py: 1.5, width: '510px', maxHeight: '60vh', overflowY: 'auto' }}>
       {/* Background Pattern */}
       <Box
         component="fieldset"

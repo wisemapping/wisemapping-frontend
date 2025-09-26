@@ -24,8 +24,11 @@ import PositionType from '../../PositionType';
 
 class TextPeer extends ElementPeer {
   private _position: { x: number; y: number };
+
   private _font: FontPeer;
+
   private _textAlign: string;
+
   private _text: string;
 
   constructor(fontPeer: FontPeer) {
@@ -82,9 +85,9 @@ class TextPeer extends ElementPeer {
           result.push(line);
           line = '';
         } else {
-          line = line + c;
+          line += c;
         }
-        i = i + 1;
+        i += 1;
       } while (i < text.length + 1);
     }
     return result;
@@ -176,7 +179,7 @@ class TextPeer extends ElementPeer {
       size: String(this._font.getSize()),
       style: this._font.getStyle(),
       weight: this._font.getWeight(),
-      color: color ? color : undefined,
+      color: color || undefined,
     };
     return style;
   }
@@ -187,7 +190,7 @@ class TextPeer extends ElementPeer {
   }
 
   getShapeWidth(): number {
-    let result = (this._native as SVGGraphicsElement).getBBox().width;
+    const result = (this._native as SVGGraphicsElement).getBBox().width;
     return result;
   }
 

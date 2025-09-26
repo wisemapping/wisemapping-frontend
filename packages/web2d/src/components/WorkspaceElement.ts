@@ -158,7 +158,6 @@ abstract class WorkspaceElement<T extends ElementPeer> {
     this.peer.setStroke(width, style, color, opacity);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   _attributeNameToFuncName(attributeKey, prefix) {
     const signature = WorkspaceElement._propertyNameToSignature[attributeKey];
     if (!$defined(signature)) {
@@ -275,6 +274,7 @@ abstract class WorkspaceElement<T extends ElementPeer> {
   }
 
   static _SIGNATURE_MULTIPLE_ARGUMENTS = -1;
+
   static _supportedEvents = [
     'click',
     'dblclick',

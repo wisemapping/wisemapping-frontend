@@ -15,7 +15,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import jquery from 'jquery';
 import * as DesignerBuilder from './components/DesignerBuilder';
 import Mindmap from './components/model/Mindmap';
 import PersistenceManager from './components/PersistenceManager';
@@ -54,9 +53,7 @@ declare global {
   var designer: Designer;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const globalAny: any = global;
-globalAny.jQuery = jquery;
+// jQuery has been removed - no longer needed
 // WebComponent registration
 // The if statement is the fix for doble registration problem. Can be deleted wen webapp-mindplot dependency be dead.
 if (!customElements.get('mindplot-component')) {

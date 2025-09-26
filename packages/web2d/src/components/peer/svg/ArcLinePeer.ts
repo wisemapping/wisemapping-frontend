@@ -21,8 +21,11 @@ import ElementPeer from './ElementPeer';
 
 class ArcLinePeer extends ElementPeer {
   private _x1: number;
+
   private _y1: number;
+
   private _x2: number;
+
   private _y2: number;
 
   constructor() {

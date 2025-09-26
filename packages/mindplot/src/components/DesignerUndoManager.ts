@@ -34,20 +34,33 @@ class DesignerUndoManager {
 
   enqueue(command: Command): void {
     $assert(command, 'Command can  not be null');
+    console.log('DesignerUndoManager.enqueue - adding command:', command.constructor.name);
+    console.log('DesignerUndoManager.enqueue - current queue length:', this._undoQueue.length);
+    console.log(
+      'DesignerUndoManager.enqueue - command getDiscardDuplicated():',
+      command.getDiscardDuplicated(),
+    );
+
     const { length } = this._undoQueue;
     if (command.getDiscardDuplicated() && length > 0) {
       // Skip duplicated events only if they are truly identical
       const lastItem = this._undoQueue[length - 1];
       if (lastItem.getDiscardDuplicated() === command.getDiscardDuplicated()) {
         // Replace the last command with the new one instead of discarding
+        console.log('DesignerUndoManager.enqueue - replacing duplicate command');
         this._undoQueue[length - 1] = command;
       } else {
+        console.log(
+          'DesignerUndoManager.enqueue - adding command to queue (different duplicate key)',
+        );
         this._undoQueue.push(command);
       }
     } else {
+      console.log('DesignerUndoManager.enqueue - adding command to queue (no duplicates)');
       this._undoQueue.push(command);
     }
     this._redoQueue = [];
+    console.log('DesignerUndoManager.enqueue - new queue length:', this._undoQueue.length);
   }
 
   execUndo(commandContext: CommandContext): void {

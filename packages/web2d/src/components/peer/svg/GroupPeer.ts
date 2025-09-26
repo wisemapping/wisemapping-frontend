@@ -22,7 +22,9 @@ import SizeType from '../../SizeType';
 
 class GroupPeer extends ElementPeer {
   private _coordSize: SizeType;
+
   private _position: PositionType;
+
   private _coordOrigin: PositionType;
 
   constructor() {

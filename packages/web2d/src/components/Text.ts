@@ -29,7 +29,7 @@ import { FontStyle } from './peer/svg/FontPeer';
 class Text extends WorkspaceElement<TextPeer> {
   constructor(attributes?: StyleAttributes) {
     const peer = Toolkit.createText('Arial');
-    // @ts-ignore
+    // @ts-expect-error - Toolkit.createText returns a generic peer type that needs to be cast
     super(peer, attributes);
   }
 

@@ -39,8 +39,13 @@ class DesignerActionRunner {
 
   execute(command: Command): void {
     $assert(command, 'command can not be null');
+    console.log('DesignerActionRunner.execute - executing command:', command.constructor.name);
     command.execute(this._context);
+    console.log('DesignerActionRunner.execute - command executed successfully');
+
+    console.log('DesignerActionRunner.execute - enqueueing command to undo manager');
     this._undoManager.enqueue(command);
+    console.log('DesignerActionRunner.execute - command enqueued');
 
     this.fireChangeEvent();
     LayoutEventBus.fireEvent('forceLayout');

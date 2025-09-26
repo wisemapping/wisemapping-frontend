@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -45,28 +44,35 @@ class PolyLine extends WorkspaceElement<PolyLinePeer> implements Line {
   getTo(): PositionType {
     throw new Error('Method not implemented.');
   }
+
   getFrom(): PositionType {
     throw new Error('Method not implemented.');
   }
 
-  setIsSrcControlPointCustom(value: boolean): void {
+  setIsSrcControlPointCustom(): void {
     throw new Error('Method not implemented.');
   }
-  setIsDestControlPointCustom(value: boolean): void {
+
+  setIsDestControlPointCustom(): void {
     throw new Error('Method not implemented.');
   }
-  setDashed(v: number, v2: number): void {
+
+  setDashed(): void {
     throw new Error('Method not implemented.');
   }
-  setSrcControlPoint(value: PositionType): void {
+
+  setSrcControlPoint(): void {
     throw new Error('Method not implemented.');
   }
-  setDestControlPoint(value: PositionType): void {
+
+  setDestControlPoint(): void {
     throw new Error('Method not implemented.');
   }
+
   isDestControlPointCustom(): boolean {
     throw new Error('Method not implemented.');
   }
+
   isSrcControlPointCustom(): boolean {
     throw new Error('Method not implemented.');
   }

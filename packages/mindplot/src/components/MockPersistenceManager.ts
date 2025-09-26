@@ -15,8 +15,8 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
+import { AjaxUtils } from './util/AjaxUtils';
 import PersistenceManager from './PersistenceManager';
 
 class MockPersistenceManager extends PersistenceManager {
@@ -37,7 +37,7 @@ class MockPersistenceManager extends PersistenceManager {
   }
 
   loadMapDom(): Promise<Document> {
-    return Promise.resolve($.parseXML(this.exampleMap));
+    return Promise.resolve(AjaxUtils.parseXML(this.exampleMap));
   }
 
   unlockMap(): void {

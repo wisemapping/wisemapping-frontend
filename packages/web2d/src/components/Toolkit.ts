@@ -29,7 +29,7 @@ import RectPeer from './peer/svg/RectPeer';
 import ArcLinePeer from './peer/svg/ArcLinePeer';
 
 class Toolkit {
-  static createWorkspace(element?: HTMLElement) {
+  static createWorkspace() {
     return new WorkspacePeer();
   }
 

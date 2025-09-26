@@ -19,6 +19,7 @@ import { $assert } from '@wisemapping/core-js';
 
 class Point {
   x: number;
+
   y: number;
 
   constructor(x: number, y: number) {

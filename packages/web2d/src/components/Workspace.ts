@@ -17,6 +17,7 @@
  */
 import { $defined } from '@wisemapping/core-js';
 import WorkspaceElement from './WorkspaceElement';
+import ElementPeer from './peer/svg/ElementPeer';
 import WorkspacePeer from './peer/svg/WorkspacePeer';
 import PositionType from './PositionType';
 import StyleAttributes from './StyleAttributes';
@@ -27,7 +28,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
 
   constructor(attributes?: StyleAttributes) {
     const htmlContainer = Workspace._createDivContainer();
-    const peer = Toolkit.createWorkspace(htmlContainer);
+    const peer = Toolkit.createWorkspace();
     const defaultAttributes: StyleAttributes = {
       width: '400px',
       height: '400px',
@@ -54,7 +55,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   /**
    * Appends an element as a child to the object.
    */
-  append(element: WorkspaceElement<any>) {
+  append(element: WorkspaceElement<ElementPeer>) {
     if (!element) {
       throw new Error('Child element can not be null');
     }
@@ -70,7 +71,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     this.peer.append(element.peer);
   }
 
-  addItAsChildTo(element: JQuery<HTMLDivElement>) {
+  addItAsChildTo(element: HTMLDivElement) {
     if (!$defined(element)) {
       throw new Error('Workspace div container can not be null');
     }
@@ -108,7 +109,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
     if (height) {
       this._htmlContainer.style.height = String(height);
     }
-    this.peer.setSize(Number.parseInt(String(width)), Number.parseInt(String(height)));
+    this.peer.setSize(Number.parseInt(String(width), 10), Number.parseInt(String(height), 10));
   }
 
   /**
@@ -174,7 +175,7 @@ class Workspace extends WorkspaceElement<WorkspacePeer> {
   /**
    * Remove an element as a child to the object.
    */
-  removeChild(element: WorkspaceElement<any>): void {
+  removeChild(element: WorkspaceElement<ElementPeer>): void {
     if (!element) {
       throw new Error('Child element can not be null');
     }

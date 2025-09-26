@@ -14,6 +14,9 @@
     ],
     "scripts": {
         "build": "webpack --config webpack.prod.js",
+        "build:verbose": "webpack --config webpack.prod.js --stats=verbose",
+        "build:analyze": "ANALYZE=true webpack --config webpack.prod.js",
+        "build:sizes": "yarn build && ls -lah dist/*.bundle.js | awk '{print $5 \"\\t\" $9}' | sort -hr && ls -la dist/*.bundle.js | awk '{sum += $5} END {print \"Total: \" sum/1024/1024 \" MB\"}'",
         "cy:open": "npx cypress open",
         "cy:run": "npx cypress run",
         "dev": "webpack --config webpack.dev.js",

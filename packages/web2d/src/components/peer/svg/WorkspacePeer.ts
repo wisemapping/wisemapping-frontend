@@ -70,7 +70,7 @@ class WorkspacePeer extends ElementPeer {
     const viewBox = this._native.getAttribute('viewBox');
     let coords = [1, 1, 1, 1];
     if (viewBox != null) {
-      coords = viewBox.split(/ /).map((e) => Number.parseInt(e));
+      coords = viewBox.split(/ /).map((e) => Number.parseInt(e, 10));
     }
     return { width: coords[2], height: coords[3] };
   }
@@ -109,7 +109,6 @@ class WorkspacePeer extends ElementPeer {
     return { x: coords[0], y: coords[1] };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   getPosition() {
     return { x: 0, y: 0 };
   }

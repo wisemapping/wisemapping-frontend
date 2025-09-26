@@ -15,43 +15,34 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
 import { $assert } from '@wisemapping/core-js';
-// https://stackoverflow.com/questions/60357083/does-not-use-passive-listeners-to-improve-scrolling-performance-lighthouse-repo
-// https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=lr
-
-import registerTouchHandler from '../../libraries/jquery.touchevent';
+import EventManager from './util/EventManager';
 import PositionType from './PositionType';
 
-registerTouchHandler($);
-
 class ScreenManager {
-  private _divContainer: JQuery<HTMLDivElement>;
+  private _divContainer: HTMLDivElement;
 
   private _padding: { x: number; y: number };
 
-  private _clickEvents: JQuery.EventHandler<HTMLElement, unknown>[];
+  private _clickEvents: EventListener[];
 
   private _scale: number;
 
   constructor(divElement: HTMLElement) {
     $assert(divElement, 'can not be null');
-    this._divContainer = $(divElement) as JQuery<HTMLDivElement>;
+    this._divContainer = divElement as HTMLDivElement;
     this._padding = { x: 0, y: 0 };
 
     // Ignore default click event propagation. Prevent 'click' event on drag.
     this._clickEvents = [];
-    this._divContainer.bind('click', (event: { stopPropagation: () => void }) => {
+    EventManager.bind(this._divContainer, 'click', (event: Event) => {
       event.stopPropagation();
     });
 
-    this._divContainer.bind(
-      'dblclick',
-      (event: { stopPropagation: () => void; preventDefault: () => void }) => {
-        event.stopPropagation();
-        event.preventDefault();
-      },
-    );
+    EventManager.bind(this._divContainer, 'dblclick', (event: Event) => {
+      event.stopPropagation();
+      event.preventDefault();
+    });
     this._scale = 1;
   }
 
@@ -69,41 +60,36 @@ class ScreenManager {
     this._scale = scale;
   }
 
-  addEvent(eventType: string, listener: JQuery.EventHandler<HTMLElement, unknown>) {
+  addEvent(eventType: string, listener: EventListener) {
     if (eventType === 'click') {
       this._clickEvents.push(listener);
     } else {
-      this._divContainer.bind(eventType, listener);
+      EventManager.bind(this._divContainer, eventType, listener);
     }
   }
 
-  removeEvent(event: string, listener: JQuery.EventHandler<HTMLElement, unknown>) {
+  removeEvent(event: string, listener: EventListener) {
     if (event === 'click') {
       const index = this._clickEvents.indexOf(listener);
       if (index > -1) {
         this._clickEvents.splice(index, 1);
       }
     } else {
-      this._divContainer.unbind(event, listener);
+      EventManager.unbind(this._divContainer, event, listener);
     }
   }
 
   fireEvent(type: string, event?: UIEvent): void {
     if (type === 'click') {
       this._clickEvents.forEach((listener) => {
-        const syntheticEvent = {
-          type,
-          preventDefault: () => {},
-          stopPropagation: () => {},
-          currentTarget: this._divContainer[0],
-          target: this._divContainer[0],
-          data: undefined,
-          delegateTarget: this._divContainer[0],
-        } as unknown as JQuery.TriggeredEvent<HTMLElement, unknown, unknown, unknown>;
-        listener.call(this._divContainer[0], syntheticEvent);
+        const syntheticEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        });
+        listener.call(this._divContainer, syntheticEvent);
       });
     } else {
-      this._divContainer.trigger(type, event);
+      EventManager.trigger(this._divContainer, type, event);
     }
   }
 
@@ -130,7 +116,7 @@ class ScreenManager {
     }
 
     // Adjust the deviation of the container positioning ...
-    const containerPosition = this.getContainer().position();
+    const containerPosition = this.getContainerPosition();
     x -= containerPosition.left;
     y -= containerPosition.top;
 
@@ -146,8 +132,62 @@ class ScreenManager {
     return { x, y };
   }
 
-  getContainer(): JQuery<HTMLDivElement> {
+  getContainer(): HTMLDivElement {
     return this._divContainer;
+  }
+
+  getContainerCss(property: string): string {
+    return getComputedStyle(this._divContainer).getPropertyValue(property);
+  }
+
+  getContainerWidth(): number {
+    // Try offsetWidth first, fallback to CSS width, then default to 800
+    const { offsetWidth } = this._divContainer;
+    if (offsetWidth > 0) {
+      return offsetWidth;
+    }
+
+    const cssWidth = this.getContainerCss('width');
+    if (cssWidth && cssWidth !== 'auto') {
+      const parsedWidth = Number.parseInt(cssWidth, 10);
+      if (!Number.isNaN(parsedWidth) && parsedWidth > 0) {
+        return parsedWidth;
+      }
+    }
+
+    // Fallback to a reasonable default for Storybook
+    return 800;
+  }
+
+  getContainerHeight(): number {
+    // Try offsetHeight first, fallback to CSS height, then default to 600
+    const { offsetHeight } = this._divContainer;
+    if (offsetHeight > 0) {
+      return offsetHeight;
+    }
+
+    const cssHeight = this.getContainerCss('height');
+    if (cssHeight && cssHeight !== 'auto') {
+      const parsedHeight = Number.parseInt(cssHeight, 10);
+      if (!Number.isNaN(parsedHeight) && parsedHeight > 0) {
+        return parsedHeight;
+      }
+    }
+
+    // Fallback to a reasonable default for Storybook
+    return 600;
+  }
+
+  getContainerPosition(): { top: number; left: number } {
+    const rect = this._divContainer.getBoundingClientRect();
+    return {
+      top: rect.top + window.scrollY,
+      left: rect.left + window.scrollX,
+    };
+  }
+
+  findInContainer(selector: string): HTMLElement | null {
+    return this._divContainer.querySelector(selector);
   }
 
   setOffset(x: number, y: number): void {

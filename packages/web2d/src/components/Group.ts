@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 /*
  *    Copyright [2021] [wisemapping]
  *
@@ -19,6 +18,7 @@
 
 import { $defined } from '@wisemapping/core-js';
 import WorkspaceElement from './WorkspaceElement';
+import ElementPeer from './peer/svg/ElementPeer';
 import GroupPeer from './peer/svg/GroupPeer';
 import SizeType from './SizeType';
 import StyleAttributes from './StyleAttributes';
@@ -47,7 +47,7 @@ class Group extends WorkspaceElement<GroupPeer> {
   /**
    * Remove an element as a child to the object.
    */
-  removeChild(element: WorkspaceElement<any>) {
+  removeChild(element: WorkspaceElement<ElementPeer>) {
     if (!element) {
       throw new Error('Child element can not be null');
     }
@@ -67,7 +67,7 @@ class Group extends WorkspaceElement<GroupPeer> {
   /**
    * Appends an element as a child to the object.
    */
-  append(element: WorkspaceElement<any>) {
+  append(element: WorkspaceElement<ElementPeer>) {
     if (!element) {
       throw Error('Child element can not be null');
     }

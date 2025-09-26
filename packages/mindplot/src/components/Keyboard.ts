@@ -15,25 +15,16 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
-import initHotKeyPluggin from '../../libraries/jquery.hotkeys';
-
-// Provides dispatcher of keyevents by key...
-initHotKeyPluggin($);
+import KeyboardManager from './util/KeyboardManager';
 
 class Keyboard {
   private _disabled = false;
 
   addShortcut(shortcuts: string[] | string, callback: () => void) {
     const shortcutsArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
-    shortcutsArray.forEach((shortcut) => {
-      $(document).bind('keydown', shortcut, (e) => {
-        if (this.isDisabled()) return;
-
-        e.stopPropagation();
-        e.preventDefault();
-        callback();
-      });
+    KeyboardManager.addShortcut(shortcutsArray, () => {
+      if (this.isDisabled()) return;
+      callback();
     });
   }
 

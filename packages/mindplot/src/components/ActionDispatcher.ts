@@ -81,6 +81,17 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
 
   abstract changeShapeTypeToTopic(topicsIds: number[], shapeType: string): void;
 
+  abstract changeCanvasStyle(
+    style:
+      | {
+          backgroundColor: string;
+          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize: number;
+          gridColor: string;
+        }
+      | undefined,
+  ): void;
+
   abstract changeFontWeightToTopic(topicsIds: number[]): void;
 
   abstract changeTextToTopic(topicsIds: number[], text: string): void;

@@ -73,12 +73,16 @@ class Mindmap extends IMindmap {
     return this._canvasStyle;
   }
 
-  setCanvasStyle(value: {
-    backgroundColor: string;
-    backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-    gridSize: number;
-    gridColor: string;
-  }): void {
+  setCanvasStyle(
+    value:
+      | {
+          backgroundColor: string;
+          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize: number;
+          gridColor: string;
+        }
+      | undefined,
+  ): void {
     this._canvasStyle = value;
   }
 

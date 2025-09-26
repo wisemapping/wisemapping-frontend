@@ -68,22 +68,23 @@ class ArcLine extends WorkspaceElement<ArcLinePeer> implements Line {
     return this;
   }
 
-  setIsSrcControlPointCustom(value: boolean): void {
+  setIsSrcControlPointCustom(): void {
     throw new Error('Method not implemented.');
   }
 
-  setIsDestControlPointCustom(value: boolean): void {
+  setIsDestControlPointCustom(): void {
     throw new Error('Method not implemented.');
   }
 
-  setDashed(v: number, v2: number): void {
-    throw new Error('Method not implemented.');
-  }
-  setSrcControlPoint(value: PositionType): void {
+  setDashed(): void {
     throw new Error('Method not implemented.');
   }
 
-  setDestControlPoint(value: PositionType): void {
+  setSrcControlPoint(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  setDestControlPoint(): void {
     throw new Error('Method not implemented.');
   }
 

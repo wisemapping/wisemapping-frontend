@@ -16,14 +16,14 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import $ from 'jquery';
+// jQuery removed - using native DOM APIs
 import { $assert } from '@wisemapping/core-js';
 import TestSuite from './TestSuite';
 import LayoutManager from '../../../src/components/layout/LayoutManager';
 
 class SymmetricTestSuite extends TestSuite {
   constructor() {
-    $('#symmetricTest').css('display', 'block');
+    document.getElementById('symmetricTest').style.display = 'block';
     super();
 
     this.testSymmetry();

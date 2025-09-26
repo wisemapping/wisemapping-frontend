@@ -1,4 +1,4 @@
-import $ from 'jquery';
+// jQuery removed - using native DOM APIs
 
 import { Mindmap, Topic } from '../../../src';
 import NodeModel from '../../../src/components/model/NodeModel';
@@ -37,12 +37,9 @@ export type TopicArgs = {
 const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => {
   // Build basic container ...
   const divElem = document.createElement('div');
-  const jqueryDiv = $(divElem);
-  jqueryDiv.css({
-    height: '600px',
-    width: '800px',
-    backgroundColor: 'gray',
-  });
+  divElem.style.height = '600px';
+  divElem.style.width = '800px';
+  divElem.style.backgroundColor = 'gray';
 
   // Initialize designer helpers ...
   const screenManager = new ScreenManager(divElem);

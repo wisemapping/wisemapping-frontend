@@ -19,12 +19,26 @@ const compat = new FlatCompat({
     allConfig: js.configs.all
 });
 
-export default defineConfig([{
-    extends: compat.extends(
-        "airbnb-base",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-    ),
+export default defineConfig([
+    {
+        ignores: [
+            "dist/**",
+            "node_modules/**",
+            "coverage/**",
+            "*.min.js",
+            "**/*.d.ts",
+            "src/@types/**",
+            "test/**",
+            "cypress/**",
+            "storybook/**"
+        ]
+    },
+    {
+        extends: compat.extends(
+            "airbnb-base",
+            "plugin:@typescript-eslint/eslint-recommended",
+            "plugin:@typescript-eslint/recommended",
+        ),
 
     plugins: {
         "@typescript-eslint": typescriptEslint,
@@ -58,6 +72,28 @@ export default defineConfig([{
 
     rules: {
         ...cypress.configs.recommended.rules,
+        "indent": ["error", 2, {
+            "SwitchCase": 1,
+            "VariableDeclarator": 1,
+            "outerIIFEBody": 1,
+            "MemberExpression": 1,
+            "FunctionDeclaration": {
+                "parameters": 1,
+                "body": 1
+            },
+            "FunctionExpression": {
+                "parameters": 1,
+                "body": 1
+            },
+            "CallExpression": {
+                "arguments": 1
+            },
+            "ArrayExpression": 1,
+            "ObjectExpression": 1,
+            "ImportDeclaration": 1,
+            "flatTernaryExpressions": false,
+            "ignoreComments": false
+        }],
         "operator-linebreak": ["error", "after", {
             overrides: {
                 "+": "ignore",
@@ -93,4 +129,5 @@ export default defineConfig([{
 
         "implicit-arrow-linebreak": "off",
     },
-}]);
+    }
+]);
