@@ -77,7 +77,7 @@ class ConnectionLine {
         break;
       case LineType.THIN_CURVED:
         line = new CurvedLine();
-        (line as CurvedLine).setWidth(1);
+        (line as CurvedLine).setWidth(10);
         break;
       case LineType.THICK_CURVED:
         line = new CurvedLine();

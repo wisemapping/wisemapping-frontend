@@ -46,7 +46,7 @@ class GenericRelationshipFunctionCommand<T> extends Command {
   /**
    * Overrides abstract parent method
    */
-  execute(commandContext: CommandContext): void {
+  execute(_commandContext: CommandContext): void {
     if (!this._applied) {
       this._relationships.forEach((relationship: Relationship) => {
         const oldValue = this._commandFunc(relationship, this._value);
@@ -58,7 +58,7 @@ class GenericRelationshipFunctionCommand<T> extends Command {
     }
   }
 
-  undoExecute(commandContext: CommandContext): void {
+  undoExecute(_commandContext: CommandContext): void {
     if (this._applied) {
       this._relationships.forEach((relationship: Relationship, index: number) => {
         this._commandFunc(relationship, this._oldValues[index]);

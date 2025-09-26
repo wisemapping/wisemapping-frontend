@@ -61,8 +61,8 @@ class MapInfoImpl implements MapInfo {
     return this.title;
   }
 
-  setTitle(value: string): void {
-    this.client.renameMap(Number.parseInt(this.getId(), 10), { title: value });
+  updateTitle(title: string): Promise<void> {
+    return this.client.renameMap(Number.parseInt(this.getId(), 10), { title: title });
   }
 
   isLocked(): boolean {

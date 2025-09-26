@@ -49,6 +49,7 @@
     "babel-polyfill": "^6.26.0",
     "cypress": "^15.2.0",
     "cypress-image-snapshot": "^4.0.1",
+    "eslint": "^9.36.0",
     "jest-transform-stub": "^2.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

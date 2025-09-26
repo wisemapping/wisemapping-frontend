@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState, useRef } from 'react';
 import MaterialToolbar from '@mui/material/Toolbar';
 import MaterialAppBar from '@mui/material/AppBar';
 import { ToolbarMenuItem } from '../toolbar';
@@ -33,6 +33,7 @@ import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import Typography from '@mui/material/Typography';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
@@ -41,6 +42,10 @@ import IconButton from '@mui/material/IconButton';
 import { ToolbarActionType } from '../toolbar/ToolbarActionType';
 import MapInfo from '../../classes/model/map-info';
 import { useIntl } from 'react-intl';
+import ThemeEditor from '../action-widget/pane/theme-editor';
+import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
+import TextField from '@mui/material/TextField';
+import { $notify } from '@wisemapping/mindplot';
 
 interface AppBarProps {
   model: Editor | undefined;
@@ -75,12 +80,85 @@ const AppBar = ({
   accountConfig,
 }: AppBarProps): ReactElement => {
   const [isStarred, setStarred] = useState<undefined | boolean>(undefined);
+  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+  const [editedTitle, setEditedTitle] = useState<string>('');
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [currentTitle, setCurrentTitle] = useState<string>(mapInfo.getTitle());
+  const inputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
 
   const handleStarredOnClick = () => {
     const newStatus = !isStarred;
     mapInfo.updateStarred(newStatus).then(() => setStarred(newStatus));
   };
+
+  const handleTitleClick = () => {
+    if (!capability.isHidden('rename')) {
+      setIsEditingTitle(true);
+      setEditedTitle(currentTitle);
+    }
+  };
+
+  const handleTitleSave = async () => {
+    if (editedTitle.trim() === '' || editedTitle === currentTitle) {
+      setIsEditingTitle(false);
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await mapInfo.updateTitle(editedTitle.trim());
+      setCurrentTitle(editedTitle.trim());
+      setIsEditingTitle(false);
+      // Update the document title as well
+      document.title = `${editedTitle.trim()} | WiseMapping`;
+      // Show success notification
+      $notify(
+        intl.formatMessage({
+          id: 'appbar.title-renamed',
+          defaultMessage: 'Mind map has been renamed',
+        }),
+      );
+    } catch (error) {
+      console.error(
+        intl.formatMessage({
+          id: 'appbar.error-saving-title',
+          defaultMessage: 'Error saving title:',
+        }),
+        error,
+      );
+      // Revert to original title on error
+      setEditedTitle(currentTitle);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleTitleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleTitleSave();
+    } else if (event.key === 'Escape') {
+      handleTitleCancel();
+    }
+  };
+
+  const handleTitleCancel = () => {
+    setIsEditingTitle(false);
+    setEditedTitle('');
+  };
+
+  // Focus input when editing starts
+  useEffect(() => {
+    if (isEditingTitle && inputRef.current) {
+      const inputElement = inputRef.current.querySelector('input');
+      if (inputElement) {
+        inputElement.focus();
+        // Position cursor at the end of the text instead of selecting all
+        const length = inputElement.value.length;
+        inputElement.setSelectionRange(length, length);
+      }
+    }
+  }, [isEditingTitle]);
 
   useEffect(() => {
     if (!capability.isHidden('starred')) {
@@ -103,22 +181,100 @@ const AppBar = ({
       onClick: () => (window.location.href = '/c/maps/'),
     },
     {
-      render: () => <img src={LogoTextBlackSvg} aria-label="WiseMappping" />,
+      render: () => (
+        <img
+          src={LogoTextBlackSvg}
+          aria-label={intl.formatMessage({
+            id: 'appbar.logo-aria-label',
+            defaultMessage: 'WiseMapping',
+          })}
+        />
+      ),
       visible: !capability.isHidden('appbar-title'),
     },
     {
       render: () => (
-        <Tooltip title={mapInfo.getTitle()}>
-          <Typography
-            className="truncated"
-            variant="body1"
-            component="div"
-            sx={{ marginX: '1.5rem' }}
-          >
-            {mapInfo.getTitle()}
-          </Typography>
-        </Tooltip>
+        <div
+          style={{
+            marginLeft: '1.5rem',
+            marginRight: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+        >
+          {isEditingTitle ? (
+            <>
+              <Tooltip
+                title={intl.formatMessage({
+                  id: 'appbar.tooltip-rename',
+                  defaultMessage: 'Rename',
+                })}
+              >
+                <TextField
+                  ref={inputRef}
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                  onKeyDown={handleTitleKeyDown}
+                  onBlur={handleTitleSave}
+                  variant="outlined"
+                  size="small"
+                  data-testid="app-bar-title"
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      fontSize: '1rem',
+                      height: '32px',
+                      outline: '2px solid #ffa800',
+                      borderRadius: '4px',
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                    },
+                    '& .MuiOutlinedInput-input': {
+                      padding: '6px 8px',
+                    },
+                  }}
+                  disabled={isSaving}
+                />
+              </Tooltip>
+            </>
+          ) : (
+            <Tooltip
+              title={intl.formatMessage({ id: 'appbar.tooltip-rename', defaultMessage: 'Rename' })}
+            >
+              <TextField
+                value={currentTitle}
+                variant="outlined"
+                size="small"
+                InputProps={{ readOnly: true }}
+                onClick={handleTitleClick}
+                data-testid="app-bar-title"
+                sx={{
+                  cursor: !capability.isHidden('rename') ? 'pointer' : 'default',
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem',
+                    height: '32px',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'transparent',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#ffa800',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'transparent',
+                    },
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    padding: '6px 8px',
+                    cursor: !capability.isHidden('rename') ? 'pointer' : 'default',
+                  },
+                }}
+              />
+            </Tooltip>
+          )}
+        </div>
       ),
+      visible: !capability.isHidden('appbar-title'),
     },
     undefined,
     {
@@ -171,6 +327,12 @@ const AppBar = ({
       disabled: () => !model?.isMapLoadded(),
     },
     {
+      icon: <HelpOutlineOutlinedIcon />,
+      onClick: () => onAction('info'),
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-info', defaultMessage: 'Information' }),
+      visible: !capability.isHidden('info'),
+    },
+    {
       icon: <RestoreOutlinedIcon />,
       onClick: () => onAction('history'),
       tooltip: intl.formatMessage({
@@ -179,7 +341,6 @@ const AppBar = ({
       }),
       visible: !capability.isHidden('history'),
     },
-    appBarDivisor,
     {
       render: () => (
         <Tooltip
@@ -196,11 +357,26 @@ const AppBar = ({
       visible: !capability.isHidden('starred'),
       disabled: () => isStarred !== undefined,
     },
+    appBarDivisor,
     {
-      icon: <FileDownloadOutlinedIcon />,
-      onClick: () => onAction('export'),
-      tooltip: intl.formatMessage({ id: 'appbar.tooltip-export', defaultMessage: 'Export' }),
-      visible: !capability.isHidden('export'),
+      icon: <PaletteOutlinedIcon />,
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-theme', defaultMessage: 'Theme' }),
+      useClickToClose: true,
+      title: intl.formatMessage({ id: 'appbar.theme-title', defaultMessage: 'Theme' }),
+      options: [
+        {
+          render: (closeModal) => {
+            if (model) {
+              const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
+              return (
+                <ThemeEditor closeModal={closeModal} themeModel={modelBuilder.getThemeModel()} />
+              );
+            }
+            return <div>Theme Editor not available</div>;
+          },
+        },
+      ],
+      visible: !capability.isHidden('theme'),
     },
     {
       icon: <PrintOutlinedIcon />,
@@ -209,10 +385,10 @@ const AppBar = ({
       visible: !capability.isHidden('print'),
     },
     {
-      icon: <HelpOutlineOutlinedIcon />,
-      onClick: () => onAction('info'),
-      tooltip: intl.formatMessage({ id: 'appbar.tooltip-info', defaultMessage: 'Information' }),
-      visible: !capability.isHidden('info'),
+      icon: <FileDownloadOutlinedIcon />,
+      onClick: () => onAction('export'),
+      tooltip: intl.formatMessage({ id: 'appbar.tooltip-export', defaultMessage: 'Export' }),
+      visible: !capability.isHidden('export'),
     },
     {
       icon: <CloudUploadOutlinedIcon />,
@@ -254,23 +430,25 @@ const AppBar = ({
   ];
 
   return (
-    <MaterialAppBar
-      role="menubar"
-      position="absolute"
-      color="default"
-      className="material-menubar"
-      sx={{
-        '& MuiButtonBase-root': {
-          marginX: '1rem',
-        },
-      }}
-    >
-      <MaterialToolbar>
-        {config.map((c, i) => {
-          return <ToolbarMenuItem key={i} configuration={c} />;
-        })}
-      </MaterialToolbar>
-    </MaterialAppBar>
+    <>
+      <MaterialAppBar
+        role="menubar"
+        position="absolute"
+        color="default"
+        className="material-menubar"
+        sx={{
+          '& MuiButtonBase-root': {
+            marginX: '1rem',
+          },
+        }}
+      >
+        <MaterialToolbar>
+          {config.map((c, i) => {
+            return <ToolbarMenuItem key={i} configuration={c} />;
+          })}
+        </MaterialToolbar>
+      </MaterialAppBar>
+    </>
   );
 };
 

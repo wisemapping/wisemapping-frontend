@@ -16,11 +16,16 @@
  *   limitations under the License.
  */
 import Box from '@mui/material/Box';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import { SelectChangeEvent } from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
 import React, { ReactElement, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 
@@ -29,24 +34,128 @@ const ThemeEditor = (props: {
   themeModel: NodeProperty<ThemeType>;
 }): ReactElement => {
   const [theme, setTheme] = useState(props.themeModel.getValue());
-  const handleOnChange = (event: SelectChangeEvent) => {
-    setTheme(event.target.value as ThemeType);
+  const intl = useIntl();
+
+  const themes = [
+    {
+      id: 'classic' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.classic.name', defaultMessage: 'Classic' }),
+      description: intl.formatMessage({
+        id: 'theme.classic.description',
+        defaultMessage:
+          'Clean and professional design with blue accents. Perfect for business presentations and formal documents.',
+      }),
+    },
+    {
+      id: 'prism' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.summer.name', defaultMessage: 'Summer' }),
+      description: intl.formatMessage({
+        id: 'theme.summer.description',
+        defaultMessage:
+          'Bright and vibrant orange theme. Great for creative projects and energetic presentations.',
+      }),
+    },
+    {
+      id: 'dark-prism' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.dark.name', defaultMessage: 'Dark' }),
+      description: intl.formatMessage({
+        id: 'theme.dark.description',
+        defaultMessage:
+          'Modern dark theme with purple accents. Ideal for low-light environments and contemporary designs.',
+      }),
+    },
+    {
+      id: 'robot' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.robot.name', defaultMessage: 'Robot' }),
+      description: intl.formatMessage({
+        id: 'theme.robot.description',
+        defaultMessage:
+          'Tech-inspired green theme. Perfect for technical documentation and futuristic presentations.',
+      }),
+    },
+  ];
+
+  const handleThemeSelect = (selectedTheme: ThemeType) => {
+    setTheme(selectedTheme);
+  };
+
+  const handleAccept = () => {
     const setValue = props.themeModel.setValue;
     if (setValue) {
-      setValue(event.target.value as ThemeType);
+      setValue(theme);
     }
     props.closeModal();
   };
 
+  const handleCancel = () => {
+    // Reset to original theme
+    setTheme(props.themeModel.getValue());
+    props.closeModal();
+  };
+
   return (
-    <Box sx={{ px: 2, pb: 2, width: '300px' }}>
-      <RadioGroup row value={theme} onChange={handleOnChange}>
-        <FormControlLabel value="classic" control={<Radio />} label="Classic" />
-        <FormControlLabel value="prism" control={<Radio />} label="Summer" />
-        <FormControlLabel value="dark-prism" control={<Radio />} label="Dark" />
-        <FormControlLabel value="robot" control={<Radio />} label="Robot" />
-      </RadioGroup>
-    </Box>
+    <Dialog
+      open={true}
+      onClose={handleCancel}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: { minHeight: '400px' },
+      }}
+    >
+      <DialogTitle>
+        <FormattedMessage id="theme-editor.title" defaultMessage="Choose Theme" />
+      </DialogTitle>
+      <DialogContent>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.4 }}>
+          <FormattedMessage
+            id="theme-editor.description"
+            defaultMessage="A theme defines the visual style of your mind map, including colors, fonts, and overall appearance. Choose a theme that best fits your content and audience."
+          />
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {themes.map((themeOption) => (
+            <Card
+              key={themeOption.id}
+              sx={{
+                cursor: 'pointer',
+                border: theme === themeOption.id ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                '&:hover': {
+                  border: '2px solid #1976d2',
+                  boxShadow: 2,
+                },
+              }}
+              onClick={() => handleThemeSelect(themeOption.id)}
+            >
+              <CardContent sx={{ p: 1 }}>
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  sx={{ fontWeight: 'bold', mb: 0.5 }}
+                >
+                  {themeOption.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ lineHeight: 1.3, fontSize: '0.875rem' }}
+                >
+                  {themeOption.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCancel}>
+          <FormattedMessage id="theme-editor.cancel" defaultMessage="Cancel" />
+        </Button>
+        <Button onClick={handleAccept} variant="contained">
+          <FormattedMessage id="theme-editor.accept" defaultMessage="Apply Theme" />
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

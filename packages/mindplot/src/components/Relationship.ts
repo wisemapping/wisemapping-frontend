@@ -72,11 +72,14 @@ class Relationship extends ConnectionLine {
     this._focusShape.setVisibility(true);
     this._focusShape.setOpacity(0.01); // Barely visible so it gets rendered
     this._focusShape.setCursor('pointer');
+
     // Critical: Use thick stroke (12px) to ensure coverage of gaps in dotted line
     this._focusShape.setStroke(12, 'solid', '#3f96ff');
     this._focusShape.setFill('none', 1);
+
     // Ensure focus shape uses solid stroke rendering for continuous hit area
     (this._focusShape as CurvedLine).setWidth(0); // Force simple stroke rendering
+
     // Always create both arrows, but show them based on model
     this._startArrow = new Arrow();
     this._startArrow.setStrokeColor(strokeColor);
@@ -111,8 +114,8 @@ class Relationship extends ConnectionLine {
     };
   }
 
-  setStroke(color: string, style: string, opacity: number): void {
-    this._line.setStroke(2, 'solid', color);
+  setStroke(color: string, style: string, _opacity: number): void {
+    this._line.setStroke(2, style, color);
     this._startArrow?.setStrokeColor(color);
     this._endArrow?.setStrokeColor(color);
     // Apply the stroke style from the model
@@ -131,14 +134,6 @@ class Relationship extends ConnectionLine {
     // For relationships, calculate connection points that face toward the center
     tPos = this.calculateRelationshipConnectionPoint(targetTopic);
     const sPos = this.calculateRelationshipConnectionPoint(sourceTopic);
-
-    // Debug: Check if source and target are the same
-    console.log(
-      `Relationship ${this.getId()}: sPos(${sPos.x}, ${sPos.y}) -> tPos(${tPos.x}, ${tPos.y})`,
-    );
-    if (sPos.x === tPos.x && sPos.y === tPos.y) {
-      console.warn(`Relationship ${this.getId()}: Source and target positions are identical!`);
-    }
 
     // Only set stroke once - remove redundant stroke calls
     const strokeColor = this._model.getStrokeColor() || Relationship.getStrokeColor();
@@ -189,28 +184,6 @@ class Relationship extends ConnectionLine {
     line2d.setSrcControlPoint(ctrlPoints[0]);
     line2d.setDestControlPoint(ctrlPoints[1]);
 
-    // Debug: Check final line coordinates and control points
-    const finalFrom = line2d.getFrom();
-    const finalTo = line2d.getTo();
-    console.log(
-      `Relationship ${this.getId()}: Final line from(${finalFrom.x}, ${finalFrom.y}) to(${finalTo.x}, ${finalTo.y})`,
-    );
-    console.log(
-      `Relationship ${this.getId()}: Control points src(${ctrlPoints[0].x}, ${ctrlPoints[0].y}) dest(${ctrlPoints[1].x}, ${ctrlPoints[1].y})`,
-    );
-
-    // Check if this creates a degenerate path (no actual curve)
-    if (
-      Math.abs(ctrlPoints[0].x) < 0.1 &&
-      Math.abs(ctrlPoints[0].y) < 0.1 &&
-      Math.abs(ctrlPoints[1].x) < 0.1 &&
-      Math.abs(ctrlPoints[1].y) < 0.1
-    ) {
-      console.warn(
-        `Relationship ${this.getId()}: Control points are near zero - might create degenerate curve!`,
-      );
-    }
-
     // Positionate Arrows
     this.positionArrows();
 
@@ -222,7 +195,6 @@ class Relationship extends ConnectionLine {
   }
 
   redraw(): void {
-    console.log(`Relationship ${this.getId()}: redraw() called`);
     this.updatePositions();
 
     // Apply stroke style only once at the end of redraw
@@ -240,19 +212,22 @@ class Relationship extends ConnectionLine {
   }
 
   private positionArrows(): void {
-    const tpos = this._line.getTo();
     const spos = this._line.getFrom();
 
+    // Fix arrow direction: arrows should point in the direction of the relationship flow
+    // Both arrows should point from source toward target
     this._startArrow.setFrom(spos.x, spos.y);
-    this._endArrow.setFrom(tpos.x, tpos.y);
+    this._endArrow.setFrom(spos.x, spos.y);
 
     if (this._line.getType() === 'CurvedLine') {
       const controlPoints = this._line.getControlPoints();
+      // Both arrows point from source toward first control point (direction of flow)
       this._startArrow.setControlPoint(controlPoints[0]);
-      this._endArrow.setControlPoint(controlPoints[1]);
+      this._endArrow.setControlPoint(controlPoints[0]);
     } else {
+      // Both arrows point from source toward target (direction of flow)
       this._startArrow.setControlPoint(this._line.getTo());
-      this._endArrow.setControlPoint(this._line.getFrom());
+      this._endArrow.setControlPoint(this._line.getTo());
     }
   }
 
@@ -275,6 +250,13 @@ class Relationship extends ConnectionLine {
     workspace.append(this._endArrow);
 
     super.addToWorkspace(workspace);
+
+    // Ensure all relationship components are rendered below topics
+    this.moveToBack(); // Main relationship line
+    this._focusShape.getElementClass().moveToBack();
+    this._startArrow.moveToBack();
+    this._endArrow.moveToBack();
+
     this.positionArrows();
     this.redraw();
   }
@@ -283,7 +265,11 @@ class Relationship extends ConnectionLine {
     workspace.removeChild(this._controlPointsController);
 
     this._line.removeEvent('click', this._onFocusHandler);
+    this._focusShape.removeEvent('click', this._onFocusHandler);
     this._isInWorkspace = false;
+
+    // Remove all relationship components from workspace
+    workspace.removeChild(this._focusShape.getElementClass());
     workspace.removeChild(this._startArrow);
     workspace.removeChild(this._endArrow);
 

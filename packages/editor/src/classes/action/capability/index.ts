@@ -277,5 +277,41 @@ const ActionConfigByRenderMode: Record<ActionType, CapabilitySupport> = {
       ],
     },
   },
+  theme: {
+    desktop: {
+      hidden: ['viewonly-public', 'viewonly-private', 'edition-viewer'],
+    },
+    mobile: {
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
+    },
+  },
+  rename: {
+    desktop: {
+      hidden: [
+        'showcase',
+        'viewonly-public',
+        'viewonly-private',
+        'edition-viewer',
+        'edition-editor',
+      ],
+    },
+    mobile: {
+      hidden: [
+        'viewonly-public',
+        'viewonly-private',
+        'showcase',
+        'edition-viewer',
+        'edition-editor',
+        'edition-owner',
+      ],
+    },
+  },
 };
 export default Capability;

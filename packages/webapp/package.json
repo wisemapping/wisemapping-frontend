@@ -58,7 +58,8 @@
         "@testing-library/cypress": "^10.1.0",
         "@welldone-software/why-did-you-render": "^10.0.1",
         "cypress": "^15.2.0",
-        "cypress-image-snapshot": "^4.0.1"
+        "cypress-image-snapshot": "^4.0.1",
+        "eslint": "^9.36.0"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.com"

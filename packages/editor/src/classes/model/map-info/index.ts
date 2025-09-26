@@ -22,6 +22,8 @@ interface MapInfo {
 
   getTitle(): string;
 
+  updateTitle(title: string): Promise<void>;
+
   getCreatorFullName(): string;
 
   isLocked(): boolean;

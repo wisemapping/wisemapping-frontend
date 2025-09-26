@@ -16,4 +16,12 @@
  *   limitations under the License.
  */
 
-export type ToolbarActionType = 'export' | 'publish' | 'history' | 'print' | 'share' | 'info';
+export type ToolbarActionType =
+  | 'export'
+  | 'publish'
+  | 'history'
+  | 'print'
+  | 'share'
+  | 'info'
+  | 'theme'
+  | 'rename';

@@ -47,7 +47,6 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
 
 import Palette from '@mui/icons-material/Square';
@@ -64,7 +63,6 @@ import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
-import ThemeEditor from '../action-widget/pane/theme-editor';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
 
 const keyTooltip = (msg: string, key: string): string => {
@@ -606,23 +604,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   };
 
   /**
-   * tool for node link edition
-   */
-  const editThemeConfiguration: ActionConfig = {
-    icon: <PaletteOutlinedIcon />,
-    tooltip: intl.formatMessage({ id: 'editor-panel.tooltip-theme', defaultMessage: 'Theme' }),
-    useClickToClose: true,
-    title: intl.formatMessage({ id: 'editor-panel.theme-title', defaultMessage: 'Theme' }),
-    options: [
-      {
-        render: (closeModal) => (
-          <ThemeEditor closeModal={closeModal} themeModel={modelBuilder.getThemeModel()} />
-        ),
-      },
-    ],
-  };
-
-  /**
    * tool for background customization
    */
   const editCanvasStyleConfiguration: ActionConfig = {
@@ -772,11 +753,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     connectionStyleConfiguration,
     editIconConfiguration,
     editNoteConfiguration,
-    emojiToolbarConfiguration,
     editLinkUrlConfiguration,
+    emojiToolbarConfiguration,
     addRelationConfiguration,
     relationshipStyleConfiguration,
     editCanvasStyleConfiguration,
-    editThemeConfiguration,
   ];
 }

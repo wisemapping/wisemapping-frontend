@@ -109,6 +109,7 @@ type ActionType =
   | 'info'
   | 'publish'
   | 'history'
+  | 'theme'
   | undefined;
 
 const ActionDispatcher = React.lazy(() => import('../maps-page/action-dispatcher'));

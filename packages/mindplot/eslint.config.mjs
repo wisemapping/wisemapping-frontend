@@ -116,7 +116,7 @@ export default defineConfig([
         "class-methods-use-this": "off",
         "no-console": "off",
         "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "@typescript-eslint/no-this-alias": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
 

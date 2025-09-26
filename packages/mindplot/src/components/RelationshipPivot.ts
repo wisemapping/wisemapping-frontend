@@ -38,7 +38,11 @@ class RelationshipPivot {
 
   private _pivot: CurvedLine | null;
 
-  private _startArrow: Arrow | null;
+  private _startArrow: Arrow | null; // Not used, kept for compatibility
+
+  private _endArrow: Arrow | null;
+
+  private _lastUpdateTime: number = 0;
 
   constructor(canvas: Canvas, designer: Designer) {
     this._canvas = canvas;
@@ -50,31 +54,48 @@ class RelationshipPivot {
     this._sourceTopic = null;
     this._pivot = null;
     this._startArrow = null;
+    this._endArrow = null;
   }
 
   start(sourceTopic: Topic, targetPos: PositionType): void {
     this.dispose();
     this._sourceTopic = sourceTopic;
     this._canvas.enableWorkspaceEvents(false);
+    this._lastUpdateTime = 0; // Reset throttling timer
 
-    const sourcePos = sourceTopic.getPosition();
     const strokeColor = Relationship.getStrokeColor();
 
     this._pivot = new CurvedLine();
-    const fromPos = this._calculateFromPosition(sourcePos);
-    this._pivot.setFrom(fromPos.x, fromPos.y);
 
-    this._pivot.setTo(targetPos.x, targetPos.y);
-    this._pivot.setStroke(2, 'solid', strokeColor);
-    this._pivot.setDashed(4, 2);
+    // Calculate proper connection points and control points like in Relationship
+    const sPos = this._calculateFromPosition(targetPos);
+    const tPos = targetPos;
 
-    this._startArrow = new Arrow();
-    this._startArrow.setStrokeColor(strokeColor);
-    this._startArrow.setStrokeWidth(2);
-    this._startArrow.setFrom(sourcePos.x, sourcePos.y);
+    // Use the same control point calculation as Relationship
+    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [
+      PositionType,
+      PositionType,
+    ];
+
+    this._pivot.setFrom(sPos.x, sPos.y);
+    this._pivot.setTo(tPos.x, tPos.y);
+    this._pivot.setSrcControlPoint(ctrlPoints[0]);
+    this._pivot.setDestControlPoint(ctrlPoints[1]);
+    this._pivot.setStroke(2, 'dash', strokeColor);
+
+    // Only create end arrow for pivot (showing direction toward target)
+    this._endArrow = new Arrow();
+    this._endArrow.setStrokeColor(strokeColor);
+    this._endArrow.setStrokeWidth(2);
+    this._endArrow.setFrom(tPos.x, tPos.y);
+    this._endArrow.setControlPoint(ctrlPoints[1]);
 
     this._canvas.append(this._pivot);
-    this._canvas.append(this._startArrow);
+    this._canvas.append(this._endArrow);
+
+    // Ensure pivot elements are rendered below topics to avoid interference
+    this._pivot.moveToBack();
+    this._endArrow.moveToBack();
 
     this._canvas.addEvent('mousemove', this._mouseMoveEvent);
     this._canvas.addEvent('click', this._onClickEvent);
@@ -104,8 +125,8 @@ class RelationshipPivot {
       if (this._pivot) {
         workspace.removeChild(this._pivot);
       }
-      if (this._startArrow) {
-        workspace.removeChild(this._startArrow);
+      if (this._endArrow) {
+        workspace.removeChild(this._endArrow);
       }
       workspace.enableWorkspaceEvents(true);
 
@@ -116,22 +137,36 @@ class RelationshipPivot {
   }
 
   private mouseMoveHandler(event: MouseEvent): boolean {
+    // Throttle updates to prevent excessive redraws
+    const now = Date.now();
+    if (now - this._lastUpdateTime < 16) {
+      // ~60fps
+      return false;
+    }
+    this._lastUpdateTime = now;
+
     const screen = this._canvas.getScreenManager();
     const pos = screen.getWorkspaceMousePosition(event);
 
-    // Leave the arrow a couple of pixels away from the cursor.
-    const sourcePosition = this._sourceTopic!.getPosition();
-    const gapDistance = Math.sign(pos.x - sourcePosition.x) * 5;
-
+    // Calculate proper connection points and control points like in Relationship
     const sPos = this._calculateFromPosition(pos);
+    const tPos = pos;
+
+    // Use the same control point calculation as Relationship
+    const ctrlPoints = Shape.calculateDefaultControlPoints(sPos, tPos) as [
+      PositionType,
+      PositionType,
+    ];
+
+    // Update pivot line with curved control points
     this._pivot!.setFrom(sPos.x, sPos.y);
+    this._pivot!.setTo(tPos.x, tPos.y);
+    this._pivot!.setSrcControlPoint(ctrlPoints[0]);
+    this._pivot!.setDestControlPoint(ctrlPoints[1]);
 
-    // Update target position ...
-    this._pivot!.setTo(pos.x - gapDistance, pos.y);
-
-    const controlPoints = this._pivot!.getControlPoints();
-    this._startArrow!.setFrom(pos.x - gapDistance, pos.y);
-    this._startArrow!.setControlPoint(controlPoints[1]);
+    // Update end arrow to follow the curve
+    this._endArrow!.setFrom(tPos.x, tPos.y);
+    this._endArrow!.setControlPoint(ctrlPoints[1]);
 
     event.stopPropagation();
     return false;

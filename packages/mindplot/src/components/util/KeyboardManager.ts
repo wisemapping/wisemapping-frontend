@@ -67,7 +67,7 @@ class KeyboardManager {
    * Check if the user is currently typing in an input field or contentEditable element
    */
   private static isTypingInInputField(): boolean {
-    const activeElement = document.activeElement;
+    const { activeElement } = document;
 
     if (!activeElement) {
       return false;
