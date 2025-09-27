@@ -102,7 +102,6 @@ const ThemeEditor = (props: {
       PaperProps={{
         sx: {
           minHeight: '400px',
-          backgroundColor: 'transparent',
           border: '2px solid #ffa800',
           boxShadow: 'none',
         },
