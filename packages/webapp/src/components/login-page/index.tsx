@@ -18,6 +18,7 @@ import { useMutation } from 'react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export type Model = {
   email: string;
@@ -67,6 +68,7 @@ const LoginPage = (): React.ReactElement => {
   const client = useContext(ClientContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const { initializeThemeFromSystem } = useTheme();
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -80,6 +82,9 @@ const LoginPage = (): React.ReactElement => {
     (model: Model) => client.login({ ...model }),
     {
       onSuccess: () => {
+        // Initialize theme from system preference if not already set
+        initializeThemeFromSystem();
+
         // If the url has been defined, redirect to the original url.
         let redirectUrl = new URLSearchParams(location.search).get('redirect');
         redirectUrl = redirectUrl ? redirectUrl : '/c/maps/';

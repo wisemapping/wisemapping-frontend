@@ -16,18 +16,19 @@
  *   limitations under the License.
  */
 import React from 'react';
-import { css } from '@emotion/react';
 import GoogleIcon from '../google-icon';
 import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
-const googleButtonStyle = css({
-  color: '#000000',
+const StyledGoogleButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.text.primary,
   fontWeight: '300',
-  border: '1px solid black',
+  border: `1px solid ${theme.palette.divider}`,
   '&:hover': {
-    border: '1px solid black',
+    border: `1px solid ${theme.palette.text.primary}`,
+    backgroundColor: theme.palette.action.hover,
   },
-});
+}));
 
 type GoogleButtonProps = {
   text: string;
@@ -39,9 +40,9 @@ const GoogleButton: React.FunctionComponent<GoogleButtonProps> = ({
   onClick,
 }: GoogleButtonProps) => {
   return (
-    <Button variant="outlined" css={googleButtonStyle} startIcon={GoogleIcon} onClick={onClick}>
+    <StyledGoogleButton variant="outlined" startIcon={GoogleIcon} onClick={onClick}>
       {text}
-    </Button>
+    </StyledGoogleButton>
   );
 };
 

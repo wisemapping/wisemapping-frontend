@@ -59,13 +59,7 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
       >
         <Logo>
           <Link to="/c/login" className="header-logo">
-            <img
-              src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)}
-              alt="logo"
-              style={{
-                filter: theme.palette.mode === 'light' ? 'brightness(0.8) contrast(1.1)' : 'none',
-              }}
-            />
+            <img src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)} alt="logo" />
           </Link>
         </Logo>
         {text}

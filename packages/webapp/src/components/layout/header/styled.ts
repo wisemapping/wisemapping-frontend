@@ -77,11 +77,10 @@ export const Logo = styled.span`
   }
 
   img {
-    filter: brightness(0.8) contrast(1.1);
-    transition: filter 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
   &:hover img {
-    filter: brightness(1) contrast(1.2);
+    opacity: 0.8;
   }
 `;

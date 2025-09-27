@@ -1,48 +1,49 @@
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 /* Footer */
 
-export const StyledFooter = styled.footer`
-  height: 250px;
-  margin-top: 80px;
-  padding: 30px 40px 10px 50px;
-  background-color: #f9a826;
-  display: grid;
-  grid-template-columns: 200px 1fr 1fr 1fr 3fr;
-  overflow: hidden;
+export const StyledFooter = styled('footer')(({ theme }) => ({
+  height: '250px',
+  marginTop: '80px',
+  padding: '30px 40px 10px 50px',
+  backgroundColor: theme.palette.primary.main,
+  display: 'grid',
+  gridTemplateColumns: '200px 1fr 1fr 1fr 3fr',
+  overflow: 'hidden',
 
-  & a {
-    font-size: 14px;
-    color: white;
-    word-wrap: nowrap;
-  }
+  '& a': {
+    fontSize: '14px',
+    color: 'white',
+    wordWrap: 'nowrap',
+  },
 
-  & h4 {
-    font-size: 14px;
-    color: white;
-    word-wrap: nowrap;
-    font-weight: 500px;
-    margin: 0px;
-  }
+  '& h4': {
+    fontSize: '14px',
+    color: 'white',
+    wordWrap: 'nowrap',
+    fontWeight: '500px',
+    margin: '0px',
+  },
 
-  & > svg {
-    grid-column: 1;
-  }
+  '& > svg': {
+    gridColumn: '1',
+  },
 
-  & div:nth-child(2) {
-    grid-column: 2;
-  }
+  '& div:nth-child(2)': {
+    gridColumn: '2',
+  },
 
-  & div:nth-child(3) {
-    grid-column: 3;
-  }
-  & div:nth-child(4) {
-    grid-column: 4;
-  }
+  '& div:nth-child(3)': {
+    gridColumn: '3',
+  },
 
-  & div:nth-child(5) {
-    grid-column: 5;
-    text-align: right;
-    display: inline-block;
-    visibility: visible;
-  }
-`;
+  '& div:nth-child(4)': {
+    gridColumn: '4',
+  },
+
+  '& div:nth-child(5)': {
+    gridColumn: '5',
+    textAlign: 'right',
+    display: 'inline-block',
+    visibility: 'visible',
+  },
+}));
