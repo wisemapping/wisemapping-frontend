@@ -17,6 +17,6 @@ describe('OPML Importer Test Suite', () => {
 
     const importer = TextImporterFactory.create('opml', opmlContent);
 
-    await exporterAssert(testName, importer);
+    await exporterAssert(`opml-${testName}`, importer);
   });
 });

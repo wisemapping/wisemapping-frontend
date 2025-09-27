@@ -17,6 +17,6 @@ describe('XMind Importer Test Suite', () => {
 
     const importer = TextImporterFactory.create('xmind', xmindContent);
 
-    await exporterAssert(testName, importer);
+    await exporterAssert(`xmind-${testName}`, importer);
   });
 });

@@ -18,6 +18,6 @@ describe('Freeplane Importer Test Suite', () => {
 
     const importer = TextImporterFactory.create('mmx', freeplaneStr);
 
-    await exporterAssert(testName, importer);
+    await exporterAssert(`freeplane-${testName}`, importer);
   });
 });

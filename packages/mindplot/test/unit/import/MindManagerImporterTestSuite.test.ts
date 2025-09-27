@@ -17,6 +17,6 @@ describe('MindManager Importer Test Suite', () => {
 
     const importer = TextImporterFactory.create('mmap', mmapContent);
 
-    await exporterAssert(testName, importer);
+    await exporterAssert(`mindmanager-${testName}`, importer);
   });
 });
