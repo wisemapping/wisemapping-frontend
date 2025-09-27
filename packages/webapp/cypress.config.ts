@@ -12,9 +12,5 @@ export default defineConfig({
     // Add macOS compatibility options
     chromeWebSecurity: false,
     experimentalStudio: false,
-  },
-  // Add browser launch options for macOS compatibility
-  chrome: {
-    args: ['--no-sandbox', '--disable-web-security', '--disable-features=VizDisplayCompositor']
   }
 });

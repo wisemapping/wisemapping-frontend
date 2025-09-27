@@ -291,6 +291,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const theme = rootElem.getAttribute('theme');
     if (theme) {
       mindmap.setTheme(theme as ThemeType);
+    } else {
+      // Default to classic theme if no theme is specified
+      mindmap.setTheme('classic');
     }
 
     // Load canvas style ...

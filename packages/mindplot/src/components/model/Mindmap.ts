@@ -34,7 +34,7 @@ class Mindmap extends IMindmap {
 
   private _relationships: Array<RelationshipModel>;
 
-  private _theme: ThemeType | undefined;
+  private _theme: ThemeType;
 
   private _canvasStyle:
     | {
@@ -50,12 +50,13 @@ class Mindmap extends IMindmap {
     this._branches = [];
     this._description = '';
     this._relationships = [];
+    this._theme = 'classic'; // Default theme
     this._version = version;
     this._id = id;
   }
 
   getTheme(): ThemeType {
-    return this._theme ? this._theme : 'classic';
+    return this._theme;
   }
 
   setTheme(value: ThemeType): void {

@@ -29,13 +29,14 @@ import {
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import ReactGA from 'react-ga4';
-import { useTheme } from '@mui/material/styles';
+import { useTheme as useMuiTheme } from '@mui/material/styles';
+import { useTheme } from '../../contexts/ThemeContext';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
 import exampleMap from '../../classes/client/mock-client/example-map.wxml';
 import JwtTokenConfig from '../../classes/jwt-token-config';
-import { useLoaderData, useNavigation } from 'react-router-dom';
+import { useLoaderData, useNavigation } from 'react-router';
 import { EditorMetadata, PageModeType } from './loader';
 import { useFetchAccount } from '../../classes/middleware';
 import { ClientContext } from '../../classes/provider/client-context';
@@ -120,7 +121,8 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
 
   const userLocale = AppI18n.getUserLocale();
-  const theme = useTheme();
+  const { mode } = useTheme(); // Get theme mode from webapp context
+  const theme = useMuiTheme(); // Get MUI theme object
   const client = useContext(ClientContext);
   const { hotkeyEnabled } = useContext(KeyboardContext);
   const editorMetadata: EditorMetadata = useLoaderData() as EditorMetadata;
@@ -215,6 +217,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         config={editorConfig}
         onAction={setActiveDialog}
         theme={theme}
+        externalThemeMode={mode}
         accountConfiguration={
           // Prevent load on non-authenticated.
           editorOptions.mode !== 'showcase' ? (

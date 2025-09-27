@@ -46,6 +46,7 @@ type EditorProps = {
   onLoad?: (designer: Designer) => void;
   config: EditorConfiguration;
   accountConfiguration?: React.ReactElement;
+  externalThemeMode?: 'light' | 'dark'; // Allow external theme mode to override internal theme
 };
 
 const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
@@ -53,8 +54,28 @@ const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps):
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
   const widgetBulder = designer ? designer.getWidgeManager() : new DefaultWidgetBuilder();
-  const { mode } = useTheme();
+  const { mode: internalMode } = useTheme();
+
+  // Now the internal theme context is synced with external theme mode
+  const mode = internalMode;
   const theme = createEditorTheme(mode);
+
+  // Initialize and sync mindmap theme variant with editor theme
+  React.useEffect(() => {
+    if (designer) {
+      designer.initializeThemeVariant(mode);
+    }
+  }, [designer]);
+
+  // Update mindmap theme variant when editor theme changes
+  React.useEffect(() => {
+    if (designer) {
+      // Add a small delay to ensure the designer is fully ready
+      setTimeout(() => {
+        designer.setThemeVariant(mode === 'dark' ? 'dark' : 'light');
+      }, 100);
+    }
+  }, [mode, designer]);
 
   // Initialize locale ...
   const locale = options.locale;
@@ -118,9 +139,14 @@ const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps):
   );
 };
 
-const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
+const Editor = ({
+  config,
+  onAction,
+  accountConfiguration,
+  externalThemeMode,
+}: EditorProps): ReactElement => {
   return (
-    <EditorThemeProvider>
+    <EditorThemeProvider externalThemeMode={externalThemeMode}>
       <EditorContent
         config={config}
         onAction={onAction}

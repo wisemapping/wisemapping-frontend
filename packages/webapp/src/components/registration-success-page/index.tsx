@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ReactGA from 'react-ga4';

@@ -4,13 +4,15 @@ import SquareOutlined from '@mui/icons-material/SquareOutlined';
 import Palette from '@mui/icons-material/Square';
 
 // Theme-aware styled icons that use the model values internally
-const ThemedSquareOutlined = styled(SquareOutlined)<{ modelValue?: string }>(
-  ({ theme, modelValue }) => ({
-    color: modelValue || theme.palette.text.primary,
-  }),
-);
+const ThemedSquareOutlined = styled(SquareOutlined, {
+  shouldForwardProp: (prop) => prop !== 'modelValue',
+})<{ modelValue?: string }>(({ theme, modelValue }) => ({
+  color: modelValue || theme.palette.text.primary,
+}));
 
-const ThemedPalette = styled(Palette)<{ modelValue?: string }>(({ theme, modelValue }) => ({
+const ThemedPalette = styled(Palette, {
+  shouldForwardProp: (prop) => prop !== 'modelValue',
+})<{ modelValue?: string }>(({ theme, modelValue }) => ({
   color: modelValue || theme.palette.text.primary,
 }));
 

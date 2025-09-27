@@ -2,7 +2,7 @@ import { StyledNav, StyledDiv, Logo } from './styled';
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 

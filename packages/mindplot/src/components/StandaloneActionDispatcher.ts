@@ -345,11 +345,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   changeTheme(themeType: ThemeType): void {
-    console.log('StandaloneActionDispatcher.changeTheme called with:', themeType);
     const command = new ChangeThemeCommand(themeType);
-    console.log('About to execute ChangeThemeCommand:', command);
     this.execute(command);
-    console.log('ChangeThemeCommand executed');
   }
 
   /** */
@@ -392,19 +389,12 @@ class StandaloneActionDispatcher extends ActionDispatcher {
         }
       | undefined,
   ): void {
-    console.log('StandaloneActionDispatcher.changeCanvasStyle called with:', style);
     const command = new ChangeCanvasStyleCommand(style);
-    console.log('About to execute ChangeCanvasStyleCommand:', command);
     this.execute(command);
-    console.log('ChangeCanvasStyleCommand executed');
   }
 
   /** */
   execute(command: Command) {
-    console.log(
-      'StandaloneActionDispatcher.execute called with command:',
-      command.constructor.name,
-    );
     this._actionRunner.execute(command);
   }
 }

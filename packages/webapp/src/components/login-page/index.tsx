@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
 import SubmitButton from '../form/submit-button';

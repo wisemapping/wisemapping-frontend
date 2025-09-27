@@ -1,5 +1,5 @@
 /*
- *    Copyright [2011] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -21,7 +21,8 @@ import { FontWeightType } from '../FontWeightType';
 import { TopicShapeType } from '../model/INodeModel';
 import Topic from '../Topic';
 import DefaultTheme, { TopicStyleType } from './DefaultTheme';
-import { TopicType } from './Theme';
+import { TopicType, ThemeVariant } from './Theme';
+import ColorUtil from './ColorUtil';
 
 const defaultStyles = new Map<TopicType, TopicStyleType>([
   [
@@ -58,7 +59,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
         '#4CA6F7',
         '#4B6FF6',
       ],
-      backgroundColor: [
+      connectionColor: [
         '#9B7BEB',
         '#E5628C',
         '#EB5130',
@@ -70,7 +71,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
         '#4CA6F7',
         '#4B6FF6',
       ],
-      connectionColor: [
+      backgroundColor: [
         '#9B7BEB',
         '#E5628C',
         '#EB5130',
@@ -136,25 +137,47 @@ class PrismTheme extends DefaultTheme {
     super(defaultStyles);
   }
 
-  getCanvasCssStyle(): string {
+  getCanvasCssStyle(variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+
+    if (isDark) {
+      // Dark mode background
+      return `position: relative;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        overflow: hidden;
+        opacity: 1;
+        background-color: #1a1a1a;
+        background-image: linear-gradient(#333333 1px, transparent 1px),
+        linear-gradient(to right, #333333 1px, #1a1a1a 1px);
+        background-size: 50px 50px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;`;
+    }
+    // Light mode - keep original background
     return `position: relative;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      overflow: hidden;
-      opacity: 1;
-      background-color: #f2f2f2;
-      background-image: linear-gradient(#ebe9e7 1px, transparent 1px),
-      linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
-      background-size: 50px 50px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;`;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        overflow: hidden;
+        opacity: 1;
+        background-color: #f2f2f2;
+        background-image: linear-gradient(#ebe9e7 1px, transparent 1px),
+        linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
+        background-size: 50px 50px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;`;
   }
 
-  getConnectionColor(topic: Topic): string {
+  getConnectionColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -174,10 +197,18 @@ class PrismTheme extends DefaultTheme {
       const index = order % colors.length;
       result = colors[index];
     }
+
+    // For dark mode, make connections more visible
+    if (isDark && result) {
+      // Lighten the connection color for better visibility on dark background
+      result = ColorUtil.lightenColor(result, 20);
+    }
+
     return result!;
   }
 
-  getBorderColor(topic: Topic): string {
+  getBorderColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getBorderColor();
 
@@ -193,6 +224,98 @@ class PrismTheme extends DefaultTheme {
       const index = order % colors.length;
       result = colors[index];
     }
+
+    // For dark mode, make borders more visible
+    if (isDark && result) {
+      // Lighten the border color for better visibility on dark background
+      result = ColorUtil.lightenColor(result, 15);
+    }
+
+    return result;
+  }
+
+  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const model = topic.getModel();
+    let result = model.getBackgroundColor();
+
+    // If topic has a custom background color, always use it
+    if (result) {
+      return result;
+    }
+
+    // For dark mode, use enhanced colors
+    if (isDark) {
+      if (topic.isCentralTopic()) {
+        // Central topic in dark mode - use a light color for contrast
+        result = '#F4B82D';
+      } else {
+        // Main topics in dark mode - use vibrant colors that work well on dark background
+        const darkColors = [
+          '#8B5CF6', // Purple
+          '#EC4899', // Pink
+          '#EF4444', // Red
+          '#F59E0B', // Amber
+          '#EAB308', // Yellow
+          '#22C55E', // Green
+          '#10B981', // Emerald
+          '#06B6D4', // Cyan
+          '#3B82F6', // Blue
+          '#6366F1', // Indigo
+        ];
+        const order = topic.getOrder() || 0;
+        result = darkColors[order % darkColors.length];
+      }
+    } else {
+      // For light mode, always use original theme colors
+      if (!topic.isCentralTopic()) {
+        // Be sure that not override default background color ...
+        const borderColor = model.getBorderColor();
+        if (borderColor) {
+          result = ColorUtil.lightenColor(borderColor, 40);
+        }
+      }
+
+      if (!result) {
+        let colors: string[] = [];
+        const resolvedColors = this.resolve('backgroundColor', topic) as string[] | string;
+        colors = colors.concat(resolvedColors);
+
+        // if the element is an array, use topic order to decide color ..
+        let order = topic.getOrder();
+        order = order || 0;
+
+        const index = order % colors.length;
+        result = colors[index];
+      }
+    }
+
+    return result;
+  }
+
+  getFontColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const model = topic.getModel();
+    let result = model.getFontColor();
+
+    // If topic has a custom font color, always use it
+    if (result) {
+      return result;
+    }
+
+    // For dark mode, use enhanced font colors
+    if (isDark) {
+      if (topic.isCentralTopic()) {
+        result = '#000000'; // Black text on light central topic
+      } else {
+        // For all non-central topics (main topics and sub-topics), use white text
+        result = '#FFFFFF'; // White text on colored topics
+      }
+    } else {
+      // For light mode, always use original theme colors
+      result = this.resolve('fontColor', topic) as string;
+    }
+
     return result;
   }
 }

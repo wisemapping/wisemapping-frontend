@@ -1,5 +1,5 @@
 /*
- *    Copyright [2011] [wisemapping]
+ *    Copyright [2021] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -58,7 +58,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
         '#4CA6F7',
         '#4B6FF6',
       ],
-      backgroundColor: [
+      connectionColor: [
         '#9B7BEB',
         '#E5628C',
         '#EB5130',
@@ -70,7 +70,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
         '#4CA6F7',
         '#4B6FF6',
       ],
-      connectionColor: [
+      backgroundColor: [
         '#9B7BEB',
         '#E5628C',
         '#EB5130',
@@ -86,7 +86,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
       fontSize: 9,
       fontStyle: 'normal' as FontStyleType,
       fontWeight: 'normal' as FontWeightType,
-      fontColor: '#FFFFFF',
+      fontColor: '#000000',
       connectionStyle: LineType.ARC,
       shapeType: 'rounded rectangle' as TopicShapeType,
       outerBackgroundColor: '#F4B82D',
@@ -103,7 +103,7 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
       fontSize: 8,
       fontStyle: 'normal' as FontStyleType,
       fontWeight: 'normal' as FontWeightType,
-      fontColor: '#FFFFFF',
+      fontColor: '#000000',
       connectionStyle: LineType.ARC,
       connectionColor: '#345780',
       shapeType: 'none' as TopicShapeType,
@@ -131,49 +131,35 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
   ],
 ]);
 
-class DarkPrismTheme extends DefaultTheme {
+class EnhancedPrismTheme extends DefaultTheme {
   constructor() {
     super(defaultStyles);
   }
 
   getCanvasCssStyle(variant?: ThemeVariant): string {
-    const isLight = variant === 'light';
-    const backgroundColor = isLight ? '#f2f2f2' : '#1a1a1a';
-    const gridColor = isLight ? '#ebe9e7' : '#333333';
+    const isDark = variant === 'dark';
+    const backgroundColor = isDark ? '#1a1a1a' : '#f2f2f2';
+    const gridColor = isDark ? '#333333' : '#ebe9e7';
 
-    if (isLight) {
-      return `position: relative;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-        overflow: hidden;
-        opacity: 1;
-        background-color: ${backgroundColor};
-        background-image: linear-gradient(${gridColor} 1px, transparent 1px),
-        linear-gradient(to right, ${gridColor} 1px, ${backgroundColor} 1px);
-        background-size: 50px 50px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;`;
-    }
     return `position: relative;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-        overflow: hidden;
-        opacity: 1;
-        background-color: ${backgroundColor};
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;`;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      overflow: hidden;
+      opacity: 1;
+      background-color: ${backgroundColor};
+      background-image: linear-gradient(${gridColor} 1px, transparent 1px),
+      linear-gradient(to right, ${gridColor} 1px, ${backgroundColor} 1px);
+      background-size: 50px 50px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;`;
   }
 
   getConnectionColor(topic: Topic, variant?: ThemeVariant): string {
-    const isLight = variant === 'light';
+    const isDark = variant === 'dark';
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -183,24 +169,24 @@ class DarkPrismTheme extends DefaultTheme {
     }
 
     if (!result) {
-      if (isLight) {
-        // For light mode, use bright connection colors that match the background colors
-        const lightConnectionColors = [
-          '#8B5CF6', // Purple
-          '#EC4899', // Pink
-          '#EF4444', // Red
-          '#F59E0B', // Amber
-          '#EAB308', // Yellow
-          '#22C55E', // Green
-          '#10B981', // Emerald
-          '#06B6D4', // Cyan
-          '#3B82F6', // Blue
-          '#6366F1', // Indigo
+      if (isDark) {
+        // For dark mode, use darker connection colors that match the background colors
+        const darkConnectionColors = [
+          '#6B46C1', // Purple
+          '#BE185D', // Pink
+          '#DC2626', // Red
+          '#D97706', // Orange
+          '#CA8A04', // Yellow
+          '#65A30D', // Green
+          '#059669', // Emerald
+          '#0891B2', // Cyan
+          '#2563EB', // Blue
+          '#4F46E5', // Indigo
         ];
         const order = topic.getOrder() || 0;
-        result = lightConnectionColors[order % lightConnectionColors.length];
+        result = darkConnectionColors[order % darkConnectionColors.length];
       } else {
-        // For dark mode, use original connection colors
+        // For light mode, use original connection colors
         let colors: string[] = [];
         colors = colors.concat(this.resolve('connectionColor', topic) as string[] | string);
 
@@ -216,30 +202,30 @@ class DarkPrismTheme extends DefaultTheme {
   }
 
   getBorderColor(topic: Topic, variant?: ThemeVariant): string {
-    const isLight = variant === 'light';
+    const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getBorderColor();
 
     // If border color has not been defined, use the connection color for the border ...
     if (!result) {
-      if (isLight) {
-        // For light mode, use bright border colors that match the background colors
-        const lightBorderColors = [
-          '#8B5CF6', // Purple
-          '#EC4899', // Pink
-          '#EF4444', // Red
-          '#F59E0B', // Amber
-          '#EAB308', // Yellow
-          '#22C55E', // Green
-          '#10B981', // Emerald
-          '#06B6D4', // Cyan
-          '#3B82F6', // Blue
-          '#6366F1', // Indigo
+      if (isDark) {
+        // For dark mode, use darker border colors that match the background colors
+        const darkBorderColors = [
+          '#6B46C1', // Purple
+          '#BE185D', // Pink
+          '#DC2626', // Red
+          '#D97706', // Orange
+          '#CA8A04', // Yellow
+          '#65A30D', // Green
+          '#059669', // Emerald
+          '#0891B2', // Cyan
+          '#2563EB', // Blue
+          '#4F46E5', // Indigo
         ];
         const order = topic.getOrder() || 0;
-        result = lightBorderColors[order % lightBorderColors.length];
+        result = darkBorderColors[order % darkBorderColors.length];
       } else {
-        // For dark mode, use original border colors
+        // For light mode, use original border colors
         let colors: string[] = [];
         colors = colors.concat(this.resolve('borderColor', topic) as string[] | string);
 
@@ -255,7 +241,7 @@ class DarkPrismTheme extends DefaultTheme {
   }
 
   getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
-    const isLight = variant === 'light';
+    const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -264,38 +250,54 @@ class DarkPrismTheme extends DefaultTheme {
       return result;
     }
 
-    // For light mode, use enhanced colors (DarkPrism is dark by default)
-    if (isLight) {
+    // For dark mode, use enhanced colors
+    if (isDark) {
       if (topic.isCentralTopic()) {
-        // Central topic in light mode - use a dark color for contrast
-        result = '#1F2937';
+        // Central topic in dark mode - use a light color for contrast
+        result = '#F4B82D';
       } else {
-        // Main topics in light mode - use bright colors
-        const lightColors = [
-          '#8B5CF6', // Purple
-          '#EC4899', // Pink
-          '#EF4444', // Red
-          '#F59E0B', // Amber
-          '#EAB308', // Yellow
-          '#22C55E', // Green
-          '#10B981', // Emerald
-          '#06B6D4', // Cyan
-          '#3B82F6', // Blue
-          '#6366F1', // Indigo
+        // Main topics in dark mode - use darker, more muted colors
+        const darkColors = [
+          '#6B46C1', // Purple
+          '#BE185D', // Pink
+          '#DC2626', // Red
+          '#D97706', // Orange
+          '#CA8A04', // Yellow
+          '#65A30D', // Green
+          '#059669', // Emerald
+          '#0891B2', // Cyan
+          '#2563EB', // Blue
+          '#4F46E5', // Indigo
         ];
         const order = topic.getOrder() || 0;
-        result = lightColors[order % lightColors.length];
+        result = darkColors[order % darkColors.length];
       }
+    } else if (topic.isCentralTopic()) {
+      // Central topic in light mode - use a soft color
+      result = '#E8F4FD'; // Light blue
     } else {
-      // For dark mode, always use original theme colors
-      result = this.resolve('backgroundColor', topic) as string;
+      // Main topics in light mode - use lighter, more muted colors
+      const lightColors = [
+        '#E8E2F3', // Light purple
+        '#FCE4EC', // Light pink
+        '#FFEBEE', // Light red
+        '#FFF3E0', // Light orange
+        '#FFFDE7', // Light yellow
+        '#F1F8E9', // Light green
+        '#E0F2F1', // Light teal
+        '#E0F7FA', // Light cyan
+        '#E3F2FD', // Light blue
+        '#F3E5F5', // Light indigo
+      ];
+      const order = topic.getOrder() || 0;
+      result = lightColors[order % lightColors.length];
     }
 
     return result;
   }
 
   getFontColor(topic: Topic, variant?: ThemeVariant): string {
-    const isLight = variant === 'light';
+    const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getFontColor();
 
@@ -304,20 +306,20 @@ class DarkPrismTheme extends DefaultTheme {
       return result;
     }
 
-    // For light mode, use enhanced font colors (DarkPrism is dark by default)
-    if (isLight) {
+    // For dark mode, use enhanced font colors
+    if (isDark) {
       if (topic.isCentralTopic()) {
-        result = '#FFFFFF'; // White text on dark central topic
+        result = '#000000'; // Black text on light central topic
       } else {
-        result = '#FFFFFF'; // White text on bright colored topics
+        result = '#FFFFFF'; // White text on colored topics
       }
     } else {
-      // For dark mode, always use original theme colors
-      result = this.resolve('fontColor', topic) as string;
+      // For light mode, use dark text for good contrast on light backgrounds
+      result = '#2D3748'; // Dark gray text for better readability
     }
 
     return result;
   }
 }
 
-export default DarkPrismTheme;
+export default EnhancedPrismTheme;

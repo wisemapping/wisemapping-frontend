@@ -44,6 +44,7 @@ import { FontStyleType } from './FontStyleType';
 import { FontWeightType } from './FontWeightType';
 import DragTopic from './DragTopic';
 import ThemeFactory from './theme/ThemeFactory';
+import { ThemeVariant } from './theme/Theme';
 import TopicShape from './shape/TopicShape';
 import TopicShapeFactory from './shape/TopicShapeFactory';
 
@@ -165,10 +166,10 @@ abstract class Topic extends NodeGraph {
     return theme.getConnectionType(this);
   }
 
-  getConnectionColor(): string {
+  getConnectionColor(variant?: ThemeVariant): string {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
-    return theme.getConnectionColor(this);
+    const theme = ThemeFactory.create(model, variant);
+    return theme.getConnectionColor(this, variant);
   }
 
   private removeInnerShape(): TopicShape {
@@ -386,10 +387,10 @@ abstract class Topic extends NodeGraph {
     return theme.getFontFamily(this);
   }
 
-  getFontColor(): string {
+  getFontColor(variant?: ThemeVariant): string {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
-    return theme.getFontColor(this);
+    const theme = ThemeFactory.create(model, variant);
+    return theme.getFontColor(this, variant);
   }
 
   getFontStyle(): FontStyleType {
@@ -458,10 +459,10 @@ abstract class Topic extends NodeGraph {
     this.redraw(true);
   }
 
-  getBackgroundColor(): string {
+  getBackgroundColor(variant?: ThemeVariant): string {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
-    return theme.getBackgroundColor(this);
+    const theme = ThemeFactory.create(model, variant);
+    return theme.getBackgroundColor(this, variant);
   }
 
   setBorderColor(color: string | undefined): void {
@@ -471,10 +472,10 @@ abstract class Topic extends NodeGraph {
     this.redraw(true);
   }
 
-  getBorderColor(): string {
+  getBorderColor(variant?: ThemeVariant): string {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
-    return theme.getBorderColor(this);
+    const theme = ThemeFactory.create(model, variant);
+    return theme.getBorderColor(this, variant);
   }
 
   private buildTopicShape(): void {
@@ -1110,16 +1111,16 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  redraw(redrawChildren = false): void {
+  redraw(redrawChildren = false, variant?: ThemeVariant): void {
     if (this._isInWorkspace) {
-      const theme = ThemeFactory.create(this.getModel());
+      const theme = ThemeFactory.create(this.getModel(), variant);
       const textShape = this.getOrBuildTextShape();
 
       // Update shape ...
       const shapeChanged = this.updateTopicShape();
 
       // Update font ...
-      const fontColor = this.getFontColor();
+      const fontColor = this.getFontColor(variant);
       textShape.setColor(fontColor);
 
       const fontSize = this.getFontSize();
@@ -1139,8 +1140,8 @@ abstract class Topic extends NodeGraph {
 
       // Update outer shape style ...
       const outerShape = this.getOuterShape();
-      const outerFillColor = theme.getOuterBackgroundColor(this, this.isOnFocus());
-      const outerBorderColor = theme.getOuterBorderColor(this);
+      const outerFillColor = theme.getOuterBackgroundColor(this, this.isOnFocus(), variant);
+      const outerBorderColor = theme.getOuterBorderColor(this, variant);
 
       outerShape.setFill(outerFillColor);
       outerShape.setStroke(1, 'solid', outerBorderColor);

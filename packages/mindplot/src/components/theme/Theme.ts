@@ -23,6 +23,8 @@ import { TopicShapeType } from '../model/INodeModel';
 import Topic from '../Topic';
 
 export type TopicType = 'CentralTopic' | 'MainTopic' | 'SubTopic' | 'IsolatedTopic';
+export type ThemeVariant = 'light' | 'dark';
+
 interface Theme {
   getText(topic: Topic): string;
 
@@ -34,26 +36,27 @@ interface Theme {
 
   getFontWeight(topic: Topic): FontWeightType;
 
-  getFontColor(topic: Topic): string;
-
-  getCanvasCssStyle(): string;
-
-  getOuterBorderColor(topic: Topic): string;
-
-  getOuterBackgroundColor(topic: Topic, onFocus: boolean): string;
-
-  getBackgroundColor(topic: Topic): string;
-
-  getBorderColor(topic: Topic): string;
-
   getInnerPadding(topic: Topic): number;
 
   getShapeType(topic: Topic): TopicShapeType;
 
   getConnectionType(topic: Topic): LineType;
 
-  getConnectionColor(topic: Topic): string;
-
   getEmojiSpacing(topic: Topic): number;
+
+  // Theme variant support
+  getCanvasCssStyle(variant?: ThemeVariant): string;
+
+  getFontColor(topic: Topic, variant?: ThemeVariant): string;
+
+  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string;
+
+  getBorderColor(topic: Topic, variant?: ThemeVariant): string;
+
+  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant?: ThemeVariant): string;
+
+  getOuterBorderColor(topic: Topic, variant?: ThemeVariant): string;
+
+  getConnectionColor(topic: Topic, variant?: ThemeVariant): string;
 }
 export default Theme;

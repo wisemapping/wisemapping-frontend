@@ -28,19 +28,19 @@ export const StyledFooter = styled('footer')(({ theme }) => ({
     gridColumn: '1',
   },
 
-  '& div:nth-child(2)': {
+  '& div:nth-of-type(1)': {
     gridColumn: '2',
   },
 
-  '& div:nth-child(3)': {
+  '& div:nth-of-type(2)': {
     gridColumn: '3',
   },
 
-  '& div:nth-child(4)': {
+  '& div:nth-of-type(3)': {
     gridColumn: '4',
   },
 
-  '& div:nth-child(5)': {
+  '& div:nth-of-type(4)': {
     gridColumn: '5',
     textAlign: 'right',
     display: 'inline-block',
