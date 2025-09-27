@@ -63,6 +63,7 @@ import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
 import { SEOHead } from '../seo';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export type Filter = GenericFilter | LabelFilter;
 
@@ -92,6 +93,15 @@ const MapsPage = (): ReactElement => {
     localStorage.getItem('desktopDrawerOpen') === 'true',
   );
   const classes = useStyles(desktopDrawerOpen);
+  const { mode } = useTheme();
+
+  // Get theme-appropriate icon color
+  const getIconColor = () => {
+    if (mode === 'dark') {
+      return '#ffa800'; // Orange for dark mode
+    }
+    return undefined; // Use default color for light mode (secondary color)
+  };
 
   const handleMobileDrawerToggle = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -155,27 +165,46 @@ const MapsPage = (): ReactElement => {
     {
       filter: { type: 'all' },
       label: intl.formatMessage({ id: 'maps.nav-all', defaultMessage: 'All' }),
-      icon: <ScatterPlotTwoTone color="secondary" />,
+      icon: (
+        <ScatterPlotTwoTone
+          htmlColor={getIconColor()}
+          color={getIconColor() ? undefined : 'secondary'}
+        />
+      ),
     },
     {
       filter: { type: 'owned' },
       label: intl.formatMessage({ id: 'maps.nav-onwned', defaultMessage: 'Owned' }),
-      icon: <PersonOutlineTwoTone color="secondary" />,
+      icon: (
+        <PersonOutlineTwoTone
+          htmlColor={getIconColor()}
+          color={getIconColor() ? undefined : 'secondary'}
+        />
+      ),
     },
     {
       filter: { type: 'starred' },
       label: intl.formatMessage({ id: 'maps.nav-starred', defaultMessage: 'Starred' }),
-      icon: <StarTwoTone color="secondary" />,
+      icon: (
+        <StarTwoTone htmlColor={getIconColor()} color={getIconColor() ? undefined : 'secondary'} />
+      ),
     },
     {
       filter: { type: 'shared' },
       label: intl.formatMessage({ id: 'maps.nav-shared', defaultMessage: 'Shared with me' }),
-      icon: <ShareTwoTone color="secondary" />,
+      icon: (
+        <ShareTwoTone htmlColor={getIconColor()} color={getIconColor() ? undefined : 'secondary'} />
+      ),
     },
     {
       filter: { type: 'public' },
       label: intl.formatMessage({ id: 'maps.nav-public', defaultMessage: 'Public' }),
-      icon: <PublicTwoTone color="secondary" />,
+      icon: (
+        <PublicTwoTone
+          htmlColor={getIconColor()}
+          color={getIconColor() ? undefined : 'secondary'}
+        />
+      ),
     },
   ];
 
@@ -390,24 +419,39 @@ interface ListItemProps {
 }
 
 // https://stackoverflow.com/questions/61486061/how-to-set-selected-and-hover-color-of-listitem-in-mui
-const CustomListItem = withEmotionStyles({
+const CustomListItem = withEmotionStyles((theme) => ({
   '&.Mui-selected': {
-    backgroundColor: 'rgb(210, 140, 5)',
-    color: 'white',
+    backgroundColor:
+      theme.palette.mode === 'light' ? theme.palette.primary.dark : theme.palette.grey[800],
+    color:
+      theme.palette.mode === 'light'
+        ? theme.palette.primary.contrastText
+        : theme.palette.text.primary,
     '& .MuiListItemIcon-root': {
-      color: 'white',
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.primary.contrastText
+          : theme.palette.text.primary,
     },
   },
   '&.Mui-selected:hover': {
-    backgroundColor: 'rgb(210, 140, 5)',
-    color: 'white',
+    backgroundColor:
+      theme.palette.mode === 'light' ? theme.palette.primary.dark : theme.palette.grey[700],
+    color:
+      theme.palette.mode === 'light'
+        ? theme.palette.primary.contrastText
+        : theme.palette.text.primary,
     '& .MuiListItemIcon-root': {
-      color: 'white',
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.primary.contrastText
+          : theme.palette.text.primary,
     },
   },
-})(ListItemButton);
+}))(ListItemButton);
 
 const StyleListItem = (props: ListItemProps) => {
+  const { mode } = useTheme();
   const icon = props.icon;
   const label = props.label;
   const filter = props.filter;
@@ -440,7 +484,7 @@ const StyleListItem = (props: ListItemProps) => {
       <Tooltip title={label} disableInteractive>
         <ListItemIcon>{icon}</ListItemIcon>
       </Tooltip>
-      <ListItemText style={{ color: 'white' }} primary={label} />
+      <ListItemText primary={label} />
       {filter.type == 'label' && (
         <ListItemSecondaryAction>
           <IconButton
@@ -449,7 +493,10 @@ const StyleListItem = (props: ListItemProps) => {
             onClick={(e) => handleOnDelete(e, filter)}
             size="large"
           >
-            <DeleteOutlineTwoTone color="secondary" />
+            <DeleteOutlineTwoTone
+              htmlColor={mode === 'dark' ? '#ffffff' : undefined}
+              color={mode === 'dark' ? undefined : 'secondary'}
+            />
           </IconButton>
         </ListItemSecondaryAction>
       )}

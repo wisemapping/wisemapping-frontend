@@ -26,7 +26,7 @@ const createEditorTheme = (mode: PaletteMode): Theme => {
       primary: {
         light: '#ffb74d',
         main: '#ffa800',
-        dark: '#e57373',
+        dark: '#e57500',
         contrastText: isLight ? '#FFFFFF' : '#000000',
       },
       secondary: {
@@ -44,6 +44,12 @@ const createEditorTheme = (mode: PaletteMode): Theme => {
         secondary: isLight ? '#666666' : '#b3b3b3',
       },
       divider: isLight ? '#e0e0e0' : '#424242',
+      action: {
+        hover: isLight ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.08)',
+        selected: isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.12)',
+        disabled: isLight ? 'rgba(0, 0, 0, 0.26)' : 'rgba(255, 255, 255, 0.3)',
+        disabledBackground: isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)',
+      },
     },
     components: {
       MuiAppBar: {

@@ -12,11 +12,19 @@ type Props = {
 };
 
 export function LabelsCell({ labels, onDelete }: Props): React.ReactElement<Props> {
+  // Keep original label colors in both light and dark mode
+  const getIconColor = (label: Label) => {
+    return label.color;
+  };
+
   return (
     <>
       {labels.map((label) => (
         <LabelContainer key={label.id} color={label.color}>
-          <LabelTwoTone htmlColor={label.color} style={{ height: '0.6em', width: '0.6em' }} />
+          <LabelTwoTone
+            htmlColor={getIconColor(label)}
+            style={{ height: '0.6em', width: '0.6em' }}
+          />
           <LabelText>{label.title}</LabelText>
           <IconButton
             color="default"

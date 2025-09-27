@@ -40,9 +40,14 @@ export default function LabelComponent({
         }
       : { height: '0.9em', width: '0.9em' };
 
+  // Keep original label colors in both light and dark mode
+  const getIconColor = () => {
+    return label.color;
+  };
+
   return (
     <LabelContainer color={label.color}>
-      <LabelTwoTone htmlColor={label.color} style={iconSize} />
+      <LabelTwoTone htmlColor={getIconColor()} style={iconSize} />
       <LabelText>{label.title}</LabelText>
       {onDelete && (
         <IconButton
