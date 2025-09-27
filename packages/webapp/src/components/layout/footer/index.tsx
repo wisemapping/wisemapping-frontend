@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { StyledFooter } from './styled';
 import poweredByIcon from './pwrdby-white.svg';
+import ThemeToggle from '../../common/theme-toggle';
 
 const Footer = (): React.ReactElement => {
   return (
@@ -65,6 +66,16 @@ const Footer = (): React.ReactElement => {
             <FormattedMessage id="footer.opensource" defaultMessage="Open Source" />
           </a>
         </div>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-start',
+          marginTop: '10px',
+        }}
+      >
+        <ThemeToggle showBackground={true} />
       </div>
     </StyledFooter>
   );

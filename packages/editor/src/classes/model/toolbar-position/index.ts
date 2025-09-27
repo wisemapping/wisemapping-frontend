@@ -32,6 +32,10 @@ interface ToolbarPosition {
      * css properties for appbar top
      */
     top: string;
+    /**
+     * css transform property for positioning
+     */
+    transform?: string;
   };
 }
 export default ToolbarPosition;

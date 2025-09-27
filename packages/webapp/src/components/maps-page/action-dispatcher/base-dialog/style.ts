@@ -18,4 +18,9 @@ export const StyledDialogActions = withEmotionStyles({
 
 export const StyledDialog = withEmotionStyles({
   borderRadius: '9px',
+  '& .MuiPaper-root': {
+    backgroundColor: 'transparent',
+    border: '2px solid #ffa800',
+    boxShadow: 'none',
+  },
 })(Dialog);

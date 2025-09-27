@@ -38,6 +38,7 @@ import Typography from '@mui/material/Typography';
 import UndoAndRedo from '../action-widget/button/undo-and-redo';
 import Button from '@mui/material/Button';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
+import LogoTextOrangeSvg from '../../../images/logo-text-orange.svg';
 import IconButton from '@mui/material/IconButton';
 import { ToolbarActionType } from '../toolbar/ToolbarActionType';
 import MapInfo from '../../classes/model/map-info';
@@ -46,6 +47,7 @@ import ThemeEditor from '../action-widget/pane/theme-editor';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
 import TextField from '@mui/material/TextField';
 import { $notify } from '@wisemapping/mindplot';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface AppBarProps {
   model: Editor | undefined;
@@ -86,6 +88,7 @@ const AppBar = ({
   const [currentTitle, setCurrentTitle] = useState<string>(mapInfo.getTitle());
   const inputRef = useRef<HTMLInputElement>(null);
   const intl = useIntl();
+  const { mode } = useTheme();
 
   const handleStarredOnClick = () => {
     const newStatus = !isStarred;
@@ -144,7 +147,7 @@ const AppBar = ({
 
   const handleTitleCancel = () => {
     setIsEditingTitle(false);
-    setEditedTitle('');
+    setEditedTitle(currentTitle);
   };
 
   // Focus input when editing starts
@@ -183,7 +186,7 @@ const AppBar = ({
     {
       render: () => (
         <img
-          src={LogoTextBlackSvg}
+          src={mode === 'light' ? LogoTextBlackSvg : LogoTextOrangeSvg}
           aria-label={intl.formatMessage({
             id: 'appbar.logo-aria-label',
             defaultMessage: 'WiseMapping',
@@ -224,7 +227,7 @@ const AppBar = ({
                     '& .MuiOutlinedInput-root': {
                       fontSize: '1rem',
                       height: '32px',
-                      outline: '2px solid #ffa800',
+                      outline: (theme) => `2px solid ${theme.palette.primary.main}`,
                       borderRadius: '4px',
                       '& fieldset': {
                         border: 'none',
@@ -258,7 +261,7 @@ const AppBar = ({
                       borderColor: 'transparent',
                     },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffa800',
+                      borderColor: (theme) => theme.palette.primary.main,
                     },
                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                       borderColor: 'transparent',

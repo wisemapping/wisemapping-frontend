@@ -31,12 +31,13 @@ import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
 import { ForgotPasswordPage } from './components/forgot-password-page';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { theme } from './theme';
+import { createAppTheme } from './theme';
 import AppI18n, { Locales } from './classes/app-i18n';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
+import { AppThemeProvider, useTheme } from './contexts/ThemeContext';
 import RegistrationCallbackPage from './components/registration-callback';
 import ErrorPage from './components/error-page';
 import { HelmetProvider } from './components/seo';
@@ -166,9 +167,11 @@ function Redirect({ to }) {
   return null;
 }
 
-const App = (): ReactElement => {
+const AppWithTheme = (): ReactElement => {
   const locale = AppI18n.getDefaultLocale();
   const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
+  const { mode } = useTheme();
+  const theme = createAppTheme(mode);
 
   return (
     <HelmetProvider>
@@ -193,6 +196,14 @@ const App = (): ReactElement => {
         </QueryClientProvider>
       </ClientContext.Provider>
     </HelmetProvider>
+  );
+};
+
+const App = (): ReactElement => {
+  return (
+    <AppThemeProvider>
+      <AppWithTheme />
+    </AppThemeProvider>
   );
 };
 

@@ -24,7 +24,8 @@ import { Designer } from '@wisemapping/mindplot';
 
 import I18nMsg from '../classes/i18n-msg';
 
-import { Theme } from '@mui/material/styles';
+import { Theme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { Notifier } from './warning-dialog/styled';
 import WarningDialog from './warning-dialog';
 import AppBar from './app-bar';
@@ -36,6 +37,8 @@ import { EditorConfiguration } from '../hooks/useEditor';
 import CreatorInfoPane from './creator-info-pane';
 import { WidgetPopover } from './widgetPopover';
 import DefaultWidgetBuilder from '../classes/default-widget-manager';
+import { EditorThemeProvider, useTheme } from '../contexts/ThemeContext';
+import { createEditorTheme } from '../theme';
 
 type EditorProps = {
   theme?: Theme;
@@ -45,65 +48,85 @@ type EditorProps = {
   accountConfiguration?: React.ReactElement;
 };
 
-const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
+const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
   const widgetBulder = designer ? designer.getWidgeManager() : new DefaultWidgetBuilder();
+  const { mode } = useTheme();
+  const theme = createEditorTheme(mode);
 
   // Initialize locale ...
   const locale = options.locale;
   const msg = I18nMsg.loadLocaleData(locale);
+
   return (
-    <IntlProvider locale={locale} messages={msg}>
-      {options.enableAppBar && (
-        <AppBar
-          model={model}
-          mapInfo={mapInfo}
-          capability={capability}
-          onAction={onAction}
-          accountConfig={accountConfiguration}
-        />
-      )}
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <IntlProvider locale={locale} messages={msg}>
+          {options.enableAppBar && (
+            <AppBar
+              model={model}
+              mapInfo={mapInfo}
+              capability={capability}
+              onAction={onAction}
+              accountConfig={accountConfiguration}
+            />
+          )}
 
-      <WidgetPopover widgetManager={widgetBulder} />
+          <WidgetPopover widgetManager={widgetBulder} />
 
-      {model && (
-        <div className="no-print">
-          <EditorToolbar model={model} capability={capability} />
-          <ZoomPanel model={model} capability={capability} />
-        </div>
-      )}
+          {model && (
+            <div className="no-print">
+              <EditorToolbar model={model} capability={capability} />
+              <ZoomPanel model={model} capability={capability} />
+            </div>
+          )}
 
-      {React.createElement('mindplot-component', {
-        ref: mindplotRef,
-        id: 'mindmap-comp',
-        mode: options.mode,
-        locale: locale,
-        zoom: options.zoom,
-      })}
+          {React.createElement('mindplot-component', {
+            ref: mindplotRef,
+            id: 'mindmap-comp',
+            mode: options.mode,
+            locale: locale,
+            zoom: options.zoom,
+          })}
 
-      <Notifier id="headerNotifier" />
+          <Notifier id="headerNotifier" />
 
-      {!options.enableAppBar && <CreatorInfoPane mapInfo={mapInfo} />}
+          {!options.enableAppBar && <CreatorInfoPane mapInfo={mapInfo} />}
 
-      <WarningDialog
-        capability={capability}
-        message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
-      />
-
-      {!model?.isMapLoadded() && (
-        <SpinnerCentered>
-          <Vortex
-            visible={true}
-            height="160"
-            width="160"
-            ariaLabel="vortex-loading"
-            colors={['#ffde1a', '#ffce00', '#ffa700', '#ff8d00', '#ff7400', '#ffde1a']}
+          <WarningDialog
+            capability={capability}
+            message={mapInfo.isLocked() ? mapInfo.getLockedMessage() : ''}
           />
-        </SpinnerCentered>
-      )}
-    </IntlProvider>
+
+          {!model?.isMapLoadded() && (
+            <SpinnerCentered>
+              <Vortex
+                visible={true}
+                height="160"
+                width="160"
+                ariaLabel="vortex-loading"
+                colors={['#ffde1a', '#ffce00', '#ffa700', '#ff8d00', '#ff7400', '#ffde1a']}
+              />
+            </SpinnerCentered>
+          )}
+        </IntlProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
+};
+
+const Editor = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
+  return (
+    <EditorThemeProvider>
+      <EditorContent
+        config={config}
+        onAction={onAction}
+        accountConfiguration={accountConfiguration}
+      />
+    </EditorThemeProvider>
   );
 };
 export default Editor;

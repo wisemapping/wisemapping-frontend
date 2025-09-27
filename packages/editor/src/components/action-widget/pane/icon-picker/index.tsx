@@ -17,7 +17,7 @@
  */
 import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
 import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
@@ -25,6 +25,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
 
 type IconPickerProp = {
   triggerClose: () => void;
@@ -33,6 +34,7 @@ type IconPickerProp = {
 
 const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
   const [checked, setChecked] = React.useState(true);
+  const theme = useTheme();
 
   const handleCheck = () => {
     setChecked(!checked);
@@ -65,6 +67,7 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
           previewConfig={{ showPreview: false }}
           emojiStyle={EmojiStyle.NATIVE}
           skinTonesDisabled
+          theme={theme.palette.mode === 'dark' ? Theme.DARK : Theme.LIGHT}
         />
       )}
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}

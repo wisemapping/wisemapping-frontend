@@ -76,7 +76,7 @@ export const InfoDialog = styled.div`
   top: 70px;
   left: 0;
   right: 0;
-  background-color: white;
+  background-color: transparent;
   border: solid 2px #ffa800;
   margin: auto;
   border-radius: 9px;

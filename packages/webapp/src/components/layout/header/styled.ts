@@ -17,11 +17,9 @@ export const StyledNav = styled.nav`
 
   &::before {
     top: 58px;
-    box-shadow: 0 4px 10px 0 rgba(202, 34, 34, 0.05), 0 5px 30px 0 rgba(0, 0, 0, 0.05);
   }
 
   &::after {
-    background: linear-gradient(white, rgba(255, 255, 255, 0.3));
     top: 0;
     z-index: 2;
   }
@@ -57,7 +55,6 @@ export const StyledNav = styled.nav`
 `;
 
 export const StyledDiv = styled.nav`
-  background: white;
   height: 74px;
   padding: 10px;
   position: sticky;
@@ -77,5 +74,14 @@ export const Logo = styled.span`
 
   .header-logo a {
     padding: 0px;
+  }
+
+  img {
+    filter: brightness(0.8) contrast(1.1);
+    transition: filter 0.2s ease;
+  }
+
+  &:hover img {
+    filter: brightness(1) contrast(1.2);
   }
 `;

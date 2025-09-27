@@ -31,6 +31,7 @@ import { ActionType } from './action-chooser';
 import AccountMenu from './account-menu';
 import HelpMenu from './help-menu';
 import LanguageMenu from './language-menu';
+import ThemeToggleButton from '../common/theme-toggle-button';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -329,6 +330,7 @@ const MapsPage = (): ReactElement => {
             />
 
             <div css={classes.rightButtonGroup as Interpolation<Theme>}>
+              <ThemeToggleButton />
               <LanguageMenu />
               <HelpMenu />
               <AccountMenu />

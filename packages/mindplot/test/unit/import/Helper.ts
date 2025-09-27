@@ -6,7 +6,7 @@ import { expect } from '@jest/globals';
 import { diff } from 'jest-diff';
 import Importer from '../../../src/components/import/Importer';
 
-const saveOutputRecord = true;
+const saveOutputRecord = false;
 
 export const parseXMLString = (xmlStr: string, mimeType: DOMParserSupportedType) => {
   const parser = new DOMParser();

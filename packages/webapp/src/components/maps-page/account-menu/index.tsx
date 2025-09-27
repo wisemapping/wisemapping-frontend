@@ -47,7 +47,7 @@ const AccountMenu = (): React.ReactElement => {
         title={`${account?.firstname} ${account?.lastname} <${account?.email}>`}
       >
         <IconButton onClick={handleMenu} size="large">
-          <AccountCircle fontSize="large" style={{ color: 'black' }} />
+          <AccountCircle fontSize="large" />
         </IconButton>
       </Tooltip>
       <Menu
