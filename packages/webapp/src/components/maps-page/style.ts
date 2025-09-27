@@ -44,7 +44,8 @@ export function useStyles(drawerOpen) {
       display: 'flex',
     },
     appBar: {
-      background: '#ffffff',
+      background: theme.palette.background.paper,
+      color: theme.palette.text.primary,
     },
     appBarShift: {
       marginLeft: drawerWidth,
@@ -68,6 +69,10 @@ export function useStyles(drawerOpen) {
       flexGrow: 10,
       textAlign: 'right',
       minWidth: '280px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      gap: '8px',
       [smMediaQuery]: {
         minWidth: 'unset',
         marginRight: 0,
@@ -108,7 +113,7 @@ export function useStyles(drawerOpen) {
       },
     },
     drawerOpen: {
-      background: '#ffa800',
+      background: theme.palette.primary.main,
       width: drawerWidth,
       [smMediaQuery]: {
         width: 300,

@@ -38,8 +38,6 @@ class RelationshipPivot {
 
   private _pivot: CurvedLine | null;
 
-  private _startArrow: Arrow | null; // Not used, kept for compatibility
-
   private _endArrow: Arrow | null;
 
   private _lastUpdateTime: number = 0;
@@ -53,7 +51,6 @@ class RelationshipPivot {
     this._onTopicClick = this._connectOnFocus.bind(this);
     this._sourceTopic = null;
     this._pivot = null;
-    this._startArrow = null;
     this._endArrow = null;
   }
 
@@ -132,7 +129,6 @@ class RelationshipPivot {
 
       this._sourceTopic = null;
       this._pivot = null;
-      this._startArrow = null;
     }
   }
 

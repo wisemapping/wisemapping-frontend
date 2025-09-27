@@ -100,7 +100,12 @@ const ThemeEditor = (props: {
       maxWidth="sm"
       fullWidth
       PaperProps={{
-        sx: { minHeight: '400px' },
+        sx: {
+          minHeight: '400px',
+          backgroundColor: 'transparent',
+          border: '2px solid #ffa800',
+          boxShadow: 'none',
+        },
       }}
     >
       <DialogTitle>

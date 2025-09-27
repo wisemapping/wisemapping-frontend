@@ -484,11 +484,25 @@ export default class RestClient implements Client {
 
   createMap(model: BasicMapInfo): Promise<number> {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
+      // Detect user's theme mode using the same pattern as language detection
+      // Check localStorage first, then system preference
+      const savedThemeMode = localStorage.getItem('themeMode');
+      let isDarkMode = false;
+
+      if (savedThemeMode) {
+        isDarkMode = savedThemeMode === 'dark';
+      } else {
+        // Check system preference if no saved preference
+        isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+
+      const theme = isDarkMode ? 'dark-prism' : 'prism';
+
       this.axios
         .post(
           `${this.baseUrl}/api/restful/maps?title=${encodeURIComponent(
             model.title,
-          )}&description=${encodeURIComponent(model.description ? model.description : '')}`,
+          )}&description=${encodeURIComponent(model.description ? model.description : '')}&theme=${encodeURIComponent(theme)}`,
           undefined,
           { headers: { 'Content-Type': 'application/json' } },
         )

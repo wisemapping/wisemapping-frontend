@@ -12,5 +12,5 @@
 }
 
 button[aria-pressed="true"] {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--mui-palette-action-selected, rgba(0, 0, 0, 0.04));
 }

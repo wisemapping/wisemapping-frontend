@@ -4,8 +4,10 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
 
 import logo from './logo-small.svg';
+import logoWhiteText from './logo-small-white-text.svg';
 import { JSX } from '@emotion/react/jsx-runtime';
 
 interface HeaderProps {
@@ -13,6 +15,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ type }: HeaderProps): React.ReactElement => {
+  const theme = useTheme();
   let signUpButton: string | JSX.Element | undefined;
   let text: string | JSX.Element | undefined;
   let signInButton: string | JSX.Element | undefined;
@@ -44,11 +47,25 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
   }
 
   return (
-    <StyledNav>
-      <StyledDiv>
+    <StyledNav
+      style={{
+        background: `linear-gradient(${theme.palette.background.default}, ${theme.palette.background.default}30)`,
+      }}
+    >
+      <StyledDiv
+        style={{
+          background: theme.palette.background.default,
+        }}
+      >
         <Logo>
           <Link to="/c/login" className="header-logo">
-            <img src={String(logo)} alt="logo" />
+            <img
+              src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)}
+              alt="logo"
+              style={{
+                filter: theme.palette.mode === 'light' ? 'brightness(0.8) contrast(1.1)' : 'none',
+              }}
+            />
           </Link>
         </Logo>
         {text}

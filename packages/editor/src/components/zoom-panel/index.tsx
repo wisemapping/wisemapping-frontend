@@ -31,6 +31,7 @@ import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrong
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import Box from '@mui/material/Box';
+import ThemeSwitcher from '../common/theme-switcher';
 
 // Helper function to check if any nodes are currently collapsed
 const areNodesCollapsed = (model: Editor): boolean => {
@@ -124,6 +125,10 @@ export function buildZoomToolbarConfig(
         },
       ],
     },
+    {
+      render: () => <ThemeSwitcher />,
+      visible: true,
+    },
   ];
 }
 
@@ -141,7 +146,7 @@ const ZoomPanel = ({ model, capability }: ZoomPanelProps): ReactElement => {
       position={{
         position: {
           right: '7px',
-          top: 'calc(100% - 47px)',
+          top: 'calc(100% - 85px)',
         },
         vertical: false,
       }}

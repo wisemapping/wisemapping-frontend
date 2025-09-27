@@ -22,11 +22,12 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
+import { useTheme } from '@mui/material/styles';
 import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import SaveAndDelete from '../save-and-delete';
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 
 type RichTextNoteEditorProps = {
   closeModal: () => void;
@@ -44,6 +45,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const savedRangeRef = useRef<Range | null>(null);
   const [characterCount, setCharacterCount] = useState(initialValue.length);
   const MAX_CHARACTERS = 10000;
+  const theme = useTheme();
 
   const submitHandler = useCallback(() => {
     closeModal();
@@ -228,9 +230,12 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         pb: 0.375,
         width: '650px',
         height: '470px',
-        backgroundColor: '#fafafa',
+        backgroundColor: theme.palette.background.paper,
         borderRadius: 2,
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        boxShadow:
+          theme.palette.mode === 'dark'
+            ? '0 4px 12px rgba(255, 255, 255, 0.1)'
+            : '0 4px 12px rgba(0, 0, 0, 0.1)',
       }}
     >
       {/* Toolbar */}
@@ -242,11 +247,14 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          border: '1px solid #e0e0e0',
+          border: `1px solid ${theme.palette.divider}`,
           borderBottom: 'none',
           borderRadius: '8px 8px 0 0',
-          backgroundColor: '#ffffff',
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+          backgroundColor: theme.palette.background.default,
+          boxShadow:
+            theme.palette.mode === 'dark'
+              ? '0 2px 4px rgba(255, 255, 255, 0.05)'
+              : '0 2px 4px rgba(0, 0, 0, 0.05)',
         }}
       >
         {/* Single Row - All Options */}
@@ -443,11 +451,14 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
         sx={{
           position: 'relative',
           height: '350px',
-          border: '1px solid #e0e0e0',
+          border: `1px solid ${theme.palette.divider}`,
           borderTop: 'none',
           borderRadius: '0 0 8px 8px',
-          backgroundColor: '#ffffff',
-          boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
+          backgroundColor: theme.palette.background.paper,
+          boxShadow:
+            theme.palette.mode === 'dark'
+              ? 'inset 0 1px 3px rgba(255, 255, 255, 0.1)'
+              : 'inset 0 1px 3px rgba(0, 0, 0, 0.1)',
         }}
       >
         <Box
@@ -463,7 +474,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             fontFamily: 'Arial, sans-serif',
             fontSize: '14px',
             lineHeight: 1.5,
-            color: '#333333',
+            color: theme.palette.text.primary,
             '&:focus': {
               outline: 'none',
             },
@@ -547,6 +558,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           previewConfig={{ showPreview: false }}
           emojiStyle={EmojiStyle.NATIVE}
           skinTonesDisabled
+          theme={theme.palette.mode === 'dark' ? Theme.DARK : Theme.LIGHT}
         />
       </Popover>
     </Box>

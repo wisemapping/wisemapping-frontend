@@ -27,16 +27,19 @@ export const useStyles = () => {
       },
       minWidth: 750,
       '& tr:nth-of-type(2n)': {
-        background: 'white',
+        background: theme.palette.background.paper,
       },
       '& tr:nth-of-type(2n+1)': {
-        background: 'rgba(221, 221, 221, 0.35)',
+        background:
+          theme.palette.mode === 'light'
+            ? alpha(theme.palette.action.hover, 0.08)
+            : alpha(theme.palette.action.hover, 0.15),
       },
     },
     headerCell: {
-      background: 'white',
+      background: theme.palette.background.paper,
       fontWeight: 'bold',
-      color: 'rgba(0, 0, 0, 0.44)',
+      color: theme.palette.text.secondary,
       border: 0,
     },
     bodyCell: {
@@ -62,7 +65,7 @@ export const useStyles = () => {
     },
     toolbar: {
       display: 'flex',
-      borderBottom: '1px solid #cccccc',
+      borderBottom: `1px solid ${theme.palette.divider}`,
       padding: '0',
       marging: '0',
     },
@@ -112,7 +115,7 @@ export const useStyles = () => {
     },
     searchInputInput: {
       '& .MuiInputBase-input': {
-        border: '1px solid #ffa800',
+        border: `1px solid ${theme.palette.primary.main}`,
         borderRadius: 4,
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),

@@ -73,7 +73,6 @@ const LanguageMenu = (): React.ReactElement => {
           css={{
             [smMediaQuery]: mobileAppbarButton,
           }}
-          style={{ borderColor: 'gray', color: 'gray' }}
           onClick={handleMenu}
           startIcon={<TranslateTwoTone style={{ color: 'inherit' }} />}
         >

@@ -27,6 +27,7 @@ import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 
 /**
  * Common button
@@ -258,6 +259,8 @@ type ToolbarProps = {
  */
 const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
+  const theme = useTheme();
+
   return (
     <AppBar
       position="absolute"
@@ -266,7 +269,13 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
         width: pos.vertical ? '40px' : 'unset',
         right: pos.position?.right,
         top: pos.position?.top,
-        backgroundColor: 'white',
+        transform: pos.position?.transform,
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
+        boxShadow: `0 2px 8px ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'}`,
+        borderRadius: '8px',
+        alignItems: 'center',
+        justifyContent: pos.vertical ? 'center' : 'center',
       }}
       role="menu"
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}

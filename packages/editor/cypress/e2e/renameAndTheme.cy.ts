@@ -26,22 +26,25 @@ describe('Rename and Theme functionality', () => {
   });
 
   it('should cancel rename when pressing Escape', () => {
-    const originalTitle = 'Mind Mapping';
-    
-    // Click on the title to enter edit mode
-    cy.get('[data-testid="app-bar-title"]').click();
-    
-    // Type new title
-    cy.get('[data-testid="app-bar-title"] input').clear().type('This should be cancelled');
-    
-    // Press Escape to cancel
-    cy.get('[data-testid="app-bar-title"] input').type('{esc}');
-    
-    // Wait for the title to revert and verify it
-    cy.get('[data-testid="app-bar-title"] input').should('have.value', originalTitle);
-    
-    // Take snapshot
-    cy.matchImageSnapshot('cancel-rename-mindmap-title');
+    // Get the current title first
+    cy.get('[data-testid="app-bar-title"] input').then(($input) => {
+      const originalTitle = $input.val();
+      
+      // Click on the title to enter edit mode
+      cy.get('[data-testid="app-bar-title"]').click();
+      
+      // Type new title
+      cy.get('[data-testid="app-bar-title"] input').clear().type('This should be cancelled');
+      
+      // Press Escape to cancel
+      cy.get('[data-testid="app-bar-title"] input').type('{esc}');
+      
+      // Wait for the title to revert and verify it
+      cy.get('[data-testid="app-bar-title"] input').should('have.value', originalTitle);
+      
+      // Take snapshot
+      cy.matchImageSnapshot('cancel-rename-mindmap-title');
+    });
   });
 
   it('should show tooltip on title hover', () => {
