@@ -12,7 +12,7 @@ import ChangePasswordDialog from './change-password-dialog';
 import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import Link from '@mui/material/Link';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useFetchAccount } from '../../../classes/middleware';
 import { ClientContext } from '../../../classes/provider/client-context';
 

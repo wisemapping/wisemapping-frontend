@@ -19,8 +19,9 @@ import { LineType } from '../ConnectionLine';
 import { FontStyleType } from '../FontStyleType';
 import { FontWeightType } from '../FontWeightType';
 import { TopicShapeType } from '../model/INodeModel';
+import Topic from '../Topic';
 import DefaultTheme, { TopicStyleType } from './DefaultTheme';
-import { TopicType } from './Theme';
+import { TopicType, ThemeVariant } from './Theme';
 
 const defaultStyles = new Map<TopicType, TopicStyleType>([
   [
@@ -102,7 +103,11 @@ class ClassicTheme extends DefaultTheme {
     super(defaultStyles);
   }
 
-  getCanvasCssStyle(): string {
+  getCanvasCssStyle(variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const backgroundColor = isDark ? '#1a1a1a' : '#f2f2f2';
+    const gridColor = isDark ? '#333333' : '#ebe9e7';
+
     return `position: relative;
       left: 0;
       width: 100%;
@@ -110,14 +115,79 @@ class ClassicTheme extends DefaultTheme {
       border: 0;
       overflow: hidden;
       opacity: 1;
-      background-color: #f2f2f2;
-      background-image: linear-gradient(#ebe9e7 1px, transparent 1px),
-      linear-gradient(to right, #ebe9e7 1px, #f2f2f2 1px);
+      background-color: ${backgroundColor};
+      background-image: linear-gradient(${gridColor} 1px, transparent 1px),
+      linear-gradient(to right, ${gridColor} 1px, ${backgroundColor} 1px);
       background-size: 50px 50px;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;`;
+  }
+
+  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const model = topic.getModel();
+    let result = model.getBackgroundColor();
+
+    // If topic has a custom background color, always use it
+    if (result) {
+      return result;
+    }
+
+    // For dark mode, use enhanced colors
+    if (isDark) {
+      if (topic.isCentralTopic()) {
+        // Central topic in dark mode - use a light color for contrast
+        result = '#F4B82D';
+      } else {
+        // Main topics in dark mode - use classic blue tones
+        const darkColors = [
+          '#1E40AF', // Blue
+          '#1E3A8A', // Dark Blue
+          '#3730A3', // Indigo
+          '#581C87', // Purple
+          '#7C2D12', // Red
+          '#92400E', // Orange
+          '#A16207', // Yellow
+          '#365314', // Green
+          '#0F766E', // Teal
+          '#155E75', // Cyan
+        ];
+        const order = topic.getOrder() || 0;
+        result = darkColors[order % darkColors.length];
+      }
+    } else {
+      // For light mode, always use original theme colors
+      result = this.resolve('backgroundColor', topic) as string;
+    }
+
+    return result;
+  }
+
+  getFontColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const model = topic.getModel();
+    let result = model.getFontColor();
+
+    // If topic has a custom font color, always use it
+    if (result) {
+      return result;
+    }
+
+    // For dark mode, use enhanced font colors
+    if (isDark) {
+      if (topic.isCentralTopic()) {
+        result = '#000000'; // Black text on light central topic
+      } else {
+        result = '#FFFFFF'; // White text on colored topics
+      }
+    } else {
+      // For light mode, always use original theme colors
+      result = this.resolve('fontColor', topic) as string;
+    }
+
+    return result;
   }
 }
 

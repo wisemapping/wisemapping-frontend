@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { json } from 'react-router-dom';
 import AppConfig from './classes/app-config';
 import ReactGA from 'react-ga4';
 
@@ -33,5 +32,5 @@ export const loader = async (): Promise<Response> => {
       },
     ]);
   }
-  return json('Load success');
+  return Response.json('Load success');
 };

@@ -25,7 +25,7 @@ import {
   createRoutesFromElements,
   createBrowserRouter,
   useSearchParams,
-} from 'react-router-dom';
+} from 'react-router';
 import ForgotPasswordSuccessPage from './components/forgot-password-success-page';
 import RegistationPage from './components/registration-page';
 import LoginPage from './components/login-page';
@@ -82,9 +82,19 @@ const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   );
 };
 
+const HydrateFallback = () => (
+  <div>
+    <FormattedMessage id="common.loading" defaultMessage="Loading..." />
+  </div>
+);
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route loader={configLoader} errorElement={<ErrorPage />}>
+    <Route
+      loader={configLoader}
+      errorElement={<ErrorPage />}
+      hydrateFallbackElement={<HydrateFallback />}
+    >
       <Route path="/" element={<Redirect to="/c/login" />} />
       <Route path="/c/login" element={<LoginPage />} />
       <Route path="/c/registration" element={<RegistationPage />} />
@@ -147,6 +157,11 @@ const router = createBrowserRouter(
       </Route>
     </Route>,
   ),
+  {
+    future: {
+      v7_startTransition: true,
+    },
+  },
 );
 
 const queryClient = new QueryClient({

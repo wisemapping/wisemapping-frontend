@@ -10,10 +10,10 @@ import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import SubmitButton from '../form/submit-button';
 import ReactGA from 'react-ga4';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ClientContext } from '../../classes/provider/client-context';
 import Button from '@mui/material/Button';
 

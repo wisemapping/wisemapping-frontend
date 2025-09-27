@@ -2,7 +2,7 @@ import { StyledNav, StyledDiv, Logo } from './styled';
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 
@@ -59,13 +59,7 @@ export const Header = ({ type }: HeaderProps): React.ReactElement => {
       >
         <Logo>
           <Link to="/c/login" className="header-logo">
-            <img
-              src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)}
-              alt="logo"
-              style={{
-                filter: theme.palette.mode === 'light' ? 'brightness(0.8) contrast(1.1)' : 'none',
-              }}
-            />
+            <img src={String(theme.palette.mode === 'dark' ? logoWhiteText : logo)} alt="logo" />
           </Link>
         </Logo>
         {text}

@@ -3,17 +3,18 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
 import Header from '../layout/header';
 import Footer from '../layout/footer';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ReactGA from 'react-ga4';
 import { Oauth2CallbackResult } from '../../classes/client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import GlobalError from '../form/global-error';
 import { buttonsStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import { logCriticalError } from '@wisemapping/core-js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const RegistrationCallbackPage = (): React.ReactElement => {
   const intl = useIntl();
@@ -22,6 +23,7 @@ const RegistrationCallbackPage = (): React.ReactElement => {
   const [showError, setShowError] = useState(false);
   const [callbackResult, setCallbackResult] = useState<Oauth2CallbackResult>();
   const navigate = useNavigate();
+  const { initializeThemeFromSystem } = useTheme();
 
   useEffect(() => {
     document.title = intl.formatMessage({
@@ -45,6 +47,8 @@ const RegistrationCallbackPage = (): React.ReactElement => {
       .processGoogleCallback(googleOauthCode)
       .then((result) => {
         if (result.googleSync) {
+          // Initialize theme from system preference if not already set
+          initializeThemeFromSystem();
           // if service reports that user already has sync accounts, go to maps page
           navigate('/c/maps/');
         }
@@ -65,6 +69,8 @@ const RegistrationCallbackPage = (): React.ReactElement => {
     client
       .confirmAccountSync(callback.email, callback.syncCode)
       .then(() => {
+        // Initialize theme from system preference if not already set
+        initializeThemeFromSystem();
         navigate('/c/maps/');
       })
       .catch((error) => {

@@ -61,6 +61,7 @@ import ImageExpoterFactory from './export/ImageExporterFactory';
 import PositionType from './PositionType';
 import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
+import { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
 
 type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
@@ -71,6 +72,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   private _options: DesignerOptions;
 
   private _actionDispatcher: StandaloneActionDispatcher;
+
+  private _themeVariant: ThemeVariant = 'light';
 
   private _model: DesignerModel;
 
@@ -647,9 +650,14 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     } else {
       // Apply theme-based style if no custom style
       const themeId = mindmap.getTheme();
-      const theme = ThemeFactory.createById(themeId);
-      const style = theme.getCanvasCssStyle();
+      const theme = ThemeFactory.createById(themeId, this._themeVariant);
+      const style = theme.getCanvasCssStyle(this._themeVariant);
       this._canvas.setBackgroundStyle(style);
+
+      // Apply theme variant to all topics after loading
+      setTimeout(() => {
+        this.updateTopicsThemeVariant();
+      }, 100);
     }
 
     // Delay render ...
@@ -726,6 +734,105 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     );
   }
 
+  /**
+   * Get the current theme variant (light/dark)
+   */
+  getThemeVariant(): ThemeVariant {
+    return this._themeVariant;
+  }
+
+  /**
+   * Initialize theme variant from editor context
+   * This should be called when the Designer is created to sync with editor theme
+   */
+  initializeThemeVariant(editorThemeMode: 'light' | 'dark'): void {
+    const variant = editorThemeMode === 'dark' ? 'dark' : 'light';
+    this._themeVariant = variant;
+  }
+
+  /**
+   * Set the theme variant and refresh the mindmap
+   *
+   * Integration with editor theme toggle:
+   * ```typescript
+   * // 1. Initialize theme variant when Designer is created
+   * const designer = model.getDesigner();
+   * designer.initializeThemeVariant(currentEditorThemeMode);
+   *
+   * // 2. Update theme variant when user toggles theme
+   * const newThemeMode = themeContext.mode; // from useTheme()
+   * designer.setThemeVariant(newThemeMode === 'dark' ? 'dark' : 'light');
+   * ```
+   */
+  setThemeVariant(variant: ThemeVariant): void {
+    if (this._themeVariant !== variant) {
+      this._themeVariant = variant;
+
+      // Check if mindmap is loaded
+      if (this._mindmap && this.getModel()) {
+        this.refreshTheme();
+        this.updateTopicsThemeVariant();
+      } else {
+        // Store the variant and apply it when the mindmap loads
+        setTimeout(() => {
+          if (this._mindmap && this.getModel()) {
+            this.refreshTheme();
+            this.updateTopicsThemeVariant();
+          }
+        }, 500);
+      }
+    }
+  }
+
+  /**
+   * Refresh the mindmap theme based on current variant
+   */
+  private refreshTheme(): void {
+    if (this._mindmap) {
+      // Use the internal applyCanvasStyle method to properly update the background
+      // This will handle the theme-based styling correctly
+      this.applyCanvasStyle(undefined); // undefined means use theme default
+
+      // Redraw the central topic and all its children
+      const centralTopic = this.getModel().getCentralTopic();
+      if (centralTopic) {
+        centralTopic.redraw(true, this._themeVariant);
+      }
+
+      // Force layout refresh to update the display
+      LayoutEventBus.fireEvent('forceLayout');
+    }
+  }
+
+  /**
+   * Update theme variant for all topics in the mindmap
+   */
+  private updateTopicsThemeVariant(): void {
+    if (this._mindmap) {
+      const centralTopic = this.getModel().getCentralTopic();
+      if (centralTopic) {
+        this.updateTopicThemeVariant(centralTopic);
+
+        // Force a layout refresh to ensure all changes are applied
+        LayoutEventBus.fireEvent('forceLayout');
+      }
+    }
+  }
+
+  /**
+   * Recursively update theme variant for a topic and its children
+   */
+  private updateTopicThemeVariant(topic: Topic): void {
+    // Update the topic's theme-related properties by redrawing with current variant
+    topic.redraw(false, this._themeVariant);
+
+    // Update children
+    const children = topic.getChildren();
+    children.forEach((child: Topic) => {
+      this.updateTopicThemeVariant(child);
+    });
+  }
+
   nodeModelToTopic(nodeModel: NodeModel): Topic {
     let children = nodeModel.getChildren().slice();
     children = children.sort((a, b) => a.getOrder()! - b.getOrder()!);
@@ -757,12 +864,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     mindmap.setTheme(id);
 
     // Update background color ...
-    const theme = ThemeFactory.createById(id);
-    const style = theme.getCanvasCssStyle();
+    const theme = ThemeFactory.createById(id, this._themeVariant);
+    const style = theme.getCanvasCssStyle(this._themeVariant);
     this._canvas.setBackgroundStyle(style);
 
     const centralTopic = this.getModel().getCentralTopic();
-    centralTopic.redraw(true);
+    centralTopic.redraw(true, this._themeVariant);
   }
 
   /**
@@ -804,8 +911,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     // If no style provided, apply theme default
     if (!style) {
       const themeId = mindmap.getTheme();
-      const theme = ThemeFactory.createById(themeId);
-      const themeStyle = theme.getCanvasCssStyle();
+      const theme = ThemeFactory.createById(themeId, this._themeVariant);
+      const themeStyle = theme.getCanvasCssStyle(this._themeVariant);
       this._canvas.setBackgroundStyle(themeStyle);
       return;
     }

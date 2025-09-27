@@ -18,7 +18,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ClientContext } from '../../classes/provider/client-context';
 import SessionExpiredDialog from './session-expired-dialog';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 
 const SessionExpired = (): React.ReactElement => {
   const [sessionExpired, setSessionExpired] = useState(false);

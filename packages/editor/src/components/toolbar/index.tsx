@@ -99,6 +99,7 @@ export const ToolbarSubmenu = ({
 }: ToolbarSubmenuProps): ReactElement => {
   const [open, setOpen] = useState(false);
   const itemRef = useRef(null);
+  const theme = useTheme();
 
   const orientationProps = vertical ? verticalAligment : horizontalAligment;
 
@@ -134,9 +135,14 @@ export const ToolbarSubmenu = ({
         PaperProps={{
           onMouseLeave: () => !configuration.useClickToClose && setOpen(false),
           square: true,
+          sx: {
+            backgroundColor: theme.palette.mode === 'dark' ? '#2d2d2d' : '#ffffff',
+            color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
+            border: theme.palette.mode === 'dark' ? '1px solid #555' : '1px solid #e0e0e0',
+          },
         }}
         sx={{
-          zIndex: configuration.useClickToClose ? '1' : '-1',
+          zIndex: configuration.useClickToClose ? '1500' : '-1',
         }}
         elevation={elevation}
       >
@@ -261,6 +267,17 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
   const pos: ToolbarPosition = position || defaultPosition;
   const theme = useTheme();
 
+  // Determine z-index based on position - bottom toolbar should be below right toolbar
+  const getZIndex = () => {
+    if (pos.position?.top && pos.position.top.includes('100%')) {
+      // This is the bottom toolbar (zoom panel)
+      return 1000;
+    } else {
+      // This is the right toolbar (editor toolbar)
+      return 1100;
+    }
+  };
+
   return (
     <AppBar
       position="absolute"
@@ -269,6 +286,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
         width: pos.vertical ? '40px' : 'unset',
         right: pos.position?.right,
         top: pos.position?.top,
+        marginTop: pos.position?.marginTop,
         transform: pos.position?.transform,
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
@@ -276,6 +294,7 @@ const Toolbar = ({ configurations, position }: ToolbarProps): ReactElement => {
         borderRadius: '8px',
         alignItems: 'center',
         justifyContent: pos.vertical ? 'center' : 'center',
+        zIndex: getZIndex(),
       }}
       role="menu"
       aria-orientation={pos.vertical ? 'vertical' : 'horizontal'}

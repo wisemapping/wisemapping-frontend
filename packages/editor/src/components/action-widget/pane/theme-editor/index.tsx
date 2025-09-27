@@ -73,6 +73,15 @@ const ThemeEditor = (props: {
           'Tech-inspired green theme. Perfect for technical documentation and futuristic presentations.',
       }),
     },
+    {
+      id: 'sunrise' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.sunrise.name', defaultMessage: 'Sunrise' }),
+      description: intl.formatMessage({
+        id: 'theme.sunrise.description',
+        defaultMessage:
+          'Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability.',
+      }),
+    },
   ];
 
   const handleThemeSelect = (selectedTheme: ThemeType) => {
@@ -101,7 +110,7 @@ const ThemeEditor = (props: {
       fullWidth
       PaperProps={{
         sx: {
-          minHeight: '400px',
+          minHeight: '350px',
           border: '2px solid #ffa800',
           boxShadow: 'none',
         },
@@ -117,7 +126,7 @@ const ThemeEditor = (props: {
             defaultMessage="A theme defines the visual style of your mind map, including colors, fonts, and overall appearance. Choose a theme that best fits your content and audience."
           />
         </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           {themes.map((themeOption) => (
             <Card
               key={themeOption.id}
@@ -131,18 +140,18 @@ const ThemeEditor = (props: {
               }}
               onClick={() => handleThemeSelect(themeOption.id)}
             >
-              <CardContent sx={{ p: 1 }}>
+              <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
                 <Typography
-                  variant="subtitle1"
+                  variant="subtitle2"
                   component="div"
-                  sx={{ fontWeight: 'bold', mb: 0.5 }}
+                  sx={{ fontWeight: 'bold', mb: 0.25, fontSize: '0.875rem' }}
                 >
                   {themeOption.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ lineHeight: 1.3, fontSize: '0.875rem' }}
+                  sx={{ lineHeight: 1.2, fontSize: '0.75rem' }}
                 >
                   {themeOption.description}
                 </Typography>

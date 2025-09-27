@@ -24,7 +24,7 @@ import { TopicShapeType } from '../model/INodeModel';
 import NodeModel from '../model/NodeModel';
 import ColorUtil from './ColorUtil';
 import Topic from '../Topic';
-import Theme, { TopicType } from './Theme';
+import Theme, { TopicType, ThemeVariant } from './Theme';
 import { $msg } from '../Messages';
 
 export type TopicStyleType = {
@@ -66,7 +66,7 @@ abstract class DefaultTheme implements Theme {
     this._style = style;
   }
 
-  abstract getCanvasCssStyle(): string;
+  abstract getCanvasCssStyle(variant?: ThemeVariant): string;
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
     // Search parent value ...
@@ -108,31 +108,6 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic): string {
-    const model = topic.getModel();
-    let result = model.getBackgroundColor();
-    if (!result && !topic.isCentralTopic()) {
-      // Be sure that not overwride default background color ...
-      const borderColor = model.getBorderColor();
-      if (borderColor) {
-        result = ColorUtil.lightenColor(borderColor, 40);
-      }
-    }
-
-    if (!result) {
-      let colors: string[] = [];
-      colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
-
-      // if the element is an array, use topic order to decide color ..
-      let order = topic.getOrder();
-      order = order || 0;
-
-      const index = order % colors.length;
-      result = colors[index];
-    }
-    return result;
-  }
-
   getShapeType(topic: Topic): TopicShapeType {
     const result = this.resolve('shapeType', topic) as TopicShapeType;
     return result;
@@ -158,17 +133,61 @@ abstract class DefaultTheme implements Theme {
     return this.resolve('fontWeight', topic) as FontWeightType;
   }
 
-  getFontColor(topic: Topic): string {
+  getInnerPadding(topic: Topic): number {
+    return topic.getOrBuildTextShape().getFontHeight() * 0.5;
+  }
+
+  getText(topic: Topic): string {
+    const { msgKey } = this.getStyles(topic);
+    return $msg(msgKey);
+  }
+
+  getEmojiSpacing(topic: Topic): number {
+    // Default spacing: central topics get more spacing than main topics
+    const fontHeight = topic.getOrBuildTextShape().getFontHeight();
+    return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
+  }
+
+  // Variant-aware methods - default implementation falls back to non-variant methods
+  getFontColor(topic: Topic, _variant?: ThemeVariant): string {
+    // Default implementation ignores variant, subclasses can override
     return this.resolve('fontColor', topic) as string;
   }
 
-  getBorderColor(topic: Topic): string {
+  getBackgroundColor(topic: Topic, _variant?: ThemeVariant): string {
+    // Default implementation ignores variant, subclasses can override
+    const model = topic.getModel();
+    let result = model.getBackgroundColor();
+    if (!result && !topic.isCentralTopic()) {
+      // Be sure that not overwride default background color ...
+      const borderColor = model.getBorderColor();
+      if (borderColor) {
+        result = ColorUtil.lightenColor(borderColor, 40);
+      }
+    }
+
+    if (!result) {
+      let colors: string[] = [];
+      colors = colors.concat(this.resolve('backgroundColor', topic) as string[] | string);
+
+      // if the element is an array, use topic order to decide color ..
+      let order = topic.getOrder();
+      order = order || 0;
+
+      const index = order % colors.length;
+      result = colors[index];
+    }
+    return result;
+  }
+
+  getBorderColor(topic: Topic, variant?: ThemeVariant): string {
+    // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBorderColor();
 
     // If the the style is a line, the color is alward the connection one.
     if (topic.getShapeType() === 'line') {
-      result = topic.getConnectionColor();
+      result = this.getConnectionColor(topic, variant);
     }
 
     if (!result) {
@@ -180,44 +199,38 @@ abstract class DefaultTheme implements Theme {
 
     // If border color has not been defined, use the connection color for the border ...
     if (!result) {
-      result = topic.getConnectionColor();
+      result = this.getConnectionColor(topic, variant);
     }
     return result;
   }
 
-  getOuterBorderColor(topic: Topic): string {
-    let result: string;
-    if (topic.getShapeType() === 'line') {
-      result = this.getStyles(topic).outerBorderColor;
-    } else {
-      const innerBorderColor = topic.getBorderColor();
-      result = ColorUtil.lightenColor(innerBorderColor, 70);
-    }
-    return result;
-  }
-
-  getOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
+  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant?: ThemeVariant): string {
+    // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
       const color = this.getStyles(topic).outerBackgroundColor;
       result = onFocus ? color : ColorUtil.lightenColor(color, 30);
     } else {
-      const innerBgColor = topic.getBackgroundColor();
+      const innerBgColor = this.getBackgroundColor(topic, variant);
       result = ColorUtil.lightenColor(innerBgColor, 70);
     }
     return result;
   }
 
-  getInnerPadding(topic: Topic): number {
-    return topic.getOrBuildTextShape().getFontHeight() * 0.5;
+  getOuterBorderColor(topic: Topic, variant?: ThemeVariant): string {
+    // Default implementation ignores variant, subclasses can override
+    let result: string;
+    if (topic.getShapeType() === 'line') {
+      result = this.getStyles(topic).outerBorderColor;
+    } else {
+      const innerBorderColor = this.getBorderColor(topic, variant);
+      result = ColorUtil.lightenColor(innerBorderColor, 70);
+    }
+    return result;
   }
 
-  getText(topic: Topic): string {
-    const { msgKey } = this.getStyles(topic);
-    return $msg(msgKey);
-  }
-
-  getConnectionColor(topic: Topic): string {
+  getConnectionColor(topic: Topic, _variant?: ThemeVariant): string {
+    // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result: string | undefined = model.getConnectionColor();
 
@@ -244,12 +257,6 @@ abstract class DefaultTheme implements Theme {
       result = colors[index];
     }
     return result!;
-  }
-
-  getEmojiSpacing(topic: Topic): number {
-    // Default spacing: central topics get more spacing than main topics
-    const fontHeight = topic.getOrBuildTextShape().getFontHeight();
-    return topic.isCentralTopic() ? fontHeight * 1.0 : fontHeight * 0.7;
   }
 }
 export default DefaultTheme;

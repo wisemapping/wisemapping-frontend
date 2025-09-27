@@ -24,6 +24,7 @@ import Tooltip from '@mui/material/Tooltip';
 import React, { ReactElement, useState, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { CirclePicker as ReactColorPicker } from 'react-color';
+import { useTheme } from '@mui/material/styles';
 import colors from '../color-picker/colors.json';
 
 export interface CanvasStyle {
@@ -40,6 +41,7 @@ type CanvasStyleEditorProps = {
 };
 
 const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
+  const theme = useTheme();
   const defaultStyle: CanvasStyle = {
     backgroundColor: '#f2f2f2',
     backgroundPattern: 'solid',
@@ -84,16 +86,28 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
   };
 
   return (
-    <Box sx={{ px: 2, py: 1.5, width: '510px', maxHeight: '60vh', overflowY: 'auto' }}>
+    <Box
+      sx={{
+        px: 2,
+        py: 1.5,
+        width: '430px',
+        maxHeight: '60vh',
+        overflowY: 'auto',
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        zIndex: 1600,
+        position: 'relative',
+      }}
+    >
       {/* Background Pattern */}
       <Box
         component="fieldset"
         sx={{
           mb: 2,
-          border: '1px solid #e0e0e0',
+          border: `1px solid ${theme.palette.divider}`,
           borderRadius: '8px',
           p: 1.5,
-          backgroundColor: '#fafafa',
+          backgroundColor: theme.palette.background.default,
           position: 'relative',
         }}
       >
@@ -101,13 +115,10 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
           component="legend"
           sx={{
             px: 1,
-            backgroundColor: '#fafafa',
+            backgroundColor: theme.palette.background.default,
           }}
         >
-          <FormattedMessage
-            id="canvas-style.background-pattern"
-            defaultMessage="Background Pattern"
-          />
+          <FormattedMessage id="canvas-style.background-pattern" defaultMessage="Pattern" />
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -127,14 +138,20 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                 width: '40px',
                 height: '40px',
                 backgroundColor: style.backgroundColor,
-                border: '2px solid #e0e0e0',
+                border: `2px solid ${theme.palette.divider}`,
                 borderRadius: '8px',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease-in-out',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                boxShadow:
+                  theme.palette.mode === 'dark'
+                    ? '0 2px 4px rgba(0,0,0,0.3)'
+                    : '0 2px 4px rgba(0,0,0,0.1)',
                 '&:hover': {
-                  borderColor: '#1976d2',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                  borderColor: theme.palette.primary.main,
+                  boxShadow:
+                    theme.palette.mode === 'dark'
+                      ? '0 4px 8px rgba(0,0,0,0.4)'
+                      : '0 4px 8px rgba(0,0,0,0.15)',
                   transform: 'scale(1.05)',
                 },
               }}
@@ -206,7 +223,12 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
           }}
           sx={{ zIndex: 1400 }}
         >
-          <Box sx={{ p: 2 }}>
+          <Box
+            sx={{
+              p: 2,
+              backgroundColor: theme.palette.background.paper,
+            }}
+          >
             <ReactColorPicker
               color={style.backgroundColor}
               onChangeComplete={(color: { hex: string }) => {
@@ -230,10 +252,10 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
           component="fieldset"
           sx={{
             mb: 2,
-            border: '1px solid #e0e0e0',
+            border: `1px solid ${theme.palette.divider}`,
             borderRadius: '8px',
             p: 1.5,
-            backgroundColor: '#fafafa',
+            backgroundColor: theme.palette.background.default,
             position: 'relative',
           }}
         >
@@ -241,7 +263,7 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
             component="legend"
             sx={{
               px: 1,
-              backgroundColor: '#fafafa',
+              backgroundColor: theme.palette.background.default,
             }}
           >
             <FormattedMessage id="canvas-style.grid-style" defaultMessage="Grid Style" />
@@ -258,14 +280,20 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
                   width: '40px',
                   height: '40px',
                   backgroundColor: style.gridColor,
-                  border: '2px solid #e0e0e0',
+                  border: `2px solid ${theme.palette.divider}`,
                   borderRadius: '8px',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  boxShadow:
+                    theme.palette.mode === 'dark'
+                      ? '0 2px 4px rgba(0,0,0,0.3)'
+                      : '0 2px 4px rgba(0,0,0,0.1)',
                   '&:hover': {
-                    borderColor: '#1976d2',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                    borderColor: theme.palette.primary.main,
+                    boxShadow:
+                      theme.palette.mode === 'dark'
+                        ? '0 4px 8px rgba(0,0,0,0.4)'
+                        : '0 4px 8px rgba(0,0,0,0.15)',
                     transform: 'scale(1.05)',
                   },
                 }}
@@ -328,7 +356,12 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
         }}
         sx={{ zIndex: 1400 }}
       >
-        <Box sx={{ p: 2 }}>
+        <Box
+          sx={{
+            p: 2,
+            backgroundColor: theme.palette.background.paper,
+          }}
+        >
           <ReactColorPicker
             color={style.gridColor}
             onChangeComplete={(color: { hex: string }) => {

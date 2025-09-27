@@ -113,7 +113,8 @@ export function useStyles(drawerOpen) {
       },
     },
     drawerOpen: {
-      background: theme.palette.primary.main,
+      background:
+        theme.palette.mode === 'light' ? theme.palette.primary.main : theme.palette.grey[900],
       width: drawerWidth,
       [smMediaQuery]: {
         width: 300,

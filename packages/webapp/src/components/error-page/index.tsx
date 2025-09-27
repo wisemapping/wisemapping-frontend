@@ -21,7 +21,7 @@ import Header from '../layout/header';
 import Typography from '@mui/material/Typography';
 import ReactGA from 'react-ga4';
 import { ErrorBody } from './styled';
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 import { logCriticalError } from '@wisemapping/core-js';
 

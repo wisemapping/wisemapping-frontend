@@ -3,8 +3,9 @@ import ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
 import DarkPrismTheme from './DarkPrismTheme';
 import PrismTheme from './PrismTheme';
+import EnhancedPrismTheme from './EnhancedPrismTheme';
 import RobotTheme from './RobotTheme';
-import Theme from './Theme';
+import Theme, { ThemeVariant } from './Theme';
 
 class ThemeFactory {
   private static prismTheme = new PrismTheme();
@@ -15,7 +16,9 @@ class ThemeFactory {
 
   private static robotTheme = new RobotTheme();
 
-  static createById(id: ThemeType): Theme {
+  private static enhancedPrismTheme = new EnhancedPrismTheme();
+
+  static createById(id: ThemeType, _variant?: ThemeVariant): Theme {
     let result: Theme;
     switch (id) {
       case 'classic':
@@ -30,6 +33,9 @@ class ThemeFactory {
       case 'robot':
         result = ThemeFactory.robotTheme;
         break;
+      case 'sunrise':
+        result = ThemeFactory.enhancedPrismTheme;
+        break;
       default: {
         const exhaustiveCheck: never = id;
         throw new Error(exhaustiveCheck);
@@ -38,10 +44,10 @@ class ThemeFactory {
     return result;
   }
 
-  static create(model: NodeModel): Theme {
+  static create(model: NodeModel, variant?: ThemeVariant): Theme {
     const mindmap = model.getMindmap();
     const theme = mindmap.getTheme();
-    return ThemeFactory.createById(theme);
+    return ThemeFactory.createById(theme, variant);
   }
 }
 export default ThemeFactory;

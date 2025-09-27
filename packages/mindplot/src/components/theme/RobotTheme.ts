@@ -21,7 +21,7 @@ import { FontWeightType } from '../FontWeightType';
 import { TopicShapeType } from '../model/INodeModel';
 import Topic from '../Topic';
 import DefaultTheme, { TopicStyleType } from './DefaultTheme';
-import { TopicType } from './Theme';
+import { TopicType, ThemeVariant } from './Theme';
 
 const defaultStyles = new Map<TopicType, TopicStyleType>([
   [
@@ -98,12 +98,15 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
   ],
 ]);
 
-class DarkPrismTheme extends DefaultTheme {
+class RobotTheme extends DefaultTheme {
   constructor() {
     super(defaultStyles);
   }
 
-  getCanvasCssStyle(): string {
+  getCanvasCssStyle(variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const backgroundColor = isDark ? '#1a1a1a' : '#FFFFFF';
+
     return `position: relative;
       left: 0;
       width: 100%;
@@ -111,14 +114,79 @@ class DarkPrismTheme extends DefaultTheme {
       border: 0;
       overflow: hidden;
       opacity: 1;
-      background-color: #FFFFFF;
+      background-color: ${backgroundColor};
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;`;
   }
 
-  getConnectionColor(topic: Topic): string {
+  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const model = topic.getModel();
+    let result = model.getBackgroundColor();
+
+    // If topic has a custom background color, always use it
+    if (result) {
+      return result;
+    }
+
+    // For dark mode, use enhanced colors
+    if (isDark) {
+      if (topic.isCentralTopic()) {
+        // Central topic in dark mode - use a light color for contrast
+        result = '#F4B82D';
+      } else {
+        // Main topics in dark mode - use tech-inspired colors
+        const darkColors = [
+          '#10B981', // Emerald
+          '#F59E0B', // Amber
+          '#EF4444', // Red
+          '#8B5CF6', // Violet
+          '#06B6D4', // Cyan
+          '#84CC16', // Lime
+          '#F97316', // Orange
+          '#EC4899', // Pink
+          '#6366F1', // Indigo
+          '#14B8A6', // Teal
+        ];
+        const order = topic.getOrder() || 0;
+        result = darkColors[order % darkColors.length];
+      }
+    } else {
+      // For light mode, always use original theme colors
+      result = this.resolve('backgroundColor', topic) as string;
+    }
+
+    return result;
+  }
+
+  getFontColor(topic: Topic, variant?: ThemeVariant): string {
+    const isDark = variant === 'dark';
+    const model = topic.getModel();
+    let result = model.getFontColor();
+
+    // If topic has a custom font color, always use it
+    if (result) {
+      return result;
+    }
+
+    // For dark mode, use enhanced font colors
+    if (isDark) {
+      if (topic.isCentralTopic()) {
+        result = '#000000'; // Black text on light central topic
+      } else {
+        result = '#FFFFFF'; // White text on colored topics
+      }
+    } else {
+      // For light mode, always use original theme colors
+      result = this.resolve('fontColor', topic) as string;
+    }
+
+    return result;
+  }
+
+  getConnectionColor(topic: Topic, _variant?: ThemeVariant): string {
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -141,7 +209,7 @@ class DarkPrismTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic): string {
+  getBorderColor(topic: Topic, _variant?: ThemeVariant): string {
     const model = topic.getModel();
     let result = model.getBorderColor();
 
@@ -161,4 +229,4 @@ class DarkPrismTheme extends DefaultTheme {
   }
 }
 
-export default DarkPrismTheme;
+export default RobotTheme;

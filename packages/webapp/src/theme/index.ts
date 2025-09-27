@@ -7,10 +7,10 @@ const createAppTheme = (mode: PaletteMode): Theme => {
     palette: {
       mode,
       primary: {
-        light: '#ffb74d',
-        main: '#ffa800',
-        dark: '#ffcc80',
-        contrastText: isLight ? '#FFFFFF' : '#000000',
+        light: isLight ? '#ffb74d' : '#cc8500',
+        main: isLight ? '#ffa800' : '#cc8500',
+        dark: isLight ? '#ffcc80' : '#996400',
+        contrastText: '#FFFFFF',
       },
       secondary: {
         light: '#a19f9f',
@@ -43,7 +43,7 @@ const createAppTheme = (mode: PaletteMode): Theme => {
             borderRadius: '9px',
             fontSize: '14px',
             '& fieldset': {
-              border: `solid 1px ${isLight ? '#ffcb66' : theme.palette.primary.main}`,
+              border: `solid 1px ${isLight ? '#ffcb66' : '#b37300'}`,
             },
             '&:hover:not(.Mui-disabled):not(.Mui-focused):not(.Mui-error) fieldset': {
               borderColor: theme.palette.primary.main,
@@ -159,7 +159,7 @@ const createAppTheme = (mode: PaletteMode): Theme => {
     typography: {
       fontFamily: ['Montserrat'].join(','),
       h4: {
-        color: '#ffa800',
+        color: isLight ? '#ffa800' : '#cc8500',
         fontWeight: 600,
         marginBottom: '10px',
       },

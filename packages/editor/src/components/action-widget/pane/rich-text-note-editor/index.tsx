@@ -201,7 +201,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
     }
   }, [initialValue]);
 
-  // Handle keyboard shortcuts
+  // Handle keyboard shortcuts and prevent editor interference
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
@@ -213,20 +213,48 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
       }
     };
 
+    const handleEditorKeyDown = (event: KeyboardEvent) => {
+      // Stop propagation to prevent main editor from intercepting keystrokes
+      event.stopPropagation();
+    };
+
+    const handleEditorKeyUp = (event: KeyboardEvent) => {
+      // Stop propagation to prevent main editor from intercepting keystrokes
+      event.stopPropagation();
+    };
+
+    const handleEditorKeyPress = (event: KeyboardEvent) => {
+      // Stop propagation to prevent main editor from intercepting keystrokes
+      event.stopPropagation();
+    };
+
     // Add event listener to the document
     document.addEventListener('keydown', handleKeyDown);
 
-    // Cleanup function to remove event listener
+    // Add event listeners to the editor to prevent interference
+    const editor = editorRef.current;
+    if (editor) {
+      editor.addEventListener('keydown', handleEditorKeyDown);
+      editor.addEventListener('keyup', handleEditorKeyUp);
+      editor.addEventListener('keypress', handleEditorKeyPress);
+    }
+
+    // Cleanup function to remove event listeners
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      if (editor) {
+        editor.removeEventListener('keydown', handleEditorKeyDown);
+        editor.removeEventListener('keyup', handleEditorKeyUp);
+        editor.removeEventListener('keypress', handleEditorKeyPress);
+      }
     };
   }, []);
 
   return (
     <Box
       sx={{
-        pl: 3,
-        pr: 2.5,
+        pl: 0,
+        pr: 0,
         pb: 0.375,
         width: '650px',
         height: '470px',
@@ -274,22 +302,22 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               displayEmpty
               sx={{
                 fontSize: '14px',
-                backgroundColor: '#ffffff',
-                borderColor: '#d0d0d0',
+                backgroundColor: theme.palette.background.paper,
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
+                  borderColor: theme.palette.text.secondary,
                 },
                 '&.Mui-focused': {
-                  borderColor: '#d0d0d0',
+                  borderColor: theme.palette.divider,
                 },
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#d0d0d0',
+                  borderColor: theme.palette.divider,
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#999999',
+                  borderColor: theme.palette.text.secondary,
                 },
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#d0d0d0',
+                  borderColor: theme.palette.divider,
                 },
               }}
             >
@@ -329,10 +357,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Insert Link"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -343,10 +371,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Insert Icon"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -360,10 +388,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Bold"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -374,10 +402,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Italic"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -388,10 +416,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Underline"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -402,10 +430,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Strikethrough"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -419,10 +447,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Bullet List"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -433,10 +461,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               title="Numbered List"
               sx={{
                 minWidth: '36px',
-                borderColor: '#d0d0d0',
+                borderColor: theme.palette.divider,
                 '&:hover': {
-                  borderColor: '#999999',
-                  backgroundColor: '#f5f5f5',
+                  borderColor: theme.palette.text.secondary,
+                  backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
@@ -466,6 +494,9 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           contentEditable
           onInput={handleContentChange}
           onBlur={handleContentChange}
+          onKeyDown={(e) => e.stopPropagation()}
+          onKeyUp={(e) => e.stopPropagation()}
+          onKeyPress={(e) => e.stopPropagation()}
           suppressContentEditableWarning={true}
           sx={{
             height: '100%',
@@ -482,14 +513,14 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
               width: '8px',
             },
             '&::-webkit-scrollbar-track': {
-              backgroundColor: '#f1f1f1',
+              backgroundColor: theme.palette.mode === 'dark' ? '#404040' : '#f1f1f1',
               borderRadius: '4px',
             },
             '&::-webkit-scrollbar-thumb': {
-              backgroundColor: '#c1c1c1',
+              backgroundColor: theme.palette.mode === 'dark' ? '#606060' : '#c1c1c1',
               borderRadius: '4px',
               '&:hover': {
-                backgroundColor: '#a8a8a8',
+                backgroundColor: theme.palette.mode === 'dark' ? '#707070' : '#a8a8a8',
               },
             },
           }}
@@ -502,10 +533,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: 2.5,
+          px: 0,
           py: 1,
-          backgroundColor: '#fafafa',
-          borderTop: '1px solid #e0e0e0',
+          backgroundColor: theme.palette.background.default,
+          borderTop: `1px solid ${theme.palette.divider}`,
         }}
       >
         {/* Character Counter */}

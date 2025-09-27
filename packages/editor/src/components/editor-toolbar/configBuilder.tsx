@@ -47,10 +47,15 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import EmojiPicker, { EmojiClickData, EmojiStyle } from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 
-import Palette from '@mui/icons-material/Square';
-import SquareOutlined from '@mui/icons-material/SquareOutlined';
+import {
+  BorderColorIcon,
+  FillColorIcon,
+  ConnectionColorIcon,
+  RelationshipColorIcon,
+  FontColorIcon,
+} from './themed-icons';
 import ActionConfig from '../../classes/action/action-config';
 import { SwitchValueDirection } from '../toolbar/ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
@@ -152,7 +157,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => <SquareOutlined htmlColor={modelBuilder.getColorBorderModel().getValue()} />,
+        icon: () => <BorderColorIcon modelValue={modelBuilder.getColorBorderModel().getValue()} />,
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-border-color',
           defaultMessage: 'Border color',
@@ -186,7 +191,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => <Palette htmlColor={modelBuilder.getSelectedTopicColorModel().getValue()} />,
+        icon: () => (
+          <FillColorIcon modelValue={modelBuilder.getSelectedTopicColorModel().getValue()} />
+        ),
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-fill-color',
           defaultMessage: 'Fill color',
@@ -303,7 +310,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => <Palette htmlColor={modelBuilder.getConnectionColorModel().getValue()} />,
+        icon: () => (
+          <ConnectionColorIcon modelValue={modelBuilder.getConnectionColorModel().getValue()} />
+        ),
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-connection-color',
           defaultMessage: 'Color',
@@ -425,7 +434,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => <Palette htmlColor={modelBuilder.getRelationshipColorModel().getValue()} />,
+        icon: () => (
+          <RelationshipColorIcon modelValue={modelBuilder.getRelationshipColorModel().getValue()} />
+        ),
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-relationship-color',
           defaultMessage: 'Color',
@@ -531,7 +542,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       },
       null,
       {
-        icon: () => <Palette htmlColor={modelBuilder.getFontColorModel().getValue() as string} />,
+        icon: () => (
+          <FontColorIcon modelValue={modelBuilder.getFontColorModel().getValue() as string} />
+        ),
         tooltip: intl.formatMessage({
           id: 'editor-panel.tooltip-topic-font-color',
           defaultMessage: 'Color',
@@ -692,6 +705,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               previewConfig={{ showPreview: false }}
               emojiStyle={EmojiStyle.NATIVE}
               skinTonesDisabled
+              theme={Theme.AUTO}
             />
           );
         },

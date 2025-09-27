@@ -16,7 +16,6 @@
  *   limitations under the License.
  */
 
-import { json } from 'react-router-dom';
 import { ErrorInfo, MapMetadata } from '../../classes/client';
 import { EditorRenderMode } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
@@ -49,7 +48,7 @@ export const loader = (pageMode: PageModeType) => {
           },
           zoom: 0.8,
         });
-        result = json(value);
+        result = Response.json(value);
         break;
       }
       case 'edit':
@@ -76,7 +75,7 @@ export const loader = (pageMode: PageModeType) => {
               zoom: zoom,
             };
           });
-          result = json(data);
+          result = Response.json(data);
         } catch (e) {
           // If the issue is an auth error, it needs to be redirect to login.
           const error = e as ErrorInfo;
@@ -96,7 +95,7 @@ export const loader = (pageMode: PageModeType) => {
             zoom: 0.8,
           };
         });
-        result = json(data);
+        result = Response.json(data);
         break;
       }
       default: {

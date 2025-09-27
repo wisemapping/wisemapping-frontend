@@ -21,7 +21,7 @@ const ThemeSwitcher: React.FC = () => {
         pr: 1.5,
         py: 0.5,
         borderRadius: '50px',
-        border: '1px solid #cc8400',
+        border: `1px solid ${muiTheme.palette.primary.main}`,
         backgroundColor: 'transparent',
         minWidth: '120px',
         height: '32px',
@@ -51,7 +51,10 @@ const ThemeSwitcher: React.FC = () => {
           />
         }
         label={
-          <Typography variant="caption" sx={{ fontSize: '0.7rem', fontWeight: 500 }}>
+          <Typography
+            variant="caption"
+            sx={{ fontSize: '0.7rem', fontWeight: 500, color: '#000000' }}
+          >
             {isDark
               ? intl.formatMessage({ id: 'theme.dark', defaultMessage: 'Dark' })
               : intl.formatMessage({ id: 'theme.light', defaultMessage: 'Light' })}

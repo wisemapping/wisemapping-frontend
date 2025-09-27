@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
 
 import Header from '../layout/header';
@@ -17,7 +17,7 @@ import AppConfig from '../../classes/app-config';
 import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import Grid from '@mui/material/Grid';

@@ -36,6 +36,10 @@ interface ToolbarPosition {
      * css transform property for positioning
      */
     transform?: string;
+    /**
+     * css marginTop property for positioning
+     */
+    marginTop?: string;
   };
 }
 export default ToolbarPosition;

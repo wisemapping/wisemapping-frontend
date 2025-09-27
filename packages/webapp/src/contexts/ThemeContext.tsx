@@ -4,6 +4,7 @@ import { PaletteMode } from '@mui/material';
 interface ThemeContextType {
   mode: PaletteMode;
   toggleMode: () => void;
+  initializeThemeFromSystem: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -34,6 +35,17 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     localStorage.setItem('themeMode', newMode);
   };
 
+  const initializeThemeFromSystem = () => {
+    // Only initialize if no preference has been set
+    if (!localStorage.getItem('themeMode')) {
+      const systemPrefersDark =
+        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemMode = systemPrefersDark ? 'dark' : 'light';
+      setMode(systemMode);
+      localStorage.setItem('themeMode', systemMode);
+    }
+  };
+
   // Listen for system theme changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -48,7 +60,11 @@ export const AppThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => 
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  return <ThemeContext.Provider value={{ mode, toggleMode }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ mode, toggleMode, initializeThemeFromSystem }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 export const useTheme = (): ThemeContextType => {
