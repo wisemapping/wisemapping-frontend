@@ -484,18 +484,6 @@ export default class RestClient implements Client {
 
   createMap(model: BasicMapInfo): Promise<number> {
     const handler = (success: (mapId: number) => void, reject: (error: ErrorInfo) => void) => {
-      // Detect user's theme mode using the same pattern as language detection
-      // Check localStorage first, then system preference
-      const savedThemeMode = localStorage.getItem('themeMode');
-      let isDarkMode = false;
-
-      if (savedThemeMode) {
-        isDarkMode = savedThemeMode === 'dark';
-      } else {
-        // Check system preference if no saved preference
-        isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-
       const theme = 'prism';
 
       this.axios
