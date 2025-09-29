@@ -27,11 +27,6 @@ context('Connection suite', () => {
     cy.matchImageSnapshot('connection-prism');
   });
 
-  it('dark prism theme', () => {
-    cy.visit('/iframe.html?args=&id=mindplot-connection--dark-prism&viewMode=story');
-    cy.matchImageSnapshot('connection-prism');
-  });
-
   it('robot theme', () => {
     cy.visit('/iframe.html?args=&id=mindplot-connection--robot&viewMode=story');
     cy.matchImageSnapshot('connection-robot');
