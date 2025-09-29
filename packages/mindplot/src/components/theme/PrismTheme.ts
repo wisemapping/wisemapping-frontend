@@ -133,12 +133,12 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
 ]);
 
 class PrismTheme extends DefaultTheme {
-  constructor() {
-    super(defaultStyles);
+  constructor(variant: ThemeVariant) {
+    super(defaultStyles, variant);
   }
 
-  getCanvasCssStyle(variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getCanvasCssStyle(): string {
+    const isDark = this._variant === 'dark';
 
     if (isDark) {
       // Dark mode background
@@ -173,8 +173,8 @@ class PrismTheme extends DefaultTheme {
         user-select: none;`;
   }
 
-  getConnectionColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getConnectionColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -204,8 +204,8 @@ class PrismTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic, variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getBorderColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getBorderColor();
 
@@ -231,8 +231,8 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic, variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getBackgroundColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -290,8 +290,8 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getFontColor(topic: Topic, variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getFontColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getFontColor();
 

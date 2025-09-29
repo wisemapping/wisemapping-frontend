@@ -99,12 +99,12 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
 ]);
 
 class ClassicTheme extends DefaultTheme {
-  constructor() {
-    super(defaultStyles);
+  constructor(variant: ThemeVariant) {
+    super(defaultStyles, variant);
   }
 
-  getCanvasCssStyle(variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getCanvasCssStyle(): string {
+    const isDark = this._variant === 'dark';
     const backgroundColor = isDark ? '#1a1a1a' : '#f2f2f2';
     const gridColor = isDark ? '#333333' : '#ebe9e7';
 
@@ -125,8 +125,8 @@ class ClassicTheme extends DefaultTheme {
       user-select: none;`;
   }
 
-  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getBackgroundColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -165,8 +165,8 @@ class ClassicTheme extends DefaultTheme {
     return result;
   }
 
-  getFontColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getFontColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getFontColor();
 

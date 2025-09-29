@@ -61,12 +61,14 @@ const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType
 
 abstract class DefaultTheme implements Theme {
   private _style: Map<TopicType, TopicStyleType>;
+  protected _variant: ThemeVariant;
 
-  constructor(style: Map<TopicType, TopicStyleType>) {
+  constructor(style: Map<TopicType, TopicStyleType>, variant: ThemeVariant) {
     this._style = style;
+    this._variant = variant;
   }
 
-  abstract getCanvasCssStyle(variant: ThemeVariant): string;
+  abstract getCanvasCssStyle(): string;
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
     // Search parent value ...
@@ -149,12 +151,12 @@ abstract class DefaultTheme implements Theme {
   }
 
   // Variant-aware methods - default implementation falls back to non-variant methods
-  getFontColor(topic: Topic, _variant: ThemeVariant): string {
+  getFontColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     return this.resolve('fontColor', topic) as string;
   }
 
-  getBackgroundColor(topic: Topic, _variant: ThemeVariant): string {
+  getBackgroundColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBackgroundColor();
@@ -180,56 +182,56 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getBorderColor(topic: Topic, variant: ThemeVariant): string {
+  getBorderColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBorderColor();
 
     // If the the style is a line, the color is alward the connection one.
     if (topic.getShapeType() === 'line') {
-      result = this.getConnectionColor(topic, variant);
+      result = this.getConnectionColor(topic);
     }
 
     if (!result) {
       const parent = topic.getParent();
       if (parent) {
-        result = parent.getBorderColor(variant);
+        result = parent.getBorderColor(this._variant);
       }
     }
 
     // If border color has not been defined, use the connection color for the border ...
     if (!result) {
-      result = this.getConnectionColor(topic, variant);
+      result = this.getConnectionColor(topic);
     }
     return result;
   }
 
-  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant: ThemeVariant): string {
+  getOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
       const color = this.getStyles(topic).outerBackgroundColor;
       result = onFocus ? color : ColorUtil.lightenColor(color, 30);
     } else {
-      const innerBgColor = this.getBackgroundColor(topic, variant);
+      const innerBgColor = this.getBackgroundColor(topic);
       result = ColorUtil.lightenColor(innerBgColor, 70);
     }
     return result;
   }
 
-  getOuterBorderColor(topic: Topic, variant: ThemeVariant): string {
+  getOuterBorderColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
       result = this.getStyles(topic).outerBorderColor;
     } else {
-      const innerBorderColor = this.getBorderColor(topic, variant);
+      const innerBorderColor = this.getBorderColor(topic);
       result = ColorUtil.lightenColor(innerBorderColor, 70);
     }
     return result;
   }
 
-  getConnectionColor(topic: Topic, _variant: ThemeVariant): string {
+  getConnectionColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result: string | undefined = model.getConnectionColor();
@@ -241,7 +243,7 @@ abstract class DefaultTheme implements Theme {
         // This means that this is central main node, in this case, I will overwrite with the main color if it was defined.
         result = topic.getModel().getConnectionColor() || parent.getModel().getConnectionColor();
       } else {
-        result = parent?.getConnectionColor(_variant);
+        result = parent?.getConnectionColor(this._variant);
       }
     }
 

@@ -169,7 +169,7 @@ abstract class Topic extends NodeGraph {
   getConnectionColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
-    return theme.getConnectionColor(this, variant);
+    return theme.getConnectionColor(this);
   }
 
   private removeInnerShape(): TopicShape {
@@ -391,7 +391,7 @@ abstract class Topic extends NodeGraph {
   getFontColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
-    return theme.getFontColor(this, variant);
+    return theme.getFontColor(this);
   }
 
   getFontStyle(): FontStyleType {
@@ -463,7 +463,7 @@ abstract class Topic extends NodeGraph {
   getBackgroundColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
-    return theme.getBackgroundColor(this, variant);
+    return theme.getBackgroundColor(this);
   }
 
   setBorderColor(color: string | undefined): void {
@@ -476,7 +476,7 @@ abstract class Topic extends NodeGraph {
   getBorderColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
-    return theme.getBorderColor(this, variant);
+    return theme.getBorderColor(this);
   }
 
   private buildTopicShape(): void {
@@ -561,8 +561,8 @@ abstract class Topic extends NodeGraph {
       this._onFocus = focus;
       const outerShape = this.getOuterShape();
 
-      const fillColor = theme.getOuterBackgroundColor(this, focus, 'light'); // Default to light variant for now
-      const borderColor = theme.getOuterBorderColor(this, 'light'); // Default to light variant for now
+      const fillColor = theme.getOuterBackgroundColor(this, focus);
+      const borderColor = theme.getOuterBorderColor(this);
 
       outerShape.setFill(fillColor);
       outerShape.setStroke(1, 'solid', borderColor);
@@ -1143,8 +1143,8 @@ abstract class Topic extends NodeGraph {
 
       // Update outer shape style ...
       const outerShape = this.getOuterShape();
-      const outerFillColor = theme.getOuterBackgroundColor(this, this.isOnFocus(), variant);
-      const outerBorderColor = theme.getOuterBorderColor(this, variant);
+      const outerFillColor = theme.getOuterBackgroundColor(this, this.isOnFocus());
+      const outerBorderColor = theme.getOuterBorderColor(this);
 
       outerShape.setFill(outerFillColor);
       outerShape.setStroke(1, 'solid', outerBorderColor);

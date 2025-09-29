@@ -99,12 +99,12 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
 ]);
 
 class RobotTheme extends DefaultTheme {
-  constructor() {
-    super(defaultStyles);
+  constructor(variant: ThemeVariant) {
+    super(defaultStyles, variant);
   }
 
-  getCanvasCssStyle(variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getCanvasCssStyle(): string {
+    const isDark = this._variant === 'dark';
     const backgroundColor = isDark ? '#1a1a1a' : '#FFFFFF';
 
     return `position: relative;
@@ -121,8 +121,8 @@ class RobotTheme extends DefaultTheme {
       user-select: none;`;
   }
 
-  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getBackgroundColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -161,8 +161,8 @@ class RobotTheme extends DefaultTheme {
     return result;
   }
 
-  getFontColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getFontColor(topic: Topic): string {
+    const isDark = this._variant === 'dark';
     const model = topic.getModel();
     let result = model.getFontColor();
 
@@ -186,7 +186,7 @@ class RobotTheme extends DefaultTheme {
     return result;
   }
 
-  getConnectionColor(topic: Topic, _variant?: ThemeVariant): string {
+  getConnectionColor(topic: Topic): string {
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -209,7 +209,7 @@ class RobotTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic, _variant?: ThemeVariant): string {
+  getBorderColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBorderColor();
 

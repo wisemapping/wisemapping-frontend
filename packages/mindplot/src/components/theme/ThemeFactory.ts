@@ -8,33 +8,23 @@ import RobotTheme from './RobotTheme';
 import Theme, { ThemeVariant } from './Theme';
 
 class ThemeFactory {
-  private static prismTheme = new PrismTheme();
-
-  private static darkPrismTheme = new DarkPrismTheme();
-
-  private static classicTheme = new ClassicTheme();
-
-  private static robotTheme = new RobotTheme();
-
-  private static enhancedPrismTheme = new EnhancedPrismTheme();
-
-  static createById(id: ThemeType, _variant: ThemeVariant): Theme {
+  static createById(id: ThemeType, variant: ThemeVariant): Theme {
     let result: Theme;
     switch (id) {
       case 'classic':
-        result = ThemeFactory.classicTheme;
+        result = new ClassicTheme(variant);
         break;
       case 'dark-prism':
-        result = ThemeFactory.darkPrismTheme;
+        result = new DarkPrismTheme(variant);
         break;
       case 'prism':
-        result = ThemeFactory.prismTheme;
+        result = new PrismTheme(variant);
         break;
       case 'robot':
-        result = ThemeFactory.robotTheme;
+        result = new RobotTheme(variant);
         break;
       case 'sunrise':
-        result = ThemeFactory.enhancedPrismTheme;
+        result = new EnhancedPrismTheme(variant);
         break;
       default: {
         const exhaustiveCheck: never = id;

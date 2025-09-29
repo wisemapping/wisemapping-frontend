@@ -45,18 +45,18 @@ interface Theme {
   getEmojiSpacing(topic: Topic): number;
 
   // Theme variant support
-  getCanvasCssStyle(variant: ThemeVariant): string;
+  getCanvasCssStyle(): string;
 
-  getFontColor(topic: Topic, variant: ThemeVariant): string;
+  getFontColor(topic: Topic): string;
 
-  getBackgroundColor(topic: Topic, variant: ThemeVariant): string;
+  getBackgroundColor(topic: Topic): string;
 
-  getBorderColor(topic: Topic, variant: ThemeVariant): string;
+  getBorderColor(topic: Topic): string;
 
-  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant: ThemeVariant): string;
+  getOuterBackgroundColor(topic: Topic, onFocus: boolean): string;
 
-  getOuterBorderColor(topic: Topic, variant: ThemeVariant): string;
+  getOuterBorderColor(topic: Topic): string;
 
-  getConnectionColor(topic: Topic, variant: ThemeVariant): string;
+  getConnectionColor(topic: Topic): string;
 }
 export default Theme;

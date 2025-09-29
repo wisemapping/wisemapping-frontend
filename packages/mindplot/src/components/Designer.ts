@@ -651,7 +651,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // Apply theme-based style if no custom style
       const themeId = mindmap.getTheme();
       const theme = ThemeFactory.createById(themeId, this._themeVariant);
-      const style = theme.getCanvasCssStyle(this._themeVariant);
+      const style = theme.getCanvasCssStyle();
       this._canvas.setBackgroundStyle(style);
     }
 
@@ -861,7 +861,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Update background color ...
     const theme = ThemeFactory.createById(id, this._themeVariant);
-    const style = theme.getCanvasCssStyle(this._themeVariant);
+    const style = theme.getCanvasCssStyle();
     this._canvas.setBackgroundStyle(style);
 
     const centralTopic = this.getModel().getCentralTopic();
@@ -908,7 +908,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     if (!style) {
       const themeId = mindmap.getTheme();
       const theme = ThemeFactory.createById(themeId, this._themeVariant);
-      const themeStyle = theme.getCanvasCssStyle(this._themeVariant);
+      const themeStyle = theme.getCanvasCssStyle();
       this._canvas.setBackgroundStyle(themeStyle);
       return;
     }

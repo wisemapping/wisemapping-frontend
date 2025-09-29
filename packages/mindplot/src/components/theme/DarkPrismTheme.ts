@@ -132,12 +132,12 @@ const defaultStyles = new Map<TopicType, TopicStyleType>([
 ]);
 
 class DarkPrismTheme extends DefaultTheme {
-  constructor() {
-    super(defaultStyles);
+  constructor(variant: ThemeVariant) {
+    super(defaultStyles, variant);
   }
 
-  getCanvasCssStyle(variant: ThemeVariant): string {
-    const isLight = variant === 'light';
+  getCanvasCssStyle(): string {
+    const isLight = this._variant === 'light';
     const backgroundColor = isLight ? '#f2f2f2' : '#1a1a1a';
     const gridColor = isLight ? '#ebe9e7' : '#333333';
 
@@ -172,8 +172,8 @@ class DarkPrismTheme extends DefaultTheme {
         user-select: none;`;
   }
 
-  getConnectionColor(topic: Topic, variant?: ThemeVariant): string {
-    const isLight = variant === 'light';
+  getConnectionColor(topic: Topic): string {
+    const isLight = this._variant === 'light';
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -215,8 +215,8 @@ class DarkPrismTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic, variant: ThemeVariant): string {
-    const isLight = variant === 'light';
+  getBorderColor(topic: Topic): string {
+    const isLight = this._variant === 'light';
     const model = topic.getModel();
     let result = model.getBorderColor();
 
@@ -254,8 +254,8 @@ class DarkPrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic, variant: ThemeVariant): string {
-    const isLight = variant === 'light';
+  getBackgroundColor(topic: Topic): string {
+    const isLight = this._variant === 'light';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -294,8 +294,8 @@ class DarkPrismTheme extends DefaultTheme {
     return result;
   }
 
-  getFontColor(topic: Topic, variant: ThemeVariant): string {
-    const isLight = variant === 'light';
+  getFontColor(topic: Topic): string {
+    const isLight = this._variant === 'light';
     const model = topic.getModel();
     let result = model.getFontColor();
 
