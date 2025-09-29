@@ -290,7 +290,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
 
     const theme = rootElem.getAttribute('theme');
     if (theme) {
-      mindmap.setTheme(theme as ThemeType);
+      // Map dark-prism to prism for backward compatibility
+      const mappedTheme = theme === 'dark-prism' ? 'prism' : theme;
+      mindmap.setTheme(mappedTheme as ThemeType);
     } else {
       // Default to classic theme if no theme is specified
       mindmap.setTheme('classic');

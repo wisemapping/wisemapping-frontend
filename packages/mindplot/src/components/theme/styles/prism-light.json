@@ -1,0 +1,24 @@
+{
+  "CentralTopic": {
+    "backgroundColor": "#F4B82D",
+    "fontColor": "#000000"
+  },
+  "MainTopic": {
+    "backgroundColor": [
+      "#8B5CF6",
+      "#EC4899",
+      "#EF4444",
+      "#F59E0B",
+      "#EAB308",
+      "#22C55E",
+      "#10B981",
+      "#06B6D4",
+      "#3B82F6",
+      "#6366F1"
+    ],
+    "fontColor": "#FFFFFF"
+  },
+  "SubTopic": {
+    "fontColor": "#000000"
+  }
+}

@@ -26,22 +26,10 @@ import ColorUtil from './ColorUtil';
 import Topic from '../Topic';
 import Theme, { TopicType, ThemeVariant } from './Theme';
 import { $msg } from '../Messages';
+import { ThemeStyle, TopicStyleType } from './ThemeStyle';
 
-export type TopicStyleType = {
-  borderColor: string | string[];
-  backgroundColor: string | string[];
-  connectionColor: string | string[];
-  connectionStyle: LineType;
-  fontFamily: string;
-  fontSize: number;
-  fontStyle: FontStyleType;
-  fontWeight: FontWeightType;
-  fontColor: string;
-  msgKey: string;
-  shapeType: TopicShapeType;
-  outerBackgroundColor: string;
-  outerBorderColor: string;
-};
+// Re-export TopicStyleType for backward compatibility
+export { TopicStyleType } from './ThemeStyle';
 
 type StyleType = string | string[] | number | undefined | LineType;
 
@@ -59,16 +47,36 @@ const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType
   ['fontStyle', (m: NodeModel) => m.getFontStyle()],
 ]);
 
-abstract class DefaultTheme implements Theme {
-  private _style: Map<TopicType, TopicStyleType>;
+class DefaultTheme implements Theme {
+  private _themeStyle: ThemeStyle;
+
   protected _variant: ThemeVariant;
 
-  constructor(style: Map<TopicType, TopicStyleType>, variant: ThemeVariant) {
-    this._style = style;
+  constructor(themeStyle: ThemeStyle, variant: ThemeVariant) {
+    this._themeStyle = themeStyle;
     this._variant = variant;
   }
 
-  abstract getCanvasCssStyle(): string;
+  // Individual canvas style properties for Designer integration
+  getCanvasBackgroundColor(): string {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.backgroundColor;
+  }
+
+  getCanvasGridColor(): string | undefined {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.gridColor;
+  }
+
+  getCanvasOpacity(): number {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.opacity || 1;
+  }
+
+  getCanvasShowGrid(): boolean {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.showGrid !== false; // Default to true if not specified
+  }
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
     // Search parent value ...
@@ -92,22 +100,24 @@ abstract class DefaultTheme implements Theme {
   }
 
   protected getStyles(topic: Topic): TopicStyleType {
-    let result: TopicStyleType;
+    let topicType: TopicType;
+
     if (topic.isCentralTopic()) {
-      result = this._style.get('CentralTopic')!;
+      topicType = 'CentralTopic';
     } else {
       const targetTopic = topic.getOutgoingConnectedTopic();
       if (targetTopic) {
         if (targetTopic.isCentralTopic()) {
-          result = this._style.get('MainTopic')!;
+          topicType = 'MainTopic';
         } else {
-          result = this._style.get('SubTopic')!;
+          topicType = 'SubTopic';
         }
       } else {
-        result = this._style.get('IsolatedTopic')!;
+        topicType = 'IsolatedTopic';
       }
     }
-    return result;
+
+    return this._themeStyle.getStyles(topicType);
   }
 
   getShapeType(topic: Topic): TopicShapeType {

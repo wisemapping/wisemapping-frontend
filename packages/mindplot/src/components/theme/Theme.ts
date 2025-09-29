@@ -44,8 +44,11 @@ interface Theme {
 
   getEmojiSpacing(topic: Topic): number;
 
-  // Theme variant support
-  getCanvasCssStyle(): string;
+  // Individual canvas style properties for Designer integration
+  getCanvasBackgroundColor(): string;
+  getCanvasGridColor(): string | undefined;
+  getCanvasOpacity(): number;
+  getCanvasShowGrid(): boolean;
 
   getFontColor(topic: Topic): string;
 

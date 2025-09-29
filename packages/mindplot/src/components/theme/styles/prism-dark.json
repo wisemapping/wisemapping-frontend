@@ -1,0 +1,9 @@
+{
+  "SubTopic": {
+    "fontColor": "#FFFFFF"
+  },
+  "Canvas": {
+    "backgroundColor": "#696969",
+    "showGrid": false
+  }
+}

@@ -56,7 +56,33 @@ class MindplotWebComponent extends HTMLElement {
     wrapper.setAttribute('id', 'mindplot-canvas');
 
     const theme = ThemeFactory.createById('classic', 'light'); // Default to light variant
-    wrapper.setAttribute('style', theme.getCanvasCssStyle());
+    const backgroundColor = theme.getCanvasBackgroundColor();
+    const opacity = theme.getCanvasOpacity();
+    const showGrid = theme.getCanvasShowGrid();
+    const gridColor = theme.getCanvasGridColor();
+
+    let style = `position: relative;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      overflow: hidden;
+      opacity: ${opacity};
+      background-color: ${backgroundColor};
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;`;
+
+    // Add grid if enabled
+    if (showGrid && gridColor) {
+      style += `
+      background-image: linear-gradient(${gridColor} 1px, transparent 1px),
+        linear-gradient(to right, ${gridColor} 1px, ${backgroundColor} 1px);
+      background-size: 20px 20px;`;
+    }
+
+    wrapper.setAttribute('style', style);
 
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;
