@@ -22,7 +22,7 @@ export default {
     linkText: { control: 'text' },
     eicon: { control: 'multi-select', options: ['❤️', '🌈', '🖇️'] },
     imageEmojiChar: { control: 'text' },
-    theme: { control: 'select', options: ['classic', 'prism', 'robot', 'sunrise'] },
+    theme: { control: 'select', options: ['classic', 'prism', 'robot', 'sunrise', 'ocean'] },
   },
 } as Meta;
 
@@ -108,6 +108,14 @@ ThemeSunrise.args = {
   eicon: ['🌈'],
   shapeType: 'none',
   theme: 'sunrise',
+};
+
+export const ThemeOcean = Template.bind({});
+ThemeOcean.args = {
+  text: 'Theme Ocean',
+  eicon: ['🌊'],
+  shapeType: 'none',
+  theme: 'ocean',
 };
 
 export const ImageEmojiFeature = Template.bind({});

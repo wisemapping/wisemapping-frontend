@@ -18,6 +18,7 @@
 import styled from 'styled-components';
 import { times } from '../size';
 import LogoTextBlackSvg from '../../../images/logo-text-black.svg';
+import { Theme } from '@mui/material/styles';
 
 export const StyledFooter = styled.div`
   height: ${times(10)};
@@ -34,13 +35,15 @@ export const StyledLogo = styled.div`
   height: 40px;
 `;
 
-export const Notifier = styled.div`
-  border: 1px solid rgb(241, 163, 39);
-  background-color: rgb(252, 235, 192);
+export const Notifier = styled.div<{ theme: Theme }>`
+  border: 1px solid
+    ${({ theme }) => (theme.palette.mode === 'dark' ? '#757575' : 'rgb(241, 163, 39)')};
+  background-color: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? '#424242' : 'rgb(252, 235, 192)'};
   border-radius: 3px;
   position: fixed;
   padding: 5px 9px;
-  color: black;
+  color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#E0E0E0' : 'black')};
   white-space: nowrap;
   margin-top: 5px;
   display: none;
@@ -70,21 +73,24 @@ export const CloseButton = styled.div`
   }
 `;
 
-export const InfoDialog = styled.div`
-  position: absolute;
+export const InfoDialog = styled.div<{ theme: Theme }>`
+  position: fixed;
   text-align: center;
-  top: 70px;
-  left: 0;
-  right: 0;
-  background-color: white;
-  border: solid 2px #ffa800;
-  margin: auto;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#424242' : 'white')};
+  border: solid 2px ${({ theme }) => (theme.palette.mode === 'dark' ? '#757575' : '#ffa800')};
   border-radius: 9px;
-  width: 80%;
+  width: 86.4%;
+  max-width: 576px;
+  color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#E0E0E0' : 'black')};
+  font-size: 0.9em;
+  z-index: 10000;
 `;
 
 export const InfoDialogContent = styled.div`
-  padding-top: 10px;
+  padding-top: 5px;
   padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 5px;

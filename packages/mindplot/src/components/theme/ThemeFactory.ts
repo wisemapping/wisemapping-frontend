@@ -3,6 +3,7 @@ import ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
 import PrismTheme from './PrismTheme';
 import SunriseTheme from './SunriseTheme';
+import OceanTheme from './OceanTheme';
 import RobotTheme from './RobotTheme';
 import Theme, { ThemeVariant } from './Theme';
 
@@ -35,6 +36,9 @@ class ThemeFactory {
         break;
       case 'sunrise':
         result = new SunriseTheme(variant);
+        break;
+      case 'ocean':
+        result = new OceanTheme(variant);
         break;
       default: {
         const exhaustiveCheck: never = actualId;

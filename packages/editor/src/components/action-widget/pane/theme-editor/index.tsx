@@ -56,6 +56,15 @@ const ThemeEditor = (props: {
       }),
     },
     {
+      id: 'ocean' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.ocean.name', defaultMessage: 'Ocean' }),
+      description: intl.formatMessage({
+        id: 'theme.ocean.description',
+        defaultMessage:
+          'Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects.',
+      }),
+    },
+    {
       id: 'classic' as ThemeType,
       name: intl.formatMessage({ id: 'theme.classic.name', defaultMessage: 'Classic' }),
       description: intl.formatMessage({

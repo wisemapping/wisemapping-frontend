@@ -3,7 +3,7 @@
  */
 context('Storybook Regression Tests', () => {
   it('connection stories load and render successfully', () => {
-    const connectionStories = ['classic', 'prism', 'robot', 'sunrise'];
+    const connectionStories = ['classic', 'prism', 'robot', 'sunrise', 'ocean'];
 
     connectionStories.forEach((variant) => {
       cy.visit(`/iframe.html?args=&id=mindplot-connection--${variant}&viewMode=story`);

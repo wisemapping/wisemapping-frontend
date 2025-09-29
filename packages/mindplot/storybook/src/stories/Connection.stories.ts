@@ -38,3 +38,8 @@ export const sunrise = Template.bind({});
 sunrise.args = {
   theme: 'sunrise',
 };
+
+export const ocean = Template.bind({});
+ocean.args = {
+  theme: 'ocean',
+};

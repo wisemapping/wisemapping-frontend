@@ -20,9 +20,9 @@ import DefaultTheme from './DefaultTheme';
 import { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
 
-class SunriseTheme extends DefaultTheme {
+class OceanTheme extends DefaultTheme {
   constructor(variant: ThemeVariant) {
-    const themeStyle = new ThemeStyle('sunrise', variant);
+    const themeStyle = new ThemeStyle('ocean', variant);
     super(themeStyle, variant);
   }
 
@@ -108,4 +108,4 @@ class SunriseTheme extends DefaultTheme {
   }
 }
 
-export default SunriseTheme;
+export default OceanTheme;
