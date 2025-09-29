@@ -653,11 +653,6 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       const theme = ThemeFactory.createById(themeId, this._themeVariant);
       const style = theme.getCanvasCssStyle(this._themeVariant);
       this._canvas.setBackgroundStyle(style);
-
-      // Apply theme variant to all topics after loading
-      setTimeout(() => {
-        this.updateTopicsThemeVariant();
-      }, 100);
     }
 
     // Delay render ...
@@ -748,6 +743,12 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   initializeThemeVariant(editorThemeMode: 'light' | 'dark'): void {
     const variant = editorThemeMode === 'dark' ? 'dark' : 'light';
     this._themeVariant = variant;
+
+    // If mindmap is already loaded, apply the theme variant immediately
+    if (this._mindmap && this.getModel()) {
+      this.refreshTheme();
+      this.updateTopicsThemeVariant();
+    }
   }
 
   /**
@@ -772,15 +773,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       if (this._mindmap && this.getModel()) {
         this.refreshTheme();
         this.updateTopicsThemeVariant();
-      } else {
-        // Store the variant and apply it when the mindmap loads
-        setTimeout(() => {
-          if (this._mindmap && this.getModel()) {
-            this.refreshTheme();
-            this.updateTopicsThemeVariant();
-          }
-        }, 500);
       }
+      // Note: We don't need to store the variant for later application
+      // because the editor's useEffect will call this method again
+      // when the mindmap is loaded and the designer is ready
     }
   }
 
@@ -796,7 +792,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // Redraw the central topic and all its children
       const centralTopic = this.getModel().getCentralTopic();
       if (centralTopic) {
-        centralTopic.redraw(true, this._themeVariant);
+        centralTopic.redraw(this._themeVariant, true);
       }
 
       // Force layout refresh to update the display
@@ -824,7 +820,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    */
   private updateTopicThemeVariant(topic: Topic): void {
     // Update the topic's theme-related properties by redrawing with current variant
-    topic.redraw(false, this._themeVariant);
+    topic.redraw(this._themeVariant, false);
 
     // Update children
     const children = topic.getChildren();
@@ -869,7 +865,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     this._canvas.setBackgroundStyle(style);
 
     const centralTopic = this.getModel().getCentralTopic();
-    centralTopic.redraw(true, this._themeVariant);
+    centralTopic.redraw(this._themeVariant, true);
   }
 
   /**

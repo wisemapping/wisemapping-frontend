@@ -137,7 +137,7 @@ class PrismTheme extends DefaultTheme {
     super(defaultStyles);
   }
 
-  getCanvasCssStyle(variant?: ThemeVariant): string {
+  getCanvasCssStyle(variant: ThemeVariant): string {
     const isDark = variant === 'dark';
 
     if (isDark) {
@@ -149,10 +149,7 @@ class PrismTheme extends DefaultTheme {
         border: 0;
         overflow: hidden;
         opacity: 1;
-        background-color: #1a1a1a;
-        background-image: linear-gradient(#333333 1px, transparent 1px),
-        linear-gradient(to right, #333333 1px, #1a1a1a 1px);
-        background-size: 50px 50px;
+        background-color: #696969;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -207,7 +204,7 @@ class PrismTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic, variant?: ThemeVariant): string {
+  getBorderColor(topic: Topic, variant: ThemeVariant): string {
     const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getBorderColor();
@@ -234,7 +231,7 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
+  getBackgroundColor(topic: Topic, variant: ThemeVariant): string {
     const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
@@ -293,7 +290,7 @@ class PrismTheme extends DefaultTheme {
     return result;
   }
 
-  getFontColor(topic: Topic, variant?: ThemeVariant): string {
+  getFontColor(topic: Topic, variant: ThemeVariant): string {
     const isDark = variant === 'dark';
     const model = topic.getModel();
     let result = model.getFontColor();
@@ -312,8 +309,8 @@ class PrismTheme extends DefaultTheme {
         result = '#FFFFFF'; // White text on colored topics
       }
     } else {
-      // For light mode, always use original theme colors
-      result = this.resolve('fontColor', topic) as string;
+      // For light mode, ensure black fonts for all topics and sub-topics
+      result = '#000000'; // Black text for all topics (central, main, and sub-topics)
     }
 
     return result;

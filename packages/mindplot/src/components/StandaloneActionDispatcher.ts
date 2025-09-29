@@ -95,7 +95,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       });
 
       // Ensure relationships are redrawn when topic moves
-      topic.redraw();
+      topic.redraw('light', false); // Default to light variant for now
 
       return result;
     };
@@ -145,7 +145,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontFamily();
       topic.setFontFamily(commandFontFamily);
 
-      topic.redraw();
+      topic.redraw('light', false); // Default to light variant for now
       return result;
     };
 
@@ -155,7 +155,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeFontColorToTopic(topicsIds: number[], color: string | undefined) {
     const commandFunc = (topic: Topic, commandColor: string | undefined) => {
-      const result = topic.getFontColor();
+      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
+      const result = topic.getFontColor(variant);
       topic.setFontColor(commandColor);
       return result;
     };
@@ -167,7 +168,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeBackgroundColorToTopic(topicsIds: number[], color: string | undefined) {
     const commandFunc = (topic: Topic, value: string | undefined) => {
-      const result = topic.getBackgroundColor();
+      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
+      const result = topic.getBackgroundColor(variant);
       topic.setBackgroundColor(value);
       return result;
     };
@@ -180,7 +182,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   /** */
   changeBorderColorToTopic(topicsIds: number[], color: string | undefined): void {
     const commandFunc = (topic: Topic, commandColor: string | undefined) => {
-      const result = topic.getBorderColor();
+      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
+      const result = topic.getBorderColor(variant);
       topic.setBorderColor(commandColor);
       return result;
     };
@@ -199,7 +202,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontSize();
       topic.setFontSize(commandSize);
 
-      topic.redraw();
+      topic.redraw('light', false); // Default to light variant for now
       return result;
     };
 
@@ -244,7 +247,8 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
   changeConnectionColorToTopic(topicsIds: number[], value: string | undefined) {
     const commandFunc = (topic: Topic, color: string | undefined) => {
-      const result: string = topic.getConnectionColor();
+      const variant = this._actionRunner.getCommandContext().designer.getThemeVariant();
+      const result: string = topic.getConnectionColor(variant);
       topic.setConnectionColor(color);
       return result;
     };
@@ -323,7 +327,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontWeight();
       const weight = result === 'bold' ? 'normal' : 'bold';
       topic.setFontWeight(weight);
-      topic.redraw();
+      topic.redraw('light', false); // Default to light variant for now
       return result;
     };
 

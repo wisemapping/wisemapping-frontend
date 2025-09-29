@@ -55,8 +55,8 @@ class MindplotWebComponent extends HTMLElement {
     wrapper.setAttribute('class', 'wise-editor');
     wrapper.setAttribute('id', 'mindplot-canvas');
 
-    const theme = ThemeFactory.createById('classic');
-    wrapper.setAttribute('style', theme.getCanvasCssStyle());
+    const theme = ThemeFactory.createById('classic', 'light'); // Default to light variant
+    wrapper.setAttribute('style', theme.getCanvasCssStyle('light'));
 
     this._shadowRoot.appendChild(wrapper);
     this._isLoaded = false;

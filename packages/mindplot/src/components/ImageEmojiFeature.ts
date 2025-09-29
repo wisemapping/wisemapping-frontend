@@ -62,7 +62,7 @@ class ImageEmojiFeature {
     }
 
     this._emojiRemoveTip = undefined; // Clear remove tip
-    this._topic.redraw();
+    this._topic.redraw('light', false); // Default to light variant for now
   }
 
   getOrBuildEmojiTextShape(): Text | undefined {
@@ -231,7 +231,7 @@ class ImageEmojiFeature {
     // Adjust topic height to accommodate emoji
     const emojiPadding = 2;
     // Get spacing from theme configuration
-    const theme = ThemeFactory.create(this._topic.getModel());
+    const theme = ThemeFactory.create(this._topic.getModel(), 'light'); // Default to light variant for now
     const spacing = theme.getEmojiSpacing(this._topic);
     // Reduce bottom padding to bring text closer to bottom
     const bottomPadding = padding / 2; // Reduce bottom padding by half
@@ -269,7 +269,7 @@ class ImageEmojiFeature {
 
     // Position text and icons below the emoji, closer to bottom of shape
     // Get spacing from theme configuration
-    const theme = ThemeFactory.create(this._topic.getModel());
+    const theme = ThemeFactory.create(this._topic.getModel(), 'light'); // Default to light variant for now
     const spacing = theme.getEmojiSpacing(this._topic);
     const bottomOffset = padding / 2; // Reduce space between text and bottom of shape
     const textY = bottomOffset + emojiHeight + spacing; // Position text below emoji

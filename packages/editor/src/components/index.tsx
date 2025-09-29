@@ -70,10 +70,7 @@ const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps):
   // Update mindmap theme variant when editor theme changes
   React.useEffect(() => {
     if (designer) {
-      // Add a small delay to ensure the designer is fully ready
-      setTimeout(() => {
-        designer.setThemeVariant(mode === 'dark' ? 'dark' : 'light');
-      }, 100);
+      designer.setThemeVariant(mode === 'dark' ? 'dark' : 'light');
     }
   }, [mode, designer]);
 

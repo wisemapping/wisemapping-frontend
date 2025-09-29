@@ -22,7 +22,7 @@ const registerRefreshHook = (topics: Topic[]) => {
 
   globalThis.observer = new MutationObserver(() => {
     // Relayout...
-    topics.forEach((t) => t.redraw());
+    topics.forEach((t) => t.redraw('light', false)); // Default to light variant for storybook
     LayoutEventBus.fireEvent('forceLayout');
   });
   const rootElement = document.getElementById('root') || document.body;
