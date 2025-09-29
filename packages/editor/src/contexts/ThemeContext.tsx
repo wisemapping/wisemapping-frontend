@@ -29,13 +29,6 @@ export const EditorThemeProvider: React.FC<ThemeProviderProps> = ({
     setMode(newMode);
     localStorage.setItem('themeMode', newMode);
     setIsUserControlled(true); // Mark that user has taken control
-
-    console.log(
-      '🎨 EditorThemeProvider: toggleMode called, newMode:',
-      newMode,
-      'user controlled:',
-      true,
-    );
   };
 
   // Sync with external theme mode changes, but only if user hasn't taken control

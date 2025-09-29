@@ -38,15 +38,6 @@ const ThemeEditor = (props: {
 
   const themes = [
     {
-      id: 'classic' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.classic.name', defaultMessage: 'Classic' }),
-      description: intl.formatMessage({
-        id: 'theme.classic.description',
-        defaultMessage:
-          'Clean and professional design with blue accents. Perfect for business presentations and formal documents.',
-      }),
-    },
-    {
       id: 'prism' as ThemeType,
       name: intl.formatMessage({ id: 'theme.summer.name', defaultMessage: 'Summer' }),
       description: intl.formatMessage({
@@ -56,21 +47,30 @@ const ThemeEditor = (props: {
       }),
     },
     {
-      id: 'robot' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.robot.name', defaultMessage: 'Robot' }),
-      description: intl.formatMessage({
-        id: 'theme.robot.description',
-        defaultMessage:
-          'Tech-inspired green theme. Perfect for technical documentation and futuristic presentations.',
-      }),
-    },
-    {
       id: 'sunrise' as ThemeType,
       name: intl.formatMessage({ id: 'theme.sunrise.name', defaultMessage: 'Sunrise' }),
       description: intl.formatMessage({
         id: 'theme.sunrise.description',
         defaultMessage:
           'Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability.',
+      }),
+    },
+    {
+      id: 'classic' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.classic.name', defaultMessage: 'Classic' }),
+      description: intl.formatMessage({
+        id: 'theme.classic.description',
+        defaultMessage:
+          'Clean and professional design with blue accents. Perfect for business presentations and formal documents.',
+      }),
+    },
+    {
+      id: 'robot' as ThemeType,
+      name: intl.formatMessage({ id: 'theme.robot.name', defaultMessage: 'Robot' }),
+      description: intl.formatMessage({
+        id: 'theme.robot.description',
+        defaultMessage:
+          'Tech-inspired green theme. Perfect for technical documentation and futuristic presentations.',
       }),
     },
   ];

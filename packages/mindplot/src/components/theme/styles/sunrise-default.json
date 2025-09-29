@@ -1,0 +1,100 @@
+{
+  "CentralTopic": {
+    "msgKey": "CENTRAL_TOPIC",
+    "borderColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF",
+    "fontFamily": "Verdana",
+    "fontSize": 10,
+    "fontStyle": "normal",
+    "fontWeight": "bold",
+    "fontColor": "#FF6B35",
+    "connectionStyle": "ARC",
+    "connectionColor": "#FF6B35",
+    "shapeType": "rounded rectangle",
+    "outerBackgroundColor": "#FF8E53",
+    "outerBorderColor": "#FF8E53"
+  },
+  "MainTopic": {
+    "msgKey": "MAIN_TOPIC",
+    "borderColor": [
+      "#FF6B35",
+      "#E65100",
+      "#FFA726",
+      "#D84315",
+      "#FF7043",
+      "#BF360C",
+      "#FF8A65",
+      "#FFAB91",
+      "#C62828",
+      "#B71C1C"
+    ],
+    "connectionColor": [
+      "#FF6B35",
+      "#E65100",
+      "#FFA726",
+      "#D84315",
+      "#FF7043",
+      "#BF360C",
+      "#FF8A65",
+      "#FFAB91",
+      "#C62828",
+      "#B71C1C"
+    ],
+    "backgroundColor": [
+      "#FF6B35",
+      "#E65100",
+      "#FFA726",
+      "#D84315",
+      "#FF7043",
+      "#BF360C",
+      "#FF8A65",
+      "#FFAB91",
+      "#C62828",
+      "#B71C1C"
+    ],
+    "fontFamily": "Verdana",
+    "fontSize": 9,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#FFFFFF",
+    "connectionStyle": "ARC",
+    "shapeType": "rounded rectangle",
+    "outerBackgroundColor": "#FF8E53",
+    "outerBorderColor": "#FF8E53"
+  },
+  "SubTopic": {
+    "msgKey": "SUB_TOPIC",
+    "borderColor": "#FFF3E0",
+    "backgroundColor": "#FFF3E0",
+    "fontFamily": "Verdana",
+    "fontSize": 8,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#E65100",
+    "connectionStyle": "ARC",
+    "connectionColor": "#FF6B35",
+    "shapeType": "none",
+    "outerBackgroundColor": "#FF8E53",
+    "outerBorderColor": "#FF8E53"
+  },
+  "IsolatedTopic": {
+    "msgKey": "ISOLATED_TOPIC",
+    "borderColor": "#FFE0B2",
+    "backgroundColor": "#FFF3E0",
+    "fontFamily": "Verdana",
+    "fontSize": 8,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#E65100",
+    "connectionStyle": "ARC",
+    "connectionColor": "#FF6B35",
+    "shapeType": "line",
+    "outerBackgroundColor": "#FF8E53",
+    "outerBorderColor": "#FF8E53"
+  },
+  "Canvas": {
+    "backgroundColor": "#FFE0B2",
+    "opacity": 1,
+    "showGrid": false
+  }
+}
