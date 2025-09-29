@@ -1,0 +1,57 @@
+{
+  "CentralTopic": {
+    "backgroundColor": "#2C1810",
+    "fontColor": "#FF8A65"
+  },
+  "MainTopic": {
+    "backgroundColor": [
+      "#4A3429",
+      "#5D4037",
+      "#6D4C41",
+      "#8D6E63",
+      "#A1887F",
+      "#BCAAA4",
+      "#D7CCC8",
+      "#EFEBE9",
+      "#3E2723",
+      "#2E1B14"
+    ],
+    "borderColor": [
+      "#4A3429",
+      "#5D4037",
+      "#6D4C41",
+      "#8D6E63",
+      "#A1887F",
+      "#BCAAA4",
+      "#D7CCC8",
+      "#EFEBE9",
+      "#3E2723",
+      "#2E1B14"
+    ],
+    "connectionColor": [
+      "#4A3429",
+      "#5D4037",
+      "#6D4C41",
+      "#8D6E63",
+      "#A1887F",
+      "#BCAAA4",
+      "#D7CCC8",
+      "#EFEBE9",
+      "#3E2723",
+      "#2E1B14"
+    ],
+    "fontColor": "#FFFFFF"
+  },
+  "SubTopic": {
+    "backgroundColor": "#3E2723",
+    "fontColor": "#D7CCC8"
+  },
+  "IsolatedTopic": {
+    "backgroundColor": "#3E2723",
+    "fontColor": "#D7CCC8"
+  },
+  "Canvas": {
+    "backgroundColor": "#2C1810",
+    "showGrid": false
+  }
+}

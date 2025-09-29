@@ -2,7 +2,7 @@ import NodeModel from '../model/NodeModel';
 import ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
 import PrismTheme from './PrismTheme';
-import EnhancedPrismTheme from './EnhancedPrismTheme';
+import SunriseTheme from './SunriseTheme';
 import RobotTheme from './RobotTheme';
 import Theme, { ThemeVariant } from './Theme';
 
@@ -34,7 +34,7 @@ class ThemeFactory {
         result = new RobotTheme(variant);
         break;
       case 'sunrise':
-        result = new EnhancedPrismTheme(variant);
+        result = new SunriseTheme(variant);
         break;
       default: {
         const exhaustiveCheck: never = actualId;

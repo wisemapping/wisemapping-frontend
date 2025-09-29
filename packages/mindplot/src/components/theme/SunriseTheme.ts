@@ -20,9 +20,9 @@ import DefaultTheme from './DefaultTheme';
 import { ThemeVariant } from './Theme';
 import { ThemeStyle } from './ThemeStyle';
 
-class EnhancedPrismTheme extends DefaultTheme {
+class SunriseTheme extends DefaultTheme {
   constructor(variant: ThemeVariant) {
-    const themeStyle = new ThemeStyle('enhanced-prism', variant);
+    const themeStyle = new ThemeStyle('sunrise', variant);
     super(themeStyle, variant);
   }
 
@@ -73,12 +73,23 @@ class EnhancedPrismTheme extends DefaultTheme {
     let result = model.getBackgroundColor();
 
     // If topic has a custom background color, always use it
-    if (result) {
+    if (result && result.trim() !== '') {
       return result;
     }
 
-    // Use theme colors from style system
-    result = this.resolve('backgroundColor', topic) as string;
+    // Get theme colors directly from ThemeStyle, bypassing DefaultTheme logic
+    const styles = this.getStyles(topic);
+    const backgroundColor = styles.backgroundColor;
+
+    if (Array.isArray(backgroundColor)) {
+      // If it's an array, use topic order to decide color
+      const order = topic.getOrder() || 0;
+      const index = order % backgroundColor.length;
+      result = backgroundColor[index];
+    } else {
+      result = backgroundColor;
+    }
+
     return result;
   }
 
@@ -97,4 +108,4 @@ class EnhancedPrismTheme extends DefaultTheme {
   }
 }
 
-export default EnhancedPrismTheme;
+export default SunriseTheme;

@@ -32,9 +32,9 @@ import classicDark from './styles/classic-dark.json';
 import robotDefault from './styles/robot-default.json';
 import robotLight from './styles/robot-light.json';
 import robotDark from './styles/robot-dark.json';
-import enhancedPrismDefault from './styles/enhanced-prism-default.json';
-import enhancedPrismLight from './styles/enhanced-prism-light.json';
-import enhancedPrismDark from './styles/enhanced-prism-dark.json';
+import sunriseDefault from './styles/sunrise-default.json';
+import sunriseLight from './styles/sunrise-light.json';
+import sunriseDark from './styles/sunrise-dark.json';
 
 export type TopicStyleType = {
   borderColor: string | string[];
@@ -188,12 +188,12 @@ export class ThemeStyle {
         return robotLight as JsonThemeStyles;
       case 'robot-dark.json':
         return robotDark as JsonThemeStyles;
-      case 'enhanced-prism-default.json':
-        return enhancedPrismDefault as JsonThemeStyles;
-      case 'enhanced-prism-light.json':
-        return enhancedPrismLight as JsonThemeStyles;
-      case 'enhanced-prism-dark.json':
-        return enhancedPrismDark as JsonThemeStyles;
+      case 'sunrise-default.json':
+        return sunriseDefault as JsonThemeStyles;
+      case 'sunrise-light.json':
+        return sunriseLight as JsonThemeStyles;
+      case 'sunrise-dark.json':
+        return sunriseDark as JsonThemeStyles;
       default:
         console.warn(`Unknown style file: ${filename}`);
         return {};
