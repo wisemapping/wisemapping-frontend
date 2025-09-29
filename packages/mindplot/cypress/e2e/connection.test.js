@@ -1,7 +1,7 @@
 context('Connection suite', () => {
   // Test to ensure all stories load without import/export errors
   it('all stories load successfully without errors', () => {
-    const stories = ['classic', 'prism', 'robot', 'sunrise'];
+    const stories = ['classic', 'prism', 'robot', 'sunrise', 'ocean'];
 
     stories.forEach((story) => {
       cy.visit(`/iframe.html?args=&id=mindplot-connection--${story}&viewMode=story`);

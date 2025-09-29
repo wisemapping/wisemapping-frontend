@@ -110,7 +110,7 @@ const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps):
             zoom: options.zoom,
           })}
 
-          <Notifier id="headerNotifier" />
+          <Notifier id="headerNotifier" theme={theme} />
 
           {!options.enableAppBar && <CreatorInfoPane mapInfo={mapInfo} />}
 

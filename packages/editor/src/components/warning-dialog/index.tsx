@@ -18,6 +18,7 @@
 import React, { useState } from 'react';
 import { CloseButton, InfoDialog, InfoDialogContent } from './styled';
 import { useIntl } from 'react-intl';
+import { useTheme } from '@mui/material/styles';
 
 import CloseDialogSvg from '../../../images/close-dialog-icon.svg';
 import Capability from '../../classes/action/capability';
@@ -29,6 +30,7 @@ export type FooterPropsType = {
 
 const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactElement => {
   const intl = useIntl();
+  const theme = useTheme();
 
   let msgExt: string = '';
   let msg: string = '';
@@ -73,7 +75,7 @@ const WarningDialog = ({ capability, message }: FooterPropsType): React.ReactEle
   return (
     <>
       {open && (
-        <InfoDialog>
+        <InfoDialog theme={theme}>
           <InfoDialogContent>
             <CloseButton>
               <button

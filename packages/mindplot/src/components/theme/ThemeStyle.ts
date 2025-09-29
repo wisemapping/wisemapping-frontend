@@ -35,6 +35,9 @@ import robotDark from './styles/robot-dark.json';
 import sunriseDefault from './styles/sunrise-default.json';
 import sunriseLight from './styles/sunrise-light.json';
 import sunriseDark from './styles/sunrise-dark.json';
+import oceanDefault from './styles/ocean-default.json';
+import oceanLight from './styles/ocean-light.json';
+import oceanDark from './styles/ocean-dark.json';
 
 export type TopicStyleType = {
   borderColor: string | string[];
@@ -194,6 +197,12 @@ export class ThemeStyle {
         return sunriseLight as JsonThemeStyles;
       case 'sunrise-dark.json':
         return sunriseDark as JsonThemeStyles;
+      case 'ocean-default.json':
+        return oceanDefault as JsonThemeStyles;
+      case 'ocean-light.json':
+        return oceanLight as JsonThemeStyles;
+      case 'ocean-dark.json':
+        return oceanDark as JsonThemeStyles;
       default:
         console.warn(`Unknown style file: ${filename}`);
         return {};
