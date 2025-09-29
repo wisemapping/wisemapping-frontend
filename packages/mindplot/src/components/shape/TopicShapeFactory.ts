@@ -37,7 +37,7 @@ class TopicShapeFactory {
         result = new RectTopicShape(0.6, value);
         break;
       case 'line':
-        result = new LineTopicShape(topic.getBorderColor('light')); // Default to light variant for now
+        result = new LineTopicShape(topic.getBorderColor(topic.getThemeVariant()));
         break;
       case 'none':
         result = new NoneTopicShape();

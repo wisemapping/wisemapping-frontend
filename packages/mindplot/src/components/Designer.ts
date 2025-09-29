@@ -819,6 +819,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * Recursively update theme variant for a topic and its children
    */
   private updateTopicThemeVariant(topic: Topic): void {
+    // Set the theme variant on the topic
+    topic.setThemeVariant(this._themeVariant);
+
     // Update the topic's theme-related properties by redrawing with current variant
     topic.redraw(this._themeVariant, false);
 
@@ -835,6 +838,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);
+
+    // Set the current theme variant on the topic
+    result.setThemeVariant(this._themeVariant);
 
     this._canvas.append(result);
     children.forEach((child) => {
