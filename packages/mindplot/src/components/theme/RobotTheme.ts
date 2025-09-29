@@ -15,114 +15,18 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import { LineType } from '../ConnectionLine';
-import { FontStyleType } from '../FontStyleType';
-import { FontWeightType } from '../FontWeightType';
-import { TopicShapeType } from '../model/INodeModel';
 import Topic from '../Topic';
-import DefaultTheme, { TopicStyleType } from './DefaultTheme';
-import { TopicType, ThemeVariant } from './Theme';
-
-const defaultStyles = new Map<TopicType, TopicStyleType>([
-  [
-    'CentralTopic',
-    {
-      msgKey: 'CENTRAL_TOPIC',
-      borderColor: '#363C56',
-      backgroundColor: '#363C56',
-      fontFamily: 'Brush Script MT',
-      fontSize: 10,
-      fontStyle: 'normal' as FontStyleType,
-      fontWeight: 'bold' as FontWeightType,
-      fontColor: '#ffffff',
-      connectionStyle: LineType.POLYLINE_MIDDLE,
-      connectionColor: '#345780',
-      shapeType: 'rectangle' as TopicShapeType,
-      outerBackgroundColor: '#F4B82D',
-      outerBorderColor: '#F4B82D',
-    },
-  ],
-  [
-    'MainTopic',
-    {
-      msgKey: 'MAIN_TOPIC',
-      borderColor: ['#698396'],
-      backgroundColor: ['#698396'],
-      connectionColor: ['#698396'],
-      fontFamily: 'Brush Script MT',
-      fontSize: 9,
-      fontStyle: 'normal' as FontStyleType,
-      fontWeight: 'normal' as FontWeightType,
-      fontColor: '#FFFFFF',
-      connectionStyle: LineType.POLYLINE_MIDDLE,
-      shapeType: 'rectangle' as TopicShapeType,
-      outerBackgroundColor: '#F4B82D',
-      outerBorderColor: '#F4B82D',
-    },
-  ],
-  [
-    'SubTopic',
-    {
-      msgKey: 'SUB_TOPIC',
-      borderColor: '#698396',
-      backgroundColor: '#698396',
-      fontFamily: 'Brush Script MT',
-      fontSize: 8,
-      fontStyle: 'normal' as FontStyleType,
-      fontWeight: 'normal' as FontWeightType,
-      fontColor: '#FFFFFF',
-      connectionStyle: LineType.POLYLINE_MIDDLE,
-      connectionColor: '#345780',
-      shapeType: 'rectangle' as TopicShapeType,
-      outerBackgroundColor: '#F4B82D',
-      outerBorderColor: '#F4B82D',
-    },
-  ],
-  [
-    'IsolatedTopic',
-    {
-      msgKey: 'ISOLATED_TOPIC',
-      borderColor: '#023BB9',
-      backgroundColor: '#96e3ff',
-      fontFamily: 'Brush Script MT',
-      fontSize: 8,
-      fontStyle: 'normal' as FontStyleType,
-      fontWeight: 'normal' as FontWeightType,
-      fontColor: '#000000',
-      connectionStyle: LineType.POLYLINE_MIDDLE,
-      connectionColor: '#345780',
-      shapeType: 'line' as TopicShapeType,
-      outerBackgroundColor: '#F4B82D',
-      outerBorderColor: '#F4B82D',
-    },
-  ],
-]);
+import DefaultTheme from './DefaultTheme';
+import { ThemeVariant } from './Theme';
+import { ThemeStyle } from './ThemeStyle';
 
 class RobotTheme extends DefaultTheme {
-  constructor() {
-    super(defaultStyles);
+  constructor(variant: ThemeVariant) {
+    const themeStyle = new ThemeStyle('robot', variant);
+    super(themeStyle, variant);
   }
 
-  getCanvasCssStyle(variant: ThemeVariant): string {
-    const isDark = variant === 'dark';
-    const backgroundColor = isDark ? '#1a1a1a' : '#FFFFFF';
-
-    return `position: relative;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      overflow: hidden;
-      opacity: 1;
-      background-color: ${backgroundColor};
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;`;
-  }
-
-  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getBackgroundColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBackgroundColor();
 
@@ -131,38 +35,12 @@ class RobotTheme extends DefaultTheme {
       return result;
     }
 
-    // For dark mode, use enhanced colors
-    if (isDark) {
-      if (topic.isCentralTopic()) {
-        // Central topic in dark mode - use a light color for contrast
-        result = '#F4B82D';
-      } else {
-        // Main topics in dark mode - use tech-inspired colors
-        const darkColors = [
-          '#10B981', // Emerald
-          '#F59E0B', // Amber
-          '#EF4444', // Red
-          '#8B5CF6', // Violet
-          '#06B6D4', // Cyan
-          '#84CC16', // Lime
-          '#F97316', // Orange
-          '#EC4899', // Pink
-          '#6366F1', // Indigo
-          '#14B8A6', // Teal
-        ];
-        const order = topic.getOrder() || 0;
-        result = darkColors[order % darkColors.length];
-      }
-    } else {
-      // For light mode, always use original theme colors
-      result = this.resolve('backgroundColor', topic) as string;
-    }
-
+    // Use theme colors from style system
+    result = this.resolve('backgroundColor', topic) as string;
     return result;
   }
 
-  getFontColor(topic: Topic, variant?: ThemeVariant): string {
-    const isDark = variant === 'dark';
+  getFontColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getFontColor();
 
@@ -171,22 +49,12 @@ class RobotTheme extends DefaultTheme {
       return result;
     }
 
-    // For dark mode, use enhanced font colors
-    if (isDark) {
-      if (topic.isCentralTopic()) {
-        result = '#000000'; // Black text on light central topic
-      } else {
-        result = '#FFFFFF'; // White text on colored topics
-      }
-    } else {
-      // For light mode, always use original theme colors
-      result = this.resolve('fontColor', topic) as string;
-    }
-
+    // Use theme colors from style system
+    result = this.resolve('fontColor', topic) as string;
     return result;
   }
 
-  getConnectionColor(topic: Topic, _variant?: ThemeVariant): string {
+  getConnectionColor(topic: Topic): string {
     let result: string | null = null;
 
     // Color of the node is the connection is the color of the parent ...
@@ -209,7 +77,7 @@ class RobotTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic, _variant?: ThemeVariant): string {
+  getBorderColor(topic: Topic): string {
     const model = topic.getModel();
     let result = model.getBorderColor();
 

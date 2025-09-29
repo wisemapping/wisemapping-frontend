@@ -26,22 +26,10 @@ import ColorUtil from './ColorUtil';
 import Topic from '../Topic';
 import Theme, { TopicType, ThemeVariant } from './Theme';
 import { $msg } from '../Messages';
+import { ThemeStyle, TopicStyleType } from './ThemeStyle';
 
-export type TopicStyleType = {
-  borderColor: string | string[];
-  backgroundColor: string | string[];
-  connectionColor: string | string[];
-  connectionStyle: LineType;
-  fontFamily: string;
-  fontSize: number;
-  fontStyle: FontStyleType;
-  fontWeight: FontWeightType;
-  fontColor: string;
-  msgKey: string;
-  shapeType: TopicShapeType;
-  outerBackgroundColor: string;
-  outerBorderColor: string;
-};
+// Re-export TopicStyleType for backward compatibility
+export { TopicStyleType } from './ThemeStyle';
 
 type StyleType = string | string[] | number | undefined | LineType;
 
@@ -59,14 +47,36 @@ const keyToModel = new Map<keyof TopicStyleType, (model: NodeModel) => StyleType
   ['fontStyle', (m: NodeModel) => m.getFontStyle()],
 ]);
 
-abstract class DefaultTheme implements Theme {
-  private _style: Map<TopicType, TopicStyleType>;
+class DefaultTheme implements Theme {
+  private _themeStyle: ThemeStyle;
 
-  constructor(style: Map<TopicType, TopicStyleType>) {
-    this._style = style;
+  protected _variant: ThemeVariant;
+
+  constructor(themeStyle: ThemeStyle, variant: ThemeVariant) {
+    this._themeStyle = themeStyle;
+    this._variant = variant;
   }
 
-  abstract getCanvasCssStyle(variant: ThemeVariant): string;
+  // Individual canvas style properties for Designer integration
+  getCanvasBackgroundColor(): string {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.backgroundColor;
+  }
+
+  getCanvasGridColor(): string | undefined {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.gridColor;
+  }
+
+  getCanvasOpacity(): number {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.opacity || 1;
+  }
+
+  getCanvasShowGrid(): boolean {
+    const canvasStyle = this._themeStyle.getCanvasStyle();
+    return canvasStyle.showGrid !== false; // Default to true if not specified
+  }
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
     // Search parent value ...
@@ -90,22 +100,24 @@ abstract class DefaultTheme implements Theme {
   }
 
   protected getStyles(topic: Topic): TopicStyleType {
-    let result: TopicStyleType;
+    let topicType: TopicType;
+
     if (topic.isCentralTopic()) {
-      result = this._style.get('CentralTopic')!;
+      topicType = 'CentralTopic';
     } else {
       const targetTopic = topic.getOutgoingConnectedTopic();
       if (targetTopic) {
         if (targetTopic.isCentralTopic()) {
-          result = this._style.get('MainTopic')!;
+          topicType = 'MainTopic';
         } else {
-          result = this._style.get('SubTopic')!;
+          topicType = 'SubTopic';
         }
       } else {
-        result = this._style.get('IsolatedTopic')!;
+        topicType = 'IsolatedTopic';
       }
     }
-    return result;
+
+    return this._themeStyle.getStyles(topicType);
   }
 
   getShapeType(topic: Topic): TopicShapeType {
@@ -149,12 +161,12 @@ abstract class DefaultTheme implements Theme {
   }
 
   // Variant-aware methods - default implementation falls back to non-variant methods
-  getFontColor(topic: Topic, _variant: ThemeVariant): string {
+  getFontColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     return this.resolve('fontColor', topic) as string;
   }
 
-  getBackgroundColor(topic: Topic, _variant: ThemeVariant): string {
+  getBackgroundColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBackgroundColor();
@@ -180,56 +192,56 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getBorderColor(topic: Topic, variant: ThemeVariant): string {
+  getBorderColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBorderColor();
 
     // If the the style is a line, the color is alward the connection one.
     if (topic.getShapeType() === 'line') {
-      result = this.getConnectionColor(topic, variant);
+      result = this.getConnectionColor(topic);
     }
 
     if (!result) {
       const parent = topic.getParent();
       if (parent) {
-        result = parent.getBorderColor(variant);
+        result = parent.getBorderColor(this._variant);
       }
     }
 
     // If border color has not been defined, use the connection color for the border ...
     if (!result) {
-      result = this.getConnectionColor(topic, variant);
+      result = this.getConnectionColor(topic);
     }
     return result;
   }
 
-  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant: ThemeVariant): string {
+  getOuterBackgroundColor(topic: Topic, onFocus: boolean): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
       const color = this.getStyles(topic).outerBackgroundColor;
       result = onFocus ? color : ColorUtil.lightenColor(color, 30);
     } else {
-      const innerBgColor = this.getBackgroundColor(topic, variant);
+      const innerBgColor = this.getBackgroundColor(topic);
       result = ColorUtil.lightenColor(innerBgColor, 70);
     }
     return result;
   }
 
-  getOuterBorderColor(topic: Topic, variant: ThemeVariant): string {
+  getOuterBorderColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
       result = this.getStyles(topic).outerBorderColor;
     } else {
-      const innerBorderColor = this.getBorderColor(topic, variant);
+      const innerBorderColor = this.getBorderColor(topic);
       result = ColorUtil.lightenColor(innerBorderColor, 70);
     }
     return result;
   }
 
-  getConnectionColor(topic: Topic, _variant: ThemeVariant): string {
+  getConnectionColor(topic: Topic): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result: string | undefined = model.getConnectionColor();
@@ -241,7 +253,7 @@ abstract class DefaultTheme implements Theme {
         // This means that this is central main node, in this case, I will overwrite with the main color if it was defined.
         result = topic.getModel().getConnectionColor() || parent.getModel().getConnectionColor();
       } else {
-        result = parent?.getConnectionColor(_variant);
+        result = parent?.getConnectionColor(this._variant);
       }
     }
 

@@ -1,0 +1,45 @@
+{
+  "CentralTopic": {
+    "backgroundColor": "#F4B82D",
+    "fontColor": "#000000"
+  },
+  "MainTopic": {
+    "backgroundColor": [
+      "#6B46C1",
+      "#BE185D",
+      "#DC2626",
+      "#D97706",
+      "#CA8A04",
+      "#65A30D",
+      "#059669",
+      "#0891B2",
+      "#2563EB",
+      "#4F46E5"
+    ],
+    "borderColor": [
+      "#6B46C1",
+      "#BE185D",
+      "#DC2626",
+      "#D97706",
+      "#CA8A04",
+      "#65A30D",
+      "#059669",
+      "#0891B2",
+      "#2563EB",
+      "#4F46E5"
+    ],
+    "connectionColor": [
+      "#6B46C1",
+      "#BE185D",
+      "#DC2626",
+      "#D97706",
+      "#CA8A04",
+      "#65A30D",
+      "#059669",
+      "#0891B2",
+      "#2563EB",
+      "#4F46E5"
+    ],
+    "fontColor": "#FFFFFF"
+  }
+}

@@ -496,7 +496,7 @@ export default class RestClient implements Client {
         isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       }
 
-      const theme = isDarkMode ? 'dark-prism' : 'prism';
+      const theme = 'prism';
 
       this.axios
         .post(

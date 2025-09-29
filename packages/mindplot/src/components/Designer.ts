@@ -61,7 +61,7 @@ import ImageExpoterFactory from './export/ImageExporterFactory';
 import PositionType from './PositionType';
 import ThemeType from './model/ThemeType';
 import ThemeFactory from './theme/ThemeFactory';
-import { ThemeVariant } from './theme/Theme';
+import Theme, { ThemeVariant } from './theme/Theme';
 import ChangeEvent from './layout/ChangeEvent';
 
 type DesignerEventType = 'modelUpdate' | 'onfocus' | 'onblur' | 'loadSuccess' | 'featureEdit';
@@ -651,8 +651,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       // Apply theme-based style if no custom style
       const themeId = mindmap.getTheme();
       const theme = ThemeFactory.createById(themeId, this._themeVariant);
-      const style = theme.getCanvasCssStyle(this._themeVariant);
-      this._canvas.setBackgroundStyle(style);
+      const canvasStyle = this._convertThemeToCanvasStyle(theme);
+      this.applyCanvasStyle(canvasStyle);
     }
 
     // Delay render ...
@@ -861,8 +861,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     // Update background color ...
     const theme = ThemeFactory.createById(id, this._themeVariant);
-    const style = theme.getCanvasCssStyle(this._themeVariant);
-    this._canvas.setBackgroundStyle(style);
+    const canvasStyle = this._convertThemeToCanvasStyle(theme);
+    this.applyCanvasStyle(canvasStyle);
 
     const centralTopic = this.getModel().getCentralTopic();
     centralTopic.redraw(this._themeVariant, true);
@@ -908,8 +908,8 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     if (!style) {
       const themeId = mindmap.getTheme();
       const theme = ThemeFactory.createById(themeId, this._themeVariant);
-      const themeStyle = theme.getCanvasCssStyle(this._themeVariant);
-      this._canvas.setBackgroundStyle(themeStyle);
+      const canvasStyle = this._convertThemeToCanvasStyle(theme);
+      this.applyCanvasStyle(canvasStyle);
       return;
     }
 
@@ -946,6 +946,30 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
 
     this._canvas.setBackgroundStyle(cssStyle);
+  }
+
+  /**
+   * Convert theme canvas style properties to Designer canvas style format
+   * @private
+   * @param theme - The theme instance
+   * @return Canvas style object for Designer
+   */
+  private _convertThemeToCanvasStyle(theme: Theme): {
+    backgroundColor: string;
+    backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
+    gridSize: number;
+    gridColor: string;
+  } {
+    const backgroundColor = theme.getCanvasBackgroundColor();
+    const gridColor = theme.getCanvasGridColor();
+    const showGrid = theme.getCanvasShowGrid();
+
+    return {
+      backgroundColor,
+      backgroundPattern: showGrid && gridColor ? 'grid' : 'solid',
+      gridSize: 20, // Default grid size
+      gridColor: gridColor || '#ebe9e7', // Default grid color
+    };
   }
 
   /**

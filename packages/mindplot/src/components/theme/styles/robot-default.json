@@ -1,0 +1,68 @@
+{
+  "CentralTopic": {
+    "msgKey": "CENTRAL_TOPIC",
+    "borderColor": "#363C56",
+    "backgroundColor": "#363C56",
+    "fontFamily": "Brush Script MT",
+    "fontSize": 10,
+    "fontStyle": "normal",
+    "fontWeight": "bold",
+    "fontColor": "#ffffff",
+    "connectionStyle": "POLYLINE_MIDDLE",
+    "connectionColor": "#345780",
+    "shapeType": "rectangle",
+    "outerBackgroundColor": "#F4B82D",
+    "outerBorderColor": "#F4B82D"
+  },
+  "MainTopic": {
+    "msgKey": "MAIN_TOPIC",
+    "borderColor": ["#698396"],
+    "backgroundColor": ["#698396"],
+    "connectionColor": ["#698396"],
+    "fontFamily": "Brush Script MT",
+    "fontSize": 9,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#FFFFFF",
+    "connectionStyle": "POLYLINE_MIDDLE",
+    "shapeType": "rectangle",
+    "outerBackgroundColor": "#F4B82D",
+    "outerBorderColor": "#F4B82D"
+  },
+  "SubTopic": {
+    "msgKey": "SUB_TOPIC",
+    "borderColor": "#698396",
+    "backgroundColor": "#698396",
+    "fontFamily": "Brush Script MT",
+    "fontSize": 8,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#FFFFFF",
+    "connectionStyle": "POLYLINE_MIDDLE",
+    "connectionColor": "#345780",
+    "shapeType": "rectangle",
+    "outerBackgroundColor": "#F4B82D",
+    "outerBorderColor": "#F4B82D"
+  },
+  "IsolatedTopic": {
+    "msgKey": "ISOLATED_TOPIC",
+    "borderColor": "#023BB9",
+    "backgroundColor": "#96e3ff",
+    "fontFamily": "Brush Script MT",
+    "fontSize": 8,
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "fontColor": "#000000",
+    "connectionStyle": "POLYLINE_MIDDLE",
+    "connectionColor": "#345780",
+    "shapeType": "line",
+    "outerBackgroundColor": "#F4B82D",
+    "outerBorderColor": "#F4B82D"
+  },
+  "Canvas": {
+    "backgroundColor": "#f2f2f2",
+    "gridColor": "#ebe9e7",
+    "opacity": 1,
+    "showGrid": true
+  }
+}

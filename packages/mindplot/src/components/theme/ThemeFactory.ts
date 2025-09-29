@@ -1,46 +1,49 @@
 import NodeModel from '../model/NodeModel';
 import ThemeType from '../model/ThemeType';
 import ClassicTheme from './ClassicTheme';
-import DarkPrismTheme from './DarkPrismTheme';
 import PrismTheme from './PrismTheme';
 import EnhancedPrismTheme from './EnhancedPrismTheme';
 import RobotTheme from './RobotTheme';
 import Theme, { ThemeVariant } from './Theme';
 
 class ThemeFactory {
-  private static prismTheme = new PrismTheme();
+  private static _cache = new Map<string, Theme>();
 
-  private static darkPrismTheme = new DarkPrismTheme();
+  static createById(id: ThemeType | 'dark-prism', variant: ThemeVariant): Theme {
+    // Map dark-prism to prism for backward compatibility
+    const actualId = id === 'dark-prism' ? 'prism' : id;
 
-  private static classicTheme = new ClassicTheme();
+    // Create cache key from actual theme ID and variant
+    const cacheKey = `${actualId}-${variant}`;
 
-  private static robotTheme = new RobotTheme();
+    // Return cached instance if it exists
+    if (this._cache.has(cacheKey)) {
+      return this._cache.get(cacheKey)!;
+    }
 
-  private static enhancedPrismTheme = new EnhancedPrismTheme();
-
-  static createById(id: ThemeType, _variant: ThemeVariant): Theme {
+    // Create new instance and cache it
     let result: Theme;
-    switch (id) {
+    switch (actualId) {
       case 'classic':
-        result = ThemeFactory.classicTheme;
-        break;
-      case 'dark-prism':
-        result = ThemeFactory.darkPrismTheme;
+        result = new ClassicTheme(variant);
         break;
       case 'prism':
-        result = ThemeFactory.prismTheme;
+        result = new PrismTheme(variant);
         break;
       case 'robot':
-        result = ThemeFactory.robotTheme;
+        result = new RobotTheme(variant);
         break;
       case 'sunrise':
-        result = ThemeFactory.enhancedPrismTheme;
+        result = new EnhancedPrismTheme(variant);
         break;
       default: {
-        const exhaustiveCheck: never = id;
+        const exhaustiveCheck: never = actualId;
         throw new Error(exhaustiveCheck);
       }
     }
+
+    // Cache the instance
+    this._cache.set(cacheKey, result);
     return result;
   }
 
@@ -48,6 +51,20 @@ class ThemeFactory {
     const mindmap = model.getMindmap();
     const theme = mindmap.getTheme();
     return ThemeFactory.createById(theme, variant);
+  }
+
+  /**
+   * Clear the theme cache. Useful for testing or memory management.
+   */
+  static clearCache(): void {
+    this._cache.clear();
+  }
+
+  /**
+   * Get the current cache size. Useful for debugging.
+   */
+  static getCacheSize(): number {
+    return this._cache.size;
   }
 }
 export default ThemeFactory;

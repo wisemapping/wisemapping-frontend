@@ -26,10 +26,15 @@ Prism.args = {
 
 export const DarkPrism = Template.bind({});
 DarkPrism.args = {
-  theme: 'dark-prism',
+  theme: 'prism',
 };
 
 export const robot = Template.bind({});
 robot.args = {
   theme: 'robot',
+};
+
+export const sunrise = Template.bind({});
+sunrise.args = {
+  theme: 'sunrise',
 };

@@ -56,15 +56,6 @@ const ThemeEditor = (props: {
       }),
     },
     {
-      id: 'dark-prism' as ThemeType,
-      name: intl.formatMessage({ id: 'theme.dark.name', defaultMessage: 'Dark' }),
-      description: intl.formatMessage({
-        id: 'theme.dark.description',
-        defaultMessage:
-          'Modern dark theme with purple accents. Ideal for low-light environments and contemporary designs.',
-      }),
-    },
-    {
       id: 'robot' as ThemeType,
       name: intl.formatMessage({ id: 'theme.robot.name', defaultMessage: 'Robot' }),
       description: intl.formatMessage({
