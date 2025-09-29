@@ -105,7 +105,10 @@ class NodePropertyBuilder {
     let result: NodeProperty<string | undefined> | undefined = this.selectedTopicColorModel;
     if (!result) {
       result = {
-        getValue: (): string | undefined => this.selectedTopic().getBackgroundColor(),
+        getValue: (): string | undefined => {
+          const variant = this.designer.getThemeVariant();
+          return this.selectedTopic().getBackgroundColor(variant);
+        },
         setValue: (color: string | undefined) => this.designer.changeBackgroundColor(color),
       };
       this.selectedTopicColorModel = result;
@@ -158,7 +161,10 @@ class NodePropertyBuilder {
     let result = this.borderColorModel;
     if (!result) {
       result = this.borderColorModel = {
-        getValue: () => this.uniqueOrUndefined((node) => node.getBorderColor()),
+        getValue: () => {
+          const variant = this.designer.getThemeVariant();
+          return this.uniqueOrUndefined((node) => node.getBorderColor(variant));
+        },
         setValue: (hex: string | undefined) => this.designer.changeBorderColor(hex),
       };
       this.borderColorModel = result;
@@ -173,7 +179,10 @@ class NodePropertyBuilder {
   getFontColorModel(): NodeProperty<string | undefined> {
     if (!this.fontColorModel)
       this.fontColorModel = {
-        getValue: () => this.uniqueOrUndefined((node) => node.getFontColor()),
+        getValue: () => {
+          const variant = this.designer.getThemeVariant();
+          return this.uniqueOrUndefined((node) => node.getFontColor(variant));
+        },
         setValue: (hex: string | undefined) => this.designer.changeFontColor(hex),
       };
     return this.fontColorModel;
@@ -254,7 +263,10 @@ class NodePropertyBuilder {
   getConnectionColorModel(): NodeProperty<string | undefined> {
     if (!this.connectionColoreModel)
       this.connectionColoreModel = {
-        getValue: () => this.selectedTopic()?.getConnectionColor(),
+        getValue: () => {
+          const variant = this.designer.getThemeVariant();
+          return this.selectedTopic()?.getConnectionColor(variant);
+        },
         setValue: (value: string | undefined) => this.designer.changeConnectionColor(value),
       };
     return this.connectionColoreModel;

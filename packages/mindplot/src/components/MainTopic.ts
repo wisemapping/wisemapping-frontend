@@ -36,10 +36,12 @@ class MainTopic extends Topic {
     innerShape.setCursor('default');
     innerShape.setVisibility(true);
 
-    const brColor = this.getBorderColor();
+    // Note: Using 'light' as default variant for drag shapes
+    // TODO: Pass the actual variant from the calling context
+    const brColor = this.getBorderColor('light');
     innerShape.setStroke(null, null, brColor);
 
-    const bgColor = this.getBackgroundColor();
+    const bgColor = this.getBackgroundColor('light');
     innerShape.setFill(bgColor);
 
     //  Create group ...

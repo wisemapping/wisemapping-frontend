@@ -18,7 +18,7 @@ class ThemeFactory {
 
   private static enhancedPrismTheme = new EnhancedPrismTheme();
 
-  static createById(id: ThemeType, _variant?: ThemeVariant): Theme {
+  static createById(id: ThemeType, _variant: ThemeVariant): Theme {
     let result: Theme;
     switch (id) {
       case 'classic':
@@ -44,7 +44,7 @@ class ThemeFactory {
     return result;
   }
 
-  static create(model: NodeModel, variant?: ThemeVariant): Theme {
+  static create(model: NodeModel, variant: ThemeVariant): Theme {
     const mindmap = model.getMindmap();
     const theme = mindmap.getTheme();
     return ThemeFactory.createById(theme, variant);

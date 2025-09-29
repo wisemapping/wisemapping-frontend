@@ -103,7 +103,7 @@ class RobotTheme extends DefaultTheme {
     super(defaultStyles);
   }
 
-  getCanvasCssStyle(variant?: ThemeVariant): string {
+  getCanvasCssStyle(variant: ThemeVariant): string {
     const isDark = variant === 'dark';
     const backgroundColor = isDark ? '#1a1a1a' : '#FFFFFF';
 

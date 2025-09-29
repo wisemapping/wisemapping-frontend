@@ -136,7 +136,7 @@ class DarkPrismTheme extends DefaultTheme {
     super(defaultStyles);
   }
 
-  getCanvasCssStyle(variant?: ThemeVariant): string {
+  getCanvasCssStyle(variant: ThemeVariant): string {
     const isLight = variant === 'light';
     const backgroundColor = isLight ? '#f2f2f2' : '#1a1a1a';
     const gridColor = isLight ? '#ebe9e7' : '#333333';
@@ -215,7 +215,7 @@ class DarkPrismTheme extends DefaultTheme {
     return result!;
   }
 
-  getBorderColor(topic: Topic, variant?: ThemeVariant): string {
+  getBorderColor(topic: Topic, variant: ThemeVariant): string {
     const isLight = variant === 'light';
     const model = topic.getModel();
     let result = model.getBorderColor();
@@ -254,7 +254,7 @@ class DarkPrismTheme extends DefaultTheme {
     return result;
   }
 
-  getBackgroundColor(topic: Topic, variant?: ThemeVariant): string {
+  getBackgroundColor(topic: Topic, variant: ThemeVariant): string {
     const isLight = variant === 'light';
     const model = topic.getModel();
     let result = model.getBackgroundColor();
@@ -294,7 +294,7 @@ class DarkPrismTheme extends DefaultTheme {
     return result;
   }
 
-  getFontColor(topic: Topic, variant?: ThemeVariant): string {
+  getFontColor(topic: Topic, variant: ThemeVariant): string {
     const isLight = variant === 'light';
     const model = topic.getModel();
     let result = model.getFontColor();

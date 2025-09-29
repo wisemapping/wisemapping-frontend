@@ -17,7 +17,7 @@ const registerRefreshHook = (topic: Topic) => {
   }
 
   globalThis.observer = new MutationObserver(() => {
-    topic.redraw();
+    topic.redraw('light', false); // Default to light variant for storybook
     console.log('Refresh triggered...');
   });
   const rootElement = document.getElementById('root') || document.body;

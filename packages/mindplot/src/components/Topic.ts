@@ -113,7 +113,7 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setShapeType(type);
 
-    this.redraw();
+    this.redraw('light', false); // Default to light variant for now
   }
 
   getParent(): Topic | null {
@@ -156,17 +156,17 @@ abstract class Topic extends NodeGraph {
 
   getShapeType(): TopicShapeType {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
     return theme.getShapeType(this);
   }
 
   getConnectionStyle(): LineType {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
     return theme.getConnectionType(this);
   }
 
-  getConnectionColor(variant?: ThemeVariant): string {
+  getConnectionColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
     return theme.getConnectionColor(this, variant);
@@ -254,7 +254,7 @@ abstract class Topic extends NodeGraph {
 
   private buildIconGroup(): IconGroup {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
 
     const textHeight = this.getOrBuildTextShape().getFontHeight();
     const iconSize = textHeight * ICON_SCALING_FACTOR;
@@ -288,7 +288,7 @@ abstract class Topic extends NodeGraph {
     const isIcon = featureModel.getType() === 'icon' || featureModel.getType() === 'eicon';
     iconGroup.addIcon(result, isIcon && !this.isReadOnly());
 
-    this.redraw();
+    this.redraw('light', false); // Default to light variant for now
     return result;
   }
 
@@ -309,7 +309,7 @@ abstract class Topic extends NodeGraph {
     if (iconGroup) {
       iconGroup.removeIconByModel(featureModel);
     }
-    this.redraw();
+    this.redraw('light', false); // Default to light variant for now
   }
 
   addRelationship(relationship: Relationship) {
@@ -332,8 +332,9 @@ abstract class Topic extends NodeGraph {
     const style = this.getFontStyle();
     result.setFont(family, size, style, weight);
 
-    const color = this.getFontColor();
-    result.setColor(color);
+    // Note: Font color will be set later in redraw() method with proper variant
+    // const color = this.getFontColor();
+    // result.setColor(color);
 
     if (!readOnly) {
       // Propagate mouse events ...
@@ -351,43 +352,43 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setFontFamily(value);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   setFontSize(value: number): void {
     const model = this.getModel();
     model.setFontSize(value);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   setFontStyle(value: FontStyleType): void {
     const model = this.getModel();
     model.setFontStyle(value);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   setFontWeight(value: FontWeightType): void {
     const model = this.getModel();
     model.setFontWeight(value);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   getFontWeight(): FontWeightType {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
     return theme.getFontWeight(this);
   }
 
   getFontFamily(): string {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
     return theme.getFontFamily(this);
   }
 
-  getFontColor(variant?: ThemeVariant): string {
+  getFontColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
     return theme.getFontColor(this, variant);
@@ -395,13 +396,13 @@ abstract class Topic extends NodeGraph {
 
   getFontStyle(): FontStyleType {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
     return theme.getFontStyle(this);
   }
 
   getFontSize(): number {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
     return theme.getFontSize(this);
   }
 
@@ -417,7 +418,7 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setFontColor(value);
 
-    this.redraw();
+    this.redraw('light', false); // Default to light variant for now
   }
 
   setText(text: string | undefined): void {
@@ -427,12 +428,12 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setText(modelText);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   getText(): string {
     const model = this.getModel();
-    const theme = ThemeFactory.create(model);
+    const theme = ThemeFactory.create(model, 'light'); // Default to light variant for now
 
     const text = model.getText();
     return text || theme.getText(this);
@@ -442,24 +443,24 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setBackgroundColor(color);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   setConnectionStyle(type: LineType): void {
     const model = this.getModel();
     model.setConnectionStyle(type);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
   setConnectionColor(value: string | undefined): void {
     const model = this.getModel();
     model.setConnectionColor(value);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
-  getBackgroundColor(variant?: ThemeVariant): string {
+  getBackgroundColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
     return theme.getBackgroundColor(this, variant);
@@ -469,10 +470,10 @@ abstract class Topic extends NodeGraph {
     const model = this.getModel();
     model.setBorderColor(color);
 
-    this.redraw(true);
+    this.redraw('light', true); // Default to light variant for now
   }
 
-  getBorderColor(variant?: ThemeVariant): string {
+  getBorderColor(variant: ThemeVariant): string {
     const model = this.getModel();
     const theme = ThemeFactory.create(model, variant);
     return theme.getBorderColor(this, variant);
@@ -556,12 +557,12 @@ abstract class Topic extends NodeGraph {
 
   setOnFocus(focus: boolean) {
     if (this.isOnFocus() !== focus) {
-      const theme = ThemeFactory.create(this.getModel());
+      const theme = ThemeFactory.create(this.getModel(), 'light'); // Default to light variant for now
       this._onFocus = focus;
       const outerShape = this.getOuterShape();
 
-      const fillColor = theme.getOuterBackgroundColor(this, focus);
-      const borderColor = theme.getOuterBorderColor(this);
+      const fillColor = theme.getOuterBackgroundColor(this, focus, 'light'); // Default to light variant for now
+      const borderColor = theme.getOuterBorderColor(this, 'light'); // Default to light variant for now
 
       outerShape.setFill(fillColor);
       outerShape.setStroke(1, 'solid', borderColor);
@@ -951,7 +952,7 @@ abstract class Topic extends NodeGraph {
       // Remove from workspace.
       LayoutEventBus.fireEvent('topicDisconect', this.getModel());
 
-      this.redraw(true);
+      this.redraw('light', true); // Default to light variant for now
     }
   }
 
@@ -966,7 +967,7 @@ abstract class Topic extends NodeGraph {
     model.setOrder(value);
 
     if (changed) {
-      this.redraw();
+      this.redraw('light', false); // Default to light variant for now
     }
   }
 
@@ -1001,7 +1002,7 @@ abstract class Topic extends NodeGraph {
 
       // Hack for the case of first node created, it needs to review the positioning problem.
       LayoutEventBus.fireEvent('forceLayout');
-      this.redraw();
+      this.redraw('light', false); // Default to light variant for now
     }
   }
 
@@ -1057,7 +1058,7 @@ abstract class Topic extends NodeGraph {
       }
     }
     this._isInWorkspace = true;
-    this.redraw();
+    this.redraw('light', false); // Default to light variant for now
   }
 
   createDragNode(layoutManager: LayoutManager): DragTopic {
@@ -1102,7 +1103,9 @@ abstract class Topic extends NodeGraph {
         }
 
         // Force the repaint in case that the main topic color has changed.
-        const borderColor = this.getBorderColor();
+        // Note: Using 'light' as default variant for connection colors
+        // TODO: Pass the actual variant from the calling context
+        const borderColor = this.getBorderColor('light');
         this._connector!.setColor(borderColor);
 
         this._outgoingLine.redraw();
@@ -1111,7 +1114,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  redraw(redrawChildren = false, variant?: ThemeVariant): void {
+  redraw(variant: ThemeVariant, redrawChildren = false): void {
     if (this._isInWorkspace) {
       const theme = ThemeFactory.create(this.getModel(), variant);
       const textShape = this.getOrBuildTextShape();
@@ -1235,14 +1238,14 @@ abstract class Topic extends NodeGraph {
 
       // Update topic color ...
       const innerShape = this.getInnerShape();
-      const borderColor = this.getBorderColor();
+      const borderColor = this.getBorderColor(variant);
       innerShape.setStroke(null, 'solid', borderColor);
 
-      const bgColor = this.getBackgroundColor();
+      const bgColor = this.getBackgroundColor(variant);
       innerShape.setFill(bgColor);
 
       if ((redrawChildren || shapeChanged || connectionChanged) && !this.areChildrenShrunken()) {
-        this.getChildren().forEach((t) => t.redraw(true));
+        this.getChildren().forEach((t) => t.redraw(variant, true));
       }
     }
   }

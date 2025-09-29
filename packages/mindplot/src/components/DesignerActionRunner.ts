@@ -37,6 +37,10 @@ class DesignerActionRunner {
     this._actionDisplatcher = notifier;
   }
 
+  getCommandContext(): CommandContext {
+    return this._context;
+  }
+
   execute(command: Command): void {
     $assert(command, 'command can not be null');
     command.execute(this._context);

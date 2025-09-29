@@ -66,7 +66,7 @@ abstract class DefaultTheme implements Theme {
     this._style = style;
   }
 
-  abstract getCanvasCssStyle(variant?: ThemeVariant): string;
+  abstract getCanvasCssStyle(variant: ThemeVariant): string;
 
   protected resolve(key: keyof TopicStyleType, topic: Topic, resolveDefault = true): StyleType {
     // Search parent value ...
@@ -149,12 +149,12 @@ abstract class DefaultTheme implements Theme {
   }
 
   // Variant-aware methods - default implementation falls back to non-variant methods
-  getFontColor(topic: Topic, _variant?: ThemeVariant): string {
+  getFontColor(topic: Topic, _variant: ThemeVariant): string {
     // Default implementation ignores variant, subclasses can override
     return this.resolve('fontColor', topic) as string;
   }
 
-  getBackgroundColor(topic: Topic, _variant?: ThemeVariant): string {
+  getBackgroundColor(topic: Topic, _variant: ThemeVariant): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBackgroundColor();
@@ -180,7 +180,7 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getBorderColor(topic: Topic, variant?: ThemeVariant): string {
+  getBorderColor(topic: Topic, variant: ThemeVariant): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result = model.getBorderColor();
@@ -193,7 +193,7 @@ abstract class DefaultTheme implements Theme {
     if (!result) {
       const parent = topic.getParent();
       if (parent) {
-        result = parent.getBorderColor();
+        result = parent.getBorderColor(variant);
       }
     }
 
@@ -204,7 +204,7 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant?: ThemeVariant): string {
+  getOuterBackgroundColor(topic: Topic, onFocus: boolean, variant: ThemeVariant): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
@@ -217,7 +217,7 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getOuterBorderColor(topic: Topic, variant?: ThemeVariant): string {
+  getOuterBorderColor(topic: Topic, variant: ThemeVariant): string {
     // Default implementation ignores variant, subclasses can override
     let result: string;
     if (topic.getShapeType() === 'line') {
@@ -229,7 +229,7 @@ abstract class DefaultTheme implements Theme {
     return result;
   }
 
-  getConnectionColor(topic: Topic, _variant?: ThemeVariant): string {
+  getConnectionColor(topic: Topic, _variant: ThemeVariant): string {
     // Default implementation ignores variant, subclasses can override
     const model = topic.getModel();
     let result: string | undefined = model.getConnectionColor();
@@ -241,7 +241,7 @@ abstract class DefaultTheme implements Theme {
         // This means that this is central main node, in this case, I will overwrite with the main color if it was defined.
         result = topic.getModel().getConnectionColor() || parent.getModel().getConnectionColor();
       } else {
-        result = parent?.getConnectionColor();
+        result = parent?.getConnectionColor(_variant);
       }
     }
 
