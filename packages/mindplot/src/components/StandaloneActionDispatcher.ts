@@ -95,7 +95,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       });
 
       // Ensure relationships are redrawn when topic moves
-      topic.redraw('light', false); // Default to light variant for now
+      topic.redraw(topic.getThemeVariant(), false);
 
       return result;
     };
@@ -145,7 +145,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontFamily();
       topic.setFontFamily(commandFontFamily);
 
-      topic.redraw('light', false); // Default to light variant for now
+      topic.redraw(topic.getThemeVariant(), false);
       return result;
     };
 
@@ -202,7 +202,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontSize();
       topic.setFontSize(commandSize);
 
-      topic.redraw('light', false); // Default to light variant for now
+      topic.redraw(topic.getThemeVariant(), false);
       return result;
     };
 
@@ -327,7 +327,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
       const result = topic.getFontWeight();
       const weight = result === 'bold' ? 'normal' : 'bold';
       topic.setFontWeight(weight);
-      topic.redraw('light', false); // Default to light variant for now
+      topic.redraw(topic.getThemeVariant(), false);
       return result;
     };
 

@@ -96,7 +96,7 @@ class ConnectionLine {
 
   private updateColor(): string {
     // In case that the main topic has changed the color, overwrite the main topic definiton.
-    const color = this._sourceTopic.getConnectionColor('light'); // Default to light variant for now
+    const color = this._sourceTopic.getConnectionColor(this._sourceTopic.getThemeVariant());
 
     this._color = color;
     switch (this._type) {

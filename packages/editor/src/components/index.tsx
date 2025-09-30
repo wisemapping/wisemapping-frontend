@@ -39,6 +39,7 @@ import { WidgetPopover } from './widgetPopover';
 import DefaultWidgetBuilder from '../classes/default-widget-manager';
 import { EditorThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { createEditorTheme } from '../theme';
+import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 
 type EditorProps = {
   theme?: Theme;
@@ -46,17 +47,22 @@ type EditorProps = {
   onLoad?: (designer: Designer) => void;
   config: EditorConfiguration;
   accountConfiguration?: React.ReactElement;
-  externalThemeMode?: 'light' | 'dark'; // Allow external theme mode to override internal theme
+  themeVariantStorage: ThemeVariantStorage; // Theme variant storage for persistence (mandatory)
 };
 
-const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps): ReactElement => {
+const EditorContent = ({
+  config,
+  onAction,
+  accountConfiguration,
+  themeVariantStorage,
+}: EditorProps): ReactElement => {
   // We can access editor instance and other configuration from editor props
   const { model, mindplotRef, mapInfo, capability, options } = config;
   const designer = model?.getDesigner();
   const widgetBulder = designer ? designer.getWidgeManager() : new DefaultWidgetBuilder();
   const { mode: internalMode } = useTheme();
 
-  // Now the internal theme context is synced with external theme mode
+  // Get the current theme mode from the theme context
   const mode = internalMode;
   const theme = createEditorTheme(mode);
 
@@ -73,6 +79,20 @@ const EditorContent = ({ config, onAction, accountConfiguration }: EditorProps):
       designer.setThemeVariant(mode === 'dark' ? 'dark' : 'light');
     }
   }, [mode, designer]);
+
+  // Listen for theme variant changes from storage and update designer directly
+  // This ensures immediate updates when ThemeVariantStorage changes, bypassing the mode state
+  React.useEffect(() => {
+    if (!designer) return;
+
+    const unsubscribe = themeVariantStorage.subscribe((variant) => {
+      // Update the designer directly when storage changes
+      // This is more direct than waiting for the mode state to update
+      designer.setThemeVariant(variant);
+    });
+
+    return unsubscribe;
+  }, [themeVariantStorage, designer]);
 
   // Initialize locale ...
   const locale = options.locale;
@@ -140,14 +160,15 @@ const Editor = ({
   config,
   onAction,
   accountConfiguration,
-  externalThemeMode,
+  themeVariantStorage,
 }: EditorProps): ReactElement => {
   return (
-    <EditorThemeProvider externalThemeMode={externalThemeMode}>
+    <EditorThemeProvider themeVariantStorage={themeVariantStorage}>
       <EditorContent
         config={config}
         onAction={onAction}
         accountConfiguration={accountConfiguration}
+        themeVariantStorage={themeVariantStorage}
       />
     </EditorThemeProvider>
   );

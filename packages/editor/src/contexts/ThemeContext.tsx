@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { PaletteMode } from '@mui/material';
+import { ThemeVariantStorage } from '../types/ThemeVariantStorage';
 
 interface ThemeContextType {
   mode: PaletteMode;
@@ -10,74 +11,40 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
   children: ReactNode;
-  externalThemeMode?: PaletteMode; // Allow external theme mode to override internal
+  themeVariantStorage: ThemeVariantStorage; // Theme variant storage for persistence (mandatory)
 }
 
 export const EditorThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
-  externalThemeMode,
+  themeVariantStorage,
 }) => {
   const [mode, setMode] = useState<PaletteMode>(() => {
-    // External theme mode should always be provided, otherwise assume light
-    return externalThemeMode || 'light';
+    return themeVariantStorage.getThemeVariant();
   });
-
-  const [isUserControlled, setIsUserControlled] = useState(false);
 
   const toggleMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     setMode(newMode);
-    localStorage.setItem('themeMode', newMode);
-    setIsUserControlled(true); // Mark that user has taken control
+
+    // Always use ThemeVariantStorage (now mandatory)
+    themeVariantStorage.setThemeVariant(newMode);
   };
 
-  // Sync with external theme mode changes, but only if user hasn't taken control
+  // External theme mode sync is no longer needed - ThemeVariantStorage is the only source
+
+  // Listen for theme variant changes from ThemeVariantStorage
   useEffect(() => {
-    if (externalThemeMode && !isUserControlled) {
-      console.log(
-        '🎨 EditorThemeProvider: External theme mode provided:',
-        externalThemeMode,
-        'current mode:',
-        mode,
-        'user controlled:',
-        isUserControlled,
-      );
-      if (externalThemeMode !== mode) {
-        console.log('🎨 EditorThemeProvider: Syncing with external theme mode:', externalThemeMode);
-        setMode(externalThemeMode);
-      }
-    }
-  }, [externalThemeMode, isUserControlled]); // Only sync if user hasn't taken control
+    const unsubscribe = themeVariantStorage.subscribe((variant) => {
+      // Always update when ThemeVariantStorage changes (it's the authoritative source)
+      // This handles cross-tab synchronization and external changes
+      setMode(variant);
+    });
 
-  // Listen for system theme changes and localStorage changes from other windows
-  useEffect(() => {
-    // Skip system preference handling if external theme mode is provided or user has taken control
-    if (externalThemeMode && !isUserControlled) {
-      return;
-    }
+    return unsubscribe;
+  }, [themeVariantStorage]);
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      // Only auto-switch if user hasn't set a preference
-      if (!localStorage.getItem('themeMode')) {
-        setMode(e.matches ? 'dark' : 'light');
-      }
-    };
-
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'themeMode' && e.newValue) {
-        setMode(e.newValue as PaletteMode);
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [externalThemeMode, isUserControlled]);
+  // System theme changes are handled by ThemeVariantStorage
+  // No need for additional localStorage or system preference handling
 
   return <ThemeContext.Provider value={{ mode, toggleMode }}>{children}</ThemeContext.Provider>;
 };

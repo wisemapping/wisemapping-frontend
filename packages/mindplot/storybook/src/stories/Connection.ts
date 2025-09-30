@@ -22,7 +22,7 @@ const registerRefreshHook = (topics: Topic[]) => {
 
   globalThis.observer = new MutationObserver(() => {
     // Relayout...
-    topics.forEach((t) => t.redraw('light', false)); // Default to light variant for storybook
+    topics.forEach((t) => t.redraw(t.getThemeVariant(), false)); // Use actual theme variant
     LayoutEventBus.fireEvent('forceLayout');
   });
   const rootElement = document.getElementById('root') || document.body;
@@ -87,14 +87,14 @@ const createConnection = ({ theme = undefined, readOnly = true }: TopicArgs) => 
   }
 
   // Create and add to canvas..
-  const centralTopic = new CentralTopic(central, { readOnly });
+  const centralTopic = new CentralTopic(central, { readOnly }, 'light'); // Default to light for storybook
 
-  const child1Topic = new MainTopic(child1, { readOnly });
-  const child2Topic = new MainTopic(child2, { readOnly });
-  const child3Topic = new MainTopic(child3, { readOnly });
-  const child4Topic = new MainTopic(child4, { readOnly });
-  const subchild1Topic = new MainTopic(subchild1, { readOnly });
-  const subchild2Topic = new MainTopic(subchild2, { readOnly });
+  const child1Topic = new MainTopic(child1, { readOnly }, 'light'); // Default to light for storybook
+  const child2Topic = new MainTopic(child2, { readOnly }, 'light'); // Default to light for storybook
+  const child3Topic = new MainTopic(child3, { readOnly }, 'light'); // Default to light for storybook
+  const child4Topic = new MainTopic(child4, { readOnly }, 'light'); // Default to light for storybook
+  const subchild1Topic = new MainTopic(subchild1, { readOnly }, 'light'); // Default to light for storybook
+  const subchild2Topic = new MainTopic(subchild2, { readOnly }, 'light'); // Default to light for storybook
 
   const topics = [
     child1Topic,

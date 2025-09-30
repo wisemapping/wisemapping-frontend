@@ -73,7 +73,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _actionDispatcher: StandaloneActionDispatcher;
 
-  private _themeVariant: ThemeVariant = 'light';
+  private _themeVariant: ThemeVariant;
 
   private _model: DesignerModel;
 
@@ -97,6 +97,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     const divElem = options.divContainer;
 
     this._options = options;
+    this._themeVariant = 'light'; // Default theme variant, will be updated by initializeThemeVariant
 
     // Set full div elem render area.The component must fill container size
     // container is responsible for location and size
@@ -245,7 +246,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
   private _buildNodeGraph(model: NodeModel, readOnly: boolean): Topic {
     // Create node graph ...
-    const topic = TopicFactory.create(model, { readOnly });
+    const topic = TopicFactory.create(model, { readOnly }, this._themeVariant);
     this.getModel().addTopic(topic);
     const me = this;
     // Add Topic events ...
@@ -819,6 +820,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
    * Recursively update theme variant for a topic and its children
    */
   private updateTopicThemeVariant(topic: Topic): void {
+    // Set the theme variant on the topic
+    topic.setThemeVariant(this._themeVariant);
+
     // Update the topic's theme-related properties by redrawing with current variant
     topic.redraw(this._themeVariant, false);
 
@@ -835,6 +839,9 @@ class Designer extends EventDispispatcher<DesignerEventType> {
 
     const result = this._buildNodeGraph(nodeModel, this.isReadOnly());
     result.setVisibility(false);
+
+    // Set the current theme variant on the topic
+    result.setThemeVariant(this._themeVariant);
 
     this._canvas.append(result);
     children.forEach((child) => {

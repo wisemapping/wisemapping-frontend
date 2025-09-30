@@ -61,7 +61,7 @@ class ImageEmojiFeature {
     }
 
     this._emojiRemoveTip = undefined; // Clear remove tip
-    this._topic.redraw('light', false); // Default to light variant for now
+    this._topic.redraw(this._topic.getThemeVariant(), false);
   }
 
   getOrBuildEmojiTextShape(): Text | undefined {

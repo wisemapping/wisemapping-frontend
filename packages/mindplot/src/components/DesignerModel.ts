@@ -53,7 +53,11 @@ class DesignerModel {
 
   getCentralTopic(): CentralTopic {
     const topics = this.getTopics();
-    return topics[0] as unknown as CentralTopic;
+    const centralTopic = topics[0] as unknown as CentralTopic;
+    if (!centralTopic) {
+      throw new Error('Central topic not found. Mindmap must have at least one topic.');
+    }
+    return centralTopic;
   }
 
   filterSelectedTopics(): Topic[] {

@@ -20,6 +20,7 @@ import { createRoot } from 'react-dom/client';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 import MapInfoImpl from './MapInfoImpl';
 import Editor, { EditorOptions, useEditor } from '../../../../src';
+import { createMockThemeVariantStorage } from './MockThemeVariantStorage';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
@@ -45,6 +46,7 @@ const mapInfo = new MapInfoImpl(
   true,
   "It's locked !",
 );
+const themeVariantStorage = createMockThemeVariantStorage();
 
 const Playground = () => {
   const editor = useEditor({
@@ -57,6 +59,7 @@ const Playground = () => {
       config={editor}
       onAction={(action) => console.log('action called:', action)}
       onLoad={initialization}
+      themeVariantStorage={themeVariantStorage}
     />
   );
 };

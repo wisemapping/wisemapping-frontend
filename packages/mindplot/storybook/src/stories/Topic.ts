@@ -17,7 +17,7 @@ const registerRefreshHook = (topic: Topic) => {
   }
 
   globalThis.observer = new MutationObserver(() => {
-    topic.redraw('light', false); // Default to light variant for storybook
+    topic.redraw(topic.getThemeVariant(), false); // Use actual theme variant
     console.log('Refresh triggered...');
   });
   const rootElement = document.getElementById('root') || document.body;
@@ -106,7 +106,7 @@ const createTopic = ({
 
   // Create topic UI element ...
   mindmap.addBranch(model);
-  const centralTopic = new CentralTopic(model, { readOnly });
+  const centralTopic = new CentralTopic(model, { readOnly }, 'light'); // Default to light for storybook
   workspace.append(centralTopic);
 
   // Register refresh hook ..
