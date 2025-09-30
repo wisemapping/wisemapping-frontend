@@ -625,7 +625,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       id: 'editor-panel.tooltip-canvas-style',
       defaultMessage: 'Background',
     }),
-    useClickToClose: true,
     title: intl.formatMessage({
       id: 'editor-panel.canvas-style-title',
       defaultMessage: 'Background',
