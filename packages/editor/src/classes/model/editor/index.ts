@@ -80,7 +80,7 @@ class Editor {
       };
 
       const onNodeFocusHandler = () => {
-        trackEditorInteraction('topic_selected');
+        // Topic selection tracking removed
         canvasUpdate(Date.now());
       };
 
