@@ -30,7 +30,6 @@ import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
 import ReactGA from 'react-ga4';
 import { useTheme as useMuiTheme } from '@mui/material/styles';
-import { useTheme } from '../../contexts/ThemeContext';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
 import AppConfig from '../../classes/app-config';
