@@ -69,7 +69,8 @@ describe('Rename and Theme functionality', () => {
     // Verify theme options are present
     cy.get('[role="dialog"]').should('contain', 'Classic');
     cy.get('[role="dialog"]').should('contain', 'Summer');
-    cy.get('[role="dialog"]').should('contain', 'Dark');
+    cy.get('[role="dialog"]').should('contain', 'Sunrise');
+    cy.get('[role="dialog"]').should('contain', 'Ocean');
     cy.get('[role="dialog"]').should('contain', 'Robot');
     
     // Select a different theme (e.g., Summer)
@@ -118,7 +119,8 @@ describe('Rename and Theme functionality', () => {
     // Verify theme cards have descriptions
     cy.get('[role="dialog"]').should('contain', 'Clean and professional design with blue accents');
     cy.get('[role="dialog"]').should('contain', 'Bright and vibrant orange theme');
-    cy.get('[role="dialog"]').should('contain', 'Modern dark theme with purple accents');
+    cy.get('[role="dialog"]').should('contain', 'Sunrise theme with light/dark mode variants');
+    cy.get('[role="dialog"]').should('contain', 'Ocean-inspired blue theme with light/dark variants');
     cy.get('[role="dialog"]').should('contain', 'Tech-inspired green theme');
     
     // Take snapshot

@@ -22,16 +22,12 @@ export const EditorThemeProvider: React.FC<ThemeProviderProps> = ({
     return themeVariantStorage.getThemeVariant();
   });
 
-  const [isUserControlled, setIsUserControlled] = useState(false);
-
   const toggleMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     setMode(newMode);
 
     // Always use ThemeVariantStorage (now mandatory)
     themeVariantStorage.setThemeVariant(newMode);
-
-    setIsUserControlled(true); // Mark that user has taken control
   };
 
   // External theme mode sync is no longer needed - ThemeVariantStorage is the only source

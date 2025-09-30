@@ -16,9 +16,8 @@
  *   limitations under the License.
  */
 
-import { ThemeVariant } from '@wisemapping/mindplot';
+import { ThemeVariant } from '@wisemapping/mindplot/src/components/theme/Theme';
 import { ThemeVariantStorage } from '@wisemapping/editor';
-import { THEME_VARIANT_STORAGE_KEY, DEFAULT_THEME_VARIANT } from '../constants/theme';
 
 /**
  * LocalStorage implementation of ThemeVariantStorage.
@@ -34,19 +33,19 @@ export class LocalStorageThemeVariantStorage implements ThemeVariantStorage {
 
   getThemeVariant(): ThemeVariant {
     try {
-      const stored = localStorage.getItem(THEME_VARIANT_STORAGE_KEY);
+      const stored = localStorage.getItem('themeMode');
       if (stored && (stored === 'light' || stored === 'dark')) {
         return stored as ThemeVariant;
       }
     } catch (error) {
       console.warn('Failed to read theme variant from localStorage:', error);
     }
-    return DEFAULT_THEME_VARIANT;
+    return 'light';
   }
 
   setThemeVariant(variant: ThemeVariant): void {
     try {
-      localStorage.setItem(THEME_VARIANT_STORAGE_KEY, variant);
+      localStorage.setItem('themeMode', variant);
       // Notify all listeners
       this.listeners.forEach((callback) => callback(variant));
     } catch (error) {
@@ -64,7 +63,7 @@ export class LocalStorageThemeVariantStorage implements ThemeVariantStorage {
   }
 
   private handleStorageChange(event: StorageEvent): void {
-    if (event.key === THEME_VARIANT_STORAGE_KEY && event.newValue) {
+    if (event.key === 'themeMode' && event.newValue) {
       const variant = event.newValue as ThemeVariant;
       if (variant === 'light' || variant === 'dark') {
         this.listeners.forEach((callback) => callback(variant));

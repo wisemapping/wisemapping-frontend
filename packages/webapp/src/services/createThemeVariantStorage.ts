@@ -23,13 +23,9 @@ import { LocalStorageThemeVariantStorage } from './ThemeVariantStorage';
  * Factory function to create a ThemeVariantStorage instance.
  * This allows the webapp to control which storage implementation to use.
  *
- * @param options Configuration options for the storage
  * @returns A configured ThemeVariantStorage instance
  */
-export function createThemeVariantStorage(options?: {
-  storageKey?: string;
-  defaultVariant?: 'light' | 'dark';
-}): ThemeVariantStorage {
+export function createThemeVariantStorage(): ThemeVariantStorage {
   // For now, we use localStorage implementation
   // In the future, this could be extended to support other storage mechanisms
   // like IndexedDB, server-side storage, etc.
