@@ -48,6 +48,7 @@ import NodePropertyValueModelBuilder from '../../classes/model/node-property-bui
 import TextField from '@mui/material/TextField';
 import { $notify } from '@wisemapping/mindplot';
 import { useTheme } from '../../contexts/ThemeContext';
+import { trackAppBarAction } from '../../utils/analytics';
 
 interface AppBarProps {
   model: Editor | undefined;
@@ -92,11 +93,13 @@ const AppBar = ({
 
   const handleStarredOnClick = () => {
     const newStatus = !isStarred;
+    trackAppBarAction('starred', newStatus ? 'star' : 'unstar');
     mapInfo.updateStarred(newStatus).then(() => setStarred(newStatus));
   };
 
   const handleTitleClick = () => {
     if (!capability.isHidden('rename')) {
+      trackAppBarAction('rename_map');
       setIsEditingTitle(true);
       setEditedTitle(currentTitle);
     }
@@ -181,7 +184,10 @@ const AppBar = ({
         id: 'appbar.back-to-map-list',
         defaultMessage: 'Back to maps list',
       }),
-      onClick: () => (window.location.href = '/c/maps/'),
+      onClick: () => {
+        trackAppBarAction('back_to_maps_list');
+        window.location.href = '/c/maps/';
+      },
     },
     {
       render: () => (
@@ -289,7 +295,10 @@ const AppBar = ({
               intl.formatMessage({ id: 'appbar.tooltip-undo', defaultMessage: 'Undo' }),
               'Z',
             ),
-            onClick: () => model!.getDesigner().undo(),
+            onClick: () => {
+              trackAppBarAction('undo');
+              model!.getDesigner().undo();
+            },
           }}
           disabledCondition={(event) => event.undoSteps > 0}
           model={model}
@@ -307,7 +316,10 @@ const AppBar = ({
               intl.formatMessage({ id: 'appbar.tooltip-redo', defaultMessage: 'Redo' }),
               'Shift + Z',
             ),
-            onClick: () => model!.getDesigner().redo(),
+            onClick: () => {
+              trackAppBarAction('redo');
+              model!.getDesigner().redo();
+            },
           }}
           disabledCondition={(event) => event.redoSteps > 0}
           model={model}
@@ -320,6 +332,7 @@ const AppBar = ({
     {
       icon: <SaveOutlinedIcon />,
       onClick: () => {
+        trackAppBarAction('save');
         model!.save(true);
       },
       tooltip: keyTooltip(
@@ -331,13 +344,19 @@ const AppBar = ({
     },
     {
       icon: <HelpOutlineOutlinedIcon />,
-      onClick: () => onAction('info'),
+      onClick: () => {
+        trackAppBarAction('info');
+        onAction('info');
+      },
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-info', defaultMessage: 'Information' }),
       visible: !capability.isHidden('info'),
     },
     {
       icon: <RestoreOutlinedIcon />,
-      onClick: () => onAction('history'),
+      onClick: () => {
+        trackAppBarAction('history');
+        onAction('history');
+      },
       tooltip: intl.formatMessage({
         id: 'appbar.tooltip-history',
         defaultMessage: 'Changes History',
@@ -383,19 +402,28 @@ const AppBar = ({
     },
     {
       icon: <PrintOutlinedIcon />,
-      onClick: () => onAction('print'),
+      onClick: () => {
+        trackAppBarAction('print');
+        onAction('print');
+      },
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-print', defaultMessage: 'Print' }),
       visible: !capability.isHidden('print'),
     },
     {
       icon: <FileDownloadOutlinedIcon />,
-      onClick: () => onAction('export'),
+      onClick: () => {
+        trackAppBarAction('export');
+        onAction('export');
+      },
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-export', defaultMessage: 'Export' }),
       visible: !capability.isHidden('export'),
     },
     {
       icon: <CloudUploadOutlinedIcon />,
-      onClick: () => onAction('publish'),
+      onClick: () => {
+        trackAppBarAction('publish');
+        onAction('publish');
+      },
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-publish', defaultMessage: 'Publish' }),
       visible: !capability.isHidden('publish'),
     },
@@ -407,7 +435,13 @@ const AppBar = ({
             defaultMessage: 'Share for Collaboration',
           })}
         >
-          <Button variant="contained" onClick={() => onAction('share')}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              trackAppBarAction('share');
+              onAction('share');
+            }}
+          >
             {intl.formatMessage({ id: 'appbar.shared-button', defaultMessage: 'Share' })}
           </Button>
         </Tooltip>
@@ -423,7 +457,13 @@ const AppBar = ({
         <Tooltip
           title={intl.formatMessage({ id: 'appbar.tooltip-signup', defaultMessage: 'Sign Up' })}
         >
-          <Button variant="contained" onClick={() => (window.location.href = '/c/registration')}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              trackAppBarAction('sign_up');
+              window.location.href = '/c/registration';
+            }}
+          >
             {intl.formatMessage({ id: 'appbar.button-signup', defaultMessage: 'Sign Up' })}
           </Button>
         </Tooltip>

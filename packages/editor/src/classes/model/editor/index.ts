@@ -24,6 +24,7 @@ import {
   Topic,
 } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
+import { trackEditorInteraction } from '../../utils/analytics';
 
 class Editor {
   private component: MindplotWebComponent;
@@ -79,6 +80,7 @@ class Editor {
       };
 
       const onNodeFocusHandler = () => {
+        trackEditorInteraction('topic_selected');
         canvasUpdate(Date.now());
       };
 
@@ -86,10 +88,12 @@ class Editor {
         const { event, topic } = value;
         switch (event) {
           case 'note': {
+            trackEditorInteraction('note_editor_open');
             widgetBuilder.fireEvent('note', topic);
             break;
           }
           case 'link': {
+            trackEditorInteraction('link_editor_open');
             widgetBuilder.fireEvent('link', topic);
             break;
           }

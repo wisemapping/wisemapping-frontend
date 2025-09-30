@@ -66,6 +66,13 @@ import IconPicker from '../action-widget/pane/icon-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
+import {
+  trackTopicStyleAction,
+  trackConnectionStyleAction,
+  trackFontFormatAction,
+  trackRelationshipAction,
+  trackEditorPanelAction,
+} from '../../utils/analytics';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
@@ -92,6 +99,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Rectangle shape',
         }),
         onClick: () => {
+          trackTopicStyleAction('shape_change', 'rectangle');
           const setValue = modelBuilder.getTopicShapeModel().setValue;
           if (setValue) {
             setValue('rectangle');
@@ -106,6 +114,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Rounded shape',
         }),
         onClick: () => {
+          trackTopicStyleAction('shape_change', 'rounded_rectangle');
           const setValue = modelBuilder.getTopicShapeModel().setValue;
           if (setValue) {
             setValue('rounded rectangle');
@@ -120,6 +129,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Line shape',
         }),
         onClick: () => {
+          trackTopicStyleAction('shape_change', 'line');
           const setValue = modelBuilder.getTopicShapeModel().setValue;
           if (setValue) {
             setValue('line');
@@ -134,6 +144,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Ellipse shape',
         }),
         onClick: () => {
+          trackTopicStyleAction('shape_change', 'ellipse');
           const setValue = modelBuilder.getTopicShapeModel().setValue;
           if (setValue) {
             setValue('elipse');
@@ -148,6 +159,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'None shape',
         }),
         onClick: () => {
+          trackTopicStyleAction('shape_change', 'none');
           const setValue = modelBuilder.getTopicShapeModel().setValue;
           if (setValue) {
             setValue('none');
@@ -182,6 +194,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Default border color',
         }),
         onClick: () => {
+          trackTopicStyleAction('border_color_reset');
           const setValue = modelBuilder.getColorBorderModel().setValue;
           if (setValue) {
             setValue(undefined);
@@ -218,6 +231,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Default fill color',
         }),
         onClick: () => {
+          trackTopicStyleAction('topic_color_reset');
           const setValue = modelBuilder.getSelectedTopicColorModel().setValue;
           if (setValue) {
             setValue(undefined);
@@ -243,6 +257,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Thick Curved',
         }),
         onClick: () => {
+          trackConnectionStyleAction('connection_style_change', 'thick_curved');
           const setValue = modelBuilder.getConnectionStyleModel().setValue;
           if (setValue) {
             setValue(LineType.THICK_CURVED);
@@ -257,6 +272,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Arc',
         }),
         onClick: () => {
+          trackConnectionStyleAction('connection_style_change', 'arc');
           const setValue = modelBuilder.getConnectionStyleModel().setValue;
           if (setValue) {
             setValue(LineType.ARC);
@@ -271,6 +287,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Thin Curved',
         }),
         onClick: () => {
+          trackConnectionStyleAction('connection_style_change', 'thin_curved');
           const setValue = modelBuilder.getConnectionStyleModel().setValue;
           if (setValue) {
             setValue(LineType.THIN_CURVED);
@@ -285,6 +302,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Simple Polyline',
         }),
         onClick: () => {
+          trackConnectionStyleAction('connection_style_change', 'polyline_middle');
           const setValue = modelBuilder.getConnectionStyleModel().setValue;
           if (setValue) {
             setValue(LineType.POLYLINE_MIDDLE);
@@ -300,6 +318,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Curved Polyline',
         }),
         onClick: () => {
+          trackConnectionStyleAction('connection_style_change', 'polyline_curved');
           const setValue = modelBuilder.getConnectionStyleModel().setValue;
           if (setValue) {
             setValue(LineType.POLYLINE_CURVED);
@@ -337,6 +356,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Default color',
         }),
         onClick: () => {
+          trackConnectionStyleAction('connection_color_reset');
           const serValue = modelBuilder.getConnectionColorModel().setValue;
           if (serValue) {
             serValue(undefined);
@@ -365,6 +385,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Solid Line',
         }),
         onClick: () => {
+          trackRelationshipAction('stroke_style_change', 'solid');
           const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
           if (setValue) {
             setValue(StrokeStyle.SOLID);
@@ -380,6 +401,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Dashed Line',
         }),
         onClick: () => {
+          trackRelationshipAction('stroke_style_change', 'dashed');
           const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
           if (setValue) {
             setValue(StrokeStyle.DASHED);
@@ -395,6 +417,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Dotted Line',
         }),
         onClick: () => {
+          trackRelationshipAction('stroke_style_change', 'dotted');
           const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
           if (setValue) {
             setValue(StrokeStyle.DOTTED);
@@ -411,6 +434,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'End Arrow',
         }),
         onClick: () => {
+          trackRelationshipAction('arrow_toggle', 'end_arrow');
           const setValue = modelBuilder.getRelationshipEndArrowModel().setValue;
           if (setValue) {
             setValue(!modelBuilder.getRelationshipEndArrowModel().getValue());
@@ -425,6 +449,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Start Arrow',
         }),
         onClick: () => {
+          trackRelationshipAction('arrow_toggle', 'start_arrow');
           const setValue = modelBuilder.getRelationshipStartArrowModel().setValue;
           if (setValue) {
             setValue(!modelBuilder.getRelationshipStartArrowModel().getValue());
@@ -461,6 +486,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Default color',
         }),
         onClick: () => {
+          trackRelationshipAction('relationship_color_reset');
           const setValue = modelBuilder.getRelationshipColorModel().setValue;
           if (setValue) {
             setValue(undefined);
@@ -496,6 +522,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Bigger',
         }),
         onClick: () => {
+          trackFontFormatAction('font_size_change', 'increase');
           const switchValue = modelBuilder.getFontSizeModel().switchValue;
           if (switchValue) {
             switchValue(SwitchValueDirection.up);
@@ -509,6 +536,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Smaller',
         }),
         onClick: () => {
+          trackFontFormatAction('font_size_change', 'decrease');
           const switchValue = modelBuilder.getFontSizeModel().switchValue;
           if (switchValue) {
             switchValue(SwitchValueDirection.down);
@@ -525,7 +553,13 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           }),
           'B',
         ),
-        onClick: modelBuilder.fontWeigthModel().switchValue,
+        onClick: () => {
+          trackFontFormatAction('font_weight_toggle');
+          const switchValue = modelBuilder.fontWeigthModel().switchValue;
+          if (switchValue) {
+            switchValue();
+          }
+        },
         selected: () => modelBuilder.fontWeigthModel().getValue() === 'bold',
       },
       {
@@ -537,7 +571,13 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           }),
           'I',
         ),
-        onClick: modelBuilder.getFontStyleModel().switchValue,
+        onClick: () => {
+          trackFontFormatAction('font_style_toggle');
+          const switchValue = modelBuilder.getFontStyleModel().switchValue;
+          if (switchValue) {
+            switchValue();
+          }
+        },
         selected: () => modelBuilder.getFontStyleModel().getValue() === 'italic',
       },
       null,
@@ -569,6 +609,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
           defaultMessage: 'Default color',
         }),
         onClick: () => {
+          trackFontFormatAction('font_color_reset');
           const setValue = modelBuilder.getFontColorModel().setValue;
           if (setValue) {
             setValue(undefined);
@@ -590,6 +631,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       defaultMessage: 'Add Relationship',
     }),
     onClick: (e) => {
+      trackRelationshipAction('show_relationship_pivot');
       model.getDesigner().showRelPivot(e);
     },
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
@@ -679,6 +721,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       defaultMessage: 'Add Imagine',
     }),
     onClick: () => {
+      trackTopicStyleAction('emoji_picker_open');
       // This will be handled by the emoji picker modal
     },
     selected: () => modelBuilder.getImageEmojiCharModel().getValue() !== undefined,
@@ -743,7 +786,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     tooltip:
       intl.formatMessage({ id: 'editor-panel.tooltip-add-topic', defaultMessage: 'Add Topic' }) +
       ' (Enter)',
-    onClick: () => model.getDesigner().createSiblingForSelectedNode(),
+    onClick: () => {
+      trackEditorPanelAction('create_sibling_topic');
+      model.getDesigner().createSiblingForSelectedNode();
+    },
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
   };
 
@@ -754,7 +800,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         id: 'editor-panel.tooltip-delete-topic',
         defaultMessage: 'Delete Topic',
       }) + ' (Delete)',
-    onClick: () => model.getDesigner().deleteSelectedEntities(),
+    onClick: () => {
+      trackEditorPanelAction('delete_selected_entities');
+      model.getDesigner().deleteSelectedEntities();
+    },
     disabled: () => model.getDesigner().getModel().filterSelectedTopics().length === 0,
   };
 
