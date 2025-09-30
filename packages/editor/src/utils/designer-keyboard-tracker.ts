@@ -51,10 +51,6 @@ export class DesignerKeyboardTracker {
     trackEditorInteraction('double_click_create_topic');
   }
 
-  static trackTopicSelection(): void {
-    trackEditorInteraction('topic_selected');
-  }
-
   static trackCanvasInteraction(action: string): void {
     trackEditorInteraction(action);
   }
