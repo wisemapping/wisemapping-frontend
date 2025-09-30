@@ -20,6 +20,7 @@ import Editor, { EditorOptions, useEditor } from '../../../../src/index';
 import { createRoot } from 'react-dom/client';
 import { LocalStorageManager, Designer } from '@wisemapping/mindplot';
 import MapInfoImpl from './MapInfoImpl';
+import { createMockThemeVariantStorage } from './MockThemeVariantStorage';
 
 const initialization = (designer: Designer) => {
   designer.addEvent('loadSuccess', () => {
@@ -39,6 +40,7 @@ const options: EditorOptions = {
 };
 
 const mapInfo = new MapInfoImpl('welcome', 'Develop Map Title', 'The Creator', false);
+const themeVariantStorage = createMockThemeVariantStorage();
 
 const Playground = () => {
   const editor = useEditor({
@@ -51,6 +53,7 @@ const Playground = () => {
       config={editor}
       onAction={(action) => console.log('action called:', action)}
       onLoad={initialization}
+      themeVariantStorage={themeVariantStorage}
     />
   );
 };

@@ -40,6 +40,7 @@ import MapInfo from './classes/model/map-info';
 import { EditorOptions, useEditor } from './hooks/useEditor';
 import { PersistenceError } from '@wisemapping/mindplot/src/components/PersistenceManager';
 import SizeType from '@wisemapping/mindplot/src/components/SizeType';
+import { ThemeVariantStorage } from './types/ThemeVariantStorage';
 
 export {
   PersistenceManager,
@@ -62,6 +63,7 @@ export {
   XMLSerializerFactory,
   SizeType,
   useEditor,
+  ThemeVariantStorage,
 };
 
 export default Editor;
