@@ -122,7 +122,6 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
 
   const userLocale = AppI18n.getUserLocale();
-  const { mode } = useTheme(); // Get theme mode from webapp context
   const theme = useMuiTheme(); // Get MUI theme object
   const client = useContext(ClientContext);
   const { hotkeyEnabled } = useContext(KeyboardContext);
