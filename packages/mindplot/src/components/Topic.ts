@@ -73,15 +73,16 @@ abstract class Topic extends NodeGraph {
 
   private _outgoingLine!: ConnectionLine | null;
 
-  private _themeVariant: ThemeVariant = 'light';
+  private _themeVariant: ThemeVariant;
 
-  constructor(model: NodeModel, options: NodeOption) {
+  constructor(model: NodeModel, options: NodeOption, themeVariant: ThemeVariant) {
     super(model, options);
     this._children = [];
     this._parent = null;
     this._relationships = [];
     this._isInWorkspace = false;
     this._innerShape = null;
+    this._themeVariant = themeVariant;
     this._imageEmojiFeature = new ImageEmojiFeature(this);
     this.buildTopicShape();
 

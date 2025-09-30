@@ -5,9 +5,10 @@ import MainTopic from './MainTopic';
 import NodeModel from './model/NodeModel';
 import { NodeOption } from './NodeGraph';
 import Topic from './Topic';
+import { ThemeVariant } from './theme/Theme';
 
 class TopicFactory {
-  static create(nodeModel: NodeModel, options: NodeOption): Topic {
+  static create(nodeModel: NodeModel, options: NodeOption, themeVariant: ThemeVariant): Topic {
     $assert(nodeModel, 'Model can not be null');
 
     const type = nodeModel.getType();
@@ -15,9 +16,9 @@ class TopicFactory {
 
     let result: Topic;
     if (type === 'CentralTopic') {
-      result = new CentralTopic(nodeModel, options);
+      result = new CentralTopic(nodeModel, options, themeVariant);
     } else if (type === 'MainTopic') {
-      result = new MainTopic(nodeModel, options);
+      result = new MainTopic(nodeModel, options, themeVariant);
     } else {
       $assert(false, `unsupported node type:${type}`);
     }
