@@ -45,6 +45,7 @@ abstract class WidgetBuilder {
     const webcomponentShadowRoot = mindmapComp.shadowRoot!;
 
     let tooltip = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip');
+    let hideTimeout: NodeJS.Timeout | null = null;
     if (!tooltip) {
       const tooltipHTML =
         '<div id="mindplot-svg-tooltip" class="mindplot-svg-tooltip">' +
@@ -61,17 +62,32 @@ abstract class WidgetBuilder {
 
       if (tooltip) {
         tooltip.addEventListener('mouseover', (evt) => {
+          // Clear any existing hide timeout when hovering over tooltip
+          if (hideTimeout) {
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
+          }
           if (tooltip) DOMUtils.css(tooltip, 'display', 'block');
           evt.stopPropagation();
         });
         tooltip.addEventListener('mouseleave', (evt) => {
-          if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
+          // Add 3 second delay before hiding the tooltip
+          hideTimeout = setTimeout(() => {
+            if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
+            hideTimeout = null;
+          }, 3000);
           evt.stopPropagation();
         });
       }
     }
 
     mindmapElement.addEvent('mouseenter', (evt: MouseEvent) => {
+      // Clear any existing hide timeout
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+
       const tooltipTitle = webcomponentShadowRoot.getElementById('mindplot-svg-tooltip-title')!;
       DOMUtils.html(tooltipTitle, title);
 
@@ -114,7 +130,11 @@ abstract class WidgetBuilder {
     });
 
     mindmapElement.addEvent('mouseleave', (evt: MouseEvent) => {
-      if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
+      // Add 3 second delay before hiding the tooltip
+      hideTimeout = setTimeout(() => {
+        if (tooltip) DOMUtils.css(tooltip, 'display', 'none');
+        hideTimeout = null;
+      }, 3000);
       evt.stopPropagation();
     });
   }
