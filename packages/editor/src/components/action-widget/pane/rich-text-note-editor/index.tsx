@@ -504,11 +504,6 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             overflow: 'auto',
             fontFamily: 'Arial, sans-serif',
             fontSize: '14px',
-            lineHeight: 1.5,
-            color: theme.palette.text.primary,
-            '&:focus': {
-              outline: 'none',
-            },
             '&::-webkit-scrollbar': {
               width: '8px',
             },
@@ -533,18 +528,19 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: 0,
-          py: 1,
-          backgroundColor: theme.palette.background.default,
-          borderTop: `1px solid ${theme.palette.divider}`,
+          px: 2,
+          py: 1.5,
+          borderTop: '1px solid',
+          borderColor: 'divider',
+          backgroundColor: 'background.default',
         }}
       >
         {/* Character Counter */}
         <Box
           sx={{
             fontSize: '12px',
-            color: characterCount > MAX_CHARACTERS * 0.9 ? '#ff5722' : '#666666',
-            fontWeight: characterCount > MAX_CHARACTERS * 0.9 ? 'bold' : 'normal',
+            color: characterCount > MAX_CHARACTERS * 0.9 ? 'error.main' : 'text.secondary',
+            fontWeight: characterCount > MAX_CHARACTERS * 0.9 ? 600 : 400,
           }}
         >
           <FormattedMessage

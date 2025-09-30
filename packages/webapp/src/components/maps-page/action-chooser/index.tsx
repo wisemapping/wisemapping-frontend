@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import { useFetchMapById } from '../../../classes/middleware';
+import { trackMindmapListAction } from '../../../utils/analytics';
 export type ActionType =
   | 'open'
   | 'share'
@@ -49,6 +50,9 @@ const ActionChooser = (props: ActionProps): React.ReactElement => {
   ): ((event: React.MouseEvent<HTMLLIElement>) => void) => {
     return (event): void => {
       event.stopPropagation();
+      if (action) {
+        trackMindmapListAction(action);
+      }
       onClose(action);
     };
   };

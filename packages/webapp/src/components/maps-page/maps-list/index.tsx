@@ -8,6 +8,7 @@ import ActionDispatcher from '../action-dispatcher';
 import dayjs from 'dayjs';
 import { Filter, LabelFilter } from '..';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { trackToolbarAction } from '../../../utils/analytics';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -393,6 +394,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   };
 
   const handleDeleteClick = () => {
+    trackToolbarAction('delete_selected', `count:${selected.length}`);
     setActiveDialog({
       actionType: 'delete',
       mapsId: selected,
@@ -400,6 +402,7 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
   };
 
   const handleAddLabelClick = () => {
+    trackToolbarAction('add_label_selected', `count:${selected.length}`);
     setActiveDialog({
       actionType: 'label',
       mapsId: selected,

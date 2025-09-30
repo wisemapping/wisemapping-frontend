@@ -32,6 +32,7 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import Box from '@mui/material/Box';
 import ThemeSwitcher from '../common/theme-switcher';
+import { trackEditorInteraction } from '../../utils/analytics';
 
 // Helper function to check if any nodes are currently collapsed
 const areNodesCollapsed = (model: Editor): boolean => {
@@ -55,6 +56,7 @@ export function buildZoomToolbarConfig(
         defaultMessage: 'Zoom to Fit',
       }),
       onClick: () => {
+        trackEditorInteraction('zoom_to_fit');
         model.getDesigner().zoomToFit();
       },
       disabled: () => !model?.isMapLoadded(),
@@ -77,6 +79,7 @@ export function buildZoomToolbarConfig(
       icon: <ZoomInOutlinedIcon />,
       tooltip: intl.formatMessage({ id: 'zoom-panel.tooltip-zoom-in', defaultMessage: 'Zoom In' }),
       onClick: () => {
+        trackEditorInteraction('zoom_in');
         model.getDesigner().zoomIn();
       },
       disabled: () => !model?.isMapLoadded(),
@@ -88,6 +91,7 @@ export function buildZoomToolbarConfig(
         defaultMessage: 'Zoom Out',
       }),
       onClick: () => {
+        trackEditorInteraction('zoom_out');
         model.getDesigner().zoomOut();
       },
       disabled: () => !model?.isMapLoadded(),
@@ -105,8 +109,10 @@ export function buildZoomToolbarConfig(
           }),
       onClick: () => {
         if (areNodesCollapsed(model)) {
+          trackEditorInteraction('expand_all_nodes');
           model.getDesigner().expandAllNodes();
         } else {
+          trackEditorInteraction('collapse_all_nodes');
           model.getDesigner().collapseAllNodes();
         }
       },
@@ -119,6 +125,7 @@ export function buildZoomToolbarConfig(
         defaultMessage: 'Keyboard Shortcuts',
       }),
       visible: !capability.isHidden('keyboard-shortcuts'),
+      onClick: () => trackEditorInteraction('keyboard_shortcuts'),
       options: [
         {
           render: () => <KeyboardShorcutsHelp />,

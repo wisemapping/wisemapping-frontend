@@ -13,7 +13,7 @@ import DeleteMultiselectDialog from './delete-multiselect-dialog';
 import ExportDialog from './export-dialog';
 import ShareDialog from './share-dialog';
 import LabelDialog from './label-dialog';
-import ReactGA from 'react-ga4';
+import { trackMindmapListAction } from '../../../utils/analytics';
 
 export type BasicMapInfo = {
   name: string;
@@ -35,11 +35,7 @@ const ActionDispatcher = ({
 }: ActionDialogProps): React.ReactElement => {
   useEffect(() => {
     if (action) {
-      ReactGA.event({
-        category: 'map metadata',
-        action: action,
-        nonInteraction: true,
-      });
+      trackMindmapListAction(action, 'map_metadata');
     }
   }, [action]);
 
