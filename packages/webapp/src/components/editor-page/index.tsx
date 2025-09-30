@@ -45,6 +45,7 @@ import { SEOHead } from '../seo';
 import PublicMapSEO from '../seo/PublicMapSEO';
 import SessionExpiredDialog from '../common-page/session-expired-dialog';
 import { EditorConfiguration } from '@wisemapping/editor/src/hooks/useEditor';
+import { createThemeVariantStorage } from '../../services/createThemeVariantStorage';
 
 const buildPersistenceManagerForEditor = (
   mode: EditorRenderMode,
@@ -217,7 +218,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
         config={editorConfig}
         onAction={setActiveDialog}
         theme={theme}
-        externalThemeMode={mode}
+        themeVariantStorage={createThemeVariantStorage()}
         accountConfiguration={
           // Prevent load on non-authenticated.
           editorOptions.mode !== 'showcase' ? (
