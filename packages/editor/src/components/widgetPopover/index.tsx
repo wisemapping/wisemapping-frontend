@@ -82,16 +82,44 @@ export const WidgetPopover = ({ widgetManager }: WidgetPopoverProps): React.Reac
             horizontal: 'left',
           }}
         >
-          <Box textAlign={'right'} ml={1}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              px: 2,
+              py: 1,
+              borderBottom: '1px solid',
+              borderColor: 'divider',
+              backgroundColor: 'background.default',
+            }}
+          >
             <Typography
-              variant="body1"
-              style={{ paddingTop: '10px', paddingLeft: '24px', float: 'left' }}
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '11px',
+                fontWeight: 500,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                opacity: 0.7,
+              }}
             >
               <FormattedMessage id={panelTitle} defaultMessage="" />
             </Typography>
 
-            <IconButton onClick={closeEditor} aria-label={'Close'}>
-              <CloseIcon />
+            <IconButton
+              onClick={closeEditor}
+              aria-label={'Close'}
+              size="small"
+              sx={{
+                color: 'text.secondary',
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                },
+              }}
+            >
+              <CloseIcon fontSize="small" />
             </IconButton>
           </Box>
           {editorComponent}

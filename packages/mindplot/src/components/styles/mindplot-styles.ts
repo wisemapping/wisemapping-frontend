@@ -1,14 +1,20 @@
 const mindplotStyles: string = `
   .mindplot-svg-tooltip {
     display: none;
-    color: rgb(51, 51, 51);
-    text-align: center;
-    padding: 1px;
+    color: #313131;
+    text-align: left;
+    padding: 0;
     position: absolute;
     z-index: 999;
-    background-color: rgb(255, 255, 255);
-    animation: fadeIn 0.4s;
-    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    animation: fadeIn 0.25s ease-out;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    max-width: 450px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
   }
 
   .fade-in {
@@ -45,35 +51,73 @@ const mindplotStyles: string = `
   }
 
 .mindplot-svg-tooltip-title {
-    background-color: #fff;
-    font-size: small;
-    font-family: sans;
+    background-color: transparent;
+    font-size: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     text-transform: uppercase;
-    padding: 16px 28px;
-    text-align: left;
-    font-family: sans-serif;
-    font-weight: bold;
-    min-width: 400px;
-    background-color: rgba(0, 0, 0, 0.04);
+    padding: 6px 16px 8px 16px;
+    text-align: right;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    color: #999999;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 8px;
+    opacity: 0.8;
 }
 
 .mindplot-svg-tooltip-content {
-    background-color: rgb(255, 255, 255);
-    padding: 20px 20px;
-    max-width: 600px;
+    background-color: #ffffff;
+    padding: 20px 20px 12px 20px;
     word-wrap: break-word;
     text-align: left;
-    font-size: small;
-    font-family: sans-serif;
-    white-space: pre-line
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    white-space: pre-line;
+    color: #2c2c2c;
+    border-radius: 12px 12px 0 0;
 }
 
 .mindplot-svg-tooltip-content-link {
-    padding: 3px 5px;
-    overflow: hidden;
-    font-size: smaller;
+    display: inline-block;
+    padding: 10px 14px;
+    margin: 6px 0;
+    background: linear-gradient(135deg, #fff8f0 0%, #fef5e7 100%);
+    border: 1px solid #ffa800;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     text-decoration: none;
-    color: #428bca;
+    color: #ffa800;
+    word-break: break-all;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(255, 168, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.mindplot-svg-tooltip-content-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.mindplot-svg-tooltip-content-link:hover {
+    background: linear-gradient(135deg, #ffa800 0%, #e57500 100%);
+    color: #ffffff;
+    border-color: #e57500;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 168, 0, 0.3);
+}
+
+.mindplot-svg-tooltip-content-link:hover::before {
+    left: 100%;
 }
 `;
 

@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { DesignerKeyboard } from '@wisemapping/mindplot';
+import { DesignerKeyboard, Designer } from '@wisemapping/mindplot';
 import { trackEditorInteraction } from './analytics';
 
 /**
@@ -31,7 +31,7 @@ export class DesignerKeyboardTracker {
     this.originalRegister = DesignerKeyboard.register;
 
     // Override the register method to add tracking
-    DesignerKeyboard.register = (designer: unknown) => {
+    DesignerKeyboard.register = (designer: Designer) => {
       // Call the original register method
       this.originalRegister(designer);
 

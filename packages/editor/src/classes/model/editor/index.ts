@@ -24,7 +24,7 @@ import {
   Topic,
 } from '@wisemapping/mindplot';
 import Capability from '../../action/capability';
-import { trackEditorInteraction } from '../../utils/analytics';
+import { trackEditorInteraction } from '../../../utils/analytics';
 
 class Editor {
   private component: MindplotWebComponent;
