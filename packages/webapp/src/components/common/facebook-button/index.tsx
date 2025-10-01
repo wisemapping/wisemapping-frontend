@@ -16,36 +16,37 @@
  *   limitations under the License.
  */
 import React from 'react';
-import GoogleIcon from '../google-icon';
+import FacebookIcon from '../facebook-icon';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
-const StyledGoogleButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.primary,
+const StyledFacebookButton = styled(Button)(() => ({
+  color: '#ffffff',
   fontWeight: '300',
-  border: `1px solid ${theme.palette.divider}`,
+  backgroundColor: '#1877f2',
+  border: `1px solid #1877f2`,
   flex: '1 1 auto',
   minWidth: '200px',
   '&:hover': {
-    border: `1px solid ${theme.palette.text.primary}`,
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: '#166fe5',
+    border: `1px solid #166fe5`,
   },
 }));
 
-type GoogleButtonProps = {
+type FacebookButtonProps = {
   text: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const GoogleButton: React.FunctionComponent<GoogleButtonProps> = ({
+const FacebookButton: React.FunctionComponent<FacebookButtonProps> = ({
   text,
   onClick,
-}: GoogleButtonProps) => {
+}: FacebookButtonProps) => {
   return (
-    <StyledGoogleButton variant="outlined" startIcon={GoogleIcon} onClick={onClick}>
+    <StyledFacebookButton variant="contained" startIcon={FacebookIcon} onClick={onClick}>
       {text}
-    </StyledGoogleButton>
+    </StyledFacebookButton>
   );
 };
 
-export default GoogleButton;
+export default FacebookButton;

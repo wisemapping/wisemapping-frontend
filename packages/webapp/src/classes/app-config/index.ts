@@ -35,6 +35,9 @@ type Config = {
   recaptcha2SiteKey?: string;
   clientType: 'mock' | 'rest';
   googleOauth2Url: string;
+  googleOauth2Enabled: boolean;
+  facebookOauth2Url: string;
+  facebookOauth2Enabled: boolean;
   jwtExpirationMin: number;
 };
 
@@ -125,6 +128,21 @@ class AppConfig {
   static getGoogleOauth2Url(): string | undefined {
     const config = this.fetchOrGetConfig();
     return config.googleOauth2Url;
+  }
+
+  static getFacebookOauth2Url(): string | undefined {
+    const config = this.fetchOrGetConfig();
+    return config.facebookOauth2Url;
+  }
+
+  static isGoogleOauth2Enabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.googleOauth2Enabled || false;
+  }
+
+  static isFacebookOauth2Enabled(): boolean {
+    const config = this.fetchOrGetConfig();
+    return config.facebookOauth2Enabled || false;
   }
 
   static getClient(): Client {

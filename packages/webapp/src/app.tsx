@@ -39,6 +39,7 @@ import RegistrationSuccessPage from './components/registration-success-page';
 import { ThemeProvider } from '@emotion/react';
 import { AppThemeProvider, useTheme } from './contexts/ThemeContext';
 import RegistrationCallbackPage from './components/registration-callback';
+import RegistrationFacebookCallbackPage from './components/registration-facebook-callback';
 import ErrorPage from './components/error-page';
 import { HelmetProvider } from './components/seo';
 import { PageModeType, loader as mapLoader } from './components/editor-page/loader';
@@ -99,6 +100,7 @@ const router = createBrowserRouter(
       <Route path="/c/login" element={<LoginPage />} />
       <Route path="/c/registration" element={<RegistationPage />} />
       <Route path="/c/registration-google" element={<RegistrationCallbackPage />} />
+      <Route path="/c/registration-facebook" element={<RegistrationFacebookCallbackPage />} />
       <Route path="/c/registration-success" element={<RegistrationSuccessPage />} />
       <Route path="/c/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />

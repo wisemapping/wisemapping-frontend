@@ -777,6 +777,36 @@ export default class RestClient implements Client {
     return new Promise(handler);
   }
 
+  processFacebookCallback(code: string): Promise<Oauth2CallbackResult> {
+    const handler = (
+      success: (result: Oauth2CallbackResult) => void,
+      reject: (error: ErrorInfo) => void,
+    ) => {
+      this.axios
+        .post(`${this.baseUrl}/api/restful/oauth2/facebookcallback?code=${code}`, {
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .then((response) => {
+          success({
+            email: response.data.email,
+            googleSync: response.data.googleSync,
+            syncCode: response.data.syncCode,
+          });
+
+          // Store jwt cookie ...
+          const token = response.data.jwtToken;
+          if (token) {
+            JwtTokenConfig.storeToken(token);
+          }
+        })
+        .catch((error) => {
+          const errorInfo = this.parseResponseOnError(error.response);
+          reject(errorInfo);
+        });
+    };
+    return new Promise(handler);
+  }
+
   confirmAccountSync(email: string, code: string): Promise<Oauth2CallbackResult> {
     const handler = (
       success: (result: Oauth2CallbackResult) => void,

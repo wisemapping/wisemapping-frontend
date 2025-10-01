@@ -11,8 +11,10 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
 import ReactGA from 'react-ga4';
+import Box from '@mui/material/Box';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
+import FacebookButton from '../common/facebook-button';
 import AppConfig from '../../classes/app-config';
 import { useMutation } from 'react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
@@ -187,7 +189,7 @@ const LoginPage = (): React.ReactElement => {
         <Link component={RouterLink} to="/c/forgot-password">
           <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
         </Link>
-        {AppConfig.isRegistrationEnabled() && (
+        {(AppConfig.isGoogleOauth2Enabled() || AppConfig.isFacebookOauth2Enabled()) && (
           <>
             <Separator
               responsive={false}
@@ -196,20 +198,48 @@ const LoginPage = (): React.ReactElement => {
                 defaultMessage: 'or',
               })}
             />
-            <GoogleButton
-              text={intl.formatMessage({
-                id: 'login.google.button',
-                defaultMessage: 'Sign in with Google',
-              })}
-              onClick={() => {
-                const authUrl = AppConfig.getGoogleOauth2Url();
-                if (authUrl) {
-                  window.location.href = authUrl;
-                } else {
-                  console.log('GoogleOauth2Url is not configured.');
-                }
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                flexWrap: 'wrap',
+                width: '100%',
+                marginBottom: '-20px',
               }}
-            />
+            >
+              {AppConfig.isFacebookOauth2Enabled() && (
+                <FacebookButton
+                  text={intl.formatMessage({
+                    id: 'login.facebook.button',
+                    defaultMessage: 'Sign in with Facebook',
+                  })}
+                  onClick={() => {
+                    const authUrl = AppConfig.getFacebookOauth2Url();
+                    if (authUrl) {
+                      window.location.href = authUrl;
+                    } else {
+                      console.log('FacebookOauth2Url is not configured.');
+                    }
+                  }}
+                />
+              )}
+              {AppConfig.isGoogleOauth2Enabled() && (
+                <GoogleButton
+                  text={intl.formatMessage({
+                    id: 'login.google.button',
+                    defaultMessage: 'Sign in with Google',
+                  })}
+                  onClick={() => {
+                    const authUrl = AppConfig.getGoogleOauth2Url();
+                    if (authUrl) {
+                      window.location.href = authUrl;
+                    } else {
+                      console.log('GoogleOauth2Url is not configured.');
+                    }
+                  }}
+                />
+              )}
+            </Box>
           </>
         )}
       </FormContainer>
