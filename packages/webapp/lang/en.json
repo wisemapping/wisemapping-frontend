@@ -326,6 +326,9 @@
   "login.google.button": {
     "defaultMessage": "Sign in with Google"
   },
+  "login.facebook.button": {
+    "defaultMessage": "Sign in with Facebook"
+  },
   "login.page-title": {
     "defaultMessage": "Login | WiseMapping"
   },
@@ -490,6 +493,9 @@
   },
   "registration.google.button": {
     "defaultMessage": "Sign up with Google"
+  },
+  "registration.facebook.button": {
+    "defaultMessage": "Sign up with Facebook"
   },
   "registration.lastname": {
     "defaultMessage": "Last Name"

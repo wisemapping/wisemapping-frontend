@@ -463,6 +463,24 @@ class MockClient implements Client {
     return new Promise(handler);
   }
 
+  processFacebookCallback(): Promise<Oauth2CallbackResult> {
+    // artificial delay for more realistic mock experience
+    const handler = (success: (result: Oauth2CallbackResult) => void) => {
+      setTimeout(() => {
+        success({
+          email: 'test@email.com',
+          // -- use case 1) user must confirm if he wants to link accounts
+          // googleSync: false,
+          // syncCode: "834580239598234650234578"
+          // -- use case 2) user already confirmed
+          googleSync: true,
+          syncCode: undefined,
+        });
+      }, 2000);
+    };
+    return new Promise(handler);
+  }
+
   confirmAccountSync(): Promise<Oauth2CallbackResult> {
     return this.processGoogleCallback();
   }

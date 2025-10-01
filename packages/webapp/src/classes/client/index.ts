@@ -94,7 +94,7 @@ export type LoginErrorInfo = ErrorInfo & {
   code: 1 | 2 | 3;
 };
 
-export type AuthenticationType = 'GOOGLE_OAUTH2' | 'DATABASE' | 'LDAP';
+export type AuthenticationType = 'GOOGLE_OAUTH2' | 'FACEBOOK_OAUTH2' | 'DATABASE' | 'LDAP';
 
 export type AccountInfo = {
   firstname: string;
@@ -158,6 +158,7 @@ interface Client {
   registerNewUser(user: NewUser): Promise<void>;
   resetPassword(email: string): Promise<ForgotPasswordResult>;
   processGoogleCallback(code: string): Promise<Oauth2CallbackResult>;
+  processFacebookCallback(code: string): Promise<Oauth2CallbackResult>;
   confirmAccountSync(email: string, code?: string): Promise<Oauth2CallbackResult>;
 
   fetchHistory(id: number): Promise<ChangeHistory[]>;

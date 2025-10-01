@@ -17,11 +17,13 @@ import AppConfig from '../../classes/app-config';
 import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
+import FacebookButton from '../common/facebook-button';
 import { Link as RouterLink } from 'react-router';
 import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
 import { SEOHead } from '../seo';
 
 export type Model = {
@@ -78,6 +80,15 @@ const RegistrationForm = () => {
     }
   };
 
+  const handleRegisterWithFacebookClick = () => {
+    const url = AppConfig.getFacebookOauth2Url();
+    if (url) {
+      window.location.href = url;
+    } else {
+      console.error('Facebook Auth callback url is null');
+    }
+  };
+
   return (
     <Grid container justifyContent="center">
       <Grid container spacing={0} justifyContent="center" alignItems="scretch" textAlign="center">
@@ -94,13 +105,26 @@ const RegistrationForm = () => {
               />
             </Typography>
           </header>
-          <GoogleButton
-            text={intl.formatMessage({
-              id: 'registration.google.button',
-              defaultMessage: 'Sign up with Google',
-            })}
-            onClick={handleRegisterWithGoogleClick}
-          />
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {AppConfig.isFacebookOauth2Enabled() && (
+              <FacebookButton
+                text={intl.formatMessage({
+                  id: 'registration.facebook.button',
+                  defaultMessage: 'Sign up with Facebook',
+                })}
+                onClick={handleRegisterWithFacebookClick}
+              />
+            )}
+            {AppConfig.isGoogleOauth2Enabled() && (
+              <GoogleButton
+                text={intl.formatMessage({
+                  id: 'registration.google.button',
+                  defaultMessage: 'Sign up with Google',
+                })}
+                onClick={handleRegisterWithGoogleClick}
+              />
+            )}
+          </Box>
         </Grid>
         <Grid size={{ md: 2, xs: 12 }}>
           <Separator
