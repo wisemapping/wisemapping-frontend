@@ -1,5 +1,5 @@
 /*
- *    Copyright [2021] [wisemapping]
+ *    Copyright [2007-2025] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -7,7 +7,7 @@
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the license at
  *
- *       http://www.wisemapping.org/license
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import {
 } from '@wisemapping/editor';
 import { IntlProvider } from 'react-intl';
 import AppI18n, { Locales } from '../../classes/app-i18n';
-import ReactGA from 'react-ga4';
+import { trackPageView } from '../../utils/analytics';
 import { useTheme as useMuiTheme } from '@mui/material/styles';
 import MapInfoImpl from '../../classes/editor-map-info';
 import { MapInfo } from '@wisemapping/editor';
@@ -137,7 +137,7 @@ const EditorPage = ({ mapId, pageMode, zoom, hid }: EditorPropsType): React.Reac
   }
 
   useEffect(() => {
-    ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: `Map Editor` });
+    trackPageView(window.location.pathname, 'Map Editor');
   }, []);
 
   // Account settings can be null and editor cannot be initilized multiple times. This creates problems

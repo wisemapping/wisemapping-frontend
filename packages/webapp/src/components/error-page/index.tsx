@@ -1,5 +1,5 @@
 /*
- *    Copyright [2021] [wisemapping]
+ *    Copyright [2007-2025] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -7,7 +7,7 @@
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the license at
  *
- *       http://www.wisemapping.org/license
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,7 @@ import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Header from '../layout/header';
 import Typography from '@mui/material/Typography';
-import ReactGA from 'react-ga4';
+import { trackPageView } from '../../utils/analytics';
 import { ErrorBody } from './styled';
 import { useRouteError } from 'react-router';
 import { ErrorInfo } from '../../classes/client';
@@ -48,7 +48,7 @@ const ErrorPage = (): React.ReactElement => {
       id: 'error.page-title',
       defaultMessage: 'Unexpected Error | WiseMapping',
     });
-    ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'ErrorPage' });
+    trackPageView(window.location.pathname, 'ErrorPage');
   }, []);
 
   return (
