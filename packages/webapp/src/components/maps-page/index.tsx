@@ -1,5 +1,5 @@
 /*
- *    Copyright [2021] [wisemapping]
+ *    Copyright [2007-2025] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -7,7 +7,7 @@
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the license at
  *
- *       http://www.wisemapping.org/license
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,7 +58,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import logoIcon from './logo-small.svg';
 import poweredByIcon from './pwrdby-white.svg';
 import LabelDeleteConfirm from './maps-list/label-delete-confirm';
-import ReactGA from 'react-ga4';
+import { trackPageView } from '../../utils/analytics';
 import { CSSObject, Interpolation, Theme } from '@emotion/react';
 import withEmotionStyles from '../HOCs/withEmotionStyles';
 import { ClientContext } from '../../classes/provider/client-context';
@@ -131,7 +131,7 @@ const MapsPage = (): ReactElement => {
       defaultMessage: 'My Maps | WiseMapping',
     });
     window.scrollTo(0, 0);
-    ReactGA.send({ hitType: 'pageview', page: window.location.pathname, title: 'Maps List' });
+    trackPageView(window.location.pathname, 'Maps List');
   }, []);
 
   const mutation = useMutation((id: number) => client.deleteLabel(id), {

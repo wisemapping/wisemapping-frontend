@@ -1,3 +1,21 @@
+/*
+ *    Copyright [2007-2025] [wisemapping]
+ *
+ *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
+ *   It is basically the Apache License, Version 2.0 (the "License") plus the
+ *   "powered by wisemapping" text requirement on every single page;
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the license at
+ *
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -14,7 +32,7 @@ import SubmitButton from '../form/submit-button';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import AppConfig from '../../classes/app-config';
-import ReactGA from 'react-ga4';
+import { trackPageView } from '../../utils/analytics';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
 import FacebookButton from '../common/facebook-button';
@@ -244,11 +262,7 @@ const RegistationPage = (): React.ReactElement => {
       id: 'registration.page-title',
       defaultMessage: 'Registration | WiseMapping',
     });
-    ReactGA.send({
-      hitType: 'pageview',
-      page: window.location.pathname,
-      title: 'Registration:Init',
-    });
+    trackPageView(window.location.pathname, 'Registration:Init');
   }, []);
 
   return (

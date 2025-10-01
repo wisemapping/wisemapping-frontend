@@ -1,5 +1,5 @@
 /*
- *    Copyright [2021] [wisemapping]
+ *    Copyright [2007-2025] [wisemapping]
  *
  *   Licensed under WiseMapping Public License, Version 1.0 (the "License").
  *   It is basically the Apache License, Version 2.0 (the "License") plus the
@@ -7,7 +7,7 @@
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the license at
  *
- *       http://www.wisemapping.org/license
+ *       https://github.com/wisemapping/wisemapping-open-source/blob/main/LICENSE.md
  *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,4 +48,39 @@ export const trackMindmapListAction = (
  */
 export const trackToolbarAction = (action: string, label?: string): void => {
   trackMindmapListAction(action, 'toolbar', label);
+};
+
+/**
+ * Tracks mindmap export events in Google Analytics
+ * @param format - The export format (svg, png, pdf, wxml, etc.)
+ * @param group - The export group type (image, document, mindmap-tool)
+ */
+export const trackExport = (format: string, group: string): void => {
+  try {
+    ReactGA.event({
+      category: 'export',
+      action: format,
+      label: group,
+      nonInteraction: false,
+    });
+  } catch (error) {
+    console.warn('Failed to track export action:', error);
+  }
+};
+
+/**
+ * Tracks page views in Google Analytics
+ * @param page - The page path (e.g., window.location.pathname)
+ * @param title - The page title for analytics
+ */
+export const trackPageView = (page: string, title: string): void => {
+  try {
+    ReactGA.send({
+      hitType: 'pageview',
+      page,
+      title,
+    });
+  } catch (error) {
+    console.warn('Failed to track page view:', error);
+  }
 };
