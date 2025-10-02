@@ -119,7 +119,7 @@ interface AdminMap {
   isLockedBy?: string;
   starred: boolean;
   labels: string[];
-  isSpam?: boolean;
+  spam?: boolean;
 }
 
 interface MapFormData {
@@ -221,7 +221,6 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
         filterSpam: filterSpam !== 'all' ? filterSpam === 'spam' : undefined,
         dateFilter: dateFilter,
       };
-      console.log('Maps Query triggered with params:', params);
       return client.getAdminMaps(params);
     },
     {
@@ -274,18 +273,14 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
 
   // Update spam status mutation
   const updateSpamStatusMutation = useMutation(
-    ({ mapId, isSpam }: { mapId: number; isSpam: boolean }) => {
-      console.log('🔄 Updating spam status for map:', mapId, 'isSpam:', isSpam);
-      return client.updateMapSpamStatus(mapId, { isSpam });
-    },
+    ({ mapId, spam }: { mapId: number; spam: boolean }) =>
+      client.updateMapSpamStatus(mapId, { spam }),
     {
-      onSuccess: (data) => {
-        console.log('✅ Spam status updated successfully:', data);
+      onSuccess: () => {
         queryClient.invalidateQueries('adminMaps');
       },
       onError: (error: Error) => {
-        console.error('❌ Failed to update spam status:', error);
-        console.error('Error details:', error.message, error.stack);
+        console.error('Failed to update spam status:', error);
       },
     },
   );
@@ -326,15 +321,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   };
 
   const handleToggleSpamStatus = (mapId: number, currentSpamStatus: boolean) => {
-    console.log('🎯 handleToggleSpamStatus called:', { mapId, currentSpamStatus });
     const newSpamStatus = !currentSpamStatus;
     const action = newSpamStatus ? 'mark as spam' : 'mark as not spam';
-    console.log('🎯 Action to perform:', action, 'newSpamStatus:', newSpamStatus);
     if (window.confirm(`Are you sure you want to ${action} this map?`)) {
-      console.log('🎯 User confirmed, calling mutation...');
-      updateSpamStatusMutation.mutate({ mapId, isSpam: newSpamStatus });
-    } else {
-      console.log('🎯 User cancelled the action');
+      updateSpamStatusMutation.mutate({ mapId, spam: newSpamStatus });
     }
   };
 
@@ -378,8 +368,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     />
   );
 
-  const getSpamChip = (isSpam: boolean, spamType?: string, spamDetectedDate?: string) => {
-    if (isSpam) {
+  const getSpamChip = (spam: boolean, spamType?: string, spamDetectedDate?: string) => {
+    if (spam) {
       return (
         <Chip
           label={`Spam (${spamType || 'Unknown'})`}
@@ -667,7 +657,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {getSpamChip(map.isSpam || false, map.spamType, map.spamDetectedDate)}
+                    {getSpamChip(map.spam || false, map.spamType, map.spamDetectedDate)}
                   </TableCell>
                   <TableCell align="center">
                     <Box display="flex" gap={0.5} justifyContent="center">
@@ -704,17 +694,17 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                       <Tooltip
                         title={intl.formatMessage({
                           id: 'admin.maps.toggle-spam',
-                          defaultMessage: map.isSpam ? 'Mark as not spam' : 'Mark as spam',
+                          defaultMessage: map.spam ? 'Mark as not spam' : 'Mark as spam',
                         })}
                       >
                         <IconButton
-                          onClick={() => handleToggleSpamStatus(map.id, map.isSpam || false)}
-                          aria-label={map.isSpam ? 'mark-not-spam' : 'mark-spam'}
-                          color={map.isSpam ? 'success' : 'warning'}
+                          onClick={() => handleToggleSpamStatus(map.id, map.spam || false)}
+                          aria-label={map.spam ? 'mark-not-spam' : 'mark-spam'}
+                          color={map.spam ? 'success' : 'warning'}
                           size="small"
                           disabled={updateSpamStatusMutation.isLoading}
                         >
-                          {map.isSpam ? <CheckCircleIcon /> : <FlagIcon />}
+                          {map.spam ? <CheckCircleIcon /> : <FlagIcon />}
                         </IconButton>
                       </Tooltip>
                       <Tooltip
@@ -748,7 +738,6 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             count={totalPages}
             page={currentPage}
             onChange={(event, page) => {
-              console.log('Maps Pagination clicked:', { oldPage: currentPage, newPage: page });
               setIsPaginationLoading(true);
               setCurrentPage(page);
             }}

@@ -214,7 +214,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Sample', 'Demo'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 2,
@@ -230,7 +230,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: false,
       labels: ['Project', 'Private'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 3,
@@ -247,7 +247,7 @@ class MockAdminClient implements AdminClientInterface {
       isLockedBy: 'john.doe@example.com',
       starred: false,
       labels: ['Research', 'Work-in-Progress'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 4,
@@ -263,7 +263,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Knowledge', 'Public', 'Reference'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 5,
@@ -279,7 +279,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: false,
       labels: [],
-      isSpam: true,
+      spam: true,
       spamType: 'CONTACT_INFO',
       spamDetectedDate: '2023-05-01T12:05:00Z',
       spamDescription: 'Contains contact information and promotional content',
@@ -298,7 +298,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: false,
       labels: ['Marketing', 'Strategy'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 7,
@@ -314,7 +314,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Product', 'Roadmap', 'Planning'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 8,
@@ -331,7 +331,7 @@ class MockAdminClient implements AdminClientInterface {
       isLockedBy: 'hr@wisemapping.com',
       starred: false,
       labels: ['HR', 'Organization', 'Team'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 9,
@@ -347,7 +347,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Finance', 'Budget', 'Planning'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 10,
@@ -363,7 +363,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: false,
       labels: ['Customer', 'Feedback', 'Analysis'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 11,
@@ -379,7 +379,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Technical', 'Architecture', 'System'],
-      isSpam: false,
+      spam: false,
     },
     {
       id: 12,
@@ -395,7 +395,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: false,
       labels: [],
-      isSpam: true,
+      spam: true,
       spamType: 'KEYWORD_PATTERN',
       spamDetectedDate: '2023-09-01T12:10:00Z',
       spamDescription: 'Contains promotional keywords and patterns',
@@ -541,7 +541,7 @@ class MockAdminClient implements AdminClientInterface {
     }
 
     if (params?.filterSpam !== undefined) {
-      filteredMaps = filteredMaps.filter((map) => map.isSpam === params.filterSpam);
+      filteredMaps = filteredMaps.filter((map) => map.spam === params.filterSpam);
     }
 
     // Apply sorting
@@ -586,7 +586,7 @@ class MockAdminClient implements AdminClientInterface {
     return Promise.resolve(updatedMap);
   }
 
-  updateMapSpamStatus(mapId: number, spamData: { isSpam: boolean }): Promise<AdminMap> {
+  updateMapSpamStatus(mapId: number, spamData: { spam: boolean }): Promise<AdminMap> {
     console.log('MockAdminClient: Updating map spam status', mapId, spamData);
 
     const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
@@ -596,15 +596,15 @@ class MockAdminClient implements AdminClientInterface {
 
     const updatedMap = {
       ...this.adminMaps[mapIndex],
-      isSpam: spamData.isSpam,
+      spam: spamData.spam,
       // Update spam-related fields when marking as spam
-      ...(spamData.isSpam && {
+      ...(spamData.spam && {
         spamType: 'MANUAL',
         spamDetectedDate: new Date().toISOString(),
         spamDescription: 'Manually marked as spam by admin',
       }),
       // Clear spam fields when marking as not spam
-      ...(!spamData.isSpam && {
+      ...(!spamData.spam && {
         spamType: undefined,
         spamDetectedDate: undefined,
         spamDescription: undefined,

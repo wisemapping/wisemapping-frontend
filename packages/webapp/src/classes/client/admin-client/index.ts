@@ -98,7 +98,7 @@ export interface AdminMap {
   isLockedBy?: string;
   starred: boolean;
   labels: string[];
-  isSpam?: boolean;
+  spam?: boolean;
   spamType?: string;
   spamDetectedDate?: string;
   spamDescription?: string;
@@ -166,7 +166,7 @@ export interface AdminClientInterface {
 
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse>;
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap>;
-  updateMapSpamStatus(mapId: number, spamData: { isSpam: boolean }): Promise<AdminMap>;
+  updateMapSpamStatus(mapId: number, spamData: { spam: boolean }): Promise<AdminMap>;
   deleteAdminMap(mapId: number): Promise<void>;
   getAdminMapXml(mapId: number): Promise<string>;
 
@@ -346,7 +346,7 @@ export default class AdminClient implements AdminClientInterface {
       });
   }
 
-  updateMapSpamStatus(mapId: number, spamData: { isSpam: boolean }): Promise<AdminMap> {
+  updateMapSpamStatus(mapId: number, spamData: { spam: boolean }): Promise<AdminMap> {
     return this.axios
       .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}/spam`, spamData)
       .then((response) => response.data)
