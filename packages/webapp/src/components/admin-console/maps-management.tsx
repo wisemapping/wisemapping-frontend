@@ -114,7 +114,7 @@ interface AdminMap {
   lastModificationBy: string;
   lastModificationById: number;
   lastModificationTime: string;
-  isPublic: boolean;
+  public: boolean;
   isLocked: boolean;
   isLockedBy?: string;
   starred: boolean;
@@ -125,7 +125,7 @@ interface AdminMap {
 interface MapFormData {
   title: string;
   description: string;
-  isPublic: boolean;
+  public: boolean;
   isLocked: boolean;
 }
 
@@ -136,7 +136,7 @@ type SortField =
   | 'createdById'
   | 'creationTime'
   | 'lastModificationTime'
-  | 'isPublic';
+  | 'public';
 type SortDirection = 'asc' | 'desc';
 
 interface MapsManagementProps {
@@ -179,7 +179,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [formData, setFormData] = useState<MapFormData>({
     title: '',
     description: '',
-    isPublic: false,
+    public: false,
     isLocked: false,
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -249,7 +249,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
         setFormData({
           title: '',
           description: '',
-          isPublic: false,
+          public: false,
           isLocked: false,
         });
         setFormErrors({});
@@ -290,7 +290,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     setFormData({
       title: map.title,
       description: map.description,
-      isPublic: map.isPublic,
+      public: map.public,
       isLocked: map.isLocked,
     });
     setFormErrors({});
@@ -652,7 +652,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                   <TableCell>{formatDate(map.lastModificationTime)}</TableCell>
                   <TableCell>
                     <Box display="flex" gap={1} flexWrap="wrap">
-                      {getPublicChip(map.isPublic)}
+                      {getPublicChip(map.public)}
                       {getLockedChip(map.isLocked, map.isLockedBy)}
                     </Box>
                   </TableCell>
@@ -807,11 +807,9 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             <FormControl fullWidth>
               <InputLabel>Public Access</InputLabel>
               <Select
-                value={formData.isPublic ? 'public' : 'private'}
+                value={formData.public ? 'public' : 'private'}
                 label="Public Access"
-                onChange={(e) =>
-                  setFormData({ ...formData, isPublic: e.target.value === 'public' })
-                }
+                onChange={(e) => setFormData({ ...formData, public: e.target.value === 'public' })}
               >
                 <MenuItem value="private">Private</MenuItem>
                 <MenuItem value="public">Public</MenuItem>

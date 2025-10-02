@@ -210,7 +210,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'admin@wisemapping.com',
       lastModificationById: 1,
       lastModificationTime: '2023-01-15T14:30:00Z',
-      isPublic: true,
+      public: true,
       isLocked: false,
       starred: true,
       labels: ['Sample', 'Demo'],
@@ -226,7 +226,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'user@wisemapping.com',
       lastModificationById: 2,
       lastModificationTime: '2023-03-01T09:15:00Z',
-      isPublic: false,
+      public: false,
       isLocked: false,
       starred: false,
       labels: ['Project', 'Private'],
@@ -242,7 +242,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'john.doe@example.com',
       lastModificationById: 3,
       lastModificationTime: '2023-04-10T16:45:00Z',
-      isPublic: false,
+      public: false,
       isLocked: true,
       isLockedBy: 'john.doe@example.com',
       starred: false,
@@ -259,7 +259,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'admin@wisemapping.com',
       lastModificationById: 1,
       lastModificationTime: '2023-04-25T12:20:00Z',
-      isPublic: true,
+      public: true,
       isLocked: false,
       starred: true,
       labels: ['Knowledge', 'Public', 'Reference'],
@@ -275,7 +275,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'spammer@fake.com',
       lastModificationById: 5,
       lastModificationTime: '2023-05-01T12:00:00Z',
-      isPublic: true,
+      public: true,
       isLocked: false,
       starred: false,
       labels: [],
@@ -294,7 +294,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'marketing@wisemapping.com',
       lastModificationById: 6,
       lastModificationTime: '2023-06-15T14:20:00Z',
-      isPublic: false,
+      public: false,
       isLocked: false,
       starred: false,
       labels: ['Marketing', 'Strategy'],
@@ -310,7 +310,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'product@wisemapping.com',
       lastModificationById: 7,
       lastModificationTime: '2023-06-25T16:45:00Z',
-      isPublic: false,
+      public: false,
       isLocked: false,
       starred: true,
       labels: ['Product', 'Roadmap', 'Planning'],
@@ -326,7 +326,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'hr@wisemapping.com',
       lastModificationById: 8,
       lastModificationTime: '2023-07-10T13:30:00Z',
-      isPublic: false,
+      public: false,
       isLocked: true,
       isLockedBy: 'hr@wisemapping.com',
       starred: false,
@@ -343,7 +343,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'finance@wisemapping.com',
       lastModificationById: 9,
       lastModificationTime: '2023-07-20T12:00:00Z',
-      isPublic: false,
+      public: false,
       isLocked: false,
       starred: true,
       labels: ['Finance', 'Budget', 'Planning'],
@@ -359,7 +359,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'support@wisemapping.com',
       lastModificationById: 10,
       lastModificationTime: '2023-08-15T09:30:00Z',
-      isPublic: true,
+      public: true,
       isLocked: false,
       starred: false,
       labels: ['Customer', 'Feedback', 'Analysis'],
@@ -375,7 +375,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'tech@wisemapping.com',
       lastModificationById: 11,
       lastModificationTime: '2023-08-25T11:45:00Z',
-      isPublic: false,
+      public: false,
       isLocked: false,
       starred: true,
       labels: ['Technical', 'Architecture', 'System'],
@@ -391,7 +391,7 @@ class MockAdminClient implements AdminClientInterface {
       lastModificationBy: 'spammer2@fake.com',
       lastModificationById: 12,
       lastModificationTime: '2023-09-01T12:00:00Z',
-      isPublic: true,
+      public: true,
       isLocked: false,
       starred: false,
       labels: [],
@@ -533,7 +533,7 @@ class MockAdminClient implements AdminClientInterface {
 
     // Apply filters
     if (params?.filterPublic !== undefined) {
-      filteredMaps = filteredMaps.filter((map) => map.isPublic === params.filterPublic);
+      filteredMaps = filteredMaps.filter((map) => map.public === params.filterPublic);
     }
 
     if (params?.filterLocked !== undefined) {
@@ -641,7 +641,7 @@ class MockAdminClient implements AdminClientInterface {
   <creation-time>${map.creationTime}</creation-time>
   <last-modification-by>${map.lastModificationBy}</last-modification-by>
   <last-modification-time>${map.lastModificationTime}</last-modification-time>
-  <is-public>${map.isPublic}</is-public>
+  <is-public>${map.public}</is-public>
   <is-locked>${map.isLocked}</is-locked>
   <labels>
     ${map.labels.map((label) => `<label>${label}</label>`).join('\n    ')}

@@ -93,7 +93,7 @@ export interface AdminMap {
   lastModificationBy: string;
   lastModificationById: number;
   lastModificationTime: string;
-  isPublic: boolean;
+  public: boolean;
   isLocked: boolean;
   isLockedBy?: string;
   starred: boolean;
@@ -503,7 +503,7 @@ export default class AdminClient implements AdminClientInterface {
       lastModificationTime: new Date().toISOString(),
       starred: false,
       description: '',
-      isPublic: false,
+      public: false,
       role: 'owner',
     });
   }
