@@ -55,7 +55,6 @@ import {
   Lock as LockIcon,
   Star as StarIcon,
   Code as CodeIcon,
-  Visibility as VisibilityIcon,
   Flag as FlagIcon,
   CheckCircle as CheckCircleIcon,
 } from '@mui/icons-material';
