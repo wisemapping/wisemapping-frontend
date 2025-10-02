@@ -399,12 +399,18 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
           })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          disabled={isLoading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
             ),
+            endAdornment: isLoading ? (
+              <InputAdornment position="end">
+                <CircularProgress size={20} />
+              </InputAdornment>
+            ) : null,
           }}
           sx={{ minWidth: 200 }}
         />
@@ -415,6 +421,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             value={filterPublic}
             label="Public"
             onChange={(e) => setFilterPublic(e.target.value)}
+            disabled={isLoading}
+            endAdornment={isLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="public">Public</MenuItem>
@@ -428,6 +436,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             value={filterLocked}
             label="Locked"
             onChange={(e) => setFilterLocked(e.target.value)}
+            disabled={isLoading}
+            endAdornment={isLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="locked">Locked</MenuItem>
@@ -449,6 +459,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               defaultMessage: 'Spam',
             })}
             onChange={(e) => setFilterSpam(e.target.value)}
+            disabled={isLoading}
+            endAdornment={isLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="spam">Spam</MenuItem>
@@ -672,7 +684,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box display="flex" justifyContent="center" mt={3}>
+        <Box display="flex" justifyContent="center" alignItems="center" mt={3} gap={2}>
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -685,7 +697,9 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             shape="rounded"
             showFirstButton
             showLastButton
+            disabled={isLoading}
           />
+          {isLoading && <CircularProgress size={24} />}
         </Box>
       )}
 

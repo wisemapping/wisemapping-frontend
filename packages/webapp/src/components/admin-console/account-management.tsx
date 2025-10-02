@@ -414,12 +414,18 @@ const AccountManagement = (): ReactElement => {
               })}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              disabled={isLoading}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
                 ),
+                endAdornment: isLoading ? (
+                  <InputAdornment position="end">
+                    <CircularProgress size={20} />
+                  </InputAdornment>
+                ) : null,
               }}
               sx={{ minWidth: 250 }}
             />
@@ -430,6 +436,8 @@ const AccountManagement = (): ReactElement => {
                 value={filterStatus}
                 label="Status"
                 onChange={(e) => setFilterStatus(e.target.value)}
+                disabled={isLoading}
+                endAdornment={isLoading ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="active">Active</MenuItem>
@@ -444,6 +452,8 @@ const AccountManagement = (): ReactElement => {
                 value={filterAuthType}
                 label="Auth Type"
                 onChange={(e) => setFilterAuthType(e.target.value)}
+                disabled={isLoading}
+                endAdornment={isLoading ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="DATABASE">Database</MenuItem>
@@ -542,7 +552,7 @@ const AccountManagement = (): ReactElement => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <Box display="flex" justifyContent="center" mt={3}>
+        <Box display="flex" justifyContent="center" alignItems="center" mt={3} gap={2}>
           <Pagination
             count={totalPages}
             page={currentPage}
@@ -555,7 +565,9 @@ const AccountManagement = (): ReactElement => {
             shape="rounded"
             showFirstButton
             showLastButton
+            disabled={isLoading}
           />
+          {isLoading && <CircularProgress size={24} />}
         </Box>
       )}
 
