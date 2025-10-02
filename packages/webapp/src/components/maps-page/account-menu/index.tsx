@@ -34,6 +34,7 @@ import AdminPanelSettingsOutlined from '@mui/icons-material/AdminPanelSettingsOu
 import { useNavigate } from 'react-router';
 import { useFetchAccount } from '../../../classes/middleware';
 import { ClientContext } from '../../../classes/provider/client-context';
+import { useAdminPermissions } from '../../../classes/hooks/useAdminPermissions';
 
 type ActionType = 'change-password' | 'account-info' | undefined;
 const AccountMenu = (): React.ReactElement => {
@@ -59,6 +60,7 @@ const AccountMenu = (): React.ReactElement => {
   };
 
   const account = useFetchAccount();
+  const { isAdmin } = useAdminPermissions();
   return (
     <span>
       <Tooltip
@@ -110,17 +112,19 @@ const AccountMenu = (): React.ReactElement => {
           </MenuItem>
         )}
 
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            navigate('/c/admin');
-          }}
-        >
-          <ListItemIcon>
-            <AdminPanelSettingsOutlined fontSize="small" />
-          </ListItemIcon>
-          <FormattedMessage id="menu.admin-console" defaultMessage="Admin Console" />
-        </MenuItem>
+        {isAdmin && (
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              navigate('/c/admin');
+            }}
+          >
+            <ListItemIcon>
+              <AdminPanelSettingsOutlined fontSize="small" />
+            </ListItemIcon>
+            <FormattedMessage id="menu.admin-console" defaultMessage="Admin Console" />
+          </MenuItem>
+        )}
 
         <MenuItem onClick={handleClose}>
           <Link color="textSecondary" href="/c/logout" onClick={(e) => handleLogout(e)}>
