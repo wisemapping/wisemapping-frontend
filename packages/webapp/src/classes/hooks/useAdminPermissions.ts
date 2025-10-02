@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import { useFetchAccount } from '../middleware';
+import { useFetchAccountWithState } from '../middleware';
 
 interface AdminPermissionsState {
   isAdmin: boolean | null;
@@ -29,10 +29,10 @@ interface AdminPermissionsState {
  * This hook uses the isAdmin field from the user's account information
  */
 export const useAdminPermissions = (): AdminPermissionsState => {
-  const account = useFetchAccount();
+  const { data: account, isLoading, error } = useFetchAccountWithState();
 
-  // If account is not loaded yet, return loading state
-  if (!account) {
+  // If account is still loading, return loading state
+  if (isLoading) {
     return {
       isAdmin: null,
       loading: true,
@@ -40,9 +40,18 @@ export const useAdminPermissions = (): AdminPermissionsState => {
     };
   }
 
+  // If there was an error loading the account
+  if (error) {
+    return {
+      isAdmin: null,
+      loading: false,
+      error: error.msg || 'Failed to load account information',
+    };
+  }
+
   // If account is loaded, use the isAdmin field
   return {
-    isAdmin: account.isAdmin || false,
+    isAdmin: account?.isAdmin || false,
     loading: false,
     error: null,
   };

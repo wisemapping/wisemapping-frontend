@@ -557,6 +557,7 @@ export default class AdminClient implements AdminClientInterface {
       lastname: 'User',
       locale: { code: 'en', message: {}, label: 'English' },
       authenticationType: 'DATABASE',
+      isAdmin: true, // Admin client should always return admin user
     });
   }
 

@@ -78,3 +78,15 @@ export const useFetchAccount = (): AccountInfo | undefined => {
   });
   return data;
 };
+
+export const useFetchAccountWithState = (): {
+  data: AccountInfo | undefined;
+  isLoading: boolean;
+  error: ErrorInfo | null;
+} => {
+  const client = useContext(ClientContext);
+  const { data, isLoading, error } = useQuery<unknown, ErrorInfo, AccountInfo>('account', () => {
+    return client.fetchAccountInfo();
+  });
+  return { data, isLoading, error };
+};
