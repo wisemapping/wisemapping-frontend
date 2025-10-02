@@ -540,7 +540,7 @@ export default class RestClient implements Client {
               lastModificationBy: m.lastModifierUser,
               lastModificationTime: m.lastModificationTime,
               description: m.description,
-              isPublic: m['public'],
+              public: m['public'],
               role: m.role,
             };
           });

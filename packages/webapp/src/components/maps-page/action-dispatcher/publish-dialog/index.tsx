@@ -42,7 +42,7 @@ const PublishDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElemen
   const { data: map } = useFetchMapById(mapId);
 
   const client = useContext(ClientContext);
-  const [model, setModel] = React.useState<boolean>(map ? map.isPublic : false);
+  const [model, setModel] = React.useState<boolean>(map ? map.public : false);
   const [error, setError] = React.useState<ErrorInfo>();
   const [activeTab, setActiveTab] = React.useState('1');
   const queryClient = useQueryClient();

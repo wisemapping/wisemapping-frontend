@@ -81,7 +81,7 @@ class MockClient implements Client {
         lastModificationTime: modifiedTime,
         starred,
         description,
-        isPublic,
+        public: isPublic,
         role,
       };
     }
@@ -267,7 +267,7 @@ class MockClient implements Client {
   updateMapToPublic(id: number, isPublic: boolean): Promise<void> {
     const mapInfo = this.maps.find((m) => m.id == id);
     if (mapInfo) {
-      mapInfo.isPublic = isPublic;
+      mapInfo.public = isPublic;
     }
     return Promise.resolve();
   }
@@ -360,7 +360,7 @@ class MockClient implements Client {
         lastModificationTime: '2008-06-02T00:00:00Z',
         lastModificationBy: 'Berna',
         creationTime: '2008-06-02T00:00:00Z',
-        isPublic: false,
+        public: false,
         role: 'owner',
       };
       this.maps.push(newMap);

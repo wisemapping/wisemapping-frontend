@@ -55,7 +55,7 @@ export type MapInfo = {
   lastModificationBy: string;
   lastModificationTime: string;
   description: string;
-  isPublic: boolean;
+  public: boolean;
   role: Role;
 };
 

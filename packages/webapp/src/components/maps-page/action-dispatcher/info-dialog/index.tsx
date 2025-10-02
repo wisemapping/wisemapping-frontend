@@ -132,7 +132,7 @@ const InfoDialog = ({ mapId, onClose }: SimpleDialogProps): React.ReactElement =
             <Typography variant="caption" color="textPrimary" css={classes.textDesc}>
               <FormattedMessage id="info.public-visibility" defaultMessage="Publicly Visible" />:
             </Typography>
-            <Typography variant="body2">{Boolean(map?.isPublic).toString()}</Typography>
+            <Typography variant="body2">{Boolean(map?.public).toString()}</Typography>
           </ListItem>
         </Card>
       </Paper>

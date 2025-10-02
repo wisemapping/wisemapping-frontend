@@ -236,7 +236,7 @@ const mapsFilter = (filter: Filter, search: string): ((mapInfo: MapInfo) => bool
           mapInfo.labels.some((label) => label.id === (filter as LabelFilter).label.id);
         break;
       case 'public':
-        result = mapInfo.isPublic;
+        result = mapInfo.public;
         break;
       default:
         result = false;
