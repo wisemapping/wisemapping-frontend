@@ -36,7 +36,7 @@ const SystemInformation = (): ReactElement => {
   } = useQuery({
     queryKey: ['systemInfo', refreshKey],
     queryFn: () => client.getSystemInfo(),
-    refetchInterval: 30000, // Refresh every 30 seconds
+    refetchInterval: 120000, // Refresh every 2 minutes (less aggressive)
   });
 
   // Fetch system health
@@ -48,7 +48,7 @@ const SystemInformation = (): ReactElement => {
   } = useQuery({
     queryKey: ['systemHealth', refreshKey],
     queryFn: () => client.getSystemHealth(),
-    refetchInterval: 10000, // Refresh every 10 seconds
+    refetchInterval: 30000, // Refresh every 30 seconds (less aggressive)
   });
 
   const handleRefresh = () => {
