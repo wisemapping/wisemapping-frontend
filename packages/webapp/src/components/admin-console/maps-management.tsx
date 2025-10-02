@@ -161,11 +161,12 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
         filterLocked: filterLocked !== 'all' ? filterLocked === 'locked' : undefined,
         filterSpam: filterSpam !== 'all' ? filterSpam === 'spam' : undefined,
       };
+      console.log('Maps Query triggered with params:', params);
       return client.getAdminMaps(params);
     },
     {
       retry: 1,
-      staleTime: 30000, // 30 seconds
+      staleTime: 0, // Always refetch when query key changes
       keepPreviousData: true,
     },
   );
@@ -629,16 +630,23 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       </TableContainer>
 
       {/* Pagination */}
-      <Box display="flex" justifyContent="center" mt={3}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, page) => setCurrentPage(page)}
-          color="primary"
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      {totalPages > 1 && (
+        <Box display="flex" justifyContent="center" mt={3}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => {
+              console.log('Maps Pagination clicked:', { oldPage: currentPage, newPage: page });
+              setCurrentPage(page);
+            }}
+            color="primary"
+            variant="outlined"
+            shape="rounded"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
+      )}
 
       {/* Edit Map Dialog */}
       <Dialog

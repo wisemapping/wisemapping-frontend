@@ -144,11 +144,12 @@ const AccountManagement = (): ReactElement => {
         filterSuspended: filterSuspended !== 'all' ? filterSuspended === 'suspended' : undefined,
         filterAuthType: filterAuthType !== 'all' ? filterAuthType : undefined,
       };
+      console.log('Users Query triggered with params:', params);
       return client.getAdminUsers(params);
     },
     {
       retry: 1,
-      staleTime: 30000, // 30 seconds
+      staleTime: 0, // Always refetch when query key changes
       keepPreviousData: true,
     },
   );
@@ -540,16 +541,23 @@ const AccountManagement = (): ReactElement => {
       </TableContainer>
 
       {/* Pagination */}
-      <Box display="flex" justifyContent="center" mt={3}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, page) => setCurrentPage(page)}
-          color="primary"
-          showFirstButton
-          showLastButton
-        />
-      </Box>
+      {totalPages > 1 && (
+        <Box display="flex" justifyContent="center" mt={3}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => {
+              console.log('Users Pagination clicked:', { oldPage: currentPage, newPage: page });
+              setCurrentPage(page);
+            }}
+            color="primary"
+            variant="outlined"
+            shape="rounded"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
+      )}
 
       {/* Edit User Dialog */}
       <Dialog
