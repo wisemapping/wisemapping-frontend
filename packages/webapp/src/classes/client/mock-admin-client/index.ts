@@ -41,6 +41,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'DATABASE',
+      isAdmin: true,
     },
     {
       id: 2,
@@ -54,6 +55,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: false,
       authenticationType: 'GOOGLE_OAUTH2',
+      isAdmin: false,
     },
     {
       id: 3,
@@ -67,6 +69,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 4,
@@ -80,6 +83,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: true,
       allowSendEmail: false,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 5,
@@ -93,6 +97,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 6,
@@ -106,6 +111,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'GOOGLE_OAUTH2',
+      isAdmin: false,
     },
     {
       id: 7,
@@ -119,6 +125,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: false,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 8,
@@ -132,6 +139,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 9,
@@ -145,6 +153,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 10,
@@ -158,6 +167,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'GOOGLE_OAUTH2',
+      isAdmin: false,
     },
     {
       id: 11,
@@ -171,6 +181,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: false,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
     {
       id: 12,
@@ -184,6 +195,7 @@ class MockAdminClient implements AdminClientInterface {
       isSuspended: false,
       allowSendEmail: true,
       authenticationType: 'DATABASE',
+      isAdmin: false,
     },
   ];
 
@@ -688,6 +700,36 @@ class MockAdminClient implements AdminClientInterface {
       database: 'UP',
       memory: 'UP',
       memoryUsagePercent: 50.0,
+    });
+  }
+
+  suspendAdminUser(userId: number): Promise<AdminUser> {
+    console.log(`MockAdminClient: Suspending user ${userId}`);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.adminUsers.find((u) => u.id === userId);
+        if (user) {
+          user.isSuspended = true;
+          resolve({ ...user });
+        } else {
+          throw new Error(`User with ID ${userId} not found`);
+        }
+      }, 500);
+    });
+  }
+
+  unsuspendAdminUser(userId: number): Promise<AdminUser> {
+    console.log(`MockAdminClient: Unsuspending user ${userId}`);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.adminUsers.find((u) => u.id === userId);
+        if (user) {
+          user.isSuspended = false;
+          resolve({ ...user });
+        } else {
+          throw new Error(`User with ID ${userId} not found`);
+        }
+      }, 500);
     });
   }
 }

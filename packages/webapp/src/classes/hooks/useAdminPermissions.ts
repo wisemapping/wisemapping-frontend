@@ -16,11 +16,7 @@
  *   limitations under the License.
  */
 
-import { useState, useEffect, useContext } from 'react';
-import { ClientContext } from '../provider/client-context';
-import AppConfig from '../app-config';
-import { AdminClientInterface } from '../client/admin-client';
-import JwtTokenConfig from '../jwt-token-config';
+import { useFetchAccount } from '../middleware';
 
 interface AdminPermissionsState {
   isAdmin: boolean | null;
@@ -30,80 +26,24 @@ interface AdminPermissionsState {
 
 /**
  * Hook to check if the current user has admin permissions
- * This hook attempts to access admin endpoints to verify permissions
+ * This hook uses the isAdmin field from the user's account information
  */
 export const useAdminPermissions = (): AdminPermissionsState => {
-  const [state, setState] = useState<AdminPermissionsState>({
-    isAdmin: null,
-    loading: true,
-    error: null,
-  });
+  const account = useFetchAccount();
 
-  const client = useContext(ClientContext);
-
-  useEffect(() => {
-    const checkAdminPermissions = async () => {
-      setState((prev) => ({ ...prev, loading: true, error: null }));
-
-      try {
-        // Get the admin client to test permissions
-        const adminClient: AdminClientInterface = AppConfig.getAdminClient();
-
-        // Try to access a simple admin endpoint to check permissions
-        await adminClient.getAdminUsers({ page: 0, pageSize: 1 });
-
-        setState({
-          isAdmin: true,
-          loading: false,
-          error: null,
-        });
-      } catch (err: unknown) {
-        console.log('Admin permission check failed:', err);
-
-        const error = err as Record<string, unknown>;
-
-        // Handle CORS errors specifically
-        const errorMessage = error?.message as string;
-        if (
-          errorMessage?.includes('CORS') ||
-          errorMessage?.includes('Access-Control-Allow-Origin')
-        ) {
-          console.warn(
-            'CORS error detected - this may indicate the frontend and backend are on different domains',
-          );
-          setState({
-            isAdmin: false,
-            loading: false,
-            error: null, // Don't show error for CORS issues, just assume no admin access
-          });
-        } else if (error?.status === 403 || error?.status === 401) {
-          setState({
-            isAdmin: false,
-            loading: false,
-            error: 'Access denied. Admin permissions required.',
-          });
-        } else {
-          setState({
-            isAdmin: false,
-            loading: false,
-            error: 'Failed to verify admin permissions. Please try again.',
-          });
-        }
-      }
+  // If account is not loaded yet, return loading state
+  if (!account) {
+    return {
+      isAdmin: null,
+      loading: true,
+      error: null,
     };
+  }
 
-    // Only check permissions if user is authenticated (has JWT token)
-    const jwtToken = JwtTokenConfig.retreiveToken();
-    if (jwtToken) {
-      checkAdminPermissions();
-    } else {
-      setState({
-        isAdmin: false,
-        loading: false,
-        error: null,
-      });
-    }
-  }, [client]);
-
-  return state;
+  // If account is loaded, use the isAdmin field
+  return {
+    isAdmin: account.isAdmin || false,
+    loading: false,
+    error: null,
+  };
 };

@@ -242,6 +242,7 @@ class MockClient implements Client {
       email: 'test@example.com',
       locale: localeFromStr(locale),
       authenticationType: 'DATABASE',
+      isAdmin: true, // Mock admin user for testing
     });
   }
 

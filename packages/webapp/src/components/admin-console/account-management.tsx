@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -95,6 +95,7 @@ const AccountManagement = (): ReactElement => {
   const queryClient = useQueryClient();
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('email');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,7 +103,22 @@ const AccountManagement = (): ReactElement => {
   const [filterActive] = useState<string>('all');
   const [filterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
+  const [isFilterLoading, setIsFilterLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Set filter loading state when filters change
+  useEffect(() => {
+    setIsFilterLoading(true);
+  }, [debouncedSearchTerm, filterStatus, filterAuthType]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -126,7 +142,7 @@ const AccountManagement = (): ReactElement => {
       'adminUsers',
       currentPage,
       pageSize,
-      searchTerm,
+      debouncedSearchTerm,
       sortField,
       sortDirection,
       filterActive,
@@ -137,7 +153,7 @@ const AccountManagement = (): ReactElement => {
       const params: AdminUsersParams = {
         page: currentPage - 1, // Convert to 0-based indexing for backend
         pageSize,
-        search: searchTerm || undefined,
+        search: debouncedSearchTerm || undefined,
         sortBy: sortField,
         sortOrder: sortDirection,
         filterActive: filterActive !== 'all' ? filterActive === 'active' : undefined,
@@ -151,6 +167,10 @@ const AccountManagement = (): ReactElement => {
       retry: 1,
       staleTime: 0, // Always refetch when query key changes
       keepPreviousData: true,
+      onSettled: () => {
+        // Clear filter loading state when query completes
+        setIsFilterLoading(false);
+      },
     },
   );
 
@@ -352,7 +372,7 @@ const AccountManagement = (): ReactElement => {
                   variant="outlined"
                   startIcon={<RefreshIcon />}
                   onClick={() => refetch()}
-                  disabled={isLoading}
+                  disabled={isLoading || isFilterLoading}
                   sx={{ borderRadius: 2 }}
                 >
                   {intl.formatMessage({
@@ -414,18 +434,19 @@ const AccountManagement = (): ReactElement => {
               })}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              disabled={isLoading}
+              disabled={isLoading || isFilterLoading}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
                 ),
-                endAdornment: isLoading ? (
-                  <InputAdornment position="end">
-                    <CircularProgress size={20} />
-                  </InputAdornment>
-                ) : null,
+                endAdornment:
+                  isLoading || isFilterLoading ? (
+                    <InputAdornment position="end">
+                      <CircularProgress size={20} />
+                    </InputAdornment>
+                  ) : null,
               }}
               sx={{ minWidth: 250 }}
             />
@@ -436,8 +457,8 @@ const AccountManagement = (): ReactElement => {
                 value={filterStatus}
                 label="Status"
                 onChange={(e) => setFilterStatus(e.target.value)}
-                disabled={isLoading}
-                endAdornment={isLoading ? <CircularProgress size={20} /> : null}
+                disabled={isLoading || isFilterLoading}
+                endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="active">Active</MenuItem>
@@ -452,8 +473,8 @@ const AccountManagement = (): ReactElement => {
                 value={filterAuthType}
                 label="Auth Type"
                 onChange={(e) => setFilterAuthType(e.target.value)}
-                disabled={isLoading}
-                endAdornment={isLoading ? <CircularProgress size={20} /> : null}
+                disabled={isLoading || isFilterLoading}
+                endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
               >
                 <MenuItem value="all">All</MenuItem>
                 <MenuItem value="DATABASE">Database</MenuItem>
@@ -565,9 +586,9 @@ const AccountManagement = (): ReactElement => {
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isLoading}
+            disabled={isLoading || isFilterLoading}
           />
-          {isLoading && <CircularProgress size={24} />}
+          {(isLoading || isFilterLoading) && <CircularProgress size={24} />}
         </Box>
       )}
 

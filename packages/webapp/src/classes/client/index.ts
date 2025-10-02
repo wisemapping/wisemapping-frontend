@@ -102,6 +102,7 @@ export type AccountInfo = {
   email: string;
   locale?: Locale;
   authenticationType: AuthenticationType;
+  isAdmin?: boolean;
 };
 
 export type Permission = {

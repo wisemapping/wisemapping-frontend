@@ -45,6 +45,7 @@ import MapsManagement from './maps-management';
 import SystemInformation from './system-information';
 import AppConfig from '../../classes/app-config';
 import { adminConsoleStyles } from './styles';
+import { useAdminPermissions } from '../../classes/hooks/useAdminPermissions';
 
 const drawerWidth = 240;
 
@@ -67,46 +68,14 @@ const AdminConsole = ({
   const intl = useIntl();
   const client = AppConfig.getAdminClient();
   const [selectedMenuItem, setSelectedMenuItem] = useState(initialMenuItem);
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { isAdmin, loading, error } = useAdminPermissions();
 
   useEffect(() => {
     document.title = intl.formatMessage({
       id: 'admin.console.title',
       defaultMessage: 'Admin Console | WiseMapping',
     });
-
-    // Check if user has admin permissions
-    checkAdminPermissions();
   }, [intl]);
-
-  const checkAdminPermissions = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Try to access admin endpoint to check permissions
-      // This will work with both AdminClient (real API) and MockAdminClient (mock data)
-      await client.getAdminUsers();
-      setIsAdmin(true);
-    } catch (err: unknown) {
-      console.error('Admin permission check failed:', err);
-
-      if (
-        (err as Record<string, unknown>)?.status === 403 ||
-        (err as Record<string, unknown>)?.status === 401
-      ) {
-        setError('Access denied. Admin permissions required.');
-        setIsAdmin(false);
-      } else {
-        setError('Failed to verify admin permissions. Please try again.');
-        setIsAdmin(false);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleMenuItemClick = (menuId: string) => {
     setSelectedMenuItem(menuId);

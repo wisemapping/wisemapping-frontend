@@ -47,6 +47,7 @@ export interface AdminUser {
   isSuspended: boolean;
   allowSendEmail: boolean;
   authenticationType: string;
+  isAdmin?: boolean;
 }
 
 export interface AdminUsersResponse {
@@ -155,6 +156,8 @@ export interface AdminClientInterface {
     userData: Omit<AdminUser, 'id' | 'fullName'> & { password: string },
   ): Promise<AdminUser>;
   deleteAdminUser(userId: number): Promise<void>;
+  suspendAdminUser(userId: number): Promise<AdminUser>;
+  unsuspendAdminUser(userId: number): Promise<AdminUser>;
 
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse>;
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap>;
@@ -264,6 +267,26 @@ export default class AdminClient implements AdminClientInterface {
       .then(() => {})
       .catch((error) => {
         console.error('Failed to delete admin user:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  suspendAdminUser(userId: number): Promise<AdminUser> {
+    return this.axios
+      .put(`${this.baseUrl}/api/restful/admin/users/${userId}/suspend`)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error('Failed to suspend admin user:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  unsuspendAdminUser(userId: number): Promise<AdminUser> {
+    return this.axios
+      .put(`${this.baseUrl}/api/restful/admin/users/${userId}/unsuspend`)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error('Failed to unsuspend admin user:', error);
         throw this.parseResponseOnError(error.response);
       });
   }

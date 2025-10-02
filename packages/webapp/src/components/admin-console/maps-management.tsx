@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -149,6 +149,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const queryClient = useQueryClient();
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [currentPage, setCurrentPage] = useState(1);
@@ -156,7 +157,22 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [filterPublic, setFilterPublic] = useState<string>('all');
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
+  const [isFilterLoading, setIsFilterLoading] = useState(false);
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
+
+  // Debounce search term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Set filter loading state when filters change
+  useEffect(() => {
+    setIsFilterLoading(true);
+  }, [debouncedSearchTerm, filterPublic, filterLocked, filterSpam]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState<MapFormData>({
     title: '',
@@ -183,7 +199,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       'adminMaps',
       currentPage,
       pageSize,
-      searchTerm,
+      debouncedSearchTerm,
       sortField,
       sortDirection,
       filterPublic,
@@ -194,7 +210,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       const params: AdminMapsParams = {
         page: currentPage - 1, // Convert to 0-based indexing for backend
         pageSize,
-        search: searchTerm || undefined,
+        search: debouncedSearchTerm || undefined,
         sortBy: sortField,
         sortOrder: sortDirection,
         filterPublic: filterPublic !== 'all' ? filterPublic === 'public' : undefined,
@@ -208,6 +224,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       retry: 1,
       staleTime: 0, // Always refetch when query key changes
       keepPreviousData: true,
+      onSettled: () => {
+        // Clear filter loading state when query completes
+        setIsFilterLoading(false);
+      },
     },
   );
 
@@ -398,7 +418,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
           })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          disabled={isLoading}
+          disabled={isLoading || isFilterLoading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -420,8 +440,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             value={filterPublic}
             label="Public"
             onChange={(e) => setFilterPublic(e.target.value)}
-            disabled={isLoading}
-            endAdornment={isLoading ? <CircularProgress size={20} /> : null}
+            disabled={isLoading || isFilterLoading}
+            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="public">Public</MenuItem>
@@ -435,8 +455,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             value={filterLocked}
             label="Locked"
             onChange={(e) => setFilterLocked(e.target.value)}
-            disabled={isLoading}
-            endAdornment={isLoading ? <CircularProgress size={20} /> : null}
+            disabled={isLoading || isFilterLoading}
+            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="locked">Locked</MenuItem>
@@ -458,8 +478,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               defaultMessage: 'Spam',
             })}
             onChange={(e) => setFilterSpam(e.target.value)}
-            disabled={isLoading}
-            endAdornment={isLoading ? <CircularProgress size={20} /> : null}
+            disabled={isLoading || isFilterLoading}
+            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="spam">Spam</MenuItem>
@@ -696,9 +716,9 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isLoading}
+            disabled={isLoading || isFilterLoading}
           />
-          {isLoading && <CircularProgress size={24} />}
+          {(isLoading || isFilterLoading) && <CircularProgress size={24} />}
         </Box>
       )}
 

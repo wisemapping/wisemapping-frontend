@@ -358,6 +358,7 @@ export default class RestClient implements Client {
             email: account.email,
             locale: locale ? localeFromStr(locale) : undefined,
             authenticationType: account.authenticationType,
+            isAdmin: account.isAdmin,
           });
         })
         .catch((error) => {
