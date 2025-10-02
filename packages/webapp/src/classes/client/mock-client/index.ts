@@ -484,6 +484,64 @@ class MockClient implements Client {
   confirmAccountSync(): Promise<Oauth2CallbackResult> {
     return this.processGoogleCallback();
   }
+
+  // Admin methods (mock implementations)
+  getAdminUsers(): Promise<Record<string, unknown>[]> {
+    return Promise.resolve([
+      {
+        id: 1,
+        email: 'admin@example.com',
+        firstname: 'Admin',
+        lastname: 'User',
+        fullName: 'Admin User',
+        locale: 'en',
+        creationDate: '2023-01-01T00:00:00Z',
+        isActive: true,
+        isSuspended: false,
+        allowSendEmail: true,
+        authenticationType: 'DATABASE',
+      },
+      {
+        id: 2,
+        email: 'user@example.com',
+        firstname: 'Regular',
+        lastname: 'User',
+        fullName: 'Regular User',
+        locale: 'en',
+        creationDate: '2023-01-02T00:00:00Z',
+        isActive: true,
+        isSuspended: false,
+        allowSendEmail: false,
+        authenticationType: 'GOOGLE_OAUTH2',
+      },
+    ]);
+  }
+
+  updateAdminUser(
+    userId: number,
+    userData: Record<string, unknown>,
+  ): Promise<Record<string, unknown>> {
+    return Promise.resolve({
+      id: userId,
+      ...userData,
+      fullName: `${userData.firstname as string} ${userData.lastname as string}`,
+    });
+  }
+
+  createAdminUser(userData: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return Promise.resolve({
+      id: Math.floor(Math.random() * 1000),
+      ...userData,
+      fullName: `${userData.firstname as string} ${userData.lastname as string}`,
+      isActive: true,
+      isSuspended: false,
+      authenticationType: 'DATABASE',
+    });
+  }
+
+  deleteAdminUser(_userId: number): Promise<void> {
+    return Promise.resolve();
+  }
 }
 
 export default MockClient;

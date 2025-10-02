@@ -19,6 +19,8 @@
 import Client from '../client';
 import MockClient from '../client/mock-client';
 import RestClient from '../client/rest-client';
+import MockAdminClient from '../client/mock-admin-client';
+import AdminClient, { AdminClientInterface } from '../client/admin-client';
 
 type ConfigContainer = {
   type: 'remote' | 'static';
@@ -79,6 +81,7 @@ class AppConfig {
 
         this._config = result;
         console.log(`App Config: ${JSON.stringify(this._config)}`);
+        console.log(`App Config clientType: ${this._config.clientType}`);
       }
     } catch (e) {
       throw { msg: `Unexpected error application. Please, try latter. Detail: ${e.message}` };
@@ -89,6 +92,7 @@ class AppConfig {
 
   static isMockEnv(): boolean {
     const config = this.fetchOrGetConfig();
+    console.log('isMockEnv - config.clientType:', config.clientType);
     return config.clientType === 'mock';
   }
 
@@ -161,9 +165,40 @@ class AppConfig {
     }
 
     if (!result) {
-      console.log('Warning: Service using mock service client');
+      console.log('Warning: Service using mock client');
       result = new MockClient();
     }
+
+    return result;
+  }
+
+  static getAdminClient(): AdminClientInterface {
+    // If we're in mock mode, always use MockAdminClient for admin functionality
+    console.log('getAdminClient called - isMockEnv():', this.isMockEnv());
+    if (this.isMockEnv()) {
+      console.log('Mock environment detected, using MockAdminClient');
+      return new MockAdminClient();
+    }
+
+    let result: AdminClientInterface | undefined;
+    try {
+      if (this.isRestClient()) {
+        const apiBaseUrl = this.getApiBaseUrl();
+        if (!apiBaseUrl) {
+          throw new Error('API base URL is not configured');
+        }
+        result = new AdminClient(apiBaseUrl);
+      }
+    } catch (e) {
+      console.error('Admin client could not be initialized.');
+      console.error(e);
+    }
+
+    if (!result) {
+      console.log('Warning: Service using mock admin client');
+      result = new MockAdminClient();
+    }
+
     return result;
   }
 

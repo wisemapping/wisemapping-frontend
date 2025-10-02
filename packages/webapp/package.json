@@ -24,10 +24,10 @@
         "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
         "lint": "eslint src --ext js,ts,tsx",
         "lint:fix": "eslint src --ext js,ts,tsx --fix",
-        "start": "APP_CONFIG_TYPE='file:dev' webpack serve --config webpack.dev.js ",
+        "start": "webpack serve --config webpack.dev.js ",
         "test": "yarn test:integration",
         "test:integration": "npx start-server-and-test start http-get://localhost:3000 cy:run",
-        "start:dev": "APP_CONFIG_TYPE='file:dev'&& webpack serve --config webpack.dev.js "
+        "start:dev": "APP_CONFIG_TYPE='file:dev' webpack serve --config webpack.dev.js "
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",

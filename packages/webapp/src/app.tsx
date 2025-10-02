@@ -52,6 +52,7 @@ import AppConfig from './classes/app-config';
 
 const EditorPage = React.lazy(() => import('./components/editor-page'));
 const MapsPage = React.lazy(() => import('./components/maps-page'));
+const AdminConsole = React.lazy(() => import('./components/admin-console'));
 
 const PageEditorWrapper = ({ mode }: { mode: PageModeType }) => {
   const id = useParams().id;
@@ -106,6 +107,20 @@ const router = createBrowserRouter(
       <Route path="/c/forgot-password-success" element={<ForgotPasswordSuccessPage />} />
 
       <Route element={<CommonPage />}>
+        <Route
+          path="/c/admin"
+          element={
+            <Suspense
+              fallback={
+                <div>
+                  <FormattedMessage id="dialog.loading" defaultMessage="Loading ..." />
+                </div>
+              }
+            >
+              <AdminConsole />
+            </Suspense>
+          }
+        />
         <Route
           path="/c/maps/"
           element={

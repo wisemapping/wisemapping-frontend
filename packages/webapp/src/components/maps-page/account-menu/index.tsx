@@ -30,6 +30,7 @@ import ChangePasswordDialog from './change-password-dialog';
 import LockOpenOutlined from '@mui/icons-material/LockOpenOutlined';
 import Link from '@mui/material/Link';
 import ExitToAppOutlined from '@mui/icons-material/ExitToAppOutlined';
+import AdminPanelSettingsOutlined from '@mui/icons-material/AdminPanelSettingsOutlined';
 import { useNavigate } from 'react-router';
 import { useFetchAccount } from '../../../classes/middleware';
 import { ClientContext } from '../../../classes/provider/client-context';
@@ -108,6 +109,18 @@ const AccountMenu = (): React.ReactElement => {
             <FormattedMessage id="menu.change-password" defaultMessage="Change password" />
           </MenuItem>
         )}
+
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate('/c/admin');
+          }}
+        >
+          <ListItemIcon>
+            <AdminPanelSettingsOutlined fontSize="small" />
+          </ListItemIcon>
+          <FormattedMessage id="menu.admin-console" defaultMessage="Admin Console" />
+        </MenuItem>
 
         <MenuItem onClick={handleClose}>
           <Link color="textSecondary" href="/c/logout" onClick={(e) => handleLogout(e)}>
