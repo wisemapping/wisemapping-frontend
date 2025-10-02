@@ -24,6 +24,7 @@ import ZH from './zh';
 import JA from './ja';
 import PT from './pt';
 import IT from './it';
+import HI from './hi';
 
 interface LanguageBundle {
   [key: string]: {
@@ -41,6 +42,7 @@ const Bundle: LanguageBundle = {
   ja: JA,
   pt: PT,
   it: IT,
+  hi: HI,
 };
 
 export default Bundle;
