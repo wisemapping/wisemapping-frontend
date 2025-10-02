@@ -323,6 +323,9 @@ export default class AdminClient implements AdminClientInterface {
         queryParams.append('filterPublic', params.filterPublic.toString());
       if (params.filterLocked !== undefined)
         queryParams.append('filterLocked', params.filterLocked.toString());
+      if (params.filterSpam !== undefined)
+        queryParams.append('filterSpam', params.filterSpam.toString());
+      if (params.dateFilter) queryParams.append('dateFilter', params.dateFilter);
     }
 
     const url = `${this.baseUrl}/api/restful/admin/maps${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
@@ -337,8 +340,17 @@ export default class AdminClient implements AdminClientInterface {
   }
 
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap> {
+    // Convert AdminMap data to RestMap format for backend compatibility
+    const restMapData = {
+      id: mapId,
+      title: mapData.title,
+      description: mapData.description,
+      isPublic: mapData.public, // Convert 'public' to 'isPublic' for backend
+      isLocked: mapData.isLocked,
+    };
+
     return this.axios
-      .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}`, mapData)
+      .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}`, restMapData)
       .then((response) => response.data)
       .catch((error) => {
         console.error('Failed to update admin map:', error);
@@ -347,8 +359,10 @@ export default class AdminClient implements AdminClientInterface {
   }
 
   updateMapSpamStatus(mapId: number, spamData: { spam: boolean }): Promise<AdminMap> {
+    // Convert spam to isSpam for backend compatibility
+    const backendData = { isSpam: spamData.spam };
     return this.axios
-      .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}/spam`, spamData)
+      .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}/spam`, backendData)
       .then((response) => response.data)
       .catch((error) => {
         console.error('Failed to update map spam status:', error);
