@@ -107,6 +107,7 @@ const AccountManagement = (): ReactElement => {
   const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
   const [isFilterLoading, setIsFilterLoading] = useState(false);
+  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
   // Debounce search term
@@ -186,8 +187,9 @@ const AccountManagement = (): ReactElement => {
       staleTime: 0, // Always refetch when query key changes
       keepPreviousData: true,
       onSettled: () => {
-        // Clear filter loading state when query completes
+        // Clear filter and pagination loading states when query completes
         setIsFilterLoading(false);
+        setIsPaginationLoading(false);
       },
     },
   );
@@ -694,6 +696,7 @@ const AccountManagement = (): ReactElement => {
             page={currentPage}
             onChange={(event, page) => {
               console.log('Users Pagination clicked:', { oldPage: currentPage, newPage: page });
+              setIsPaginationLoading(true);
               setCurrentPage(page);
             }}
             color="primary"
@@ -701,9 +704,9 @@ const AccountManagement = (): ReactElement => {
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isLoading || isFilterLoading}
+            disabled={isLoading || isFilterLoading || isPaginationLoading}
           />
-          {(isLoading || isFilterLoading) && <CircularProgress size={24} />}
+          {(isLoading || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
         </Box>
       )}
 

@@ -158,6 +158,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
   const [isFilterLoading, setIsFilterLoading] = useState(false);
+  const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
 
   // Debounce search term
@@ -225,8 +226,9 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       staleTime: 0, // Always refetch when query key changes
       keepPreviousData: true,
       onSettled: () => {
-        // Clear filter loading state when query completes
+        // Clear filter and pagination loading states when query completes
         setIsFilterLoading(false);
+        setIsPaginationLoading(false);
       },
     },
   );
@@ -709,6 +711,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             page={currentPage}
             onChange={(event, page) => {
               console.log('Maps Pagination clicked:', { oldPage: currentPage, newPage: page });
+              setIsPaginationLoading(true);
               setCurrentPage(page);
             }}
             color="primary"
@@ -716,9 +719,9 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             shape="rounded"
             showFirstButton
             showLastButton
-            disabled={isLoading || isFilterLoading}
+            disabled={isLoading || isFilterLoading || isPaginationLoading}
           />
-          {(isLoading || isFilterLoading) && <CircularProgress size={24} />}
+          {(isLoading || isFilterLoading || isPaginationLoading) && <CircularProgress size={24} />}
         </Box>
       )}
 
