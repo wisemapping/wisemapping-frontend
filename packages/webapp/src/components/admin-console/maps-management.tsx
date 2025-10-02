@@ -63,6 +63,47 @@ import { AdminMapsParams } from '../../classes/client/admin-client';
 import AppConfig from '../../classes/app-config';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+// XML formatting utility
+const formatXml = (xml: string): string => {
+  if (!xml || xml.trim() === '') return '';
+
+  try {
+    // Basic XML formatting with proper indentation
+    let formatted = xml;
+    let indent = 0;
+    const tab = '  '; // 2 spaces for indentation
+
+    // Split by tags and process each part
+    formatted = formatted.replace(/></g, '>\n<');
+    const lines = formatted.split('\n');
+
+    const formattedLines = lines.map((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) return '';
+
+      // Decrease indent for closing tags
+      if (trimmed.startsWith('</')) {
+        indent = Math.max(0, indent - 1);
+      }
+
+      const indentedLine = tab.repeat(indent) + trimmed;
+
+      // Increase indent for opening tags (but not self-closing)
+      if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.endsWith('/>')) {
+        indent++;
+      }
+
+      return indentedLine;
+    });
+
+    return formattedLines.join('\n');
+  } catch (error) {
+    // If formatting fails, return original XML
+    console.warn('Failed to format XML:', error);
+    return xml;
+  }
+};
+
 // Types for maps management
 interface AdminMap {
   id: number;
@@ -801,7 +842,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                 multiline
                 rows={20}
                 fullWidth
-                value={xmlContent}
+                value={formatXml(xmlContent)}
                 variant="outlined"
                 InputProps={{
                   readOnly: true,
@@ -814,6 +855,8 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                         : theme.palette.grey[50],
                     '& .MuiInputBase-input': {
                       color: (theme) => theme.palette.text.primary,
+                      whiteSpace: 'pre',
+                      overflow: 'auto',
                     },
                   },
                 }}
@@ -836,16 +879,16 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             variant="contained"
             onClick={() => {
               if (xmlContent) {
-                navigator.clipboard.writeText(xmlContent);
+                navigator.clipboard.writeText(formatXml(xmlContent));
                 // You could add a snackbar notification here
               }
             }}
             disabled={!xmlContent || isLoadingXml}
-            startIcon={<VisibilityIcon />}
+            startIcon={<CodeIcon />}
           >
             {intl.formatMessage({
               id: 'admin.maps.xml-viewer.copy',
-              defaultMessage: 'Copy XML',
+              defaultMessage: 'Copy Formatted XML',
             })}
           </Button>
         </DialogActions>
