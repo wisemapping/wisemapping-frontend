@@ -208,7 +208,8 @@ const AdminConsole = ({
             boxSizing: 'border-box',
             position: 'relative',
             height: '100%',
-            backgroundColor: (theme) => theme.palette.grey[50],
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
             borderRight: (theme) => `1px solid ${theme.palette.divider}`,
           },
         }}
@@ -252,6 +253,9 @@ const AdminConsole = ({
                   },
                   '&:hover': {
                     backgroundColor: (theme) => theme.palette.action.hover,
+                  },
+                  '& .MuiListItemIcon-root': {
+                    color: (theme) => theme.palette.text.primary,
                   },
                 }}
               >
