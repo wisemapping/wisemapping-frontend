@@ -135,7 +135,7 @@ const AccountManagement = (): ReactElement => {
     ],
     () => {
       const params: AdminUsersParams = {
-        page: currentPage,
+        page: currentPage - 1, // Convert to 0-based indexing for backend
         pageSize,
         search: searchTerm || undefined,
         sortBy: sortField,
@@ -153,7 +153,7 @@ const AccountManagement = (): ReactElement => {
     },
   );
 
-  const users = usersResponse?.users || [];
+  const users = usersResponse?.data || [];
   const totalPages = usersResponse?.totalPages || 0;
 
   // Update user mutation

@@ -50,11 +50,13 @@ export interface AdminUser {
 }
 
 export interface AdminUsersResponse {
-  users: AdminUser[];
-  totalCount: number;
-  currentPage: number;
+  data: AdminUser[];
+  page: number;
   pageSize: number;
+  totalElements: number;
   totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
 }
 
 export interface AdminUsersParams {
@@ -96,11 +98,13 @@ export interface AdminMap {
 }
 
 export interface AdminMapsResponse {
-  maps: AdminMap[];
-  totalCount: number;
-  currentPage: number;
+  data: AdminMap[];
+  page: number;
   pageSize: number;
+  totalElements: number;
   totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
 }
 
 export interface SystemInfo {

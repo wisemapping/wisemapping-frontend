@@ -201,11 +201,13 @@ class MockAdminClient implements AdminClientInterface {
     const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
     return Promise.resolve({
-      users: paginatedUsers,
-      totalCount,
-      currentPage: page,
+      data: paginatedUsers,
+      page: page - 1, // Convert to 0-based indexing
       pageSize,
+      totalElements: totalCount,
       totalPages,
+      hasNext: page < totalPages,
+      hasPrevious: page > 1,
     });
   }
 
@@ -303,11 +305,13 @@ class MockAdminClient implements AdminClientInterface {
     const paginatedMaps = filteredMaps.slice(startIndex, endIndex);
 
     return Promise.resolve({
-      maps: paginatedMaps,
-      totalCount,
-      currentPage: page,
+      data: paginatedMaps,
+      page: page - 1, // Convert to 0-based indexing
       pageSize,
+      totalElements: totalCount,
       totalPages,
+      hasNext: page < totalPages,
+      hasPrevious: page > 1,
     });
   }
 

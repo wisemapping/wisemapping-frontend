@@ -147,7 +147,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     ],
     () => {
       const params: AdminMapsParams = {
-        page: currentPage,
+        page: currentPage - 1, // Convert to 0-based indexing for backend
         pageSize,
         search: searchTerm || undefined,
         sortBy: sortField,
@@ -164,7 +164,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     },
   );
 
-  const maps = mapsResponse?.maps || [];
+  const maps = mapsResponse?.data || [];
   const totalPages = mapsResponse?.totalPages || 0;
 
   // Update map mutation
