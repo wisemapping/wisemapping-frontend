@@ -174,7 +174,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   // Set filter loading state when filters change
   useEffect(() => {
     setIsFilterLoading(true);
-  }, [debouncedSearchTerm, filterPublic, filterLocked, filterSpam]);
+  }, [debouncedSearchTerm, filterPublic, filterLocked, filterSpam, dateFilter]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState<MapFormData>({
     title: '',
