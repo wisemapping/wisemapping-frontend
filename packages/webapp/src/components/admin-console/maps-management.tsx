@@ -157,6 +157,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [filterPublic, setFilterPublic] = useState<string>('all');
   const [filterLocked, setFilterLocked] = useState<string>('all');
   const [filterSpam, setFilterSpam] = useState<string>('all');
+  const [dateFilter, setDateFilter] = useState<string>('1');
   const [isFilterLoading, setIsFilterLoading] = useState(false);
   const [isPaginationLoading, setIsPaginationLoading] = useState(false);
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
@@ -206,6 +207,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       filterPublic,
       filterLocked,
       filterSpam,
+      dateFilter,
     ],
     () => {
       const params: AdminMapsParams = {
@@ -217,6 +219,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
         filterPublic: filterPublic !== 'all' ? filterPublic === 'public' : undefined,
         filterLocked: filterLocked !== 'all' ? filterLocked === 'locked' : undefined,
         filterSpam: filterSpam !== 'all' ? filterSpam === 'spam' : undefined,
+        dateFilter: dateFilter,
       };
       console.log('Maps Query triggered with params:', params);
       return client.getAdminMaps(params);
@@ -271,14 +274,18 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
 
   // Update spam status mutation
   const updateSpamStatusMutation = useMutation(
-    ({ mapId, isSpam }: { mapId: number; isSpam: boolean }) =>
-      client.updateMapSpamStatus(mapId, { isSpam }),
+    ({ mapId, isSpam }: { mapId: number; isSpam: boolean }) => {
+      console.log('🔄 Updating spam status for map:', mapId, 'isSpam:', isSpam);
+      return client.updateMapSpamStatus(mapId, { isSpam });
+    },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        console.log('✅ Spam status updated successfully:', data);
         queryClient.invalidateQueries('adminMaps');
       },
       onError: (error: Error) => {
-        console.error('Failed to update spam status:', error);
+        console.error('❌ Failed to update spam status:', error);
+        console.error('Error details:', error.message, error.stack);
       },
     },
   );
@@ -319,10 +326,15 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   };
 
   const handleToggleSpamStatus = (mapId: number, currentSpamStatus: boolean) => {
+    console.log('🎯 handleToggleSpamStatus called:', { mapId, currentSpamStatus });
     const newSpamStatus = !currentSpamStatus;
     const action = newSpamStatus ? 'mark as spam' : 'mark as not spam';
+    console.log('🎯 Action to perform:', action, 'newSpamStatus:', newSpamStatus);
     if (window.confirm(`Are you sure you want to ${action} this map?`)) {
+      console.log('🎯 User confirmed, calling mutation...');
       updateSpamStatusMutation.mutate({ mapId, isSpam: newSpamStatus });
+    } else {
+      console.log('🎯 User cancelled the action');
     }
   };
 
@@ -486,6 +498,32 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="spam">Spam</MenuItem>
             <MenuItem value="not-spam">Not Spam</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Date Filter */}
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel id="date-filter-label">
+            {intl.formatMessage({
+              id: 'admin.maps.filter.date',
+              defaultMessage: 'Date Range',
+            })}
+          </InputLabel>
+          <Select
+            labelId="date-filter-label"
+            value={dateFilter}
+            label={intl.formatMessage({
+              id: 'admin.maps.filter.date',
+              defaultMessage: 'Date Range',
+            })}
+            onChange={(e) => setDateFilter(e.target.value)}
+            disabled={isLoading || isFilterLoading}
+            endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+          >
+            <MenuItem value="1">Last 1 Month</MenuItem>
+            <MenuItem value="3">Last 3 Months</MenuItem>
+            <MenuItem value="6">Last 6 Months</MenuItem>
+            <MenuItem value="all">All Time</MenuItem>
           </Select>
         </FormControl>
       </Box>

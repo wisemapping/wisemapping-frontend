@@ -80,6 +80,7 @@ export interface AdminMapsParams {
   filterPublic?: boolean;
   filterLocked?: boolean;
   filterSpam?: boolean;
+  dateFilter?: string;
 }
 
 export interface AdminMap {
