@@ -43,7 +43,6 @@ import {
 import AccountManagement from './account-management';
 import MapsManagement from './maps-management';
 import SystemInformation from './system-information';
-import AppConfig from '../../classes/app-config';
 import { adminConsoleStyles } from './styles';
 import { useAdminPermissions } from '../../classes/hooks/useAdminPermissions';
 
@@ -66,7 +65,6 @@ const AdminConsole = ({
   onNavigateToUser,
 }: AdminConsoleProps = {}): ReactElement => {
   const intl = useIntl();
-  const client = AppConfig.getAdminClient();
   const [selectedMenuItem, setSelectedMenuItem] = useState(initialMenuItem);
   const { isAdmin, loading, error } = useAdminPermissions();
 
