@@ -59,6 +59,8 @@ import {
   Add as AddIcon,
   Refresh as RefreshIcon,
   Person as PersonIcon,
+  Block as BlockIcon,
+  CheckCircle as CheckCircleIcon,
 } from '@mui/icons-material';
 import { AdminUsersParams } from '../../classes/client/admin-client';
 import AppConfig from '../../classes/app-config';
@@ -72,8 +74,9 @@ interface User {
   fullName: string;
   locale: string;
   creationDate: string;
-  isActive: boolean;
   isSuspended: boolean;
+  suspensionReason?: string;
+  suspendedDate?: string;
   allowSendEmail: boolean;
   authenticationType: string;
 }
@@ -101,7 +104,7 @@ const AccountManagement = (): ReactElement => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
   const [filterActive] = useState<string>('all');
-  const [filterSuspended] = useState<string>('all');
+  const [filterSuspended, setFilterSuspended] = useState<string>('all');
   const [filterAuthType, setFilterAuthType] = useState<string>('all');
   const [isFilterLoading, setIsFilterLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -118,7 +121,7 @@ const AccountManagement = (): ReactElement => {
   // Set filter loading state when filters change
   useEffect(() => {
     setIsFilterLoading(true);
-  }, [debouncedSearchTerm, filterStatus, filterAuthType]);
+  }, [debouncedSearchTerm, filterStatus, filterAuthType, filterSuspended]);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -130,6 +133,21 @@ const AccountManagement = (): ReactElement => {
     allowSendEmail: false,
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  // Suspension dialog state
+  const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
+  const [suspendingUser, setSuspendingUser] = useState<User | null>(null);
+  const [suspensionReason, setSuspensionReason] = useState<string>('');
+
+  // Suspension reasons
+  const suspensionReasons = [
+    { value: 'ABUSE', label: 'Abuse' },
+    { value: 'TERMS_VIOLATION', label: 'Terms Violation' },
+    { value: 'SECURITY_CONCERN', label: 'Security Concern' },
+    { value: 'MANUAL_REVIEW', label: 'Manual Review' },
+    { value: 'INACTIVITY', label: 'Inactivity' },
+    { value: 'OTHER', label: 'Other' },
+  ];
 
   // Fetch users
   const {
@@ -237,6 +255,36 @@ const AccountManagement = (): ReactElement => {
     },
   });
 
+  // Suspend user mutation
+  const suspendUserMutation = useMutation(
+    ({ userId, reason }: { userId: number; reason?: string }) =>
+      client.updateUserSuspension(userId, { suspended: true, suspensionReason: reason }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('adminUsers');
+        setIsSuspensionDialogOpen(false);
+        setSuspendingUser(null);
+        setSuspensionReason('');
+      },
+      onError: (error: Error) => {
+        console.error('Failed to suspend user:', error);
+      },
+    },
+  );
+
+  // Unsuspend user mutation
+  const unsuspendUserMutation = useMutation(
+    (userId: number) => client.updateUserSuspension(userId, { suspended: false }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('adminUsers');
+      },
+      onError: (error: Error) => {
+        console.error('Failed to unsuspend user:', error);
+      },
+    },
+  );
+
   // TODO: Implement filtering and sorting functionality
 
   const handleSort = (field: SortField) => {
@@ -320,17 +368,50 @@ const AccountManagement = (): ReactElement => {
     }
   };
 
+  const handleSuspendUser = (user: User) => {
+    setSuspendingUser(user);
+    setIsSuspensionDialogOpen(true);
+    setSuspensionReason('');
+  };
+
+  const handleUnsuspendUser = (userId: number, userEmail: string) => {
+    if (window.confirm(`Are you sure you want to unsuspend user "${userEmail}"?`)) {
+      unsuspendUserMutation.mutate(userId);
+    }
+  };
+
+  const handleConfirmSuspension = () => {
+    if (suspendingUser) {
+      suspendUserMutation.mutate({
+        userId: suspendingUser.id,
+        reason: suspensionReason || undefined,
+      });
+    }
+  };
+
+  const handleCancelSuspension = () => {
+    setIsSuspensionDialogOpen(false);
+    setSuspendingUser(null);
+    setSuspensionReason('');
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
 
   const getStatusChip = (user: User) => {
     if (user.isSuspended) {
-      return <Chip label="Suspended" color="error" size="small" />;
-    } else if (user.isActive) {
-      return <Chip label="Active" color="success" size="small" />;
+      const reason = user.suspensionReason ? ` (${user.suspensionReason})` : '';
+      const tooltip = user.suspendedDate
+        ? `Suspended on: ${formatDate(user.suspendedDate)}`
+        : 'Suspended';
+      return (
+        <Tooltip title={tooltip}>
+          <Chip label={`Suspended${reason}`} color="error" size="small" />
+        </Tooltip>
+      );
     } else {
-      return <Chip label="Inactive" color="default" size="small" />;
+      return <Chip label="Active" color="success" size="small" />;
     }
   };
 
@@ -482,6 +563,21 @@ const AccountManagement = (): ReactElement => {
                 <MenuItem value="FACEBOOK_OAUTH2">Facebook</MenuItem>
               </Select>
             </FormControl>
+
+            <FormControl sx={{ minWidth: 150 }}>
+              <InputLabel>Suspension Status</InputLabel>
+              <Select
+                value={filterSuspended}
+                label="Suspension Status"
+                onChange={(e) => setFilterSuspended(e.target.value)}
+                disabled={isLoading || isFilterLoading}
+                endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
+              >
+                <MenuItem value="all">All Users</MenuItem>
+                <MenuItem value="active">Active Only</MenuItem>
+                <MenuItem value="suspended">Suspended Only</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
         </CardContent>
       </Card>
@@ -555,6 +651,25 @@ const AccountManagement = (): ReactElement => {
                     <IconButton size="small" onClick={() => handleEditUser(user)} title="Edit user">
                       <EditIcon />
                     </IconButton>
+                    {user.isSuspended ? (
+                      <IconButton
+                        size="small"
+                        onClick={() => handleUnsuspendUser(user.id, user.email)}
+                        title="Unsuspend user"
+                        color="success"
+                      >
+                        <CheckCircleIcon />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        size="small"
+                        onClick={() => handleSuspendUser(user)}
+                        title="Suspend user"
+                        color="warning"
+                      >
+                        <BlockIcon />
+                      </IconButton>
+                    )}
                     <IconButton
                       size="small"
                       onClick={() => handleDeleteUser(user.id, user.email)}
@@ -754,6 +869,46 @@ const AccountManagement = (): ReactElement => {
             disabled={createUserMutation.isLoading}
           >
             {createUserMutation.isLoading ? 'Creating...' : 'Create User'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Suspension Dialog */}
+      <Dialog
+        open={isSuspensionDialogOpen}
+        onClose={handleCancelSuspension}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Suspend User</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            Are you sure you want to suspend user &quot;{suspendingUser?.email}&quot;?
+          </Typography>
+          <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel>Suspension Reason</InputLabel>
+            <Select
+              value={suspensionReason}
+              onChange={(e) => setSuspensionReason(e.target.value)}
+              label="Suspension Reason"
+            >
+              {suspensionReasons.map((reason) => (
+                <MenuItem key={reason.value} value={reason.value}>
+                  {reason.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelSuspension}>Cancel</Button>
+          <Button
+            onClick={handleConfirmSuspension}
+            color="error"
+            variant="contained"
+            disabled={suspendUserMutation.isLoading}
+          >
+            {suspendUserMutation.isLoading ? 'Suspending...' : 'Suspend User'}
           </Button>
         </DialogActions>
       </Dialog>

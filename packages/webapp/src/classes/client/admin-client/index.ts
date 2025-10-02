@@ -156,6 +156,10 @@ export interface AdminClientInterface {
     userData: Omit<AdminUser, 'id' | 'fullName'> & { password: string },
   ): Promise<AdminUser>;
   deleteAdminUser(userId: number): Promise<void>;
+  updateUserSuspension(
+    userId: number,
+    suspensionData: { suspended: boolean; suspensionReason?: string },
+  ): Promise<AdminUser>;
   suspendAdminUser(userId: number): Promise<AdminUser>;
   unsuspendAdminUser(userId: number): Promise<AdminUser>;
 
@@ -267,6 +271,19 @@ export default class AdminClient implements AdminClientInterface {
       .then(() => {})
       .catch((error) => {
         console.error('Failed to delete admin user:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  updateUserSuspension(
+    userId: number,
+    suspensionData: { suspended: boolean; suspensionReason?: string },
+  ): Promise<AdminUser> {
+    return this.axios
+      .put(`${this.baseUrl}/api/restful/admin/users/${userId}/suspension`, suspensionData)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error('Failed to update user suspension:', error);
         throw this.parseResponseOnError(error.response);
       });
   }

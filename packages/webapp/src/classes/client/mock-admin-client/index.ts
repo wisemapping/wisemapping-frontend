@@ -703,6 +703,39 @@ class MockAdminClient implements AdminClientInterface {
     });
   }
 
+  updateUserSuspension(
+    userId: number,
+    suspensionData: { suspended: boolean; suspensionReason?: string },
+  ): Promise<AdminUser> {
+    console.log(`MockAdminClient: Updating suspension for user ${userId}`, suspensionData);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const user = this.adminUsers.find((u) => u.id === userId);
+        if (user) {
+          user.isSuspended = suspensionData.suspended;
+          if (suspensionData.suspended && suspensionData.suspensionReason) {
+            (
+              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
+            ).suspensionReason = suspensionData.suspensionReason;
+            (
+              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
+            ).suspendedDate = new Date().toISOString();
+          } else if (!suspensionData.suspended) {
+            (
+              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
+            ).suspensionReason = undefined;
+            (
+              user as AdminUser & { suspensionReason?: string; suspendedDate?: string }
+            ).suspendedDate = undefined;
+          }
+          resolve({ ...user });
+        } else {
+          throw new Error(`User with ID ${userId} not found`);
+        }
+      }, 500);
+    });
+  }
+
   suspendAdminUser(userId: number): Promise<AdminUser> {
     console.log(`MockAdminClient: Suspending user ${userId}`);
     return new Promise((resolve) => {
