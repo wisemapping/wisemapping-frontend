@@ -92,7 +92,6 @@ class AppConfig {
 
   static isMockEnv(): boolean {
     const config = this.fetchOrGetConfig();
-    console.log('isMockEnv - config.clientType:', config.clientType);
     return config.clientType === 'mock';
   }
 
@@ -174,7 +173,6 @@ class AppConfig {
 
   static getAdminClient(): AdminClientInterface {
     // If we're in mock mode, always use MockAdminClient for admin functionality
-    console.log('getAdminClient called - isMockEnv():', this.isMockEnv());
     if (this.isMockEnv()) {
       console.log('Mock environment detected, using MockAdminClient');
       return new MockAdminClient();

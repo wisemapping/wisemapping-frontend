@@ -98,6 +98,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Sample', 'Demo'],
+      isSpam: false,
     },
     {
       id: 2,
@@ -113,6 +114,7 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: false,
       labels: ['Project', 'Private'],
+      isSpam: false,
     },
     {
       id: 3,
@@ -129,6 +131,7 @@ class MockAdminClient implements AdminClientInterface {
       isLockedBy: 'john.doe@example.com',
       starred: false,
       labels: ['Research', 'Work-in-Progress'],
+      isSpam: false,
     },
     {
       id: 4,
@@ -144,6 +147,26 @@ class MockAdminClient implements AdminClientInterface {
       isLocked: false,
       starred: true,
       labels: ['Knowledge', 'Public', 'Reference'],
+      isSpam: false,
+    },
+    {
+      id: 5,
+      title: 'Buy Cheap Products Now!',
+      description: 'Get the best deals on amazing products. Call now!',
+      createdBy: 'spammer@fake.com',
+      createdById: 5,
+      creationTime: '2023-05-01T12:00:00Z',
+      lastModificationBy: 'spammer@fake.com',
+      lastModificationById: 5,
+      lastModificationTime: '2023-05-01T12:00:00Z',
+      isPublic: true,
+      isLocked: false,
+      starred: false,
+      labels: [],
+      isSpam: true,
+      spamType: 'CONTACT_INFO',
+      spamDetectedDate: '2023-05-01T12:05:00Z',
+      spamDescription: 'Contains contact information and promotional content',
     },
   ];
 
@@ -192,7 +215,7 @@ class MockAdminClient implements AdminClientInterface {
     }
 
     // Pagination
-    const page = params?.page || 1;
+    const page = (params?.page ?? 0) + 1; // Convert 0-based to 1-based for calculation
     const pageSize = params?.pageSize || 10;
     const totalCount = filteredUsers.length;
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -202,7 +225,7 @@ class MockAdminClient implements AdminClientInterface {
 
     return Promise.resolve({
       data: paginatedUsers,
-      page: page - 1, // Convert to 0-based indexing
+      page: params?.page ?? 0, // Return the original 0-based page
       pageSize,
       totalElements: totalCount,
       totalPages,
@@ -285,6 +308,10 @@ class MockAdminClient implements AdminClientInterface {
       filteredMaps = filteredMaps.filter((map) => map.isLocked === params.filterLocked);
     }
 
+    if (params?.filterSpam !== undefined) {
+      filteredMaps = filteredMaps.filter((map) => map.isSpam === params.filterSpam);
+    }
+
     // Apply sorting
     if (params?.sortBy) {
       filteredMaps.sort((a, b) => {
@@ -296,7 +323,7 @@ class MockAdminClient implements AdminClientInterface {
     }
 
     // Pagination
-    const page = params?.page || 1;
+    const page = (params?.page ?? 0) + 1; // Convert 0-based to 1-based for calculation
     const pageSize = params?.pageSize || 10;
     const totalCount = filteredMaps.length;
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -306,7 +333,7 @@ class MockAdminClient implements AdminClientInterface {
 
     return Promise.resolve({
       data: paginatedMaps,
-      page: page - 1, // Convert to 0-based indexing
+      page: params?.page ?? 0, // Return the original 0-based page
       pageSize,
       totalElements: totalCount,
       totalPages,
@@ -323,6 +350,34 @@ class MockAdminClient implements AdminClientInterface {
       return Promise.reject(new Error('Map not found'));
     }
     const updatedMap = { ...this.adminMaps[mapIndex], ...mapData };
+    this.adminMaps[mapIndex] = updatedMap;
+    return Promise.resolve(updatedMap);
+  }
+
+  updateMapSpamStatus(mapId: number, spamData: { isSpam: boolean }): Promise<AdminMap> {
+    console.log('MockAdminClient: Updating map spam status', mapId, spamData);
+
+    const mapIndex = this.adminMaps.findIndex((map) => map.id === mapId);
+    if (mapIndex === -1) {
+      return Promise.reject(new Error('Map not found'));
+    }
+
+    const updatedMap = {
+      ...this.adminMaps[mapIndex],
+      isSpam: spamData.isSpam,
+      // Update spam-related fields when marking as spam
+      ...(spamData.isSpam && {
+        spamType: 'MANUAL',
+        spamDetectedDate: new Date().toISOString(),
+        spamDescription: 'Manually marked as spam by admin',
+      }),
+      // Clear spam fields when marking as not spam
+      ...(!spamData.isSpam && {
+        spamType: undefined,
+        spamDetectedDate: undefined,
+        spamDescription: undefined,
+      }),
+    };
     this.adminMaps[mapIndex] = updatedMap;
     return Promise.resolve(updatedMap);
   }

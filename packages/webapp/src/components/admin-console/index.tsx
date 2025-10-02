@@ -44,6 +44,7 @@ import AccountManagement from './account-management';
 import MapsManagement from './maps-management';
 import SystemInformation from './system-information';
 import AppConfig from '../../classes/app-config';
+import { adminConsoleStyles } from './styles';
 
 const drawerWidth = 240;
 
@@ -172,14 +173,7 @@ const AdminConsole = ({
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
       {/* App Bar */}
-      <AppBar
-        position="fixed"
-        sx={{
-          width: `calc(100% - ${drawerWidth}px)`,
-          ml: `${drawerWidth}px`,
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-      >
+      <AppBar position="fixed" sx={adminConsoleStyles.appBar}>
         <Toolbar>
           <AdminIcon sx={{ mr: 2 }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -198,22 +192,7 @@ const AdminConsole = ({
       </AppBar>
 
       {/* Left Navigation Panel */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            position: 'relative',
-            height: '100%',
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
-            borderRight: (theme) => `1px solid ${theme.palette.divider}`,
-          },
-        }}
-      >
+      <Drawer variant="permanent" sx={adminConsoleStyles.drawer}>
         <Box sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <AdminIcon color="primary" sx={{ mr: 1 }} />
@@ -238,26 +217,7 @@ const AdminConsole = ({
               <ListItemButton
                 selected={selectedMenuItem === item.id}
                 onClick={() => handleMenuItemClick(item.id)}
-                sx={{
-                  mx: 1,
-                  borderRadius: 1,
-                  '&.Mui-selected': {
-                    backgroundColor: (theme) => theme.palette.primary.main,
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: (theme) => theme.palette.primary.dark,
-                    },
-                    '& .MuiListItemIcon-root': {
-                      color: 'white',
-                    },
-                  },
-                  '&:hover': {
-                    backgroundColor: (theme) => theme.palette.action.hover,
-                  },
-                  '& .MuiListItemIcon-root': {
-                    color: (theme) => theme.palette.text.primary,
-                  },
-                }}
+                sx={adminConsoleStyles.navigationButton}
               >
                 <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
                 <ListItemText

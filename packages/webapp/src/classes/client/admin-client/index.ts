@@ -78,6 +78,7 @@ export interface AdminMapsParams {
   sortOrder?: 'asc' | 'desc';
   filterPublic?: boolean;
   filterLocked?: boolean;
+  filterSpam?: boolean;
 }
 
 export interface AdminMap {
@@ -95,6 +96,10 @@ export interface AdminMap {
   isLockedBy?: string;
   starred: boolean;
   labels: string[];
+  isSpam?: boolean;
+  spamType?: string;
+  spamDetectedDate?: string;
+  spamDescription?: string;
 }
 
 export interface AdminMapsResponse {
@@ -153,6 +158,7 @@ export interface AdminClientInterface {
 
   getAdminMaps(params?: AdminMapsParams): Promise<AdminMapsResponse>;
   updateAdminMap(mapId: number, mapData: Partial<AdminMap>): Promise<AdminMap>;
+  updateMapSpamStatus(mapId: number, spamData: { isSpam: boolean }): Promise<AdminMap>;
   deleteAdminMap(mapId: number): Promise<void>;
   getAdminMapXml(mapId: number): Promise<string>;
 
@@ -295,6 +301,16 @@ export default class AdminClient implements AdminClientInterface {
       .then((response) => response.data)
       .catch((error) => {
         console.error('Failed to update admin map:', error);
+        throw this.parseResponseOnError(error.response);
+      });
+  }
+
+  updateMapSpamStatus(mapId: number, spamData: { isSpam: boolean }): Promise<AdminMap> {
+    return this.axios
+      .put(`${this.baseUrl}/api/restful/admin/maps/${mapId}/spam`, spamData)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error('Failed to update map spam status:', error);
         throw this.parseResponseOnError(error.response);
       });
   }

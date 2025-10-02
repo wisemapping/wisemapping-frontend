@@ -56,6 +56,8 @@ import {
   Star as StarIcon,
   Code as CodeIcon,
   Visibility as VisibilityIcon,
+  Flag as FlagIcon,
+  CheckCircle as CheckCircleIcon,
 } from '@mui/icons-material';
 import { AdminMapsParams } from '../../classes/client/admin-client';
 import AppConfig from '../../classes/app-config';
@@ -77,6 +79,7 @@ interface AdminMap {
   isLockedBy?: string;
   starred: boolean;
   labels: string[];
+  isSpam?: boolean;
 }
 
 interface MapFormData {
@@ -112,6 +115,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [pageSize] = useState(10);
   const [filterPublic, setFilterPublic] = useState<string>('all');
   const [filterLocked, setFilterLocked] = useState<string>('all');
+  const [filterSpam, setFilterSpam] = useState<string>('all');
   const [editingMap, setEditingMap] = useState<AdminMap | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [formData, setFormData] = useState<MapFormData>({
@@ -144,6 +148,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       sortDirection,
       filterPublic,
       filterLocked,
+      filterSpam,
     ],
     () => {
       const params: AdminMapsParams = {
@@ -154,6 +159,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
         sortOrder: sortDirection,
         filterPublic: filterPublic !== 'all' ? filterPublic === 'public' : undefined,
         filterLocked: filterLocked !== 'all' ? filterLocked === 'locked' : undefined,
+        filterSpam: filterSpam !== 'all' ? filterSpam === 'spam' : undefined,
       };
       return client.getAdminMaps(params);
     },
@@ -200,6 +206,20 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     },
   });
 
+  // Update spam status mutation
+  const updateSpamStatusMutation = useMutation(
+    ({ mapId, isSpam }: { mapId: number; isSpam: boolean }) =>
+      client.updateMapSpamStatus(mapId, { isSpam }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('adminMaps');
+      },
+      onError: (error: Error) => {
+        console.error('Failed to update spam status:', error);
+      },
+    },
+  );
+
   const handleEditMap = (map: AdminMap) => {
     setEditingMap(map);
     setFormData({
@@ -232,6 +252,14 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const handleDeleteMap = (mapId: number, mapTitle: string) => {
     if (window.confirm(`Are you sure you want to delete the map "${mapTitle}"?`)) {
       deleteMapMutation.mutate(mapId);
+    }
+  };
+
+  const handleToggleSpamStatus = (mapId: number, currentSpamStatus: boolean) => {
+    const newSpamStatus = !currentSpamStatus;
+    const action = newSpamStatus ? 'mark as spam' : 'mark as not spam';
+    if (window.confirm(`Are you sure you want to ${action} this map?`)) {
+      updateSpamStatusMutation.mutate({ mapId, isSpam: newSpamStatus });
     }
   };
 
@@ -274,6 +302,20 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       size="small"
     />
   );
+
+  const getSpamChip = (isSpam: boolean, spamType?: string, spamDetectedDate?: string) => {
+    if (isSpam) {
+      return (
+        <Chip
+          label={`Spam (${spamType || 'Unknown'})`}
+          color="error"
+          size="small"
+          title={spamDetectedDate ? `Detected: ${formatDate(spamDetectedDate)}` : 'Spam detected'}
+        />
+      );
+    }
+    return <Chip label="Clean" color="success" size="small" />;
+  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -350,6 +392,27 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             <MenuItem value="unlocked">Unlocked</MenuItem>
           </Select>
         </FormControl>
+
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel>
+            {intl.formatMessage({
+              id: 'admin.maps.filter.spam',
+              defaultMessage: 'Spam',
+            })}
+          </InputLabel>
+          <Select
+            value={filterSpam}
+            label={intl.formatMessage({
+              id: 'admin.maps.filter.spam',
+              defaultMessage: 'Spam',
+            })}
+            onChange={(e) => setFilterSpam(e.target.value)}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="spam">Spam</MenuItem>
+            <MenuItem value="not-spam">Not Spam</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
 
       {/* Maps Table */}
@@ -411,19 +474,25 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                 </TableSortLabel>
               </TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>
+                {intl.formatMessage({
+                  id: 'admin.maps.table.spam',
+                  defaultMessage: 'Spam',
+                })}
+              </TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={10} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : maps.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={10} align="center">
                   <Typography variant="body2" color="text.secondary">
                     {intl.formatMessage({
                       id: 'admin.maps.no-maps',
@@ -484,6 +553,9 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                       {getLockedChip(map.isLocked, map.isLockedBy)}
                     </Box>
                   </TableCell>
+                  <TableCell>
+                    {getSpamChip(map.isSpam || false, map.spamType, map.spamDetectedDate)}
+                  </TableCell>
                   <TableCell align="center">
                     <Box display="flex" gap={0.5} justifyContent="center">
                       <Tooltip
@@ -514,6 +586,22 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                           size="small"
                         >
                           <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={intl.formatMessage({
+                          id: 'admin.maps.toggle-spam',
+                          defaultMessage: map.isSpam ? 'Mark as not spam' : 'Mark as spam',
+                        })}
+                      >
+                        <IconButton
+                          onClick={() => handleToggleSpamStatus(map.id, map.isSpam || false)}
+                          aria-label={map.isSpam ? 'mark-not-spam' : 'mark-spam'}
+                          color={map.isSpam ? 'success' : 'warning'}
+                          size="small"
+                          disabled={updateSpamStatusMutation.isLoading}
+                        >
+                          {map.isSpam ? <CheckCircleIcon /> : <FlagIcon />}
                         </IconButton>
                       </Tooltip>
                       <Tooltip
@@ -712,7 +800,13 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                   sx: {
                     fontFamily: 'monospace',
                     fontSize: '0.875rem',
-                    backgroundColor: (theme) => theme.palette.grey[50],
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? theme.palette.grey[900]
+                        : theme.palette.grey[50],
+                    '& .MuiInputBase-input': {
+                      color: (theme) => theme.palette.text.primary,
+                    },
                   },
                 }}
                 placeholder={intl.formatMessage({
