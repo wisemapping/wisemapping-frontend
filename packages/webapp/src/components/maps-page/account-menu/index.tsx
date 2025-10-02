@@ -98,7 +98,7 @@ const AccountMenu = (): React.ReactElement => {
           <FormattedMessage id="menu.account" defaultMessage="Account" />
         </MenuItem>
 
-        {account?.authenticationType !== 'GOOGLE_OAUTH2' && (
+        {account?.authenticationType === 'DATABASE' && (
           <MenuItem
             onClick={() => {
               handleClose();
