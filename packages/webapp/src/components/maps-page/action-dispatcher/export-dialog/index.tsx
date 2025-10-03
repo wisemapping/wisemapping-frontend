@@ -35,6 +35,7 @@ import {
   Mindmap,
   SizeType,
 } from '@wisemapping/editor';
+import ThemeType from '@wisemapping/mindplot/src/components/model/ThemeType';
 import { fetchMindmap } from '../../../editor-page/PersistenceManagerUtils';
 
 import Checkbox from '@mui/material/Checkbox';
@@ -68,6 +69,7 @@ const ExportDialog = ({
   );
 
   const [zoomToFit, setZoomToFit] = React.useState<boolean>(true);
+  const [exportTheme, setExportTheme] = React.useState<ThemeType>('prism');
 
   const classes = useStyles();
 
@@ -106,10 +108,15 @@ const ExportDialog = ({
     setZoomToFit(!zoomToFit);
   };
 
+  const handleOnThemeChange = (event): void => {
+    setExportTheme(event.target.value);
+  };
+
   const exporter = async (formatType: ExportFormat): Promise<string> => {
     let svgElement: Element | undefined;
     let size: SizeType;
     let mindmap: Mindmap;
+    let originalTheme: ThemeType | undefined;
 
     const designer: Designer = globalThis.designer;
     // exporting from editor toolbar action
@@ -120,9 +127,22 @@ const ExportDialog = ({
       svgElement = workspace.getSVGElement();
       size = { width: window.innerWidth, height: window.innerHeight };
       mindmap = designer.getMindmap();
+
+      // Store original theme and apply export theme
+      originalTheme = mindmap.getTheme();
+      if (originalTheme !== exportTheme) {
+        designer.applyTheme(exportTheme);
+        // Re-render to apply new theme
+        workspace.getSVGElement();
+      }
     } else {
       // exporting from map list
       mindmap = await fetchMindmap(mapId);
+      // Store original theme and apply export theme
+      originalTheme = mindmap.getTheme();
+      if (originalTheme !== exportTheme) {
+        mindmap.setTheme(exportTheme);
+      }
     }
 
     let exporter: Exporter;

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.0">
+  <sheet id="sheet1">
+    <topic id="topic1">
+      <title>Icon Test Map</title>
+      <children>
+        <topics type="attached">
+          <topic id="topic2">
+            <title>Priority Icons</title>
+            <markers>
+              <marker marker-id="priority-1"/>
+            </markers>
+            <children>
+              <topics type="attached">
+                <topic id="topic3">
+                  <title>Priority 2</title>
+                  <markers>
+                    <marker marker-id="priority-2"/>
+                  </markers>
+                </topic>
+                <topic id="topic4">
+                  <title>Priority 3</title>
+                  <markers>
+                    <marker marker-id="priority-3"/>
+                  </markers>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic5">
+            <title>Star Rating</title>
+            <markers>
+              <marker marker-id="star"/>
+            </markers>
+          </topic>
+          <topic id="topic6">
+            <title>Task Management</title>
+            <markers>
+              <marker marker-id="task-done"/>
+            </markers>
+            <children>
+              <topics type="attached">
+                <topic id="topic7">
+                  <title>In Progress</title>
+                  <markers>
+                    <marker marker-id="task-start"/>
+                  </markers>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic8">
+            <title>Emotions</title>
+            <markers>
+              <marker marker-id="smile"/>
+            </markers>
+            <children>
+              <topics type="attached">
+                <topic id="topic9">
+                  <title>Happy</title>
+                  <markers>
+                    <marker marker-id="happy"/>
+                  </markers>
+                </topic>
+                <topic id="topic10">
+                  <title>Thinking</title>
+                  <markers>
+                    <marker marker-id="thinking"/>
+                  </markers>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic11">
+            <title>Technology</title>
+            <markers>
+              <marker marker-id="computer"/>
+            </markers>
+            <children>
+              <topics type="attached">
+                <topic id="topic12">
+                  <title>Mobile</title>
+                  <markers>
+                    <marker marker-id="phone-mobile"/>
+                  </markers>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>

@@ -14,15 +14,18 @@
             <note><![CDATA[This is a note for Child 2]]></note>
         </topic>
         <topic position="-7.347880794884119e-14,-400" order="4" text="Child 3" shape="line" id="8">
-            <note><![CDATA[Markers: priority-1]]></note>
+            <eicon id="🔴"/>
+            <note><![CDATA[🔖 priority-1]]></note>
         <topic position="318.1980515339463,-318.19805153394645" order="0" text="Subchild" shape="line" id="9">
         </topic>
         </topic>
         <topic position="500,-1.2246467991473532e-13" order="5" text="Subchild" shape="line" id="10">
         </topic>
         <topic position="388.9087296526012,388.90872965260104" order="6" text="Child 4" shape="line" id="11">
-            <note><![CDATA[Another note with more details]]></note>
-            <note><![CDATA[Markers: priority-2, star]]></note>
+            <eicon id="🟡"/>
+            <eicon id="⭐"/>
+            <note><![CDATA[Another note with more details
+🔖 priority-2, 🔖 star]]></note>
         </topic>
     </topic>
 </map>
