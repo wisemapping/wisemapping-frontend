@@ -1,1 +1,29 @@
-<map name="freeplane-simple"><node TEXT="Freeplane Map Import Error"></node></map>
+<map name="freeplane-simple" version="tango">
+    <topic central="true" text="Central Topic" id="1">
+        <topic position="141,141" order="0" text="Child 1" shape="line" id="2">
+                <topic position="0,200" order="0" text="Grandchild 1" shape="line" id="3">
+                </topic>
+                <topic position="-141,141" order="1" text="Grandchild 2" shape="line" id="4">
+                </topic>
+        </topic>
+        <topic position="-200,0" order="1" text="Grandchild 1" shape="line" id="5">
+        </topic>
+        <topic position="-141,-141" order="2" text="Grandchild 2" shape="line" id="6">
+        </topic>
+        <topic position="0,-200" order="3" text="Child 2" shape="line" id="7">
+            <note><![CDATA[<html>
+          <head/>
+          <body>
+            <p>This is a note for Child 2</p>
+          </body>
+        </html>]]></note>
+        </topic>
+        <topic position="141,-141" order="4" text="Child 3" shape="line" id="8">
+            <eicon id="🔴"/>
+                <topic position="200,0" order="0" text="Subchild" shape="line" id="9">
+                </topic>
+        </topic>
+        <topic position="141,141" order="5" text="Subchild" shape="line" id="10">
+        </topic>
+    </topic>
+</map>

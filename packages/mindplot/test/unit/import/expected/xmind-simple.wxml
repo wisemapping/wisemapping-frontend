@@ -1,27 +1,27 @@
 <map name="xmind-simple" version="tango">
     <topic central="true" text="Central Topic" id="1">
-        <topic position="100,0" order="0" text="Child 1" shape="line" id="2">
-        <topic position="106.06601717798213,106.06601717798212" order="0" text="Grandchild 1" shape="line" id="3">
+        <topic  order="0" text="Child 1" shape="line" id="2">
+        <topic  order="0" text="Grandchild 1" shape="line" id="3">
         </topic>
-        <topic position="1.2246467991473532e-14,200" order="1" text="Grandchild 2" shape="line" id="4">
+        <topic  order="1" text="Grandchild 2" shape="line" id="4">
         </topic>
         </topic>
-        <topic position="-176.77669529663686,176.7766952966369" order="1" text="Grandchild 1" shape="line" id="5">
+        <topic  order="1" text="Grandchild 1" shape="line" id="5">
         </topic>
-        <topic position="-300,3.6739403974420595e-14" order="2" text="Grandchild 2" shape="line" id="6">
+        <topic  order="2" text="Grandchild 2" shape="line" id="6">
         </topic>
-        <topic position="-247.4873734152917,-247.48737341529161" order="3" text="Child 2" shape="line" id="7">
+        <topic order="3" text="Child 2" shape="line" id="7">
             <note><![CDATA[This is a note for Child 2]]></note>
         </topic>
-        <topic position="-7.347880794884119e-14,-400" order="4" text="Child 3" shape="line" id="8">
+        <topic order="4" text="Child 3" shape="line" id="8">
             <eicon id="🔴"/>
             <note><![CDATA[🔖 priority-1]]></note>
-        <topic position="318.1980515339463,-318.19805153394645" order="0" text="Subchild" shape="line" id="9">
+        <topic order="0" text="Subchild" shape="line" id="9">
         </topic>
         </topic>
-        <topic position="500,-1.2246467991473532e-13" order="5" text="Subchild" shape="line" id="10">
+        <topic order="5" text="Subchild" shape="line" id="10">
         </topic>
-        <topic position="388.9087296526012,388.90872965260104" order="6" text="Child 4" shape="line" id="11">
+        <topic order="6" text="Child 4" shape="line" id="11">
             <eicon id="🟡"/>
             <eicon id="⭐"/>
             <note><![CDATA[Another note with more details

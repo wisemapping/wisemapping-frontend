@@ -16,18 +16,11 @@
  *   limitations under the License.
  */
 import Importer from './Importer';
-import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
-import NoteModel from '../model/NoteModel';
-import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
-import ContentType from '../ContentType';
-import HtmlSanitizer from '../security/HtmlSanitizer';
 import SecureXmlParser from '../security/SecureXmlParser';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
-
-  private mindmap!: Mindmap;
+  private idCounter: number = 1;
 
   constructor(map: string) {
     super();
@@ -42,114 +35,471 @@ class FreeplaneImporter extends Importer {
         throw new Error('Failed to parse Freeplane XML - content may be unsafe');
       }
 
-      this.mindmap = new Mindmap(nameMap);
-      if (description) {
-        this.mindmap.setDescription(description);
-      }
-
       // Find the root node
       const rootNode = freeplaneDoc.querySelector('node');
-      if (rootNode) {
-        const centralTopic = this.convertNode(rootNode, this.mindmap);
-        this.mindmap.addBranch(centralTopic);
+      if (!rootNode) {
+        throw new Error('No root node found in Freeplane XML');
       }
 
-      // Serialize to WiseMapping format
-      const serializer = XMLSerializerFactory.createFromDocument(freeplaneDoc);
-      const mindmapToXml = serializer.toXML(this.mindmap);
-      const xmlStr = new XMLSerializer().serializeToString(mindmapToXml);
+      // Generate WiseMapping XML directly
+      const wiseMappingXML = this.generateWiseMappingXML(rootNode, nameMap);
 
-      return Promise.resolve(xmlStr);
+      return Promise.resolve(wiseMappingXML);
     } catch (error) {
       console.error('Error importing Freeplane map:', error);
       // Fallback to basic map
-      return Promise.resolve(
-        `<map name="${nameMap}"><node TEXT="Freeplane Map Import Error"></node></map>`,
-      );
+      return Promise.resolve(this.createFallbackMap(nameMap, error as Error));
     }
   }
 
-  private convertNode(freeplaneNode: Element, mindmap: Mindmap): NodeModel {
-    const text = freeplaneNode.getAttribute('TEXT') || '';
-    const node = new NodeModel('CentralTopic', mindmap);
-    node.setText(text);
+  private generateWiseMappingXML(rootNode: Element, mapName: string): string {
+    const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
+    const centralId = this.generateId();
 
-    // Handle rich content
-    const richContent = freeplaneNode.querySelector('richcontent');
-    if (richContent) {
-      const htmlContent = richContent.innerHTML;
-      if (htmlContent) {
-        const cleanHtml = this.cleanHtml(htmlContent);
-        node.setText(cleanHtml);
-        // Topic text is always plain, no contentType needed
-      }
+    let xml = `<map name="${this.escapeXml(mapName)}" version="tango">\n`;
+    xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
+
+    // Process child nodes
+    const childNodes = rootNode.querySelectorAll(':scope > node');
+    childNodes.forEach((childNode, index) => {
+      xml += this.generateChildTopicXML(childNode as Element, index);
+    });
+
+    xml += `    </topic>\n`;
+    xml += `</map>`;
+
+    return xml;
+  }
+
+  private generateChildTopicXML(freeplaneNode: Element, order: number, depth: number = 0): string {
+    const topicId = this.generateId();
+    const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
+    const position = this.calculatePosition();
+
+    const indent = '        '.repeat(depth + 1);
+    let xml = `${indent}<topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
+
+    // Add icons if present
+    const icons = freeplaneNode.querySelectorAll('icon');
+    if (icons.length > 0) {
+      icons.forEach((icon) => {
+        const builtin = icon.getAttribute('BUILTIN');
+        if (builtin) {
+          const emojiIcon = this.mapFreeplaneIconToEmojiIcon(builtin);
+          xml += `${indent}    <eicon id="${emojiIcon}"/>\n`;
+        }
+      });
     }
 
-    // Handle notes
+    // Add notes if present
+    const noteContent = this.buildNoteContent(freeplaneNode);
+    if (noteContent) {
+      xml += `${indent}    <note><![CDATA[${noteContent}]]></note>\n`;
+    }
+
+    // Add links if present
+    const link = freeplaneNode.getAttribute('LINK');
+    if (link) {
+      xml += `${indent}    <link url="${this.escapeXml(link)}" urlType="url"/>\n`;
+    }
+
+    // Process child nodes recursively
+    const childNodes = freeplaneNode.querySelectorAll(':scope > node');
+    childNodes.forEach((childNode, childIndex) => {
+      xml += this.generateChildTopicXML(childNode as Element, childIndex, depth + 1);
+    });
+
+    xml += `${indent}</topic>\n`;
+
+    return xml;
+  }
+
+  private buildNoteContent(freeplaneNode: Element): string | null {
+    const parts: string[] = [];
+
+    // Handle Freeplane notes
     const noteElements = freeplaneNode.querySelectorAll('richcontent[TYPE="NOTE"]');
     noteElements.forEach((noteElement) => {
       const htmlContent = noteElement.innerHTML;
       if (htmlContent) {
-        const cleanHtml = this.cleanHtml(htmlContent);
-        const noteModel = new NoteModel({ text: cleanHtml });
-        // Set contentType for rich text notes
-        noteModel.setContentType(ContentType.HTML);
-        node.addFeature(noteModel);
+        // For simple HTML like <p>text</p>, preserve the original format
+        // Don't sanitize for now to preserve the exact format
+        const trimmedContent = htmlContent.trim();
+        if (trimmedContent) {
+          parts.push(trimmedContent);
+        }
       }
     });
 
-    // Handle child nodes
-    const childNodes = freeplaneNode.querySelectorAll(':scope > node');
-    childNodes.forEach((childNode) => {
-      const childWiseNode = this.convertChildNode(childNode as Element, mindmap);
-      node.append(childWiseNode);
-    });
-
-    return node;
+    return parts.length > 0 ? parts.join('\n') : null;
   }
 
-  private convertChildNode(freeplaneNode: Element, mindmap: Mindmap): NodeModel {
-    const text = freeplaneNode.getAttribute('TEXT') || '';
-    const node = new NodeModel('MainTopic', mindmap);
-    node.setText(text);
+  private mapFreeplaneIconToEmojiIcon(builtin: string): string {
+    const iconMap: Record<string, string> = {
+      // Priority and status icons
+      flag_red: '🔴',
+      flag_yellow: '🟡',
+      flag_green: '🟢',
+      flag_blue: '🔵',
+      flag_orange: '🟠',
+      flag_pink: '🩷',
+      flag_purple: '🟣',
 
-    // Handle rich content
-    const richContent = freeplaneNode.querySelector('richcontent');
-    if (richContent) {
-      const htmlContent = richContent.innerHTML;
-      if (htmlContent) {
-        const cleanHtml = this.cleanHtml(htmlContent);
-        node.setText(cleanHtml);
-        // Topic text is always plain, no contentType needed
-      }
-    }
+      // Star and rating icons
+      star: '⭐',
+      star_yellow: '⭐',
+      star_red: '⭐',
+      star_green: '⭐',
+      star_blue: '⭐',
 
-    // Handle notes
-    const noteElements = freeplaneNode.querySelectorAll('richcontent[TYPE="NOTE"]');
-    noteElements.forEach((noteElement) => {
-      const htmlContent = noteElement.innerHTML;
-      if (htmlContent) {
-        const cleanHtml = this.cleanHtml(htmlContent);
-        const noteModel = new NoteModel({ text: cleanHtml });
-        // Set contentType for rich text notes
-        noteModel.setContentType(ContentType.HTML);
-        node.addFeature(noteModel);
-      }
-    });
+      // Task and completion icons
+      task: '📋',
+      task_done: '✅',
+      task_start: '🟡',
+      task_pause: '⏸️',
+      task_stop: '⏹️',
 
-    // Handle child nodes recursively
-    const childNodes = freeplaneNode.querySelectorAll(':scope > node');
-    childNodes.forEach((childNode) => {
-      const childWiseNode = this.convertChildNode(childNode as Element, mindmap);
-      node.append(childWiseNode);
-    });
+      // Arrow and direction icons
+      arrow_up: '⬆️',
+      arrow_down: '⬇️',
+      arrow_left: '⬅️',
+      arrow_right: '➡️',
+      arrow_up_right: '↗️',
+      arrow_down_right: '↘️',
+      arrow_down_left: '↙️',
+      arrow_up_left: '↖️',
 
-    return node;
+      // Symbol icons
+      smile: '😊',
+      sad: '😢',
+      angry: '😠',
+      surprised: '😲',
+      confused: '😕',
+      thinking: '🤔',
+      happy: '😃',
+      laughing: '😂',
+      wink: '😉',
+      kiss: '😘',
+      love: '😍',
+      cool: '😎',
+      sleepy: '😪',
+      tired: '😴',
+      worried: '😟',
+      crying: '😭',
+      screaming: '😱',
+      neutral: '😐',
+      expressionless: '😑',
+
+      // Numbers (1-10)
+      number_1: '1️⃣',
+      number_2: '2️⃣',
+      number_3: '3️⃣',
+      number_4: '4️⃣',
+      number_5: '5️⃣',
+      number_6: '6️⃣',
+      number_7: '7️⃣',
+      number_8: '8️⃣',
+      number_9: '9️⃣',
+      number_10: '🔟',
+
+      // Letters (A-Z)
+      letter_a: '🅰️',
+      letter_b: '🅱️',
+      letter_c: '🅲',
+      letter_d: '🅳',
+      letter_e: '🅴',
+      letter_f: '🅵',
+      letter_g: '🅶',
+      letter_h: '🅷',
+      letter_i: '🅸',
+      letter_j: '🅹',
+      letter_k: '🅺',
+      letter_l: '🅻',
+      letter_m: '🅼',
+      letter_n: '🅽',
+      letter_o: '🅾️',
+      letter_p: '🅿️',
+      letter_q: '🆀',
+      letter_r: '🆁',
+      letter_s: '🆂',
+      letter_t: '🆃',
+      letter_u: '🆄',
+      letter_v: '🆅',
+      letter_w: '🆆',
+      letter_x: '🆇',
+      letter_y: '🆈',
+      letter_z: '🆉',
+
+      // People icons
+      people: '👥',
+      person: '👤',
+      person_1: '👤',
+      person_2: '👥',
+      person_3: '👥',
+
+      // Time and calendar icons
+      clock: '🕐',
+      calendar: '📅',
+      time: '⏰',
+      phone: '📞',
+      email: '📧',
+      message: '💬',
+      chat: '💬',
+
+      // File and document icons
+      file: '📄',
+      folder: '📁',
+      attachment: '📎',
+      link: '🔗',
+
+      // Warning and info icons
+      warning: '⚠️',
+      info: 'ℹ️',
+      question: '❓',
+      exclamation: '❗',
+
+      // Heart and like icons
+      heart: '❤️',
+      like: '👍',
+      dislike: '👎',
+
+      // Idea and lightbulb icons
+      lightbulb: '💡',
+      idea: '💡',
+      bulb: '💡',
+
+      // Money and currency icons
+      money: '💰',
+      dollar: '💲',
+      euro: '💶',
+      pound: '💷',
+
+      // Location and building icons
+      location: '📍',
+      home: '🏠',
+      building: '🏢',
+      school: '🏫',
+
+      // Technology icons
+      computer: '💻',
+      laptop: '💻',
+      phone_mobile: '📱',
+      tablet: '📱',
+
+      // Weather icons
+      sun: '☀️',
+      cloud: '☁️',
+      rain: '🌧️',
+      snow: '❄️',
+      storm: '⛈️',
+      rainbow: '🌈',
+      sunny: '🌞',
+      partly_cloudy: '⛅',
+      cloudy: '🌥️',
+      lightning: '⚡',
+      tornado: '🌪️',
+      fog: '🌫️',
+      wind: '🌬️',
+      thermometer: '🌡️',
+
+      // Animals
+      dog: '🐶',
+      cat: '🐱',
+      mouse: '🐭',
+      hamster: '🐹',
+      rabbit: '🐰',
+      fox: '🦊',
+      bear: '🐻',
+      panda: '🐼',
+      koala: '🐨',
+      lion: '🦁',
+      tiger: '🐯',
+      cow: '🐮',
+      pig: '🐷',
+      frog: '🐸',
+      monkey: '🐵',
+      chicken: '🐔',
+      penguin: '🐧',
+      bird: '🐦',
+      fish: '🐟',
+      whale: '🐳',
+      dolphin: '🐬',
+      octopus: '🐙',
+      spider: '🕷️',
+      bug: '🐛',
+      bee: '🐝',
+      butterfly: '🦋',
+      snail: '🐌',
+      turtle: '🐢',
+      snake: '🐍',
+      dragon: '🐉',
+      unicorn: '🦄',
+
+      // Food and drink icons
+      coffee: '☕',
+      food: '🍽️',
+      pizza: '🍕',
+      burger: '🍔',
+      apple: '🍎',
+      orange: '🍊',
+      banana: '🍌',
+      grapes: '🍇',
+      strawberry: '🍓',
+      kiwi: '🥝',
+      peach: '🍑',
+      coconut: '🥥',
+      cherry: '🍒',
+      lemon: '🍋',
+      watermelon: '🍉',
+      pineapple: '🍍',
+      bread: '🍞',
+      cookie: '🍪',
+      candy: '🍬',
+      chocolate: '🍫',
+      ice_cream: '🍦',
+      popcorn: '🍿',
+      beer: '🍺',
+      wine: '🍷',
+      cocktail: '🍸',
+      tea: '🍵',
+      milk: '🥛',
+      water: '💧',
+
+      // Sports and activity icons
+      sports: '⚽',
+      football: '⚽',
+      basketball: '🏀',
+      tennis: '🎾',
+      swimming: '🏊',
+      soccer: '⚽',
+      baseball: '⚾',
+      volleyball: '🏐',
+      rugby: '🏈',
+      golf: '⛳',
+      bowling: '🎳',
+      running: '🏃',
+      cycling: '🚴',
+      skiing: '⛷️',
+      snowboarding: '🏂',
+      surfing: '🏄',
+      climbing: '🧗',
+      yoga: '🧘',
+      dancing: '💃',
+      gym: '🏋️',
+      weightlifting: '🏋️',
+      boxing: '🥊',
+      martial_arts: '🥋',
+      archery: '🏹',
+      fishing: '🎣',
+      hiking: '🧖',
+      camping: '🏕️',
+      picnic: '🍽️',
+      barbecue: '🍳',
+      target: '🎯',
+      trophy: '🏆',
+      medal: '🏅',
+      first_place: '🥇',
+      second_place: '🥈',
+      third_place: '🥉',
+
+      // Music and entertainment icons
+      music: '🎵',
+      movie: '🎬',
+      game: '🎮',
+      book: '📚',
+
+      // Travel and transport icons
+      car: '🚗',
+      plane: '✈️',
+      train: '🚂',
+      bus: '🚌',
+      bike: '🚲',
+
+      // Nature icons
+      tree: '🌳',
+      flower: '🌸',
+      leaf: '🍃',
+      mountain: '⛰️',
+      ocean: '🌊',
+
+      // Holiday and celebration icons
+      gift: '🎁',
+      cake: '🎂',
+      party: '🎉',
+      fireworks: '🎆',
+      christmas: '🎄',
+      halloween: '🎃',
+
+      // Tools and work icons
+      tool: '🔧',
+      wrench: '🔧',
+      hammer: '🔨',
+      screwdriver: '🔩',
+      key: '🔑',
+      lock: '🔒',
+
+      // Medical and health icons
+      medical: '🏥',
+      health: '💊',
+      pill: '💊',
+      heartbeat: '💓',
+      cross: '➕',
+
+      // Shopping and commerce icons
+      shopping: '🛒',
+      cart: '🛒',
+      bag: '👜',
+      credit_card: '💳',
+
+      // Security and safety icons
+      security: '🔒',
+      shield: '🛡️',
+      lock_closed: '🔒',
+      lock_open: '🔓',
+
+      // Science and education icons
+      science: '🔬',
+      microscope: '🔬',
+      telescope: '🔭',
+      atom: '⚛️',
+      book_open: '📖',
+      graduation: '🎓',
+    };
+
+    // Return mapped emoji or default if not found
+    return iconMap[builtin.toLowerCase()] || '💡'; // Default to lightbulb
   }
 
-  private cleanHtml(content: string): string {
-    // Use secure HTML sanitizer to prevent XSS and other injection attacks
-    return HtmlSanitizer.sanitize(content);
+  private generateId(): string {
+    return (this.idCounter++).toString();
+  }
+
+  private calculatePosition(): { x: number; y: number } {
+    // Simple positioning algorithm - can be enhanced later
+    const angle = (this.idCounter - 2) * (Math.PI / 4); // 45 degree increments, start from 0
+    const radius = 200;
+    return {
+      x: Math.round(Math.cos(angle) * radius),
+      y: Math.round(Math.sin(angle) * radius),
+    };
+  }
+
+  private escapeXml(text: string): string {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  private createFallbackMap(nameMap: string, error: Error): string {
+    return `<map name="${this.escapeXml(nameMap)}" version="tango">
+        <topic central="true" text="Freeplane Import Error" id="1">
+            <note><![CDATA[Freeplane import failed: ${this.escapeXml(error.message)}
+Please check the file format and try again.]]></note>
+        </topic>
+    </map>`;
   }
 }
 
