@@ -102,6 +102,7 @@ export interface AdminMap {
   spamType?: string;
   spamDetectedDate?: string;
   spamDescription?: string;
+  isCreatorSuspended?: boolean;
 }
 
 export interface AdminMapsResponse {

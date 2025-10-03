@@ -57,6 +57,8 @@ import {
   Code as CodeIcon,
   Flag as FlagIcon,
   CheckCircle as CheckCircleIcon,
+  Block as BlockIcon,
+  PersonOff as PersonOffIcon,
 } from '@mui/icons-material';
 import { AdminMapsParams } from '../../classes/client/admin-client';
 import AppConfig from '../../classes/app-config';
@@ -120,6 +122,7 @@ interface AdminMap {
   starred: boolean;
   labels: string[];
   spam?: boolean;
+  isCreatorSuspended?: boolean;
 }
 
 interface MapFormData {
@@ -189,6 +192,13 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [isXmlViewerOpen, setIsXmlViewerOpen] = useState(false);
   const [xmlContent, setXmlContent] = useState<string>('');
   const [isLoadingXml, setIsLoadingXml] = useState(false);
+
+  // User suspension state
+  const [isSuspensionDialogOpen, setIsSuspensionDialogOpen] = useState(false);
+  const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string } | null>(
+    null,
+  );
+  const [suspensionReason, setSuspensionReason] = useState('');
 
   // Fetch maps with pagination and filters
   const {
@@ -285,6 +295,23 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     },
   );
 
+  // Suspend user mutation
+  const suspendUserMutation = useMutation(
+    ({ userId, reason }: { userId: number; reason?: string }) =>
+      client.updateUserSuspension(userId, { suspended: true, suspensionReason: reason }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('adminMaps');
+        setIsSuspensionDialogOpen(false);
+        setSuspendingUser(null);
+        setSuspensionReason('');
+      },
+      onError: (error: Error) => {
+        console.error('Failed to suspend user:', error);
+      },
+    },
+  );
+
   const handleEditMap = (map: AdminMap) => {
     setEditingMap(map);
     setFormData({
@@ -325,6 +352,21 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     const action = newSpamStatus ? 'mark as spam' : 'mark as not spam';
     if (window.confirm(`Are you sure you want to ${action} this map?`)) {
       updateSpamStatusMutation.mutate({ mapId, spam: newSpamStatus });
+    }
+  };
+
+  const handleSuspendUser = (userId: number, userName: string) => {
+    setSuspendingUser({ userId, userName });
+    setSuspensionReason('');
+    setIsSuspensionDialogOpen(true);
+  };
+
+  const handleConfirmSuspension = () => {
+    if (suspendingUser) {
+      suspendUserMutation.mutate({
+        userId: suspendingUser.userId,
+        reason: suspensionReason || undefined,
+      });
     }
   };
 
@@ -380,6 +422,13 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
       );
     }
     return <Chip label="Clean" color="success" size="small" />;
+  };
+
+  const getSuspendedUserChip = (isSuspended: boolean) => {
+    if (isSuspended) {
+      return <Chip label="Suspended" color="error" size="small" icon={<PersonOffIcon />} />;
+    }
+    return null;
   };
 
   const handleSort = (field: SortField) => {
@@ -654,6 +703,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                     <Box display="flex" gap={1} flexWrap="wrap">
                       {getPublicChip(map.public)}
                       {getLockedChip(map.isLocked, map.isLockedBy)}
+                      {getSuspendedUserChip(map.isCreatorSuspended || false)}
                     </Box>
                   </TableCell>
                   <TableCell>
@@ -707,6 +757,24 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                           {map.spam ? <CheckCircleIcon /> : <FlagIcon />}
                         </IconButton>
                       </Tooltip>
+                      {!map.isCreatorSuspended && (
+                        <Tooltip
+                          title={intl.formatMessage({
+                            id: 'admin.maps.suspend-user',
+                            defaultMessage: 'Suspend user account',
+                          })}
+                        >
+                          <IconButton
+                            onClick={() => handleSuspendUser(map.createdById, map.createdBy)}
+                            aria-label="suspend-user"
+                            color="warning"
+                            size="small"
+                            disabled={suspendUserMutation.isLoading}
+                          >
+                            <BlockIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
                       <Tooltip
                         title={intl.formatMessage({
                           id: 'admin.maps.delete',
@@ -951,6 +1019,90 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               id: 'admin.maps.xml-viewer.copy',
               defaultMessage: 'Copy Formatted XML',
             })}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* User Suspension Dialog */}
+      <Dialog
+        open={isSuspensionDialogOpen}
+        onClose={() => setIsSuspensionDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          {intl.formatMessage({
+            id: 'admin.maps.suspend-user.title',
+            defaultMessage: 'Suspend User Account',
+          })}
+        </DialogTitle>
+        <DialogContent>
+          <Alert severity="warning" sx={{ mb: 2 }}>
+            <Typography variant="body2">
+              {intl.formatMessage({
+                id: 'admin.maps.suspend-user.warning',
+                defaultMessage:
+                  'This action will suspend the user account, preventing them from accessing the system.',
+              })}
+            </Typography>
+          </Alert>
+
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            {intl.formatMessage(
+              {
+                id: 'admin.maps.suspend-user.confirm',
+                defaultMessage:
+                  'Are you sure you want to suspend the account for user "{userName}" (ID: {userId})?',
+              },
+              {
+                userName: suspendingUser?.userName || '',
+                userId: suspendingUser?.userId || '',
+              },
+            )}
+          </Typography>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            label={intl.formatMessage({
+              id: 'admin.maps.suspend-user.reason',
+              defaultMessage: 'Suspension Reason (Optional)',
+            })}
+            fullWidth
+            multiline
+            rows={3}
+            variant="outlined"
+            value={suspensionReason}
+            onChange={(e) => setSuspensionReason(e.target.value)}
+            placeholder={intl.formatMessage({
+              id: 'admin.maps.suspend-user.reason.placeholder',
+              defaultMessage: 'Enter the reason for suspending this user account...',
+            })}
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsSuspensionDialogOpen(false)}>
+            {intl.formatMessage({
+              id: 'common.cancel',
+              defaultMessage: 'Cancel',
+            })}
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleConfirmSuspension}
+            disabled={suspendUserMutation.isLoading}
+            startIcon={<BlockIcon />}
+          >
+            {suspendUserMutation.isLoading ? (
+              <CircularProgress size={20} />
+            ) : (
+              intl.formatMessage({
+                id: 'admin.maps.suspend-user.confirm-button',
+                defaultMessage: 'Suspend User',
+              })
+            )}
           </Button>
         </DialogActions>
       </Dialog>
