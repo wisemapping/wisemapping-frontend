@@ -342,7 +342,7 @@ class XMindImporter extends Importer {
     const centralId = this.generateId();
     const centralTitle = rootTopic.querySelector('title')?.textContent || 'Central Topic';
 
-    let xml = `<map name="${nameMap}" version="tango" theme="prism">\n`;
+    let xml = `<map name="${nameMap}" version="tango">\n`;
 
     // Generate central topic
     xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
@@ -361,9 +361,10 @@ class XMindImporter extends Importer {
 
   private generateChildTopicXMLFromXML(xmlTopic: Element, order: number): string {
     const topicId = this.generateId();
+    const position = this.calculatePosition();
     const title = xmlTopic.querySelector('title')?.textContent || 'Untitled';
 
-    let xml = `        <topic order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
+    let xml = `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
 
     // Add icons if present (from markers)
     const markers = xmlTopic.querySelectorAll('markers > marker');
@@ -399,7 +400,7 @@ class XMindImporter extends Importer {
     description?: string,
   ): string {
     const centralId = this.generateId();
-    let xml = `<map name="${nameMap}" version="tango" theme="prism">\n`;
+    let xml = `<map name="${nameMap}" version="tango">\n`;
 
     // Generate central topic
     xml += `    <topic central="true" text="${this.escapeXml(rootTopic.title)}" id="${centralId}">\n`;
@@ -420,9 +421,10 @@ class XMindImporter extends Importer {
 
     topics.forEach((topic, index) => {
       const topicId = this.generateId();
+      const position = this.calculatePosition();
       const bgColor = this.extractBackgroundColor(topic);
 
-      xml += `        <topic order="${order}" text="${this.escapeXml(topic.title)}" shape="line" id="${topicId}"`;
+      xml += `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(topic.title)}" shape="line" id="${topicId}"`;
 
       if (bgColor) {
         xml += ` bgColor="${bgColor}"`;
