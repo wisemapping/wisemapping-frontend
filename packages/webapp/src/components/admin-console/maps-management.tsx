@@ -198,7 +198,6 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
   const [suspendingUser, setSuspendingUser] = useState<{ userId: number; userName: string } | null>(
     null,
   );
-  const [suspensionReason, setSuspensionReason] = useState('');
 
   // Fetch maps with pagination and filters
   const {
@@ -297,14 +296,19 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
 
   // Suspend user mutation
   const suspendUserMutation = useMutation(
-    ({ userId, reason }: { userId: number; reason?: string }) =>
-      client.updateUserSuspension(userId, { suspended: true, suspensionReason: reason }),
+    ({ userId }: { userId: number }) => {
+      const suspensionData: { suspended: boolean; suspensionReason: string } = {
+        suspended: true,
+        suspensionReason: 'MANUAL_REVIEW',
+      };
+
+      return client.updateUserSuspension(userId, suspensionData);
+    },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('adminMaps');
         setIsSuspensionDialogOpen(false);
         setSuspendingUser(null);
-        setSuspensionReason('');
       },
       onError: (error: Error) => {
         console.error('Failed to suspend user:', error);
@@ -357,7 +361,6 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
 
   const handleSuspendUser = (userId: number, userName: string) => {
     setSuspendingUser({ userId, userName });
-    setSuspensionReason('');
     setIsSuspensionDialogOpen(true);
   };
 
@@ -365,7 +368,6 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
     if (suspendingUser) {
       suspendUserMutation.mutate({
         userId: suspendingUser.userId,
-        reason: suspensionReason || undefined,
       });
     }
   };
@@ -1052,7 +1054,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               {
                 id: 'admin.maps.suspend-user.confirm',
                 defaultMessage:
-                  'Are you sure you want to suspend the account for user "{userName}" (ID: {userId})?',
+                  'Are you sure you want to suspend the account for user "{userName}" (ID: {userId})? This will be marked as a manual review suspension.',
               },
               {
                 userName: suspendingUser?.userName || '',
@@ -1060,26 +1062,6 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               },
             )}
           </Typography>
-
-          <TextField
-            autoFocus
-            margin="dense"
-            label={intl.formatMessage({
-              id: 'admin.maps.suspend-user.reason',
-              defaultMessage: 'Suspension Reason (Optional)',
-            })}
-            fullWidth
-            multiline
-            rows={3}
-            variant="outlined"
-            value={suspensionReason}
-            onChange={(e) => setSuspensionReason(e.target.value)}
-            placeholder={intl.formatMessage({
-              id: 'admin.maps.suspend-user.reason.placeholder',
-              defaultMessage: 'Enter the reason for suspending this user account...',
-            })}
-            sx={{ mt: 2 }}
-          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsSuspensionDialogOpen(false)}>
