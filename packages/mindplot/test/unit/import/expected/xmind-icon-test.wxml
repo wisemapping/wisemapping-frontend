@@ -1,76 +1,76 @@
-<map name="xmind-icon-test" version="tango">
+<map name="xmind-icon-test" version="tango" theme="prism">
     <topic central="true" text="Icon Test Map" id="1">
-        <topic position="100,0" order="0" text="Priority Icons" shape="line" id="2">
+        <topic order="0" text="Priority Icons" shape="line" id="2">
             <eicon id="🔴"/>
             <eicon id="🟡"/>
             <eicon id="🟢"/>
             <note><![CDATA[🔖 priority-1, 🔖 priority-2, 🔖 priority-3]]></note>
-        <topic position="106.06601717798213,106.06601717798212" order="0" text="Priority 2" shape="line" id="3">
+        <topic order="0" text="Priority 2" shape="line" id="3">
             <eicon id="🟡"/>
             <note><![CDATA[🔖 priority-2]]></note>
         </topic>
-        <topic position="1.2246467991473532e-14,200" order="1" text="Priority 3" shape="line" id="4">
+        <topic order="1" text="Priority 3" shape="line" id="4">
             <eicon id="🟢"/>
             <note><![CDATA[🔖 priority-3]]></note>
         </topic>
         </topic>
-        <topic position="-176.77669529663686,176.7766952966369" order="1" text="Priority 2" shape="line" id="5">
+        <topic order="1" text="Priority 2" shape="line" id="5">
             <eicon id="🟡"/>
             <note><![CDATA[🔖 priority-2]]></note>
         </topic>
-        <topic position="-300,3.6739403974420595e-14" order="2" text="Priority 3" shape="line" id="6">
+        <topic order="2" text="Priority 3" shape="line" id="6">
             <eicon id="🟢"/>
             <note><![CDATA[🔖 priority-3]]></note>
         </topic>
-        <topic position="-247.4873734152917,-247.48737341529161" order="3" text="Star Rating" shape="line" id="7">
+        <topic order="3" text="Star Rating" shape="line" id="7">
             <eicon id="⭐"/>
             <note><![CDATA[🔖 star]]></note>
         </topic>
-        <topic position="-7.347880794884119e-14,-400" order="4" text="Task Management" shape="line" id="8">
+        <topic order="4" text="Task Management" shape="line" id="8">
             <eicon id="✅"/>
             <eicon id="🟡"/>
             <note><![CDATA[🔖 task-done, 🔖 task-start]]></note>
-        <topic position="318.1980515339463,-318.19805153394645" order="0" text="In Progress" shape="line" id="9">
+        <topic order="0" text="In Progress" shape="line" id="9">
             <eicon id="🟡"/>
             <note><![CDATA[🔖 task-start]]></note>
         </topic>
         </topic>
-        <topic position="500,-1.2246467991473532e-13" order="5" text="In Progress" shape="line" id="10">
+        <topic order="5" text="In Progress" shape="line" id="10">
             <eicon id="🟡"/>
             <note><![CDATA[🔖 task-start]]></note>
         </topic>
-        <topic position="388.9087296526012,388.90872965260104" order="6" text="Emotions" shape="line" id="11">
+        <topic order="6" text="Emotions" shape="line" id="11">
             <eicon id="😊"/>
             <eicon id="😃"/>
             <eicon id="🤔"/>
             <note><![CDATA[🔖 smile, 🔖 happy, 🔖 thinking]]></note>
-        <topic position="1.83697019872103e-13,600" order="0" text="Happy" shape="line" id="12">
+        <topic order="0" text="Happy" shape="line" id="12">
             <eicon id="😃"/>
             <note><![CDATA[🔖 happy]]></note>
         </topic>
-        <topic position="-459.61940777125614,459.6194077712556" order="1" text="Thinking" shape="line" id="13">
+        <topic order="1" text="Thinking" shape="line" id="13">
             <eicon id="🤔"/>
             <note><![CDATA[🔖 thinking]]></note>
         </topic>
         </topic>
-        <topic position="-700,2.5717582782094416e-13" order="7" text="Happy" shape="line" id="14">
+        <topic order="7" text="Happy" shape="line" id="14">
             <eicon id="😃"/>
             <note><![CDATA[🔖 happy]]></note>
         </topic>
-        <topic position="-530.3300858899104,-530.330085889911" order="8" text="Thinking" shape="line" id="15">
+        <topic order="8" text="Thinking" shape="line" id="15">
             <eicon id="🤔"/>
             <note><![CDATA[🔖 thinking]]></note>
         </topic>
-        <topic position="-3.4290110376125887e-13,-800" order="9" text="Technology" shape="line" id="16">
+        <topic order="9" text="Technology" shape="line" id="16">
             <eicon id="💻"/>
             <eicon id="📱"/>
             <note><![CDATA[🔖 computer, 🔖 phone-mobile]]></note>
-        <topic position="601.0407640085656,-601.0407640085651" order="0" text="Mobile" shape="line" id="17">
+        <topic order="0" text="Mobile" shape="line" id="17">
             <eicon id="📱"/>
             <note><![CDATA[🔖 phone-mobile]]></note>
         </topic>
         </topic>
-        <topic position="900,-4.4087284769304714e-13" order="10" text="Mobile" shape="line" id="18">
+        <topic order="10" text="Mobile" shape="line" id="18">
             <eicon id="📱"/>
             <note><![CDATA[🔖 phone-mobile]]></note>
         </topic>

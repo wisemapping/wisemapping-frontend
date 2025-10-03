@@ -1,14 +1,14 @@
-<map name="xmind-simple" version="tango">
+<map name="xmind-simple" version="tango" theme="prism">
     <topic central="true" text="Central Topic" id="1">
-        <topic  order="0" text="Child 1" shape="line" id="2">
-        <topic  order="0" text="Grandchild 1" shape="line" id="3">
+        <topic order="0" text="Child 1" shape="line" id="2">
+        <topic order="0" text="Grandchild 1" shape="line" id="3">
         </topic>
-        <topic  order="1" text="Grandchild 2" shape="line" id="4">
+        <topic order="1" text="Grandchild 2" shape="line" id="4">
         </topic>
         </topic>
-        <topic  order="1" text="Grandchild 1" shape="line" id="5">
+        <topic order="1" text="Grandchild 1" shape="line" id="5">
         </topic>
-        <topic  order="2" text="Grandchild 2" shape="line" id="6">
+        <topic order="2" text="Grandchild 2" shape="line" id="6">
         </topic>
         <topic order="3" text="Child 2" shape="line" id="7">
             <note><![CDATA[This is a note for Child 2]]></note>
