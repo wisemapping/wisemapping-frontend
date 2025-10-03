@@ -21,6 +21,7 @@ import SecureXmlParser from '../security/SecureXmlParser';
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
   private idCounter: number = 1;
+  private positionCounter: number = 0;
 
   constructor(map: string) {
     super();
@@ -475,13 +476,16 @@ class FreeplaneImporter extends Importer {
   }
 
   private calculatePosition(): { x: number; y: number } {
-    // Simple positioning algorithm - can be enhanced later
-    const angle = (this.idCounter - 2) * (Math.PI / 4); // 45 degree increments, start from 0
-    const radius = 200;
-    return {
-      x: Math.round(Math.cos(angle) * radius),
-      y: Math.round(Math.sin(angle) * radius),
-    };
+    // Distribute first-level topics evenly between left and right sides
+    const isEven = this.positionCounter % 2 === 0;
+    const sideIndex = Math.floor(this.positionCounter / 2);
+
+    // Alternate between left (negative x) and right (positive x) sides
+    const x = isEven ? -200 - sideIndex * 100 : 200 + sideIndex * 100;
+    const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
+
+    this.positionCounter++;
+    return { x, y };
   }
 
   private escapeXml(text: string): string {

@@ -325,11 +325,14 @@ class XMindImporter extends Importer {
   }
 
   private calculatePosition(): { x: number; y: number } {
-    // Simple positioning algorithm - spread nodes in a circle
-    const angle = this.positionCounter * 45 * (Math.PI / 180);
-    const radius = 100 + this.positionCounter * 50;
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
+    // Distribute first-level topics evenly between left and right sides
+    const isEven = this.positionCounter % 2 === 0;
+    const sideIndex = Math.floor(this.positionCounter / 2);
+
+    // Alternate between left (negative x) and right (positive x) sides
+    const x = isEven ? -200 - sideIndex * 100 : 200 + sideIndex * 100;
+    const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
+
     this.positionCounter++;
     return { x, y };
   }

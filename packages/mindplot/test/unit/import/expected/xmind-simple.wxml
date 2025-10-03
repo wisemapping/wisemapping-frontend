@@ -1,27 +1,27 @@
 <map name="xmind-simple" version="tango">
     <topic central="true" text="Central Topic" id="1">
-        <topic  order="0" text="Child 1" shape="line" id="2">
-        <topic  order="0" text="Grandchild 1" shape="line" id="3">
+        <topic position="-200,0" order="0" text="Child 1" shape="line" id="2">
+        <topic position="200,0" order="0" text="Grandchild 1" shape="line" id="3">
         </topic>
-        <topic  order="1" text="Grandchild 2" shape="line" id="4">
+        <topic position="-300,75" order="1" text="Grandchild 2" shape="line" id="4">
         </topic>
         </topic>
-        <topic  order="1" text="Grandchild 1" shape="line" id="5">
+        <topic position="300,75" order="1" text="Grandchild 1" shape="line" id="5">
         </topic>
-        <topic  order="2" text="Grandchild 2" shape="line" id="6">
+        <topic position="-400,150" order="2" text="Grandchild 2" shape="line" id="6">
         </topic>
-        <topic order="3" text="Child 2" shape="line" id="7">
+        <topic position="400,150" order="3" text="Child 2" shape="line" id="7">
             <note><![CDATA[This is a note for Child 2]]></note>
         </topic>
-        <topic order="4" text="Child 3" shape="line" id="8">
+        <topic position="-500,225" order="4" text="Child 3" shape="line" id="8">
             <eicon id="🔴"/>
             <note><![CDATA[🔖 priority-1]]></note>
-        <topic order="0" text="Subchild" shape="line" id="9">
+        <topic position="500,225" order="0" text="Subchild" shape="line" id="9">
         </topic>
         </topic>
-        <topic order="5" text="Subchild" shape="line" id="10">
+        <topic position="-600,300" order="5" text="Subchild" shape="line" id="10">
         </topic>
-        <topic order="6" text="Child 4" shape="line" id="11">
+        <topic position="600,300" order="6" text="Child 4" shape="line" id="11">
             <eicon id="🟡"/>
             <eicon id="⭐"/>
             <note><![CDATA[Another note with more details

@@ -1,8 +1,8 @@
 <map name="freeplane" version="tango">
     <topic central="true" text="Freeplane Root" id="1">
-        <topic position="141,141" order="0" text="Child 1" shape="line" id="2">
+        <topic position="-200,0" order="0" text="Child 1" shape="line" id="2">
         </topic>
-        <topic position="0,200" order="1" text="Child 2" shape="line" id="3">
+        <topic position="200,0" order="1" text="Child 2" shape="line" id="3">
         </topic>
     </topic>
 </map>
