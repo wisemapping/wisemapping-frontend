@@ -326,11 +326,12 @@ class XMindImporter extends Importer {
 
   private calculatePosition(): { x: number; y: number } {
     // Distribute first-level topics evenly between left and right sides
+    // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
     const isEven = this.positionCounter % 2 === 0;
     const sideIndex = Math.floor(this.positionCounter / 2);
 
-    // Alternate between left (negative x) and right (positive x) sides
-    const x = isEven ? -200 - sideIndex * 100 : 200 + sideIndex * 100;
+    // Alternate between right (positive x) and left (negative x) sides
+    const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
     const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
 
     this.positionCounter++;
@@ -345,7 +346,7 @@ class XMindImporter extends Importer {
     const centralId = this.generateId();
     const centralTitle = rootTopic.querySelector('title')?.textContent || 'Central Topic';
 
-    let xml = `<map name="${nameMap}" version="tango">\n`;
+    let xml = `<map name="${nameMap}" version="tango" theme="prism">\n`;
 
     // Generate central topic
     xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
@@ -403,7 +404,7 @@ class XMindImporter extends Importer {
     description?: string,
   ): string {
     const centralId = this.generateId();
-    let xml = `<map name="${nameMap}" version="tango">\n`;
+    let xml = `<map name="${nameMap}" version="tango" theme="prism">\n`;
 
     // Generate central topic
     xml += `    <topic central="true" text="${this.escapeXml(rootTopic.title)}" id="${centralId}">\n`;

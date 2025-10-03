@@ -1,4 +1,4 @@
-<map name="freeplane" version="tango">
+<map name="freeplane" version="tango" theme="prism">
     <topic central="true" text="Freeplane Root" id="1">
         <topic position="-200,0" order="0" text="Child 1" shape="line" id="2">
         </topic>

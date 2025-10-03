@@ -57,7 +57,7 @@ class FreeplaneImporter extends Importer {
     const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
     const centralId = this.generateId();
 
-    let xml = `<map name="${this.escapeXml(mapName)}" version="tango">\n`;
+    let xml = `<map name="${this.escapeXml(mapName)}" version="tango" theme="prism">\n`;
     xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
 
     // Process child nodes
@@ -477,11 +477,12 @@ class FreeplaneImporter extends Importer {
 
   private calculatePosition(): { x: number; y: number } {
     // Distribute first-level topics evenly between left and right sides
+    // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
     const isEven = this.positionCounter % 2 === 0;
     const sideIndex = Math.floor(this.positionCounter / 2);
 
-    // Alternate between left (negative x) and right (positive x) sides
-    const x = isEven ? -200 - sideIndex * 100 : 200 + sideIndex * 100;
+    // Alternate between right (positive x) and left (negative x) sides
+    const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
     const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
 
     this.positionCounter++;

@@ -1,4 +1,4 @@
-<map name="xmind-icon-test" version="tango">
+<map name="xmind-icon-test" version="tango" theme="prism">
     <topic central="true" text="Icon Test Map" id="1">
         <topic position="-200,0" order="0" text="Priority Icons" shape="line" id="2">
             <eicon id="🔴"/>
