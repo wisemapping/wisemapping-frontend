@@ -37,6 +37,16 @@
               </topics>
             </children>
           </topic>
+          <topic id="topic8">
+            <title>Child 4</title>
+            <notes>
+              <plain>Another note with more details</plain>
+            </notes>
+            <markers>
+              <marker marker-id="priority-2"/>
+              <marker marker-id="star"/>
+            </markers>
+          </topic>
         </topics>
       </children>
     </topic>
