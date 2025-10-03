@@ -18,7 +18,6 @@
 import Importer from './Importer';
 import Mindmap from '../model/Mindmap';
 import NodeModel from '../model/NodeModel';
-import XMLSerializerFactory from '../persistence/XMLSerializerFactory';
 
 // XMind data structures
 interface XMindTopic {
@@ -93,43 +92,14 @@ class XMindImporter extends Importer {
         throw new Error('No root topic found in XMind file');
       }
 
-      // Create WiseMapping mindmap
-      this.mindmap = new Mindmap(nameMap);
-      this.nodeMap = new Map();
-      this.positionCounter = 0;
+      // Reset counters
       this.idCounter = 1;
+      this.positionCounter = 0;
 
-      if (description) {
-        this.mindmap.setDescription(description);
-      }
+      // Generate WiseMapping XML directly from XML structure
+      const xmlContent = this.generateWiseMappingXMLFromXML(rootTopic, nameMap, description);
 
-      // Get central topic title
-      const centralTitle = rootTopic.querySelector('title')?.textContent || 'Central Topic';
-
-      // Create central topic
-      const centralTopic = this.mindmap.createNode('CentralTopic', this.generateId());
-      centralTopic.setText(centralTitle);
-      centralTopic.setPosition(0, 0);
-      this.mindmap.addBranch(centralTopic);
-
-      // Convert child topics
-      const childTopics = rootTopic.querySelectorAll('topics[type="attached"] > topic');
-      childTopics.forEach((childTopic) => {
-        const childNode = this.convertXMLTopic(childTopic);
-        const position = this.calculatePosition();
-        childNode.setPosition(position.x, position.y);
-
-        // Add as branch to mindmap
-        this.mindmap.addBranch(childNode);
-        this.mindmap.createRelationship(centralTopic.getId(), childNode.getId());
-      });
-
-      // Serialize to WiseMapping XML format
-      const serializer = XMLSerializerFactory.createFromMindmap(this.mindmap);
-      const domMindmap = serializer.toXML(this.mindmap);
-      const xmlToString = new XMLSerializer().serializeToString(domMindmap);
-
-      return xmlToString;
+      return xmlContent;
     } catch (error) {
       console.error('XML XMind import failed:', error);
       return this.createFallbackMap(nameMap, error as Error);
@@ -141,26 +111,14 @@ class XMindImporter extends Importer {
       // Parse the XMind content
       const xmindData = this.parseXMindContent();
 
-      // Create WiseMapping mindmap
-      this.mindmap = new Mindmap(nameMap);
-      this.nodeMap = new Map();
-      this.positionCounter = 0;
+      // Reset counters
       this.idCounter = 1;
+      this.positionCounter = 0;
 
-      if (description) {
-        this.mindmap.setDescription(description);
-      }
+      // Generate WiseMapping XML directly
+      const xmlContent = this.generateWiseMappingXML(xmindData.rootTopic, nameMap, description);
 
-      // Convert the root topic to central topic
-      const centralTopic = this.convertTopic(xmindData.rootTopic, true);
-      this.mindmap.addBranch(centralTopic);
-
-      // Serialize to WiseMapping XML format
-      const serializer = XMLSerializerFactory.createFromMindmap(this.mindmap);
-      const domMindmap = serializer.toXML(this.mindmap);
-      const xmlToString = new XMLSerializer().serializeToString(domMindmap);
-
-      return xmlToString;
+      return xmlContent;
     } catch (error) {
       console.error('JSON XMind import failed:', error);
       return this.createFallbackMap(nameMap, error as Error);
@@ -171,7 +129,8 @@ class XMindImporter extends Importer {
     try {
       // XMind files are ZIP archives, but the content is passed as a string
       // We need to extract the content.json from the ZIP data
-      const contentMatch = this.xmindInput.match(/content\.json\[(.*?)\]/);
+      // The format is: content.json[{...}] where {...} is the JSON content
+      const contentMatch = this.xmindInput.match(/content\.json\[(.*?)\]PK/);
       if (!contentMatch) {
         throw new Error('Could not find content.json in XMind file');
       }
@@ -324,24 +283,143 @@ class XMindImporter extends Importer {
     return { x, y };
   }
 
+  private generateWiseMappingXMLFromXML(
+    rootTopic: Element,
+    nameMap: string,
+    description?: string,
+  ): string {
+    const centralId = this.generateId();
+    const centralTitle = rootTopic.querySelector('title')?.textContent || 'Central Topic';
+
+    let xml = `<map name="${nameMap}" version="tango">\n`;
+
+    // Generate central topic
+    xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
+
+    // Generate child topics recursively
+    const childTopics = rootTopic.querySelectorAll('topics[type="attached"] > topic');
+    childTopics.forEach((childTopic, index) => {
+      xml += this.generateChildTopicXMLFromXML(childTopic, index);
+    });
+
+    xml += `    </topic>\n`;
+    xml += `</map>`;
+
+    return xml;
+  }
+
+  private generateChildTopicXMLFromXML(xmlTopic: Element, order: number): string {
+    const topicId = this.generateId();
+    const position = this.calculatePosition();
+    const title = xmlTopic.querySelector('title')?.textContent || 'Untitled';
+
+    let xml = `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
+
+    // Handle notes
+    const notes = xmlTopic.querySelector('notes > plain');
+    if (notes) {
+      const noteText = notes.textContent || '';
+      xml += `            <note><![CDATA[${noteText}]]></note>\n`;
+    }
+
+    // Handle markers
+    const markers = xmlTopic.querySelectorAll('markers > marker');
+    if (markers.length > 0) {
+      const markerTexts = Array.from(markers).map(
+        (marker) => marker.getAttribute('marker-id') || 'unknown',
+      );
+      xml += `            <note><![CDATA[Markers: ${markerTexts.join(', ')}]]></note>\n`;
+    }
+
+    // Recursively generate child topics
+    const childTopics = xmlTopic.querySelectorAll('topics[type="attached"] > topic');
+    childTopics.forEach((childTopic, index) => {
+      xml += this.generateChildTopicXMLFromXML(childTopic, index);
+    });
+
+    xml += `        </topic>\n`;
+    return xml;
+  }
+
+  private generateWiseMappingXML(
+    rootTopic: XMindTopic,
+    nameMap: string,
+    description?: string,
+  ): string {
+    const centralId = this.generateId();
+    let xml = `<map name="${nameMap}" version="tango">\n`;
+
+    // Generate central topic
+    xml += `    <topic central="true" text="${this.escapeXml(rootTopic.title)}" id="${centralId}">\n`;
+
+    // Generate child topics recursively
+    if (rootTopic.children?.attached) {
+      xml += this.generateChildTopicsXML(rootTopic.children.attached, 0);
+    }
+
+    xml += `    </topic>\n`;
+    xml += `</map>`;
+
+    return xml;
+  }
+
+  private generateChildTopicsXML(topics: XMindTopic[], order: number): string {
+    let xml = '';
+
+    topics.forEach((topic, index) => {
+      const topicId = this.generateId();
+      const position = this.calculatePosition();
+      const bgColor = this.extractBackgroundColor(topic);
+
+      xml += `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(topic.title)}" shape="line" id="${topicId}"`;
+
+      if (bgColor) {
+        xml += ` bgColor="${bgColor}"`;
+      }
+
+      xml += `>\n`;
+
+      // Add notes if present
+      if (topic.labels && topic.labels.length > 0) {
+        const noteText = `XMind Labels: ${topic.labels.join(', ')}`;
+        xml += `            <note><![CDATA[${noteText}]]></note>\n`;
+      }
+
+      // Recursively generate child topics
+      if (topic.children?.attached) {
+        xml += this.generateChildTopicsXML(topic.children.attached, index);
+      }
+
+      xml += `        </topic>\n`;
+    });
+
+    return xml;
+  }
+
+  private extractBackgroundColor(topic: XMindTopic): string | null {
+    if (topic.style?.properties?.['svg:fill']) {
+      return this.convertXMindColor(topic.style.properties['svg:fill']);
+    }
+    return null;
+  }
+
+  private escapeXml(text: string): string {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   private createFallbackMap(nameMap: string, error: Error): string {
-    return `
-      <map name="${nameMap}">
-        <node TEXT="${nameMap}" STYLE="bubble" POSITION="0,0" ID="central-topic">
-          <node TEXT="Import Error" STYLE="bubble" POSITION="right" ID="error-note">
-            <richcontent TYPE="NOTE">
-              <html>
-                <head></head>
-                <body>
-                  <p>XMind import failed: ${error.message}</p>
-                  <p>Please check the file format and try again.</p>
-                </body>
-              </html>
-            </richcontent>
-          </node>
-        </node>
-      </map>
-    `;
+    return `<map name="${nameMap}" version="tango">
+    <topic central="true" text="${nameMap}" id="1">
+        <topic position="200,0" order="0" text="Import Error" shape="line" id="2">
+            <note><![CDATA[XMind import failed: ${error.message}. Please check the file format and try again.]]></note>
+        </topic>
+    </topic>
+</map>`;
   }
 }
 
