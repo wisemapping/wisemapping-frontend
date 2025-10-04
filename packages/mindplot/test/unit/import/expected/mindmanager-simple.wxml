@@ -1,1 +1,18 @@
-<map name="mindmanager-simple"><node TEXT="MindManager Map"></node></map>
+<map name='mindmanager-simple' version='tango' theme='prism'>
+    <topic central='true' text='Central Topic' id='1'>
+        <topic position='200,0' order='0' text='Child 1' shape='line' id='2'>
+        <topic position='200,0' order='0' text='Grandchild 1' shape='line' id='3'>
+        </topic>
+        <topic position='-200,0' order='1' text='Grandchild 2' shape='line' id='4'>
+        </topic>
+        </topic>
+        <topic position='-200,0' order='1' text='Child 2' shape='line' id='5'>
+            <note><![CDATA[This is a note for Child 2]]></note>
+        </topic>
+        <topic position='300,75' order='2' text='Child 3' shape='line' id='6'>
+            <link url='https://example.com'/>
+        <topic position='200,0' order='0' text='Subchild' shape='line' id='7'>
+        </topic>
+        </topic>
+    </topic>
+</map>

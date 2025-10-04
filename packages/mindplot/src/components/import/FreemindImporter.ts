@@ -81,6 +81,7 @@ export default class FreemindImporter extends Importer {
 
     const freeNode = this.freemindMap.getNode()!;
     this.mindmap.setVersion(FreemindConstant.CODE_VERSION);
+    this.mindmap.setTheme('prism'); // Apply Prism theme for consistency
 
     const wiseTopicId = this.getIdNode(freeNode);
     const wiseTopic = this.mindmap.createNode('CentralTopic');
@@ -226,8 +227,6 @@ export default class FreemindImporter extends Importer {
     const freeChilden = freeParent.getArrowlinkOrCloudOrEdge();
     let currentWiseTopic: NodeModel = wiseParent;
     let order = 0;
-    let firstLevelRightOrder = 0;
-    let firstLevelLeftOrder = 1;
 
     freeChilden.forEach((child) => {
       if (child instanceof FreemindNode) {
@@ -242,12 +241,9 @@ export default class FreemindImporter extends Importer {
         let norder: number;
         if (depth !== 1) {
           norder = order++;
-        } else if (child.getPosition() && child.getPosition() === FreemindConstant.POSITION_LEFT) {
-          norder = firstLevelLeftOrder;
-          firstLevelLeftOrder += 2;
         } else {
-          norder = firstLevelRightOrder;
-          firstLevelRightOrder += 2;
+          // Use simple alternating order for first-level topics (0, 1, 2, 3...)
+          norder = order++;
         }
 
         wiseChild.setOrder(norder);

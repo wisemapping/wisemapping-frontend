@@ -24,6 +24,8 @@ interface MindManagerTopic {
   text: string;
   notes?: string;
   hyperlink?: string;
+  icon?: string;
+  color?: string;
   children?: MindManagerTopic[];
 }
 
@@ -66,6 +68,93 @@ class MindManagerImporter extends Importer {
     return notes.trim();
   }
 
+  private mapMindManagerIconToEmojiIcon(iconId: string): string {
+    // MindManager icon mapping to WiseMapping EmojiIcons
+    const iconMappings: { [key: string]: string } = {
+      // Priority icons
+      'priority-1': '🔴',
+      'priority-2': '🟡',
+      'priority-3': '🟢',
+      'priority-4': '🔵',
+      'priority-5': '🟣',
+
+      // Task icons
+      'task-start': '🟡',
+      'task-done': '✅',
+      'task-pause': '⏸️',
+      'task-cancel': '❌',
+
+      // Star icons
+      star: '⭐',
+      'star-empty': '☆',
+      'star-half': '⭐',
+
+      // Arrow icons
+      'arrow-up': '⬆️',
+      'arrow-down': '⬇️',
+      'arrow-left': '⬅️',
+      'arrow-right': '➡️',
+
+      // Number icons
+      1: '1️⃣',
+      2: '2️⃣',
+      3: '3️⃣',
+      4: '4️⃣',
+      5: '5️⃣',
+      6: '6️⃣',
+      7: '7️⃣',
+      8: '8️⃣',
+      9: '9️⃣',
+      10: '🔟',
+
+      // Letter icons
+      A: '🅰️',
+      B: '🅱️',
+      C: '🅲',
+      D: '🅳',
+      E: '🅴',
+      F: '🅵',
+      G: '🅶',
+      H: '🅷',
+      I: '🅸',
+      J: '🅹',
+      K: '🅺',
+      L: '🅻',
+      M: '🅼',
+      N: '🅽',
+      O: '🅾️',
+      P: '🅿️',
+      Q: '🆀',
+      R: '🆁',
+      S: '🆂',
+      T: '🆃',
+      U: '🆄',
+      V: '🆅',
+      W: '🆆',
+      X: '🆇',
+      Y: '🆈',
+      Z: '🆉',
+
+      // Emotion icons
+      smile: '😊',
+      happy: '😃',
+      sad: '😢',
+      angry: '😠',
+      thinking: '🤔',
+      surprised: '😲',
+
+      // Technology icons
+      computer: '💻',
+      phone: '📱',
+      email: '📧',
+      internet: '🌐',
+
+      // Default fallback
+    };
+
+    return iconMappings[iconId.toLowerCase()] || '💡';
+  }
+
   private generateWiseMappingXML(
     rootTopic: MindManagerTopic,
     nameMap: string,
@@ -95,7 +184,20 @@ class MindManagerImporter extends Importer {
       const topicId = this.generateId();
       const position = this.calculatePosition(index);
 
-      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.text)}' shape='line' id='${topicId}'>\n`;
+      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.text)}' shape='line' id='${topicId}'`;
+
+      // Add color if present
+      if (topic.color) {
+        xml += ` bgColor='${topic.color}' brColor='${topic.color}'`;
+      }
+
+      xml += '>\n';
+
+      // Add icon if present
+      if (topic.icon) {
+        const emojiIcon = this.mapMindManagerIconToEmojiIcon(topic.icon);
+        xml += `            <eicon id='${emojiIcon}'/>\n`;
+      }
 
       // Add notes if present
       const noteContent = this.buildNoteContent(topic.notes);
@@ -125,17 +227,35 @@ class MindManagerImporter extends Importer {
       throw new Error('Failed to parse MindManager XML - content may be unsafe');
     }
 
-    const mapElement = doc.querySelector('Map');
+    // Find Map element by tag name (ignoring namespace)
+    const mapElement = this.findElementByTagName(doc, 'Map');
     if (!mapElement) {
       throw new Error('Invalid MindManager XML: missing Map element');
     }
 
-    const rootTopic = mapElement.querySelector('Topic');
+    // Find root Topic element
+    const rootTopic = this.findElementByTagName(mapElement, 'Topic');
     if (!rootTopic) {
       throw new Error('Invalid MindManager XML: missing root Topic');
     }
 
     return this.parseTopic(rootTopic);
+  }
+
+  private findElementByTagName(parent: Element | Document, tagName: string): Element | null {
+    // Try direct query first
+    const element = parent.querySelector(tagName);
+    if (element) return element;
+
+    // If not found, search all elements by tag name
+    const allElements = parent.getElementsByTagName('*');
+    for (let i = 0; i < allElements.length; i++) {
+      const el = allElements[i];
+      if (el.localName === tagName || el.tagName === tagName) {
+        return el;
+      }
+    }
+    return null;
   }
 
   private parseTopic(topicElement: Element): MindManagerTopic {
@@ -148,21 +268,41 @@ class MindManagerImporter extends Importer {
     };
 
     // Parse notes
-    const notesElement = topicElement.querySelector('Notes');
+    const notesElement = this.findElementByTagName(topicElement, 'Notes');
     if (notesElement) {
       topic.notes = notesElement.textContent || '';
     }
 
     // Parse hyperlink
-    const hyperlinkElement = topicElement.querySelector('Hyperlink');
+    const hyperlinkElement = this.findElementByTagName(topicElement, 'Hyperlink');
     if (hyperlinkElement) {
       topic.hyperlink = hyperlinkElement.getAttribute('URL') || '';
     }
 
-    // Parse child topics
-    const childTopics = topicElement.querySelectorAll(':scope > Topic');
+    // Parse icon
+    const iconElement = this.findElementByTagName(topicElement, 'Icon');
+    if (iconElement) {
+      topic.icon = iconElement.getAttribute('Name') || iconElement.textContent || '';
+    }
+
+    // Parse color
+    const colorElement = this.findElementByTagName(topicElement, 'Color');
+    if (colorElement) {
+      topic.color = colorElement.getAttribute('Value') || colorElement.textContent || '';
+    }
+
+    // Parse child topics - find direct child Topic elements
+    const childTopics: Element[] = [];
+    const allChildren = topicElement.children;
+    for (let i = 0; i < allChildren.length; i++) {
+      const child = allChildren[i];
+      if (child.localName === 'Topic' || child.tagName === 'Topic') {
+        childTopics.push(child);
+      }
+    }
+
     if (childTopics.length > 0) {
-      topic.children = Array.from(childTopics).map((child) => this.parseTopic(child));
+      topic.children = childTopics.map((child) => this.parseTopic(child));
     }
 
     return topic;
