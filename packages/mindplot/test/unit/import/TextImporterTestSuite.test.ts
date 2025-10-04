@@ -26,6 +26,7 @@ import TextImporterFactory from '../../../src/components/import/TextImporterFact
 
 const testNames = fs
   .readdirSync(path.resolve(__dirname, './input/'))
+  .filter((filename: string) => filename.endsWith('.mm'))
   .map((filename: string) => filename.split('.')[0]);
 
 describe('package/', () => {

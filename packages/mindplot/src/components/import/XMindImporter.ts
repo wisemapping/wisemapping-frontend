@@ -219,15 +219,15 @@ class XMindImporter extends Importer {
   private generateWiseMappingXMLFromXML(
     rootTopic: Element,
     nameMap: string,
-    description?: string,
+    _description?: string,
   ): string {
     const centralId = this.generateId();
     const centralTitle = rootTopic.querySelector('title')?.textContent || 'Central Topic';
 
-    let xml = `<map name="${nameMap}" version="tango" theme="prism">\n`;
+    let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
 
     // Generate central topic
-    xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
+    xml += `    <topic central='true' text='${this.escapeXml(centralTitle)}' id='${centralId}'>\n`;
 
     // Generate child topics recursively
     const childrenElement = rootTopic.querySelector('children');
@@ -243,8 +243,8 @@ class XMindImporter extends Importer {
       }
     }
 
-    xml += `    </topic>\n`;
-    xml += `</map>`;
+    xml += '    </topic>\n';
+    xml += '</map>';
 
     return xml;
   }
@@ -254,7 +254,7 @@ class XMindImporter extends Importer {
     const position = this.calculatePosition(order);
     const title = xmlTopic.querySelector('title')?.textContent || 'Untitled';
 
-    let xml = `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
+    let xml = `        <topic position='${position.x},${position.y}' order='${order}' text='${this.escapeXml(title)}' shape='line' id='${topicId}'>\n`;
 
     // Add icons if present (from markers)
     const markers = xmlTopic.querySelectorAll('markers > marker');
@@ -263,7 +263,7 @@ class XMindImporter extends Importer {
         const markerId = marker.getAttribute('marker-id');
         if (markerId) {
           const emojiIcon = this.mapXMindIconToEmojiIcon(markerId);
-          xml += `            <eicon id="${emojiIcon}"/>\n`;
+          xml += `            <eicon id='${emojiIcon}'/>\n`;
         }
       });
     }
@@ -288,28 +288,28 @@ class XMindImporter extends Importer {
       }
     }
 
-    xml += `        </topic>\n`;
+    xml += '        </topic>\n';
     return xml;
   }
 
   private generateWiseMappingXML(
     rootTopic: XMindTopic,
     nameMap: string,
-    description?: string,
+    _description?: string,
   ): string {
     const centralId = this.generateId();
-    let xml = `<map name="${nameMap}" version="tango" theme="prism">\n`;
+    let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
 
     // Generate central topic
-    xml += `    <topic central="true" text="${this.escapeXml(rootTopic.title)}" id="${centralId}">\n`;
+    xml += `    <topic central='true' text='${this.escapeXml(rootTopic.title)}' id='${centralId}'>\n`;
 
     // Generate child topics recursively
     if (rootTopic.children?.attached) {
       xml += this.generateChildTopicsXML(rootTopic.children.attached, 0);
     }
 
-    xml += `    </topic>\n`;
-    xml += `</map>`;
+    xml += '    </topic>\n';
+    xml += '</map>';
 
     return xml;
   }
@@ -322,25 +322,25 @@ class XMindImporter extends Importer {
       const position = this.calculatePosition(order);
       const bgColor = this.extractBackgroundColor(topic);
 
-      xml += `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(topic.title)}" shape="line" id="${topicId}"`;
+      xml += `        <topic position='${position.x},${position.y}' order='${order}' text='${this.escapeXml(topic.title)}' shape='line' id='${topicId}'`;
 
       if (bgColor) {
-        xml += ` bgColor="${bgColor}"`;
+        xml += ` bgColor='${bgColor}'`;
       }
 
       // Add border color if available
       const borderColor = this.extractBorderColor(topic);
       if (borderColor) {
-        xml += ` brColor="${borderColor}"`;
+        xml += ` brColor='${borderColor}'`;
       }
 
-      xml += `>\n`;
+      xml += '>\n';
 
       // Add icons if present (mapped to EmojiIcons)
       if (topic.icons && topic.icons.length > 0) {
         topic.icons.forEach((icon) => {
           const emojiIcon = this.mapXMindIconToEmojiIcon(icon);
-          xml += `            <eicon id="${emojiIcon}"/>\n`;
+          xml += `            <eicon id='${emojiIcon}'/>\n`;
         });
       }
 
@@ -355,7 +355,7 @@ class XMindImporter extends Importer {
         xml += this.generateChildTopicsXML(topic.children.attached, index);
       }
 
-      xml += `        </topic>\n`;
+      xml += '        </topic>\n';
     });
 
     return xml;
@@ -493,16 +493,16 @@ class XMindImporter extends Importer {
       'number-8': '8️⃣', // 8️⃣
       'number-9': '9️⃣', // 9️⃣
       'number-10': '🔟', // 🔟
-      '1': '1️⃣', // 1️⃣
-      '2': '2️⃣', // 2️⃣
-      '3': '3️⃣', // 3️⃣
-      '4': '4️⃣', // 4️⃣
-      '5': '5️⃣', // 5️⃣
-      '6': '6️⃣', // 6️⃣
-      '7': '7️⃣', // 7️⃣
-      '8': '8️⃣', // 8️⃣
-      '9': '9️⃣', // 9️⃣
-      '10': '🔟', // 🔟
+      1: '1️⃣', // 1️⃣
+      2: '2️⃣', // 2️⃣
+      3: '3️⃣', // 3️⃣
+      4: '4️⃣', // 4️⃣
+      5: '5️⃣', // 5️⃣
+      6: '6️⃣', // 6️⃣
+      7: '7️⃣', // 7️⃣
+      8: '8️⃣', // 8️⃣
+      9: '9️⃣', // 9️⃣
+      10: '🔟', // 🔟
 
       // Letters (A-Z)
       'letter-a': '🅰️', // 🅰️

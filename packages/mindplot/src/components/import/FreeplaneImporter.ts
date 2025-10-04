@@ -20,6 +20,7 @@ import SecureXmlParser from '../security/SecureXmlParser';
 
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
+
   private idCounter: number = 1;
 
   constructor(map: string) {
@@ -27,7 +28,7 @@ class FreeplaneImporter extends Importer {
     this.freeplaneInput = map;
   }
 
-  import(nameMap: string, description?: string): Promise<string> {
+  import(nameMap: string, _description?: string): Promise<string> {
     try {
       // Use secure XML parser to prevent XXE attacks
       const freeplaneDoc = SecureXmlParser.parseSecureXml(this.freeplaneInput);
@@ -65,8 +66,8 @@ class FreeplaneImporter extends Importer {
       xml += this.generateChildTopicXML(childNode as Element, index);
     });
 
-    xml += `    </topic>\n`;
-    xml += `</map>`;
+    xml += '    </topic>\n';
+    xml += '</map>';
 
     return xml;
   }

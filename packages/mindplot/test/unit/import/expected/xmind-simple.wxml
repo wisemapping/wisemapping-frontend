@@ -1,23 +1,23 @@
-<map name="xmind-simple" version="tango" theme="prism">
-    <topic central="true" text="Central Topic" id="1">
-        <topic position="200,0" order="0" text="Child 1" shape="line" id="2">
-        <topic position="200,0" order="0" text="Grandchild 1" shape="line" id="3">
+<map name='xmind-simple' version='tango' theme='prism'>
+    <topic central='true' text='Central Topic' id='1'>
+        <topic position='200,0' order='0' text='Child 1' shape='line' id='2'>
+        <topic position='200,0' order='0' text='Grandchild 1' shape='line' id='3'>
         </topic>
-        <topic position="-200,0" order="1" text="Grandchild 2" shape="line" id="4">
+        <topic position='-200,0' order='1' text='Grandchild 2' shape='line' id='4'>
         </topic>
         </topic>
-        <topic position="-200,0" order="1" text="Child 2" shape="line" id="5">
+        <topic position='-200,0' order='1' text='Child 2' shape='line' id='5'>
             <note><![CDATA[This is a note for Child 2]]></note>
         </topic>
-        <topic position="300,75" order="2" text="Child 3" shape="line" id="6">
-            <eicon id="🔴"/>
+        <topic position='300,75' order='2' text='Child 3' shape='line' id='6'>
+            <eicon id='🔴'/>
             <note><![CDATA[🔖 priority-1]]></note>
-        <topic position="200,0" order="0" text="Subchild" shape="line" id="7">
+        <topic position='200,0' order='0' text='Subchild' shape='line' id='7'>
         </topic>
         </topic>
-        <topic position="-300,75" order="3" text="Child 4" shape="line" id="8">
-            <eicon id="🟡"/>
-            <eicon id="⭐"/>
+        <topic position='-300,75' order='3' text='Child 4' shape='line' id='8'>
+            <eicon id='🟡'/>
+            <eicon id='⭐'/>
             <note><![CDATA[Another note with more details
 🔖 priority-2, 🔖 star]]></note>
         </topic>
