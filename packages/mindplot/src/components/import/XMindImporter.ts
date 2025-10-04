@@ -99,9 +99,12 @@ class XMindImporter extends Importer {
 
   private idCounter = 1;
 
+  private topicIdMap: Map<string, string>;
+
   constructor(map: string) {
     super();
     this.xmindInput = map;
+    this.topicIdMap = new Map();
   }
 
   import(nameMap: string, description?: string): Promise<string> {
@@ -129,14 +132,30 @@ class XMindImporter extends Importer {
       const parser = new DOMParser();
       const doc = parser.parseFromString(this.xmindInput, 'text/xml');
 
-      // Find the root topic
-      const rootTopic = doc.querySelector('topic');
+      // Find the root topic (within sheet element) - handle namespaces
+      let sheet = doc.querySelector('sheet');
+      if (!sheet) {
+        // Try to find sheet by tag name (works with namespaces)
+        const sheets = doc.getElementsByTagName('sheet');
+        sheet = sheets.length > 0 ? sheets[0] : null;
+      }
+
+      let rootTopic = sheet?.querySelector('topic');
+      if (!rootTopic) {
+        // Try to find topic by tag name (works with namespaces)
+        const topics = sheet
+          ? sheet.getElementsByTagName('topic')
+          : doc.getElementsByTagName('topic');
+        rootTopic = topics.length > 0 ? topics[0] : null;
+      }
+
       if (!rootTopic) {
         throw new Error('No root topic found in XMind file');
       }
 
-      // Reset counters
+      // Reset counters and ID map
       this.idCounter = 1;
+      this.topicIdMap.clear();
 
       // Generate WiseMapping XML directly from XML structure
       const xmlContent = this.generateWiseMappingXMLFromXML(rootTopic, nameMap, description);
@@ -222,7 +241,14 @@ class XMindImporter extends Importer {
     _description?: string,
   ): string {
     const centralId = this.generateId();
-    const centralTitle = rootTopic.querySelector('title')?.textContent || 'Central Topic';
+    const rootTopicId = rootTopic.getAttribute('id') || 'topic1';
+    this.topicIdMap.set(rootTopicId, centralId.toString());
+
+    let centralTitle = rootTopic.querySelector('title')?.textContent;
+    if (!centralTitle) {
+      const titles = rootTopic.getElementsByTagName('title');
+      centralTitle = titles.length > 0 ? titles[0].textContent : 'Central Topic';
+    }
 
     let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
 
@@ -230,12 +256,23 @@ class XMindImporter extends Importer {
     xml += `    <topic central='true' text='${this.escapeXml(centralTitle)}' id='${centralId}'>\n`;
 
     // Generate child topics recursively
-    const childrenElement = rootTopic.querySelector('children');
+    let childrenElement = rootTopic.querySelector('children');
+    if (!childrenElement) {
+      const children = rootTopic.getElementsByTagName('children');
+      childrenElement = children.length > 0 ? children[0] : null;
+    }
+
     if (childrenElement) {
-      const topicsElement = childrenElement.querySelector('topics[type="attached"]');
+      let topicsElement = childrenElement.querySelector('topics[type="attached"]');
+      if (!topicsElement) {
+        const topics = childrenElement.getElementsByTagName('topics');
+        topicsElement =
+          Array.from(topics).find((t) => t.getAttribute('type') === 'attached') || null;
+      }
+
       if (topicsElement) {
         const childTopics = Array.from(topicsElement.children).filter(
-          (child) => child.tagName === 'topic',
+          (child) => child.tagName === 'topic' || child.localName === 'topic',
         );
         childTopics.forEach((childTopic, index) => {
           xml += this.generateChildTopicXMLFromXML(childTopic as Element, index);
@@ -244,6 +281,13 @@ class XMindImporter extends Importer {
     }
 
     xml += '    </topic>\n';
+
+    // Add relationships if present
+    const relationshipsXML = this.generateRelationshipsXML(rootTopic);
+    if (relationshipsXML) {
+      xml += relationshipsXML;
+    }
+
     xml += '</map>';
 
     return xml;
@@ -251,15 +295,30 @@ class XMindImporter extends Importer {
 
   private generateChildTopicXMLFromXML(xmlTopic: Element, order: number): string {
     const topicId = this.generateId();
+    const xmindTopicId = xmlTopic.getAttribute('id') || `topic${this.idCounter}`;
+    this.topicIdMap.set(xmindTopicId, topicId.toString());
+
     const position = this.calculatePosition(order);
-    const title = xmlTopic.querySelector('title')?.textContent || 'Untitled';
+    let title = xmlTopic.querySelector('title')?.textContent;
+    if (!title) {
+      const titles = xmlTopic.getElementsByTagName('title');
+      title = titles.length > 0 ? titles[0].textContent : 'Untitled';
+    }
 
     let xml = `        <topic position='${position.x},${position.y}' order='${order}' text='${this.escapeXml(title)}' shape='line' id='${topicId}'>\n`;
 
     // Add icons if present (from markers)
-    const markers = xmlTopic.querySelectorAll('markers > marker');
+    let markers = xmlTopic.querySelectorAll('marker-refs > marker-ref');
+    if (markers.length === 0) {
+      const markerRefs = xmlTopic.getElementsByTagName('marker-refs');
+      if (markerRefs.length > 0) {
+        const markerElements = markerRefs[0].getElementsByTagName('marker-ref');
+        markers = Array.from(markerElements) as unknown as NodeListOf<Element>;
+      }
+    }
+
     if (markers.length > 0) {
-      markers.forEach((marker) => {
+      Array.from(markers).forEach((marker) => {
         const markerId = marker.getAttribute('marker-id');
         if (markerId) {
           const emojiIcon = this.mapXMindIconToEmojiIcon(markerId);
@@ -275,12 +334,23 @@ class XMindImporter extends Importer {
     }
 
     // Recursively generate child topics
-    const childrenElement = xmlTopic.querySelector('children');
+    let childrenElement = xmlTopic.querySelector('children');
+    if (!childrenElement) {
+      const children = xmlTopic.getElementsByTagName('children');
+      childrenElement = children.length > 0 ? children[0] : null;
+    }
+
     if (childrenElement) {
-      const topicsElement = childrenElement.querySelector('topics[type="attached"]');
+      let topicsElement = childrenElement.querySelector('topics[type="attached"]');
+      if (!topicsElement) {
+        const topics = childrenElement.getElementsByTagName('topics');
+        topicsElement =
+          Array.from(topics).find((t) => t.getAttribute('type') === 'attached') || null;
+      }
+
       if (topicsElement) {
         const childTopics = Array.from(topicsElement.children).filter(
-          (child) => child.tagName === 'topic',
+          (child) => child.tagName === 'topic' || child.localName === 'topic',
         );
         childTopics.forEach((childTopic, index) => {
           xml += this.generateChildTopicXMLFromXML(childTopic as Element, index);
@@ -290,6 +360,65 @@ class XMindImporter extends Importer {
 
     xml += '        </topic>\n';
     return xml;
+  }
+
+  private generateRelationshipsXML(rootTopic: Element): string {
+    // Find relationships in the sheet (parent of rootTopic)
+    const sheet = rootTopic.parentElement;
+    if (!sheet) return '';
+
+    let relationshipsElement = sheet.querySelector('relationships');
+    if (!relationshipsElement) {
+      const relationships = sheet.getElementsByTagName('relationships');
+      relationshipsElement = relationships.length > 0 ? relationships[0] : null;
+    }
+
+    if (!relationshipsElement) return '';
+
+    let relationshipsXML = '';
+    const relationshipElements = relationshipsElement.querySelectorAll('relationship');
+    if (relationshipElements.length === 0) {
+      const relationships = relationshipsElement.getElementsByTagName('relationship');
+      Array.from(relationships).forEach((rel) => {
+        relationshipsXML += this.generateRelationshipXML(rel as Element);
+      });
+    } else {
+      relationshipElements.forEach((rel) => {
+        relationshipsXML += this.generateRelationshipXML(rel as Element);
+      });
+    }
+
+    return relationshipsXML;
+  }
+
+  private generateRelationshipXML(relationshipElement: Element): string {
+    const end1 = relationshipElement.getAttribute('end1');
+    const end2 = relationshipElement.getAttribute('end2');
+    const title =
+      relationshipElement.querySelector('title')?.textContent ||
+      relationshipElement.querySelector('[local-name()="title"]')?.textContent ||
+      '';
+
+    if (!end1 || !end2) return '';
+
+    // Map XMind topic IDs to WiseMapping topic IDs
+    const srcTopicId = this.mapTopicId(end1);
+    const destTopicId = this.mapTopicId(end2);
+
+    if (!srcTopicId || !destTopicId) return '';
+
+    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+
+    if (title) {
+      relationshipXML += ` label='${this.escapeXml(title)}'`;
+    }
+
+    relationshipXML += '/>\n';
+    return relationshipXML;
+  }
+
+  private mapTopicId(xmindTopicId: string): string | null {
+    return this.topicIdMap.get(xmindTopicId) || null;
   }
 
   private generateWiseMappingXML(
@@ -314,15 +443,15 @@ class XMindImporter extends Importer {
     return xml;
   }
 
-  private generateChildTopicsXML(topics: XMindTopic[], order: number): string {
+  private generateChildTopicsXML(topics: XMindTopic[], _order: number): string {
     let xml = '';
 
     topics.forEach((topic, index) => {
       const topicId = this.generateId();
-      const position = this.calculatePosition(order);
+      const position = this.calculatePosition(index);
       const bgColor = this.extractBackgroundColor(topic);
 
-      xml += `        <topic position='${position.x},${position.y}' order='${order}' text='${this.escapeXml(topic.title)}' shape='line' id='${topicId}'`;
+      xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.title)}' shape='line' id='${topicId}'`;
 
       if (bgColor) {
         xml += ` bgColor='${bgColor}'`;

@@ -1,0 +1,104 @@
+<map name='mindmanager-product-development' version='tango' theme='prism'>
+    <topic central='true' text='Product Development Roadmap' id='1'>
+        <topic position='200,0' order='0' text='Ideation Phase' shape='line' id='2'>
+            <eicon id='💡'/>
+            <note><![CDATA[Generate and evaluate product ideas]]></note>
+        <topic position='200,0' order='0' text='Market Research' shape='line' id='3'>
+            <eicon id='💡'/>
+            <note><![CDATA[Analyze market needs and opportunities]]></note>
+        </topic>
+        <topic position='-200,0' order='1' text='User Stories' shape='line' id='4'>
+            <eicon id='💡'/>
+            <note><![CDATA[Define user requirements and stories]]></note>
+        </topic>
+        <topic position='300,75' order='2' text='Feature Prioritization' shape='line' id='5'>
+            <eicon id='⭐'/>
+            <note><![CDATA[Prioritize features based on value and effort]]></note>
+        </topic>
+        <topic position='-300,75' order='3' text='Competitive Analysis' shape='line' id='6'>
+            <eicon id='💡'/>
+            <note><![CDATA[Analyze competitor products and features]]></note>
+        </topic>
+        </topic>
+        <topic position='-200,0' order='1' text='Design Phase' shape='line' id='7'>
+            <eicon id='💡'/>
+            <note><![CDATA[Create product design and specifications]]></note>
+        <topic position='200,0' order='0' text='Wireframes' shape='line' id='8'>
+            <eicon id='💡'/>
+            <note><![CDATA[Create low-fidelity wireframes]]></note>
+        </topic>
+        <topic position='-200,0' order='1' text='Prototypes' shape='line' id='9'>
+            <eicon id='💻'/>
+            <note><![CDATA[Develop interactive prototypes]]></note>
+        </topic>
+        <topic position='300,75' order='2' text='User Interface Design' shape='line' id='10'>
+            <eicon id='💡'/>
+            <note><![CDATA[Design user interface and experience]]></note>
+        </topic>
+        <topic position='-300,75' order='3' text='Technical Architecture' shape='line' id='11'>
+            <eicon id='💻'/>
+            <note><![CDATA[Define technical architecture and stack]]></note>
+        </topic>
+        </topic>
+        <topic position='300,75' order='2' text='Development Phase' shape='line' id='12'>
+            <eicon id='💻'/>
+            <note><![CDATA[Implement product features and functionality]]></note>
+        <topic position='200,0' order='0' text='Sprint Planning' shape='line' id='13'>
+            <eicon id='💡'/>
+            <note><![CDATA[Plan development sprints and iterations]]></note>
+        </topic>
+        <topic position='-200,0' order='1' text='Code Development' shape='line' id='14'>
+            <eicon id='💻'/>
+            <note><![CDATA[Write and review code]]></note>
+        </topic>
+        <topic position='300,75' order='2' text='Integration' shape='line' id='15'>
+            <eicon id='💡'/>
+            <note><![CDATA[Integrate components and systems]]></note>
+        </topic>
+        <topic position='-300,75' order='3' text='Version Control' shape='line' id='16'>
+            <eicon id='💡'/>
+            <note><![CDATA[Manage code versions and releases]]></note>
+        </topic>
+        </topic>
+        <topic position='-300,75' order='3' text='Testing Phase' shape='line' id='17'>
+            <eicon id='💡'/>
+            <note><![CDATA[Test product functionality and quality]]></note>
+        <topic position='200,0' order='0' text='Unit Testing' shape='line' id='18'>
+            <eicon id='💻'/>
+            <note><![CDATA[Test individual components and functions]]></note>
+        </topic>
+        <topic position='-200,0' order='1' text='Integration Testing' shape='line' id='19'>
+            <eicon id='💡'/>
+            <note><![CDATA[Test component interactions]]></note>
+        </topic>
+        <topic position='300,75' order='2' text='User Acceptance Testing' shape='line' id='20'>
+            <eicon id='💡'/>
+            <note><![CDATA[Validate product with end users]]></note>
+        </topic>
+        <topic position='-300,75' order='3' text='Performance Testing' shape='line' id='21'>
+            <eicon id='💡'/>
+            <note><![CDATA[Test performance and scalability]]></note>
+        </topic>
+        </topic>
+        <topic position='400,150' order='4' text='Launch Phase' shape='line' id='22'>
+            <eicon id='💡'/>
+            <note><![CDATA[Prepare and execute product launch]]></note>
+        <topic position='200,0' order='0' text='Deployment' shape='line' id='23'>
+            <eicon id='💻'/>
+            <note><![CDATA[Deploy product to production environment]]></note>
+        </topic>
+        <topic position='-200,0' order='1' text='Marketing Launch' shape='line' id='24'>
+            <eicon id='💡'/>
+            <note><![CDATA[Execute marketing and launch campaigns]]></note>
+        </topic>
+        <topic position='300,75' order='2' text='User Training' shape='line' id='25'>
+            <eicon id='💡'/>
+            <note><![CDATA[Train users and provide documentation]]></note>
+        </topic>
+        <topic position='-300,75' order='3' text='Monitoring' shape='line' id='26'>
+            <eicon id='💡'/>
+            <note><![CDATA[Monitor product performance and usage]]></note>
+        </topic>
+        </topic>
+    </topic>
+</map>

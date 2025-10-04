@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.0">
+  <sheet id="sheet1" theme="prism">
+    <topic id="topic1" structure-class="org.xmind.ui.map">
+      <title>SWOT Analysis</title>
+      <children>
+        <topics type="attached">
+          <topic id="topic2">
+            <title>Strengths</title>
+            <marker-refs>
+              <marker-ref marker-id="flag-green"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic3">
+                  <title>Strong Brand</title>
+                  <marker-refs>
+                    <marker-ref marker-id="star"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic4">
+                  <title>Experienced Team</title>
+                  <marker-refs>
+                    <marker-ref marker-id="people"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic5">
+                  <title>Financial Stability</title>
+                  <marker-refs>
+                    <marker-ref marker-id="money"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic6">
+                  <title>Innovation</title>
+                  <marker-refs>
+                    <marker-ref marker-id="lightbulb"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic7">
+            <title>Weaknesses</title>
+            <marker-refs>
+              <marker-ref marker-id="flag-red"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic8">
+                  <title>Limited Resources</title>
+                  <marker-refs>
+                    <marker-ref marker-id="warning"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic9">
+                  <title>Market Share</title>
+                  <marker-refs>
+                    <marker-ref marker-id="chart"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic10">
+                  <title>Technology Gap</title>
+                  <marker-refs>
+                    <marker-ref marker-id="computer"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic11">
+                  <title>Process Inefficiency</title>
+                  <marker-refs>
+                    <marker-ref marker-id="clock"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic12">
+            <title>Opportunities</title>
+            <marker-refs>
+              <marker-ref marker-id="flag-yellow"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic13">
+                  <title>Market Expansion</title>
+                  <marker-refs>
+                    <marker-ref marker-id="globe"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic14">
+                  <title>New Technology</title>
+                  <marker-refs>
+                    <marker-ref marker-id="computer"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic15">
+                  <title>Partnerships</title>
+                  <marker-refs>
+                    <marker-ref marker-id="people"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic16">
+                  <title>Digital Transformation</title>
+                  <marker-refs>
+                    <marker-ref marker-id="arrow-right"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic17">
+            <title>Threats</title>
+            <marker-refs>
+              <marker-ref marker-id="flag-red"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic18">
+                  <title>Competition</title>
+                  <marker-refs>
+                    <marker-ref marker-id="warning"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic19">
+                  <title>Economic Changes</title>
+                  <marker-refs>
+                    <marker-ref marker-id="chart"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic20">
+                  <title>Regulatory Changes</title>
+                  <marker-refs>
+                    <marker-ref marker-id="document"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic21">
+                  <title>Technology Disruption</title>
+                  <marker-refs>
+                    <marker-ref marker-id="computer"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>

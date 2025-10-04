@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.0">
+  <sheet id="sheet1" theme="prism">
+    <topic id="topic1" structure-class="org.xmind.ui.map">
+      <title>Project Management Plan</title>
+      <children>
+        <topics type="attached">
+          <topic id="topic2">
+            <title>Planning Phase</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-1"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic3">
+                  <title>Define Scope</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic4">
+                  <title>Create Timeline</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic5">
+                  <title>Resource Allocation</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-done"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic6">
+            <title>Execution Phase</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-2"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic7">
+                  <title>Development</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic8">
+                  <title>Testing</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-pause"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic9">
+                  <title>Documentation</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic10">
+            <title>Monitoring & Control</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-3"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic11">
+                  <title>Progress Tracking</title>
+                  <marker-refs>
+                    <marker-ref marker-id="flag-red"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic12">
+                  <title>Quality Assurance</title>
+                  <marker-refs>
+                    <marker-ref marker-id="flag-yellow"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic13">
+                  <title>Risk Management</title>
+                  <marker-refs>
+                    <marker-ref marker-id="flag-green"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic14">
+            <title>Closure Phase</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-4"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic15">
+                  <title>Final Review</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-done"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic16">
+                  <title>Lessons Learned</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic17">
+                  <title>Project Archive</title>
+                  <marker-refs>
+                    <marker-ref marker-id="task-start"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>

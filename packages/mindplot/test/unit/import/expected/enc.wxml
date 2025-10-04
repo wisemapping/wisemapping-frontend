@@ -1,10 +1,10 @@
-<map name="enc" version="tango">
+<map name="enc" theme="prism" version="tango">
     <topic central="true" text="Artigos GF comentários interessantes" id="1">
-        <topic position="-200,-50" order="1" shape="rectangle" id="5" bgColor="#cccccc">
+        <topic position="-200,-50" order="0" shape="rectangle" id="5" bgColor="#cccccc">
             <text><![CDATA[Baraloto et al. 2010. Functional trait variation and sampling strategies in species-rich plant
 communities]]></text>
-            <topic position="-200,-350" order="1" shape="line" id="6"/>
-            <topic position="290,-150" order="0" shape="line" id="7">
+            <topic position="-200,-350" order="0" shape="line" id="6"/>
+            <topic position="290,-125" order="1" shape="line" id="7">
                 <text><![CDATA[
                         
                         
@@ -15,7 +15,7 @@ communities]]></text>
                         
                     ]]></text>
             </topic>
-            <topic position="380,-125" order="1" shape="line" id="8">
+            <topic position="380,-100" order="2" shape="line" id="8">
                 <text><![CDATA[
                         
                         
@@ -35,21 +35,21 @@ communities]]></text>
                         
                     ]]></text>
             </topic>
-            <topic position="470,-100" order="2" shape="line" id="9">
+            <topic position="470,-75" order="3" shape="line" id="9">
                 <text><![CDATA[Falar que a escolha das categorias de sucessão e dos parâmetros ou característica dos indivíduos que
 serão utilizadas dependera da facilidade de coleta dos dados e do custo monetário e
 temporal.]]></text>
             </topic>
-            <topic position="560,-75" order="3" shape="line" id="12">
+            <topic position="560,-50" order="4" shape="line" id="12">
                 <text><![CDATA[Ver se classifica sucessão por densidade de tronco para citar no artigo como exemplo de outros
 atributos além de germinação e ver se e custoso no tempo e em
 dinheiro]]></text>
             </topic>
-            <topic position="650,-50" order="4" shape="line" id="13">
+            <topic position="650,-25" order="5" shape="line" id="13">
                 <text><![CDATA[Intensas amostragens de experimentos simples  tem maior retorno em acurácia de estimativa e de custo
 tb.]]></text>
             </topic>
-            <topic position="740,-25" order="5" shape="line" id="14">
+            <topic position="740,0" order="6" shape="line" id="14">
                 <text><![CDATA[
                         
                         
@@ -62,7 +62,7 @@ tb.]]></text>
                         
                     ]]></text>
             </topic>
-            <topic position="830,0" order="6" shape="line" id="15">
+            <topic position="830,25" order="7" shape="line" id="15">
                 <text><![CDATA[
                         
                         
@@ -79,8 +79,8 @@ tb.]]></text>
                     ]]></note>
             </topic>
         </topic>
-        <topic position="-290,-12" order="0" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
-            <topic position="290,-137" order="0" shape="line" id="22">
+        <topic position="-290,13" order="1" text="Chazdon 2010. Biotropica. 42(1): 31–40" shape="rectangle" id="17" bgColor="#cccccc">
+            <topic position="290,-112" order="0" shape="line" id="22">
                 <text><![CDATA[
                         
                         
@@ -95,7 +95,7 @@ tb.]]></text>
                         
                     ]]></text>
             </topic>
-            <topic position="380,-112" order="1" shape="line" id="23">
+            <topic position="380,-87" order="1" shape="line" id="23">
                 <text><![CDATA[
                         
                         
@@ -107,7 +107,7 @@ tb.]]></text>
                         
                     ]]></text>
             </topic>
-            <topic position="470,-87" order="2" shape="line" id="24">
+            <topic position="470,-62" order="2" shape="line" id="24">
                 <text><![CDATA[Falar no artigo que esse trabalho fala que é inadequada a divisão entre pioneira e não pioneira
 devido a grande variação que há entre elas. Além de terem descoberto que durante a ontogenia a
 resposta a luminosidade muda dentro de uma mesma espécie. Porém recomendar que essa classificação
@@ -121,7 +121,7 @@ idéia maismrápida e a curto prazo da classificação destas espécies. Depois 
 construir classificações mais detalhadas e com mais dados confiáveis.
 ]]></text>
             </topic>
-            <topic position="560,-62" order="3" shape="line" id="25">
+            <topic position="560,-37" order="3" shape="line" id="25">
                 <text><![CDATA[
                         
                         
@@ -137,7 +137,7 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                         
                     ]]></text>
             </topic>
-            <topic position="650,-37" order="4" shape="line" id="26">
+            <topic position="650,-12" order="4" shape="line" id="26">
                 <text><![CDATA[
                         
                         
@@ -148,10 +148,10 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                         
                     ]]></text>
             </topic>
-            <topic position="740,-12" order="5" shape="line" id="27"/>
-            <topic position="830,13" order="6" shape="line" id="28"/>
-            <topic position="920,38" order="7" shape="line" id="29"/>
-            <topic position="1010,63" order="8" shape="line" id="30">
+            <topic position="740,13" order="5" shape="line" id="27"/>
+            <topic position="830,38" order="6" shape="line" id="28"/>
+            <topic position="920,63" order="7" shape="line" id="29"/>
+            <topic position="1010,88" order="8" shape="line" id="30">
                 <text><![CDATA[
                         
                         
@@ -162,7 +162,7 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                         
                     ]]></text>
             </topic>
-            <topic position="1100,88" order="9" shape="line" id="31">
+            <topic position="1100,113" order="9" shape="line" id="31">
                 <text><![CDATA[
                         
                         
@@ -189,9 +189,9 @@ construir classificações mais detalhadas e com mais dados confiáveis.
                     ]]></text>
             </topic>
         </topic>
-        <topic position="-380,0" order="1" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">
-            <topic position="380,-12" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
-                <topic position="-380,-24" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
+        <topic position="-380,25" order="2" text="Poorter 1999. Functional Ecology. 13:396-410" shape="rectangle" id="2" bgColor="#cccccc">
+            <topic position="380,13" order="0" text="Espécies pioneiras crescem mais rápido do que as não pioneiras" shape="line" id="3">
+                <topic position="-380,1" order="0" text="Tolerância a sombra está relacionada com persistência e não com crescimento" shape="line" id="4"/>
             </topic>
         </topic>
     </topic>

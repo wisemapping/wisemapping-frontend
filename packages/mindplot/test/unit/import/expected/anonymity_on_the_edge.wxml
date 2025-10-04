@@ -1,43 +1,43 @@
-<map name="anonymity_on_the_edge" version="tango">
+<map name="anonymity_on_the_edge" theme="prism" version="tango">
     <topic central="true" text="Anonymity on the Edge" id="1499076781">
         <topic position="200,-50" order="0" text="author" shape="line" id="858068095">
             <topic position="200,0" order="0" text="Luke O'Connor" shape="line" id="894658161">
                 <link url="http://lukenotricks.blogspot.com/" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-290,-12" order="0" text="Embassy incident" shape="line" id="474203765">
-            <topic position="290,-112" order="0" text="who" shape="line" shrink="true" id="1263348404">
-                <topic position="-290,-137" order="0" text="Dan Egerstad, the Swedish computer security" shape="line" id="242191883"/>
-                <topic position="-380,-112" order="1" text="21-year-old " shape="line" id="720929382"/>
+        <topic position="-290,13" order="1" text="Embassy incident" shape="line" id="474203765">
+            <topic position="290,-87" order="0" text="who" shape="line" shrink="true" id="1263348404">
+                <topic position="-290,-112" order="0" text="Dan Egerstad, the Swedish computer security" shape="line" id="242191883"/>
+                <topic position="-380,-87" order="1" text="21-year-old " shape="line" id="720929382"/>
             </topic>
-            <topic position="380,-87" order="1" text="what" shape="line" shrink="true" id="1982200632">
-                <topic position="-380,-162" order="0" shape="line" id="1786192306">
+            <topic position="380,-62" order="1" text="what" shape="line" shrink="true" id="1982200632">
+                <topic position="-380,-137" order="0" shape="line" id="1786192306">
                     <text><![CDATA[obtained log-in and password information for 1,000 e-mail accounts belonging to foreign embassies,
 corporations and human rights
 organizations]]></text>
                 </topic>
-                <topic position="-470,-137" order="1" shape="line" id="258634955">
+                <topic position="-470,-112" order="1" shape="line" id="258634955">
                     <text><![CDATA[when he posted on his web site the log-in information and passwords for 100 of the 1,000 e-mail
 accounts for which he obtained log-ins and passwords. (His site is no longer online). He posted the
 information, he said, because he felt it would be the most effective way to make the account owners
 aware that their communication had been
 compromised.]]></text>
-                    <topic position="470,-162" order="0" text="including one corporation that does more than $10bn in annual revenue." shape="line" id="783703672"/>
-                    <topic position="560,-137" order="1" text="request of American law enforcement agencies" shape="line" id="1648785444"/>
+                    <topic position="470,-137" order="0" text="including one corporation that does more than $10bn in annual revenue." shape="line" id="783703672"/>
+                    <topic position="560,-112" order="1" text="request of American law enforcement agencies" shape="line" id="1648785444"/>
                 </topic>
-                <topic position="-560,-112" order="2" shape="line" id="927456224">
+                <topic position="-560,-87" order="2" shape="line" id="927456224">
                     <text><![CDATA[Initially, Egerstad refused to disclose how he obtained the log-ins and passwords. But then in
 September he revealed that he'd intercepted the information through five exit nodes that he'd set up
 on the Tor network in Asia, the US and
 Europe]]></text>
                 </topic>
-                <topic position="-650,-87" order="3" shape="line" id="642215802">
+                <topic position="-650,-62" order="3" shape="line" id="642215802">
                     <text><![CDATA[Tor is used by people who want to maintain privacy and don't want anyone to know where they go on
 the web or with whom they communicate. Tor traffic is encrypted while it's enroute, but is decrypted
 as it leaves the exit node and goes to its final destination. Egerstad simply sniffed the plaintext
 traffic that passed through his five exit nodes to obtain the user names and passwords of e-mail
 accounts.]]></text>
-                    <topic position="650,-99" order="0" shape="line" id="1211756003">
+                    <topic position="650,-74" order="0" shape="line" id="1211756003">
                         <text><![CDATA[#1 Five ToR exit nodes, at different locations in the world, equipped with our own packet-sniffer
 focused entirely on POP3 and IMAP traffic using a keyword-filter looking for words like “gov,
 government, embassy, military, war, terrorism, passport, visa” as well as domains belonging to
@@ -48,21 +48,21 @@ other traffic such as web and instant
 messaging.]]></text>
                     </topic>
                 </topic>
-                <topic position="-740,-62" order="4" shape="line" id="378589600">
+                <topic position="-740,-37" order="4" shape="line" id="378589600">
                     <text><![CDATA[Egerstad didn't hack any systems to obtain the data and therefore says he didn't break any laws, but
 once he posted the log-in details for the accounts online he provided others with all the
 information they needed to breach the accounts and read sensitive correspondence stored in
 them.]]></text>
                 </topic>
-                <topic position="-830,-37" order="5" text="what he could read" shape="line" id="701607448">
-                    <topic position="830,-62" order="0" shape="line" id="1653141327">
+                <topic position="-830,-12" order="5" text="what he could read" shape="line" id="701607448">
+                    <topic position="830,-37" order="0" shape="line" id="1653141327">
                         <text><![CDATA[Victims of Egerstad's research project included embassies belonging to Australia, Japan, Iran, India
 and Russia. Egerstad also found accounts belonging to the foreign ministry of Iran, the United
 Kingdom's visa office in Nepal and the Defence Research and Development Organization in India's
 Ministry of
 Defence.]]></text>
                     </topic>
-                    <topic position="920,-37" order="1" shape="line" id="293271973">
+                    <topic position="920,-12" order="1" shape="line" id="293271973">
                         <text><![CDATA[In addition, Egerstad was able to read correspondence belonging to the Indian ambassador to China,
 various politicians in Hong Kong, workers in the Dalai Lama's liaison office and several
 human-rights groups in Hong
@@ -70,44 +70,44 @@ Kong.]]></text>
                     </topic>
                 </topic>
             </topic>
-            <topic position="470,-62" order="2" text="when" shape="line" shrink="true" id="1054930706">
-                <topic position="-470,-74" order="0" text="August - Sept 2007" shape="line" id="355764311"/>
+            <topic position="470,-37" order="2" text="when" shape="line" shrink="true" id="1054930706">
+                <topic position="-470,-49" order="0" text="August - Sept 2007" shape="line" id="355764311"/>
             </topic>
-            <topic position="560,-37" order="3" text="why?" shape="line" shrink="true" id="1467573808">
-                <topic position="-560,-62" order="0" shape="line" id="126964183">
+            <topic position="560,-12" order="3" text="why?" shape="line" shrink="true" id="1467573808">
+                <topic position="-560,-37" order="0" shape="line" id="126964183">
                     <text><![CDATA[But Egerstad remains convinced he did the right thing, saying it was the only way to call attention
 to problem that Tor officials have already warned about
 previously.]]></text>
                 </topic>
-                <topic position="-650,-37" order="1" shape="line" id="38126740">
+                <topic position="-650,-12" order="1" shape="line" id="38126740">
                     <text><![CDATA[withheld details on how he came into possession of the passwords, instead writing that there is no
 exploit to publish, no vendor to
 contact.]]></text>
                 </topic>
             </topic>
-            <topic position="650,-12" order="4" text="response" shape="line" shrink="true" id="1493808593">
-                <topic position="-650,-62" order="0" text="house raided on Monday by Swedish officials, who took him in for questioning" shape="line" id="1639195319"/>
-                <topic position="-740,-37" order="1" shape="line" id="1911990641">
+            <topic position="650,13" order="4" text="response" shape="line" shrink="true" id="1493808593">
+                <topic position="-650,-37" order="0" text="house raided on Monday by Swedish officials, who took him in for questioning" shape="line" id="1639195319"/>
+                <topic position="-740,-12" order="1" shape="line" id="1911990641">
                     <text><![CDATA[While three of them took him to the local police headquarters for questioning, the other two agents
 ransacked his house and hauled away three computers, external hard drives, CDs, notebooks and
 various
 papers]]></text>
                 </topic>
-                <topic position="-830,-12" order="2" shape="line" id="1645583680">
+                <topic position="-830,13" order="2" shape="line" id="1645583680">
                     <text><![CDATA[Egerstad hasn't been charged with anything but is under suspicion for breaking into computers, which
 he says he never did. Egerstad said the agents told him they were investigating him because he had
 pissed off some foreign
 countries.]]></text>
                 </topic>
-                <topic position="-920,13" order="3" shape="line" id="671508443">
+                <topic position="-920,38" order="3" shape="line" id="671508443">
                     <text><![CDATA[The posting of 100 official embassy passwords has made Egerstad a pariah in many circles. Publishing
 information that allows any old criminal to infiltrate sensitive government networks is a touchy
 thing, and many, including several Reg readers, have denounced
 it.]]></text>
                 </topic>
             </topic>
-            <topic position="740,13" order="5" text="analysis" shape="line" id="1006842787">
-                <topic position="-740,-37" order="0" shape="line" id="914839159">
+            <topic position="740,38" order="5" text="analysis" shape="line" id="1006842787">
+                <topic position="-740,-12" order="0" shape="line" id="914839159">
                     <text><![CDATA[As Egerstad and I discussed the problem in August, we both came to the conclusion that the embassy
 employees were likely not using Tor nor even knew what Tor was. Instead, we suspected that the
 traffic he sniffed belonged to someone who had hacked the accounts and was eavesdropping on them via
@@ -115,73 +115,73 @@ the Tor network. As the hacked data passed through Egerstad's Tor exit nodes, he
 as
 well.]]></text>
                 </topic>
-                <topic position="-830,-12" order="1" shape="line" id="387297264">
+                <topic position="-830,13" order="1" shape="line" id="387297264">
                     <text><![CDATA[it's NOT a problem within Tor. Tor is meant for privacy, not confidentiality!!!! I'm a bit amazed
 governments and companies are using this as a security
 measure.]]></text>
                 </topic>
-                <topic position="-920,13" order="2" shape="line" id="1627594721">
+                <topic position="-920,38" order="2" shape="line" id="1627594721">
                     <text><![CDATA[It's not a written law but it is a guideline in having a responsible disclosure. I think he did a
 responsible disclosure. Was it legal? He did intercept traffic that was not destined for him. So
 probably no depending on Swedish law. Is our society a safer place after the disclosure. Yes, I
 think it is. Instead of arresting him, the government should have offered him a
 job.]]></text>
                 </topic>
-                <topic position="-1010,38" order="3" shape="line" id="522775828">
+                <topic position="-1010,63" order="3" shape="line" id="522775828">
                     <text><![CDATA[And what did we learn today? Don't report a security hole, sell it to Russia. Just kidding, but do
 check legal council before doing a
 disclosure.]]></text>
                 </topic>
             </topic>
-            <topic position="830,38" order="6" text="articles on the incident" shape="line" id="10">
-                <topic position="-830,-37" order="0" text="Wired article" shape="line" id="1706281223">
+            <topic position="830,63" order="6" text="articles on the incident" shape="line" id="10">
+                <topic position="-830,-12" order="0" text="Wired article" shape="line" id="1706281223">
                     <link url="http://blog.wired.com/27bstroke6/2007/11/swedish-researc.html" urlType="url"/>
-                    <topic position="830,-49" order="0" text="again" shape="line" id="1305481313">
+                    <topic position="830,-24" order="0" text="again" shape="line" id="1305481313">
                         <link url="http://www.wired.com/politics/security/news/2007/09/embassy_hacks" urlType="url"/>
                     </topic>
                 </topic>
-                <topic position="-920,-12" order="1" text="Register article" shape="line" id="1977246852">
+                <topic position="-920,13" order="1" text="Register article" shape="line" id="1977246852">
                     <link url="http://www.theregister.co.uk/2007/09/10/misuse_of_tor_led_to_embassy_password_breach/" urlType="url"/>
                 </topic>
-                <topic position="-1010,13" order="2" text="Security For all blog" shape="line" id="775180190">
+                <topic position="-1010,38" order="2" text="Security For all blog" shape="line" id="775180190">
                     <link url="http://security4all.blogspot.com/2007/09/how-embassy-passwords-got-leaked.html" urlType="url"/>
-                    <topic position="1010,1" order="0" text="again" shape="line" id="342308366">
+                    <topic position="1010,26" order="0" text="again" shape="line" id="342308366">
                         <link url="http://security4all.blogspot.com/2007/11/tor-embassy-hacker-gets-arrested.html" urlType="url"/>
                     </topic>
                 </topic>
-                <topic position="-1100,38" order="3" text="PC World" shape="line" id="1016307796">
+                <topic position="-1100,63" order="3" text="PC World" shape="line" id="1016307796">
                     <link url="http://www.pcworld.com/article/id,137004-page,1/article.html" urlType="url"/>
                 </topic>
-                <topic position="-1190,63" order="4" text="PasswordResearch blog" shape="line" id="7323900">
+                <topic position="-1190,88" order="4" text="PasswordResearch blog" shape="line" id="7323900">
                     <link url="http://blog.passwordresearch.com/2007/09/embassy-password-hacker-reveals-his.html" urlType="url"/>
                 </topic>
-                <topic position="-1280,88" order="5" shape="line" shrink="true" id="1265229876">
+                <topic position="-1280,113" order="5" shape="line" shrink="true" id="1265229876">
                     <text><![CDATA[Shava Nerad
 Development Director, The Tor Project]]></text>
                     <link url="http://www.theregister.co.uk/2007/09/10/misuse_of_tor_led_to_embassy_password_breach/comments/" urlType="url"/>
-                    <topic position="1280,63" order="0" shape="line" id="428154943">
+                    <topic position="1280,88" order="0" shape="line" id="428154943">
                         <text><![CDATA[A connection through Tor can be encrypted end-to-end -- but only if one is communicating with a
 secure protocol -- https: or encrypted chat both would be examples of
 this.]]></text>
                     </topic>
-                    <topic position="1370,88" order="1" text="more sensible comments" shape="line" id="613513779">
-                        <topic position="-1370,63" order="0" text="be sensible" shape="line" id="785632554"/>
-                        <topic position="-1460,88" order="1" text="use encryption" shape="line" id="933048896"/>
+                    <topic position="1370,113" order="1" text="more sensible comments" shape="line" id="613513779">
+                        <topic position="-1370,88" order="0" text="be sensible" shape="line" id="785632554"/>
+                        <topic position="-1460,113" order="1" text="use encryption" shape="line" id="933048896"/>
                     </topic>
                 </topic>
             </topic>
-            <topic position="920,63" order="7" text="threat" shape="line" shrink="true" id="620851645">
-                <topic position="-920,1" order="0" shape="line" id="1865367107">
+            <topic position="920,88" order="7" text="threat" shape="line" shrink="true" id="620851645">
+                <topic position="-920,26" order="0" shape="line" id="1865367107">
                     <text><![CDATA[But Egerstad says that many who use Tor mistakenly believe it is an end-to-end encryption tool. As a
 result, they aren't taking the precautions they need to take to protect their web
 activity.]]></text>
                 </topic>
-                <topic position="-1010,26" order="1" shape="line" id="793585356">
+                <topic position="-1010,51" order="1" shape="line" id="793585356">
                     <text><![CDATA[I am absolutely positive that I am not the only one to figure this out, Egerstad says. I'm pretty
 sure there are governments doing the exact same thing. There's probably a reason why people are
 volunteering to set up a
 node.]]></text>
-                    <topic position="1010,14" order="0" shape="line" id="1624606525">
+                    <topic position="1010,39" order="0" shape="line" id="1624606525">
                         <text><![CDATA[For example, several Tor nodes in the Washington, D.C., area can handle up to 10T bytes of data a
 month, a flow of data that would cost at least US$5,000 a month to run, and is likely way out the
 range of volunteers who run a node on their own money, Egerstad said.  
@@ -190,26 +190,26 @@ Who would pay for that? Egerstad
 said]]></text>
                     </topic>
                 </topic>
-                <topic position="-1100,51" order="2" shape="line" id="322430860">
+                <topic position="-1100,76" order="2" shape="line" id="322430860">
                     <text><![CDATA[To his surprise, he found that more than 99 percent of the traffic -- including requests for Web
 sites, instant messaging traffic and e-mails -- were transmitted
 unencrypted.]]></text>
-                    <topic position="1100,26" order="0" text="but it can't encrypted" shape="line" id="1190504719"/>
-                    <topic position="1190,51" order="1" text="unless you have some UDP SSL thing" shape="line" id="878085542"/>
+                    <topic position="1100,51" order="0" text="but it can't encrypted" shape="line" id="1190504719"/>
+                    <topic position="1190,76" order="1" text="unless you have some UDP SSL thing" shape="line" id="878085542"/>
                 </topic>
-                <topic position="-1190,76" order="3" shape="line" id="252326982">
+                <topic position="-1190,101" order="3" shape="line" id="252326982">
                     <text><![CDATA[Egerstad said the process of snooping on the traffic is trivial. The problem is not with Tor, which
 still works as intended, but with users' expectations: the Tor system is designed to merely
 anonymize Internet traffic and does not perform end-to-end
 encryption.]]></text>
                 </topic>
-                <topic position="-1280,101" order="4" text="know where to sniff" shape="line" id="1987137112">
-                    <topic position="1280,76" order="0" shape="line" id="57456761">
+                <topic position="-1280,126" order="4" text="know where to sniff" shape="line" id="1987137112">
+                    <topic position="1280,101" order="0" shape="line" id="57456761">
                         <text><![CDATA[Yes of course end-to-end encryption would have fixed this, but without it Onion routing actually
 exacerbates the risk of packet
 sniffing.]]></text>
                     </topic>
-                    <topic position="1370,101" order="1" shape="line" id="1030401667">
+                    <topic position="1370,126" order="1" shape="line" id="1030401667">
                         <text><![CDATA[The fact Onion routing was used is the only way this researcher (that leaves a bad taste) could get
 access to those packets in the first place - with regular routing he'd need to have access to the
 embassy's ISP's network, or their upstream networks, to sniff those
@@ -218,13 +218,13 @@ packets.]]></text>
                 </topic>
             </topic>
         </topic>
-        <topic position="-380,0" order="1" text="ToR background" shape="line" id="323634907">
-            <topic position="380,-62" order="0" text="a distributed system of computers that anonymizes the source of network traffic" shape="line" id="1600820841"/>
-            <topic position="470,-37" order="1" text="how it works" shape="line" shrink="true" id="1815601685">
-                <topic position="-470,-99" order="0" text="from the ToR site itself" shape="line" id="1921440204">
+        <topic position="-380,25" order="2" text="ToR background" shape="line" id="323634907">
+            <topic position="380,-37" order="0" text="a distributed system of computers that anonymizes the source of network traffic" shape="line" id="1600820841"/>
+            <topic position="470,-12" order="1" text="how it works" shape="line" shrink="true" id="1815601685">
+                <topic position="-470,-74" order="0" text="from the ToR site itself" shape="line" id="1921440204">
                     <link url="http://www.torproject.org/overview.html.en" urlType="url"/>
                 </topic>
-                <topic position="-560,-74" order="1" shape="line" id="801405722">
+                <topic position="-560,-49" order="1" shape="line" id="801405722">
                     <text><![CDATA[Under Tor's architecture, administrators at the entry point can identify the user's IP address, but
 can't read the content of the user's correspondence or know its final destination. Each node in the
 network thereafter only knows the node from which it received the traffic, and it peels off a layer
@@ -232,46 +232,46 @@ of encryption to reveal the next node to which it must forward the connection. (
 Onion
 Router.)]]></text>
                 </topic>
-                <topic position="-650,-49" order="2" shape="line" id="207380926">
+                <topic position="-650,-24" order="2" shape="line" id="207380926">
                     <text><![CDATA[Tor works by using servers donated by volunteers around the world to bounce traffic around en route
 to its destination. Traffic is encrypted through most of that route, and routed over a random path
 each time a person uses
 it.]]></text>
                 </topic>
-                <topic position="-740,-24" order="3" shape="line" id="441868529">
+                <topic position="-740,1" order="3" shape="line" id="441868529">
                     <text><![CDATA[downloaded from the Tor website to configure several servers designed to bounce sensitive traffic
 around the internet before it ultimately is routed to its destination. The Tor servers try to make
 it harder to trace the originator of traffic in much the same way an agent under surveillance might
 quickly drive in and out of a parking garage to throw off
 pursuers.]]></text>
                 </topic>
-                <topic position="-830,1" order="4" text="1600 nodes" shape="line" id="1074734152"/>
+                <topic position="-830,26" order="4" text="1600 nodes" shape="line" id="1074734152"/>
             </topic>
-            <topic position="560,-12" order="2" text="exit node caveat" shape="line" shrink="true" id="1922326141">
-                <topic position="-560,-37" order="0" shape="line" id="1458310176">
+            <topic position="560,13" order="2" text="exit node caveat" shape="line" shrink="true" id="1922326141">
+                <topic position="-560,-12" order="0" shape="line" id="1458310176">
                     <text><![CDATA[Tor has taken pains to warn its users that people running so-called exit nodes - which are the last
 Tor servers to touch a packet before sending it on its way - can read the bytes that come in and out
 there. They go on to say: This is why you should always use end-to-end encryption such as SSL for
 sensitive Internet
 connections.]]></text>
                 </topic>
-                <topic position="-650,-12" order="1" shape="line" shrink="true" id="253769006">
+                <topic position="-650,13" order="1" shape="line" shrink="true" id="253769006">
                     <text><![CDATA[Unless they're surfing to a website protected with SSL encryption, or use encryption software like
 PGP, all of their e-mail content, instant messages, surfing and other web activity is potentially
 exposed to any eavesdropper who owns a Tor server. This amounts to a lot of eavesdroppers -- the
 software currently lists about 1,600 nodes in the Tor
 network.]]></text>
-                    <topic position="650,-24" order="0" text="but then not anonymous!" shape="line" id="295074878"/>
+                    <topic position="650,1" order="0" text="but then not anonymous!" shape="line" id="295074878"/>
                 </topic>
             </topic>
-            <topic position="650,13" order="3" text="who uses it?" shape="line" shrink="true" id="65883705">
-                <topic position="-650,-37" order="0" shape="line" id="317136509">
+            <topic position="650,38" order="3" text="who uses it?" shape="line" shrink="true" id="65883705">
+                <topic position="-650,-12" order="0" shape="line" id="317136509">
                     <text><![CDATA[has a slew of beneficial uses: Human-rights workers, the military and journalists all use the
 system. However, the anonymity of Tor has also attracted seedier elements as well: digital pirates,
 online criminals and, quite possibly, child
 pornographers]]></text>
                 </topic>
-                <topic position="-740,-12" order="1" shape="line" id="735767612">
+                <topic position="-740,13" order="1" shape="line" id="735767612">
                     <text><![CDATA[TOR (The Onion Router) is a network of proxy nodes set up to provide some privacy and anonymity to
 its users. Originally backed by the US Naval Research Laboratory, TOR became an Electronic Frontier
 Foundation (EFF) project three years ago. The system provides a way for whistleblowers and human
@@ -279,28 +279,28 @@ rights workers to exchange information with journalists, among other things. The
 provides plenty of scope for
 mischief.]]></text>
                 </topic>
-                <topic position="-830,13" order="2" shape="line" id="1333668798">
+                <topic position="-830,38" order="2" shape="line" id="1333668798">
                     <text><![CDATA[Tor has hundreds of thousands of users around the world, according to its developers. The largest
 numbers of users are in the United States, the European Union and
 China.]]></text>
                 </topic>
-                <topic position="-920,38" order="3" shape="line" id="900915922">
+                <topic position="-920,63" order="3" shape="line" id="900915922">
                     <text><![CDATA[The first is the use by embassies of the Tor product to obfusticate their communications. This is a
 reasonable response to the assumed traffic monitoring by the host
 country.]]></text>
                 </topic>
             </topic>
-            <topic position="740,38" order="4" text="manipulations" shape="line" shrink="true" id="1072807557">
-                <topic position="-740,1" order="0" text="data from exit node eavesdropping" shape="line" id="587439201">
+            <topic position="740,63" order="4" text="manipulations" shape="line" shrink="true" id="1072807557">
+                <topic position="-740,26" order="0" text="data from exit node eavesdropping" shape="line" id="587439201">
                     <link url="http://www.teamfurry.com/wordpress/2007/11/19/on-tor/#more-177" urlType="url"/>
                 </topic>
-                <topic position="-830,26" order="1" text="exit node man-in-the-middle attacks" shape="line" id="677882397">
+                <topic position="-830,51" order="1" text="exit node man-in-the-middle attacks" shape="line" id="677882397">
                     <link url="http://www.teamfurry.com/wordpress/2007/11/20/tor-exit-node-doing-mitm-attacks/" urlType="url"/>
-                    <topic position="830,14" order="0" text="response" shape="line" id="1135359854">
+                    <topic position="830,39" order="0" text="response" shape="line" id="1135359854">
                         <link url="http://www.f-secure.com/weblog/archives/00001321.html" urlType="url"/>
                     </topic>
                 </topic>
-                <topic position="-920,51" order="2" text="SPAM impersonation of Tor by Storm" shape="line" id="1315461423">
+                <topic position="-920,76" order="2" text="SPAM impersonation of Tor by Storm" shape="line" id="1315461423">
                     <link url="http://www.lightbluetouchpaper.org/2007/09/07/analysis-of-the-storm-javascript-exploits/" urlType="url"/>
                 </topic>
             </topic>

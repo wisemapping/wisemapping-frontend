@@ -1,0 +1,416 @@
+<map name="freeplane-event-planning" version="tango" theme="prism">
+    <topic central="true" text="Event Planning" id="1">
+        <topic position="200,0" order="0" text="Pre-Event Planning" shape="line" id="2">
+            <eicon id="💡"/>
+            <eicon id="📍"/>
+            <eicon id="💰"/>
+            <eicon id="💡"/>
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Research and book appropriate venue</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Create detailed budget and cost estimates</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Create guest list and manage invitations</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Coordinate with caterers, decorators, etc.</p>
+            </body>
+          </html>]]></note>
+                <topic position="200,0" order="0" text="Venue Selection" shape="line" id="3">
+                    <eicon id="📍"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Research and book appropriate venue</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-200,0" order="1" text="Budget Planning" shape="line" id="4">
+                    <eicon id="💰"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create detailed budget and cost estimates</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="300,75" order="2" text="Guest Management" shape="line" id="5">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create guest list and manage invitations</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-300,75" order="3" text="Vendor Coordination" shape="line" id="6">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Coordinate with caterers, decorators, etc.</p>
+            </body>
+          </html>]]></note>
+                </topic>
+        </topic>
+        <topic position="-200,0" order="1" text="Venue Selection" shape="line" id="7">
+            <eicon id="📍"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Research and book appropriate venue</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="300,75" order="2" text="Budget Planning" shape="line" id="8">
+            <eicon id="💰"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create detailed budget and cost estimates</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-300,75" order="3" text="Guest Management" shape="line" id="9">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create guest list and manage invitations</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="400,150" order="4" text="Vendor Coordination" shape="line" id="10">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Coordinate with caterers, decorators, etc.</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-400,150" order="5" text="Event Day Operations" shape="line" id="11">
+            <eicon id="💡"/>
+            <eicon id="💡"/>
+            <eicon id="💡"/>
+            <eicon id="📅"/>
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Venue setup and decoration coordination</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Guest registration and check-in process</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Execute planned program and activities</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Event photography and videography</p>
+            </body>
+          </html>]]></note>
+                <topic position="200,0" order="0" text="Setup  Decoration" shape="line" id="12">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Venue setup and decoration coordination</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-200,0" order="1" text="Registration" shape="line" id="13">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Guest registration and check-in process</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="300,75" order="2" text="Program Execution" shape="line" id="14">
+                    <eicon id="📅"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Execute planned program and activities</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-300,75" order="3" text="Photography" shape="line" id="15">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Event photography and videography</p>
+            </body>
+          </html>]]></note>
+                </topic>
+        </topic>
+        <topic position="500,225" order="6" text="Setup  Decoration" shape="line" id="16">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Venue setup and decoration coordination</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-500,225" order="7" text="Registration" shape="line" id="17">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Guest registration and check-in process</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="600,300" order="8" text="Program Execution" shape="line" id="18">
+            <eicon id="📅"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Execute planned program and activities</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-600,300" order="9" text="Photography" shape="line" id="19">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Event photography and videography</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="700,375" order="10" text="Post-Event Activities" shape="line" id="20">
+            <eicon id="💡"/>
+            <eicon id="💡"/>
+            <eicon id="💬"/>
+            <eicon id="❤️"/>
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Venue cleanup and equipment return</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Collect attendee feedback and surveys</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Send thank you notes to attendees and vendors</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Create comprehensive event report</p>
+            </body>
+          </html>]]></note>
+                <topic position="200,0" order="0" text="Cleanup" shape="line" id="21">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Venue cleanup and equipment return</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-200,0" order="1" text="Feedback Collection" shape="line" id="22">
+                    <eicon id="💬"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Collect attendee feedback and surveys</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="300,75" order="2" text="Thank You Notes" shape="line" id="23">
+                    <eicon id="❤️"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Send thank you notes to attendees and vendors</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-300,75" order="3" text="Event Report" shape="line" id="24">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create comprehensive event report</p>
+            </body>
+          </html>]]></note>
+                </topic>
+        </topic>
+        <topic position="-700,375" order="11" text="Cleanup" shape="line" id="25">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Venue cleanup and equipment return</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="800,450" order="12" text="Feedback Collection" shape="line" id="26">
+            <eicon id="💬"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Collect attendee feedback and surveys</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-800,450" order="13" text="Thank You Notes" shape="line" id="27">
+            <eicon id="❤️"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Send thank you notes to attendees and vendors</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="900,525" order="14" text="Event Report" shape="line" id="28">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create comprehensive event report</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-900,525" order="15" text="Marketing  Promotion" shape="line" id="29">
+            <eicon id="💡"/>
+            <eicon id="💡"/>
+            <eicon id="📧"/>
+            <eicon id="💡"/>
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Promote event on social media platforms</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Email marketing and invitation campaigns</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Create and distribute press releases</p>
+            </body>
+          </html>
+<html>
+            <head/>
+            <body>
+              <p>Develop strategic partnerships for promotion</p>
+            </body>
+          </html>]]></note>
+                <topic position="200,0" order="0" text="Social Media" shape="line" id="30">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Promote event on social media platforms</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-200,0" order="1" text="Email Campaigns" shape="line" id="31">
+                    <eicon id="📧"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Email marketing and invitation campaigns</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="300,75" order="2" text="Press Release" shape="line" id="32">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create and distribute press releases</p>
+            </body>
+          </html>]]></note>
+                </topic>
+                <topic position="-300,75" order="3" text="Partnerships" shape="line" id="33">
+                    <eicon id="💡"/>
+                    <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Develop strategic partnerships for promotion</p>
+            </body>
+          </html>]]></note>
+                </topic>
+        </topic>
+        <topic position="1000,600" order="16" text="Social Media" shape="line" id="34">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Promote event on social media platforms</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-1000,600" order="17" text="Email Campaigns" shape="line" id="35">
+            <eicon id="📧"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Email marketing and invitation campaigns</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="1100,675" order="18" text="Press Release" shape="line" id="36">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Create and distribute press releases</p>
+            </body>
+          </html>]]></note>
+        </topic>
+        <topic position="-1100,675" order="19" text="Partnerships" shape="line" id="37">
+            <eicon id="💡"/>
+            <note><![CDATA[<html>
+            <head/>
+            <body>
+              <p>Develop strategic partnerships for promotion</p>
+            </body>
+          </html>]]></note>
+        </topic>
+    </topic>
+</map>

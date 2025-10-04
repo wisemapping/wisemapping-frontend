@@ -23,9 +23,12 @@ class FreeplaneImporter extends Importer {
 
   private idCounter: number = 1;
 
+  private topicIdMap: Map<string, string>;
+
   constructor(map: string) {
     super();
     this.freeplaneInput = map;
+    this.topicIdMap = new Map();
   }
 
   import(nameMap: string, _description?: string): Promise<string> {
@@ -42,6 +45,10 @@ class FreeplaneImporter extends Importer {
         throw new Error('No root node found in Freeplane XML');
       }
 
+      // Reset counters and ID map
+      this.idCounter = 1;
+      this.topicIdMap.clear();
+
       // Generate WiseMapping XML directly
       const wiseMappingXML = this.generateWiseMappingXML(rootNode, nameMap);
 
@@ -56,6 +63,8 @@ class FreeplaneImporter extends Importer {
   private generateWiseMappingXML(rootNode: Element, mapName: string): string {
     const centralTitle = rootNode.getAttribute('TEXT') || 'Central Topic';
     const centralId = this.generateId();
+    const rootNodeId = rootNode.getAttribute('ID') || 'ID_1';
+    this.topicIdMap.set(rootNodeId, centralId.toString());
 
     let xml = `<map name="${this.escapeXml(mapName)}" version="tango" theme="prism">\n`;
     xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
@@ -67,6 +76,13 @@ class FreeplaneImporter extends Importer {
     });
 
     xml += '    </topic>\n';
+
+    // Add relationships if present
+    const relationshipsXML = this.generateRelationshipsXML(rootNode);
+    if (relationshipsXML) {
+      xml += relationshipsXML;
+    }
+
     xml += '</map>';
 
     return xml;
@@ -74,6 +90,9 @@ class FreeplaneImporter extends Importer {
 
   private generateChildTopicXML(freeplaneNode: Element, order: number, depth: number = 0): string {
     const topicId = this.generateId();
+    const freeplaneNodeId = freeplaneNode.getAttribute('ID') || `ID_${this.idCounter}`;
+    this.topicIdMap.set(freeplaneNodeId, topicId.toString());
+
     const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
     const position = this.calculatePosition(order);
 
@@ -486,6 +505,53 @@ class FreeplaneImporter extends Importer {
     const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
 
     return { x, y };
+  }
+
+  private generateRelationshipsXML(rootNode: Element): string {
+    // Find all arrowlink elements in the document
+    const arrowlinks = rootNode.ownerDocument?.querySelectorAll('arrowlink') || [];
+    if (arrowlinks.length === 0) return '';
+
+    let relationshipsXML = '';
+    arrowlinks.forEach((arrowlink) => {
+      relationshipsXML += this.generateRelationshipXML(arrowlink as Element);
+    });
+
+    return relationshipsXML;
+  }
+
+  private generateRelationshipXML(arrowlinkElement: Element): string {
+    const destination = arrowlinkElement.getAttribute('DESTINATION');
+    const dash = arrowlinkElement.getAttribute('DASH') || '';
+
+    if (!destination) return '';
+
+    // Find the source node (parent of the arrowlink)
+    const sourceNode = arrowlinkElement.parentElement;
+    if (!sourceNode) return '';
+
+    const sourceId = sourceNode.getAttribute('ID');
+    const destId = destination;
+
+    if (!sourceId) return '';
+
+    // Map Freeplane IDs to WiseMapping IDs
+    const srcTopicId = this.topicIdMap.get(sourceId);
+    const destTopicId = this.topicIdMap.get(destId);
+
+    if (!srcTopicId || !destTopicId) return '';
+
+    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+
+    // Map line style based on dash pattern
+    if (dash.includes('3 3')) {
+      relationshipXML += " lineType='1'"; // Dashed
+    } else if (dash.includes('5 5')) {
+      relationshipXML += " lineType='2'"; // Dotted
+    }
+
+    relationshipXML += '/>\n';
+    return relationshipXML;
   }
 
   private escapeXml(text: string): string {

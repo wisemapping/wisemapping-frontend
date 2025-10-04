@@ -1,0 +1,7 @@
+<map name="xmind-event-planning" version="tango">
+    <topic central="true" text="xmind-event-planning" id="1">
+        <topic position="200,0" order="0" text="Import Error" shape="line" id="2">
+            <note><![CDATA[XMind import failed: No root topic found in XMind file. Please check the file format and try again.]]></note>
+        </topic>
+    </topic>
+</map>

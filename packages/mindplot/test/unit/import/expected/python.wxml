@@ -1,193 +1,193 @@
-<map name="python" version="tango">
+<map name="python" theme="prism" version="tango">
     <topic central="true" text="Python Language" id="839220195" bgColor="#ffff66">
         <topic position="200,-900" order="0" text="Operators" shape="rounded rectangle" id="1297750582" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1initLoadFile=/wiki/images/5/5a/Python_Operators.mmmm_title=Python%20Operators" urlType="url"/>
         </topic>
-        <topic position="-290,-237" order="0" text="Control Flow" shape="rounded rectangle" id="925623560" bgColor="#ffff66">
+        <topic position="-290,-212" order="1" text="Control Flow" shape="rounded rectangle" id="925623560" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/d/d3/Python_ControlFlow2.mmmm_title=Control%20Flow%20in%20Python" urlType="url"/>
         </topic>
-        <topic position="-380,-212" order="1" text="Functions" shape="rounded rectangle" id="43284047" bgColor="#ffff66">
+        <topic position="-380,-187" order="2" text="Functions" shape="rounded rectangle" id="43284047" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/3/36/Python_Functions2.mmmm_title=Python%20Functions" urlType="url"/>
         </topic>
-        <topic position="-470,-187" order="2" text="Modules" shape="rounded rectangle" id="941305946" bgColor="#ffff66">
+        <topic position="-470,-162" order="3" text="Modules" shape="rounded rectangle" id="941305946" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/9/9f/Python_Modules_WebLinks.mmmm_title=Python%20Modules" urlType="url"/>
-            <topic position="470,-199" order="0" text="Importing" shape="rectangle" id="33365258" bgColor="#99ff99">
+            <topic position="470,-174" order="0" text="Importing" shape="rectangle" id="33365258" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/a/a7/Python_Modules_Importing.mmmm_title=Importing%20Python%20Modules" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-560,-162" order="3" text="sys.path" shape="rounded rectangle" id="870573867" bgColor="#ffff66">
+        <topic position="-560,-137" order="4" text="sys.path" shape="rounded rectangle" id="870573867" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/e/e3/Python_Path2.mmmm_title=Python%20sys.path" urlType="url"/>
         </topic>
-        <topic position="-650,-137" order="4" text="Packages" shape="rounded rectangle" id="373733403" bgColor="#ffff66">
+        <topic position="-650,-112" order="5" text="Packages" shape="rounded rectangle" id="373733403" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/e/e9/Python_Packages2.mmmm_title=Python%20Packages" urlType="url"/>
         </topic>
-        <topic position="-740,-112" order="5" text="Classes" shape="rounded rectangle" id="42563653" bgColor="#ffff66">
+        <topic position="-740,-87" order="6" text="Classes" shape="rounded rectangle" id="42563653" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/6/67/Python_Classes_WebLinks.mmmm_title=Python%20Classes" urlType="url"/>
-            <topic position="740,-162" order="0" text="Methods" shape="rounded rectangle" id="248209168" bgColor="#99ff99">
+            <topic position="740,-137" order="0" text="Methods" shape="rounded rectangle" id="248209168" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/8/89/Python_Classes_Methods.mmmm_title=Python%20Methods" urlType="url"/>
             </topic>
-            <topic position="830,-137" order="1" text="Inheritance" shape="rounded rectangle" id="162137343" bgColor="#99ff99">
+            <topic position="830,-112" order="1" text="Inheritance" shape="rounded rectangle" id="162137343" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/4/46/Python_Classes_Inheritance.mmmm_title=Inheritance%20in%20Python" urlType="url"/>
             </topic>
-            <topic position="920,-112" order="2" text="Attribute Inheritance Search" shape="rounded rectangle" id="314760601" bgColor="#99ff99">
+            <topic position="920,-87" order="2" text="Attribute Inheritance Search" shape="rounded rectangle" id="314760601" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/4/46/Python_Classes_Inheritance.mmmm_title=Inheritance%20in%20Python" urlType="url"/>
             </topic>
-            <topic position="1010,-87" order="3" text="New-style Classes" shape="rectangle" id="1014089682" bgColor="#99ff99">
+            <topic position="1010,-62" order="3" text="New-style Classes" shape="rectangle" id="1014089682" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/e/ef/Python_Classes_Newstyle.mmmm_title=Python%20New-style%20Classes" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-830,-87" order="6" text="Scoping, Namespaces" shape="rounded rectangle" id="137608830" bgColor="#ffff66">
+        <topic position="-830,-62" order="7" text="Scoping, Namespaces" shape="rounded rectangle" id="137608830" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/7/74/Python_Scoping_And_Namespaces2.mmmm_title=Python%20Scoping%20and%20Namespaces" urlType="url"/>
         </topic>
-        <topic position="-920,-62" order="7" text="Exceptions" shape="rounded rectangle" id="50696333" bgColor="#ffff66">
+        <topic position="-920,-37" order="8" text="Exceptions" shape="rounded rectangle" id="50696333" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=1initLoadFile=/wiki/images/1/1a/Python_Exceptions2.mmmm_title=Python%20Exceptions%20and%20Exception%20Handling" urlType="url"/>
         </topic>
-        <topic position="-1010,-37" order="8" text="Iterators and Generators" shape="rounded rectangle" id="1500711771" bgColor="#ffff66">
+        <topic position="-1010,-12" order="9" text="Iterators and Generators" shape="rounded rectangle" id="1500711771" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/8/8f/Python_Iterators.mmmm_title=Python%20Iterators%2C%20Generators%20and%20Generator%20Expressions" urlType="url"/>
         </topic>
-        <topic position="-1100,-12" order="9" text="Special Method Attributes" shape="rounded rectangle" id="1259199925" bgColor="#ffff66">
+        <topic position="-1100,13" order="10" text="Special Method Attributes" shape="rounded rectangle" id="1259199925" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/5/5c/Python_SpecialAttributes_WebLinks.mmmm_title=Special%20Attributes%20in%20Python" urlType="url"/>
         </topic>
-        <topic position="-1190,13" order="10" text="File System Useful Functions" shape="rounded rectangle" id="1694945670" bgColor="#ffff66">
+        <topic position="-1190,38" order="11" text="File System Useful Functions" shape="rounded rectangle" id="1694945670" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/a/a8/Python_FileSystem.mmmm_title=Useful%20Python%20Functions%20for%20Operating%20on%20the%20File%20System" urlType="url"/>
         </topic>
-        <topic position="-1280,38" order="11" text="File I/O" shape="rounded rectangle" id="1195661090" bgColor="#ffff66">
+        <topic position="-1280,63" order="12" text="File I/O" shape="rounded rectangle" id="1195661090" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/2/24/Python_FileIO2.mmmm_title=Python%20File%20IO" urlType="url"/>
         </topic>
-        <topic position="-1370,63" order="12" text="Data Serialization" shape="rounded rectangle" id="602160149" bgColor="#ffff66">
+        <topic position="-1370,88" order="13" text="Data Serialization" shape="rounded rectangle" id="602160149" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/1/17/Python_DataSerialization2.mmmm_title=Python%20Data%20Serialization" urlType="url"/>
         </topic>
-        <topic position="-1460,88" order="13" text="Delegation, Callbacks and Decorators" shape="rounded rectangle" id="1935675521" bgColor="#ffff66">
+        <topic position="-1460,113" order="14" text="Delegation, Callbacks and Decorators" shape="rounded rectangle" id="1935675521" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/1/10/Python_Delegation.mmmm_title=Python%20Delegation%2C%20Callbacks%20and%20Decorators" urlType="url"/>
         </topic>
-        <topic position="-1550,113" order="14" text="Regular Expressions" shape="rounded rectangle" id="710876781" bgColor="#ffff66">
+        <topic position="-1550,138" order="15" text="Regular Expressions" shape="rounded rectangle" id="710876781" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/7/7f/Python_RegularExpressions.mmmm_title=Python%20Regular%20Expressions" urlType="url"/>
         </topic>
-        <topic position="-1640,138" order="15" text="Windows, COM" shape="rounded rectangle" id="950644393" bgColor="#ffff66">
-            <topic position="1640,113" order="0" text="Python COM Server" shape="rectangle" id="611860677" bgColor="#99ff99">
+        <topic position="-1640,163" order="16" text="Windows, COM" shape="rounded rectangle" id="950644393" bgColor="#ffff66">
+            <topic position="1640,138" order="0" text="Python COM Server" shape="rectangle" id="611860677" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/4/45/Python_COMServer.mmmm_title=Python%20COM%20Server%20%28Windows%20Only%29" urlType="url"/>
             </topic>
-            <topic position="1730,138" order="1" text="Python Client-side COM" shape="rectangle" id="1212768514" bgColor="#99ff99">
+            <topic position="1730,163" order="1" text="Python Client-side COM" shape="rectangle" id="1212768514" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/f/f3/Python_COMClientSide.mmmm_title=Python%20Client-side%20COM%20%28Windows%20Only%29" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-1730,163" order="16" text="Miscellaneous" shape="rounded rectangle" id="410804486" bgColor="#ffff66">
-            <topic position="1730,113" order="0" text="Empty Placeholder" shape="rounded rectangle" shrink="true" id="216222883" bgColor="#99ff99">
-                <topic position="-1730,101" order="0" text="pass" shape="rectangle" shrink="true" id="960362756" bgColor="#bbffff">
-                    <topic position="1730,76" order="0" text="EG" shape="rectangle" shrink="true" id="1413300827" bgColor="#ddddff">
-                        <topic position="-1730,64" order="0" shape="line" id="343426327">
+        <topic position="-1730,188" order="17" text="Miscellaneous" shape="rounded rectangle" id="410804486" bgColor="#ffff66">
+            <topic position="1730,138" order="0" text="Empty Placeholder" shape="rounded rectangle" shrink="true" id="216222883" bgColor="#99ff99">
+                <topic position="-1730,126" order="0" text="pass" shape="rectangle" shrink="true" id="960362756" bgColor="#bbffff">
+                    <topic position="1730,101" order="0" text="EG" shape="rectangle" shrink="true" id="1413300827" bgColor="#ddddff">
+                        <topic position="-1730,89" order="0" shape="line" id="343426327">
                             <text><![CDATA[while x  a:
     pass]]></text>
                         </topic>
                     </topic>
-                    <topic position="1820,101" order="1" text="Useful" shape="rectangle" shrink="true" id="148179241" bgColor="#ddddff">
-                        <topic position="-1820,89" order="0" text="Stub Code" shape="line" shrink="true" id="1655738492">
-                            <topic position="1820,77" order="0" text="To Fill In Later" shape="line" id="722854259"/>
+                    <topic position="1820,126" order="1" text="Useful" shape="rectangle" shrink="true" id="148179241" bgColor="#ddddff">
+                        <topic position="-1820,114" order="0" text="Stub Code" shape="line" shrink="true" id="1655738492">
+                            <topic position="1820,102" order="0" text="To Fill In Later" shape="line" id="722854259"/>
                         </topic>
                     </topic>
                 </topic>
             </topic>
-            <topic position="1820,138" order="1" text="Future Language Features" shape="rectangle" shrink="true" id="284656157" bgColor="#99ff99">
-                <topic position="-1820,101" order="0" text="__future__ Module" shape="rectangle" id="1074301759" bgColor="#bbffff"/>
-                <topic position="-1910,126" order="1" text="Will Become" shape="rectangle" shrink="true" id="1968353063" bgColor="#bbffff">
-                    <topic position="1910,114" order="0" text="Standard" shape="rectangle" shrink="true" id="103089226" bgColor="#ddddff">
-                        <topic position="-1910,102" order="0" text="In" shape="line" shrink="true" id="1232954476">
-                            <topic position="1910,90" order="0" text="Future Edition" shape="line" shrink="true" id="636908811">
-                                <topic position="-1910,78" order="0" text="Python" shape="line" id="1862127571"/>
+            <topic position="1820,163" order="1" text="Future Language Features" shape="rectangle" shrink="true" id="284656157" bgColor="#99ff99">
+                <topic position="-1820,126" order="0" text="__future__ Module" shape="rectangle" id="1074301759" bgColor="#bbffff"/>
+                <topic position="-1910,151" order="1" text="Will Become" shape="rectangle" shrink="true" id="1968353063" bgColor="#bbffff">
+                    <topic position="1910,139" order="0" text="Standard" shape="rectangle" shrink="true" id="103089226" bgColor="#ddddff">
+                        <topic position="-1910,127" order="0" text="In" shape="line" shrink="true" id="1232954476">
+                            <topic position="1910,115" order="0" text="Future Edition" shape="line" shrink="true" id="636908811">
+                                <topic position="-1910,103" order="0" text="Python" shape="line" id="1862127571"/>
                             </topic>
                         </topic>
                     </topic>
                 </topic>
-                <topic position="-2000,151" order="2" text="from __future__ import feature name" shape="rectangle" id="1192405210" bgColor="#bbffff"/>
+                <topic position="-2000,176" order="2" text="from __future__ import feature name" shape="rectangle" id="1192405210" bgColor="#bbffff"/>
             </topic>
-            <topic position="1910,163" order="2" text="Executing Code Strings" shape="rounded rectangle" shrink="true" id="171652609" bgColor="#99ff99">
-                <topic position="-1910,151" order="0" text="exec" shape="rectangle" id="493710140" bgColor="#bbffff"/>
+            <topic position="1910,188" order="2" text="Executing Code Strings" shape="rounded rectangle" shrink="true" id="171652609" bgColor="#99ff99">
+                <topic position="-1910,176" order="0" text="exec" shape="rectangle" id="493710140" bgColor="#bbffff"/>
             </topic>
-            <topic position="2000,188" order="3" text="Printing" shape="rectangle" id="1061642683" bgColor="#99ff99">
+            <topic position="2000,213" order="3" text="Printing" shape="rectangle" id="1061642683" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/7/78/Python_Print.mmmm_title=Printing%20in%20Python" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-1820,188" order="17" text="Tools" shape="rounded rectangle" id="339808348" bgColor="#ffff66">
+        <topic position="-1820,213" order="18" text="Tools" shape="rounded rectangle" id="339808348" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/5/58/Python_Tools.mmmm_title=Useful%20Tools%20for%20Python%20Developers" urlType="url"/>
         </topic>
-        <topic position="-1910,300" order="18" text="Sources" shape="rounded rectangle" id="1418013461" bgColor="#ffff66">
-            <topic position="1910,263" order="0" text="The Quick Python Book" shape="rectangle" shrink="true" id="826312042" bgColor="#99ff99">
-                <topic position="-1910,188" order="0" text="Harms, Daryl D." shape="rounded rectangle" id="1996207289" bgColor="#bbffff"/>
-                <topic position="-2000,213" order="1" text="McDonald, Kenneth" shape="rounded rectangle" id="383517101" bgColor="#bbffff"/>
-                <topic position="-2090,238" order="2" text="Manning Publications Co." shape="rounded rectangle" id="1698437504" bgColor="#bbffff"/>
-                <topic position="-2180,263" order="3" text="1999" shape="rounded rectangle" id="615897615" bgColor="#bbffff"/>
-                <topic position="-2270,288" order="4" text="ISBN 1-884777-74-0" shape="rounded rectangle" id="723474810" bgColor="#bbffff"/>
-                <topic position="-2360,313" order="5" text="Python Version" shape="rounded rectangle" shrink="true" id="1103530142" bgColor="#bbffff">
-                    <topic position="2360,301" order="0" text="1.5.2" shape="rounded rectangle" id="180808477" bgColor="#ddddff"/>
+        <topic position="-1910,325" order="19" text="Sources" shape="rounded rectangle" id="1418013461" bgColor="#ffff66">
+            <topic position="1910,288" order="0" text="The Quick Python Book" shape="rectangle" shrink="true" id="826312042" bgColor="#99ff99">
+                <topic position="-1910,213" order="0" text="Harms, Daryl D." shape="rounded rectangle" id="1996207289" bgColor="#bbffff"/>
+                <topic position="-2000,238" order="1" text="McDonald, Kenneth" shape="rounded rectangle" id="383517101" bgColor="#bbffff"/>
+                <topic position="-2090,263" order="2" text="Manning Publications Co." shape="rounded rectangle" id="1698437504" bgColor="#bbffff"/>
+                <topic position="-2180,288" order="3" text="1999" shape="rounded rectangle" id="615897615" bgColor="#bbffff"/>
+                <topic position="-2270,313" order="4" text="ISBN 1-884777-74-0" shape="rounded rectangle" id="723474810" bgColor="#bbffff"/>
+                <topic position="-2360,338" order="5" text="Python Version" shape="rounded rectangle" shrink="true" id="1103530142" bgColor="#bbffff">
+                    <topic position="2360,326" order="0" text="1.5.2" shape="rounded rectangle" id="180808477" bgColor="#ddddff"/>
                 </topic>
             </topic>
-            <topic position="2000,288" order="1" text="Learning Python, 3rd Edition" shape="rectangle" shrink="true" id="589134829" bgColor="#99ff99">
-                <topic position="-2000,226" order="0" text="Lutz, Mark" shape="rectangle" id="1822890051" bgColor="#bbffff"/>
-                <topic position="-2090,251" order="1" text="O'Reilly Media" shape="rectangle" id="568361499" bgColor="#bbffff"/>
-                <topic position="-2180,276" order="2" text="2008" shape="rectangle" id="1839765866" bgColor="#bbffff"/>
-                <topic position="-2270,301" order="3" text="ISBN-10: 0-596-51398-4" shape="rectangle" id="844895767" bgColor="#bbffff"/>
-                <topic position="-2360,326" order="4" text="Python Version" shape="rectangle" shrink="true" id="619327232" bgColor="#bbffff">
-                    <topic position="2360,314" order="0" text="2.5" shape="rectangle" id="803477492" bgColor="#ddddff"/>
+            <topic position="2000,313" order="1" text="Learning Python, 3rd Edition" shape="rectangle" shrink="true" id="589134829" bgColor="#99ff99">
+                <topic position="-2000,251" order="0" text="Lutz, Mark" shape="rectangle" id="1822890051" bgColor="#bbffff"/>
+                <topic position="-2090,276" order="1" text="O'Reilly Media" shape="rectangle" id="568361499" bgColor="#bbffff"/>
+                <topic position="-2180,301" order="2" text="2008" shape="rectangle" id="1839765866" bgColor="#bbffff"/>
+                <topic position="-2270,326" order="3" text="ISBN-10: 0-596-51398-4" shape="rectangle" id="844895767" bgColor="#bbffff"/>
+                <topic position="-2360,351" order="4" text="Python Version" shape="rectangle" shrink="true" id="619327232" bgColor="#bbffff">
+                    <topic position="2360,339" order="0" text="2.5" shape="rectangle" id="803477492" bgColor="#ddddff"/>
                 </topic>
             </topic>
-            <topic position="2090,313" order="2" text="Python Library Reference" shape="rectangle" shrink="true" id="216007275" bgColor="#99ff99">
-                <topic position="-2090,301" order="0" text="Python Version" shape="rounded rectangle" shrink="true" id="846688505" bgColor="#bbffff">
-                    <topic position="2090,289" order="0" text="2.5" shape="rounded rectangle" id="1966201406" bgColor="#ddddff"/>
+            <topic position="2090,338" order="2" text="Python Library Reference" shape="rectangle" shrink="true" id="216007275" bgColor="#99ff99">
+                <topic position="-2090,326" order="0" text="Python Version" shape="rounded rectangle" shrink="true" id="846688505" bgColor="#bbffff">
+                    <topic position="2090,314" order="0" text="2.5" shape="rounded rectangle" id="1966201406" bgColor="#ddddff"/>
                 </topic>
             </topic>
         </topic>
-        <topic position="-2000,325" order="19" text="Good References" shape="rounded rectangle" id="408691934" bgColor="#ffff66">
-            <topic position="2000,288" order="0" text="Python 2.5 Quick Reference" shape="rectangle" id="1159506227" bgColor="#99ff99">
+        <topic position="-2000,350" order="20" text="Good References" shape="rounded rectangle" id="408691934" bgColor="#ffff66">
+            <topic position="2000,313" order="0" text="Python 2.5 Quick Reference" shape="rectangle" id="1159506227" bgColor="#99ff99">
                 <link url="http://rgruet.free.fr/PQR25/PQR2.5.html" urlType="url"/>
             </topic>
-            <topic position="2090,313" order="1" text="Python Library Reference" shape="rectangle" id="403604653" bgColor="#99ff99">
+            <topic position="2090,338" order="1" text="Python Library Reference" shape="rectangle" id="403604653" bgColor="#99ff99">
                 <link url="http://www.python.org/doc/current/lib/" urlType="url"/>
             </topic>
-            <topic position="2180,338" order="2" text="Tutorial" shape="rectangle" shrink="true" id="1090520692" bgColor="#99ff99">
-                <topic position="-2180,326" order="0" text="Dive Into Python" shape="rectangle" shrink="true" id="1535875895" bgColor="#bbffff">
+            <topic position="2180,363" order="2" text="Tutorial" shape="rectangle" shrink="true" id="1090520692" bgColor="#99ff99">
+                <topic position="-2180,351" order="0" text="Dive Into Python" shape="rectangle" shrink="true" id="1535875895" bgColor="#bbffff">
                     <link url="http://diveintopython.org/toc/index.html" urlType="url"/>
-                    <topic position="2180,314" order="0" text="eBook" shape="rectangle" id="530171131" bgColor="#ddddff"/>
+                    <topic position="2180,339" order="0" text="eBook" shape="rectangle" id="530171131" bgColor="#ddddff"/>
                 </topic>
             </topic>
         </topic>
-        <topic position="-2090,350" order="20" text="Good For" shape="rounded rectangle" id="1119763140" bgColor="#ffff66">
-            <topic position="2090,275" order="0" text="Internal Logic" shape="rounded rectangle" id="1033376248" bgColor="#99ff99"/>
-            <topic position="2180,300" order="1" text="Serialization" shape="rounded rectangle" shrink="true" id="690803073" bgColor="#99ff99">
-                <topic position="-2180,275" order="0" text="Via" shape="rectangle" shrink="true" id="1922775420" bgColor="#bbffff">
-                    <topic position="2180,263" order="0" text="cPickle" shape="rounded rectangle" id="840960577" bgColor="#ddddff"/>
+        <topic position="-2090,375" order="21" text="Good For" shape="rounded rectangle" id="1119763140" bgColor="#ffff66">
+            <topic position="2090,300" order="0" text="Internal Logic" shape="rounded rectangle" id="1033376248" bgColor="#99ff99"/>
+            <topic position="2180,325" order="1" text="Serialization" shape="rounded rectangle" shrink="true" id="690803073" bgColor="#99ff99">
+                <topic position="-2180,300" order="0" text="Via" shape="rectangle" shrink="true" id="1922775420" bgColor="#bbffff">
+                    <topic position="2180,288" order="0" text="cPickle" shape="rounded rectangle" id="840960577" bgColor="#ddddff"/>
                 </topic>
-                <topic position="-2270,300" order="1" text="For" shape="rectangle" shrink="true" id="1747246492" bgColor="#bbffff">
-                    <topic position="2270,288" order="0" text="Object" shape="rounded rectangle" shrink="true" id="1134905437" bgColor="#ddddff">
-                        <topic position="-2270,263" order="0" text="Storage" shape="line" id="1461256366"/>
-                        <topic position="-2360,288" order="1" text="Transmission" shape="line" id="319385397"/>
+                <topic position="-2270,325" order="1" text="For" shape="rectangle" shrink="true" id="1747246492" bgColor="#bbffff">
+                    <topic position="2270,313" order="0" text="Object" shape="rounded rectangle" shrink="true" id="1134905437" bgColor="#ddddff">
+                        <topic position="-2270,288" order="0" text="Storage" shape="line" id="1461256366"/>
+                        <topic position="-2360,313" order="1" text="Transmission" shape="line" id="319385397"/>
                     </topic>
                 </topic>
             </topic>
-            <topic position="2270,325" order="2" text="Macros" shape="rounded rectangle" id="794590494" bgColor="#99ff99"/>
-            <topic position="2360,350" order="3" text="List Manipulation" shape="rounded rectangle" id="1361141366" bgColor="#99ff99"/>
-            <topic position="2450,375" order="4" text="Scripting Language" shape="rounded rectangle" shrink="true" id="1265703728" bgColor="#99ff99">
-                <topic position="-2450,363" order="0" text="For" shape="rectangle" shrink="true" id="864746490" bgColor="#bbffff">
-                    <topic position="2450,351" order="0" text="Applications" shape="rounded rectangle" id="834911546" bgColor="#ddddff"/>
+            <topic position="2270,350" order="2" text="Macros" shape="rounded rectangle" id="794590494" bgColor="#99ff99"/>
+            <topic position="2360,375" order="3" text="List Manipulation" shape="rounded rectangle" id="1361141366" bgColor="#99ff99"/>
+            <topic position="2450,400" order="4" text="Scripting Language" shape="rounded rectangle" shrink="true" id="1265703728" bgColor="#99ff99">
+                <topic position="-2450,388" order="0" text="For" shape="rectangle" shrink="true" id="864746490" bgColor="#bbffff">
+                    <topic position="2450,376" order="0" text="Applications" shape="rounded rectangle" id="834911546" bgColor="#ddddff"/>
                 </topic>
             </topic>
-            <topic position="2540,400" order="5" text="NOT" shape="rounded rectangle" shrink="true" id="478941778" bgColor="#99ff99">
-                <topic position="-2540,388" order="0" text="UI" shape="rectangle" id="1073082243" bgColor="#bbffff"/>
+            <topic position="2540,425" order="5" text="NOT" shape="rounded rectangle" shrink="true" id="478941778" bgColor="#99ff99">
+                <topic position="-2540,413" order="0" text="UI" shape="rectangle" id="1073082243" bgColor="#bbffff"/>
             </topic>
         </topic>
-        <topic position="-2180,375" order="21" text="Definitions" shape="rounded rectangle" id="1122845804" bgColor="#ffff66">
-            <topic position="2180,350" order="0" text="Module" shape="rectangle" shrink="true" id="840405826" bgColor="#99ff99">
-                <topic position="-2180,325" order="0" text="Text File" shape="rectangle" shrink="true" id="566688799" bgColor="#bbffff">
-                    <topic position="2180,313" order="0" text="Containing" shape="rectangle" shrink="true" id="672124937" bgColor="#ddddff">
-                        <topic position="-2180,301" order="0" text="Python Statements" shape="line" id="1702192141"/>
+        <topic position="-2180,400" order="22" text="Definitions" shape="rounded rectangle" id="1122845804" bgColor="#ffff66">
+            <topic position="2180,375" order="0" text="Module" shape="rectangle" shrink="true" id="840405826" bgColor="#99ff99">
+                <topic position="-2180,350" order="0" text="Text File" shape="rectangle" shrink="true" id="566688799" bgColor="#bbffff">
+                    <topic position="2180,338" order="0" text="Containing" shape="rectangle" shrink="true" id="672124937" bgColor="#ddddff">
+                        <topic position="-2180,326" order="0" text="Python Statements" shape="line" id="1702192141"/>
                     </topic>
                 </topic>
-                <topic position="-2270,350" order="1" text=".py Extension" shape="rectangle" shrink="true" id="390798590" bgColor="#bbffff">
-                    <topic position="2270,338" order="0" text="Allows" shape="rectangle" shrink="true" id="335165396" bgColor="#ddddff">
-                        <topic position="-2270,326" order="0" text="Importing" shape="line" shrink="true" id="1607129465">
-                            <topic position="2270,314" order="0" text="Into" shape="line" shrink="true" id="1403960256">
-                                <topic position="-2270,302" order="0" text="Other" shape="line" shrink="true" id="113989320">
-                                    <topic position="2270,290" order="0" text="Python" shape="line" shrink="true" id="311927148">
-                                        <topic position="-2270,278" order="0" text="Programs" shape="line" id="1786999314"/>
+                <topic position="-2270,375" order="1" text=".py Extension" shape="rectangle" shrink="true" id="390798590" bgColor="#bbffff">
+                    <topic position="2270,363" order="0" text="Allows" shape="rectangle" shrink="true" id="335165396" bgColor="#ddddff">
+                        <topic position="-2270,351" order="0" text="Importing" shape="line" shrink="true" id="1607129465">
+                            <topic position="2270,339" order="0" text="Into" shape="line" shrink="true" id="1403960256">
+                                <topic position="-2270,327" order="0" text="Other" shape="line" shrink="true" id="113989320">
+                                    <topic position="2270,315" order="0" text="Python" shape="line" shrink="true" id="311927148">
+                                        <topic position="-2270,303" order="0" text="Programs" shape="line" id="1786999314"/>
                                     </topic>
                                 </topic>
                             </topic>
@@ -195,89 +195,89 @@
                     </topic>
                 </topic>
             </topic>
-            <topic position="2270,375" order="1" text="Script" shape="rectangle" shrink="true" id="395160073" bgColor="#99ff99">
-                <topic position="-2270,350" order="0" text="Module" shape="rectangle" shrink="true" id="1329016047" bgColor="#bbffff">
-                    <topic position="2270,338" order="0" text="Top-level" shape="rectangle" shrink="true" id="1277010492" bgColor="#ddddff">
-                        <topic position="-2270,313" order="0" text="With" shape="line" shrink="true" id="1711834777">
-                            <topic position="2270,301" order="0" text="Entry Point" shape="rectangle" id="1909734320" bgColor="#ddddff"/>
+            <topic position="2270,400" order="1" text="Script" shape="rectangle" shrink="true" id="395160073" bgColor="#99ff99">
+                <topic position="-2270,375" order="0" text="Module" shape="rectangle" shrink="true" id="1329016047" bgColor="#bbffff">
+                    <topic position="2270,363" order="0" text="Top-level" shape="rectangle" shrink="true" id="1277010492" bgColor="#ddddff">
+                        <topic position="-2270,338" order="0" text="With" shape="line" shrink="true" id="1711834777">
+                            <topic position="2270,326" order="0" text="Entry Point" shape="rectangle" id="1909734320" bgColor="#ddddff"/>
                         </topic>
-                        <topic position="-2360,338" order="1" text="Can Run" shape="line" shrink="true" id="954195369">
-                            <topic position="2360,313" order="0" text="Directly" shape="line" id="766218881"/>
-                            <topic position="2450,338" order="1" text="From" shape="rectangle" shrink="true" id="1311896276" bgColor="#ddddff">
-                                <topic position="-2450,301" order="0" text="Commandline" shape="line" id="732073344"/>
-                                <topic position="-2540,326" order="1" text="Run Window" shape="line" shrink="true" id="1452833927">
-                                    <topic position="2540,314" order="0" text="In" shape="line" shrink="true" id="1357024336">
-                                        <topic position="-2540,302" order="0" text="Windows" shape="line" id="1157790742"/>
+                        <topic position="-2360,363" order="1" text="Can Run" shape="line" shrink="true" id="954195369">
+                            <topic position="2360,338" order="0" text="Directly" shape="line" id="766218881"/>
+                            <topic position="2450,363" order="1" text="From" shape="rectangle" shrink="true" id="1311896276" bgColor="#ddddff">
+                                <topic position="-2450,326" order="0" text="Commandline" shape="line" id="732073344"/>
+                                <topic position="-2540,351" order="1" text="Run Window" shape="line" shrink="true" id="1452833927">
+                                    <topic position="2540,339" order="0" text="In" shape="line" shrink="true" id="1357024336">
+                                        <topic position="-2540,327" order="0" text="Windows" shape="line" id="1157790742"/>
                                     </topic>
                                 </topic>
-                                <topic position="-2630,351" order="2" text="IDLE" shape="line" id="1185023081"/>
+                                <topic position="-2630,376" order="2" text="IDLE" shape="line" id="1185023081"/>
                             </topic>
                         </topic>
                     </topic>
                 </topic>
-                <topic position="-2360,375" order="1" text="Extension" shape="rectangle" shrink="true" id="1767810300" bgColor="#bbffff">
-                    <topic position="2360,363" order="0" text="NOT Required" shape="rounded rectangle" shrink="true" id="375617029" bgColor="#ddddff">
-                        <topic position="-2360,351" order="0" text=".py" shape="line" id="1629169951"/>
+                <topic position="-2360,400" order="1" text="Extension" shape="rectangle" shrink="true" id="1767810300" bgColor="#bbffff">
+                    <topic position="2360,388" order="0" text="NOT Required" shape="rounded rectangle" shrink="true" id="375617029" bgColor="#ddddff">
+                        <topic position="-2360,376" order="0" text=".py" shape="line" id="1629169951"/>
                     </topic>
                 </topic>
             </topic>
         </topic>
-        <topic position="-2270,400" order="22" text="Python Implemenations" shape="rounded rectangle" id="278508781" bgColor="#ffff66">
+        <topic position="-2270,425" order="23" text="Python Implemenations" shape="rounded rectangle" id="278508781" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/e/ef/Python_Implementations.mmmm_title=Different%20Implementations%20of%20Python" urlType="url"/>
         </topic>
-        <topic position="-2360,425" order="23" text="Syntax" shape="rounded rectangle" id="1136447695" bgColor="#ffff66">
+        <topic position="-2360,450" order="24" text="Syntax" shape="rounded rectangle" id="1136447695" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/4/4f/Python_Syntax.mmmm_title=Python%20Syntax" urlType="url"/>
         </topic>
-        <topic position="-2450,450" order="24" text="Executing Python" shape="rounded rectangle" id="332530597" bgColor="#ffff66">
+        <topic position="-2450,475" order="25" text="Executing Python" shape="rounded rectangle" id="332530597" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/1/1b/Python_Execution.mmmm_title=Different%20Ways%20of%20Running%20Python%20Programs" urlType="url"/>
         </topic>
-        <topic position="-2540,475" order="25" text="Getting Informaton" shape="rounded rectangle" id="10" bgColor="#ffff66">
+        <topic position="-2540,500" order="26" text="Getting Informaton" shape="rounded rectangle" id="10" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/4/4b/Python_Information.mmmm_title=How%20to%20Get%20Information%20in%20Python" urlType="url"/>
         </topic>
-        <topic position="-2630,500" order="26" text="Naming Conventions" shape="rounded rectangle" id="1594651750" bgColor="#ffff66">
+        <topic position="-2630,525" order="27" text="Naming Conventions" shape="rounded rectangle" id="1594651750" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/2/2f/Python_NamingConventions2.mmmm_title=Python%20Naming%20Conventions" urlType="url"/>
         </topic>
-        <topic position="-2720,525" order="27" text="Type System" shape="rounded rectangle" id="1547162624" bgColor="#ffff66">
+        <topic position="-2720,550" order="28" text="Type System" shape="rounded rectangle" id="1547162624" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/9/95/Python_TypeSystem.mmmm_title=The%20CPython%20Type%20System" urlType="url"/>
-            <topic position="2720,513" order="0" text="CPython" shape="rectangle" id="190569951" bgColor="#99ff99"/>
+            <topic position="2720,538" order="0" text="CPython" shape="rectangle" id="190569951" bgColor="#99ff99"/>
         </topic>
-        <topic position="-2810,550" order="28" text="Built-in Data Types" shape="rounded rectangle" id="559844936" bgColor="#ffff66">
+        <topic position="-2810,575" order="29" text="Built-in Data Types" shape="rounded rectangle" id="559844936" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/b/b0/Python_DataTypes_WebLinks.mmmm_title=Python%20Data%20Types" urlType="url"/>
-            <topic position="2810,475" order="0" text="Numeric Types" shape="rounded rectangle" id="154102391" bgColor="#99ff99">
+            <topic position="2810,500" order="0" text="Numeric Types" shape="rounded rectangle" id="154102391" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/f/fd/Python_DataTypes_Numeric2.mmmm_title=Python%20Numeric%20Data%20Types" urlType="url"/>
             </topic>
-            <topic position="2900,500" order="1" text="Sequence Types" shape="rounded rectangle" id="918145730" bgColor="#99ff99">
+            <topic position="2900,525" order="1" text="Sequence Types" shape="rounded rectangle" id="918145730" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/f/f0/Python_DataTypes_Sequence_WebLinks.mmmm_title=Python%20Sequence%20Data%20Types" urlType="url"/>
-                <topic position="-2900,475" order="0" text="Mutable" shape="rectangle" id="1578736339" bgColor="#bbffff">
-                    <topic position="2900,463" order="0" text="Lists" shape="rounded rectangle" id="1776894225" bgColor="#ddddff">
+                <topic position="-2900,500" order="0" text="Mutable" shape="rectangle" id="1578736339" bgColor="#bbffff">
+                    <topic position="2900,488" order="0" text="Lists" shape="rounded rectangle" id="1776894225" bgColor="#ddddff">
                         <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/f/f1/Python_DataTypes_Sequence_Lists.mmmm_title=Python%20List%20Data%20Type" urlType="url"/>
                     </topic>
                 </topic>
-                <topic position="-2990,500" order="1" text="Immutable" shape="rectangle" id="1799786939" bgColor="#bbffff">
-                    <topic position="2990,475" order="0" text="Tuples" shape="rectangle" id="1329146055" bgColor="#ddddff">
+                <topic position="-2990,525" order="1" text="Immutable" shape="rectangle" id="1799786939" bgColor="#bbffff">
+                    <topic position="2990,500" order="0" text="Tuples" shape="rectangle" id="1329146055" bgColor="#ddddff">
                         <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/1/14/Python_DataTypes_Sequence_Tuples.mmmm_title=Python%20Tuple%20Data%20Type" urlType="url"/>
                     </topic>
-                    <topic position="3080,500" order="1" text="Strings" shape="rounded rectangle" id="315458704" bgColor="#ddddff">
+                    <topic position="3080,525" order="1" text="Strings" shape="rounded rectangle" id="315458704" bgColor="#ddddff">
                         <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=4initLoadFile=/wiki/images/3/35/Python_DataTypes_Sequence_Strings.mmmm_title=Python%20String%20Data%20Type" urlType="url"/>
                     </topic>
                 </topic>
             </topic>
-            <topic position="2990,525" order="2" text="Mapping Types" shape="rounded rectangle" id="674126003" bgColor="#99ff99">
-                <topic position="-2990,513" order="0" text="Dictionary" shape="rounded rectangle" id="1822985067" bgColor="#bbffff">
+            <topic position="2990,550" order="2" text="Mapping Types" shape="rounded rectangle" id="674126003" bgColor="#99ff99">
+                <topic position="-2990,538" order="0" text="Dictionary" shape="rounded rectangle" id="1822985067" bgColor="#bbffff">
                     <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/7/73/Python_DataTypes_Dictionary2.mmmm_title=Python%20Dictionary%20Data%20Type" urlType="url"/>
                 </topic>
             </topic>
-            <topic position="3080,550" order="3" text="Set" shape="rounded rectangle" id="617132681" bgColor="#99ff99">
+            <topic position="3080,575" order="3" text="Set" shape="rounded rectangle" id="617132681" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/a/a9/Python_DataTypes_Sets.mmmm_title=Python%20Set%20Data%20Type" urlType="url"/>
             </topic>
-            <topic position="3170,575" order="4" text="Bool" shape="rounded rectangle" id="985221708" bgColor="#99ff99">
+            <topic position="3170,600" order="4" text="Bool" shape="rounded rectangle" id="985221708" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/1/16/Python_DataTypes_Bool2.mmmm_title=Python%20Boolean%20Data%20Type" urlType="url"/>
             </topic>
-            <topic position="3260,600" order="5" text="Checking" shape="rounded rectangle" id="854059184" bgColor="#99ff99">
+            <topic position="3260,625" order="5" text="Checking" shape="rounded rectangle" id="854059184" bgColor="#99ff99">
                 <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=3initLoadFile=/wiki/images/5/5a/Python_DataTypes_Checking2.mmmm_title=Checking%20Python%20Data%20Types" urlType="url"/>
             </topic>
         </topic>
-        <topic position="-2900,575" order="29" text="Statements" shape="rounded rectangle" id="464774508" bgColor="#ffff66">
+        <topic position="-2900,600" order="30" text="Statements" shape="rounded rectangle" id="464774508" bgColor="#ffff66">
             <link url="http://freemind.sourceforge.net/wiki/extensions/freemind/flashwindow.php?startCollapsedToLevel=2initLoadFile=/wiki/images/5/56/Python_Statements.mmmm_title=Python%20Statements" urlType="url"/>
         </topic>
     </topic>

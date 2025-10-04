@@ -1,0 +1,64 @@
+<map name='xmind-marketing-strategy' version='tango' theme='prism'>
+    <topic central='true' text='Marketing Strategy' id='1'>
+        <topic position='200,0' order='0' text='Market Analysis' shape='line' id='2'>
+            <eicon id='🔴'/>
+            <eicon id='👥'/>
+            <eicon id='💡'/>
+            <eicon id='💡'/>
+        <topic position='200,0' order='0' text='Target Audience' shape='line' id='3'>
+            <eicon id='👥'/>
+        </topic>
+        <topic position='-200,0' order='1' text='Competitor Research' shape='line' id='4'>
+            <eicon id='💡'/>
+        </topic>
+        <topic position='300,75' order='2' text='Market Trends' shape='line' id='5'>
+            <eicon id='💡'/>
+        </topic>
+        </topic>
+        <topic position='-200,0' order='1' text='Marketing Channels' shape='line' id='6'>
+            <eicon id='🟡'/>
+            <eicon id='💻'/>
+            <eicon id='👥'/>
+            <eicon id='💡'/>
+        <topic position='200,0' order='0' text='Digital Marketing' shape='line' id='7'>
+            <eicon id='💻'/>
+        </topic>
+        <topic position='-200,0' order='1' text='Social Media' shape='line' id='8'>
+            <eicon id='👥'/>
+        </topic>
+        <topic position='300,75' order='2' text='Content Marketing' shape='line' id='9'>
+            <eicon id='💡'/>
+        </topic>
+        </topic>
+        <topic position='300,75' order='2' text='Campaign Planning' shape='line' id='10'>
+            <eicon id='🟢'/>
+            <eicon id='💰'/>
+            <eicon id='📅'/>
+            <eicon id='💡'/>
+        <topic position='200,0' order='0' text='Budget Allocation' shape='line' id='11'>
+            <eicon id='💰'/>
+        </topic>
+        <topic position='-200,0' order='1' text='Timeline' shape='line' id='12'>
+            <eicon id='📅'/>
+        </topic>
+        <topic position='300,75' order='2' text='KPI Metrics' shape='line' id='13'>
+            <eicon id='💡'/>
+        </topic>
+        </topic>
+        <topic position='-300,75' order='3' text='Brand Positioning' shape='line' id='14'>
+            <eicon id='🔵'/>
+            <eicon id='⭐'/>
+            <eicon id='💡'/>
+            <eicon id='💬'/>
+        <topic position='200,0' order='0' text='Value Proposition' shape='line' id='15'>
+            <eicon id='⭐'/>
+        </topic>
+        <topic position='-200,0' order='1' text='Brand Identity' shape='line' id='16'>
+            <eicon id='💡'/>
+        </topic>
+        <topic position='300,75' order='2' text='Messaging' shape='line' id='17'>
+            <eicon id='💬'/>
+        </topic>
+        </topic>
+    </topic>
+</map>

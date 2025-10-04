@@ -28,6 +28,7 @@ import FreemindEdge from '../export/freemind/Edge';
 import FreemindIcon from '../export/freemind/Icon';
 import FreemindHook from '../export/freemind/Hook';
 import FreemindRichcontent from '../export/freemind/Richcontent';
+import FreemindArrowlink from '../export/freemind/Arrowlink';
 import VersionNumber from '../export/freemind/importer/VersionNumber';
 import FreemindIconConverter from './FreemindIconConverter';
 import NoteModel from '../model/NoteModel';
@@ -349,38 +350,57 @@ export default class FreemindImporter extends Importer {
         }
       }
 
-      // if (child instanceof FreemindArrowLink) {
-      //   const arrow: FreemindArrowLink = child as FreemindArrowLink;
-      //   const relationship: RelationshipModel = new RelationshipModel(0, 0);
-      //   const destId = arrow.getDestination();
+      if (child instanceof FreemindArrowlink) {
+        const arrow: FreemindArrowlink = child as FreemindArrowlink;
+        const destId = arrow.getDestination();
 
-      //   relationship.setSrcCtrlPoint(destId);
-      //   relationship.setDestCtrlPoint(freeParent.getId());
-      //   const endinclination = arrow.getEndInclination();
-      //   if (endinclination) {
-      //     const inclination: Array<string> = endinclination.split(';');
-      //     relationship.setDestCtrlPoint(`${ inclination[0]}, ${ inclination[1]}`);
-      //   }
+        if (destId) {
+          // Find the source and destination nodes
+          const sourceNode = this.nodesmap.get(freeParent.getId()!);
+          const destNode = this.nodesmap.get(destId);
 
-      //   const startinclination = arrow.getStartinclination();
-      //   if (startinclination) {
-      //     const inclination: Array<string> = startinclination.split(';');
-      //     relationship.setSrcCtrlPoint(`${ inclination[0]}, ${ inclination[1]}`);
-      //   }
+          if (sourceNode && destNode) {
+            // Create a new relationship with the correct node IDs
+            const newRelationship = new RelationshipModel(sourceNode.getId(), destNode.getId());
 
-      //   const endarrow = arrow.getEndarrow();
-      //   if (endarrow) {
-      //     relationship.setEndArrow(endarrow.toLowerCase() !== 'none');
-      //   }
+            // Set control points if available
+            const endinclination = arrow.getEndInclination();
+            if (endinclination) {
+              const inclination: Array<string> = endinclination.split(';');
+              if (inclination.length >= 2) {
+                newRelationship.setDestCtrlPoint({
+                  x: parseFloat(inclination[0]),
+                  y: parseFloat(inclination[1]),
+                });
+              }
+            }
 
-      //   const startarrow = arrow.getStartarrow();
-      //   if (startarrow) {
-      //     relationship.setStartArrow(startarrow.toLowerCase() !== 'none');
-      //   }
+            const startinclination = arrow.getStartinclination();
+            if (startinclination) {
+              const inclination: Array<string> = startinclination.split(';');
+              if (inclination.length >= 2) {
+                newRelationship.setSrcCtrlPoint({
+                  x: parseFloat(inclination[0]),
+                  y: parseFloat(inclination[1]),
+                });
+              }
+            }
 
-      //   relationship.setLineType(3);
-      //   this.relationship.push(relationship);
-      // }
+            const endarrow = arrow.getEndarrow();
+            if (endarrow) {
+              newRelationship.setEndArrow(endarrow.toLowerCase() !== 'none');
+            }
+
+            const startarrow = arrow.getStartarrow();
+            if (startarrow) {
+              newRelationship.setStartArrow(startarrow.toLowerCase() !== 'none');
+            }
+
+            newRelationship.setLineType(3);
+            mindmap.addRelationship(newRelationship);
+          }
+        }
+      }
     });
   }
 

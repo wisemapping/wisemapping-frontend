@@ -34,9 +34,12 @@ class MindManagerImporter extends Importer {
 
   private idCounter: number = 1;
 
+  private topicIdMap: Map<string, string>;
+
   constructor(map: string) {
     super();
     this.mindManagerInput = map;
+    this.topicIdMap = new Map();
   }
 
   private generateId(): string {
@@ -161,6 +164,8 @@ class MindManagerImporter extends Importer {
     _description?: string,
   ): string {
     const centralId = this.generateId();
+    this.topicIdMap.set(rootTopic.id, centralId.toString());
+
     let xml = `<map name='${nameMap}' version='tango' theme='prism'>\n`;
 
     // Generate central topic
@@ -172,6 +177,13 @@ class MindManagerImporter extends Importer {
     }
 
     xml += '    </topic>\n';
+
+    // Add relationships if present
+    const relationshipsXML = this.generateRelationshipsXML();
+    if (relationshipsXML) {
+      xml += relationshipsXML;
+    }
+
     xml += '</map>';
 
     return xml;
@@ -182,6 +194,7 @@ class MindManagerImporter extends Importer {
 
     topics.forEach((topic, index) => {
       const topicId = this.generateId();
+      this.topicIdMap.set(topic.id, topicId.toString());
       const position = this.calculatePosition(index);
 
       xml += `        <topic position='${position.x},${position.y}' order='${index}' text='${this.escapeXml(topic.text)}' shape='line' id='${topicId}'`;
@@ -308,9 +321,62 @@ class MindManagerImporter extends Importer {
     return topic;
   }
 
+  private generateRelationshipsXML(): string {
+    // Parse the XML to find relationships
+    const doc = SecureXmlParser.parseSecureXml(this.mindManagerInput);
+    if (!doc) return '';
+
+    const relationshipsElement = this.findElementByTagName(doc, 'Relationships');
+    if (!relationshipsElement) return '';
+
+    let relationshipsXML = '';
+    const relationshipElements = relationshipsElement.getElementsByTagName('Relationship');
+
+    Array.from(relationshipElements).forEach((rel) => {
+      relationshipsXML += this.generateRelationshipXML(rel as Element);
+    });
+
+    return relationshipsXML;
+  }
+
+  private generateRelationshipXML(relationshipElement: Element): string {
+    const fromTopicId = relationshipElement.getAttribute('FromTopicID');
+    const toTopicId = relationshipElement.getAttribute('ToTopicID');
+    const label = relationshipElement.getAttribute('Label') || '';
+    const lineStyle = relationshipElement.getAttribute('LineStyle') || '';
+
+    if (!fromTopicId || !toTopicId) return '';
+
+    // Map MindManager IDs to WiseMapping IDs
+    const srcTopicId = this.topicIdMap.get(fromTopicId);
+    const destTopicId = this.topicIdMap.get(toTopicId);
+
+    if (!srcTopicId || !destTopicId) return '';
+
+    let relationshipXML = `    <relationship srcTopicId='${srcTopicId}' destTopicId='${destTopicId}'`;
+
+    if (label) {
+      relationshipXML += ` label='${this.escapeXml(label)}'`;
+    }
+
+    // Map line style
+    if (lineStyle === 'Dashed') {
+      relationshipXML += " lineType='1'";
+    } else if (lineStyle === 'Dotted') {
+      relationshipXML += " lineType='2'";
+    }
+
+    relationshipXML += '/>\n';
+    return relationshipXML;
+  }
+
   public import(nameMap: string, _description?: string): Promise<string> {
     try {
       console.log(`Importing MindManager map: ${nameMap}, description: ${_description}`);
+
+      // Reset counters and ID map
+      this.idCounter = 1;
+      this.topicIdMap.clear();
 
       const rootTopic = this.parseMindManagerXML(this.mindManagerInput);
       const xml = this.generateWiseMappingXML(rootTopic, nameMap, _description);

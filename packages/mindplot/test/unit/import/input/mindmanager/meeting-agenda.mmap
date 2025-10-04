@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Map xmlns="http://www.mindjet.com/MindManager/MindMapXML/1.0">
+  <Topic ID="1" Text="Meeting Agenda">
+    <Topic ID="2" Text="Opening">
+      <Icon Name="calendar"/>
+      <Notes>Meeting introduction and agenda review</Notes>
+      <Topic ID="3" Text="Welcome">
+        <Icon Name="people"/>
+        <Notes>Welcome attendees and introductions</Notes>
+      </Topic>
+      <Topic ID="4" Text="Agenda Review">
+        <Icon Name="document"/>
+        <Notes>Review meeting agenda and objectives</Notes>
+      </Topic>
+      <Topic ID="5" Text="Ground Rules">
+        <Icon Name="shield"/>
+        <Notes>Establish meeting ground rules</Notes>
+      </Topic>
+    </Topic>
+    <Topic ID="6" Text="Previous Meeting">
+      <Icon Name="clock"/>
+      <Notes>Review previous meeting outcomes</Notes>
+      <Topic ID="7" Text="Action Items">
+        <Icon Name="task-done"/>
+        <Notes>Review completed action items</Notes>
+      </Topic>
+      <Topic ID="8" Text="Outstanding Items">
+        <Icon Name="task-start"/>
+        <Notes>Discuss outstanding action items</Notes>
+      </Topic>
+      <Topic ID="9" Text="Follow-up">
+        <Icon Name="arrow-right"/>
+        <Notes>Follow-up on previous decisions</Notes>
+      </Topic>
+    </Topic>
+    <Topic ID="10" Text="Current Topics">
+      <Icon Name="star"/>
+      <Notes>Main discussion topics for this meeting</Notes>
+      <Topic ID="11" Text="Project Updates">
+        <Icon Name="chart"/>
+        <Notes>Update on current project status</Notes>
+      </Topic>
+      <Topic ID="12" Text="Budget Review">
+        <Icon Name="money"/>
+        <Notes>Review budget status and allocations</Notes>
+      </Topic>
+      <Topic ID="13" Text="Resource Planning">
+        <Icon Name="people"/>
+        <Notes>Plan resource allocation and needs</Notes>
+      </Topic>
+      <Topic ID="14" Text="Risk Assessment">
+        <Icon Name="warning"/>
+        <Notes>Assess and discuss project risks</Notes>
+      </Topic>
+    </Topic>
+    <Topic ID="15" Text="Decision Making">
+      <Icon Name="lightbulb"/>
+      <Notes>Make decisions on key issues</Notes>
+      <Topic ID="16" Text="Proposals">
+        <Icon Name="document"/>
+        <Notes>Present and discuss proposals</Notes>
+      </Topic>
+      <Topic ID="17" Text="Voting">
+        <Icon Name="people"/>
+        <Notes>Vote on key decisions</Notes>
+      </Topic>
+      <Topic ID="18" Text="Consensus">
+        <Icon Name="handshake"/>
+        <Notes>Reach consensus on important matters</Notes>
+      </Topic>
+    </Topic>
+    <Topic ID="19" Text="Action Planning">
+      <Icon Name="task-start"/>
+      <Notes>Plan next steps and actions</Notes>
+      <Topic ID="20" Text="New Action Items">
+        <Icon Name="task-start"/>
+        <Notes>Assign new action items and responsibilities</Notes>
+      </Topic>
+      <Topic ID="21" Text="Timeline">
+        <Icon Name="calendar"/>
+        <Notes>Set timelines and deadlines</Notes>
+      </Topic>
+      <Topic ID="22" Text="Next Meeting">
+        <Icon Name="calendar"/>
+        <Notes>Schedule next meeting and agenda</Notes>
+      </Topic>
+    </Topic>
+    <Topic ID="23" Text="Closing">
+      <Icon Name="button_ok"/>
+      <Notes>Meeting wrap-up and conclusion</Notes>
+      <Topic ID="24" Text="Summary">
+        <Icon Name="document"/>
+        <Notes>Summarize key decisions and outcomes</Notes>
+      </Topic>
+      <Topic ID="25" Text="Action Items Review">
+        <Icon Name="task-start"/>
+        <Notes>Review all action items and assignments</Notes>
+      </Topic>
+      <Topic ID="26" Text="Meeting Notes">
+        <Icon Name="document"/>
+        <Notes>Distribute meeting notes and minutes</Notes>
+      </Topic>
+    </Topic>
+  </Topic>
+</Map>

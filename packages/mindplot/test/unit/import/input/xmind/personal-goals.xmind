@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xmap-content xmlns="urn:xmind:xmap:xmlns:content:2.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.0">
+  <sheet id="sheet1" theme="prism">
+    <topic id="topic1" structure-class="org.xmind.ui.map">
+      <title>Personal Goals</title>
+      <children>
+        <topics type="attached">
+          <topic id="topic2">
+            <title>Career Development</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-1"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic3">
+                  <title>Skill Enhancement</title>
+                  <marker-refs>
+                    <marker-ref marker-id="lightbulb"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic4">
+                  <title>Networking</title>
+                  <marker-refs>
+                    <marker-ref marker-id="people"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic5">
+                  <title>Certification</title>
+                  <marker-refs>
+                    <marker-ref marker-id="document"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic6">
+                  <title>Leadership Training</title>
+                  <marker-refs>
+                    <marker-ref marker-id="star"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic7">
+            <title>Health & Fitness</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-2"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic8">
+                  <title>Exercise Routine</title>
+                  <marker-refs>
+                    <marker-ref marker-id="sports"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic9">
+                  <title>Nutrition Plan</title>
+                  <marker-refs>
+                    <marker-ref marker-id="food"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic10">
+                  <title>Mental Health</title>
+                  <marker-refs>
+                    <marker-ref marker-id="heart"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic11">
+                  <title>Sleep Schedule</title>
+                  <marker-refs>
+                    <marker-ref marker-id="clock"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic12">
+            <title>Financial Goals</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-3"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic13">
+                  <title>Savings Plan</title>
+                  <marker-refs>
+                    <marker-ref marker-id="money"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic14">
+                  <title>Investment Strategy</title>
+                  <marker-refs>
+                    <marker-ref marker-id="chart"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic15">
+                  <title>Debt Reduction</title>
+                  <marker-refs>
+                    <marker-ref marker-id="warning"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic16">
+                  <title>Emergency Fund</title>
+                  <marker-refs>
+                    <marker-ref marker-id="shield"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+          <topic id="topic17">
+            <title>Personal Growth</title>
+            <marker-refs>
+              <marker-ref marker-id="priority-4"/>
+            </marker-refs>
+            <children>
+              <topics type="attached">
+                <topic id="topic18">
+                  <title>Reading Goals</title>
+                  <marker-refs>
+                    <marker-ref marker-id="book"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic19">
+                  <title>Learning New Skills</title>
+                  <marker-refs>
+                    <marker-ref marker-id="lightbulb"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic20">
+                  <title>Travel Plans</title>
+                  <marker-refs>
+                    <marker-ref marker-id="globe"/>
+                  </marker-refs>
+                </topic>
+                <topic id="topic21">
+                  <title>Hobbies</title>
+                  <marker-refs>
+                    <marker-ref marker-id="art"/>
+                  </marker-refs>
+                </topic>
+              </topics>
+            </children>
+          </topic>
+        </topics>
+      </children>
+    </topic>
+  </sheet>
+</xmap-content>
