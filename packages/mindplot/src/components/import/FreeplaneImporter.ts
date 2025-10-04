@@ -21,7 +21,6 @@ import SecureXmlParser from '../security/SecureXmlParser';
 class FreeplaneImporter extends Importer {
   private freeplaneInput: string;
   private idCounter: number = 1;
-  private positionCounter: number = 0;
 
   constructor(map: string) {
     super();
@@ -75,7 +74,7 @@ class FreeplaneImporter extends Importer {
   private generateChildTopicXML(freeplaneNode: Element, order: number, depth: number = 0): string {
     const topicId = this.generateId();
     const title = freeplaneNode.getAttribute('TEXT') || 'Untitled';
-    const position = this.calculatePosition();
+    const position = this.calculatePosition(order);
 
     const indent = '        '.repeat(depth + 1);
     let xml = `${indent}<topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
@@ -475,17 +474,16 @@ class FreeplaneImporter extends Importer {
     return (this.idCounter++).toString();
   }
 
-  private calculatePosition(): { x: number; y: number } {
+  private calculatePosition(order: number): { x: number; y: number } {
     // Distribute first-level topics evenly between left and right sides
     // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
-    const isEven = this.positionCounter % 2 === 0;
-    const sideIndex = Math.floor(this.positionCounter / 2);
+    const isEven = order % 2 === 0;
+    const sideIndex = Math.floor(order / 2);
 
     // Alternate between right (positive x) and left (negative x) sides
     const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
     const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
 
-    this.positionCounter++;
     return { x, y };
   }
 

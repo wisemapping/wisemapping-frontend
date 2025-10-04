@@ -66,8 +66,6 @@
  * ```
  */
 import Importer from './Importer';
-import Mindmap from '../model/Mindmap';
-import NodeModel from '../model/NodeModel';
 
 // XMind data structures
 interface XMindTopic {
@@ -98,12 +96,6 @@ interface XMindContent {
 
 class XMindImporter extends Importer {
   private xmindInput: string;
-
-  private mindmap!: Mindmap;
-
-  private nodeMap: Map<string, NodeModel> = new Map();
-
-  private positionCounter = 0;
 
   private idCounter = 1;
 
@@ -145,7 +137,6 @@ class XMindImporter extends Importer {
 
       // Reset counters
       this.idCounter = 1;
-      this.positionCounter = 0;
 
       // Generate WiseMapping XML directly from XML structure
       const xmlContent = this.generateWiseMappingXMLFromXML(rootTopic, nameMap, description);
@@ -164,7 +155,6 @@ class XMindImporter extends Importer {
 
       // Reset counters
       this.idCounter = 1;
-      this.positionCounter = 0;
 
       // Generate WiseMapping XML directly
       const xmlContent = this.generateWiseMappingXML(xmindData.rootTopic, nameMap, description);
@@ -196,117 +186,6 @@ class XMindImporter extends Importer {
     }
   }
 
-  private convertXMLTopic(xmlTopic: Element): NodeModel {
-    const wiseNode = this.mindmap.createNode('MainTopic', this.generateId());
-
-    // Get title
-    const title = xmlTopic.querySelector('title')?.textContent || 'Untitled';
-    wiseNode.setText(title);
-
-    // Handle notes
-    const notes = xmlTopic.querySelector('notes > plain');
-    if (notes) {
-      const noteText = notes.textContent || '';
-      const noteFeature = wiseNode.createFeature('note', { text: noteText });
-      wiseNode.addFeature(noteFeature);
-    }
-
-    // Handle markers (priority, etc.)
-    const markers = xmlTopic.querySelectorAll('markers > marker');
-    if (markers.length > 0) {
-      const markerTexts = Array.from(markers).map(
-        (marker) => marker.getAttribute('marker-id') || '',
-      );
-      const markerText = markerTexts.join(', ');
-      const markerFeature = wiseNode.createFeature('note', { text: `Markers: ${markerText}` });
-      wiseNode.addFeature(markerFeature);
-    }
-
-    // Convert child topics
-    const childTopics = xmlTopic.querySelectorAll('children > topics[type="attached"] > topic');
-    childTopics.forEach((childTopic) => {
-      const childNode = this.convertXMLTopic(childTopic);
-      const position = this.calculatePosition();
-      childNode.setPosition(position.x, position.y);
-
-      // Add child to mindmap and create relationship
-      this.mindmap.addBranch(childNode);
-      this.mindmap.createRelationship(wiseNode.getId(), childNode.getId());
-    });
-
-    return wiseNode;
-  }
-
-  private convertTopic(xmindTopic: XMindTopic, isCentral: boolean = false): NodeModel {
-    const nodeType = isCentral ? 'CentralTopic' : 'MainTopic';
-
-    const wiseNode = this.mindmap.createNode(nodeType, this.generateId());
-
-    // Set position
-    if (isCentral) {
-      wiseNode.setPosition(0, 0);
-    } else {
-      const position = this.calculatePosition();
-      wiseNode.setPosition(position.x, position.y);
-    }
-
-    // Set text content
-    wiseNode.setText(xmindTopic.title);
-
-    // Apply styling if available
-    if (xmindTopic.style?.properties) {
-      this.applyStyling(wiseNode, xmindTopic.style.properties);
-    }
-
-    // Add labels as notes if present
-    if (xmindTopic.labels && xmindTopic.labels.length > 0) {
-      const labelsText = xmindTopic.labels.join(', ');
-      // Create a note feature for labels with more detailed information
-      const noteFeature = wiseNode.createFeature('note', {
-        text: `XMind Labels: ${labelsText}`,
-        type: 'xmind-labels',
-      });
-      wiseNode.addFeature(noteFeature);
-    }
-
-    // Store in node map for reference
-    this.nodeMap.set(xmindTopic.id, wiseNode);
-
-    // Convert child topics
-    if (xmindTopic.children?.attached) {
-      xmindTopic.children.attached.forEach((childTopic) => {
-        const childNode = this.convertTopic(childTopic, false);
-        // Add child to mindmap and create relationship
-        this.mindmap.addBranch(childNode);
-        // Create a relationship between parent and child
-        this.mindmap.createRelationship(wiseNode.getId(), childNode.getId());
-      });
-    }
-
-    return wiseNode;
-  }
-
-  private applyStyling(node: NodeModel, properties: Record<string, string>): void {
-    // Map XMind colors to WiseMapping styles
-    if (properties['svg:fill']) {
-      const color = properties['svg:fill'];
-      // Convert XMind color format to WiseMapping format
-      const wiseColor = this.convertXMindColor(color);
-      node.setBackgroundColor(wiseColor);
-    }
-
-    // Map border properties if available
-    if (properties['border-line-width']) {
-      // Note: WiseMapping might not support border width directly
-      // This could be stored as a feature or style property
-    }
-
-    if (properties['border-line-pattern']) {
-      // Note: WiseMapping might not support border pattern directly
-      // This could be stored as a feature or style property
-    }
-  }
-
   private convertXMindColor(xmindColor: string): string {
     // XMind uses RGBA format like #8EDE99FF
     // WiseMapping might expect different format
@@ -324,17 +203,16 @@ class XMindImporter extends Importer {
     return this.idCounter++;
   }
 
-  private calculatePosition(): { x: number; y: number } {
+  private calculatePosition(order: number): { x: number; y: number } {
     // Distribute first-level topics evenly between left and right sides
     // Even orders (0, 2, 4...) = Right side, Odd orders (1, 3, 5...) = Left side
-    const isEven = this.positionCounter % 2 === 0;
-    const sideIndex = Math.floor(this.positionCounter / 2);
+    const isEven = order % 2 === 0;
+    const sideIndex = Math.floor(order / 2);
 
     // Alternate between right (positive x) and left (negative x) sides
     const x = isEven ? 200 + sideIndex * 100 : -200 - sideIndex * 100;
     const y = sideIndex * 150 - sideIndex * 75; // Spread vertically
 
-    this.positionCounter++;
     return { x, y };
   }
 
@@ -352,10 +230,18 @@ class XMindImporter extends Importer {
     xml += `    <topic central="true" text="${this.escapeXml(centralTitle)}" id="${centralId}">\n`;
 
     // Generate child topics recursively
-    const childTopics = rootTopic.querySelectorAll('topics[type="attached"] > topic');
-    childTopics.forEach((childTopic, index) => {
-      xml += this.generateChildTopicXMLFromXML(childTopic, index);
-    });
+    const childrenElement = rootTopic.querySelector('children');
+    if (childrenElement) {
+      const topicsElement = childrenElement.querySelector('topics[type="attached"]');
+      if (topicsElement) {
+        const childTopics = Array.from(topicsElement.children).filter(
+          (child) => child.tagName === 'topic',
+        );
+        childTopics.forEach((childTopic, index) => {
+          xml += this.generateChildTopicXMLFromXML(childTopic as Element, index);
+        });
+      }
+    }
 
     xml += `    </topic>\n`;
     xml += `</map>`;
@@ -365,7 +251,7 @@ class XMindImporter extends Importer {
 
   private generateChildTopicXMLFromXML(xmlTopic: Element, order: number): string {
     const topicId = this.generateId();
-    const position = this.calculatePosition();
+    const position = this.calculatePosition(order);
     const title = xmlTopic.querySelector('title')?.textContent || 'Untitled';
 
     let xml = `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(title)}" shape="line" id="${topicId}">\n`;
@@ -389,10 +275,18 @@ class XMindImporter extends Importer {
     }
 
     // Recursively generate child topics
-    const childTopics = xmlTopic.querySelectorAll('topics[type="attached"] > topic');
-    childTopics.forEach((childTopic, index) => {
-      xml += this.generateChildTopicXMLFromXML(childTopic, index);
-    });
+    const childrenElement = xmlTopic.querySelector('children');
+    if (childrenElement) {
+      const topicsElement = childrenElement.querySelector('topics[type="attached"]');
+      if (topicsElement) {
+        const childTopics = Array.from(topicsElement.children).filter(
+          (child) => child.tagName === 'topic',
+        );
+        childTopics.forEach((childTopic, index) => {
+          xml += this.generateChildTopicXMLFromXML(childTopic as Element, index);
+        });
+      }
+    }
 
     xml += `        </topic>\n`;
     return xml;
@@ -425,7 +319,7 @@ class XMindImporter extends Importer {
 
     topics.forEach((topic, index) => {
       const topicId = this.generateId();
-      const position = this.calculatePosition();
+      const position = this.calculatePosition(order);
       const bgColor = this.extractBackgroundColor(topic);
 
       xml += `        <topic position="${position.x},${position.y}" order="${order}" text="${this.escapeXml(topic.title)}" shape="line" id="${topicId}"`;
