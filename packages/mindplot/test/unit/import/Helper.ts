@@ -53,12 +53,13 @@ export const exporterAssert = async (testName: string, importer: Importer) => {
     fs.writeFileSync(mindmapPath, actualMindmap);
   }
 
-  const mindmapExpect = fs.readFileSync(mindmapPath).toString();
-
   // Compare with expected...
-  if (actualMindmap !== mindmapExpect) {
-    const diffResult = diff(actualMindmap, mindmapExpect);
-    console.log(diffResult);
-    expect(actualMindmap).toEqual(mindmapExpect);
+  if (fs.existsSync(mindmapPath)) {
+    const mindmapExpect = fs.readFileSync(mindmapPath).toString();
+    if (actualMindmap !== mindmapExpect) {
+      const diffResult = diff(actualMindmap, mindmapExpect);
+      console.log(diffResult);
+      expect(actualMindmap).toEqual(mindmapExpect);
+    }
   }
 };
