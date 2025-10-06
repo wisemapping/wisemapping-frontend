@@ -11,6 +11,12 @@
       "value": "हटाएं"
     }
   ],
+  "action.reset": [
+    {
+      "type": 0,
+      "value": "रीसेट करें"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -95,6 +101,120 @@
       "value": "पूर्ववत"
     }
   ],
+  "canvas-style.apply": [
+    {
+      "type": 0,
+      "value": "लागू करें"
+    }
+  ],
+  "canvas-style.background-color": [
+    {
+      "type": 0,
+      "value": "पृष्ठभूमि रंग"
+    }
+  ],
+  "canvas-style.background-pattern": [
+    {
+      "type": 0,
+      "value": "पृष्ठभूमि पैटर्न"
+    }
+  ],
+  "canvas-style.colors": [
+    {
+      "type": 0,
+      "value": "रंग"
+    }
+  ],
+  "canvas-style.grid-color": [
+    {
+      "type": 0,
+      "value": "ग्रिड रंग"
+    }
+  ],
+  "canvas-style.grid-size-l": [
+    {
+      "type": 0,
+      "value": "L"
+    }
+  ],
+  "canvas-style.grid-size-m": [
+    {
+      "type": 0,
+      "value": "M"
+    }
+  ],
+  "canvas-style.grid-size-s": [
+    {
+      "type": 0,
+      "value": "S"
+    }
+  ],
+  "canvas-style.grid-size-xl": [
+    {
+      "type": 0,
+      "value": "XL"
+    }
+  ],
+  "canvas-style.grid-size-xs": [
+    {
+      "type": 0,
+      "value": "XS"
+    }
+  ],
+  "canvas-style.grid-style": [
+    {
+      "type": 0,
+      "value": "ग्रिड शैली"
+    }
+  ],
+  "canvas-style.pattern-dots": [
+    {
+      "type": 0,
+      "value": "बिंदु"
+    }
+  ],
+  "canvas-style.pattern-grid": [
+    {
+      "type": 0,
+      "value": "ग्रिड लाइनें"
+    }
+  ],
+  "canvas-style.pattern-none": [
+    {
+      "type": 0,
+      "value": "कोई नहीं"
+    }
+  ],
+  "canvas-style.pattern-solid": [
+    {
+      "type": 0,
+      "value": "ठोस रंग"
+    }
+  ],
+  "canvas-style.preview": [
+    {
+      "type": 0,
+      "value": "पूर्वावलोकन"
+    }
+  ],
+  "canvas-style.reset": [
+    {
+      "type": 0,
+      "value": "रीसेट करें"
+    }
+  ],
+  "canvas-style.title": [
+    {
+      "type": 0,
+      "value": "पृष्ठभूमि"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "बंद करें"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,
@@ -105,6 +225,24 @@
     {
       "type": 0,
       "value": "विवरण"
+    }
+  ],
+  "editor-panel.canvas-style-title": [
+    {
+      "type": 0,
+      "value": "पृष्ठभूमि"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "डिफ़ॉल्ट"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "मिश्रित"
     }
   ],
   "editor-panel.icon-title": [
@@ -123,6 +261,12 @@
     {
       "type": 0,
       "value": "नोट"
+    }
+  ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "थीम"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -153,6 +297,12 @@
     {
       "type": 0,
       "value": "विषय जोड़ें"
+    }
+  ],
+  "editor-panel.tooltip-canvas-style": [
+    {
+      "type": 0,
+      "value": "पृष्ठभूमि"
     }
   ],
   "editor-panel.tooltip-connection-color": [
@@ -201,6 +351,12 @@
     {
       "type": 0,
       "value": "विषय हटाएं"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "थीम"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
@@ -327,6 +483,12 @@
     {
       "type": 0,
       "value": "यह संपादन स्थान क्षमताओं को प्रदर्शित करता है!"
+    }
+  ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "इमोजी खोजें..."
     }
   ],
   "icon-picker.show-images": [
@@ -585,6 +747,18 @@
     {
       "type": 0,
       "value": "थीम बदलें"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "सभी नोड्स को संकुचित करें"
+    }
+  ],
+  "zoom-panel.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "सभी नोड्स को विस्तृत करें"
     }
   ],
   "zoom-panel.tooltip-keyboard": [

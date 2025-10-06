@@ -17,6 +17,12 @@
       "value": "Supprimer"
     }
   ],
+  "action.reset": [
+    {
+      "type": 0,
+      "value": "Réinitialiser"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -231,6 +237,18 @@
     {
       "type": 0,
       "value": "Arrière-plan"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "Par défaut"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Mixte"
     }
   ],
   "editor-panel.icon-title": [
@@ -497,6 +515,12 @@
       "value": "Cet espace d'édition présente certaines des fonctionnalités des cartes mentales !"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Rechercher des emojis..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -759,6 +783,18 @@
     {
       "type": 0,
       "value": "Raccourcis clavier"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Réduire tous les nœuds"
+    }
+  ],
+  "zoom-panel.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Développer tous les nœuds"
     }
   ],
   "zoom-panel.tooltip-keyboard": [

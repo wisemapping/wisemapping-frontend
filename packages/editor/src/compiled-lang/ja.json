@@ -11,6 +11,12 @@
       "value": "削除"
     }
   ],
+  "action.reset": [
+    {
+      "type": 0,
+      "value": "リセット"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -95,6 +101,114 @@
       "value": "元に戻す"
     }
   ],
+  "canvas-style.apply": [
+    {
+      "type": 0,
+      "value": "適用"
+    }
+  ],
+  "canvas-style.background-color": [
+    {
+      "type": 0,
+      "value": "背景色"
+    }
+  ],
+  "canvas-style.background-pattern": [
+    {
+      "type": 0,
+      "value": "背景パターン"
+    }
+  ],
+  "canvas-style.colors": [
+    {
+      "type": 0,
+      "value": "色"
+    }
+  ],
+  "canvas-style.grid-color": [
+    {
+      "type": 0,
+      "value": "グリッド色"
+    }
+  ],
+  "canvas-style.grid-size-l": [
+    {
+      "type": 0,
+      "value": "L"
+    }
+  ],
+  "canvas-style.grid-size-m": [
+    {
+      "type": 0,
+      "value": "M"
+    }
+  ],
+  "canvas-style.grid-size-s": [
+    {
+      "type": 0,
+      "value": "S"
+    }
+  ],
+  "canvas-style.grid-size-xl": [
+    {
+      "type": 0,
+      "value": "XL"
+    }
+  ],
+  "canvas-style.grid-size-xs": [
+    {
+      "type": 0,
+      "value": "XS"
+    }
+  ],
+  "canvas-style.grid-style": [
+    {
+      "type": 0,
+      "value": "グリッドスタイル"
+    }
+  ],
+  "canvas-style.pattern-dots": [
+    {
+      "type": 0,
+      "value": "ドット"
+    }
+  ],
+  "canvas-style.pattern-grid": [
+    {
+      "type": 0,
+      "value": "グリッドライン"
+    }
+  ],
+  "canvas-style.pattern-none": [
+    {
+      "type": 0,
+      "value": "なし"
+    }
+  ],
+  "canvas-style.pattern-solid": [
+    {
+      "type": 0,
+      "value": "ソリッドカラー"
+    }
+  ],
+  "canvas-style.preview": [
+    {
+      "type": 0,
+      "value": "プレビュー"
+    }
+  ],
+  "canvas-style.reset": [
+    {
+      "type": 0,
+      "value": "リセット"
+    }
+  ],
+  "canvas-style.title": [
+    {
+      "type": 0,
+      "value": "背景"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
@@ -113,6 +227,24 @@
       "value": "説明"
     }
   ],
+  "editor-panel.canvas-style-title": [
+    {
+      "type": 0,
+      "value": "背景"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "デフォルト"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "混合"
+    }
+  ],
   "editor-panel.icon-title": [
     {
       "type": 0,
@@ -129,6 +261,12 @@
     {
       "type": 0,
       "value": "ノート"
+    }
+  ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "テーマ"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -159,6 +297,12 @@
     {
       "type": 0,
       "value": "トピックを追加"
+    }
+  ],
+  "editor-panel.tooltip-canvas-style": [
+    {
+      "type": 0,
+      "value": "背景"
     }
   ],
   "editor-panel.tooltip-connection-color": [
@@ -207,6 +351,12 @@
     {
       "type": 0,
       "value": "トピックを削除"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "テーマ"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
@@ -333,6 +483,12 @@
     {
       "type": 0,
       "value": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
+    }
+  ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "絵文字を検索..."
     }
   ],
   "icon-picker.show-images": [
@@ -591,6 +747,18 @@
     {
       "type": 0,
       "value": "テーマ切り替え"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "すべてのノードを折りたたむ"
+    }
+  ],
+  "zoom-panel.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "すべてのノードを展開"
     }
   ],
   "zoom-panel.tooltip-keyboard": [

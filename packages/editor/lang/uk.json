@@ -5,6 +5,9 @@
   "action.delete": {
     "defaultMessage": "Видалити"
   },
+  "action.reset": {
+    "defaultMessage": "Скинути"
+  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Повернутися до списку карт"
   },

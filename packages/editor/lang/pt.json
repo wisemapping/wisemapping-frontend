@@ -5,6 +5,9 @@
   "action.delete": {
     "defaultMessage": "Excluir"
   },
+  "action.reset": {
+    "defaultMessage": "Redefinir"
+  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Voltar à lista de mapas"
   },
@@ -340,5 +343,77 @@
   },
   "common.close": {
     "defaultMessage": "Fechar"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "Aplicar"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "Cor de fundo"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "Padrão de fundo"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "Cores"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "Cor da grade"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "Estilo da grade"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "Pontos"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "Linhas da grade"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "Nenhum"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "Cor sólida"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "Visualização"
+  },
+  "canvas-style.reset": {
+    "defaultMessage": "Redefinir"
+  },
+  "canvas-style.title": {
+    "defaultMessage": "Fundo"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "Fundo"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "Tema"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "Fundo"
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "Tema"
+  },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "Recolher todos os nós"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "Expandir todos os nós"
   }
 }

@@ -68,9 +68,12 @@
     "action.accept": {
         "defaultMessage": "Принять"
     },
-    "action.delete": {
-        "defaultMessage": "Удалить"
-    },
+  "action.delete": {
+    "defaultMessage": "Удалить"
+  },
+  "action.reset": {
+    "defaultMessage": "Сбросить"
+  },
     "appbar.back-to-map-list": {
         "defaultMessage": "Назад к списку карт"
     },
@@ -382,5 +385,77 @@
     },
     "common.close": {
         "defaultMessage": "Закрыть"
+    },
+    "canvas-style.apply": {
+        "defaultMessage": "Применить"
+    },
+    "canvas-style.background-color": {
+        "defaultMessage": "Цвет фона"
+    },
+    "canvas-style.background-pattern": {
+        "defaultMessage": "Узор фона"
+    },
+    "canvas-style.colors": {
+        "defaultMessage": "Цвета"
+    },
+    "canvas-style.grid-color": {
+        "defaultMessage": "Цвет сетки"
+    },
+    "canvas-style.grid-size-l": {
+        "defaultMessage": "L"
+    },
+    "canvas-style.grid-size-m": {
+        "defaultMessage": "M"
+    },
+    "canvas-style.grid-size-s": {
+        "defaultMessage": "S"
+    },
+    "canvas-style.grid-size-xl": {
+        "defaultMessage": "XL"
+    },
+    "canvas-style.grid-size-xs": {
+        "defaultMessage": "XS"
+    },
+    "canvas-style.grid-style": {
+        "defaultMessage": "Стиль сетки"
+    },
+    "canvas-style.pattern-dots": {
+        "defaultMessage": "Точки"
+    },
+    "canvas-style.pattern-grid": {
+        "defaultMessage": "Линии сетки"
+    },
+    "canvas-style.pattern-none": {
+        "defaultMessage": "Нет"
+    },
+    "canvas-style.pattern-solid": {
+        "defaultMessage": "Сплошной цвет"
+    },
+    "canvas-style.preview": {
+        "defaultMessage": "Предварительный просмотр"
+    },
+    "canvas-style.reset": {
+        "defaultMessage": "Сбросить"
+    },
+    "canvas-style.title": {
+        "defaultMessage": "Фон"
+    },
+    "editor-panel.canvas-style-title": {
+        "defaultMessage": "Фон"
+    },
+    "editor-panel.font-family-default": {
+        "defaultMessage": "По умолчанию"
+    },
+    "editor-panel.font-family-mixed": {
+        "defaultMessage": "Смешанный"
+    },
+    "editor-panel.tooltip-canvas-style": {
+        "defaultMessage": "Фон"
+    },
+    "zoom-panel.tooltip-collapse-all": {
+        "defaultMessage": "Свернуть все узлы"
+    },
+    "zoom-panel.tooltip-expand-all": {
+        "defaultMessage": "Развернуть все узлы"
     }
 }

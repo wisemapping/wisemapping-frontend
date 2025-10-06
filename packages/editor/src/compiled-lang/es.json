@@ -107,6 +107,36 @@
       "value": "Deshacer"
     }
   ],
+  "canvas-style.apply": [
+    {
+      "type": 0,
+      "value": "Aplicar"
+    }
+  ],
+  "canvas-style.background-color": [
+    {
+      "type": 0,
+      "value": "Color de fondo"
+    }
+  ],
+  "canvas-style.background-pattern": [
+    {
+      "type": 0,
+      "value": "Patrón de fondo"
+    }
+  ],
+  "canvas-style.colors": [
+    {
+      "type": 0,
+      "value": "Colores"
+    }
+  ],
+  "canvas-style.grid-color": [
+    {
+      "type": 0,
+      "value": "Color de cuadrícula"
+    }
+  ],
   "canvas-style.grid-size-l": [
     {
       "type": 0,
@@ -137,10 +167,76 @@
       "value": "XS"
     }
   ],
+  "canvas-style.grid-style": [
+    {
+      "type": 0,
+      "value": "Estilo de cuadrícula"
+    }
+  ],
+  "canvas-style.pattern-dots": [
+    {
+      "type": 0,
+      "value": "Puntos"
+    }
+  ],
+  "canvas-style.pattern-grid": [
+    {
+      "type": 0,
+      "value": "Líneas de cuadrícula"
+    }
+  ],
+  "canvas-style.pattern-none": [
+    {
+      "type": 0,
+      "value": "Ninguno"
+    }
+  ],
+  "canvas-style.pattern-solid": [
+    {
+      "type": 0,
+      "value": "Color sólido"
+    }
+  ],
+  "canvas-style.preview": [
+    {
+      "type": 0,
+      "value": "Vista previa"
+    }
+  ],
+  "canvas-style.reset": [
+    {
+      "type": 0,
+      "value": "Restablecer"
+    }
+  ],
+  "canvas-style.title": [
+    {
+      "type": 0,
+      "value": "Fondo"
+    }
+  ],
   "common.close": [
     {
       "type": 0,
       "value": "Cerrar"
+    }
+  ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Creador"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Descripción"
+    }
+  ],
+  "editor-panel.canvas-style-title": [
+    {
+      "type": 0,
+      "value": "Fondo"
     }
   ],
   "editor-panel.font-family-default": [
@@ -207,6 +303,12 @@
     {
       "type": 0,
       "value": "Agregar tópico"
+    }
+  ],
+  "editor-panel.tooltip-canvas-style": [
+    {
+      "type": 0,
+      "value": "Fondo"
     }
   ],
   "editor-panel.tooltip-connection-color": [
@@ -663,6 +765,18 @@
     {
       "type": 0,
       "value": "Cambiar Tema"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Contraer todos los nodos"
+    }
+  ],
+  "zoom-panel.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Expandir todos los nodos"
     }
   ],
   "zoom-panel.tooltip-keyboard": [
