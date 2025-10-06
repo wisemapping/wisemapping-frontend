@@ -146,7 +146,7 @@ class DefaultTheme implements Theme {
   }
 
   getInnerPadding(topic: Topic): number {
-    return topic.getOrBuildTextShape().getFontHeight() * 0.5;
+    return topic.getOrBuildTextShape().getFontHeight() * 0.8;
   }
 
   getText(topic: Topic): string {

@@ -63,6 +63,7 @@ import ColorPicker from '../action-widget/pane/color-picker';
 import TopicLinkEditor from '../action-widget/pane/topic-link-editor';
 import RichTextNoteEditor from '../action-widget/pane/rich-text-note-editor';
 import IconPicker from '../action-widget/pane/icon-picker';
+import TopicImagePicker from '../action-widget/pane/topic-image-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
@@ -512,7 +513,9 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        render: () => <FontFamilySelector fontFamilyModel={modelBuilder.getFontFamilyModel()} />,
+        render: () => (
+          <FontFamilySelector fontFamilyModel={modelBuilder.getFontFamilyModel()} model={model} />
+        ),
       },
       null,
       {
@@ -676,8 +679,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         render: (closeModal) => (
           <CanvasStyleEditor
             closeModal={closeModal}
-            initialStyle={model.getDesigner().getMindmap()?.getCanvasStyle()}
-            onStyleChange={(style: CanvasStyle) => {
+            initialStyle={
+              model.getDesigner().getMindmap()?.getCanvasStyle() as Partial<CanvasStyle>
+            }
+            onStyleChange={(style: Partial<CanvasStyle>) => {
               model.getDesigner().setCanvasStyle(style);
             }}
           />
@@ -722,32 +727,19 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     onClick: () => {
       trackTopicStyleAction('emoji_picker_open');
-      // This will be handled by the emoji picker modal
+      // This will be handled by the topic image picker modal
     },
-    selected: () => modelBuilder.getImageEmojiCharModel().getValue() !== undefined,
+    selected: () =>
+      modelBuilder.getImageEmojiCharModel().getValue() !== undefined ||
+      modelBuilder.getImageGalleryIconNameModel().getValue() !== undefined,
     options: [
       {
         render: (closeModal) => {
           return (
-            <EmojiPicker
-              onEmojiClick={(emoji: EmojiClickData) => {
-                console.log('Emoji picker selection:', emoji.emoji);
-
-                // Set the image emoji character
-                const setImageEmojiValue = modelBuilder.getImageEmojiCharModel().setValue;
-                if (setImageEmojiValue) {
-                  console.log('Setting image emoji character to:', emoji.emoji);
-                  setImageEmojiValue(emoji.emoji);
-                }
-
-                closeModal();
-              }}
-              lazyLoadEmojis={true}
-              autoFocusSearch={true}
-              previewConfig={{ showPreview: false }}
-              emojiStyle={EmojiStyle.NATIVE}
-              skinTonesDisabled
-              theme={Theme.AUTO}
+            <TopicImagePicker
+              triggerClose={closeModal}
+              emojiModel={modelBuilder.getImageEmojiCharModel()}
+              iconsGalleryModel={modelBuilder.getImageGalleryIconNameModel()}
             />
           );
         },
@@ -775,6 +767,38 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
         }),
         render: (closeModal) => (
           <IconPicker triggerClose={closeModal} iconModel={modelBuilder.getTopicIconModel()} />
+        ),
+      },
+    ],
+    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
+  };
+
+  /**
+   * tool for topic image selection
+   */
+  const editTopicImageConfiguration: ActionConfig = {
+    icon: <ImageOutlinedIcon />,
+    tooltip: intl.formatMessage({
+      id: 'editor-panel.tooltip-add-topic-image',
+      defaultMessage: 'Add Topic Image',
+    }),
+    useClickToClose: true,
+    title: intl.formatMessage({
+      id: 'editor-panel.topic-image-title',
+      defaultMessage: 'Topic Image',
+    }),
+    options: [
+      {
+        tooltip: intl.formatMessage({
+          id: 'editor-panel.tooltip-add-topic-image',
+          defaultMessage: 'Add Topic Image',
+        }),
+        render: (closeModal) => (
+          <TopicImagePicker
+            triggerClose={closeModal}
+            emojiModel={modelBuilder.getImageEmojiCharModel()}
+            iconsGalleryModel={modelBuilder.getImageGalleryIconNameModel()}
+          />
         ),
       },
     ],

@@ -231,6 +231,11 @@ class EditorComponent extends EventDispatcher<EditorEventType> {
     }
     if (!fontStyle.weight) {
       fontStyle.weight = 'normal';
+    } else {
+      // Keep semantic weights; rendering layer will map if needed
+      if (fontStyle.weight !== 'normal' && fontStyle.weight !== 'bold') {
+        fontStyle.weight = fontStyle.weight;
+      }
     }
 
     const cssStyle = {

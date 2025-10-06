@@ -19,7 +19,7 @@ import React, { ReactElement, useEffect } from 'react';
 import NodeProperty from '../../../../classes/model/node-property';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
-import IconImageTab from './image-icon-tab';
+import TopicImageTab from '../topic-image-picker/image-icon-tab';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -32,12 +32,6 @@ type IconPickerProp = {
 };
 
 const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
-  const [checked, setChecked] = React.useState(true);
-
-  const handleCheck = () => {
-    setChecked(!checked);
-  };
-
   // Review ...
   useEffect(() => {
     DesignerKeyboard.pause();
@@ -46,35 +40,9 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
     };
   }, []);
 
-  const handleEmojiSelect = (emoji: EmojiClickData) => {
-    const emojiChar = emoji.emoji;
-    const setValue = iconModel.setValue;
-    if (setValue) {
-      setValue(`emoji:${emojiChar}`);
-    }
-    triggerClose();
-  };
-
   return (
     <Box style={{ padding: '5px' }}>
-      {checked && (
-        <EmojiPicker
-          onEmojiClick={handleEmojiSelect}
-          lazyLoadEmojis={true}
-          autoFocusSearch={true}
-          previewConfig={{ showPreview: false }}
-          emojiStyle={EmojiStyle.NATIVE}
-          skinTonesDisabled
-          theme={Theme.AUTO}
-        />
-      )}
-      {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}
-      <FormGroup sx={{ float: 'right' }}>
-        <FormControlLabel
-          label={<FormattedMessage id="icon-picker.show-images" defaultMessage="Show images" />}
-          control={<Switch onChange={handleCheck} />}
-        />
-      </FormGroup>
+      <TopicImageTab iconModel={iconModel} emojiModel={null} triggerClose={triggerClose} />
     </Box>
   );
 };

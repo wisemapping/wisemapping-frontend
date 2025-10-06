@@ -14,6 +14,8 @@
   ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','zh-CN','ru','ja','pt','it','hi'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
@@ -44,15 +46,23 @@
   },
   "devDependencies": {
     "@formatjs/cli": "^6.7.2",
+    "@mdx-js/react": "^3.1.1",
+    "@storybook/addon-docs": "^9.1.8",
+    "@storybook/addon-links": "^9.1.8",
+    "@storybook/builder-webpack5": "^9.1.8",
+    "@storybook/react-webpack5": "^9.1.8",
     "@testing-library/react": "^16.3.0",
     "@types/cypress-image-snapshot": "^3.1.9",
     "babel-polyfill": "^6.26.0",
     "cypress": "^15.2.0",
     "cypress-image-snapshot": "^4.0.1",
     "eslint": "^9.36.0",
+    "eslint-plugin-storybook": "9.1.8",
     "jest-transform-stub": "^2.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "start-server-and-test": "^2.1.2"
+    "start-server-and-test": "^2.1.2",
+    "storybook": "^9.1.8",
+    "vite": "^7.1.7"
   }
 }

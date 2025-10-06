@@ -15,7 +15,7 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,17 +23,43 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 
 import NodeProperty from '../../../../classes/model/node-property';
+import Model from '../../../../classes/model/editor';
 
 /**
  * Font family selector for editor toolbar
  */
 const FontFamilySelect = (props: {
   fontFamilyModel: NodeProperty<string | undefined>;
+  model: Model | undefined;
 }): ReactElement => {
-  const [font, setFont] = React.useState(props.fontFamilyModel.getValue());
+  const [currentFont, setCurrentFont] = useState<string | undefined>(
+    props.fontFamilyModel.getValue(),
+  );
+
+  useEffect(() => {
+    if (props.model?.isMapLoadded()) {
+      const handleUpdate = () => {
+        const newFont = props.fontFamilyModel.getValue();
+        setCurrentFont(newFont);
+      };
+
+      if (props.model.getDesigner()) {
+        props.model.getDesigner().addEvent('modelUpdate', handleUpdate);
+        props.model.getDesigner().addEvent('onfocus', handleUpdate);
+        props.model.getDesigner().addEvent('onblur', handleUpdate);
+      }
+
+      return () => {
+        if (props.model?.getDesigner()) {
+          props.model.getDesigner().removeEvent('modelUpdate', handleUpdate);
+          props.model.getDesigner().removeEvent('onfocus', handleUpdate);
+          props.model.getDesigner().removeEvent('onblur', handleUpdate);
+        }
+      };
+    }
+  }, [props.model?.isMapLoadded()]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setFont(event.target.value as string);
     const setValue = props.fontFamilyModel.setValue;
     if (setValue) {
       setValue(event.target.value);
@@ -43,7 +69,7 @@ const FontFamilySelect = (props: {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl variant="standard" sx={{ m: 1 }} size="small">
-        <Select id="demo-simple-select" value={font || ''} onChange={handleChange}>
+        <Select id="demo-simple-select" value={currentFont || ''} onChange={handleChange}>
           {[
             'Arial',
             'Baskerville',
@@ -54,6 +80,7 @@ const FontFamilySelect = (props: {
             'Times',
             'Cursive',
             'Fantasy',
+            'Inter',
             'Perpetua',
             'Brush Script',
             'Copperplate',

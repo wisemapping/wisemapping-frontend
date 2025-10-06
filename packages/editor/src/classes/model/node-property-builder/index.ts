@@ -51,6 +51,8 @@ class NodePropertyBuilder {
   private noteModel: NodeProperty<string | undefined> | undefined;
   private linkModel: NodeProperty<string> | undefined;
   private imageEmojiCharModel: NodeProperty<string | undefined> | undefined;
+
+  private imageGalleryIconNameModel: NodeProperty<string | undefined> | undefined;
   private _themeModel: NodeProperty<ThemeType> | undefined;
 
   constructor(designer: Designer) {
@@ -157,6 +159,15 @@ class NodePropertyBuilder {
         setValue: (value: string | undefined) => this.designer.changeImageEmojiChar(value),
       };
     return this.imageEmojiCharModel;
+  }
+
+  getImageGalleryIconNameModel(): NodeProperty<string | undefined> {
+    if (!this.imageGalleryIconNameModel)
+      this.imageGalleryIconNameModel = {
+        getValue: () => this.uniqueOrUndefined((node) => node.getImageGalleryIconName()),
+        setValue: (value: string | undefined) => this.designer.changeImageGalleryIconName(value),
+      };
+    return this.imageGalleryIconNameModel;
   }
 
   getThemeModel(): NodeProperty<ThemeType> {

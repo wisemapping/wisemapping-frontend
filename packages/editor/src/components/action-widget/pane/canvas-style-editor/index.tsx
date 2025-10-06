@@ -36,8 +36,8 @@ export interface CanvasStyle {
 
 type CanvasStyleEditorProps = {
   closeModal: () => void;
-  initialStyle?: CanvasStyle;
-  onStyleChange: (style: CanvasStyle) => void;
+  initialStyle?: Partial<CanvasStyle>;
+  onStyleChange: (style: Partial<CanvasStyle>) => void;
 };
 
 const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
@@ -49,8 +49,11 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
     gridColor: '#ebe9e7',
   };
 
-  // Use initialStyle if provided, otherwise fall back to default
-  const [style, setStyle] = useState<CanvasStyle>(props.initialStyle || defaultStyle);
+  // Use initialStyle if provided (merge), otherwise fall back to default
+  const [style, setStyle] = useState<CanvasStyle>({
+    ...defaultStyle,
+    ...(props.initialStyle || {}),
+  });
   const [showBackgroundColorPicker, setShowBackgroundColorPicker] = useState(false);
   const [showGridColorPicker, setShowGridColorPicker] = useState(false);
 

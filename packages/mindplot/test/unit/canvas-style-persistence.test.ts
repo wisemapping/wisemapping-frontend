@@ -222,7 +222,7 @@ describe('Canvas Style Persistence Tests', () => {
       mindmap = new Mindmap('test-map');
     });
 
-    test('should serialize canvas style to XML correctly', () => {
+    test('should serialize overridden canvas attributes to XML correctly', () => {
       const canvasStyle = {
         backgroundColor: '#f2f2f2',
         backgroundPattern: 'grid' as const,
@@ -235,10 +235,17 @@ describe('Canvas Style Persistence Tests', () => {
       const xmlDoc = serializer.toXML(mindmap);
       const mapElement = xmlDoc.documentElement;
 
-      expect(mapElement.hasAttribute('canvasStyle')).toBe(true);
+      // Only gridSize differs from theme defaults (20), so only it must be persisted
+      expect(mapElement.hasAttribute('gridSize')).toBe(true);
+      expect(mapElement.getAttribute('gridSize')).toBe('50');
 
-      const serializedStyle = JSON.parse(mapElement.getAttribute('canvasStyle')!);
-      expect(serializedStyle).toEqual(canvasStyle);
+      // Defaults should not be duplicated as attributes
+      expect(mapElement.hasAttribute('backgroundColor')).toBe(false);
+      expect(mapElement.hasAttribute('backgroundPattern')).toBe(false);
+      expect(mapElement.hasAttribute('gridColor')).toBe(false);
+
+      // No legacy JSON stored
+      expect(mapElement.hasAttribute('canvasStyle')).toBe(false);
     });
 
     test('should not serialize canvas style when undefined', () => {
@@ -247,9 +254,13 @@ describe('Canvas Style Persistence Tests', () => {
       const mapElement = xmlDoc.documentElement;
 
       expect(mapElement.hasAttribute('canvasStyle')).toBe(false);
+      expect(mapElement.hasAttribute('backgroundColor')).toBe(false);
+      expect(mapElement.hasAttribute('backgroundPattern')).toBe(false);
+      expect(mapElement.hasAttribute('gridSize')).toBe(false);
+      expect(mapElement.hasAttribute('gridColor')).toBe(false);
     });
 
-    test('should deserialize canvas style from XML correctly', () => {
+    test('should deserialize canvas style from decomposed attributes correctly', () => {
       const canvasStyle = {
         backgroundColor: '#ffffff',
         backgroundPattern: 'dots' as const,
@@ -257,11 +268,14 @@ describe('Canvas Style Persistence Tests', () => {
         gridColor: '#cccccc',
       };
 
-      // Create XML with canvas style
+      // Create XML with canvas style attributes
       const xmlDoc = document.implementation.createDocument('', '');
       const mapElement = xmlDoc.createElement('map');
       mapElement.setAttribute('name', 'test-map');
-      mapElement.setAttribute('canvasStyle', JSON.stringify(canvasStyle));
+      mapElement.setAttribute('backgroundColor', canvasStyle.backgroundColor);
+      mapElement.setAttribute('backgroundPattern', canvasStyle.backgroundPattern);
+      mapElement.setAttribute('gridSize', String(canvasStyle.gridSize));
+      mapElement.setAttribute('gridColor', canvasStyle.gridColor);
       xmlDoc.appendChild(mapElement);
 
       const loadedMindmap = serializer.loadFromDom(xmlDoc, 'test-map');
@@ -269,24 +283,7 @@ describe('Canvas Style Persistence Tests', () => {
       expect(loadedMindmap.getCanvasStyle()).toEqual(canvasStyle);
     });
 
-    test('should handle malformed canvas style gracefully', () => {
-      // Create XML with malformed canvas style
-      const xmlDoc = document.implementation.createDocument('', '');
-      const mapElement = xmlDoc.createElement('map');
-      mapElement.setAttribute('name', 'test-map');
-      mapElement.setAttribute('canvasStyle', 'invalid-json');
-      xmlDoc.appendChild(mapElement);
-
-      // Mock console.warn to verify error handling
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
-      const loadedMindmap = serializer.loadFromDom(xmlDoc, 'test-map');
-
-      expect(loadedMindmap.getCanvasStyle()).toBeUndefined();
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to parse canvas style:', expect.any(Error));
-
-      consoleSpy.mockRestore();
-    });
+    // Removed legacy malformed JSON test since backward compatibility was dropped
 
     test('should handle missing canvas style attribute gracefully', () => {
       // Create XML without canvas style attribute

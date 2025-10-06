@@ -38,10 +38,10 @@ class Mindmap extends IMindmap {
 
   private _canvasStyle:
     | {
-        backgroundColor: string;
-        backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-        gridSize: number;
-        gridColor: string;
+        backgroundColor?: string;
+        backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+        gridSize?: number;
+        gridColor?: string;
       }
     | undefined;
 
@@ -65,10 +65,10 @@ class Mindmap extends IMindmap {
 
   getCanvasStyle():
     | {
-        backgroundColor: string;
-        backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-        gridSize: number;
-        gridColor: string;
+        backgroundColor?: string;
+        backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+        gridSize?: number;
+        gridColor?: string;
       }
     | undefined {
     return this._canvasStyle;
@@ -77,10 +77,10 @@ class Mindmap extends IMindmap {
   setCanvasStyle(
     value:
       | {
-          backgroundColor: string;
-          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize: number;
-          gridColor: string;
+          backgroundColor?: string;
+          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize?: number;
+          gridColor?: string;
         }
       | undefined,
   ): void {

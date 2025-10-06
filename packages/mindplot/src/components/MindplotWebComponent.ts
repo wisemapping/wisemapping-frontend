@@ -43,9 +43,44 @@ class MindplotWebComponent extends HTMLElement {
 
   private _isLoaded: boolean;
 
+  private loadMaterialIconsFont(): void {
+    // Check if Material Icons font is already loaded
+    if (document.querySelector('link[href*="Material+Icons"]')) {
+      return;
+    }
+
+    // Load Material Icons font
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+
+    console.log('Material Icons font loaded');
+  }
+
+  private loadInterFont(): void {
+    // Check if Inter font is already loaded
+    if (document.querySelector('link[href*="Inter"]')) {
+      return;
+    }
+
+    // Load Inter font
+    const link = document.createElement('link');
+    link.href =
+      'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+
+    console.log('Inter font loaded');
+  }
+
   constructor() {
     super();
     this._shadowRoot = this.attachShadow({ mode: 'open' });
+
+    // Load fonts
+    this.loadMaterialIconsFont();
+    this.loadInterFont();
 
     const mindplotStylesElement = document.createElement('style');
     mindplotStylesElement.innerHTML = mindplotStyles;
@@ -108,6 +143,9 @@ class MindplotWebComponent extends HTMLElement {
     const editorRenderMode = this.getAttribute('mode') as EditorRenderMode;
     const locale = this.getAttribute('locale');
     const zoom = this.getAttribute('zoom');
+
+    // Clear theme cache to ensure updated configurations are loaded
+    ThemeFactory.clearCache();
 
     const persistenceManager =
       persistence || new LocalStorageManager('map.xml', false, undefined, false);

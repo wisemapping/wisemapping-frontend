@@ -19,10 +19,10 @@ import Command from '../Command';
 import CommandContext from '../CommandContext';
 
 export type CanvasStyle = {
-  backgroundColor: string;
-  backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-  gridSize: number;
-  gridColor: string;
+  backgroundColor?: string;
+  backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+  gridSize?: number;
+  gridColor?: string;
 };
 
 class ChangeCanvasStyleCommand extends Command {

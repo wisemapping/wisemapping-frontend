@@ -882,10 +882,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   setCanvasStyle(
     style:
       | {
-          backgroundColor: string;
-          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize: number;
-          gridColor: string;
+          backgroundColor?: string;
+          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize?: number;
+          gridColor?: string;
         }
       | undefined,
   ): void {
@@ -900,10 +900,10 @@ class Designer extends EventDispispatcher<DesignerEventType> {
   applyCanvasStyle(
     style:
       | {
-          backgroundColor: string;
-          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize: number;
-          gridColor: string;
+          backgroundColor?: string;
+          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize?: number;
+          gridColor?: string;
         }
       | undefined,
   ): void {
@@ -920,6 +920,17 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       return;
     }
 
+    // Resolve missing values at render time using theme defaults
+    const themeId = mindmap.getTheme();
+    const theme = ThemeFactory.createById(themeId, this._themeVariant);
+    const defaultStyle = this._convertThemeToCanvasStyle(theme);
+    const resolved = {
+      backgroundColor: style.backgroundColor ?? defaultStyle.backgroundColor,
+      backgroundPattern: style.backgroundPattern ?? defaultStyle.backgroundPattern,
+      gridSize: style.gridSize ?? defaultStyle.gridSize,
+      gridColor: style.gridColor ?? defaultStyle.gridColor,
+    };
+
     let cssStyle = `position: relative;
       left: 0;
       width: 100%;
@@ -927,23 +938,23 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       border: 0;
       overflow: hidden;
       opacity: 1;
-      background-color: ${style.backgroundColor};
+      background-color: ${resolved.backgroundColor};
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;`;
 
-    switch (style.backgroundPattern) {
+    switch (resolved.backgroundPattern) {
       case 'grid':
         cssStyle += `
-          background-image: linear-gradient(${style.gridColor} 1px, transparent 1px),
-            linear-gradient(to right, ${style.gridColor} 1px, ${style.backgroundColor} 1px);
-          background-size: ${style.gridSize}px ${style.gridSize}px;`;
+          background-image: linear-gradient(${resolved.gridColor} 1px, transparent 1px),
+            linear-gradient(to right, ${resolved.gridColor} 1px, ${resolved.backgroundColor} 1px);
+          background-size: ${resolved.gridSize}px ${resolved.gridSize}px;`;
         break;
       case 'dots':
         cssStyle += `
-          background-image: radial-gradient(circle, ${style.gridColor} 1px, transparent 1px);
-          background-size: ${style.gridSize}px ${style.gridSize}px;`;
+          background-image: radial-gradient(circle, ${resolved.gridColor} 1px, transparent 1px);
+          background-size: ${resolved.gridSize}px ${resolved.gridSize}px;`;
         break;
       case 'solid':
       case 'none':
@@ -1187,6 +1198,24 @@ class Designer extends EventDispispatcher<DesignerEventType> {
       this._actionDispatcher.changeImageEmojiCharToTopic(topicsIds, imageEmojiChar);
     } else {
       console.log('No topics selected for image emoji change');
+    }
+  }
+
+  changeImageGalleryIconName(imageGalleryIconName: string | undefined): void {
+    console.log('Designer.changeImageGalleryIconName called with:', imageGalleryIconName);
+    const topicsIds = this.getModel()
+      .filterSelectedTopics()
+      .map((topic) => topic.getId());
+    console.log('Selected topic IDs for image gallery change:', topicsIds);
+    if (topicsIds.length > 0) {
+      console.log(
+        'Calling changeImageGalleryIconNameToTopic with:',
+        topicsIds,
+        imageGalleryIconName,
+      );
+      this._actionDispatcher.changeImageGalleryIconNameToTopic(topicsIds, imageGalleryIconName);
+    } else {
+      console.log('No topics selected for image gallery change');
     }
   }
 

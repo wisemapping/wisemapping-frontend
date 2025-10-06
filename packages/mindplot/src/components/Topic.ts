@@ -24,6 +24,7 @@ import TopicFeatureFactory from './TopicFeature';
 import ConnectionLine, { LineType } from './ConnectionLine';
 import IconGroup from './IconGroup';
 import ImageEmojiFeature from './ImageEmojiFeature';
+import ImageSVGFeature from './ImageSVGFeature';
 import LayoutEventBus from './layout/LayoutEventBus';
 import ShirinkConnector from './ShrinkConnector';
 import ActionDispatcher from './ActionDispatcher';
@@ -67,6 +68,8 @@ abstract class Topic extends NodeGraph {
 
   private _imageEmojiFeature: ImageEmojiFeature;
 
+  private _imageSVGFeature: ImageSVGFeature;
+
   private _iconsGroup!: IconGroup;
 
   private _connector!: ShirinkConnector;
@@ -84,6 +87,8 @@ abstract class Topic extends NodeGraph {
     this._innerShape = null;
     this._themeVariant = themeVariant;
     this._imageEmojiFeature = new ImageEmojiFeature(this);
+
+    this._imageSVGFeature = new ImageSVGFeature(this);
     this.buildTopicShape();
 
     // Position a topic ....
@@ -246,6 +251,10 @@ abstract class Topic extends NodeGraph {
 
   getOrBuildImageEmojiTextShape(): Text | undefined {
     return this._imageEmojiFeature.getOrBuildEmojiTextShape();
+  }
+
+  getOrBuildImageSVGElement(): Text | undefined {
+    return this._imageSVGFeature.getOrBuildSVGElement();
   }
 
   getOrBuildIconGroup(): IconGroup {
@@ -422,7 +431,27 @@ abstract class Topic extends NodeGraph {
   }
 
   setImageEmojiChar(imageEmojiChar: string | undefined): void {
+    // Set emoji on topic
     this._imageEmojiFeature.setEmojiChar(imageEmojiChar);
+
+    // Enforce mutual exclusivity: if emoji is set, clear gallery icon
+    if (imageEmojiChar) {
+      this._imageSVGFeature.setGalleryIconName(undefined);
+    }
+  }
+
+  getImageGalleryIconName(): string | undefined {
+    return this._imageSVGFeature.getGalleryIconName();
+  }
+
+  setImageGalleryIconName(imageGalleryIconName: string | undefined): void {
+    // Set gallery icon on topic
+    this._imageSVGFeature.setGalleryIconName(imageGalleryIconName);
+
+    // Enforce mutual exclusivity: if gallery icon is set, clear emoji
+    if (imageGalleryIconName) {
+      this._imageEmojiFeature.setEmojiChar(undefined);
+    }
   }
 
   setFontColor(value: string | undefined) {
@@ -1139,7 +1168,9 @@ abstract class Topic extends NodeGraph {
       textShape.setFontSize(fontSize);
 
       const fontWeight = this.getFontWeight();
-      textShape.setWeight(fontWeight);
+      // Map theme weight '600' to a concrete weight for rendering
+      const web2dWeight = fontWeight === '600' ? 'bold' : fontWeight;
+      textShape.setWeight(web2dWeight as any);
 
       const fontStyle = this.getFontStyle();
       textShape.setStyle(fontStyle);
@@ -1180,15 +1211,24 @@ abstract class Topic extends NodeGraph {
       iconGroupWith = iconGroup.getSize().width;
       topicWith = iconGroupWith + 2 * textIconSpacing + textWidth + padding * 2;
 
-      // Handle emoji feature - emoji appears on top of any shape
+      // Handle emoji and SVG features - both appear on top of any shape
       const hasEmoji = this._imageEmojiFeature.hasEmoji();
+      const hasSVG = this._imageSVGFeature.hasSVG();
       let emojiHeight = 0;
+      let svgHeight = 0;
 
       // Ensure emoji text is added to the group if it exists
       if (hasEmoji) {
         const group = this.get2DElement();
         // Add emoji text to group (append is safe to call multiple times)
         this._imageEmojiFeature.addToGroup(group);
+      }
+
+      // Ensure SVG element is added to the group if it exists
+      if (hasSVG) {
+        const group = this.get2DElement();
+        // Add SVG element to group (append is safe to call multiple times)
+        this._imageSVGFeature.addToGroup(group);
       }
 
       if (hasEmoji) {
@@ -1205,6 +1245,20 @@ abstract class Topic extends NodeGraph {
         );
         topicWith = sizeAdjustments.width;
         topicHeight = sizeAdjustments.height;
+      } else if (hasSVG) {
+        // Calculate SVG dimensions and adjust topic size
+        const svgDimensions = this._imageSVGFeature.calculateSVGDimensions();
+        svgHeight = svgDimensions.height;
+
+        // Adjust topic size to accommodate SVG
+        const sizeAdjustments = this._imageSVGFeature.calculateTopicSizeAdjustments(
+          topicWith,
+          topicHeight,
+          textHeight,
+          padding,
+        );
+        topicWith = sizeAdjustments.width;
+        topicHeight = sizeAdjustments.height;
       }
 
       // Update connections ...
@@ -1213,13 +1267,30 @@ abstract class Topic extends NodeGraph {
 
       // Adjust all topic elements positions ...
 
-      // Position elements based on whether emoji is present
-      const positioning = this._imageEmojiFeature.positionEmojiAndAdjustText(
-        topicWith,
-        emojiHeight,
-        textHeight,
-        padding,
-      );
+      // Position elements based on whether emoji or SVG is present
+      let positioning;
+      if (hasEmoji) {
+        positioning = this._imageEmojiFeature.positionEmojiAndAdjustText(
+          topicWith,
+          emojiHeight,
+          textHeight,
+          padding,
+        );
+      } else if (hasSVG) {
+        positioning = this._imageSVGFeature.positionSVGAndAdjustText(
+          topicWith,
+          svgHeight,
+          textHeight,
+          padding,
+        );
+      } else {
+        // Default positioning for shapes without emoji or SVG
+        const yPosition = (topicHeight - textHeight) / 2;
+        positioning = {
+          textY: yPosition,
+          iconY: yPosition - yPosition / 4,
+        };
+      }
 
       if (hasEmoji) {
         // Setup delete widget for emoji
@@ -1233,8 +1304,19 @@ abstract class Topic extends NodeGraph {
         this._imageEmojiFeature.setVisibility(true);
         const isThisTopicBeingEdited = this._getTopicEventDispatcher().isEditingTopic(this);
         textShape.setVisibility(!isThisTopicBeingEdited);
+      } else if (hasSVG) {
+        // Setup delete widget for SVG
+        this._imageSVGFeature.buildRemoveTip();
+
+        // Position text and icons
+        textShape.setPosition(padding + iconGroupWith + textIconSpacing, positioning.textY);
+        iconGroup.setPosition(padding, positioning.iconY);
+
+        // Show SVG, but only show text if this specific topic is not being edited
+        const isThisTopicBeingEdited = this._getTopicEventDispatcher().isEditingTopic(this);
+        textShape.setVisibility(!isThisTopicBeingEdited);
       } else {
-        // Default positioning for shapes without emoji
+        // Default positioning for shapes without emoji or SVG
         // Only show text if this specific topic is not being edited
         const isThisTopicBeingEdited = this._getTopicEventDispatcher().isEditingTopic(this);
         textShape.setVisibility(!isThisTopicBeingEdited);

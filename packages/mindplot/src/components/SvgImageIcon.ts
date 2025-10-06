@@ -23,6 +23,7 @@ import ActionDispatcher from './ActionDispatcher';
 import iconFamily from './model/SvgIconFamily.json';
 import Topic from './Topic';
 import SvgIconModel from './model/SvgIconModel';
+import { mapIconNameToAsset } from './IconMapping';
 
 // Create icon URL mapping using webpack's require.context
 // This works consistently in both development and production since webpack
@@ -97,7 +98,9 @@ class SvgImageIcon extends ImageIcon {
   }
 
   static getImageUrl(iconId: string) {
-    return originalGetImageUrl(iconId);
+    // Map descriptive icon name to asset file name
+    const assetName = mapIconNameToAsset(iconId.toLowerCase());
+    return originalGetImageUrl(assetName);
   }
 
   getModel() {

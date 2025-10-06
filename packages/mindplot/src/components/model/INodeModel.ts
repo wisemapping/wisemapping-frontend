@@ -277,6 +277,14 @@ abstract class INodeModel {
     return this.getProperty('imageEmojiChar') as string | undefined;
   }
 
+  setImageGalleryIconName(imageGalleryIconName: string | undefined) {
+    this.putProperty('imageGalleryIconName', imageGalleryIconName);
+  }
+
+  getImageGalleryIconName(): string | undefined {
+    return this.getProperty('imageGalleryIconName') as string | undefined;
+  }
+
   isNodeModel(): boolean {
     return true;
   }

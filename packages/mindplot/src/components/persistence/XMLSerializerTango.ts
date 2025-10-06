@@ -57,10 +57,21 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       mapElem.setAttribute('theme', theme);
     }
 
-    // Add canvas style ...
+    // Add canvas style ... only persist when provided (non-null/undefined)
     const canvasStyle = mindmap.getCanvasStyle();
     if (canvasStyle) {
-      mapElem.setAttribute('canvasStyle', JSON.stringify(canvasStyle));
+      if (canvasStyle.backgroundColor != null) {
+        mapElem.setAttribute('backgroundColor', canvasStyle.backgroundColor);
+      }
+      if (canvasStyle.backgroundPattern != null) {
+        mapElem.setAttribute('backgroundPattern', canvasStyle.backgroundPattern);
+      }
+      if (canvasStyle.gridSize != null) {
+        mapElem.setAttribute('gridSize', String(canvasStyle.gridSize));
+      }
+      if (canvasStyle.gridColor != null) {
+        mapElem.setAttribute('gridColor', canvasStyle.gridColor);
+      }
     }
 
     const version = mindmap.getVersion();
@@ -128,6 +139,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const imageEmojiChar = topic.getImageEmojiChar();
     if (imageEmojiChar) {
       parentTopic.setAttribute('imageEmoji', imageEmojiChar);
+    }
+
+    // Serialize image gallery icon as a separate attribute (feature)
+    const imageGalleryIconName = topic.getImageGalleryIconName();
+    if (imageGalleryIconName) {
+      parentTopic.setAttribute('imageGallery', imageGalleryIconName.toLowerCase());
     }
 
     if (
@@ -298,15 +315,50 @@ class XMLSerializerTango implements XMLMindmapSerializer {
       mindmap.setTheme('classic');
     }
 
-    // Load canvas style ...
-    const canvasStyleAttr = rootElem.getAttribute('canvasStyle');
-    if (canvasStyleAttr) {
-      try {
-        const canvasStyle = JSON.parse(canvasStyleAttr);
-        mindmap.setCanvasStyle(canvasStyle);
-      } catch (e) {
-        console.warn('Failed to parse canvas style:', e);
+    // Load canvas style ... only set if all attributes are present; do not resolve defaults here
+    const backgroundColor = rootElem.getAttribute('backgroundColor');
+    const backgroundPatternAttr = rootElem.getAttribute('backgroundPattern');
+    const gridSizeAttr = rootElem.getAttribute('gridSize');
+    const gridColor = rootElem.getAttribute('gridColor');
+
+    const hasAllAttrs =
+      backgroundColor != null &&
+      backgroundPatternAttr != null &&
+      gridSizeAttr != null &&
+      gridColor != null;
+
+    if (hasAllAttrs) {
+      const gridSize = Number.parseInt(gridSizeAttr!, 10);
+      if (Number.isFinite(gridSize)) {
+        mindmap.setCanvasStyle({
+          backgroundColor: backgroundColor!,
+          backgroundPattern: backgroundPatternAttr as 'solid' | 'grid' | 'dots' | 'none',
+          gridSize,
+          gridColor: gridColor!,
+        });
       }
+    } else if (
+      backgroundColor != null ||
+      backgroundPatternAttr != null ||
+      gridSizeAttr != null ||
+      gridColor != null
+    ) {
+      // Set only provided attributes; missing ones left undefined
+      const partial: {
+        backgroundColor?: string;
+        backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+        gridSize?: number;
+        gridColor?: string;
+      } = {};
+      if (backgroundColor != null) partial.backgroundColor = backgroundColor;
+      if (backgroundPatternAttr != null)
+        partial.backgroundPattern = backgroundPatternAttr as 'solid' | 'grid' | 'dots' | 'none';
+      if (gridSizeAttr != null) {
+        const parsed = Number.parseInt(gridSizeAttr, 10);
+        if (Number.isFinite(parsed)) partial.gridSize = parsed;
+      }
+      if (gridColor != null) partial.gridColor = gridColor;
+      mindmap.setCanvasStyle(partial);
     }
 
     // Add all the topics nodes ...
@@ -413,6 +465,12 @@ class XMLSerializerTango implements XMLMindmapSerializer {
     const imageEmoji = domElem.getAttribute('imageEmoji');
     if (imageEmoji) {
       topic.setImageEmojiChar(imageEmoji);
+    }
+
+    // Deserialize image gallery icon as a separate attribute (feature)
+    const imageGalleryIcon = domElem.getAttribute('imageGallery');
+    if (imageGalleryIcon) {
+      topic.setImageGalleryIconName(imageGalleryIcon.toLowerCase());
     }
 
     const bgColor = domElem.getAttribute('bgColor');

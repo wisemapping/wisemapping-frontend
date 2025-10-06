@@ -75,6 +75,11 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
     imageEmojiChar: string | undefined,
   ): void;
 
+  abstract changeImageGalleryIconNameToTopic(
+    topicsIds: number[],
+    imageGalleryIconName: string | undefined,
+  ): void;
+
   abstract changeBackgroundColorToTopic(topicsIds: number[], color: string): void;
 
   abstract changeBorderColorToTopic(topicsIds: number[], color: string): void;
@@ -84,10 +89,10 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
   abstract changeCanvasStyle(
     style:
       | {
-          backgroundColor: string;
-          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize: number;
-          gridColor: string;
+          backgroundColor?: string;
+          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize?: number;
+          gridColor?: string;
         }
       | undefined,
   ): void;

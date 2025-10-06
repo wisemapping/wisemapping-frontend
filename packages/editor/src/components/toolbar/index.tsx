@@ -154,7 +154,7 @@ export const ToolbarSubmenu = ({
                 paddingTop: '15px',
                 paddingLeft: '5px',
                 float: 'left',
-                fontWeight: 'bold',
+                fontWeight: '900',
                 fontSize: '20px',
               }}
             >

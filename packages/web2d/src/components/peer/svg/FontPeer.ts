@@ -72,6 +72,14 @@ class FontPeer {
   }
 
   getWeight(): string {
+    // Increase font weight by 50% for visualization only
+    // Normal: 400 -> 600 (400 * 1.5)
+    // Bold: 700 -> 1050 (700 * 1.5)
+    if (this._weight === 'normal') {
+      return '600';
+    } else if (this._weight === 'bold') {
+      return '900';
+    }
     return this._weight;
   }
 
@@ -84,7 +92,12 @@ class FontPeer {
   }
 
   setWeight(weight: string) {
-    this._weight = weight;
+    // Use semantic weights; map to browser-supported numeric if needed at render time
+    if (weight === 'normal' || weight === 'bold') {
+      this._weight = weight;
+    } else {
+      this._weight = weight;
+    }
   }
 
   getFontName(): string {

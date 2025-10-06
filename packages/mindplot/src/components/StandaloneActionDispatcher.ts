@@ -222,6 +222,18 @@ class StandaloneActionDispatcher extends ActionDispatcher {
     this.execute(command);
   }
 
+  changeImageGalleryIconNameToTopic(topicsIds: number[], imageGalleryIconName: string | undefined) {
+    const commandFunc = (topic: Topic, commandImageGalleryIconName: string | undefined) => {
+      const result = topic.getImageGalleryIconName();
+      topic.setImageGalleryIconName(commandImageGalleryIconName);
+
+      return result;
+    };
+
+    const command = new GenericFunctionCommand(commandFunc, topicsIds, imageGalleryIconName);
+    this.execute(command);
+  }
+
   changeShapeTypeToTopic(topicsIds: number[], shapeType: TopicShapeType) {
     const commandFunc = (topic: Topic, commandShapeType: TopicShapeType) => {
       const result = topic.getShapeType();
@@ -325,6 +337,7 @@ class StandaloneActionDispatcher extends ActionDispatcher {
 
     const commandFunc = (topic: Topic) => {
       const result = topic.getFontWeight();
+      // Toggle between normal and bold; rendering layer maps to numeric as needed
       const weight = result === 'bold' ? 'normal' : 'bold';
       topic.setFontWeight(weight);
       topic.redraw(topic.getThemeVariant(), false);
@@ -373,10 +386,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   changeCanvasStyle(
     style:
       | {
-          backgroundColor: string;
-          backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
-          gridSize: number;
-          gridColor: string;
+          backgroundColor?: string;
+          backgroundPattern?: 'solid' | 'grid' | 'dots' | 'none';
+          gridSize?: number;
+          gridColor?: string;
         }
       | undefined,
   ): void {

@@ -15,4 +15,15 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-export type FontWeightType = 'bold' | 'normal' | '600';
+import styled from 'styled-components';
+
+export const SvgIcon = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-left: 4px;
+  margin-top: 3px;
+  cursor: pointer;
+  &:hover {
+    background-color: #efefef;
+  }
+`;
