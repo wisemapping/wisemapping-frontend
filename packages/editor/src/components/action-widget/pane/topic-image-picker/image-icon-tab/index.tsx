@@ -9,6 +9,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import NodeProperty from '../../../../../classes/model/node-property';
 import {
   // Icons used in the component
   Home,
@@ -225,8 +226,8 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 interface ImageIconTabProps {
-  iconModel: any;
-  emojiModel: any;
+  iconModel: NodeProperty<string | undefined>;
+  emojiModel: NodeProperty<string | undefined>;
   triggerClose: () => void;
 }
 
@@ -235,7 +236,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   // Comprehensive icon mapping with proper categorization
-  const iconMapping: { component: any; name: string; category: string }[] = [
+  const iconMapping: { component: React.ComponentType; name: string; category: string }[] = [
     // Navigation & General
     { component: Home, name: 'home', category: 'Navigation' },
     { component: Work, name: 'work', category: 'Navigation' },
@@ -452,11 +453,11 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
 
   const handleIconSelect = (iconName: string) => {
     // Clear emoji if icon is selected
-    if (emojiModel) {
+    if (emojiModel && emojiModel.setValue) {
       emojiModel.setValue(undefined);
     }
     // Set the icon using the descriptive name (which will be saved to XML)
-    if (iconModel) {
+    if (iconModel && iconModel.setValue) {
       iconModel.setValue(iconName.toLowerCase());
     }
     // Close the picker
@@ -502,7 +503,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
   // Category icons mapping - dynamically generated to match actual categories
   const categoryIcons = useMemo(() => {
     const uniqueCategories = ['All', ...new Set(iconMapping.map((icon) => icon.category))];
-    const iconMap: { [key: string]: any } = {
+    const iconMap: { [key: string]: React.ComponentType } = {
       All: Apps,
       Navigation: Home,
       General: Star,
@@ -515,7 +516,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
     };
 
     // Only include categories that actually exist in iconMapping
-    const filteredMap: { [key: string]: any } = {};
+    const filteredMap: { [key: string]: React.ComponentType } = {};
     uniqueCategories.forEach((category) => {
       if (iconMap[category]) {
         filteredMap[category] = iconMap[category];
@@ -535,7 +536,9 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
     return uniqueCategories;
   }, []);
 
-  const renderIconGrid = (icons: any[]) => (
+  const renderIconGrid = (
+    icons: { component: React.ComponentType; name: string; category: string }[],
+  ) => (
     <Grid container sx={{ gap: 0.25, justifyContent: 'flex-start' }}>
       {icons.map((iconMapping, index) => {
         const IconComponent = iconMapping.component;
@@ -550,7 +553,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
                 onClick={() => handleIconSelect(iconName)}
                 size="small"
               >
-                <IconComponent sx={{ fontSize: 18 }} />
+                {(IconComponent as any)({ style: { fontSize: 18 } })}
               </StyledIconButton>
             </Tooltip>
           </Grid>
@@ -619,7 +622,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
                 flexShrink: 0,
               }}
             >
-              <CategoryIcon sx={{ fontSize: 20 }} />
+              {(CategoryIcon as any)({ style: { fontSize: 20 } })}
             </IconButton>
           );
         })}

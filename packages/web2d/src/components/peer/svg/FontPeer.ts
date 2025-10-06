@@ -77,7 +77,8 @@ class FontPeer {
     // Bold: 700 -> 1050 (700 * 1.5)
     if (this._weight === 'normal') {
       return '600';
-    } else if (this._weight === 'bold') {
+    }
+    if (this._weight === 'bold') {
       return '900';
     }
     return this._weight;

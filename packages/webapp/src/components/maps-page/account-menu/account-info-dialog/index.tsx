@@ -25,9 +25,6 @@ import BaseDialog from '../../action-dispatcher/base-dialog';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -149,7 +146,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     }
   };
 
-  const handleLanguageChange = (event: any) => {
+  const handleLanguageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const newLanguage = event.target.value as LocaleCode;
     setSelectedLanguage(newLanguage);
     mutationChangeLanguage.mutate(newLanguage);

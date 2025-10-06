@@ -61,7 +61,7 @@ class ImageSVGFeature {
       const group = this._topic.get2DElement();
       try {
         group.removeChild(this._svgText);
-      } catch (e) {
+      } catch {
         // Element might not be in the group, that's okay
       }
       this._svgText = undefined;
@@ -98,7 +98,7 @@ class ImageSVGFeature {
       // Ensure the element is not already in the group before adding
       try {
         group.removeChild(svgTextShape);
-      } catch (e) {
+      } catch {
         // Element might not be in the group, that's okay
       }
       group.append(svgTextShape);
@@ -152,9 +152,8 @@ class ImageSVGFeature {
         }
 
         return text;
-      } else {
-        console.warn(`No Unicode mapping found for icon: ${iconName}`);
       }
+      console.warn(`No Unicode mapping found for icon: ${iconName}`);
     } catch (error) {
       console.warn(`Failed to create Material UI icon for ${iconName}:`, error);
     }

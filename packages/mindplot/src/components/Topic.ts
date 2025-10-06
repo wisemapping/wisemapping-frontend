@@ -1170,7 +1170,7 @@ abstract class Topic extends NodeGraph {
       const fontWeight = this.getFontWeight();
       // Map theme weight '600' to a concrete weight for rendering
       const web2dWeight = fontWeight === '600' ? 'bold' : fontWeight;
-      textShape.setWeight(web2dWeight as any);
+      textShape.setWeight(web2dWeight as 'normal' | 'bold');
 
       const fontStyle = this.getFontStyle();
       textShape.setStyle(fontStyle);

@@ -69,7 +69,7 @@ const ExportDialog = ({
   );
 
   const [zoomToFit, setZoomToFit] = React.useState<boolean>(true);
-  const [exportTheme, setExportTheme] = React.useState<ThemeType>('prism');
+  const exportTheme: ThemeType = 'prism';
 
   const classes = useStyles();
 
@@ -106,10 +106,6 @@ const ExportDialog = ({
 
   const handleOnZoomToFit = (): void => {
     setZoomToFit(!zoomToFit);
-  };
-
-  const handleOnThemeChange = (event): void => {
-    setExportTheme(event.target.value);
   };
 
   const exporter = async (formatType: ExportFormat): Promise<string> => {

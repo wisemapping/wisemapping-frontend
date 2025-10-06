@@ -16,6 +16,7 @@
  *   limitations under the License.
  */
 
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import IconPicker from './index';
 import NodeProperty from '../../../../classes/model/node-property';
@@ -36,7 +37,7 @@ class SimpleNodeProperty<T> implements NodeProperty<T> {
 
 const meta: Meta = {
   title: 'Editor/IconPicker',
-  component: IconPicker as any,
+  component: IconPicker as React.ComponentType,
   parameters: { layout: 'centered' },
 };
 

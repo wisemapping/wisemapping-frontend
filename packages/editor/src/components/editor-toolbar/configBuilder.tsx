@@ -47,7 +47,6 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 
 import {
   BorderColorIcon,
@@ -838,6 +837,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     fontFormatToolbarConfiguration,
     connectionStyleConfiguration,
     editIconConfiguration,
+    editTopicImageConfiguration,
     editNoteConfiguration,
     editLinkUrlConfiguration,
     emojiToolbarConfiguration,

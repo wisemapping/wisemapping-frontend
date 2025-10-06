@@ -351,8 +351,9 @@ class XMLSerializerTango implements XMLMindmapSerializer {
         gridColor?: string;
       } = {};
       if (backgroundColor != null) partial.backgroundColor = backgroundColor;
-      if (backgroundPatternAttr != null)
+      if (backgroundPatternAttr != null) {
         partial.backgroundPattern = backgroundPatternAttr as 'solid' | 'grid' | 'dots' | 'none';
+      }
       if (gridSizeAttr != null) {
         const parsed = Number.parseInt(gridSizeAttr, 10);
         if (Number.isFinite(parsed)) partial.gridSize = parsed;
