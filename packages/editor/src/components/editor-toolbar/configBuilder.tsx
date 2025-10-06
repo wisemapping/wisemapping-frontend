@@ -16,7 +16,7 @@
  *   limitations under the License.
  */
 import React from 'react';
-import FormatPaintIconOutlineIcon from '@mui/icons-material/FormatPaintOutlined';
+import BrushIcon from '@mui/icons-material/Brush';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
 import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
 import TextDecreaseOutlinedIcon from '@mui/icons-material/TextDecreaseOutlined';
@@ -64,6 +64,7 @@ import RichTextNoteEditor from '../action-widget/pane/rich-text-note-editor';
 import IconPicker from '../action-widget/pane/icon-picker';
 import TopicImagePicker from '../action-widget/pane/topic-image-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
+import TopicStyleEditor from '../action-widget/pane/topic-style-editor';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import {
@@ -85,290 +86,29 @@ const keyTooltip = (msg: string, key: string): string => {
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
 
-  const colorAndShapeToolbarConfiguration: ActionConfig = {
-    icon: <FormatPaintIconOutlineIcon />,
+  const unifiedStylingConfiguration: ActionConfig = {
+    icon: <BrushIcon />,
     tooltip: intl.formatMessage({
-      id: 'editor-panel.tooltip-topic-style',
-      defaultMessage: 'Topic Style',
+      id: 'editor-panel.tooltip-unified-styling',
+      defaultMessage: 'Style Topic & Connections',
     }),
     options: [
       {
-        icon: <SquareOutlinedIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-share-rectangle',
-          defaultMessage: 'Rectangle shape',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('shape_change', 'rectangle');
-          const setValue = modelBuilder.getTopicShapeModel().setValue;
-          if (setValue) {
-            setValue('rectangle');
-          }
+        render: (closeModal) => {
+          return (
+            <TopicStyleEditor
+              closeModal={closeModal}
+              topicShapeModel={modelBuilder.getTopicShapeModel()}
+              topicFillColorModel={modelBuilder.getSelectedTopicColorModel()}
+              topicBorderColorModel={modelBuilder.getColorBorderModel()}
+              connectionStyleModel={modelBuilder.getConnectionStyleModel()}
+              connectionColorModel={modelBuilder.getConnectionColorModel()}
+            />
+          );
         },
-        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'rectangle',
-      },
-      {
-        icon: <CheckBoxOutlineBlankOutlinedIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-share-rounded',
-          defaultMessage: 'Rounded shape',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('shape_change', 'rounded_rectangle');
-          const setValue = modelBuilder.getTopicShapeModel().setValue;
-          if (setValue) {
-            setValue('rounded rectangle');
-          }
-        },
-        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'rounded rectangle',
-      },
-      {
-        icon: <HorizontalRuleOutlinedIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-share-line',
-          defaultMessage: 'Line shape',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('shape_change', 'line');
-          const setValue = modelBuilder.getTopicShapeModel().setValue;
-          if (setValue) {
-            setValue('line');
-          }
-        },
-        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'line',
-      },
-      {
-        icon: <CircleOutlinedIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-share-ellipse',
-          defaultMessage: 'Ellipse shape',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('shape_change', 'ellipse');
-          const setValue = modelBuilder.getTopicShapeModel().setValue;
-          if (setValue) {
-            setValue('elipse');
-          }
-        },
-        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'elipse',
-      },
-      {
-        icon: <NotInterestedOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-share-none',
-          defaultMessage: 'None shape',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('shape_change', 'none');
-          const setValue = modelBuilder.getTopicShapeModel().setValue;
-          if (setValue) {
-            setValue('none');
-          }
-        },
-        selected: () => modelBuilder.getTopicShapeModel().getValue() === 'none',
-      },
-      null,
-      {
-        icon: () => <BorderColorIcon modelValue={modelBuilder.getColorBorderModel().getValue()} />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-border-color',
-          defaultMessage: 'Border color',
-        }),
-        options: [
-          {
-            render: (closeModal) => {
-              return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={modelBuilder.getColorBorderModel()}
-                />
-              );
-            },
-          },
-        ],
-      },
-      {
-        icon: <NotInterestedOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-border-color-default',
-          defaultMessage: 'Default border color',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('border_color_reset');
-          const setValue = modelBuilder.getColorBorderModel().setValue;
-          if (setValue) {
-            setValue(undefined);
-          }
-        },
-        selected: () => modelBuilder.getColorBorderModel().getValue() === undefined,
-      },
-      null,
-      {
-        icon: () => (
-          <FillColorIcon modelValue={modelBuilder.getSelectedTopicColorModel().getValue()} />
-        ),
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-fill-color',
-          defaultMessage: 'Fill color',
-        }),
-        options: [
-          {
-            render: (closeModal) => {
-              return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={modelBuilder.getSelectedTopicColorModel()}
-                />
-              );
-            },
-          },
-        ],
-      },
-      {
-        icon: <NotInterestedOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-fill-color-default',
-          defaultMessage: 'Default fill color',
-        }),
-        onClick: () => {
-          trackTopicStyleAction('topic_color_reset');
-          const setValue = modelBuilder.getSelectedTopicColorModel().setValue;
-          if (setValue) {
-            setValue(undefined);
-          }
-        },
-        selected: () => modelBuilder.getSelectedTopicColorModel().getValue() === undefined,
       },
     ],
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
-  };
-
-  const connectionStyleConfiguration: ActionConfig = {
-    icon: <ShareOutlined />,
-    tooltip: intl.formatMessage({
-      id: 'editor-panel.tooltip-connection-style',
-      defaultMessage: 'Connection Style',
-    }),
-    options: [
-      {
-        icon: <GestureOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-curved-thick',
-          defaultMessage: 'Thick Curved',
-        }),
-        onClick: () => {
-          trackConnectionStyleAction('connection_style_change', 'thick_curved');
-          const setValue = modelBuilder.getConnectionStyleModel().setValue;
-          if (setValue) {
-            setValue(LineType.THICK_CURVED);
-          }
-        },
-        selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THICK_CURVED,
-      },
-      {
-        icon: <ShortcutIconOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-arc',
-          defaultMessage: 'Arc',
-        }),
-        onClick: () => {
-          trackConnectionStyleAction('connection_style_change', 'arc');
-          const setValue = modelBuilder.getConnectionStyleModel().setValue;
-          if (setValue) {
-            setValue(LineType.ARC);
-          }
-        },
-        selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.ARC,
-      },
-      {
-        icon: <SwapCallsOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-curved-thin',
-          defaultMessage: 'Thin Curved',
-        }),
-        onClick: () => {
-          trackConnectionStyleAction('connection_style_change', 'thin_curved');
-          const setValue = modelBuilder.getConnectionStyleModel().setValue;
-          if (setValue) {
-            setValue(LineType.THIN_CURVED);
-          }
-        },
-        selected: () => modelBuilder.getConnectionStyleModel().getValue() === LineType.THIN_CURVED,
-      },
-      {
-        icon: <PolylineOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-polyline',
-          defaultMessage: 'Simple Polyline',
-        }),
-        onClick: () => {
-          trackConnectionStyleAction('connection_style_change', 'polyline_middle');
-          const setValue = modelBuilder.getConnectionStyleModel().setValue;
-          if (setValue) {
-            setValue(LineType.POLYLINE_MIDDLE);
-          }
-        },
-        selected: () =>
-          modelBuilder.getConnectionStyleModel().getValue() === LineType.POLYLINE_MIDDLE,
-      },
-      {
-        icon: <TimelineOutined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-style-polyline-curved',
-          defaultMessage: 'Curved Polyline',
-        }),
-        onClick: () => {
-          trackConnectionStyleAction('connection_style_change', 'polyline_curved');
-          const setValue = modelBuilder.getConnectionStyleModel().setValue;
-          if (setValue) {
-            setValue(LineType.POLYLINE_CURVED);
-          }
-        },
-        selected: () =>
-          modelBuilder.getConnectionStyleModel().getValue() === LineType.POLYLINE_CURVED,
-      },
-      null,
-      {
-        icon: () => (
-          <ConnectionColorIcon modelValue={modelBuilder.getConnectionColorModel().getValue()} />
-        ),
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-color',
-          defaultMessage: 'Color',
-        }),
-        options: [
-          {
-            render: (closeModal) => {
-              return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={modelBuilder.getConnectionColorModel()}
-                />
-              );
-            },
-          },
-        ],
-      },
-      {
-        icon: <NotInterestedOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-connection-color-default',
-          defaultMessage: 'Default color',
-        }),
-        onClick: () => {
-          trackConnectionStyleAction('connection_color_reset');
-          const serValue = modelBuilder.getConnectionColorModel().setValue;
-          if (serValue) {
-            serValue(undefined);
-          }
-        },
-        selected: () => modelBuilder.getConnectionColorModel().getValue() === undefined,
-      },
-    ],
-    disabled: () => {
-      const selected = model.getDesignerModel()!.filterSelectedTopics();
-      return selected.length === 0;
-    },
   };
 
   const relationshipStyleConfiguration: ActionConfig = {
@@ -801,9 +541,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   return [
     addNodeToolbarConfiguration,
     deleteNodeToolbarConfiguration,
-    colorAndShapeToolbarConfiguration,
+    unifiedStylingConfiguration, // New unified topic style dialog
     fontFormatToolbarConfiguration,
-    connectionStyleConfiguration,
     editIconConfiguration,
     editTopicImageConfiguration,
     editNoteConfiguration,
