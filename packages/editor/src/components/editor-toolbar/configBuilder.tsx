@@ -718,38 +718,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   /**
    * tool for emoji selection
    */
-  const emojiToolbarConfiguration: ActionConfig = {
-    icon: <ImageOutlinedIcon />,
-    tooltip: intl.formatMessage({
-      id: 'editor-panel.tooltip-topic-emoji',
-      defaultMessage: 'Add Imagine',
-    }),
-    onClick: () => {
-      trackTopicStyleAction('emoji_picker_open');
-      // This will be handled by the topic image picker modal
-    },
-    selected: () =>
-      modelBuilder.getImageEmojiCharModel().getValue() !== undefined ||
-      modelBuilder.getImageGalleryIconNameModel().getValue() !== undefined,
-    options: [
-      {
-        render: (closeModal) => {
-          return (
-            <TopicImagePicker
-              triggerClose={closeModal}
-              emojiModel={modelBuilder.getImageEmojiCharModel()}
-              iconsGalleryModel={modelBuilder.getImageGalleryIconNameModel()}
-            />
-          );
-        },
-      },
-    ],
-    disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
-  };
-
-  /**
-   * tool for emoji selection
-   */
   const editIconConfiguration: ActionConfig = {
     icon: <SentimentSatisfiedAltIcon />,
     tooltip: intl.formatMessage({
@@ -840,7 +808,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     editTopicImageConfiguration,
     editNoteConfiguration,
     editLinkUrlConfiguration,
-    emojiToolbarConfiguration,
     addRelationConfiguration,
     relationshipStyleConfiguration,
     editCanvasStyleConfiguration,

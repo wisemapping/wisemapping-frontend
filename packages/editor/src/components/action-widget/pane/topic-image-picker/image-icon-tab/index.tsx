@@ -500,32 +500,6 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
     return filtered;
   }, [searchQuery, selectedCategory]);
 
-  // Category icons mapping - dynamically generated to match actual categories
-  const categoryIcons = useMemo(() => {
-    const uniqueCategories = ['All', ...new Set(iconMapping.map((icon) => icon.category))];
-    const iconMap: { [key: string]: React.ComponentType } = {
-      All: Apps,
-      Navigation: Home,
-      General: Star,
-      People: Person,
-      Communication: Email,
-      Technology: Computer,
-      Business: AttachMoney,
-      Lifestyle: Restaurant,
-      Health: MedicalServices,
-    };
-
-    // Only include categories that actually exist in iconMapping
-    const filteredMap: { [key: string]: React.ComponentType } = {};
-    uniqueCategories.forEach((category) => {
-      if (iconMap[category]) {
-        filteredMap[category] = iconMap[category];
-      }
-    });
-
-    return filteredMap;
-  }, []);
-
   // Get unique categories for tabs
   const categories = useMemo(() => {
     const uniqueCategories = ['All', ...new Set(iconMapping.map((icon) => icon.category))];
@@ -541,7 +515,6 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
   ) => (
     <Grid container sx={{ gap: 0.25, justifyContent: 'flex-start' }}>
       {icons.map((iconMapping, index) => {
-        const IconComponent = iconMapping.component;
         const iconName = iconMapping.name;
         const isSelected = iconModel?.getValue() === iconName;
 
@@ -553,7 +526,10 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
                 onClick={() => handleIconSelect(iconName)}
                 size="small"
               >
-                {(IconComponent as any)({ style: { fontSize: 18 } })}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {React.createElement(iconMapping.component as React.ComponentType<any>, {
+                  style: { fontSize: 18 },
+                })}
               </StyledIconButton>
             </Tooltip>
           </Grid>
@@ -604,8 +580,34 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
         }}
       >
         {categories.map((category) => {
-          const CategoryIcon = categoryIcons[category];
           const isSelected = selectedCategory === category;
+
+          // Render icon based on category with direct JSX
+          const renderCategoryIcon = () => {
+            switch (category) {
+              case 'All':
+                return <Apps sx={{ fontSize: 20 }} />;
+              case 'Navigation':
+                return <Home sx={{ fontSize: 20 }} />;
+              case 'General':
+                return <Star sx={{ fontSize: 20 }} />;
+              case 'People':
+                return <Person sx={{ fontSize: 20 }} />;
+              case 'Communication':
+                return <Email sx={{ fontSize: 20 }} />;
+              case 'Technology':
+                return <Computer sx={{ fontSize: 20 }} />;
+              case 'Business':
+                return <AttachMoney sx={{ fontSize: 20 }} />;
+              case 'Lifestyle':
+                return <Restaurant sx={{ fontSize: 20 }} />;
+              case 'Health':
+                return <MedicalServices sx={{ fontSize: 20 }} />;
+              default:
+                return <Apps sx={{ fontSize: 20 }} />;
+            }
+          };
+
           return (
             <IconButton
               key={category}
@@ -622,7 +624,7 @@ const ImageIconTab: React.FC<ImageIconTabProps> = ({ iconModel, emojiModel, trig
                 flexShrink: 0,
               }}
             >
-              {(CategoryIcon as any)({ style: { fontSize: 20 } })}
+              {renderCategoryIcon()}
             </IconButton>
           );
         })}
