@@ -5769,7 +5769,6 @@ __metadata:
     "@types/cypress-image-snapshot": ^3.1.9
     "@wisemapping/core-js": "workspace:*"
     "@wisemapping/mindplot": "workspace:*"
-    "@wisemapping/shared": "workspace:*"
     babel-polyfill: ^6.26.0
     cypress: ^15.2.0
     cypress-image-snapshot: ^4.0.1
@@ -5826,7 +5825,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@wisemapping/shared@workspace:*, @wisemapping/shared@workspace:packages/shared":
+"@wisemapping/shared@workspace:packages/shared":
   version: 0.0.0-use.local
   resolution: "@wisemapping/shared@workspace:packages/shared"
   dependencies:
@@ -5874,7 +5873,6 @@ __metadata:
     "@welldone-software/why-did-you-render": ^10.0.1
     "@wisemapping/core-js": "workspace:*"
     "@wisemapping/editor": "workspace:^"
-    "@wisemapping/shared": "workspace:*"
     axios: ^1.12.2
     cypress: ^15.2.0
     cypress-image-snapshot: ^4.0.1
