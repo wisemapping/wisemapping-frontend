@@ -1229,6 +1229,8 @@ abstract class Topic extends NodeGraph {
         const group = this.get2DElement();
         // Add SVG element to group (append is safe to call multiple times)
         this._imageSVGFeature.addToGroup(group);
+        // Update SVG icon color to match current font color
+        this._imageSVGFeature.updateIconColor();
       }
 
       if (hasEmoji) {

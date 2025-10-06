@@ -71,6 +71,22 @@ class ImageSVGFeature {
     this._topic.redraw(this._topic.getThemeVariant(), false);
   }
 
+  /**
+   * Updates the SVG icon color to match the current topic font color
+   * This should be called whenever the topic's font color changes
+   */
+  updateIconColor(): void {
+    if (this._svgText) {
+      const shapeType = this._topic.getShapeType();
+      if (shapeType !== 'line') {
+        const model = this._topic.getModel();
+        const theme = ThemeFactory.create(model, this._topic.getThemeVariant());
+        const fontColor = theme.getFontColor(this._topic);
+        this._svgText.setColor(fontColor);
+      }
+    }
+  }
+
   getOrBuildSVGElement(): Text | undefined {
     const galleryIconName = this.getGalleryIconName();
     if (!galleryIconName) {
@@ -166,130 +182,256 @@ class ImageSVGFeature {
     // These are the actual Unicode codepoints for Material Icons font
     const materialIcons: { [key: string]: string } = {
       // Basic actions
-      Star: '\ue838', // star
-      star: '\ue838', // star (lowercase)
-      Favorite: '\ue87d', // favorite
-      favorite: '\ue87d', // favorite (lowercase)
-      ThumbUp: '\ue8dc', // thumb_up
-      'thumbs-up': '\ue8dc', // thumbs-up (kebab-case)
-      CheckCircle: '\ue86c', // check_circle
-      'check-circle': '\ue86c', // check-circle (kebab-case)
-      Warning: '\ue002', // warning
-      warning: '\ue002', // warning (lowercase)
-      Error: '\ue000', // error
-      error: '\ue000', // error (lowercase)
-      Info: '\ue88e', // info
-      info: '\ue88e', // info (lowercase)
-      Help: '\ue887', // help
-      help: '\ue887', // help (lowercase)
-      Add: '\ue145', // add
-      add: '\ue145', // add (lowercase)
-      Delete: '\ue872', // delete
-      delete: '\ue872', // delete (lowercase)
-      Edit: '\ue3c9', // edit
-      edit: '\ue3c9', // edit (lowercase)
-      Save: '\ue161', // save
-      save: '\ue161', // save (lowercase)
-      Search: '\ue8b6', // search
-      search: '\ue8b6', // search (lowercase)
-      Settings: '\ue8b8', // settings
-      settings: '\ue8b8', // settings (lowercase)
+      star: '\ue838',
+      favorite: '\ue87d',
+      'thumbs-up': '\ue8dc',
+      'check-circle': '\ue86c',
+      warning: '\ue002',
+      error: '\ue000',
+      info: '\ue88e',
+      help: '\ue887',
+      add: '\ue145',
+      delete: '\ue872',
+      edit: '\ue3c9',
+      save: '\ue161',
+      search: '\ue8b6',
+      settings: '\ue8b8',
 
       // Navigation
-      Home: '\ue88a', // home
-      home: '\ue88a', // home (lowercase)
-      Work: '\ue8f9', // work
-      work: '\ue8f9', // work (lowercase)
-      Business: '\ue7ee', // business
-      business: '\ue7ee', // business (lowercase)
+      home: '\ue88a',
+      work: '\ue8f9',
+      business: '\ue7ee',
 
       // Communication
-      Email: '\ue0be', // email
-      email: '\ue0be', // email (lowercase)
-      Phone: '\ue0cd', // phone
-      phone: '\ue0cd', // phone (lowercase)
-      Message: '\ue0c9', // message
-      message: '\ue0c9', // message (lowercase)
-      Share: '\ue80d', // share
-      share: '\ue80d', // share (lowercase)
+      email: '\ue0be',
+      phone: '\ue0cd',
+      message: '\ue0c9',
+      share: '\ue80d',
 
       // Technology
-      Computer: '\ue30a', // computer
-      computer: '\ue30a', // computer (lowercase)
-      Smartphone: '\ue32c', // smartphone
-      smartphone: '\ue32c', // smartphone (lowercase)
-      Tablet: '\ue32f', // tablet
-      tablet: '\ue32f', // tablet (lowercase)
-      Laptop: '\ue31e', // laptop
-      laptop: '\ue31e', // laptop (lowercase)
+      computer: '\ue30a',
+      smartphone: '\ue32c',
+      tablet: '\ue32f',
+      laptop: '\ue31e',
 
       // Transportation
-      DirectionsCar: '\ue531', // directions_car
-      'directions-car': '\ue531', // directions-car (kebab-case)
-      Flight: '\ue539', // flight
-      flight: '\ue539', // flight (lowercase)
-      Train: '\ue570', // train
-      train: '\ue570', // train (lowercase)
-      DirectionsBike: '\ue52f', // directions_bike
-      'directions-bike': '\ue52f', // directions-bike (kebab-case)
-      DirectionsWalk: '\ue536', // directions_walk
-      'directions-walk': '\ue536', // directions-walk (kebab-case)
-      LocationOn: '\ue55f', // location_on
-      'location-on': '\ue55f', // location-on (kebab-case)
-      DirectionsBus: '\ue530', // directions_bus
-      'directions-bus': '\ue530', // directions-bus (kebab-case)
-      DirectionsSubway: '\ue534', // directions_subway
-      'directions-subway': '\ue534', // directions-subway (kebab-case)
-      TwoWheeler: '\ue9ca', // two_wheeler
-      'two-wheeler': '\ue9ca', // two-wheeler (kebab-case)
-      DirectionsRun: '\ue566', // directions_run
-      'directions-run': '\ue566', // directions-run (kebab-case)
+      'directions-car': '\ue531',
+      flight: '\ue539',
+      train: '\ue570',
+      'directions-bike': '\ue52f',
+      'directions-walk': '\ue536',
+      'location-on': '\ue55f',
+      'directions-bus': '\ue530',
+      'directions-subway': '\ue534',
+      'two-wheeler': '\ue9ca',
+      'directions-run': '\ue566',
 
       // Education & Creative
-      School: '\ue80c', // school
-      school: '\ue80c', // school (lowercase)
-      Palette: '\ue40a', // palette
-      palette: '\ue40a', // palette (lowercase)
-      Brush: '\ue3ae', // brush
-      brush: '\ue3ae', // brush (lowercase)
-      Lightbulb: '\ue0f0', // lightbulb
-      lightbulb: '\ue0f0', // lightbulb (lowercase)
-      FlashOn: '\ue3e1', // flash_on
-      'flash-on': '\ue3e1', // flash-on (kebab-case)
-      Security: '\ue32a', // security
-      security: '\ue32a', // security (lowercase)
-      Lock: '\ue897', // lock
-      lock: '\ue897', // lock (lowercase)
-      MenuBook: '\ue421', // menu_book
-      'menu-book': '\ue421', // menu-book (kebab-case)
-      Assignment: '\ue85d', // assignment
-      assignment: '\ue85d', // assignment (lowercase)
-      Build: '\ue869', // build
-      build: '\ue869', // build (lowercase)
-      Science: '\uea4b', // science
-      science: '\uea4b', // science (lowercase)
+      school: '\ue80c',
+      palette: '\ue40a',
+      brush: '\ue3ae',
+      lightbulb: '\ue0f0',
+      'flash-on': '\ue3e1',
+      security: '\ue32a',
+      lock: '\ue897',
+      'menu-book': '\ue421',
+      assignment: '\ue85d',
+      build: '\ue869',
+      science: '\uea4b',
 
       // Lifestyle
-      Restaurant: '\ue56c', // restaurant
-      restaurant: '\ue56c', // restaurant (lowercase)
-      ShoppingCart: '\ue8cc', // shopping_cart
-      'shopping-cart': '\ue8cc', // shopping-cart (kebab-case)
-      LocalGroceryStore: '\ue547', // local_grocery_store
-      'local-grocery-store': '\ue547', // local-grocery-store (kebab-case)
-      LocalHospital: '\ue548', // local_hospital
-      'local-hospital': '\ue548', // local-hospital (kebab-case)
-      SportsSoccer: '\uea2c', // sports_soccer
-      'sports-soccer': '\uea2c', // sports-soccer (kebab-case)
-      SportsBasketball: '\uea26', // sports_basketball
-      'sports-basketball': '\uea26', // sports-basketball (kebab-case)
-      Gamepad: '\ue30f', // gamepad
-      gamepad: '\ue30f', // gamepad (lowercase)
-      Book: '\ue865', // book
-      book: '\ue865', // book (lowercase)
-      LocalCafe: '\ue541', // local_cafe
-      'local-cafe': '\ue541', // local-cafe (kebab-case)
-      ShoppingBag: '\ue8cb', // shopping_bag
-      'shopping-bag': '\ue8cb', // shopping-bag (kebab-case)
+      restaurant: '\ue56c',
+      'shopping-cart': '\ue8cc',
+      'local-grocery-store': '\ue547',
+      'local-hospital': '\ue548',
+      'sports-soccer': '\uea2c',
+      'sports-basketball': '\uea26',
+      gamepad: '\ue30f',
+      book: '\ue865',
+      'local-cafe': '\ue541',
+      'shopping-bag': '\ue8cb',
+
+      // Media & Controls
+      play: '\ue037',
+      pause: '\ue034',
+      stop: '\ue047',
+      'skip-next': '\ue044',
+      'skip-previous': '\ue045',
+      'fast-forward': '\ue01f',
+      'fast-rewind': '\ue020',
+      'volume-up': '\ue050',
+      'volume-down': '\ue04d',
+      'volume-off': '\ue04f',
+      mic: '\ue31d',
+      'mic-off': '\ue02b',
+      videocam: '\ue04b',
+      'videocam-off': '\ue04c',
+      fullscreen: '\ue5d0',
+      'fullscreen-exit': '\ue5d1',
+      'zoom-in': '\ue8ff',
+      'zoom-out': '\ue900',
+
+      // People & Communication
+      'account-circle': '\ue853',
+      person: '\ue7fd',
+      group: '\ue7ef',
+      mail: '\ue158',
+      chat: '\ue0b7',
+      notifications: '\ue7f4',
+
+      // Technology & Devices
+      'phone-android': '\ue324',
+      tv: '\ue333',
+      headphones: '\ue30f',
+      camera: '\ue3af',
+      image: '\ue3f4',
+      'video-file': '\ue1a2',
+      'audio-file': '\ue1a0',
+      folder: '\ue2c7',
+      'cloud-upload': '\ue2c3',
+      wifi: '\ue63e',
+      bluetooth: '\ue1a7',
+      storage: '\ue1db',
+      memory: '\ue322',
+
+      // Business & Finance
+      money: '\ue227',
+      'trending-up': '\ue8e5',
+      'pie-chart': '\ue6c3',
+      'bar-chart': '\ue26b',
+      timeline: '\ue922',
+      assessment: '\ue85f',
+      description: '\ue873',
+      schedule: '\ue8b5',
+      'calendar-today': '\ue935',
+      event: '\ue878',
+      'event-available': '\ue614',
+      'event-busy': '\ue615',
+      'access-time': '\ue192',
+      timer: '\ue425',
+      'date-range': '\ue916',
+      today: '\ue8df',
+      update: '\ue923',
+      history: '\ue889',
+
+      // Transportation & Location
+      location: '\ue55f',
+      car: '\ue531',
+      bike: '\ue52f',
+      walk: '\ue536',
+
+      // Lifestyle & Activities
+      'grocery-store': '\ue547',
+      hospital: '\ue548',
+      soccer: '\uea2c',
+      basketball: '\uea26',
+      tennis: '\uea32',
+      fitness: '\ueb43',
+      music: '\ue405',
+      movie: '\ue02c',
+
+      // Creative & Design
+      'photo-camera': '\ue412',
+      'color-lens': '\ue40a',
+      'auto-fix': '\ue3e0',
+      'filter-vintage': '\ue3e3',
+      gradient: '\ue3e9',
+      texture: '\ue421',
+
+      // Nature & Weather
+      sunny: '\ue430',
+      snow: '\ueb3b',
+      fire: '\ue80e',
+      'invert-colors': '\ue891',
+      opacity: '\ue91c',
+      park: '\ue63f',
+      nature: '\ue406',
+
+      // Food & Drink
+      'wine-bar': '\ue1eab',
+      coffee: '\uef4a',
+      cake: '\ue7e9',
+      'ice-cream': '\uea69',
+      cookie: '\ueaac',
+      bakery: '\uea53',
+
+      // Health & Medical
+      'medical-services': '\uef4d',
+      'health-safety': '\ue1f5',
+      coronavirus: '\uf221',
+      vaccines: '\ue138',
+      medication: '\uef4e',
+      sick: '\uef80',
+
+      // Social Media
+      facebook: '\uf234',
+      twitter: '\uf099',
+      instagram: '\uf16d',
+      linkedin: '\uf08c',
+      youtube: '\uf167',
+      whatsapp: '\uf232',
+
+      // Additional General Icons
+      close: '\ue5cd',
+      check: '\ue5ca',
+      cancel: '\ue5c9',
+      done: '\ue876',
+      clear: '\ue14c',
+      remove: '\ue15b',
+      'add-circle': '\ue147',
+      'remove-circle': '\ue15c',
+      'expand-more': '\ue5cf',
+      'expand-less': '\ue5ce',
+      'arrow-down': '\ue313',
+      'arrow-up': '\ue316',
+      'arrow-left': '\ue314',
+      'arrow-right': '\ue315',
+
+      // Actions & Navigation
+      'open-in-new': '\ue89e',
+      launch: '\ue895',
+      link: '\ue157',
+      'link-off': '\ue16f',
+      'content-copy': '\ue14d',
+      'content-cut': '\ue14e',
+      'content-paste': '\ue14f',
+      undo: '\ue166',
+      redo: '\ue15a',
+      print: '\ue8ad',
+      'print-disabled': '\ue8ae',
+      pdf: '\ue415',
+      download: '\ue2c4',
+      upload: '\ue2c6',
+      refresh: '\ue5d5',
+
+      // Documents & Notes
+      article: '\uef42',
+      note: '\ue8d9',
+      'sticky-note': '\ue1fc',
+      task: '\ue8f5',
+      checklist: '\ue6b1',
+      list: '\ue896',
+
+      // Views & Layout
+      'view-list': '\ue8ef',
+      'view-module': '\ue8f0',
+      dashboard: '\ue871',
+      table: '\ue265',
+      'view-column': '\ue8f1',
+      'view-headline': '\ue8f2',
+      'view-stream': '\ue8f3',
+      'view-week': '\ue8f4',
+      'view-day': '\ue8ee',
+      'view-agenda': '\ue8ed',
+      'view-carousel': '\ue8f6',
+      'view-comfy': '\ue8f7',
+      'view-compact': '\ue8f8',
+      'view-sidebar': '\ue8f9',
+      'view-quilt': '\ue8fa',
+      'view-array': '\ue8fb',
+      'view-kanban': '\ue8fc',
+      'view-timeline': '\ue8fd',
+      'view-ar': '\ue8fe',
     };
 
     return materialIcons[iconName];
