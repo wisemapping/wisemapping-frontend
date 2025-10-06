@@ -11,12 +11,6 @@
       "value": "Excluir"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Redefinir"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,

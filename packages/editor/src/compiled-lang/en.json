@@ -11,12 +11,6 @@
       "value": "Delete"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Reset"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,

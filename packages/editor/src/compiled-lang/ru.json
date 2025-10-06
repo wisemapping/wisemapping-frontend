@@ -11,18 +11,6 @@
       "value": "Удалить"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Сбросить"
-    }
-  ],
-  "action.share": [
-    {
-      "type": 0,
-      "value": "Поделиться"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -329,12 +317,6 @@
       "value": "Стиль подключения"
     }
   ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "дуга"
-    }
-  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -449,12 +431,6 @@
       "value": "Форма линии"
     }
   ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "нет формы"
-    }
-  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -477,12 +453,6 @@
     {
       "type": 0,
       "value": "Возможности ограниченной версии Mindmap поддерживаются на мобильных устройствах. Используйте настольный браузер для полных возможностей редактора."
-    }
-  ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "Примечание для мобильных устройств."
     }
   ],
   "editor.try-welcome": [
@@ -549,12 +519,6 @@
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "login.signup": [
-    {
-      "type": 0,
-      "value": "Регистрация"
     }
   ],
   "rich-text-editor.bold": [

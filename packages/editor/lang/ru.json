@@ -1,461 +1,392 @@
 {
-    "editor.try-welcome": {
-        "defaultMessage": "Это демо-версия редактора, можно попробовать его в деле!"
-    },
-    "editor.try-welcome-description": {
-        "defaultMessage": "Чтобы получить бесплатный неограниченный доступ —  нужна только регистрация."
-    },
-	"editor.try-welcome-mobile": {
-		"defaultMessage": "В этом издании демонстрируются некоторые возможности ментальных карт!"
-	},
-    "editor.try-welcome-description-mobile": {
-        "defaultMessage": "Зарегистрируйтесь, чтобы начать создавать, делиться и публиковать неограниченное количество ментальных карт бесплатно. Возможности ограниченной версии Mindmap поддерживаются на мобильных устройствах. Используйте настольный браузер для полных возможностей редактора."
-    },
-    "editor.edit-mobile": {
-        "defaultMessage": "Примечание для мобильных устройств."
-    },
-    "editor.edit-description-mobile": {
-        "defaultMessage": "Возможности ограниченной версии Mindmap поддерживаются на мобильных устройствах. Используйте настольный браузер для полных возможностей редактора."
-    },
-    "editor-panel.tooltip-theme": {
-        "defaultMessage": "Тема"
-    },
-    "editor-panel.theme-title": {
-        "defaultMessage": "Тема"
-    },
-    "editor-panel.tooltip-connection-style-arc": {
-        "defaultMessage": "дуга"
-    },
-    "editor-panel.tooltip-topic-share-none": {
-        "defaultMessage": "нет формы"
-    },
-    "editor-panel.tooltip-connection-color": {
-        "defaultMessage": "Цвет"
-    },
-    "editor-panel.tooltip-connection-color-default": {
-        "defaultMessage": "Цвет по умолчанию"
-    },
-    "editor-panel.tooltip-connection-style": {
-        "defaultMessage": "Стиль подключения"
-    },
-    "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "широкая кривая"
-    },
-    "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "тонкая кривая"
-    },
-    "editor-panel.tooltip-topic-border-color-default": {
-        "defaultMessage": "Цвет границы по умолчанию"
-    },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Цвет заливки"
-    },
-    "editor-panel.tooltip-topic-fill-color-default": {
-        "defaultMessage": "Цвет заливки по умолчанию"
-    },
-    "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Круглый"
-    },
-    "login.signup": {
-        "defaultMessage": "Регистрация"
-    },
-    "action.share": {
-        "defaultMessage": "Поделиться"
-    },
-    "zoom-panel.tooltip-keyboard": {
-        "defaultMessage": "Клавиатура"
-    },
-    "action.accept": {
-        "defaultMessage": "Принять"
-    },
+  "editor.try-welcome": {
+    "defaultMessage": "Это демо-версия редактора, можно попробовать его в деле!"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "Чтобы получить бесплатный неограниченный доступ —  нужна только регистрация."
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "В этом издании демонстрируются некоторые возможности ментальных карт!"
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "Зарегистрируйтесь, чтобы начать создавать, делиться и публиковать неограниченное количество ментальных карт бесплатно. Возможности ограниченной версии Mindmap поддерживаются на мобильных устройствах. Используйте настольный браузер для полных возможностей редактора."
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "Возможности ограниченной версии Mindmap поддерживаются на мобильных устройствах. Используйте настольный браузер для полных возможностей редактора."
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "Тема"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "Тема"
+  },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "Цвет"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "Цвет по умолчанию"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "Стиль подключения"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "Толстая кривая"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "Тонкая кривая"
+  },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "Цвет границы по умолчанию"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "Цвет заливки"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "Цвет заливки по умолчанию"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "Круглая форма"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "Клавиатура"
+  },
+  "action.accept": {
+    "defaultMessage": "Принять"
+  },
   "action.delete": {
     "defaultMessage": "Удалить"
   },
-  "action.reset": {
+  "appbar.back-to-map-list": {
+    "defaultMessage": "Назад к списку карт"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "Регистрация"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "Поделиться"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "Экспорт"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "История изменений"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "Информация"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "Печать"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "Опубликовать"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "Повторить"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "Сохранить"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "Поделиться для сотрудничества"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "Регистрация"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "Избранное"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "Отменить"
+  },
+  "editor-panel.icon-title": {
+    "defaultMessage": "Иконка"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "Ссылка"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "Заметка"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "Добавить иконку"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "Добавить ссылку"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "Добавить заметку"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "Добавить связь"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "Добавить тему"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "Простая полилиния"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "Изогнутая полилиния"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "Удалить тему"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "Цвет границы"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "Увеличить"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "Жирный"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "Цвет"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "Цвет по умолчанию"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "Курсив"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "Уменьшить"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Стиль шрифта"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "Форма эллипса"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "Форма линии"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "Прямоугольная форма"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "Стиль темы"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "Показать изображения"
+  },
+  "link.help_text": {
+    "defaultMessage": "Адрес недействителен"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "Действие"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "Добавить дочернюю тему"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "Добавить ссылку"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "Добавить заметку"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "Добавить родственную тему"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "Отменить изменения текста"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "Изменить текст на жирный"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "Изменить текст на курсив"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "Свернуть дочерние элементы"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "Копировать и вставлять темы/Копировать изображение карты в буфер обмена."
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "Удалить тему"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "Отменить выбор всех тем"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "Отключить тему"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "Добавить многострочный текст темы"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "Редактировать текст темы"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "F2 или двойной клик"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "Навигация"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "Клавиши со стрелками"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "Перезаписать текст темы"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "Печатать на выбранной теме"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "Повторить редактирование"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "Сохранить изменения"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "Выбрать все темы"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "Выбрать несколько тем"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "Клик мыши"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "Отменить редактирование"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "Увеличить"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "Уменьшить"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "Подогнать по размеру"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "Описание"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "Создатель"
+  },
+  "theme.dark": {
+    "defaultMessage": "Темная"
+  },
+  "theme.light": {
+    "defaultMessage": "Светлая"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Переключить Тему"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "Вставить ссылку"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "Вставить иконку"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "Жирный"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "Курсив"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "Подчеркнутый"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "Зачеркнутый"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "Маркированный список"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "Нумерованный список"
+  },
+  "image-icon-tab.icon-found": {
+    "defaultMessage": "иконка найдена"
+  },
+  "image-icon-tab.icons-found": {
+    "defaultMessage": "иконки найдены"
+  },
+  "image-icon-tab.icons": {
+    "defaultMessage": "иконки"
+  },
+  "emoji-picker.search-placeholder": {
+    "defaultMessage": "Поиск эмодзи..."
+  },
+  "common.close": {
+    "defaultMessage": "Закрыть"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "Применить"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "Цвет фона"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "Узор фона"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "Цвета"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "Цвет сетки"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "Стиль сетки"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "Точки"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "Линии сетки"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "Нет"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "Сплошной цвет"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "Предварительный просмотр"
+  },
+  "canvas-style.reset": {
     "defaultMessage": "Сбросить"
   },
-    "appbar.back-to-map-list": {
-        "defaultMessage": "Назад к списку карт"
-    },
-    "appbar.button-signup": {
-        "defaultMessage": "Регистрация"
-    },
-    "appbar.shared-button": {
-        "defaultMessage": "Поделиться"
-    },
-    "appbar.tooltip-export": {
-        "defaultMessage": "Экспорт"
-    },
-    "appbar.tooltip-history": {
-        "defaultMessage": "История изменений"
-    },
-    "appbar.tooltip-info": {
-        "defaultMessage": "Информация"
-    },
-    "appbar.tooltip-print": {
-        "defaultMessage": "Печать"
-    },
-    "appbar.tooltip-publish": {
-        "defaultMessage": "Опубликовать"
-    },
-    "appbar.tooltip-redo": {
-        "defaultMessage": "Повторить"
-    },
-    "appbar.tooltip-save": {
-        "defaultMessage": "Сохранить"
-    },
-    "appbar.tooltip-shared": {
-        "defaultMessage": "Поделиться для сотрудничества"
-    },
-    "appbar.tooltip-signup": {
-        "defaultMessage": "Регистрация"
-    },
-    "appbar.tooltip-starred": {
-        "defaultMessage": "Избранное"
-    },
-    "appbar.tooltip-undo": {
-        "defaultMessage": "Отменить"
-    },
-    "editor-panel.icon-title": {
-        "defaultMessage": "Иконка"
-    },
-    "editor-panel.link-panel-title": {
-        "defaultMessage": "Ссылка"
-    },
-    "editor-panel.note-panel-title": {
-        "defaultMessage": "Заметка"
-    },
-    "editor-panel.tooltip-add-icon": {
-        "defaultMessage": "Добавить иконку"
-    },
-    "editor-panel.tooltip-add-link": {
-        "defaultMessage": "Добавить ссылку"
-    },
-    "editor-panel.tooltip-add-note": {
-        "defaultMessage": "Добавить заметку"
-    },
-    "editor-panel.tooltip-add-relationship": {
-        "defaultMessage": "Добавить связь"
-    },
-    "editor-panel.tooltip-add-topic": {
-        "defaultMessage": "Добавить тему"
-    },
-    "editor-panel.tooltip-connection-color": {
-        "defaultMessage": "Цвет"
-    },
-    "editor-panel.tooltip-connection-color-default": {
-        "defaultMessage": "Цвет по умолчанию"
-    },
-    "editor-panel.tooltip-connection-style": {
-        "defaultMessage": "Стиль подключения"
-    },
-    "editor-panel.tooltip-connection-style-curved-thick": {
-        "defaultMessage": "Толстая кривая"
-    },
-    "editor-panel.tooltip-connection-style-curved-thin": {
-        "defaultMessage": "Тонкая кривая"
-    },
-    "editor-panel.tooltip-connection-style-polyline": {
-        "defaultMessage": "Простая полилиния"
-    },
-    "editor-panel.tooltip-connection-style-polyline-curved": {
-        "defaultMessage": "Изогнутая полилиния"
-    },
-    "editor-panel.tooltip-delete-topic": {
-        "defaultMessage": "Удалить тему"
-    },
-    "editor-panel.tooltip-topic-border-color": {
-        "defaultMessage": "Цвет границы"
-    },
-    "editor-panel.tooltip-topic-border-color-default": {
-        "defaultMessage": "Цвет границы по умолчанию"
-    },
-    "editor-panel.tooltip-topic-fill-color": {
-        "defaultMessage": "Цвет заливки"
-    },
-    "editor-panel.tooltip-topic-fill-color-default": {
-        "defaultMessage": "Цвет заливки по умолчанию"
-    },
-    "editor-panel.tooltip-topic-font-bigger": {
-        "defaultMessage": "Увеличить"
-    },
-    "editor-panel.tooltip-topic-font-bold": {
-        "defaultMessage": "Жирный"
-    },
-    "editor-panel.tooltip-topic-font-color": {
-        "defaultMessage": "Цвет"
-    },
-    "editor-panel.tooltip-topic-font-color-default": {
-        "defaultMessage": "Цвет по умолчанию"
-    },
-    "editor-panel.tooltip-topic-font-italic": {
-        "defaultMessage": "Курсив"
-    },
-    "editor-panel.tooltip-topic-font-smaller": {
-        "defaultMessage": "Уменьшить"
-    },
-    "editor-panel.tooltip-topic-font-style": {
-        "defaultMessage": "Стиль шрифта"
-    },
-    "editor-panel.tooltip-topic-share-ellipse": {
-        "defaultMessage": "Форма эллипса"
-    },
-    "editor-panel.tooltip-topic-share-line": {
-        "defaultMessage": "Форма линии"
-    },
-    "editor-panel.tooltip-topic-share-rectangle": {
-        "defaultMessage": "Прямоугольная форма"
-    },
-    "editor-panel.tooltip-topic-share-rounded": {
-        "defaultMessage": "Круглая форма"
-    },
-    "editor-panel.tooltip-topic-style": {
-        "defaultMessage": "Стиль темы"
-    },
-    "icon-picker.show-images": {
-        "defaultMessage": "Показать изображения"
-    },
-    "link.help_text": {
-        "defaultMessage": "Адрес недействителен"
-    },
-    "link.placeholder": {
-        "defaultMessage": "https://www.example.com"
-    },
-    "shortcut-help-pane.action": {
-        "defaultMessage": "Действие"
-    },
-    "shortcut-help-pane.add-child": {
-        "defaultMessage": "Добавить дочернюю тему"
-    },
-    "shortcut-help-pane.add-link": {
-        "defaultMessage": "Добавить ссылку"
-    },
-    "shortcut-help-pane.add-note": {
-        "defaultMessage": "Добавить заметку"
-    },
-    "shortcut-help-pane.add-sibling": {
-        "defaultMessage": "Добавить родственную тему"
-    },
-    "shortcut-help-pane.cancel-text-changes": {
-        "defaultMessage": "Отменить изменения текста"
-    },
-    "shortcut-help-pane.change-font-bold": {
-        "defaultMessage": "Изменить текст на жирный"
-    },
-    "shortcut-help-pane.change-font-italic": {
-        "defaultMessage": "Изменить текст на курсив"
-    },
-    "shortcut-help-pane.collapse-children": {
-        "defaultMessage": "Свернуть дочерние элементы"
-    },
-    "shortcut-help-pane.copy-and-text": {
-        "defaultMessage": "Копировать и вставлять темы/Копировать изображение карты в буфер обмена."
-    },
-    "shortcut-help-pane.delete-topic": {
-        "defaultMessage": "Удалить тему"
-    },
-    "shortcut-help-pane.deselect-all-topics": {
-        "defaultMessage": "Отменить выбор всех тем"
-    },
-    "shortcut-help-pane.drag-disconnect": {
-        "defaultMessage": "Отключить тему"
-    },
-    "shortcut-help-pane.edit-multiline": {
-        "defaultMessage": "Добавить многострочный текст темы"
-    },
-    "shortcut-help-pane.edit-topic": {
-        "defaultMessage": "Редактировать текст темы"
-    },
-    "shortcut-help-pane.edit-topic-key": {
-        "defaultMessage": "F2 или двойной клик"
-    },
-    "shortcut-help-pane.navigation": {
-        "defaultMessage": "Навигация"
-    },
-    "shortcut-help-pane.navigation-keys": {
-        "defaultMessage": "Клавиши со стрелками"
-    },
-    "shortcut-help-pane.overwrite-edit-topic": {
-        "defaultMessage": "Перезаписать текст темы"
-    },
-    "shortcut-help-pane.overwrite-edit-topic-key": {
-        "defaultMessage": "Печатать на выбранной теме"
-    },
-    "shortcut-help-pane.redo": {
-        "defaultMessage": "Повторить редактирование"
-    },
-    "shortcut-help-pane.save-changes": {
-        "defaultMessage": "Сохранить изменения"
-    },
-    "shortcut-help-pane.select-all-topics": {
-        "defaultMessage": "Выбрать все темы"
-    },
-    "shortcut-help-pane.select-topics": {
-        "defaultMessage": "Выбрать несколько тем"
-    },
-    "shortcut-help-pane.select-topics-keys": {
-        "defaultMessage": "Клик мыши"
-    },
-    "shortcut-help-pane.undo": {
-        "defaultMessage": "Отменить редактирование"
-    },
-    "zoom-panel.tooltip-zoom-in": {
-        "defaultMessage": "Увеличить"
-    },
-    "zoom-panel.tooltip-zoom-out": {
-        "defaultMessage": "Уменьшить"
-    },
-    "zoom-panel.tooltip-zoom-to-fit": {
-        "defaultMessage": "Подогнать по размеру"
-    },
-    "creator-info-pane.description": {
-        "defaultMessage": "Описание"
-    },
-    "creator-info-pane.creator": {
-        "defaultMessage": "Создатель"
-    },
-    "theme.dark": {
-        "defaultMessage": "Темная"
-    },
-    "theme.light": {
-        "defaultMessage": "Светлая"
-    },
-    "theme.toggle": {
-        "defaultMessage": "Переключить Тему"
-    },
-    "rich-text-editor.insert-link": {
-        "defaultMessage": "Вставить Ссылку"
-    },
-    "rich-text-editor.insert-icon": {
-        "defaultMessage": "Вставить Иконку"
-    },
-    "rich-text-editor.bold": {
-        "defaultMessage": "Жирный"
-    },
-    "rich-text-editor.italic": {
-        "defaultMessage": "Курсив"
-    },
-    "rich-text-editor.underline": {
-        "defaultMessage": "Подчеркнутый"
-    },
-    "rich-text-editor.strikethrough": {
-        "defaultMessage": "Зачеркнутый"
-    },
-    "rich-text-editor.bullet-list": {
-        "defaultMessage": "Маркированный Список"
-    },
-    "rich-text-editor.numbered-list": {
-        "defaultMessage": "Нумерованный Список"
-    },
-    "image-icon-tab.icon-found": {
-        "defaultMessage": "иконка найдена"
-    },
-    "image-icon-tab.icons-found": {
-        "defaultMessage": "иконки найдены"
-    },
-    "image-icon-tab.icons": {
-        "defaultMessage": "иконки"
-    },
-    "emoji-picker.search-placeholder": {
-        "defaultMessage": "Поиск эмодзи..."
-    },
-    "rich-text-editor.insert-link": {
-        "defaultMessage": "Вставить ссылку"
-    },
-    "rich-text-editor.insert-icon": {
-        "defaultMessage": "Вставить иконку"
-    },
-    "rich-text-editor.bold": {
-        "defaultMessage": "Жирный"
-    },
-    "rich-text-editor.italic": {
-        "defaultMessage": "Курсив"
-    },
-    "rich-text-editor.underline": {
-        "defaultMessage": "Подчеркнутый"
-    },
-    "rich-text-editor.strikethrough": {
-        "defaultMessage": "Зачеркнутый"
-    },
-    "rich-text-editor.bullet-list": {
-        "defaultMessage": "Маркированный список"
-    },
-    "rich-text-editor.numbered-list": {
-        "defaultMessage": "Нумерованный список"
-    },
-    "common.close": {
-        "defaultMessage": "Закрыть"
-    },
-    "canvas-style.apply": {
-        "defaultMessage": "Применить"
-    },
-    "canvas-style.background-color": {
-        "defaultMessage": "Цвет фона"
-    },
-    "canvas-style.background-pattern": {
-        "defaultMessage": "Узор фона"
-    },
-    "canvas-style.colors": {
-        "defaultMessage": "Цвета"
-    },
-    "canvas-style.grid-color": {
-        "defaultMessage": "Цвет сетки"
-    },
-    "canvas-style.grid-size-l": {
-        "defaultMessage": "L"
-    },
-    "canvas-style.grid-size-m": {
-        "defaultMessage": "M"
-    },
-    "canvas-style.grid-size-s": {
-        "defaultMessage": "S"
-    },
-    "canvas-style.grid-size-xl": {
-        "defaultMessage": "XL"
-    },
-    "canvas-style.grid-size-xs": {
-        "defaultMessage": "XS"
-    },
-    "canvas-style.grid-style": {
-        "defaultMessage": "Стиль сетки"
-    },
-    "canvas-style.pattern-dots": {
-        "defaultMessage": "Точки"
-    },
-    "canvas-style.pattern-grid": {
-        "defaultMessage": "Линии сетки"
-    },
-    "canvas-style.pattern-none": {
-        "defaultMessage": "Нет"
-    },
-    "canvas-style.pattern-solid": {
-        "defaultMessage": "Сплошной цвет"
-    },
-    "canvas-style.preview": {
-        "defaultMessage": "Предварительный просмотр"
-    },
-    "canvas-style.reset": {
-        "defaultMessage": "Сбросить"
-    },
-    "canvas-style.title": {
-        "defaultMessage": "Фон"
-    },
-    "editor-panel.canvas-style-title": {
-        "defaultMessage": "Фон"
-    },
-    "editor-panel.font-family-default": {
-        "defaultMessage": "По умолчанию"
-    },
-    "editor-panel.font-family-mixed": {
-        "defaultMessage": "Смешанный"
-    },
-    "editor-panel.tooltip-canvas-style": {
-        "defaultMessage": "Фон"
-    },
-    "zoom-panel.tooltip-collapse-all": {
-        "defaultMessage": "Свернуть все узлы"
-    },
-    "zoom-panel.tooltip-expand-all": {
-        "defaultMessage": "Развернуть все узлы"
-    }
+  "canvas-style.title": {
+    "defaultMessage": "Фон"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "Фон"
+  },
+  "editor-panel.font-family-default": {
+    "defaultMessage": "По умолчанию"
+  },
+  "editor-panel.font-family-mixed": {
+    "defaultMessage": "Смешанный"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "Фон"
+  },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "Свернуть все узлы"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "Развернуть все узлы"
+  }
 }

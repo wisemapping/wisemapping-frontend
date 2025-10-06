@@ -11,12 +11,6 @@
       "value": "Elimina"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Reimposta"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,

@@ -5,22 +5,10 @@
       "value": "Accepter"
     }
   ],
-  "action.cancel": [
-    {
-      "type": 0,
-      "value": "Annuler"
-    }
-  ],
   "action.delete": [
     {
       "type": 0,
       "value": "Supprimer"
-    }
-  ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Réinitialiser"
     }
   ],
   "appbar.back-to-map-list": [
@@ -329,12 +317,6 @@
       "value": "Style de connexion"
     }
   ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "Arc"
-    }
-  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -357,12 +339,6 @@
     {
       "type": 0,
       "value": "Polygonale courbée"
-    }
-  ],
-  "editor-panel.tooltip-delete-sujet": [
-    {
-      "type": 0,
-      "value": "Supprimer le noeud"
     }
   ],
   "editor-panel.tooltip-delete-topic": [
@@ -443,12 +419,6 @@
       "value": "Style de police"
     }
   ],
-  "editor-panel.tooltip-topic-share-arrondi": [
-    {
-      "type": 0,
-      "value": "Arrondi"
-    }
-  ],
   "editor-panel.tooltip-topic-share-ellipse": [
     {
       "type": 0,
@@ -459,12 +429,6 @@
     {
       "type": 0,
       "value": "Ligne"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "Aucune forme"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [
@@ -777,12 +741,6 @@
     {
       "type": 0,
       "value": "Changer le Thème"
-    }
-  ],
-  "zoom-panel.tooltip-clavier": [
-    {
-      "type": 0,
-      "value": "Raccourcis clavier"
     }
   ],
   "zoom-panel.tooltip-collapse-all": [

@@ -11,12 +11,6 @@
       "value": "削除"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "リセット"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,

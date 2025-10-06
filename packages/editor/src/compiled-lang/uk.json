@@ -11,12 +11,6 @@
       "value": "Видалити"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Скинути"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,

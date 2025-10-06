@@ -17,12 +17,6 @@
   "action.accept": {
     "defaultMessage": "Accepter"
   },
-  "action.cancel": {
-    "defaultMessage": "Annuler"
-  },
-  "action.reset": {
-    "defaultMessage": "Réinitialiser"
-  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Retourner à la liste des cartes"
   },
@@ -98,9 +92,6 @@
   "editor-panel.tooltip-delete-topic": {
     "defaultMessage": "Supprimer un noeud"
   },
-  "editor-panel.tooltip-delete-sujet": {
-    "defaultMessage": "Supprimer le noeud"
-  },
   "editor-panel.tooltip-topic-border-color": {
     "defaultMessage": "Couleur de bordure"
   },
@@ -131,17 +122,11 @@
   "editor-panel.tooltip-topic-share-rectangle": {
     "defaultMessage": "Rectangulaire"
   },
-  "editor-panel.tooltip-topic-share-arrondi": {
-    "defaultMessage": "Arrondi"
-  },
   "editor-panel.tooltip-topic-style": {
     "defaultMessage": "Style de noeud"
   },
   "zoom-panel.tooltip-keyboard": {
     "defaultMessage": "Clavier"
-  },
-  "zoom-panel.tooltip-clavier": {
-    "defaultMessage": "Raccourcis clavier"
   },
   "zoom-panel.tooltip-zoom-in": {
     "defaultMessage": "Zoom avant"
@@ -236,17 +221,11 @@
   "shortcut-help-pane.overwrite-edit-topic-key": {
     "defaultMessage": "Ecrire dans le noeud sélectionné"
   },
-  "editor-panel.tooltip-topic-share-none": {
-    "defaultMessage": "Aucune forme"
-  },
   "editor-panel.tooltip-theme": {
     "defaultMessage": "Thème"
   },
   "editor-panel.theme-title": {
     "defaultMessage": "Thème"
-  },
-  "editor-panel.tooltip-connection-style-arc": {
-    "defaultMessage": "Arc"
   },
   "editor-panel.tooltip-topic-share-rounded": {
     "defaultMessage": "Arrondi"
