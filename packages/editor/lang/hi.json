@@ -1,133 +1,392 @@
 {
-  "action.accept": { "defaultMessage": "स्वीकार करें" },
-  "action.delete": { "defaultMessage": "हटाएं" },
-  "action.reset": { "defaultMessage": "रीसेट करें" },
-  "appbar.back-to-map-list": { "defaultMessage": "मानचित्र सूची पर वापस" },
-  "appbar.button-signup": { "defaultMessage": "साइन अप" },
-  "appbar.shared-button": { "defaultMessage": "साझा करें" },
-  "appbar.tooltip-export": { "defaultMessage": "निर्यात" },
-  "appbar.tooltip-history": { "defaultMessage": "परिवर्तनों का इतिहास" },
-  "appbar.tooltip-info": { "defaultMessage": "जानकारी" },
-  "appbar.tooltip-print": { "defaultMessage": "प्रिंट" },
-  "appbar.tooltip-publish": { "defaultMessage": "प्रकाशित करें" },
-  "appbar.tooltip-redo": { "defaultMessage": "फिर से करें" },
-  "appbar.tooltip-save": { "defaultMessage": "सहेजें" },
-  "appbar.tooltip-shared": { "defaultMessage": "सहयोग के लिए साझा करें" },
-  "appbar.tooltip-signup": { "defaultMessage": "साइन अप" },
-  "appbar.tooltip-starred": { "defaultMessage": "पसंदीदा" },
-  "appbar.tooltip-undo": { "defaultMessage": "पूर्ववत" },
-  "editor-panel.icon-title": { "defaultMessage": "आइकन" },
-  "editor-panel.link-panel-title": { "defaultMessage": "लिंक" },
-  "editor-panel.note-panel-title": { "defaultMessage": "नोट" },
-  "editor-panel.tooltip-add-icon": { "defaultMessage": "आइकन जोड़ें" },
-  "editor-panel.tooltip-add-link": { "defaultMessage": "लिंक जोड़ें" },
-  "editor-panel.tooltip-add-note": { "defaultMessage": "नोट जोड़ें" },
-  "editor-panel.tooltip-add-relationship": { "defaultMessage": "संबंध जोड़ें" },
-  "editor-panel.tooltip-add-topic": { "defaultMessage": "विषय जोड़ें" },
-  "editor-panel.tooltip-connection-color": { "defaultMessage": "रंग" },
-  "editor-panel.tooltip-connection-color-default": { "defaultMessage": "डिफ़ॉल्ट रंग" },
-  "editor-panel.tooltip-connection-style": { "defaultMessage": "कनेक्शन शैली" },
-  "editor-panel.tooltip-connection-style-curved-thick": { "defaultMessage": "मोटी वक्र" },
-  "editor-panel.tooltip-connection-style-curved-thin": { "defaultMessage": "पतली वक्र" },
-  "editor-panel.tooltip-connection-style-polyline": { "defaultMessage": "सरल पॉलीलाइन" },
-  "editor-panel.tooltip-connection-style-polyline-curved": { "defaultMessage": "घुमावदार पॉलीलाइन" },
-  "editor-panel.tooltip-delete-topic": { "defaultMessage": "विषय हटाएं" },
-  "editor-panel.tooltip-topic-border-color": { "defaultMessage": "बॉर्डर रंग" },
-  "editor-panel.tooltip-topic-border-color-default": { "defaultMessage": "डिफ़ॉल्ट बॉर्डर रंग" },
-  "editor-panel.tooltip-topic-fill-color": { "defaultMessage": "भराव रंग" },
-  "editor-panel.tooltip-topic-fill-color-default": { "defaultMessage": "डिफ़ॉल्ट भराव रंग" },
-  "editor-panel.tooltip-topic-font-bigger": { "defaultMessage": "बड़ा" },
-  "editor-panel.tooltip-topic-font-bold": { "defaultMessage": "बोल्ड" },
-  "editor-panel.tooltip-topic-font-color": { "defaultMessage": "रंग" },
-  "editor-panel.tooltip-topic-font-color-default": { "defaultMessage": "डिफ़ॉल्ट रंग" },
-  "editor-panel.tooltip-topic-font-italic": { "defaultMessage": "इटालिक" },
-  "editor-panel.tooltip-topic-font-smaller": { "defaultMessage": "छोटा" },
-  "editor-panel.tooltip-topic-font-style": { "defaultMessage": "फ़ॉन्ट शैली" },
-  "editor-panel.tooltip-topic-share-ellipse": { "defaultMessage": "वृत्ताकार आकार" },
-  "editor-panel.tooltip-topic-share-line": { "defaultMessage": "रेखा आकार" },
-  "editor-panel.tooltip-topic-share-rectangle": { "defaultMessage": "आयताकार आकार" },
-  "editor-panel.tooltip-topic-share-rounded": { "defaultMessage": "गोलाकार आकार" },
-  "editor-panel.tooltip-topic-style": { "defaultMessage": "विषय शैली" },
-  "editor.edit-description-mobile": { "defaultMessage": "मोबाइल उपकरणों पर सीमित संपादन क्षमताएं समर्थित हैं। पूर्ण क्षमताओं के लिए डेस्कटॉप ब्राउज़र का उपयोग करें।" },
-  "editor.try-welcome": { "defaultMessage": "यह संपादन स्थान कुछ क्षमताओं को प्रदर्शित करता है!" },
-  "editor.try-welcome-description": { "defaultMessage": "निःशुल्क साइन अप करें और असीमित माइंडमैप बनाना, साझा करना और प्रकाशित करना शुरू करें।" },
-  "editor.try-welcome-description-mobile": { "defaultMessage": "निःशुल्क साइन अप करें और असीमित माइंडमैप बनाना, साझा करना और प्रकाशित करना शुरू करें। मोबाइल पर सीमित क्षमताएं समर्थित हैं।" },
-  "editor.try-welcome-mobile": { "defaultMessage": "यह संपादन स्थान क्षमताओं को प्रदर्शित करता है!" },
-  "icon-picker.show-images": { "defaultMessage": "छवियां दिखाएं" },
-  "link.help_text": { "defaultMessage": "पता मान्य नहीं है" },
-  "link.placeholder": { "defaultMessage": "https://www.example.com" },
-  "shortcut-help-pane.action": { "defaultMessage": "क्रिया" },
-  "shortcut-help-pane.add-child": { "defaultMessage": "चाइल्ड विषय जोड़ें" },
-  "shortcut-help-pane.add-link": { "defaultMessage": "लिंक जोड़ें" },
-  "shortcut-help-pane.add-note": { "defaultMessage": "नोट जोड़ें" },
-  "shortcut-help-pane.add-sibling": { "defaultMessage": "सिबलिंग विषय जोड़ें" },
-  "shortcut-help-pane.cancel-text-changes": { "defaultMessage": "पाठ परिवर्तन रद्द करें" },
-  "shortcut-help-pane.change-font-bold": { "defaultMessage": "पाठ को बोल्ड करें" },
-  "shortcut-help-pane.change-font-italic": { "defaultMessage": "पाठ को इटालिक करें" },
-  "shortcut-help-pane.collapse-children": { "defaultMessage": "बच्चों को समेटें" },
-  "shortcut-help-pane.copy-and-text": { "defaultMessage": "कॉपी-पेस्ट/माइंडमैप छवि कॉपी करें" },
-  "shortcut-help-pane.delete-topic": { "defaultMessage": "विषय हटाएं" },
-  "shortcut-help-pane.deselect-all-topics": { "defaultMessage": "सभी विषयों का चयन रद्द करें" },
-  "shortcut-help-pane.drag-disconnect": { "defaultMessage": "विषय डिस्कनेक्ट करें" },
-  "shortcut-help-pane.edit-multiline": { "defaultMessage": "मल्टी-लाइन पाठ जोड़ें" },
-  "shortcut-help-pane.edit-topic": { "defaultMessage": "विषय पाठ संपादित करें" },
-  "shortcut-help-pane.edit-topic-key": { "defaultMessage": "F2 या डबल क्लिक" },
-  "shortcut-help-pane.navigation": { "defaultMessage": "नेविगेशन" },
-  "shortcut-help-pane.navigation-keys": { "defaultMessage": "एरो कीज़" },
-  "shortcut-help-pane.overwrite-edit-topic": { "defaultMessage": "विषय पाठ अधिलेखित करें" },
-  "shortcut-help-pane.overwrite-edit-topic-key": { "defaultMessage": "चयनित विषय पर टाइप करें" },
-  "shortcut-help-pane.redo": { "defaultMessage": "पुनः करें" },
-  "shortcut-help-pane.save-changes": { "defaultMessage": "परिवर्तन सहेजें" },
-  "shortcut-help-pane.select-all-topics": { "defaultMessage": "सभी विषयों का चयन करें" },
-  "shortcut-help-pane.select-topics": { "defaultMessage": "एकाधिक विषय चुनें" },
-  "shortcut-help-pane.select-topics-keys": { "defaultMessage": "माउस क्लिक" },
-  "shortcut-help-pane.undo": { "defaultMessage": "पूर्ववत संपादन" },
-  "zoom-panel.tooltip-keyboard": { "defaultMessage": "कीबोर्ड शॉर्टकट" },
-  "zoom-panel.tooltip-zoom-in": { "defaultMessage": "ज़ूम इन" },
-  "zoom-panel.tooltip-zoom-out": { "defaultMessage": "ज़ूम आउट" },
-  "zoom-panel.tooltip-zoom-to-fit": { "defaultMessage": "स्क्रीन में फिट करें" },
-  "creator-info-pane.description": { "defaultMessage": "विवरण" },
-  "creator-info-pane.creator": { "defaultMessage": "निर्माता" },
-  "theme.dark": { "defaultMessage": "डार्क" },
-  "theme.light": { "defaultMessage": "लाइट" },
-  "theme.toggle": { "defaultMessage": "थीम बदलें" },
-  "rich-text-editor.insert-link": { "defaultMessage": "लिंक डालें" },
-  "rich-text-editor.insert-icon": { "defaultMessage": "आइकन डालें" },
-  "rich-text-editor.bold": { "defaultMessage": "बोल्ड" },
-  "rich-text-editor.italic": { "defaultMessage": "इटैलिक" },
-  "rich-text-editor.underline": { "defaultMessage": "रेखांकित" },
-  "rich-text-editor.strikethrough": { "defaultMessage": "काटा गया" },
-  "rich-text-editor.bullet-list": { "defaultMessage": "बुलेट सूची" },
-  "rich-text-editor.numbered-list": { "defaultMessage": "क्रमांकित सूची" },
-  "image-icon-tab.icon-found": { "defaultMessage": "आइकन मिला" },
-  "image-icon-tab.icons-found": { "defaultMessage": "आइकन मिले" },
-  "image-icon-tab.icons": { "defaultMessage": "आइकन" },
-  "canvas-style.apply": { "defaultMessage": "लागू करें" },
-  "canvas-style.background-color": { "defaultMessage": "पृष्ठभूमि रंग" },
-  "canvas-style.background-pattern": { "defaultMessage": "पृष्ठभूमि पैटर्न" },
-  "canvas-style.colors": { "defaultMessage": "रंग" },
-  "canvas-style.grid-color": { "defaultMessage": "ग्रिड रंग" },
-  "canvas-style.grid-size-l": { "defaultMessage": "L" },
-  "canvas-style.grid-size-m": { "defaultMessage": "M" },
-  "canvas-style.grid-size-s": { "defaultMessage": "S" },
-  "canvas-style.grid-size-xl": { "defaultMessage": "XL" },
-  "canvas-style.grid-size-xs": { "defaultMessage": "XS" },
-  "canvas-style.grid-style": { "defaultMessage": "ग्रिड शैली" },
-  "canvas-style.pattern-dots": { "defaultMessage": "बिंदु" },
-  "canvas-style.pattern-grid": { "defaultMessage": "ग्रिड लाइनें" },
-  "canvas-style.pattern-none": { "defaultMessage": "कोई नहीं" },
-  "canvas-style.pattern-solid": { "defaultMessage": "ठोस रंग" },
-  "canvas-style.preview": { "defaultMessage": "पूर्वावलोकन" },
-  "canvas-style.reset": { "defaultMessage": "रीसेट करें" },
-  "canvas-style.title": { "defaultMessage": "पृष्ठभूमि" },
-  "common.close": { "defaultMessage": "बंद करें" },
-  "editor-panel.canvas-style-title": { "defaultMessage": "पृष्ठभूमि" },
-  "editor-panel.font-family-default": { "defaultMessage": "डिफ़ॉल्ट" },
-  "editor-panel.font-family-mixed": { "defaultMessage": "मिश्रित" },
-  "editor-panel.theme-title": { "defaultMessage": "थीम" },
-  "editor-panel.tooltip-canvas-style": { "defaultMessage": "पृष्ठभूमि" },
-  "editor-panel.tooltip-theme": { "defaultMessage": "थीम" },
-  "emoji-picker.search-placeholder": { "defaultMessage": "इमोजी खोजें..." },
-  "zoom-panel.tooltip-collapse-all": { "defaultMessage": "सभी नोड्स को संकुचित करें" },
-  "zoom-panel.tooltip-expand-all": { "defaultMessage": "सभी नोड्स को विस्तृत करें" }
+  "action.accept": {
+    "defaultMessage": "स्वीकार करें"
+  },
+  "action.delete": {
+    "defaultMessage": "हटाएं"
+  },
+  "appbar.back-to-map-list": {
+    "defaultMessage": "मानचित्र सूची पर वापस"
+  },
+  "appbar.button-signup": {
+    "defaultMessage": "साइन अप"
+  },
+  "appbar.shared-button": {
+    "defaultMessage": "साझा करें"
+  },
+  "appbar.tooltip-export": {
+    "defaultMessage": "निर्यात"
+  },
+  "appbar.tooltip-history": {
+    "defaultMessage": "परिवर्तनों का इतिहास"
+  },
+  "appbar.tooltip-info": {
+    "defaultMessage": "जानकारी"
+  },
+  "appbar.tooltip-print": {
+    "defaultMessage": "प्रिंट"
+  },
+  "appbar.tooltip-publish": {
+    "defaultMessage": "प्रकाशित करें"
+  },
+  "appbar.tooltip-redo": {
+    "defaultMessage": "फिर से करें"
+  },
+  "appbar.tooltip-save": {
+    "defaultMessage": "सहेजें"
+  },
+  "appbar.tooltip-shared": {
+    "defaultMessage": "सहयोग के लिए साझा करें"
+  },
+  "appbar.tooltip-signup": {
+    "defaultMessage": "साइन अप"
+  },
+  "appbar.tooltip-starred": {
+    "defaultMessage": "पसंदीदा"
+  },
+  "appbar.tooltip-undo": {
+    "defaultMessage": "पूर्ववत"
+  },
+  "editor-panel.icon-title": {
+    "defaultMessage": "आइकन"
+  },
+  "editor-panel.link-panel-title": {
+    "defaultMessage": "लिंक"
+  },
+  "editor-panel.note-panel-title": {
+    "defaultMessage": "नोट"
+  },
+  "editor-panel.tooltip-add-icon": {
+    "defaultMessage": "आइकन जोड़ें"
+  },
+  "editor-panel.tooltip-add-link": {
+    "defaultMessage": "लिंक जोड़ें"
+  },
+  "editor-panel.tooltip-add-note": {
+    "defaultMessage": "नोट जोड़ें"
+  },
+  "editor-panel.tooltip-add-relationship": {
+    "defaultMessage": "संबंध जोड़ें"
+  },
+  "editor-panel.tooltip-add-topic": {
+    "defaultMessage": "विषय जोड़ें"
+  },
+  "editor-panel.tooltip-connection-color": {
+    "defaultMessage": "रंग"
+  },
+  "editor-panel.tooltip-connection-color-default": {
+    "defaultMessage": "डिफ़ॉल्ट रंग"
+  },
+  "editor-panel.tooltip-connection-style": {
+    "defaultMessage": "कनेक्शन शैली"
+  },
+  "editor-panel.tooltip-connection-style-curved-thick": {
+    "defaultMessage": "मोटी वक्र"
+  },
+  "editor-panel.tooltip-connection-style-curved-thin": {
+    "defaultMessage": "पतली वक्र"
+  },
+  "editor-panel.tooltip-connection-style-polyline": {
+    "defaultMessage": "सरल पॉलीलाइन"
+  },
+  "editor-panel.tooltip-connection-style-polyline-curved": {
+    "defaultMessage": "घुमावदार पॉलीलाइन"
+  },
+  "editor-panel.tooltip-delete-topic": {
+    "defaultMessage": "विषय हटाएं"
+  },
+  "editor-panel.tooltip-topic-border-color": {
+    "defaultMessage": "बॉर्डर रंग"
+  },
+  "editor-panel.tooltip-topic-border-color-default": {
+    "defaultMessage": "डिफ़ॉल्ट बॉर्डर रंग"
+  },
+  "editor-panel.tooltip-topic-fill-color": {
+    "defaultMessage": "भराव रंग"
+  },
+  "editor-panel.tooltip-topic-fill-color-default": {
+    "defaultMessage": "डिफ़ॉल्ट भराव रंग"
+  },
+  "editor-panel.tooltip-topic-font-bigger": {
+    "defaultMessage": "बड़ा"
+  },
+  "editor-panel.tooltip-topic-font-bold": {
+    "defaultMessage": "बोल्ड"
+  },
+  "editor-panel.tooltip-topic-font-color": {
+    "defaultMessage": "रंग"
+  },
+  "editor-panel.tooltip-topic-font-color-default": {
+    "defaultMessage": "डिफ़ॉल्ट रंग"
+  },
+  "editor-panel.tooltip-topic-font-italic": {
+    "defaultMessage": "इटालिक"
+  },
+  "editor-panel.tooltip-topic-font-smaller": {
+    "defaultMessage": "छोटा"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "फ़ॉन्ट शैली"
+  },
+  "editor-panel.tooltip-topic-share-ellipse": {
+    "defaultMessage": "वृत्ताकार आकार"
+  },
+  "editor-panel.tooltip-topic-share-line": {
+    "defaultMessage": "रेखा आकार"
+  },
+  "editor-panel.tooltip-topic-share-rectangle": {
+    "defaultMessage": "आयताकार आकार"
+  },
+  "editor-panel.tooltip-topic-share-rounded": {
+    "defaultMessage": "गोलाकार आकार"
+  },
+  "editor-panel.tooltip-topic-style": {
+    "defaultMessage": "विषय शैली"
+  },
+  "editor.edit-description-mobile": {
+    "defaultMessage": "मोबाइल उपकरणों पर सीमित संपादन क्षमताएं समर्थित हैं। पूर्ण क्षमताओं के लिए डेस्कटॉप ब्राउज़र का उपयोग करें।"
+  },
+  "editor.try-welcome": {
+    "defaultMessage": "यह संपादन स्थान कुछ क्षमताओं को प्रदर्शित करता है!"
+  },
+  "editor.try-welcome-description": {
+    "defaultMessage": "निःशुल्क साइन अप करें और असीमित माइंडमैप बनाना, साझा करना और प्रकाशित करना शुरू करें।"
+  },
+  "editor.try-welcome-description-mobile": {
+    "defaultMessage": "निःशुल्क साइन अप करें और असीमित माइंडमैप बनाना, साझा करना और प्रकाशित करना शुरू करें। मोबाइल पर सीमित क्षमताएं समर्थित हैं।"
+  },
+  "editor.try-welcome-mobile": {
+    "defaultMessage": "यह संपादन स्थान क्षमताओं को प्रदर्शित करता है!"
+  },
+  "icon-picker.show-images": {
+    "defaultMessage": "छवियां दिखाएं"
+  },
+  "link.help_text": {
+    "defaultMessage": "पता मान्य नहीं है"
+  },
+  "link.placeholder": {
+    "defaultMessage": "https://www.example.com"
+  },
+  "shortcut-help-pane.action": {
+    "defaultMessage": "क्रिया"
+  },
+  "shortcut-help-pane.add-child": {
+    "defaultMessage": "चाइल्ड विषय जोड़ें"
+  },
+  "shortcut-help-pane.add-link": {
+    "defaultMessage": "लिंक जोड़ें"
+  },
+  "shortcut-help-pane.add-note": {
+    "defaultMessage": "नोट जोड़ें"
+  },
+  "shortcut-help-pane.add-sibling": {
+    "defaultMessage": "सिबलिंग विषय जोड़ें"
+  },
+  "shortcut-help-pane.cancel-text-changes": {
+    "defaultMessage": "पाठ परिवर्तन रद्द करें"
+  },
+  "shortcut-help-pane.change-font-bold": {
+    "defaultMessage": "पाठ को बोल्ड करें"
+  },
+  "shortcut-help-pane.change-font-italic": {
+    "defaultMessage": "पाठ को इटालिक करें"
+  },
+  "shortcut-help-pane.collapse-children": {
+    "defaultMessage": "बच्चों को समेटें"
+  },
+  "shortcut-help-pane.copy-and-text": {
+    "defaultMessage": "कॉपी-पेस्ट/माइंडमैप छवि कॉपी करें"
+  },
+  "shortcut-help-pane.delete-topic": {
+    "defaultMessage": "विषय हटाएं"
+  },
+  "shortcut-help-pane.deselect-all-topics": {
+    "defaultMessage": "सभी विषयों का चयन रद्द करें"
+  },
+  "shortcut-help-pane.drag-disconnect": {
+    "defaultMessage": "विषय डिस्कनेक्ट करें"
+  },
+  "shortcut-help-pane.edit-multiline": {
+    "defaultMessage": "मल्टी-लाइन पाठ जोड़ें"
+  },
+  "shortcut-help-pane.edit-topic": {
+    "defaultMessage": "विषय पाठ संपादित करें"
+  },
+  "shortcut-help-pane.edit-topic-key": {
+    "defaultMessage": "F2 या डबल क्लिक"
+  },
+  "shortcut-help-pane.navigation": {
+    "defaultMessage": "नेविगेशन"
+  },
+  "shortcut-help-pane.navigation-keys": {
+    "defaultMessage": "एरो कीज़"
+  },
+  "shortcut-help-pane.overwrite-edit-topic": {
+    "defaultMessage": "विषय पाठ अधिलेखित करें"
+  },
+  "shortcut-help-pane.overwrite-edit-topic-key": {
+    "defaultMessage": "चयनित विषय पर टाइप करें"
+  },
+  "shortcut-help-pane.redo": {
+    "defaultMessage": "पुनः करें"
+  },
+  "shortcut-help-pane.save-changes": {
+    "defaultMessage": "परिवर्तन सहेजें"
+  },
+  "shortcut-help-pane.select-all-topics": {
+    "defaultMessage": "सभी विषयों का चयन करें"
+  },
+  "shortcut-help-pane.select-topics": {
+    "defaultMessage": "एकाधिक विषय चुनें"
+  },
+  "shortcut-help-pane.select-topics-keys": {
+    "defaultMessage": "माउस क्लिक"
+  },
+  "shortcut-help-pane.undo": {
+    "defaultMessage": "पूर्ववत संपादन"
+  },
+  "zoom-panel.tooltip-keyboard": {
+    "defaultMessage": "कीबोर्ड शॉर्टकट"
+  },
+  "zoom-panel.tooltip-zoom-in": {
+    "defaultMessage": "ज़ूम इन"
+  },
+  "zoom-panel.tooltip-zoom-out": {
+    "defaultMessage": "ज़ूम आउट"
+  },
+  "zoom-panel.tooltip-zoom-to-fit": {
+    "defaultMessage": "स्क्रीन में फिट करें"
+  },
+  "creator-info-pane.description": {
+    "defaultMessage": "विवरण"
+  },
+  "creator-info-pane.creator": {
+    "defaultMessage": "निर्माता"
+  },
+  "theme.dark": {
+    "defaultMessage": "डार्क"
+  },
+  "theme.light": {
+    "defaultMessage": "लाइट"
+  },
+  "theme.toggle": {
+    "defaultMessage": "थीम बदलें"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "लिंक डालें"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "आइकन डालें"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "बोल्ड"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "इटैलिक"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "रेखांकित"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "काटा गया"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "बुलेट सूची"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "क्रमांकित सूची"
+  },
+  "image-icon-tab.icon-found": {
+    "defaultMessage": "आइकन मिला"
+  },
+  "image-icon-tab.icons-found": {
+    "defaultMessage": "आइकन मिले"
+  },
+  "image-icon-tab.icons": {
+    "defaultMessage": "आइकन"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "लागू करें"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "पृष्ठभूमि रंग"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "पृष्ठभूमि पैटर्न"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "रंग"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "ग्रिड रंग"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "ग्रिड शैली"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "बिंदु"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "ग्रिड लाइनें"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "कोई नहीं"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "ठोस रंग"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "पूर्वावलोकन"
+  },
+  "canvas-style.reset": {
+    "defaultMessage": "रीसेट करें"
+  },
+  "canvas-style.title": {
+    "defaultMessage": "पृष्ठभूमि"
+  },
+  "common.close": {
+    "defaultMessage": "बंद करें"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "पृष्ठभूमि"
+  },
+  "editor-panel.font-family-default": {
+    "defaultMessage": "डिफ़ॉल्ट"
+  },
+  "editor-panel.font-family-mixed": {
+    "defaultMessage": "मिश्रित"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "थीम"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "पृष्ठभूमि"
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "थीम"
+  },
+  "emoji-picker.search-placeholder": {
+    "defaultMessage": "इमोजी खोजें..."
+  },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "सभी नोड्स को संकुचित करें"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "सभी नोड्स को विस्तृत करें"
+  }
 }

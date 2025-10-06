@@ -5,22 +5,10 @@
       "value": "Aceptar"
     }
   ],
-  "action.cancel": [
-    {
-      "type": 0,
-      "value": "Cancelar"
-    }
-  ],
   "action.delete": [
     {
       "type": 0,
       "value": "Borrar"
-    }
-  ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Restablecer"
     }
   ],
   "appbar.back-to-map-list": [
@@ -329,12 +317,6 @@
       "value": "Estilo de conexión"
     }
   ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "Arco"
-    }
-  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -447,12 +429,6 @@
     {
       "type": 0,
       "value": "Forma de linea"
-    }
-  ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "Sin forma"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [

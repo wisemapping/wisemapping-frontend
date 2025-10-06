@@ -263,133 +263,133 @@
   "creator-info-pane.description": {
     "defaultMessage": "描述"
   },
-    "creator-info-pane.creator": {
-        "defaultMessage": "创建者"
-    },
-    "theme.dark": {
-        "defaultMessage": "深色"
-    },
-    "theme.light": {
-        "defaultMessage": "浅色"
-    },
-    "theme.toggle": {
-        "defaultMessage": "切换主题"
-    },
-    "rich-text-editor.insert-link": {
-        "defaultMessage": "插入链接"
-    },
-    "rich-text-editor.insert-icon": {
-        "defaultMessage": "插入图标"
-    },
-    "rich-text-editor.bold": {
-        "defaultMessage": "粗体"
-    },
-    "rich-text-editor.italic": {
-        "defaultMessage": "斜体"
-    },
-    "rich-text-editor.underline": {
-        "defaultMessage": "下划线"
-    },
-    "rich-text-editor.strikethrough": {
-        "defaultMessage": "删除线"
-    },
-    "rich-text-editor.bullet-list": {
-        "defaultMessage": "项目符号列表"
-    },
-    "rich-text-editor.numbered-list": {
-        "defaultMessage": "编号列表"
-    },
-    "image-icon-tab.icon-found": {
-        "defaultMessage": "找到图标"
-    },
-    "image-icon-tab.icons-found": {
-        "defaultMessage": "找到图标"
-    },
-    "image-icon-tab.icons": {
-        "defaultMessage": "图标"
-    },
-    "canvas-style.apply": {
-        "defaultMessage": "应用"
-    },
-    "canvas-style.background-color": {
-        "defaultMessage": "背景颜色"
-    },
-    "canvas-style.background-pattern": {
-        "defaultMessage": "背景图案"
-    },
-    "canvas-style.colors": {
-        "defaultMessage": "颜色"
-    },
-    "canvas-style.grid-color": {
-        "defaultMessage": "网格颜色"
-    },
-    "canvas-style.grid-size-l": {
-        "defaultMessage": "L"
-    },
-    "canvas-style.grid-size-m": {
-        "defaultMessage": "M"
-    },
-    "canvas-style.grid-size-s": {
-        "defaultMessage": "S"
-    },
-    "canvas-style.grid-size-xl": {
-        "defaultMessage": "XL"
-    },
-    "canvas-style.grid-size-xs": {
-        "defaultMessage": "XS"
-    },
-    "canvas-style.grid-style": {
-        "defaultMessage": "网格样式"
-    },
-    "canvas-style.pattern-dots": {
-        "defaultMessage": "点"
-    },
-    "canvas-style.pattern-grid": {
-        "defaultMessage": "网格线"
-    },
-    "canvas-style.pattern-none": {
-        "defaultMessage": "无"
-    },
-    "canvas-style.pattern-solid": {
-        "defaultMessage": "纯色"
-    },
-    "canvas-style.preview": {
-        "defaultMessage": "预览"
-    },
-    "canvas-style.reset": {
-        "defaultMessage": "重置"
-    },
-    "canvas-style.title": {
-        "defaultMessage": "背景"
-    },
-    "common.close": {
-        "defaultMessage": "关闭"
-    },
-    "editor-panel.canvas-style-title": {
-        "defaultMessage": "背景"
-    },
-    "editor-panel.font-family-default": {
-        "defaultMessage": "默认"
-    },
-    "editor-panel.font-family-mixed": {
-        "defaultMessage": "混合"
-    },
-    "editor-panel.theme-title": {
-        "defaultMessage": "主题"
-    },
-    "editor-panel.tooltip-canvas-style": {
-        "defaultMessage": "背景"
-    },
-    "editor-panel.tooltip-theme": {
-        "defaultMessage": "主题"
-    },
-    "emoji-picker.search-placeholder": {
-        "defaultMessage": "搜索表情..."
-    },
-    "zoom-panel.tooltip-collapse-all": {
-        "defaultMessage": "折叠所有节点"
-    },
-    "zoom-panel.tooltip-expand-all": {
-        "defaultMessage": "展开所有节点"
-    }
+  "creator-info-pane.creator": {
+    "defaultMessage": "创建者"
+  },
+  "theme.dark": {
+    "defaultMessage": "深色"
+  },
+  "theme.light": {
+    "defaultMessage": "浅色"
+  },
+  "theme.toggle": {
+    "defaultMessage": "切换主题"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "插入链接"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "插入图标"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "粗体"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "斜体"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "下划线"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "删除线"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "项目符号列表"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "编号列表"
+  },
+  "image-icon-tab.icon-found": {
+    "defaultMessage": "找到图标"
+  },
+  "image-icon-tab.icons-found": {
+    "defaultMessage": "找到图标"
+  },
+  "image-icon-tab.icons": {
+    "defaultMessage": "图标"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "应用"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "背景颜色"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "背景图案"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "颜色"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "网格颜色"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "网格样式"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "点"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "网格线"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "无"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "纯色"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "预览"
+  },
+  "canvas-style.reset": {
+    "defaultMessage": "重置"
+  },
+  "canvas-style.title": {
+    "defaultMessage": "背景"
+  },
+  "common.close": {
+    "defaultMessage": "关闭"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "背景"
+  },
+  "editor-panel.font-family-default": {
+    "defaultMessage": "默认"
+  },
+  "editor-panel.font-family-mixed": {
+    "defaultMessage": "混合"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "主题"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "背景"
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "主题"
+  },
+  "emoji-picker.search-placeholder": {
+    "defaultMessage": "搜索表情..."
+  },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "折叠所有节点"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "展开所有节点"
+  }
 }

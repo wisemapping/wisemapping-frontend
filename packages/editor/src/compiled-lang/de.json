@@ -5,28 +5,10 @@
       "value": "Akzeptieren"
     }
   ],
-  "action.cancel": [
-    {
-      "type": 0,
-      "value": "Abbrechen"
-    }
-  ],
   "action.delete": [
     {
       "type": 0,
       "value": "Löschen"
-    }
-  ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "Zurücksetzen"
-    }
-  ],
-  "action.share": [
-    {
-      "type": 0,
-      "value": "Teilen"
     }
   ],
   "appbar.back-to-map-list": [
@@ -335,12 +317,6 @@
       "value": "Verbindungsstil"
     }
   ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "Bogen"
-    }
-  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -455,12 +431,6 @@
       "value": "Linienform"
     }
   ],
-  "editor-panel.tooltip-topic-share-none": [
-    {
-      "type": 0,
-      "value": "keine Form"
-    }
-  ],
   "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
@@ -549,12 +519,6 @@
     {
       "type": 0,
       "value": "https://www.beispiel.de"
-    }
-  ],
-  "login.signup": [
-    {
-      "type": 0,
-      "value": "Anmeldung"
     }
   ],
   "rich-text-editor.bold": [

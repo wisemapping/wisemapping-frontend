@@ -11,18 +11,6 @@
       "value": "删除"
     }
   ],
-  "action.reset": [
-    {
-      "type": 0,
-      "value": "重置"
-    }
-  ],
-  "action.share": [
-    {
-      "type": 0,
-      "value": "分享"
-    }
-  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -329,12 +317,6 @@
       "value": "连接方式"
     }
   ],
-  "editor-panel.tooltip-connection-style-arc": [
-    {
-      "type": 0,
-      "value": "弧"
-    }
-  ],
   "editor-panel.tooltip-connection-style-curved-thick": [
     {
       "type": 0,
@@ -449,10 +431,10 @@
       "value": "线形"
     }
   ],
-  "editor-panel.tooltip-topic-share-none": [
+  "editor-panel.tooltip-topic-share-rectangle": [
     {
       "type": 0,
-      "value": "没有形状"
+      "value": "矩形形状"
     }
   ],
   "editor-panel.tooltip-topic-share-rectangle": [
@@ -477,12 +459,6 @@
     {
       "type": 0,
       "value": "移动设备支持有限的思维导图编辑功能。 使用桌面浏览器获得完整的编辑器功能。"
-    }
-  ],
-  "editor.edit-mobile": [
-    {
-      "type": 0,
-      "value": "移动设备注意事项."
     }
   ],
   "editor.try-welcome": [
@@ -549,12 +525,6 @@
     {
       "type": 0,
       "value": "https://www.example.com"
-    }
-  ],
-  "login.signup": [
-    {
-      "type": 0,
-      "value": "注册"
     }
   ],
   "rich-text-editor.bold": [
