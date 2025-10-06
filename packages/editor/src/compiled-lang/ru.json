@@ -365,10 +365,34 @@
       "value": "В этом издании демонстрируются некоторые возможности ментальных карт!"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Поиск эмодзи..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
       "value": "Показать изображения"
+    }
+  ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "иконка найдена"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "иконки"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "иконки найдены"
     }
   ],
   "link.help_text": [
@@ -387,6 +411,54 @@
     {
       "type": 0,
       "value": "Регистрация"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Жирный"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Маркированный Список"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Вставить Иконку"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Вставить Ссылку"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Курсив"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Нумерованный Список"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Зачеркнутый"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Подчеркнутый"
     }
   ],
   "shortcut-help-pane.action": [

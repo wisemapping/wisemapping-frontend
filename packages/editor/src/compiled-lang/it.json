@@ -335,6 +335,24 @@
       "value": "Mostra immagini"
     }
   ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "icona trovata"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "icone"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "icone trovate"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -345,6 +363,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Grassetto"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Elenco Puntato"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Inserisci Icona"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Inserisci Link"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Corsivo"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Elenco Numerato"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Barrato"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Sottolineato"
     }
   ],
   "shortcut-help-pane.action": [

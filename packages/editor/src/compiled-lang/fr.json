@@ -497,6 +497,24 @@
       "value": "Afficher les images"
     }
   ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "icône trouvée"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "icônes"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "icônes trouvées"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -507,6 +525,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Gras"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Liste à Puces"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Insérer une Icône"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Insérer un Lien"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Italique"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Liste Numérotée"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Barré"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Souligné"
     }
   ],
   "shortcut-help-pane.action": [

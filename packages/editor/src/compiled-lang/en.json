@@ -11,6 +11,12 @@
       "value": "Delete"
     }
   ],
+  "action.reset": [
+    {
+      "type": 0,
+      "value": "Reset"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -219,6 +225,18 @@
     {
       "type": 0,
       "value": "Background"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "Default"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Mixed"
     }
   ],
   "editor-panel.icon-title": [
@@ -461,10 +479,34 @@
       "value": "This edition space showcases some of the mindmap editor capabilities!"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Search emojis..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
       "value": "Show images"
+    }
+  ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "icon found"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "icons"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "icons found"
     }
   ],
   "link.help_text": [
@@ -477,6 +519,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Bold"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Bullet List"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Insert Icon"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Insert Link"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Italic"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Numbered List"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Strikethrough"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Underline"
     }
   ],
   "shortcut-help-pane.action": [

@@ -479,6 +479,24 @@
       "value": "Bilder anzeigen"
     }
   ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "Symbol gefunden"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "Symbole"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "Symbole gefunden"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -495,6 +513,54 @@
     {
       "type": 0,
       "value": "Anmeldung"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Fett"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Aufzählungsliste"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Symbol Einfügen"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Link Einfügen"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Kursiv"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Nummerierte Liste"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Durchgestrichen"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Unterstrichen"
     }
   ],
   "shortcut-help-pane.action": [

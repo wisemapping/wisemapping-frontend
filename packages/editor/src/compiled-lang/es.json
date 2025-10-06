@@ -17,6 +17,12 @@
       "value": "Borrar"
     }
   ],
+  "action.reset": [
+    {
+      "type": 0,
+      "value": "Restablecer"
+    }
+  ],
   "appbar.back-to-map-list": [
     {
       "type": 0,
@@ -99,6 +105,48 @@
     {
       "type": 0,
       "value": "Deshacer"
+    }
+  ],
+  "canvas-style.grid-size-l": [
+    {
+      "type": 0,
+      "value": "L"
+    }
+  ],
+  "canvas-style.grid-size-m": [
+    {
+      "type": 0,
+      "value": "M"
+    }
+  ],
+  "canvas-style.grid-size-s": [
+    {
+      "type": 0,
+      "value": "S"
+    }
+  ],
+  "canvas-style.grid-size-xl": [
+    {
+      "type": 0,
+      "value": "XL"
+    }
+  ],
+  "canvas-style.grid-size-xs": [
+    {
+      "type": 0,
+      "value": "XS"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "Por defecto"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Mixto"
     }
   ],
   "editor-panel.icon-title": [
@@ -347,10 +395,34 @@
       "value": "¡Este espacio de edición muestra algunas de las capacidades de mapas mentales!"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Buscar emojis..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
       "value": "Mostrar imagenes"
+    }
+  ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "icono encontrado"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "iconos"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "iconos encontrados"
     }
   ],
   "link.help_text": [
@@ -363,6 +435,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Negrita"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Lista con Viñetas"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Insertar Icono"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Insertar Enlace"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Cursiva"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Lista Numerada"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Tachado"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Subrayado"
     }
   ],
   "shortcut-help-pane.action": [

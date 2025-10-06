@@ -335,6 +335,24 @@
       "value": "छवियां दिखाएं"
     }
   ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "आइकन मिला"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "आइकन"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "आइकन मिले"
+    }
+  ],
   "link.help_text": [
     {
       "type": 0,
@@ -345,6 +363,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "बोल्ड"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "बुलेट सूची"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "आइकन डालें"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "लिंक डालें"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "इटैलिक"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "क्रमांकित सूची"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "काटा गया"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "रेखांकित"
     }
   ],
   "shortcut-help-pane.action": [

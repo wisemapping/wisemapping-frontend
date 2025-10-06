@@ -107,6 +107,18 @@
       "value": "Descrição"
     }
   ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "Padrão"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Misto"
+    }
+  ],
   "editor-panel.icon-title": [
     {
       "type": 0,
@@ -329,10 +341,34 @@
       "value": "Este espaço de edição mostra algumas das capacidades do editor de mapas mentais!"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Pesquisar emojis..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
       "value": "Mostrar imagens"
+    }
+  ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "ícone encontrado"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "ícones"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "ícones encontrados"
     }
   ],
   "link.help_text": [
@@ -345,6 +381,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Negrito"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Lista com Marcadores"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Inserir Ícone"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Inserir Link"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Itálico"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Lista Numerada"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Riscado"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Sublinhado"
     }
   ],
   "shortcut-help-pane.action": [
