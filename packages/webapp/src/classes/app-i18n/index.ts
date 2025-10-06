@@ -20,6 +20,7 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/es';
 import 'dayjs/locale/de';
 import 'dayjs/locale/ru';
+import 'dayjs/locale/uk';
 import 'dayjs/locale/zh';
 import 'dayjs/locale/zh-cn';
 import 'dayjs/locale/ja';
@@ -101,6 +102,7 @@ export type LocaleCode =
   | 'fr'
   | 'de'
   | 'ru'
+  | 'uk'
   | 'zh'
   | 'zh-CN'
   | 'ja'
@@ -114,6 +116,7 @@ export const Locales = {
   DE: new Locale('de', 'Deutsch', require('./../../compiled-lang/de.json')), // eslint-disable-line
   FR: new Locale('fr', 'Français', require('./../../compiled-lang/fr.json')), // eslint-disable-line
   RU: new Locale('ru', 'Pусский', require('./../../compiled-lang/ru.json')), // eslint-disable-line
+  UK: new Locale('uk', 'Українська', require('./../../compiled-lang/uk.json')), // eslint-disable-line
   ZH: new Locale('zh', '中文 (简体)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
   ZH_CN: new Locale('zh-CN', '中文 (普通话)', require('./../../compiled-lang/zh.json')), // eslint-disable-line
   JA: new Locale('ja', '日本語', require('./../../compiled-lang/ja.json')), // eslint-disable-line

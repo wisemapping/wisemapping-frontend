@@ -319,5 +319,41 @@
     },
     "theme.toggle": {
         "defaultMessage": "Переключить Тему"
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "Вставить Ссылку"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "Вставить Иконку"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "Жирный"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "Курсив"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "Подчеркнутый"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "Зачеркнутый"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "Маркированный Список"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "Нумерованный Список"
+    },
+    "image-icon-tab.icon-found": {
+        "defaultMessage": "иконка найдена"
+    },
+    "image-icon-tab.icons-found": {
+        "defaultMessage": "иконки найдены"
+    },
+    "image-icon-tab.icons": {
+        "defaultMessage": "иконки"
+    },
+    "emoji-picker.search-placeholder": {
+        "defaultMessage": "Поиск эмодзи..."
     }
 }

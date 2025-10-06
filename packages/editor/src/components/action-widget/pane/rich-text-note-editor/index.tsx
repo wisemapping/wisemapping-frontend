@@ -24,7 +24,7 @@ import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
 import { useTheme } from '@mui/material/styles';
 import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import NodeProperty from '../../../../classes/model/node-property';
 import SaveAndDelete from '../save-and-delete';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
@@ -46,6 +46,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
   const [characterCount, setCharacterCount] = useState(initialValue.length);
   const MAX_CHARACTERS = 10000;
   const theme = useTheme();
+  const intl = useIntl();
 
   const submitHandler = useCallback(() => {
     closeModal();
@@ -586,6 +587,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           emojiStyle={EmojiStyle.NATIVE}
           skinTonesDisabled
           theme={theme.palette.mode === 'dark' ? Theme.DARK : Theme.LIGHT}
+          searchPlaceholder={intl.formatMessage({
+            id: 'emoji-picker.search-placeholder',
+            defaultMessage: 'Search emojis...',
+          })}
         />
       </Popover>
     </Box>

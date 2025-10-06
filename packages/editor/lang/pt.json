@@ -128,6 +128,12 @@
   "editor-panel.tooltip-topic-font-style": {
     "defaultMessage": "Estilo da fonte"
   },
+  "editor-panel.font-family-default": {
+    "defaultMessage": "Padrão"
+  },
+  "editor-panel.font-family-mixed": {
+    "defaultMessage": "Misto"
+  },
   "editor-panel.tooltip-topic-share-ellipse": {
     "defaultMessage": "Forma elíptica"
   },
@@ -271,5 +277,41 @@
   },
   "theme.toggle": {
     "defaultMessage": "Alternar Tema"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "Inserir Link"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "Inserir Ícone"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "Negrito"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "Itálico"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "Sublinhado"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "Riscado"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "Lista com Marcadores"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "Lista Numerada"
+  },
+  "image-icon-tab.icon-found": {
+    "defaultMessage": "ícone encontrado"
+  },
+  "image-icon-tab.icons-found": {
+    "defaultMessage": "ícones encontrados"
+  },
+  "image-icon-tab.icons": {
+    "defaultMessage": "ícones"
+  },
+  "emoji-picker.search-placeholder": {
+    "defaultMessage": "Pesquisar emojis..."
   }
 }

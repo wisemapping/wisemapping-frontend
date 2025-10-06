@@ -1,0 +1,1142 @@
+{
+  "account.delete-warning": [
+    {
+      "type": 0,
+      "value": "Майте на увазі, що ви не зможете відновити жодну карту розуму, яку ви додали. Вся ваша інформація буде видалена і не може бути відновлена."
+    }
+  ],
+  "accountinfo.button": [
+    {
+      "type": 0,
+      "value": "Прийняти"
+    }
+  ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "Видалити акаунт"
+    }
+  ],
+  "accountinfo.email": [
+    {
+      "type": 0,
+      "value": "Електронна пошта"
+    }
+  ],
+  "accountinfo.firstname": [
+    {
+      "type": 0,
+      "value": "Ім'я"
+    }
+  ],
+  "accountinfo.lastname": [
+    {
+      "type": 0,
+      "value": "Прізвище"
+    }
+  ],
+  "accountinfo.title": [
+    {
+      "type": 0,
+      "value": "Інформація про акаунт"
+    }
+  ],
+  "action.cancel-button": [
+    {
+      "type": 0,
+      "value": "Скасувати"
+    }
+  ],
+  "action.close-button": [
+    {
+      "type": 0,
+      "value": "Закрити"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Видалити"
+    }
+  ],
+  "action.delete-description": [
+    {
+      "type": 0,
+      "value": "Видалену карту розуму неможливо відновити. Чи хочете продовжити?"
+    }
+  ],
+  "action.delete-title": [
+    {
+      "type": 0,
+      "value": "Видалити"
+    }
+  ],
+  "action.duplicate": [
+    {
+      "type": 0,
+      "value": "Дублювати"
+    }
+  ],
+  "action.export": [
+    {
+      "type": 0,
+      "value": "Експорт"
+    }
+  ],
+  "action.history": [
+    {
+      "type": 0,
+      "value": "Історія"
+    }
+  ],
+  "action.history-description": [
+    {
+      "type": 0,
+      "value": "Список змін, внесених за останні 90 днів."
+    }
+  ],
+  "action.history-title": [
+    {
+      "type": 0,
+      "value": "Історія версій"
+    }
+  ],
+  "action.import": [
+    {
+      "type": 0,
+      "value": "Імпорт"
+    }
+  ],
+  "action.info": [
+    {
+      "type": 0,
+      "value": "Інформація"
+    }
+  ],
+  "action.label": [
+    {
+      "type": 0,
+      "value": "Додати мітку"
+    }
+  ],
+  "action.new": [
+    {
+      "type": 0,
+      "value": "Нова карта"
+    }
+  ],
+  "action.open": [
+    {
+      "type": 0,
+      "value": "Відкрити"
+    }
+  ],
+  "action.print": [
+    {
+      "type": 0,
+      "value": "Друк"
+    }
+  ],
+  "action.publish": [
+    {
+      "type": 0,
+      "value": "Опублікувати"
+    }
+  ],
+  "action.rename": [
+    {
+      "type": 0,
+      "value": "Перейменувати"
+    }
+  ],
+  "action.rename-description-placeholder": [
+    {
+      "type": 0,
+      "value": "Опис"
+    }
+  ],
+  "action.rename-name-placeholder": [
+    {
+      "type": 0,
+      "value": "Назва"
+    }
+  ],
+  "action.share": [
+    {
+      "type": 0,
+      "value": "Поділитися"
+    }
+  ],
+  "changepwd.button": [
+    {
+      "type": 0,
+      "value": "Змінити"
+    }
+  ],
+  "changepwd.confirm-password": [
+    {
+      "type": 0,
+      "value": "Підтвердити пароль"
+    }
+  ],
+  "changepwd.description": [
+    {
+      "type": 0,
+      "value": "Будь ласка, вкажіть новий пароль для вашого акаунту."
+    }
+  ],
+  "changepwd.password": [
+    {
+      "type": 0,
+      "value": "Пароль"
+    }
+  ],
+  "changepwd.password-match": [
+    {
+      "type": 0,
+      "value": "Паролі не співпадають. Будь ласка, спробуйте ще раз."
+    }
+  ],
+  "changepwd.title": [
+    {
+      "type": 0,
+      "value": "Змінити пароль"
+    }
+  ],
+  "common.wait": [
+    {
+      "type": 0,
+      "value": "Будь ласка, зачекайте..."
+    }
+  ],
+  "create.button": [
+    {
+      "type": 0,
+      "value": "Створити"
+    }
+  ],
+  "create.description": [
+    {
+      "type": 0,
+      "value": "Будь ласка, заповніть назву та опис нової карти."
+    }
+  ],
+  "create.title": [
+    {
+      "type": 0,
+      "value": "Створити нову карту розуму"
+    }
+  ],
+  "deletem.title": [
+    {
+      "type": 0,
+      "value": "Всі вибрані карти будуть видалені"
+    }
+  ],
+  "dialog.loading": [
+    {
+      "type": 0,
+      "value": "Завантаження..."
+    }
+  ],
+  "duplicate.title": [
+    {
+      "type": 0,
+      "value": "Дублювати"
+    }
+  ],
+  "expired.description": [
+    {
+      "type": 0,
+      "value": "Ваша поточна сесія закінчилася. Будь ласка, увійдіть в систему і спробуйте ще раз."
+    }
+  ],
+  "expired.title": [
+    {
+      "type": 0,
+      "value": "Ваша сесія закінчилася"
+    }
+  ],
+  "export.desc": [
+    {
+      "type": 0,
+      "value": "Експортуйте цю карту в потрібному форматі та почніть використовувати її у ваших презентаціях або ділитися електронною поштою"
+    }
+  ],
+  "export.document": [
+    {
+      "type": 0,
+      "value": "Інструменти карт розуму: Експортуйте вашу карту розуму в формати сторонніх інструментів карт розуму"
+    }
+  ],
+  "export.document-label": [
+    {
+      "type": 0,
+      "value": "Документ: Експортуйте вашу карту розуму в автономний документ, готовий для обміну"
+    }
+  ],
+  "export.image": [
+    {
+      "type": 0,
+      "value": "Зображення: Отримайте графічне представлення вашої карти, включаючи всі кольори та форми."
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "Центрувати та масштабувати під розмір"
+    }
+  ],
+  "export.title": [
+    {
+      "type": 0,
+      "value": "Експорт"
+    }
+  ],
+  "export.warning": [
+    {
+      "type": 0,
+      "value": "Експорт в зображення (SVG,PNG,JPEG,PDF) доступний тільки в панелі інструментів редактора."
+    }
+  ],
+  "footer.aboutus": [
+    {
+      "type": 0,
+      "value": "Про нас"
+    }
+  ],
+  "footer.contactus": [
+    {
+      "type": 0,
+      "value": "Зв'язатися з нами"
+    }
+  ],
+  "footer.donations": [
+    {
+      "type": 0,
+      "value": "Пожертви"
+    }
+  ],
+  "footer.faq": [
+    {
+      "type": 0,
+      "value": "Часті питання"
+    }
+  ],
+  "footer.faqandhelp": [
+    {
+      "type": 0,
+      "value": "Допомога та FAQ"
+    }
+  ],
+  "footer.feedback": [
+    {
+      "type": 0,
+      "value": "Відгуки"
+    }
+  ],
+  "footer.opensource": [
+    {
+      "type": 0,
+      "value": "Відкритий код"
+    }
+  ],
+  "footer.others": [
+    {
+      "type": 0,
+      "value": "Інше"
+    }
+  ],
+  "footer.support": [
+    {
+      "type": 0,
+      "value": "Підтримка"
+    }
+  ],
+  "footer.team": [
+    {
+      "type": 0,
+      "value": "Наша команда"
+    }
+  ],
+  "footer.termsandconditions": [
+    {
+      "type": 0,
+      "value": "Умови використання"
+    }
+  ],
+  "forgot.desc": [
+    {
+      "type": 0,
+      "value": "Ми надішлемо вам електронний лист для скидання пароля."
+    }
+  ],
+  "forgot.email": [
+    {
+      "type": 0,
+      "value": "Електронна пошта"
+    }
+  ],
+  "forgot.oauth.back": [
+    {
+      "type": 0,
+      "value": "Повернутися до входу"
+    }
+  ],
+  "forgot.oauth.message": [
+    {
+      "type": 0,
+      "value": "Вам не потрібен пароль, будь ласка, увійдіть через Google."
+    }
+  ],
+  "forgot.page-title": [
+    {
+      "type": 0,
+      "value": "Забули пароль | WiseMapping"
+    }
+  ],
+  "forgot.register": [
+    {
+      "type": 0,
+      "value": "Надіслати посилання для відновлення"
+    }
+  ],
+  "forgot.success.desc": [
+    {
+      "type": 0,
+      "value": "Ми надіслали вам електронний лист, який дозволить скинути ваш пароль. Ви повинні отримати його в найближчі хвилини."
+    }
+  ],
+  "forgot.success.title": [
+    {
+      "type": 0,
+      "value": "Ваш тимчасовий пароль було надіслано."
+    }
+  ],
+  "forgot.title": [
+    {
+      "type": 0,
+      "value": "Скинути ваш пароль"
+    }
+  ],
+  "forgotsuccess.page-title": [
+    {
+      "type": 0,
+      "value": "Пароль відновлено | WiseMapping"
+    }
+  ],
+  "header.donthaveaccount": [
+    {
+      "type": 0,
+      "value": "Немає акаунту?"
+    }
+  ],
+  "header.haveaccount": [
+    {
+      "type": 0,
+      "value": "Вже є акаунт?"
+    }
+  ],
+  "help.support": [
+    {
+      "type": 0,
+      "value": "Підтримка"
+    }
+  ],
+  "history.no-changes": [
+    {
+      "type": 0,
+      "value": "Немає доступних змін"
+    }
+  ],
+  "import.button": [
+    {
+      "type": 0,
+      "value": "Створити"
+    }
+  ],
+  "import.description": [
+    {
+      "type": 0,
+      "value": "Ви можете імпортувати карти WiseMapping, FreeMind, Freeplane, XMind, MindManager та OPML до вашого списку карт. Виберіть файл, який хочете імпортувати."
+    }
+  ],
+  "import.error-file": [
+    {
+      "type": 0,
+      "value": "Помилка імпорту {error}"
+    }
+  ],
+  "import.title": [
+    {
+      "type": 0,
+      "value": "Імпорт існуючої карти розуму"
+    }
+  ],
+  "info.basic-info": [
+    {
+      "type": 0,
+      "value": "Основна інформація"
+    }
+  ],
+  "info.button": [
+    {
+      "type": 0,
+      "value": "Прийняти"
+    }
+  ],
+  "info.creation-time": [
+    {
+      "type": 0,
+      "value": "Дата створення"
+    }
+  ],
+  "info.creator": [
+    {
+      "type": 0,
+      "value": "Створювач"
+    }
+  ],
+  "info.description": [
+    {
+      "type": 0,
+      "value": "Опис"
+    }
+  ],
+  "info.description-msg": [
+    {
+      "type": 0,
+      "value": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
+    }
+  ],
+  "info.modified-time": [
+    {
+      "type": 0,
+      "value": "Дата останньої зміни"
+    }
+  ],
+  "info.modified-tny": [
+    {
+      "type": 0,
+      "value": "Остання зміна"
+    }
+  ],
+  "info.name": [
+    {
+      "type": 0,
+      "value": "Назва"
+    }
+  ],
+  "info.public-visibility": [
+    {
+      "type": 0,
+      "value": "Публічно видима"
+    }
+  ],
+  "info.sharing": [
+    {
+      "type": 0,
+      "value": "Спільне використання"
+    }
+  ],
+  "info.starred": [
+    {
+      "type": 0,
+      "value": "Відмічена"
+    }
+  ],
+  "info.title": [
+    {
+      "type": 0,
+      "value": "Інформація"
+    }
+  ],
+  "label.add-button": [
+    {
+      "type": 0,
+      "value": "Додати мітку"
+    }
+  ],
+  "label.add-for": [
+    {
+      "type": 0,
+      "value": "Редагування міток для"
+    }
+  ],
+  "label.add-placeholder": [
+    {
+      "type": 0,
+      "value": "Назва мітки"
+    }
+  ],
+  "label.change-color": [
+    {
+      "type": 0,
+      "value": "Змінити колір мітки"
+    }
+  ],
+  "label.delete-description": [
+    {
+      "type": 0,
+      "value": "буде видалена, включаючи її асоціації з усіма існуючими картами. Чи хочете продовжити?"
+    }
+  ],
+  "label.delete-title": [
+    {
+      "type": 0,
+      "value": "Підтвердити видалення мітки"
+    }
+  ],
+  "label.description": [
+    {
+      "type": 0,
+      "value": "Використовуйте мітки для організації ваших карт."
+    }
+  ],
+  "label.maps-count": [
+    {
+      "type": 0,
+      "value": "{count} карт"
+    }
+  ],
+  "label.title": [
+    {
+      "type": 0,
+      "value": "Додати мітку"
+    }
+  ],
+  "language.change": [
+    {
+      "type": 0,
+      "value": "Змінити мову"
+    }
+  ],
+  "language.help": [
+    {
+      "type": 0,
+      "value": "Допомогти з перекладом"
+    }
+  ],
+  "login.desc": [
+    {
+      "type": 0,
+      "value": "Увійдіть у ваш акаунт"
+    }
+  ],
+  "login.division": [
+    {
+      "type": 0,
+      "value": "або"
+    }
+  ],
+  "login.email": [
+    {
+      "type": 0,
+      "value": "Електронна пошта"
+    }
+  ],
+  "login.error": [
+    {
+      "type": 0,
+      "value": "Введена адреса електронної пошти або пароль недійсні."
+    }
+  ],
+  "login.forgotpwd": [
+    {
+      "type": 0,
+      "value": "Забули пароль?"
+    }
+  ],
+  "login.google.button": [
+    {
+      "type": 0,
+      "value": "Увійти через Google"
+    }
+  ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "Увійти через Facebook"
+    }
+  ],
+  "login.page-title": [
+    {
+      "type": 0,
+      "value": "Вхід | WiseMapping"
+    }
+  ],
+  "login.password": [
+    {
+      "type": 0,
+      "value": "Пароль"
+    }
+  ],
+  "login.remberme": [
+    {
+      "type": 0,
+      "value": "Запам'ятати мене"
+    }
+  ],
+  "login.signin": [
+    {
+      "type": 0,
+      "value": "Увійти"
+    }
+  ],
+  "login.signup": [
+    {
+      "type": 0,
+      "value": "Зареєструватися"
+    }
+  ],
+  "login.title": [
+    {
+      "type": 0,
+      "value": "Ласкаво просимо"
+    }
+  ],
+  "login.userinactive": [
+    {
+      "type": 0,
+      "value": "Вибачте, ваш акаунт ще не активовано. Ви отримаєте сповіщення електронною поштою, коли він стане активним. Залишайтеся на зв'язку!"
+    }
+  ],
+  "map.creator": [
+    {
+      "type": 0,
+      "value": "Створювач"
+    }
+  ],
+  "map.delete-selected": [
+    {
+      "type": 0,
+      "value": "Видалити вибрані"
+    }
+  ],
+  "map.last-update": [
+    {
+      "type": 0,
+      "value": "Останнє оновлення"
+    }
+  ],
+  "map.more-actions": [
+    {
+      "type": 0,
+      "value": "Більше дій"
+    }
+  ],
+  "map.name": [
+    {
+      "type": 0,
+      "value": "Назва"
+    }
+  ],
+  "map.tooltip-add": [
+    {
+      "type": 0,
+      "value": "Додати мітку до вибраного"
+    }
+  ],
+  "maps.choose-file": [
+    {
+      "type": 0,
+      "value": "Виберіть файл"
+    }
+  ],
+  "maps.create-tooltip": [
+    {
+      "type": 0,
+      "value": "Створити нову карту розуму"
+    }
+  ],
+  "maps.empty-result": [
+    {
+      "type": 0,
+      "value": "Не знайдено карт розуму, що відповідають поточним критеріям фільтрації."
+    }
+  ],
+  "maps.import-desc": [
+    {
+      "type": 0,
+      "value": "Імпорт з інших інструментів"
+    }
+  ],
+  "maps.modified": [
+    {
+      "type": 0,
+      "value": "Змінено"
+    }
+  ],
+  "maps.modified-by": [
+    {
+      "type": 0,
+      "value": "Змінено"
+    }
+  ],
+  "maps.modified-by-desc": [
+    {
+      "type": 0,
+      "value": "Змінено {by} {on}"
+    }
+  ],
+  "maps.nav-all": [
+    {
+      "type": 0,
+      "value": "Всі"
+    }
+  ],
+  "maps.nav-onwned": [
+    {
+      "type": 0,
+      "value": "Мої"
+    }
+  ],
+  "maps.nav-public": [
+    {
+      "type": 0,
+      "value": "Публічні"
+    }
+  ],
+  "maps.nav-shared": [
+    {
+      "type": 0,
+      "value": "Спільні зі мною"
+    }
+  ],
+  "maps.nav-starred": [
+    {
+      "type": 0,
+      "value": "Відмічені"
+    }
+  ],
+  "maps.page-title": [
+    {
+      "type": 0,
+      "value": "Мої карти | WiseMapping"
+    }
+  ],
+  "maps.revert": [
+    {
+      "type": 0,
+      "value": "Повернути"
+    }
+  ],
+  "maps.search-action": [
+    {
+      "type": 0,
+      "value": "Пошук..."
+    }
+  ],
+  "maps.tooltip-open": [
+    {
+      "type": 0,
+      "value": "Відкрити для редагування"
+    }
+  ],
+  "maps.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Відмічена"
+    }
+  ],
+  "maps.view": [
+    {
+      "type": 0,
+      "value": "Переглянути"
+    }
+  ],
+  "menu.account": [
+    {
+      "type": 0,
+      "value": "Акаунт"
+    }
+  ],
+  "menu.change-password": [
+    {
+      "type": 0,
+      "value": "Змінити пароль"
+    }
+  ],
+  "menu.signout": [
+    {
+      "type": 0,
+      "value": "Вийти"
+    }
+  ],
+  "publish.button": [
+    {
+      "type": 0,
+      "value": "Прийняти"
+    }
+  ],
+  "publish.checkbox": [
+    {
+      "type": 0,
+      "value": "Увімкнути публічне спільне використання"
+    }
+  ],
+  "publish.description": [
+    {
+      "type": 0,
+      "value": "Опублікувавши карту, ви робите її видимою для всіх в Інтернеті."
+    }
+  ],
+  "publish.embedded": [
+    {
+      "type": 0,
+      "value": "Вбудована"
+    }
+  ],
+  "publish.embedded-msg": [
+    {
+      "type": 0,
+      "value": "Скопіюйте цей фрагмент коду для вбудовування у ваш блог або сторінку:"
+    }
+  ],
+  "publish.public-url": [
+    {
+      "type": 0,
+      "value": "Публічне посилання"
+    }
+  ],
+  "publish.public-url-msg": [
+    {
+      "type": 0,
+      "value": "Скопіюйте та вставте посилання нижче, щоб поділитися вашою картою з колегами:"
+    }
+  ],
+  "publish.title": [
+    {
+      "type": 0,
+      "value": "Опублікувати"
+    }
+  ],
+  "registation.callback.error.message": [
+    {
+      "type": 0,
+      "value": "Сталася помилка при підтвердженні вашої особистості через Google, ви можете спробувати ще раз зі сторінки входу"
+    }
+  ],
+  "registation.success-title": [
+    {
+      "type": 0,
+      "value": "Успішна реєстрація | WiseMapping"
+    }
+  ],
+  "registration.callback.back": [
+    {
+      "type": 0,
+      "value": "Повернутися до входу"
+    }
+  ],
+  "registration.callback.confirm.description": [
+    {
+      "type": 0,
+      "value": "Акаунт з такою ж електронною поштою був раніше зареєстрований. Чи хочете прив'язати ваш Google акаунт до того акаунту WiseMapping?"
+    }
+  ],
+  "registration.callback.confirm.title": [
+    {
+      "type": 0,
+      "value": "Підтвердити"
+    }
+  ],
+  "registration.callback.sync": [
+    {
+      "type": 0,
+      "value": "Синхронізувати акаунт"
+    }
+  ],
+  "registration.callback.waiting.description": [
+    {
+      "type": 0,
+      "value": "Будь ласка, зачекайте, поки ми підтверджуємо вашу особистість"
+    }
+  ],
+  "registration.callback.waiting.title": [
+    {
+      "type": 0,
+      "value": "Завершення..."
+    }
+  ],
+  "registration.desc": [
+    {
+      "type": 0,
+      "value": "Реєстрація безкоштовна і займає лише кілька хвилин"
+    }
+  ],
+  "registration.division": [
+    {
+      "type": 0,
+      "value": "або"
+    }
+  ],
+  "registration.email": [
+    {
+      "type": 0,
+      "value": "Електронна пошта"
+    }
+  ],
+  "registration.firstname": [
+    {
+      "type": 0,
+      "value": "Ім'я"
+    }
+  ],
+  "registration.google.button": [
+    {
+      "type": 0,
+      "value": "Зареєструватися через Google"
+    }
+  ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "Зареєструватися через Facebook"
+    }
+  ],
+  "registration.lastname": [
+    {
+      "type": 0,
+      "value": "Прізвище"
+    }
+  ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "Реєстрація | WiseMapping"
+    }
+  ],
+  "registration.password": [
+    {
+      "type": 0,
+      "value": "Пароль"
+    }
+  ],
+  "registration.register": [
+    {
+      "type": 0,
+      "value": "Зареєструватися"
+    }
+  ],
+  "registration.success.desc": [
+    {
+      "type": 0,
+      "value": "Натисніть кнопку 'Увійти' нижче і почніть створювати карти розуму."
+    }
+  ],
+  "registration.termandconditions": [
+    {
+      "type": 0,
+      "value": "Умови клієнта: Будь ласка, перевірте інформацію про акаунт WiseMapping, яку ви ввели вище, і перегляньте Умови клієнта тут. Натиснувши 'Зареєструватися' нижче, ви погоджуєтеся з Умовами клієнта вище та Політикою конфіденційності"
+    }
+  ],
+  "registration.title": [
+    {
+      "type": 0,
+      "value": "Стати учасником"
+    }
+  ],
+  "rename.description": [
+    {
+      "type": 0,
+      "value": "Будь ласка, заповніть нову назву та опис карти."
+    }
+  ],
+  "rename.title": [
+    {
+      "type": 0,
+      "value": "Перейменувати"
+    }
+  ],
+  "resetpassword.success.title": [
+    {
+      "type": 0,
+      "value": "Ваш акаунт було успішно створено"
+    }
+  ],
+  "role.editor": [
+    {
+      "type": 0,
+      "value": "Редактор"
+    }
+  ],
+  "role.owner": [
+    {
+      "type": 0,
+      "value": "Власник"
+    }
+  ],
+  "role.viewer": [
+    {
+      "type": 0,
+      "value": "Переглядач"
+    }
+  ],
+  "share.add-button": [
+    {
+      "type": 0,
+      "value": "Поділитися"
+    }
+  ],
+  "share.add-message": [
+    {
+      "type": 0,
+      "value": "Додати повідомлення"
+    }
+  ],
+  "share.can-edit": [
+    {
+      "type": 0,
+      "value": "Може редагувати"
+    }
+  ],
+  "share.can-view": [
+    {
+      "type": 0,
+      "value": "Може переглядати"
+    }
+  ],
+  "share.delete": [
+    {
+      "type": 0,
+      "value": "Видалити співробітника"
+    }
+  ],
+  "share.delete-description": [
+    {
+      "type": 0,
+      "value": "Запросіть людей співпрацювати з вами у створенні вашої карти розуму. Вони отримають сповіщення електронною поштою."
+    }
+  ],
+  "share.delete-title": [
+    {
+      "type": 0,
+      "value": "Поділитися з людьми"
+    }
+  ],
+  "share.message": [
+    {
+      "type": 0,
+      "value": "Повідомлення"
+    }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Темна"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Світла"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Перемкнути тему"
+    }
+  ]
+}

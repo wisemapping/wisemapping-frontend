@@ -355,5 +355,38 @@
   },
   "theme.toggle": {
     "defaultMessage": "Changer le Thème"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "Insérer un Lien"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "Insérer une Icône"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "Gras"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "Italique"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "Souligné"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "Barré"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "Liste à Puces"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "Liste Numérotée"
+  },
+  "image-icon-tab.icon-found": {
+    "defaultMessage": "icône trouvée"
+  },
+  "image-icon-tab.icons-found": {
+    "defaultMessage": "icônes trouvées"
+  },
+  "image-icon-tab.icons": {
+    "defaultMessage": "icônes"
   }
 }

@@ -36,12 +36,17 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 import WarningIcon from '@mui/icons-material/Warning';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LanguageIcon from '@mui/icons-material/Language';
 import { useFetchAccount } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
+import AppI18n, { LocaleCode, Locales } from '../../../../classes/app-i18n';
 
 type AccountInfoDialogProps = {
   onClose: () => void;
@@ -60,6 +65,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
   const [showDeleteDialog, setShowDeleteDialog] = React.useState<boolean>(false);
   const [deleteConfirmationText, setDeleteConfirmationText] = React.useState<string>('');
   const [activeTab, setActiveTab] = React.useState<string>('1');
+  const [selectedLanguage, setSelectedLanguage] = React.useState<LocaleCode>('en');
 
   const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
@@ -95,6 +101,22 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     },
   );
 
+  const mutationChangeLanguage = useMutation<void, ErrorInfo, LocaleCode>(
+    (locale: LocaleCode) => {
+      return client.updateAccountLanguage(locale);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('account');
+        // Reload the page to apply the new language
+        window.location.reload();
+      },
+      onError: (error) => {
+        setError(error);
+      },
+    },
+  );
+
   const account = useFetchAccount();
   useEffect(() => {
     if (account) {
@@ -103,8 +125,11 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
         lastname: account?.lastname,
         firstname: account?.firstname,
       });
+      // Set the current language from account or default
+      const currentLocale = account?.locale || AppI18n.getDefaultLocale().code;
+      setSelectedLanguage(currentLocale as LocaleCode);
     }
-  }, [account?.email]);
+  }, [account?.email, account?.locale]);
 
   const handleOnClose = (): void => {
     onClose();
@@ -122,6 +147,12 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
       setShowDeleteDialog(false);
       setDeleteConfirmationText('');
     }
+  };
+
+  const handleLanguageChange = (event: any) => {
+    const newLanguage = event.target.value as LocaleCode;
+    setSelectedLanguage(newLanguage);
+    mutationChangeLanguage.mutate(newLanguage);
   };
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -292,6 +323,37 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
         <TabPanel value="2" sx={{ px: 0 }}>
           <FormControl fullWidth={true}>
             <Box sx={{ mb: 2 }}>
+              {/* Language Selection */}
+              <Box sx={{ mb: 4 }}>
+                <FormControl fullWidth sx={{ mb: 2 }}>
+                  <InputLabel>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <LanguageIcon />
+                      <FormattedMessage id="language.change" defaultMessage="Change Language" />
+                    </Box>
+                  </InputLabel>
+                  <Select
+                    value={selectedLanguage}
+                    onChange={handleLanguageChange}
+                    label={
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <LanguageIcon />
+                        <FormattedMessage id="language.change" defaultMessage="Change Language" />
+                      </Box>
+                    }
+                    disabled={mutationChangeLanguage.isLoading}
+                  >
+                    {Object.values(Locales).map((locale) => (
+                      <MenuItem key={locale.code} value={locale.code}>
+                        {locale.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <Divider sx={{ mb: 4 }} />
+
               {!showDeleteDialog ? (
                 <Box>
                   <Alert severity="error" sx={{ mb: 3 }}>

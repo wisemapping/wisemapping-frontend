@@ -352,5 +352,38 @@
     },
     "theme.toggle": {
         "defaultMessage": "Design Wechseln"
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "Link Einfügen"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "Symbol Einfügen"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "Fett"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "Kursiv"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "Unterstrichen"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "Durchgestrichen"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "Aufzählungsliste"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "Nummerierte Liste"
+    },
+    "image-icon-tab.icon-found": {
+        "defaultMessage": "Symbol gefunden"
+    },
+    "image-icon-tab.icons-found": {
+        "defaultMessage": "Symbole gefunden"
+    },
+    "image-icon-tab.icons": {
+        "defaultMessage": "Symbole"
     }
 }

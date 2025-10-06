@@ -271,5 +271,38 @@
     },
     "theme.toggle": {
         "defaultMessage": "切换主题"
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "插入链接"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "插入图标"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "粗体"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "斜体"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "下划线"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "删除线"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "项目符号列表"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "编号列表"
+    },
+    "image-icon-tab.icon-found": {
+        "defaultMessage": "找到图标"
+    },
+    "image-icon-tab.icons-found": {
+        "defaultMessage": "找到图标"
+    },
+    "image-icon-tab.icons": {
+        "defaultMessage": "图标"
     }
 }

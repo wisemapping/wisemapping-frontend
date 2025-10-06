@@ -1139,7 +1139,7 @@ class Designer extends EventDispispatcher<DesignerEventType> {
     }
   }
 
-  changeFontFamily(font: string) {
+  changeFontFamily(font: string | undefined) {
     const topicsIds = this.getModel().filterTopicsIds();
     if (topicsIds.length > 0) {
       this._actionDispatcher.changeFontFamilyToTopic(topicsIds, font);

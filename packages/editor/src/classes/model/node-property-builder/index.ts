@@ -81,7 +81,9 @@ class NodePropertyBuilder {
 
   private uniqueOrUndefined<T>(propertyGetter: (Topic: Topic) => T | undefined): T | undefined {
     const nodes = this.designer.getModel().filterSelectedTopics();
-    return nodes.every((n) => propertyGetter(n) == nodes[0]) ? propertyGetter(nodes[0]) : undefined;
+    if (nodes.length === 0) return undefined;
+    const firstValue = propertyGetter(nodes[0]);
+    return nodes.every((n) => propertyGetter(n) === firstValue) ? firstValue : undefined;
   }
 
   /**

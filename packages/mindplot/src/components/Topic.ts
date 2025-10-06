@@ -368,7 +368,7 @@ abstract class Topic extends NodeGraph {
     return result;
   }
 
-  setFontFamily(value: string): void {
+  setFontFamily(value: string | undefined): void {
     const model = this.getModel();
     model.setFontFamily(value);
 

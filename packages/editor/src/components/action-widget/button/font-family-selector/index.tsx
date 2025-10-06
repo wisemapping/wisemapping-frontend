@@ -21,6 +21,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
+import { useIntl } from 'react-intl';
 
 import NodeProperty from '../../../../classes/model/node-property';
 import Model from '../../../../classes/model/editor';
@@ -32,6 +33,7 @@ const FontFamilySelect = (props: {
   fontFamilyModel: NodeProperty<string | undefined>;
   model: Model | undefined;
 }): ReactElement => {
+  const intl = useIntl();
   const [currentFont, setCurrentFont] = useState<string | undefined>(
     props.fontFamilyModel.getValue(),
   );
@@ -62,14 +64,34 @@ const FontFamilySelect = (props: {
   const handleChange = (event: SelectChangeEvent) => {
     const setValue = props.fontFamilyModel.setValue;
     if (setValue) {
-      setValue(event.target.value);
+      // Convert empty string to undefined to represent "no font family" or "default"
+      const value = event.target.value === '' ? undefined : event.target.value;
+      setValue(value);
     }
   };
 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl variant="standard" sx={{ m: 1 }} size="small">
-        <Select id="demo-simple-select" value={currentFont || ''} onChange={handleChange}>
+        <Select
+          id="demo-simple-select"
+          value={currentFont || ''}
+          onChange={handleChange}
+          displayEmpty
+        >
+          <MenuItem value="">
+            <Typography sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+              {currentFont === undefined
+                ? intl.formatMessage({
+                    id: 'editor-panel.font-family-default',
+                    defaultMessage: 'Default',
+                  })
+                : intl.formatMessage({
+                    id: 'editor-panel.font-family-mixed',
+                    defaultMessage: 'Mixed',
+                  })}
+            </Typography>
+          </MenuItem>
           {[
             'Arial',
             'Baskerville',

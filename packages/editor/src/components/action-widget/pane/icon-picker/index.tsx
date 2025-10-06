@@ -23,7 +23,7 @@ import IconImageTab from './image-icon-tab';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 
 type IconPickerProp = {
@@ -33,6 +33,7 @@ type IconPickerProp = {
 
 const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement => {
   const [checked, setChecked] = React.useState(true);
+  const intl = useIntl();
 
   const handleCheck = () => {
     setChecked(!checked);
@@ -66,6 +67,10 @@ const IconPicker = ({ triggerClose, iconModel }: IconPickerProp): ReactElement =
           emojiStyle={EmojiStyle.NATIVE}
           skinTonesDisabled
           theme={Theme.AUTO}
+          searchPlaceholder={intl.formatMessage({
+            id: 'emoji-picker.search-placeholder',
+            defaultMessage: 'Search emojis...',
+          })}
         />
       )}
       {!checked && <IconImageTab iconModel={iconModel} triggerClose={triggerClose} />}

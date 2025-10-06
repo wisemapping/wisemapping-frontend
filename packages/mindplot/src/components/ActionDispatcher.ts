@@ -62,7 +62,7 @@ abstract class ActionDispatcher extends EventDispispatcher<LayoutEventBusType> {
     index: PivotType,
   ): void;
 
-  abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string): void;
+  abstract changeFontFamilyToTopic(topicIds: number[], fontFamily: string | undefined): void;
 
   abstract changeFontStyleToTopic(topicsIds: number[]): void;
 

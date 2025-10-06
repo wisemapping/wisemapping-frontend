@@ -89,5 +89,16 @@
   "creator-info-pane.creator": { "defaultMessage": "निर्माता" },
   "theme.dark": { "defaultMessage": "डार्क" },
   "theme.light": { "defaultMessage": "लाइट" },
-  "theme.toggle": { "defaultMessage": "थीम बदलें" }
+  "theme.toggle": { "defaultMessage": "थीम बदलें" },
+  "rich-text-editor.insert-link": { "defaultMessage": "लिंक डालें" },
+  "rich-text-editor.insert-icon": { "defaultMessage": "आइकन डालें" },
+  "rich-text-editor.bold": { "defaultMessage": "बोल्ड" },
+  "rich-text-editor.italic": { "defaultMessage": "इटैलिक" },
+  "rich-text-editor.underline": { "defaultMessage": "रेखांकित" },
+  "rich-text-editor.strikethrough": { "defaultMessage": "काटा गया" },
+  "rich-text-editor.bullet-list": { "defaultMessage": "बुलेट सूची" },
+  "rich-text-editor.numbered-list": { "defaultMessage": "क्रमांकित सूची" },
+  "image-icon-tab.icon-found": { "defaultMessage": "आइकन मिला" },
+  "image-icon-tab.icons-found": { "defaultMessage": "आइकन मिले" },
+  "image-icon-tab.icons": { "defaultMessage": "आइकन" }
 }

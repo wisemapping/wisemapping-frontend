@@ -137,11 +137,10 @@ class StandaloneActionDispatcher extends ActionDispatcher {
   }
 
   /** */
-  changeFontFamilyToTopic(topicIds: number[], fontFamily: string) {
+  changeFontFamilyToTopic(topicIds: number[], fontFamily: string | undefined) {
     $assert(topicIds, 'topicIds can not be null');
-    $assert(fontFamily, 'fontFamily can not be null');
 
-    const commandFunc = (topic: Topic, commandFontFamily: string) => {
+    const commandFunc = (topic: Topic, commandFontFamily: string | undefined) => {
       const result = topic.getFontFamily();
       topic.setFontFamily(commandFontFamily);
 

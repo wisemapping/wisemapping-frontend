@@ -20,7 +20,7 @@ import NodeProperty from '../../../../classes/model/node-property';
 import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
 import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
 import TopicImageTab from './image-icon-tab';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -41,6 +41,7 @@ const TopicImagePicker = ({
 }: TopicImagePickerProp): ReactElement => {
   const [tabValue, setTabValue] = React.useState(0); // 0 = Image Gallery, 1 = Emojis
   const { mode } = useTheme();
+  const intl = useIntl();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -177,6 +178,10 @@ const TopicImagePicker = ({
               theme={mode === 'dark' ? Theme.DARK : Theme.LIGHT}
               width="100%"
               height="100%"
+              searchPlaceholder={intl.formatMessage({
+                id: 'emoji-picker.search-placeholder',
+                defaultMessage: 'Search emojis...',
+              })}
             />
           </Box>
         )}

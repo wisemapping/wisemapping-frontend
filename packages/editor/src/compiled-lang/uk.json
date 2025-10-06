@@ -1,0 +1,776 @@
+{
+  "action.accept": [
+    {
+      "type": 0,
+      "value": "Прийняти"
+    }
+  ],
+  "action.delete": [
+    {
+      "type": 0,
+      "value": "Видалити"
+    }
+  ],
+  "appbar.back-to-map-list": [
+    {
+      "type": 0,
+      "value": "Повернутися до списку карт"
+    }
+  ],
+  "appbar.button-signup": [
+    {
+      "type": 0,
+      "value": "Зареєструватися"
+    }
+  ],
+  "appbar.shared-button": [
+    {
+      "type": 0,
+      "value": "Поділитися"
+    }
+  ],
+  "appbar.tooltip-export": [
+    {
+      "type": 0,
+      "value": "Експорт"
+    }
+  ],
+  "appbar.tooltip-history": [
+    {
+      "type": 0,
+      "value": "Історія змін"
+    }
+  ],
+  "appbar.tooltip-info": [
+    {
+      "type": 0,
+      "value": "Інформація"
+    }
+  ],
+  "appbar.tooltip-print": [
+    {
+      "type": 0,
+      "value": "Друк"
+    }
+  ],
+  "appbar.tooltip-publish": [
+    {
+      "type": 0,
+      "value": "Опублікувати"
+    }
+  ],
+  "appbar.tooltip-redo": [
+    {
+      "type": 0,
+      "value": "Повторити"
+    }
+  ],
+  "appbar.tooltip-save": [
+    {
+      "type": 0,
+      "value": "Зберегти"
+    }
+  ],
+  "appbar.tooltip-shared": [
+    {
+      "type": 0,
+      "value": "Поділитися для співпраці"
+    }
+  ],
+  "appbar.tooltip-signup": [
+    {
+      "type": 0,
+      "value": "Зареєструватися"
+    }
+  ],
+  "appbar.tooltip-starred": [
+    {
+      "type": 0,
+      "value": "Відмічені"
+    }
+  ],
+  "appbar.tooltip-undo": [
+    {
+      "type": 0,
+      "value": "Скасувати"
+    }
+  ],
+  "editor-panel.icon-title": [
+    {
+      "type": 0,
+      "value": "Іконка"
+    }
+  ],
+  "editor-panel.link-panel-title": [
+    {
+      "type": 0,
+      "value": "Посилання"
+    }
+  ],
+  "editor-panel.note-panel-title": [
+    {
+      "type": 0,
+      "value": "Примітка"
+    }
+  ],
+  "editor-panel.tooltip-add-icon": [
+    {
+      "type": 0,
+      "value": "Додати іконку"
+    }
+  ],
+  "editor-panel.tooltip-add-link": [
+    {
+      "type": 0,
+      "value": "Додати посилання"
+    }
+  ],
+  "editor-panel.tooltip-add-note": [
+    {
+      "type": 0,
+      "value": "Додати примітку"
+    }
+  ],
+  "editor-panel.tooltip-add-relationship": [
+    {
+      "type": 0,
+      "value": "Додати зв'язок"
+    }
+  ],
+  "editor-panel.tooltip-add-topic": [
+    {
+      "type": 0,
+      "value": "Додати тему"
+    }
+  ],
+  "editor-panel.tooltip-connection-color": [
+    {
+      "type": 0,
+      "value": "Колір"
+    }
+  ],
+  "editor-panel.tooltip-connection-color-default": [
+    {
+      "type": 0,
+      "value": "Колір за замовчуванням"
+    }
+  ],
+  "editor-panel.tooltip-connection-style": [
+    {
+      "type": 0,
+      "value": "Стиль з'єднання"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thick": [
+    {
+      "type": 0,
+      "value": "Товста крива"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-curved-thin": [
+    {
+      "type": 0,
+      "value": "Тонка крива"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline": [
+    {
+      "type": 0,
+      "value": "Проста полілінія"
+    }
+  ],
+  "editor-panel.tooltip-connection-style-polyline-curved": [
+    {
+      "type": 0,
+      "value": "Крива полілінія"
+    }
+  ],
+  "editor-panel.tooltip-delete-topic": [
+    {
+      "type": 0,
+      "value": "Видалити тему"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color": [
+    {
+      "type": 0,
+      "value": "Колір рамки"
+    }
+  ],
+  "editor-panel.tooltip-topic-border-color-default": [
+    {
+      "type": 0,
+      "value": "Колір рамки за замовчуванням"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color": [
+    {
+      "type": 0,
+      "value": "Колір заливки"
+    }
+  ],
+  "editor-panel.tooltip-topic-fill-color-default": [
+    {
+      "type": 0,
+      "value": "Колір заливки за замовчуванням"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bigger": [
+    {
+      "type": 0,
+      "value": "Більший"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-bold": [
+    {
+      "type": 0,
+      "value": "Жирний"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color": [
+    {
+      "type": 0,
+      "value": "Колір"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-color-default": [
+    {
+      "type": 0,
+      "value": "Колір за замовчуванням"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-italic": [
+    {
+      "type": 0,
+      "value": "Курсив"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-smaller": [
+    {
+      "type": 0,
+      "value": "Менший"
+    }
+  ],
+  "editor-panel.tooltip-topic-font-style": [
+    {
+      "type": 0,
+      "value": "Стиль шрифту"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "За замовчуванням"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Змішаний"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-ellipse": [
+    {
+      "type": 0,
+      "value": "Форма еліпса"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-line": [
+    {
+      "type": 0,
+      "value": "Форма лінії"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rectangle": [
+    {
+      "type": 0,
+      "value": "Форма прямокутника"
+    }
+  ],
+  "editor-panel.tooltip-topic-share-rounded": [
+    {
+      "type": 0,
+      "value": "Округла форма"
+    }
+  ],
+  "editor-panel.tooltip-topic-style": [
+    {
+      "type": 0,
+      "value": "Стиль теми"
+    }
+  ],
+  "editor.edit-description-mobile": [
+    {
+      "type": 0,
+      "value": "Обмежені можливості редагування карт розуму підтримуються на мобільних пристроях. Використовуйте настільний браузер для повних можливостей редактора."
+    }
+  ],
+  "editor.try-welcome": [
+    {
+      "type": 0,
+      "value": "Цей простір редагування демонструє деякі можливості редактора карт розуму!"
+    }
+  ],
+  "editor.try-welcome-description": [
+    {
+      "type": 0,
+      "value": "Зареєструйтеся, щоб почати створювати, ділитися та публікувати необмежену кількість карт розуму безкоштовно."
+    }
+  ],
+  "editor.try-welcome-description-mobile": [
+    {
+      "type": 0,
+      "value": "Зареєструйтеся, щоб почати створювати, ділитися та публікувати необмежену кількість карт розуму безкоштовно. Обмежені можливості редагування карт розуму підтримуються на мобільних пристроях. Використовуйте настільний браузер для повних можливостей редактора."
+    }
+  ],
+  "editor.try-welcome-mobile": [
+    {
+      "type": 0,
+      "value": "Цей простір редагування демонструє деякі можливості редактора карт розуму!"
+    }
+  ],
+  "icon-picker.show-images": [
+    {
+      "type": 0,
+      "value": "Показати зображення"
+    }
+  ],
+  "link.help_text": [
+    {
+      "type": 0,
+      "value": "Адреса недійсна"
+    }
+  ],
+  "link.placeholder": [
+    {
+      "type": 0,
+      "value": "https://www.example.com"
+    }
+  ],
+  "shortcut-help-pane.action": [
+    {
+      "type": 0,
+      "value": "Дія"
+    }
+  ],
+  "shortcut-help-pane.add-child": [
+    {
+      "type": 0,
+      "value": "Додати дочірню тему"
+    }
+  ],
+  "shortcut-help-pane.add-link": [
+    {
+      "type": 0,
+      "value": "Додати посилання"
+    }
+  ],
+  "shortcut-help-pane.add-note": [
+    {
+      "type": 0,
+      "value": "Додати примітку"
+    }
+  ],
+  "shortcut-help-pane.add-sibling": [
+    {
+      "type": 0,
+      "value": "Додати сестринську тему"
+    }
+  ],
+  "shortcut-help-pane.cancel-text-changes": [
+    {
+      "type": 0,
+      "value": "Скасувати зміни тексту"
+    }
+  ],
+  "shortcut-help-pane.change-font-bold": [
+    {
+      "type": 0,
+      "value": "Змінити текст на жирний"
+    }
+  ],
+  "shortcut-help-pane.change-font-italic": [
+    {
+      "type": 0,
+      "value": "Змінити текст на курсив"
+    }
+  ],
+  "shortcut-help-pane.collapse-children": [
+    {
+      "type": 0,
+      "value": "Згорнути дочірні елементи"
+    }
+  ],
+  "shortcut-help-pane.copy-and-text": [
+    {
+      "type": 0,
+      "value": "Копіювати та вставляти теми/Копіювати зображення карти розуму в буфер обміну."
+    }
+  ],
+  "shortcut-help-pane.delete-topic": [
+    {
+      "type": 0,
+      "value": "Видалити тему"
+    }
+  ],
+  "shortcut-help-pane.deselect-all-topics": [
+    {
+      "type": 0,
+      "value": "Скасувати вибір всіх тем"
+    }
+  ],
+  "shortcut-help-pane.drag-disconnect": [
+    {
+      "type": 0,
+      "value": "Відключити тему"
+    }
+  ],
+  "shortcut-help-pane.edit-multiline": [
+    {
+      "type": 0,
+      "value": "Додати багаторядковий текст теми"
+    }
+  ],
+  "shortcut-help-pane.edit-topic": [
+    {
+      "type": 0,
+      "value": "Редагувати текст теми"
+    }
+  ],
+  "shortcut-help-pane.edit-topic-key": [
+    {
+      "type": 0,
+      "value": "F2 або Подвійне натискання"
+    }
+  ],
+  "shortcut-help-pane.navigation": [
+    {
+      "type": 0,
+      "value": "Навігація"
+    }
+  ],
+  "shortcut-help-pane.navigation-keys": [
+    {
+      "type": 0,
+      "value": "Стрілки"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic": [
+    {
+      "type": 0,
+      "value": "Перезаписати текст теми"
+    }
+  ],
+  "shortcut-help-pane.overwrite-edit-topic-key": [
+    {
+      "type": 0,
+      "value": "Введіть текст на вибраній темі"
+    }
+  ],
+  "shortcut-help-pane.redo": [
+    {
+      "type": 0,
+      "value": "Повторити редагування"
+    }
+  ],
+  "shortcut-help-pane.save-changes": [
+    {
+      "type": 0,
+      "value": "Зберегти зміни"
+    }
+  ],
+  "shortcut-help-pane.select-all-topics": [
+    {
+      "type": 0,
+      "value": "Вибрати всі теми"
+    }
+  ],
+  "shortcut-help-pane.select-topics": [
+    {
+      "type": 0,
+      "value": "Вибрати кілька тем"
+    }
+  ],
+  "shortcut-help-pane.select-topics-keys": [
+    {
+      "type": 0,
+      "value": "Натискання мишею"
+    }
+  ],
+  "shortcut-help-pane.undo": [
+    {
+      "type": 0,
+      "value": "Скасувати редагування"
+    }
+  ],
+  "zoom-panel.tooltip-keyboard": [
+    {
+      "type": 0,
+      "value": "Гарячі клавіші"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-in": [
+    {
+      "type": 0,
+      "value": "Збільшити"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-out": [
+    {
+      "type": 0,
+      "value": "Зменшити"
+    }
+  ],
+  "zoom-panel.tooltip-zoom-to-fit": [
+    {
+      "type": 0,
+      "value": "Підігнати під розмір"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Згорнути всі вузли"
+    }
+  ],
+  "zoom-panel.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Розгорнути всі вузли"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Опис"
+    }
+  ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Створювач"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Тема"
+    }
+  ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Тема"
+    }
+  ],
+  "editor-panel.tooltip-canvas-style": [
+    {
+      "type": 0,
+      "value": "Фон"
+    }
+  ],
+  "editor-panel.canvas-style-title": [
+    {
+      "type": 0,
+      "value": "Фон"
+    }
+  ],
+  "canvas-style.title": [
+    {
+      "type": 0,
+      "value": "Фон"
+    }
+  ],
+  "canvas-style.colors": [
+    {
+      "type": 0,
+      "value": "Кольори"
+    }
+  ],
+  "canvas-style.background-color": [
+    {
+      "type": 0,
+      "value": "Колір фону"
+    }
+  ],
+  "canvas-style.background-pattern": [
+    {
+      "type": 0,
+      "value": "Візерунок фону"
+    }
+  ],
+  "canvas-style.pattern-solid": [
+    {
+      "type": 0,
+      "value": "Суцільний колір"
+    }
+  ],
+  "canvas-style.pattern-grid": [
+    {
+      "type": 0,
+      "value": "Сітка"
+    }
+  ],
+  "canvas-style.pattern-dots": [
+    {
+      "type": 0,
+      "value": "Крапки"
+    }
+  ],
+  "canvas-style.pattern-none": [
+    {
+      "type": 0,
+      "value": "Немає"
+    }
+  ],
+  "canvas-style.grid-style": [
+    {
+      "type": 0,
+      "value": "Стиль сітки"
+    }
+  ],
+  "canvas-style.grid-size-xs": [
+    {
+      "type": 0,
+      "value": "XS"
+    }
+  ],
+  "canvas-style.grid-size-s": [
+    {
+      "type": 0,
+      "value": "S"
+    }
+  ],
+  "canvas-style.grid-size-m": [
+    {
+      "type": 0,
+      "value": "M"
+    }
+  ],
+  "canvas-style.grid-size-l": [
+    {
+      "type": 0,
+      "value": "L"
+    }
+  ],
+  "canvas-style.grid-size-xl": [
+    {
+      "type": 0,
+      "value": "XL"
+    }
+  ],
+  "canvas-style.grid-color": [
+    {
+      "type": 0,
+      "value": "Колір сітки"
+    }
+  ],
+  "canvas-style.preview": [
+    {
+      "type": 0,
+      "value": "Попередній перегляд"
+    }
+  ],
+  "canvas-style.reset": [
+    {
+      "type": 0,
+      "value": "Скинути"
+    }
+  ],
+  "canvas-style.apply": [
+    {
+      "type": 0,
+      "value": "Застосувати"
+    }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Темна"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Світла"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Перемкнути тему"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Вставити посилання"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Вставити іконку"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Жирний"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Курсив"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Підкреслення"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Закреслення"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Маркований список"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Нумерований список"
+    }
+  ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "іконка знайдена"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "іконки знайдені"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "іконки"
+    }
+  ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Пошук емодзі..."
+    }
+  ]
+}
