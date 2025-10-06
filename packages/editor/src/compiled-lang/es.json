@@ -137,6 +137,12 @@
       "value": "XS"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Cerrar"
+    }
+  ],
   "editor-panel.font-family-default": [
     {
       "type": 0,

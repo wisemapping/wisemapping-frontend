@@ -95,6 +95,12 @@
       "value": "Annulla"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Chiudi"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,

@@ -157,7 +157,14 @@ const RegistrationForm = () => {
         <Grid size={{ md: 5, xs: 12 }}>
           <main>
             <FormControl css={{ maxWidth: maxFormWidth }}>
-              <form onSubmit={handleOnSubmit} role="form" aria-label="Registration form">
+              <form
+                onSubmit={handleOnSubmit}
+                role="form"
+                aria-label={intl.formatMessage({
+                  id: 'common.registration-form',
+                  defaultMessage: 'Registration form',
+                })}
+              >
                 <GlobalError error={error} />
                 <fieldset>
                   <legend>

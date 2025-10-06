@@ -595,7 +595,13 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                                 defaultMessage: 'More Actions',
                               })}
                             >
-                              <IconButton aria-label="settings" onClick={handleActionClick(row.id)}>
+                              <IconButton
+                                aria-label={intl.formatMessage({
+                                  id: 'common.settings',
+                                  defaultMessage: 'Settings',
+                                })}
+                                onClick={handleActionClick(row.id)}
+                              >
                                 <MoreVertIcon color="action" />
                               </IconButton>
                             </Tooltip>
@@ -770,7 +776,10 @@ export const MapsList = (props: MapsListProps): React.ReactElement => {
                             })}
                           >
                             <IconButton
-                              aria-label="Others"
+                              aria-label={intl.formatMessage({
+                                id: 'common.others',
+                                defaultMessage: 'Others',
+                              })}
                               size="small"
                               onClick={handleActionClick(row.id)}
                             >

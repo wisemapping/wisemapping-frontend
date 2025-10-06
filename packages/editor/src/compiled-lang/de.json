@@ -215,6 +215,12 @@
       "value": "Hintergrund"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Schließen"
+    }
+  ],
   "editor-panel.canvas-style-title": [
     {
       "type": 0,
@@ -530,13 +536,13 @@
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
-      "value": "Symbol Einfügen"
+      "value": "Symbol einfügen"
     }
   ],
   "rich-text-editor.insert-link": [
     {
       "type": 0,
-      "value": "Link Einfügen"
+      "value": "Link einfügen"
     }
   ],
   "rich-text-editor.italic": [

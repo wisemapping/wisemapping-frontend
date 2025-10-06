@@ -20,7 +20,7 @@
         "cy:open": "npx cypress open",
         "cy:run": "npx cypress run",
         "dev": "webpack --config webpack.dev.js",
-        "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','zh-CN','ru','ja','pt','it','hi'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
+        "i18n:compile": "bash -c 'for lang in {'es','en','fr','de','zh','zh-CN','ru','uk','ja','pt','it','hi'};do formatjs compile lang/${lang}.json --ast --out-file src/compiled-lang/${lang}.json;done'",
         "i18n:extract": "formatjs extract 'src/**/*.ts*' --ignore 'src/@types/**/*' --out-file lang/en.json",
         "lint": "eslint src --ext js,ts,tsx",
         "lint:fix": "eslint src --ext js,ts,tsx --fix",

@@ -423,12 +423,25 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
         />
       );
     }
-    return <Chip label="Clean" color="success" size="small" />;
+    return (
+      <Chip
+        label={intl.formatMessage({ id: 'admin.status-clean', defaultMessage: 'Clean' })}
+        color="success"
+        size="small"
+      />
+    );
   };
 
   const getSuspendedUserChip = (isSuspended: boolean) => {
     if (isSuspended) {
-      return <Chip label="Suspended" color="error" size="small" icon={<PersonOffIcon />} />;
+      return (
+        <Chip
+          label={intl.formatMessage({ id: 'admin.status-suspended', defaultMessage: 'Suspended' })}
+          color="error"
+          size="small"
+          icon={<PersonOffIcon />}
+        />
+      );
     }
     return null;
   };
@@ -459,7 +472,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
             defaultMessage: 'Maps Management',
           })}
         </Typography>
-        <IconButton onClick={() => refetch()} aria-label="refresh">
+        <IconButton
+          onClick={() => refetch()}
+          aria-label={intl.formatMessage({ id: 'admin.refresh', defaultMessage: 'Refresh' })}
+        >
           <RefreshIcon />
         </IconButton>
       </Box>
@@ -493,7 +509,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
           <InputLabel>Public</InputLabel>
           <Select
             value={filterPublic}
-            label="Public"
+            label={intl.formatMessage({ id: 'admin.public', defaultMessage: 'Public' })}
             onChange={(e) => setFilterPublic(e.target.value)}
             disabled={isLoading || isFilterLoading}
             endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
@@ -508,7 +524,7 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
           <InputLabel>Locked</InputLabel>
           <Select
             value={filterLocked}
-            label="Locked"
+            label={intl.formatMessage({ id: 'admin.locked', defaultMessage: 'Locked' })}
             onChange={(e) => setFilterLocked(e.target.value)}
             disabled={isLoading || isFilterLoading}
             endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
@@ -721,7 +737,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                       >
                         <IconButton
                           onClick={() => handleViewXml(map)}
-                          aria-label="view-xml"
+                          aria-label={intl.formatMessage({
+                            id: 'admin.view-xml',
+                            defaultMessage: 'View XML',
+                          })}
                           color="info"
                           size="small"
                         >
@@ -736,7 +755,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                       >
                         <IconButton
                           onClick={() => handleEditMap(map)}
-                          aria-label="edit"
+                          aria-label={intl.formatMessage({
+                            id: 'admin.edit',
+                            defaultMessage: 'Edit',
+                          })}
                           color="primary"
                           size="small"
                         >
@@ -768,7 +790,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                         >
                           <IconButton
                             onClick={() => handleSuspendUser(map.createdById, map.createdBy)}
-                            aria-label="suspend-user"
+                            aria-label={intl.formatMessage({
+                              id: 'admin.suspend-user',
+                              defaultMessage: 'Suspend user',
+                            })}
                             color="warning"
                             size="small"
                             disabled={suspendUserMutation.isLoading}
@@ -785,7 +810,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
                       >
                         <IconButton
                           onClick={() => handleDeleteMap(map.id, map.title)}
-                          aria-label="delete"
+                          aria-label={intl.formatMessage({
+                            id: 'admin.delete',
+                            defaultMessage: 'Delete',
+                          })}
                           color="error"
                           size="small"
                         >
@@ -878,7 +906,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               <InputLabel>Public Access</InputLabel>
               <Select
                 value={formData.public ? 'public' : 'private'}
-                label="Public Access"
+                label={intl.formatMessage({
+                  id: 'admin.public-access',
+                  defaultMessage: 'Public Access',
+                })}
                 onChange={(e) => setFormData({ ...formData, public: e.target.value === 'public' })}
               >
                 <MenuItem value="private">Private</MenuItem>
@@ -890,7 +921,10 @@ const MapsManagement = ({ onNavigateToUser }: MapsManagementProps): ReactElement
               <InputLabel>Lock Status</InputLabel>
               <Select
                 value={formData.isLocked ? 'locked' : 'unlocked'}
-                label="Lock Status"
+                label={intl.formatMessage({
+                  id: 'admin.lock-status',
+                  defaultMessage: 'Lock Status',
+                })}
                 onChange={(e) =>
                   setFormData({ ...formData, isLocked: e.target.value === 'locked' })
                 }

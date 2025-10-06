@@ -209,6 +209,12 @@
       "value": "Arrière-plan"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Fermer"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,

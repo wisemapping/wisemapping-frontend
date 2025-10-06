@@ -568,5 +568,104 @@
   },
   "theme.toggle": {
     "defaultMessage": "Toggle Theme"
+  },
+  "admin.edit-user": {
+    "defaultMessage": "Edit user"
+  },
+  "admin.unsuspend-user": {
+    "defaultMessage": "Unsuspend user"
+  },
+  "admin.suspend-user": {
+    "defaultMessage": "Suspend user"
+  },
+  "admin.delete-user": {
+    "defaultMessage": "Delete user"
+  },
+  "admin.status-active": {
+    "defaultMessage": "Active"
+  },
+  "admin.status-clean": {
+    "defaultMessage": "Clean"
+  },
+  "admin.status-suspended": {
+    "defaultMessage": "Suspended"
+  },
+  "admin.public": {
+    "defaultMessage": "Public"
+  },
+  "admin.locked": {
+    "defaultMessage": "Locked"
+  },
+  "admin.public-access": {
+    "defaultMessage": "Public Access"
+  },
+  "admin.lock-status": {
+    "defaultMessage": "Lock Status"
+  },
+  "admin.view-xml": {
+    "defaultMessage": "View XML"
+  },
+  "admin.edit": {
+    "defaultMessage": "Edit"
+  },
+  "admin.delete": {
+    "defaultMessage": "Delete"
+  },
+  "admin.refresh": {
+    "defaultMessage": "Refresh"
+  },
+  "admin.status": {
+    "defaultMessage": "Status"
+  },
+  "admin.auth-type": {
+    "defaultMessage": "Auth Type"
+  },
+  "admin.suspension-status": {
+    "defaultMessage": "Suspension Status"
+  },
+  "admin.suspension-reason": {
+    "defaultMessage": "Suspension Reason"
+  },
+  "common.first-name": {
+    "defaultMessage": "First Name"
+  },
+  "common.last-name": {
+    "defaultMessage": "Last Name"
+  },
+  "common.email": {
+    "defaultMessage": "Email"
+  },
+  "common.locale": {
+    "defaultMessage": "Locale"
+  },
+  "common.allow-email-notifications": {
+    "defaultMessage": "Allow Email Notifications"
+  },
+  "common.settings": {
+    "defaultMessage": "Settings"
+  },
+  "common.others": {
+    "defaultMessage": "Others"
+  },
+  "common.open-drawer": {
+    "defaultMessage": "Open drawer"
+  },
+  "common.maps-list": {
+    "defaultMessage": "Maps list"
+  },
+  "common.delete": {
+    "defaultMessage": "Delete"
+  },
+  "common.delete-tag": {
+    "defaultMessage": "Delete tag"
+  },
+  "common.emails": {
+    "defaultMessage": "Emails"
+  },
+  "common.registration-form": {
+    "defaultMessage": "Registration form"
+  },
+  "common.login-form": {
+    "defaultMessage": "Login form"
   }
 }

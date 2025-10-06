@@ -170,7 +170,14 @@ const LoginPage = (): React.ReactElement => {
 
         <main>
           <FormControl>
-            <form onSubmit={handleOnSubmit} role="form" aria-label="Login form">
+            <form
+              onSubmit={handleOnSubmit}
+              role="form"
+              aria-label={intl.formatMessage({
+                id: 'common.login-form',
+                defaultMessage: 'Login form',
+              })}
+            >
               <fieldset>
                 <Input
                   onChange={handleOnChange}

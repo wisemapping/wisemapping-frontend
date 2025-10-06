@@ -385,5 +385,32 @@
     },
     "image-icon-tab.icons": {
         "defaultMessage": "Symbole"
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "Link einfügen"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "Symbol einfügen"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "Fett"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "Kursiv"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "Unterstrichen"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "Durchgestrichen"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "Aufzählungsliste"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "Nummerierte Liste"
+    },
+    "common.close": {
+        "defaultMessage": "Schließen"
     }
 }

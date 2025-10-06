@@ -302,7 +302,34 @@
     "image-icon-tab.icons-found": {
         "defaultMessage": "アイコンが見つかりました"
     },
-    "image-icon-tab.icons": {
-        "defaultMessage": "アイコン"
-    }
+  "image-icon-tab.icons": {
+    "defaultMessage": "アイコン"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "リンクを挿入"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "アイコンを挿入"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "太字"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "斜体"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "下線"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "取り消し線"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "箇条書きリスト"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "番号付きリスト"
+  },
+  "common.close": {
+    "defaultMessage": "閉じる"
+  }
 }

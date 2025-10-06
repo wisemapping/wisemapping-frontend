@@ -95,6 +95,12 @@
       "value": "Desfazer"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Fechar"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,

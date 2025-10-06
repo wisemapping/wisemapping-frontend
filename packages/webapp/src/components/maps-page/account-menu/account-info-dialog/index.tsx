@@ -146,7 +146,7 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     }
   };
 
-  const handleLanguageChange = (event: any) => {
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newLanguage = event.target.value as LocaleCode;
     setSelectedLanguage(newLanguage);
     mutationChangeLanguage.mutate(newLanguage);

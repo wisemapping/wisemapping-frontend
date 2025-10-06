@@ -385,5 +385,32 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Пошук емодзі..."
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "Вставити посилання"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "Вставити іконку"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "Жирний"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "Курсив"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "Підкреслений"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "Закреслений"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "Маркований список"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "Нумерований список"
+  },
+  "common.close": {
+    "defaultMessage": "Закрити"
   }
 }

@@ -47,7 +47,10 @@ export function LabelsCell({ labels, onDelete }: Props): React.ReactElement<Prop
           <IconButton
             color="default"
             size="small"
-            aria-label="delete tag"
+            aria-label={intl.formatMessage({
+              id: 'common.delete-tag',
+              defaultMessage: 'Delete tag',
+            })}
             component="span"
             onClick={(e) => {
               e.stopPropagation();

@@ -355,7 +355,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
             <Button
               onClick={insertLink}
-              title="Insert Link"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.insert-link',
+                defaultMessage: 'Insert Link',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -369,7 +372,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             </Button>
             <Button
               onClick={handleIconPickerOpen}
-              title="Insert Icon"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.insert-icon',
+                defaultMessage: 'Insert Icon',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -386,7 +392,7 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
             <Button
               onClick={() => execCommand('bold')}
-              title="Bold"
+              title={intl.formatMessage({ id: 'rich-text-editor.bold', defaultMessage: 'Bold' })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -400,7 +406,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             </Button>
             <Button
               onClick={() => execCommand('italic')}
-              title="Italic"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.italic',
+                defaultMessage: 'Italic',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -414,7 +423,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             </Button>
             <Button
               onClick={() => execCommand('underline')}
-              title="Underline"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.underline',
+                defaultMessage: 'Underline',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -428,7 +440,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             </Button>
             <Button
               onClick={() => execCommand('strikeThrough')}
-              title="Strikethrough"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.strikethrough',
+                defaultMessage: 'Strikethrough',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -445,7 +460,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           <ButtonGroup size="small" variant="outlined" sx={{ flexShrink: 0 }}>
             <Button
               onClick={() => execCommand('insertUnorderedList')}
-              title="Bullet List"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.bullet-list',
+                defaultMessage: 'Bullet List',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,
@@ -459,7 +477,10 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
             </Button>
             <Button
               onClick={() => execCommand('insertOrderedList')}
-              title="Numbered List"
+              title={intl.formatMessage({
+                id: 'rich-text-editor.numbered-list',
+                defaultMessage: 'Numbered List',
+              })}
               sx={{
                 minWidth: '36px',
                 borderColor: theme.palette.divider,

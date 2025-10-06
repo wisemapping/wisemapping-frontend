@@ -388,5 +388,8 @@
   },
   "image-icon-tab.icons": {
     "defaultMessage": "icônes"
+  },
+  "common.close": {
+    "defaultMessage": "Fermer"
   }
 }

@@ -341,5 +341,32 @@
     },
     "action.reset": {
         "defaultMessage": "Restablecer"
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "Insertar Enlace"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "Insertar Icono"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "Negrita"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "Cursiva"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "Subrayado"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "Tachado"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "Lista con Viñetas"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "Lista Numerada"
+    },
+    "common.close": {
+        "defaultMessage": "Cerrar"
     }
 }

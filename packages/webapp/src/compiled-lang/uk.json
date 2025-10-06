@@ -464,7 +464,11 @@
   "import.error-file": [
     {
       "type": 0,
-      "value": "Помилка імпорту {error}"
+      "value": "Помилка імпорту "
+    },
+    {
+      "type": 1,
+      "value": "error"
     }
   ],
   "import.title": [
@@ -595,8 +599,12 @@
   ],
   "label.maps-count": [
     {
+      "type": 1,
+      "value": "count"
+    },
+    {
       "type": 0,
-      "value": "{count} карт"
+      "value": " карт"
     }
   ],
   "label.title": [
@@ -641,6 +649,12 @@
       "value": "Введена адреса електронної пошти або пароль недійсні."
     }
   ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "Увійти через Facebook"
+    }
+  ],
   "login.forgotpwd": [
     {
       "type": 0,
@@ -651,12 +665,6 @@
     {
       "type": 0,
       "value": "Увійти через Google"
-    }
-  ],
-  "login.facebook.button": [
-    {
-      "type": 0,
-      "value": "Увійти через Facebook"
     }
   ],
   "login.page-title": [
@@ -776,7 +784,19 @@
   "maps.modified-by-desc": [
     {
       "type": 0,
-      "value": "Змінено {by} {on}"
+      "value": "Змінено "
+    },
+    {
+      "type": 1,
+      "value": "by"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "on"
     }
   ],
   "maps.nav-all": [
@@ -977,6 +997,12 @@
       "value": "Електронна пошта"
     }
   ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "Зареєструватися через Facebook"
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,
@@ -987,12 +1013,6 @@
     {
       "type": 0,
       "value": "Зареєструватися через Google"
-    }
-  ],
-  "registration.facebook.button": [
-    {
-      "type": 0,
-      "value": "Зареєструватися через Facebook"
     }
   ],
   "registration.lastname": [

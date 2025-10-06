@@ -313,5 +313,32 @@
   },
   "emoji-picker.search-placeholder": {
     "defaultMessage": "Pesquisar emojis..."
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "Inserir Link"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "Inserir Ícone"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "Negrito"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "Itálico"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "Sublinhado"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "Riscado"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "Lista com Marcadores"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "Lista Numerada"
+  },
+  "common.close": {
+    "defaultMessage": "Fechar"
   }
 }

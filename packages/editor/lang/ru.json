@@ -355,5 +355,32 @@
     },
     "emoji-picker.search-placeholder": {
         "defaultMessage": "Поиск эмодзи..."
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "Вставить ссылку"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "Вставить иконку"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "Жирный"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "Курсив"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "Подчеркнутый"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "Зачеркнутый"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "Маркированный список"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "Нумерованный список"
+    },
+    "common.close": {
+        "defaultMessage": "Закрыть"
     }
 }

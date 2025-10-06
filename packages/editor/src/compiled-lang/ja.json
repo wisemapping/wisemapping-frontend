@@ -95,6 +95,12 @@
       "value": "元に戻す"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "閉じる"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,

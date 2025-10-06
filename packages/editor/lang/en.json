@@ -403,5 +403,32 @@
   },
   "action.reset": {
     "defaultMessage": "Reset"
+  },
+  "rich-text-editor.insert-link": {
+    "defaultMessage": "Insert Link"
+  },
+  "rich-text-editor.insert-icon": {
+    "defaultMessage": "Insert Icon"
+  },
+  "rich-text-editor.bold": {
+    "defaultMessage": "Bold"
+  },
+  "rich-text-editor.italic": {
+    "defaultMessage": "Italic"
+  },
+  "rich-text-editor.underline": {
+    "defaultMessage": "Underline"
+  },
+  "rich-text-editor.strikethrough": {
+    "defaultMessage": "Strikethrough"
+  },
+  "rich-text-editor.bullet-list": {
+    "defaultMessage": "Bullet List"
+  },
+  "rich-text-editor.numbered-list": {
+    "defaultMessage": "Numbered List"
+  },
+  "common.close": {
+    "defaultMessage": "Close"
   }
 }

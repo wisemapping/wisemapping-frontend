@@ -5,6 +5,12 @@
       "value": "分享"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "关闭"
+    }
+  ],
   "editor-panel.theme-title": [
     {
       "type": 0,

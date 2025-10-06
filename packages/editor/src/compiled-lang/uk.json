@@ -95,6 +95,150 @@
       "value": "Скасувати"
     }
   ],
+  "canvas-style.apply": [
+    {
+      "type": 0,
+      "value": "Застосувати"
+    }
+  ],
+  "canvas-style.background-color": [
+    {
+      "type": 0,
+      "value": "Колір фону"
+    }
+  ],
+  "canvas-style.background-pattern": [
+    {
+      "type": 0,
+      "value": "Візерунок фону"
+    }
+  ],
+  "canvas-style.colors": [
+    {
+      "type": 0,
+      "value": "Кольори"
+    }
+  ],
+  "canvas-style.grid-color": [
+    {
+      "type": 0,
+      "value": "Колір сітки"
+    }
+  ],
+  "canvas-style.grid-size-l": [
+    {
+      "type": 0,
+      "value": "L"
+    }
+  ],
+  "canvas-style.grid-size-m": [
+    {
+      "type": 0,
+      "value": "M"
+    }
+  ],
+  "canvas-style.grid-size-s": [
+    {
+      "type": 0,
+      "value": "S"
+    }
+  ],
+  "canvas-style.grid-size-xl": [
+    {
+      "type": 0,
+      "value": "XL"
+    }
+  ],
+  "canvas-style.grid-size-xs": [
+    {
+      "type": 0,
+      "value": "XS"
+    }
+  ],
+  "canvas-style.grid-style": [
+    {
+      "type": 0,
+      "value": "Стиль сітки"
+    }
+  ],
+  "canvas-style.pattern-dots": [
+    {
+      "type": 0,
+      "value": "Крапки"
+    }
+  ],
+  "canvas-style.pattern-grid": [
+    {
+      "type": 0,
+      "value": "Сітка"
+    }
+  ],
+  "canvas-style.pattern-none": [
+    {
+      "type": 0,
+      "value": "Немає"
+    }
+  ],
+  "canvas-style.pattern-solid": [
+    {
+      "type": 0,
+      "value": "Суцільний колір"
+    }
+  ],
+  "canvas-style.preview": [
+    {
+      "type": 0,
+      "value": "Попередній перегляд"
+    }
+  ],
+  "canvas-style.reset": [
+    {
+      "type": 0,
+      "value": "Скинути"
+    }
+  ],
+  "canvas-style.title": [
+    {
+      "type": 0,
+      "value": "Фон"
+    }
+  ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Закрити"
+    }
+  ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Створювач"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Опис"
+    }
+  ],
+  "editor-panel.canvas-style-title": [
+    {
+      "type": 0,
+      "value": "Фон"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "За замовчуванням"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Змішаний"
+    }
+  ],
   "editor-panel.icon-title": [
     {
       "type": 0,
@@ -111,6 +255,12 @@
     {
       "type": 0,
       "value": "Примітка"
+    }
+  ],
+  "editor-panel.theme-title": [
+    {
+      "type": 0,
+      "value": "Тема"
     }
   ],
   "editor-panel.tooltip-add-icon": [
@@ -141,6 +291,12 @@
     {
       "type": 0,
       "value": "Додати тему"
+    }
+  ],
+  "editor-panel.tooltip-canvas-style": [
+    {
+      "type": 0,
+      "value": "Фон"
     }
   ],
   "editor-panel.tooltip-connection-color": [
@@ -189,6 +345,12 @@
     {
       "type": 0,
       "value": "Видалити тему"
+    }
+  ],
+  "editor-panel.tooltip-theme": [
+    {
+      "type": 0,
+      "value": "Тема"
     }
   ],
   "editor-panel.tooltip-topic-border-color": [
@@ -257,18 +419,6 @@
       "value": "Стиль шрифту"
     }
   ],
-  "editor-panel.font-family-default": [
-    {
-      "type": 0,
-      "value": "За замовчуванням"
-    }
-  ],
-  "editor-panel.font-family-mixed": [
-    {
-      "type": 0,
-      "value": "Змішаний"
-    }
-  ],
   "editor-panel.tooltip-topic-share-ellipse": [
     {
       "type": 0,
@@ -329,10 +479,34 @@
       "value": "Цей простір редагування демонструє деякі можливості редактора карт розуму!"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Пошук емодзі..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
       "value": "Показати зображення"
+    }
+  ],
+  "image-icon-tab.icon-found": [
+    {
+      "type": 0,
+      "value": "іконка знайдена"
+    }
+  ],
+  "image-icon-tab.icons": [
+    {
+      "type": 0,
+      "value": "іконки"
+    }
+  ],
+  "image-icon-tab.icons-found": [
+    {
+      "type": 0,
+      "value": "іконки знайдені"
     }
   ],
   "link.help_text": [
@@ -345,6 +519,54 @@
     {
       "type": 0,
       "value": "https://www.example.com"
+    }
+  ],
+  "rich-text-editor.bold": [
+    {
+      "type": 0,
+      "value": "Жирний"
+    }
+  ],
+  "rich-text-editor.bullet-list": [
+    {
+      "type": 0,
+      "value": "Маркований список"
+    }
+  ],
+  "rich-text-editor.insert-icon": [
+    {
+      "type": 0,
+      "value": "Вставити іконку"
+    }
+  ],
+  "rich-text-editor.insert-link": [
+    {
+      "type": 0,
+      "value": "Вставити посилання"
+    }
+  ],
+  "rich-text-editor.italic": [
+    {
+      "type": 0,
+      "value": "Курсив"
+    }
+  ],
+  "rich-text-editor.numbered-list": [
+    {
+      "type": 0,
+      "value": "Нумерований список"
+    }
+  ],
+  "rich-text-editor.strikethrough": [
+    {
+      "type": 0,
+      "value": "Закреслений"
+    }
+  ],
+  "rich-text-editor.underline": [
+    {
+      "type": 0,
+      "value": "Підкреслений"
     }
   ],
   "shortcut-help-pane.action": [
@@ -503,6 +725,36 @@
       "value": "Скасувати редагування"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Темна"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Світла"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Перемкнути тему"
+    }
+  ],
+  "zoom-panel.tooltip-collapse-all": [
+    {
+      "type": 0,
+      "value": "Згорнути всі вузли"
+    }
+  ],
+  "zoom-panel.tooltip-expand-all": [
+    {
+      "type": 0,
+      "value": "Розгорнути всі вузли"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,
@@ -525,252 +777,6 @@
     {
       "type": 0,
       "value": "Підігнати під розмір"
-    }
-  ],
-  "zoom-panel.tooltip-collapse-all": [
-    {
-      "type": 0,
-      "value": "Згорнути всі вузли"
-    }
-  ],
-  "zoom-panel.tooltip-expand-all": [
-    {
-      "type": 0,
-      "value": "Розгорнути всі вузли"
-    }
-  ],
-  "creator-info-pane.description": [
-    {
-      "type": 0,
-      "value": "Опис"
-    }
-  ],
-  "creator-info-pane.creator": [
-    {
-      "type": 0,
-      "value": "Створювач"
-    }
-  ],
-  "editor-panel.tooltip-theme": [
-    {
-      "type": 0,
-      "value": "Тема"
-    }
-  ],
-  "editor-panel.theme-title": [
-    {
-      "type": 0,
-      "value": "Тема"
-    }
-  ],
-  "editor-panel.tooltip-canvas-style": [
-    {
-      "type": 0,
-      "value": "Фон"
-    }
-  ],
-  "editor-panel.canvas-style-title": [
-    {
-      "type": 0,
-      "value": "Фон"
-    }
-  ],
-  "canvas-style.title": [
-    {
-      "type": 0,
-      "value": "Фон"
-    }
-  ],
-  "canvas-style.colors": [
-    {
-      "type": 0,
-      "value": "Кольори"
-    }
-  ],
-  "canvas-style.background-color": [
-    {
-      "type": 0,
-      "value": "Колір фону"
-    }
-  ],
-  "canvas-style.background-pattern": [
-    {
-      "type": 0,
-      "value": "Візерунок фону"
-    }
-  ],
-  "canvas-style.pattern-solid": [
-    {
-      "type": 0,
-      "value": "Суцільний колір"
-    }
-  ],
-  "canvas-style.pattern-grid": [
-    {
-      "type": 0,
-      "value": "Сітка"
-    }
-  ],
-  "canvas-style.pattern-dots": [
-    {
-      "type": 0,
-      "value": "Крапки"
-    }
-  ],
-  "canvas-style.pattern-none": [
-    {
-      "type": 0,
-      "value": "Немає"
-    }
-  ],
-  "canvas-style.grid-style": [
-    {
-      "type": 0,
-      "value": "Стиль сітки"
-    }
-  ],
-  "canvas-style.grid-size-xs": [
-    {
-      "type": 0,
-      "value": "XS"
-    }
-  ],
-  "canvas-style.grid-size-s": [
-    {
-      "type": 0,
-      "value": "S"
-    }
-  ],
-  "canvas-style.grid-size-m": [
-    {
-      "type": 0,
-      "value": "M"
-    }
-  ],
-  "canvas-style.grid-size-l": [
-    {
-      "type": 0,
-      "value": "L"
-    }
-  ],
-  "canvas-style.grid-size-xl": [
-    {
-      "type": 0,
-      "value": "XL"
-    }
-  ],
-  "canvas-style.grid-color": [
-    {
-      "type": 0,
-      "value": "Колір сітки"
-    }
-  ],
-  "canvas-style.preview": [
-    {
-      "type": 0,
-      "value": "Попередній перегляд"
-    }
-  ],
-  "canvas-style.reset": [
-    {
-      "type": 0,
-      "value": "Скинути"
-    }
-  ],
-  "canvas-style.apply": [
-    {
-      "type": 0,
-      "value": "Застосувати"
-    }
-  ],
-  "theme.dark": [
-    {
-      "type": 0,
-      "value": "Темна"
-    }
-  ],
-  "theme.light": [
-    {
-      "type": 0,
-      "value": "Світла"
-    }
-  ],
-  "theme.toggle": [
-    {
-      "type": 0,
-      "value": "Перемкнути тему"
-    }
-  ],
-  "rich-text-editor.insert-link": [
-    {
-      "type": 0,
-      "value": "Вставити посилання"
-    }
-  ],
-  "rich-text-editor.insert-icon": [
-    {
-      "type": 0,
-      "value": "Вставити іконку"
-    }
-  ],
-  "rich-text-editor.bold": [
-    {
-      "type": 0,
-      "value": "Жирний"
-    }
-  ],
-  "rich-text-editor.italic": [
-    {
-      "type": 0,
-      "value": "Курсив"
-    }
-  ],
-  "rich-text-editor.underline": [
-    {
-      "type": 0,
-      "value": "Підкреслення"
-    }
-  ],
-  "rich-text-editor.strikethrough": [
-    {
-      "type": 0,
-      "value": "Закреслення"
-    }
-  ],
-  "rich-text-editor.bullet-list": [
-    {
-      "type": 0,
-      "value": "Маркований список"
-    }
-  ],
-  "rich-text-editor.numbered-list": [
-    {
-      "type": 0,
-      "value": "Нумерований список"
-    }
-  ],
-  "image-icon-tab.icon-found": [
-    {
-      "type": 0,
-      "value": "іконка знайдена"
-    }
-  ],
-  "image-icon-tab.icons-found": [
-    {
-      "type": 0,
-      "value": "іконки знайдені"
-    }
-  ],
-  "image-icon-tab.icons": [
-    {
-      "type": 0,
-      "value": "іконки"
-    }
-  ],
-  "emoji-picker.search-placeholder": [
-    {
-      "type": 0,
-      "value": "Пошук емодзі..."
     }
   ]
 }

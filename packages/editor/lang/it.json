@@ -304,5 +304,32 @@
     },
     "image-icon-tab.icons": {
         "defaultMessage": "icone"
+    },
+    "rich-text-editor.insert-link": {
+        "defaultMessage": "Inserisci Link"
+    },
+    "rich-text-editor.insert-icon": {
+        "defaultMessage": "Inserisci Icona"
+    },
+    "rich-text-editor.bold": {
+        "defaultMessage": "Grassetto"
+    },
+    "rich-text-editor.italic": {
+        "defaultMessage": "Corsivo"
+    },
+    "rich-text-editor.underline": {
+        "defaultMessage": "Sottolineato"
+    },
+    "rich-text-editor.strikethrough": {
+        "defaultMessage": "Barrato"
+    },
+    "rich-text-editor.bullet-list": {
+        "defaultMessage": "Elenco Puntato"
+    },
+    "rich-text-editor.numbered-list": {
+        "defaultMessage": "Elenco Numerato"
+    },
+    "common.close": {
+        "defaultMessage": "Chiudi"
     }
 }

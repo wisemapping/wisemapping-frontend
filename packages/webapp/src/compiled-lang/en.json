@@ -167,6 +167,120 @@
       "value": "Share"
     }
   ],
+  "admin.auth-type": [
+    {
+      "type": 0,
+      "value": "Auth Type"
+    }
+  ],
+  "admin.delete": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "admin.delete-user": [
+    {
+      "type": 0,
+      "value": "Delete user"
+    }
+  ],
+  "admin.edit": [
+    {
+      "type": 0,
+      "value": "Edit"
+    }
+  ],
+  "admin.edit-user": [
+    {
+      "type": 0,
+      "value": "Edit user"
+    }
+  ],
+  "admin.lock-status": [
+    {
+      "type": 0,
+      "value": "Lock Status"
+    }
+  ],
+  "admin.locked": [
+    {
+      "type": 0,
+      "value": "Locked"
+    }
+  ],
+  "admin.public": [
+    {
+      "type": 0,
+      "value": "Public"
+    }
+  ],
+  "admin.public-access": [
+    {
+      "type": 0,
+      "value": "Public Access"
+    }
+  ],
+  "admin.refresh": [
+    {
+      "type": 0,
+      "value": "Refresh"
+    }
+  ],
+  "admin.status": [
+    {
+      "type": 0,
+      "value": "Status"
+    }
+  ],
+  "admin.status-active": [
+    {
+      "type": 0,
+      "value": "Active"
+    }
+  ],
+  "admin.status-clean": [
+    {
+      "type": 0,
+      "value": "Clean"
+    }
+  ],
+  "admin.status-suspended": [
+    {
+      "type": 0,
+      "value": "Suspended"
+    }
+  ],
+  "admin.suspend-user": [
+    {
+      "type": 0,
+      "value": "Suspend user"
+    }
+  ],
+  "admin.suspension-reason": [
+    {
+      "type": 0,
+      "value": "Suspension Reason"
+    }
+  ],
+  "admin.suspension-status": [
+    {
+      "type": 0,
+      "value": "Suspension Status"
+    }
+  ],
+  "admin.unsuspend-user": [
+    {
+      "type": 0,
+      "value": "Unsuspend user"
+    }
+  ],
+  "admin.view-xml": [
+    {
+      "type": 0,
+      "value": "View XML"
+    }
+  ],
   "changepwd.button": [
     {
       "type": 0,
@@ -201,6 +315,90 @@
     {
       "type": 0,
       "value": "Change Password"
+    }
+  ],
+  "common.allow-email-notifications": [
+    {
+      "type": 0,
+      "value": "Allow Email Notifications"
+    }
+  ],
+  "common.delete": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "common.delete-tag": [
+    {
+      "type": 0,
+      "value": "Delete tag"
+    }
+  ],
+  "common.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "common.emails": [
+    {
+      "type": 0,
+      "value": "Emails"
+    }
+  ],
+  "common.first-name": [
+    {
+      "type": 0,
+      "value": "First Name"
+    }
+  ],
+  "common.last-name": [
+    {
+      "type": 0,
+      "value": "Last Name"
+    }
+  ],
+  "common.locale": [
+    {
+      "type": 0,
+      "value": "Locale"
+    }
+  ],
+  "common.login-form": [
+    {
+      "type": 0,
+      "value": "Login form"
+    }
+  ],
+  "common.maps-list": [
+    {
+      "type": 0,
+      "value": "Maps list"
+    }
+  ],
+  "common.open-drawer": [
+    {
+      "type": 0,
+      "value": "Open drawer"
+    }
+  ],
+  "common.others": [
+    {
+      "type": 0,
+      "value": "Others"
+    }
+  ],
+  "common.registration-form": [
+    {
+      "type": 0,
+      "value": "Registration form"
+    }
+  ],
+  "common.settings": [
+    {
+      "type": 0,
+      "value": "Settings"
     }
   ],
   "common.wait": [

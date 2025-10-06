@@ -287,7 +287,10 @@ const MapsPage = (): ReactElement => {
         >
           <Toolbar role="banner">
             <IconButton
-              aria-label="open drawer"
+              aria-label={intl.formatMessage({
+                id: 'common.open-drawer',
+                defaultMessage: 'Open drawer',
+              })}
               edge="start"
               onClick={handleMobileDrawerToggle}
               sx={{ mr: 2, display: { sm: 'none' } }}
@@ -296,7 +299,10 @@ const MapsPage = (): ReactElement => {
               <MenuIcon />
             </IconButton>
             <IconButton
-              aria-label="open drawer"
+              aria-label={intl.formatMessage({
+                id: 'common.open-drawer',
+                defaultMessage: 'Open drawer',
+              })}
               edge="start"
               onClick={handleDesktopDrawerToggle}
               sx={{ p: 0, mr: 2, display: { xs: 'none', sm: 'inherit' } }}
@@ -390,7 +396,9 @@ const MapsPage = (): ReactElement => {
         </Drawer>
         <main css={classes.content} role="main">
           <div css={classes.toolbar} />
-          <section aria-label="Maps list">
+          <section
+            aria-label={intl.formatMessage({ id: 'common.maps-list', defaultMessage: 'Maps list' })}
+          >
             <MapsList filter={filter} />
           </section>
         </main>
@@ -489,7 +497,7 @@ const StyleListItem = (props: ListItemProps) => {
         <ListItemSecondaryAction>
           <IconButton
             edge="end"
-            aria-label="delete"
+            aria-label={intl.formatMessage({ id: 'common.delete', defaultMessage: 'Delete' })}
             onClick={(e) => handleOnDelete(e, filter)}
             size="large"
           >

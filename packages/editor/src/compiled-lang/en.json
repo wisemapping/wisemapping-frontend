@@ -209,6 +209,12 @@
       "value": "Background"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,

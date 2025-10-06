@@ -101,6 +101,12 @@
       "value": "Отменить"
     }
   ],
+  "common.close": [
+    {
+      "type": 0,
+      "value": "Закрыть"
+    }
+  ],
   "creator-info-pane.creator": [
     {
       "type": 0,
@@ -422,19 +428,19 @@
   "rich-text-editor.bullet-list": [
     {
       "type": 0,
-      "value": "Маркированный Список"
+      "value": "Маркированный список"
     }
   ],
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
-      "value": "Вставить Иконку"
+      "value": "Вставить иконку"
     }
   ],
   "rich-text-editor.insert-link": [
     {
       "type": 0,
-      "value": "Вставить Ссылку"
+      "value": "Вставить ссылку"
     }
   ],
   "rich-text-editor.italic": [
@@ -446,7 +452,7 @@
   "rich-text-editor.numbered-list": [
     {
       "type": 0,
-      "value": "Нумерованный Список"
+      "value": "Нумерованный список"
     }
   ],
   "rich-text-editor.strikethrough": [

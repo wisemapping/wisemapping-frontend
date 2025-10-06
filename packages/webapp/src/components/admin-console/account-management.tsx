@@ -413,7 +413,13 @@ const AccountManagement = (): ReactElement => {
         </Tooltip>
       );
     } else {
-      return <Chip label="Active" color="success" size="small" />;
+      return (
+        <Chip
+          label={intl.formatMessage({ id: 'admin.status-active', defaultMessage: 'Active' })}
+          color="success"
+          size="small"
+        />
+      );
     }
   };
 
@@ -538,7 +544,7 @@ const AccountManagement = (): ReactElement => {
               <InputLabel>Status</InputLabel>
               <Select
                 value={filterStatus}
-                label="Status"
+                label={intl.formatMessage({ id: 'admin.status', defaultMessage: 'Status' })}
                 onChange={(e) => setFilterStatus(e.target.value)}
                 disabled={isLoading || isFilterLoading}
                 endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
@@ -554,7 +560,7 @@ const AccountManagement = (): ReactElement => {
               <InputLabel>Auth Type</InputLabel>
               <Select
                 value={filterAuthType}
-                label="Auth Type"
+                label={intl.formatMessage({ id: 'admin.auth-type', defaultMessage: 'Auth Type' })}
                 onChange={(e) => setFilterAuthType(e.target.value)}
                 disabled={isLoading || isFilterLoading}
                 endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
@@ -570,7 +576,10 @@ const AccountManagement = (): ReactElement => {
               <InputLabel>Suspension Status</InputLabel>
               <Select
                 value={filterSuspended}
-                label="Suspension Status"
+                label={intl.formatMessage({
+                  id: 'admin.suspension-status',
+                  defaultMessage: 'Suspension Status',
+                })}
                 onChange={(e) => setFilterSuspended(e.target.value)}
                 disabled={isLoading || isFilterLoading}
                 endAdornment={isLoading || isFilterLoading ? <CircularProgress size={20} /> : null}
@@ -650,14 +659,24 @@ const AccountManagement = (): ReactElement => {
                   </TableCell>
                   <TableCell>{formatDate(user.creationDate)}</TableCell>
                   <TableCell align="center">
-                    <IconButton size="small" onClick={() => handleEditUser(user)} title="Edit user">
+                    <IconButton
+                      size="small"
+                      onClick={() => handleEditUser(user)}
+                      title={intl.formatMessage({
+                        id: 'admin.edit-user',
+                        defaultMessage: 'Edit user',
+                      })}
+                    >
                       <EditIcon />
                     </IconButton>
                     {user.isSuspended ? (
                       <IconButton
                         size="small"
                         onClick={() => handleUnsuspendUser(user.id, user.email)}
-                        title="Unsuspend user"
+                        title={intl.formatMessage({
+                          id: 'admin.unsuspend-user',
+                          defaultMessage: 'Unsuspend user',
+                        })}
                         color="success"
                       >
                         <CheckCircleIcon />
@@ -666,7 +685,10 @@ const AccountManagement = (): ReactElement => {
                       <IconButton
                         size="small"
                         onClick={() => handleSuspendUser(user)}
-                        title="Suspend user"
+                        title={intl.formatMessage({
+                          id: 'admin.suspend-user',
+                          defaultMessage: 'Suspend user',
+                        })}
                         color="warning"
                       >
                         <BlockIcon />
@@ -675,7 +697,10 @@ const AccountManagement = (): ReactElement => {
                     <IconButton
                       size="small"
                       onClick={() => handleDeleteUser(user.id, user.email)}
-                      title="Delete user"
+                      title={intl.formatMessage({
+                        id: 'admin.delete-user',
+                        defaultMessage: 'Delete user',
+                      })}
                       color="error"
                     >
                       <DeleteIcon />
@@ -731,7 +756,7 @@ const AccountManagement = (): ReactElement => {
           )}
           <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 1 }}>
             <TextField
-              label="First Name"
+              label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
               value={formData.firstname}
               onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
               error={!!formErrors.firstname}
@@ -739,7 +764,7 @@ const AccountManagement = (): ReactElement => {
               fullWidth
             />
             <TextField
-              label="Last Name"
+              label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
               value={formData.lastname}
               onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
               error={!!formErrors.lastname}
@@ -747,7 +772,7 @@ const AccountManagement = (): ReactElement => {
               fullWidth
             />
             <TextField
-              label="Email"
+              label={intl.formatMessage({ id: 'common.email', defaultMessage: 'Email' })}
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -759,7 +784,7 @@ const AccountManagement = (): ReactElement => {
               <InputLabel>Locale</InputLabel>
               <Select
                 value={formData.locale}
-                label="Locale"
+                label={intl.formatMessage({ id: 'common.locale', defaultMessage: 'Locale' })}
                 onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
               >
                 <MenuItem value="en">English</MenuItem>
@@ -777,7 +802,10 @@ const AccountManagement = (): ReactElement => {
                   onChange={(e) => setFormData({ ...formData, allowSendEmail: e.target.checked })}
                 />
               }
-              label="Allow Email Notifications"
+              label={intl.formatMessage({
+                id: 'common.allow-email-notifications',
+                defaultMessage: 'Allow Email Notifications',
+              })}
             />
           </Box>
         </DialogContent>
@@ -814,7 +842,7 @@ const AccountManagement = (): ReactElement => {
           )}
           <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 1 }}>
             <TextField
-              label="First Name"
+              label={intl.formatMessage({ id: 'common.first-name', defaultMessage: 'First Name' })}
               value={formData.firstname}
               onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
               error={!!formErrors.firstname}
@@ -822,7 +850,7 @@ const AccountManagement = (): ReactElement => {
               fullWidth
             />
             <TextField
-              label="Last Name"
+              label={intl.formatMessage({ id: 'common.last-name', defaultMessage: 'Last Name' })}
               value={formData.lastname}
               onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
               error={!!formErrors.lastname}
@@ -830,7 +858,7 @@ const AccountManagement = (): ReactElement => {
               fullWidth
             />
             <TextField
-              label="Email"
+              label={intl.formatMessage({ id: 'common.email', defaultMessage: 'Email' })}
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -842,7 +870,7 @@ const AccountManagement = (): ReactElement => {
               <InputLabel>Locale</InputLabel>
               <Select
                 value={formData.locale}
-                label="Locale"
+                label={intl.formatMessage({ id: 'common.locale', defaultMessage: 'Locale' })}
                 onChange={(e) => setFormData({ ...formData, locale: e.target.value })}
               >
                 <MenuItem value="en">English</MenuItem>
@@ -860,7 +888,10 @@ const AccountManagement = (): ReactElement => {
                   onChange={(e) => setFormData({ ...formData, allowSendEmail: e.target.checked })}
                 />
               }
-              label="Allow Email Notifications"
+              label={intl.formatMessage({
+                id: 'common.allow-email-notifications',
+                defaultMessage: 'Allow Email Notifications',
+              })}
             />
           </Box>
         </DialogContent>
@@ -893,7 +924,10 @@ const AccountManagement = (): ReactElement => {
             <Select
               value={suspensionReason}
               onChange={(e) => setSuspensionReason(e.target.value)}
-              label="Suspension Reason"
+              label={intl.formatMessage({
+                id: 'admin.suspension-reason',
+                defaultMessage: 'Suspension Reason',
+              })}
             >
               {suspensionReasons.map((reason) => (
                 <MenuItem key={reason.value} value={reason.value}>
