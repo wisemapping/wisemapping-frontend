@@ -23,6 +23,7 @@ import { Label } from '../../../../classes/client';
 import LabelTwoTone from '@mui/icons-material/LabelTwoTone';
 import DeleteIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
+import { useIntl } from 'react-intl';
 
 type Props = {
   labels: Label[];
@@ -30,6 +31,8 @@ type Props = {
 };
 
 export function LabelsCell({ labels, onDelete }: Props): React.ReactElement<Props> {
+  const intl = useIntl();
+
   // Keep original label colors in both light and dark mode
   const getIconColor = (label: Label) => {
     return label.color;

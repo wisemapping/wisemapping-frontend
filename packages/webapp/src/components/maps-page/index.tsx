@@ -23,7 +23,7 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import { useStyles } from './style';
 import { MapsList } from './maps-list';
-import { createIntl, createIntlCache, FormattedMessage, IntlProvider } from 'react-intl';
+import { createIntl, createIntlCache, FormattedMessage, IntlProvider, useIntl } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { Label } from '../../classes/client';
 import ActionDispatcher from './action-dispatcher';
@@ -460,6 +460,7 @@ const CustomListItem = withEmotionStyles((theme) => ({
 
 const StyleListItem = (props: ListItemProps) => {
   const { mode } = useTheme();
+  const intl = useIntl();
   const icon = props.icon;
   const label = props.label;
   const filter = props.filter;

@@ -17,6 +17,7 @@
  */
 
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { LabelContainer, LabelText } from './styled';
 
 import { Label } from '../../../../classes/client';
@@ -32,6 +33,7 @@ export default function LabelComponent({
   onDelete,
   size = 'small',
 }: LabelComponentProps): React.ReactElement<LabelComponentProps> {
+  const intl = useIntl();
   const iconSize =
     size === 'small'
       ? {
