@@ -55,14 +55,16 @@ class ImageSVGFeature {
     const model = this._topic.getModel();
     model.setImageGalleryIconName(galleryIconName);
 
-    // If removing gallery icon, properly clean up the visual elements
-    if (!galleryIconName && this._svgText) {
-      // Remove SVG text from group
+    // Always clean up the existing SVG text element before creating a new one
+    if (this._svgText) {
+      // Remove existing SVG text from group
       const group = this._topic.get2DElement();
-      group.removeChild(this._svgText);
+      try {
+        group.removeChild(this._svgText);
+      } catch (e) {
+        // Element might not be in the group, that's okay
+      }
       this._svgText = undefined;
-    } else {
-      this._svgText = undefined; // Clear to force rebuild
     }
 
     this._svgRemoveTip = undefined; // Clear remove tip
@@ -93,13 +95,11 @@ class ImageSVGFeature {
   addToGroup(group: Group): void {
     const svgTextShape = this.getOrBuildSVGElement();
     if (svgTextShape) {
-      // Only remove if the element is already in the group
-      if (this._svgText) {
-        try {
-          group.removeChild(this._svgText);
-        } catch (e) {
-          // Element might not be in the group, that's okay
-        }
+      // Ensure the element is not already in the group before adding
+      try {
+        group.removeChild(svgTextShape);
+      } catch (e) {
+        // Element might not be in the group, that's okay
       }
       group.append(svgTextShape);
       // Move SVG text to front to ensure it appears above other elements
