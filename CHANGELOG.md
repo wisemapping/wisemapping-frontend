@@ -4,31 +4,15 @@ All notable changes to the Wisemapping Frontend project are documented in this f
 
 ## Recent Improvements (Last 5 Days)
 
-## Week of September 24 - October 1, 2025
+## Week of Oct 1 - October 6, 2025
 
 ### 🌍 Global Language Support
 
-#### Multi-Language Interface
-
-- **12 Languages Available**: Users can now access the application in English, Spanish, French, German, Russian, Ukrainian, Chinese, Japanese, Portuguese, Italian, and Hindi
-- **Instant Language Switching**: Change language preferences in real-time without losing work or reloading pages
-- **Native Language Experience**: Complete interface translation including menus, buttons, tooltips, and error messages
-- **Persistent Language Settings**: Language preferences are automatically saved and restored across sessions
-
-#### Enhanced User Accessibility
-
-- **Global User Base**: Expanded accessibility for international users with comprehensive language support
-- **Intuitive Language Selection**: Easy-to-use language selector in user account settings
-- **Consistent Experience**: Uniform language support across all application features and components
-- **Cultural Adaptation**: Interface elements adapted for different language requirements and cultural preferences
-
----
+- **12 Languages Available**: English, Spanish, French, German, Russian, Ukrainian, Chinese, Japanese, Portuguese, Italian, Hindi
+- **Instant Language Switching**: Real-time language changes without page reload
+- **Persistent Settings**: Language preferences saved across sessions
 
 ## 🌍 Supported Languages
-
-WiseMapping Frontend supports **12 languages** across all packages, providing comprehensive internationalization for users worldwide.
-
-### Complete Language List
 
 | Language              | Code    | Native Name   | Package Support |
 | --------------------- | ------- | ------------- | --------------- |
@@ -45,40 +29,11 @@ WiseMapping Frontend supports **12 languages** across all packages, providing co
 | 🇮🇹 Italian            | `it`    | Italiano      | All packages    |
 | 🇮🇳 Hindi              | `hi`    | हिन्दी        | All packages    |
 
-### Package-Specific Language Support
+### Package Support
 
-#### Webapp Package (`@wisemapping/webapp`)
-
-- **Total Languages**: 12
-- **Compilation**: All languages compiled via `i18n:compile` script
-- **Runtime**: Full support for all languages with proper locale switching
-
-#### Editor Package (`@wisemapping/editor`)
-
-- **Total Languages**: 12
-- **Compilation**: All languages compiled via `i18n:compile` script
-- **Runtime**: Full support for all languages with proper locale switching
-
-#### Mindplot Package (`@wisemapping/mindplot`)
-
-- **Total Languages**: 11
-- **Implementation**: Direct TypeScript imports (no compilation needed)
-- **Note**: Does not support Ukrainian (`uk`) or Chinese Simplified (`zh-CN`) variants
-
-### Language Features
-
-- **Dynamic Language Switching**: Users can change language preferences in real-time
-- **Persistent Settings**: Language preferences are saved and restored across sessions
-- **Complete Translation Coverage**: All UI elements, messages, and tooltips are translated
-- **RTL Support**: Ready for right-to-left languages (when needed)
-- **Fallback System**: English fallback for any missing translations
-
-### Technical Implementation
-
-- **FormatJS Integration**: Uses react-intl for message formatting and pluralization
-- **Compiled Messages**: Language files are compiled to optimized AST format
-- **Lazy Loading**: Language resources are loaded on-demand for better performance
-- **Type Safety**: Full TypeScript support for all language-related operations
+- **Webapp & Editor**: 12 languages (full support)
+- **Mindplot**: 11 languages (excludes Ukrainian, Chinese Simplified)
+- **Implementation**: FormatJS with react-intl, compiled AST format
 
 ---
 
