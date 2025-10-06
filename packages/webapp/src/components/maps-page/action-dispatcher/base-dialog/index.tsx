@@ -39,6 +39,7 @@ export type DialogProps = {
   actionUrl?: string;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
   papercss?: CSSObject;
+  isDangerousAction?: boolean;
 };
 
 const BaseDialog = (props: DialogProps): React.ReactElement => {
@@ -67,7 +68,7 @@ const BaseDialog = (props: DialogProps): React.ReactElement => {
         open={true}
         onClose={onClose}
         maxWidth={maxWidth}
-        papercss={{ '& .MuiPaper-root.MuiDialog-paper': papercss }}
+        papercss={papercss}
         fullWidth={true}
       >
         <form autoComplete="off" onSubmit={handleOnSubmit}>

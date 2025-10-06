@@ -23,10 +23,23 @@ import { ErrorInfo } from '../../../../classes/client';
 import Input from '../../../form/input';
 import BaseDialog from '../../action-dispatcher/base-dialog';
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import WarningIcon from '@mui/icons-material/Warning';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useFetchAccount } from '../../../../classes/middleware';
 import { ClientContext } from '../../../../classes/provider/client-context';
 
@@ -44,7 +57,9 @@ const defaultModel: AccountInfoModel = { firstname: '', lastname: '', email: '' 
 const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElement => {
   const client = useContext(ClientContext);
   const queryClient = useQueryClient();
-  const [remove, setRemove] = React.useState<boolean>(false);
+  const [showDeleteDialog, setShowDeleteDialog] = React.useState<boolean>(false);
+  const [deleteConfirmationText, setDeleteConfirmationText] = React.useState<string>('');
+  const [activeTab, setActiveTab] = React.useState<string>('1');
 
   const [model, setModel] = React.useState<AccountInfoModel>(defaultModel);
   const [error, setError] = React.useState<ErrorInfo>();
@@ -95,12 +110,33 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     onClose();
     setModel(defaultModel);
     setError(undefined);
+    setShowDeleteDialog(false);
+    setDeleteConfirmationText('');
+    setActiveTab('1');
+  };
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    setActiveTab(newValue);
+    // Reset delete confirmation when switching tabs
+    if (newValue === '1') {
+      setShowDeleteDialog(false);
+      setDeleteConfirmationText('');
+    }
   };
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    if (remove) {
-      mutationRemove.mutate();
+    if (showDeleteDialog) {
+      if (deleteConfirmationText === 'DELETE') {
+        mutationRemove.mutate();
+      } else {
+        setError({
+          msg: intl.formatMessage({
+            id: 'account.delete-confirmation-error',
+            defaultMessage: 'Please type "DELETE" to confirm account deletion.',
+          }),
+        });
+      }
     } else {
       mutationChangeName.mutate(model);
     }
@@ -114,84 +150,286 @@ const AccountInfoDialog = ({ onClose }: AccountInfoDialogProps): React.ReactElem
     setModel({ ...model, [name as keyof AccountInfoModel]: value });
   };
 
-  const handleOnRemoveChange = (event) => {
-    setRemove(event.target.checked);
+  const handleDeleteAccountClick = () => {
+    setShowDeleteDialog(true);
+    setError(undefined);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteDialog(false);
+    setDeleteConfirmationText('');
+    setError(undefined);
+  };
+
+  const handleDeleteConfirmationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDeleteConfirmationText(event.target.value);
+    if (error?.msg?.includes('DELETE')) {
+      setError(undefined);
+    }
+  };
+
+  const handleDeleteAccountSubmit = () => {
+    const challengePhrase = intl.formatMessage({
+      id: 'account.delete-challenge',
+      defaultMessage: 'DELETE MY ACCOUNT',
+    });
+
+    if (deleteConfirmationText === challengePhrase) {
+      mutationRemove.mutate();
+    } else {
+      setError({
+        msg: intl.formatMessage({
+          id: 'account.delete-confirmation-error',
+          defaultMessage: `Please type "${challengePhrase}" to confirm account deletion.`,
+        }),
+      });
+    }
+  };
+
+  const getSubmitButtonText = () => {
+    if (showDeleteDialog) {
+      return intl.formatMessage({
+        id: 'account.delete-confirm',
+        defaultMessage: 'Delete Account',
+      });
+    }
+    return intl.formatMessage({
+      id: 'accountinfo.button',
+      defaultMessage: 'Save Changes',
+    });
+  };
+
+  const shouldShowSubmitButton = () => {
+    return activeTab === '1' || (activeTab === '2' && !showDeleteDialog);
   };
 
   return (
     <BaseDialog
       onClose={handleOnClose}
-      onSubmit={handleOnSubmit}
+      onSubmit={shouldShowSubmitButton() ? handleOnSubmit : undefined}
       error={error}
-      title={intl.formatMessage({ id: 'accountinfo.title', defaultMessage: 'Account info' })}
-      submitButton={intl.formatMessage({
-        id: 'accountinfo.button',
-        defaultMessage: 'Accept',
-      })}
+      title={intl.formatMessage({ id: 'accountinfo.title', defaultMessage: 'Account Settings' })}
+      submitButton={shouldShowSubmitButton() ? getSubmitButtonText() : undefined}
+      maxWidth="md"
     >
-      <FormControl fullWidth={true}>
-        <Input
-          name="email"
-          type="text"
-          disabled={true}
-          label={intl.formatMessage({ id: 'accountinfo.email', defaultMessage: 'Email' })}
-          value={model.email}
-          onChange={handleOnChange}
-          error={error}
-          fullWidth={true}
-        />
+      <TabContext value={activeTab}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+          <TabList onChange={handleTabChange} aria-label="account settings tabs">
+            <Tab
+              icon={<PersonIcon />}
+              iconPosition="start"
+              label={intl.formatMessage({
+                id: 'accountinfo.personal-info',
+                defaultMessage: 'Personal Info',
+              })}
+              value="1"
+            />
+            <Tab
+              icon={<SettingsIcon />}
+              iconPosition="start"
+              label={intl.formatMessage({
+                id: 'accountinfo.account-settings',
+                defaultMessage: 'Account Settings',
+              })}
+              value="2"
+            />
+          </TabList>
+        </Box>
 
-        <Input
-          name="firstname"
-          type="text"
-          label={intl.formatMessage({
-            id: 'accountinfo.firstname',
-            defaultMessage: 'First Name',
-          })}
-          value={model.firstname}
-          onChange={handleOnChange}
-          required={true}
-          fullWidth={true}
-        />
+        <TabPanel value="1" sx={{ px: 0 }}>
+          <FormControl fullWidth={true}>
+            <Box sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ mb: 2, color: 'primary.main', fontWeight: 600 }}
+              >
+                <FormattedMessage
+                  id="accountinfo.personal-details"
+                  defaultMessage="Personal Details"
+                />
+              </Typography>
 
-        <Input
-          name="lastname"
-          type="text"
-          label={intl.formatMessage({
-            id: 'accountinfo.lastname',
-            defaultMessage: 'Last Name',
-          })}
-          value={model.lastname}
-          onChange={handleOnChange}
-          required={true}
-          fullWidth={true}
-        />
-
-        <FormGroup>
-          {remove && (
-            <Alert severity="error">
-              <FormattedMessage
-                id="account.delete-warning"
-                defaultMessage="Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
+              <Input
+                name="email"
+                type="text"
+                disabled={true}
+                label={intl.formatMessage({ id: 'accountinfo.email', defaultMessage: 'Email' })}
+                value={model.email}
+                onChange={handleOnChange}
+                error={error}
+                fullWidth={true}
               />
-            </Alert>
-          )}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={remove}
-                onChange={handleOnRemoveChange}
-                name="remove"
-                color="primary"
+
+              <Input
+                name="firstname"
+                type="text"
+                label={intl.formatMessage({
+                  id: 'accountinfo.firstname',
+                  defaultMessage: 'First Name',
+                })}
+                value={model.firstname}
+                onChange={handleOnChange}
+                required={true}
+                fullWidth={true}
               />
-            }
-            label={intl.formatMessage({
-              id: 'accountinfo.deleteaccount',
-              defaultMessage: 'Delete Account',
-            })}
-          />
-        </FormGroup>
-      </FormControl>
+
+              <Input
+                name="lastname"
+                type="text"
+                label={intl.formatMessage({
+                  id: 'accountinfo.lastname',
+                  defaultMessage: 'Last Name',
+                })}
+                value={model.lastname}
+                onChange={handleOnChange}
+                required={true}
+                fullWidth={true}
+              />
+            </Box>
+          </FormControl>
+        </TabPanel>
+
+        <TabPanel value="2" sx={{ px: 0 }}>
+          <FormControl fullWidth={true}>
+            <Box sx={{ mb: 2 }}>
+              {!showDeleteDialog ? (
+                <Box>
+                  <Alert severity="error" sx={{ mb: 3 }}>
+                    <AlertTitle>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <WarningIcon />
+                        <FormattedMessage
+                          id="account.delete-warning-title"
+                          defaultMessage="Delete Account"
+                        />
+                      </Box>
+                    </AlertTitle>
+                    <Typography variant="body2" sx={{ mb: 2 }}>
+                      <FormattedMessage
+                        id="account.delete-warning-description"
+                        defaultMessage="Once you delete your account, there is no going back. Please be certain."
+                      />
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+                      <FormattedMessage
+                        id="account.delete-warning-consequences"
+                        defaultMessage="This will permanently delete:"
+                      />
+                    </Typography>
+                    <Box component="ul" sx={{ pl: 2, m: 0 }}>
+                      <Typography component="li" variant="body2">
+                        <FormattedMessage
+                          id="account.delete-warning-mindmaps"
+                          defaultMessage="All your mindmaps and their content"
+                        />
+                      </Typography>
+                      <Typography component="li" variant="body2">
+                        <FormattedMessage
+                          id="account.delete-warning-data"
+                          defaultMessage="All your personal data and account information"
+                        />
+                      </Typography>
+                      <Typography component="li" variant="body2">
+                        <FormattedMessage
+                          id="account.delete-warning-collaborations"
+                          defaultMessage="All shared mindmaps and collaborations"
+                        />
+                      </Typography>
+                      <Typography component="li" variant="body2">
+                        <FormattedMessage
+                          id="account.delete-warning-history"
+                          defaultMessage="All account history and activity logs"
+                        />
+                      </Typography>
+                    </Box>
+                  </Alert>
+
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    startIcon={<DeleteForeverIcon />}
+                    onClick={handleDeleteAccountClick}
+                    sx={{
+                      borderWidth: 2,
+                      '&:hover': {
+                        borderWidth: 2,
+                        backgroundColor: 'error.light',
+                        color: 'error.contrastText',
+                      },
+                    }}
+                  >
+                    <FormattedMessage
+                      id="accountinfo.deleteaccount"
+                      defaultMessage="Delete Account"
+                    />
+                  </Button>
+                </Box>
+              ) : (
+                <Box>
+                  <Alert severity="error" sx={{ mb: 3 }}>
+                    <AlertTitle>
+                      <FormattedMessage
+                        id="account.delete-confirmation-title"
+                        defaultMessage="Are you absolutely sure?"
+                      />
+                    </AlertTitle>
+                    <Typography variant="body2" sx={{ mb: 2 }}>
+                      <FormattedMessage
+                        id="account.delete-confirmation-warning"
+                        defaultMessage="This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+                      />
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      <FormattedMessage
+                        id="account.delete-confirmation-instruction"
+                        defaultMessage="Please type DELETE MY ACCOUNT to confirm:"
+                      />
+                    </Typography>
+                  </Alert>
+
+                  <Input
+                    name="deleteConfirmation"
+                    type="text"
+                    label={intl.formatMessage({
+                      id: 'account.delete-confirmation-label',
+                      defaultMessage: 'Type "DELETE MY ACCOUNT" to confirm',
+                    })}
+                    value={deleteConfirmationText}
+                    onChange={handleDeleteConfirmationChange}
+                    error={error}
+                    fullWidth={true}
+                    required={true}
+                  />
+
+                  <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                    <Button variant="outlined" onClick={handleCancelDelete} sx={{ flex: 1 }}>
+                      <FormattedMessage id="action.cancel-button" defaultMessage="Cancel" />
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      disabled={
+                        deleteConfirmationText !==
+                        intl.formatMessage({
+                          id: 'account.delete-challenge',
+                          defaultMessage: 'DELETE MY ACCOUNT',
+                        })
+                      }
+                      onClick={handleDeleteAccountSubmit}
+                      sx={{ flex: 1 }}
+                    >
+                      <FormattedMessage
+                        id="account.delete-confirm"
+                        defaultMessage="Delete Account"
+                      />
+                    </Button>
+                  </Box>
+                </Box>
+              )}
+            </Box>
+          </FormControl>
+        </TabPanel>
+      </TabContext>
     </BaseDialog>
   );
 };

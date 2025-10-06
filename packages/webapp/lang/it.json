@@ -553,5 +553,14 @@
   },
   "share.message": {
     "defaultMessage": "Messaggio"
-  }
+	},
+	"theme.dark": {
+		"defaultMessage": "Scuro"
+	},
+	"theme.light": {
+		"defaultMessage": "Chiaro"
+	},
+	"theme.toggle": {
+		"defaultMessage": "Cambia Tema"
+	}
 }

@@ -553,5 +553,14 @@
   },
   "share.message": {
     "defaultMessage": "संदेश"
-  }
+	},
+	"theme.dark": {
+		"defaultMessage": "डार्क"
+	},
+	"theme.light": {
+		"defaultMessage": "लाइट"
+	},
+	"theme.toggle": {
+		"defaultMessage": "थीम बदलें"
+	}
 }

@@ -1124,5 +1124,23 @@
       "type": 0,
       "value": "Nachricht"
     }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Dunkel"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Hell"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Design Wechseln"
+    }
   ]
 }

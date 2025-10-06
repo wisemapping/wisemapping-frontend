@@ -1128,5 +1128,23 @@
       "type": 0,
       "value": "Messaggio"
     }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Scuro"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Chiaro"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Cambia Tema"
+    }
   ]
 }

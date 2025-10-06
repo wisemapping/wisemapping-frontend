@@ -557,5 +557,14 @@
 	},
 	"forgot.oauth.back": {
 	  "defaultMessage": "Volver"
+	},
+	"theme.dark": {
+		"defaultMessage": "Oscuro"
+	},
+	"theme.light": {
+		"defaultMessage": "Claro"
+	},
+	"theme.toggle": {
+		"defaultMessage": "Cambiar Tema"
 	}
 }

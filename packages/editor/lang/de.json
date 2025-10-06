@@ -343,5 +343,14 @@
     },
     "canvas-style.apply": {
         "defaultMessage": "Anwenden"
+    },
+    "theme.dark": {
+        "defaultMessage": "Dunkel"
+    },
+    "theme.light": {
+        "defaultMessage": "Hell"
+    },
+    "theme.toggle": {
+        "defaultMessage": "Design Wechseln"
     }
 }

@@ -334,5 +334,14 @@
   },
   "canvas-style.apply": {
     "defaultMessage": "Apply"
+  },
+  "theme.dark": {
+    "defaultMessage": "Dark"
+  },
+  "theme.light": {
+    "defaultMessage": "Light"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Toggle Theme"
   }
 }

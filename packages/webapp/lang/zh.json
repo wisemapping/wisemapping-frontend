@@ -551,5 +551,14 @@
 	},
 	"forgot.oauth.back": {
 	  "defaultMessage": "回到登录"
+	},
+	"theme.dark": {
+		"defaultMessage": "深色"
+	},
+	"theme.light": {
+		"defaultMessage": "浅色"
+	},
+	"theme.toggle": {
+		"defaultMessage": "切换主题"
 	}
 }

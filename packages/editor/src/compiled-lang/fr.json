@@ -665,6 +665,24 @@
       "value": "Annuler l'édition"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Sombre"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Clair"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Changer le Thème"
+    }
+  ],
   "zoom-panel.tooltip-clavier": [
     {
       "type": 0,

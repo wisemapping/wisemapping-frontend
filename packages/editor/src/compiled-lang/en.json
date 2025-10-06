@@ -635,6 +635,24 @@
       "value": "Undo edition"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Dark"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Light"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Toggle Theme"
+    }
+  ],
   "zoom-panel.tooltip-collapse-all": [
     {
       "type": 0,

@@ -21,7 +21,7 @@ import React, { ComponentType } from 'react';
 function withEmotionStyles<T>(css) {
   return (Component: ComponentType<T>) => {
     const WithEmotionStyles = (hocProps): React.ReactElement => {
-      return <Component {...hocProps} css={{ ...hocProps.papercss, ...css }} />;
+      return <Component {...hocProps} css={{ ...css, ...hocProps.papercss }} />;
     };
     WithEmotionStyles.displayName = `withEmotionStyles(${getDisplayName(Component)})`;
     return WithEmotionStyles;

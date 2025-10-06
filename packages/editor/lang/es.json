@@ -272,5 +272,14 @@
     },
     "shortcut-help-pane.drag-disconnect": {
         "defaultMessage": "Desconectar tópico"
+    },
+    "theme.dark": {
+        "defaultMessage": "Oscuro"
+    },
+    "theme.light": {
+        "defaultMessage": "Claro"
+    },
+    "theme.toggle": {
+        "defaultMessage": "Cambiar Tema"
     }
 }

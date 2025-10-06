@@ -545,6 +545,24 @@
       "value": "Отменить редактирование"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Темная"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Светлая"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Переключить Тему"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,

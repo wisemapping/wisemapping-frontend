@@ -260,7 +260,16 @@
   "creator-info-pane.description": {
     "defaultMessage": "Descrizione"
   },
-  "creator-info-pane.creator": {
-    "defaultMessage": "Creatore"
-  }
+    "creator-info-pane.creator": {
+        "defaultMessage": "Creatore"
+    },
+    "theme.dark": {
+        "defaultMessage": "Scuro"
+    },
+    "theme.light": {
+        "defaultMessage": "Chiaro"
+    },
+    "theme.toggle": {
+        "defaultMessage": "Cambia Tema"
+    }
 }

@@ -653,6 +653,24 @@
       "value": "Änderung rückgängig machen"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Dunkel"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Hell"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Design Wechseln"
+    }
+  ],
   "zoom-panel.tooltip-collapse-all": [
     {
       "type": 0,

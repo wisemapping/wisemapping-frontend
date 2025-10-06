@@ -1128,5 +1128,23 @@
       "type": 0,
       "value": "संदेश"
     }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "डार्क"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "लाइट"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "थीम बदलें"
+    }
   ]
 }

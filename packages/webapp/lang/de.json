@@ -554,5 +554,14 @@
 	},
 	"forgot.oauth.back": {
 	  "defaultMessage": "Zurück zur Anmeldung"
+	},
+	"theme.dark": {
+		"defaultMessage": "Dunkel"
+	},
+	"theme.light": {
+		"defaultMessage": "Hell"
+	},
+	"theme.toggle": {
+		"defaultMessage": "Design Wechseln"
 	}
 }

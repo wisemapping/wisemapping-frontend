@@ -310,5 +310,14 @@
     },
     "creator-info-pane.creator": {
         "defaultMessage": "Создатель"
+    },
+    "theme.dark": {
+        "defaultMessage": "Темная"
+    },
+    "theme.light": {
+        "defaultMessage": "Светлая"
+    },
+    "theme.toggle": {
+        "defaultMessage": "Переключить Тему"
     }
 }

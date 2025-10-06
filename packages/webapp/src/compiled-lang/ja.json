@@ -1146,5 +1146,23 @@
       "type": 0,
       "value": "メッセージ"
     }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "ダーク"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "ライト"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "テーマ切り替え"
+    }
   ]
 }

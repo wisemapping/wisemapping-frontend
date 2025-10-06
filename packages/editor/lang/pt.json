@@ -262,5 +262,14 @@
   },
   "creator-info-pane.creator": {
     "defaultMessage": "Criador"
+  },
+  "theme.dark": {
+    "defaultMessage": "Escuro"
+  },
+  "theme.light": {
+    "defaultMessage": "Claro"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Alternar Tema"
   }
 }

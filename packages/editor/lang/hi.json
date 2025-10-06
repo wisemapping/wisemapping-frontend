@@ -86,5 +86,8 @@
   "zoom-panel.tooltip-zoom-out": { "defaultMessage": "ज़ूम आउट" },
   "zoom-panel.tooltip-zoom-to-fit": { "defaultMessage": "स्क्रीन में फिट करें" },
   "creator-info-pane.description": { "defaultMessage": "विवरण" },
-  "creator-info-pane.creator": { "defaultMessage": "निर्माता" }
+  "creator-info-pane.creator": { "defaultMessage": "निर्माता" },
+  "theme.dark": { "defaultMessage": "डार्क" },
+  "theme.light": { "defaultMessage": "लाइट" },
+  "theme.toggle": { "defaultMessage": "थीम बदलें" }
 }

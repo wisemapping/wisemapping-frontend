@@ -503,6 +503,24 @@
       "value": "Desfazer edição"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Escuro"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Claro"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Alternar Tema"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,

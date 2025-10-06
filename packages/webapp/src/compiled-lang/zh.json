@@ -1118,5 +1118,23 @@
       "type": 0,
       "value": "消息"
     }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "深色"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "浅色"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "切换主题"
+    }
   ]
 }

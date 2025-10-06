@@ -503,6 +503,24 @@
       "value": "Annulla modifica"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Scuro"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Chiaro"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Cambia Tema"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,

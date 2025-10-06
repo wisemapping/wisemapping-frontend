@@ -346,5 +346,14 @@
   },
   "canvas-style.apply": {
     "defaultMessage": "Appliquer"
+  },
+  "theme.dark": {
+    "defaultMessage": "Sombre"
+  },
+  "theme.light": {
+    "defaultMessage": "Clair"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Changer le Thème"
   }
 }

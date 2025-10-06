@@ -503,6 +503,24 @@
       "value": "撤销编辑"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "深色"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "浅色"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "切换主题"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,

@@ -260,7 +260,16 @@
   "creator-info-pane.description": {
     "defaultMessage": "描述"
   },
-  "creator-info-pane.creator": {
-    "defaultMessage": "创建者"
-  }
+    "creator-info-pane.creator": {
+        "defaultMessage": "创建者"
+    },
+    "theme.dark": {
+        "defaultMessage": "深色"
+    },
+    "theme.light": {
+        "defaultMessage": "浅色"
+    },
+    "theme.toggle": {
+        "defaultMessage": "切换主题"
+    }
 }

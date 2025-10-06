@@ -503,6 +503,24 @@
       "value": "編集を元に戻す"
     }
   ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "ダーク"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "ライト"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "テーマ切り替え"
+    }
+  ],
   "zoom-panel.tooltip-keyboard": [
     {
       "type": 0,

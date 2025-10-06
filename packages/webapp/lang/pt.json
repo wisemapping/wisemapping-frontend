@@ -563,5 +563,14 @@
   },
   "editor.try-welcome-description": {
     "defaultMessage": "Cadastre-se para começar a criar, compartilhar e publicar um número ilimitado de mapas mentais gratuitamente."
+  },
+  "theme.dark": {
+    "defaultMessage": "Escuro"
+  },
+  "theme.light": {
+    "defaultMessage": "Claro"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Alternar Tema"
   }
 }

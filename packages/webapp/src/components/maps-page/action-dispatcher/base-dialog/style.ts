@@ -34,11 +34,13 @@ export const StyledDialogActions = withEmotionStyles({
   padding: '39px 39px 39px 39px',
 })(DialogActions);
 
-export const StyledDialog = withEmotionStyles({
+export const StyledDialog = withEmotionStyles((theme) => ({
   borderRadius: '9px',
   '& .MuiPaper-root': {
-    backgroundColor: 'transparent',
     border: '2px solid #ffa800',
-    boxShadow: 'none',
+    // Ensure theme background is preserved
+    '&.MuiDialog-paper': {
+      backgroundColor: `${theme.palette.background.paper} !important`,
+    },
   },
-})(Dialog);
+}))(Dialog);

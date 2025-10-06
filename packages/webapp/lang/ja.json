@@ -563,5 +563,14 @@
   },
   "editor.try-welcome-description": {
     "defaultMessage": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。"
-  }
+	},
+	"theme.dark": {
+		"defaultMessage": "ダーク"
+	},
+	"theme.light": {
+		"defaultMessage": "ライト"
+	},
+	"theme.toggle": {
+		"defaultMessage": "テーマ切り替え"
+	}
 }

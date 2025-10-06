@@ -1064,5 +1064,23 @@
       "type": 0,
       "value": "Сообщение"
     }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Темная"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Светлая"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Переключить Тему"
+    }
   ]
 }

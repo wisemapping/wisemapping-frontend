@@ -649,6 +649,12 @@
       "value": "The email address or password you entered is not valid."
     }
   ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "Sign in with Facebook"
+    }
+  ],
   "login.forgotpwd": [
     {
       "type": 0,
@@ -991,6 +997,12 @@
       "value": "Email"
     }
   ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "Sign up with Facebook"
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,
@@ -1127,6 +1139,24 @@
     {
       "type": 0,
       "value": "Message"
+    }
+  ],
+  "theme.dark": [
+    {
+      "type": 0,
+      "value": "Dark"
+    }
+  ],
+  "theme.light": [
+    {
+      "type": 0,
+      "value": "Light"
+    }
+  ],
+  "theme.toggle": [
+    {
+      "type": 0,
+      "value": "Toggle Theme"
     }
   ]
 }

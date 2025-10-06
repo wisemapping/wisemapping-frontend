@@ -559,5 +559,14 @@
   },
   "share.message": {
     "defaultMessage": "Message"
+  },
+  "theme.dark": {
+    "defaultMessage": "Dark"
+  },
+  "theme.light": {
+    "defaultMessage": "Light"
+  },
+  "theme.toggle": {
+    "defaultMessage": "Toggle Theme"
   }
 }

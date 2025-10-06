@@ -64,5 +64,14 @@
     },
     "editor-panel.tooltip-topic-share-rounded": {
         "defaultMessage": "圆形"
+    },
+    "theme.dark": {
+        "defaultMessage": "深色"
+    },
+    "theme.light": {
+        "defaultMessage": "浅色"
+    },
+    "theme.toggle": {
+        "defaultMessage": "切换主题"
     }
 }
