@@ -368,5 +368,62 @@
     },
     "common.close": {
         "defaultMessage": "Cerrar"
+    },
+    "canvas-style.apply": {
+        "defaultMessage": "Aplicar"
+    },
+    "canvas-style.background-color": {
+        "defaultMessage": "Color de fondo"
+    },
+    "canvas-style.background-pattern": {
+        "defaultMessage": "Patrón de fondo"
+    },
+    "canvas-style.colors": {
+        "defaultMessage": "Colores"
+    },
+    "canvas-style.grid-color": {
+        "defaultMessage": "Color de cuadrícula"
+    },
+    "canvas-style.grid-style": {
+        "defaultMessage": "Estilo de cuadrícula"
+    },
+    "canvas-style.pattern-dots": {
+        "defaultMessage": "Puntos"
+    },
+    "canvas-style.pattern-grid": {
+        "defaultMessage": "Líneas de cuadrícula"
+    },
+    "canvas-style.pattern-none": {
+        "defaultMessage": "Ninguno"
+    },
+    "canvas-style.pattern-solid": {
+        "defaultMessage": "Color sólido"
+    },
+    "canvas-style.preview": {
+        "defaultMessage": "Vista previa"
+    },
+    "canvas-style.reset": {
+        "defaultMessage": "Restablecer"
+    },
+    "canvas-style.title": {
+        "defaultMessage": "Fondo"
+    },
+    "creator-info-pane.creator": {
+        "defaultMessage": "Creador"
+    },
+    "creator-info-pane.description": {
+        "defaultMessage": "Descripción"
+    },
+    "editor-panel.canvas-style-title": {
+        "defaultMessage": "Fondo"
+    },
+    "editor-panel.tooltip-canvas-style": {
+        "defaultMessage": "Fondo"
+    },
+    "zoom-panel.tooltip-collapse-all": {
+        "defaultMessage": "Contraer todos los nodos"
+    },
+    "zoom-panel.tooltip-expand-all": {
+        "defaultMessage": "Expandir todos los nodos"
     }
 }

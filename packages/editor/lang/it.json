@@ -5,6 +5,9 @@
   "action.delete": {
     "defaultMessage": "Elimina"
   },
+  "action.reset": {
+    "defaultMessage": "Reimposta"
+  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Torna alla lista delle mappe"
   },
@@ -331,5 +334,86 @@
     },
     "common.close": {
         "defaultMessage": "Chiudi"
+    },
+    "canvas-style.apply": {
+        "defaultMessage": "Applica"
+    },
+    "canvas-style.background-color": {
+        "defaultMessage": "Colore di sfondo"
+    },
+    "canvas-style.background-pattern": {
+        "defaultMessage": "Motivo di sfondo"
+    },
+    "canvas-style.colors": {
+        "defaultMessage": "Colori"
+    },
+    "canvas-style.grid-color": {
+        "defaultMessage": "Colore griglia"
+    },
+    "canvas-style.grid-size-l": {
+        "defaultMessage": "L"
+    },
+    "canvas-style.grid-size-m": {
+        "defaultMessage": "M"
+    },
+    "canvas-style.grid-size-s": {
+        "defaultMessage": "S"
+    },
+    "canvas-style.grid-size-xl": {
+        "defaultMessage": "XL"
+    },
+    "canvas-style.grid-size-xs": {
+        "defaultMessage": "XS"
+    },
+    "canvas-style.grid-style": {
+        "defaultMessage": "Stile griglia"
+    },
+    "canvas-style.pattern-dots": {
+        "defaultMessage": "Punti"
+    },
+    "canvas-style.pattern-grid": {
+        "defaultMessage": "Linee griglia"
+    },
+    "canvas-style.pattern-none": {
+        "defaultMessage": "Nessuno"
+    },
+    "canvas-style.pattern-solid": {
+        "defaultMessage": "Colore solido"
+    },
+    "canvas-style.preview": {
+        "defaultMessage": "Anteprima"
+    },
+    "canvas-style.reset": {
+        "defaultMessage": "Reimposta"
+    },
+    "canvas-style.title": {
+        "defaultMessage": "Sfondo"
+    },
+    "editor-panel.canvas-style-title": {
+        "defaultMessage": "Sfondo"
+    },
+    "editor-panel.font-family-default": {
+        "defaultMessage": "Predefinito"
+    },
+    "editor-panel.font-family-mixed": {
+        "defaultMessage": "Misto"
+    },
+    "editor-panel.theme-title": {
+        "defaultMessage": "Tema"
+    },
+    "editor-panel.tooltip-canvas-style": {
+        "defaultMessage": "Sfondo"
+    },
+    "editor-panel.tooltip-theme": {
+        "defaultMessage": "Tema"
+    },
+    "emoji-picker.search-placeholder": {
+        "defaultMessage": "Cerca emoji..."
+    },
+    "zoom-panel.tooltip-collapse-all": {
+        "defaultMessage": "Comprimi tutti i nodi"
+    },
+    "zoom-panel.tooltip-expand-all": {
+        "defaultMessage": "Espandi tutti i nodi"
     }
 }

@@ -17,6 +17,12 @@
       "value": "Löschen"
     }
   ],
+  "action.reset": [
+    {
+      "type": 0,
+      "value": "Zurücksetzen"
+    }
+  ],
   "action.share": [
     {
       "type": 0,
@@ -221,10 +227,34 @@
       "value": "Schließen"
     }
   ],
+  "creator-info-pane.creator": [
+    {
+      "type": 0,
+      "value": "Ersteller"
+    }
+  ],
+  "creator-info-pane.description": [
+    {
+      "type": 0,
+      "value": "Beschreibung"
+    }
+  ],
   "editor-panel.canvas-style-title": [
     {
       "type": 0,
       "value": "Hintergrund"
+    }
+  ],
+  "editor-panel.font-family-default": [
+    {
+      "type": 0,
+      "value": "Standard"
+    }
+  ],
+  "editor-panel.font-family-mixed": [
+    {
+      "type": 0,
+      "value": "Gemischt"
     }
   ],
   "editor-panel.icon-title": [
@@ -479,6 +509,12 @@
       "value": "Diese Edition zeigt einige der Mindmap-Funktionen!"
     }
   ],
+  "emoji-picker.search-placeholder": [
+    {
+      "type": 0,
+      "value": "Emojis suchen..."
+    }
+  ],
   "icon-picker.show-images": [
     {
       "type": 0,
@@ -536,13 +572,13 @@
   "rich-text-editor.insert-icon": [
     {
       "type": 0,
-      "value": "Symbol einfügen"
+      "value": "Symbol Einfügen"
     }
   ],
   "rich-text-editor.insert-link": [
     {
       "type": 0,
-      "value": "Link einfügen"
+      "value": "Link Einfügen"
     }
   ],
   "rich-text-editor.italic": [

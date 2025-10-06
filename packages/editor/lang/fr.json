@@ -20,6 +20,9 @@
   "action.cancel": {
     "defaultMessage": "Annuler"
   },
+  "action.reset": {
+    "defaultMessage": "Réinitialiser"
+  },
   "appbar.back-to-map-list": {
     "defaultMessage": "Retourner à la liste des cartes"
   },
@@ -391,5 +394,20 @@
   },
   "common.close": {
     "defaultMessage": "Fermer"
+  },
+  "editor-panel.font-family-default": {
+    "defaultMessage": "Par défaut"
+  },
+  "editor-panel.font-family-mixed": {
+    "defaultMessage": "Mixte"
+  },
+  "emoji-picker.search-placeholder": {
+    "defaultMessage": "Rechercher des emojis..."
+  },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "Réduire tous les nœuds"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "Développer tous les nœuds"
   }
 }

@@ -5,6 +5,9 @@
   "action.delete": {
     "defaultMessage": "削除"
   },
+  "action.reset": {
+    "defaultMessage": "リセット"
+  },
   "appbar.back-to-map-list": {
     "defaultMessage": "マップリストに戻る"
   },
@@ -305,31 +308,88 @@
   "image-icon-tab.icons": {
     "defaultMessage": "アイコン"
   },
-  "rich-text-editor.insert-link": {
-    "defaultMessage": "リンクを挿入"
-  },
-  "rich-text-editor.insert-icon": {
-    "defaultMessage": "アイコンを挿入"
-  },
-  "rich-text-editor.bold": {
-    "defaultMessage": "太字"
-  },
-  "rich-text-editor.italic": {
-    "defaultMessage": "斜体"
-  },
-  "rich-text-editor.underline": {
-    "defaultMessage": "下線"
-  },
-  "rich-text-editor.strikethrough": {
-    "defaultMessage": "取り消し線"
-  },
-  "rich-text-editor.bullet-list": {
-    "defaultMessage": "箇条書きリスト"
-  },
-  "rich-text-editor.numbered-list": {
-    "defaultMessage": "番号付きリスト"
-  },
   "common.close": {
     "defaultMessage": "閉じる"
+  },
+  "canvas-style.apply": {
+    "defaultMessage": "適用"
+  },
+  "canvas-style.background-color": {
+    "defaultMessage": "背景色"
+  },
+  "canvas-style.background-pattern": {
+    "defaultMessage": "背景パターン"
+  },
+  "canvas-style.colors": {
+    "defaultMessage": "色"
+  },
+  "canvas-style.grid-color": {
+    "defaultMessage": "グリッド色"
+  },
+  "canvas-style.grid-size-l": {
+    "defaultMessage": "L"
+  },
+  "canvas-style.grid-size-m": {
+    "defaultMessage": "M"
+  },
+  "canvas-style.grid-size-s": {
+    "defaultMessage": "S"
+  },
+  "canvas-style.grid-size-xl": {
+    "defaultMessage": "XL"
+  },
+  "canvas-style.grid-size-xs": {
+    "defaultMessage": "XS"
+  },
+  "canvas-style.grid-style": {
+    "defaultMessage": "グリッドスタイル"
+  },
+  "canvas-style.pattern-dots": {
+    "defaultMessage": "ドット"
+  },
+  "canvas-style.pattern-grid": {
+    "defaultMessage": "グリッドライン"
+  },
+  "canvas-style.pattern-none": {
+    "defaultMessage": "なし"
+  },
+  "canvas-style.pattern-solid": {
+    "defaultMessage": "ソリッドカラー"
+  },
+  "canvas-style.preview": {
+    "defaultMessage": "プレビュー"
+  },
+  "canvas-style.reset": {
+    "defaultMessage": "リセット"
+  },
+  "canvas-style.title": {
+    "defaultMessage": "背景"
+  },
+  "editor-panel.canvas-style-title": {
+    "defaultMessage": "背景"
+  },
+  "editor-panel.font-family-default": {
+    "defaultMessage": "デフォルト"
+  },
+  "editor-panel.font-family-mixed": {
+    "defaultMessage": "混合"
+  },
+  "editor-panel.theme-title": {
+    "defaultMessage": "テーマ"
+  },
+  "editor-panel.tooltip-canvas-style": {
+    "defaultMessage": "背景"
+  },
+  "editor-panel.tooltip-theme": {
+    "defaultMessage": "テーマ"
+  },
+  "emoji-picker.search-placeholder": {
+    "defaultMessage": "絵文字を検索..."
+  },
+  "zoom-panel.tooltip-collapse-all": {
+    "defaultMessage": "すべてのノードを折りたたむ"
+  },
+  "zoom-panel.tooltip-expand-all": {
+    "defaultMessage": "すべてのノードを展開"
   }
 }
