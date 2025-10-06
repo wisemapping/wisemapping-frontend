@@ -1,4 +1,31 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn lint && yarn test
+echo "🔍 Running pre-push verification..."
+
+# Check if there are any uncommitted changes to source files
+echo "🔍 Checking for uncommitted changes..."
+if ! git diff --quiet HEAD -- packages/editor/lang/ packages/webapp/lang/; then
+  echo "❌ ERROR: Uncommitted changes detected in language files!"
+  echo "Please commit your language file changes before pushing."
+  exit 1
+fi
+
+echo "📝 Compiling i18n resources..."
+cd packages/editor && yarn i18n:compile && cd ../webapp && yarn i18n:compile && cd ../..
+
+# Check if compilation created any new files or modified existing ones
+echo "🔍 Checking if compilation created new files..."
+if ! git diff --quiet HEAD -- packages/editor/lang/ packages/webapp/lang/; then
+  echo "❌ ERROR: i18n compilation created/modified files!"
+  echo "This indicates that source language files were modified but not committed."
+  echo "Please commit your language file changes and run 'yarn i18n:compile' locally."
+  exit 1
+fi
+
+echo "✅ i18n compilation completed - no new files created"
+echo "🔍 Running lint checks..."
+yarn lint
+echo "🧪 Running tests..."
+yarn test
+echo "✅ All pre-push checks passed!"
