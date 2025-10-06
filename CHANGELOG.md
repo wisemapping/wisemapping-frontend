@@ -2,8 +2,6 @@
 
 All notable changes to the Wisemapping Frontend project are documented in this file.
 
-## Recent Improvements (Last 5 Days)
-
 ## Week of Oct 1 - October 6, 2025
 
 ### 🌍 Global Language Support
