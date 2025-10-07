@@ -667,5 +667,77 @@
   },
   "common.settings": {
     "defaultMessage": "[FR] common.settings"
+  },
+  "common.loading": {
+    "defaultMessage": "Chargement..."
+  },
+  "common.retry": {
+    "defaultMessage": "Réessayer"
+  },
+  "admin.system.title": {
+    "defaultMessage": "Informations Système"
+  },
+  "admin.system.refresh": {
+    "defaultMessage": "Actualiser"
+  },
+  "common.refresh": {
+    "defaultMessage": "Actualiser"
+  },
+  "admin.system.memory": {
+    "defaultMessage": "Mémoire"
+  },
+  "admin.system.db.url": {
+    "defaultMessage": "URL"
+  },
+  "admin.system.jvm": {
+    "defaultMessage": "JVM"
+  },
+  "error.security-error": {
+    "defaultMessage": "La carte mentale ne peut pas être ouverte."
+  },
+  "error.undexpected-error-msg": {
+    "defaultMessage": "Erreur inattendue lors de l'ouverture de la carte mentale. Veuillez réessayer plus tard."
+  },
+  "accountinfo.personal-details": {
+    "defaultMessage": "Détails Personnels"
+  },
+  "account.delete-warning-title": {
+    "defaultMessage": "Supprimer le Compte"
+  },
+  "account.delete-warning-description": {
+    "defaultMessage": "Une fois que vous supprimez votre compte, il n'y a pas de retour en arrière. Veuillez être certain."
+  },
+  "account.delete-warning-consequences": {
+    "defaultMessage": "Cela supprimera définitivement :"
+  },
+  "account.delete-warning-mindmaps": {
+    "defaultMessage": "Toutes vos cartes mentales et leur contenu"
+  },
+  "account.delete-warning-data": {
+    "defaultMessage": "Toutes vos données personnelles et informations de compte"
+  },
+  "account.delete-warning-collaborations": {
+    "defaultMessage": "Toutes les cartes mentales partagées et collaborations"
+  },
+  "account.delete-warning-history": {
+    "defaultMessage": "Tout l'historique du compte et les journaux d'activité"
+  },
+  "account.delete-confirmation-title": {
+    "defaultMessage": "Êtes-vous absolument sûr ?"
+  },
+  "account.delete-confirmation-warning": {
+    "defaultMessage": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes les données de nos serveurs."
+  },
+  "account.delete-confirmation-instruction": {
+    "defaultMessage": "Veuillez taper SUPPRIMER MON COMPTE pour confirmer :"
+  },
+  "account.delete-confirm": {
+    "defaultMessage": "Supprimer le Compte"
+  },
+  "menu.admin-console": {
+    "defaultMessage": "Console d'Administration"
+  },
+  "registration.form-legend": {
+    "defaultMessage": "Informations du Compte"
   }
 }

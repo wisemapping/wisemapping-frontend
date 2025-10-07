@@ -1,8 +1,74 @@
 {
+  "account.delete-confirm": [
+    {
+      "type": 0,
+      "value": "Supprimer le Compte"
+    }
+  ],
+  "account.delete-confirmation-instruction": [
+    {
+      "type": 0,
+      "value": "Veuillez taper SUPPRIMER MON COMPTE pour confirmer :"
+    }
+  ],
+  "account.delete-confirmation-title": [
+    {
+      "type": 0,
+      "value": "Êtes-vous absolument sûr ?"
+    }
+  ],
+  "account.delete-confirmation-warning": [
+    {
+      "type": 0,
+      "value": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et supprimera toutes les données de nos serveurs."
+    }
+  ],
   "account.delete-warning": [
     {
       "type": 0,
       "value": "Gardez à l'esprit que vous ne pourrez pas récupérer les cartes mentales que vous avez créées. Toutes vos informations seront supprimées et ne pourront pas être restaurées."
+    }
+  ],
+  "account.delete-warning-collaborations": [
+    {
+      "type": 0,
+      "value": "Toutes les cartes mentales partagées et collaborations"
+    }
+  ],
+  "account.delete-warning-consequences": [
+    {
+      "type": 0,
+      "value": "Cela supprimera définitivement :"
+    }
+  ],
+  "account.delete-warning-data": [
+    {
+      "type": 0,
+      "value": "Toutes vos données personnelles et informations de compte"
+    }
+  ],
+  "account.delete-warning-description": [
+    {
+      "type": 0,
+      "value": "Une fois que vous supprimez votre compte, il n'y a pas de retour en arrière. Veuillez être certain."
+    }
+  ],
+  "account.delete-warning-history": [
+    {
+      "type": 0,
+      "value": "Tout l'historique du compte et les journaux d'activité"
+    }
+  ],
+  "account.delete-warning-mindmaps": [
+    {
+      "type": 0,
+      "value": "Toutes vos cartes mentales et leur contenu"
+    }
+  ],
+  "account.delete-warning-title": [
+    {
+      "type": 0,
+      "value": "Supprimer le Compte"
     }
   ],
   "accountinfo.button": [
@@ -33,6 +99,12 @@
     {
       "type": 0,
       "value": "Nom de famille"
+    }
+  ],
+  "accountinfo.personal-details": [
+    {
+      "type": 0,
+      "value": "Détails Personnels"
     }
   ],
   "accountinfo.title": [
@@ -167,6 +239,150 @@
       "value": "Partager"
     }
   ],
+  "admin.auth-type": [
+    {
+      "type": 0,
+      "value": "[FR] admin.auth-type"
+    }
+  ],
+  "admin.delete": [
+    {
+      "type": 0,
+      "value": "[FR] admin.delete"
+    }
+  ],
+  "admin.delete-user": [
+    {
+      "type": 0,
+      "value": "[FR] admin.delete-user"
+    }
+  ],
+  "admin.edit": [
+    {
+      "type": 0,
+      "value": "[FR] admin.edit"
+    }
+  ],
+  "admin.edit-user": [
+    {
+      "type": 0,
+      "value": "[FR] admin.edit-user"
+    }
+  ],
+  "admin.lock-status": [
+    {
+      "type": 0,
+      "value": "[FR] admin.lock-status"
+    }
+  ],
+  "admin.locked": [
+    {
+      "type": 0,
+      "value": "[FR] admin.locked"
+    }
+  ],
+  "admin.public": [
+    {
+      "type": 0,
+      "value": "[FR] admin.public"
+    }
+  ],
+  "admin.public-access": [
+    {
+      "type": 0,
+      "value": "[FR] admin.public-access"
+    }
+  ],
+  "admin.refresh": [
+    {
+      "type": 0,
+      "value": "[FR] admin.refresh"
+    }
+  ],
+  "admin.status": [
+    {
+      "type": 0,
+      "value": "[FR] admin.status"
+    }
+  ],
+  "admin.status-active": [
+    {
+      "type": 0,
+      "value": "[FR] admin.status-active"
+    }
+  ],
+  "admin.status-clean": [
+    {
+      "type": 0,
+      "value": "[FR] admin.status-clean"
+    }
+  ],
+  "admin.status-suspended": [
+    {
+      "type": 0,
+      "value": "[FR] admin.status-suspended"
+    }
+  ],
+  "admin.suspend-user": [
+    {
+      "type": 0,
+      "value": "[FR] admin.suspend-user"
+    }
+  ],
+  "admin.suspension-reason": [
+    {
+      "type": 0,
+      "value": "[FR] admin.suspension-reason"
+    }
+  ],
+  "admin.suspension-status": [
+    {
+      "type": 0,
+      "value": "[FR] admin.suspension-status"
+    }
+  ],
+  "admin.system.db.url": [
+    {
+      "type": 0,
+      "value": "URL"
+    }
+  ],
+  "admin.system.jvm": [
+    {
+      "type": 0,
+      "value": "JVM"
+    }
+  ],
+  "admin.system.memory": [
+    {
+      "type": 0,
+      "value": "Mémoire"
+    }
+  ],
+  "admin.system.refresh": [
+    {
+      "type": 0,
+      "value": "Actualiser"
+    }
+  ],
+  "admin.system.title": [
+    {
+      "type": 0,
+      "value": "Informations Système"
+    }
+  ],
+  "admin.unsuspend-user": [
+    {
+      "type": 0,
+      "value": "[FR] admin.unsuspend-user"
+    }
+  ],
+  "admin.view-xml": [
+    {
+      "type": 0,
+      "value": "[FR] admin.view-xml"
+    }
+  ],
   "changepwd.button": [
     {
       "type": 0,
@@ -201,6 +417,108 @@
     {
       "type": 0,
       "value": "Changer le mot de passe"
+    }
+  ],
+  "common.allow-email-notifications": [
+    {
+      "type": 0,
+      "value": "[FR] common.allow-email-notifications"
+    }
+  ],
+  "common.delete": [
+    {
+      "type": 0,
+      "value": "[FR] common.delete"
+    }
+  ],
+  "common.delete-tag": [
+    {
+      "type": 0,
+      "value": "[FR] common.delete-tag"
+    }
+  ],
+  "common.email": [
+    {
+      "type": 0,
+      "value": "[FR] common.email"
+    }
+  ],
+  "common.emails": [
+    {
+      "type": 0,
+      "value": "[FR] common.emails"
+    }
+  ],
+  "common.first-name": [
+    {
+      "type": 0,
+      "value": "[FR] common.first-name"
+    }
+  ],
+  "common.last-name": [
+    {
+      "type": 0,
+      "value": "[FR] common.last-name"
+    }
+  ],
+  "common.loading": [
+    {
+      "type": 0,
+      "value": "Chargement..."
+    }
+  ],
+  "common.locale": [
+    {
+      "type": 0,
+      "value": "[FR] common.locale"
+    }
+  ],
+  "common.login-form": [
+    {
+      "type": 0,
+      "value": "[FR] common.login-form"
+    }
+  ],
+  "common.maps-list": [
+    {
+      "type": 0,
+      "value": "[FR] common.maps-list"
+    }
+  ],
+  "common.open-drawer": [
+    {
+      "type": 0,
+      "value": "[FR] common.open-drawer"
+    }
+  ],
+  "common.others": [
+    {
+      "type": 0,
+      "value": "[FR] common.others"
+    }
+  ],
+  "common.refresh": [
+    {
+      "type": 0,
+      "value": "Actualiser"
+    }
+  ],
+  "common.registration-form": [
+    {
+      "type": 0,
+      "value": "[FR] common.registration-form"
+    }
+  ],
+  "common.retry": [
+    {
+      "type": 0,
+      "value": "Réessayer"
+    }
+  ],
+  "common.settings": [
+    {
+      "type": 0,
+      "value": "[FR] common.settings"
     }
   ],
   "common.wait": [
@@ -245,16 +563,16 @@
       "value": "Dupliquer"
     }
   ],
-  "editor.try-welcome": [
+  "error.security-error": [
     {
       "type": 0,
-      "value": "Cet espace d'édition présente certaines des fonctionnalités de l'éditeur de cartes mentales !"
+      "value": "La carte mentale ne peut pas être ouverte."
     }
   ],
-  "editor.try-welcome-description": [
+  "error.undexpected-error-msg": [
     {
       "type": 0,
-      "value": "Inscrivez-vous pour commencer à créer, partager et publier gratuitement un nombre illimité de cartes mentales."
+      "value": "Erreur inattendue lors de l'ouverture de la carte mentale. Veuillez réessayer plus tard."
     }
   ],
   "expired.description": [
@@ -291,6 +609,12 @@
     {
       "type": 0,
       "value": "Image : obtenez une représentation graphique de votre carte, y compris toutes les couleurs et toutes les formes."
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "[FR] export.img-center"
     }
   ],
   "export.title": [
@@ -603,6 +927,12 @@
       "value": "Utilisez des étiquettes pour organiser vos cartes."
     }
   ],
+  "label.maps-count": [
+    {
+      "type": 0,
+      "value": "[FR] label.maps-count"
+    }
+  ],
   "label.title": [
     {
       "type": 0,
@@ -645,6 +975,12 @@
       "value": "L'adresse e-mail ou le mot de passe que vous avez entré n'est pas valide."
     }
   ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "[FR] login.facebook.button"
+    }
+  ],
   "login.forgotpwd": [
     {
       "type": 0,
@@ -655,12 +991,6 @@
     {
       "type": 0,
       "value": "Connectez-vous avec Google"
-    }
-  ],
-  "login.hsqldbcofig": [
-    {
-      "type": 0,
-      "value": "Bien que HSQLDB soit fourni avec WiseMapping par défaut lors de l'installation, nous ne recommandons pas cette base de données pour une utilisation en production. Veuillez envisager d'utiliser MySQL 5.7 à la place. Vous pouvez trouver plus d'informations sur la configuration de MySQL"
     }
   ],
   "login.page-title": [
@@ -867,6 +1197,12 @@
       "value": "Compte"
     }
   ],
+  "menu.admin-console": [
+    {
+      "type": 0,
+      "value": "Console d'Administration"
+    }
+  ],
   "menu.change-password": [
     {
       "type": 0,
@@ -993,10 +1329,22 @@
       "value": "E-mail"
     }
   ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "[FR] registration.facebook.button"
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,
       "value": "Prénom"
+    }
+  ],
+  "registration.form-legend": [
+    {
+      "type": 0,
+      "value": "Informations du Compte"
     }
   ],
   "registration.google.button": [

@@ -1,14 +1,86 @@
 {
+  "account.delete-confirm": [
+    {
+      "type": 0,
+      "value": "Eliminar Cuenta"
+    }
+  ],
+  "account.delete-confirmation-instruction": [
+    {
+      "type": 0,
+      "value": "Por favor, escribe ELIMINAR MI CUENTA para confirmar:"
+    }
+  ],
+  "account.delete-confirmation-title": [
+    {
+      "type": 0,
+      "value": "¿Estás absolutamente seguro?"
+    }
+  ],
+  "account.delete-confirmation-warning": [
+    {
+      "type": 0,
+      "value": "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y removerá todos los datos de nuestros servidores."
+    }
+  ],
   "account.delete-warning": [
     {
       "type": 0,
       "value": "Tenga en cuenta que no podrá recuperar ningún mapa mental que haya creado. Toda su información será eliminada y no podrá ser restaurada."
     }
   ],
+  "account.delete-warning-collaborations": [
+    {
+      "type": 0,
+      "value": "Todos los mapas mentales compartidos y colaboraciones"
+    }
+  ],
+  "account.delete-warning-consequences": [
+    {
+      "type": 0,
+      "value": "Esto eliminará permanentemente:"
+    }
+  ],
+  "account.delete-warning-data": [
+    {
+      "type": 0,
+      "value": "Todos tus datos personales e información de cuenta"
+    }
+  ],
+  "account.delete-warning-description": [
+    {
+      "type": 0,
+      "value": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, ten certeza."
+    }
+  ],
+  "account.delete-warning-history": [
+    {
+      "type": 0,
+      "value": "Todo el historial de cuenta y registros de actividad"
+    }
+  ],
+  "account.delete-warning-mindmaps": [
+    {
+      "type": 0,
+      "value": "Todos tus mapas mentales y su contenido"
+    }
+  ],
+  "account.delete-warning-title": [
+    {
+      "type": 0,
+      "value": "Eliminar Cuenta"
+    }
+  ],
   "accountinfo.button": [
     {
       "type": 0,
       "value": "Aceptar"
+    }
+  ],
+  "accountinfo.deleteaccount": [
+    {
+      "type": 0,
+      "value": "[ES] accountinfo.deleteaccount"
     }
   ],
   "accountinfo.email": [
@@ -27,6 +99,12 @@
     {
       "type": 0,
       "value": "Apellido"
+    }
+  ],
+  "accountinfo.personal-details": [
+    {
+      "type": 0,
+      "value": "Detalles Personales"
     }
   ],
   "accountinfo.title": [
@@ -161,6 +239,150 @@
       "value": "Compartir"
     }
   ],
+  "admin.auth-type": [
+    {
+      "type": 0,
+      "value": "[ES] admin.auth-type"
+    }
+  ],
+  "admin.delete": [
+    {
+      "type": 0,
+      "value": "[ES] admin.delete"
+    }
+  ],
+  "admin.delete-user": [
+    {
+      "type": 0,
+      "value": "[ES] admin.delete-user"
+    }
+  ],
+  "admin.edit": [
+    {
+      "type": 0,
+      "value": "[ES] admin.edit"
+    }
+  ],
+  "admin.edit-user": [
+    {
+      "type": 0,
+      "value": "[ES] admin.edit-user"
+    }
+  ],
+  "admin.lock-status": [
+    {
+      "type": 0,
+      "value": "[ES] admin.lock-status"
+    }
+  ],
+  "admin.locked": [
+    {
+      "type": 0,
+      "value": "[ES] admin.locked"
+    }
+  ],
+  "admin.public": [
+    {
+      "type": 0,
+      "value": "[ES] admin.public"
+    }
+  ],
+  "admin.public-access": [
+    {
+      "type": 0,
+      "value": "[ES] admin.public-access"
+    }
+  ],
+  "admin.refresh": [
+    {
+      "type": 0,
+      "value": "[ES] admin.refresh"
+    }
+  ],
+  "admin.status": [
+    {
+      "type": 0,
+      "value": "[ES] admin.status"
+    }
+  ],
+  "admin.status-active": [
+    {
+      "type": 0,
+      "value": "[ES] admin.status-active"
+    }
+  ],
+  "admin.status-clean": [
+    {
+      "type": 0,
+      "value": "[ES] admin.status-clean"
+    }
+  ],
+  "admin.status-suspended": [
+    {
+      "type": 0,
+      "value": "[ES] admin.status-suspended"
+    }
+  ],
+  "admin.suspend-user": [
+    {
+      "type": 0,
+      "value": "[ES] admin.suspend-user"
+    }
+  ],
+  "admin.suspension-reason": [
+    {
+      "type": 0,
+      "value": "[ES] admin.suspension-reason"
+    }
+  ],
+  "admin.suspension-status": [
+    {
+      "type": 0,
+      "value": "[ES] admin.suspension-status"
+    }
+  ],
+  "admin.system.db.url": [
+    {
+      "type": 0,
+      "value": "URL"
+    }
+  ],
+  "admin.system.jvm": [
+    {
+      "type": 0,
+      "value": "JVM"
+    }
+  ],
+  "admin.system.memory": [
+    {
+      "type": 0,
+      "value": "Memoria"
+    }
+  ],
+  "admin.system.refresh": [
+    {
+      "type": 0,
+      "value": "Actualizar"
+    }
+  ],
+  "admin.system.title": [
+    {
+      "type": 0,
+      "value": "Información del Sistema"
+    }
+  ],
+  "admin.unsuspend-user": [
+    {
+      "type": 0,
+      "value": "[ES] admin.unsuspend-user"
+    }
+  ],
+  "admin.view-xml": [
+    {
+      "type": 0,
+      "value": "[ES] admin.view-xml"
+    }
+  ],
   "changepwd.button": [
     {
       "type": 0,
@@ -195,6 +417,108 @@
     {
       "type": 0,
       "value": "Cambia la contraseña"
+    }
+  ],
+  "common.allow-email-notifications": [
+    {
+      "type": 0,
+      "value": "[ES] common.allow-email-notifications"
+    }
+  ],
+  "common.delete": [
+    {
+      "type": 0,
+      "value": "[ES] common.delete"
+    }
+  ],
+  "common.delete-tag": [
+    {
+      "type": 0,
+      "value": "[ES] common.delete-tag"
+    }
+  ],
+  "common.email": [
+    {
+      "type": 0,
+      "value": "[ES] common.email"
+    }
+  ],
+  "common.emails": [
+    {
+      "type": 0,
+      "value": "[ES] common.emails"
+    }
+  ],
+  "common.first-name": [
+    {
+      "type": 0,
+      "value": "[ES] common.first-name"
+    }
+  ],
+  "common.last-name": [
+    {
+      "type": 0,
+      "value": "[ES] common.last-name"
+    }
+  ],
+  "common.loading": [
+    {
+      "type": 0,
+      "value": "Cargando..."
+    }
+  ],
+  "common.locale": [
+    {
+      "type": 0,
+      "value": "[ES] common.locale"
+    }
+  ],
+  "common.login-form": [
+    {
+      "type": 0,
+      "value": "[ES] common.login-form"
+    }
+  ],
+  "common.maps-list": [
+    {
+      "type": 0,
+      "value": "[ES] common.maps-list"
+    }
+  ],
+  "common.open-drawer": [
+    {
+      "type": 0,
+      "value": "[ES] common.open-drawer"
+    }
+  ],
+  "common.others": [
+    {
+      "type": 0,
+      "value": "[ES] common.others"
+    }
+  ],
+  "common.refresh": [
+    {
+      "type": 0,
+      "value": "Actualizar"
+    }
+  ],
+  "common.registration-form": [
+    {
+      "type": 0,
+      "value": "[ES] common.registration-form"
+    }
+  ],
+  "common.retry": [
+    {
+      "type": 0,
+      "value": "Reintentar"
+    }
+  ],
+  "common.settings": [
+    {
+      "type": 0,
+      "value": "[ES] common.settings"
     }
   ],
   "common.wait": [
@@ -239,16 +563,16 @@
       "value": "Duplicar"
     }
   ],
-  "editor.try-welcome": [
+  "error.security-error": [
     {
       "type": 0,
-      "value": "¡Este espacio de edición muestra algunas de las capacidades del editor de mapas mentales!"
+      "value": "No se puede abrir el mapa mental."
     }
   ],
-  "editor.try-welcome-description": [
+  "error.undexpected-error-msg": [
     {
       "type": 0,
-      "value": "Regístrese para comenzar a crear, compartir y publicar una cantidad ilimitada de mapas mentales de forma gratuita."
+      "value": "Error inesperado al abrir el mapa mental. Por favor, inténtelo más tarde."
     }
   ],
   "expired.description": [
@@ -285,6 +609,12 @@
     {
       "type": 0,
       "value": "Imagen: obtenga una representación gráfica de su mapa, incluidos todos los colores y formas."
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "[ES] export.img-center"
     }
   ],
   "export.title": [
@@ -649,6 +979,12 @@
       "value": "La dirección de correo electrónico o la contraseña que ingresó no es válida."
     }
   ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "[ES] login.facebook.button"
+    }
+  ],
   "login.forgotpwd": [
     {
       "type": 0,
@@ -659,12 +995,6 @@
     {
       "type": 0,
       "value": "Ingresar con Google"
-    }
-  ],
-  "login.hsqldbcofig": [
-    {
-      "type": 0,
-      "value": "Aunque HSQLDB se incluye con WiseMapping de forma predeterminada durante la instalación, no recomendamos esta base de datos para uso en producción. Considere usar MySQL 5.7 en su lugar. Puede encontrar más información sobre cómo configurar MySQL"
     }
   ],
   "login.page-title": [
@@ -871,6 +1201,12 @@
       "value": "Información de cuenta"
     }
   ],
+  "menu.admin-console": [
+    {
+      "type": 0,
+      "value": "Consola de Administración"
+    }
+  ],
   "menu.change-password": [
     {
       "type": 0,
@@ -997,10 +1333,22 @@
       "value": "Correo electrónico"
     }
   ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "[ES] registration.facebook.button"
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,
       "value": "Primer nombre"
+    }
+  ],
+  "registration.form-legend": [
+    {
+      "type": 0,
+      "value": "Información de Cuenta"
     }
   ],
   "registration.google.button": [

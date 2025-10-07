@@ -667,5 +667,77 @@
   },
   "common.settings": {
     "defaultMessage": "[ES] common.settings"
+  },
+  "common.loading": {
+    "defaultMessage": "Cargando..."
+  },
+  "common.retry": {
+    "defaultMessage": "Reintentar"
+  },
+  "admin.system.title": {
+    "defaultMessage": "Información del Sistema"
+  },
+  "admin.system.refresh": {
+    "defaultMessage": "Actualizar"
+  },
+  "common.refresh": {
+    "defaultMessage": "Actualizar"
+  },
+  "admin.system.memory": {
+    "defaultMessage": "Memoria"
+  },
+  "admin.system.db.url": {
+    "defaultMessage": "URL"
+  },
+  "admin.system.jvm": {
+    "defaultMessage": "JVM"
+  },
+  "error.security-error": {
+    "defaultMessage": "No se puede abrir el mapa mental."
+  },
+  "error.undexpected-error-msg": {
+    "defaultMessage": "Error inesperado al abrir el mapa mental. Por favor, inténtelo más tarde."
+  },
+  "accountinfo.personal-details": {
+    "defaultMessage": "Detalles Personales"
+  },
+  "account.delete-warning-title": {
+    "defaultMessage": "Eliminar Cuenta"
+  },
+  "account.delete-warning-description": {
+    "defaultMessage": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, ten certeza."
+  },
+  "account.delete-warning-consequences": {
+    "defaultMessage": "Esto eliminará permanentemente:"
+  },
+  "account.delete-warning-mindmaps": {
+    "defaultMessage": "Todos tus mapas mentales y su contenido"
+  },
+  "account.delete-warning-data": {
+    "defaultMessage": "Todos tus datos personales e información de cuenta"
+  },
+  "account.delete-warning-collaborations": {
+    "defaultMessage": "Todos los mapas mentales compartidos y colaboraciones"
+  },
+  "account.delete-warning-history": {
+    "defaultMessage": "Todo el historial de cuenta y registros de actividad"
+  },
+  "account.delete-confirmation-title": {
+    "defaultMessage": "¿Estás absolutamente seguro?"
+  },
+  "account.delete-confirmation-warning": {
+    "defaultMessage": "Esta acción no se puede deshacer. Esto eliminará permanentemente tu cuenta y removerá todos los datos de nuestros servidores."
+  },
+  "account.delete-confirmation-instruction": {
+    "defaultMessage": "Por favor, escribe ELIMINAR MI CUENTA para confirmar:"
+  },
+  "account.delete-confirm": {
+    "defaultMessage": "Eliminar Cuenta"
+  },
+  "menu.admin-console": {
+    "defaultMessage": "Consola de Administración"
+  },
+  "registration.form-legend": {
+    "defaultMessage": "Información de Cuenta"
   }
 }

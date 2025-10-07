@@ -667,5 +667,77 @@
   },
   "common.settings": {
     "defaultMessage": "[DE] common.settings"
+  },
+  "common.loading": {
+    "defaultMessage": "Laden..."
+  },
+  "common.retry": {
+    "defaultMessage": "Wiederholen"
+  },
+  "admin.system.title": {
+    "defaultMessage": "Systeminformationen"
+  },
+  "admin.system.refresh": {
+    "defaultMessage": "Aktualisieren"
+  },
+  "common.refresh": {
+    "defaultMessage": "Aktualisieren"
+  },
+  "admin.system.memory": {
+    "defaultMessage": "Speicher"
+  },
+  "admin.system.db.url": {
+    "defaultMessage": "URL"
+  },
+  "admin.system.jvm": {
+    "defaultMessage": "JVM"
+  },
+  "error.security-error": {
+    "defaultMessage": "Mindmap kann nicht geöffnet werden."
+  },
+  "error.undexpected-error-msg": {
+    "defaultMessage": "Unerwarteter Fehler beim Öffnen der Mindmap. Bitte versuchen Sie es später erneut."
+  },
+  "accountinfo.personal-details": {
+    "defaultMessage": "Persönliche Details"
+  },
+  "account.delete-warning-title": {
+    "defaultMessage": "Konto löschen"
+  },
+  "account.delete-warning-description": {
+    "defaultMessage": "Sobald Sie Ihr Konto löschen, gibt es kein Zurück. Bitte seien Sie sicher."
+  },
+  "account.delete-warning-consequences": {
+    "defaultMessage": "Dies wird dauerhaft löschen:"
+  },
+  "account.delete-warning-mindmaps": {
+    "defaultMessage": "Alle Ihre Mindmaps und deren Inhalt"
+  },
+  "account.delete-warning-data": {
+    "defaultMessage": "Alle Ihre persönlichen Daten und Kontoinformationen"
+  },
+  "account.delete-warning-collaborations": {
+    "defaultMessage": "Alle geteilten Mindmaps und Zusammenarbeiten"
+  },
+  "account.delete-warning-history": {
+    "defaultMessage": "Alle Kontohistorie und Aktivitätsprotokolle"
+  },
+  "account.delete-confirmation-title": {
+    "defaultMessage": "Sind Sie absolut sicher?"
+  },
+  "account.delete-confirmation-warning": {
+    "defaultMessage": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Daten von unseren Servern entfernen."
+  },
+  "account.delete-confirmation-instruction": {
+    "defaultMessage": "Bitte geben Sie MEIN KONTO LÖSCHEN zur Bestätigung ein:"
+  },
+  "account.delete-confirm": {
+    "defaultMessage": "Konto löschen"
+  },
+  "menu.admin-console": {
+    "defaultMessage": "Admin-Konsole"
+  },
+  "registration.form-legend": {
+    "defaultMessage": "Kontoinformationen"
   }
 }

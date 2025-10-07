@@ -1,8 +1,74 @@
 {
+  "account.delete-confirm": [
+    {
+      "type": 0,
+      "value": "Delete Account"
+    }
+  ],
+  "account.delete-confirmation-instruction": [
+    {
+      "type": 0,
+      "value": "Please type DELETE MY ACCOUNT to confirm:"
+    }
+  ],
+  "account.delete-confirmation-title": [
+    {
+      "type": 0,
+      "value": "Are you absolutely sure?"
+    }
+  ],
+  "account.delete-confirmation-warning": [
+    {
+      "type": 0,
+      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    }
+  ],
   "account.delete-warning": [
     {
       "type": 0,
       "value": "Keep in mind that you will not be able retrieve any mindmap you have added. All your information will be deleted and it can not be restored."
+    }
+  ],
+  "account.delete-warning-collaborations": [
+    {
+      "type": 0,
+      "value": "All shared mindmaps and collaborations"
+    }
+  ],
+  "account.delete-warning-consequences": [
+    {
+      "type": 0,
+      "value": "This will permanently delete:"
+    }
+  ],
+  "account.delete-warning-data": [
+    {
+      "type": 0,
+      "value": "All your personal data and account information"
+    }
+  ],
+  "account.delete-warning-description": [
+    {
+      "type": 0,
+      "value": "Once you delete your account, there is no going back. Please be certain."
+    }
+  ],
+  "account.delete-warning-history": [
+    {
+      "type": 0,
+      "value": "All account history and activity logs"
+    }
+  ],
+  "account.delete-warning-mindmaps": [
+    {
+      "type": 0,
+      "value": "All your mindmaps and their content"
+    }
+  ],
+  "account.delete-warning-title": [
+    {
+      "type": 0,
+      "value": "Delete Account"
     }
   ],
   "accountinfo.button": [
@@ -33,6 +99,12 @@
     {
       "type": 0,
       "value": "Last Name"
+    }
+  ],
+  "accountinfo.personal-details": [
+    {
+      "type": 0,
+      "value": "Personal Details"
     }
   ],
   "accountinfo.title": [
@@ -269,6 +341,36 @@
       "value": "Suspension Status"
     }
   ],
+  "admin.system.db.url": [
+    {
+      "type": 0,
+      "value": "URL"
+    }
+  ],
+  "admin.system.jvm": [
+    {
+      "type": 0,
+      "value": "JVM"
+    }
+  ],
+  "admin.system.memory": [
+    {
+      "type": 0,
+      "value": "Memory"
+    }
+  ],
+  "admin.system.refresh": [
+    {
+      "type": 0,
+      "value": "Refresh"
+    }
+  ],
+  "admin.system.title": [
+    {
+      "type": 0,
+      "value": "System Information"
+    }
+  ],
   "admin.unsuspend-user": [
     {
       "type": 0,
@@ -359,6 +461,12 @@
       "value": "Last Name"
     }
   ],
+  "common.loading": [
+    {
+      "type": 0,
+      "value": "Loading..."
+    }
+  ],
   "common.locale": [
     {
       "type": 0,
@@ -389,10 +497,22 @@
       "value": "Others"
     }
   ],
+  "common.refresh": [
+    {
+      "type": 0,
+      "value": "Refresh"
+    }
+  ],
   "common.registration-form": [
     {
       "type": 0,
       "value": "Registration form"
+    }
+  ],
+  "common.retry": [
+    {
+      "type": 0,
+      "value": "Retry"
     }
   ],
   "common.settings": [
@@ -441,6 +561,18 @@
     {
       "type": 0,
       "value": "Duplicate"
+    }
+  ],
+  "error.security-error": [
+    {
+      "type": 0,
+      "value": "Mindmap cannot be opened."
+    }
+  ],
+  "error.undexpected-error-msg": [
+    {
+      "type": 0,
+      "value": "Unexpected error opening mindmap. Please, try latter."
     }
   ],
   "expired.description": [
@@ -1069,6 +1201,12 @@
       "value": "Account"
     }
   ],
+  "menu.admin-console": [
+    {
+      "type": 0,
+      "value": "Admin Console"
+    }
+  ],
   "menu.change-password": [
     {
       "type": 0,
@@ -1205,6 +1343,12 @@
     {
       "type": 0,
       "value": "First Name"
+    }
+  ],
+  "registration.form-legend": [
+    {
+      "type": 0,
+      "value": "Account Information"
     }
   ],
   "registration.google.button": [

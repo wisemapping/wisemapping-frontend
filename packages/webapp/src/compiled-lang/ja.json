@@ -1,8 +1,74 @@
 {
+  "account.delete-confirm": [
+    {
+      "type": 0,
+      "value": "Delete Account"
+    }
+  ],
+  "account.delete-confirmation-instruction": [
+    {
+      "type": 0,
+      "value": "Please type DELETE MY ACCOUNT to confirm:"
+    }
+  ],
+  "account.delete-confirmation-title": [
+    {
+      "type": 0,
+      "value": "Are you absolutely sure?"
+    }
+  ],
+  "account.delete-confirmation-warning": [
+    {
+      "type": 0,
+      "value": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+    }
+  ],
   "account.delete-warning": [
     {
       "type": 0,
       "value": "作成したマインドマップは復元できません。すべての情報が削除され、復元することはできません。"
+    }
+  ],
+  "account.delete-warning-collaborations": [
+    {
+      "type": 0,
+      "value": "All shared mindmaps and collaborations"
+    }
+  ],
+  "account.delete-warning-consequences": [
+    {
+      "type": 0,
+      "value": "This will permanently delete:"
+    }
+  ],
+  "account.delete-warning-data": [
+    {
+      "type": 0,
+      "value": "All your personal data and account information"
+    }
+  ],
+  "account.delete-warning-description": [
+    {
+      "type": 0,
+      "value": "Once you delete your account, there is no going back. Please be certain."
+    }
+  ],
+  "account.delete-warning-history": [
+    {
+      "type": 0,
+      "value": "All account history and activity logs"
+    }
+  ],
+  "account.delete-warning-mindmaps": [
+    {
+      "type": 0,
+      "value": "All your mindmaps and their content"
+    }
+  ],
+  "account.delete-warning-title": [
+    {
+      "type": 0,
+      "value": "Delete Account"
     }
   ],
   "accountinfo.button": [
@@ -33,6 +99,12 @@
     {
       "type": 0,
       "value": "姓"
+    }
+  ],
+  "accountinfo.personal-details": [
+    {
+      "type": 0,
+      "value": "Personal Details"
     }
   ],
   "accountinfo.title": [
@@ -167,6 +239,150 @@
       "value": "共有"
     }
   ],
+  "admin.auth-type": [
+    {
+      "type": 0,
+      "value": "[JA] admin.auth-type"
+    }
+  ],
+  "admin.delete": [
+    {
+      "type": 0,
+      "value": "[JA] admin.delete"
+    }
+  ],
+  "admin.delete-user": [
+    {
+      "type": 0,
+      "value": "[JA] admin.delete-user"
+    }
+  ],
+  "admin.edit": [
+    {
+      "type": 0,
+      "value": "[JA] admin.edit"
+    }
+  ],
+  "admin.edit-user": [
+    {
+      "type": 0,
+      "value": "[JA] admin.edit-user"
+    }
+  ],
+  "admin.lock-status": [
+    {
+      "type": 0,
+      "value": "[JA] admin.lock-status"
+    }
+  ],
+  "admin.locked": [
+    {
+      "type": 0,
+      "value": "[JA] admin.locked"
+    }
+  ],
+  "admin.public": [
+    {
+      "type": 0,
+      "value": "[JA] admin.public"
+    }
+  ],
+  "admin.public-access": [
+    {
+      "type": 0,
+      "value": "[JA] admin.public-access"
+    }
+  ],
+  "admin.refresh": [
+    {
+      "type": 0,
+      "value": "[JA] admin.refresh"
+    }
+  ],
+  "admin.status": [
+    {
+      "type": 0,
+      "value": "[JA] admin.status"
+    }
+  ],
+  "admin.status-active": [
+    {
+      "type": 0,
+      "value": "[JA] admin.status-active"
+    }
+  ],
+  "admin.status-clean": [
+    {
+      "type": 0,
+      "value": "[JA] admin.status-clean"
+    }
+  ],
+  "admin.status-suspended": [
+    {
+      "type": 0,
+      "value": "[JA] admin.status-suspended"
+    }
+  ],
+  "admin.suspend-user": [
+    {
+      "type": 0,
+      "value": "[JA] admin.suspend-user"
+    }
+  ],
+  "admin.suspension-reason": [
+    {
+      "type": 0,
+      "value": "[JA] admin.suspension-reason"
+    }
+  ],
+  "admin.suspension-status": [
+    {
+      "type": 0,
+      "value": "[JA] admin.suspension-status"
+    }
+  ],
+  "admin.system.db.url": [
+    {
+      "type": 0,
+      "value": "URL"
+    }
+  ],
+  "admin.system.jvm": [
+    {
+      "type": 0,
+      "value": "JVM"
+    }
+  ],
+  "admin.system.memory": [
+    {
+      "type": 0,
+      "value": "Memory"
+    }
+  ],
+  "admin.system.refresh": [
+    {
+      "type": 0,
+      "value": "Refresh"
+    }
+  ],
+  "admin.system.title": [
+    {
+      "type": 0,
+      "value": "System Information"
+    }
+  ],
+  "admin.unsuspend-user": [
+    {
+      "type": 0,
+      "value": "[JA] admin.unsuspend-user"
+    }
+  ],
+  "admin.view-xml": [
+    {
+      "type": 0,
+      "value": "[JA] admin.view-xml"
+    }
+  ],
   "changepwd.button": [
     {
       "type": 0,
@@ -201,6 +417,108 @@
     {
       "type": 0,
       "value": "パスワードを変更"
+    }
+  ],
+  "common.allow-email-notifications": [
+    {
+      "type": 0,
+      "value": "[JA] common.allow-email-notifications"
+    }
+  ],
+  "common.delete": [
+    {
+      "type": 0,
+      "value": "[JA] common.delete"
+    }
+  ],
+  "common.delete-tag": [
+    {
+      "type": 0,
+      "value": "[JA] common.delete-tag"
+    }
+  ],
+  "common.email": [
+    {
+      "type": 0,
+      "value": "[JA] common.email"
+    }
+  ],
+  "common.emails": [
+    {
+      "type": 0,
+      "value": "[JA] common.emails"
+    }
+  ],
+  "common.first-name": [
+    {
+      "type": 0,
+      "value": "[JA] common.first-name"
+    }
+  ],
+  "common.last-name": [
+    {
+      "type": 0,
+      "value": "[JA] common.last-name"
+    }
+  ],
+  "common.loading": [
+    {
+      "type": 0,
+      "value": "Loading..."
+    }
+  ],
+  "common.locale": [
+    {
+      "type": 0,
+      "value": "[JA] common.locale"
+    }
+  ],
+  "common.login-form": [
+    {
+      "type": 0,
+      "value": "[JA] common.login-form"
+    }
+  ],
+  "common.maps-list": [
+    {
+      "type": 0,
+      "value": "[JA] common.maps-list"
+    }
+  ],
+  "common.open-drawer": [
+    {
+      "type": 0,
+      "value": "[JA] common.open-drawer"
+    }
+  ],
+  "common.others": [
+    {
+      "type": 0,
+      "value": "[JA] common.others"
+    }
+  ],
+  "common.refresh": [
+    {
+      "type": 0,
+      "value": "Refresh"
+    }
+  ],
+  "common.registration-form": [
+    {
+      "type": 0,
+      "value": "[JA] common.registration-form"
+    }
+  ],
+  "common.retry": [
+    {
+      "type": 0,
+      "value": "Retry"
+    }
+  ],
+  "common.settings": [
+    {
+      "type": 0,
+      "value": "[JA] common.settings"
     }
   ],
   "common.wait": [
@@ -245,16 +563,16 @@
       "value": "複製"
     }
   ],
-  "editor.try-welcome": [
+  "error.security-error": [
     {
       "type": 0,
-      "value": "この編集スペースでは、マインドマップエディターの機能の一部をご紹介しています！"
+      "value": "Mindmap cannot be opened."
     }
   ],
-  "editor.try-welcome-description": [
+  "error.undexpected-error-msg": [
     {
       "type": 0,
-      "value": "無料で無制限のマインドマップを作成、共有、公開するためにサインアップしてください。"
+      "value": "Unexpected error opening mindmap. Please, try latter."
     }
   ],
   "expired.description": [
@@ -661,6 +979,12 @@
       "value": "入力されたメールアドレスまたはパスワードが無効です。"
     }
   ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "[JA] login.facebook.button"
+    }
+  ],
   "login.forgotpwd": [
     {
       "type": 0,
@@ -671,12 +995,6 @@
     {
       "type": 0,
       "value": "Googleでサインイン"
-    }
-  ],
-  "login.hsqldbcofig": [
-    {
-      "type": 0,
-      "value": "HSQLDBはインストール時にデフォルトでWiseMappingにバンドルされていますが、本番環境での使用は推奨しません。代わりにMySQL 5.7の使用を検討してください。MySQLの設定方法の詳細はこちら"
     }
   ],
   "login.page-title": [
@@ -883,6 +1201,12 @@
       "value": "アカウント"
     }
   ],
+  "menu.admin-console": [
+    {
+      "type": 0,
+      "value": "Admin Console"
+    }
+  ],
   "menu.change-password": [
     {
       "type": 0,
@@ -1009,10 +1333,22 @@
       "value": "メールアドレス"
     }
   ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "[JA] registration.facebook.button"
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,
       "value": "名"
+    }
+  ],
+  "registration.form-legend": [
+    {
+      "type": 0,
+      "value": "Account Information"
     }
   ],
   "registration.google.button": [

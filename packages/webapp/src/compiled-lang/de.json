@@ -1,8 +1,74 @@
 {
+  "account.delete-confirm": [
+    {
+      "type": 0,
+      "value": "Konto löschen"
+    }
+  ],
+  "account.delete-confirmation-instruction": [
+    {
+      "type": 0,
+      "value": "Bitte geben Sie MEIN KONTO LÖSCHEN zur Bestätigung ein:"
+    }
+  ],
+  "account.delete-confirmation-title": [
+    {
+      "type": 0,
+      "value": "Sind Sie absolut sicher?"
+    }
+  ],
+  "account.delete-confirmation-warning": [
+    {
+      "type": 0,
+      "value": "Diese Aktion kann nicht rückgängig gemacht werden. Dies wird Ihr Konto dauerhaft löschen und alle Daten von unseren Servern entfernen."
+    }
+  ],
   "account.delete-warning": [
     {
       "type": 0,
       "value": "Denke daran, dass du keine von dir erstellte Mindmap mehr aufrufen kannst. Alle deine Informationen werden gelöscht und können nicht wiederhergestellt werden."
+    }
+  ],
+  "account.delete-warning-collaborations": [
+    {
+      "type": 0,
+      "value": "Alle geteilten Mindmaps und Zusammenarbeiten"
+    }
+  ],
+  "account.delete-warning-consequences": [
+    {
+      "type": 0,
+      "value": "Dies wird dauerhaft löschen:"
+    }
+  ],
+  "account.delete-warning-data": [
+    {
+      "type": 0,
+      "value": "Alle Ihre persönlichen Daten und Kontoinformationen"
+    }
+  ],
+  "account.delete-warning-description": [
+    {
+      "type": 0,
+      "value": "Sobald Sie Ihr Konto löschen, gibt es kein Zurück. Bitte seien Sie sicher."
+    }
+  ],
+  "account.delete-warning-history": [
+    {
+      "type": 0,
+      "value": "Alle Kontohistorie und Aktivitätsprotokolle"
+    }
+  ],
+  "account.delete-warning-mindmaps": [
+    {
+      "type": 0,
+      "value": "Alle Ihre Mindmaps und deren Inhalt"
+    }
+  ],
+  "account.delete-warning-title": [
+    {
+      "type": 0,
+      "value": "Konto löschen"
     }
   ],
   "accountinfo.button": [
@@ -33,6 +99,12 @@
     {
       "type": 0,
       "value": "Nachname"
+    }
+  ],
+  "accountinfo.personal-details": [
+    {
+      "type": 0,
+      "value": "Persönliche Details"
     }
   ],
   "accountinfo.title": [
@@ -167,6 +239,150 @@
       "value": "Teilen"
     }
   ],
+  "admin.auth-type": [
+    {
+      "type": 0,
+      "value": "[DE] admin.auth-type"
+    }
+  ],
+  "admin.delete": [
+    {
+      "type": 0,
+      "value": "[DE] admin.delete"
+    }
+  ],
+  "admin.delete-user": [
+    {
+      "type": 0,
+      "value": "[DE] admin.delete-user"
+    }
+  ],
+  "admin.edit": [
+    {
+      "type": 0,
+      "value": "[DE] admin.edit"
+    }
+  ],
+  "admin.edit-user": [
+    {
+      "type": 0,
+      "value": "[DE] admin.edit-user"
+    }
+  ],
+  "admin.lock-status": [
+    {
+      "type": 0,
+      "value": "[DE] admin.lock-status"
+    }
+  ],
+  "admin.locked": [
+    {
+      "type": 0,
+      "value": "[DE] admin.locked"
+    }
+  ],
+  "admin.public": [
+    {
+      "type": 0,
+      "value": "[DE] admin.public"
+    }
+  ],
+  "admin.public-access": [
+    {
+      "type": 0,
+      "value": "[DE] admin.public-access"
+    }
+  ],
+  "admin.refresh": [
+    {
+      "type": 0,
+      "value": "[DE] admin.refresh"
+    }
+  ],
+  "admin.status": [
+    {
+      "type": 0,
+      "value": "[DE] admin.status"
+    }
+  ],
+  "admin.status-active": [
+    {
+      "type": 0,
+      "value": "[DE] admin.status-active"
+    }
+  ],
+  "admin.status-clean": [
+    {
+      "type": 0,
+      "value": "[DE] admin.status-clean"
+    }
+  ],
+  "admin.status-suspended": [
+    {
+      "type": 0,
+      "value": "[DE] admin.status-suspended"
+    }
+  ],
+  "admin.suspend-user": [
+    {
+      "type": 0,
+      "value": "[DE] admin.suspend-user"
+    }
+  ],
+  "admin.suspension-reason": [
+    {
+      "type": 0,
+      "value": "[DE] admin.suspension-reason"
+    }
+  ],
+  "admin.suspension-status": [
+    {
+      "type": 0,
+      "value": "[DE] admin.suspension-status"
+    }
+  ],
+  "admin.system.db.url": [
+    {
+      "type": 0,
+      "value": "URL"
+    }
+  ],
+  "admin.system.jvm": [
+    {
+      "type": 0,
+      "value": "JVM"
+    }
+  ],
+  "admin.system.memory": [
+    {
+      "type": 0,
+      "value": "Speicher"
+    }
+  ],
+  "admin.system.refresh": [
+    {
+      "type": 0,
+      "value": "Aktualisieren"
+    }
+  ],
+  "admin.system.title": [
+    {
+      "type": 0,
+      "value": "Systeminformationen"
+    }
+  ],
+  "admin.unsuspend-user": [
+    {
+      "type": 0,
+      "value": "[DE] admin.unsuspend-user"
+    }
+  ],
+  "admin.view-xml": [
+    {
+      "type": 0,
+      "value": "[DE] admin.view-xml"
+    }
+  ],
   "changepwd.button": [
     {
       "type": 0,
@@ -201,6 +417,108 @@
     {
       "type": 0,
       "value": "Kennwort ändern"
+    }
+  ],
+  "common.allow-email-notifications": [
+    {
+      "type": 0,
+      "value": "[DE] common.allow-email-notifications"
+    }
+  ],
+  "common.delete": [
+    {
+      "type": 0,
+      "value": "[DE] common.delete"
+    }
+  ],
+  "common.delete-tag": [
+    {
+      "type": 0,
+      "value": "[DE] common.delete-tag"
+    }
+  ],
+  "common.email": [
+    {
+      "type": 0,
+      "value": "[DE] common.email"
+    }
+  ],
+  "common.emails": [
+    {
+      "type": 0,
+      "value": "[DE] common.emails"
+    }
+  ],
+  "common.first-name": [
+    {
+      "type": 0,
+      "value": "[DE] common.first-name"
+    }
+  ],
+  "common.last-name": [
+    {
+      "type": 0,
+      "value": "[DE] common.last-name"
+    }
+  ],
+  "common.loading": [
+    {
+      "type": 0,
+      "value": "Laden..."
+    }
+  ],
+  "common.locale": [
+    {
+      "type": 0,
+      "value": "[DE] common.locale"
+    }
+  ],
+  "common.login-form": [
+    {
+      "type": 0,
+      "value": "[DE] common.login-form"
+    }
+  ],
+  "common.maps-list": [
+    {
+      "type": 0,
+      "value": "[DE] common.maps-list"
+    }
+  ],
+  "common.open-drawer": [
+    {
+      "type": 0,
+      "value": "[DE] common.open-drawer"
+    }
+  ],
+  "common.others": [
+    {
+      "type": 0,
+      "value": "[DE] common.others"
+    }
+  ],
+  "common.refresh": [
+    {
+      "type": 0,
+      "value": "Aktualisieren"
+    }
+  ],
+  "common.registration-form": [
+    {
+      "type": 0,
+      "value": "[DE] common.registration-form"
+    }
+  ],
+  "common.retry": [
+    {
+      "type": 0,
+      "value": "Wiederholen"
+    }
+  ],
+  "common.settings": [
+    {
+      "type": 0,
+      "value": "[DE] common.settings"
     }
   ],
   "common.wait": [
@@ -245,16 +563,16 @@
       "value": "Kopie"
     }
   ],
-  "editor.try-welcome": [
+  "error.security-error": [
     {
       "type": 0,
-      "value": "Dieser Ausgabebereich zeigt einige der Mindmap-Editor-Funktionen!"
+      "value": "Mindmap kann nicht geöffnet werden."
     }
   ],
-  "editor.try-welcome-description": [
+  "error.undexpected-error-msg": [
     {
       "type": 0,
-      "value": "Melde dich an, um kostenlos eine unbegrenzte Anzahl von Mindmaps zu erstellen, zu teilen und zu veröffentlichen."
+      "value": "Unerwarteter Fehler beim Öffnen der Mindmap. Bitte versuchen Sie es später erneut."
     }
   ],
   "expired.description": [
@@ -291,6 +609,12 @@
     {
       "type": 0,
       "value": "Bild: Erhalte eine grafische Darstellung deiner Mindmap mit allen Farben und Formen."
+    }
+  ],
+  "export.img-center": [
+    {
+      "type": 0,
+      "value": "[DE] export.img-center"
     }
   ],
   "export.title": [
@@ -603,6 +927,12 @@
       "value": "Verwende Labels, um deine Mindmaps zu organisieren."
     }
   ],
+  "label.maps-count": [
+    {
+      "type": 0,
+      "value": "[DE] label.maps-count"
+    }
+  ],
   "label.title": [
     {
       "type": 0,
@@ -645,6 +975,12 @@
       "value": "Die eingegebene E-Mail-Adresse oder das eingegebene Passwort ist ungültig."
     }
   ],
+  "login.facebook.button": [
+    {
+      "type": 0,
+      "value": "[DE] login.facebook.button"
+    }
+  ],
   "login.forgotpwd": [
     {
       "type": 0,
@@ -655,12 +991,6 @@
     {
       "type": 0,
       "value": "Anmeldung mit Google"
-    }
-  ],
-  "login.hsqldbcofig": [
-    {
-      "type": 0,
-      "value": "Obwohl HSQLDB während der Installation standardmäßig mit WiseMapping installiert wird, empfehlen wir diese Datenbank nicht für den Produktionseinsatz. Bitte erwäge stattdessen die Verwendung von MySQL 5.7. Weitere Informationen zur Konfiguration von MySQL findest du hier"
     }
   ],
   "login.page-title": [
@@ -867,6 +1197,12 @@
       "value": "Konto"
     }
   ],
+  "menu.admin-console": [
+    {
+      "type": 0,
+      "value": "Admin-Konsole"
+    }
+  ],
   "menu.change-password": [
     {
       "type": 0,
@@ -993,10 +1329,22 @@
       "value": "E-Mail"
     }
   ],
+  "registration.facebook.button": [
+    {
+      "type": 0,
+      "value": "[DE] registration.facebook.button"
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,
       "value": "Vorname"
+    }
+  ],
+  "registration.form-legend": [
+    {
+      "type": 0,
+      "value": "Kontoinformationen"
     }
   ],
   "registration.google.button": [
@@ -1009,6 +1357,12 @@
     {
       "type": 0,
       "value": "Nachname"
+    }
+  ],
+  "registration.page-title": [
+    {
+      "type": 0,
+      "value": "[DE] registration.page-title"
     }
   ],
   "registration.password": [

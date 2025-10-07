@@ -667,5 +667,77 @@
   },
   "common.settings": {
     "defaultMessage": "[PT] common.settings"
+  },
+  "common.loading": {
+    "defaultMessage": "Loading..."
+  },
+  "common.retry": {
+    "defaultMessage": "Retry"
+  },
+  "admin.system.title": {
+    "defaultMessage": "System Information"
+  },
+  "admin.system.refresh": {
+    "defaultMessage": "Refresh"
+  },
+  "common.refresh": {
+    "defaultMessage": "Refresh"
+  },
+  "admin.system.memory": {
+    "defaultMessage": "Memory"
+  },
+  "admin.system.db.url": {
+    "defaultMessage": "URL"
+  },
+  "admin.system.jvm": {
+    "defaultMessage": "JVM"
+  },
+  "error.security-error": {
+    "defaultMessage": "Mindmap cannot be opened."
+  },
+  "error.undexpected-error-msg": {
+    "defaultMessage": "Unexpected error opening mindmap. Please, try latter."
+  },
+  "accountinfo.personal-details": {
+    "defaultMessage": "Personal Details"
+  },
+  "account.delete-warning-title": {
+    "defaultMessage": "Delete Account"
+  },
+  "account.delete-warning-description": {
+    "defaultMessage": "Once you delete your account, there is no going back. Please be certain."
+  },
+  "account.delete-warning-consequences": {
+    "defaultMessage": "This will permanently delete:"
+  },
+  "account.delete-warning-mindmaps": {
+    "defaultMessage": "All your mindmaps and their content"
+  },
+  "account.delete-warning-data": {
+    "defaultMessage": "All your personal data and account information"
+  },
+  "account.delete-warning-collaborations": {
+    "defaultMessage": "All shared mindmaps and collaborations"
+  },
+  "account.delete-warning-history": {
+    "defaultMessage": "All account history and activity logs"
+  },
+  "account.delete-confirmation-title": {
+    "defaultMessage": "Are you absolutely sure?"
+  },
+  "account.delete-confirmation-warning": {
+    "defaultMessage": "This action cannot be undone. This will permanently delete your account and remove all data from our servers."
+  },
+  "account.delete-confirmation-instruction": {
+    "defaultMessage": "Please type DELETE MY ACCOUNT to confirm:"
+  },
+  "account.delete-confirm": {
+    "defaultMessage": "Delete Account"
+  },
+  "menu.admin-console": {
+    "defaultMessage": "Admin Console"
+  },
+  "registration.form-legend": {
+    "defaultMessage": "Account Information"
   }
 }
