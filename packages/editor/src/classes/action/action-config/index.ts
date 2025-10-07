@@ -63,6 +63,12 @@ interface ActionConfig {
    * title for popover. Only used if useClickToClose is true
    */
   title?: string;
+  /**
+   * if true, skip rendering the default popover header (title and close button).
+   * Useful for components that provide their own header/close functionality.
+   * Only applies when useClickToClose is true.
+   */
+  noPopoverHeader?: boolean;
 }
 
 export default ActionConfig;

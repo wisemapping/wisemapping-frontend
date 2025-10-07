@@ -92,10 +92,10 @@ const ConnectionButton = styled(Button)<{ selected?: boolean }>(({ selected, the
 interface TopicStyleEditorProps {
   closeModal: () => void;
   // Topic styling models
-  topicShapeModel: NodeProperty<TopicShapeType>;
-  topicFillColorModel: NodeProperty<string | undefined>;
-  topicBorderColorModel: NodeProperty<string | undefined>;
-  topicBorderStyleModel: NodeProperty<StrokeStyle>;
+  shapeModel: NodeProperty<TopicShapeType>;
+  fillColorModel: NodeProperty<string | undefined>;
+  borderColorModel: NodeProperty<string | undefined>;
+  borderStyleModel: NodeProperty<StrokeStyle>;
   // Connection styling models
   connectionStyleModel: NodeProperty<LineType>;
   connectionColorModel: NodeProperty<string | undefined>;
@@ -210,14 +210,14 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
   };
 
   const handleShapeChange = (shapeType: TopicShapeType | StrokeStyle | LineType) => {
-    const setValue = props.topicShapeModel.setValue;
+    const setValue = props.shapeModel.setValue;
     if (setValue) {
       setValue(shapeType as TopicShapeType);
     }
   };
 
   const handleBorderStyleChange = (style: TopicShapeType | StrokeStyle | LineType) => {
-    const setValue = props.topicBorderStyleModel.setValue;
+    const setValue = props.borderStyleModel.setValue;
     if (setValue) {
       setValue(style as StrokeStyle);
     }
@@ -290,7 +290,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
             <FormattedMessage id="unified-styling.style-topic" defaultMessage="Style Topic" />
           </Typography>
           <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
-            <ColorPicker closeModal={() => {}} colorModel={props.topicFillColorModel} />
+            <ColorPicker closeModal={() => {}} colorModel={props.fillColorModel} />
           </Box>
 
           <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
@@ -340,7 +340,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
                   ),
                 },
               ]}
-              selectedValue={props.topicShapeModel.getValue()}
+              selectedValue={props.shapeModel.getValue()}
               onSelect={handleShapeChange}
             />
           </Box>
@@ -354,7 +354,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
             <FormattedMessage id="unified-styling.border-color" defaultMessage="Border Color" />
           </Typography>
           <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
-            <ColorPicker closeModal={() => {}} colorModel={props.topicBorderColorModel} />
+            <ColorPicker closeModal={() => {}} colorModel={props.borderColorModel} />
           </Box>
 
           <Typography variant="subtitle2" gutterBottom sx={{ mt: 1, fontSize: '0.75rem', mb: 1 }}>
@@ -363,7 +363,7 @@ const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
           <Box sx={{ display: 'flex', width: '100%', pl: 0, padding: '0px' }}>
             <IconCollection
               styles={borderStyles}
-              selectedValue={props.topicBorderStyleModel.getValue()}
+              selectedValue={props.borderStyleModel.getValue()}
               onSelect={handleBorderStyleChange}
             />
           </Box>

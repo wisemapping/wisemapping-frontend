@@ -135,18 +135,25 @@ export const ToolbarSubmenu = ({
         PaperProps={{
           onMouseLeave: () => !configuration.useClickToClose && setOpen(false),
           square: true,
-          sx: {
-            backgroundColor: theme.palette.mode === 'dark' ? '#2d2d2d' : '#ffffff',
-            color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
-            border: theme.palette.mode === 'dark' ? '1px solid #555' : '1px solid #e0e0e0',
-          },
+          sx: configuration.noPopoverHeader
+            ? {
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
+                border: 'none',
+                overflow: 'visible',
+              }
+            : {
+                backgroundColor: theme.palette.mode === 'dark' ? '#2d2d2d' : '#ffffff',
+                color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
+                border: theme.palette.mode === 'dark' ? '1px solid #555' : '1px solid #e0e0e0',
+              },
         }}
         sx={{
           zIndex: configuration.useClickToClose ? '1500' : '-1',
         }}
         elevation={elevation}
       >
-        {configuration.useClickToClose && (
+        {configuration.useClickToClose && !configuration.noPopoverHeader && (
           <Box textAlign={'right'} ml={1}>
             <Typography
               variant="body1"

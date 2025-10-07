@@ -86,23 +86,24 @@ const keyTooltip = (msg: string, key: string): string => {
 export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionConfig[] {
   const modelBuilder = new NodePropertyValueModelBuilder(model.getDesigner());
 
-  const unifiedStylingConfiguration: ActionConfig = {
+  const styleConfiguration: ActionConfig = {
     icon: <BrushIcon />,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-unified-styling',
       defaultMessage: 'Style Topic & Connections',
     }),
     useClickToClose: true,
+    noPopoverHeader: true,
     options: [
       {
         render: (closeModal) => {
           return (
             <TopicStyleEditor
               closeModal={closeModal}
-              topicShapeModel={modelBuilder.getTopicShapeModel()}
-              topicFillColorModel={modelBuilder.getSelectedTopicColorModel()}
-              topicBorderColorModel={modelBuilder.getColorBorderModel()}
-              topicBorderStyleModel={modelBuilder.getBorderStyleModel()}
+              shapeModel={modelBuilder.getTopicShapeModel()}
+              fillColorModel={modelBuilder.getSelectedTopicColorModel()}
+              borderColorModel={modelBuilder.getColorBorderModel()}
+              borderStyleModel={modelBuilder.getBorderStyleModel()}
               connectionStyleModel={modelBuilder.getConnectionStyleModel()}
               connectionColorModel={modelBuilder.getConnectionColorModel()}
             />
@@ -407,6 +408,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editCanvasStyleConfiguration: ActionConfig = {
     icon: <TextureIcon />,
+    useClickToClose: true,
+    noPopoverHeader: true,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-canvas-style',
       defaultMessage: 'Background',
@@ -543,7 +546,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   return [
     addNodeToolbarConfiguration,
     deleteNodeToolbarConfiguration,
-    unifiedStylingConfiguration, // New unified topic style dialog
+    styleConfiguration, // New unified topic style dialog
     fontFormatToolbarConfiguration,
     editIconConfiguration,
     editTopicImageConfiguration,
