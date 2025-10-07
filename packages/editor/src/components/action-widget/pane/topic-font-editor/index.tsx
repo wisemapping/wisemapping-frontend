@@ -51,7 +51,7 @@ interface TopicFontEditorProps {
   fontWeightModel: NodeProperty<string | undefined>;
   fontStyleModel: NodeProperty<string>;
   fontColorModel: NodeProperty<string | undefined>;
-  model: Editor;
+  model?: Editor;
 }
 
 const TopicFontEditor = (props: TopicFontEditorProps): ReactElement => {

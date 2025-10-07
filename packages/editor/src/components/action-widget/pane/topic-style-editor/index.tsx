@@ -17,9 +17,9 @@
  */
 
 import React, { ReactElement, useState } from 'react';
-import { Tabs, Tab, Box, Typography, Button, IconButton } from '@mui/material';
+import { Tabs, Tab, Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { styled } from '@mui/material/styles';
 
 // Icons
@@ -63,29 +63,6 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   '& .MuiTabs-indicator': {
     height: '2px',
     borderRadius: '1px',
-  },
-}));
-
-const ShapeButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
-  width: '24px',
-  height: '24px',
-  padding: '0px',
-  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
-  borderRadius: '4px',
-  '&:hover': {
-    borderColor: theme.palette.primary.main,
-  },
-}));
-
-const ConnectionButton = styled(Button)<{ selected?: boolean }>(({ selected, theme }) => ({
-  padding: '6px 8px',
-  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
-  borderRadius: '4px',
-  textTransform: 'none',
-  minHeight: '24px',
-  fontSize: '0.7rem',
-  '&:hover': {
-    borderColor: theme.palette.primary.main,
   },
 }));
 
@@ -202,8 +179,6 @@ const connectionStyles = [
 
 const TopicStyleEditor = (props: TopicStyleEditorProps): ReactElement => {
   const [activeTab, setActiveTab] = useState(0);
-
-  const intl = useIntl();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);

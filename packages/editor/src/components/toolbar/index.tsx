@@ -25,8 +25,6 @@ import '../app-bar/styles.css';
 import Box from '@mui/material/Box';
 import ToolbarPosition from '../../classes/model/toolbar-position';
 import ActionConfig from '../../classes/action/action-config';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 
 /**
@@ -99,7 +97,6 @@ export const ToolbarSubmenu = ({
 }: ToolbarSubmenuProps): ReactElement => {
   const [open, setOpen] = useState(false);
   const itemRef = useRef(null);
-  const theme = useTheme();
 
   const orientationProps = vertical ? verticalAligment : horizontalAligment;
   // If options has custom render, use click-to-close behavior, otherwise hover

@@ -18,67 +18,28 @@
 import React from 'react';
 import BrushIcon from '@mui/icons-material/Brush';
 import FontDownloadOutlinedIcon from '@mui/icons-material/FontDownloadOutlined';
-import TextIncreaseOutlinedIcon from '@mui/icons-material/TextIncreaseOutlined';
-import TextDecreaseOutlinedIcon from '@mui/icons-material/TextDecreaseOutlined';
-import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import SquareOutlinedIcon from '@mui/icons-material/SquareOutlined';
-import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
-import HorizontalRuleOutlinedIcon from '@mui/icons-material/HorizontalRuleOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import PolylineOutlined from '@mui/icons-material/PolylineOutlined';
-import GestureOutlined from '@mui/icons-material/GestureOutlined';
-import TimelineOutined from '@mui/icons-material/TimelineOutlined';
-import ShareOutlined from '@mui/icons-material/ShareOutlined';
-import SwapCallsOutlined from '@mui/icons-material/SwapCallsOutlined';
-import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
-import ShortcutIconOutlined from '@mui/icons-material/ShortcutOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import TextureIcon from '@mui/icons-material/Texture';
-import RemoveIcon from '@mui/icons-material/Remove';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import RelationshipStyleIcon from '../icons/RelationshipStyleIcon';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
-import {
-  BorderColorIcon,
-  FillColorIcon,
-  ConnectionColorIcon,
-  RelationshipColorIcon,
-  FontColorIcon,
-} from './themed-icons';
 import ActionConfig from '../../classes/action/action-config';
-import { SwitchValueDirection } from '../toolbar/ToolbarValueModelBuilder';
 import NodePropertyValueModelBuilder from '../../classes/model/node-property-builder';
-import ColorPicker from '../action-widget/pane/color-picker';
 import TopicLinkEditor from '../action-widget/pane/topic-link-editor';
 import RichTextNoteEditor from '../action-widget/pane/rich-text-note-editor';
-import IconPicker from '../action-widget/pane/icon-picker';
 import TopicImagePicker from '../action-widget/pane/topic-image-picker';
-import FontFamilySelector from '../action-widget/button/font-family-selector';
 import TopicStyleEditor from '../action-widget/pane/topic-style-editor';
 import TopicFontEditor from '../action-widget/pane/topic-font-editor';
 import RelationshipStyleEditor from '../action-widget/pane/relationship-style-editor';
 import TopicIconEditor from '../action-widget/pane/topic-icon-editor';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
-import {
-  trackTopicStyleAction,
-  trackConnectionStyleAction,
-  trackFontFormatAction,
-  trackRelationshipAction,
-  trackEditorPanelAction,
-} from '../../utils/analytics';
-import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
-import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
+import { trackRelationshipAction, trackEditorPanelAction } from '../../utils/analytics';
 import CanvasStyleEditor, { CanvasStyle } from '../action-widget/pane/canvas-style-editor';
 
 const keyTooltip = (msg: string, key: string): string => {
@@ -162,6 +123,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
               fontWeightModel={modelBuilder.fontWeigthModel()}
               fontStyleModel={modelBuilder.getFontStyleModel()}
               fontColorModel={modelBuilder.getFontColorModel()}
+              // @todo: This does not seem correct.
               model={model}
             />
           );

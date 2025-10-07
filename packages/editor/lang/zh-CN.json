@@ -321,19 +321,19 @@
     "defaultMessage": "网格颜色"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "大"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "中"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "小"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "极大"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "极小"
   },
   "canvas-style.grid-style": {
     "defaultMessage": "网格样式"
