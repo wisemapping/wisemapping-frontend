@@ -16,52 +16,56 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import RichTextNoteEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
+import React from 'react';
 
-// Mock NodeProperty implementation with actions
-class MockNodeProperty<T> implements NodeProperty<T> {
-  private value: T;
+// Wrapper component to expose setValue as an action-trackable callback
+const RichTextNoteEditorWithActions = (props: {
+  closeModal: () => void;
+  initialNote?: string;
+  onNoteChange?: (note: string | undefined) => void;
+}) => {
+  const [note, setNote] = React.useState<string | undefined>(props.initialNote);
 
-  constructor(value: T) {
-    this.value = value;
-  }
+  const noteModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => note,
+      setValue: (v: string | undefined) => {
+        setNote(v);
+        props.onNoteChange?.(v);
+      },
+    }),
+    [note, props.onNoteChange],
+  );
 
-  getValue(): T {
-    return this.value;
-  }
+  return <RichTextNoteEditor closeModal={props.closeModal} noteModel={noteModel} />;
+};
 
-  setValue = fn((v: T) => {
-    this.value = v;
-  });
-}
-
-const meta: Meta = {
+const meta: Meta<typeof RichTextNoteEditorWithActions> = {
   title: 'Editor/RichTextNoteEditor',
-  component: RichTextNoteEditor as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: RichTextNoteEditorWithActions,
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    closeModal: { action: 'closeModal' },
+    onNoteChange: { action: 'onNoteChange' },
+  },
 };
 
 export default meta;
-type Story = StoryObj<typeof RichTextNoteEditor>;
+type Story = StoryObj<typeof RichTextNoteEditorWithActions>;
 
 export const Default: Story = {
-  render: () => {
-    const noteModel = new MockNodeProperty<string | undefined>('');
-
-    return <RichTextNoteEditor closeModal={fn()} noteModel={noteModel} />;
+  args: {
+    initialNote: '',
   },
 };
 
 export const WithExistingNote: Story = {
-  render: () => {
-    const noteModel = new MockNodeProperty<string | undefined>(
-      '<b>Important note:</b> This is a sample note with <i>rich text</i> formatting.',
-    );
-
-    return <RichTextNoteEditor closeModal={fn()} noteModel={noteModel} />;
+  args: {
+    initialNote: '<b>Important note:</b> This is a sample note with <i>rich text</i> formatting.',
   },
 };

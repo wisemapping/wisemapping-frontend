@@ -17,64 +17,55 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/react';
-import TopicIconEditor from './index';
+import ColorPicker from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import React from 'react';
 
 // Wrapper component to expose setValue as an action-trackable callback
-const TopicIconEditorWithActions = (props: {
+const ColorPickerWithActions = (props: {
   closeModal: () => void;
-  initialIcon?: string;
-  onIconChange?: (icon: string | undefined) => void;
+  initialColor?: string;
+  onColorChange?: (color: string | undefined) => void;
 }) => {
-  const [icon, setIcon] = React.useState<string | undefined>(props.initialIcon);
+  const [color, setColor] = React.useState<string | undefined>(props.initialColor);
 
-  const iconModel: NodeProperty<string | undefined> = React.useMemo(
+  const colorModel: NodeProperty<string | undefined> = React.useMemo(
     () => ({
-      getValue: () => icon,
+      getValue: () => color,
       setValue: (v: string | undefined) => {
-        console.log('TopicIconEditor iconModel.setValue called with:', v);
-        setIcon(v);
-        if (props.onIconChange) {
-          props.onIconChange(v);
-        }
+        setColor(v);
+        props.onColorChange?.(v);
       },
     }),
-    [icon, props.onIconChange],
+    [color, props.onColorChange],
   );
 
-  return <TopicIconEditor closeModal={props.closeModal} iconModel={iconModel} />;
+  return <ColorPicker closeModal={props.closeModal} colorModel={colorModel} />;
 };
 
-const meta: Meta<typeof TopicIconEditorWithActions> = {
-  title: 'Editor/TopicIconEditor',
-  component: TopicIconEditorWithActions,
+const meta: Meta<typeof ColorPickerWithActions> = {
+  title: 'Editor/ColorPicker',
+  component: ColorPickerWithActions,
   parameters: {
     layout: 'centered',
   },
   argTypes: {
     closeModal: { action: 'closeModal' },
-    onIconChange: { action: 'onIconChange' },
+    onColorChange: { action: 'onColorChange' },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof TopicIconEditorWithActions>;
+type Story = StoryObj<typeof ColorPickerWithActions>;
 
 export const Default: Story = {
   args: {
-    initialIcon: undefined,
+    initialColor: undefined,
   },
 };
 
-export const WithEmoji: Story = {
+export const WithSelectedColor: Story = {
   args: {
-    initialIcon: 'emoji:😀',
-  },
-};
-
-export const WithImage: Story = {
-  args: {
-    initialIcon: 'image:tag_blue',
+    initialColor: '#ff0000',
   },
 };

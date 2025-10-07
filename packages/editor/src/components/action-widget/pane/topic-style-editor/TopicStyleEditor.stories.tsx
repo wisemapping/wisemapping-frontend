@@ -17,68 +17,133 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import TopicStyleEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 import { TopicShapeType } from '@wisemapping/mindplot/src/components/model/INodeModel';
 import { StrokeStyle } from '@wisemapping/mindplot/src/components/model/RelationshipModel';
 import { LineType } from '@wisemapping/mindplot/src/components/ConnectionLine';
+import React from 'react';
 
-// Mock NodeProperty implementation with actions
-class MockNodeProperty<T> implements NodeProperty<T> {
-  private value: T;
-  public setValue: (v: T) => void;
-  public switchValue: () => void;
+// Wrapper component to expose all setValue calls as action-trackable callbacks
+const TopicStyleEditorWithActions = (props: {
+  closeModal: () => void;
+  onShapeChange?: (shape: TopicShapeType) => void;
+  onFillColorChange?: (color: string | undefined) => void;
+  onBorderColorChange?: (color: string | undefined) => void;
+  onBorderStyleChange?: (style: StrokeStyle) => void;
+  onConnectionStyleChange?: (style: LineType) => void;
+  onConnectionColorChange?: (color: string | undefined) => void;
+}) => {
+  const [shape, setShape] = React.useState<TopicShapeType>('rounded rectangle');
+  const [fillColor, setFillColor] = React.useState<string | undefined>('#00ff00');
+  const [borderColor, setBorderColor] = React.useState<string | undefined>('#0000ff');
+  const [borderStyle, setBorderStyle] = React.useState<StrokeStyle>(StrokeStyle.SOLID);
+  const [connectionStyle, setConnectionStyle] = React.useState<LineType>(LineType.THICK_CURVED);
+  const [connectionColor, setConnectionColor] = React.useState<string | undefined>('#ff0000');
 
-  constructor(value: T, name: string) {
-    this.value = value;
-    this.setValue = fn((v: T) => {
-      this.value = v;
-    }).mockName(`${name}.setValue`);
-    this.switchValue = fn(() => {
-      // Switch value logic
-    }).mockName(`${name}.switchValue`);
-  }
+  const shapeModel: NodeProperty<TopicShapeType> = React.useMemo(
+    () => ({
+      getValue: () => shape,
+      setValue: (v: TopicShapeType) => {
+        setShape(v);
+        props.onShapeChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [shape, props.onShapeChange],
+  );
 
-  getValue(): T {
-    return this.value;
-  }
-}
+  const fillColorModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => fillColor,
+      setValue: (v: string | undefined) => {
+        setFillColor(v);
+        props.onFillColorChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [fillColor, props.onFillColorChange],
+  );
 
-// Create shared mock instances outside render to ensure actions are tracked
-const shapeModel = new MockNodeProperty<TopicShapeType>('rounded rectangle', 'shapeModel');
-const fillColorModel = new MockNodeProperty<string | undefined>('#00ff00', 'fillColorModel');
-const borderColorModel = new MockNodeProperty<string | undefined>('#0000ff', 'borderColorModel');
-const borderStyleModel = new MockNodeProperty<StrokeStyle>(StrokeStyle.SOLID, 'borderStyleModel');
-const connectionStyleModel = new MockNodeProperty<LineType>(
-  LineType.THICK_CURVED,
-  'connectionStyleModel',
-);
-const connectionColorModel = new MockNodeProperty<string | undefined>(
-  '#ff0000',
-  'connectionColorModel',
-);
-const closeModalAction = fn().mockName('closeModal');
+  const borderColorModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => borderColor,
+      setValue: (v: string | undefined) => {
+        setBorderColor(v);
+        props.onBorderColorChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [borderColor, props.onBorderColorChange],
+  );
 
-const meta: Meta<typeof TopicStyleEditor> = {
+  const borderStyleModel: NodeProperty<StrokeStyle> = React.useMemo(
+    () => ({
+      getValue: () => borderStyle,
+      setValue: (v: StrokeStyle) => {
+        setBorderStyle(v);
+        props.onBorderStyleChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [borderStyle, props.onBorderStyleChange],
+  );
+
+  const connectionStyleModel: NodeProperty<LineType> = React.useMemo(
+    () => ({
+      getValue: () => connectionStyle,
+      setValue: (v: LineType) => {
+        setConnectionStyle(v);
+        props.onConnectionStyleChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [connectionStyle, props.onConnectionStyleChange],
+  );
+
+  const connectionColorModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => connectionColor,
+      setValue: (v: string | undefined) => {
+        setConnectionColor(v);
+        props.onConnectionColorChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [connectionColor, props.onConnectionColorChange],
+  );
+
+  return (
+    <TopicStyleEditor
+      closeModal={props.closeModal}
+      shapeModel={shapeModel}
+      fillColorModel={fillColorModel}
+      borderColorModel={borderColorModel}
+      borderStyleModel={borderStyleModel}
+      connectionStyleModel={connectionStyleModel}
+      connectionColorModel={connectionColorModel}
+    />
+  );
+};
+
+const meta: Meta<typeof TopicStyleEditorWithActions> = {
   title: 'Editor/TopicStyleEditor',
-  component: TopicStyleEditor,
+  component: TopicStyleEditorWithActions,
   parameters: {
     layout: 'centered',
-    actions: { disable: false }, // Ensure actions are enabled
   },
-  args: {
-    closeModal: closeModalAction,
-    shapeModel,
-    fillColorModel,
-    borderColorModel,
-    borderStyleModel,
-    connectionStyleModel,
-    connectionColorModel,
+  argTypes: {
+    closeModal: { action: 'closeModal' },
+    onShapeChange: { action: 'onShapeChange' },
+    onFillColorChange: { action: 'onFillColorChange' },
+    onBorderColorChange: { action: 'onBorderColorChange' },
+    onBorderStyleChange: { action: 'onBorderStyleChange' },
+    onConnectionStyleChange: { action: 'onConnectionStyleChange' },
+    onConnectionColorChange: { action: 'onConnectionColorChange' },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof TopicStyleEditor>;
+type Story = StoryObj<typeof TopicStyleEditorWithActions>;
 
 export const Default: Story = {};

@@ -21,39 +21,90 @@ import type { Meta, StoryObj } from '@storybook/react';
 import TopicImagePicker from './index';
 import NodeProperty from '../../../../classes/model/node-property';
 
-// Minimal NodeProperty stub for Storybook
-class SimpleNodeProperty<T> implements NodeProperty<T> {
-  private value: T;
-  constructor(value: T) {
-    this.value = value;
-  }
-  getValue(): T {
-    return this.value;
-  }
-  setValue = (v: T) => {
-    this.value = v;
-  };
-}
+// Wrapper component to expose setValue as an action-trackable callback
+const TopicImagePickerWithActions = (props: {
+  triggerClose: () => void;
+  initialEmoji?: string;
+  initialIconsGallery?: string;
+  onEmojiChange?: (emoji: string | undefined) => void;
+  onIconsGalleryChange?: (icon: string | undefined) => void;
+}) => {
+  const [emoji, setEmoji] = React.useState<string | undefined>(props.initialEmoji);
+  const [iconsGallery, setIconsGallery] = React.useState<string | undefined>(
+    props.initialIconsGallery,
+  );
 
-const meta: Meta = {
+  const emojiModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => emoji,
+      setValue: (v: string | undefined) => {
+        console.log('TopicImagePicker emojiModel.setValue called with:', v);
+        setEmoji(v);
+        if (props.onEmojiChange) {
+          props.onEmojiChange(v);
+        }
+      },
+    }),
+    [emoji, props.onEmojiChange],
+  );
+
+  const iconsGalleryModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => iconsGallery,
+      setValue: (v: string | undefined) => {
+        console.log('TopicImagePicker iconsGalleryModel.setValue called with:', v);
+        setIconsGallery(v);
+        if (props.onIconsGalleryChange) {
+          props.onIconsGalleryChange(v);
+        }
+      },
+    }),
+    [iconsGallery, props.onIconsGalleryChange],
+  );
+
+  return (
+    <TopicImagePicker
+      triggerClose={props.triggerClose}
+      emojiModel={emojiModel}
+      iconsGalleryModel={iconsGalleryModel}
+    />
+  );
+};
+
+const meta: Meta<typeof TopicImagePickerWithActions> = {
   title: 'Editor/TopicImagePicker',
-  component: TopicImagePicker as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: TopicImagePickerWithActions,
+  parameters: {
+    layout: 'centered',
+    chromatic: { disableSnapshot: true },
+  },
+  argTypes: {
+    triggerClose: { action: 'triggerClose' },
+    onEmojiChange: { action: 'onEmojiChange' },
+    onIconsGalleryChange: { action: 'onIconsGalleryChange' },
+  },
 };
 
 export default meta;
-type Story = StoryObj<typeof TopicImagePicker>;
+type Story = StoryObj<typeof TopicImagePickerWithActions>;
 
 export const Default: Story = {
-  render: () => {
-    const emojiModel = new SimpleNodeProperty<string | undefined>(undefined);
-    const iconsGalleryModel = new SimpleNodeProperty<string | undefined>(undefined);
-    return (
-      <TopicImagePicker
-        triggerClose={() => {}}
-        emojiModel={emojiModel}
-        iconsGalleryModel={iconsGalleryModel}
-      />
-    );
+  args: {
+    initialEmoji: undefined,
+    initialIconsGallery: undefined,
+  },
+};
+
+export const WithEmoji: Story = {
+  args: {
+    initialEmoji: 'emoji:😀',
+    initialIconsGallery: undefined,
+  },
+};
+
+export const WithImage: Story = {
+  args: {
+    initialEmoji: undefined,
+    initialIconsGallery: 'image:tag_blue',
   },
 };

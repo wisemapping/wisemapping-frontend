@@ -16,22 +16,21 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import KeyboardShorcutsHelp from './index';
 
-const meta: Meta = {
+const meta: Meta<typeof KeyboardShorcutsHelp> = {
   title: 'Editor/KeyboardShortcutHelp',
-  component: KeyboardShorcutsHelp as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: KeyboardShorcutsHelp,
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    closeModal: { action: 'closeModal' },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof KeyboardShorcutsHelp>;
 
-export const Default: Story = {
-  render: () => {
-    return <KeyboardShorcutsHelp closeModal={fn()} />;
-  },
-};
+export const Default: Story = {};

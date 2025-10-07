@@ -16,37 +16,64 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import IconPicker from './index';
 import NodeProperty from '../../../../classes/model/node-property';
+import React from 'react';
 
-// Minimal NodeProperty stub for Storybook
-class SimpleNodeProperty<T> implements NodeProperty<T> {
-  private value: T;
-  constructor(value: T) {
-    this.value = value;
-  }
-  getValue(): T {
-    return this.value;
-  }
-  setValue = (v: T) => {
-    this.value = v;
-  };
-}
+// Wrapper component to expose setValue as an action-trackable callback
+const IconPickerWithActions = (props: {
+  triggerClose: () => void;
+  initialIcon?: string;
+  onIconChange?: (icon: string | undefined) => void;
+}) => {
+  const [icon, setIcon] = React.useState<string | undefined>(props.initialIcon);
 
-const meta: Meta = {
+  const iconModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => icon,
+      setValue: (v: string | undefined) => {
+        setIcon(v);
+        props.onIconChange?.(v);
+      },
+    }),
+    [icon, props.onIconChange],
+  );
+
+  return <IconPicker triggerClose={props.triggerClose} iconModel={iconModel} />;
+};
+
+const meta: Meta<typeof IconPickerWithActions> = {
   title: 'Editor/IconPicker',
-  component: IconPicker as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: IconPickerWithActions,
+  parameters: {
+    layout: 'centered',
+    // Disable chromatic snapshots for this story due to emoji picker
+    chromatic: { disableSnapshot: true },
+  },
+  argTypes: {
+    triggerClose: { action: 'triggerClose' },
+    onIconChange: { action: 'onIconChange' },
+  },
 };
 
 export default meta;
-type Story = StoryObj<typeof IconPicker>;
+type Story = StoryObj<typeof IconPickerWithActions>;
 
 export const Default: Story = {
-  render: () => {
-    const iconModel = new SimpleNodeProperty<string | undefined>(undefined);
-    return <IconPicker triggerClose={() => {}} iconModel={iconModel} />;
+  args: {
+    initialIcon: undefined,
+  },
+};
+
+export const WithEmoji: Story = {
+  args: {
+    initialIcon: 'emoji:😀',
+  },
+};
+
+export const WithImage: Story = {
+  args: {
+    initialIcon: 'image:tag_blue',
   },
 };

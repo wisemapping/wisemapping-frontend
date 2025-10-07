@@ -16,55 +16,53 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import CanvasStyleEditor, { CanvasStyle } from './index';
 
-const meta: Meta = {
+const meta: Meta<typeof CanvasStyleEditor> = {
   title: 'Editor/CanvasStyleEditor',
-  component: CanvasStyleEditor as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: CanvasStyleEditor,
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    closeModal: { action: 'closeModal' },
+    onStyleChange: { action: 'onStyleChange' },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof CanvasStyleEditor>;
 
 export const Default: Story = {
-  render: () => {
-    const initialStyle: Partial<CanvasStyle> = {
+  args: {
+    initialStyle: {
       backgroundColor: '#f2f2f2',
       backgroundPattern: 'grid',
       gridSize: 50,
       gridColor: '#ebe9e7',
-    };
-
-    return <CanvasStyleEditor closeModal={fn()} initialStyle={initialStyle} onStyleChange={fn()} />;
+    } as Partial<CanvasStyle>,
   },
 };
 
 export const WithSolidBackground: Story = {
-  render: () => {
-    const initialStyle: Partial<CanvasStyle> = {
+  args: {
+    initialStyle: {
       backgroundColor: '#ffffff',
       backgroundPattern: 'solid',
       gridSize: 50,
       gridColor: '#cccccc',
-    };
-
-    return <CanvasStyleEditor closeModal={fn()} initialStyle={initialStyle} onStyleChange={fn()} />;
+    } as Partial<CanvasStyle>,
   },
 };
 
 export const WithDots: Story = {
-  render: () => {
-    const initialStyle: Partial<CanvasStyle> = {
+  args: {
+    initialStyle: {
       backgroundColor: '#f8f8f8',
       backgroundPattern: 'dots',
       gridSize: 25,
       gridColor: '#aaaaaa',
-    };
-
-    return <CanvasStyleEditor closeModal={fn()} initialStyle={initialStyle} onStyleChange={fn()} />;
+    } as Partial<CanvasStyle>,
   },
 };

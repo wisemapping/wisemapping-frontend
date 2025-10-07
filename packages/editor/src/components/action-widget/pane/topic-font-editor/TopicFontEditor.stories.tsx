@@ -16,59 +16,124 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import TopicFontEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
+import React from 'react';
 
-// Mock NodeProperty implementation with actions
-class MockNodeProperty<T> implements NodeProperty<T> {
-  private value: T;
+// Wrapper component to expose all setValue and switchValue calls as action-trackable callbacks
+const TopicFontEditorWithActions = (props: {
+  closeModal: () => void;
+  onFontFamilyChange?: (family: string | undefined) => void;
+  onFontSizeSwitch?: (direction?: any) => void;
+  onFontWeightSwitch?: () => void;
+  onFontStyleSwitch?: () => void;
+  onFontColorChange?: (color: string | undefined) => void;
+}) => {
+  const [fontFamily, setFontFamily] = React.useState<string | undefined>('Arial');
+  const [fontSize, setFontSize] = React.useState<number>(12);
+  const [fontWeight, setFontWeight] = React.useState<string | undefined>('normal');
+  const [fontStyle, setFontStyle] = React.useState<string>('normal');
+  const [fontColor, setFontColor] = React.useState<string | undefined>('#000000');
 
-  constructor(value: T) {
-    this.value = value;
-  }
+  const fontFamilyModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => fontFamily,
+      setValue: (v: string | undefined) => {
+        setFontFamily(v);
+        props.onFontFamilyChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [fontFamily, props.onFontFamilyChange],
+  );
 
-  getValue(): T {
-    return this.value;
-  }
+  const fontSizeModel: NodeProperty<number> = React.useMemo(
+    () => ({
+      getValue: () => fontSize,
+      setValue: (v: number) => {
+        setFontSize(v);
+      },
+      switchValue: (direction?: any) => {
+        const newSize = direction === 'up' ? fontSize + 1 : fontSize - 1;
+        setFontSize(newSize);
+        props.onFontSizeSwitch?.(direction);
+      },
+    }),
+    [fontSize, props.onFontSizeSwitch],
+  );
 
-  setValue = fn((v: T) => {
-    this.value = v;
-  });
+  const fontWeightModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => fontWeight,
+      setValue: (v: string | undefined) => {
+        setFontWeight(v);
+      },
+      switchValue: () => {
+        const newWeight = fontWeight === 'bold' ? 'normal' : 'bold';
+        setFontWeight(newWeight);
+        props.onFontWeightSwitch?.();
+      },
+    }),
+    [fontWeight, props.onFontWeightSwitch],
+  );
 
-  switchValue = fn(() => {
-    // Switch value logic
-  });
-}
+  const fontStyleModel: NodeProperty<string> = React.useMemo(
+    () => ({
+      getValue: () => fontStyle,
+      setValue: (v: string) => {
+        setFontStyle(v);
+      },
+      switchValue: () => {
+        const newStyle = fontStyle === 'italic' ? 'normal' : 'italic';
+        setFontStyle(newStyle);
+        props.onFontStyleSwitch?.();
+      },
+    }),
+    [fontStyle, props.onFontStyleSwitch],
+  );
 
-const meta: Meta = {
+  const fontColorModel: NodeProperty<string | undefined> = React.useMemo(
+    () => ({
+      getValue: () => fontColor,
+      setValue: (v: string | undefined) => {
+        setFontColor(v);
+        props.onFontColorChange?.(v);
+      },
+      switchValue: () => {},
+    }),
+    [fontColor, props.onFontColorChange],
+  );
+
+  return (
+    <TopicFontEditor
+      closeModal={props.closeModal}
+      fontFamilyModel={fontFamilyModel}
+      fontSizeModel={fontSizeModel}
+      fontWeightModel={fontWeightModel}
+      fontStyleModel={fontStyleModel}
+      fontColorModel={fontColorModel}
+    />
+  );
+};
+
+const meta: Meta<typeof TopicFontEditorWithActions> = {
   title: 'Editor/TopicFontEditor',
-  component: TopicFontEditor as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: TopicFontEditorWithActions,
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    closeModal: { action: 'closeModal' },
+    onFontFamilyChange: { action: 'onFontFamilyChange' },
+    onFontSizeSwitch: { action: 'onFontSizeSwitch' },
+    onFontWeightSwitch: { action: 'onFontWeightSwitch' },
+    onFontStyleSwitch: { action: 'onFontStyleSwitch' },
+    onFontColorChange: { action: 'onFontColorChange' },
+  },
 };
 
 export default meta;
-type Story = StoryObj<typeof TopicFontEditor>;
+type Story = StoryObj<typeof TopicFontEditorWithActions>;
 
-export const Default: Story = {
-  render: () => {
-    const fontFamilyModel = new MockNodeProperty<string | undefined>('Arial');
-    const fontSizeModel = new MockNodeProperty<number>(12);
-    const fontWeightModel = new MockNodeProperty<string | undefined>('normal');
-    const fontStyleModel = new MockNodeProperty<string>('normal');
-    const fontColorModel = new MockNodeProperty<string | undefined>('#000000');
-
-    return (
-      <TopicFontEditor
-        closeModal={fn()}
-        fontFamilyModel={fontFamilyModel}
-        fontSizeModel={fontSizeModel}
-        fontWeightModel={fontWeightModel}
-        fontStyleModel={fontStyleModel}
-        fontColorModel={fontColorModel}
-      />
-    );
-  },
-};
+export const Default: Story = {};

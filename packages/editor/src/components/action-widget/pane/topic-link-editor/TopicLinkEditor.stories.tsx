@@ -16,50 +16,56 @@
  *   limitations under the License.
  */
 
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import TopicLinkEditor from './index';
 import NodeProperty from '../../../../classes/model/node-property';
+import React from 'react';
 
-// Mock NodeProperty implementation with actions
-class MockNodeProperty<T> implements NodeProperty<T> {
-  private value: T;
+// Wrapper component to expose setValue as an action-trackable callback
+const TopicLinkEditorWithActions = (props: {
+  closeModal: () => void;
+  initialUrl?: string;
+  onUrlChange?: (url: string) => void;
+}) => {
+  const [url, setUrl] = React.useState<string>(props.initialUrl || '');
 
-  constructor(value: T) {
-    this.value = value;
-  }
+  const urlModel: NodeProperty<string> = React.useMemo(
+    () => ({
+      getValue: () => url,
+      setValue: (v: string) => {
+        setUrl(v);
+        props.onUrlChange?.(v);
+      },
+    }),
+    [url, props.onUrlChange],
+  );
 
-  getValue(): T {
-    return this.value;
-  }
+  return <TopicLinkEditor closeModal={props.closeModal} urlModel={urlModel} />;
+};
 
-  setValue = fn((v: T) => {
-    this.value = v;
-  });
-}
-
-const meta: Meta = {
+const meta: Meta<typeof TopicLinkEditorWithActions> = {
   title: 'Editor/TopicLinkEditor',
-  component: TopicLinkEditor as React.ComponentType,
-  parameters: { layout: 'centered' },
+  component: TopicLinkEditorWithActions,
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    closeModal: { action: 'closeModal' },
+    onUrlChange: { action: 'onUrlChange' },
+  },
 };
 
 export default meta;
-type Story = StoryObj<typeof TopicLinkEditor>;
+type Story = StoryObj<typeof TopicLinkEditorWithActions>;
 
 export const Default: Story = {
-  render: () => {
-    const urlModel = new MockNodeProperty<string>('');
-
-    return <TopicLinkEditor closeModal={fn()} urlModel={urlModel} />;
+  args: {
+    initialUrl: '',
   },
 };
 
 export const WithExistingURL: Story = {
-  render: () => {
-    const urlModel = new MockNodeProperty<string>('https://www.wisemapping.com');
-
-    return <TopicLinkEditor closeModal={fn()} urlModel={urlModel} />;
+  args: {
+    initialUrl: 'https://www.wisemapping.com',
   },
 };
