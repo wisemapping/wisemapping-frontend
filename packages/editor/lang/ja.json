@@ -501,31 +501,31 @@
     "defaultMessage": "テーマを選択"
   },
   "theme.classic.description": {
-    "defaultMessage": "伝統的な色のクラシックテーマ"
+    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
   },
   "theme.classic.name": {
     "defaultMessage": "クラシック"
   },
   "theme.ocean.description": {
-    "defaultMessage": "青いトーンのオーシャンテーマ"
+    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
   },
   "theme.ocean.name": {
     "defaultMessage": "オーシャン"
   },
   "theme.robot.description": {
-    "defaultMessage": "未来的な色のロボットテーマ"
+    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
   },
   "theme.robot.name": {
     "defaultMessage": "ロボット"
   },
   "theme.summer.description": {
-    "defaultMessage": "暖かい色のサマーテーマ"
+    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
   },
   "theme.summer.name": {
     "defaultMessage": "サマー"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "オレンジと黄色のトーンの日の出テーマ"
+    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
   },
   "theme.sunrise.name": {
     "defaultMessage": "日の出"

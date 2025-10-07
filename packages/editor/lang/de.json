@@ -501,31 +501,31 @@
     "defaultMessage": "Thema wählen"
   },
   "theme.classic.description": {
-    "defaultMessage": "Klassisches Thema mit traditionellen Farben"
+    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
   },
   "theme.classic.name": {
     "defaultMessage": "Klassisch"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Ozean-Thema mit blauen Tönen"
+    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
   },
   "theme.ocean.name": {
     "defaultMessage": "Ozean"
   },
   "theme.robot.description": {
-    "defaultMessage": "Roboter-Thema mit futuristischen Farben"
+    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
   },
   "theme.robot.name": {
     "defaultMessage": "Roboter"
   },
   "theme.summer.description": {
-    "defaultMessage": "Sommer-Thema mit warmen Farben"
+    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
   },
   "theme.summer.name": {
     "defaultMessage": "Sommer"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Sonnenaufgang-Thema mit orange und gelben Tönen"
+    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Sonnenaufgang"

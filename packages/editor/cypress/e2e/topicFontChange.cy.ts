@@ -90,7 +90,7 @@ describe('Topic Font Suite', () => {
     cy.onMouseOverToolbarButton('Font Style');
     cy.get('[aria-label^="Bold ').first().click({ force: true });
 
-    cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', 'bold');
+    cy.get('[test-id=1] > text').invoke('attr', 'font-weight').should('eq', '900');
 
     cy.contains('Mind Mapping').click({ force: true });
     cy.matchImageSnapshot('changeFontBold');

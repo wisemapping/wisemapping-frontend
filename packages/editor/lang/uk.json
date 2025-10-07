@@ -501,31 +501,31 @@
     "defaultMessage": "Вибрати тему"
   },
   "theme.classic.description": {
-    "defaultMessage": "Класична тема з традиційними кольорами"
+    "defaultMessage": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
   },
   "theme.classic.name": {
     "defaultMessage": "Класичний"
   },
   "theme.ocean.description": {
-    "defaultMessage": "Океанська тема з синіми тонами"
+    "defaultMessage": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
   },
   "theme.ocean.name": {
     "defaultMessage": "Океан"
   },
   "theme.robot.description": {
-    "defaultMessage": "Роботична тема з футуристичними кольорами"
+    "defaultMessage": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
   },
   "theme.robot.name": {
     "defaultMessage": "Робот"
   },
   "theme.summer.description": {
-    "defaultMessage": "Літня тема з теплими кольорами"
+    "defaultMessage": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
   },
   "theme.summer.name": {
     "defaultMessage": "Літо"
   },
   "theme.sunrise.description": {
-    "defaultMessage": "Тема сходу сонця з помаранчевими та жовтими тонами"
+    "defaultMessage": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
   },
   "theme.sunrise.name": {
     "defaultMessage": "Схід сонця"

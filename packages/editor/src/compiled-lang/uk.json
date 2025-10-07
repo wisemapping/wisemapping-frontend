@@ -954,7 +954,7 @@
   "theme.classic.description": [
     {
       "type": 0,
-      "value": "Класична тема з традиційними кольорами"
+      "value": "Clean and professional design with blue accents. Perfect for business presentations and formal documents."
     }
   ],
   "theme.classic.name": [
@@ -978,7 +978,7 @@
   "theme.ocean.description": [
     {
       "type": 0,
-      "value": "Океанська тема з синіми тонами"
+      "value": "Ocean-inspired blue theme with light/dark variants. Calm and professional colors perfect for business and creative projects."
     }
   ],
   "theme.ocean.name": [
@@ -990,7 +990,7 @@
   "theme.robot.description": [
     {
       "type": 0,
-      "value": "Роботична тема з футуристичними кольорами"
+      "value": "Tech-inspired green theme. Perfect for technical documentation and futuristic presentations."
     }
   ],
   "theme.robot.name": [
@@ -1002,7 +1002,7 @@
   "theme.summer.description": [
     {
       "type": 0,
-      "value": "Літня тема з теплими кольорами"
+      "value": "Bright and vibrant orange theme. Great for creative projects and energetic presentations."
     }
   ],
   "theme.summer.name": [
@@ -1014,7 +1014,7 @@
   "theme.sunrise.description": [
     {
       "type": 0,
-      "value": "Тема сходу сонця з помаранчевими та жовтими тонами"
+      "value": "Sunrise theme with light/dark mode variants. Enhanced colors and contrast for better readability."
     }
   ],
   "theme.sunrise.name": [

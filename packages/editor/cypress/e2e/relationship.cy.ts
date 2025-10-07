@@ -76,13 +76,13 @@ describe('Relationship Topics', () => {
     cy.get('@rel').click({ force: true });
 
     // Move control point start ...
-    cy.get('[test-id="relctl:0:11-15"]').first().trigger('mousedown');
+    cy.get('[test-id="relctl:0:11-15"]').first().trigger('mousedown', { force: true });
     cy.get('body').trigger('mousemove', { clientX: 350, clientY: 380 });
     cy.get('body').trigger('mouseup');
     cy.matchImageSnapshot('move ctl pont 0');
 
     // Move control point end ...
-    cy.get('[test-id="relctl:1:11-15"]').first().trigger('mousedown');
+    cy.get('[test-id="relctl:1:11-15"]').first().trigger('mousedown', { force: true });
     cy.get('body').trigger('mousemove', { clientX: 350, clientY: 100 });
     cy.get('body').trigger('mouseup');
     cy.matchImageSnapshot('move ctl pont 1');
