@@ -303,19 +303,19 @@
     "defaultMessage": "Style de grille"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "Très Petit"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "Petit"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "Moyen"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "Grand"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "Très Grand"
   },
   "canvas-style.grid-color": {
     "defaultMessage": "Couleur de grille"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Style de relation"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "Style du thème et des connexions"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Style de police"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "Couleur de relation"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "Style de ligne et flèches"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "Couleur de police"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "Famille de police"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "Taille et style de police"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Aucune forme"

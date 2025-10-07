@@ -24,6 +24,7 @@ import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import SaveAndDelete from '../save-and-delete';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 import { useIntl } from 'react-intl';
 
 /**
@@ -63,7 +64,36 @@ const TopicLinkEditor = (props: {
   const isValidUrl = !url || checkURL(url);
 
   return (
-    <Box sx={{ px: 2, pb: 2, width: '300px' }}>
+    <Box
+      sx={{
+        pt: 1.5,
+        px: 1.5,
+        pb: 1,
+        minWidth: '320px',
+        maxWidth: '380px',
+        backgroundColor: 'background.paper',
+        borderRadius: '8px',
+        border: '1px solid',
+        borderColor: 'divider',
+        position: 'relative',
+      }}
+    >
+      <IconButton
+        onClick={props.closeModal}
+        sx={{
+          position: 'absolute',
+          top: 4,
+          right: 4,
+          zIndex: 1,
+          width: 24,
+          height: 24,
+          '& .MuiSvgIcon-root': {
+            fontSize: '16px',
+          },
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       <Input
         autoFocus
         error={!isValidUrl}

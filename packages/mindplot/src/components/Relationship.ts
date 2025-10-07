@@ -369,7 +369,9 @@ class Relationship extends ConnectionLine {
         // Show focus shape when focusing
         this._focusShape.setVisibility(true);
         this._focusShape.setOpacity(1);
-        this._focusShape.setStroke(3, 'solid', '#3f96ff');
+        this._focusShape.setStroke(5, 'solid', '#3f96ff');
+        // Move focus shape below the main line so style changes are visible
+        this._focusShape.moveToBack();
       } else {
         // Completely hide focus shape when unfocusing
         this._focusShape.setVisibility(false);

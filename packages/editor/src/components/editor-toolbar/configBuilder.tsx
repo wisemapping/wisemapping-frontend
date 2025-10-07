@@ -65,6 +65,9 @@ import IconPicker from '../action-widget/pane/icon-picker';
 import TopicImagePicker from '../action-widget/pane/topic-image-picker';
 import FontFamilySelector from '../action-widget/button/font-family-selector';
 import TopicStyleEditor from '../action-widget/pane/topic-style-editor';
+import TopicFontEditor from '../action-widget/pane/topic-font-editor';
+import RelationshipStyleEditor from '../action-widget/pane/relationship-style-editor';
+import TopicIconEditor from '../action-widget/pane/topic-icon-editor';
 import Editor from '../../classes/model/editor';
 import { IntlShape } from 'react-intl';
 import {
@@ -92,8 +95,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       id: 'editor-panel.tooltip-unified-styling',
       defaultMessage: 'Style Topic & Connections',
     }),
-    useClickToClose: true,
-    noPopoverHeader: true,
     options: [
       {
         render: (closeModal) => {
@@ -122,120 +123,17 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        icon: <RemoveIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-stroke-solid',
-          defaultMessage: 'Solid Line',
-        }),
-        onClick: () => {
-          trackRelationshipAction('stroke_style_change', 'solid');
-          const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
-          if (setValue) {
-            setValue(StrokeStyle.SOLID);
-          }
+        render: (closeModal) => {
+          return (
+            <RelationshipStyleEditor
+              closeModal={closeModal}
+              strokeStyleModel={modelBuilder.getRelationshipStrokeStyleModel()}
+              startArrowModel={modelBuilder.getRelationshipStartArrowModel()}
+              endArrowModel={modelBuilder.getRelationshipEndArrowModel()}
+              colorModel={modelBuilder.getRelationshipColorModel()}
+            />
+          );
         },
-        selected: () =>
-          modelBuilder.getRelationshipStrokeStyleModel().getValue() === StrokeStyle.SOLID,
-      },
-      {
-        icon: <MoreHorizIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-stroke-dashed',
-          defaultMessage: 'Dashed Line',
-        }),
-        onClick: () => {
-          trackRelationshipAction('stroke_style_change', 'dashed');
-          const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
-          if (setValue) {
-            setValue(StrokeStyle.DASHED);
-          }
-        },
-        selected: () =>
-          modelBuilder.getRelationshipStrokeStyleModel().getValue() === StrokeStyle.DASHED,
-      },
-      {
-        icon: <FiberManualRecordIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-stroke-dotted',
-          defaultMessage: 'Dotted Line',
-        }),
-        onClick: () => {
-          trackRelationshipAction('stroke_style_change', 'dotted');
-          const setValue = modelBuilder.getRelationshipStrokeStyleModel().setValue;
-          if (setValue) {
-            setValue(StrokeStyle.DOTTED);
-          }
-        },
-        selected: () =>
-          modelBuilder.getRelationshipStrokeStyleModel().getValue() === StrokeStyle.DOTTED,
-      },
-      null,
-      {
-        icon: <ArrowLeftIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-arrow-end',
-          defaultMessage: 'End Arrow',
-        }),
-        onClick: () => {
-          trackRelationshipAction('arrow_toggle', 'end_arrow');
-          const setValue = modelBuilder.getRelationshipEndArrowModel().setValue;
-          if (setValue) {
-            setValue(!modelBuilder.getRelationshipEndArrowModel().getValue());
-          }
-        },
-        selected: () => modelBuilder.getRelationshipEndArrowModel().getValue(),
-      },
-      {
-        icon: <ArrowRightIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-arrow-start',
-          defaultMessage: 'Start Arrow',
-        }),
-        onClick: () => {
-          trackRelationshipAction('arrow_toggle', 'start_arrow');
-          const setValue = modelBuilder.getRelationshipStartArrowModel().setValue;
-          if (setValue) {
-            setValue(!modelBuilder.getRelationshipStartArrowModel().getValue());
-          }
-        },
-        selected: () => modelBuilder.getRelationshipStartArrowModel().getValue(),
-      },
-      null,
-      {
-        icon: () => (
-          <RelationshipColorIcon modelValue={modelBuilder.getRelationshipColorModel().getValue()} />
-        ),
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-color',
-          defaultMessage: 'Color',
-        }),
-        options: [
-          {
-            render: (closeModal) => {
-              return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={modelBuilder.getRelationshipColorModel()}
-                />
-              );
-            },
-          },
-        ],
-      },
-      {
-        icon: <NotInterestedOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-relationship-color-default',
-          defaultMessage: 'Default color',
-        }),
-        onClick: () => {
-          trackRelationshipAction('relationship_color_reset');
-          const setValue = modelBuilder.getRelationshipColorModel().setValue;
-          if (setValue) {
-            setValue(undefined);
-          }
-        },
-        selected: () => modelBuilder.getRelationshipColorModel().getValue() === undefined,
       },
     ],
     disabled: () => {
@@ -255,112 +153,19 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     }),
     options: [
       {
-        render: () => (
-          <FontFamilySelector fontFamilyModel={modelBuilder.getFontFamilyModel()} model={model} />
-        ),
-      },
-      null,
-      {
-        icon: <TextIncreaseOutlinedIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-font-bigger',
-          defaultMessage: 'Bigger',
-        }),
-        onClick: () => {
-          trackFontFormatAction('font_size_change', 'increase');
-          const switchValue = modelBuilder.getFontSizeModel().switchValue;
-          if (switchValue) {
-            switchValue(SwitchValueDirection.up);
-          }
+        render: (closeModal) => {
+          return (
+            <TopicFontEditor
+              closeModal={closeModal}
+              fontFamilyModel={modelBuilder.getFontFamilyModel()}
+              fontSizeModel={modelBuilder.getFontSizeModel()}
+              fontWeightModel={modelBuilder.fontWeigthModel()}
+              fontStyleModel={modelBuilder.getFontStyleModel()}
+              fontColorModel={modelBuilder.getFontColorModel()}
+              model={model}
+            />
+          );
         },
-      },
-      {
-        icon: <TextDecreaseOutlinedIcon />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-font-smaller',
-          defaultMessage: 'Smaller',
-        }),
-        onClick: () => {
-          trackFontFormatAction('font_size_change', 'decrease');
-          const switchValue = modelBuilder.getFontSizeModel().switchValue;
-          if (switchValue) {
-            switchValue(SwitchValueDirection.down);
-          }
-        },
-      },
-      null,
-      {
-        icon: <FormatBoldOutlinedIcon />,
-        tooltip: keyTooltip(
-          intl.formatMessage({
-            id: 'editor-panel.tooltip-topic-font-bold',
-            defaultMessage: 'Bold',
-          }),
-          'B',
-        ),
-        onClick: () => {
-          trackFontFormatAction('font_weight_toggle');
-          const switchValue = modelBuilder.fontWeigthModel().switchValue;
-          if (switchValue) {
-            switchValue();
-          }
-        },
-        selected: () => modelBuilder.fontWeigthModel().getValue() === 'bold',
-      },
-      {
-        icon: <FormatItalicIcon />,
-        tooltip: keyTooltip(
-          intl.formatMessage({
-            id: 'editor-panel.tooltip-topic-font-italic',
-            defaultMessage: 'Italic',
-          }),
-          'I',
-        ),
-        onClick: () => {
-          trackFontFormatAction('font_style_toggle');
-          const switchValue = modelBuilder.getFontStyleModel().switchValue;
-          if (switchValue) {
-            switchValue();
-          }
-        },
-        selected: () => modelBuilder.getFontStyleModel().getValue() === 'italic',
-      },
-      null,
-      {
-        icon: () => (
-          <FontColorIcon modelValue={modelBuilder.getFontColorModel().getValue() as string} />
-        ),
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-font-color',
-          defaultMessage: 'Color',
-        }),
-        options: [
-          {
-            render: (closeModal) => {
-              return (
-                <ColorPicker
-                  closeModal={closeModal}
-                  colorModel={modelBuilder.getFontColorModel()}
-                />
-              );
-            },
-          },
-        ],
-      },
-      {
-        icon: <NotInterestedOutlined />,
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-topic-font-color-default',
-          defaultMessage: 'Default color',
-        }),
-        onClick: () => {
-          trackFontFormatAction('font_color_reset');
-          const setValue = modelBuilder.getFontColorModel().setValue;
-          if (setValue) {
-            setValue(undefined);
-          }
-        },
-        selected: () => modelBuilder.getFontColorModel().getValue() === undefined,
       },
     ],
     disabled: () => model.getDesignerModel()!.filterSelectedTopics().length === 0,
@@ -391,8 +196,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       intl.formatMessage({ id: 'editor-panel.tooltip-add-link', defaultMessage: 'Add Link' }),
       'L',
     ),
-    useClickToClose: true,
-    title: intl.formatMessage({ id: 'editor-panel.link-panel-title', defaultMessage: 'Link' }),
     options: [
       {
         render: (closeModal) => (
@@ -408,14 +211,8 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
    */
   const editCanvasStyleConfiguration: ActionConfig = {
     icon: <TextureIcon />,
-    useClickToClose: true,
-    noPopoverHeader: true,
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-canvas-style',
-      defaultMessage: 'Background',
-    }),
-    title: intl.formatMessage({
-      id: 'editor-panel.canvas-style-title',
       defaultMessage: 'Background',
     }),
     options: [
@@ -444,8 +241,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       intl.formatMessage({ id: 'editor-panel.tooltip-add-note', defaultMessage: 'Add Note' }),
       'K',
     ),
-    useClickToClose: true,
-    title: intl.formatMessage({ id: 'editor-panel.note-panel-title', defaultMessage: 'Note' }),
     options: [
       {
         tooltip: intl.formatMessage({
@@ -469,16 +264,10 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
       id: 'editor-panel.tooltip-add-icon',
       defaultMessage: 'Add Icon',
     }),
-    useClickToClose: true,
-    title: intl.formatMessage({ id: 'editor-panel.icon-title', defaultMessage: 'Icon' }),
     options: [
       {
-        tooltip: intl.formatMessage({
-          id: 'editor-panel.tooltip-add-icon',
-          defaultMessage: 'Add Icon',
-        }),
         render: (closeModal) => (
-          <IconPicker triggerClose={closeModal} iconModel={modelBuilder.getTopicIconModel()} />
+          <TopicIconEditor closeModal={closeModal} iconModel={modelBuilder.getTopicIconModel()} />
         ),
       },
     ],
@@ -493,11 +282,6 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
     tooltip: intl.formatMessage({
       id: 'editor-panel.tooltip-add-topic-image',
       defaultMessage: 'Add Topic Image',
-    }),
-    useClickToClose: true,
-    title: intl.formatMessage({
-      id: 'editor-panel.topic-image-title',
-      defaultMessage: 'Topic Image',
     }),
     options: [
       {
@@ -546,7 +330,7 @@ export function buildEditorPanelConfig(model: Editor, intl: IntlShape): ActionCo
   return [
     addNodeToolbarConfiguration,
     deleteNodeToolbarConfiguration,
-    styleConfiguration, // New unified topic style dialog
+    styleConfiguration,
     fontFormatToolbarConfiguration,
     editIconConfiguration,
     editTopicImageConfiguration,

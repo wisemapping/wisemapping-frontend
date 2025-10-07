@@ -52,23 +52,9 @@ interface ActionConfig {
    */
   selected?: () => boolean;
   /**
-   * for submenu popover, if true, popover will not be closed when mouse leave it.
-   */
-  useClickToClose?: boolean;
-  /**
    * if false the menu entry or button is not visible. Also custom render will be ignored.
    */
   visible?: boolean;
-  /**
-   * title for popover. Only used if useClickToClose is true
-   */
-  title?: string;
-  /**
-   * if true, skip rendering the default popover header (title and close button).
-   * Useful for components that provide their own header/close functionality.
-   * Only applies when useClickToClose is true.
-   */
-  noPopoverHeader?: boolean;
 }
 
 export default ActionConfig;

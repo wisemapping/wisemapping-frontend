@@ -321,19 +321,19 @@
     "defaultMessage": "ग्रिड रंग"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "बड़ा"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "मध्यम"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "छोटा"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "अतिरिक्त बड़ा"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "अतिरिक्त छोटा"
   },
   "canvas-style.grid-style": {
     "defaultMessage": "ग्रिड शैली"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "संबंध शैली"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "विषय और कनेक्शन शैली"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "फ़ॉन्ट शैली"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "संबंध रंग"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "रेखा शैली और तीर"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "फ़ॉन्ट रंग"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "फ़ॉन्ट परिवार"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "फ़ॉन्ट आकार और शैली"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "कोई आकार नहीं"

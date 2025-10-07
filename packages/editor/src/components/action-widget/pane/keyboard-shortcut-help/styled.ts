@@ -20,16 +20,57 @@ import styled from 'styled-components';
 export const ShortcutsContainer = styled.div`
   font-size: 13px;
   width: 100%;
+
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
   & td {
-    padding: 3px;
-    white-space: nowrap;
+    padding: 10px 12px;
+    white-space: normal;
+    word-wrap: break-word;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.875rem;
   }
+
   & th {
-    padding: 5px;
+    padding: 12px;
     white-space: nowrap;
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: 600;
+    text-align: left;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #ccc;
   }
-  & th {
-    background-color: #000000;
-    color: #ffffff;
+
+  & tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  & tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  & tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  & tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  & td:nth-child(2),
+  & td:nth-child(3) {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #1976d2;
+    font-weight: 500;
   }
 `;

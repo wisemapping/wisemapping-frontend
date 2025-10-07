@@ -15,23 +15,24 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Typography from '@mui/material/Typography';
-import Popover from '@mui/material/Popover';
-import Tooltip from '@mui/material/Tooltip';
-import React, { ReactElement, useState, useRef } from 'react';
+
+import React, { ReactElement, useState } from 'react';
+import { Box, Typography, IconButton, Tooltip } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import GridOnIcon from '@mui/icons-material/GridOn';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import NotInterestedOutlined from '@mui/icons-material/NotInterestedOutlined';
 import { FormattedMessage } from 'react-intl';
-import { CirclePicker as ReactColorPicker } from 'react-color';
-import { useTheme } from '@mui/material/styles';
-import colors from '../color-picker/colors.json';
+import { styled } from '@mui/material/styles';
+import ColorPicker from '../color-picker';
+import NodeProperty from '../../../../classes/model/node-property';
 
 export interface CanvasStyle {
-  backgroundColor: string;
+  backgroundColor?: string;
   backgroundPattern: 'solid' | 'grid' | 'dots' | 'none';
   gridSize: number;
-  gridColor: string;
+  gridColor?: string;
 }
 
 type CanvasStyleEditorProps = {
@@ -40,8 +41,30 @@ type CanvasStyleEditorProps = {
   onStyleChange: (style: Partial<CanvasStyle>) => void;
 };
 
+const ActionButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
+  padding: '8px',
+  width: '32px',
+  height: '32px',
+  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
+  borderRadius: '4px',
+  '&:hover': {
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
+const GridSizeButton = styled(IconButton)<{ selected?: boolean }>(({ selected, theme }) => ({
+  padding: '6px',
+  width: '32px',
+  height: '32px',
+  border: selected ? `2px solid ${theme.palette.primary.main}` : '2px solid #e0e0e0',
+  borderRadius: '4px',
+  fontSize: '0.7rem',
+  '&:hover': {
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
 const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
-  const theme = useTheme();
   const defaultStyle: CanvasStyle = {
     backgroundColor: '#f2f2f2',
     backgroundPattern: 'solid',
@@ -49,347 +72,219 @@ const CanvasStyleEditor = (props: CanvasStyleEditorProps): ReactElement => {
     gridColor: '#ebe9e7',
   };
 
-  // Use initialStyle if provided (merge), otherwise fall back to default
   const [style, setStyle] = useState<CanvasStyle>({
     ...defaultStyle,
     ...(props.initialStyle || {}),
   });
-  const [showBackgroundColorPicker, setShowBackgroundColorPicker] = useState(false);
-  const [showGridColorPicker, setShowGridColorPicker] = useState(false);
 
-  // Refs for color picker buttons
-  const backgroundColorButtonRef = useRef<HTMLDivElement>(null);
-  const gridColorButtonRef = useRef<HTMLDivElement>(null);
-
-  const handlePatternChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newPattern: CanvasStyle['backgroundPattern'],
-  ) => {
-    if (newPattern !== null) {
-      const newStyle = { ...style, backgroundPattern: newPattern };
+  // Create NodeProperty adapters for color pickers
+  const backgroundColorModel: NodeProperty<string | undefined> = {
+    getValue: () => style.backgroundColor,
+    setValue: (color: string | undefined) => {
+      const newStyle = { ...style, backgroundColor: color };
       setStyle(newStyle);
       props.onStyleChange(newStyle);
+    },
+  };
+
+  const gridColorModel: NodeProperty<string | undefined> = {
+    getValue: () => style.gridColor,
+    setValue: (color: string | undefined) => {
+      const newStyle = { ...style, gridColor: color };
+      setStyle(newStyle);
+      props.onStyleChange(newStyle);
+    },
+  };
+
+  const preventClose = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
     }
   };
 
-  const handleGridSizeChange = (event: React.MouseEvent<HTMLElement>, newGridSize: number) => {
+  const handlePatternChange = (newPattern: CanvasStyle['backgroundPattern']) => {
+    const newStyle = { ...style, backgroundPattern: newPattern };
+    setStyle(newStyle);
+    props.onStyleChange(newStyle);
+  };
+
+  const handleGridSizeChange = (newGridSize: number) => {
     const newStyle = { ...style, gridSize: newGridSize };
     setStyle(newStyle);
     props.onStyleChange(newStyle);
   };
 
-  const applyStyle = () => {
-    props.onStyleChange(style);
-    props.closeModal();
-  };
-
-  const resetToDefault = () => {
-    setStyle(defaultStyle);
-    props.onStyleChange(defaultStyle);
-  };
-
   return (
     <Box
       sx={{
-        px: 2,
-        py: 1.5,
-        width: '430px',
-        maxHeight: '60vh',
-        overflowY: 'auto',
-        backgroundColor: theme.palette.background.paper,
-        color: theme.palette.text.primary,
-        zIndex: 1600,
+        pt: 1.5,
+        px: 1.5,
+        pb: 1,
+        minWidth: '280px',
+        maxWidth: '320px',
+        backgroundColor: 'background.paper',
+        borderRadius: '8px',
+        border: '1px solid',
+        borderColor: 'divider',
         position: 'relative',
       }}
     >
-      {/* Background Pattern */}
-      <Box
-        component="fieldset"
+      <IconButton
+        onClick={props.closeModal}
         sx={{
-          mb: 2,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: '8px',
-          p: 1.5,
-          backgroundColor: theme.palette.background.default,
-          position: 'relative',
+          position: 'absolute',
+          top: 4,
+          right: 4,
+          zIndex: 1,
+          width: 24,
+          height: 24,
+          '& .MuiSvgIcon-root': {
+            fontSize: '16px',
+          },
         }}
       >
-        <Typography
-          component="legend"
-          sx={{
-            px: 1,
-            backgroundColor: theme.palette.background.default,
-          }}
-        >
-          <FormattedMessage id="canvas-style.background-pattern" defaultMessage="Pattern" />
+        <CloseIcon />
+      </IconButton>
+
+      {/* Background Color */}
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+          <FormattedMessage id="canvas-style.background-color" defaultMessage="Background Color" />
         </Typography>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          {/* Background Color Picker */}
-          <Tooltip
-            title={
-              <FormattedMessage
-                id="canvas-style.background-color"
-                defaultMessage="Background Color"
-              />
-            }
-            arrow
-          >
-            <Box
-              ref={backgroundColorButtonRef}
-              sx={{
-                width: '40px',
-                height: '40px',
-                backgroundColor: style.backgroundColor,
-                border: `2px solid ${theme.palette.divider}`,
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease-in-out',
-                boxShadow:
-                  theme.palette.mode === 'dark'
-                    ? '0 2px 4px rgba(0,0,0,0.3)'
-                    : '0 2px 4px rgba(0,0,0,0.1)',
-                '&:hover': {
-                  borderColor: theme.palette.primary.main,
-                  boxShadow:
-                    theme.palette.mode === 'dark'
-                      ? '0 4px 8px rgba(0,0,0,0.4)'
-                      : '0 4px 8px rgba(0,0,0,0.15)',
-                  transform: 'scale(1.05)',
-                },
-              }}
-              onClick={() => setShowBackgroundColorPicker(!showBackgroundColorPicker)}
-            />
-          </Tooltip>
-
-          <ButtonGroup
-            variant="outlined"
-            aria-label="background pattern selection"
-            sx={{ flex: 1 }}
-          >
-            <Button
-              variant={style.backgroundPattern === 'solid' ? 'contained' : 'outlined'}
-              onClick={(event) => handlePatternChange(event, 'solid')}
-              sx={{ flex: 1 }}
-            >
-              <FormattedMessage id="canvas-style.pattern-solid" defaultMessage="Solid" />
-            </Button>
-            <Button
-              variant={style.backgroundPattern === 'grid' ? 'contained' : 'outlined'}
-              onClick={(event) => handlePatternChange(event, 'grid')}
-              sx={{
-                flex: 1,
-                backgroundImage:
-                  style.backgroundPattern === 'grid'
-                    ? 'none'
-                    : `linear-gradient(90deg, #ccc 1px, transparent 1px), linear-gradient(0deg, #ccc 1px, transparent 1px)`,
-                backgroundSize: '8px 8px',
-              }}
-            >
-              <FormattedMessage id="canvas-style.pattern-grid" defaultMessage="Grid" />
-            </Button>
-            <Button
-              variant={style.backgroundPattern === 'dots' ? 'contained' : 'outlined'}
-              onClick={(event) => handlePatternChange(event, 'dots')}
-              sx={{
-                flex: 1,
-                backgroundImage:
-                  style.backgroundPattern === 'dots'
-                    ? 'none'
-                    : `radial-gradient(circle, #ccc 1px, transparent 1px)`,
-                backgroundSize: '8px 8px',
-              }}
-            >
-              <FormattedMessage id="canvas-style.pattern-dots" defaultMessage="Dots" />
-            </Button>
-            <Button
-              variant={style.backgroundPattern === 'none' ? 'contained' : 'outlined'}
-              onClick={(event) => handlePatternChange(event, 'none')}
-              sx={{ flex: 1 }}
-            >
-              <FormattedMessage id="canvas-style.pattern-none" defaultMessage="None" />
-            </Button>
-          </ButtonGroup>
+        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <ColorPicker closeModal={preventClose} colorModel={backgroundColorModel} />
         </Box>
-
-        <Popover
-          open={showBackgroundColorPicker}
-          anchorEl={backgroundColorButtonRef.current}
-          onClose={() => setShowBackgroundColorPicker(false)}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          sx={{ zIndex: 1400 }}
-        >
-          <Box
-            sx={{
-              p: 2,
-              backgroundColor: theme.palette.background.paper,
-            }}
-          >
-            <ReactColorPicker
-              color={style.backgroundColor}
-              onChangeComplete={(color: { hex: string }) => {
-                const newStyle = { ...style, backgroundColor: color.hex };
-                setStyle(newStyle);
-                props.onStyleChange(newStyle);
-                setShowBackgroundColorPicker(false);
-              }}
-              colors={colors}
-              width={280}
-              circleSpacing={12}
-              circleSize={24}
-            />
-          </Box>
-        </Popover>
       </Box>
 
-      {/* Grid Style (only shown for grid and dots) */}
-      {(style.backgroundPattern === 'grid' || style.backgroundPattern === 'dots') && (
-        <Box
-          component="fieldset"
-          sx={{
-            mb: 2,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: '8px',
-            p: 1.5,
-            backgroundColor: theme.palette.background.default,
-            position: 'relative',
-          }}
-        >
-          <Typography
-            component="legend"
-            sx={{
-              px: 1,
-              backgroundColor: theme.palette.background.default,
-            }}
-          >
-            <FormattedMessage id="canvas-style.grid-style" defaultMessage="Grid Style" />
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {/* Grid Color Picker */}
-            <Tooltip
-              title={<FormattedMessage id="canvas-style.grid-color" defaultMessage="Grid Color" />}
-              arrow
-            >
-              <Box
-                ref={gridColorButtonRef}
-                sx={{
-                  width: '40px',
-                  height: '40px',
-                  backgroundColor: style.gridColor,
-                  border: `2px solid ${theme.palette.divider}`,
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease-in-out',
-                  boxShadow:
-                    theme.palette.mode === 'dark'
-                      ? '0 2px 4px rgba(0,0,0,0.3)'
-                      : '0 2px 4px rgba(0,0,0,0.1)',
-                  '&:hover': {
-                    borderColor: theme.palette.primary.main,
-                    boxShadow:
-                      theme.palette.mode === 'dark'
-                        ? '0 4px 8px rgba(0,0,0,0.4)'
-                        : '0 4px 8px rgba(0,0,0,0.15)',
-                    transform: 'scale(1.05)',
-                  },
-                }}
-                onClick={() => setShowGridColorPicker(!showGridColorPicker)}
-              />
-            </Tooltip>
-
-            <ButtonGroup variant="outlined" aria-label="grid style selection" sx={{ flex: 1 }}>
-              <Button
-                variant={style.gridSize === 15 ? 'contained' : 'outlined'}
-                onClick={(event) => handleGridSizeChange(event, 15)}
-                sx={{ flex: 1 }}
-              >
-                XS
-              </Button>
-              <Button
-                variant={style.gridSize === 25 ? 'contained' : 'outlined'}
-                onClick={(event) => handleGridSizeChange(event, 25)}
-                sx={{ flex: 1 }}
-              >
-                S
-              </Button>
-              <Button
-                variant={style.gridSize === 50 ? 'contained' : 'outlined'}
-                onClick={(event) => handleGridSizeChange(event, 50)}
-                sx={{ flex: 1 }}
-              >
-                M
-              </Button>
-              <Button
-                variant={style.gridSize === 75 ? 'contained' : 'outlined'}
-                onClick={(event) => handleGridSizeChange(event, 75)}
-                sx={{ flex: 1 }}
-              >
-                L
-              </Button>
-              <Button
-                variant={style.gridSize === 100 ? 'contained' : 'outlined'}
-                onClick={(event) => handleGridSizeChange(event, 100)}
-                sx={{ flex: 1 }}
-              >
-                XL
-              </Button>
-            </ButtonGroup>
-          </Box>
-        </Box>
-      )}
-
-      <Popover
-        open={showGridColorPicker}
-        anchorEl={gridColorButtonRef.current}
-        onClose={() => setShowGridColorPicker(false)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        sx={{ zIndex: 1400 }}
-      >
-        <Box
-          sx={{
-            p: 2,
-            backgroundColor: theme.palette.background.paper,
-          }}
-        >
-          <ReactColorPicker
-            color={style.gridColor}
-            onChangeComplete={(color: { hex: string }) => {
-              const newStyle = { ...style, gridColor: color.hex };
-              setStyle(newStyle);
-              props.onStyleChange(newStyle);
-              setShowGridColorPicker(false);
-            }}
-            colors={colors}
-            width={280}
-            circleSpacing={12}
-            circleSize={24}
+      {/* Background Pattern */}
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+          <FormattedMessage
+            id="canvas-style.background-pattern"
+            defaultMessage="Background Pattern"
           />
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+          <Tooltip
+            title={<FormattedMessage id="canvas-style.pattern-solid" defaultMessage="Solid" />}
+          >
+            <ActionButton
+              selected={style.backgroundPattern === 'solid'}
+              onClick={() => handlePatternChange('solid')}
+            >
+              <CheckBoxOutlineBlankIcon />
+            </ActionButton>
+          </Tooltip>
+          <Tooltip
+            title={<FormattedMessage id="canvas-style.pattern-grid" defaultMessage="Grid" />}
+          >
+            <ActionButton
+              selected={style.backgroundPattern === 'grid'}
+              onClick={() => handlePatternChange('grid')}
+            >
+              <GridOnIcon />
+            </ActionButton>
+          </Tooltip>
+          <Tooltip
+            title={<FormattedMessage id="canvas-style.pattern-dots" defaultMessage="Dots" />}
+          >
+            <ActionButton
+              selected={style.backgroundPattern === 'dots'}
+              onClick={() => handlePatternChange('dots')}
+            >
+              <MoreHorizIcon />
+            </ActionButton>
+          </Tooltip>
+          <Tooltip
+            title={<FormattedMessage id="canvas-style.pattern-none" defaultMessage="None" />}
+          >
+            <ActionButton
+              selected={style.backgroundPattern === 'none'}
+              onClick={() => handlePatternChange('none')}
+            >
+              <NotInterestedOutlined />
+            </ActionButton>
+          </Tooltip>
         </Box>
-      </Popover>
-
-      {/* Actions */}
-      <Box component="span" justifyContent="flex-end" display="flex" sx={{ pt: 1 }}>
-        <Button color="primary" variant="outlined" onClick={applyStyle} sx={{ mr: 1 }} size="small">
-          <FormattedMessage id="action.accept" defaultMessage="Accept" />
-        </Button>
-        <Button color="secondary" variant="outlined" onClick={resetToDefault} size="small">
-          <FormattedMessage id="action.delete" defaultMessage="Delete" />
-        </Button>
       </Box>
+
+      {/* Grid Settings - Only shown for grid and dots */}
+      {(style.backgroundPattern === 'grid' || style.backgroundPattern === 'dots') && (
+        <>
+          {/* Grid Color */}
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+              <FormattedMessage id="canvas-style.grid-color" defaultMessage="Grid Color" />
+            </Typography>
+            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+              <ColorPicker closeModal={preventClose} colorModel={gridColorModel} />
+            </Box>
+          </Box>
+
+          {/* Grid Size */}
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ fontSize: '0.75rem', mb: 1 }}>
+              <FormattedMessage id="canvas-style.grid-style" defaultMessage="Grid Size" />
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+              <Tooltip
+                title={
+                  <FormattedMessage id="canvas-style.grid-size-xs" defaultMessage="Extra Small" />
+                }
+              >
+                <GridSizeButton
+                  selected={style.gridSize === 15}
+                  onClick={() => handleGridSizeChange(15)}
+                >
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XS</Typography>
+                </GridSizeButton>
+              </Tooltip>
+              <Tooltip
+                title={<FormattedMessage id="canvas-style.grid-size-s" defaultMessage="Small" />}
+              >
+                <GridSizeButton
+                  selected={style.gridSize === 25}
+                  onClick={() => handleGridSizeChange(25)}
+                >
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>S</Typography>
+                </GridSizeButton>
+              </Tooltip>
+              <Tooltip
+                title={<FormattedMessage id="canvas-style.grid-size-m" defaultMessage="Medium" />}
+              >
+                <GridSizeButton
+                  selected={style.gridSize === 50}
+                  onClick={() => handleGridSizeChange(50)}
+                >
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>M</Typography>
+                </GridSizeButton>
+              </Tooltip>
+              <Tooltip
+                title={<FormattedMessage id="canvas-style.grid-size-l" defaultMessage="Large" />}
+              >
+                <GridSizeButton
+                  selected={style.gridSize === 75}
+                  onClick={() => handleGridSizeChange(75)}
+                >
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>L</Typography>
+                </GridSizeButton>
+              </Tooltip>
+              <Tooltip
+                title={
+                  <FormattedMessage id="canvas-style.grid-size-xl" defaultMessage="Extra Large" />
+                }
+              >
+                <GridSizeButton
+                  selected={style.gridSize === 100}
+                  onClick={() => handleGridSizeChange(100)}
+                >
+                  <Typography sx={{ fontSize: '0.65rem', fontWeight: 600 }}>XL</Typography>
+                </GridSizeButton>
+              </Tooltip>
+            </Box>
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

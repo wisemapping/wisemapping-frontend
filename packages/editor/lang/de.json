@@ -303,19 +303,19 @@
     "defaultMessage": "Rasterstil"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "Sehr Klein"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "Klein"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "Mittel"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "Groß"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "Sehr Groß"
   },
   "canvas-style.grid-color": {
     "defaultMessage": "Rasterfarbe"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Beziehungsstil"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "Thema- und Verbindungsstil"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Schriftstil"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "Beziehungsfarbe"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "Linienstil und Pfeile"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "Schriftfarbe"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "Schriftfamilie"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "Schriftgröße und -stil"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Keine Form"

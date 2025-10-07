@@ -22,6 +22,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Popover from '@mui/material/Popover';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import React, { ReactElement, useState, useCallback, useRef, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -265,8 +267,29 @@ const RichTextNoteEditor = ({ closeModal, noteModel }: RichTextNoteEditorProps):
           theme.palette.mode === 'dark'
             ? '0 4px 12px rgba(255, 255, 255, 0.1)'
             : '0 4px 12px rgba(0, 0, 0, 0.1)',
+        position: 'relative',
       }}
     >
+      <IconButton
+        onClick={closeModal}
+        sx={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          zIndex: 10,
+          width: 32,
+          height: 32,
+          backgroundColor: theme.palette.background.paper,
+          '&:hover': {
+            backgroundColor: theme.palette.action.hover,
+          },
+          '& .MuiSvgIcon-root': {
+            fontSize: '20px',
+          },
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       {/* Toolbar */}
       <Box
         sx={{

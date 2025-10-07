@@ -324,19 +324,19 @@
     "defaultMessage": "グリッド色"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "大"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "中"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "小"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "極大"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "極小"
   },
   "canvas-style.grid-style": {
     "defaultMessage": "グリッドスタイル"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "関係スタイル"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "トピックと接続のスタイル"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "フォントスタイル"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "関係の色"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "線のスタイルと矢印"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "フォントの色"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "フォントファミリー"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "フォントサイズとスタイル"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "形状なし"

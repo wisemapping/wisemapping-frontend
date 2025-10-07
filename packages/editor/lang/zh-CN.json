@@ -452,6 +452,27 @@
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "关系样式"
   },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "主题和连接样式"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "字体样式"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "关系颜色"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "线条样式和箭头"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "字体颜色"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "字体系列"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "字体大小和样式"
+  },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "无形状"
   },

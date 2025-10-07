@@ -315,19 +315,19 @@
     "defaultMessage": "Стиль сітки"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "Дуже маленький"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "Маленький"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "Середній"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "Великий"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "Дуже великий"
   },
   "canvas-style.grid-color": {
     "defaultMessage": "Колір сітки"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Стиль зв'язку"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "Стиль теми та з'єднань"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Стиль шрифту"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "Колір зв'язку"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "Стиль лінії та стрілки"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "Колір шрифту"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "Сімейство шрифтів"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "Розмір і стиль шрифту"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Без форми"

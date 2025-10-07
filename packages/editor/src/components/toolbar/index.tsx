@@ -102,6 +102,8 @@ export const ToolbarSubmenu = ({
   const theme = useTheme();
 
   const orientationProps = vertical ? verticalAligment : horizontalAligment;
+  // If options has custom render, use click-to-close behavior, otherwise hover
+  const hasCustomRender = configuration.options?.some((o) => o?.render);
 
   return (
     <Box
@@ -109,10 +111,10 @@ export const ToolbarSubmenu = ({
       display="inline-flex"
       role="menuitem"
       ref={itemRef}
-      onMouseLeave={() => !configuration.useClickToClose && setOpen(false)}
+      onMouseLeave={() => !hasCustomRender && setOpen(false)}
       onMouseEnter={() => {
         if (configuration.disabled && configuration.disabled()) return;
-        if (!configuration.useClickToClose) setOpen(true);
+        if (!hasCustomRender) setOpen(true);
       }}
     >
       <ToolbarButtonOption
@@ -133,49 +135,20 @@ export const ToolbarSubmenu = ({
         disableScrollLock={false}
         disablePortal={false}
         PaperProps={{
-          onMouseLeave: () => !configuration.useClickToClose && setOpen(false),
+          onMouseLeave: () => !hasCustomRender && setOpen(false),
           square: true,
-          sx: configuration.noPopoverHeader
-            ? {
-                backgroundColor: 'transparent',
-                boxShadow: 'none',
-                border: 'none',
-                overflow: 'visible',
-              }
-            : {
-                backgroundColor: theme.palette.mode === 'dark' ? '#2d2d2d' : '#ffffff',
-                color: theme.palette.mode === 'dark' ? '#ffffff' : '#000000',
-                border: theme.palette.mode === 'dark' ? '1px solid #555' : '1px solid #e0e0e0',
-              },
+          sx: {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            border: 'none',
+            overflow: 'visible',
+          },
         }}
         sx={{
-          zIndex: configuration.useClickToClose ? '1500' : '-1',
+          zIndex: hasCustomRender ? '1500' : '-1',
         }}
         elevation={elevation}
       >
-        {configuration.useClickToClose && !configuration.noPopoverHeader && (
-          <Box textAlign={'right'} ml={1}>
-            <Typography
-              variant="body1"
-              style={{
-                paddingTop: '15px',
-                paddingLeft: '5px',
-                float: 'left',
-                fontWeight: '900',
-                fontSize: '20px',
-              }}
-            >
-              {configuration.title}
-            </Typography>
-            <IconButton
-              onClick={() => setOpen(false)}
-              aria-label={'Close'}
-              sx={{ marginTop: '10px', marginRight: '5px' }}
-            >
-              <CloseIcon aria-label={'Close'} />
-            </IconButton>
-          </Box>
-        )}
         <div style={{ display: 'flex' }} onScroll={(e) => e.stopPropagation()}>
           {configuration.options?.map((o, i) => {
             if (o?.visible === false) {

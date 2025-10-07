@@ -333,19 +333,19 @@
     "defaultMessage": "Цвет сетки"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "Большой"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "Средний"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "Маленький"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "Очень большой"
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "Очень маленький"
   },
   "canvas-style.grid-style": {
     "defaultMessage": "Стиль сетки"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Стиль связи"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "Стиль темы и соединений"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Стиль шрифта"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "Цвет связи"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "Стиль линии и стрелки"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "Цвет шрифта"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "Семейство шрифтов"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "Размер и стиль шрифта"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Без формы"

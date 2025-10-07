@@ -383,8 +383,6 @@ const AppBar = ({
     {
       icon: <PaletteOutlinedIcon />,
       tooltip: intl.formatMessage({ id: 'appbar.tooltip-theme', defaultMessage: 'Theme' }),
-      useClickToClose: true,
-      title: intl.formatMessage({ id: 'appbar.theme-title', defaultMessage: 'Theme' }),
       options: [
         {
           render: (closeModal) => {

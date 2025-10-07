@@ -31,16 +31,6 @@ const SaveAndDelete = ({ model, closeModal, submitHandler }: SaveAndDeleteProps)
   const value = model.getValue();
   return (
     <Box component="span" justifyContent="flex-end" display="flex" sx={{ pt: 1 }}>
-      <Button
-        color="primary"
-        variant="outlined"
-        onClick={submitHandler}
-        sx={{ mr: 1 }}
-        size="small"
-      >
-        <FormattedMessage id="action.accept" defaultMessage="Accept" />
-      </Button>
-
       {value && value.trim() !== '' && (
         <Button
           color="secondary"
@@ -51,11 +41,16 @@ const SaveAndDelete = ({ model, closeModal, submitHandler }: SaveAndDeleteProps)
               model.setValue(undefined);
             }
           }}
+          sx={{ mr: 1 }}
           size="small"
         >
           <FormattedMessage id="action.delete" defaultMessage="Delete" />
         </Button>
       )}
+
+      <Button color="primary" variant="outlined" onClick={submitHandler} size="small">
+        <FormattedMessage id="action.accept" defaultMessage="Accept" />
+      </Button>
     </Box>
   );
 };

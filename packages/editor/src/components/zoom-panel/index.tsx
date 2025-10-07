@@ -128,7 +128,7 @@ export function buildZoomToolbarConfig(
       onClick: () => trackEditorInteraction('keyboard_shortcuts'),
       options: [
         {
-          render: () => <KeyboardShorcutsHelp />,
+          render: (closeModal) => <KeyboardShorcutsHelp closeModal={closeModal} />,
         },
       ],
     },

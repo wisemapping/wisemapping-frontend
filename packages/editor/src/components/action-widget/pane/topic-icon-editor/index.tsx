@@ -15,41 +15,32 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+
 import React, { ReactElement, useEffect } from 'react';
-import NodeProperty from '../../../../classes/model/node-property';
-import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
-import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
-import TopicImageTab from './image-icon-tab';
-import { FormattedMessage, useIntl } from 'react-intl';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import IconButton from '@mui/material/IconButton';
+import { Box, Tabs, Tab, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import ImageIcon from '@mui/icons-material/Image';
+import { FormattedMessage } from 'react-intl';
+import EmojiPicker, { EmojiClickData, EmojiStyle, Theme } from 'emoji-picker-react';
+import DesignerKeyboard from '@wisemapping/mindplot/src/components/DesignerKeyboard';
 import { useTheme } from '../../../../contexts/ThemeContext';
+import NodeProperty from '../../../../classes/model/node-property';
+import IconImageTab from '../icon-picker/image-icon-tab';
 
-type TopicImagePickerProp = {
-  triggerClose: () => void;
-  emojiModel: NodeProperty<string | undefined>;
-  iconsGalleryModel: NodeProperty<string | undefined>;
+type TopicIconEditorProps = {
+  closeModal: () => void;
+  iconModel: NodeProperty<string | undefined>;
 };
 
-const TopicImagePicker = ({
-  triggerClose,
-  emojiModel,
-  iconsGalleryModel,
-}: TopicImagePickerProp): ReactElement => {
-  const [tabValue, setTabValue] = React.useState(0); // 0 = Image Gallery, 1 = Emojis
+const TopicIconEditor = ({ closeModal, iconModel }: TopicIconEditorProps): ReactElement => {
+  const [tabValue, setTabValue] = React.useState(0); // 0 = Emojis, 1 = Icons Gallery
   const { mode } = useTheme();
-  const intl = useIntl();
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  // Review ...
   useEffect(() => {
     DesignerKeyboard.pause();
     return () => {
@@ -59,19 +50,11 @@ const TopicImagePicker = ({
 
   const handleEmojiSelect = (emoji: EmojiClickData) => {
     const emojiChar = emoji.emoji;
-    const setEmojiValue = emojiModel.setValue;
-    const setIconsValue = iconsGalleryModel.setValue;
-
-    if (setEmojiValue) {
-      setEmojiValue(emojiChar); // Store just the emoji character
+    const setValue = iconModel.setValue;
+    if (setValue) {
+      setValue(`emoji:${emojiChar}`);
     }
-
-    // Clear the icons gallery when emoji is selected
-    if (setIconsValue) {
-      setIconsValue(undefined);
-    }
-
-    triggerClose();
+    closeModal();
   };
 
   return (
@@ -84,15 +67,15 @@ const TopicImagePicker = ({
         minHeight: '500px',
         maxHeight: '500px',
         backgroundColor: 'background.paper',
-        borderRadius: '12px',
+        borderRadius: '8px',
         overflow: 'hidden',
-        border: 1,
+        border: '1px solid',
         borderColor: 'divider',
         position: 'relative',
       }}
     >
       <IconButton
-        onClick={triggerClose}
+        onClick={closeModal}
         sx={{
           position: 'absolute',
           top: 8,
@@ -111,7 +94,8 @@ const TopicImagePicker = ({
       >
         <CloseIcon />
       </IconButton>
-      {/* Tabs at the top */}
+
+      {/* Tabs */}
       <Box
         sx={{
           borderBottom: 1,
@@ -144,13 +128,13 @@ const TopicImagePicker = ({
           }}
         >
           <Tab
-            icon={<ImageIcon />}
-            label={<FormattedMessage id="icon-picker.icons" defaultMessage="Icons Gallery" />}
+            icon={<SentimentSatisfiedAltIcon />}
+            label={<FormattedMessage id="icon-picker.emojis" defaultMessage="Emojis" />}
             iconPosition="start"
           />
           <Tab
-            icon={<SentimentSatisfiedAltIcon />}
-            label={<FormattedMessage id="icon-picker.emojis" defaultMessage="Emojis" />}
+            icon={<ImageIcon />}
+            label={<FormattedMessage id="icon-picker.icons" defaultMessage="Icons Gallery" />}
             iconPosition="start"
           />
         </Tabs>
@@ -175,10 +159,16 @@ const TopicImagePicker = ({
               backgroundColor: 'background.paper',
             }}
           >
-            <TopicImageTab
-              iconModel={iconsGalleryModel}
-              emojiModel={emojiModel}
-              triggerClose={triggerClose}
+            <EmojiPicker
+              onEmojiClick={handleEmojiSelect}
+              lazyLoadEmojis={true}
+              autoFocusSearch={true}
+              previewConfig={{ showPreview: false }}
+              emojiStyle={EmojiStyle.NATIVE}
+              skinTonesDisabled
+              theme={mode === 'dark' ? Theme.DARK : Theme.LIGHT}
+              width="100%"
+              height="100%"
             />
           </Box>
         )}
@@ -191,25 +181,12 @@ const TopicImagePicker = ({
               backgroundColor: 'background.paper',
             }}
           >
-            <EmojiPicker
-              onEmojiClick={handleEmojiSelect}
-              lazyLoadEmojis={true}
-              autoFocusSearch={true}
-              previewConfig={{ showPreview: false }}
-              emojiStyle={EmojiStyle.NATIVE}
-              skinTonesDisabled
-              theme={mode === 'dark' ? Theme.DARK : Theme.LIGHT}
-              width="100%"
-              height="100%"
-              searchPlaceholder={intl.formatMessage({
-                id: 'emoji-picker.search-placeholder',
-                defaultMessage: 'Search emojis...',
-              })}
-            />
+            <IconImageTab iconModel={iconModel} triggerClose={closeModal} />
           </Box>
         )}
       </Box>
     </Box>
   );
 };
-export default TopicImagePicker;
+
+export default TopicIconEditor;

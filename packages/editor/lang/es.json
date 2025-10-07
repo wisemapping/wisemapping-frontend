@@ -315,19 +315,19 @@
     "defaultMessage": "Buscar emojis..."
   },
   "canvas-style.grid-size-xs": {
-    "defaultMessage": "XS"
+    "defaultMessage": "Extra Pequeño"
   },
   "canvas-style.grid-size-s": {
-    "defaultMessage": "S"
+    "defaultMessage": "Pequeño"
   },
   "canvas-style.grid-size-m": {
-    "defaultMessage": "M"
+    "defaultMessage": "Mediano"
   },
   "canvas-style.grid-size-l": {
-    "defaultMessage": "L"
+    "defaultMessage": "Grande"
   },
   "canvas-style.grid-size-xl": {
-    "defaultMessage": "XL"
+    "defaultMessage": "Extra Grande"
   },
   "common.close": {
     "defaultMessage": "Cerrar"
@@ -451,6 +451,27 @@
   },
   "editor-panel.tooltip-relationship-style": {
     "defaultMessage": "Estilo de relación"
+  },
+  "editor-panel.tooltip-unified-styling": {
+    "defaultMessage": "Estilo de tema y conexiones"
+  },
+  "editor-panel.tooltip-topic-font-style": {
+    "defaultMessage": "Estilo de fuente"
+  },
+  "relationship-style-editor.color": {
+    "defaultMessage": "Color de relación"
+  },
+  "relationship-style-editor.line-arrows": {
+    "defaultMessage": "Estilo de línea y flechas"
+  },
+  "topic-font-editor.font-color": {
+    "defaultMessage": "Color de fuente"
+  },
+  "topic-font-editor.font-family": {
+    "defaultMessage": "Familia de fuente"
+  },
+  "topic-font-editor.font-size-style": {
+    "defaultMessage": "Tamaño y estilo de fuente"
   },
   "editor-panel.tooltip-topic-share-none": {
     "defaultMessage": "Sin forma"
